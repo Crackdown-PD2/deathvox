@@ -1,0 +1,22 @@
+{
+ "name" : "Death Vox"
+ "description" : "EVIL EYES, EVIL EYES EVERYWHERE",
+ "author" : "Iamgoofball and Discendo Vox",
+ "contact" : "Hell",
+ "version" : "BETA",
+ "priority" : 45,
+ "blt_version" : 2,
+ "image" : "res.png",
+ "undisablable" : false,
+ "disable_safe_mode" : false,
+ "pre_hooks" : [
+		{ "hook_id" : "lib/entry", "script_path" : "Core.lua" }
+    ],
+ "libraries" : [
+        {
+            "display_name" : "BeardLib",
+            "identifier" : "beardlib",
+            "optional" : "false"
+        }
+    ]
+}
