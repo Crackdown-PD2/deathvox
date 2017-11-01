@@ -1931,3 +1931,1081 @@ function CharacterTweakData:_init_deathvox(presets)
  	table.insert(self._enemy_list, "deathvox_grenadier")
 	
 end
+
+function CharacterTweakData:_set_sm_wish()
+	if SystemInfo:platform() == Idstring("PS3") then
+		self:_multiply_all_hp(1.75, 0.8)
+	else
+		self:_multiply_all_hp(1.75, 0.8)
+	end
+	self:_multiply_weapon_delay(self.presets.weapon.normal, 0)
+	self:_multiply_weapon_delay(self.presets.weapon.good, 0)
+	self:_multiply_weapon_delay(self.presets.weapon.expert, 0)
+	self:_multiply_weapon_delay(self.presets.weapon.sniper, 0)
+	self:_multiply_weapon_delay(self.presets.weapon.gang_member, 0)
+	self.security = deep_clone(self.deathvox_guard) -- fucking broke piece of shit movement stuff
+	self:_set_characters_weapon_preset("deathvox")
+	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	self:_set_characters_dodge_preset("deathvox")
+	self:_set_characters_melee_preset("3")
+	self:_set_specials_weapon_preset("expert")
+	self.shield.weapon.is_pistol.melee_speed = nil
+	self.shield.weapon.is_pistol.melee_dmg = nil
+	self.shield.weapon.is_pistol.melee_retry_delay = nil
+	self:_set_specials_melee_preset("2.5")
+	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	self.security.no_arrest = true
+	self.gensec.no_arrest = true
+	self.bolivian_indoors.no_arrest = true
+	if job == "kosugi" or job == "dark" then
+		self.city_swat.no_arrest = true
+	else
+		self.city_swat.no_arrest = false
+	end
+	self:_multiply_all_speeds(1, 1)
+	self.presets.gang_member_damage.HEALTH_INIT = 175
+	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
+	self.old_hoxton_mission.HEALTH_INIT = 175
+	self.spa_vip.HEALTH_INIT = 175
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 175
+	self.flashbang_multiplier = 2
+	self.concussion_multiplier = 2
+end
+function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
+	self.security.HEALTH_INIT = self.security.HEALTH_INIT * hp_mul
+	self.gensec.HEALTH_INIT = self.gensec.HEALTH_INIT * hp_mul
+	self.cop.HEALTH_INIT = self.cop.HEALTH_INIT * hp_mul
+	self.cop_scared.HEALTH_INIT = self.cop_scared.HEALTH_INIT * hp_mul
+	self.cop_female.HEALTH_INIT = self.cop_female.HEALTH_INIT * hp_mul
+	self.fbi.HEALTH_INIT = self.fbi.HEALTH_INIT * hp_mul
+	self.fbi_female.HEALTH_INIT = self.fbi_female.HEALTH_INIT * hp_mul
+	self.medic.HEALTH_INIT = self.medic.HEALTH_INIT * hp_mul
+	self.bolivian.HEALTH_INIT = self.bolivian.HEALTH_INIT * hp_mul
+	self.bolivian_indoors.HEALTH_INIT = self.bolivian_indoors.HEALTH_INIT * hp_mul
+	self.drug_lord_boss.HEALTH_INIT = self.drug_lord_boss.HEALTH_INIT * hp_mul
+	self.drug_lord_boss_stealth.HEALTH_INIT = self.drug_lord_boss_stealth.HEALTH_INIT * hp_mul
+	self.fbi_swat.HEALTH_INIT = self.fbi_swat.HEALTH_INIT * hp_mul
+	self.fbi_swat_vet.HEALTH_INIT = self.fbi_swat_vet.HEALTH_INIT * hp_mul
+	self.city_swat.HEALTH_INIT = self.city_swat.HEALTH_INIT * hp_mul
+	self.swat.HEALTH_INIT = self.swat.HEALTH_INIT * hp_mul
+	self.hrt.HEALTH_INIT = self.hrt.HEALTH_INIT * hp_mul
+	self.heavy_swat.HEALTH_INIT = self.heavy_swat.HEALTH_INIT * hp_mul
+	self.heavy_swat_sniper.HEALTH_INIT = self.heavy_swat_sniper.HEALTH_INIT * hp_mul
+	self.fbi_heavy_swat.HEALTH_INIT = self.fbi_heavy_swat.HEALTH_INIT * hp_mul
+	self.sniper.HEALTH_INIT = self.sniper.HEALTH_INIT * hp_mul
+	self.gangster.HEALTH_INIT = self.gangster.HEALTH_INIT * hp_mul
+	self.mobster.HEALTH_INIT = self.mobster.HEALTH_INIT * hp_mul
+	self.mobster_boss.HEALTH_INIT = self.mobster_boss.HEALTH_INIT * hp_mul
+	self.chavez_boss.HEALTH_INIT = self.chavez_boss.HEALTH_INIT * hp_mul
+	self.hector_boss.HEALTH_INIT = self.hector_boss.HEALTH_INIT * hp_mul
+	self.hector_boss_no_armor.HEALTH_INIT = self.hector_boss_no_armor.HEALTH_INIT * hp_mul
+	self.biker_boss.HEALTH_INIT = self.biker_boss.HEALTH_INIT * hp_mul
+	self.biker.HEALTH_INIT = self.biker.HEALTH_INIT * hp_mul
+	self.biker_guard.HEALTH_INIT = self.biker_guard.HEALTH_INIT * hp_mul
+	self.tank_biker.HEALTH_INIT = self.tank_biker.HEALTH_INIT * hp_mul
+	self.tank.HEALTH_INIT = self.tank.HEALTH_INIT * hp_mul
+	self.tank_mini.HEALTH_INIT = self.tank_mini.HEALTH_INIT * hp_mul
+	self.tank_medic.HEALTH_INIT = self.tank_medic.HEALTH_INIT * hp_mul
+	self.tank_hw.HEALTH_INIT = self.tank_hw.HEALTH_INIT * hp_mul
+	self.spooc.HEALTH_INIT = self.spooc.HEALTH_INIT * hp_mul
+	self.shield.HEALTH_INIT = self.shield.HEALTH_INIT * hp_mul
+	self.phalanx_minion.HEALTH_INIT = self.phalanx_minion.HEALTH_INIT * hp_mul
+	self.phalanx_vip.HEALTH_INIT = self.phalanx_vip.HEALTH_INIT * hp_mul
+	self.taser.HEALTH_INIT = self.taser.HEALTH_INIT * hp_mul
+	self.biker_escape.HEALTH_INIT = self.biker_escape.HEALTH_INIT * hp_mul
+	self.omnia_lpf.HEALTH_INIT = self.omnia_lpf.HEALTH_INIT * hp_mul
+	self.deathvox_guard.HEALTH_INIT = self.deathvox_guard.HEALTH_INIT * hp_mul
+	self.deathvox_heavyar.HEALTH_INIT = self.deathvox_heavyar.HEALTH_INIT * hp_mul
+	self.deathvox_heavyshot.HEALTH_INIT = self.deathvox_heavyshot.HEALTH_INIT * hp_mul
+	self.deathvox_lightar.HEALTH_INIT = self.deathvox_lightar.HEALTH_INIT * hp_mul
+	self.deathvox_lightshot.HEALTH_INIT = self.deathvox_lightshot.HEALTH_INIT * hp_mul
+	self.deathvox_shield.HEALTH_INIT = self.deathvox_shield.HEALTH_INIT * hp_mul
+	self.deathvox_medic.HEALTH_INIT = self.deathvox_medic.HEALTH_INIT * hp_mul
+
+	self.deathvox_taser.HEALTH_INIT = self.deathvox_taser.HEALTH_INIT * hp_mul
+	self.deathvox_cloaker.HEALTH_INIT = self.deathvox_cloaker.HEALTH_INIT * hp_mul
+	self.deathvox_sniper_assault.HEALTH_INIT = self.deathvox_sniper_assault.HEALTH_INIT * hp_mul
+	self.deathvox_greendozer.HEALTH_INIT = self.deathvox_greendozer.HEALTH_INIT * hp_mul
+	self.deathvox_blackdozer.HEALTH_INIT = self.deathvox_blackdozer.HEALTH_INIT * hp_mul
+	self.deathvox_lmgdozer.HEALTH_INIT = self.deathvox_lmgdozer.HEALTH_INIT * hp_mul
+	self.deathvox_medicdozer.HEALTH_INIT = self.deathvox_medicdozer.HEALTH_INIT * hp_mul
+	self.deathvox_grenadier.HEALTH_INIT = self.deathvox_grenadier.HEALTH_INIT * hp_mul
+	
+	if self.security.headshot_dmg_mul then
+		self.security.headshot_dmg_mul = self.security.headshot_dmg_mul * hs_mul
+	end
+	if self.gensec.headshot_dmg_mul then
+		self.gensec.headshot_dmg_mul = self.gensec.headshot_dmg_mul * hs_mul
+	end
+	if self.cop.headshot_dmg_mul then
+		self.cop.headshot_dmg_mul = self.cop.headshot_dmg_mul * hs_mul
+	end
+	if self.cop_scared.headshot_dmg_mul then
+		self.cop_scared.headshot_dmg_mul = self.cop_scared.headshot_dmg_mul * hs_mul
+	end
+	if self.cop_female.headshot_dmg_mul then
+		self.cop_female.headshot_dmg_mul = self.cop_female.headshot_dmg_mul * hs_mul
+	end
+	if self.fbi.headshot_dmg_mul then
+		self.fbi.headshot_dmg_mul = self.fbi.headshot_dmg_mul * hs_mul
+	end
+	if self.fbi_female.headshot_dmg_mul then
+		self.fbi_female.headshot_dmg_mul = self.fbi_female.headshot_dmg_mul * hs_mul
+	end
+	if self.medic.headshot_dmg_mul then
+		self.medic.headshot_dmg_mul = self.medic.headshot_dmg_mul * hs_mul
+	end
+	if self.fbi_swat.headshot_dmg_mul then
+		self.fbi_swat.headshot_dmg_mul = self.fbi_swat.headshot_dmg_mul * hs_mul
+	end
+	if self.fbi_swat_vet.headshot_dmg_mul then
+		self.fbi_swat_vet.headshot_dmg_mul = self.fbi_swat_vet.headshot_dmg_mul * hs_mul
+	end
+	if self.city_swat.headshot_dmg_mul then
+		self.city_swat.headshot_dmg_mul = self.city_swat.headshot_dmg_mul * hs_mul
+	end
+	if self.swat.headshot_dmg_mul then
+		self.swat.headshot_dmg_mul = self.swat.headshot_dmg_mul * hs_mul
+	end
+	if self.hrt.headshot_dmg_mul then
+		self.hrt.headshot_dmg_mul = self.hrt.headshot_dmg_mul * hs_mul
+	end	
+	if self.heavy_swat.headshot_dmg_mul then
+		self.heavy_swat.headshot_dmg_mul = self.heavy_swat.headshot_dmg_mul * hs_mul
+	end
+	if self.heavy_swat_sniper.headshot_dmg_mul then
+		self.heavy_swat_sniper.headshot_dmg_mul = self.heavy_swat_sniper.headshot_dmg_mul * hs_mul
+	end
+	if self.fbi_heavy_swat.headshot_dmg_mul then
+		self.fbi_heavy_swat.headshot_dmg_mul = self.fbi_heavy_swat.headshot_dmg_mul * hs_mul
+	end
+	if self.sniper.headshot_dmg_mul then
+		self.sniper.headshot_dmg_mul = self.sniper.headshot_dmg_mul * hs_mul
+	end
+	if self.gangster.headshot_dmg_mul then
+		self.gangster.headshot_dmg_mul = self.gangster.headshot_dmg_mul * hs_mul
+	end
+	if self.hector_boss.headshot_dmg_mul then
+		self.hector_boss.headshot_dmg_mul = self.hector_boss.headshot_dmg_mul * hs_mul
+	end
+	if self.hector_boss_no_armor.headshot_dmg_mul then
+		self.hector_boss_no_armor.headshot_dmg_mul = self.hector_boss_no_armor.headshot_dmg_mul * hs_mul
+	end
+	if self.mobster.headshot_dmg_mul then
+		self.mobster.headshot_dmg_mul = self.mobster.headshot_dmg_mul * hs_mul
+	end
+	if self.mobster_boss.headshot_dmg_mul then
+		self.mobster_boss.headshot_dmg_mul = self.mobster_boss.headshot_dmg_mul * hs_mul
+	end
+	if self.biker.headshot_dmg_mul then
+		self.biker.headshot_dmg_mul = self.biker.headshot_dmg_mul * hs_mul
+	end
+	if self.biker_guard.headshot_dmg_mul then
+		self.biker_guard.headshot_dmg_mul = self.biker_guard.headshot_dmg_mul * hs_mul
+	end
+	if self.biker_boss.headshot_dmg_mul then
+		self.biker_boss.headshot_dmg_mul = self.biker_boss.headshot_dmg_mul * hs_mul
+	end
+	if self.tank.headshot_dmg_mul then
+		self.tank.headshot_dmg_mul = self.tank.headshot_dmg_mul * hs_mul
+	end
+	if self.tank_mini.headshot_dmg_mul then
+		self.tank_mini.headshot_dmg_mul = self.tank_mini.headshot_dmg_mul * hs_mul
+	end
+	if self.tank_medic.headshot_dmg_mul then
+		self.tank_medic.headshot_dmg_mul = self.tank_medic.headshot_dmg_mul * hs_mul
+	end
+	if self.chavez_boss.headshot_dmg_mul then
+		self.chavez_boss.headshot_dmg_mul = self.chavez_boss.headshot_dmg_mul * hs_mul
+	end
+	if self.tank_hw.headshot_dmg_mul then
+		self.tank_hw.headshot_dmg_mul = self.tank_hw.headshot_dmg_mul * hs_mul
+	end
+	if self.spooc.headshot_dmg_mul then
+		self.spooc.headshot_dmg_mul = self.spooc.headshot_dmg_mul * hs_mul
+	end
+	if self.shield.headshot_dmg_mul then
+		self.shield.headshot_dmg_mul = self.shield.headshot_dmg_mul * hs_mul
+	end
+	if self.phalanx_minion.headshot_dmg_mul then
+		self.phalanx_minion.headshot_dmg_mul = self.phalanx_minion.headshot_dmg_mul * hs_mul
+	end
+	if self.phalanx_vip.headshot_dmg_mul then
+		self.phalanx_vip.headshot_dmg_mul = self.phalanx_vip.headshot_dmg_mul * hs_mul
+	end
+	if self.taser.headshot_dmg_mul then
+		self.taser.headshot_dmg_mul = self.taser.headshot_dmg_mul * hs_mul
+	end
+	if self.biker_escape.headshot_dmg_mul then
+		self.biker_escape.headshot_dmg_mul = self.biker_escape.headshot_dmg_mul * hs_mul
+	end
+	if self.drug_lord_boss.headshot_dmg_mul then
+		self.drug_lord_boss.headshot_dmg_mul = self.drug_lord_boss.headshot_dmg_mul * hs_mul
+	end
+	if self.drug_lord_boss_stealth.headshot_dmg_mul then
+		self.drug_lord_boss_stealth.headshot_dmg_mul = self.drug_lord_boss_stealth.headshot_dmg_mul * hs_mul
+	end
+	if self.bolivian.headshot_dmg_mul then
+		self.bolivian.headshot_dmg_mul = self.bolivian.headshot_dmg_mul * hs_mul
+	end
+	if self.bolivian_indoors.headshot_dmg_mul then
+		self.bolivian_indoors.headshot_dmg_mul = self.bolivian_indoors.headshot_dmg_mul * hs_mul
+	end
+	if self.deathvox_guard.headshot_dmg_mul then
+		self.deathvox_guard.headshot_dmg_mul = self.deathvox_guard.headshot_dmg_mul * hs_mul
+	end
+	if self.deathvox_heavyar.headshot_dmg_mul then
+		self.deathvox_heavyar.headshot_dmg_mul = self.deathvox_heavyar.headshot_dmg_mul * hs_mul
+	end
+	if self.deathvox_heavyshot.headshot_dmg_mul then
+		self.deathvox_heavyshot.headshot_dmg_mul = self.deathvox_heavyshot.headshot_dmg_mul * hs_mul
+	end
+	if self.deathvox_lightar.headshot_dmg_mul then
+		self.deathvox_lightar.headshot_dmg_mul = self.deathvox_lightar.headshot_dmg_mul * hs_mul
+	end
+	if self.deathvox_medic.headshot_dmg_mul then
+		self.deathvox_medic.headshot_dmg_mul = self.deathvox_medic.headshot_dmg_mul * hs_mul
+	end
+	if self.deathvox_shield.headshot_dmg_mul then
+		self.deathvox_shield.headshot_dmg_mul = self.deathvox_shield.headshot_dmg_mul * hs_mul
+	end
+	if self.deathvox_lightshot.headshot_dmg_mul then
+		self.deathvox_lightshot.headshot_dmg_mul = self.deathvox_lightshot.headshot_dmg_mul * hs_mul
+	end
+	if self.deathvox_taser.headshot_dmg_mul then
+		self.deathvox_taser.headshot_dmg_mul = self.deathvox_taser.headshot_dmg_mul * hs_mul
+	end
+	if self.deathvox_cloaker.headshot_dmg_mul then
+		self.deathvox_cloaker.headshot_dmg_mul = self.deathvox_cloaker.headshot_dmg_mul * hs_mul
+	end
+	if self.deathvox_sniper_assault.headshot_dmg_mul then
+		self.deathvox_sniper_assault.headshot_dmg_mul = self.deathvox_sniper_assault.headshot_dmg_mul * hs_mul
+	end
+	if self.deathvox_greendozer.headshot_dmg_mul then
+		self.deathvox_greendozer.headshot_dmg_mul = self.deathvox_greendozer.headshot_dmg_mul * hs_mul
+	end
+	if self.deathvox_blackdozer.headshot_dmg_mul then
+		self.deathvox_blackdozer.headshot_dmg_mul = self.deathvox_blackdozer.headshot_dmg_mul * hs_mul
+	end
+	if self.deathvox_lmgdozer.headshot_dmg_mul then
+		self.deathvox_lmgdozer.headshot_dmg_mul = self.deathvox_lmgdozer.headshot_dmg_mul * hs_mul
+	end
+	if self.deathvox_medicdozer.headshot_dmg_mul then
+		self.deathvox_medicdozer.headshot_dmg_mul = self.deathvox_medicdozer.headshot_dmg_mul * hs_mul
+	end
+	if self.deathvox_grenadier.headshot_dmg_mul then
+		self.deathvox_grenadier.headshot_dmg_mul = self.deathvox_grenadier.headshot_dmg_mul * hs_mul
+	end
+end
+
+function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
+	local all_units = {
+		"security",
+		"gensec",
+		"cop",
+		"cop_scared",
+		"cop_female",
+		"fbi",
+		"fbi_female",
+		"medic",
+		"swat",
+		"hrt",
+		"heavy_swat",
+		"heavy_swat_sniper",
+		"fbi_swat",
+		"fbi_swat_vet",
+		"fbi_heavy_swat",
+		"city_swat",
+		"sniper",
+		"gangster",
+		"mobster",
+		"mobster_boss",
+		"biker_boss",
+		"hector_boss",
+		"chavez_boss",
+		"hector_boss_no_armor",
+		"tank",
+		"tank_mini",
+		"tank_medic",
+		"tank_hw",
+		"spooc",
+		"phalanx_vip",
+		"phalanx_minion",
+		"shield",
+		"biker",
+		"biker_guard",
+		"taser",
+		"deathvox_guard",
+		"deathvox_heavyar",
+		"deathvox_heavyshot",
+		"deathvox_lightar",
+		"deathvox_lightshot",
+		"deathvox_medic",
+		"deathvox_shield",
+		"deathvox_taser",
+		"deathvox_cloaker",
+		"deathvox_sniper_assault",
+		"deathvox_greendozer",
+		"deathvox_blackdozer",
+		"deathvox_lmgdozer",
+		"deathvox_medicdozer",
+		"deathvox_grenadier"
+	}
+	table.insert(all_units, "bolivian")
+	table.insert(all_units, "bolivian_indoors")
+	table.insert(all_units, "drug_lord_boss")
+	table.insert(all_units, "drug_lord_boss_stealth")
+	for _, name in ipairs(all_units) do
+		local speed_table = self[name].SPEED_WALK
+		speed_table.hos = speed_table.hos * walk_mul
+		speed_table.cbt = speed_table.cbt * walk_mul
+	end
+	self.security.SPEED_RUN = self.security.SPEED_RUN * run_mul
+	self.gensec.SPEED_RUN = self.security.SPEED_RUN * run_mul
+	self.cop.SPEED_RUN = self.cop.SPEED_RUN * run_mul
+	self.cop_scared.SPEED_RUN = self.cop_scared.SPEED_RUN * run_mul
+	self.cop_female.SPEED_RUN = self.cop_female.SPEED_RUN * run_mul
+	self.fbi.SPEED_RUN = self.fbi.SPEED_RUN * run_mul
+	self.fbi_female.SPEED_RUN = self.fbi_female.SPEED_RUN * run_mul
+	self.fbi_vet.SPEED_RUN = self.fbi_vet.SPEED_RUN * run_mul
+	self.medic.SPEED_RUN = self.medic.SPEED_RUN * run_mul
+	self.bolivian.SPEED_RUN = self.bolivian.SPEED_RUN * run_mul
+	self.bolivian_indoors.SPEED_RUN = self.bolivian_indoors.SPEED_RUN * run_mul
+	self.drug_lord_boss.SPEED_RUN = self.drug_lord_boss.SPEED_RUN * run_mul
+	self.drug_lord_boss_stealth.SPEED_RUN = self.drug_lord_boss_stealth.SPEED_RUN * run_mul
+	self.swat.SPEED_RUN = self.swat.SPEED_RUN * run_mul
+	self.hrt.SPEED_RUN = self.hrt.SPEED_RUN * run_mul
+	self.heavy_swat.SPEED_RUN = self.heavy_swat.SPEED_RUN * run_mul
+	self.heavy_swat_sniper.SPEED_RUN = self.heavy_swat_sniper.SPEED_RUN * run_mul
+	self.fbi_swat.SPEED_RUN = self.fbi_swat.SPEED_RUN * run_mul
+	self.fbi_swat_vet.SPEED_RUN = self.fbi_swat_vet.SPEED_RUN * run_mul
+	self.fbi_heavy_swat.SPEED_RUN = self.fbi_heavy_swat.SPEED_RUN * run_mul
+	self.city_swat.SPEED_RUN = self.city_swat.SPEED_RUN * run_mul
+	self.sniper.SPEED_RUN = self.sniper.SPEED_RUN * run_mul
+	self.gangster.SPEED_RUN = self.gangster.SPEED_RUN * run_mul
+	self.mobster.SPEED_RUN = self.gangster.SPEED_RUN * run_mul
+	self.mobster_boss.SPEED_RUN = self.mobster_boss.SPEED_RUN * run_mul
+	self.chavez_boss.SPEED_RUN = self.chavez_boss.SPEED_RUN * run_mul
+	self.biker_boss.SPEED_RUN = self.biker_boss.SPEED_RUN * run_mul
+	self.hector_boss.SPEED_RUN = self.hector_boss.SPEED_RUN * run_mul
+	self.hector_boss_no_armor.SPEED_RUN = self.hector_boss_no_armor.SPEED_RUN * run_mul
+	self.tank.SPEED_RUN = self.tank.SPEED_RUN * run_mul
+	self.tank_mini.SPEED_RUN = self.tank_mini.SPEED_RUN * run_mul
+	self.tank_medic.SPEED_RUN = self.tank_medic.SPEED_RUN * run_mul
+	self.tank_hw.SPEED_RUN = self.tank_hw.SPEED_RUN * run_mul
+	self.spooc.SPEED_RUN = self.spooc.SPEED_RUN * run_mul
+	self.phalanx_vip.SPEED_RUN = self.phalanx_vip.SPEED_RUN * run_mul
+	self.phalanx_minion.SPEED_RUN = self.phalanx_minion.SPEED_RUN * run_mul
+	self.shield.SPEED_RUN = self.shield.SPEED_RUN * run_mul
+	self.biker.SPEED_RUN = self.biker.SPEED_RUN * run_mul
+	self.biker_guard.SPEED_RUN = self.biker_guard.SPEED_RUN * run_mul
+	self.taser.SPEED_RUN = self.taser.SPEED_RUN * run_mul
+	self.biker_escape.SPEED_RUN = self.biker_escape.SPEED_RUN * run_mul
+	self.deathvox_guard.SPEED_RUN = self.deathvox_guard.SPEED_RUN * run_mul
+	self.deathvox_grenadier.SPEED_RUN = self.deathvox_grenadier.SPEED_RUN * run_mul
+	self.deathvox_heavyar.SPEED_RUN = self.deathvox_heavyar.SPEED_RUN * run_mul
+	self.deathvox_heavyshot.SPEED_RUN = self.deathvox_heavyshot.SPEED_RUN * run_mul
+	self.deathvox_lightar.SPEED_RUN = self.deathvox_lightar.SPEED_RUN * run_mul
+	self.deathvox_lightshot.SPEED_RUN = self.deathvox_lightshot.SPEED_RUN * run_mul
+	self.deathvox_shield.SPEED_RUN = self.deathvox_shield.SPEED_RUN * run_mul
+	self.deathvox_medic.SPEED_RUN = self.deathvox_medic.SPEED_RUN * run_mul
+	
+	self.deathvox_taser.SPEED_RUN = self.deathvox_taser.SPEED_RUN * run_mul
+	self.deathvox_cloaker.SPEED_RUN = self.deathvox_cloaker.SPEED_RUN * run_mul
+	self.deathvox_sniper_assault.SPEED_RUN = self.deathvox_sniper_assault.SPEED_RUN * run_mul
+	self.deathvox_greendozer.SPEED_RUN = self.deathvox_greendozer.SPEED_RUN * run_mul
+	self.deathvox_blackdozer.SPEED_RUN = self.deathvox_blackdozer.SPEED_RUN * run_mul
+	self.deathvox_lmgdozer.SPEED_RUN = self.deathvox_lmgdozer.SPEED_RUN * run_mul
+	self.deathvox_medicdozer.SPEED_RUN = self.deathvox_medicdozer.SPEED_RUN * run_mul
+end
+
+function CharacterTweakData:_set_characters_weapon_preset(preset)
+	local all_units = {
+		"security",
+		"cop",
+		"cop_scared",
+		"cop_female",
+		"gensec",
+		"fbi",
+		"fbi_female",
+		"swat",
+		"hrt",
+		"gangster",
+		"hector_boss_no_armor",
+		"bolivian",
+		"bolivian_indoors",
+		"drug_lord_boss_stealth",
+		"biker",
+		"biker_guard",
+		"mobster",
+		"deathvox_guard",
+		"deathvox_heavyar",
+		"deathvox_heavyshot",
+		"deathvox_lightar",
+		"deathvox_lightshot",
+		"deathvox_medic",
+		"deathvox_shield",
+		"deathvox_taser",
+		"deathvox_cloaker",
+		"deathvox_sniper_assault",
+		"deathvox_greendozer",
+		"deathvox_blackdozer",
+		"deathvox_lmgdozer",
+		"deathvox_medicdozer",
+		"deathvox_grenadier"
+	}
+	for _, name in ipairs(all_units) do
+		self[name].weapon = self.presets.weapon[preset]
+	end
+end
+
+function CharacterTweakData:_set_characters_dodge_preset(preset)
+	local all_units = {
+		"gensec",
+		"fbi",
+		"fbi_female",
+		"medic",
+		"taser",
+		"hector_boss_no_armor",
+		"bolivian_indoors",
+		"drug_lord_boss_stealth",
+		"swat",
+		"hrt",
+		"deathvox_heavyar",
+		"deathvox_heavyshot",
+		"deathvox_lightar",
+		"deathvox_lightshot",
+		"deathvox_medic",
+		"deathvox_taser",
+		"deathvox_cloaker",
+		"deathvox_sniper_assault",
+		"deathvox_guard",
+		"deathvox_grenadier"
+	}
+	for _, name in ipairs(all_units) do
+		self[name].dodge = self.presets.dodge[preset]
+	end
+end
+
+function CharacterTweakData:_set_characters_melee_preset(preset)
+	local all_units = {
+		"security",
+		"cop",
+		"cop_scared",
+		"cop_female",
+		"gensec",
+		"fbi",
+		"fbi_female",
+		"swat",
+		"hrt",
+		"gangster",
+		"hector_boss_no_armor",
+		"bolivian",
+		"bolivian_indoors",
+		"drug_lord_boss_stealth",
+		"biker",
+		"biker_guard",
+		"mobster",
+		"deathvox_guard",
+		"deathvox_heavyar",
+		"deathvox_heavyshot",
+		"deathvox_lightar",
+		"deathvox_lightshot"
+	}
+	for _, name in ipairs(all_units) do
+		self[name].melee_weapon_dmg_multiplier = preset
+	end
+end
+
+function CharacterTweakData:_set_specials_weapon_preset(preset)
+	local all_units = {
+		"taser",
+		"medic",
+		"spooc",
+		"shield",
+		"tank",
+		"tank_mini",
+		"tank_medic",
+		"tank_hw",
+		"mobster_boss",
+		"biker_boss",
+		"chavez_boss",
+		"hector_boss",
+		"drug_lord_boss",
+		"phalanx_minion",
+		"phalanx_vip",
+		"deathvox_medic",
+		"deathvox_shield",
+		"deathvox_taser",
+		"deathvox_cloaker",
+		"deathvox_sniper_assault",
+		"deathvox_greendozer",
+		"deathvox_blackdozer",
+		"deathvox_lmgdozer",
+		"deathvox_medicdozer",
+		"deathvox_grenadier"
+	}
+	for _, name in ipairs(all_units) do
+		self[name].weapon = deep_clone(self.presets.weapon[preset])
+	end
+end
+
+function CharacterTweakData:_set_specials_melee_preset(preset)
+	local all_units = {
+		"taser",
+		"medic",
+		"spooc",
+		"shield",
+		"tank",
+		"tank_mini",
+		"tank_medic",
+		"sniper",
+		"tank_hw",
+		"mobster_boss",
+		"biker_boss",
+		"chavez_boss",
+		"hector_boss",
+		"drug_lord_boss",
+		"phalanx_minion",
+		"phalanx_vip",
+		"deathvox_medic",
+		"deathvox_shield",
+		"deathvox_taser",
+		"deathvox_cloaker",
+		"deathvox_sniper_assault",
+		"deathvox_greendozer",
+		"deathvox_blackdozer",
+		"deathvox_lmgdozer",
+		"deathvox_medicdozer",
+		"deathvox_grenadier"
+	}
+	for _, name in ipairs(all_units) do
+		self[name].melee_weapon_dmg_multiplier = preset
+	end
+end
+
+function CharacterTweakData:character_map()
+	local char_map = {
+		basic = {
+			path = "units/payday2/characters/",
+			list = {
+				"civ_female_bank_1",
+				"civ_female_bank_manager_1",
+				"civ_female_bikini_1",
+				"civ_female_bikini_2",
+				"civ_female_casual_1",
+				"civ_female_casual_2",
+				"civ_female_casual_3",
+				"civ_female_casual_4",
+				"civ_female_casual_5",
+				"civ_female_casual_6",
+				"civ_female_casual_7",
+				"civ_female_casual_8",
+				"civ_female_casual_9",
+				"civ_female_casual_10",
+				"civ_female_crackwhore_1",
+				"civ_female_curator_1",
+				"civ_female_curator_2",
+				"civ_female_hostess_apron_1",
+				"civ_female_hostess_jacket_1",
+				"civ_female_hostess_shirt_1",
+				"civ_female_party_1",
+				"civ_female_party_2",
+				"civ_female_party_3",
+				"civ_female_party_4",
+				"civ_female_waitress_1",
+				"civ_female_waitress_2",
+				"civ_female_waitress_3",
+				"civ_female_waitress_4",
+				"civ_female_wife_trophy_1",
+				"civ_female_wife_trophy_2",
+				"civ_male_bank_1",
+				"civ_male_bank_2",
+				"civ_male_bank_manager_1",
+				"civ_male_bank_manager_3",
+				"civ_male_bank_manager_4",
+				"civ_male_bank_manager_5",
+				"civ_male_bartender_1",
+				"civ_male_bartender_2",
+				"civ_male_business_1",
+				"civ_male_business_2",
+				"civ_male_casual_1",
+				"civ_male_casual_2",
+				"civ_male_casual_3",
+				"civ_male_casual_4",
+				"civ_male_casual_5",
+				"civ_male_casual_6",
+				"civ_male_casual_7",
+				"civ_male_casual_8",
+				"civ_male_casual_9",
+				"civ_male_casual_12",
+				"civ_male_casual_13",
+				"civ_male_casual_14",
+				"civ_male_curator_1",
+				"civ_male_curator_2",
+				"civ_male_curator_3",
+				"civ_male_dj_1",
+				"civ_male_italian_robe_1",
+				"civ_male_janitor_1",
+				"civ_male_janitor_2",
+				"civ_male_janitor_3",
+				"civ_male_meth_cook_1",
+				"civ_male_party_1",
+				"civ_male_party_2",
+				"civ_male_party_3",
+				"civ_male_pilot_1",
+				"civ_male_scientist_1",
+				"civ_male_miami_store_clerk_1",
+				"civ_male_taxman",
+				"civ_male_trucker_1",
+				"civ_male_worker_1",
+				"civ_male_worker_2",
+				"civ_male_worker_3",
+				"civ_male_worker_docks_1",
+				"civ_male_worker_docks_2",
+				"civ_male_worker_docks_3",
+				"civ_male_dog_abuser_1",
+				"civ_male_dog_abuser_2",
+				"ene_biker_1",
+				"ene_biker_2",
+				"ene_biker_3",
+				"ene_biker_4",
+				"ene_bulldozer_1",
+				"ene_bulldozer_2",
+				"ene_bulldozer_2_hw",
+				"ene_bulldozer_3",
+				"ene_bulldozer_4",
+				"ene_city_swat_1",
+				"ene_city_swat_2",
+				"ene_city_swat_3",
+				"ene_city_swat_heavy_1",
+				"ene_city_swat_heavy_2",
+				"ene_murkywater_1",
+				"ene_murkywater_2",
+				"ene_cop_1",
+				"ene_cop_2",
+				"ene_cop_3",
+				"ene_cop_4",
+				"ene_fbi_1",
+				"ene_fbi_2",
+				"ene_fbi_3",
+				"ene_fbi_boss_1",
+				"ene_fbi_female_1",
+				"ene_fbi_female_2",
+				"ene_fbi_female_3",
+				"ene_fbi_female_4",
+				"ene_fbi_heavy_1",
+				"ene_fbi_heavy_r870",
+				"ene_fbi_office_1",
+				"ene_fbi_office_2",
+				"ene_fbi_office_3",
+				"ene_fbi_office_4",
+				"ene_fbi_swat_1",
+				"ene_fbi_swat_2",
+				"ene_fbi_swat_3",
+				"ene_gang_black_1",
+				"ene_gang_black_2",
+				"ene_gang_black_3",
+				"ene_gang_black_4",
+				"ene_gang_mexican_1",
+				"ene_gang_mexican_2",
+				"ene_gang_mexican_3",
+				"ene_gang_mexican_4",
+				"ene_gang_russian_1",
+				"ene_gang_russian_2",
+				"ene_gang_russian_3",
+				"ene_gang_russian_4",
+				"ene_gang_russian_5",
+				"ene_gang_mobster_1",
+				"ene_gang_mobster_2",
+				"ene_gang_mobster_3",
+				"ene_gang_mobster_4",
+				"ene_gang_mobster_boss",
+				"ene_guard_national_1",
+				"ene_hoxton_breakout_guard_1",
+				"ene_hoxton_breakout_guard_2",
+				"ene_male_tgt_1",
+				"ene_murkywater_1",
+				"ene_murkywater_2",
+				"ene_prisonguard_female_1",
+				"ene_prisonguard_male_1",
+				"ene_secret_service_1",
+				"ene_secret_service_2",
+				"ene_security_1",
+				"ene_security_2",
+				"ene_security_3",
+				"ene_security_4",
+				"ene_security_5",
+				"ene_security_6",
+				"ene_security_7",
+				"ene_security_8",
+				"ene_shield_1",
+				"ene_shield_2",
+				"ene_city_shield",
+				"ene_shield_gensec",
+				"ene_phalanx_1",
+				"ene_vip_1",
+				"ene_vip_2",
+				"ene_sniper_1",
+				"ene_sniper_2",
+				"ene_spook_1",
+				"ene_swat_1",
+				"ene_swat_2",
+				"ene_swat_heavy_1",
+				"ene_swat_heavy_r870",
+				"ene_tazer_1",
+				"npc_old_hoxton_prisonsuit_1",
+				"npc_old_hoxton_prisonsuit_2",
+				"ene_medic_r870",
+				"ene_medic_m4",
+				"ene_city_heavy_r870",
+				"ene_city_heavy_g36",
+				"ene_guard_biker_1",
+				"ene_murky_heavy_m4",
+				"ene_murky_heavy_r870"
+			}
+		},
+		dlc1 = {
+			path = "units/pd2_dlc1/characters/",
+			list = {
+				"civ_male_bank_manager_2",
+				"civ_male_casual_10",
+				"civ_male_casual_11",
+				"civ_male_firefighter_1",
+				"civ_male_paramedic_1",
+				"civ_male_paramedic_2",
+				"ene_security_gensec_1",
+				"ene_security_gensec_2"
+			}
+		},
+		dlc2 = {
+			path = "units/pd2_dlc2/characters/",
+			list = {
+				"civ_female_bank_assistant_1",
+				"civ_female_bank_assistant_2"
+			}
+		},
+		mansion = {
+			path = "units/pd2_mcmansion/characters/",
+			list = {
+				"ene_male_hector_1",
+				"ene_male_hector_2",
+				"ene_hoxton_breakout_guard_1",
+				"ene_hoxton_breakout_guard_2"
+			}
+		},
+		cage = {
+			path = "units/pd2_dlc_cage/characters/",
+			list = {
+				"civ_female_bank_2"
+			}
+		},
+		arena = {
+			path = "units/pd2_dlc_arena/characters/",
+			list = {
+				"civ_female_fastfood_1",
+				"civ_female_party_alesso_1",
+				"civ_female_party_alesso_2",
+				"civ_female_party_alesso_3",
+				"civ_female_party_alesso_4",
+				"civ_female_party_alesso_5",
+				"civ_female_party_alesso_6",
+				"civ_male_party_alesso_1",
+				"civ_male_party_alesso_2",
+				"civ_male_alesso_booth",
+				"civ_male_fastfood_1",
+				"ene_guard_security_heavy_2",
+				"ene_guard_security_heavy_1"
+			}
+		},
+		kenaz = {
+			path = "units/pd2_dlc_casino/characters/",
+			list = {
+				"civ_male_casino_1",
+				"civ_male_casino_2",
+				"civ_male_casino_3",
+				"civ_male_casino_4",
+				"ene_secret_service_1_casino",
+				"civ_male_business_casino_1",
+				"civ_male_business_casino_2",
+				"civ_male_impersonator",
+				"civ_female_casino_1",
+				"civ_female_casino_2",
+				"civ_female_casino_3",
+				"civ_male_casino_pitboss"
+			}
+		},
+		vip = {
+			path = "units/pd2_dlc_vip/characters/",
+			list = {
+				"ene_vip_1",
+				"ene_vip_2",
+				"ene_phalanx_1"
+			}
+		},
+		holly = {
+			path = "units/pd2_dlc_holly/characters/",
+			list = {
+				"civ_male_hobo_1",
+				"civ_male_hobo_2",
+				"civ_male_hobo_3",
+				"civ_male_hobo_4",
+				"ene_gang_hispanic_1",
+				"ene_gang_hispanic_3",
+				"ene_gang_hispanic_2"
+			}
+		},
+		red = {
+			path = "units/pd2_dlc_red/characters/",
+			list = {
+				"civ_female_inside_man_1"
+			}
+		},
+		dinner = {
+			path = "units/pd2_dlc_dinner/characters/",
+			list = {
+				"civ_male_butcher_2",
+				"civ_male_butcher_1"
+			}
+		},
+		pal = {
+			path = "units/pd2_dlc_pal/characters/",
+			list = {
+				"civ_male_mitch"
+			}
+		},
+		cane = {
+			path = "units/pd2_dlc_cane/characters/",
+			list = {
+				"civ_male_helper_1",
+				"civ_male_helper_2",
+				"civ_male_helper_3",
+				"civ_male_helper_4"
+			}
+		},
+		berry = {
+			path = "units/pd2_dlc_berry/characters/",
+			list = {
+				"ene_murkywater_no_light",
+				"npc_locke"
+			}
+		},
+		peta = {
+			path = "units/pd2_dlc_peta/characters/",
+			list = {
+				"civ_male_boris"
+			}
+		},
+		mad = {
+			path = "units/pd2_dlc_mad/characters/",
+			list = {
+				"civ_male_scientist_01",
+				"civ_male_scientist_02",
+				"ene_akan_fbi_heavy_g36",
+				"ene_akan_fbi_heavy_r870",
+				"ene_akan_fbi_shield_sr2_smg",
+				"ene_akan_fbi_spooc_asval_smg",
+				"ene_akan_fbi_swat_ak47_ass",
+				"ene_akan_fbi_swat_dw_ak47_ass",
+				"ene_akan_fbi_swat_dw_r870",
+				"ene_akan_fbi_swat_dw_ump",
+				"ene_akan_fbi_swat_r870",
+				"ene_akan_fbi_swat_ump",
+				"ene_akan_fbi_tank_r870",
+				"ene_akan_fbi_tank_rpk_lmg",
+				"ene_akan_fbi_tank_saiga",
+				"ene_akan_cs_cop_ak47_ass",
+				"ene_akan_cs_cop_akmsu_smg",
+				"ene_akan_cs_cop_asval_smg",
+				"ene_akan_cs_cop_r870",
+				"ene_akan_cs_heavy_ak47_ass",
+				"ene_akan_cs_heavy_r870",
+				"ene_akan_cs_shield_c45",
+				"ene_akan_cs_swat_ak47_ass",
+				"ene_akan_cs_swat_r870",
+				"ene_akan_cs_swat_sniper_svd_snp",
+				"ene_akan_cs_tazer_ak47_ass",
+				"ene_akan_fbi_heavy_dw",
+				"ene_akan_fbi_heavy_dw_r870",
+				"ene_akan_fbi_1",
+				"ene_akan_fbi_2",
+				"ene_akan_veteran_1",
+				"ene_akan_veteran_2",
+				"ene_akan_grenadier_1",
+				"ene_akan_medic_m4"
+			}
+		},
+		born = {
+			path = "units/pd2_dlc_born/characters/",
+			list = {
+				"ene_gang_biker_boss",
+				"ene_biker_female_1",
+				"ene_biker_female_2",
+				"ene_biker_female_3",
+				"npc_male_mechanic"
+			}
+		},
+		flat = {
+			path = "units/pd2_dlc_flat/characters/",
+			list = {
+				"npc_chavez",
+				"npc_jamaican"
+			}
+		},
+		help = {
+			path = "units/pd2_dlc_help/characters/",
+			list = {
+				"ene_zeal_bulldozer_halloween"
+			}
+		},
+		glace = {
+			path = "units/pd2_dlc_glace/characters/",
+			list = {
+				"npc_chinese_prisoner",
+				"npc_prisoner_1",
+				"npc_prisoner_2",
+				"npc_prisoner_3",
+				"npc_prisoner_4",
+				"npc_prisoner_5",
+				"npc_prisoner_6",
+				"npc_yakuza_prisoner"
+			}
+		},
+		moon = {
+			path = "units/pd2_dlc_moon/characters/",
+			list = {
+				"civ_male_pilot_2"
+			}
+		},
+		friend = {
+			path = "units/pd2_dlc_friend/characters/",
+			list = {
+				"ene_bolivian_thug_outdoor_01",
+				"ene_bolivian_thug_outdoor_02",
+				"ene_drug_lord_boss",
+				"ene_security_manager",
+				"ene_thug_indoor_01",
+				"ene_thug_indoor_02"
+			}
+		},
+		gitgud = {
+			path = "units/pd2_dlc_gitgud/characters/",
+			list = {
+				"ene_zeal_bulldozer",
+				"ene_zeal_bulldozer_2",
+				"ene_zeal_bulldozer_3",
+				"ene_zeal_cloaker",
+				"ene_zeal_swat",
+				"ene_zeal_city_1",
+				"ene_zeal_city_2",
+				"ene_zeal_swat_heavy",
+				"ene_zeal_heavy_shield",
+				"ene_zeal_swat_shield"
+			}
+		},
+		spa = {
+			path = "units/pd2_dlc_spa/characters/",
+			list = {
+				"ene_sniper_3",
+				"npc_spa",
+				"npc_spa_2",
+				"npc_spa_3",
+				"npc_gage"
+			}
+		},
+		fish = {
+			path = "units/pd2_dlc_lxy/characters/",
+			list = {
+				"civ_female_guest_gala_1",
+				"civ_female_guest_gala_2",
+				"civ_male_guest_gala_1",
+				"civ_male_guest_gala_2",
+				"civ_male_camera_crew_1"
+			}
+		},
+		slu = {
+			path = "units/pd2_dlc_slu/characters/",
+			list = {"npc_vlad", "npc_sophia"}
+		},
+		run = {
+			path = "units/pd2_dlc_run/characters/",
+			list = {"npc_matt"}
+		},
+		drm = {
+			path = "units/pd2_dlc_drm/characters/",
+			list = {
+				"ene_bulldozer_medic",
+				"ene_bulldozer_minigun",
+				"ene_zeal_swat_heavy_sniper"
+			}
+		},
+		wwh = {
+			path = "units/pd2_dlc_wwh/characters/",
+			list = {
+				"ene_female_crew",
+				"ene_male_crew_01",
+				"ene_male_crew_02",
+				"ene_captain",
+				"ene_locke"
+			}			
+		},		
+		dah = {
+			path = "units/pd2_dlc_dah/characters/",
+			list = {
+				"npc_male_cfo",
+				"npc_male_ralph"
+			}
+		},		
+		hvh = {
+			path = "units/pd2_dlc_hvh/characters/",
+			list = {
+				"ene_cop_hvh_1",
+				"ene_cop_hvh_2",
+				"ene_cop_hvh_3",
+				"ene_cop_hvh_4",
+				"ene_swat_hvh_1",
+				"ene_swat_hvh_2",
+				"ene_fbi_hvh_1",
+				"ene_fbi_hvh_2",
+				"ene_fbi_hvh_3",
+				"ene_spook_hvh_1",
+				"ene_swat_heavy_hvh_1",
+				"ene_swat_heavy_hvh_r870",
+				"ene_tazer_hvh_1",
+				"ene_shield_hvh_1",
+				"ene_shield_hvh_2",
+				"ene_medic_hvh_r870",
+				"ene_medic_hvh_m4",
+				"ene_bulldozer_hvh_1",
+				"ene_bulldozer_hvh_2",
+				"ene_bulldozer_hvh_3",
+				"ene_fbi_swat_hvh_1",
+				"ene_fbi_swat_hvh_2",
+				"ene_fbi_heavy_hvh_1",
+				"ene_fbi_heavy_hvh_r870",
+				"ene_sniper_hvh_2"
+			}
+		}
+		gageammo = {
+			path = "units/pd2_mod_gageammo/characters/",
+			list = {
+				"ene_deathvox_guard",
+				"ene_deathvox_heavyar",
+				"ene_deathvox_lightar",
+				"ene_deathvox_medic",
+				"ene_deathvox_shield",
+				"ene_deathvox_lightshot",
+				"ene_deathvox_heavyshot",
+				"ene_deathvox_taser",
+				"ene_deathvox_cloaker",
+				"ene_deathvox_sniper_assault",
+				"ene_deathvox_greendozer",
+				"ene_deathvox_blackdozer",
+				"ene_deathvox_lmgdozer",
+				"ene_deathvox_medicdozer",
+				"ene_deathvox_grenadier"
+			}
+		}				
+	}
+	return char_map
+end
