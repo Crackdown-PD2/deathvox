@@ -10,6 +10,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_shotgun_heavy = deep_clone(self.ben_crew)
 	self.deathvox_sniper = deep_clone(self.wa2000_crew)
 	self.deathvox_medicdozer_smg = deep_clone(self.polymer_crew)
+	self.deathvox_grenadier = deep_clone(self.contraband_crew)
 
 	self.deathvox_light_ar.sounds.prefix = "aug_npc" -- dont worry about this
 	self.deathvox_light_ar.use_data.selection_index = 2 -- dont worry about this
@@ -122,7 +123,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_sniper.alert_size = 5000
 	self.deathvox_sniper.suppression = 1	
 	self.deathvox_sniper.armor_piercing = true
-	self.deathvox_sniper.usage = "is_sniper"
+	self.deathvox_sniper.usage = "is_assault_sniper"
 	self.deathvox_sniper.anim_usage = "is_bullpup"
 	
 	self.deathvox_medicdozer_smg.sounds.prefix = "polymer_npc"
@@ -143,5 +144,22 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_medicdozer_smg.alert_size = 5000
 	self.deathvox_medicdozer_smg.suppression = 1	
 	self.deathvox_medicdozer_smg.usage = "is_tank_smg"
+	
+	self.deathvox_grenadier.sounds.prefix = "contraband_npc"
+	self.deathvox_grenadier.use_data.selection_index = 2
+	self.deathvox_grenadier.DAMAGE = 6
+	self.deathvox_grenadier.muzzleflash = "effects/payday2/particles/weapons/762_auto"
+	self.deathvox_grenadier.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556"
+	self.deathvox_grenadier.CLIP_AMMO_MAX = 20
+	self.deathvox_grenadier.NR_CLIPS_MAX = 5
+	self.deathvox_grenadier.pull_magazine_during_reload = "rifle"
+	self.deathvox_grenadier.auto.fire_rate = 0.098
+	self.deathvox_grenadier.hold = {
+		"bullpup",
+		"rifle"
+	}
+	self.deathvox_grenadier.reload = "rifle"
+	self.deathvox_grenadier.alert_size = 5000
+	self.deathvox_grenadier.suppression = 1
 	
 end

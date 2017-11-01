@@ -100,29 +100,31 @@ function CharacterTweakData:_presets(tweak_data)
 		}
 	}		
 	--[[presets.weapon.deathvox = {
-		is_pistol = {},--
-		is_revolver = {},--
-		is_rifle = {},
-		is_lmg = {},--
-		is_shotgun_pump = {},--
-		is_shotgun_mag = {},--
-		mossberg = {},
-		is_smg = {},--
-		mp9 = {},
-		rifle = {},
-		mac11 = {},
-		akimbo_pistol = {},
-		mini = {},--
-		flamethrower = {},
-		is_light_rifle = {},--
-		is_heavy_rifle = {},--
-		is_light_shotgun = {},--
-		is_heavy_shotgun = {},--
-		is_tank_smg = {},--
-		is_bullpup = {}
+		is_pistol = {},-- used for guards and numerous scripted enemies, as well as beat police. Assumes base damage 40.
+		is_revolver = {},-- used for medics and numerous scripted enemies, as well as beat police. Assumes base damage 60.
+		is_rifle = {}, -- clones heavy ar. Used enemy types unknown. assumes base damage 75.
+		is_lmg = {},-- used for scripted boss enemies, lmg dozers. Assumes base damage 100.
+		is_shotgun_pump = {}, -- used for green dozers. Assumes base damage 400.
+		is_shotgun_mag = {}, -- used for saiga dozers. Assumes base damage 225.
+		mossberg = {}, -- scripted enemy (e.g. beat cop) shotgun. clones light shotgun. Assumes base damage 75.
+		is_smg = {}, -- Ased for shield, variety of enemies. Assumes base damage 36.
+		mp9 = {}, -- Clones smg. Used primarily by security, FBI HRT.
+		rifle = {}, -- clones light ar. Used enemy types unknown. Assumes base damage 60.
+		mac11 = {}, -- Clones smg. Used primarily by criminal enemies. Assumes base damage 36.
+		akimbo_pistol = {}, -- used by boss enemy on Panic Room. Clones pistol.
+		mini = {}, -- unused aside from Spring, crime spree enemy. Will revise in future build for possible scripted use.
+		flamethrower = {}, -- Used for Summers.
+		is_light_rifle = {}, -- Used for light AR SWAT, Tasers, Grenadiers. Assumes base damage 60.
+		is_heavy_rifle = {}, -- Used for heavy AR. Assumes base damage 75.
+		is_light_shotgun = {}, -- Used for light shotgun SWAT. Assumes base damage 75.
+		is_heavy_shotgun = {}, -- Used for heavy shotgun SWAT. Assumes base damage 100.
+		is_tank_smg = {}, -- used for medic dozer. Assumes base damage 36.
+		is_bullpup = {}, -- clones light rifle. Assumes base damage 60.
+		is_sniper = {}, -- initializing sniper. Assumes base damage 240.
+		is_assault_sniper = {} -- initializing assault sniper preset. Assumes base damage 240.
 	}]]--
 	presets.weapon.deathvox = deep_clone(presets.weapon.deathwish)
-	presets.weapon.deathvox.is_revolver.aim_delay = {
+	presets.weapon.deathvox.is_revolver.aim_delay = { -- mark 3 values complete.
 		0,
 		0
 	}
@@ -234,7 +236,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_pistol = { -- mark 2 values complete. Currently valid for guards, beat police, low level enemies. basis: presets.weapon.deathwish.is_pistol.
+	presets.weapon.deathvox.is_pistol = { -- mark 3 values complete. Currently valid for guards, beat police, low level enemies. basis: presets.weapon.deathwish.is_pistol.
 		aim_delay = {
 			0,
 			0
@@ -363,7 +365,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_shotgun_pump = { -- mark 2 values complete. Assumes base damage 400. basis is presets.weapon.deathwish.is_shotgun_pump. Extremely dangerous close range, much less so further out.
+	presets.weapon.deathvox.is_shotgun_pump = { -- mark 3 values complete. Assumes base damage 400. basis is presets.weapon.deathwish.is_shotgun_pump. Extremely dangerous close range, much less so further out.
 		aim_delay = {
 			0,
 			0
@@ -474,7 +476,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_shotgun_mag = { -- mark 2 values complete. assumes base damage 225. basis is presets.weapon.deathwish.is_shotgun_pump. Much more even arc distribution-focus/shotcount becomes crucial.
+	presets.weapon.deathvox.is_shotgun_mag = { -- mark 3 values complete. assumes base damage 225. Basis is presets.weapon.deathwish.is_shotgun_pump. Much more even arc distribution-focus/shotcount becomes crucial.
 		aim_delay = {
 			0,
 			0
@@ -585,140 +587,8 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_tank_smg = { -- mark 2 values complete. Assumes base 36. basis is presets.weapon.deathwish.is_smg. Used for medidozer.
-		aim_delay = {
-			0,
-			0
-		},
-		focus_delay = 0,
-		focus_dis = 200,
-		spread = 15,
-		miss_dis = 10,
-		RELOAD_SPEED = 1.4, -- validated, unchanged.
-		melee_speed = presets.weapon.expert.is_smg.melee_speed,
-		melee_dmg = presets.weapon.expert.is_smg.melee_dmg,
-		melee_retry_delay = presets.weapon.expert.is_smg.melee_retry_delay,
-		range = {
-			optimal = 3200,
-			far = 6000,
-			close = 2000
-		},
-		autofire_rounds = {
-			8,
-			16
-		},
-		FALLOFF = {
-			{
-				dmg_mul = 1,
-				r = 100,
-				acc = {
-					0.95,
-					0.95
-				},
-				recoil = {
-					0.1,
-					0.25
-				},
-				mode = {
-					0,
-					0,
-					0,
-					1
-				}
-			},
-			{
-				dmg_mul = 1,
-				r = 500,
-				acc = {
-					0.75,
-					0.75
-				},
-				recoil = {
-					0.1,
-					0.3
-				},
-				mode = {
-					0,
-					0,
-					0,
-					1
-				}
-			},
-			{
-				dmg_mul = .9, -- applying falloff, unlike DW.
-				r = 1000,
-				acc = {
-					0.65,
-					0.65
-				},
-				recoil = {
-					0.35,
-					0.5
-				},
-				mode = {
-					0,
-					0,
-					0,
-					1
-				}
-			},
-			{
-				dmg_mul = .7,
-				r = 2000,
-				acc = {
-					0.6,
-					0.7
-				},
-				recoil = {
-					0.35,
-					0.5
-				},
-				mode = {
-					0,
-					0,
-					1,
-					0
-				}
-			},
-			{
-				dmg_mul = .6,
-				r = 3000,
-				acc = {
-					0.55,
-					0.6
-				},
-				recoil = {
-					0.5,
-					1.5
-				},
-				mode = {
-					0,
-					0,
-					1,
-					0
-				}
-			},
-			{
-				dmg_mul = .4,
-				r = 4500,
-				acc = {
-					0.3,
-					0.6
-				},
-				recoil = {
-					1,
-					1.5
-				},
-				mode = {
-					0,
-					1,
-					0,
-					0
-				}
-			}
-		}
-	}
-	presets.weapon.deathvox.is_light_rifle = { -- mark 2 values complete. basis is presets.weapon.deathwish.is_rifle. General goal- more shots, less damage, reduced range.
+
+	presets.weapon.deathvox.is_light_rifle = { -- mark 3 values complete. basis is presets.weapon.deathwish.is_rifle. General goal- more shots, less damage, reduced range.
 		aim_delay = {
 			0,
 			0
@@ -851,7 +721,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_heavy_rifle = { -- mark 2 values complete. basis is presets.weapon.deathwish.is_rifle. General goal- fewer shots, more damage, greater range.
+	presets.weapon.deathvox.is_heavy_rifle = { -- mark 3 values complete. basis is presets.weapon.deathwish.is_rifle. General goal- fewer shots, more damage, greater range.
 		aim_delay = {
 			0,
 			0
@@ -984,8 +854,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_bullpup = presets.weapon.deathvox.is_light_rifle
-	presets.weapon.deathvox.is_light_shotgun = { -- mark 2 values complete. basis is presets.weapon.deathwish.is_shotgun_pump. Light shotgunner fires and gains focus faster than Heavy.
+	presets.weapon.deathvox.is_light_shotgun = { -- mark 3 values complete. basis is presets.weapon.deathwish.is_shotgun_pump. Light shotgunner fires and gains focus faster than Heavy.
 		aim_delay = {
 			0,
 			0
@@ -1096,7 +965,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_heavy_shotgun = { -- mark 2 values complete. basis is presets.weapon.deathwish.is_shotgun_pump. Heavy Shotgunner has conventional focal stats.
+	presets.weapon.deathvox.is_heavy_shotgun = { -- mark 3 values complete. basis is presets.weapon.deathwish.is_shotgun_pump. Heavy Shotgunner has conventional focal stats.
 		aim_delay = {
 			0,
 			0
@@ -1207,27 +1076,34 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_smg = {
+	presets.weapon.deathvox.is_tank_smg = { -- mark 3 values complete. Assumes base damage of 36. basis is presets.weapon.deathwish.is_smg. Used for medidozer.
 		aim_delay = {
 			0,
-			0.1
+			0.1 --re-adding aim delay from lower difficulties.
 		},
-		focus_delay = 1,
+		focus_delay = 1, --re-adding slight focus delay from lower difficulties.
 		focus_dis = 200,
 		spread = 15,
 		miss_dis = 10,
-		RELOAD_SPEED = 1.2,
-		melee_speed = presets.weapon.normal.is_smg.melee_speed,
-		melee_dmg = presets.weapon.normal.is_smg.melee_dmg,
-		melee_retry_delay = presets.weapon.normal.is_smg.melee_retry_delay,
-		range = presets.weapon.normal.is_smg.range,
-		autofire_rounds = presets.weapon.normal.is_smg.autofire_rounds,
+		RELOAD_SPEED = 1.4, -- validated, unchanged.
+		melee_speed = presets.weapon.expert.is_smg.melee_speed,
+		melee_dmg = presets.weapon.expert.is_smg.melee_dmg,
+		melee_retry_delay = presets.weapon.expert.is_smg.melee_retry_delay,
+		range = {
+			optimal = 3200,
+			far = 6000,
+			close = 2000
+		},
+		autofire_rounds = {
+			8,
+			16
+		},
 		FALLOFF = {
 			{
-				dmg_mul = 5,
+				dmg_mul = 1,
 				r = 100,
 				acc = {
-					0.6,
+					0.6, -- applying lower bound on accuracy based on lower difficulties.
 					0.95
 				},
 				recoil = {
@@ -1236,17 +1112,17 @@ function CharacterTweakData:_presets(tweak_data)
 				},
 				mode = {
 					0,
-					3,
-					3,
+					0,
+					0,
 					1
 				}
 			},
 			{
-				dmg_mul = 4.5,
+				dmg_mul = 1,
 				r = 500,
 				acc = {
 					0.6,
-					0.9
+					0.75
 				},
 				recoil = {
 					0.1,
@@ -1254,17 +1130,17 @@ function CharacterTweakData:_presets(tweak_data)
 				},
 				mode = {
 					0,
-					3,
-					3,
+					0,
+					0,
 					1
 				}
 			},
 			{
-				dmg_mul = 4,
+				dmg_mul = .9, -- applying falloff, unlike DW.
 				r = 1000,
 				acc = {
-					0.4,
-					0.65
+					0.5,
+					0.75
 				},
 				recoil = {
 					0.35,
@@ -1272,162 +1148,201 @@ function CharacterTweakData:_presets(tweak_data)
 				},
 				mode = {
 					0,
-					3,
-					3,
-					0
+					0,
+					0,
+					1
 				}
 			},
 			{
-				dmg_mul = 3,
+				dmg_mul = .7,
 				r = 2000,
 				acc = {
 					0.4,
-					0.6
+					0.7
 				},
 				recoil = {
 					0.35,
-					0.7
+					0.5
 				},
 				mode = {
 					0,
-					3,
-					3,
+					0,
+					1,
 					0
 				}
 			},
 			{
-				dmg_mul = 2,
+				dmg_mul = .6,
 				r = 3000,
 				acc = {
-					0.2,
-					0.35
+					0.55,
+					0.6
 				},
 				recoil = {
 					0.5,
 					1.5
 				},
 				mode = {
+					0,
+					0,
 					1,
-					3,
-					2,
+					0
+				}
+			},
+			{
+				dmg_mul = .4,
+				r = 4500,
+				acc = {
+					0.3,
+					0.6
+				},
+				recoil = {
+					1,
+					1.5
+				},
+				mode = {
+					0,
+					1,
+					0,
 					0
 				}
 			}
 		}
 	}
-	presets.weapon.deathvox.is_revolver.aim_delay = {
-		0,
-		0
-	}
-	presets.weapon.deathvox.is_revolver.focus_delay = 10 -- leaving intact
-	presets.weapon.deathvox.is_revolver.focus_dis = 200
-	presets.weapon.deathvox.is_revolver.spread = 20
-	presets.weapon.deathvox.is_revolver.miss_dis = 50
-	presets.weapon.deathvox.is_revolver.RELOAD_SPEED = 0.9
-	presets.weapon.deathvox.is_revolver.melee_speed = 1
-	presets.weapon.deathvox.is_revolver.melee_dmg = 8
-	presets.weapon.deathvox.is_revolver.melee_retry_delay = {
-		1,
-		2
-	}
-	presets.weapon.deathvox.is_revolver.range = {
-		optimal = 2000,
-		far = 5000,
-		close = 1000
-	}
-	presets.weapon.deathvox.is_revolver.FALLOFF = { 
-		{
-			dmg_mul = 1,
-			r = 100,
-			acc = {
-				0.7, --note to self 2 values show acc increase with focus delay
-				0.9
-			},
-			recoil = {
-				0.8,
-				1
-			},
-			mode = {
-				1,
-				0,
-				0,
-				0
-			}
+	presets.weapon.deathvox.is_smg = { -- mark 3 values complete. Assumes base damage of 36. basis is presets.weapon.deathwish.is_smg. Currently copies medidozer values.
+		aim_delay = {
+			0,
+			0.1 --re-adding aim delay from lower difficulties.
 		},
-		{
-			dmg_mul = 1,
-			r = 500,
-			acc = {
-				0.6,
-				0.85
-			},
-			recoil = {
-				0.8,
-				1.1
-			},
-			mode = {
-				1,
-				0,
-				0,
-				0
-			}
+		focus_delay = 1, --re-adding slight focus delay from lower difficulties.
+		focus_dis = 200,
+		spread = 15,
+		miss_dis = 10,
+		RELOAD_SPEED = 1.4, -- validated, unchanged.
+		melee_speed = presets.weapon.expert.is_smg.melee_speed,
+		melee_dmg = presets.weapon.expert.is_smg.melee_dmg,
+		melee_retry_delay = presets.weapon.expert.is_smg.melee_retry_delay,
+		range = {
+			optimal = 3200,
+			far = 6000,
+			close = 2000
 		},
-		{
-			dmg_mul = 0.65,
-			r = 1000,
-			acc = {
-				0.5,
-				0.75
-			},
-			recoil = {
-				0.8,
-				1.1
-			},
-			mode = {
-				1,
-				0,
-				0,
-				0
-			}
+		autofire_rounds = {
+			8,
+			16
 		},
-		{
-			dmg_mul = 0.5,
-			r = 2000,
-			acc = {
-				0.5,
-				0.65
+		FALLOFF = {
+			{
+				dmg_mul = 1,
+				r = 100,
+				acc = {
+					0.6, -- applying lower bound on accuracy based on lower difficulties.
+					0.95
+				},
+				recoil = {
+					0.1,
+					0.25
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
 			},
-			recoil = {
-				1,
-				1.3
+			{
+				dmg_mul = 1,
+				r = 500,
+				acc = {
+					0.6,
+					0.75
+				},
+				recoil = {
+					0.1,
+					0.3
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
 			},
-			mode = {
-				1,
-				0,
-				0,
-				0
-			}
-		},
-		{
-			dmg_mul = 0.37,
-			r = 3000,
-			acc = {
-				0.1,
-				0.35
+			{
+				dmg_mul = .9, -- applying falloff, unlike DW.
+				r = 1000,
+				acc = {
+					0.5,
+					0.75
+				},
+				recoil = {
+					0.35,
+					0.5
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
 			},
-			recoil = {
-				1,
-				1.5
+			{
+				dmg_mul = .7,
+				r = 2000,
+				acc = {
+					0.4,
+					0.7
+				},
+				recoil = {
+					0.35,
+					0.5
+				},
+				mode = {
+					0,
+					0,
+					1,
+					0
+				}
 			},
-			mode = {
-				1,
-				0,
-				0,
-				0
+			{
+				dmg_mul = .6,
+				r = 3000,
+				acc = {
+					0.55,
+					0.6
+				},
+				recoil = {
+					0.5,
+					1.5
+				},
+				mode = {
+					0,
+					0,
+					1,
+					0
+				}
+			},
+			{
+				dmg_mul = .4,
+				r = 4500,
+				acc = {
+					0.3,
+					0.6
+				},
+				recoil = {
+					1,
+					1.5
+				},
+				mode = {
+					0,
+					1,
+					0,
+					0
+				}
 			}
 		}
-	}	
-	presets.weapon.deathvox.mini = {
+	}
+	presets.weapon.deathvox.mini = { -- unused and unchanged as of mark 3 revisions.
 		aim_delay = {
 			0.1,
 			0.2
@@ -1545,8 +1460,8 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_lmg = {
-		aim_delay = {
+	presets.weapon.deathvox.is_lmg = { --mark 3 values complete. Basis is presets.weapon.deathwish.is_lmg. Assumes 100 base damage. Used for LMG Dozers, certain scripted enemies. using a balance between expert and DW values here.
+		aim_delay = { 
 			0.1,
 			0.1
 		},
@@ -1554,27 +1469,30 @@ function CharacterTweakData:_presets(tweak_data)
 		focus_dis = 200,
 		spread = 24,
 		miss_dis = 40,
-		RELOAD_SPEED = 1,
+		RELOAD_SPEED = 0.75,
 		melee_speed = 1,
 		melee_dmg = 15,
 		melee_retry_delay = presets.weapon.normal.is_lmg.melee_retry_delay,
 		range = {
-			optimal = 2000,
-			far = 5000,
-			close = 1000
+			optimal = 3500,
+			far = 6000,
+			close = 2000
 		},
-		autofire_rounds = presets.weapon.normal.is_lmg.autofire_rounds,
-		FALLOFF = {
+		autofire_rounds = {
+			25,
+			50
+		},
+		FALLOFF = { 
 			{
-				dmg_mul = 3,
+				dmg_mul = 1,
 				r = 100,
 				acc = {
-					0.65,
-					0.85
+					0.8,
+					0.9
 				},
 				recoil = {
-					0.4,
-					0.8
+					0.25,
+					0.5
 				},
 				mode = {
 					0,
@@ -1584,15 +1502,15 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = 2,
+				dmg_mul = 1,
 				r = 500,
 				acc = {
-					0.4,
+					0.7,
 					0.8
 				},
 				recoil = {
 					0.45,
-					0.8
+					0.6
 				},
 				mode = {
 					0,
@@ -1602,11 +1520,11 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = 1.5,
+				dmg_mul = .75,
 				r = 1000,
 				acc = {
-					0.2,
-					0.7
+					0.5,
+					0.8
 				},
 				recoil = {
 					0.35,
@@ -1620,15 +1538,15 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = 1.25,
+				dmg_mul = .5,
 				r = 2000,
 				acc = {
-					0.2,
-					0.5
+					0.4,
+					0.65
 				},
 				recoil = {
 					0.4,
-					1.2
+					1
 				},
 				mode = {
 					0,
@@ -1638,11 +1556,29 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = 1,
+				dmg_mul = .25,
 				r = 3000,
 				acc = {
-					0.01,
+					0.2,
 					0.35
+				},
+				recoil = {
+					0.8,
+					2
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = .16,
+				r = 6000,
+				acc = {
+					0.1, -- generally a warning shot at range.
+					0.3
 				},
 				recoil = {
 					1.5,
@@ -1657,36 +1593,95 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
+	presets.weapon.deathvox_sniper = {is_rifle = {}}
+	presets.weapon.deathvox_sniper.is_rifle = { -- mark 3 values complete. basis is presets.weapon.sniper. For non-assault wave snipers. Headings revised to fit standard format.
+		aim_delay = {
+			0,
+			0.1
+		},
+		focus_delay = 7,
+		focus_dis = 200,
+		spread = 30,
+		miss_dis = 250,
+		RELOAD_SPEED = 1.25,  -- validated, unchanged.
+		melee_speed = presets.weapon.normal.is_rifle.melee_speed,
+		melee_dmg = presets.weapon.normal.is_rifle.melee_dmg,
+		melee_retry_delay = presets.weapon.normal.is_rifle.melee_retry_delay,
+		range = { --validated, unchanged. Will need to see values used by crimespree zeal heavy snipers for assault snipers.
+			optimal = 15000,
+			far = 15000,
+			close = 15000
+		},
+		autofire_rounds = presets.weapon.normal.is_rifle.autofire_rounds,
+		use_laser = true, -- where the laser change goes.
+		FALLOFF = { -- note values do not match frank's table. Largely eyeballed, may need revision.
+			{
+				dmg_mul = 1,
+				r = 700,
+				acc = {
+					0.4,
+					0.95
+				},
+				recoil = {
+					2,
+					4
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
+			},
+			{
+				dmg_mul = .95, -- slight falloff, frank indicates flat damage on DW.
+				r = 4500,
+				acc = {
+					0.1,
+					0.75
+				},
+				recoil = {
+					3,
+					4
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
+			},
+			{
+				dmg_mul = .83,
+				r = 12000,
+				acc = {
+					0,
+					0.5
+				},
+				recoil = {
+					3,
+					5
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
+			}
+		}
+	}
 
-	presets.weapon.deathvox_sniper = {is_rifle = {}} -- mark 2 values complete. basis is presets.weapon.sniper. For non-assault wave snipers. Please check I've not botched headings.
-	presets.weapon.deathvox_sniper.is_rifle.aim_delay = {
-		0,
-		0.1
-	}
-	presets.weapon.deathvox_sniper.is_rifle.focus_delay = 7
-	presets.weapon.deathvox_sniper.is_rifle.focus_dis = 200
-	presets.weapon.deathvox_sniper.is_rifle.spread = 30
-	presets.weapon.deathvox_sniper.is_rifle.miss_dis = 250
-	presets.weapon.deathvox_sniper.is_rifle.RELOAD_SPEED = 1.25  -- validated, unchanged.
-	presets.weapon.deathvox_sniper.is_rifle.melee_speed = presets.weapon.normal.is_rifle.melee_speed
-	presets.weapon.deathvox_sniper.is_rifle.melee_dmg = presets.weapon.normal.is_rifle.melee_dmg
-	presets.weapon.deathvox_sniper.is_rifle.melee_retry_delay = presets.weapon.normal.is_rifle.melee_retry_delay
-	presets.weapon.deathvox_sniper.is_rifle.range = { --validated, unchanged. Will need to see values used by crimespree zeal heavy snipers for assault snipers.
-		optimal = 15000,
-		far = 15000,
-		close = 15000
-	}
-	presets.weapon.deathvox_sniper.is_rifle.autofire_rounds = presets.weapon.normal.is_rifle.autofire_rounds
-	presets.weapon.deathvox_sniper.is_rifle.use_laser = true -- where the laser change goes.
-	presets.weapon.deathvox_sniper.is_rifle.FALLOFF = { -- note values do not match frank's table. Largely eyeballed, may need revision.
+	presets.weapon.deathvox.is_assault_sniper = deep_clone(presets.weapon.deathvox_sniper.is_rifle) --defining the assault sniper preset.
+	presets.weapon.deathvox.is_assault_sniper.FALLOFF = { -- revising assault sniper falloff values.
 		{
 			dmg_mul = 1,
 			r = 700,
 			acc = {
-				0.4,
+				0, --zeroing base focus accuracy to ensure warning.
 				0.95
 			},
-			recoil = { --
+			recoil = {
 				2,
 				4
 			},
@@ -1701,7 +1696,7 @@ function CharacterTweakData:_presets(tweak_data)
 			dmg_mul = .95, -- slight falloff, frank indicates flat damage on DW.
 			r = 4500,
 			acc = {
-				0.1,
+				0, --zeroing base focus accuracy to ensure warning.
 				0.75
 			},
 			recoil = {
@@ -1734,13 +1729,13 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	
-	presets.weapon.deathvox.mac11 = deep_clone(presets.weapon.deathvox.is_pistol)
-	presets.weapon.deathvox.mp9 = deep_clone(presets.weapon.deathvox.is_pistol)
+	presets.weapon.deathvox.is_bullpup = deep_clone(presets.weapon.deathvox.is_light_rifle) -- moving this clone down from inappropriate position above.
+	presets.weapon.deathvox.mac11 = deep_clone(presets.weapon.deathvox.is_smg) -- revises erroneous clone of pistol from previous setup.
+	presets.weapon.deathvox.mp9 = deep_clone(presets.weapon.deathvox.is_smg) -- revises erroneous clone of pistol from previous setup.
 	presets.weapon.deathvox.rifle = deep_clone(presets.weapon.deathvox.is_light_rifle)
-	presets.weapon.deathvox.is_rifle = deep_clone(presets.weapon.deathvox.is_heavy_rifle)
 	presets.weapon.deathvox.is_sniper = deep_clone(presets.weapon.deathvox.is_light_rifle)
-	presets.weapon.deathvox.akimbo_pistol = deep_clone(presets.weapon.deathvox.is_pistol)
+	presets.weapon.deathvox.is_rifle = deep_clone(presets.weapon.deathvox.is_heavy_rifle)
+	presets.weapon.deathvox.akimbo_pistol = deep_clone(presets.weapon.deathvox.is_pistol) -- may require examination of vanilla setting. Is fine for mark 3.
 	presets.weapon.deathvox.mossberg = deep_clone(presets.weapon.deathvox.is_light_shotgun)
 	return presets
 end
@@ -1897,6 +1892,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.no_arrest = true
 	self.deathvox_taser.steal_loot = nil
 	self.deathvox_taser.rescue_hostages = false
+	self.deathvox_taser.factory_weapon_id = {"wpn_deathvox_light_ar"}
+	self.deathvox_taser.use_factory = true
 
 	table.insert(self._enemy_list, "deathvox_taser") 
 
@@ -1913,6 +1910,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker.no_arrest = true
 	self.deathvox_cloaker.steal_loot = nil
 	self.deathvox_cloaker.rescue_hostages = false
+	self.deathvox_cloaker.factory_weapon_id = {"wpn_deathvox_light_ar"}
+	self.deathvox_cloaker.use_factory = true
 
 	table.insert(self._enemy_list, "deathvox_spooc") 
 
@@ -2016,6 +2015,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_grenadier.spawn_sound_event = "clk_c01x_plu"
 	self.deathvox_grenadier.die_sound_event = "rmdc_x02a_any_3p"
 	self.deathvox_grenadier.steal_loot = nil
+	self.deathvox_grenadier.use_factory = true -- Use a factory weapon
+	self.deathvox_grenadier.factory_weapon_id = {"wpn_deathvox_grenadier"} 
  	table.insert(self._enemy_list, "deathvox_grenadier")
 	
 end
