@@ -16,6 +16,7 @@
 
 		<hook file="lib/units/weapons/quickcsgrenade.lua" source_file="lib/units/weapons/quickcsgrenade"/>
 		<hook file="lib/units/weapons/raycastweaponbase.lua" source_file="lib/units/weapons/raycastweaponbase"/>
+		<hook file="lib/units/weapons/newnpcraycastweaponbase.lua" source_file="lib/units/weapons/newnpcraycastweaponbase"/>
 		
 		<hook file="lib/managers/groupaistatebase.lua" source_file="lib/managers/group_ai_states/groupaistatebase"/>
 

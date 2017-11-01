@@ -210,5 +210,3 @@ function CopMovement:_chk_play_equip_weapon()
 	end
 	self._ext_inventory:set_weapon_enabled(true)
 end
-
-end

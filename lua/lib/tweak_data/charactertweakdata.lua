@@ -2,8 +2,8 @@ local origin_init = CharacterTweakData.init
 local origin_presets = CharacterTweakData._presets
 
 function CharacterTweakData:init(tweak_data)
-	origin_init(self, tweak_data)
 	local presets = self:_presets(tweak_data)
+	origin_init(self, tweak_data)
 	self:_init_deathvox(presets)
 end
 
@@ -65,7 +65,7 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			}
 		}
-	},
+	}
 	presets.dodge.deathvox_guard = {
 		speed = 1.2,
 		occasions = {
@@ -1742,6 +1742,7 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.weapon.deathvox.is_sniper = deep_clone(presets.weapon.deathvox.is_light_rifle)
 	presets.weapon.deathvox.akimbo_pistol = deep_clone(presets.weapon.deathvox.is_pistol)
 	presets.weapon.deathvox.mossberg = deep_clone(presets.weapon.deathvox.is_light_shotgun)
+	return presets
 end
 	
 function CharacterTweakData:_init_deathvox(presets)
@@ -1995,9 +1996,6 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_grenadier.suppression = nil
 	self.deathvox_grenadier.weapon_voice = "3"
 	self.deathvox_grenadier.experience.cable_tie = "tie_swat"
-	self.deathvox_grenadier.speech_prefix_p1 = self._prefix_data_p1.swat()
-	self.deathvox_grenadier.speech_prefix_p2 = self._prefix_data_p2.swat()
-	self.deathvox_grenadier.speech_prefix_count = 1
 	self.deathvox_grenadier.access = "taser"
 	self.deathvox_grenadier.dodge = presets.dodge.athletic
 	self.deathvox_grenadier.use_gas = true
@@ -2067,17 +2065,14 @@ function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 	self.cop_scared.HEALTH_INIT = self.cop_scared.HEALTH_INIT * hp_mul
 	self.cop_female.HEALTH_INIT = self.cop_female.HEALTH_INIT * hp_mul
 	self.fbi.HEALTH_INIT = self.fbi.HEALTH_INIT * hp_mul
-	self.fbi_female.HEALTH_INIT = self.fbi_female.HEALTH_INIT * hp_mul
 	self.medic.HEALTH_INIT = self.medic.HEALTH_INIT * hp_mul
 	self.bolivian.HEALTH_INIT = self.bolivian.HEALTH_INIT * hp_mul
 	self.bolivian_indoors.HEALTH_INIT = self.bolivian_indoors.HEALTH_INIT * hp_mul
 	self.drug_lord_boss.HEALTH_INIT = self.drug_lord_boss.HEALTH_INIT * hp_mul
 	self.drug_lord_boss_stealth.HEALTH_INIT = self.drug_lord_boss_stealth.HEALTH_INIT * hp_mul
 	self.fbi_swat.HEALTH_INIT = self.fbi_swat.HEALTH_INIT * hp_mul
-	self.fbi_swat_vet.HEALTH_INIT = self.fbi_swat_vet.HEALTH_INIT * hp_mul
 	self.city_swat.HEALTH_INIT = self.city_swat.HEALTH_INIT * hp_mul
 	self.swat.HEALTH_INIT = self.swat.HEALTH_INIT * hp_mul
-	self.hrt.HEALTH_INIT = self.hrt.HEALTH_INIT * hp_mul
 	self.heavy_swat.HEALTH_INIT = self.heavy_swat.HEALTH_INIT * hp_mul
 	self.heavy_swat_sniper.HEALTH_INIT = self.heavy_swat_sniper.HEALTH_INIT * hp_mul
 	self.fbi_heavy_swat.HEALTH_INIT = self.fbi_heavy_swat.HEALTH_INIT * hp_mul
@@ -2090,7 +2085,6 @@ function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 	self.hector_boss_no_armor.HEALTH_INIT = self.hector_boss_no_armor.HEALTH_INIT * hp_mul
 	self.biker_boss.HEALTH_INIT = self.biker_boss.HEALTH_INIT * hp_mul
 	self.biker.HEALTH_INIT = self.biker.HEALTH_INIT * hp_mul
-	self.biker_guard.HEALTH_INIT = self.biker_guard.HEALTH_INIT * hp_mul
 	self.tank.HEALTH_INIT = self.tank.HEALTH_INIT * hp_mul
 	self.tank_mini.HEALTH_INIT = self.tank_mini.HEALTH_INIT * hp_mul
 	self.tank_medic.HEALTH_INIT = self.tank_medic.HEALTH_INIT * hp_mul
@@ -2136,17 +2130,11 @@ function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 	if self.fbi.headshot_dmg_mul then
 		self.fbi.headshot_dmg_mul = self.fbi.headshot_dmg_mul * hs_mul
 	end
-	if self.fbi_female.headshot_dmg_mul then
-		self.fbi_female.headshot_dmg_mul = self.fbi_female.headshot_dmg_mul * hs_mul
-	end
 	if self.medic.headshot_dmg_mul then
 		self.medic.headshot_dmg_mul = self.medic.headshot_dmg_mul * hs_mul
 	end
 	if self.fbi_swat.headshot_dmg_mul then
 		self.fbi_swat.headshot_dmg_mul = self.fbi_swat.headshot_dmg_mul * hs_mul
-	end
-	if self.fbi_swat_vet.headshot_dmg_mul then
-		self.fbi_swat_vet.headshot_dmg_mul = self.fbi_swat_vet.headshot_dmg_mul * hs_mul
 	end
 	if self.city_swat.headshot_dmg_mul then
 		self.city_swat.headshot_dmg_mul = self.city_swat.headshot_dmg_mul * hs_mul
@@ -2154,9 +2142,6 @@ function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 	if self.swat.headshot_dmg_mul then
 		self.swat.headshot_dmg_mul = self.swat.headshot_dmg_mul * hs_mul
 	end
-	if self.hrt.headshot_dmg_mul then
-		self.hrt.headshot_dmg_mul = self.hrt.headshot_dmg_mul * hs_mul
-	end	
 	if self.heavy_swat.headshot_dmg_mul then
 		self.heavy_swat.headshot_dmg_mul = self.heavy_swat.headshot_dmg_mul * hs_mul
 	end
@@ -2186,9 +2171,6 @@ function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 	end
 	if self.biker.headshot_dmg_mul then
 		self.biker.headshot_dmg_mul = self.biker.headshot_dmg_mul * hs_mul
-	end
-	if self.biker_guard.headshot_dmg_mul then
-		self.biker_guard.headshot_dmg_mul = self.biker_guard.headshot_dmg_mul * hs_mul
 	end
 	if self.biker_boss.headshot_dmg_mul then
 		self.biker_boss.headshot_dmg_mul = self.biker_boss.headshot_dmg_mul * hs_mul
@@ -2293,14 +2275,11 @@ function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
 		"cop_scared",
 		"cop_female",
 		"fbi",
-		"fbi_female",
 		"medic",
 		"swat",
-		"hrt",
 		"heavy_swat",
 		"heavy_swat_sniper",
 		"fbi_swat",
-		"fbi_swat_vet",
 		"fbi_heavy_swat",
 		"city_swat",
 		"sniper",
@@ -2320,7 +2299,6 @@ function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
 		"phalanx_minion",
 		"shield",
 		"biker",
-		"biker_guard",
 		"taser",
 		"deathvox_guard",
 		"deathvox_heavyar",
@@ -2353,19 +2331,15 @@ function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
 	self.cop_scared.SPEED_RUN = self.cop_scared.SPEED_RUN * run_mul
 	self.cop_female.SPEED_RUN = self.cop_female.SPEED_RUN * run_mul
 	self.fbi.SPEED_RUN = self.fbi.SPEED_RUN * run_mul
-	self.fbi_female.SPEED_RUN = self.fbi_female.SPEED_RUN * run_mul
-	self.fbi_vet.SPEED_RUN = self.fbi_vet.SPEED_RUN * run_mul
 	self.medic.SPEED_RUN = self.medic.SPEED_RUN * run_mul
 	self.bolivian.SPEED_RUN = self.bolivian.SPEED_RUN * run_mul
 	self.bolivian_indoors.SPEED_RUN = self.bolivian_indoors.SPEED_RUN * run_mul
 	self.drug_lord_boss.SPEED_RUN = self.drug_lord_boss.SPEED_RUN * run_mul
 	self.drug_lord_boss_stealth.SPEED_RUN = self.drug_lord_boss_stealth.SPEED_RUN * run_mul
 	self.swat.SPEED_RUN = self.swat.SPEED_RUN * run_mul
-	self.hrt.SPEED_RUN = self.hrt.SPEED_RUN * run_mul
 	self.heavy_swat.SPEED_RUN = self.heavy_swat.SPEED_RUN * run_mul
 	self.heavy_swat_sniper.SPEED_RUN = self.heavy_swat_sniper.SPEED_RUN * run_mul
 	self.fbi_swat.SPEED_RUN = self.fbi_swat.SPEED_RUN * run_mul
-	self.fbi_swat_vet.SPEED_RUN = self.fbi_swat_vet.SPEED_RUN * run_mul
 	self.fbi_heavy_swat.SPEED_RUN = self.fbi_heavy_swat.SPEED_RUN * run_mul
 	self.city_swat.SPEED_RUN = self.city_swat.SPEED_RUN * run_mul
 	self.sniper.SPEED_RUN = self.sniper.SPEED_RUN * run_mul
@@ -2385,7 +2359,6 @@ function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
 	self.phalanx_minion.SPEED_RUN = self.phalanx_minion.SPEED_RUN * run_mul
 	self.shield.SPEED_RUN = self.shield.SPEED_RUN * run_mul
 	self.biker.SPEED_RUN = self.biker.SPEED_RUN * run_mul
-	self.biker_guard.SPEED_RUN = self.biker_guard.SPEED_RUN * run_mul
 	self.taser.SPEED_RUN = self.taser.SPEED_RUN * run_mul
 	self.biker_escape.SPEED_RUN = self.biker_escape.SPEED_RUN * run_mul
 	self.deathvox_guard.SPEED_RUN = self.deathvox_guard.SPEED_RUN * run_mul
@@ -2414,16 +2387,13 @@ function CharacterTweakData:_set_characters_weapon_preset(preset)
 		"cop_female",
 		"gensec",
 		"fbi",
-		"fbi_female",
 		"swat",
-		"hrt",
 		"gangster",
 		"hector_boss_no_armor",
 		"bolivian",
 		"bolivian_indoors",
 		"drug_lord_boss_stealth",
 		"biker",
-		"biker_guard",
 		"mobster",
 		"deathvox_guard",
 		"deathvox_heavyar",
@@ -2442,6 +2412,7 @@ function CharacterTweakData:_set_characters_weapon_preset(preset)
 		"deathvox_grenadier"
 	}
 	for _, name in ipairs(all_units) do
+		log(name)
 		self[name].weapon = self.presets.weapon[preset]
 	end
 end
@@ -2450,14 +2421,12 @@ function CharacterTweakData:_set_characters_dodge_preset(preset)
 	local all_units = {
 		"gensec",
 		"fbi",
-		"fbi_female",
 		"medic",
 		"taser",
 		"hector_boss_no_armor",
 		"bolivian_indoors",
 		"drug_lord_boss_stealth",
 		"swat",
-		"hrt",
 		"deathvox_heavyar",
 		"deathvox_heavyshot",
 		"deathvox_lightar",
@@ -2482,16 +2451,13 @@ function CharacterTweakData:_set_characters_melee_preset(preset)
 		"cop_female",
 		"gensec",
 		"fbi",
-		"fbi_female",
 		"swat",
-		"hrt",
 		"gangster",
 		"hector_boss_no_armor",
 		"bolivian",
 		"bolivian_indoors",
 		"drug_lord_boss_stealth",
 		"biker",
-		"biker_guard",
 		"mobster",
 		"deathvox_guard",
 		"deathvox_heavyar",
@@ -3072,7 +3038,7 @@ function CharacterTweakData:character_map()
 				"ene_fbi_heavy_hvh_r870",
 				"ene_sniper_hvh_2"
 			}
-		}
+		},
 		gageammo = {
 			path = "units/pd2_mod_gageammo/characters/",
 			list = {
