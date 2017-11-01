@@ -9,6 +9,96 @@ end
 
 function CharacterTweakData:_presets(tweak_data)
 	local presets = origin_presets(self, tweak_data)
+    presets.dodge.deathvox = {
+		speed = 1.7,
+		occasions = {
+			hit = {
+				chance = 1,
+				check_timeout = {0, 3},
+				variations = {
+					side_step = {
+						chance = 3,
+						timeout = {1, 2},
+						shoot_chance = 1,
+						shoot_accuracy = 0.8
+					},
+					roll = {
+						chance = 1,
+						timeout = {1.2, 2}
+					}
+				}
+			},
+			preemptive = {
+				chance = 0.9,
+				check_timeout = {0, 3},
+				variations = {
+					side_step = {
+						chance = 3,
+						timeout = {1, 2},
+						shoot_chance = 1,
+						shoot_accuracy = 0.8
+					},
+					roll = {
+						chance = 1,
+						timeout = {1.2, 2}
+					}
+				}
+			},
+			scared = {
+				chance = 0.9,
+				check_timeout = {0, 3},
+				variations = {
+					side_step = {
+						chance = 5,
+						timeout = {1, 2},
+						shoot_chance = 1,
+						shoot_accuracy = 0.7
+					},
+					roll = {
+						chance = 3,
+						timeout = {1.2, 2}
+					},
+					dive = {
+						chance = 1,
+						timeout = {1.2, 2}
+					}
+				}
+			}
+		}
+	},
+	presets.dodge.deathvox_guard = {
+		speed = 1.2,
+		occasions = {
+			hit = {
+				chance = 1,
+				check_timeout = {0, 3},
+				variations = {
+					side_step = {
+						chance = 3,
+						timeout = {1, 2},
+					},
+					roll = {
+						chance = 1,
+						timeout = {1.2, 2}
+					}
+				}
+			},
+			scared = {
+				chance = 0.9,
+				check_timeout = {0, 3},
+				variations = {
+					side_step = {
+						chance = 5,
+						timeout = {1, 2},
+					},
+					roll = {
+						chance = 3,
+						timeout = {1.2, 2}
+					},
+				}
+			}
+		}
+	}		
 	--[[presets.weapon.deathvox = {
 		is_pistol = {},--
 		is_revolver = {},--
@@ -1946,9 +2036,8 @@ function CharacterTweakData:_set_sm_wish()
 	self.security = deep_clone(self.deathvox_guard) -- fucking broke piece of shit movement stuff
 	self:_set_characters_weapon_preset("deathvox")
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
-	self:_set_characters_dodge_preset("deathvox")
 	self:_set_characters_melee_preset("3")
-	self:_set_specials_weapon_preset("expert")
+	self:_set_specials_weapon_preset("deathvox")
 	self.shield.weapon.is_pistol.melee_speed = nil
 	self.shield.weapon.is_pistol.melee_dmg = nil
 	self.shield.weapon.is_pistol.melee_retry_delay = nil
