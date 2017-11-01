@@ -2091,7 +2091,6 @@ function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 	self.biker_boss.HEALTH_INIT = self.biker_boss.HEALTH_INIT * hp_mul
 	self.biker.HEALTH_INIT = self.biker.HEALTH_INIT * hp_mul
 	self.biker_guard.HEALTH_INIT = self.biker_guard.HEALTH_INIT * hp_mul
-	self.tank_biker.HEALTH_INIT = self.tank_biker.HEALTH_INIT * hp_mul
 	self.tank.HEALTH_INIT = self.tank.HEALTH_INIT * hp_mul
 	self.tank_mini.HEALTH_INIT = self.tank_mini.HEALTH_INIT * hp_mul
 	self.tank_medic.HEALTH_INIT = self.tank_medic.HEALTH_INIT * hp_mul
@@ -2102,7 +2101,6 @@ function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 	self.phalanx_vip.HEALTH_INIT = self.phalanx_vip.HEALTH_INIT * hp_mul
 	self.taser.HEALTH_INIT = self.taser.HEALTH_INIT * hp_mul
 	self.biker_escape.HEALTH_INIT = self.biker_escape.HEALTH_INIT * hp_mul
-	self.omnia_lpf.HEALTH_INIT = self.omnia_lpf.HEALTH_INIT * hp_mul
 	self.deathvox_guard.HEALTH_INIT = self.deathvox_guard.HEALTH_INIT * hp_mul
 	self.deathvox_heavyar.HEALTH_INIT = self.deathvox_heavyar.HEALTH_INIT * hp_mul
 	self.deathvox_heavyshot.HEALTH_INIT = self.deathvox_heavyshot.HEALTH_INIT * hp_mul
