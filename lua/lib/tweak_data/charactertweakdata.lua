@@ -1753,6 +1753,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard.no_arrest = true -- removing the arrest loophole.
 	self.deathvox_guard.factory_weapon_id = {"wpn_deathvox_guard_pistol"}
 	self.deathvox_guard.use_factory = true
+	self.deathvox_guard.HEALTH_INIT = 8
 	self.deathvox_guard.weapon = deep_clone(presets.weapon.deathvox)
 	table.insert(self._enemy_list, "deathvox_guard")
 	
@@ -1774,6 +1775,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightar.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_lightar.factory_weapon_id = {"wpn_deathvox_light_ar"}
 	self.deathvox_lightar.use_factory = true
+	self.deathvox_lightar.HEALTH_INIT = 23
 	table.insert(self._enemy_list, "deathvox_lightar")
 	
 	self.deathvox_heavyar = deep_clone(self.city_swat)
@@ -1794,6 +1796,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyar.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_heavyar.factory_weapon_id = {"wpn_deathvox_heavy_ar"}
 	self.deathvox_heavyar.use_factory = true
+	self.deathvox_heavyar.HEALTH_INIT = 23
 	table.insert(self._enemy_list, "deathvox_heavyar")
 	
 	self.deathvox_lightshot = deep_clone(self.city_swat)
@@ -1814,6 +1817,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightshot.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_lightshot.factory_weapon_id = {"wpn_deathvox_shotgun_light"}
 	self.deathvox_lightshot.use_factory = true
+	self.deathvox_lightshot.HEALTH_INIT = 23
 	table.insert(self._enemy_list, "deathvox_lightshot")
 	
 	self.deathvox_heavyshot = deep_clone(self.city_swat)
@@ -1834,6 +1838,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyshot.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_heavyshot.factory_weapon_id = {"wpn_deathvox_shotgun_heavy"}
 	self.deathvox_heavyshot.use_factory = true
+	self.deathvox_heavyshot.HEALTH_INIT = 23
 	table.insert(self._enemy_list, "deathvox_heavyshot")
 	
 	self.deathvox_shield = deep_clone(self.shield)
@@ -1851,7 +1856,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.steal_loot = true -- this is new.
 	self.deathvox_shield.rescue_hostages = false
 	self.deathvox_shield.weapon = deep_clone(presets.weapon.deathvox)
-	
+	self.deathvox_shield.HEALTH_INIT = 23 
 	table.insert(self._enemy_list, "deathvox_shield")
 	
 	self.deathvox_medic = deep_clone(self.medic)
@@ -1874,6 +1879,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic.use_factory = true -- Use a factory weapon
 	self.deathvox_medic.dv_medic_heal = true -- dont touch, makes him use the death vox healing
 	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_medic_pistol"}
+	self.deathvox_medic.HEALTH_INIT = 52 
 	table.insert(self._enemy_list, "deathvox_medic") 
 
 	self.deathvox_taser = deep_clone(self.taser)
@@ -1894,7 +1900,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.rescue_hostages = false
 	self.deathvox_taser.factory_weapon_id = {"wpn_deathvox_light_ar"}
 	self.deathvox_taser.use_factory = true
-
+	self.deathvox_taser.HEALTH_INIT = 63
 	table.insert(self._enemy_list, "deathvox_taser") 
 
 	self.deathvox_cloaker = deep_clone(self.spooc)
@@ -1929,10 +1935,12 @@ function CharacterTweakData:_init_deathvox(presets)
 
 	self.deathvox_sniper.use_factory = true -- Use a factory weapon
 	self.deathvox_sniper.factory_weapon_id = {"wpn_deathvox_sniper"}
+	self.deathvox_sniper.HEALTH_INIT = 13
 
 	self.deathvox_sniper_assault = deep_clone(self.deathvox_sniper)
 	self.deathvox_sniper_assault.move_speed = presets.move_speed.very_fast
 	self.deathvox_sniper_assault.deathguard = true --tentative. This was apparently a big problem in RAID, but that unit may be implemented differently.
+	self.deathvox_sniper_assault.HEALTH_INIT = 13
 
 	table.insert(self._enemy_list, "deathvox_sniperassault")
 
@@ -1950,6 +1958,7 @@ function CharacterTweakData:_init_deathvox(presets)
     self.deathvox_tank.no_arrest = true
     self.deathvox_tank.steal_loot = nil
     self.deathvox_tank.rescue_hostages = false
+	self.deathvox_tank.HEALTH_INIT = 875
 
     self.deathvox_greendozer = deep_clone(self.deathvox_tank) -- pro OOP strats
 	table.insert(self._enemy_list, "deathvox_greendozer")
@@ -1974,7 +1983,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_grenadier.melee_weapon_dmg_multiplier = 1
 	self.deathvox_grenadier.weapon_safety_range = 1000
 	self.deathvox_grenadier.detection = presets.detection.normal
-	self.deathvox_grenadier.HEALTH_INIT = 36
+	self.deathvox_grenadier.HEALTH_INIT = 63
 	self.deathvox_grenadier.HEALTH_SUICIDE_LIMIT = 0.25
 	self.deathvox_grenadier.flammable = true
 	self.deathvox_grenadier.use_animation_on_fire_damage = true
@@ -2023,9 +2032,9 @@ end
 
 function CharacterTweakData:_set_sm_wish()
 	if SystemInfo:platform() == Idstring("PS3") then
-		self:_multiply_all_hp(1.75, 0.8)
+		self:_multiply_all_hp(1, 1)
 	else
-		self:_multiply_all_hp(1.75, 0.8)
+		self:_multiply_all_hp(1, 1)
 	end
 	self:_multiply_weapon_delay(self.presets.weapon.normal, 0)
 	self:_multiply_weapon_delay(self.presets.weapon.good, 0)
@@ -2041,6 +2050,7 @@ function CharacterTweakData:_set_sm_wish()
 	self.shield.weapon.is_pistol.melee_dmg = nil
 	self.shield.weapon.is_pistol.melee_retry_delay = nil
 	self:_set_specials_melee_preset("2.5")
+	self.sniper = deep_clone(self.deathvox_sniper)
 	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	self.security.no_arrest = true
 	self.gensec.no_arrest = true
