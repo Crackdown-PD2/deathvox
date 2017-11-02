@@ -29,10 +29,12 @@ function CopActionShoot:_get_target_pos(shoot_from_pos, ...)
 	local _time = math.floor(TimerManager:game():time())
 	self._throw_projectile_time = self._throw_projectile_time or 0
 	if self._unit:base()._tweak_table == "deathvox_grenadier" and self._throw_projectile_time < _time then
+		log("am grenadier")
 		if self._shooting_player then
 			self._throw_projectile_time = _time + math.round_with_precision(10, 2)
 			shoot_from_pos = shoot_from_pos + Vector3(50, 50, 0)
 			target_pos, target_vec, target_dis, autotarget = _f_CopActionShoot__get_target_pos(self, shoot_from_pos, ...)
+			log("able to gas")
 			deploy_gas(shoot_from_pos, target_vec)
 		else
 			target_pos, target_vec, target_dis, autotarget = _f_CopActionShoot__get_target_pos(self, shoot_from_pos, ...)
@@ -51,6 +53,7 @@ function deploy_gas(shoot_from_pos, target_vec)
 	local roll = math.rand(1, 100)
 	local chance_gas = 25
 	if roll <= chance_gas then
+		log("gas roll succeeded")
 		managers.groupai:state():detonate_cs_grenade(detonate_pos, nil, 7.5)
 	end
 end

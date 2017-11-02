@@ -12,9 +12,9 @@
 		<hook file="lib/units/enemies/cop/copmovement.lua" source_file="lib/units/enemies/cop/copmovement"/>
 		<hook file="lib/units/enemies/cop/copinventory.lua" source_file="lib/units/enemies/cop/copinventory"/>
 		<hook file="lib/units/enemies/cop/copdamage.lua" source_file="lib/units/enemies/cop/copdamage"/>
-		<hook file="lib/units/enemies/actions/upper_body/copactionshoot.lua" source_file="lib/units/enemies/actions/upper_body/copactionshoot"/>
+		<hook file="lib/units/enemies/actions/upper_body/copactionshoot.lua" source_file="lib/units/enemies/cop/actions/upper_body/copactionshoot"/>
 
-		<hook file="lib/units/weapons/quickcsgrenade.lua" source_file="lib/units/weapons/quickcsgrenade"/>
+		<hook file="lib/units/weapons/quickcsgrenade.lua" source_file="lib/units/weapons/grenades/quickcsgrenade"/>
 		<hook file="lib/units/weapons/raycastweaponbase.lua" source_file="lib/units/weapons/raycastweaponbase"/>
 		<hook file="lib/units/weapons/newnpcraycastweaponbase.lua" source_file="lib/units/weapons/newnpcraycastweaponbase"/>
 		

@@ -6,4 +6,5 @@ function QuickCsGrenade:_setup_from_tweak_data()
 	self._radius = self._tweak_data.radius or 300
 	self._radius_blurzone_multiplier = self._tweak_data.radius_blurzone_multiplier or 1.3
 	self._damage_per_tick = 0
+	self._damage_tick_period = self._tweak_data.damage_tick_period or 0.25
 end
