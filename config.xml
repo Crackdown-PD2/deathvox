@@ -14,6 +14,7 @@
 		<hook file="lib/units/enemies/cop/copinventory.lua" source_file="lib/units/enemies/cop/copinventory"/>
 		<hook file="lib/units/enemies/cop/copdamage.lua" source_file="lib/units/enemies/cop/copdamage"/>
 		<hook file="lib/units/enemies/actions/upper_body/copactionshoot.lua" source_file="lib/units/enemies/cop/actions/upper_body/copactionshoot"/>
+		<hook file="lib/units/enemies/actions/upper_body/copactiontase.lua" source_file="lib/units/enemies/cop/actions/upper_body/copactiontase"/>
 		<hook file="lib/units/enemies/taser/logics/taserlogicattack.lua" source_file="lib/units/enemies/taser/logics/taserlogicattack"/>
 
 		<hook file="lib/units/beings/player/playerdamage.lua" source_file="lib/units/beings/player/playerdamage"/>

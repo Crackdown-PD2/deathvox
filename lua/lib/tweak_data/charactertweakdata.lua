@@ -600,6 +600,12 @@ function CharacterTweakData:_presets(tweak_data)
 		RELOAD_SPEED = 1.4, -- validated, unchanged.
 		melee_speed = 1,
 		melee_dmg = 20,
+		tase_distance = 1500,
+		aim_delay_tase = {
+			0,
+			0
+		},
+		tase_sphere_cast_radius = 30,
 		melee_retry_delay = presets.weapon.expert.is_rifle.melee_retry_delay,
 		range = { 
 			optimal = 3500,
@@ -1734,7 +1740,7 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.weapon.deathvox.mp9 = deep_clone(presets.weapon.deathvox.is_smg) -- revises erroneous clone of pistol from previous setup.
 	presets.weapon.deathvox.rifle = deep_clone(presets.weapon.deathvox.is_light_rifle)
 	presets.weapon.deathvox.is_sniper = deep_clone(presets.weapon.deathvox.is_light_rifle)
-	presets.weapon.deathvox.is_rifle = deep_clone(presets.weapon.deathvox.is_heavy_rifle)
+	presets.weapon.deathvox.is_rifle = deep_clone(presets.weapon.deathvox.is_light_rifle)
 	presets.weapon.deathvox.akimbo_pistol = deep_clone(presets.weapon.deathvox.is_pistol) -- may require examination of vanilla setting. Is fine for mark 3.
 	presets.weapon.deathvox.mossberg = deep_clone(presets.weapon.deathvox.is_light_shotgun)
 	return presets
@@ -1898,8 +1904,6 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.no_arrest = true
 	self.deathvox_taser.steal_loot = nil
 	self.deathvox_taser.rescue_hostages = false
-	self.deathvox_taser.factory_weapon_id = {"wpn_deathvox_light_ar"}
-	self.deathvox_taser.use_factory = true
 	self.deathvox_taser.HEALTH_INIT = 63
 	table.insert(self._enemy_list, "deathvox_taser") 
 
@@ -1942,7 +1946,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper_assault.deathguard = true --tentative. This was apparently a big problem in RAID, but that unit may be implemented differently.
 	self.deathvox_sniper_assault.HEALTH_INIT = 13
 
-	table.insert(self._enemy_list, "deathvox_sniperassault")
+	table.insert(self._enemy_list, "deathvox_sniper_assault")
 
     self.deathvox_tank = deep_clone(self.tank)
     self.deathvox_tank.tags = {"tank"} -- just making sure tag applies.
@@ -2050,7 +2054,6 @@ function CharacterTweakData:_set_sm_wish()
 	self.shield.weapon.is_pistol.melee_dmg = nil
 	self.shield.weapon.is_pistol.melee_retry_delay = nil
 	self:_set_specials_melee_preset("2.5")
-	self.sniper = deep_clone(self.deathvox_sniper)
 	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	self.security.no_arrest = true
 	self.gensec.no_arrest = true

@@ -836,6 +836,18 @@ end
 function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 	old_task_data(self, difficulty_index, difficulty)
 	if difficulty_index == 8 then
+		self.besiege.assault.force_balance_mul = {
+			3,
+			3.2,
+			3.5,
+			3.9
+		}
+		self.besiege.assault.force_pool_balance_mul = {
+			2.7,
+			2.9,
+			3.1,
+			3.3
+		}
 		self.besiege.assault.groups = {
 			gorgon = { 0.05,0.05,0.05  },
 			atlas = { 0.05,0.05,0.05  },
