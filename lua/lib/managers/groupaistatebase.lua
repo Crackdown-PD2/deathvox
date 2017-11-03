@@ -40,13 +40,6 @@ function GroupAIStateBase:detonate_world_smoke_grenade(id)
 			return
 		end
 
-		local flashbang_unit = "units/payday2/weapons/wpn_frag_flashbang/wpn_frag_flashbang"
-		local pos = data.detonate_pos + Vector3(0, 0, 1)
-		local rotation = Rotation(math.random() * 360, 0, 0)
-		local flash_grenade = World:spawn_unit(Idstring(flashbang_unit), data.detonate_pos, rotation)
-
-		flash_grenade:base():activate(data.detonate_pos, data.duration)
-
 		self._smoke_grenades[id] = nil
 	else
 		data.duration = data.duration == 0 and 15 or data.duration
