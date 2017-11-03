@@ -1781,7 +1781,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightar.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_lightar.factory_weapon_id = {"wpn_deathvox_light_ar"}
 	self.deathvox_lightar.use_factory = true
-	self.deathvox_lightar.HEALTH_INIT = 23
+	self.deathvox_lightar.HEALTH_INIT = 34
 	table.insert(self._enemy_list, "deathvox_lightar")
 	
 	self.deathvox_heavyar = deep_clone(self.city_swat)
@@ -1802,7 +1802,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyar.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_heavyar.factory_weapon_id = {"wpn_deathvox_heavy_ar"}
 	self.deathvox_heavyar.use_factory = true
-	self.deathvox_heavyar.HEALTH_INIT = 23
+	self.deathvox_heavyar.HEALTH_INIT = 34
 	table.insert(self._enemy_list, "deathvox_heavyar")
 	
 	self.deathvox_lightshot = deep_clone(self.city_swat)
@@ -1823,7 +1823,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightshot.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_lightshot.factory_weapon_id = {"wpn_deathvox_shotgun_light"}
 	self.deathvox_lightshot.use_factory = true
-	self.deathvox_lightshot.HEALTH_INIT = 23
+	self.deathvox_lightshot.HEALTH_INIT = 34
 	table.insert(self._enemy_list, "deathvox_lightshot")
 	
 	self.deathvox_heavyshot = deep_clone(self.city_swat)
@@ -1844,7 +1844,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyshot.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_heavyshot.factory_weapon_id = {"wpn_deathvox_shotgun_heavy"}
 	self.deathvox_heavyshot.use_factory = true
-	self.deathvox_heavyshot.HEALTH_INIT = 23
+	self.deathvox_heavyshot.HEALTH_INIT = 34
 	table.insert(self._enemy_list, "deathvox_heavyshot")
 	
 	self.deathvox_shield = deep_clone(self.shield)
@@ -1862,7 +1862,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.steal_loot = true -- this is new.
 	self.deathvox_shield.rescue_hostages = false
 	self.deathvox_shield.weapon = deep_clone(presets.weapon.deathvox)
-	self.deathvox_shield.HEALTH_INIT = 23 
+	self.deathvox_shield.HEALTH_INIT = 34 
 	table.insert(self._enemy_list, "deathvox_shield")
 	
 	self.deathvox_medic = deep_clone(self.medic)
@@ -1962,7 +1962,7 @@ function CharacterTweakData:_init_deathvox(presets)
     self.deathvox_tank.no_arrest = true
     self.deathvox_tank.steal_loot = nil
     self.deathvox_tank.rescue_hostages = false
-	self.deathvox_tank.HEALTH_INIT = 875
+	self.deathvox_tank.HEALTH_INIT = 675
 
     self.deathvox_greendozer = deep_clone(self.deathvox_tank) -- pro OOP strats
 	table.insert(self._enemy_list, "deathvox_greendozer")
