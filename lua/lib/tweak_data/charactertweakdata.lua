@@ -1735,6 +1735,496 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
+
+
+	presets.weapon.deathvox.is_dozer_saiga = { -- Revised Nov 4 values. Copies is_shotgun_mag.
+		aim_delay = {
+			0,
+			0
+		},
+		focus_delay = 5, -- re-added from lower difficulties.
+		focus_dis = 200,
+		spread = 15,
+		miss_dis = 20,
+		RELOAD_SPEED = 1.4, --unchanged, validated.
+		melee_speed = 1,
+		melee_dmg = 20,
+		melee_retry_delay = presets.weapon.expert.is_shotgun_pump.melee_retry_delay,
+		range = {
+			optimal = 3000,
+			far = 5000,
+			close = 2000
+		},
+		FALLOFF = {
+			{
+				dmg_mul = 1,
+				r = 100,
+				acc = {
+					0.95,
+					0.95
+				},
+				recoil = {
+					1,
+					1.1
+				},
+				mode = {
+					0,
+					0,
+					1,
+					0
+				}
+			},
+			{
+				dmg_mul = 1,
+				r = 500,
+				acc = { -- reduced lower end, vanilla .7.
+					0.5,
+					0.95
+				},
+				recoil = {
+					1,
+					1.25
+				},
+				mode = {
+					0,
+					0,
+					1,
+					0
+				}
+			},
+			{
+				dmg_mul = .93,
+				r = 1000,
+				acc = { -- reduced lower end, vanilla .5.
+					0.4,
+					0.85
+				},
+				recoil = {
+					1,
+					1.5
+				},
+				mode = {
+					1,
+					1,
+					0,
+					0
+				}
+			},
+			{
+				dmg_mul = .6,
+				r = 2000,
+				acc = { -- reduced lower end, vanilla .35.
+					0.35,
+					0.65
+				},
+				recoil = {
+					1.25,
+					1.5
+				},
+				mode = {
+					1,
+					1,
+					0,
+					0
+				}
+			},
+			{
+				dmg_mul = .2,
+				r = 3000,
+				acc = {
+					0.3,
+					0.5
+				},
+				recoil = {
+					1.5,
+					1.75
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
+			}
+		}
+	}
+	presets.weapon.deathvox.is_cloaker_smg = { -- Revised Nov 4 values. Copies is_smg.
+		aim_delay = {
+			0,
+			0.1 --re-adding aim delay from lower difficulties.
+		},
+		focus_delay = 1, --re-adding slight focus delay from lower difficulties.
+		focus_dis = 200,
+		spread = 15,
+		miss_dis = 10,
+		RELOAD_SPEED = 1.4, -- validated, unchanged.
+		melee_speed = presets.weapon.expert.is_smg.melee_speed,
+		melee_dmg = presets.weapon.expert.is_smg.melee_dmg,
+		melee_retry_delay = presets.weapon.expert.is_smg.melee_retry_delay,
+		range = {
+			optimal = 3200,
+			far = 6000,
+			close = 2000
+		},
+		autofire_rounds = {
+			8,
+			16
+		},
+		FALLOFF = {
+			{
+				dmg_mul = 1,
+				r = 100,
+				acc = {
+					0.6, -- applying lower bound on accuracy based on lower difficulties.
+					0.95
+				},
+				recoil = {
+					0.1,
+					0.25
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = 1,
+				r = 500,
+				acc = {
+					0.6,
+					0.75
+				},
+				recoil = {
+					0.1,
+					0.3
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = .9, -- applying falloff, unlike DW.
+				r = 1000,
+				acc = {
+					0.5,
+					0.75
+				},
+				recoil = {
+					0.35,
+					0.5
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = .7,
+				r = 2000,
+				acc = {
+					0.4,
+					0.7
+				},
+				recoil = {
+					0.35,
+					0.5
+				},
+				mode = {
+					0,
+					0,
+					1,
+					0
+				}
+			},
+			{
+				dmg_mul = .6,
+				r = 3000,
+				acc = {
+					0.55,
+					0.6
+				},
+				recoil = {
+					0.5,
+					1.5
+				},
+				mode = {
+					0,
+					0,
+					1,
+					0
+				}
+			},
+			{
+				dmg_mul = .4,
+				r = 4500,
+				acc = {
+					0.3,
+					0.6
+				},
+				recoil = {
+					1,
+					1.5
+				},
+				mode = {
+					0,
+					1,
+					0,
+					0
+				}
+			}
+		}
+	}
+	presets.weapon.deathvox.is_dozer_pump = { -- Revised Nov 4 values. Copies is_shotgun_pump.
+		aim_delay = {
+			0,
+			0
+		},
+		focus_delay = 5, -- re-added from lower difficulties.
+		focus_dis = 200,
+		spread = 15,
+		miss_dis = 20,
+		RELOAD_SPEED = 1.4, --unchanged, validated.
+		melee_speed = 1,
+		melee_dmg = 20,
+		melee_retry_delay = presets.weapon.expert.is_shotgun_pump.melee_retry_delay,
+		range = { -- using expert ranges. Should have effect of causing enemy to fire when closer.
+			optimal = 2000,
+			far = 5000,
+			close = 1000
+		},
+		FALLOFF = {
+			{
+				dmg_mul = 1,
+				r = 100,
+				acc = { -- Vanilla .95-.95.
+					0.95,
+					1
+				},
+				recoil = {
+					1,
+					1.1
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
+			},
+			{
+				dmg_mul = 1, -- no falloff to 5 meters. Falloff arc undergoes bifurcal distortion.
+				r = 500,
+				acc = {
+					0.7,
+					0.95
+				},
+				recoil = {
+					1,
+					1.25
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
+			},
+			{
+				dmg_mul = .875,
+				r = 1000,
+				acc = {
+					0.5,
+					0.8
+				},
+				recoil = {
+					1,
+					1.5
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
+			},
+			{
+				dmg_mul = .325,
+				r = 2000,
+				acc = {
+					0.45,
+					0.65
+				},
+				recoil = {
+					1.25,
+					1.5
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
+			},
+			{
+				dmg_mul = .125,
+				r = 3000,
+				acc = {
+					0.3,
+					0.5
+				},
+				recoil = { -- greater max recoil for conveyance purposes.
+					1.5,
+					2.25
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
+			}
+		}
+	}
+	presets.weapon.deathvox.is_dozer_lmg = { --Revised Nov 4 values. Copies is_shotgun_pump.
+		aim_delay = { 
+			0.1,
+			0.1
+		},
+		focus_delay = 3,
+		focus_dis = 200,
+		spread = 24,
+		miss_dis = 40,
+		RELOAD_SPEED = 0.75,
+		melee_speed = 1,
+		melee_dmg = 15,
+		melee_retry_delay = presets.weapon.normal.is_lmg.melee_retry_delay,
+		range = {
+			optimal = 3500,
+			far = 6000,
+			close = 2000
+		},
+		autofire_rounds = {
+			25,
+			50
+		},
+		FALLOFF = { 
+			{
+				dmg_mul = 1,
+				r = 100,
+				acc = {
+					0.8,
+					0.9
+				},
+				recoil = {
+					0.25,
+					0.5
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = 1,
+				r = 500,
+				acc = {
+					0.7,
+					0.8
+				},
+				recoil = {
+					0.45,
+					0.6
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = .75,
+				r = 1000,
+				acc = {
+					0.5,
+					0.8
+				},
+				recoil = {
+					0.35,
+					0.75
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = .5,
+				r = 2000,
+				acc = {
+					0.4,
+					0.65
+				},
+				recoil = {
+					0.4,
+					1
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = .25,
+				r = 3000,
+				acc = {
+					0.2,
+					0.35
+				},
+				recoil = {
+					0.8,
+					2
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = .16,
+				r = 6000,
+				acc = {
+					0.1, -- generally a warning shot at range.
+					0.3
+				},
+				recoil = {
+					1.5,
+					3
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			}
+		}
+	}
 	presets.weapon.deathvox.is_bullpup = deep_clone(presets.weapon.deathvox.is_light_rifle) -- moving this clone down from inappropriate position above.
 	presets.weapon.deathvox.mac11 = deep_clone(presets.weapon.deathvox.is_smg) -- revises erroneous clone of pistol from previous setup.
 	presets.weapon.deathvox.mp9 = deep_clone(presets.weapon.deathvox.is_smg) -- revises erroneous clone of pistol from previous setup.
@@ -1923,7 +2413,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker.no_arrest = true
 	self.deathvox_cloaker.steal_loot = nil
 	self.deathvox_cloaker.rescue_hostages = false
-	self.deathvox_cloaker.factory_weapon_id = {"wpn_deathvox_light_ar"}
+	self.deathvox_cloaker.factory_weapon_id = {"wpn_deathvox_cloaker"}
 	self.deathvox_cloaker.use_factory = true
 	self.deathvox_cloaker.is_special_unit = "spooc"
 
@@ -1970,12 +2460,18 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.is_special_unit = "tank"
 
     self.deathvox_greendozer = deep_clone(self.deathvox_tank) -- pro OOP strats
+	self.deathvox_greendozer.use_factory = true -- Use a factory weapon
+	self.deathvox_greendozer.factory_weapon_id = {"wpn_deathvox_greendozer"} 
 	table.insert(self._enemy_list, "deathvox_greendozer")
 
     self.deathvox_blackdozer = deep_clone(self.deathvox_tank)
+	self.deathvox_blackdozer.use_factory = true -- Use a factory weapon
+	self.deathvox_blackdozer.factory_weapon_id = {"wpn_deathvox_blackdozer"} 
 	table.insert(self._enemy_list, "deathvox_blackdozer")
 
     self.deathvox_lmgdozer = deep_clone(self.deathvox_tank)
+	self.deathvox_lmgdozer.use_factory = true -- Use a factory weapon
+	self.deathvox_lmgdozer.factory_weapon_id = {"wpn_deathvox_lmgdozer"} 
 	table.insert(self._enemy_list, "deathvox_lmgdozer")
 	
     self.deathvox_medicdozer = deep_clone(self.deathvox_tank)

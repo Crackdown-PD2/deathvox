@@ -78,6 +78,11 @@
 	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_sniper" load="true" force="true"/>
 	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_medicdozer_smg" load="true" force="true"/>
 	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_grenadier" load="true" force="true"/>
+	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_greendozer" load="true" force="true"/>
+	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_blackdozer" load="true" force="true"/>
+	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_lmgdozer" load="true" force="true"/>
+	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_cloaker" load="true" force="true"/>
+
 	<effect path="effects/particles/explosions/cs_grenade_smoke" load="true" force="true"/>
 	
 </table>
