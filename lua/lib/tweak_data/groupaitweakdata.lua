@@ -284,7 +284,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				rank = 3
 			},
 			{
-				unit = "deathvox_lmgdozer", -- placeholder
+				unit = "deathvox_lmgdozer",
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
@@ -346,16 +346,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			{
 				unit = "deathvox_greendozer",
 				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
+				amount_min = 1,
+				amount_max = 1,
 				tactics = self._tactics.tank_rush,
 				rank = 3
 			},
 			{
 				unit = "deathvox_taser",
 				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
+				amount_min = 2,
+				amount_max = 2,
 				tactics = self._tactics.tazer_charge,
 				rank = 2
 			},
@@ -469,10 +469,18 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		amount = {4, 4},
 		spawn = {
 			{
+				unit = "deathvox_grenadier",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.tazer_charge,
+				rank = 1
+			}
+			{
 				unit = "deathvox_cloaker",
 				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
+				amount_min = 1,
+				amount_max = 1,
 				tactics = self._tactics.spooc,
 				rank = 2
 			},
@@ -577,6 +585,27 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		}
 	}
 
+	self.enemy_spawn_groups.hoplon = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.shield_wall_charge,
+				rank = 2
+			},
+			{
+				unit = "deathvox_grenadier",
+				freq = 1,
+				amount_min = 2, -- you left this as 1 despite the 4,4
+				amount_max = 2,
+				tactics = self._tactics.swat_rifle,
+				rank = 1
+			}
+		}
+	}
 	self.enemy_spawn_groups.recon = {
 		amount = {4, 4},
 		spawn = {
