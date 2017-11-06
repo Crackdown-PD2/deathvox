@@ -910,10 +910,11 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 			dv_group_5_med = { 0.1,0.1,0.1 }
 		}
 		self.besiege.recon.groups = {
-			recovery_unit = { 0.25,0.25,0.25 },
-			too_group = { 0.25,0.25,0.25 },
-			styx = { 0.25,0.25,0.25 },
-			recon = { 0.25,0.25,0.25 },
+			recovery_unit = { 0.2,0.2,0.2 },
+			too_group = { 0.2,0.2,0.2 },
+			styx = { 0.2,0.2,0.2 },
+			recon = { 0.2,0.2,0.2 },
+			hoplon = { 0.2,0.2,0.2 }
 		}
 	end
 end
