@@ -30,7 +30,7 @@ function MedicDamage:heal_unit(unit, override_cooldown)
 	end
 
 	if self._unit:base():char_tweak().custom_voicework then
-		local voicelines = _G.restoration.BufferedSounds[self._unit:base():char_tweak().custom_voicework]
+		local voicelines = _G.deathvox.BufferedSounds[self._unit:base():char_tweak().custom_voicework]
 		if voicelines and voicelines["heal"] then
 			local line_to_use = voicelines.heal[math.random(#voicelines.heal)]
 			self._unit:base():play_voiceline(line_to_use[1], line_to_use[2])
