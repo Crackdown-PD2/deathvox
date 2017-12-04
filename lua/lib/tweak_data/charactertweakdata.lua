@@ -2479,6 +2479,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medicdozer.use_factory = true -- Use a factory weapon
 	self.deathvox_medicdozer.factory_weapon_id = {"wpn_deathvox_medicdozer_smg"} 
 	self.deathvox_medicdozer.dv_medic_heal = true -- dont touch, makes him use the death vox healing
+	self.deathvox_medicdozer.custom_voicework = "medicdozer"
 	table.insert(self._enemy_list, "deathvox_medicdozer")
 
 	self.deathvox_grenadier = deep_clone(presets.base)
@@ -2533,6 +2534,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_grenadier.use_factory = true -- Use a factory weapon
 	self.deathvox_grenadier.factory_weapon_id = {"wpn_deathvox_grenadier"} 
 	self.deathvox_grenadier.is_special_unit = "boom"
+	self.deathvox_grenadier.custom_voicework = "grenadier"
  	table.insert(self._enemy_list, "deathvox_grenadier")
 	
 end

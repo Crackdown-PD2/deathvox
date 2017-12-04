@@ -28,12 +28,27 @@ function CopActionShoot:_get_target_pos(shoot_from_pos, ...)
 	local target_pos, target_vec, target_dis, autotarget
 	local _time = math.floor(TimerManager:game():time())
 	self._throw_projectile_time = self._throw_projectile_time or 0
+	target_pos, target_vec, target_dis, autotarget = _f_CopActionShoot__get_target_pos(self, shoot_from_pos, ...)
 	if self._unit:base()._tweak_table == "deathvox_grenadier" and self._throw_projectile_time < _time then
 		if self._shooting_player then
-			self._throw_projectile_time = _time + math.round_with_precision(10, 2)
-			shoot_from_pos = shoot_from_pos + Vector3(50, 50, 0)
-			target_pos, target_vec, target_dis, autotarget = _f_CopActionShoot__get_target_pos(self, shoot_from_pos, ...)
-			deploy_gas(shoot_from_pos, target_vec)
+			local roll = math.rand(1, 100)
+			if self._throw_projectile_time < _time then
+				local chance_gas = 25
+				if roll <= chance_gas then
+					self._throw_projectile_time = _time + math.round_with_precision(10, 2)
+					shoot_from_pos = shoot_from_pos + Vector3(50, 50, 0)
+					target_pos, target_vec, target_dis, autotarget = _f_CopActionShoot__get_target_pos(self, shoot_from_pos, ...)
+					self._unit:base():play_voiceline(_G.restoration.BufferedSounds.grenadier.use_gas[1], _G.restoration.BufferedSounds.grenadier.use_gas[2], true)
+					deploy_gas(shoot_from_pos, target_vec)
+				end
+			else
+				roll = math.rand(1, 100)
+				if roll <= 2 then
+					local dildo = _G.restoration.BufferedSounds.grenadier.spot_heister
+					local voiceline_to_use = dildo[math.random(#dildo)]
+					self._unit:base():play_voiceline(voiceline_to_use[1], voiceline_to_use[2])
+				end
+			end
 		else
 			target_pos, target_vec, target_dis, autotarget = _f_CopActionShoot__get_target_pos(self, shoot_from_pos, ...)
 		end
@@ -48,9 +63,5 @@ function deploy_gas(shoot_from_pos, target_vec)
 	local z_fix = {-0.05, -0.02, -0.05, -0.02, -0.07, -0.07, -0.1}
 	target_vec = target_vec + Vector3(0, 0, z_fix[math.random(7)])
 	local detonate_pos = managers.player:player_unit():position()
-	local roll = math.rand(1, 100)
-	local chance_gas = 25
-	if roll <= chance_gas then
-		managers.groupai:state():detonate_cs_grenade(detonate_pos, nil, 7.5)
-	end
+	managers.groupai:state():detonate_cs_grenade(detonate_pos, nil, 7.5)
 end
