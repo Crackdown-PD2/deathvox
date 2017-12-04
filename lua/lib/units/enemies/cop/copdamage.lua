@@ -41,8 +41,8 @@ function CopDamage:die(attack_data)
 	if self._immortal then
 		debug_pause("Immortal character died!")
 	end
-	if char_tweak.custom_voicework then
-		local voicelines = _G.restoration.BufferedSounds[char_tweak.custom_voicework]
+	if self._unit:base():char_tweak().custom_voicework then
+		local voicelines = _G.restoration.BufferedSounds[self._unit:base():char_tweak().custom_voicework]
 		if voicelines and voicelines["death"] then
 			self._unit:base():play_voiceline(voicelines.death[1], voicelines.death[2], true)
 		end
