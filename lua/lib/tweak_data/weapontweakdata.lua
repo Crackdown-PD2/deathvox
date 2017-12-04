@@ -10,6 +10,12 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_shotgun_heavy = deep_clone(self.ben_crew)
 	self.deathvox_sniper = deep_clone(self.wa2000_crew)
 	self.deathvox_medicdozer_smg = deep_clone(self.polymer_crew)
+	self.deathvox_grenadier = deep_clone(self.contraband_crew)
+	
+	self.deathvox_lmgdozer = deep_clone(self.m249_crew)
+	self.deathvox_cloaker = deep_clone(self.schakal_crew)
+	self.deathvox_blackdozer = deep_clone(self.saiga_crew)
+	self.deathvox_greendozer = deep_clone(self.r870_crew)
 
 	self.deathvox_light_ar.sounds.prefix = "aug_npc" -- dont worry about this
 	self.deathvox_light_ar.use_data.selection_index = 2 -- dont worry about this
@@ -122,7 +128,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_sniper.alert_size = 5000
 	self.deathvox_sniper.suppression = 1	
 	self.deathvox_sniper.armor_piercing = true
-	self.deathvox_sniper.usage = "is_sniper"
+	self.deathvox_sniper.usage = "is_assault_sniper"
 	self.deathvox_sniper.anim_usage = "is_bullpup"
 	
 	self.deathvox_medicdozer_smg.sounds.prefix = "polymer_npc"
@@ -143,5 +149,81 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_medicdozer_smg.alert_size = 5000
 	self.deathvox_medicdozer_smg.suppression = 1	
 	self.deathvox_medicdozer_smg.usage = "is_tank_smg"
+	
+	self.deathvox_grenadier.sounds.prefix = "contraband_npc"
+	self.deathvox_grenadier.use_data.selection_index = 2
+	self.deathvox_grenadier.DAMAGE = 6
+	self.deathvox_grenadier.muzzleflash = "effects/payday2/particles/weapons/762_auto"
+	self.deathvox_grenadier.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556"
+	self.deathvox_grenadier.CLIP_AMMO_MAX = 20
+	self.deathvox_grenadier.NR_CLIPS_MAX = 5
+	self.deathvox_grenadier.pull_magazine_during_reload = "rifle"
+	self.deathvox_grenadier.auto.fire_rate = 0.098
+	self.deathvox_grenadier.hold = {
+		"bullpup",
+		"rifle"
+	}
+	self.deathvox_grenadier.reload = "rifle"
+	self.deathvox_grenadier.alert_size = 5000
+	self.deathvox_grenadier.suppression = 1
+	
+    self.deathvox_lmgdozer.sounds.prefix = "m249_npc"
+    self.deathvox_lmgdozer.use_data.selection_index = 2
+    self.deathvox_lmgdozer.DAMAGE = 10
+    self.deathvox_lmgdozer.muzzleflash = "effects/payday2/particles/weapons/big_762_auto"
+    self.deathvox_lmgdozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556_lmg"
+    self.deathvox_lmgdozer.CLIP_AMMO_MAX = 200
+    self.deathvox_lmgdozer.NR_CLIPS_MAX = 2
+    self.deathvox_lmgdozer.auto.fire_rate = 0.08
+    self.deathvox_lmgdozer.hold = "rifle"
+    self.deathvox_lmgdozer.alert_size = 5000
+    self.deathvox_lmgdozer.suppression = 1
+    self.deathvox_lmgdozer.usage = "is_dozer_lmg"
+   
+    self.deathvox_cloaker.sounds.prefix = "schakal_npc"
+    self.deathvox_cloaker.use_data.selection_index = 1
+    self.deathvox_cloaker.DAMAGE = 3.6
+    self.deathvox_cloaker.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+    self.deathvox_cloaker.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+    self.deathvox_cloaker.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+    self.deathvox_cloaker.CLIP_AMMO_MAX = 30
+    self.deathvox_cloaker.NR_CLIPS_MAX = 5
+    self.deathvox_cloaker.pull_magazine_during_reload = "pistol"
+    self.deathvox_cloaker.auto.fire_rate = 0.092
+    self.deathvox_cloaker.hold = {
+        "bullpup",
+        "rifle"
+    }
+    self.deathvox_cloaker.hold = "rifle"
+    self.deathvox_cloaker.alert_size = 5000
+    self.deathvox_cloaker.suppression = 1
+    self.deathvox_cloaker.usage = "is_cloaker_smg"
+   
+    self.deathvox_blackdozer.sounds.prefix = "saiga_npc"
+    self.deathvox_blackdozer.use_data.selection_index = 2
+    self.deathvox_blackdozer.DAMAGE = 22.5
+    self.deathvox_blackdozer.muzzleflash = "effects/payday2/particles/weapons/762_auto"
+    self.deathvox_blackdozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug"
+    self.deathvox_blackdozer.auto.fire_rate = 0.14
+    self.deathvox_blackdozer.CLIP_AMMO_MAX = 7
+    self.deathvox_blackdozer.NR_CLIPS_MAX = 10
+    self.deathvox_blackdozer.hold = "rifle"
+    self.deathvox_blackdozer.alert_size = 4500
+    self.deathvox_blackdozer.suppression = 1.8
+    self.deathvox_blackdozer.is_shotgun = true
+    self.deathvox_blackdozer.usage = "is_dozer_saiga"
+   
+    self.deathvox_greendozer.sounds.prefix = "remington_npc"
+    self.deathvox_greendozer.use_data.selection_index = 2
+    self.deathvox_greendozer.DAMAGE = 40
+    self.deathvox_greendozer.muzzleflash = "effects/payday2/particles/weapons/762_auto"
+    self.deathvox_greendozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug_semi"
+    self.deathvox_greendozer.CLIP_AMMO_MAX = 6
+    self.deathvox_greendozer.NR_CLIPS_MAX = 4
+    self.deathvox_greendozer.hold = "rifle"
+    self.deathvox_greendozer.alert_size = 4500
+    self.deathvox_greendozer.suppression = 1.8
+    self.deathvox_greendozer.is_shotgun = true
+    self.deathvox_greendozer.usage = "is_dozer_pump"
 	
 end

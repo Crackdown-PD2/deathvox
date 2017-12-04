@@ -7,19 +7,27 @@
 		
 		<hook file="lib/tweak_data/weapontweakdata.lua" source_file="lib/tweak_data/weapontweakdata"/>
 		<hook file="lib/tweak_data/weaponfactorytweakdata.lua" source_file="lib/tweak_data/weaponfactorytweakdata"/>
-		
+		<hook file="lib/tweak_data/playertweakdata.lua" source_file="lib/tweak_data/playertweakdata"/>
+
 		<hook file="lib/units/enemies/cop/copbrain.lua" source_file="lib/units/enemies/cop/copbrain"/>
 		<hook file="lib/units/enemies/cop/copmovement.lua" source_file="lib/units/enemies/cop/copmovement"/>
 		<hook file="lib/units/enemies/cop/copinventory.lua" source_file="lib/units/enemies/cop/copinventory"/>
 		<hook file="lib/units/enemies/cop/copdamage.lua" source_file="lib/units/enemies/cop/copdamage"/>
-		<hook file="lib/units/enemies/actions/upper_body/copactionshoot.lua" source_file="lib/units/enemies/actions/upper_body/copactionshoot"/>
+		<hook file="lib/units/enemies/actions/upper_body/copactionshoot.lua" source_file="lib/units/enemies/cop/actions/upper_body/copactionshoot"/>
+		<hook file="lib/units/enemies/actions/upper_body/copactiontase.lua" source_file="lib/units/enemies/cop/actions/upper_body/copactiontase"/>
+		<hook file="lib/units/enemies/taser/logics/taserlogicattack.lua" source_file="lib/units/enemies/taser/logics/taserlogicattack"/>
 
-		<hook file="lib/units/weapons/quickcsgrenade.lua" source_file="lib/units/weapons/quickcsgrenade"/>
+		<hook file="lib/units/beings/player/playerdamage.lua" source_file="lib/units/beings/player/playerdamage"/>
+
+		<hook file="lib/units/weapons/quickcsgrenade.lua" source_file="lib/units/weapons/grenades/quickcsgrenade"/>
 		<hook file="lib/units/weapons/raycastweaponbase.lua" source_file="lib/units/weapons/raycastweaponbase"/>
+		<hook file="lib/units/weapons/newnpcraycastweaponbase.lua" source_file="lib/units/weapons/newnpcraycastweaponbase"/>
 		
 		<hook file="lib/managers/groupaistatebase.lua" source_file="lib/managers/group_ai_states/groupaistatebase"/>
+		<hook file="lib/managers/group_ai_states/groupaistatebesiege.lua" source_file="lib/managers/group_ai_states/groupaistatebesiege"/>
 
 		<hook file="lib/managers/mission/elementspawnenemygroup.lua" source_file="lib/managers/mission/elementspawnenemygroup"/>
+		<hook file="lib/managers/mission/elementspawnenemydummy.lua" source_file="lib/managers/mission/elementspawnenemydummy"/>
     </Hooks>
 	<AddFiles file="add.xml"/>
 </mod>

@@ -1,3 +1,11 @@
+function RaycastWeaponBase:_weapon_tweak_data_id()
+	local override_gadget = self:gadget_overrides_weapon_functions()
+	if override_gadget then
+		return override_gadget.name_id
+	end
+	return self._name_id
+end
+
 function RaycastWeaponBase:set_laser_enabled(state)
 	if state then
 		if alive(self._laser_unit) then
@@ -17,3 +25,4 @@ function RaycastWeaponBase:set_laser_enabled(state)
 		self._laser_unit = nil
 	end
 end
+

@@ -284,7 +284,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				rank = 3
 			},
 			{
-				unit = "deathvox_lmgdozer", -- placeholder
+				unit = "deathvox_lmgdozer",
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
@@ -346,16 +346,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			{
 				unit = "deathvox_greendozer",
 				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
+				amount_min = 1,
+				amount_max = 1,
 				tactics = self._tactics.tank_rush,
 				rank = 3
 			},
 			{
 				unit = "deathvox_taser",
 				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
+				amount_min = 2,
+				amount_max = 2,
 				tactics = self._tactics.tazer_charge,
 				rank = 2
 			},
@@ -469,10 +469,18 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		amount = {4, 4},
 		spawn = {
 			{
+				unit = "deathvox_grenadier",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.tazer_charge,
+				rank = 1
+			}
+			{
 				unit = "deathvox_cloaker",
 				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
+				amount_min = 1,
+				amount_max = 1,
 				tactics = self._tactics.spooc,
 				rank = 2
 			},
@@ -577,6 +585,27 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		}
 	}
 
+	self.enemy_spawn_groups.hoplon = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.shield_wall_charge,
+				rank = 2
+			},
+			{
+				unit = "deathvox_grenadier",
+				freq = 1,
+				amount_min = 2, -- you left this as 1 despite the 4,4
+				amount_max = 2,
+				tactics = self._tactics.swat_rifle,
+				rank = 1
+			}
+		}
+	}
 	self.enemy_spawn_groups.recon = {
 		amount = {4, 4},
 		spawn = {
@@ -836,6 +865,18 @@ end
 function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 	old_task_data(self, difficulty_index, difficulty)
 	if difficulty_index == 8 then
+		self.besiege.assault.force_balance_mul = {
+			3,
+			3.2,
+			3.5,
+			3.9
+		}
+		self.besiege.assault.force_pool_balance_mul = {
+			2.7,
+			2.9,
+			3.1,
+			3.3
+		}
 		self.besiege.assault.groups = {
 			gorgon = { 0.05,0.05,0.05  },
 			atlas = { 0.05,0.05,0.05  },
@@ -869,10 +910,11 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 			dv_group_5_med = { 0.1,0.1,0.1 }
 		}
 		self.besiege.recon.groups = {
-			recovery_unit = { 0.25,0.25,0.25 },
-			too_group = { 0.25,0.25,0.25 },
-			styx = { 0.25,0.25,0.25 },
-			recon = { 0.25,0.25,0.25 },
+			recovery_unit = { 0.2,0.2,0.2 },
+			too_group = { 0.2,0.2,0.2 },
+			styx = { 0.2,0.2,0.2 },
+			recon = { 0.2,0.2,0.2 },
+			hoplon = { 0.2,0.2,0.2 }
 		}
 	end
 end
