@@ -475,7 +475,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				amount_max = 1,
 				tactics = self._tactics.tazer_charge,
 				rank = 1
-			}
+			},
 			{
 				unit = "deathvox_cloaker",
 				freq = 1,
