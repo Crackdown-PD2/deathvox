@@ -94,7 +94,7 @@ function CharacterTweakData:_presets(tweak_data)
 					roll = {
 						chance = 3,
 						timeout = {1.2, 2}
-					},
+					}
 				}
 			}
 		}
