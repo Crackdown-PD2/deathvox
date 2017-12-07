@@ -820,14 +820,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				amount_max = 2,
 				tactics = self._tactics.swat_rifle,
 				rank = 1
-			},
-			{
-				unit = "deathvox_medic",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.swat_rifle,
-				rank = 1
 			}
 		}
 	}
@@ -888,7 +880,7 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 			caduceus = { 0.05,0.05,0.05  },
 			atropos = { 0.05,0.05,0.05 },
 			aegeas = { 0.05,0.05,0.05 },
-			dv_group_1 = {0.2, 0.2, 0.2},
+			dv_group_1 = {0.1, 0.1, 0.1},
 			dv_group_2_std = { 0.05,0.05,0.05  },
 			dv_group_2_med = { 0.05,0.05,0.05  },
 			dv_group_3_std = { 0.05,0.05,0.05  },
