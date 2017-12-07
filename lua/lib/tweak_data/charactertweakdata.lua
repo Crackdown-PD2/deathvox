@@ -9,7 +9,7 @@ end
 
 function CharacterTweakData:_presets(tweak_data)
 	local presets = origin_presets(self, tweak_data)
-    presets.dodge.deathvox = {
+	presets.dodge.deathvox = {
 		speed = 1.7,
 		occasions = {
 			hit = {
@@ -56,6 +56,81 @@ function CharacterTweakData:_presets(tweak_data)
 					},
 					roll = {
 						chance = 3,
+						timeout = {1.2, 2}
+					},
+					dive = {
+						chance = 1,
+						timeout = {1.2, 2}
+					}
+				}
+			}
+		}
+	}
+	presets.dodge.deathvoxninja = {
+		speed = 1.7,
+		occasions = {
+			hit = {
+				chance = 0.9,
+				check_timeout = {0, 1},
+				variations = {
+					side_step = {
+						chance = 3,
+						shoot_chance = 1,
+						shoot_accuracy = 0.7,
+						timeout = {1, 2}
+					},
+					roll = {
+						chance = 1,
+						timeout = {1.2, 2}
+					},
+					wheel = {
+						chance = 2,
+						shoot_chance = 1, -- test value. May or may not operate action, crash.
+						shoot_accuracy = 0.8,
+						timeout = {1.2, 2}
+					}
+				}
+			},
+			preemptive = {
+				chance = 0.9,
+				check_timeout = {0, 1},
+				variations = {
+					side_step = {
+						chance = 1,
+						shoot_chance = 1,
+						shoot_accuracy = 0.8,
+						timeout = {1, 2}
+					},
+					roll = {
+						chance = 2,
+						timeout = {1.2, 2}
+					},
+					wheel = {
+						chance = 2,
+						shoot_chance = 1, -- test value. May or may not operate action, crash.
+						shoot_accuracy = 0.8,
+						timeout = {1.2, 2}
+					}
+				}
+			},
+			scared = {
+				chance = 0.9,
+				check_timeout = {0, 1},
+				variations = {
+					side_step = {
+						chance = 1,
+						shoot_chance = 0.8,
+						shoot_accuracy = 0.6,
+						timeout = {1, 2}
+					},
+					roll = {
+						chance = 3,
+						timeout = {1.2, 2}
+					},
+					wheel = {
+						chance = 3,
+						shoot_chance = 1, -- test value. May or may not operate action, crash.
+						shoot_accuracy = 0.8,
 						timeout = {1.2, 2}
 					},
 					dive = {
@@ -2410,7 +2485,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker.HEALTH_INIT = 96
 	self.deathvox_cloaker.surrender_break_time = {4, 6} 
 	self.deathvox_cloaker.ecm_vulnerability = 0
-	self.deathvox_cloaker.dodge = presets.dodge.ninja
+	self.deathvox_cloaker.dodge = presets.dodge.deathvoxninja
 	self.deathvox_cloaker.deathguard = true 
 	self.deathvox_cloaker.no_arrest = true
 	self.deathvox_cloaker.steal_loot = nil
