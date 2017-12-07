@@ -2406,6 +2406,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker.suppression = nil
 	self.deathvox_cloaker.surrender = presets.surrender.special 
 	self.deathvox_cloaker.move_speed = presets.move_speed.lightning
+	self.deathvox_cloaker.headshot_dmg_mul = 3
+	self.deathvox_cloaker.HEALTH_INIT = 96
 	self.deathvox_cloaker.surrender_break_time = {4, 6} 
 	self.deathvox_cloaker.ecm_vulnerability = 0
 	self.deathvox_cloaker.dodge = presets.dodge.ninja
