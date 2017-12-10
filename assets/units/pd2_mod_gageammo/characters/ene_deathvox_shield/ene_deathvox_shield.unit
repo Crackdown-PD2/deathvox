@@ -44,7 +44,7 @@
 		<extension name="sound" class="CopSound" />
 	</extensions>
 
-	<network sync="spawn" remote_unit="units/pd2_gage_ammo/characters/ene_deathvox_shield/ene_deathvox_shield_husk"/>
+	<network sync="spawn" remote_unit="units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield_husk"/>
 
 	<sounds>
 		<default_soundsource source="Hips"/>
