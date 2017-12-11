@@ -2574,6 +2574,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medicdozer.dv_medic_heal = true -- dont touch, makes him use the death vox healing
 	self.deathvox_medicdozer.custom_voicework = "medicdozer"
 	self.deathvox_medicdozer.access = "tank"
+	self.deathvox_medicdozer.disable_medic_heal_voice = true
 	table.insert(self._enemy_list, "deathvox_medicdozer")
 
 	self.deathvox_grenadier = deep_clone(presets.base)

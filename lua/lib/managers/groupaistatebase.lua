@@ -193,3 +193,70 @@ function GroupAIStateBase:on_enemy_registered(unit)
 		unit:movement():set_team(self._teams[tweak_data.levels:get_default_team_ID(unit:base():char_tweak().access == "gangster" and "gangster" or "combatant")])
 	end
 end
+
+function GroupAIStateBase:chk_say_enemy_chatter(unit, unit_pos, chatter_type)
+	if unit:sound():speaking(self._t) then
+		return
+	end
+
+	local chatter_tweak = tweak_data.group_ai.enemy_chatter[chatter_type]
+	local chatter_type_hist = self._enemy_chatter[chatter_type]
+
+	if not chatter_type_hist then
+		chatter_type_hist = {
+			cooldown_t = 0,
+			events = {}
+		}
+		self._enemy_chatter[chatter_type] = chatter_type_hist
+	end
+
+	local t = self._t
+
+	if t < chatter_type_hist.cooldown_t then
+		return
+	end
+
+	local nr_events_in_area = 0
+
+	for i_event, event_data in pairs(chatter_type_hist.events) do
+		if event_data.expire_t < t then
+			chatter_type_hist[i_event] = nil
+		elseif mvector3.distance(unit_pos, event_data.epicenter) < chatter_tweak.radius then
+			if nr_events_in_area == chatter_tweak.max_nr - 1 then
+				return
+			else
+				nr_events_in_area = nr_events_in_area + 1
+			end
+		end
+	end
+
+	local group_requirement = chatter_tweak.group_min
+
+	if group_requirement and group_requirement > 1 then
+		local u_data = self._police[unit:key()]
+		local nr_in_group = 1
+
+		if u_data.group then
+			nr_in_group = u_data.group.size
+		end
+
+		if nr_in_group < group_requirement then
+			return
+		end
+	end
+
+	chatter_type_hist.cooldown_t = t + math.lerp(chatter_tweak.interval[1], chatter_tweak.interval[2], math.random())
+	local new_event = {
+		epicenter = mvector3.copy(unit_pos),
+		expire_t = t + math.lerp(chatter_tweak.duration[1], chatter_tweak.duration[2], math.random())
+	}
+
+	table.insert(chatter_type_hist.events, new_event)
+	if unit:base():char_tweak().custom_voicework then
+		unit:sound():xaudio_say(chatter_type, true)
+	else
+		unit:sound():say(chatter_tweak.queue, true)
+	end
+
+	return true
+end

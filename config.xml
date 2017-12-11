@@ -1,6 +1,8 @@
 <mod name="DeathVox" global_key="deathvox">
     <Hooks directory="lua">
 		<hook file="loc/loc.lua" source_file="lib/managers/localizationmanager"/>
+
+		<hook file="lib/network/handlers/unitnetworkhandler.lua" source_file="lib/network/handlers/unitnetworkhandler"/>
 		
 		<hook file="lib/tweak_data/charactertweakdata.lua" source_file="lib/tweak_data/charactertweakdata"/>
 		<hook file="lib/tweak_data/groupaitweakdata.lua" source_file="lib/tweak_data/groupaitweakdata"/>
@@ -14,6 +16,7 @@
 		<hook file="lib/units/enemies/cop/copinventory.lua" source_file="lib/units/enemies/cop/copinventory"/>
 		<hook file="lib/units/enemies/cop/copdamage.lua" source_file="lib/units/enemies/cop/copdamage"/>
 		<hook file="lib/units/enemies/cop/copbase.lua" source_file="lib/units/enemies/cop/copbase"/>
+		<hook file="lib/units/enemies/cop/copsound.lua" source_file="lib/units/enemies/cop/copsound"/>
 		<hook file="lib/units/enemies/medic/medicdamage.lua" source_file="lib/units/enemies/medic/medicdamage"/>
 		<hook file="lib/units/enemies/cop/huskcopdamage.lua" source_file="lib/units/enemies/cop/huskcopdamage"/>
 		<hook file="lib/units/enemies/cop/logic/coplogictravel.lua" source_file="lib/units/enemies/cop/logic/coplogictravel"/>

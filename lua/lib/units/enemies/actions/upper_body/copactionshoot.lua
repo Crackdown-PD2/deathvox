@@ -38,7 +38,7 @@ function CopActionShoot:_get_target_pos(shoot_from_pos, ...)
 					self._throw_projectile_time = _time + math.round_with_precision(10, 2)
 					shoot_from_pos = shoot_from_pos + Vector3(50, 50, 0)
 					target_pos, target_vec, target_dis, autotarget = _f_CopActionShoot__get_target_pos(self, shoot_from_pos, ...)
-					self._unit:base():play_voiceline(_G.deathvox.BufferedSounds.grenadier.use_gas[1], _G.deathvox.BufferedSounds.grenadier.use_gas[2], true)
+					self._unit:base():play_voiceline(_G.deathvox.BufferedSounds.grenadier.use_gas, true)
 					deploy_gas(shoot_from_pos, target_vec)
 				end
 			else
@@ -46,7 +46,7 @@ function CopActionShoot:_get_target_pos(shoot_from_pos, ...)
 				if roll <= 5 then
 					local dildo = _G.deathvox.BufferedSounds.grenadier.spot_heister
 					local voiceline_to_use = dildo[math.random(#dildo)]
-					self._unit:base():play_voiceline(voiceline_to_use[1], voiceline_to_use[2])
+					self._unit:base():play_voiceline(voiceline_to_use)
 				end
 			end
 		else
