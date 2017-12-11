@@ -22,6 +22,7 @@
 		<hook file="lib/units/enemies/cop/logics/coplogictravel.lua" source_file="lib/units/enemies/cop/logics/coplogictravel"/>
 		<hook file="lib/units/enemies/actions/upper_body/copactionshoot.lua" source_file="lib/units/enemies/cop/actions/upper_body/copactionshoot"/>
 		<hook file="lib/units/enemies/actions/upper_body/copactiontase.lua" source_file="lib/units/enemies/cop/actions/upper_body/copactiontase"/>
+		<hook file="lib/units/enemies/actions/upper_body/copactionhealed.lua" source_file="lib/units/enemies/cop/actions/upper_body/copactionhealed"/>
 		<hook file="lib/units/enemies/taser/logics/taserlogicattack.lua" source_file="lib/units/enemies/taser/logics/taserlogicattack"/>
 
 		<hook file="lib/units/beings/player/playerdamage.lua" source_file="lib/units/beings/player/playerdamage"/>
