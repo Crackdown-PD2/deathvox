@@ -1674,7 +1674,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox_sniper = {is_rifle = {}}
+	presets.weapon.deathvox_sniper = {is_rifle = {}, is_assault_sniper = {}}
 	presets.weapon.deathvox_sniper.is_rifle = { -- mark 3 values complete. basis is presets.weapon.sniper. For non-assault wave snipers. Headings revised to fit standard format.
 		aim_delay = {
 			0,
@@ -1752,7 +1752,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-
+	presets.weapon.deathvox_sniper.is_assault_sniper = deep_clone(presets.weapon.deathvox_sniper.is_rifle)
 	presets.weapon.deathvox.is_assault_sniper = deep_clone(presets.weapon.deathvox_sniper.is_rifle) --defining the assault sniper preset.
 	presets.weapon.deathvox.is_assault_sniper.FALLOFF = { -- revising assault sniper falloff values.
 		{
