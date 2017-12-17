@@ -28,20 +28,38 @@ function CopInventory:add_unit_by_name(new_unit_name, equip)
 	managers.mutators:modify_value("CopInventory:add_unit_by_name", self)
 	self:_chk_spawn_shield(new_unit)
 
-	local setup_data = {
-		user_unit = self._unit,
-		ignore_units = {
-			self._unit,
-			new_unit,
-			self._shield_unit
-		},
-		expend_ammo = false,
-		hit_slotmask = managers.slot:get_mask("bullet_impact_targets"),
-		hit_player = true,
-		user_sound_variant = tweak_data.character[self._unit:base()._tweak_table].weapon_voice,
-		alert_AI = true,
-		alert_filter = self._unit:brain():SO_access()
-	}
+	log("CRACKDOWN: tweak: " .. self._unit:base()._tweak_table)
+	local setup_data = {}
+	if Network:is_server() then
+		setup_data = {
+			user_unit = self._unit,
+			ignore_units = {
+				self._unit,
+				new_unit,
+				self._shield_unit
+			},
+			expend_ammo = false,
+			hit_slotmask = managers.slot:get_mask("bullet_impact_targets"),
+			hit_player = true,
+			user_sound_variant = tweak_data.character[self._unit:base()._tweak_table].weapon_voice,
+			alert_AI = true,
+			alert_filter = self._unit:brain():SO_access()
+		}
+	else
+		setup_data = {
+			user_unit = self._unit,
+			ignore_units = {
+				self._unit,
+				new_unit,
+				self._shield_unit
+			},
+			expend_ammo = false,
+			hit_slotmask = managers.slot:get_mask("bullet_impact_targets"),
+			hit_player = true,
+			user_sound_variant = tweak_data.character[self._unit:base()._tweak_table].weapon_voice,
+			alert_AI = false,
+		}
+	end	
 
 	new_unit:base():setup(setup_data)
 
