@@ -450,16 +450,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			{
 				unit = "deathvox_taser",
 				freq = 1,
-				amount_min = 1
-				amount_max = 1
+				amount_min = 1,
+				amount_max = 1,
 				tactics = self._tactics.deathvox_tazerlead,
 				rank = 2
 			},
 			{
 				unit = "deathvox_taser",
 				freq = 1,
-				amount_min = 2
-				amount_max = 2
+				amount_min = 2,
+				amount_max = 2,
 				tactics = self._tactics.deathvox_tazer_follow,
 				rank = 2
 			},
