@@ -32,8 +32,8 @@ function CopBase:play_voiceline(buffer, force)
 				self.my_voice = nil
 			end
 			self.my_voice = XAudio.UnitSource:new(self._unit, buffer)
-			self.voice_length = 5
-			self.voice_start_time = _time + 5
+			self.voice_length = buffer:get_length()
+			self.voice_start_time = _time + buffer:get_length()
 		end
 	end
 end
