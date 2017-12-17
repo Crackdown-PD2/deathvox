@@ -142,6 +142,8 @@ function CopInventory:destroy_all_items()
 	end
 end
 
+
+
 function CopInventory:add_unit_by_factory_name(factory_name, equip, instant, blueprint_string, cosmetics_string)
 	local factory_weapon = tweak_data.weapon.factory[factory_name]
 	local ids_unit_name = Idstring(factory_weapon.unit)
@@ -185,20 +187,44 @@ function CopInventory:add_unit_by_factory_blueprint(factory_name, equip, instant
 	new_unit:base():set_cosmetics_data(cosmetics)
 	new_unit:base():assemble_from_blueprint(factory_name, blueprint)
 	new_unit:base():check_npc()
-
+	log("CRACKDOWN: tweak: " .. self._unit:base()._tweak_table)
 	local setup_data = {
-		user_unit = self._unit,
-		ignore_units = {
-			self._unit,
-			new_unit
-		},
-		expend_ammo = false,
-		autoaim = false,
-		user_sound_variant = "1",
-		hit_player = true,
-		alert_AI = true,
-		alert_filter = self._unit:brain():SO_access()
+		user_unit = nil,
+		ignore_units = {},
+		expend_ammo = nil,
+		hit_player = nil,
+		user_sound_variant = nil,
+		alert_AI = nil,
+		alert_filter = nil
 	}
+	if Network:is_server() then
+		setup_data = {
+			user_unit = self._unit,
+			ignore_units = {
+				self._unit,
+				new_unit
+			},
+			expend_ammo = false,
+			autoaim = false,
+			user_sound_variant = "1",
+			hit_player = true,
+			alert_AI = true,
+			alert_filter = self._unit:brain():SO_access()
+		}
+	else
+		setup_data = {
+			user_unit = self._unit,
+			ignore_units = {
+				self._unit,
+				new_unit
+			},
+			expend_ammo = false,
+			autoaim = false,
+			user_sound_variant = "1",
+			hit_player = true,
+		`	alert_AI = false
+		}
+	end
 
 	new_unit:base():setup(setup_data)
 	self:add_unit(new_unit, equip, instant)
