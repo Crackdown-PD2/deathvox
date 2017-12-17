@@ -260,7 +260,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				},
 			deathvox_medic = {
 				"shield_cover",
-				"provide_support"
+				"provide_support",
 				"charge",
 				"provide_coverfire"
 				},
