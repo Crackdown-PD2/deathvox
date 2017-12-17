@@ -16,7 +16,7 @@
 			<var name="_default_weapon_id" value="mp9" />
 			<var name="can_be_marked" value="true" />
 		</extension>
-		<extension name="inventory" class="CopInventory" >
+		<extension name="inventory" class="HuskCopInventory" >
 			<var name="_shield_unit_name" value="units/payday2/characters/ene_acc_shield_lights/ene_acc_shield_lights" />
 		</extension>
 		<extension name="brain" class="HuskCopBrain" />
