@@ -26,6 +26,8 @@
 		<hook file="lib/units/enemies/taser/logics/taserlogicattack.lua" source_file="lib/units/enemies/taser/logics/taserlogicattack"/>
 
 		<hook file="lib/units/beings/player/playerdamage.lua" source_file="lib/units/beings/player/playerdamage"/>
+		<hook file="lib/units/beings/player/states/playertased.lua" source_file="lib/units/beings/player/states/playertased"/>
+		
 
 		<hook file="lib/units/weapons/quickcsgrenade.lua" source_file="lib/units/weapons/grenades/quickcsgrenade"/>
 		<hook file="lib/units/weapons/raycastweaponbase.lua" source_file="lib/units/weapons/raycastweaponbase"/>
