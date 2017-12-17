@@ -222,7 +222,7 @@ function CopInventory:add_unit_by_factory_blueprint(factory_name, equip, instant
 			autoaim = false,
 			user_sound_variant = "1",
 			hit_player = true,
-		`	alert_AI = false
+			alert_AI = false
 		}
 	end
 
