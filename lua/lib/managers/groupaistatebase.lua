@@ -252,11 +252,7 @@ function GroupAIStateBase:chk_say_enemy_chatter(unit, unit_pos, chatter_type)
 	}
 
 	table.insert(chatter_type_hist.events, new_event)
-	if unit:base():char_tweak().custom_voicework then
-		unit:sound():xaudio_say(chatter_type, true)
-	else
-		unit:sound():say(chatter_tweak.queue, true)
-	end
+	unit:sound():say(chatter_tweak.queue, true)
 
 	return true
 end
