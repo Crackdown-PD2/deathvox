@@ -85,5 +85,6 @@
 
 	<effect path="effects/particles/explosions/cs_grenade_smoke" load="true" force="true"/>
 	<effect path="effects/particles/weapons/trail_dv_sniper" load="true" force="true"/>
+	<unit path="units/weapons/cs_grenade_quick/cs_grenade_quick" load="true" force="true"/>
 	
 </table>

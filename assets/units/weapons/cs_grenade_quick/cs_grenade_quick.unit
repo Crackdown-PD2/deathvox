@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<unit type="item" slot="14">
+  <object file="units/weapons/smoke_grenade_quick/smoke_grenade_quick" />
+  <dependencies>
+    <depends_on effect="effects/particles/explosions/explosion_smoke_grenade" />
+    <depends_on effect="effects/particles/explosions/cs_grenade_smoke" />
+        
+  </dependencies>
+  <extensions>
+  	<extension name="base" class="TearGasGrenade" />
+    <extension name="unit_data" class="ScriptUnitData" />
+  </extensions>
+   <sounds>
+    <default_soundsource source="rp_smoke_grenade" />
+  </sounds>
+</unit>

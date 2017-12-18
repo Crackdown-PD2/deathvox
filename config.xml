@@ -30,6 +30,7 @@
 		
 
 		<hook file="lib/units/weapons/quickcsgrenade.lua" source_file="lib/units/weapons/grenades/quickcsgrenade"/>
+		<hook file="lib/units/weapons/teargasgrenade.lua" source_file="lib/units/weapons/grenades/teargasgrenade"/>
 		<hook file="lib/units/weapons/raycastweaponbase.lua" source_file="lib/units/weapons/raycastweaponbase"/>
 		<hook file="lib/units/weapons/newnpcraycastweaponbase.lua" source_file="lib/units/weapons/newnpcraycastweaponbase"/>
 		
