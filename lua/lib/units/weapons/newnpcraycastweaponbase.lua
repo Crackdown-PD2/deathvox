@@ -89,3 +89,6 @@ function NewNPCRaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, d
 	end
 	return result
 end
+
+DeathVoxSniperWeaponBase = DeathVoxSniperWeaponBase or blt_class(NewNPCRaycastWeaponBase)
+DeathVoxSniperWeaponBase.TRAIL_EFFECT = Idstring("effects/particles/weapons/trail_dv_sniper")

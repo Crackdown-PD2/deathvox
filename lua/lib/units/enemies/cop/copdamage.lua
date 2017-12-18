@@ -97,3 +97,30 @@ function CopDamage:die(attack_data)
 	self:_on_death()
 	managers.mutators:notify(Message.OnCopDamageDeath, self, attack_data)
 end
+
+function CopDamage:check_medic_heal()
+	if self._unit:anim_data() and self._unit:anim_data().act then
+		return false
+	end
+
+	local medic = managers.enemy:get_nearby_medic(self._unit)
+	local difficulty_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)
+	if difficulty_index == 8 and medic then
+		if medic:character_damage():heal_unit(self._unit) then
+			local enemies = World:find_units_quick(medic, "sphere", medic:position(), tweak_data.medic.radius, managers.slot:get_mask("enemies"))
+			
+			for _, enemy in ipairs(enemies) do
+				if medic:character_damage():heal_unit(enemy, true) and not enemy == self._unit then
+					enemy:movement():action_request({
+						body_part = 1,
+						type = "healed",
+						client_interrupt = Network:is_client()
+					})
+				end
+			end
+			return true
+		end
+	else
+		return medic and medic:character_damage():heal_unit(self._unit)
+	end
+end

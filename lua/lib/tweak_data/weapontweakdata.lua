@@ -130,6 +130,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_sniper.armor_piercing = true
 	self.deathvox_sniper.usage = "is_assault_sniper"
 	self.deathvox_sniper.anim_usage = "is_bullpup"
+	self.deathvox_sniper.disable_sniper_laser = true
 	
 	self.deathvox_medicdozer_smg.sounds.prefix = "polymer_npc"
 	self.deathvox_medicdozer_smg.use_data.selection_index = 1
@@ -225,5 +226,23 @@ function WeaponTweakData:init(tweak_data)
     self.deathvox_greendozer.suppression = 1.8
     self.deathvox_greendozer.is_shotgun = true
     self.deathvox_greendozer.usage = "is_dozer_pump"
-	
+end
+
+function WeaponTweakData:_set_sm_wish()
+	self.ak47_ass_npc.DAMAGE = 3
+	self.m4_npc.DAMAGE = 3
+	self.g36_npc.DAMAGE = 5
+	self.r870_npc.DAMAGE = 7
+	self.swat_van_turret_module.HEALTH_INIT = 40000
+	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 500
+	self.swat_van_turret_module.DAMAGE = 3
+	self.swat_van_turret_module.CLIP_SIZE = 600
+	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 696969
+	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3
+	self.ceiling_turret_module.HEALTH_INIT = 40000
+	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 350
+	self.ceiling_turret_module.DAMAGE = 3.5
+	self.ceiling_turret_module.CLIP_SIZE = 800
+	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 3
+	self.ceiling_turret_module.BAG_DMG_MUL = 50
 end

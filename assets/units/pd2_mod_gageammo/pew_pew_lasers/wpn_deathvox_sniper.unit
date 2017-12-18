@@ -5,7 +5,7 @@
 	</dependencies>
 	<extensions>
 		<extension name="unit_data" class="ScriptUnitData" />
-		<extension name="base" class="NewNPCRaycastWeaponBase" >
+		<extension name="base" class="DeathVoxSniperWeaponBase" >
 			<var name="name_id" value="deathvox_sniper" />
 		</extension>
 	</extensions>

@@ -155,3 +155,7 @@ function GroupAIStateBesiege:_upd_group_spawning()
 		end
 	end
 end
+
+function GroupAIStateBesiege:_check_spawn_phalanx()
+	return false
+end

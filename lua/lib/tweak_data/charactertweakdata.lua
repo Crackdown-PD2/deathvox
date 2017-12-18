@@ -2327,11 +2327,11 @@ function CharacterTweakData:_set_sm_wish()
 		self.city_swat.no_arrest = false
 	end
 	self:_multiply_all_speeds(1, 1)
-	self.presets.gang_member_damage.HEALTH_INIT = 175
-	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
-	self.old_hoxton_mission.HEALTH_INIT = 175
-	self.spa_vip.HEALTH_INIT = 175
-	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 175
+	self.presets.gang_member_damage.HEALTH_INIT = 525
+	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.75
+	self.old_hoxton_mission.HEALTH_INIT = 525
+	self.spa_vip.HEALTH_INIT = 525
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 525
 	self.flashbang_multiplier = 2
 	self.concussion_multiplier = 2
 end
