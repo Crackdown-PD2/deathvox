@@ -1961,7 +1961,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard = deep_clone(self.security)
 	self.deathvox_guard.detection = presets.detection.guard -- normal, guard, sniper, gang_member, civilian, blind
 	self.deathvox_guard.suppression = nil -- presets.suppression.no_supress
-	self.deathvox_guard.surrender = nil
+	self.deathvox_guard.surrender = presets.surrender.easy
 	self.deathvox_guard.move_speed = presets.move_speed.very_fast -- tentative.
 	self.deathvox_guard.ecm_vulnerability = 0 -- DV guards ignore feedback. Removing safety net in stealth.
 	
