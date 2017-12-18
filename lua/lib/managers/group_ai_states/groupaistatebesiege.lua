@@ -159,3 +159,8 @@ end
 function GroupAIStateBesiege:_check_spawn_phalanx()
 	return false
 end
+
+function GroupAIStateBesiege:detonate_cs_grenade(detonate_pos, shooter_pos, duration, damage, diameter)
+	managers.network:session():send_to_peers_synched("sync_cs_grenade", detonate_pos, shooter_pos, duration, damage, diameter)
+	self:sync_cs_grenade(detonate_pos, shooter_pos, duration, damage, diameter)
+end

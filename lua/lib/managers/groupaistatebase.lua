@@ -256,3 +256,15 @@ function GroupAIStateBase:chk_say_enemy_chatter(unit, unit_pos, chatter_type)
 
 	return true
 end
+
+
+function GroupAIStateBase:sync_cs_grenade(detonate_pos, shooter_pos, duration, damage, diameter)
+	local grenade_to_use = World:spawn_unit(Idstring("units/weapons/cs_grenade_quick/cs_grenade_quick"), detonate_pos, Rotation())
+	
+	grenade:base():set_properties({
+		radius = diameter * 0.5 * 100,
+		damage = damage,
+		duration = duration
+	})
+	grenade:base():detonate()
+end
