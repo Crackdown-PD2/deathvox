@@ -4,7 +4,7 @@ function PlayerTased:_update_check_actions(t, dt)
 	if self._next_shock < t then
 		self._num_shocks = self._num_shocks + 1
 		if difficulty_index == 8 then
-			self._next_shock = t + 0.1 + math.rand(0.5)
+			self._next_shock = t + 0.25 + math.rand(1)
 			self._unit:camera():play_shaker("player_taser_shock", 3, 10)
 			self._unit:camera():camera_unit():base():set_target_tilt((math.random(2) == 1 and -1 or 1) * math.random(25))
 		else
