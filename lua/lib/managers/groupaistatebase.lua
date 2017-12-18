@@ -260,16 +260,16 @@ end
 
 function GroupAIStateBase:sync_cs_grenade(detonate_pos, shooter_pos, duration, damage, diameter)
 	local grenade_to_use = World:spawn_unit(Idstring("units/weapons/cs_grenade_quick/cs_grenade_quick"), detonate_pos, Rotation())
-	log("CRACKDOWN sync cs grenade: diameter " .. diameter .. " damage " .. damage .. " duration " .. duration)
+	log("CRACKDOWN sync cs grenade: diameter")
+	log(diameter)
+	log("CRACKDOWN sync cs grenade: damage")
+	log(damage)
+	log("CRACKDOWN sync cs grenade: duration")
+	log(duration)
 	grenade_to_use:base():set_properties({
 		radius = diameter * 0.5 * 100,
 		damage = damage,
 		duration = duration
 	})
 	grenade_to_use:base():detonate()
-end
-
-function GroupAIStateBase:detonate_cs_grenade(detonate_pos, shooter_pos, duration, damage, diameter)
-	managers.network:session():send_to_peers_synched("sync_cs_grenade", detonate_pos, shooter_pos, duration, damage, diameter)
-	self:sync_cs_grenade(detonate_pos, shooter_pos, duration, damage, diameter)
 end
