@@ -260,7 +260,7 @@ end
 
 function GroupAIStateBase:sync_cs_grenade(detonate_pos, shooter_pos, duration, damage, diameter)
 	local grenade_to_use = World:spawn_unit(Idstring("units/weapons/cs_grenade_quick/cs_grenade_quick"), detonate_pos, Rotation())
-	log("CRACKDOWN sync cs grenade: diameter")
+	log("CRACKDOWN sync cs grenade: diameter " .. type(diameter))
 	log(diameter)
 	log("CRACKDOWN sync cs grenade: damage")
 	log(damage)
