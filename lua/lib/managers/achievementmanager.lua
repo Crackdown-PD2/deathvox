@@ -1,3 +1,3 @@
-function AchievmentManager.award(self, ...)
+function AchievmentManager:award(id)
 	return
 end
