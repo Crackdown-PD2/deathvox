@@ -20,15 +20,18 @@ function PlayerTased:_update_check_actions(t, dt)
 
 		if not alive(self._counter_taser_unit) then
 			self._camera_unit:base():start_shooting()
-
-			self._recoil_t = t + 0.5
-
+			if difficulty_index == 8 then
+				self._recoil_t = t + 0.25
+			else
+				self._recoil_t = t + 0.5
 			if not managers.player:has_category_upgrade("player", "resist_firing_tased") then
 				input.btn_primary_attack_state = true
 				input.btn_primary_attack_press = true
 			end
-
-			self._camera_unit:base():recoil_kick(-5, 5, -5, 5)
+			if difficulty_index == 8 then
+				self._camera_unit:base():recoil_kick(-15, 15, -15, 15)
+			else
+				self._camera_unit:base():recoil_kick(-5, 5, -5, 5)
 			self._unit:camera():play_redirect(self:get_animation("tased_boost"))
 		end
 	elseif self._recoil_t then
@@ -50,7 +53,10 @@ function PlayerTased:_update_check_actions(t, dt)
 	self._shooting = self:_check_action_primary_attack(t, input)
 
 	if self._shooting then
-		self._camera_unit:base():recoil_kick(-5, 5, -5, 5)
+		if difficulty_index == 8 then
+			self._camera_unit:base():recoil_kick(-15, 15, -15, 15)
+		else
+			self._camera_unit:base():recoil_kick(-5, 5, -5, 5)
 	end
 
 	if self._unequip_weapon_expire_t and self._unequip_weapon_expire_t <= t then
