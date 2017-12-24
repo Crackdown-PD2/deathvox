@@ -35,6 +35,7 @@
 		<hook file="lib/units/weapons/newnpcraycastweaponbase.lua" source_file="lib/units/weapons/newnpcraycastweaponbase"/>
 		
 		<hook file="lib/managers/groupaistatebase.lua" source_file="lib/managers/group_ai_states/groupaistatebase"/>
+		<hook file="lib/managers/achievementmanager.lua" source_file="lib/managers/achievementmanager"/>
 		<hook file="lib/managers/group_ai_states/groupaistatebesiege.lua" source_file="lib/managers/group_ai_states/groupaistatebesiege"/>
 
 		<hook file="lib/managers/mission/elementspawnenemygroup.lua" source_file="lib/managers/mission/elementspawnenemygroup"/>

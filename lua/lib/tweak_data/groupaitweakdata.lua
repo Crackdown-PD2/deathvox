@@ -245,13 +245,15 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 	self._tactics = {
 			deathvox_swat_flank = {
 				"flank",
+				"charge",
 				"provide_coverfire",
 				"provide_support"
 				},	
 			deathvox_swat_ranged = {
 				"ranged_fire",
 				"provide_coverfire",
-				"provide_support"
+				"provide_support",
+				"charge"
 				},
 			deathvox_swat_charge = {
 				"charge",
@@ -261,8 +263,8 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			deathvox_medic = {
 				"shield_cover",
 				"provide_support",
-				"charge",
-				"provide_coverfire"
+				"provide_coverfire",
+				"charge"
 				},
 			deathvox_shield_lead = {
 				"shield",
@@ -306,6 +308,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				},
 			deathvox_tank_pinch = {
 				"flank",
+				"charge",
 				"provide_coverfire",
 				"deathguard",
 				"murder"
@@ -319,13 +322,17 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				},
 			deathvox_spooc_pinch = {
 				"flank",
-				"provide_coverfire",
 				"smoke_grenade",
+				"charge",
+				"provide_coverfire",
+				"provide_support",
 				"deathguard"
 				},
 			deathvox_spooc_shield = {
 				"shield_cover",
+				"charge",
 				"provide_coverfire",
+				"provide_support",
 				"smoke_grenade",
 				"deathguard"
 				},
@@ -346,26 +353,30 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"flank",
 				"ranged_fire",
 				"provide_coverfire",
+				"provide_support",
 				"deathguard"
 				},
 			deathvox_sniper = {
 				"shield_cover",
 				"ranged_fire",
+				"charge",
 				"provide_coverfire",
+				"provide_support",
 				"murder",
 				"deathguard"
 				},
 			deathvox_supportflash = {
+				"charge",
 				"flank",
 				"flash_grenade",
-				"provide_support",
-				"provide_coverfire"
+				"provide_coverfire",
+				"provide_support"
 				},
 			deathvox_supportsmoke = {
 				"flank",
 				"smoke_grenade",
-				"provide_support",
-				"provide_coverfire"
+				"provide_coverfire",
+				"provide_support"
 				},	
 			swat_shotgun_rush = { --vanilla tactics begin here.
 				"charge",
@@ -405,7 +416,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			shield_wall_charge = {
 				"shield",
 				"charge",
-				"provide_support "
+				"provide_support"
 				},
 			shield_support_charge = {
 				"shield_cover",
@@ -421,7 +432,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"deathguard"
 				},
 			tazer_flanking = {
-				"flanking",
+				"flank",
 				"charge",
 				"provide_coverfire",
 				"smoke_grenade",
@@ -452,7 +463,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_tazerlead,
+				tactics = self._tactics.deathvox_tazer_lead,
 				rank = 2
 			},
 			{
