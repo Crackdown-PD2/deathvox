@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<tweak name="settings/network" extension="network_settings">
+    <search>
+		<network/>
+			<rpc/>
+				<message name="sync_tear_gas_grenade_detonate" receiver="unit" delivery="ordered" check="server_to_client"/>
+    </search>
+    <target>
+		<param type="int" min="0"/>
+		<param type="int" min="0"/>
+		<param type="int" min="0"/>
+		<param type="vector3" exact="false"/>
+	</target>
+</tweak>
