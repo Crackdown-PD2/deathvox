@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<tweak name="settings/network" extension="network_settings">
+    <search>
+		<network/>
+			<rpc/>
+				<message name="sync_cs_grenade" receiver="unit" delivery="reliable" check="server_to_client"/>
+    </search>
+    <target>
+		<param type="int" min="0" max="600"/>
+		<param type="int" min="0" max="600"/>
+	</target>
+</tweak>
