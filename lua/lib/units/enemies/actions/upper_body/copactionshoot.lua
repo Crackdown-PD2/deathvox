@@ -39,7 +39,7 @@ function CopActionShoot:_get_target_pos(shoot_from_pos, ...)
 					shoot_from_pos = shoot_from_pos + Vector3(50, 50, 0)
 					target_pos, target_vec, target_dis, autotarget = _f_CopActionShoot__get_target_pos(self, shoot_from_pos, ...)
 					self._unit:base():play_voiceline(_G.deathvox.BufferedSounds.grenadier.use_gas, true)
-					deploy_gas(shoot_from_pos, target_vec)
+					managers.groupai:state():detonate_cs_grenade(target_pos, nil, 7.5, 0, 6)
 				end
 			else
 				roll = math.rand(1, 100)
@@ -56,12 +56,4 @@ function CopActionShoot:_get_target_pos(shoot_from_pos, ...)
 		target_pos, target_vec, target_dis, autotarget = _f_CopActionShoot__get_target_pos(self, shoot_from_pos, ...)
 	end
 	return target_pos, target_vec, target_dis, autotarget
-end
-
-function deploy_gas(shoot_from_pos, target_vec)
-	local Net = _G.LuaNetworking
-	local z_fix = {-0.05, -0.02, -0.05, -0.02, -0.07, -0.07, -0.1}
-	target_vec = target_vec + Vector3(0, 0, z_fix[math.random(7)])
-	local detonate_pos = managers.player:player_unit():position()
-	managers.groupai:state():detonate_cs_grenade(detonate_pos, nil, 7.5, 0, 6)
 end

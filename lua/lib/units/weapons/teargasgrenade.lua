@@ -21,9 +21,7 @@ function TearGasGrenade:detonate()
 	local blurzone_radius = self.radius * 1.5
 
 	managers.environment_controller:set_blurzone(self._unit:key(), 1, self._unit:position(), blurzone_radius, 0, true)
-	if Network:is_server() then
-		managers.network:session():send_to_peers("sync_tear_gas_grenade_detonate", self._unit)
-	end
+	managers.network:session():send_to_peers_synched("sync_tear_gas_grenade_detonate", self._unit)
 
 end
 

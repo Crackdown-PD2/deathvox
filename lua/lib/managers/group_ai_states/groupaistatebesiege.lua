@@ -167,6 +167,5 @@ function GroupAIStateBesiege:detonate_cs_grenade(detonate_pos, shooter_pos, dura
 	log(damage)
 	log("CRACKDOWN detonate cs grenade: duration")
 	log(duration)
-	managers.network:session():send_to_peers_synched("sync_cs_grenade", detonate_pos, shooter_pos, duration, damage, diameter)
 	self:sync_cs_grenade(detonate_pos, shooter_pos, duration, damage, diameter)
 end
