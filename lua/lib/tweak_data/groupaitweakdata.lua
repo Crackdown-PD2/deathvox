@@ -13,8 +13,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			boom = 2,
 			spooc = 4,
 			shield = 6,
-			medic = 3,
-			ass_sniper = 2
+			medic = 4,
+			ass_sniper = 3
 		}
 	end
 	-- Death Vox
@@ -303,6 +303,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			deathvox_tank_lead = {
 				"charge",
 				"provide_coverfire",
+				"provide_support",
 				"murder",
 				"deathguard"
 				},
@@ -310,6 +311,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"flank",
 				"charge",
 				"provide_coverfire",
+				"provide_support",
 				"deathguard",
 				"murder"
 				},
@@ -865,8 +867,24 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			{
 				unit = "deathvox_heavyar",
 				freq = 1,
-				amount_min = 4,
-				amount_max = 4,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = deathvox_swat_ranged,
+				rank = 1
+			},
+			{
+				unit = "deathvox_sniper_assault",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_sniper,
+				rank = 2
+			},
+			{
+				unit = "deathvox_heavyar",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
 				tactics = deathvox_swat_ranged,
 				rank = 1
 			}
@@ -919,7 +937,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				amount_min = 1,
 				amount_max = 1,
 				tactics = self._tactics.deathvox_medic,
-				rank = 2
+				rank = 1
 			}
 		}
 	}
