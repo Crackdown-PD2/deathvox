@@ -1765,7 +1765,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 	self.deathvox_lightshot = deep_clone(self.city_swat)
 	self.deathvox_lightshot.detection = presets.detection.normal
-	self.deathvox_lightshot.suppression = presets.suppression.no_supress -- tentative.
+	self.deathvox_lightshot.suppression = presets.suppression.hard_agg -- tentative.
 	self.deathvox_lightshot.surrender = presets.surrender.normal -- tentative.
 	self.deathvox_lightshot.move_speed = presets.move_speed.very_fast
 	self.deathvox_lightshot.surrender_break_time = {6, 8} 
@@ -1920,7 +1920,7 @@ function CharacterTweakData:_init_deathvox(presets)
 
 	self.deathvox_sniper.use_factory = true -- Use a factory weapon
 	self.deathvox_sniper.factory_weapon_id = {"wpn_deathvox_sniper"}
-	self.deathvox_sniper.HEALTH_INIT = 34 -- new with final 2017 pass.
+	self.deathvox_sniper.HEALTH_INIT = 15 -- note does not match assault, consider revise.
 	self.deathvox_sniper.headshot_dmg_mul = 3
 	self.deathvox_sniper.is_special_unit = "sniper"
 	self.deathvox_sniper.access = "sniper"
@@ -1928,7 +1928,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper_assault = deep_clone(self.deathvox_sniper)
 	self.deathvox_sniper_assault.move_speed = presets.move_speed.very_fast
 	self.deathvox_sniper_assault.deathguard = true
-	self.deathvox_sniper_assault.HEALTH_INIT = 15
+	self.deathvox_sniper_assault.HEALTH_INIT = 34
 	self.deathvox_sniper_assault.headshot_dmg_mul = 3
 	self.deathvox_sniper_assault.is_special_unit = "ass_sniper"
 	self.deathvox_sniper_assault.access = "swat"
