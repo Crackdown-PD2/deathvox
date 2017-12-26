@@ -182,10 +182,10 @@ function CharacterTweakData:_presets(tweak_data)
 		is_shotgun_pump = {}, -- used for green dozers. Assumes base damage 400.
 		is_shotgun_mag = {}, -- used for saiga dozers. Assumes base damage 225.
 		mossberg = {}, -- scripted enemy (e.g. beat cop) shotgun. clones light shotgun. Assumes base damage 75.
-		is_smg = {}, -- Ased for shield, variety of enemies. Assumes base damage 36.
+		is_smg = {}, -- Ased for shield, variety of enemies. Assumes base damage 45.
 		mp9 = {}, -- Clones smg. Used primarily by security, FBI HRT.
 		rifle = {}, -- clones light ar. Used enemy types unknown. Assumes base damage 60.
-		mac11 = {}, -- Clones smg. Used primarily by criminal enemies. Assumes base damage 36.
+		mac11 = {}, -- Clones smg. Used primarily by criminal enemies. Assumes base damage 45.
 		akimbo_pistol = {}, -- used by boss enemy on Panic Room. Clones pistol.
 		mini = {}, -- unused aside from Spring, crime spree enemy. Will revise in future build for possible scripted use.
 		flamethrower = {}, -- Used for Summers.
@@ -193,121 +193,124 @@ function CharacterTweakData:_presets(tweak_data)
 		is_heavy_rifle = {}, -- Used for heavy AR. Assumes base damage 75.
 		is_light_shotgun = {}, -- Used for light shotgun SWAT. Assumes base damage 75.
 		is_heavy_shotgun = {}, -- Used for heavy shotgun SWAT. Assumes base damage 100.
-		is_tank_smg = {}, -- used for medic dozer. Assumes base damage 36.
+		is_tank_smg = {}, -- used for medic dozer. Clones smg. Assumes base damage 45.
 		is_bullpup = {}, -- clones light rifle. Assumes base damage 60.
 		is_sniper = {}, -- initializing sniper. Assumes base damage 240.
 		is_assault_sniper = {} -- initializing assault sniper preset. Assumes base damage 240.
 	}]]--
 	presets.weapon.deathvox = deep_clone(presets.weapon.deathwish)
-	presets.weapon.deathvox.is_revolver.aim_delay = { -- mark 3 values complete.
+	--note to self- clean up is_revolver and make consistent.
+	presets.weapon.deathvox.is_revolver = { -- used by medics.
+		aim_delay = { -- mark 3 values complete.
 		0,
 		0
-	}
-	presets.weapon.deathvox.is_revolver.focus_delay = 10 -- validated, unchanged.
-	presets.weapon.deathvox.is_revolver.focus_dis = 200
-	presets.weapon.deathvox.is_revolver.spread = 20
-	presets.weapon.deathvox.is_revolver.miss_dis = 50
-	presets.weapon.deathvox.is_revolver.RELOAD_SPEED = 0.9 --validated, unchanged.
-	presets.weapon.deathvox.is_revolver.melee_speed = 1
-	presets.weapon.deathvox.is_revolver.melee_dmg = 8
-	presets.weapon.deathvox.is_revolver.melee_retry_delay = {
+		},
+		focus_delay = 10, -- validated, unchanged.
+		focus_dis = 200,
+		spread = 20,
+		miss_dis = 50,
+		RELOAD_SPEED = 0.9, --validated, unchanged.
+		melee_speed = 1,
+		melee_dmg = 8,
+		melee_retry_delay = {
 		1,
 		2
-	}
-	presets.weapon.deathvox.is_revolver.range = { --validated, unchanged, consider adjustment to increase engage range.
-		optimal = 2000,
-		far = 5000,
-		close = 1000
-	}
-	presets.weapon.deathvox.is_revolver.FALLOFF = { 
-		{
-			dmg_mul = 1,
-			r = 100,
-			acc = {
-				0.7, --note to self 2 values show acc increase with focus delay
-				0.9
-			},
-			recoil = {
-				0.8,
-				1
-			},
-			mode = {
-				1,
-				0,
-				0,
-				0
-			}
 		},
-		{
-			dmg_mul = .8, -- new from mark 1.
-			r = 500,
-			acc = {
-				0.6,
-				0.85
-			},
-			recoil = {
-				0.8,
-				1.1
-			},
-			mode = {
-				1,
-				0,
-				0,
-				0
-			}
+		range = { --validated, unchanged, consider adjustment to increase engage range.
+			optimal = 2000,
+			far = 5000,
+			close = 1000
 		},
-		{
-			dmg_mul = 0.65,
-			r = 1000,
-			acc = {
-				0.5,
-				0.75
+		FALLOFF = { 
+			{
+				dmg_mul = 1,
+				r = 100,
+				acc = {
+					0.7, --note to self 2 values show acc increase with focus delay
+					0.9
+				},
+				recoil = {
+					0.8,
+					1
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
 			},
-			recoil = {
-				0.8,
-				1.1
+			{
+				dmg_mul = .8, -- new from mark 1.
+				r = 500,
+				acc = {
+					0.6,
+					0.85
+				},
+				recoil = {
+					0.8,
+					1.1
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
 			},
-			mode = {
-				1,
-				0,
-				0,
-				0
-			}
-		},
-		{
-			dmg_mul = 0.5,
-			r = 2000,
-			acc = {
-				0.5,
-				0.65
+			{
+				dmg_mul = 0.65,
+				r = 1000,
+				acc = {
+					0.5,
+					0.75
+				},
+				recoil = {
+					0.8,
+					1.1
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
 			},
-			recoil = {
-				1,
-				1.3
+			{
+				dmg_mul = 0.5,
+				r = 2000,
+				acc = {
+					0.5,
+					0.65
+				},
+				recoil = {
+					1,
+					1.3
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
 			},
-			mode = {
-				1,
-				0,
-				0,
-				0
-			}
-		},
-		{
-			dmg_mul = 0.37,
-			r = 3000,
-			acc = {
-				0.1,
-				0.35
-			},
-			recoil = {
-				1,
-				1.5
-			},
-			mode = {
-				1,
-				0,
-				0,
-				0
+			{
+				dmg_mul = 0.37,
+				r = 3000,
+				acc = {
+					0.1,
+					0.35
+				},
+				recoil = {
+					1,
+					1.5
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
 			}
 		}
 	}
@@ -440,7 +443,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_shotgun_pump = { -- mark 3 values complete. Assumes base damage 400. basis is presets.weapon.deathwish.is_shotgun_pump. Extremely dangerous close range, much less so further out.
+	presets.weapon.deathvox.is_shotgun_pump = { -- mark 4 values complete. Assumes base damage 400. basis is presets.weapon.deathwish.is_shotgun_pump. Extremely dangerous close range, much less so further out.
 		aim_delay = {
 			0,
 			0
@@ -514,7 +517,7 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = .325,
+				dmg_mul = .350,
 				r = 2000,
 				acc = {
 					0.45,
@@ -532,7 +535,7 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = .125,
+				dmg_mul = .150,
 				r = 3000,
 				acc = {
 					0.3,
@@ -625,7 +628,7 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = .6,
+				dmg_mul = .7,
 				r = 2000,
 				acc = { -- reduced lower end, vanilla .35.
 					0.35,
@@ -643,7 +646,7 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = .2,
+				dmg_mul = .3,
 				r = 3000,
 				acc = {
 					0.3,
@@ -1157,140 +1160,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_tank_smg = { -- mark 3 values complete. Assumes base damage of 36. basis is presets.weapon.deathwish.is_smg. Used for medidozer.
-		aim_delay = {
-			0,
-			0.1 --re-adding aim delay from lower difficulties.
-		},
-		focus_delay = 1, --re-adding slight focus delay from lower difficulties.
-		focus_dis = 200,
-		spread = 15,
-		miss_dis = 10,
-		RELOAD_SPEED = 1.4, -- validated, unchanged.
-		melee_speed = presets.weapon.expert.is_smg.melee_speed,
-		melee_dmg = presets.weapon.expert.is_smg.melee_dmg,
-		melee_retry_delay = presets.weapon.expert.is_smg.melee_retry_delay,
-		range = {
-			optimal = 3200,
-			far = 6000,
-			close = 2000
-		},
-		autofire_rounds = {
-			8,
-			16
-		},
-		FALLOFF = {
-			{
-				dmg_mul = 1,
-				r = 100,
-				acc = {
-					0.6, -- applying lower bound on accuracy based on lower difficulties.
-					0.95
-				},
-				recoil = {
-					0.1,
-					0.25
-				},
-				mode = {
-					0,
-					0,
-					0,
-					1
-				}
-			},
-			{
-				dmg_mul = 1,
-				r = 500,
-				acc = {
-					0.6,
-					0.75
-				},
-				recoil = {
-					0.1,
-					0.3
-				},
-				mode = {
-					0,
-					0,
-					0,
-					1
-				}
-			},
-			{
-				dmg_mul = .9, -- applying falloff, unlike DW.
-				r = 1000,
-				acc = {
-					0.5,
-					0.75
-				},
-				recoil = {
-					0.35,
-					0.5
-				},
-				mode = {
-					0,
-					0,
-					0,
-					1
-				}
-			},
-			{
-				dmg_mul = .7,
-				r = 2000,
-				acc = {
-					0.4,
-					0.7
-				},
-				recoil = {
-					0.35,
-					0.5
-				},
-				mode = {
-					0,
-					0,
-					1,
-					0
-				}
-			},
-			{
-				dmg_mul = .6,
-				r = 3000,
-				acc = {
-					0.55,
-					0.6
-				},
-				recoil = {
-					0.5,
-					1.5
-				},
-				mode = {
-					0,
-					0,
-					1,
-					0
-				}
-			},
-			{
-				dmg_mul = .4,
-				r = 4500,
-				acc = {
-					0.3,
-					0.6
-				},
-				recoil = {
-					1,
-					1.5
-				},
-				mode = {
-					0,
-					1,
-					0,
-					0
-				}
-			}
-		}
-	}
-	presets.weapon.deathvox.is_smg = { -- mark 3 values complete. Assumes base damage of 36. basis is presets.weapon.deathwish.is_smg. Currently copies medidozer values.
+	presets.weapon.deathvox.is_smg = { -- mark 3 values complete. Assumes base damage of 45. basis is presets.weapon.deathwish.is_smg. Currently copies medidozer values.
 		aim_delay = {
 			0,
 			0.1 --re-adding aim delay from lower difficulties.
@@ -1601,7 +1471,7 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = .75,
+				dmg_mul = .8,
 				r = 1000,
 				acc = {
 					0.5,
@@ -1619,7 +1489,7 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = .5,
+				dmg_mul = .6,
 				r = 2000,
 				acc = {
 					0.4,
@@ -1637,7 +1507,7 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = .25,
+				dmg_mul = .3,
 				r = 3000,
 				acc = {
 					0.2,
@@ -1810,139 +1680,8 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_cloaker_smg = { -- Revised Nov 4 values. Copies is_smg.
-		aim_delay = {
-			0,
-			0.1 --re-adding aim delay from lower difficulties.
-		},
-		focus_delay = 1, --re-adding slight focus delay from lower difficulties.
-		focus_dis = 200,
-		spread = 15,
-		miss_dis = 10,
-		RELOAD_SPEED = 1.4, -- validated, unchanged.
-		melee_speed = presets.weapon.expert.is_smg.melee_speed,
-		melee_dmg = presets.weapon.expert.is_smg.melee_dmg,
-		melee_retry_delay = presets.weapon.expert.is_smg.melee_retry_delay,
-		range = {
-			optimal = 3200,
-			far = 6000,
-			close = 2000
-		},
-		autofire_rounds = {
-			8,
-			16
-		},
-		FALLOFF = {
-			{
-				dmg_mul = 1,
-				r = 100,
-				acc = {
-					0.6, -- applying lower bound on accuracy based on lower difficulties.
-					0.95
-				},
-				recoil = {
-					0.1,
-					0.25
-				},
-				mode = {
-					0,
-					0,
-					0,
-					1
-				}
-			},
-			{
-				dmg_mul = 1,
-				r = 500,
-				acc = {
-					0.6,
-					0.75
-				},
-				recoil = {
-					0.1,
-					0.3
-				},
-				mode = {
-					0,
-					0,
-					0,
-					1
-				}
-			},
-			{
-				dmg_mul = .9, -- applying falloff, unlike DW.
-				r = 1000,
-				acc = {
-					0.5,
-					0.75
-				},
-				recoil = {
-					0.35,
-					0.5
-				},
-				mode = {
-					0,
-					0,
-					0,
-					1
-				}
-			},
-			{
-				dmg_mul = .7,
-				r = 2000,
-				acc = {
-					0.4,
-					0.7
-				},
-				recoil = {
-					0.35,
-					0.5
-				},
-				mode = {
-					0,
-					0,
-					1,
-					0
-				}
-			},
-			{
-				dmg_mul = .6,
-				r = 3000,
-				acc = {
-					0.55,
-					0.6
-				},
-				recoil = {
-					0.5,
-					1.5
-				},
-				mode = {
-					0,
-					0,
-					1,
-					0
-				}
-			},
-			{
-				dmg_mul = .4,
-				r = 4500,
-				acc = {
-					0.3,
-					0.6
-				},
-				recoil = {
-					1,
-					1.5
-				},
-				mode = {
-					0,
-					1,
-					0,
-					0
-				}
-			}
-		}
-	}
+	presets.weapon.deathvox.is_tank_smg = deep_clone(presets.weapon.deathvox.is_smg) --Used for medidozer. May separate.
+	presets.weapon.deathvox.is_cloaker_smg = deep_clone(presets.weapon.deathvox.is_smg) -- clone similar to other vars.
 	presets.weapon.deathvox.is_dozer_saiga = deep_clone(presets.weapon.deathvox.is_shotgun_mag)
 	presets.weapon.deathvox.is_dozer_pump = deep_clone(presets.weapon.deathvox.is_shotgun_pump)
 	presets.weapon.deathvox.is_dozer_lmg = deep_clone(presets.weapon.deathvox.is_lmg)
@@ -2001,6 +1740,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 	self.deathvox_heavyar = deep_clone(self.city_swat)
 	self.deathvox_heavyar.detection = presets.detection.normal
+	self.deathvox_heavyar.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- new with final 2017 pass.
 	self.deathvox_heavyar.suppression = presets.suppression.hard_agg -- tentative.
 	self.deathvox_heavyar.surrender = presets.surrender.hard --tentative.
 	self.deathvox_heavyar.move_speed = presets.move_speed.very_fast
@@ -2017,8 +1757,9 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyar.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_heavyar.factory_weapon_id = {"wpn_deathvox_heavy_ar"}
 	self.deathvox_heavyar.use_factory = true
-	self.deathvox_heavyar.HEALTH_INIT = 96
+	self.deathvox_heavyar.HEALTH_INIT = 101 -- new with final 2017 pass.
 	self.deathvox_heavyar.headshot_dmg_mul = 3
+	self.deathvox_heavyar.damage.explosion_damage_mul = 0.9
 	self.deathvox_heavyar.access = "swat"
 	table.insert(self._enemy_list, "deathvox_heavyar")
 	
@@ -2047,6 +1788,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 	self.deathvox_heavyshot = deep_clone(self.city_swat)
 	self.deathvox_heavyshot.detection = presets.detection.normal
+	self.deathvox_heavyshot.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- new with final 2017 pass.
 	self.deathvox_heavyshot.suppression = presets.suppression.hard_agg -- tentative.
 	self.deathvox_heavyshot.surrender = presets.surrender.hard -- tentative.
 	self.deathvox_heavyshot.move_speed = presets.move_speed.very_fast
@@ -2063,15 +1805,17 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyshot.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_heavyshot.factory_weapon_id = {"wpn_deathvox_shotgun_heavy"}
 	self.deathvox_heavyshot.use_factory = true
-	self.deathvox_heavyshot.HEALTH_INIT = 96
+	self.deathvox_heavyshot.HEALTH_INIT = 101 -- new with final 2017 pass.
 	self.deathvox_heavyshot.headshot_dmg_mul = 3
+	self.deathvox_heavyshot.damage.explosion_damage_mul = 0.9
 	self.deathvox_heavyshot.access = "swat"
 	table.insert(self._enemy_list, "deathvox_heavyshot")
 	
 	self.deathvox_shield = deep_clone(self.shield)
 	self.deathvox_shield.tags = {"shield"} -- just to be sure it's being applied.
 	self.deathvox_shield.detection = presets.detection.normal
-	self.deathvox_shield.suppression = presets.suppression.no_supress --I think this is in resto, if not it now is.
+	self.deathvox_shield.damage.hurt_severity = presets.hurt_severities.only_explosion_hurts
+	self.deathvox_shield.suppression = presets.suppression.no_supress -- I think this is in resto, if not it now is.
 	self.deathvox_shield.surrender = nil
 	self.deathvox_shield.move_speed = presets.move_speed.very_fast -- same as base.
 	self.deathvox_shield.ecm_vulnerability = .9 -- same as base.
@@ -2092,6 +1836,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic = deep_clone(self.medic)
 	self.deathvox_medic.tags = {"medic"} --just making sure tag applies.
 	self.deathvox_medic.detection = presets.detection.normal
+	self.deathvox_medic.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- added to make code consistent.
 	self.deathvox_medic.suppression = presets.suppression.no_supress -- tentative, in base.
 	self.deathvox_medic.surrender = presets.surrender.special 
 	self.deathvox_medic.move_speed = presets.move_speed.very_fast
@@ -2105,8 +1850,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic.no_arrest = true 
 	self.deathvox_medic.steal_loot = nil
 	self.deathvox_medic.rescue_hostages = false
-	self.deathvox_medic.weapon = deep_clone(presets.weapon.deathvox) -- normal, good, expert, deathwish, gang_member, sniper, sniper_good/expert/deathwish
-	self.deathvox_medic.use_factory = true -- Use a factory weapon
+	self.deathvox_medic.weapon = deep_clone(presets.weapon.deathvox)
+	self.deathvox_medic.use_factory = true
 	self.deathvox_medic.dv_medic_heal = true -- dont touch, makes him use the death vox healing
 	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_medic_pistol"}
 	self.deathvox_medic.HEALTH_INIT = 48
@@ -2118,9 +1863,11 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser = deep_clone(self.taser)
 	self.deathvox_taser.tags = {"taser"} -- just making sure tag applies.
 	self.deathvox_taser.detection = presets.detection.normal
-	self.deathvox_taser.suppression = nil
+	self.deathvox_taser.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire
+	self.deathvox_taser.damage.hurt_severity.tase = false -- if this works, great, horrible things will arise.
+	self.deathvox_taser.suppression = presets.suppression.no_supress -- consistent form added.
 	self.deathvox_taser.surrender = presets.surrender.special 
-	self.deathvox_taser.move_speed = presets.move_speed.fast --tentative, in base.
+	self.deathvox_taser.move_speed = presets.move_speed.fast
 	self.deathvox_taser.surrender_break_time = {7, 12} 
 	self.deathvox_taser.ecm_vulnerability = 0.9 -- in base
 	self.deathvox_taser.ecm_hurts = {
@@ -2131,7 +1878,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.no_arrest = true
 	self.deathvox_taser.steal_loot = nil
 	self.deathvox_taser.rescue_hostages = false
-	self.deathvox_taser.HEALTH_INIT = 96
+	self.deathvox_taser.HEALTH_INIT = 101 -- new with final 2017 pass.
 	self.deathvox_taser.headshot_dmg_mul = 3
 	self.deathvox_taser.is_special_unit = "taser"
 	self.deathvox_taser.access = "taser"
@@ -2173,35 +1920,37 @@ function CharacterTweakData:_init_deathvox(presets)
 
 	self.deathvox_sniper.use_factory = true -- Use a factory weapon
 	self.deathvox_sniper.factory_weapon_id = {"wpn_deathvox_sniper"}
-	self.deathvox_sniper.HEALTH_INIT = 15
+	self.deathvox_sniper.HEALTH_INIT = 15 -- note does not match assault, consider revise.
 	self.deathvox_sniper.headshot_dmg_mul = 3
 	self.deathvox_sniper.is_special_unit = "sniper"
 	self.deathvox_sniper.access = "sniper"
 
 	self.deathvox_sniper_assault = deep_clone(self.deathvox_sniper)
 	self.deathvox_sniper_assault.move_speed = presets.move_speed.very_fast
-	self.deathvox_sniper_assault.deathguard = true --tentative. This was apparently a big problem in RAID, but that unit may be implemented differently.
-	self.deathvox_sniper_assault.HEALTH_INIT = 15
+	self.deathvox_sniper_assault.deathguard = true
+	self.deathvox_sniper_assault.HEALTH_INIT = 34
 	self.deathvox_sniper_assault.headshot_dmg_mul = 3
 	self.deathvox_sniper_assault.is_special_unit = "ass_sniper"
 	self.deathvox_sniper_assault.access = "swat"
 	table.insert(self._enemy_list, "deathvox_sniper_assault")
 
-    self.deathvox_tank = deep_clone(self.tank)
-    self.deathvox_tank.tags = {"tank"} -- just making sure tag applies.
-    self.deathvox_tank.detection = presets.detection.normal
-    self.deathvox_tank.suppression = presets.suppression.no_supress
-    self.deathvox_tank.surrender = nil
-    self.deathvox_tank.surrender_break_time = {4, 6}
-    self.deathvox_tank.ecm_vulnerability = 0.85
-    self.deathvox_taser.ecm_hurts = {
+	self.deathvox_tank = deep_clone(self.tank)
+	self.deathvox_tank.tags = {"tank"} -- just making sure tag applies.
+	self.deathvox_tank.detection = presets.detection.normal
+	self.deathvox_tank.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase -- new with final 2017 pass. Probably not a change, needs to stay.
+	self.deathvox_tank.suppression = presets.suppression.no_supress
+	self.deathvox_tank.surrender = nil
+	self.deathvox_tank.surrender_break_time = {4, 6}
+	self.deathvox_tank.ecm_vulnerability = 0.85
+	self.deathvox_taser.ecm_hurts = {
         ears = {min_duration = 1, max_duration = 3} -- tentative, in base
     }
-    self.deathvox_tank.deathguard = true
-    self.deathvox_tank.no_arrest = true
-    self.deathvox_tank.steal_loot = nil
-    self.deathvox_tank.rescue_hostages = false
+	self.deathvox_tank.deathguard = true
+	self.deathvox_tank.no_arrest = true
+	self.deathvox_tank.steal_loot = nil
+	self.deathvox_tank.rescue_hostages = false
 	self.deathvox_tank.HEALTH_INIT = 675
+	self.deathvox_tank.damage.explosion_damage_mul = 0.7  -- new with final 2017 pass. Highly tentative. I do not believe this will effect armor. Requires scrutiny.
 	self.deathvox_tank.is_special_unit = "tank"
 	self.deathvox_tank.access = "tank"
 
@@ -2241,7 +1990,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_grenadier.melee_weapon_dmg_multiplier = 1
 	self.deathvox_grenadier.weapon_safety_range = 1000
 	self.deathvox_grenadier.detection = presets.detection.normal
-	self.deathvox_grenadier.HEALTH_INIT = 96
+	self.deathvox_grenadier.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire -- immune to poison. new with final 2017 pass.
+	self.deathvox_grenadier.HEALTH_INIT = 101
 	self.deathvox_grenadier.HEALTH_SUICIDE_LIMIT = 0.25
 	self.deathvox_grenadier.flammable = true
 	self.deathvox_grenadier.use_animation_on_fire_damage = true
