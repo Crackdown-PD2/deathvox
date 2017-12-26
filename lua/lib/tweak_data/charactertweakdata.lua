@@ -1836,7 +1836,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic = deep_clone(self.medic)
 	self.deathvox_medic.tags = {"medic"} --just making sure tag applies.
 	self.deathvox_medic.detection = presets.detection.normal
-	self.deathvox_heavyar.damage.hurt_severity = presets.hurt_severities.no_hurts -- added to make code consistent.
+	self.deathvox_medic.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- added to make code consistent.
 	self.deathvox_medic.suppression = presets.suppression.no_supress -- tentative, in base.
 	self.deathvox_medic.surrender = presets.surrender.special 
 	self.deathvox_medic.move_speed = presets.move_speed.very_fast
