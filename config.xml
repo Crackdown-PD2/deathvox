@@ -39,6 +39,7 @@
 
 		<hook file="lib/managers/mission/elementspawnenemygroup.lua" source_file="lib/managers/mission/elementspawnenemygroup"/>
 		<hook file="lib/managers/mission/elementspawnenemydummy.lua" source_file="lib/managers/mission/elementspawnenemydummy"/>
+		<hook file="lib/managers/mission/elementspecialobjective.lua" source_file="lib/managers/mission/elementspecialobjective"/>
     </Hooks>
 	<AddFiles file="add.xml"/>
 </mod>

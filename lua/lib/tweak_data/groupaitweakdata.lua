@@ -5,7 +5,10 @@ local old_task_data = GroupAITweakData._init_task_data
 function GroupAITweakData:_init_unit_categories(difficulty_index)
 	old_unit_cat(self, difficulty_index)
 	local access_type_walk_only = {walk = true}
-	local access_type_all = {walk = true, acrobatic = true}
+	local access_type_all = {
+		acrobatic = true,
+		walk = true
+	}
 	if difficulty_index == 8 then
 		self.special_unit_spawn_limits = {
 			tank = 3,
@@ -30,7 +33,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard")
 			}						
 		},
-		access = {walk = true, acrobatic = true, security = true, security_patrol = true}
+		access = access_type_all
 	}
 	self.unit_categories.deathvox_grenadier = {
 		unit_types = {
@@ -59,7 +62,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar")
 			}						
 		},
-		access = {walk = true, acrobatic = true, swat = true, fbi = true, cop = true}
+		access = access_type_all
 	}
 	self.unit_categories.deathvox_heavyar = {
 		unit_types = {
@@ -87,7 +90,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot")
 			}					
 		},
-		access = {walk = true, acrobatic = true, swat = true, fbi = true, cop = true}
+		access = access_type_all
 	}
 	self.unit_categories.deathvox_heavyshot = {
 		unit_types = {
@@ -101,7 +104,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
 			}						
 		},
-		access = {walk = true, acrobatic = true, swat = true, fbi = true, cop = true}
+		access = access_type_all
 	}
 	self.unit_categories.deathvox_shield = {
 		unit_types = {
@@ -115,7 +118,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield")
 			}						
 		},
-		access = {walk = true, acrobatic = true, swat = true, fbi = true, cop = true, shield = true},
+		access = access_type_all,
 		special_type = "shield"
 	}
 	self.unit_categories.deathvox_medic = {
@@ -130,7 +133,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic")
 			}						
 		},
-		access = {walk = true, acrobatic = true, swat = true, fbi = true, cop = true},
+		access = access_type_all,
 		special_type = "medic"
 	}
 	self.unit_categories.deathvox_taser = {
@@ -145,7 +148,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser"),
 			}					
 		},
-		access = {walk = true, acrobatic = true, swat = true, fbi = true, taser = true},
+		access = access_type_all,
 		special_type = "taser"
 	}
 	self.unit_categories.deathvox_greendozer = {
@@ -160,7 +163,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer"),
 			}					
 		},
-		access = {walk = true, acrobatic = true, swat = true, fbi = true, cop = true, tank = true},
+		access = access_type_all,
 		special_type = "tank"
 	}
 	self.unit_categories.deathvox_medicdozer = {
@@ -175,7 +178,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer"),
 			}					
 		},
-		access = {walk = true, acrobatic = true, swat = true, fbi = true, cop = true, tank = true},
+		access = access_type_all,
 		special_type = "tank"
 	}
 	self.unit_categories.deathvox_blackdozer = {
@@ -190,7 +193,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer"),
 			}				
 		},
-		access = {walk = true, acrobatic = true, swat = true, fbi = true, cop = true, tank = true},
+		access = access_type_all,
 		special_type = "tank"
 	}
 	self.unit_categories.deathvox_lmgdozer = {
@@ -205,7 +208,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer"),
 			}					
 		},
-		access = {walk = true, acrobatic = true, swat = true, fbi = true, cop = true, tank = true},
+		access = access_type_all,
 		special_type = "tank"
 	}
 	self.unit_categories.deathvox_cloaker = {
@@ -220,7 +223,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker")
 			}					
 		},
-		access = {walk = true, acrobatic = true, swat = true, fbi = true, cop = true, spooc = true},
+		access = access_type_all,
 		special_type = "spooc"
 	}
 	self.unit_categories.deathvox_sniper_assault = {
@@ -235,7 +238,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_sniper_assault/ene_deathvox_sniper_assault"),
 			}					
 		},
-		access = {walk = true, acrobatic = true, swat = true, fbi = true, cop = true},
+		access = access_type_all,
 		special_type = "ass_sniper"
 	}
 end
