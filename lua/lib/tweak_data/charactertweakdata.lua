@@ -1712,7 +1712,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard.HEALTH_INIT = 15
 	self.deathvox_guard.headshot_dmg_mul = 3
 	self.deathvox_guard.weapon = deep_clone(presets.weapon.deathvox)
-	self.deathvox_guard.access = "security"
+	self.deathvox_guard.access = "any"
 	table.insert(self._enemy_list, "deathvox_guard")
 	
 	self.deathvox_lightar = deep_clone(self.city_swat)
@@ -1735,7 +1735,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightar.use_factory = true
 	self.deathvox_lightar.HEALTH_INIT = 48
 	self.deathvox_lightar.headshot_dmg_mul = 3
-	self.deathvox_lightar.access = "swat"
+	self.deathvox_lightar.access = "any"
 	table.insert(self._enemy_list, "deathvox_lightar")
 	
 	self.deathvox_heavyar = deep_clone(self.city_swat)
@@ -1760,7 +1760,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyar.HEALTH_INIT = 101 -- new with final 2017 pass.
 	self.deathvox_heavyar.headshot_dmg_mul = 3
 	self.deathvox_heavyar.damage.explosion_damage_mul = 0.9
-	self.deathvox_heavyar.access = "swat"
+	self.deathvox_heavyar.access = "any"
 	table.insert(self._enemy_list, "deathvox_heavyar")
 	
 	self.deathvox_lightshot = deep_clone(self.city_swat)
@@ -1783,7 +1783,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightshot.use_factory = true
 	self.deathvox_lightshot.HEALTH_INIT = 48
 	self.deathvox_lightshot.headshot_dmg_mul = 3
-	self.deathvox_lightshot.access = "swat"
+	self.deathvox_lightshot.access = "any"
 	table.insert(self._enemy_list, "deathvox_lightshot")
 	
 	self.deathvox_heavyshot = deep_clone(self.city_swat)
@@ -1808,7 +1808,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyshot.HEALTH_INIT = 101 -- new with final 2017 pass.
 	self.deathvox_heavyshot.headshot_dmg_mul = 3
 	self.deathvox_heavyshot.damage.explosion_damage_mul = 0.9
-	self.deathvox_heavyshot.access = "swat"
+	self.deathvox_heavyshot.access = "any"
 	table.insert(self._enemy_list, "deathvox_heavyshot")
 	
 	self.deathvox_shield = deep_clone(self.shield)
@@ -1830,7 +1830,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.HEALTH_INIT = 72
 	self.deathvox_shield.headshot_dmg_mul = 3
 	self.deathvox_shield.is_special_unit = "shield"	
-	self.deathvox_shield.access = "shield"
+	self.deathvox_shield.access = "any"
 	table.insert(self._enemy_list, "deathvox_shield")
 	
 	self.deathvox_medic = deep_clone(self.medic)
@@ -1857,7 +1857,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic.HEALTH_INIT = 48
 	self.deathvox_medic.headshot_dmg_mul = 3
 	self.deathvox_medic.is_special_unit = "medic"
-	self.deathvox_medic.access = "swat"
+	self.deathvox_medic.access = "any"
 	table.insert(self._enemy_list, "deathvox_medic") 
 
 	self.deathvox_taser = deep_clone(self.taser)
@@ -1881,7 +1881,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.HEALTH_INIT = 101 -- new with final 2017 pass.
 	self.deathvox_taser.headshot_dmg_mul = 3
 	self.deathvox_taser.is_special_unit = "taser"
-	self.deathvox_taser.access = "taser"
+	self.deathvox_taser.access = "any"
 	table.insert(self._enemy_list, "deathvox_taser") 
 
 	self.deathvox_cloaker = deep_clone(self.spooc)
@@ -1902,7 +1902,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker.factory_weapon_id = {"wpn_deathvox_cloaker"}
 	self.deathvox_cloaker.use_factory = true
 	self.deathvox_cloaker.is_special_unit = "spooc"
-	self.deathvox_cloaker.access = "spooc"
+	self.deathvox_cloaker.access = "any"
 
 	table.insert(self._enemy_list, "deathvox_cloaker") 
 
@@ -1923,7 +1923,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper.HEALTH_INIT = 15 -- note does not match assault, consider revise.
 	self.deathvox_sniper.headshot_dmg_mul = 3
 	self.deathvox_sniper.is_special_unit = "sniper"
-	self.deathvox_sniper.access = "sniper"
+	self.deathvox_sniper.access = "any"
 
 	self.deathvox_sniper_assault = deep_clone(self.deathvox_sniper)
 	self.deathvox_sniper_assault.move_speed = presets.move_speed.very_fast
@@ -1931,7 +1931,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper_assault.HEALTH_INIT = 34
 	self.deathvox_sniper_assault.headshot_dmg_mul = 3
 	self.deathvox_sniper_assault.is_special_unit = "ass_sniper"
-	self.deathvox_sniper_assault.access = "swat"
+	self.deathvox_sniper_assault.access = "any"
 	table.insert(self._enemy_list, "deathvox_sniper_assault")
 
 	self.deathvox_tank = deep_clone(self.tank)
@@ -1952,7 +1952,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.HEALTH_INIT = 675
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7  -- new with final 2017 pass. Highly tentative. I do not believe this will effect armor. Requires scrutiny.
 	self.deathvox_tank.is_special_unit = "tank"
-	self.deathvox_tank.access = "tank"
+	self.deathvox_tank.access = "walk"
 
     self.deathvox_greendozer = deep_clone(self.deathvox_tank) -- pro OOP strats
 	self.deathvox_greendozer.use_factory = true -- Use a factory weapon
@@ -1963,13 +1963,13 @@ function CharacterTweakData:_init_deathvox(presets)
     self.deathvox_blackdozer = deep_clone(self.deathvox_tank)
 	self.deathvox_blackdozer.use_factory = true -- Use a factory weapon
 	self.deathvox_blackdozer.factory_weapon_id = {"wpn_deathvox_blackdozer"} 
-	self.deathvox_blackdozer.access = "tank"
+	self.deathvox_blackdozer.access = "walk"
 	table.insert(self._enemy_list, "deathvox_blackdozer")
 
     self.deathvox_lmgdozer = deep_clone(self.deathvox_tank)
 	self.deathvox_lmgdozer.use_factory = true -- Use a factory weapon
 	self.deathvox_lmgdozer.factory_weapon_id = {"wpn_deathvox_lmgdozer"} 
-	self.deathvox_lmgdozer.access = "tank"
+	self.deathvox_lmgdozer.access = "walk"
 	table.insert(self._enemy_list, "deathvox_lmgdozer")
 	
     self.deathvox_medicdozer = deep_clone(self.deathvox_tank)
@@ -1978,7 +1978,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medicdozer.factory_weapon_id = {"wpn_deathvox_medicdozer_smg"} 
 	self.deathvox_medicdozer.dv_medic_heal = true -- dont touch, makes him use the death vox healing
 	self.deathvox_medicdozer.custom_voicework = "medicdozer"
-	self.deathvox_medicdozer.access = "tank"
+	self.deathvox_medicdozer.access = "walk"
 	self.deathvox_medicdozer.disable_medic_heal_voice = true
 	table.insert(self._enemy_list, "deathvox_medicdozer")
 
@@ -2012,7 +2012,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_grenadier.suppression = nil
 	self.deathvox_grenadier.weapon_voice = "3"
 	self.deathvox_grenadier.experience.cable_tie = "tie_swat"
-	self.deathvox_grenadier.access = "taser"
+	self.deathvox_grenadier.access = "any"
 	self.deathvox_grenadier.dodge = presets.dodge.athletic
 	self.deathvox_grenadier.use_gas = true
 	self.deathvox_grenadier.priority_shout = "g29"
