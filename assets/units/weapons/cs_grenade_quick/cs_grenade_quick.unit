@@ -7,7 +7,7 @@
         
   </dependencies>
   <extensions>
-  	<extension name="base" class="TearGasGrenade" />
+  	<extension name="base" class="DeathVoxTearGasGrenade" />
     <extension name="unit_data" class="ScriptUnitData" />
   </extensions>
    <sounds>
