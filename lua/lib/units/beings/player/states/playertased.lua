@@ -4,7 +4,7 @@ function PlayerTased:_update_check_actions(t, dt)
 	if self._next_shock < t then
 		self._num_shocks = self._num_shocks + 1
 		if difficulty_index == 8 then
-			self._next_shock = t + 0.1 + math.rand(1)
+			self._next_shock = t + 0.1 + math.rand(0.5)
 			self._unit:camera():play_shaker("player_taser_shock", 1, 10)
 			self._unit:camera():camera_unit():base():set_target_tilt((math.random(2) == 1 and -1 or 1) * math.random(40))
 		else
@@ -24,6 +24,7 @@ function PlayerTased:_update_check_actions(t, dt)
 				self._recoil_t = t + 0.25
 			else
 				self._recoil_t = t + 0.5
+			end
 			if not managers.player:has_category_upgrade("player", "resist_firing_tased") then
 				input.btn_primary_attack_state = true
 				input.btn_primary_attack_press = true
@@ -32,6 +33,7 @@ function PlayerTased:_update_check_actions(t, dt)
 				self._camera_unit:base():recoil_kick(-15, 15, -15, 15)
 			else
 				self._camera_unit:base():recoil_kick(-5, 5, -5, 5)
+			end
 			self._unit:camera():play_redirect(self:get_animation("tased_boost"))
 		end
 	elseif self._recoil_t then
@@ -57,6 +59,7 @@ function PlayerTased:_update_check_actions(t, dt)
 			self._camera_unit:base():recoil_kick(-15, 15, -15, 15)
 		else
 			self._camera_unit:base():recoil_kick(-5, 5, -5, 5)
+		end
 	end
 
 	if self._unequip_weapon_expire_t and self._unequip_weapon_expire_t <= t then
