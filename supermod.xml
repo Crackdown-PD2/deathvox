@@ -2,6 +2,4 @@
 <mod>
 	<!-- Use the tweak defined in game_name_tweak.xml - if you have a lot of these, you should probably put them in their own directory -->
 	<tweak definition="tear_gas_fix.xml" />
-	<tweak definition="tear_gas_tweak2.xml" />
-	<tweak definition="teargas_3_electric_boogaloo.xml" />
 </mod>
