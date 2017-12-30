@@ -1,12 +1,12 @@
-function UnitNetworkHandler:sync_cs_grenade(detonate_pos, shooter_pos, duration, damage, d_rad)
+function UnitNetworkHandler:sync_vox_grenade(detonate_pos, shooter_pos, duration, damage, d_rad)
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 		return
 	end
 
-	managers.groupai:state():sync_cs_grenade(detonate_pos, shooter_pos, duration, damage, d_rad)
+	managers.groupai:state():sync_vox_grenade(detonate_pos, shooter_pos, duration, damage, d_rad)
 end
 
-function UnitNetworkHandler:sync_tear_gas_grenade_properties(grenade, radius, damage, duration, location)
+function UnitNetworkHandler:sync_vox_grenade_properties(grenade, radius, damage, duration, location)
 	if grenade then
 		grenade:base():set_properties({
 			radius = radius,
@@ -23,7 +23,7 @@ function UnitNetworkHandler:sync_tear_gas_grenade_properties(grenade, radius, da
 	end
 end
 
-function UnitNetworkHandler:sync_tear_gas_grenade_detonate(grenade, radius, damage, duration, location)
+function UnitNetworkHandler:sync_vox_grenade_detonate(grenade, radius, damage, duration, location)
 	if grenade then
 		grenade:base():detonate()
 	else

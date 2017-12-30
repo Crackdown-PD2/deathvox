@@ -1,12 +1,31 @@
 <?xml version="1.0"?>
 <tweak name="settings/network" extension="network_settings">
     <search>
-		<network/>
-			<rpc/>
-				<message name="sync_cs_grenade" receiver="unit" delivery="reliable" check="server_to_client"/>
+        <network/>
     </search>
     <target>
-		<param type="int" min="0" max="600"/>
-		<param type="int" min="0" max="600"/>
+		<rpc>
+			<message name="sync_vox_grenade" receiver="unit" delivery="reliable" check="server_to_client">
+				<param type="vector3" exact="false"/>
+				<param type="vector3" exact="false"/>
+				<param type="int" min="0"/>
+				<param type="int" min="0"/>
+				<param type="int" min="0"/>
+			</message>
+			<message name="sync_vox_grenade_properties" receiver="unit" delivery="ordered" check="server_to_client">
+				<param type="unit"/> <!-- Grenade unit -->
+				<param type="int" min="0"/> <!-- Range -->
+				<param type="int" min="0"/> <!-- Damage * 10 -->
+				<param type="int" min="0"/>
+				<param type="vector3" exact="false"/>
+			</message>
+			<message name="sync_vox_grenade_detonate" receiver="unit" delivery="ordered" check="server_to_client">
+				<param type="unit" /> <!-- Grenade unit -->
+				<param type="int" min="0"/>
+				<param type="int" min="0"/>
+				<param type="int" min="0"/>
+				<param type="vector3" exact="false"/>
+			</message>
+		</rpc>
 	</target>
 </tweak>

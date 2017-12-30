@@ -1,4 +1,16 @@
-function TearGasGrenade:detonate()
+DeathVoxTearGasGrenade = DeathVoxTearGasGrenade or blt_class(TearGasGrenade)
+
+function DeathVoxTearGasGrenade:set_properties(props)
+	self.radius = props.radius or 0
+	self.duration = props.duration or 0
+	self.damage = props.damage or 0
+
+	if Network:is_server() then
+		managers.network:session():send_to_peers("sync_vox_grenade_properties", self._unit, self.radius, self.damage * 10, self.duration, self._unit:position())
+	end
+end
+
+function DeathVoxTearGasGrenade:detonate()
 	local now = TimerManager:game():time()
 	self._remove_t = now + self.duration
 	self._damage_t = now + 1
@@ -22,12 +34,12 @@ function TearGasGrenade:detonate()
 
 	managers.environment_controller:set_blurzone(self._unit:key(), 1, self._unit:position(), blurzone_radius, 0, true)
 	if Network:is_server() then
-		managers.network:session():send_to_peers("sync_tear_gas_grenade_detonate", self._unit)
+		managers.network:session():send_to_peers("sync_vox_grenade_detonate", self._unit)
 	end
 
 end
 
-function TearGasGrenade:destroy()
+function DeathVoxTearGasGrenade:destroy()
 	if self._smoke_effect then
 		World:effect_manager():fade_kill(self._smoke_effect)
 	end
