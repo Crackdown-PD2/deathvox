@@ -257,6 +257,16 @@ function GroupAIStateBase:chk_say_enemy_chatter(unit, unit_pos, chatter_type)
 	return true
 end
 
+function GroupAIStateBase:detonate_vox_grenade(detonate_pos, shooter_pos, duration, damage, diameter)
+	log("CRACKDOWN detonate vox grenade: diameter")
+	log(diameter)
+	log("CRACKDOWN detonate vox grenade: damage")
+	log(damage)
+	log("CRACKDOWN detonate vox grenade: duration")
+	log(duration)
+	self:sync_vox_grenade(detonate_pos, shooter_pos, duration, damage, diameter)
+end
+
 
 function GroupAIStateBase:sync_vox_grenade(detonate_pos, shooter_pos, duration, damage, diameter)
 	local grenade_to_use = World:spawn_unit(Idstring("units/weapons/cs_grenade_quick/cs_grenade_quick"), detonate_pos, Rotation())

@@ -39,7 +39,7 @@ function CopActionShoot:_get_target_pos(shoot_from_pos, ...)
 					shoot_from_pos = shoot_from_pos + Vector3(50, 50, 0)
 					target_pos, target_vec, target_dis, autotarget = _f_CopActionShoot__get_target_pos(self, shoot_from_pos, ...)
 					self._unit:base():play_voiceline(_G.deathvox.BufferedSounds.grenadier.use_gas, true)
-					managers.groupai:state():detonate_cs_grenade(target_pos, nil, 7.5, 0, 6)
+					managers.groupai:state():detonate_vox_grenade(target_pos, nil, 7.5, 0, 6)
 				end
 			else
 				roll = math.rand(1, 100)

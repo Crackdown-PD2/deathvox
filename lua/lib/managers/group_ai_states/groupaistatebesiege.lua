@@ -160,12 +160,12 @@ function GroupAIStateBesiege:_check_spawn_phalanx()
 	return false
 end
 
-function GroupAIStateBesiege:detonate_cs_grenade(detonate_pos, shooter_pos, duration, damage, diameter)
-	log("CRACKDOWN detonate cs grenade: diameter")
+function GroupAIStateBesiege:detonate_vox_grenade(detonate_pos, shooter_pos, duration, damage, diameter)
+	log("CRACKDOWN detonate vox grenade: diameter")
 	log(diameter)
-	log("CRACKDOWN detonate cs grenade: damage")
+	log("CRACKDOWN detonate vox grenade: damage")
 	log(damage)
-	log("CRACKDOWN detonate cs grenade: duration")
+	log("CRACKDOWN detonate vox grenade: duration")
 	log(duration)
-	self:sync_cs_grenade(detonate_pos, shooter_pos, duration, damage, diameter)
+	self:sync_vox_grenade(detonate_pos, shooter_pos, duration, damage, diameter)
 end
