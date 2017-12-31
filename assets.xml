@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<assets :base_path="assets/">
+
+	<!-- All characters -->
+	<group name="units/pd2_mod_gageammo/characters/">
+		<!--DV Guard-->
+		<file :name="ene_deathvox_guard/ene_deathvox_guard.unit" load="true"/>
+		<file :name="ene_deathvox_guard/ene_deathvox_guard_husk.unit" load="true"/>
+
+		<!--DV Heavy Assault Rifle-->
+		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar.unit" load="true"/>
+		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar_husk.unit" load="true"/>
+
+		<!--DV Light Assault Rifle-->
+		<file :name="ene_deathvox_lightar/ene_deathvox_lightar.unit" load="true"/>
+		<file :name="ene_deathvox_lightar/ene_deathvox_lightar_husk.unit" load="true"/>
+
+		<!--DV Medic-->
+		<file :name="ene_deathvox_medic/ene_deathvox_medic.unit" load="true"/>
+		<file :name="ene_deathvox_medic/ene_deathvox_medic_husk.unit" load="true"/>
+
+		<!--DV Shield-->
+		<file :name="ene_deathvox_shield/ene_deathvox_shield.unit" load="true"/>
+		<file :name="ene_deathvox_shield/ene_deathvox_shield_husk.unit" load="true"/>
+
+		<!--DV Heavy Assault Rifle-->
+		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot.unit" load="true"/>
+		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot_husk.unit" load="true"/>
+
+		<!--DV Light Assault Rifle-->
+		<file :name="ene_deathvox_lightshot/ene_deathvox_lightshot.unit" load="true"/>
+		<file :name="ene_deathvox_lightshot/ene_deathvox_lightshot_husk.unit" load="true"/>
+
+		<!--DV Light Shotgun-->
+		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.unit" load="true"/>
+		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer_husk.unit" load="true"/>
+
+		<!--DV Heavy Shotgun-->
+		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.unit" load="true"/>
+		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer_husk.unit" load="true"/>
+
+		<!--DV Heavy Assault Rifle-->
+		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.unit" load="true"/>
+		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer_husk.unit" load="true"/>
+
+		<!--DV Light Assault Rifle-->
+		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.unit" load="true"/>
+		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer_husk.unit" load="true"/>
+
+		<!--DV Taser-->
+		<file :name="ene_deathvox_taser/ene_deathvox_taser.unit" load="true"/>
+		<file :name="ene_deathvox_taser/ene_deathvox_taser_husk.unit" load="true"/>
+
+		<!--DV Cloaker-->
+		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.unit" load="true"/>
+		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker_husk.unit" load="true"/>
+
+		<!--DV Light Shotgun-->
+		<file :name="ene_deathvox_sniper_assault/ene_deathvox_sniper_assault.unit" load="true"/>
+		<file :name="ene_deathvox_sniper_assault/ene_deathvox_sniper_assault_husk.unit" load="true"/>
+
+		<!--DV Grenadier-->
+		<file :name="shared_textures/grenadier_atlas_df.texture" force="false"/>
+		<file :name="shared_textures/grenadier_atlas_nm.texture" force="false"/>
+		<file :name="shared_textures/grenadier_body_df.texture" force="false"/>
+		<file :name="shared_textures/grenadier_body_nm.texture" force="false"/>
+		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.object" force="false"/>
+		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.model" force="false"/>
+		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.unit" force="false" load="false"/>
+		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.material_config" force="false"/>
+		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier_husk.unit" force="false" load="true"/>
+	</group>
+
+	<!-- All weapons -->
+	<group name="units/pd2_mod_gageammo/pew_pew_lasers/">
+		<file :name="wpn_deathvox_guard_pistol.unit" load="true" force="true"/>
+		<file :name="wpn_deathvox_medic_pistol.unit" load="true" force="true"/>
+		<file :name="wpn_deathvox_light_ar.unit" load="true" force="true"/>
+		<file :name="wpn_deathvox_heavy_ar.unit" load="true" force="true"/>
+		<file :name="wpn_deathvox_shotgun_light.unit" load="true" force="true"/>
+		<file :name="wpn_deathvox_shotgun_heavy.unit" load="true" force="true"/>
+		<file :name="wpn_deathvox_sniper.unit" load="true" force="true"/>
+		<file :name="wpn_deathvox_medicdozer_smg.unit" load="true" force="true"/>
+		<file :name="wpn_deathvox_grenadier.unit" load="true" force="true"/>
+		<file :name="wpn_deathvox_greendozer.unit" load="true" force="true"/>
+		<file :name="wpn_deathvox_blackdozer.unit" load="true" force="true"/>
+		<file :name="wpn_deathvox_lmgdozer.unit" load="true" force="true"/>
+		<file :name="wpn_deathvox_cloaker.unit" load="true" force="true"/>
+	</group>
+
+	<file name="effects/particles/explosions/cs_grenade_smoke.effect" load="false" force="true"/>
+	<file name="effects/particles/weapons/trail_dv_sniper.effect" load="false" force="true"/>
+</assets>
