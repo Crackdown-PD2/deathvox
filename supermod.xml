@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<mod name="DeathVox" global_key="deathvox">
+	<:include src="assets.xml" />
+	<:include src="hooks.xml" />
+</mod>
