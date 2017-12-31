@@ -1,4 +1,0 @@
-<mod name="DeathVox" global_key="deathvox">
-    <Hooks directory="lua">
-    </Hooks>
-</mod>
