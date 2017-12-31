@@ -1,44 +1,4 @@
 <mod name="DeathVox" global_key="deathvox">
     <Hooks directory="lua">
-		<hook file="loc/loc.lua" source_file="lib/managers/localizationmanager"/>
-
-		<hook file="lib/network/handlers/unitnetworkhandler.lua" source_file="lib/network/handlers/unitnetworkhandler"/>
-		
-		<hook file="lib/tweak_data/charactertweakdata.lua" source_file="lib/tweak_data/charactertweakdata"/>
-		<hook file="lib/tweak_data/groupaitweakdata.lua" source_file="lib/tweak_data/groupaitweakdata"/>
-		
-		<hook file="lib/tweak_data/weapontweakdata.lua" source_file="lib/tweak_data/weapontweakdata"/>
-		<hook file="lib/tweak_data/weaponfactorytweakdata.lua" source_file="lib/tweak_data/weaponfactorytweakdata"/>
-		<hook file="lib/tweak_data/playertweakdata.lua" source_file="lib/tweak_data/playertweakdata"/>
-
-		<hook file="lib/units/enemies/cop/copbrain.lua" source_file="lib/units/enemies/cop/copbrain"/>
-		<hook file="lib/units/enemies/cop/copmovement.lua" source_file="lib/units/enemies/cop/copmovement"/>
-		<hook file="lib/units/enemies/cop/copinventory.lua" source_file="lib/units/enemies/cop/copinventory"/>
-		<hook file="lib/units/enemies/cop/copdamage.lua" source_file="lib/units/enemies/cop/copdamage"/>
-		<hook file="lib/units/enemies/cop/copbase.lua" source_file="lib/units/enemies/cop/copbase"/>
-		<hook file="lib/units/enemies/cop/copsound.lua" source_file="lib/units/enemies/cop/copsound"/>
-		<hook file="lib/units/enemies/medic/medicdamage.lua" source_file="lib/units/enemies/medic/medicdamage"/>
-		<hook file="lib/units/enemies/cop/huskcopdamage.lua" source_file="lib/units/enemies/cop/huskcopdamage"/>
-		<hook file="lib/units/enemies/cop/logics/coplogictravel.lua" source_file="lib/units/enemies/cop/logics/coplogictravel"/>
-		<hook file="lib/units/enemies/actions/upper_body/copactionshoot.lua" source_file="lib/units/enemies/cop/actions/upper_body/copactionshoot"/>
-		<hook file="lib/units/enemies/actions/upper_body/copactiontase.lua" source_file="lib/units/enemies/cop/actions/upper_body/copactiontase"/>
-		<hook file="lib/units/enemies/actions/upper_body/copactionhealed.lua" source_file="lib/units/enemies/cop/actions/upper_body/copactionhealed"/>
-		<hook file="lib/units/enemies/taser/logics/taserlogicattack.lua" source_file="lib/units/enemies/taser/logics/taserlogicattack"/>
-
-		<hook file="lib/units/beings/player/playerdamage.lua" source_file="lib/units/beings/player/playerdamage"/>
-		<hook file="lib/units/beings/player/states/playertased.lua" source_file="lib/units/beings/player/states/playertased"/>
-		
-
-		<hook file="lib/units/weapons/quickcsgrenade.lua" source_file="lib/units/weapons/grenades/quickcsgrenade"/>
-		<hook file="lib/units/weapons/raycastweaponbase.lua" source_file="lib/units/weapons/raycastweaponbase"/>
-		<hook file="lib/units/weapons/newnpcraycastweaponbase.lua" source_file="lib/units/weapons/newnpcraycastweaponbase"/>
-		
-		<hook file="lib/managers/groupaistatebase.lua" source_file="lib/managers/group_ai_states/groupaistatebase"/>
-		<hook file="lib/managers/achievementmanager.lua" source_file="lib/managers/achievementmanager"/>
-		<hook file="lib/managers/group_ai_states/groupaistatebesiege.lua" source_file="lib/managers/group_ai_states/groupaistatebesiege"/>
-
-		<hook file="lib/managers/mission/elementspawnenemygroup.lua" source_file="lib/managers/mission/elementspawnenemygroup"/>
-		<hook file="lib/managers/mission/elementspawnenemydummy.lua" source_file="lib/managers/mission/elementspawnenemydummy"/>
-		<hook file="lib/managers/mission/elementspecialobjective.lua" source_file="lib/managers/mission/elementspecialobjective"/>
     </Hooks>
 </mod>
