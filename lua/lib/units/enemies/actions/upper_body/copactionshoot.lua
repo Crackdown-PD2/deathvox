@@ -34,7 +34,7 @@ function CopActionShoot:_get_target_pos(shoot_from_pos, ...)
 			local roll = math.rand(1, 100)
 			if self._throw_projectile_time < _time then
 				local chance_gas = 25
-				if roll <= chance_gas then
+				if roll <= chance_gas and not managers.groupai:state()._cs_grenade then
 					self._throw_projectile_time = _time + math.round_with_precision(10, 2)
 					shoot_from_pos = shoot_from_pos + Vector3(50, 50, 0)
 					target_pos, target_vec, target_dis, autotarget = _f_CopActionShoot__get_target_pos(self, shoot_from_pos, ...)
