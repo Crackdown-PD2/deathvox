@@ -1,4 +1,3 @@
-
 if not _G.deathvox then
 	_G.deathvox = {}
 	_G.deathvox.ModPath = ModPath
