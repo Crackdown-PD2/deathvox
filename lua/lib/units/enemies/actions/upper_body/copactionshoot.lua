@@ -32,7 +32,7 @@ function CopActionShoot:_get_target_pos(shoot_from_pos, ...)
 	if self._unit:base()._tweak_table == "deathvox_grenadier" and self._throw_projectile_time < _time then
 		if self._shooting_player then
 			local roll = math.rand(1, 100)
-			if self._throw_projectile_time < _time then -- and not managers.groupai:state()._cs_grenade
+			if self._throw_projectile_time < _time then
 				local chance_gas = 25
 				if roll <= chance_gas then
 					self._throw_projectile_time = _time + math.round_with_precision(10, 2)
@@ -40,13 +40,13 @@ function CopActionShoot:_get_target_pos(shoot_from_pos, ...)
 					target_pos, target_vec, target_dis, autotarget = _f_CopActionShoot__get_target_pos(self, shoot_from_pos, ...)
 					self._unit:base():play_voiceline(_G.deathvox.BufferedSounds.grenadier.use_gas, true)
 					deploy_gas(shoot_from_pos, target_vec)
-				end
-			else
-				roll = math.rand(1, 100)
-				if roll <= 15 then
-					local dildo = _G.deathvox.BufferedSounds.grenadier.spot_heister
-					local voiceline_to_use = dildo[math.random(#dildo)]
-					self._unit:base():play_voiceline(voiceline_to_use)
+				else
+					roll = math.rand(1, 100)
+					if roll <= 15 then
+						local dildo = _G.deathvox.BufferedSounds.grenadier.spot_heister
+						local voiceline_to_use = dildo[math.random(#dildo)]
+						self._unit:base():play_voiceline(voiceline_to_use)
+					end
 				end
 			end
 		else
