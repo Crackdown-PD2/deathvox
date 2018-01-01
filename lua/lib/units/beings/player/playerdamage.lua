@@ -1,0 +1,10 @@
+Hooks:PostHook( PlayerDamage, "init", "PlayerDamageLivesFix", function(self, ...)
+	log(self._revives)
+	log(self._lives_init)
+	self._lives_init = tweak_data.player.damage.LIVES_INIT
+	self._lives_init = managers.crime_spree:modify_value("PlayerDamage:GetMaximumLives", self._lives_init)
+	log("fuck you playerdamage")
+	log(self._revives)
+	log(self._lives_init)
+	self:replenish()
+end )
