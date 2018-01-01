@@ -45,7 +45,7 @@ function CopActionShoot:_get_target_pos(shoot_from_pos, ...)
 					if roll <= 15 then
 						local dildo = _G.deathvox.BufferedSounds.grenadier.spot_heister
 						local voiceline_to_use = dildo[math.random(#dildo)]
-						self._unit:base():play_voiceline(voiceline_to_use, true)
+						self._unit:base():play_voiceline(voiceline_to_use)
 					end
 				end
 			end
