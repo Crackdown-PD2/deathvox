@@ -15,10 +15,8 @@ function QuickCsGrenade:update(unit, t, dt)
 		self._remove_t =  current_time + 7
 	end
 	if self._remove_t and self._remove_t < current_time then
-		if Network:is_server() then
-			managers.network:session():send_to_peers_synched("sync_cs_grenade_kill")
-			managers.groupai:state()._cs_grenade = nil
-		end
+		managers.network:session():send_to_peers_synched("sync_cs_grenade_kill")
+		managers.groupai:state()._cs_grenade = nil
 		self._unit:set_slot(0)
 	end
 
