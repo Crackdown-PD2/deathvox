@@ -19,7 +19,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_light_ar.sounds.prefix = "aug_npc" -- dont worry about this
 	self.deathvox_light_ar.use_data.selection_index = 2 -- dont worry about this
-	self.deathvox_light_ar.DAMAGE = 6 -- Base damage 60.
+	self.deathvox_light_ar.DAMAGE = 7.75 -- Base damage 77.5.
 	self.deathvox_light_ar.muzzleflash = "effects/payday2/particles/weapons/556_auto" -- dont worry about this
 	self.deathvox_light_ar.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556" -- dont worry about this
 	self.deathvox_light_ar.CLIP_AMMO_MAX = 30 -- How many shots before they gotta reload
@@ -37,7 +37,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_heavy_ar.sounds.prefix = "fn_fal_npc"
 	self.deathvox_heavy_ar.use_data.selection_index = 2
-	self.deathvox_heavy_ar.DAMAGE = 7.5 -- base damage 75.
+	self.deathvox_heavy_ar.DAMAGE = 8.75 -- base damage 87.5.
 	self.deathvox_heavy_ar.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_heavy_ar.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556"
 	self.deathvox_heavy_ar.CLIP_AMMO_MAX = 20
@@ -52,7 +52,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_guard_pistol.sounds.prefix = "packrat_npc"
 	self.deathvox_guard_pistol.use_data.selection_index = 1
-	self.deathvox_guard_pistol.DAMAGE = 4 -- base damage 40
+	self.deathvox_guard_pistol.DAMAGE = 6 -- base damage 60
 	self.deathvox_guard_pistol.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
 	self.deathvox_guard_pistol.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
 	self.deathvox_guard_pistol.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
@@ -67,7 +67,7 @@ function WeaponTweakData:init(tweak_data)
 	
 	self.deathvox_medic_pistol.sounds.prefix = "mateba_npc"
 	self.deathvox_medic_pistol.use_data.selection_index = 1
-	self.deathvox_medic_pistol.DAMAGE = 6 -- base 60 damage.
+	self.deathvox_medic_pistol.DAMAGE = 8 -- base 80 damage.
 	self.deathvox_medic_pistol.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
 	self.deathvox_medic_pistol.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
 	self.deathvox_medic_pistol.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty"
@@ -83,7 +83,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_shotgun_light.sounds.prefix = "remington_npc"
 	self.deathvox_shotgun_light.use_data.selection_index = 2
-	self.deathvox_shotgun_light.DAMAGE = 7.5 -- Base damage 75.
+	self.deathvox_shotgun_light.DAMAGE = 8.75 -- Base damage 87.5.
 	self.deathvox_shotgun_light.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_shotgun_light.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug_semi"
 	self.deathvox_shotgun_light.CLIP_AMMO_MAX = 6
@@ -97,7 +97,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_shotgun_heavy.sounds.prefix = "benelli_m4_npc"
 	self.deathvox_shotgun_heavy.use_data.selection_index = 2
-	self.deathvox_shotgun_heavy.DAMAGE = 10 -- Base damage 100
+	self.deathvox_shotgun_heavy.DAMAGE = 13 -- Base damage 130
 	self.deathvox_shotgun_heavy.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_shotgun_heavy.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug"
 	self.deathvox_shotgun_heavy.auto.fire_rate = 0.14
@@ -154,7 +154,7 @@ function WeaponTweakData:init(tweak_data)
 	
 	self.deathvox_grenadier.sounds.prefix = "contraband_npc"
 	self.deathvox_grenadier.use_data.selection_index = 2
-	self.deathvox_grenadier.DAMAGE = 6
+	self.deathvox_grenadier.DAMAGE = 7
 	self.deathvox_grenadier.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_grenadier.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556"
 	self.deathvox_grenadier.CLIP_AMMO_MAX = 20
@@ -184,7 +184,7 @@ function WeaponTweakData:init(tweak_data)
    
     self.deathvox_cloaker.sounds.prefix = "schakal_npc"
     self.deathvox_cloaker.use_data.selection_index = 1
-    self.deathvox_cloaker.DAMAGE = 4.5
+    self.deathvox_cloaker.DAMAGE = 6.5
     self.deathvox_cloaker.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
     self.deathvox_cloaker.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
     self.deathvox_cloaker.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
