@@ -1,10 +1,8 @@
 Hooks:PostHook( PlayerDamage, "init", "PlayerDamageLivesFix", function(self, ...)
-	log(self._revives)
-	log(self._lives_init)
-	self._lives_init = tweak_data.player.damage.LIVES_INIT
-	self._lives_init = managers.crime_spree:modify_value("PlayerDamage:GetMaximumLives", self._lives_init)
-	log("fuck you playerdamage")
-	log(self._revives)
-	log(self._lives_init)
+	local difficulty_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)
+	if difficulty_index == 8 then
+		self._lives_init = 3
+		self._lives_init = managers.crime_spree:modify_value("PlayerDamage:GetMaximumLives", self._lives_init)
+	end
 	self:replenish()
 end )
