@@ -1701,7 +1701,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard.detection = presets.detection.guard -- normal, guard, sniper, gang_member, civilian, blind
 	self.deathvox_guard.suppression = nil -- presets.suppression.no_supress
 	self.deathvox_guard.surrender = presets.surrender.easy
-	self.deathvox_guard.move_speed = presets.move_speed.lightning -- tentative.
+	self.deathvox_guard.move_speed = presets.move_speed.very_fast -- tentative.
 	self.deathvox_guard.ecm_vulnerability = 0 -- DV guards ignore feedback. Removing safety net in stealth.
 	
 	self.deathvox_guard.dodge = presets.dodge.deathvox_guard
@@ -1719,7 +1719,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightar.detection = presets.detection.normal
 	self.deathvox_lightar.suppression = presets.suppression.hard_agg -- tentative. Need to consider effect, may be too much.
 	self.deathvox_lightar.surrender = presets.surrender.normal --tentative. hard for heavy, normal for light.
-	self.deathvox_lightar.move_speed = presets.move_speed.lightning
+	self.deathvox_lightar.move_speed = presets.move_speed.very_fast
 	self.deathvox_lightar.surrender_break_time = {6, 8} --should be fairly fast, used in base for fbi heavy swat.
 	self.deathvox_lightar.ecm_vulnerability = 1
 	self.deathvox_lightar.ecm_hurts = {
@@ -1743,7 +1743,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyar.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- new with final 2017 pass.
 	self.deathvox_heavyar.suppression = presets.suppression.hard_agg -- tentative.
 	self.deathvox_heavyar.surrender = presets.surrender.hard --tentative.
-	self.deathvox_heavyar.move_speed = presets.move_speed.lightning
+	self.deathvox_heavyar.move_speed = presets.move_speed.very_fast
 	self.deathvox_heavyar.surrender_break_time = {6, 8}
 	self.deathvox_heavyar.ecm_vulnerability = 1
 	self.deathvox_heavyar.ecm_hurts = {
@@ -1767,7 +1767,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightshot.detection = presets.detection.normal
 	self.deathvox_lightshot.suppression = presets.suppression.hard_agg -- tentative.
 	self.deathvox_lightshot.surrender = presets.surrender.normal -- tentative.
-	self.deathvox_lightshot.move_speed = presets.move_speed.lightning
+	self.deathvox_lightshot.move_speed = presets.move_speed.very_fast
 	self.deathvox_lightshot.surrender_break_time = {6, 8} 
 	self.deathvox_lightshot.ecm_vulnerability = 1
 	self.deathvox_lightshot.ecm_hurts = {
@@ -1791,7 +1791,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyshot.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- new with final 2017 pass.
 	self.deathvox_heavyshot.suppression = presets.suppression.hard_agg -- tentative.
 	self.deathvox_heavyshot.surrender = presets.surrender.hard -- tentative.
-	self.deathvox_heavyshot.move_speed = presets.move_speed.lightning
+	self.deathvox_heavyshot.move_speed = presets.move_speed.very_fast
 	self.deathvox_heavyshot.surrender_break_time = {6, 8} 
 	self.deathvox_heavyshot.ecm_vulnerability = 1
 	self.deathvox_heavyshot.ecm_hurts = {
@@ -1817,7 +1817,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.damage.hurt_severity = presets.hurt_severities.only_explosion_hurts
 	self.deathvox_shield.suppression = presets.suppression.no_supress -- I think this is in resto, if not it now is.
 	self.deathvox_shield.surrender = nil
-	self.deathvox_shield.move_speed = presets.move_speed.lightning -- same as base.
+	self.deathvox_shield.move_speed = presets.move_speed.fast -- same as base.
 	self.deathvox_shield.ecm_vulnerability = .9 -- same as base.
 	self.deathvox_shield.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8} -- same as general enemies, less than vanilla.
@@ -1839,7 +1839,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- added to make code consistent.
 	self.deathvox_medic.suppression = presets.suppression.no_supress -- tentative, in base.
 	self.deathvox_medic.surrender = presets.surrender.special 
-	self.deathvox_medic.move_speed = presets.move_speed.lightning
+	self.deathvox_medic.move_speed = presets.move_speed.very_fast
 	self.deathvox_medic.surrender_break_time = {7, 12} 
 	self.deathvox_medic.ecm_vulnerability = 1
 	self.deathvox_medic.ecm_hurts = {
@@ -1867,7 +1867,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.damage.hurt_severity.tase = false -- if this works, great, horrible things will arise.
 	self.deathvox_taser.suppression = presets.suppression.no_supress -- consistent form added.
 	self.deathvox_taser.surrender = presets.surrender.special 
-	self.deathvox_taser.move_speed = presets.move_speed.lightning
+	self.deathvox_taser.move_speed = presets.move_speed.fast
 	self.deathvox_taser.surrender_break_time = {7, 12} 
 	self.deathvox_taser.ecm_vulnerability = 0.9 -- in base
 	self.deathvox_taser.ecm_hurts = {
@@ -1911,7 +1911,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper.detection = presets.detection.normal
 	self.deathvox_sniper.suppression = presets.suppression.no_supress -- this actually makes snipers way less annoying!
 	self.deathvox_sniper.surrender = presets.surrender.special 
-	self.deathvox_sniper.move_speed = presets.move_speed.lightning
+	self.deathvox_sniper.move_speed = presets.move_speed.fast
 	self.deathvox_sniper.surrender_break_time = {4, 6} 
 	self.deathvox_sniper.ecm_vulnerability = 0
 	self.deathvox_sniper.no_arrest = true
@@ -1926,7 +1926,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper.access = "any"
 
 	self.deathvox_sniper_assault = deep_clone(self.deathvox_sniper)
-	self.deathvox_sniper_assault.move_speed = presets.move_speed.lightning
+	self.deathvox_sniper_assault.move_speed = presets.move_speed.very_fast
 	self.deathvox_sniper_assault.deathguard = true
 	self.deathvox_sniper_assault.HEALTH_INIT = 34
 	self.deathvox_sniper_assault.headshot_dmg_mul = 3
@@ -2000,7 +2000,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_grenadier.damage.hurt_severity = presets.hurt_severities.base
 	self.deathvox_grenadier.headshot_dmg_mul = 3
 	self.deathvox_grenadier.bag_dmg_mul = 6
-	self.deathvox_grenadier.move_speed = presets.move_speed.lightning
+	self.deathvox_grenadier.move_speed = presets.move_speed.fast
 	self.deathvox_grenadier.no_retreat = true
 	self.deathvox_grenadier.no_arrest = true
 	self.deathvox_grenadier.surrender = nil
