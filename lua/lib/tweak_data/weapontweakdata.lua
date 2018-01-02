@@ -79,6 +79,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_medic_pistol.suppression = 1.8
 	self.deathvox_medic_pistol.usage = "is_revolver"
 	self.deathvox_medic_pistol.anim_usage = "is_revolver"
+	self.deathvox_medic_pistol.armor_piercing = true
 
 	self.deathvox_shotgun_light.sounds.prefix = "remington_npc"
 	self.deathvox_shotgun_light.use_data.selection_index = 2
