@@ -17,6 +17,7 @@ if not _G.deathvox then
 			heal = {}
 		}
 	}
+	_G.deathvox.grenadier_gas_duration = 15
 	for i = 1, 31 do
 		table.insert(_G.deathvox.BufferedSounds.medicdozer.heal, XAudio.Buffer:new(ModPath .. "assets/oggs/voiceover/medicdozer/heal" .. i .. ".ogg"))
 	end

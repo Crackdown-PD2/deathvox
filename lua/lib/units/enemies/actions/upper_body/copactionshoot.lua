@@ -63,5 +63,5 @@ function deploy_gas(shoot_from_pos, target_vec)
 	local z_fix = {-0.05, -0.02, -0.05, -0.02, -0.07, -0.07, -0.1}
 	target_vec = target_vec + Vector3(0, 0, z_fix[math.random(7)])
 	local detonate_pos = managers.player:player_unit():position()
-	managers.groupai:state():detonate_cs_grenade(detonate_pos, nil, 7)
+	managers.groupai:state():detonate_cs_grenade(detonate_pos, nil, _G.deathvox.grenadier_gas_duration)
 end
