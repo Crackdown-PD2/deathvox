@@ -256,7 +256,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"ranged_fire",
 				"provide_coverfire",
 				"provide_support",
-				"charge"
 				},
 			deathvox_swat_charge = {
 				"charge",
@@ -265,9 +264,10 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				},
 			deathvox_medic = {
 				"shield_cover",
+				"charge",
 				"provide_support",
-				"provide_coverfire",
-				"charge"
+				"provide_coverfire"
+
 				},
 			deathvox_shield_lead = {
 				"shield",
@@ -319,8 +319,8 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"murder"
 				},
 			deathvox_spooc_lead = {
-				"flash_grenade",
 				"charge",
+				"flash_grenade",
 				"provide_coverfire",
 				"smoke_grenade",
 				"deathguard"
@@ -872,7 +872,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = deathvox_swat_ranged,
+				tactics = self._tactics.deathvox_swat_ranged,
 				rank = 1
 			},
 			{
@@ -888,7 +888,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = deathvox_swat_ranged,
+				tactics = self._tactics.deathvox_swat_ranged,
 				rank = 1
 			}
 		}
@@ -952,7 +952,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_swat_flank,
 				rank = 2
 			},
 			{
