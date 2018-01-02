@@ -10,7 +10,11 @@ function QuickCsGrenade:_setup_from_tweak_data()
 end
 
 function QuickCsGrenade:update(unit, t, dt)
-	if self._remove_t and self._remove_t < t then
+	local current_time = TimerManager:game():time()
+	if not self._remove_t then
+		self._remove_t =  current_time + 7
+	end
+	if self._remove_t and self._remove_t < current_time then
 		if Network:is_server() then
 			managers.network:session():send_to_peers_synched("sync_cs_grenade_kill")
 			managers.groupai:state()._cs_grenade = nil

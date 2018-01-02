@@ -114,7 +114,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_sniper.sounds.prefix = "lakner_npc"
 	self.deathvox_sniper.use_data.selection_index = 2
-	self.deathvox_sniper.DAMAGE = 24 -- base 240, drop with distance, check other vals.
+	self.deathvox_sniper.DAMAGE = 35 -- base 240, drop with distance, check other vals.
 	self.deathvox_sniper.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
 	self.deathvox_sniper.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
 	self.deathvox_sniper.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
