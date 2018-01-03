@@ -44,4 +44,6 @@
 	<post :script_path="managers/mission/elementspawnenemygroup.lua" :hook_id="managers/mission/elementspawnenemygroup"/>
 	<post :script_path="managers/mission/elementspawnenemydummy.lua" :hook_id="managers/mission/elementspawnenemydummy"/>
 	<post :script_path="managers/mission/elementspecialobjective.lua" :hook_id="managers/mission/elementspecialobjective"/>
+	
+	<post :script_path="network/matchmaking/networkmatchmakingsteam.lua" :hook_id="network/matchmaking/networkmatchmakingsteam"/>
 </hooks>
