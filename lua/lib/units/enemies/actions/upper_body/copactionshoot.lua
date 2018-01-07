@@ -38,7 +38,9 @@ function CopActionShoot:_get_target_pos(shoot_from_pos, ...)
 					self._throw_projectile_time = _time + math.round_with_precision(10, 2)
 					shoot_from_pos = shoot_from_pos + Vector3(50, 50, 0)
 					target_pos, target_vec, target_dis, autotarget = _f_CopActionShoot__get_target_pos(self, shoot_from_pos, ...)
-					self._unit:base():play_voiceline(_G.deathvox.BufferedSounds.grenadier.use_gas, true)
+					local dildo = _G.deathvox.BufferedSounds.grenadier.use_gas
+					local voiceline_to_use = dildo[math.random(#dildo)]
+					self._unit:base():play_voiceline(voiceline_to_use, true)
 					deploy_gas(shoot_from_pos, target_vec)
 				else
 					roll = math.rand(1, 100)
