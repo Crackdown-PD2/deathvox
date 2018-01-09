@@ -1942,7 +1942,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.surrender = nil
 	self.deathvox_tank.surrender_break_time = {4, 6}
 	self.deathvox_tank.ecm_vulnerability = 0.85
-	self.deathvox_taser.ecm_hurts = {
+	self.deathvox_tank.ecm_hurts = {
         ears = {min_duration = 1, max_duration = 3} -- tentative, in base
     }
 	self.deathvox_tank.deathguard = true
@@ -1996,7 +1996,6 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_grenadier.flammable = true
 	self.deathvox_grenadier.use_animation_on_fire_damage = true
 	self.deathvox_grenadier.damage.fire_damage_mul = 1
-	self.deathvox_grenadier.damage.hurt_severity = presets.hurt_severities.base
 	self.deathvox_grenadier.headshot_dmg_mul = 3
 	self.deathvox_grenadier.bag_dmg_mul = 6
 	self.deathvox_grenadier.move_speed = presets.move_speed.fast
