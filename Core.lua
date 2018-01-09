@@ -6,7 +6,9 @@ if not _G.deathvox then
 		grenadier = {
 			death = {
 				XAudio.Buffer:new(ModPath .. "assets/oggs/voiceover/grenadier/grenadier_death1.ogg"),
-				XAudio.Buffer:new(ModPath .. "assets/oggs/voiceover/grenadier/grenadier_death1.ogg")
+				XAudio.Buffer:new(ModPath .. "assets/oggs/voiceover/grenadier/grenadier_death2.ogg"),
+				XAudio.Buffer:new(ModPath .. "assets/oggs/voiceover/grenadier/grenadier_death3.ogg"),
+				XAudio.Buffer:new(ModPath .. "assets/oggs/voiceover/grenadier/grenadier_death4.ogg")
 			},
 			spawn = {
 				XAudio.Buffer:new(ModPath .. "assets/oggs/voiceover/grenadier/grenadier_spawn1.ogg"),
@@ -20,7 +22,9 @@ if not _G.deathvox then
 			},
 			use_gas = {
 				XAudio.Buffer:new(ModPath .. "assets/oggs/voiceover/grenadier/grenadier_gas_1.ogg"),
-				XAudio.Buffer:new(ModPath .. "assets/oggs/voiceover/grenadier/grenadier_gas_2.ogg")
+				XAudio.Buffer:new(ModPath .. "assets/oggs/voiceover/grenadier/grenadier_gas_2.ogg"),
+				XAudio.Buffer:new(ModPath .. "assets/oggs/voiceover/grenadier/grenadier_gas_3.ogg"),
+				XAudio.Buffer:new(ModPath .. "assets/oggs/voiceover/grenadier/grenadier_gas_4.ogg")
 			}
 		},
 		medicdozer = {
