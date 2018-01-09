@@ -135,7 +135,7 @@ function WeaponTweakData:init(tweak_data)
 	
 	self.deathvox_medicdozer_smg.sounds.prefix = "polymer_npc"
 	self.deathvox_medicdozer_smg.use_data.selection_index = 1
-	self.deathvox_medicdozer_smg.DAMAGE = 4.5 -- Vanilla base is 20, adjusting up to 45.
+	self.deathvox_medicdozer_smg.DAMAGE = 6.5 -- Vanilla base is 20, adjusting up to 65.
 	self.deathvox_medicdozer_smg.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
 	self.deathvox_medicdozer_smg.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
 	self.deathvox_medicdozer_smg.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"

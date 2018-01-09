@@ -1817,7 +1817,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.damage.hurt_severity = presets.hurt_severities.only_explosion_hurts
 	self.deathvox_shield.suppression = presets.suppression.no_supress -- I think this is in resto, if not it now is.
 	self.deathvox_shield.surrender = nil
-	self.deathvox_shield.move_speed = presets.move_speed.fast -- same as base.
+	self.deathvox_shield.move_speed = presets.move_speed.very_fast -- same as base.
 	self.deathvox_shield.ecm_vulnerability = .9 -- same as base.
 	self.deathvox_shield.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8} -- same as general enemies, less than vanilla.
@@ -1837,7 +1837,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic.tags = {"medic"} --just making sure tag applies.
 	self.deathvox_medic.detection = presets.detection.normal
 	self.deathvox_medic.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- added to make code consistent.
-	self.deathvox_medic.suppression = presets.suppression.no_supress -- tentative, in base.
+	self.deathvox_medic.suppression = presets.suppression.no_supress -- in base.
 	self.deathvox_medic.surrender = presets.surrender.special 
 	self.deathvox_medic.move_speed = presets.move_speed.very_fast
 	self.deathvox_medic.surrender_break_time = {7, 12} 
@@ -1911,7 +1911,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper.detection = presets.detection.normal
 	self.deathvox_sniper.suppression = presets.suppression.no_supress -- this actually makes snipers way less annoying!
 	self.deathvox_sniper.surrender = presets.surrender.special 
-	self.deathvox_sniper.move_speed = presets.move_speed.fast
+	self.deathvox_sniper.move_speed = presets.move_speed.normal -- same as base.
 	self.deathvox_sniper.surrender_break_time = {4, 6} 
 	self.deathvox_sniper.ecm_vulnerability = 0
 	self.deathvox_sniper.no_arrest = true
@@ -1942,7 +1942,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.surrender = nil
 	self.deathvox_tank.surrender_break_time = {4, 6}
 	self.deathvox_tank.ecm_vulnerability = 0.85
-	self.deathvox_taser.ecm_hurts = {
+	self.deathvox_tank.ecm_hurts = {
         ears = {min_duration = 1, max_duration = 3} -- tentative, in base
     }
 	self.deathvox_tank.deathguard = true
@@ -1954,7 +1954,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.is_special_unit = "tank"
 	self.deathvox_tank.access = "walk"
 
-    self.deathvox_greendozer = deep_clone(self.deathvox_tank) -- pro OOP strats
+    self.deathvox_greendozer = deep_clone(self.deathvox_tank)
 	self.deathvox_greendozer.use_factory = true -- Use a factory weapon
 	self.deathvox_greendozer.factory_weapon_id = {"wpn_deathvox_greendozer"} 
 	self.deathvox_greendozer.access = "tank"
@@ -1995,9 +1995,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_grenadier.HEALTH_SUICIDE_LIMIT = 0.25
 	self.deathvox_grenadier.flammable = true
 	self.deathvox_grenadier.use_animation_on_fire_damage = true
-	--self.deathvox_grenadier.damage.explosion_damage_mul = 0.5
 	self.deathvox_grenadier.damage.fire_damage_mul = 1
-	self.deathvox_grenadier.damage.hurt_severity = presets.hurt_severities.base
 	self.deathvox_grenadier.headshot_dmg_mul = 3
 	self.deathvox_grenadier.bag_dmg_mul = 6
 	self.deathvox_grenadier.move_speed = presets.move_speed.fast
