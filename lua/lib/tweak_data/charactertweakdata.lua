@@ -1949,7 +1949,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.no_arrest = true
 	self.deathvox_tank.steal_loot = nil
 	self.deathvox_tank.rescue_hostages = false
-	self.deathvox_tank.HEALTH_INIT = 675
+	self.deathvox_tank.HEALTH_INIT = 875
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7  -- new with final 2017 pass. Highly tentative. I do not believe this will effect armor. Requires scrutiny.
 	self.deathvox_tank.is_special_unit = "tank"
 	self.deathvox_tank.access = "walk"
