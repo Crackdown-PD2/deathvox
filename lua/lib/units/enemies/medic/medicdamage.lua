@@ -4,10 +4,8 @@ function MedicDamage:heal_unit(unit, override_cooldown)
 	local crackdown_disable_heal = {"deathvox_medic", "deathvox_medicdozer"}
 	local cooldown = tweak_data.medic.cooldown
 	cooldown = managers.crime_spree:modify_value("MedicDamage:CooldownTime", cooldown)
-	if not difficulty_index == 8 then
-		if t < self._heal_cooldown_t + cooldown and not override_cooldown then
-			return false
-		end
+	if t < self._heal_cooldown_t + cooldown and not override_cooldown then
+		return false
 	end
 
 	if self._unit:anim_data() and self._unit:anim_data().act then

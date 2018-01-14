@@ -9,8 +9,6 @@
 	<dependencies>
   	<depends_on animation_state_machine="anims/units/enemies/cop/cop_machine" animation_def="anims/units/enemies/cop/cop_def" />
   	<depends_on unit="pd1_cops/units/characters/enemies/swat/swat_helmet_1" />
-<!--  	<depends_on bnk="soundbanks/swordman" />
-  	<depends_on bnk="soundbanks/swordman_voice" /> -->
   	
   </dependencies>
   

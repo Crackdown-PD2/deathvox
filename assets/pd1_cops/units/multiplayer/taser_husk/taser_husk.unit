@@ -8,7 +8,7 @@
 	
 	<dependencies>
   	<depends_on animation_state_machine="anims/units/enemies/cop/cop_machine" animation_def="anims/units/enemies/cop/cop_def" />
-  	
+  	<depends_on effect="pd1_cops/effects/particles/weapons/taser_thread" />
   </dependencies>
   
   <extensions>

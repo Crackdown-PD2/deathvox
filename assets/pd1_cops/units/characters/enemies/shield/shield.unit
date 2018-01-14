@@ -9,7 +9,7 @@
 	<dependencies>
   		<depends_on animation_state_machine="anims/units/enemies/cop/cop_machine" animation_def="anims/units/enemies/cop/cop_def" />
   		<depends_on unit="units/payday2/weapons/wpn_npc_smg_mp9/wpn_npc_smg_mp9" />
-		<depends_on unit="units/payday2/characters/ene_acc_shield_lights/ene_acc_shield_lights" />
+		<depends_on unit="pd1_cops/units/weapons/shield/shield" />
   		<depends_on bnk="soundbanks/regular_vox" />
   </dependencies>
   
