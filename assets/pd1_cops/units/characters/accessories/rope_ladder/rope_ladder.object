@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <dynamic_object>
-  <diesel materials="units/characters/accessories/rope_ladder/rope_ladder" orientation_object="rp_rope_ladder" />
-  <sequence_manager file="units/characters/accessories/rope_ladder/rope_ladder" />
+  <diesel materials="pd1_cops/units/characters/accessories/rope_ladder/rope_ladder" orientation_object="rp_rope_ladder" />
+  <sequence_manager file="pd1_cops/units/characters/accessories/rope_ladder/rope_ladder" />
 	<animations>
 		<animation_group name="anim">			
 			<object name="joint1" />

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <unit type="storm" slot="1">
-  <object file="units/characters/accessories/baton/baton" />
+  <object file="pd1_cops/units/characters/accessories/baton/baton" />
   <extensions>
     <extension name="unit_data" class="ScriptUnitData" />
   </extensions>

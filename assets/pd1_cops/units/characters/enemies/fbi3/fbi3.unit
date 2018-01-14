@@ -4,12 +4,12 @@
 	
 	<anim_state_machine name="anims/units/enemies/cop/cop_machine" />
 	
-	<object file="units/characters/enemies/fbi3/fbi3" />
+	<object file="pd1_cops/units/characters/enemies/fbi3/fbi3" />
 	
 	<dependencies>
   		<depends_on animation_state_machine="anims/units/enemies/cop/cop_machine" animation_def="anims/units/enemies/cop/cop_def" />
   		<depends_on bnk="soundbanks/regular_vox" />
-		<depends_on unit="units/characters/enemies/fbi3/fbi_cap" />
+		<depends_on unit="pd1_cops/units/characters/enemies/fbi3/fbi_cap" />
   </dependencies>
   
   <extensions>
@@ -25,7 +25,7 @@
 			<var name="_head_body_name" value="head" />
 			<var name="_head_gear_object" value="g_cap" />
 			<var name="_nr_head_gear_objects" value="2" />
-			<var name="_head_gear" value="units/characters/enemies/fbi3/fbi_cap" />
+			<var name="_head_gear" value="pd1_cops/units/characters/enemies/fbi3/fbi_cap" />
 		</extension>
 		<extension name="movement" class="CopMovement" >
 			<var name="_footwear" value="hardsole" />
@@ -42,7 +42,7 @@
 		<extension name="sound" class="CopSound" />
 	</extensions>
   
-  <network sync="spawn" remote_unit="units/multiplayer/fbi3_husk/fbi3_husk"/>
+  <network sync="spawn" remote_unit="pd1_cops/units/multiplayer/fbi3_husk/fbi3_husk"/>
 	
   <sounds>
 		<default_soundsource source="Hips"/>

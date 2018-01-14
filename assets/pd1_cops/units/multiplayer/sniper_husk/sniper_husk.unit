@@ -4,14 +4,11 @@
 	
 	<anim_state_machine name="anims/units/enemies/cop/cop_machine" />
 	
-	<object file="units/characters/enemies/swat/swat" />
+	<object file="pd1_cops/units/characters/enemies/swat/swat" />
 	
 	<dependencies>
   	<depends_on animation_state_machine="anims/units/enemies/cop/cop_machine" animation_def="anims/units/enemies/cop/cop_def" />
-  	<depends_on unit="units/characters/enemies/swat/swat_helmet_1" />
-<!--  	<depends_on bnk="soundbanks/swordman" />
-  	<depends_on bnk="soundbanks/swordman_voice" /> -->
-  	
+  	<depends_on unit="pd1_cops/units/characters/enemies/swat/swat_helmet_1" />
   </dependencies>
   
   <extensions>
@@ -27,7 +24,7 @@
 			<var name="_head_body_name" value="head" />
 			<var name="_head_gear_object" value="g_helmet" />
 			<var name="_nr_head_gear_objects" value="2" />
-			<var name="_head_gear" value="units/characters/enemies/swat/swat_helmet_1" />
+			<var name="_head_gear" value="pd1_cops/units/characters/enemies/swat/swat_helmet_1" />
 			<var name="_head_gear_decal_mesh" value="dm_helmet" />
 		</extension>
 		<extension name="movement" class="HuskCopMovement" >

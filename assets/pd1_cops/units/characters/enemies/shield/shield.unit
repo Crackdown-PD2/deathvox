@@ -4,12 +4,11 @@
 	
 	<anim_state_machine name="anims/units/enemies/cop/cop_machine" />
 	
-	<object file="units/characters/enemies/shield/shield" />
+	<object file="pd1_cops/units/characters/enemies/shield/shield" />
 	
 	<dependencies>
   		<depends_on animation_state_machine="anims/units/enemies/cop/cop_machine" animation_def="anims/units/enemies/cop/cop_def" />
   		<depends_on unit="units/payday2/weapons/wpn_npc_smg_mp9/wpn_npc_smg_mp9" />
-  		<!--<depends_on unit="units/weapons/shield/shield" />-->
 		<depends_on unit="units/payday2/characters/ene_acc_shield_lights/ene_acc_shield_lights" />
   		<depends_on bnk="soundbanks/regular_vox" />
   </dependencies>
@@ -21,16 +20,12 @@
 			<var name="_default_weapon_id" value="mp9" />
 		</extension>
 		<extension name="inventory" class="CopInventory" >
-			<var name="_shield_unit_name" value="units/payday2/characters/ene_acc_shield_lights/ene_acc_shield_lights" />
+			<var name="_shield_unit_name" value="pd1_cops/units/weapons/shield/shield" />
 		</extension>
 		<extension name="brain" class="CopBrain" />
 		<extension name="anim_data" class="PlayerAnimationData" />
 		<extension name="character_damage" class="CopDamage">
 			<var name="_head_body_name" value="head" />
-			<!--<var name="_head_gear_object" value="g_helmet_lod" />
-			<var name="_nr_head_gear_objects" value="2" />
-			<var name="_head_gear" value="units/payday2/characters/ene_acc_shield_helmet/ene_acc_shield_helmet" />
-			<var name="_head_gear_decal_mesh" value="dm_helmet" />-->
 		</extension>
 		<extension name="movement" class="CopMovement" >
 			<var name="_footwear" value="hardsole" />
@@ -47,7 +42,7 @@
 		<extension name="sound" class="CopSound" />
 	</extensions>
   
-  <network sync="spawn" remote_unit="units/multiplayer/shieldcop_husk/shieldcop_husk"/>
+  <network sync="spawn" remote_unit="pd1_cops/units/multiplayer/shieldcop_husk/shieldcop_husk"/>
 	
   <sounds>
 		<default_soundsource source="Hips"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <unit type="debris" slot="18">
-  <object file="units/characters/enemies/security/cap" />
+  <object file="pd1_cops/units/characters/enemies/security/cap" />
   <extensions>
     <extension name="unit_data" class="ScriptUnitData" />
   </extensions>

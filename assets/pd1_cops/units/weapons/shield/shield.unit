@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <unit type="static" slot="8">
-  <object file="units/weapons/shield/shield" />
+  <object file="pd1_cops/units/weapons/shield/shield" />
   <extensions>
     <extension name="unit_data" class="ScriptUnitData" />
 	<extension name="damage" class="UnitDamage" />

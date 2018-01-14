@@ -3,8 +3,8 @@
 	<animation_def name="anims/units/enemies/cop/cop_def" />
 	
 
-  <diesel materials="units/characters/enemies/police_force" orientation_object="root_point" />
-  <sequence_manager file="units/characters/ragdoll" />
+  <diesel materials="pd1_cops/units/characters/enemies/police_force" orientation_object="root_point" />
+  <sequence_manager file="pd1_cops/units/characters/ragdoll" />
   
   <graphics>
     <object name="g_nypd_hat" enabled="true" />

@@ -4,7 +4,7 @@
 	
 	<anim_state_machine name="anims/units/enemies/cop/cop_machine" />
 	
-	<object file="units/characters/enemies/cop3/cop3" />
+	<object file="pd1_cops/units/characters/enemies/cop3/cop3" />
 	
 	<dependencies>
   	<depends_on animation_state_machine="anims/units/enemies/cop/cop_machine" animation_def="anims/units/enemies/cop/cop_def" />
@@ -26,7 +26,7 @@
 			<var name="_head_body_name" value="head" />
 			<var name="_head_gear_object" value="g_nypd_hat" />
 			<var name="_nr_head_gear_objects" value="2" />
-			<var name="_head_gear" value="units/characters/enemies/cop/nypd_hat" />
+			<var name="_head_gear" value="pd1_cops/units/characters/enemies/cop/nypd_hat" />
 		</extension>
 		<extension name="movement" class="HuskCopMovement" >
 			<var name="_footwear" value="hardsole" />

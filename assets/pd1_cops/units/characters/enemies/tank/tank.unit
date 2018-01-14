@@ -4,11 +4,10 @@
 	
 	<anim_state_machine name="anims/units/enemies/cop/cop_machine" />
 	
-	<object file="units/characters/enemies/tank/tank" />
+	<object file="pd1_cops/units/characters/enemies/tank/tank" />
 	
 	<dependencies>
   		<depends_on animation_state_machine="anims/units/enemies/cop/cop_machine" animation_def="anims/units/enemies/cop/cop_def" />
- <!--	<depends_on unit="units/characters/enemies/swat/swat_helmet_1" /> -->
   		<depends_on bnk="soundbanks/regular_vox" />
 		 <depends_on effect="effects/particles/bullet_hit/glass_breakable/bullet_hit_glass_breakable" />
 		 <depends_on bnk="soundbanks/regular_sfx" />
@@ -42,7 +41,7 @@
 		<extension name="sound" class="CopSound" />
 	</extensions>
   
-  <network sync="spawn" remote_unit="units/multiplayer/tank_husk/tank_husk"/>
+  <network sync="spawn" remote_unit="pd1_cops/units/multiplayer/tank_husk/tank_husk"/>
 	
   <sounds>
 		<default_soundsource source="Hips"/>

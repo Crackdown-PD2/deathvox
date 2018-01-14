@@ -4,12 +4,10 @@
 	
 	<anim_state_machine name="anims/units/enemies/cop/cop_machine" />
 	
-	<object file="units/characters/enemies/spooc/spooc" />
+	<object file="pd1_cops/units/characters/enemies/spooc/spooc" />
 	
 	<dependencies>
   	<depends_on animation_state_machine="anims/units/enemies/cop/cop_machine" animation_def="anims/units/enemies/cop/cop_def" />
-<!--  	<depends_on bnk="soundbanks/swordman" />
-  	<depends_on bnk="soundbanks/swordman_voice" /> -->
   	
   </dependencies>
 	

@@ -4,7 +4,7 @@
 	
 	<anim_state_machine name="anims/units/enemies/cop/cop_machine" />
 	
-	<object file="units/characters/enemies/fbi1/fbi1" />
+	<object file="pd1_cops/units/characters/enemies/fbi1/fbi1" />
 	
 	<dependencies>
   	<depends_on animation_state_machine="anims/units/enemies/cop/cop_machine" animation_def="anims/units/enemies/cop/cop_def" />
