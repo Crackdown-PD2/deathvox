@@ -92,4 +92,172 @@
 
 	<file name="effects/particles/explosions/cs_grenade_smoke.effect" load="false" force="true"/>
 	<file name="effects/particles/weapons/trail_dv_sniper.effect" load="false" force="true"/>
+	
+	<group name="pd1_cops/">	
+		<file :name="units/characters/accessories/rope_ladder/rope_ladder.unit"/>
+		<file :name="units/characters/accessories/rope_ladder/rope_ladder.object"/>
+		<file :name="units/characters/accessories/rope_ladder/rope_ladder.model"/>
+		<file :name="units/characters/accessories/rope_ladder/rope_ladder.cooked_physics"/>
+		<file :name="units/characters/accessories/rope_ladder/rope_ladder.material_config"/>
+		<file :name="units/characters/accessories/rope_ladder/rope_ladder.sequence_manager"/>
+		<file :name="units/characters/enemies/tank/tank.unit" load="true"/>
+		<file :name="units/characters/enemies/tank/tank.object"/>
+		<file :name="units/characters/enemies/tank/tank.model"/>
+		<file :name="units/characters/enemies/tank/tank.cooked_physics"/>
+		<file :name="units/characters/enemies/tank/tank.sequence_manager"/>
+		<file :name="units/characters/enemies/tank/tank_contour.material_config"/>
+		<file :name="units/multiplayer/tank_husk/tank_husk.unit" load="true"/>
+		<file :name="units/characters/enemies/spooc/spooc.unit" load="true"/>
+		<file :name="units/characters/accessories/baton/baton.unit" load="true"/>
+		<file :name="units/characters/accessories/baton/baton.object"/>
+		<file :name="units/characters/accessories/baton/baton.model"/>
+		<file :name="units/characters/accessories/baton/baton.cooked_physics"/>
+		<file :name="effects/particles/character/cloaker_goggle.effect"/>
+		<file :name="units/characters/enemies/spooc/spooc.object"/>
+		<file :name="units/characters/enemies/spooc/spooc.model"/>
+		<file :name="units/characters/enemies/spooc/spooc.cooked_physics"/>
+		<file :name="units/multiplayer/spooc_husk/spooc_husk.unit" load="true"/>
+		<file :name="units/characters/enemies/taser/taser.unit" load="true"/>
+		<file :name="effects/particles/weapons/taser_thread.effect"/>
+		<file :name="units/characters/enemies/taser/taser.object"/>
+		<file :name="units/characters/enemies/taser/taser.model"/>
+		<file :name="units/characters/enemies/taser/taser.cooked_physics"/>
+		<file :name="units/multiplayer/taser_husk/taser_husk.unit" load="true"/>
+		<file :name="units/characters/enemies/swat_kevlar1/swat_kevlar1.unit" load="true"/>
+		<file :name="units/characters/enemies/swat_kevlar1/kevlar_helmet.unit" load="true"/>
+		<file :name="units/characters/enemies/swat_kevlar1/kevlar_helmet.object"/>
+		<file :name="units/characters/enemies/swat_kevlar1/kevlar_helmet.model"/>
+		<file :name="units/characters/enemies/swat_kevlar1/kevlar_helmet.cooked_physics"/>
+		<file :name="units/characters/enemies/swat_kevlar1/kevlar_helmet.sequence_manager"/>
+		<file :name="units/characters/enemies/swat_kevlar1/swat_kevlar1.object"/>
+		<file :name="units/characters/enemies/swat_kevlar1/swat_kevlar1.model"/>
+		<file :name="units/characters/enemies/swat_kevlar1/swat_kevlar1.cooked_physics"/>
+		<file :name="units/multiplayer/swat_kevlar1_husk/swat_kevlar1_husk.unit" load="true"/>
+		<file :name="units/characters/enemies/security/security_guard_01.unit" load="true"/>
+		<file :name="units/characters/enemies/security/security_guard_01.object"/>
+		<file :name="units/characters/enemies/security/security_guard_01.model"/>
+		<file :name="units/characters/enemies/security/security_guard_01.cooked_physics"/>
+		<file :name="units/multiplayer/security_husk/security_guard_01_husk.unit" load="true"/>
+		<file :name="units/characters/enemies/security/security_guard_02.unit" load="true"/>
+		<file :name="units/characters/enemies/security/security_guard_02.object"/>
+		<file :name="units/characters/enemies/security/security_guard_02.model"/>
+		<file :name="units/characters/enemies/security/security_guard_02.cooked_physics"/>
+		<file :name="units/multiplayer/security_husk/security_guard_02_husk.unit" load="true"/>
+		<file :name="units/characters/enemies/cop2/cop2.object"/>
+		<file :name="units/characters/enemies/cop2/cop2.model"/>
+		<file :name="units/characters/enemies/cop2/cop2.cooked_physics"/>
+		<file :name="units/multiplayer/cop2_husk/cop2_husk.unit" load="true"/>
+		<file :name="units/characters/enemies/cop3/cop3.unit" load="true"/>
+		<file :name="units/characters/enemies/cop3/cop3.object"/>
+		<file :name="units/characters/enemies/cop3/cop3.model"/>
+		<file :name="units/characters/enemies/cop3/cop3.cooked_physics"/>
+		<file :name="units/multiplayer/cop3_husk/cop3_husk.unit" load="true"/>
+		<file :name="units/characters/enemies/swat/swat.unit" load="true"/>
+		<file :name="units/characters/enemies/swat/swat_helmet_1.unit" load="true"/>
+		<file :name="units/characters/enemies/swat/swat_helmet_1.object"/>
+		<file :name="units/characters/enemies/swat/swat_helmet_1.model"/>
+		<file :name="units/characters/enemies/swat/swat_helmet_1.cooked_physics"/>
+		<file :name="units/characters/enemies/swat/swat.object"/>
+		<file :name="units/characters/enemies/swat/swat.model"/>
+		<file :name="units/characters/enemies/swat/swat.cooked_physics"/>
+		<file :name="units/multiplayer/swat_husk/swat_husk.unit" load="true"/>
+		<file :name="units/characters/enemies/cop/cop.unit" load="true"/>
+		<file :name="units/characters/enemies/cop/nypd_hat.unit" load="true"/>
+		<file :name="units/characters/enemies/cop/nypd_hat.object"/>
+		<file :name="units/characters/enemies/cop/nypd_hat.model"/>
+		<file :name="units/characters/enemies/cop/nypd_hat.cooked_physics"/>
+		<file :name="units/characters/enemies/cop/cop.object"/>
+		<file :name="units/characters/enemies/cop/cop.model"/>
+		<file :name="units/characters/enemies/cop/cop.cooked_physics"/>
+		<file :name="units/multiplayer/cop_husk/cop_husk.unit" load="true"/>
+		<file :name="units/characters/enemies/cop2/cop2.unit" load="true"/>
+		<file :name="units/characters/enemies/security/patrol_guard.unit" load="true"/>
+		<file :name="units/characters/enemies/security/cap.unit" load="true"/>
+		<file :name="units/characters/enemies/security/cap.object"/>
+		<file :name="units/characters/enemies/security/cap.model"/>
+		<file :name="units/characters/enemies/security/cap.cooked_physics"/>
+		<file :name="units/characters/enemies/police_force.material_config"/>
+		<file :name="units/characters/enemies/police_force_contour.material_config"/>
+		<file :name="units/characters/enemies/textures/police_force_df.texture"/>
+		<file :name="units/glass/tank_glass_df.texture"/>
+		<file :name="units/weapons/texture/weapon_il_green_il.texture"/>
+		<file :name="units/characters/enemies/textures/police_force_nm.texture"/>
+		<file :name="units/glass/tank_glass_op.texture"/>
+		<file :name="units/characters/enemies/security/security_guard_one_diamond.object"/>
+		<file :name="units/characters/enemies/security/security_guard_one_diamond.model"/>
+		<file :name="units/characters/enemies/security/security_guard_one_diamond.cooked_physics"/>
+		<file :name="units/multiplayer/security_husk/patrol_guard_husk.unit" load="true"/>
+		<file :name="units/characters/enemies/swat_kevlar2/swat_kevlar2.object"/>
+		<file :name="units/characters/enemies/swat_kevlar2/swat_kevlar2.model"/>
+		<file :name="units/characters/enemies/swat_kevlar2/swat_kevlar2.cooked_physics"/>
+		<file :name="units/characters/enemies/swat_kevlar2/swat_kevlar2.unit" load="true"/>
+		<file :name="units/characters/enemies/shield/shield.object"/>
+		<file :name="units/characters/enemies/shield/shield.model"/>
+		<file :name="units/characters/enemies/shield/shield.cooked_physics"/>
+		<file :name="units/multiplayer/shieldcop_husk/shieldcop_husk.unit" load="true"/>
+		<file :name="units/characters/enemies/shield/shield.unit" load="true"/>
+		<file :name="units/weapons/shield/shield.unit" load="true"/>
+		<file :name="units/weapons/shield/shield.object"/>
+		<file :name="units/weapons/shield/shield.model"/>
+		<file :name="units/weapons/shield/shield.material_config"/>
+		<file :name="units/weapons/shield/shield.sequence_manager"/>
+		<file :name="units/weapons/shield/shield.cooked_physics"/>
+		<file :name="units/weapons/shield/shield_df.texture"/>
+		<file :name="units/weapons/shield/shield_nm.texture"/>
+		<file :name="units/characters/ragdoll.sequence_manager"/>
+		
+		<file :name="units/characters/enemies/swat2/swat2.object"/>
+		<file :name="units/characters/enemies/swat2/swat2.model"/>
+		<file :name="units/characters/enemies/swat2/swat2.cooked_physics"/>
+		<file :name="units/characters/enemies/swat2/swat2.unit" load="true"/>
+		<file :name="units/multiplayer/swat2_husk/swat2_husk.unit" load="true"/>
+		
+		<file :name="units/characters/enemies/swat3/swat3.object"/>
+		<file :name="units/characters/enemies/swat3/swat3.model"/>
+		<file :name="units/characters/enemies/swat3/swat3.cooked_physics"/>
+		<file :name="units/characters/enemies/swat3/swat3.unit" load="true"/>
+		<file :name="units/multiplayer/swat3_husk/swat3_husk.unit" load="true"/>
+		
+		<file :name="units/characters/enemies/sniper/sniper.unit" load="true"/>
+		<file :name="units/multiplayer/sniper_husk/sniper_husk.unit" load="true"/>
+		
+		<file :name="units/characters/enemies/fbi1/fbi1.object"/>
+		<file :name="units/characters/enemies/fbi1/fbi1.model"/>
+		<file :name="units/characters/enemies/fbi1/fbi1.cooked_physics"/>
+		<file :name="units/characters/enemies/fbi1/fbi1.unit" load="true"/>
+		<file :name="units/multiplayer/fbi1_husk/fbi1_husk.unit" load="true"/>
+		
+		<file :name="units/characters/enemies/fbi2/fbi2.object"/>
+		<file :name="units/characters/enemies/fbi2/fbi2.model"/>
+		<file :name="units/characters/enemies/fbi2/fbi2.cooked_physics"/>
+		<file :name="units/characters/enemies/fbi2/fbi2.unit" load="true"/>
+		<file :name="units/multiplayer/fbi2_husk/fbi2_husk.unit" load="true"/>
+		
+		<file :name="units/characters/enemies/fbi3/fbi3.object"/>
+		<file :name="units/characters/enemies/fbi3/fbi3.model"/>
+		<file :name="units/characters/enemies/fbi3/fbi3.cooked_physics"/>
+		<file :name="units/characters/enemies/fbi3/fbi3.unit" load="true"/>
+		<file :name="units/multiplayer/fbi3_husk/fbi3_husk.unit" load="true"/>
+		
+		<file :name="units/characters/enemies/fbi3/fbi_cap.object"/>
+		<file :name="units/characters/enemies/fbi3/fbi_cap.model"/>
+		<file :name="units/characters/enemies/fbi3/fbi_cap.cooked_physics"/>
+		<file :name="units/characters/enemies/fbi3/fbi_cap.unit" load="true"/>
+		
+		<file :name="units/characters/enemies/murky_water1/murky_water1.object"/>
+		<file :name="units/characters/enemies/murky_water1/murky_water1.model"/>
+		<file :name="units/characters/enemies/murky_water1/murky_water1.cooked_physics"/>
+		<file :name="units/characters/enemies/murky_water1/murky_water1.unit" load="true"/>
+		
+		<file :name="units/characters/enemies/murky_water2/murky_water2.object"/>
+		<file :name="units/characters/enemies/murky_water2/murky_water2.model"/>
+		<file :name="units/characters/enemies/murky_water2/murky_water2.cooked_physics"/>
+		<file :name="units/characters/enemies/murky_water2/murky_water2.unit" load="true"/>
+		
+		<file :name="units/characters/enemies/murky_water1/murky_water_cap.object"/>
+		<file :name="units/characters/enemies/murky_water1/murky_water_cap.model"/>
+		<file :name="units/characters/enemies/murky_water1/murky_water_cap.cooked_physics"/>
+		<file :name="units/characters/enemies/murky_water1/murky_water_cap.unit" load="true"/>
+	</group>
+
 </assets>
