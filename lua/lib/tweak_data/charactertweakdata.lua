@@ -70,72 +70,62 @@ function CharacterTweakData:_presets(tweak_data)
 		speed = 1.7,
 		occasions = {
 			hit = {
-				chance = 0.9,
+				chance = 1,
 				check_timeout = {0, 1},
 				variations = {
-					side_step = {
-						chance = 3,
-						shoot_chance = 1,
-						shoot_accuracy = 0.7,
-						timeout = {1, 2}
-					},
 					roll = {
-						chance = 1,
-						timeout = {1.2, 2}
+						chance = 2,
+						timeout = {1, 1.5}
 					},
 					wheel = {
-						chance = 2,
-						shoot_chance = 1, -- test value. May or may not operate action, crash.
+						chance = 1,
+						shoot_chance = 0.9,
 						shoot_accuracy = 0.8,
-						timeout = {1.2, 2}
+						timeout = {1, 1.5}
 					}
 				}
 			},
 			preemptive = {
-				chance = 0.9,
-				check_timeout = {0, 1},
-				variations = {
-					side_step = {
-						chance = 1,
-						shoot_chance = 1,
-						shoot_accuracy = 0.8,
-						timeout = {1, 2}
-					},
-					roll = {
-						chance = 2,
-						timeout = {1.2, 2}
-					},
-					wheel = {
-						chance = 2,
-						shoot_chance = 1, -- test value. May or may not operate action, crash.
-						shoot_accuracy = 0.8,
-						timeout = {1.2, 2}
-					}
-				}
-			},
-			scared = {
-				chance = 0.9,
-				check_timeout = {0, 1},
+				chance = 1,
+				check_timeout = {0, .6},
 				variations = {
 					side_step = {
 						chance = 1,
 						shoot_chance = 0.8,
 						shoot_accuracy = 0.6,
-						timeout = {1, 2}
+						timeout = {1, 1.5}
+					},
+					roll = {
+						chance = 2,
+						timeout = {1, 1.5}
+					},
+					wheel = {
+						chance = 2,
+						shoot_chance = 0.9,
+						shoot_accuracy = 0.8,
+						timeout = {1, 1.5}
+					}
+				}
+			},
+			scared = {
+				chance = 1,
+				check_timeout = {0, 0.6},
+				variations = {
+					side_step = {
+						chance = 1,
+						shoot_chance = 0.8,
+						shoot_accuracy = 0.6,
+						timeout = {1, 1.5}
 					},
 					roll = {
 						chance = 3,
-						timeout = {1.2, 2}
+						timeout = {1, 1.5}
 					},
 					wheel = {
 						chance = 3,
-						shoot_chance = 1, -- test value. May or may not operate action, crash.
+						shoot_chance = 0.9,
 						shoot_accuracy = 0.8,
-						timeout = {1.2, 2}
-					},
-					dive = {
-						chance = 1,
-						timeout = {1.2, 2}
+						timeout = {1, 1.5}
 					}
 				}
 			}
@@ -1698,7 +1688,7 @@ end
 	
 function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard = deep_clone(self.security)
-	self.deathvox_guard.detection = presets.detection.guard -- normal, guard, sniper, gang_member, civilian, blind
+	self.deathvox_guard.detection = presets.detection.guard
 	self.deathvox_guard.suppression = nil -- presets.suppression.no_supress
 	self.deathvox_guard.surrender = presets.surrender.easy
 	self.deathvox_guard.move_speed = presets.move_speed.very_fast -- tentative.
@@ -1717,15 +1707,15 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 	self.deathvox_lightar = deep_clone(self.city_swat)
 	self.deathvox_lightar.detection = presets.detection.normal
-	self.deathvox_lightar.suppression = presets.suppression.hard_agg -- tentative. Need to consider effect, may be too much.
-	self.deathvox_lightar.surrender = presets.surrender.normal --tentative. hard for heavy, normal for light.
+	self.deathvox_lightar.suppression = presets.suppression.hard_agg
+	self.deathvox_lightar.surrender = presets.surrender.normal -- hard for heavy, normal for light.
 	self.deathvox_lightar.move_speed = presets.move_speed.very_fast
-	self.deathvox_lightar.surrender_break_time = {6, 8} --should be fairly fast, used in base for fbi heavy swat.
+	self.deathvox_lightar.surrender_break_time = {6, 8}
 	self.deathvox_lightar.ecm_vulnerability = 1
 	self.deathvox_lightar.ecm_hurts = {
-		ears = {min_duration = 6, max_duration = 8} -- base game taser value. Gen base is 8-10.
+		ears = {min_duration = 6, max_duration = 8}
 	}
-	self.deathvox_lightar.dodge = presets.dodge.deathvox
+	self.deathvox_lightar.dodge = presets.dodge.deathvoxninja
 	self.deathvox_lightar.deathguard = true
 	self.deathvox_lightar.no_arrest = true
 	self.deathvox_lightar.steal_loot = true
@@ -1759,7 +1749,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyar.use_factory = true
 	self.deathvox_heavyar.HEALTH_INIT = 101 -- new with final 2017 pass.
 	self.deathvox_heavyar.headshot_dmg_mul = 3
-	self.deathvox_heavyar.damage.explosion_damage_mul = 0.9
+	self.deathvox_heavyar.damage.explosion_damage_mul = 0.7
 	self.deathvox_heavyar.access = "any"
 	table.insert(self._enemy_list, "deathvox_heavyar")
 	
@@ -1773,7 +1763,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightshot.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8}
 	}
-	self.deathvox_lightshot.dodge = presets.dodge.deathvox
+	self.deathvox_lightshot.dodge = presets.dodge.deathvoxninja
 	self.deathvox_lightshot.deathguard = true
 	self.deathvox_lightshot.no_arrest = true
 	self.deathvox_lightshot.steal_loot = true
@@ -1807,7 +1797,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyshot.use_factory = true
 	self.deathvox_heavyshot.HEALTH_INIT = 101 -- new with final 2017 pass.
 	self.deathvox_heavyshot.headshot_dmg_mul = 3
-	self.deathvox_heavyshot.damage.explosion_damage_mul = 0.9
+	self.deathvox_heavyshot.damage.explosion_damage_mul = 0.7
 	self.deathvox_heavyshot.access = "any"
 	table.insert(self._enemy_list, "deathvox_heavyshot")
 	
@@ -1838,7 +1828,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic.detection = presets.detection.normal
 	self.deathvox_medic.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- added to make code consistent.
 	self.deathvox_medic.suppression = presets.suppression.no_supress -- in base.
-	self.deathvox_medic.surrender = presets.surrender.special 
+	self.deathvox_medic.surrender = nil -- correcting surrender bug.
 	self.deathvox_medic.move_speed = presets.move_speed.very_fast
 	self.deathvox_medic.surrender_break_time = {7, 12} 
 	self.deathvox_medic.ecm_vulnerability = 1
@@ -1866,7 +1856,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire
 	self.deathvox_taser.damage.hurt_severity.tase = false -- if this works, great, horrible things will arise.
 	self.deathvox_taser.suppression = presets.suppression.no_supress -- consistent form added.
-	self.deathvox_taser.surrender = presets.surrender.special 
+	self.deathvox_taser.surrender = nil -- correcting surrender bug.
 	self.deathvox_taser.move_speed = presets.move_speed.fast
 	self.deathvox_taser.surrender_break_time = {7, 12} 
 	self.deathvox_taser.ecm_vulnerability = 0.9 -- in base
@@ -1888,7 +1878,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker.tags = {"spooc"} -- just making sure tag applies.
 	self.deathvox_cloaker.detection = presets.detection.normal
 	self.deathvox_cloaker.suppression = nil
-	self.deathvox_cloaker.surrender = presets.surrender.special 
+	self.deathvox_cloaker.surrender = nil
 	self.deathvox_cloaker.move_speed = presets.move_speed.lightning
 	self.deathvox_cloaker.HEALTH_INIT = 96
 	self.deathvox_cloaker.headshot_dmg_mul = 3
@@ -1910,7 +1900,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper.tags = {"sniper"} -- just making sure tag applies.
 	self.deathvox_sniper.detection = presets.detection.normal
 	self.deathvox_sniper.suppression = presets.suppression.no_supress -- this actually makes snipers way less annoying!
-	self.deathvox_sniper.surrender = presets.surrender.special 
+	self.deathvox_sniper.surrender = nil -- correcting surrender bug.
 	self.deathvox_sniper.move_speed = presets.move_speed.normal -- same as base.
 	self.deathvox_sniper.surrender_break_time = {4, 6} 
 	self.deathvox_sniper.ecm_vulnerability = 0
@@ -1928,7 +1918,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper_assault = deep_clone(self.deathvox_sniper)
 	self.deathvox_sniper_assault.move_speed = presets.move_speed.very_fast
 	self.deathvox_sniper_assault.deathguard = true
-	self.deathvox_sniper_assault.HEALTH_INIT = 34
+	self.deathvox_sniper_assault.HEALTH_INIT = 15
 	self.deathvox_sniper_assault.headshot_dmg_mul = 3
 	self.deathvox_sniper_assault.is_special_unit = "ass_sniper"
 	self.deathvox_sniper_assault.access = "any"
@@ -1950,7 +1940,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.steal_loot = nil
 	self.deathvox_tank.rescue_hostages = false
 	self.deathvox_tank.HEALTH_INIT = 875
-	self.deathvox_tank.damage.explosion_damage_mul = 0.7  -- new with final 2017 pass. Highly tentative. I do not believe this will effect armor. Requires scrutiny.
+	self.deathvox_tank.damage.explosion_damage_mul = 0.5  -- new with final 2017 pass. Requires scrutiny.
 	self.deathvox_tank.is_special_unit = "tank"
 	self.deathvox_tank.access = "walk"
 
