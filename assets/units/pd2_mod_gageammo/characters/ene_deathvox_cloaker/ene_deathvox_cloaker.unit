@@ -1,18 +1,13 @@
 <?xml version="1.0"?>
 <unit type="being" slot="12">
 	<anim_state_machine name="anims/units/enemies/cop/cop_machine" />
-	<object file="units/payday2/characters/ene_spook_1/ene_spook_1" />
-
+	<object file="pd1_cops/units/characters/enemies/spooc/spooc" />
 	<dependencies>
-		<depends_on physic_effect="core/physic_effects/sequencemanager_push" />
-		<depends_on physic_effect="core/physic_effects/sequencemanager_push_with_ang" />
-		<depends_on effect="effects/payday2/particles/impacts/blood/blood_impact_katana" />
+		<depends_on animation_state_machine="anims/units/enemies/cop/cop_machine" animation_def="anims/units/enemies/cop/cop_def" />
 		<depends_on bnk="soundbanks/regular_vox" />
-		<depends_on effect="effects/particles/character/cloaker_goggle" />
-		<depends_on unit="units/payday2/characters/ene_acc_baton/ene_acc_baton" />
-		<depends_on unit="units/payday2/characters/ene_spook_1/debris/ene_spook_head_debris" />
-		<depends_on unit="units/payday2/characters/ene_spook_1/debris/ene_spook_upper_body_debris" />
-	</dependencies>
+		<depends_on unit="pd1_cops/units/characters/accessories/baton/baton" />
+		<depends_on effect="pd1_cops/effects/particles/character/cloaker_goggle" />
+  </dependencies>
 
 	<extensions>
 		<extension name="unit_data" class="ScriptUnitData" />
@@ -26,7 +21,6 @@
 		<extension name="anim_data" class="PlayerAnimationData" />
 		<extension name="character_damage" class="CopDamage">
 			<var name="_head_body_name" value="head" />
-			<var name="_death_sequence" value="kill_spook_lights" />
 		</extension>
 		<extension name="movement" class="CopMovement" >
 			<var name="_footwear" value="hardsole" />
