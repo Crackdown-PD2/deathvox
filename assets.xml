@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<assets base_path="assets/">
+<assets base_path="assets/" target="scripted" load_group="cops">
 	<group name="pd1_cops/">
 		<file :name="units/characters/enemies/tank/tank.object" force="false"/>
 		<file :name="units/characters/enemies/tank/tank.model" force="false"/>
