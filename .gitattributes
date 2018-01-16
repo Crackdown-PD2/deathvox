@@ -26,3 +26,4 @@
 *.bz2 binary
 *.swp binary
 *.model binary
+*.texture binary
