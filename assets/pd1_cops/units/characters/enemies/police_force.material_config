@@ -3,14 +3,10 @@
         <bump_normal_texture file="pd1_cops/units/characters/enemies/textures/police_force_nm"/>
         <diffuse_texture file="pd1_cops/units/characters/enemies/textures/police_force_df"/>
     </material>
-    <material name="police_force_lod1" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:RL_COPS:SKINNED_3WEIGHTS:VERTEX_COLOR:VERTEX_COLOR_ALPHA:VERTEX_COLOR_CHARACTER" version="2">
-        <diffuse_texture file="pd1_cops/units/characters/enemies/textures/police_force_df" mip="1"/>
-		<bump_normal_texture file="pd1_cops/units/characters/enemies/textures/police_force_nm" mip="1"/>
+    <material name="police_force_lod1" render_template="generic:DIFFUSE_TEXTURE:RL_COPS:SKINNED_3WEIGHTS:VERTEX_COLOR:VERTEX_COLOR_ALPHA:VERTEX_COLOR_CHARACTER" version="2">
+        <diffuse_texture file="pd1_cops/units/characters/enemies/textures/police_force_df"/>
     </material>
-    <material name="police_force_lod2" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:RL_COPS:SKINNED_3WEIGHTS:VERTEX_COLOR:VERTEX_COLOR_ALPHA:VERTEX_COLOR_CHARACTER" version="2">
-		<diffuse_texture file="pd1_cops/units/characters/enemies/textures/police_force_df" mip="4"/>
-		<bump_normal_texture file="pd1_cops/units/characters/enemies/textures/police_force_nm" mip="4"/>
-	</material>
+    <material name="police_force_lod2" render_template="generic:RL_COPS:SKINNED_1WEIGHT:VERTEX_COLOR:VERTEX_COLOR_ALPHA:VERTEX_COLOR_CHARACTER" version="2"/>
     <material name="police_force_no_skin" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:RL_COPS:VERTEX_COLOR:VERTEX_COLOR_ALPHA:VERTEX_COLOR_CHARACTER" version="2">
         <bump_normal_texture file="pd1_cops/units/characters/enemies/textures/police_force_nm"/>
         <diffuse_texture file="pd1_cops/units/characters/enemies/textures/police_force_df"/>

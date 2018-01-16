@@ -22,7 +22,8 @@
         <variable value="1 1 1" type="vector3" name="contour_color"/>
         <variable value="0" type="scalar" name="contour_opacity"/>
     </material>
-    <material name="police_force_lod2" unique="true" render_template="generic:CONTOUR:RL_COPS:SKINNED_1WEIGHT:VERTEX_COLOR:VERTEX_COLOR_ALPHA:VERTEX_COLOR_CHARACTER" version="2">
+    <material name="police_force_lod2" unique="true" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:RL_COPS:SKINNED_3WEIGHTS:VERTEX_COLOR:VERTEX_COLOR_ALPHA:VERTEX_COLOR_CHARACTER" version="2">
+        <diffuse_texture file="pd1_cops/units/characters/enemies/textures/police_force_df"/>
         <variable value="1 1 1" type="vector3" name="contour_color"/>
         <variable value="0" type="scalar" name="contour_opacity"/>
     </material>
