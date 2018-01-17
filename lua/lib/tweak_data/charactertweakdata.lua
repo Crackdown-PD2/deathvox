@@ -1731,7 +1731,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 	self.deathvox_heavyar = deep_clone(self.city_swat)
 	self.deathvox_heavyar.detection = presets.detection.normal
-	self.deathvox_heavyar.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- new with final 2017 pass.
+	self.deathvox_heavyar.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- revised per feedback.
 	self.deathvox_heavyar.suppression = presets.suppression.hard_agg -- tentative.
 	self.deathvox_heavyar.surrender = presets.surrender.hard --tentative.
 	self.deathvox_heavyar.move_speed = presets.move_speed.very_fast
@@ -1779,7 +1779,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 	self.deathvox_heavyshot = deep_clone(self.city_swat)
 	self.deathvox_heavyshot.detection = presets.detection.normal
-	self.deathvox_heavyshot.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- new with final 2017 pass.
+	self.deathvox_heavyshot.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- revised per feedback.
 	self.deathvox_heavyshot.suppression = presets.suppression.hard_agg -- tentative.
 	self.deathvox_heavyshot.surrender = presets.surrender.hard -- tentative.
 	self.deathvox_heavyshot.move_speed = presets.move_speed.very_fast
