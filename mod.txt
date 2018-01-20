@@ -1,10 +1,10 @@
 {
- "name" : "Death Vox"
- "description" : "EVIL EYES, EVIL EYES EVERYWHERE",
+ "name" : "Crackdown"
+ "description" : "Reimagining of One Down difficulty",
  "author" : "Iamgoofball and Discendo Vox",
- "contact" : "Hell",
+ "contact" : "https://discord.gg/BdN4as7",
  "version" : "BETA",
- "priority" : 45,
+ "priority" : 48,
  "blt_version" : 2,
  "image" : "res.png",
  "undisablable" : false,

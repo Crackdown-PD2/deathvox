@@ -1,3 +1,4 @@
+
 function CopBase:init(unit)
 	UnitBase.init(self, unit, false)
 
