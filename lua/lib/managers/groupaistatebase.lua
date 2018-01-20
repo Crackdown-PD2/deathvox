@@ -287,7 +287,7 @@ function GroupAIStateBase:propagate_alert(alert_data)
 			local alert_rad_sq = alert_data[3] * alert_data[3]
 			if self._enemy_weapons_hot then
 				log("its loud")
-				alert_rad_sq = 1500 * 1500
+				alert_rad_sq = 4500 * 4500
 			else
 				log("it's stealth")
 			end
