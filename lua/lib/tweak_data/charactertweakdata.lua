@@ -9,7 +9,6 @@ end
 
 function CharacterTweakData:_presets(tweak_data)
 	local presets = origin_presets(self, tweak_data)
-	presets.base.use_pdth_shit = false
 	presets.dodge.deathvox = {
 		speed = 1.7,
 		occasions = {
@@ -1894,7 +1893,6 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker.use_factory = true
 	self.deathvox_cloaker.is_special_unit = "spooc"
 	self.deathvox_cloaker.access = "any"
-	self.deathvox_cloaker.use_pdth_shit = true
 
 	table.insert(self._enemy_list, "deathvox_cloaker") 
 

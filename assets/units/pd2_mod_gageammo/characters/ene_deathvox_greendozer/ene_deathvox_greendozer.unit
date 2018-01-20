@@ -1,15 +1,20 @@
 <?xml version="1.0"?>
 <unit type="being" slot="12">
 	<anim_state_machine name="anims/units/enemies/cop/cop_machine" />
-	
-	<object file="pd1_cops/units/characters/enemies/tank/tank" />
-	
+	<object file="units/payday2/characters/ene_bulldozer_1/ene_bulldozer_1" />
+
 	<dependencies>
-  		<depends_on animation_state_machine="anims/units/enemies/cop/cop_machine" animation_def="anims/units/enemies/cop/cop_def" />
-  		<depends_on bnk="soundbanks/regular_vox" />
-		 <depends_on effect="effects/particles/bullet_hit/glass_breakable/bullet_hit_glass_breakable" />
-		 <depends_on bnk="soundbanks/regular_sfx" />
-  </dependencies>
+		
+		<depends_on bnk="soundbanks/regular_vox" />
+		<depends_on bnk="soundbanks/regular_sfx" />
+		<depends_on effect="effects/particles/bullet_hit/glass_breakable/bullet_hit_glass_breakable" />
+		<depends_on unit="units/payday2/characters/ene_acc_bulldozer_back/ene_acc_bulldozer_back" />
+		<depends_on unit="units/payday2/characters/ene_acc_bulldozer_chest/ene_acc_bulldozer_chest" />
+		<depends_on unit="units/payday2/characters/ene_acc_bulldozer_helmet_plate/ene_acc_bulldozer_helmet_plate" />
+		<depends_on unit="units/payday2/characters/ene_acc_bulldozer_neck/ene_acc_bulldozer_neck" />
+		<depends_on unit="units/payday2/characters/ene_acc_bulldozer_stomache/ene_acc_bulldozer_stomache" />
+		<depends_on unit="units/payday2/characters/ene_acc_bulldozer_throat/ene_acc_bulldozer_throat" />
+	</dependencies>
 
 	<extensions>
 		<extension name="unit_data" class="ScriptUnitData" />
@@ -44,6 +49,5 @@
 
 	<sounds>
 		<default_soundsource source="Hips"/>
-		<soundsource name="glass" source="e_glass" />
 	</sounds>
 </unit>

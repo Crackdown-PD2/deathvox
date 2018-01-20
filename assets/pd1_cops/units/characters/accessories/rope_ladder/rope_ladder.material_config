@@ -1,3 +1,0 @@
-<materials version="3">
-    <material name="mat_rope" render_template="generic:SKINNED_1WEIGHT:VERTEX_COLOR" version="2"/>
-</materials>

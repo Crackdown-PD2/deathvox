@@ -578,13 +578,13 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				rank = 2
 			},
 			{
-				unit = "deathvox_grenadier",
+				unit = "deathvox_shield",
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_grenad_lead,
+				tactics = self._tactics.deathvox_shield_lead,
 				rank = 1
-			}
+			},
 		}
 	}
 
@@ -695,12 +695,12 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		amount = {4, 4},
 		spawn = {
 			{
-				unit = "deathvox_grenadier",
+				unit = "deathvox_shield",
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_grenad_lead,
-				rank = 1
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 2
 			},
 			{
 				unit = "deathvox_cloaker",
@@ -716,36 +716,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				amount_min = 2,
 				amount_max = 2,
 				tactics = self._tactics.deathvox_tazer_follow,
-				rank = 1
-			}
-		}
-	}
-
-	self.enemy_spawn_groups.aegeas = {
-		amount = {3, 3},
-		spawn = {
-			{
-				unit = "deathvox_grenadier",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_grenad_lead,
-				rank = 3
-			},
-			{
-				unit = "deathvox_shield",
-				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
-				tactics = self._tactics.deathvox_shield_support,
-				rank = 2
-			},
-			{
-				unit = "deathvox_grenadier",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_grenad_follow,
 				rank = 1
 			}
 		}
@@ -831,11 +801,11 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				rank = 2
 			},
 			{
-				unit = "deathvox_grenadier",
+				unit = "deathvox_cloaker",
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_grenad_follow,
+				tactics = self._tactics.deathvox_spooc_pinch,
 				rank = 1
 			}
 		}
@@ -1139,7 +1109,6 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 			damocles = { 0.05,0.05,0.05  },
 			caduceus = { 0.05,0.05,0.05  },
 			atropos = { 0.05,0.05,0.05 },
-			aegeas = { 0.05,0.05,0.05 },
 			dv_group_1 = {0.1, 0.1, 0.1},
 			dv_group_2_std = { 0.05,0.05,0.05  },
 			dv_group_2_med = { 0.05,0.05,0.05  },
