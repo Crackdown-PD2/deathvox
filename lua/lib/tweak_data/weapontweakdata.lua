@@ -112,7 +112,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_shotgun_heavy.usage = "is_heavy_shotgun"
 	self.deathvox_shotgun_heavy.anim_usage = "is_shotgun_mag"
 
-	self.deathvox_sniper.sounds.prefix = "lakner_npc"
+	self.deathvox_sniper.sounds.prefix = "sniper_npc"
 	self.deathvox_sniper.use_data.selection_index = 2
 	self.deathvox_sniper.DAMAGE = 24 -- base 240, drop with distance. Same as DW and OD.
 	self.deathvox_sniper.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
