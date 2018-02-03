@@ -3,7 +3,7 @@ function MedicDamage:heal_unit(unit, override_cooldown)
 	local difficulty_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)
 	local cooldown = tweak_data.medic.cooldown
 	if difficulty_index == 8 then
-		local cooldown = 1.2
+		local cooldown = 1.8
 	end
 	
 	cooldown = managers.crime_spree:modify_value("MedicDamage:CooldownTime", cooldown)
