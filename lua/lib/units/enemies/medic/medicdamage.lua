@@ -1,8 +1,11 @@
 function MedicDamage:heal_unit(unit, override_cooldown)
 	local t = Application:time()
 	local difficulty_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)
-	local crackdown_disable_heal = {"deathvox_medic", "deathvox_medicdozer"}
 	local cooldown = tweak_data.medic.cooldown
+	if difficulty_index == 8 then
+		local cooldown = 1.2
+	end
+	
 	cooldown = managers.crime_spree:modify_value("MedicDamage:CooldownTime", cooldown)
 	if t < self._heal_cooldown_t + cooldown and not override_cooldown then
 		return false
@@ -13,15 +16,6 @@ function MedicDamage:heal_unit(unit, override_cooldown)
 	end
 
 	local tweak_table = unit:base()._tweak_table
-	if difficulty_index == 8 then
-		if table.contains(crackdown_disable_heal, tweak_table)  then
-			return false
-		end
-	else
-		if table.contains(tweak_data.medic.disabled_units, tweak_table) then
-			return false
-		end
-	end
 	if unit:brain() and unit:brain()._logic_data then
 		local team = unit:brain()._logic_data.team
 
