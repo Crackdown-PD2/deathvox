@@ -236,7 +236,7 @@ function WeaponTweakData:_set_sm_wish()
 	self.r870_npc.DAMAGE = 7
 	self.swat_van_turret_module.HEALTH_INIT = 40000
 	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 500
-	self.swat_van_turret_module.DAMAGE = 3
+	self.swat_van_turret_module.DAMAGE = 3.5
 	self.swat_van_turret_module.CLIP_SIZE = 600
 	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 696969
 	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3
