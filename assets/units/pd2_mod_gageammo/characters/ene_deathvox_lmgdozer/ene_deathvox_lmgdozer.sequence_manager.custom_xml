@@ -32,15 +32,15 @@
 			<function extension="'character_damage'" function="'seq_clbk_vizor_shatter'" start_time="1"/>
 		</sequence>
 		<body name="'body_helmet_plate'">
-			<endurance damage="30" explosion="0">
+			<endurance damage="30" explosion="10">
 				<run_sequence name="'int_seq_helmet_plate'"/>
 			</endurance>
 		</body>
 		<body name="'body_helmet_glass'">
-			<endurance damage="16" explosion="0">
+			<endurance damage="16" explosion="10">
 				<run_sequence name="'int_seq_helmet_glass_01'"/>
 			</endurance>
-			<endurance damage="32" explosion="0">
+			<endurance damage="32" explosion="10">
 				<run_sequence name="'int_seq_helmet_glass_02'"/>
 			</endurance>
 		</body>
