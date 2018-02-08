@@ -1,3 +1,8 @@
+local deathvox_mod_instance = ModInstance
+log("UNLOADING_ASSETS")
+deathvox_mod_instance:GetSuperMod():GetAssetLoader():FreeAssetGroup("cops")
+log("LOADING_ASSETS")
+deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("cops")
 if not _G.deathvox then
 	_G.deathvox = {}
 	_G.deathvox.ModPath = ModPath
