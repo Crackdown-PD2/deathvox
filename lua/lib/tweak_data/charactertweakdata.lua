@@ -2039,8 +2039,14 @@ function CharacterTweakData:_init_deathvox(presets)
  	table.insert(self._enemy_list, "deathvox_grenadier")
 	
 end
+local deathvox_mod_instance = ModInstance
 function CharacterTweakData:_set_sm_wish()
 
+	log("UNLOADING_ASSETS")
+	deathvox_mod_instance:GetSuperMod():GetAssetLoader():FreeAssetGroup("cops")
+	log("LOADING_ASSETS")
+	deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("cops")
+	log("DONE LOADING ASSETS")
 	if SystemInfo:platform() == Idstring("PS3") then
 		self:_multiply_all_hp(1, 1)
 	else

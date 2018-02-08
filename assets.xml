@@ -105,14 +105,6 @@
 		<!--DV Heavy Assault Rifle-->
 		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.unit" load="true"/>
 		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer_husk.unit" load="true"/>
-		<file :name="ene_deathvox_lmgdozer/bulldozer_nm.texture" force="false"/>
-		<file :name="ene_deathvox_lmgdozer/bulldozer_df.texture" force="false"/>
-		<file :name="ene_deathvox_lmgdozer/bulldozer_visor_il.texture" force="false"/>
-		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.material_config" force="false"/>
-		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.object" force="false"/>
-		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.model" force="false"/>
 
 		<!--DV Light Assault Rifle-->
 		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.unit" load="true"/>
