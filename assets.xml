@@ -97,10 +97,29 @@
 		<!--DV Light Shotgun-->
 		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.unit" load="true"/>
 		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer_husk.unit" load="true"/>
+		<file :name="ene_deathvox_greendozer/bulldozer_nm.texture" force="false"/>
+		<file :name="ene_deathvox_greendozer/bulldozer_df.texture" force="false"/>
+		<file :name="ene_deathvox_greendozer/bulldozer_visor_il.texture" force="false"/>
+		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.material_config" force="false"/>
+		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.object" force="false"/>
+		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.model" force="false"/>
+		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.sequence_manager" force="false"/>
 
 		<!--DV Heavy Shotgun-->
 		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.unit" load="true"/>
 		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer_husk.unit" load="true"/>
+		<file :name="ene_deathvox_blackdozer/bulldozer_nm.texture" force="false"/>
+		<file :name="ene_deathvox_blackdozer/bulldozer_df.texture" force="false"/>
+		<file :name="ene_deathvox_blackdozer/bulldozer_visor_il.texture" force="false"/>
+		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.material_config" force="false"/>
+		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.object" force="false"/>
+		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.model" force="false"/>
+		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.sequence_manager" force="false"/>
+
 
 		<!--DV Heavy Assault Rifle-->
 		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.unit" load="true"/>
@@ -118,6 +137,15 @@
 		<!--DV Light Assault Rifle-->
 		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.unit" load="true"/>
 		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer_husk.unit" load="true"/>
+		<file :name="ene_deathvox_medicdozer/bulldozer_nm.texture" force="false"/>
+		<file :name="ene_deathvox_medicdozer/bulldozer_df.texture" force="false"/>
+		<file :name="ene_deathvox_medicdozer/bulldozer_visor_il.texture" force="false"/>
+		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.material_config" force="false"/>
+		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.object" force="false"/>
+		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.model" force="false"/>
+		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.sequence_manager" force="false"/>
 
 		<!--DV Taser-->
 		<file :name="ene_deathvox_taser/ene_deathvox_taser.unit" load="true"/>
