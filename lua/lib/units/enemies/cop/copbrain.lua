@@ -16,7 +16,7 @@ require("lib/units/enemies/shield/logics/ShieldLogicAttack")
 require("lib/units/enemies/spooc/logics/SpoocLogicIdle")
 require("lib/units/enemies/spooc/logics/SpoocLogicAttack")
 require("lib/units/enemies/taser/logics/TaserLogicAttack")
-local old_init = CopBrain.init
+local old_init = CopBrain.post_init
 local logic_variants = {
 	security = {
 		idle = CopLogicIdle,
@@ -33,8 +33,7 @@ local logic_variants = {
 	}
 }
 local security_variant = logic_variants.security
-function CopBrain:init(unit)
-	old_init(self, unit)
+function CopBrain:post_init()
 	CopBrain._logic_variants.deathvox_shield = clone(security_variant)
 	CopBrain._logic_variants.deathvox_shield.attack = ShieldLogicAttack
 	CopBrain._logic_variants.deathvox_shield.intimidated = nil
@@ -63,6 +62,7 @@ function CopBrain:init(unit)
 	CopBrain._logic_variants.deathvox_lmgdozer.attack = TankCopLogicAttack
 	CopBrain._logic_variants.deathvox_medicdozer = clone(security_variant)
 	CopBrain._logic_variants.deathvox_medicdozer.attack = TankCopLogicAttack
+	old_init(self)
 end
 
 function CopBrain:convert_to_criminal(mastermind_criminal)

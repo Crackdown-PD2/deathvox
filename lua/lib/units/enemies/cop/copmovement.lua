@@ -19,34 +19,6 @@ local action_variants = {
 }
 local security_variant = action_variants.security
 function CopMovement:init(unit)
-	old_init(self, unit)
-	CopMovement._action_variants.cop_civ = security_variant
-	CopMovement._action_variants.fbi_female = security_variant
-	CopMovement._action_variants.hrt = security_variant
-	CopMovement._action_variants.fbi_swat_vet = security_variant
-	CopMovement._action_variants.city_swat_titan = security_variant
-	CopMovement._action_variants.city_swat_titan_assault = security_variant
-	CopMovement._action_variants.boom = security_variant
-	CopMovement._action_variants.rboom = security_variant
-	CopMovement._action_variants.fbi_vet = security_variant
-	CopMovement._action_variants.spring = clone(security_variant)
-	CopMovement._action_variants.summers = security_variant
-	CopMovement._action_variants.boom_summers = security_variant
-	CopMovement._action_variants.taser_summers = security_variant
-	CopMovement._action_variants.omnia_lpf = security_variant
-	CopMovement._action_variants.medic_summers = security_variant
-	CopMovement._action_variants.tank_titan = clone(security_variant)
-	CopMovement._action_variants.tank_titan.walk = TankCopActionWalk
-	CopMovement._action_variants.tank_titan_assault = clone(security_variant)
-	CopMovement._action_variants.tank_titan_assault.walk = TankCopActionWalk
-	CopMovement._action_variants.tank_biker = clone(security_variant)
-	CopMovement._action_variants.tank_biker.walk = TankCopActionWalk
-	CopMovement._action_variants.biker_guard = security_variant
-	CopMovement._action_variants.phalanx_minion_assault = clone(security_variant)
-	CopMovement._action_variants.phalanx_minion_assault.hurt = ShieldActionHurt
-	CopMovement._action_variants.phalanx_minion_assault.walk = ShieldCopActionWalk
-	CopMovement._action_variants.spooc_titan = security_variant
-
 	CopMovement._action_variants.deathvox_shield = clone(security_variant)
 	CopMovement._action_variants.deathvox_shield.hurt = ShieldActionHurt
 	CopMovement._action_variants.deathvox_shield.walk = ShieldCopActionWalk
@@ -70,7 +42,7 @@ function CopMovement:init(unit)
 	CopMovement._action_variants.deathvox_lmgdozer.walk = TankCopActionWalk
 	CopMovement._action_variants.deathvox_medicdozer = clone(security_variant)
 	CopMovement._action_variants.deathvox_medicdozer.walk = TankCopActionWalk
-
+	old_init(self, unit)
 end
 
 function CopMovement:post_init()
