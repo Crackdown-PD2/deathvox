@@ -28,7 +28,7 @@ local sm_wish = {
 		["units/pd2_dlc_mad/characters/ene_akan_cs_cop_asval_smg/ene_akan_cs_cop_asval_smg"] = "units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar",
 		["units/pd2_dlc_mad/characters/ene_akan_cs_cop_r870/ene_akan_cs_cop_r870"] = "units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightshot",
 -- akan swat enemies.
-		["units/pd2_dlc_mad/characters/ene_akan_cs_heavy_ak47_ass/ene_akan_cs_heavy_ak47_ass"]
+		["units/pd2_dlc_mad/characters/ene_akan_cs_heavy_ak47_ass/ene_akan_cs_heavy_ak47_ass"]  = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",
 		["units/pd2_dlc_mad/characters/ene_akan_cs_heavy_r870/ene_akan_cs_heavy_r870"] = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",
 		["units/pd2_dlc_mad/characters/ene_akan_cs_swat_ak47_ass/ene_akan_cs_swat_ak47_ass"] = "units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar",
 		["units/pd2_dlc_mad/characters/ene_akan_cs_swat_r870/ene_akan_cs_swat_r870"] = "units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightshot",
