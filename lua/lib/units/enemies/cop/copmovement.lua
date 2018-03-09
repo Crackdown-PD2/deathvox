@@ -18,6 +18,7 @@ local action_variants = {
 	}
 }
 local security_variant = action_variants.security
+
 function CopMovement:init(unit)
 	CopMovement._action_variants.deathvox_shield = clone(security_variant)
 	CopMovement._action_variants.deathvox_shield.hurt = ShieldActionHurt
