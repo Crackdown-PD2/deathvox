@@ -1728,6 +1728,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightar.HEALTH_INIT = 48
 	self.deathvox_lightar.headshot_dmg_mul = 3
 	self.deathvox_lightar.access = "any"
+	self.deathvox_lightar.custom_voicework = "light"
 	table.insert(self._enemy_list, "deathvox_lightar")
 	
 	self.deathvox_heavyar = deep_clone(self.city_swat)
@@ -1754,6 +1755,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyar.headshot_dmg_mul = 3
 	self.deathvox_heavyar.damage.explosion_damage_mul = 0.7
 	self.deathvox_heavyar.access = "any"
+	self.deathvox_heavyar.custom_voicework = "heavy"
 	table.insert(self._enemy_list, "deathvox_heavyar")
 	
 	self.deathvox_lightshot = deep_clone(self.city_swat)
@@ -1778,6 +1780,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightshot.HEALTH_INIT = 48
 	self.deathvox_lightshot.headshot_dmg_mul = 3
 	self.deathvox_lightshot.access = "any"
+	self.deathvox_lightshot.custom_voicework = "light"
 	table.insert(self._enemy_list, "deathvox_lightshot")
 	
 	self.deathvox_heavyshot = deep_clone(self.city_swat)
@@ -1804,6 +1807,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyshot.headshot_dmg_mul = 3
 	self.deathvox_heavyshot.damage.explosion_damage_mul = 0.7
 	self.deathvox_heavyshot.access = "any"
+	self.deathvox_heavyshot.custom_voicework = "heavy"
 	table.insert(self._enemy_list, "deathvox_heavyshot")
 	
 	self.deathvox_shield = deep_clone(self.shield)
