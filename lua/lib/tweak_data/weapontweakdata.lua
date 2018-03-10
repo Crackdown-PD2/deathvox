@@ -207,7 +207,7 @@ function WeaponTweakData:init(tweak_data)
     self.deathvox_blackdozer.muzzleflash = "effects/payday2/particles/weapons/762_auto"
     self.deathvox_blackdozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug"
     self.deathvox_blackdozer.auto.fire_rate = 0.14
-    self.deathvox_blackdozer.CLIP_AMMO_MAX = 7
+    self.deathvox_blackdozer.CLIP_AMMO_MAX = 11
     self.deathvox_blackdozer.NR_CLIPS_MAX = 10
     self.deathvox_blackdozer.hold = "rifle"
     self.deathvox_blackdozer.alert_size = 4500
@@ -217,7 +217,7 @@ function WeaponTweakData:init(tweak_data)
    
     self.deathvox_greendozer.sounds.prefix = "remington_npc"
     self.deathvox_greendozer.use_data.selection_index = 2
-    self.deathvox_greendozer.DAMAGE = 45 --Base damage 450, Compare DW 400, OD 560.
+    self.deathvox_greendozer.DAMAGE = 50 --Base damage 500, Compare DW 400, DS 560.
     self.deathvox_greendozer.muzzleflash = "effects/payday2/particles/weapons/762_auto"
     self.deathvox_greendozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug_semi"
     self.deathvox_greendozer.CLIP_AMMO_MAX = 6
