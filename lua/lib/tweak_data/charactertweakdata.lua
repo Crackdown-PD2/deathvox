@@ -1822,7 +1822,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8} -- same as general enemies, less than vanilla.
 	}
-	self.deathvox_shield.deathguard = false
+	self.deathvox_shield.deathguard = true
 	self.deathvox_shield.no_arrest = true
 	self.deathvox_shield.steal_loot = true -- this is new.
 	self.deathvox_shield.rescue_hostages = false
