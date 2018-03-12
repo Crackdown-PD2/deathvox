@@ -723,7 +723,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 					freq = 1,
 					amount_min = 2,
 					amount_max = 2,
-					tactics = self._tactics.deathvox_grenad_lead,
+					tactics = self._tactics.deathvox_grenad_follow,
 					rank = 1
 				}
 			}
