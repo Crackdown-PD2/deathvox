@@ -9,6 +9,8 @@
 		<file :name="shared_textures/ene_zeal_swat_head_df.texture" force="false"/>
 		<file :name="shared_textures/ene_zeal_swat_nm.texture" force="false"/>
 		<file :name="shared_textures/ene_zeal_swat_head_nm.texture" force="false"/>
+		<file :name="shared_textures/bulldozer_visor_il.texture" force="false"/>
+		<file :name="shared_textures/bulldozer_df.texture" force="false"/>
 		
 		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.material_config" force="false"/>
 		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.object" force="false"/>
@@ -99,7 +101,6 @@
 		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer_husk.unit" load="true"/>
 		<file :name="ene_deathvox_greendozer/bulldozer_nm.texture" force="false"/>
 		<file :name="ene_deathvox_greendozer/bulldozer_df.texture" force="false"/>
-		<file :name="ene_deathvox_greendozer/bulldozer_visor_il.texture" force="false"/>
 		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer_contour.material_config" force="false"/>
 		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.material_config" force="false"/>
 		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.object" force="false"/>
@@ -112,7 +113,6 @@
 		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer_husk.unit" load="true"/>
 		<file :name="ene_deathvox_blackdozer/bulldozer_nm.texture" force="false"/>
 		<file :name="ene_deathvox_blackdozer/bulldozer_df.texture" force="false"/>
-		<file :name="ene_deathvox_blackdozer/bulldozer_visor_il.texture" force="false"/>
 		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer_contour.material_config" force="false"/>
 		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.material_config" force="false"/>
 		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.object" force="false"/>
@@ -126,7 +126,6 @@
 		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer_husk.unit" load="true"/>
 		<file :name="ene_deathvox_lmgdozer/bulldozer_nm.texture" force="false"/>
 		<file :name="ene_deathvox_lmgdozer/bulldozer_df.texture" force="false"/>
-		<file :name="ene_deathvox_lmgdozer/bulldozer_visor_il.texture" force="false"/>
 		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer_contour.material_config" force="false"/>
 		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.material_config" force="false"/>
 		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.object" force="false"/>
@@ -139,7 +138,6 @@
 		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer_husk.unit" load="true"/>
 		<file :name="ene_deathvox_medicdozer/bulldozer_nm.texture" force="false"/>
 		<file :name="ene_deathvox_medicdozer/bulldozer_df.texture" force="false"/>
-		<file :name="ene_deathvox_medicdozer/bulldozer_visor_il.texture" force="false"/>
 		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer_contour.material_config" force="false"/>
 		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.material_config" force="false"/>
 		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.object" force="false"/>
@@ -152,6 +150,7 @@
 		<file :name="ene_deathvox_taser/ene_deathvox_taser_husk.unit" load="true"/>
 		<file :name="ene_deathvox_taser/taser_body_df.texture" force="false"/>
 		<file :name="ene_deathvox_taser/helmets_heavy_taser_atlas_df.texture" force="false"/>
+		<file :name="ene_deathvox_taser/helmets_heavy_taser_atlas_il.texture" force="false"/>
 		<file :name="ene_deathvox_taser/heads_atlas_df.texture" force="false"/>
 		<file :name="ene_deathvox_taser/heads_atlas_nm.texture" force="false"/>
 		<file :name="ene_deathvox_taser/ene_deathvox_taser_contour.material_config" force="false"/>
