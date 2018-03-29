@@ -433,7 +433,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_shotgun_pump = { -- mark 4 values complete. Assumes base damage 400. basis is presets.weapon.deathwish.is_shotgun_pump. Extremely dangerous close range, much less so further out.
+	presets.weapon.deathvox.is_shotgun_pump = { -- mark 5 values complete. Assumes base damage 500. Extremely dangerous close range, less so further out. Slower to fire.
 		aim_delay = {
 			0,
 			0
@@ -507,7 +507,7 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = .350,
+				dmg_mul = .400,
 				r = 2000,
 				acc = {
 					0.45,
@@ -544,7 +544,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_shotgun_mag = { -- mark 3 values complete. assumes base damage 225. Basis is presets.weapon.deathwish.is_shotgun_pump. Much more even arc distribution-focus/shotcount becomes crucial.
+	presets.weapon.deathvox.is_shotgun_mag = { -- mark 4 values complete. assumes base damage 225. The danger isn't the damage, it's the low recoil! Extremely hazardous at close range.
 		aim_delay = {
 			0,
 			0
@@ -571,8 +571,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = {
-					1,
-					1.1
+					0.5,
+					1.0
 				},
 				mode = {
 					0,
@@ -589,8 +589,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = {
-					1,
-					1.25
+					0.5,
+					1.0
 				},
 				mode = {
 					0,
@@ -607,8 +607,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.85
 				},
 				recoil = {
-					1,
-					1.5
+					0.7,
+					1.1
 				},
 				mode = {
 					1,
@@ -625,7 +625,7 @@ function CharacterTweakData:_presets(tweak_data)
 					0.65
 				},
 				recoil = {
-					1.25,
+					1.0,
 					1.5
 				},
 				mode = {
@@ -1401,7 +1401,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_lmg = { --mark 3 values complete. Basis is presets.weapon.deathwish.is_lmg. Assumes 100 base damage. Used for LMG Dozers, certain scripted enemies. using a balance between expert and DW values here.
+	presets.weapon.deathvox.is_lmg = { --mark 4 values complete. Assumes 100 base damage. Going to treat it as a bullethose, making it much more dangerous to approach directly.
 		aim_delay = { 
 			0.1,
 			0.1
@@ -1419,9 +1419,9 @@ function CharacterTweakData:_presets(tweak_data)
 			far = 6000,
 			close = 2000
 		},
-		autofire_rounds = {
-			25,
-			50
+		autofire_rounds = { -- experimental autofire increase. prev values 25, 50.
+			55,
+			70
 		},
 		FALLOFF = { 
 			{
@@ -1822,7 +1822,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8} -- same as general enemies, less than vanilla.
 	}
-	self.deathvox_shield.deathguard = false
+	self.deathvox_shield.deathguard = true
 	self.deathvox_shield.no_arrest = true
 	self.deathvox_shield.steal_loot = true -- this is new.
 	self.deathvox_shield.rescue_hostages = false
