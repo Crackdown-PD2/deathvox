@@ -454,552 +454,279 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				}
 		}
 	old_spawn_group(self, difficulty_index)
-	if Global.game_settings and Global.game_settings.single_player then -- singleplayer sets below this point!
-		self.enemy_spawn_groups.gorgon = {
-			amount = {3, 3},
-			spawn = {
-				{
-					unit = "deathvox_taser",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_tazer_lead,
-					rank = 3
-				},
-				{
-					unit = "deathvox_taser",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_tazer_follow,
-					rank = 2
-				},
-				{
-					unit = "deathvox_medic",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_medic,
-					rank = 1
-				}
+	self.enemy_spawn_groups.gorgon = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_taser",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tazer_lead,
+				rank = 3
+			},
+			{
+				unit = "deathvox_taser",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tazer_follow,
+				rank = 2
+			},
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_medic,
+				rank = 1
 			}
 		}
+	}
 
-		self.enemy_spawn_groups.atlas = {
-			amount = {4, 4},
-			spawn = {
-				{
-					unit = "deathvox_shield",
-					freq = 1,
-					amount_min = 2,
-					amount_max = 2,
-					tactics = self._tactics.deathvox_shield_lead,
-					rank = 3
-				},
-				{
-					unit = "deathvox_lmgdozer",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_tank_cover,
-					rank = 2
-				},
-				{
-					unit = "deathvox_medic",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_medic,
-					rank = 1
-				}
+	self.enemy_spawn_groups.atlas = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 3
+			},
+			{
+				unit = "deathvox_lmgdozer",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tank_cover,
+				rank = 2
+			},
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_medic,
+				rank = 1
 			}
 		}
+	}
 
-		self.enemy_spawn_groups.chimera = {
-			amount = {4, 4},
-			spawn = {
-				{
-					unit = "deathvox_taser",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_tazer_lead,
-					rank = 4
-				},
-				{
-					unit = "deathvox_blackdozer",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_tank_lead,
-					rank = 3
-				},
-				{
-					unit = "deathvox_medic",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_medic,
-					rank = 2
-				},
-				{
-					unit = "deathvox_cloaker",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_spooc_pinch,
-					rank = 1
-				}
+	self.enemy_spawn_groups.chimera = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_taser",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tazer_lead,
+				rank = 4
+			},
+			{
+				unit = "deathvox_blackdozer",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tank_lead,
+				rank = 3
+			},
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_medic,
+				rank = 2
+			},
+			{
+				unit = "deathvox_cloaker",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_spooc_pinch,
+				rank = 1
 			}
 		}
+	}
 
-		self.enemy_spawn_groups.zeus = {
-			amount = {4, 4},
-			spawn = {
-				{
-					unit = "deathvox_greendozer",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_tank_lead,
-					rank = 3
-				},
-				{
-					unit = "deathvox_taser",
-					freq = 1,
-					amount_min = 2,
-					amount_max = 2,
-					tactics = self._tactics.deathvox_tazer_follow,
-					rank = 2
-				},
-				{
-					unit = "deathvox_grenadier",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_grenad_follow,
-					rank = 1
-				}
+	self.enemy_spawn_groups.zeus = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_greendozer",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tank_lead,
+				rank = 3
+			},
+			{
+				unit = "deathvox_taser",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_tazer_follow,
+				rank = 2
+			},
+			{
+				unit = "deathvox_grenadier",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_grenad_follow,
+				rank = 1
 			}
 		}
+	}
 
-		self.enemy_spawn_groups.janus = {
-			amount = {2, 2},
-			spawn = {
-				{
-					unit = "deathvox_blackdozer",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_tank_lead,
-					rank = 2
-				},
-				{
-					unit = "deathvox_medicdozer",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_medic,
-					rank = 1
-				}
+	self.enemy_spawn_groups.janus = {
+		amount = {2, 2},
+		spawn = {
+			{
+				unit = "deathvox_blackdozer",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tank_lead,
+				rank = 2
+			},
+			{
+				unit = "deathvox_medicdozer",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_medic,
+				rank = 1
 			}
 		}
+	}
 
-		self.enemy_spawn_groups.epeius = {
-			amount = {4, 4},
-			spawn = {
-				{
-					unit = "deathvox_shield",
-					freq = 1,
-					amount_min = 3,
-					amount_max = 3,
-					tactics = self._tactics.deathvox_shield_lead,
-					rank = 2
-				},
-				{
-					unit = "deathvox_lmgdozer",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_tank_cover,
-					rank = 1
-				}
+	self.enemy_spawn_groups.epeius = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 3,
+				amount_max = 3,
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 2
+			},
+			{
+				unit = "deathvox_lmgdozer",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tank_cover,
+				rank = 1
 			}
 		}
+	}
 
-		self.enemy_spawn_groups.damocles = {
-			amount = {3, 3},
-			spawn = {
-				{
-					unit = "deathvox_cloaker",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_spooc_lead,
-					rank = 2
-				},
-				{
-					unit = "deathvox_cloaker",
-					freq = 1,
-					amount_min = 2,
-					amount_max = 2,
-					tactics = self._tactics.deathvox_spooc_pinch,
-					rank = 1
-				}
+	self.enemy_spawn_groups.damocles = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_cloaker",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_spooc_lead,
+				rank = 2
+			},
+			{
+				unit = "deathvox_cloaker",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_spooc_pinch,
+				rank = 1
 			}
 		}
-		self.enemy_spawn_groups.caduceus = {
-			amount = {4, 4},
-			spawn = {
-				{
-					unit = "deathvox_greendozer",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_tank_lead,
-					rank = 3
-				},
-				{
-					unit = "deathvox_medic",
-					freq = 1,
-					amount_min = 2,
-					amount_max = 2,
-					tactics = self._tactics.deathvox_medic,
-					rank = 2
-				},
-				{
-					unit = "deathvox_medicdozer",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_medic,
-					rank = 1
-				}
+	}
+	self.enemy_spawn_groups.caduceus = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_greendozer",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tank_lead,
+				rank = 3
+			},
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_medic,
+				rank = 2
+			},
+			{
+				unit = "deathvox_medicdozer",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_medic,
+				rank = 1
 			}
 		}
+	}
 
-		self.enemy_spawn_groups.atropos = {
-			amount = {4, 4},
-			spawn = {
-				{
-					unit = "deathvox_grenadier",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_grenad_lead,
-					rank = 3
-				},
-				{
-					unit = "deathvox_cloaker",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_spooc_pinch,
-					rank = 2
-				},
-				{
-					unit = "deathvox_taser",
-					freq = 1,
-					amount_min = 2,
-					amount_max = 2,
-					tactics = self._tactics.deathvox_tazer_follow,
-					rank = 1
-				}
+	self.enemy_spawn_groups.atropos = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_grenadier",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_grenad_lead,
+				rank = 3
+			},
+			{
+				unit = "deathvox_cloaker",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_spooc_pinch,
+				rank = 2
+			},
+			{
+				unit = "deathvox_taser",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_tazer_follow,
+				rank = 1
 			}
 		}
+	}
 
-		self.enemy_spawn_groups.aegeas = {
-			amount = {4, 4},
-			spawn = {
-				{
-					unit = "deathvox_shield",
-					freq = 1,
-					amount_min = 2,
-					amount_max = 2,
-					tactics = self._tactics.deathvox_shield_lead,
-					rank = 2
-				},				{
-					unit = "deathvox_grenadier",
-					freq = 1,
-					amount_min = 2,
-					amount_max = 2,
-					tactics = self._tactics.deathvox_grenad_follow,
-					rank = 1
-				}
+	self.enemy_spawn_groups.aegeas = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 2
+			},				{
+				unit = "deathvox_grenadier",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_grenad_follow,
+				rank = 1
 			}
 		}
-	else
-		self.enemy_spawn_groups.gorgon = {
-			amount = {3, 3},
-			spawn = {
-				{
-					unit = "deathvox_taser",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_tazer_lead,
-					rank = 3
-				},
-				{
-					unit = "deathvox_taser",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_tazer_follow,
-					rank = 2
-				},
-				{
-					unit = "deathvox_medic",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_medic,
-					rank = 1
-				}
-			}
-		}
-
-		self.enemy_spawn_groups.atlas = {
-			amount = {4, 4},
-			spawn = {
-				{
-					unit = "deathvox_shield",
-					freq = 1,
-					amount_min = 2,
-					amount_max = 2,
-					tactics = self._tactics.deathvox_shield_lead,
-					rank = 3
-				},
-				{
-					unit = "deathvox_lmgdozer",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_tank_cover,
-					rank = 2
-				},
-				{
-					unit = "deathvox_medic",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_medic,
-					rank = 1
-				}
-			}
-		}
-
-		self.enemy_spawn_groups.chimera = {
-			amount = {4, 4},
-			spawn = {
-				{
-					unit = "deathvox_taser",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_tazer_lead,
-					rank = 4
-				},
-				{
-					unit = "deathvox_blackdozer",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_tank_pinch,
-					rank = 3
-				},
-				{
-					unit = "deathvox_medic",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_medic,
-					rank = 2
-				},
-				{
-					unit = "deathvox_cloaker",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_spooc_pinch,
-					rank = 1
-				}
-			}
-		}
-
-		self.enemy_spawn_groups.zeus = {
-			amount = {4, 4},
-			spawn = {
-				{
-					unit = "deathvox_shield",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_shield_lead,
-					rank = 3
-				},
-				{
-					unit = "deathvox_greendozer",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_tank_lead,
-					rank = 2
-				},
-				{
-					unit = "deathvox_taser",
-					freq = 1,
-					amount_min = 2,
-					amount_max = 2,
-					tactics = self._tactics.deathvox_tazer_follow,
-					rank = 1
-				}
-			}
-		}
-
-		self.enemy_spawn_groups.janus = {
-			amount = {2, 2},
-			spawn = {
-				{
-					unit = "deathvox_blackdozer",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_tank_lead,
-					rank = 2
-				},
-				{
-					unit = "deathvox_medicdozer",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_medic,
-					rank = 1
-				}
-			}
-		}
-
-		self.enemy_spawn_groups.epeius = {
-			amount = {4, 4},
-			spawn = {
-				{
-					unit = "deathvox_shield",
-					freq = 1,
-					amount_min = 3,
-					amount_max = 3,
-					tactics = self._tactics.deathvox_shield_lead,
-					rank = 2
-				},
-				{
-					unit = "deathvox_lmgdozer",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_tank_cover,
-					rank = 1
-				}
-			}
-		}
-		self.enemy_spawn_groups.damocles = {
-			amount = {3, 3},
-			spawn = {
-				{
-					unit = "deathvox_cloaker",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_spooc_lead,
-					rank = 2
-				},
-				{
-					unit = "deathvox_cloaker",
-					freq = 1,
-					amount_min = 2,
-					amount_max = 2,
-					tactics = self._tactics.deathvox_spooc_pinch,
-					rank = 1
-				}
-			}
-		}
-		self.enemy_spawn_groups.caduceus = {
-			amount = {4, 4},
-			spawn = {
-				{
-					unit = "deathvox_greendozer",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_tank_lead,
-					rank = 3
-				},
-				{
-					unit = "deathvox_medic",
-					freq = 1,
-					amount_min = 2,
-					amount_max = 2,
-					tactics = self._tactics.deathvox_medic,
-					rank = 2
-				},
-				{
-					unit = "deathvox_medicdozer",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_medic,
-					rank = 1
-				}
-			}
-		}
-		self.enemy_spawn_groups.atropos = {
-			amount = {4, 4},
-			spawn = {
-				{
-					unit = "deathvox_shield",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_shield_lead,
-					rank = 3
-				},
-				{
-					unit = "deathvox_cloaker",
-					freq = 1,
-					amount_min = 1,
-					amount_max = 1,
-					tactics = self._tactics.deathvox_spooc_pinch,
-					rank = 2
-				},
-				{
-					unit = "deathvox_taser",
-					freq = 1,
-					amount_min = 2,
-					amount_max = 2,
-					tactics = self._tactics.deathvox_tazer_follow,
-					rank = 1
-				}
-			}
-		}
-		self.enemy_spawn_groups.aegeas = {
-			amount = {4, 4},
-			spawn = {
-				{
-					unit = "deathvox_shield",
-					freq = 1,
-					amount_min = 2,
-					amount_max = 2,
-					tactics = self._tactics.deathvox_shield_lead,
-					rank = 2
-				},				{
-					unit = "deathvox_taser",
-					freq = 1,
-					amount_min = 2,
-					amount_max = 2,
-					tactics = self._tactics.deathvox_tazer_follow,
-					rank = 1
-				}
-			}
-		}
-	end
+	}
 
 	-- Death Vox Control Phase
 
