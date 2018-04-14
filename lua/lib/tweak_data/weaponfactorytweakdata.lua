@@ -93,19 +93,12 @@ function WeaponFactoryTweakData:init(...)
 		"wpn_fps_upg_o_spot"
 	}
 
-	self.wpn_deathvox_grenadier = deep_clone(self.wpn_fps_ass_contraband_npc)
+	self.wpn_deathvox_grenadier = deep_clone(self.wpn_fps_gre_m79_npc)
 	self.wpn_deathvox_grenadier.default_blueprint = {
-		"wpn_fps_ass_contraband_b_standard",
-		"wpn_fps_ass_contraband_body_standard",
-		"wpn_fps_ass_contraband_dh_standard",
-		"wpn_fps_ass_contraband_fg_standard",
-		"wpn_fps_ass_contraband_g_standard",
-		"wpn_fps_ass_contraband_gl_m203",
-		"wpn_fps_ass_contraband_m_standard",
-		"wpn_fps_ass_contraband_ns_standard",
-		"wpn_fps_ass_contraband_o_standard",
-		"wpn_fps_ass_contraband_s_standard",
-		"wpn_fps_ass_contraband_bolt_standard"
+			"wpn_fps_gre_m79_barrel",
+			"wpn_fps_gre_m79_barrelcatch",
+			"wpn_fps_gre_m79_grenade",
+			"wpn_fps_gre_m79_stock"
 	}
 	
 	self.wpn_deathvox_cloaker = deep_clone(self.wpn_fps_smg_schakal_npc)

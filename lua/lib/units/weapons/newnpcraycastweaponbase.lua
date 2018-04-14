@@ -142,3 +142,24 @@ end
 
 DeathVoxSniperWeaponBase = DeathVoxSniperWeaponBase or blt_class(NewNPCRaycastWeaponBase)
 DeathVoxSniperWeaponBase.TRAIL_EFFECT = Idstring("effects/particles/weapons/trail_dv_sniper")
+
+DeathVoxGrenadierWeaponBase = DeathVoxGrenadierWeaponBase or blt_class(NewNPCRaycastWeaponBase)
+
+
+function DeathVoxGrenadierWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoot_player, shoot_through_data)
+	if not Network:is_client() then
+		local unit = nil
+		local mvec_from_pos = Vector3()
+		local mvec_direction = Vector3()
+		mvector3.set(mvec_from_pos, from_pos)
+		mvector3.set(mvec_direction, direction)
+		mvector3.multiply(mvec_direction, 100)
+		log("multiplied by 100")
+		mvector3.add(mvec_from_pos, mvec_direction)
+		if not self._client_authoritative then
+			unit = ProjectileBase.throw_projectile("launcher_incendiary", mvec_from_pos, direction)
+		end
+		return {}
+	end
+	return DeathVoxGrenadierWeaponBase.super._fire_raycast(self, user_unit, from_pos, direction, dmg_mul, shoot_player, shoot_through_data)
+end

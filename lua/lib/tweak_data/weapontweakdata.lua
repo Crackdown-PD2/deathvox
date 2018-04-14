@@ -10,7 +10,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_shotgun_heavy = deep_clone(self.ben_crew)
 	self.deathvox_sniper = deep_clone(self.wa2000_crew)
 	self.deathvox_medicdozer_smg = deep_clone(self.polymer_crew)
-	self.deathvox_grenadier = deep_clone(self.contraband_crew)
+	self.deathvox_grenadier = deep_clone(self.gre_m79_crew)
 	
 	self.deathvox_lmgdozer = deep_clone(self.m249_crew)
 	self.deathvox_cloaker = deep_clone(self.schakal_crew)
@@ -152,15 +152,17 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_medicdozer_smg.suppression = 1	
 	self.deathvox_medicdozer_smg.usage = "is_tank_smg"
 	
-	self.deathvox_grenadier.sounds.prefix = "contraband_npc"
+	self.deathvox_grenadier.sounds.prefix = "gl40_npc"
 	self.deathvox_grenadier.use_data.selection_index = 2
-	self.deathvox_grenadier.DAMAGE = 7.5 -- Base damage 75. Matched to light swat.
+	self.deathvox_grenadier.DAMAGE = 0
 	self.deathvox_grenadier.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_grenadier.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556"
-	self.deathvox_grenadier.CLIP_AMMO_MAX = 20
-	self.deathvox_grenadier.NR_CLIPS_MAX = 5
-	self.deathvox_grenadier.pull_magazine_during_reload = "rifle"
-	self.deathvox_grenadier.auto.fire_rate = 0.098
+	self.deathvox_grenadier.CLIP_AMMO_MAX = 1
+	self.deathvox_grenadier.NR_CLIPS_MAX = 4
+	self.deathvox_grenadier.looped_reload_speed = 7
+	self.deathvox_grenadier.timers = {reload_not_empty = 7}
+	self.deathvox_grenadier.timers.reload_empty = self.deathvox_grenadier.timers.reload_not_empty
+	self.deathvox_grenadier.auto.fire_rate = 0.1
 	self.deathvox_grenadier.hold = {
 		"bullpup",
 		"rifle"
@@ -168,6 +170,9 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_grenadier.reload = "rifle"
 	self.deathvox_grenadier.alert_size = 5000
 	self.deathvox_grenadier.suppression = 1
+	self.deathvox_grenadier.usage = "is_heavy_rifle"
+	self.deathvox_grenadier.anim_usage = "is_rifle"
+	self.deathvox_grenadier.no_trail = true
 	
     self.deathvox_lmgdozer.sounds.prefix = "m249_npc"
     self.deathvox_lmgdozer.use_data.selection_index = 2

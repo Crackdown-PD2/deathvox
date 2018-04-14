@@ -190,6 +190,7 @@
 
 		<!--DV Grenadier-->
 		<file :name="shared_textures/grenadier_atlas_df.texture" force="false"/>
+		<file :name="shared_textures/grenadier_atlas_il.texture" force="false"/>
 		<file :name="shared_textures/grenadier_atlas_nm.texture" force="false"/>
 		<file :name="shared_textures/grenadier_body_df.texture" force="false"/>
 		<file :name="shared_textures/grenadier_body_nm.texture" force="false"/>
