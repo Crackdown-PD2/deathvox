@@ -66,6 +66,59 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
+	presets.dodge.deathvoxchavez = {
+		speed = 1.7,
+		occasions = {
+			hit = {
+				chance = 1,
+				check_timeout = {0, 3},
+				variations = {
+					dive = {
+						chance = 2,
+						timeout = {1, 2},
+						shoot_chance = 1,
+						shoot_accuracy = 0.9
+					},
+					roll = {
+						chance = 1,
+						timeout = {1.2, 2}
+					}
+				}
+			},
+			preemptive = {
+				chance = 1,
+				check_timeout = {0, 3},
+				variations = {
+					dive = {
+						chance = 2,
+						timeout = {1, 2},
+						shoot_chance = 1,
+						shoot_accuracy = 0.9
+					},
+					roll = {
+						chance = 1,
+						timeout = {1.2, 2}
+					}
+				}
+			},
+			scared = {
+				chance = 0.9,
+				check_timeout = {0, 2},
+				variations = {
+					roll = {
+						chance = 1,
+						timeout = {1.2, 2}
+					},
+					dive = {
+						chance = 2,
+						timeout = {1, 2},
+						shoot_chance = 1,
+						shoot_accuracy = 0.9
+					}
+				}
+			}
+		}
+	}
 	presets.dodge.deathvoxninja = {
 		speed = 1.7,
 		occasions = {
@@ -1670,6 +1723,139 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
+	presets.weapon.deathvox.akimbo_pistol = { --mark 1 adjustment. Needs damage increase.
+		aim_delay = {
+			0,
+			0
+		},
+		focus_delay = 0,
+		focus_dis = 200,
+		spread = 20,
+		miss_dis = 50,
+		RELOAD_SPEED = 1.4, -- validated, unchanged.
+		melee_speed = presets.weapon.expert.is_pistol.melee_speed,
+		melee_dmg = 20,
+		melee_retry_delay = presets.weapon.expert.is_pistol.melee_retry_delay,
+		autofire_rounds = { -- experimental autofire increase. prev values 25, 50.
+			8,
+			10
+		},
+			range = {
+			optimal = 3200, -- validated, unchanged.
+			far = 5000,
+			close = 2000
+		},
+		FALLOFF = {
+			{
+				dmg_mul = 1,
+				r = 100,
+				acc = {
+					0.9,
+					0.95
+				},
+				recoil = {
+					0.15,
+					0.25
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = 1,
+				r = 500,
+				acc = {
+					0.9,
+					0.95
+				},
+				recoil = {
+					0.15,
+					0.3
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = .8,
+				r = 1000,
+				acc = {
+					0.7,
+					0.8
+				},
+				recoil = {
+					0.25,
+					0.3
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = .65,
+				r = 2000,
+				acc = {
+					0.6,
+					0.7
+				},
+				recoil = {
+					0.4,
+					0.5
+				},
+				mode = {
+					0,
+					1,
+					0,
+					0
+				}
+			},
+			{
+				dmg_mul = .6,
+				r = 3000,
+				acc = {
+					0.6,
+					0.65
+				},
+				recoil = {
+					0.6,
+					0.8
+				},
+				mode = {
+					0,
+					1,
+					0,
+					0
+				}
+			},
+			{
+				dmg_mul = .5, -- no flat damage.
+				r = 4000,
+				acc = {
+					0.2,
+					0.60 -- no infinite range.
+				},
+				recoil = {
+					1,
+					1.5
+				},
+				mode = {
+					0,
+					1,
+					0,
+					0
+				}
+			}
+		}
+	}
 	presets.weapon.deathvox.is_tank_smg = deep_clone(presets.weapon.deathvox.is_smg) --Used for medidozer. May separate.
 	presets.weapon.deathvox.is_cloaker_smg = deep_clone(presets.weapon.deathvox.is_smg) -- clone similar to other vars.
 	presets.weapon.deathvox.is_dozer_saiga = deep_clone(presets.weapon.deathvox.is_shotgun_mag)
@@ -1681,7 +1867,6 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.weapon.deathvox.rifle = deep_clone(presets.weapon.deathvox.is_light_rifle)
 	presets.weapon.deathvox.is_sniper = deep_clone(presets.weapon.deathvox.is_light_rifle)
 	presets.weapon.deathvox.is_rifle = deep_clone(presets.weapon.deathvox.is_light_rifle)
-	presets.weapon.deathvox.akimbo_pistol = deep_clone(presets.weapon.deathvox.is_pistol) -- Will revise for test version of Chavez boss at future date.
 	presets.weapon.deathvox.mossberg = deep_clone(presets.weapon.deathvox.is_light_shotgun)
 	return presets
 end
@@ -2064,11 +2249,20 @@ function CharacterTweakData:_set_sm_wish()
 	self:_multiply_weapon_delay(self.presets.weapon.gang_member, 0)
 	self.security = deep_clone(self.deathvox_guard) -- fucking broke piece of shit movement stuff
 	self.gensec = deep_clone(self.deathvox_guard)
+	
 	self.bolivian_indoors.HEALTH_INIT = 36
+	self.bolivian_indoors.no_arrest = true
+	self.bolivian.HEALTH_INIT = 36
 	self.gangster.HEALTH_INIT = 36
 	self.biker.HEALTH_INIT = 36
 	self.biker_escape.HEALTH_INIT = 36
+	
 	self.cop.HEALTH_INIT = 15
+	self.cop_female.HEALTH_INIT = 15
+	self.fbi.HEALTH_INIT = 48
+	
+	self.chavez_boss.HEALTH_INIT = 900
+	
 	self:_set_characters_weapon_preset("deathvox")
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	self:_set_characters_melee_preset("3")
@@ -2081,7 +2275,7 @@ function CharacterTweakData:_set_sm_wish()
 	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	self.security.no_arrest = true
 	self.gensec.no_arrest = true
-	self.bolivian_indoors.no_arrest = true
+	
 	if job == "kosugi" or job == "dark" then
 		self.city_swat.no_arrest = true
 	else
@@ -2090,9 +2284,9 @@ function CharacterTweakData:_set_sm_wish()
 	self:_multiply_all_speeds(1, 1)
 	self.presets.gang_member_damage.HEALTH_INIT = 525
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.75
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 525
 	self.old_hoxton_mission.HEALTH_INIT = 525
 	self.spa_vip.HEALTH_INIT = 525
-	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 525
 	self.flashbang_multiplier = 2
 	self.concussion_multiplier = 2
 end
