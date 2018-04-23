@@ -2069,6 +2069,11 @@ function CharacterTweakData:_set_sm_wish()
 	self.biker.HEALTH_INIT = 36
 	self.biker_escape.HEALTH_INIT = 36
 	self.cop.HEALTH_INIT = 15
+	if job == "man" then
+		self.fbi.calls_in = nil
+		self.cop_female.calls_in = nil
+		self.cop.calls_in = nil
+	end
 	self:_set_characters_weapon_preset("deathvox")
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	self:_set_characters_melee_preset("3")
