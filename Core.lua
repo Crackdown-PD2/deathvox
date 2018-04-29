@@ -2,6 +2,8 @@ if not _G.deathvox then
 	_G.deathvox = {}
 	_G.deathvox.ModPath = ModPath
 	blt.xaudio.setup()
+	log(tostring(Application))
+	
 	log("DOING FRAMEWORK SETUP")
 	if _G.voiceline_framework then
 		_G.voiceline_framework:register_unit("grenadier")
