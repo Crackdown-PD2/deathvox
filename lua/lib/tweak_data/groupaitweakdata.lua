@@ -1080,6 +1080,22 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 			1,
 			1
 		}
+		self.besiege.recon.force_balance_mul = {
+			1,
+			1,
+			1,
+			1
+		}
+		self.besiege.recon.force = {
+			20,
+			20,
+			20
+		}
+		self.besiege.recon.interval = {
+			20,
+			20,
+			20
+		}
 		self.besiege.assault.force = {
 			50,
 			50,
