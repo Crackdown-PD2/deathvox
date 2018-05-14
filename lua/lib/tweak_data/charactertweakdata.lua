@@ -2016,6 +2016,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.headshot_dmg_mul = 3
 	self.deathvox_shield.is_special_unit = "shield"	
 	self.deathvox_shield.access = "any"
+	self.deathvox_shield.no_retreat = false
 	table.insert(self._enemy_list, "deathvox_shield")
 	
 	self.deathvox_medic = deep_clone(self.medic)
@@ -2044,6 +2045,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic.headshot_dmg_mul = 3
 	self.deathvox_medic.is_special_unit = "medic"
 	self.deathvox_medic.access = "any"
+	self.deathvox_medic.no_retreat = false
 	table.insert(self._enemy_list, "deathvox_medic") 
 
 	self.deathvox_taser = deep_clone(self.taser)
@@ -2070,6 +2072,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.is_special_unit = "taser"
 	self.deathvox_taser.access = "any"
 	self.deathvox_taser.custom_voicework = "taser"
+	self.deathvox_taser.no_retreat = false
 	table.insert(self._enemy_list, "deathvox_taser") 
 
 	self.deathvox_cloaker = deep_clone(self.spooc)
@@ -2092,6 +2095,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker.use_factory = true
 	self.deathvox_cloaker.is_special_unit = "spooc"
 	self.deathvox_cloaker.access = "any"
+	self.deathvox_cloaker.no_retreat = false
 
 	table.insert(self._enemy_list, "deathvox_cloaker") 
 
@@ -2144,26 +2148,27 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.damage.explosion_damage_mul = 0.5  -- new with final 2017 pass. Requires scrutiny.
 	self.deathvox_tank.is_special_unit = "tank"
 	self.deathvox_tank.access = "walk"
+	self.deathvox_tank.no_retreat = false
 
-    self.deathvox_greendozer = deep_clone(self.deathvox_tank)
+	self.deathvox_greendozer = deep_clone(self.deathvox_tank)
 	self.deathvox_greendozer.use_factory = true -- Use a factory weapon
 	self.deathvox_greendozer.factory_weapon_id = {"wpn_deathvox_greendozer"} 
 	self.deathvox_greendozer.access = "tank"
 	table.insert(self._enemy_list, "deathvox_greendozer")
 
-    self.deathvox_blackdozer = deep_clone(self.deathvox_tank)
+	self.deathvox_blackdozer = deep_clone(self.deathvox_tank)
 	self.deathvox_blackdozer.use_factory = true -- Use a factory weapon
 	self.deathvox_blackdozer.factory_weapon_id = {"wpn_deathvox_blackdozer"} 
 	self.deathvox_blackdozer.access = "walk"
 	table.insert(self._enemy_list, "deathvox_blackdozer")
 
-    self.deathvox_lmgdozer = deep_clone(self.deathvox_tank)
+	self.deathvox_lmgdozer = deep_clone(self.deathvox_tank)
 	self.deathvox_lmgdozer.use_factory = true -- Use a factory weapon
 	self.deathvox_lmgdozer.factory_weapon_id = {"wpn_deathvox_lmgdozer"} 
 	self.deathvox_lmgdozer.access = "walk"
 	table.insert(self._enemy_list, "deathvox_lmgdozer")
 	
-    self.deathvox_medicdozer = deep_clone(self.deathvox_tank)
+	self.deathvox_medicdozer = deep_clone(self.deathvox_tank)
 	self.deathvox_medicdozer.tags = {"tank", "medic"}
 	self.deathvox_medicdozer.use_factory = true -- Use a factory weapon
 	self.deathvox_medicdozer.factory_weapon_id = {"wpn_deathvox_medicdozer_smg"} 
@@ -2191,7 +2196,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_grenadier.headshot_dmg_mul = 3
 	self.deathvox_grenadier.bag_dmg_mul = 6
 	self.deathvox_grenadier.move_speed = presets.move_speed.fast
-	self.deathvox_grenadier.no_retreat = true
+	self.deathvox_grenadier.no_retreat = false
 	self.deathvox_grenadier.no_arrest = true
 	self.deathvox_grenadier.surrender = nil
 	self.deathvox_grenadier.ecm_vulnerability = 0.9
@@ -2272,7 +2277,7 @@ function CharacterTweakData:_set_sm_wish()
 	
 	self:_set_characters_weapon_preset("deathvox")
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
-	self:_set_characters_melee_preset("3")
+	self:_set_characters_melee_preset("2")
 	self:_set_specials_weapon_preset("deathvox")
 	self.shield.weapon.is_pistol.melee_speed = nil
 	self.shield.weapon.is_pistol.melee_dmg = nil
