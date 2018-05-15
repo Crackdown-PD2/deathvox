@@ -1,0 +1,492 @@
+<table>
+	<statics>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_concrete_cracks_a" name_id="com_ext_parking_garage_concrete_cracks_a_001" position="-1675 1636 407.46" rotation="-0.707107 0 0 -0.707107" unit_id="300010"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/props/str_prop_decal_graffiti_clans/str_prop_decal_graffiti_clans_answer" name_id="str_prop_decal_graffiti_clans_answer_001" position="718 -1230.58 413.82" rotation="-0.0370071 0.706138 0.0370071 -0.706138" unit_id="300012"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/props/str_prop_decal_graffiti_clans/str_prop_decal_graffiti_clans_7200" name_id="str_prop_decal_graffiti_clans_7200_001" position="718 -1249 473.27" rotation="0 0.707107 0 -0.707107" unit_id="300013"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/props/str_prop_decal_graffiti_clans/str_prop_decal_graffiti_clans_ww" name_id="str_prop_decal_graffiti_clans_ww_001" position="200 -1050 441.82" rotation="0.707107 3.09086e-008 0.707107 3.09086e-008" unit_id="300014"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/props/str_prop_decal_graffiti_clans/str_prop_decal_graffiti_clans_team_evil" name_id="str_prop_decal_graffiti_clans_team_evil_001" position="5276.32 2025 429.11" rotation="-0.48674 0.512917 -0.512917 -0.48674" unit_id="300017"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/pd2_dlc1/props/str_prop_decal_ground_skidmark/str_prop_decal_ground_skidmark_curve_right" name_id="str_prop_decal_ground_skidmark_curve_right_001" position="-4841.4 -2495.68 373.65" rotation="0 0 0.0784591 -0.996917" unit_id="300019"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/pd2_dlc1/props/str_prop_decal_ground_skidmark/str_prop_decal_ground_skidmark_straight" name_id="str_prop_decal_ground_skidmark_straight_001" position="-4371.5 -2525 342.5" rotation="0 -0.0479781 -5.96047e-008 -0.998848" unit_id="300018"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/props/str_prop_decal_graffiti_clans/str_prop_decal_graffiti_clans_naohspree" name_id="str_prop_decal_graffiti_clans_naohspree_001" position="-6295 -2115.47 468.94" rotation="0.706434 -0.0308435 0.706434 -0.0308435" unit_id="300025"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_a_spot_4m" name_id="com_ext_parking_garage_decal_a_spot_4m_002" position="-6225 2925 299.6" rotation="0 0 0 -1" unit_id="300033"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/props/str_prop_decal_graffiti_clans/str_prop_decal_graffiti_clans_gefilte_fish" name_id="str_prop_decal_graffiti_clans_gefilte_fish_002" position="2775 1635 392.17" rotation="-0.5 0.5 -0.5 -0.5" unit_id="300035"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_concrete_decal_edge_a" name_id="com_ext_parking_garage_concrete_decal_edge_a_001" position="1177 1634 376.44" rotation="-0.5 0.5 -0.5 -0.5" unit_id="300040"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_concrete_decal_edge_b" name_id="com_ext_parking_garage_concrete_decal_edge_b_001" position="3023 1634 398.51" rotation="0.707107 1.49012e-008 0.707107 -1.49012e-007" unit_id="300041"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_concrete_decal_a" name_id="com_ext_parking_garage_concrete_decal_a_002" position="1850 1633 408.41" rotation="-0.707107 0 0 -0.707107" unit_id="300042"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_concrete_decal_b" name_id="com_ext_parking_garage_concrete_decal_b_002" position="2450 1634 339.99" rotation="-0.707107 0 0 -0.707107" unit_id="300043"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_concrete_decal_edge_b" name_id="com_ext_parking_garage_concrete_decal_edge_b_002" position="120 1580 325.52" rotation="0.675116 0.0273226 0.736407 0.0343056" unit_id="300044"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/props/str_prop_decal_graffiti_clans/str_prop_decal_graffiti_clans_heist" name_id="str_prop_decal_graffiti_clans_heist_001" position="-725 1635 393.32" rotation="-0.5 0.5 -0.5 -0.5" unit_id="300047"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_concrete_decal_edge_a" name_id="com_ext_parking_garage_concrete_decal_edge_a_002" position="-2023 1634 377.35" rotation="-0.5 0.5 -0.5 -0.5" unit_id="300048"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/pd2_dlc1/props/str_prop_decal_ground_skidmark/str_prop_decal_ground_skidmark_straight" name_id="str_prop_decal_ground_skidmark_straight_002" position="-4500 -1223 373.65" rotation="-1.66833e-009 -2.33891e-009 -0.814116 -0.580703" unit_id="300052"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/props/str_prop_decal_graffiti_clans/str_prop_decal_graffiti_clans_buff" name_id="str_prop_decal_graffiti_clans_buff_001" position="2313 1635 393.49" rotation="-0.512917 0.48674 -0.48674 -0.512917" unit_id="300000"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni/light_omni" name_id="light_omni_002" position="4270.71 1272.24 379.65" rotation="0 0 0.029352 -0.999569" unit_id="300001">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.992157 0.211765 0.231373" enabled="true" falloff_exponent="1" far_range="190" multiplier="@ID8badd0cc6ca7cc05@" name="lo_omni" near_range="80" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni/light_omni" name_id="light_omni_003" position="4260.38 1096.54 379.65" rotation="0 0 0.029352 -0.999569" unit_id="300002">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.992157 0.211765 0.231373" enabled="true" falloff_exponent="1" far_range="190" multiplier="@ID8badd0cc6ca7cc05@" name="lo_omni" near_range="80" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni/light_omni" name_id="light_omni_004" position="3618.87 823.753 368.65" rotation="0 0 -0.0294495 -0.999566" unit_id="300003">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.992157 0.211765 0.231373" enabled="true" falloff_exponent="1" far_range="190" multiplier="@ID8badd0cc6ca7cc05@" name="lo_omni" near_range="80" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni/light_omni" name_id="light_omni_005" position="3608.27 1003.44 368.65" rotation="0 0 -0.0294495 -0.999566" unit_id="300004">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.992157 0.211765 0.231373" enabled="true" falloff_exponent="1" far_range="190" multiplier="@ID8badd0cc6ca7cc05@" name="lo_omni" near_range="80" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_spot/light_spot" name_id="light_spot_014" position="3248.46 824.948 346.58" rotation="-0.020824 0.7068 -0.020824 -0.7068" unit_id="300005">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.996078 0.945098 0.737255" enabled="true" falloff_exponent="1" far_range="1000" multiplier="@IDbca13ba1d306f87b@" name="ls_spot" near_range="80" spot_angle_end="53" spot_angle_start="43"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_spot/light_spot" name_id="light_spot_015" position="3240.74 955.721 346.58" rotation="-0.020824 0.7068 -0.020824 -0.7068" unit_id="300007">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.996078 0.945098 0.737255" enabled="true" falloff_exponent="1" far_range="1000" multiplier="@IDbca13ba1d306f87b@" name="ls_spot" near_range="80" spot_angle_end="53" spot_angle_start="43"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni_seq/light_omni_seq" name_id="light_omni_seq_001" position="3088 1128 370.65" rotation="0 0 0 -1" unit_id="300008">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.901961 0.564706 0.109804" enabled="true" falloff_exponent="1" far_range="150" multiplier="@ID18ceffa252d5a43d@" name="lo_omni" near_range="10" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni_seq/light_omni_seq" name_id="light_omni_seq_002" position="3088 1301 370.65" rotation="0 0 0 -1" unit_id="300009">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.901961 0.564706 0.109804" enabled="true" falloff_exponent="1" far_range="150" multiplier="@ID18ceffa252d5a43d@" name="lo_omni" near_range="10" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni_seq/light_omni_seq" name_id="light_omni_seq_003" position="2613 1307 339.65" rotation="0 0 0 -1" unit_id="300011">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.901961 0.564706 0.109804" enabled="true" falloff_exponent="1" far_range="150" multiplier="@ID18ceffa252d5a43d@" name="lo_omni" near_range="10" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni_seq/light_omni_seq" name_id="light_omni_seq_004" position="2613 1121 339.65" rotation="0 0 0 -1" unit_id="300062">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.901961 0.564706 0.109804" enabled="true" falloff_exponent="1" far_range="150" multiplier="@ID18ceffa252d5a43d@" name="lo_omni" near_range="10" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_spot/light_spot" name_id="light_spot_016" position="2623.3 1281 346.58" rotation="-4.00469e-008 0.707107 4.47035e-008 -0.707107" unit_id="300063">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.996078 0.945098 0.737255" enabled="true" falloff_exponent="1" far_range="1000" multiplier="@IDbca13ba1d306f87b@" name="ls_spot" near_range="80" spot_angle_end="53" spot_angle_start="43"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_spot/light_spot" name_id="light_spot_017" position="2623.3 1150 346.58" rotation="4.09782e-008 0.707107 -5.96047e-008 -0.707107" unit_id="300064">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.996078 0.945098 0.737255" enabled="true" falloff_exponent="1" far_range="1000" multiplier="@IDbca13ba1d306f87b@" name="ls_spot" near_range="80" spot_angle_end="53" spot_angle_start="43"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni/light_omni" name_id="light_omni_006" position="770.31 976.333 368.65" rotation="0 0 0.0315264 -0.999503" unit_id="300065">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.992157 0.211765 0.231373" enabled="true" falloff_exponent="1" far_range="190" multiplier="@ID8badd0cc6ca7cc05@" name="lo_omni" near_range="80" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni/light_omni" name_id="light_omni_007" position="758.97 796.69 368.65" rotation="0 0 0.0315264 -0.999503" unit_id="300066">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.992157 0.211765 0.231373" enabled="true" falloff_exponent="1" far_range="190" multiplier="@ID8badd0cc6ca7cc05@" name="lo_omni" near_range="80" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_spot/light_spot" name_id="light_spot_018" position="399.71 973.683 346.58" rotation="0.0222926 0.706755 0.0222926 -0.706755" unit_id="300067">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.996078 0.945098 0.737255" enabled="true" falloff_exponent="1" far_range="1000" multiplier="@IDbca13ba1d306f87b@" name="ls_spot" near_range="80" spot_angle_end="53" spot_angle_start="43"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_spot/light_spot" name_id="light_spot_019" position="391.45 842.944 346.58" rotation="0.0222926 0.706755 0.0222926 -0.706755" unit_id="300068">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.996078 0.945098 0.737255" enabled="true" falloff_exponent="1" far_range="1000" multiplier="@IDbca13ba1d306f87b@" name="ls_spot" near_range="80" spot_angle_end="53" spot_angle_start="43"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni_seq/light_omni_seq" name_id="light_omni_seq_005" position="-659.4 946.149 370.65" rotation="0 0 0.0694803 -0.997583" unit_id="300069">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.901961 0.564706 0.109804" enabled="true" falloff_exponent="1" far_range="150" multiplier="@ID18ceffa252d5a43d@" name="lo_omni" near_range="10" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni_seq/light_omni_seq" name_id="light_omni_seq_006" position="-685.19 761.945 370.65" rotation="0 0 0.0694803 -0.997583" unit_id="300070">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.901961 0.564706 0.109804" enabled="true" falloff_exponent="1" far_range="150" multiplier="@ID18ceffa252d5a43d@" name="lo_omni" near_range="10" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni_seq/light_omni_seq" name_id="light_omni_seq_007" position="-1102.74 837.557 345.65" rotation="0 0 0.0694803 -0.997583" unit_id="300071">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.901961 0.564706 0.109804" enabled="true" falloff_exponent="1" far_range="150" multiplier="@ID18ceffa252d5a43d@" name="lo_omni" near_range="10" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni_seq/light_omni_seq" name_id="light_omni_seq_008" position="-1081.53 989.08 345.65" rotation="0 0 0.0694803 -0.997583" unit_id="300072">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.901961 0.564706 0.109804" enabled="true" falloff_exponent="1" far_range="150" multiplier="@ID18ceffa252d5a43d@" name="lo_omni" near_range="10" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni/light_omni" name_id="light_omni_008" position="-2969.91 -1198.18 373.65" rotation="0 0 0.736454 -0.676488" unit_id="300073">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.992157 0.211765 0.231373" enabled="true" falloff_exponent="1" far_range="190" multiplier="@ID8badd0cc6ca7cc05@" name="lo_omni" near_range="80" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni/light_omni" name_id="light_omni_010" position="-2778.6 -1214.44 373.65" rotation="0 0 0.736454 -0.676488" unit_id="300074">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.992157 0.211765 0.231373" enabled="true" falloff_exponent="1" far_range="190" multiplier="@ID8badd0cc6ca7cc05@" name="lo_omni" near_range="80" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_spot/light_spot" name_id="light_spot_020" position="-2773.81 -768.548 346.58" rotation="0.520751 0.478349 0.520751 -0.478349" unit_id="300075">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.996078 0.945098 0.737255" enabled="true" falloff_exponent="1" far_range="1000" multiplier="@IDbca13ba1d306f87b@" name="ls_spot" near_range="80" spot_angle_end="53" spot_angle_start="43"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_spot/light_spot" name_id="light_spot_021" position="-2904.33 -757.448 346.58" rotation="0.520751 0.478349 0.520751 -0.478349" unit_id="300076">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.996078 0.945098 0.737255" enabled="true" falloff_exponent="1" far_range="1000" multiplier="@IDbca13ba1d306f87b@" name="ls_spot" near_range="80" spot_angle_end="53" spot_angle_start="43"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni/light_omni" name_id="light_omni_011" position="-2331.92 1094.21 373.84" rotation="0 0 0.145172 -0.989406" unit_id="300077">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.992157 0.211765 0.231373" enabled="true" falloff_exponent="1" far_range="190" multiplier="@ID8badd0cc6ca7cc05@" name="lo_omni" near_range="80" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni/light_omni" name_id="light_omni_015" position="-2387.08 910.305 373.84" rotation="0 0 0.145172 -0.989406" unit_id="300078">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.992157 0.211765 0.231373" enabled="true" falloff_exponent="1" far_range="190" multiplier="@ID8badd0cc6ca7cc05@" name="lo_omni" near_range="80" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni/light_omni" name_id="light_omni_016" position="-3218.41 2404.44 360.65" rotation="0 0 -0.768859 -0.639418" unit_id="300079">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.992157 0.211765 0.231373" enabled="true" falloff_exponent="1" far_range="190" multiplier="@ID8badd0cc6ca7cc05@" name="lo_omni" near_range="80" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni/light_omni" name_id="light_omni_017" position="-3390.48 2372.54 360.65" rotation="0 0 -0.768859 -0.639418" unit_id="300080">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.992157 0.211765 0.231373" enabled="true" falloff_exponent="1" far_range="190" multiplier="@ID8badd0cc6ca7cc05@" name="lo_omni" near_range="80" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_spot/light_spot" name_id="light_spot_022" position="-3147.61 1934.78 346.58" rotation="0.543666 -0.452137 0.543666 0.452137" unit_id="300081">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.996078 0.945098 0.737255" enabled="true" falloff_exponent="1" far_range="1000" multiplier="@IDbca13ba1d306f87b@" name="ls_spot" near_range="80" spot_angle_end="53" spot_angle_start="43"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_spot/light_spot" name_id="light_spot_023" position="-3276.41 1910.9 346.58" rotation="0.543666 -0.452137 0.543666 0.452137" unit_id="300082">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.996078 0.945098 0.737255" enabled="true" falloff_exponent="1" far_range="1000" multiplier="@IDbca13ba1d306f87b@" name="ls_spot" near_range="80" spot_angle_end="53" spot_angle_start="43"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/vehicles/bdrop_vehicles_cars_bridge/bdrop_vehicles_cars_bridge" name_id="bdrop_vehicles_cars_bridge_001" position="6802 -8572 297.5" rotation="0 0 0 -1" unit_id="300086"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/brushes/puddle_oil/puddle_oil_1" name_id="puddle_oil_1_001" position="1149.09 3092.93 307.01" rotation="0 0 0.923879 -0.382684" unit_id="300089"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_leak_a_4m" name_id="com_ext_parking_garage_decal_leak_a_4m_023" position="1875 2925 306.01" rotation="0 0 0 -1" unit_id="300090"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_leak_a_4m" name_id="com_ext_parking_garage_decal_leak_a_4m_024" position="2125 2925 306.01" rotation="0 0 0 -1" unit_id="300091"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_leak_a_4m" name_id="com_ext_parking_garage_decal_leak_a_4m_025" position="1725 2925 306.01" rotation="-8.42937e-008 0.707107 0.707107 -8.42937e-008" unit_id="300092"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_leak_a_4m" name_id="com_ext_parking_garage_decal_leak_a_4m_026" position="1500 2925 306.01" rotation="-8.42937e-008 0.707107 0.707107 -8.42937e-008" unit_id="300093"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_concrete_decal_edge_a" name_id="com_ext_parking_garage_concrete_decal_edge_a_004" position="1474 2954 394.74" rotation="0 0.707107 0 -0.707107" unit_id="300094"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/pd2_dlc1/props/str_prop_alley_graffiti/str_prop_decal_graffitti_sp00nerismtag" name_id="str_prop_decal_graffitti_sp00nerismtag_001" position="1100 3120 433.24" rotation="-0.477714 -0.521334 -0.477715 -0.521334" unit_id="300095"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/pd2_dlc1/props/str_prop_alley_graffiti/str_prop_decal_graffitti_gangstercharacter" name_id="str_prop_decal_graffitti_gangstercharacter_001" position="2500 3122 449.95" rotation="-0.5 0.5 0.5 -0.5" unit_id="300096"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_leak_a_4m" name_id="com_ext_parking_garage_decal_leak_a_4m_027" position="2500 2950 306.01" rotation="-0.5 0.5 0.5 -0.5" unit_id="300097"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_stain_a_corner_inner_4m" name_id="com_ext_parking_garage_decal_stain_a_corner_inner_4m_001" position="2500 2950 556.52" rotation="-0.5 0.5 0.5 -0.5" unit_id="300098"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/props/oil_stains_decal/oil_stains_decal_03" name_id="oil_stains_decal_03_001" position="799 2100 306.01" rotation="0 0 0 -1" unit_id="300099"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_concrete_decal_edge_a" name_id="com_ext_parking_garage_concrete_decal_edge_a_005" position="796 1951 387.2" rotation="0 0.707107 0 -0.707107" unit_id="300100"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/brushes/puddle/puddle_5" name_id="puddle_5_001" position="1375 2200 307.01" rotation="0 0 0 -1" unit_id="300006"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_leak_a_4m" name_id="com_ext_parking_garage_decal_leak_a_4m_029" position="2075 2475 306.01" rotation="-0.5 0.5 0.5 -0.5" unit_id="300103"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_a_spot_4m" name_id="com_ext_parking_garage_decal_a_spot_4m_001" position="1850 2675 306.01" rotation="0 0 0.92388 0.382683" unit_id="300105"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_a_4m" name_id="com_ext_parking_garage_decal_a_4m_002" position="2075 2875 679.47" rotation="0.5 0.5 -0.5 -0.5" unit_id="300106"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_leak_b" name_id="com_ext_parking_garage_decal_leak_b_001" position="2023 2875 601.7" rotation="-0.5 0.5 -0.5 -0.5" unit_id="300108"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_leak_c" name_id="com_ext_parking_garage_decal_leak_c_001" position="1993 2875 500.27" rotation="-0.5 0.5 -0.5 -0.5" unit_id="300109"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_leak_c" name_id="com_ext_parking_garage_decal_leak_c_002" position="1658 2875 442.95" rotation="-3.09086e-008 0.707107 -0.707107 -3.09086e-008" unit_id="300110"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_leak_c" name_id="com_ext_parking_garage_decal_leak_c_003" position="1667 2875 442.95" rotation="-0.707107 0 0 -0.707107" unit_id="300111"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_leak_a_1m" name_id="com_ext_parking_garage_decal_leak_a_1m_004" position="1607 2875 443.74" rotation="8.42937e-008 0.707107 -0.707107 8.42937e-008" unit_id="300112"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_leak_c" name_id="com_ext_parking_garage_decal_leak_c_004" position="1608 2875 442.95" rotation="-0.5 -0.5 0.5 -0.5" unit_id="300113"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/pd2_dlc1/props/str_prop_alley_graffiti/str_prop_decal_graffitti_stingertag" name_id="str_prop_decal_graffitti_stingertag_001" position="-1875 -1350 613.51" rotation="-0.5 -0.5 -0.5 -0.5" unit_id="300120"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_concrete_decal_edge_a" name_id="com_ext_parking_garage_concrete_decal_edge_a_006" position="-125 -925 383.55" rotation="0 0.707107 0 -0.707107" unit_id="300121"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_concrete_decal_edge_a" name_id="com_ext_parking_garage_concrete_decal_edge_a_007" position="-1075 -1175 415.61" rotation="0.707107 -1.19209e-007 0.707107 8.9407e-008" unit_id="300122"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/pd2_dlc1/props/str_prop_decal_ground_skidmark/str_prop_decal_ground_skidmark_straight" name_id="str_prop_decal_ground_skidmark_straight_004" position="-3184.52 1687.57 279.84" rotation="-1.80801e-009 -2.2327e-009 -0.848048 -0.529919" unit_id="300125"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/pd2_dlc1/props/str_prop_decal_ground_skidmark/str_prop_decal_ground_skidmark_straight" name_id="str_prop_decal_ground_skidmark_straight_005" position="-2315.68 980.162 279.65" rotation="1.37085e-009 -2.52479e-009 0.165047 -0.986286" unit_id="300126"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/props/glass_shatter/glass_shatter" name_id="glass_shatter_001" position="-2836 1243 279.84" rotation="0 0 0 -1" unit_id="300124"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/props/glass_shatter/glass_shatter" name_id="glass_shatter_002" position="-2858.03 1320.76 279.84" rotation="0 0 -0.382683 -0.92388" unit_id="300127"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni/light_omni" name_id="light_omni_024" position="1158.01 1210.77 379.65" rotation="0 0 0.0404839 -0.99918" unit_id="300130">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.992157 0.211765 0.231373" enabled="true" falloff_exponent="1" far_range="190" multiplier="@ID8badd0cc6ca7cc05@" name="lo_omni" near_range="80" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="core/units/light_omni/light_omni" name_id="light_omni_025" position="1197.17 1384.17 379.65" rotation="0 0 0.0404839 -0.99918" unit_id="300131">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.992157 0.211765 0.231373" enabled="true" falloff_exponent="1" far_range="190" multiplier="@ID8badd0cc6ca7cc05@" name="lo_omni" near_range="80" spot_angle_end="-1" spot_angle_start="-1"/>
+				</lights>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_a_4m" name_id="com_ext_parking_garage_decal_a_4m_003" position="2075 2475 679.47" rotation="0.5 0.5 -0.5 -0.5" unit_id="300107"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_leak_a_1m" name_id="com_ext_parking_garage_decal_leak_a_1m_005" position="1613 2803 306.01" rotation="0 0 1 -8.9407e-008" unit_id="300104"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/architecture/suburbia/props/suburbia_thinpipes_2" name_id="suburbia_thinpipes_2_001" position="2500 2520 379" rotation="0 0 0.707107 -0.707107" unit_id="300114"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/architecture/suburbia/props/suburbia_thinpipes_2" name_id="suburbia_thinpipes_2_002" position="-100 -1050 381.01" rotation="0 0 0.707107 -0.707107" unit_id="300123"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/architecture/suburbia/props/suburbia_thinpipes_1" name_id="suburbia_thinpipes_1_001" position="-1762 -1100 559.76" rotation="0 0 0 -1" unit_id="300128"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/architecture/suburbia/props/suburbia_thinpipes_1" name_id="suburbia_thinpipes_1_002" position="800 1813 365.75" rotation="0 0 0.707107 -0.707107" unit_id="300129"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/architecture/suburbia/props/suburbia_thinpipes_1" name_id="suburbia_thinpipes_1_003" position="3212 2450 365.75" rotation="0 0 0 -1" unit_id="300132"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/architecture/suburbia/props/suburbia_thinpipes_1" name_id="suburbia_thinpipes_1_004" position="1500 2821 365.59" rotation="0 0 0.707107 -0.707107" unit_id="300133"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/props/survivalist/canisters/canister_plastic" name_id="canister_plastic_009" position="702 2264 357.02" rotation="0 0 -0.843392 -0.537299" unit_id="300134"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/props/survivalist/canisters/canister_plastic" name_id="canister_plastic_001" position="3074.2 2634.71 306.01" rotation="0 0 0.976296 -0.21644" unit_id="300135"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/props/survivalist/canisters/canister_plastic" name_id="canister_plastic_002" position="1141 2897 308.91" rotation="0 0 0.984808 0.173648" unit_id="300136"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/props/survivalist/canisters/canister_plastic" name_id="canister_plastic_003" position="-1814 -1433 557.03" rotation="0 0 0.976296 -0.21644" unit_id="300137"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/props/survivalist/canisters/canister_plastic" name_id="canister_plastic_004" position="5668 -1332 299.65" rotation="0 0 0.819152 -0.573577" unit_id="300138"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/props/survivalist/canisters/canister_plastic" name_id="canister_plastic_005" position="5046.6 -2624.66 299.65" rotation="0 0 0.173647 -0.984808" unit_id="300139"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/props/survivalist/canisters/canister_plastic" name_id="canister_plastic_006" position="-373.78 -1477.08 363.03" rotation="0 0 0.477158 -0.878817" unit_id="300140"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/props/survivalist/canisters/canister_plastic" name_id="canister_plastic_007" position="4623 2061 299.65" rotation="0 0 0.819152 -0.573577" unit_id="300141"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/props/survivalist/canisters/canister_plastic" name_id="canister_plastic_008" position="-7071 2969 299.6" rotation="0 0 0.819152 -0.573577" unit_id="300142"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/props/survivalist/canisters/canister_plastic" name_id="canister_plastic_010" position="-7224 2565 299.6" rotation="0 0 0.819152 -0.573577" unit_id="300143"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/props/street/roof_addons/roof_water_tower_04" name_id="roof_water_tower_04_001" position="-7075 5125 1099.6" rotation="0 0 0.707107 -0.707107" unit_id="300144"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/vehicles/str_vehicle_truck_frontloader/str_vehicle_truck_frontloader" name_id="str_vehicle_truck_frontloader_002" position="6663.3 -6126.46 277.5" rotation="0 0 0.999358 0.0358222" unit_id="300145"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/props/com_prop_basement_cables_ceiling_ladder/com_prop_basement_cables_ceiling_ladder_straight_4m" name_id="com_prop_basement_cables_ceiling_ladder_straight_4m_004" position="1000 3025 606.01" rotation="0 0 0.707107 -0.707107" unit_id="300146"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/props/com_prop_basement_cables_ceiling_ladder/com_prop_basement_cables_ceiling_ladder_straight_4m" name_id="com_prop_basement_cables_ceiling_ladder_straight_4m_005" position="1600 3025 606.01" rotation="0 0 0.707107 -0.707107" unit_id="300147"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/props/com_prop_basement_cables_ceiling_ladder/com_prop_basement_cables_ceiling_ladder_straight_4m" name_id="com_prop_basement_cables_ceiling_ladder_straight_4m_006" position="2200 3025 606.01" rotation="0 0 0.707107 -0.707107" unit_id="300148"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/props/com_prop_basement_cables_ceiling_ladder/com_prop_basement_cables_ceiling_ladder_drop_50_cm" name_id="com_prop_basement_cables_ceiling_ladder_drop_50_cm_001" position="2200 3025 606.01" rotation="0 0 -0.707107 -0.707107" unit_id="300149"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/props/com_prop_basement_cables_ceiling_ladder/com_prop_basement_cables_ceiling_ladder_drop_50_cm" name_id="com_prop_basement_cables_ceiling_ladder_drop_50_cm_002" position="2000 3025 606.01" rotation="0 0 0.707107 -0.707107" unit_id="300150"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/props/com_prop_basement_cables_ceiling_ladder/com_prop_basement_cables_ceiling_ladder_drop_50_cm" name_id="com_prop_basement_cables_ceiling_ladder_drop_50_cm_007" position="1600 3025 606.01" rotation="0 0 -0.707107 -0.707107" unit_id="300151"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/props/com_prop_basement_cables_ceiling_ladder/com_prop_basement_cables_ceiling_ladder_drop_50_cm" name_id="com_prop_basement_cables_ceiling_ladder_drop_50_cm_008" position="1400 3025 606.01" rotation="0 0 0.707107 -0.707107" unit_id="300152"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/props/street/streetcone_01" name_id="streetcone_01_003" position="-4731 -2308 373.65" rotation="0 0 -0.207912 -0.978148" unit_id="300153"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/props/street/streetcone_01" name_id="streetcone_01_004" position="-3874 -2281 299.65" rotation="0 0 -0.566406 -0.824126" unit_id="300154"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/props/furniture_outdoors/furniture_outdoors_chair_plastic" name_id="furniture_outdoors_chair_plastic_001" position="-7265.2 2585.87 299.6" rotation="0 0 0.165048 -0.986286" unit_id="300158"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_bdrop_signe_02_t_riggs_8x8" name_id="ind_bdrop_signe_02_t_riggs_8x8_001" position="7412 -7625 297.5" rotation="0 0 0 -1" unit_id="300159"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/brushes/puddle/puddle_1" name_id="puddle_1_003" position="-299.18 -1365.68 307.01" rotation="0 0 -0.743145 -0.669131" unit_id="300030"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/architecture/desert/des_vil_house_rooftop/des_vil_house_rooftop_02" name_id="des_vil_house_rooftop_02_003" position="-7725 -2950 1173.65" rotation="0 0 -1.13249e-006 -1" unit_id="300031"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/pd2_dlc1/props/str_prop_alley_graffiti/str_prop_decal_graffitti_obedpiece" name_id="str_prop_decal_graffitti_obedpiece_001" position="-4283 -3050 567.286" rotation="0.0123406 0.706999 0.706999 -0.0123406" unit_id="300037"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/architecture/desert/des_vil_house_rooftop/des_vil_house_rooftop_02" name_id="des_vil_house_rooftop_02_004" position="-6625 -4625 1173.65" rotation="0 0 1 -1.2517e-006" unit_id="300038"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/props/street/streetcone_01" name_id="streetcone_01_005" position="-3874 -3035 299.65" rotation="0 0 0.983255 0.182236" unit_id="300039"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/props/str_prop_decal_graffiti_clans/str_prop_decal_graffiti_clans_naohspree" name_id="str_prop_decal_graffiti_clans_naohspree_002" position="3401 3018 435.768" rotation="0.707107 3.09086e-008 0.707107 3.09086e-008" unit_id="300015"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/pd2_dlc1/props/str_prop_alley_graffiti/str_prop_decal_graffitti_xraytag" name_id="str_prop_decal_graffitti_xraytag_001" position="-6295 -1297 524.643" rotation="-0.5 -0.5 -0.5 -0.5" unit_id="300016"/>
+		</table>
+	</statics>
+	<values>
+		<workviews/>
+	</values>
+</table>

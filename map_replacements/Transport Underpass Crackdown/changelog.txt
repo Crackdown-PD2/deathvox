@@ -1,0 +1,20 @@
+Current changes:
+Lock loot to gold or cash.
+Lock required loot to 10. Doublechecked, validated.
+Adjust number of trucks to 6. Requires testing.
+Environment- intensify fog close range. Set to 3003 from 4004. Environment packed.
+Removed links to completely undeveloped trucks to avoid confusion.
+Locked escort to FBI.
+Sniper loop slightly adjusted.
+Sniper elements staged.
+Sniper surfaces placed.
+Complete creation of sniper locations, setups. 
+Place sniper elements.
+1-4 on ambulance side,
+5, 6 on center of pass,
+7-10 on lot side.
+loc completed.
+Fixed additional error in sniper loop, thanks to Rex.
+
+Todo:
+Loc fix -  difficulty asset insertion.

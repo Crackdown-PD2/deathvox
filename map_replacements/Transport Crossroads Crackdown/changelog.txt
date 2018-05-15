@@ -1,0 +1,16 @@
+Current changes:
+Removed needless dev textures. 
+Moved some startup elements to dev area to begin mapping effects.
+Map spawn structure, consider locking player spawn to one position to simplify task. 
+Set trucks to 8.
+Set loot per truck to 6.
+Set loot to jewelry
+Placed 3 snipers.
+Altered sniper loop to force 4 or 5 max.
+Locked extra cars to low or high.
+Fix truckspawn.
+Fix sniper spawn.
+Loc file.
+
+Todo:
+Loc fix -  difficulty asset insertion.

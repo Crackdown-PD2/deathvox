@@ -1,0 +1,11 @@
+{
+	"heist_arm_cro_name" : "Transport: Crossroads Crackdown",
+	"heist_arm_cro_brief" : "Bain has intercepted a convoy of armored Gensec trucks. They're carrying high-value cargo and you need to get in fast and steal it.
+
+» Break into the immobilized trucks
+» Crack open the strongboxes
+» Get the loot to the getaway vehicle",
+	"heist_arm_cro_CD_name" : "Transport: Crossroads Crackdown",
+	"heist_arm_cro_CD_brief" : "We've forced the Gensec trucks off the road at the corner of McCarty and James. Sure it had those Time Out hipsters shitting into their latte macchiatos. You're going to need to get into the trucks, and then break open the strongboxes inside. Whatever they're carrying, get it, and get out."
+}
+

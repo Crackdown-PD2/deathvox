@@ -1,0 +1,6 @@
+{
+	"heist_wwh_name" : "Alaskan Deal Crackdown",
+	"heist_wwh_brief" : "Dear friends, I need assistance unloading some weapons. I have set up a deal in Alaska, but I need an escort to keep the transaction secure, yeah?",
+	"heist_wwh_CD_name" : "Alaskan Deal Crackdown",
+	"heist_wwh_CD_brief" : "Locke has asked for help guarding a weapons transaction in Alaska. Says he's not expecting trouble, but wants some reliable security just in case. Looks like it might be an easy Payday if you can put up with the cold."
+}
