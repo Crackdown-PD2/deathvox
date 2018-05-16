@@ -2155,11 +2155,29 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.access = "walk"
 	self.deathvox_tank.no_retreat = false
 
-	self.deathvox_guarddozer = deep_clone(self.deathvox_tank)
+	self.deathvox_guarddozer = deep_clone(self.security)
+	self.deathvox_guarddozer.tags = {"tank"} -- just making sure tag applies.
+	self.deathvox_guarddozer.ignore_medic_revive_animation = false  -- revive animation.
+	self.deathvox_guarddozer.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase -- new with final 2017 pass. Probably not a change, needs to stay.
+	self.deathvox_guarddozer.suppression = presets.suppression.no_supress
+	self.deathvox_guarddozer.surrender = nil
+	self.deathvox_guarddozer.surrender_break_time = {4, 6}
+	self.deathvox_guarddozer.ecm_vulnerability = 0.85
+	self.deathvox_guarddozer.ecm_hurts = {
+        ears = {min_duration = 1, max_duration = 3} -- tentative, in base
+    }
+	self.deathvox_guarddozer.deathguard = true
+	self.deathvox_guarddozer.steal_loot = nil
+	self.deathvox_guarddozer.rescue_hostages = false
+	self.deathvox_guarddozer.HEALTH_INIT = 875
+	self.deathvox_guarddozer.damage.explosion_damage_mul = 0.5  -- new with final 2017 pass. Requires scrutiny.
+	self.deathvox_guarddozer.is_special_unit = "tank"
+	self.deathvox_guarddozer.no_retreat = false
 	self.deathvox_guarddozer.access = "any"
 	self.deathvox_guarddozer.no_arrest = false
 	self.deathvox_guarddozer.calls_in = true
-	table.insert(self._enemy_list, "deathvox_greendozer")
+	self.deathvox_guarddozer.detection = presets.detection.guard
+	table.insert(self._enemy_list, "deathvox_guarddozer")
 	
 	self.deathvox_greendozer = deep_clone(self.deathvox_tank)
 	self.deathvox_greendozer.use_factory = true -- Use a factory weapon
