@@ -54,6 +54,17 @@
 		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight.unit" load="true"/>
 		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight_husk.unit" load="true"/>
 		
+		<!--DV Guard Dozer-->
+		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.unit" load="true"/>
+		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer_husk.unit" load="true"/>
+		<file :name="ene_deathvox_guarddozer/bulldozer_nm.texture" force="false"/>
+		<file :name="ene_deathvox_guarddozer/bulldozer_df.texture" force="false"/>
+		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.material_config" force="false"/>
+		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.object" force="false"/>
+		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.model" force="false"/>
+		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.sequence_manager" force="false"/>
 		<!--DV Heavy Assault Rifle-->
 		<file :name="ene_deathvox_heavyar/swat_heavy_df.texture" force="false"/>
 		<file :name="ene_deathvox_heavyar/swat_heavy_head_df.texture" force="false"/>

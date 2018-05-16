@@ -2155,6 +2155,12 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.access = "walk"
 	self.deathvox_tank.no_retreat = false
 
+	self.deathvox_guarddozer = deep_clone(self.deathvox_tank)
+	self.deathvox_guarddozer.access = "any"
+	self.deathvox_guarddozer.no_arrest = false
+	self.deathvox_guarddozer.calls_in = true
+	table.insert(self._enemy_list, "deathvox_greendozer")
+	
 	self.deathvox_greendozer = deep_clone(self.deathvox_tank)
 	self.deathvox_greendozer.use_factory = true -- Use a factory weapon
 	self.deathvox_greendozer.factory_weapon_id = {"wpn_deathvox_greendozer"} 
@@ -2807,7 +2813,8 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_medicdozer",
 			"ene_deathvox_grenadier",
 			"ene_deathvox_gman",
-			"ene_deathvox_gman_flashlight"
+			"ene_deathvox_gman_flashlight",
+			"ene_deathvox_guarddozer"
 		}
 	}
 	return char_map

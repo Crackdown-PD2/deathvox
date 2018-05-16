@@ -38,6 +38,8 @@ function CopMovement:init(unit)
 	
 	CopMovement._action_variants.deathvox_greendozer = clone(security_variant)
 	CopMovement._action_variants.deathvox_greendozer.walk = TankCopActionWalk
+	CopMovement._action_variants.deathvox_guarddozer = clone(security_variant)
+	CopMovement._action_variants.deathvox_guarddozer.walk = TankCopActionWalk
 	CopMovement._action_variants.deathvox_blackdozer = clone(security_variant)
 	CopMovement._action_variants.deathvox_blackdozer.walk = TankCopActionWalk
 	CopMovement._action_variants.deathvox_lmgdozer = clone(security_variant)
