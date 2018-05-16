@@ -27,6 +27,7 @@ function CopMovement:init(unit)
 	CopMovement._action_variants.deathvox_lightar = security_variant
 	CopMovement._action_variants.deathvox_medic = security_variant
 	CopMovement._action_variants.deathvox_guard = security_variant
+	CopMovement._action_variants.deathvox_gman = security_variant
 	CopMovement._action_variants.deathvox_lightshot = security_variant
 	CopMovement._action_variants.deathvox_heavyshot = security_variant
 
@@ -78,6 +79,7 @@ function CopMovement:post_init()
 	self._unit:kill_mover()
 	self._unit:set_driving("script")
 	self._unit:unit_data().has_alarm_pager = self._tweak_data.has_alarm_pager
+	self._unit:unit_data().ignore_ecm_for_pager = self._tweak_data.ignore_ecm_for_pager
 	local event_list = {
 		"bleedout",
 		"light_hurt",

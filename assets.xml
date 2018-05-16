@@ -32,6 +32,28 @@
 		<file :name="ene_deathvox_guard/ene_deathvox_guard.unit" load="true"/>
 		<file :name="ene_deathvox_guard/ene_deathvox_guard_husk.unit" load="true"/>
 
+		<file :name="shared_textures/gman_df.texture" force="false"/>
+		<file :name="shared_textures/gman_nm.texture" force="false"/>
+		<file :name="shared_textures/gman_head_df.texture" force="false"/>
+		<file :name="shared_textures/gman_head_nm.texture" force="false"/>
+		
+		<!--DV G-Men-->
+		<file :name="ene_deathvox_gman/ene_deathvox_gman_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_gman/ene_deathvox_gman.material_config" force="false"/>
+		<file :name="ene_deathvox_gman/ene_deathvox_gman.object" force="false"/>
+		<file :name="ene_deathvox_gman/ene_deathvox_gman.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_gman/ene_deathvox_gman.model" force="false"/>
+		<file :name="ene_deathvox_gman/ene_deathvox_gman.unit" load="true"/>
+		<file :name="ene_deathvox_gman/ene_deathvox_gman_husk.unit" load="true"/>
+		
+		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight.material_config" force="false"/>
+		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight.object" force="false"/>
+		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight.model" force="false"/>
+		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight.unit" load="true"/>
+		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight_husk.unit" load="true"/>
+		
 		<!--DV Heavy Assault Rifle-->
 		<file :name="ene_deathvox_heavyar/swat_heavy_df.texture" force="false"/>
 		<file :name="ene_deathvox_heavyar/swat_heavy_head_df.texture" force="false"/>
@@ -221,4 +243,5 @@
 
 	<file name="effects/particles/explosions/cs_grenade_smoke.effect" load="false" force="true"/>
 	<file name="effects/particles/weapons/trail_dv_sniper.effect" load="false" force="true"/>
+	<file name="effects/pd2_mod_gageammo/particles/character/flashlight_ss.effect" load="false" force="true"/>
 </assets>
