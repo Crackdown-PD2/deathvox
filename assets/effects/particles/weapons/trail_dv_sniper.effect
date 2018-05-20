@@ -30,7 +30,7 @@
                 </color_keys>
                 <opacity_keys loop="false">
                     <key t="0" v="255"/>
-                    <key t="2.08188152313232" v="0"/>
+                    <key t="4.08188152313232" v="0"/>
                 </opacity_keys>
             </billboard>
             <billboard texture="effects/textures/add_atlas_df" intensity="sun" billboard_type="normal_locked" rotation_channel="world_rotation" blend_mode="normal" render_template="heat_shimmer" origo="0.5 1" per_particle_age="false" size_input="scaled_channel" color_input="constant" color="255 255 255" opacity_input="keys" rotation_input="constant" rotation="0" rotation_axis="0 0 1" uv_size="0.25 0.125" uv_offset_input="constant" uv_offset="0.5 0.17">
@@ -41,7 +41,7 @@
                 <opacity_keys loop="false">
                     <key t="0.060456852167845" v="255"/>
                     <key t="0.81254354715347" v="20"/>
-                    <key t="1.61811847686768" v="0"/>
+                    <key t="4.61811847686768" v="0"/>
                 </opacity_keys>
             </billboard>
         </visualizerstack>
