@@ -9,9 +9,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		acrobatic = true,
 		walk = true
 	}
-	if difficulty_index == 8 then
+	if difficulty_index == 8 then -- reducing dozer spawncap to 2, test value 5/19. Should indirectly address other balance issues.
 		self.special_unit_spawn_limits = {
-			tank = 3,
+			tank = 2,
 			taser = 4,
 			boom = 2,
 			spooc = 4,
