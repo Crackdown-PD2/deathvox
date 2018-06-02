@@ -1,0 +1,7 @@
+<table>
+	<art1 file="art1/art1"/>
+	<collision file="collision/collision"/>
+	<editor_only file="editor_only/editor_only"/>
+	<mkp file="mkp/mkp"/>
+	<world file="world/world"/>
+</table>

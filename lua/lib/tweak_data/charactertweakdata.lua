@@ -1,5 +1,6 @@
 local origin_init = CharacterTweakData.init
 local origin_presets = CharacterTweakData._presets
+local origin_charmap = CharacterTweakData.character_map
 
 function CharacterTweakData:init(tweak_data)
 	local presets = self:_presets(tweak_data)
@@ -61,6 +62,59 @@ function CharacterTweakData:_presets(tweak_data)
 					dive = {
 						chance = 1,
 						timeout = {1.2, 2}
+					}
+				}
+			}
+		}
+	}
+	presets.dodge.deathvoxchavez = {
+		speed = 1.7,
+		occasions = {
+			hit = {
+				chance = 1,
+				check_timeout = {0, 3},
+				variations = {
+					dive = {
+						chance = 2,
+						timeout = {1, 2},
+						shoot_chance = 1,
+						shoot_accuracy = 0.9
+					},
+					roll = {
+						chance = 1,
+						timeout = {1.2, 2}
+					}
+				}
+			},
+			preemptive = {
+				chance = 1,
+				check_timeout = {0, 3},
+				variations = {
+					dive = {
+						chance = 2,
+						timeout = {1, 2},
+						shoot_chance = 1,
+						shoot_accuracy = 0.9
+					},
+					roll = {
+						chance = 1,
+						timeout = {1.2, 2}
+					}
+				}
+			},
+			scared = {
+				chance = 0.9,
+				check_timeout = {0, 2},
+				variations = {
+					roll = {
+						chance = 1,
+						timeout = {1.2, 2}
+					},
+					dive = {
+						chance = 2,
+						timeout = {1, 2},
+						shoot_chance = 1,
+						shoot_accuracy = 0.9
 					}
 				}
 			}
@@ -1670,6 +1724,139 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
+	presets.weapon.deathvox.akimbo_pistol = { --mark 1 adjustment. Needs damage increase.
+		aim_delay = {
+			0,
+			0
+		},
+		focus_delay = 0,
+		focus_dis = 200,
+		spread = 20,
+		miss_dis = 50,
+		RELOAD_SPEED = 1.4, -- validated, unchanged.
+		melee_speed = presets.weapon.expert.is_pistol.melee_speed,
+		melee_dmg = 20,
+		melee_retry_delay = presets.weapon.expert.is_pistol.melee_retry_delay,
+		autofire_rounds = { -- experimental autofire increase. prev values 25, 50.
+			8,
+			10
+		},
+			range = {
+			optimal = 3200, -- validated, unchanged.
+			far = 5000,
+			close = 2000
+		},
+		FALLOFF = {
+			{
+				dmg_mul = 1,
+				r = 100,
+				acc = {
+					0.9,
+					0.95
+				},
+				recoil = {
+					0.15,
+					0.25
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = 1,
+				r = 500,
+				acc = {
+					0.9,
+					0.95
+				},
+				recoil = {
+					0.15,
+					0.3
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = .8,
+				r = 1000,
+				acc = {
+					0.7,
+					0.8
+				},
+				recoil = {
+					0.25,
+					0.3
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = .65,
+				r = 2000,
+				acc = {
+					0.6,
+					0.7
+				},
+				recoil = {
+					0.4,
+					0.5
+				},
+				mode = {
+					0,
+					1,
+					0,
+					0
+				}
+			},
+			{
+				dmg_mul = .6,
+				r = 3000,
+				acc = {
+					0.6,
+					0.65
+				},
+				recoil = {
+					0.6,
+					0.8
+				},
+				mode = {
+					0,
+					1,
+					0,
+					0
+				}
+			},
+			{
+				dmg_mul = .5, -- no flat damage.
+				r = 4000,
+				acc = {
+					0.2,
+					0.60 -- no infinite range.
+				},
+				recoil = {
+					1,
+					1.5
+				},
+				mode = {
+					0,
+					1,
+					0,
+					0
+				}
+			}
+		}
+	}
 	presets.weapon.deathvox.is_tank_smg = deep_clone(presets.weapon.deathvox.is_smg) --Used for medidozer. May separate.
 	presets.weapon.deathvox.is_cloaker_smg = deep_clone(presets.weapon.deathvox.is_smg) -- clone similar to other vars.
 	presets.weapon.deathvox.is_dozer_saiga = deep_clone(presets.weapon.deathvox.is_shotgun_mag)
@@ -1681,7 +1868,6 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.weapon.deathvox.rifle = deep_clone(presets.weapon.deathvox.is_light_rifle)
 	presets.weapon.deathvox.is_sniper = deep_clone(presets.weapon.deathvox.is_light_rifle)
 	presets.weapon.deathvox.is_rifle = deep_clone(presets.weapon.deathvox.is_light_rifle)
-	presets.weapon.deathvox.akimbo_pistol = deep_clone(presets.weapon.deathvox.is_pistol) -- Will revise for test version of Chavez boss at future date.
 	presets.weapon.deathvox.mossberg = deep_clone(presets.weapon.deathvox.is_light_shotgun)
 	return presets
 end
@@ -1705,6 +1891,10 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_guard.access = "any"
 	table.insert(self._enemy_list, "deathvox_guard")
+	
+	self.deathvox_gman = deep_clone(self.deathvox_guard)
+	self.deathvox_gman.ignore_ecm_for_pager = true
+	table.insert(self._enemy_list, "deathvox_gman")
 	
 	self.deathvox_lightar = deep_clone(self.city_swat)
 	self.deathvox_lightar.detection = presets.detection.normal
@@ -1831,6 +2021,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.headshot_dmg_mul = 3
 	self.deathvox_shield.is_special_unit = "shield"	
 	self.deathvox_shield.access = "any"
+	self.deathvox_shield.no_retreat = false
 	table.insert(self._enemy_list, "deathvox_shield")
 	
 	self.deathvox_medic = deep_clone(self.medic)
@@ -1859,6 +2050,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic.headshot_dmg_mul = 3
 	self.deathvox_medic.is_special_unit = "medic"
 	self.deathvox_medic.access = "any"
+	self.deathvox_medic.no_retreat = false
 	table.insert(self._enemy_list, "deathvox_medic") 
 
 	self.deathvox_taser = deep_clone(self.taser)
@@ -1885,6 +2077,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.is_special_unit = "taser"
 	self.deathvox_taser.access = "any"
 	self.deathvox_taser.custom_voicework = "taser"
+	self.deathvox_taser.no_retreat = false
 	table.insert(self._enemy_list, "deathvox_taser") 
 
 	self.deathvox_cloaker = deep_clone(self.spooc)
@@ -1907,6 +2100,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker.use_factory = true
 	self.deathvox_cloaker.is_special_unit = "spooc"
 	self.deathvox_cloaker.access = "any"
+	self.deathvox_cloaker.no_retreat = false
 
 	table.insert(self._enemy_list, "deathvox_cloaker") 
 
@@ -1959,26 +2153,51 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.damage.explosion_damage_mul = 0.5  -- new with final 2017 pass. Requires scrutiny.
 	self.deathvox_tank.is_special_unit = "tank"
 	self.deathvox_tank.access = "walk"
+	self.deathvox_tank.no_retreat = false
 
-    self.deathvox_greendozer = deep_clone(self.deathvox_tank)
+	self.deathvox_guarddozer = deep_clone(self.security)
+	self.deathvox_guarddozer.tags = {"tank"} -- just making sure tag applies.
+	self.deathvox_guarddozer.ignore_medic_revive_animation = false  -- revive animation.
+	self.deathvox_guarddozer.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase -- new with final 2017 pass. Probably not a change, needs to stay.
+	self.deathvox_guarddozer.suppression = presets.suppression.no_supress
+	self.deathvox_guarddozer.surrender = nil
+	self.deathvox_guarddozer.surrender_break_time = {4, 6}
+	self.deathvox_guarddozer.ecm_vulnerability = 0.85
+	self.deathvox_guarddozer.ecm_hurts = {
+        ears = {min_duration = 1, max_duration = 3} -- tentative, in base
+    }
+	self.deathvox_guarddozer.deathguard = true
+	self.deathvox_guarddozer.steal_loot = nil
+	self.deathvox_guarddozer.rescue_hostages = false
+	self.deathvox_guarddozer.HEALTH_INIT = 875
+	self.deathvox_guarddozer.damage.explosion_damage_mul = 0.5  -- new with final 2017 pass. Requires scrutiny.
+	self.deathvox_guarddozer.is_special_unit = "tank"
+	self.deathvox_guarddozer.no_retreat = false
+	self.deathvox_guarddozer.access = "any"
+	self.deathvox_guarddozer.no_arrest = false
+	self.deathvox_guarddozer.calls_in = true
+	self.deathvox_guarddozer.detection = presets.detection.guard
+	table.insert(self._enemy_list, "deathvox_guarddozer")
+	
+	self.deathvox_greendozer = deep_clone(self.deathvox_tank)
 	self.deathvox_greendozer.use_factory = true -- Use a factory weapon
 	self.deathvox_greendozer.factory_weapon_id = {"wpn_deathvox_greendozer"} 
 	self.deathvox_greendozer.access = "tank"
 	table.insert(self._enemy_list, "deathvox_greendozer")
 
-    self.deathvox_blackdozer = deep_clone(self.deathvox_tank)
+	self.deathvox_blackdozer = deep_clone(self.deathvox_tank)
 	self.deathvox_blackdozer.use_factory = true -- Use a factory weapon
 	self.deathvox_blackdozer.factory_weapon_id = {"wpn_deathvox_blackdozer"} 
 	self.deathvox_blackdozer.access = "walk"
 	table.insert(self._enemy_list, "deathvox_blackdozer")
 
-    self.deathvox_lmgdozer = deep_clone(self.deathvox_tank)
+	self.deathvox_lmgdozer = deep_clone(self.deathvox_tank)
 	self.deathvox_lmgdozer.use_factory = true -- Use a factory weapon
 	self.deathvox_lmgdozer.factory_weapon_id = {"wpn_deathvox_lmgdozer"} 
 	self.deathvox_lmgdozer.access = "walk"
 	table.insert(self._enemy_list, "deathvox_lmgdozer")
 	
-    self.deathvox_medicdozer = deep_clone(self.deathvox_tank)
+	self.deathvox_medicdozer = deep_clone(self.deathvox_tank)
 	self.deathvox_medicdozer.tags = {"tank", "medic"}
 	self.deathvox_medicdozer.use_factory = true -- Use a factory weapon
 	self.deathvox_medicdozer.factory_weapon_id = {"wpn_deathvox_medicdozer_smg"} 
@@ -2006,7 +2225,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_grenadier.headshot_dmg_mul = 3
 	self.deathvox_grenadier.bag_dmg_mul = 6
 	self.deathvox_grenadier.move_speed = presets.move_speed.fast
-	self.deathvox_grenadier.no_retreat = true
+	self.deathvox_grenadier.no_retreat = false
 	self.deathvox_grenadier.no_arrest = true
 	self.deathvox_grenadier.surrender = nil
 	self.deathvox_grenadier.ecm_vulnerability = 0.9
@@ -2064,14 +2283,30 @@ function CharacterTweakData:_set_sm_wish()
 	self:_multiply_weapon_delay(self.presets.weapon.gang_member, 0)
 	self.security = deep_clone(self.deathvox_guard) -- fucking broke piece of shit movement stuff
 	self.gensec = deep_clone(self.deathvox_guard)
+	
 	self.bolivian_indoors.HEALTH_INIT = 36
+	self.bolivian_indoors.no_arrest = true
+	self.bolivian.HEALTH_INIT = 36
 	self.gangster.HEALTH_INIT = 36
 	self.biker.HEALTH_INIT = 36
 	self.biker_escape.HEALTH_INIT = 36
+
+	if job == "man" then
+		self.fbi.calls_in = nil
+		self.cop_female.calls_in = nil
+		self.cop.calls_in = nil
+	end	
+	
 	self.cop.HEALTH_INIT = 15
+
+	self.cop_female.HEALTH_INIT = 15
+	self.fbi.HEALTH_INIT = 48
+	
+	self.chavez_boss.HEALTH_INIT = 900
+	
 	self:_set_characters_weapon_preset("deathvox")
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
-	self:_set_characters_melee_preset("3")
+	self:_set_characters_melee_preset("2")
 	self:_set_specials_weapon_preset("deathvox")
 	self.shield.weapon.is_pistol.melee_speed = nil
 	self.shield.weapon.is_pistol.melee_dmg = nil
@@ -2081,7 +2316,7 @@ function CharacterTweakData:_set_sm_wish()
 	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	self.security.no_arrest = true
 	self.gensec.no_arrest = true
-	self.bolivian_indoors.no_arrest = true
+	
 	if job == "kosugi" or job == "dark" then
 		self.city_swat.no_arrest = true
 	else
@@ -2090,9 +2325,9 @@ function CharacterTweakData:_set_sm_wish()
 	self:_multiply_all_speeds(1, 1)
 	self.presets.gang_member_damage.HEALTH_INIT = 525
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.75
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 525
 	self.old_hoxton_mission.HEALTH_INIT = 525
 	self.spa_vip.HEALTH_INIT = 525
-	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 525
 	self.flashbang_multiplier = 2
 	self.concussion_multiplier = 2
 end
@@ -2576,527 +2811,29 @@ function CharacterTweakData:_set_specials_melee_preset(preset)
 end
 
 function CharacterTweakData:character_map()
-	local char_map = {
-		basic = {
-			path = "units/payday2/characters/",
-			list = {
-				"civ_female_bank_1",
-				"civ_female_bank_manager_1",
-				"civ_female_bikini_1",
-				"civ_female_bikini_2",
-				"civ_female_casual_1",
-				"civ_female_casual_2",
-				"civ_female_casual_3",
-				"civ_female_casual_4",
-				"civ_female_casual_5",
-				"civ_female_casual_6",
-				"civ_female_casual_7",
-				"civ_female_casual_8",
-				"civ_female_casual_9",
-				"civ_female_casual_10",
-				"civ_female_crackwhore_1",
-				"civ_female_curator_1",
-				"civ_female_curator_2",
-				"civ_female_hostess_apron_1",
-				"civ_female_hostess_jacket_1",
-				"civ_female_hostess_shirt_1",
-				"civ_female_party_1",
-				"civ_female_party_2",
-				"civ_female_party_3",
-				"civ_female_party_4",
-				"civ_female_waitress_1",
-				"civ_female_waitress_2",
-				"civ_female_waitress_3",
-				"civ_female_waitress_4",
-				"civ_female_wife_trophy_1",
-				"civ_female_wife_trophy_2",
-				"civ_male_bank_1",
-				"civ_male_bank_2",
-				"civ_male_bank_manager_1",
-				"civ_male_bank_manager_3",
-				"civ_male_bank_manager_4",
-				"civ_male_bank_manager_5",
-				"civ_male_bartender_1",
-				"civ_male_bartender_2",
-				"civ_male_business_1",
-				"civ_male_business_2",
-				"civ_male_casual_1",
-				"civ_male_casual_2",
-				"civ_male_casual_3",
-				"civ_male_casual_4",
-				"civ_male_casual_5",
-				"civ_male_casual_6",
-				"civ_male_casual_7",
-				"civ_male_casual_8",
-				"civ_male_casual_9",
-				"civ_male_casual_12",
-				"civ_male_casual_13",
-				"civ_male_casual_14",
-				"civ_male_curator_1",
-				"civ_male_curator_2",
-				"civ_male_curator_3",
-				"civ_male_dj_1",
-				"civ_male_italian_robe_1",
-				"civ_male_janitor_1",
-				"civ_male_janitor_2",
-				"civ_male_janitor_3",
-				"civ_male_meth_cook_1",
-				"civ_male_party_1",
-				"civ_male_party_2",
-				"civ_male_party_3",
-				"civ_male_pilot_1",
-				"civ_male_scientist_1",
-				"civ_male_miami_store_clerk_1",
-				"civ_male_taxman",
-				"civ_male_trucker_1",
-				"civ_male_worker_1",
-				"civ_male_worker_2",
-				"civ_male_worker_3",
-				"civ_male_worker_docks_1",
-				"civ_male_worker_docks_2",
-				"civ_male_worker_docks_3",
-				"civ_male_dog_abuser_1",
-				"civ_male_dog_abuser_2",
-				"ene_biker_1",
-				"ene_biker_2",
-				"ene_biker_3",
-				"ene_biker_4",
-				"ene_bulldozer_1",
-				"ene_bulldozer_2",
-				"ene_bulldozer_2_hw",
-				"ene_bulldozer_3",
-				"ene_bulldozer_4",
-				"ene_city_swat_1",
-				"ene_city_swat_2",
-				"ene_city_swat_3",
-				"ene_city_swat_heavy_1",
-				"ene_city_swat_heavy_2",
-				"ene_murkywater_1",
-				"ene_murkywater_2",
-				"ene_cop_1",
-				"ene_cop_2",
-				"ene_cop_3",
-				"ene_cop_4",
-				"ene_fbi_1",
-				"ene_fbi_2",
-				"ene_fbi_3",
-				"ene_fbi_boss_1",
-				"ene_fbi_female_1",
-				"ene_fbi_female_2",
-				"ene_fbi_female_3",
-				"ene_fbi_female_4",
-				"ene_fbi_heavy_1",
-				"ene_fbi_heavy_r870",
-				"ene_fbi_office_1",
-				"ene_fbi_office_2",
-				"ene_fbi_office_3",
-				"ene_fbi_office_4",
-				"ene_fbi_swat_1",
-				"ene_fbi_swat_2",
-				"ene_fbi_swat_3",
-				"ene_gang_black_1",
-				"ene_gang_black_2",
-				"ene_gang_black_3",
-				"ene_gang_black_4",
-				"ene_gang_mexican_1",
-				"ene_gang_mexican_2",
-				"ene_gang_mexican_3",
-				"ene_gang_mexican_4",
-				"ene_gang_russian_1",
-				"ene_gang_russian_2",
-				"ene_gang_russian_3",
-				"ene_gang_russian_4",
-				"ene_gang_russian_5",
-				"ene_gang_mobster_1",
-				"ene_gang_mobster_2",
-				"ene_gang_mobster_3",
-				"ene_gang_mobster_4",
-				"ene_gang_mobster_boss",
-				"ene_guard_national_1",
-				"ene_hoxton_breakout_guard_1",
-				"ene_hoxton_breakout_guard_2",
-				"ene_male_tgt_1",
-				"ene_murkywater_1",
-				"ene_murkywater_2",
-				"ene_prisonguard_female_1",
-				"ene_prisonguard_male_1",
-				"ene_secret_service_1",
-				"ene_secret_service_2",
-				"ene_security_1",
-				"ene_security_2",
-				"ene_security_3",
-				"ene_security_4",
-				"ene_security_5",
-				"ene_security_6",
-				"ene_security_7",
-				"ene_security_8",
-				"ene_shield_1",
-				"ene_shield_2",
-				"ene_city_shield",
-				"ene_shield_gensec",
-				"ene_phalanx_1",
-				"ene_vip_1",
-				"ene_vip_2",
-				"ene_sniper_1",
-				"ene_sniper_2",
-				"ene_spook_1",
-				"ene_swat_1",
-				"ene_swat_2",
-				"ene_swat_heavy_1",
-				"ene_swat_heavy_r870",
-				"ene_tazer_1",
-				"npc_old_hoxton_prisonsuit_1",
-				"npc_old_hoxton_prisonsuit_2",
-				"ene_medic_r870",
-				"ene_medic_m4",
-				"ene_city_heavy_r870",
-				"ene_city_heavy_g36",
-				"ene_guard_biker_1",
-				"ene_murky_heavy_m4",
-				"ene_murky_heavy_r870"
-			}
-		},
-		dlc1 = {
-			path = "units/pd2_dlc1/characters/",
-			list = {
-				"civ_male_bank_manager_2",
-				"civ_male_casual_10",
-				"civ_male_casual_11",
-				"civ_male_firefighter_1",
-				"civ_male_paramedic_1",
-				"civ_male_paramedic_2",
-				"ene_security_gensec_1",
-				"ene_security_gensec_2"
-			}
-		},
-		dlc2 = {
-			path = "units/pd2_dlc2/characters/",
-			list = {
-				"civ_female_bank_assistant_1",
-				"civ_female_bank_assistant_2"
-			}
-		},
-		mansion = {
-			path = "units/pd2_mcmansion/characters/",
-			list = {
-				"ene_male_hector_1",
-				"ene_male_hector_2",
-				"ene_hoxton_breakout_guard_1",
-				"ene_hoxton_breakout_guard_2"
-			}
-		},
-		cage = {
-			path = "units/pd2_dlc_cage/characters/",
-			list = {
-				"civ_female_bank_2"
-			}
-		},
-		arena = {
-			path = "units/pd2_dlc_arena/characters/",
-			list = {
-				"civ_female_fastfood_1",
-				"civ_female_party_alesso_1",
-				"civ_female_party_alesso_2",
-				"civ_female_party_alesso_3",
-				"civ_female_party_alesso_4",
-				"civ_female_party_alesso_5",
-				"civ_female_party_alesso_6",
-				"civ_male_party_alesso_1",
-				"civ_male_party_alesso_2",
-				"civ_male_alesso_booth",
-				"civ_male_fastfood_1",
-				"ene_guard_security_heavy_2",
-				"ene_guard_security_heavy_1"
-			}
-		},
-		kenaz = {
-			path = "units/pd2_dlc_casino/characters/",
-			list = {
-				"civ_male_casino_1",
-				"civ_male_casino_2",
-				"civ_male_casino_3",
-				"civ_male_casino_4",
-				"ene_secret_service_1_casino",
-				"civ_male_business_casino_1",
-				"civ_male_business_casino_2",
-				"civ_male_impersonator",
-				"civ_female_casino_1",
-				"civ_female_casino_2",
-				"civ_female_casino_3",
-				"civ_male_casino_pitboss"
-			}
-		},
-		vip = {
-			path = "units/pd2_dlc_vip/characters/",
-			list = {
-				"ene_vip_1",
-				"ene_vip_2",
-				"ene_phalanx_1"
-			}
-		},
-		holly = {
-			path = "units/pd2_dlc_holly/characters/",
-			list = {
-				"civ_male_hobo_1",
-				"civ_male_hobo_2",
-				"civ_male_hobo_3",
-				"civ_male_hobo_4",
-				"ene_gang_hispanic_1",
-				"ene_gang_hispanic_3",
-				"ene_gang_hispanic_2"
-			}
-		},
-		red = {
-			path = "units/pd2_dlc_red/characters/",
-			list = {
-				"civ_female_inside_man_1"
-			}
-		},
-		dinner = {
-			path = "units/pd2_dlc_dinner/characters/",
-			list = {
-				"civ_male_butcher_2",
-				"civ_male_butcher_1"
-			}
-		},
-		pal = {
-			path = "units/pd2_dlc_pal/characters/",
-			list = {
-				"civ_male_mitch"
-			}
-		},
-		cane = {
-			path = "units/pd2_dlc_cane/characters/",
-			list = {
-				"civ_male_helper_1",
-				"civ_male_helper_2",
-				"civ_male_helper_3",
-				"civ_male_helper_4"
-			}
-		},
-		berry = {
-			path = "units/pd2_dlc_berry/characters/",
-			list = {
-				"ene_murkywater_no_light",
-				"npc_locke"
-			}
-		},
-		peta = {
-			path = "units/pd2_dlc_peta/characters/",
-			list = {
-				"civ_male_boris"
-			}
-		},
-		mad = {
-			path = "units/pd2_dlc_mad/characters/",
-			list = {
-				"civ_male_scientist_01",
-				"civ_male_scientist_02",
-				"ene_akan_fbi_heavy_g36",
-				"ene_akan_fbi_heavy_r870",
-				"ene_akan_fbi_shield_sr2_smg",
-				"ene_akan_fbi_spooc_asval_smg",
-				"ene_akan_fbi_swat_ak47_ass",
-				"ene_akan_fbi_swat_dw_ak47_ass",
-				"ene_akan_fbi_swat_dw_r870",
-				"ene_akan_fbi_swat_dw_ump",
-				"ene_akan_fbi_swat_r870",
-				"ene_akan_fbi_swat_ump",
-				"ene_akan_fbi_tank_r870",
-				"ene_akan_fbi_tank_rpk_lmg",
-				"ene_akan_fbi_tank_saiga",
-				"ene_akan_cs_cop_ak47_ass",
-				"ene_akan_cs_cop_akmsu_smg",
-				"ene_akan_cs_cop_asval_smg",
-				"ene_akan_cs_cop_r870",
-				"ene_akan_cs_heavy_ak47_ass",
-				"ene_akan_cs_heavy_r870",
-				"ene_akan_cs_shield_c45",
-				"ene_akan_cs_swat_ak47_ass",
-				"ene_akan_cs_swat_r870",
-				"ene_akan_cs_swat_sniper_svd_snp",
-				"ene_akan_cs_tazer_ak47_ass",
-				"ene_akan_fbi_heavy_dw",
-				"ene_akan_fbi_heavy_dw_r870",
-				"ene_akan_fbi_1",
-				"ene_akan_fbi_2",
-				"ene_akan_veteran_1",
-				"ene_akan_veteran_2",
-				"ene_akan_grenadier_1",
-				"ene_akan_medic_m4"
-			}
-		},
-		born = {
-			path = "units/pd2_dlc_born/characters/",
-			list = {
-				"ene_gang_biker_boss",
-				"ene_biker_female_1",
-				"ene_biker_female_2",
-				"ene_biker_female_3",
-				"npc_male_mechanic"
-			}
-		},
-		flat = {
-			path = "units/pd2_dlc_flat/characters/",
-			list = {
-				"npc_chavez",
-				"npc_jamaican"
-			}
-		},
-		help = {
-			path = "units/pd2_dlc_help/characters/",
-			list = {
-				"ene_zeal_bulldozer_halloween"
-			}
-		},
-		glace = {
-			path = "units/pd2_dlc_glace/characters/",
-			list = {
-				"npc_chinese_prisoner",
-				"npc_prisoner_1",
-				"npc_prisoner_2",
-				"npc_prisoner_3",
-				"npc_prisoner_4",
-				"npc_prisoner_5",
-				"npc_prisoner_6",
-				"npc_yakuza_prisoner"
-			}
-		},
-		moon = {
-			path = "units/pd2_dlc_moon/characters/",
-			list = {
-				"civ_male_pilot_2"
-			}
-		},
-		friend = {
-			path = "units/pd2_dlc_friend/characters/",
-			list = {
-				"ene_bolivian_thug_outdoor_01",
-				"ene_bolivian_thug_outdoor_02",
-				"ene_drug_lord_boss",
-				"ene_security_manager",
-				"ene_thug_indoor_01",
-				"ene_thug_indoor_02"
-			}
-		},
-		gitgud = {
-			path = "units/pd2_dlc_gitgud/characters/",
-			list = {
-				"ene_zeal_bulldozer",
-				"ene_zeal_bulldozer_2",
-				"ene_zeal_bulldozer_3",
-				"ene_zeal_cloaker",
-				"ene_zeal_swat",
-				"ene_zeal_city_1",
-				"ene_zeal_city_2",
-				"ene_zeal_swat_heavy",
-				"ene_zeal_heavy_shield",
-				"ene_zeal_swat_shield"
-			}
-		},
-		spa = {
-			path = "units/pd2_dlc_spa/characters/",
-			list = {
-				"ene_sniper_3",
-				"npc_spa",
-				"npc_spa_2",
-				"npc_spa_3",
-				"npc_gage"
-			}
-		},
-		fish = {
-			path = "units/pd2_dlc_lxy/characters/",
-			list = {
-				"civ_female_guest_gala_1",
-				"civ_female_guest_gala_2",
-				"civ_male_guest_gala_1",
-				"civ_male_guest_gala_2",
-				"civ_male_camera_crew_1"
-			}
-		},
-		slu = {
-			path = "units/pd2_dlc_slu/characters/",
-			list = {"npc_vlad", "npc_sophia"}
-		},
-		run = {
-			path = "units/pd2_dlc_run/characters/",
-			list = {"npc_matt"}
-		},
-		drm = {
-			path = "units/pd2_dlc_drm/characters/",
-			list = {
-				"ene_bulldozer_medic",
-				"ene_bulldozer_minigun",
-				"ene_zeal_swat_heavy_sniper"
-			}
-		},
-		wwh = {
-			path = "units/pd2_dlc_wwh/characters/",
-			list = {
-				"ene_female_crew",
-				"ene_male_crew_01",
-				"ene_male_crew_02",
-				"ene_captain",
-				"ene_locke"
-			}			
-		},		
-		dah = {
-			path = "units/pd2_dlc_dah/characters/",
-			list = {
-				"npc_male_cfo",
-				"npc_male_ralph"
-			}
-		},		
-		hvh = {
-			path = "units/pd2_dlc_hvh/characters/",
-			list = {
-				"ene_cop_hvh_1",
-				"ene_cop_hvh_2",
-				"ene_cop_hvh_3",
-				"ene_cop_hvh_4",
-				"ene_swat_hvh_1",
-				"ene_swat_hvh_2",
-				"ene_fbi_hvh_1",
-				"ene_fbi_hvh_2",
-				"ene_fbi_hvh_3",
-				"ene_spook_hvh_1",
-				"ene_swat_heavy_hvh_1",
-				"ene_swat_heavy_hvh_r870",
-				"ene_tazer_hvh_1",
-				"ene_shield_hvh_1",
-				"ene_shield_hvh_2",
-				"ene_medic_hvh_r870",
-				"ene_medic_hvh_m4",
-				"ene_bulldozer_hvh_1",
-				"ene_bulldozer_hvh_2",
-				"ene_bulldozer_hvh_3",
-				"ene_fbi_swat_hvh_1",
-				"ene_fbi_swat_hvh_2",
-				"ene_fbi_heavy_hvh_1",
-				"ene_fbi_heavy_hvh_r870",
-				"ene_sniper_hvh_2"
-			}
-		},
-		gageammo = {
-			path = "units/pd2_mod_gageammo/characters/",
-			list = {
-				"ene_deathvox_guard",
-				"ene_deathvox_heavyar",
-				"ene_deathvox_lightar",
-				"ene_deathvox_medic",
-				"ene_deathvox_shield",
-				"ene_deathvox_lightshot",
-				"ene_deathvox_heavyshot",
-				"ene_deathvox_taser",
-				"ene_deathvox_cloaker",
-				"ene_deathvox_sniper_assault",
-				"ene_deathvox_greendozer",
-				"ene_deathvox_blackdozer",
-				"ene_deathvox_lmgdozer",
-				"ene_deathvox_medicdozer",
-				"ene_deathvox_grenadier"
-			}
-		}				
+	local char_map = origin_charmap(self)
+	char_map.gageammo = {
+		path = "units/pd2_mod_gageammo/characters/",
+		list = {
+			"ene_deathvox_guard",
+			"ene_deathvox_heavyar",
+			"ene_deathvox_lightar",
+			"ene_deathvox_medic",
+			"ene_deathvox_shield",
+			"ene_deathvox_lightshot",
+			"ene_deathvox_heavyshot",
+			"ene_deathvox_taser",
+			"ene_deathvox_cloaker",
+			"ene_deathvox_sniper_assault",
+			"ene_deathvox_greendozer",
+			"ene_deathvox_blackdozer",
+			"ene_deathvox_lmgdozer",
+			"ene_deathvox_medicdozer",
+			"ene_deathvox_grenadier",
+			"ene_deathvox_gman",
+			"ene_deathvox_gman_flashlight",
+			"ene_deathvox_guarddozer"
+		}
 	}
 	return char_map
 end

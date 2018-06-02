@@ -1,7 +1,10 @@
 <materials version="3" group="ene_tazer_1">
-	<material name="mtr_head" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:RL_COPS:SKINNED_3WEIGHTS" version="2">
+	<material name="mtr_head" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:SELF_ILLUMINATION:SELF_ILLUMINATION_UVANIM:SKINNED_3WEIGHTS" version="2">
 		<bump_normal_texture 	file="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_nm"/>
 		<diffuse_texture 		file="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_df"/>
+        <self_illumination_texture file="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_il"/>
+        <variable value="0 0 0" type="vector3" name="uv_speed"/>
+        <variable type="scalar" name="il_multiplier" value="dimlight"/>
 	</material>
 	<material name="mtr_body" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:RL_COPS:SKINNED_3WEIGHTS" version="2">
 		<bump_normal_texture 	file="units/pd2_mod_gageammo/characters/shared_textures/grenadier_body_nm"/>
@@ -10,7 +13,7 @@
 	<material name="mtr_ene_acc_swat_helmet" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:SELF_ILLUMINATION" version="2">
 		<bump_normal_texture 	file="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_nm"/>
 		<diffuse_texture 		file="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_df"/>
-		<self_illumination_texture file="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_il"/>
+        <self_illumination_texture file="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_il"/>
         <variable type="scalar" name="il_multiplier" value="reddot"/>
 	</material>
 

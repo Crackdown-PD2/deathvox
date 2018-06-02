@@ -1,0 +1,13 @@
+Current changes:
+set random a, b and c to 3
+set random cloakers to 4
+set random snipers (100389) to 3
+implemented hatches, flash
+Escape task adjusted to 10 seconds from 5
+Halved loop delay on boat and chopper spawns
+loc
+Working turrets.
+First turret spawns on initial ambush, 2 and 3 spawn on gangway task.
+
+Todo:
+Adjust winters spawn to start of heist.

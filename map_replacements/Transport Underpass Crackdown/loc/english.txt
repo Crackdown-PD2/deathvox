@@ -1,0 +1,10 @@
+{
+	"heist_arm_und_name" : "Transport: Underpass Crackdown",
+	"heist_arm_und_brief" : "Bain has intercepted a convoy of armored Gensec trucks. They're carrying high-value cargo and you need to get in fast and steal it.
+
+» Break into the immobilized trucks
+» Crack open the strongboxes
+» Get the loot to the getaway vehicle",
+	"heist_arm_und_CD_name" : "Transport: Underpass Crackdown",
+	"heist_arm_und_CD_brief" : "We hit the Gensec convoy at the underpass, en-route from Dulles to their depot in McLean, so expect rich pickings. Get whatever's in the trucks to the escape driver. We're deep in Indian country here, gentlemen, so expect a fast response from DC's finest."
+}

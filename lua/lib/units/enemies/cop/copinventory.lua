@@ -251,3 +251,37 @@ function CopInventory:add_unit_by_factory_blueprint(factory_name, equip, instant
 		new_unit:base():create_second_gun()
 	end
 end
+
+local temp_vec1 = Vector3()
+local drop_weapon_original = CopInventory.drop_weapon
+function CopInventory:drop_weapon(...)
+  local selection = self._available_selections[self._equipped_selection]
+  local unit = selection and selection.unit
+
+  if unit and unit:damage() then
+    return drop_weapon_original(self, ...)
+  end
+
+  local create_physics_body = function (unit, right)
+    local dropped_col = World:spawn_unit(Idstring("units/payday2/weapons/box_collision/box_collision_medium_ar"), unit:position(), unit:rotation())
+    dropped_col:link(Idstring("rp_box_collision_medium"), unit)
+    mvector3.set(temp_vec1, unit:rotation():y())
+    mvector3.multiply(temp_vec1, math.random(75, 200))
+    dropped_col:push(10, temp_vec1)
+    unit:base()._collider_unit = dropped_col
+  end
+
+  if unit then
+    unit:unlink()
+    create_physics_body(unit)
+    self:_call_listeners("unequip")
+    managers.game_play_central:weapon_dropped(unit)
+
+    if unit:base() and unit:base()._second_gun then
+      local second_gun = unit:base()._second_gun
+      second_gun:unlink()
+      create_physics_body(unit, true)
+      managers.game_play_central:weapon_dropped(second_gun)
+    end
+  end
+end
