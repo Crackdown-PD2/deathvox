@@ -234,6 +234,9 @@ function WeaponTweakData:_set_sm_wish()
 	self.m4_npc.DAMAGE = 3
 	self.g36_npc.DAMAGE = 5
 	self.r870_npc.DAMAGE = 7
+	self.npc_melee.baton.damage = 5
+	self.npc_melee.knife_1.damage = 7
+	self.npc_melee.fists.damage = 4
 	self.swat_van_turret_module.HEALTH_INIT = 40000
 	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 500
 	self.swat_van_turret_module.DAMAGE = 3
