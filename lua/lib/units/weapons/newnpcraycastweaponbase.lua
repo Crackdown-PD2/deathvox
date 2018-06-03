@@ -152,22 +152,45 @@ DeathVoxSniperWeaponBase = DeathVoxSniperWeaponBase or blt_class(NewNPCRaycastWe
 DeathVoxSniperWeaponBase.TRAIL_EFFECT = Idstring("effects/particles/weapons/trail_dv_sniper")
 
 DeathVoxGrenadierWeaponBase = DeathVoxGrenadierWeaponBase or blt_class(NewNPCRaycastWeaponBase)
-
+function DeathVoxGrenadierWeaponBase:init(unit)
+	DeathVoxGrenadierWeaponBase.super.init(self, unit)
+	self._grenade_cooldown = 0
+	self._grenade_cooldown_max = 10
+	self._firing_status = 0 -- 0 for can fire, 1 for speaking
+	self._speaking_cooldown = 1
+	self._speak_cool = 0
+end
 
 function DeathVoxGrenadierWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoot_player, shoot_through_data)
-	if not Network:is_client() then
-		local unit = nil
-		local mvec_from_pos = Vector3()
-		local mvec_direction = Vector3()
-		mvector3.set(mvec_from_pos, from_pos)
-		mvector3.set(mvec_direction, direction)
-		mvector3.multiply(mvec_direction, 100)
-		log("multiplied by 100")
-		mvector3.add(mvec_from_pos, mvec_direction)
-		if not self._client_authoritative then
-			unit = ProjectileBase.throw_projectile("launcher_incendiary", mvec_from_pos, direction)
-		end
+	local t = TimerManager:main():time()
+	if self._grenade_cooldown > t or self._speak_cool > t then
 		return {}
 	end
-	return DeathVoxGrenadierWeaponBase.super._fire_raycast(self, user_unit, from_pos, direction, dmg_mul, shoot_player, shoot_through_data)
+	if self._firing_status == 0 then
+		self._firing_status = 1
+		user_unit:sound():say("use_gas", true, nil, true)
+		self._speak_cool = t + self._speaking_cooldown
+		return {}
+	else
+		if not Network:is_client() then
+			local unit = nil
+			local mvec_from_pos = Vector3()
+			local mvec_direction = Vector3()
+			mvector3.set(mvec_from_pos, from_pos)
+			mvector3.set(mvec_direction, direction)
+			mvector3.multiply(mvec_direction, 100)
+			log("multiplied by 100")
+			mvector3.add(mvec_from_pos, mvec_direction)
+			if not self._client_authoritative then
+				unit = ProjectileBase.throw_projectile("dv_grenadier_grenade", mvec_from_pos, direction)
+			end
+			self._firing_status = 0
+			self._grenade_cooldown = t + self._grenade_cooldown_max
+			return {}
+		end
+	end
+	return {}
 end
+
+
+

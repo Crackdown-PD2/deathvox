@@ -24,7 +24,7 @@ function QuickCsGrenade:update(unit, t, dt)
 		self._timer = self._timer - dt
 
 		if self._timer <= 0 then
-			self._timer = self._timer + 0.5
+			self._timer = self._timer
 			self._state = 2
 
 			self:_play_sound_and_effects()
