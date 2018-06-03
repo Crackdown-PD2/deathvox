@@ -2542,7 +2542,7 @@
 					<entry index="3" type="number" value="1"/>
 					<entry index="4" type="number" value="1"/>
 				</entry>
-				<entry key="depth" type="number" value="696"/>
+				<entry key="depth" type="number" value="840"/>
 				<entry key="environment" type="string" value="environments/pd2_wwh/pd2_wwh_train"/>
 				<entry key="filter_list" type="table">
 					<entry index="1" type="string" value="cee9c44e4f1ef6e2"/>
@@ -2571,15 +2571,15 @@
 					<entry index="24" type="string" value="72c5ffc46ab06e53"/>
 					<entry index="25" type="string" value="fb96a0addd59b018"/>
 				</entry>
-				<entry key="height" type="number" value="462"/>
+				<entry key="height" type="number" value="400"/>
 				<entry key="name" type="string" value="none"/>
 				<entry key="permanent" type="boolean" value="false"/>
-				<entry key="position" type="vector3" value="3522 2471 938"/>
+				<entry key="position" type="vector3" value="3423 1397 1138"/>
 				<entry key="prio" type="number" value="100"/>
 				<entry key="rotation" type="quaternion" value="0 0 0 -1"/>
 				<entry key="transition_time" type="number" value="0.1"/>
 				<entry key="type" type="string" value="box"/>
-				<entry key="width" type="number" value="475"/>
+				<entry key="width" type="number" value="970"/>
 			</entry>
 			<entry index="3" type="table">
 				<entry key="bezier_curve" type="table">
@@ -2634,7 +2634,7 @@
 					<entry index="3" type="number" value="1"/>
 					<entry index="4" type="number" value="1"/>
 				</entry>
-				<entry key="depth" type="number" value="840"/>
+				<entry key="depth" type="number" value="696"/>
 				<entry key="environment" type="string" value="environments/pd2_wwh/pd2_wwh_train"/>
 				<entry key="filter_list" type="table">
 					<entry index="1" type="string" value="cee9c44e4f1ef6e2"/>
@@ -2663,15 +2663,15 @@
 					<entry index="24" type="string" value="72c5ffc46ab06e53"/>
 					<entry index="25" type="string" value="fb96a0addd59b018"/>
 				</entry>
-				<entry key="height" type="number" value="400"/>
+				<entry key="height" type="number" value="462"/>
 				<entry key="name" type="string" value="none"/>
 				<entry key="permanent" type="boolean" value="false"/>
-				<entry key="position" type="vector3" value="3423 1397 1138"/>
+				<entry key="position" type="vector3" value="3522 2471 938"/>
 				<entry key="prio" type="number" value="100"/>
 				<entry key="rotation" type="quaternion" value="0 0 0 -1"/>
 				<entry key="transition_time" type="number" value="0.1"/>
 				<entry key="type" type="string" value="box"/>
-				<entry key="width" type="number" value="970"/>
+				<entry key="width" type="number" value="475"/>
 			</entry>
 			<entry index="5" type="table">
 				<entry key="bezier_curve" type="table">

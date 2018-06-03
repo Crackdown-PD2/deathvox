@@ -1,3 +1,4 @@
+Note this heist was edited without consideration for lower difficulty adjustment.
 Current changes:
 Lock loot to gold or cash.
 Lock required loot to 10. Doublechecked, validated.
@@ -15,6 +16,8 @@ Place sniper elements.
 7-10 on lot side.
 loc completed.
 Fixed additional error in sniper loop, thanks to Rex.
+Added startup elements to prevent damage during fade-in.
+CD filter applied to snipers.
 
 Todo:
 Loc fix -  difficulty asset insertion.

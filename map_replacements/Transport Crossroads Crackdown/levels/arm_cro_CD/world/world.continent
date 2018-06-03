@@ -2442,7 +2442,7 @@
 			<unit_data continent="world" name="units/world/architecture/hospital/props/rooftop/acvent/acvent03" name_id="acvent03_004" position="-1150 3500 800" rotation="0 0 0.707107 -0.707107" unit_id="100899"/>
 		</table>
 		<table>
-			<unit_data continent="world" name="units/world/architecture/hospital/props/rooftop/acvent/acvent03" name_id="acvent03_005" position="3475 1450 414.535" rotation="0 0 0.707107 -0.707107" unit_id="100900"/>
+			<unit_data _prev_pos="3475 1450 422.535" _prev_rot="0 0 0.707107 -0.707107" continent="world" local_pos="0 0 0" local_rot="0 0 0 1" name="units/world/architecture/hospital/props/rooftop/acvent/acvent03" name_id="acvent03_005" position="3307 1450 422.535" rotation="0 0 0.707107 -0.707107" unit_id="100900"/>
 		</table>
 		<table>
 			<unit_data continent="world" name="units/world/architecture/hospital/props/rooftop/acvent/acvent03" name_id="acvent03_006" position="-1050 -1800 799.281" rotation="0 0 0.707107 -0.707107" unit_id="100901"/>
@@ -2472,7 +2472,7 @@
 			<unit_data continent="world" name="units/world/architecture/hospital/props/rooftop/acvent/acvent04" name_id="acvent04_010" position="-1800 -2427 17.9999" rotation="0 0 0.707107 -0.707107" unit_id="100909"/>
 		</table>
 		<table>
-			<unit_data continent="world" name="units/world/architecture/hospital/props/rooftop/acvent/acvent04" name_id="acvent04_012" position="2925 1450 414.535" rotation="0 0 0 -1" unit_id="100911"/>
+			<unit_data _prev_pos="2925 1450 414.535" _prev_rot="0 0 0 -1" continent="world" local_pos="0 0 0" local_rot="0 0 0 1" name="units/world/architecture/hospital/props/rooftop/acvent/acvent04" name_id="acvent04_012" position="2925 1450 433.535" rotation="0 0 0 -1" unit_id="100911"/>
 		</table>
 		<table>
 			<unit_data continent="world" name="units/world/architecture/hospital/props/rooftop/acvent/acvent04" name_id="acvent04_013" position="1575 -3050 -0.0001" rotation="0 0 -0.707107 -0.707107" unit_id="100912"/>
@@ -4659,7 +4659,7 @@
 			<unit_data continent="world" name="units/payday2/architecture/lcm_b/lcm_b_ext_roof4_plane_8x8m_a" name_id="lcm_b_ext_roof4_plane_8x8m_a_029" position="2900 -800 1289" rotation="0 0 1 -4.37114e-008" unit_id="103343"/>
 		</table>
 		<table>
-			<unit_data continent="world" name="units/payday2/architecture/lcm_b/lcm_b_ext_roof4_plane_8x8m_a" name_id="lcm_b_ext_roof4_plane_8x8m_a_030" position="-800 3000 825" rotation="0 0 0 -1" unit_id="103344"/>
+			<unit_data _prev_pos="-800 3000 825" _prev_rot="0 0 0 -1" continent="world" local_pos="0 0 0" local_rot="0 0 0 1" name="units/payday2/architecture/lcm_b/lcm_b_ext_roof4_plane_8x8m_a" name_id="lcm_b_ext_roof4_plane_8x8m_a_030" position="-800 3000 846" rotation="0 0 0 -1" unit_id="103344"/>
 		</table>
 		<table>
 			<unit_data continent="world" name="units/payday2/architecture/lcm_b/lcm_b_ext_roof4_plane_8x8m_a" name_id="lcm_b_ext_roof4_plane_8x8m_a_031" position="2000 -3200 400" rotation="0 0 -0.707106 -0.707107" unit_id="103345"/>
@@ -4710,7 +4710,7 @@
 			<unit_data continent="world" name="units/payday2/architecture/lcm_b/lcm_b_ext_roof4_plane_8x8m_a" name_id="lcm_b_ext_roof4_plane_8x8m_a_046" position="-700 -3200 1262" rotation="0 0 -0.707107 -0.707107" unit_id="103360"/>
 		</table>
 		<table>
-			<unit_data continent="world" name="units/payday2/architecture/lcm_b/lcm_b_ext_roof4_plane_8x8m_a" name_id="lcm_b_ext_roof4_plane_8x8m_a_047" position="2800 1600 400" rotation="0 0 1 -4.37114e-008" unit_id="103361"/>
+			<unit_data _prev_pos="2800 1600 401" _prev_rot="0 0 1 -4.37114e-008" continent="world" local_pos="0 0 0" local_rot="0 0 0 1" name="units/payday2/architecture/lcm_b/lcm_b_ext_roof4_plane_8x8m_a" name_id="lcm_b_ext_roof4_plane_8x8m_a_047" position="2800 1600 436" rotation="0 0 1 -4.37114e-008" unit_id="103361"/>
 		</table>
 		<table>
 			<unit_data continent="world" name="units/payday2/architecture/lcm_b/lcm_b_ext_roof4_plane_8x8m_a" name_id="lcm_b_ext_roof4_plane_8x8m_a_048" position="-1500 -3200 1262" rotation="0 0 -0.707107 -0.707107" unit_id="103362"/>
@@ -6904,7 +6904,7 @@
 			<unit_data continent="world" name="units/world/architecture/secret_stash/props/secret_stash_vent_1" name_id="secret_stash_vent_1_013" position="-2500 4400 400" rotation="0 0 0.707107 -0.707107" unit_id="104395"/>
 		</table>
 		<table>
-			<unit_data continent="world" name="units/world/architecture/secret_stash/props/secret_stash_vent_1" name_id="secret_stash_vent_1_014" position="3325 1000 400" rotation="0 0 0.707107 -0.707107" unit_id="104396"/>
+			<unit_data _prev_pos="3325 1000 400" _prev_rot="0 0 0.707107 -0.707107" continent="world" local_pos="0 0 0" local_rot="0 0 0 1" name="units/world/architecture/secret_stash/props/secret_stash_vent_1" name_id="secret_stash_vent_1_014" position="3325 1000 416" rotation="0 0 0.707107 -0.707107" unit_id="104396"/>
 		</table>
 		<table>
 			<unit_data continent="world" name="units/world/architecture/secret_stash/props/secret_stash_vent_1" name_id="secret_stash_vent_1_015" position="4000 1275 400" rotation="0 0 -0.707107 -0.707107" unit_id="104397"/>
@@ -12489,6 +12489,9 @@
 		</table>
 		<table>
 			<unit_data _prev_pos="3153 -2384 1891" _prev_rot="0 0 -0.707106 -0.707107" continent="world" local_pos="0 0 0" local_rot="0 0 0 1" name="units/payday2/architecture/lcm_b/lcm_b_ext_roof4_plane_8x8m_a" name_id="lcm_b_ext_roof4_plane_8x8m_a_002" position="3186 -2384 1891" rotation="0 0 -0.707106 -0.707107" unit_id="100012"/>
+		</table>
+		<table>
+			<unit_data _prev_pos="-1328 3143 840" _prev_rot="0 0 0.707107 -0.707107" continent="world" local_pos="0 0 0" local_rot="0 0 0 1" name="units/world/architecture/hospital/props/rooftop/acvent/acvent04" name_id="acvent04_003" position="-1364 3143 840" rotation="0 0 0.707107 -0.707107" unit_id="100013"/>
 		</table>
 	</statics>
 	<values>

@@ -1,16 +1,22 @@
+Note this heist was edited without consideration for lower difficulty adjustment.
 Current changes:
 Removed needless dev textures. 
 Moved some startup elements to dev area to begin mapping effects.
-Map spawn structure, consider locking player spawn to one position to simplify task. 
+Mapped and relocated spawn and startup structures.
 Set trucks to 8.
 Set loot per truck to 6.
 Set loot to jewelry
-Placed 3 snipers.
+Placed 3 new sniper locations.
 Altered sniper loop to force 4 or 5 max.
-Locked extra cars to low or high.
+Locked extra cars to none to avoid link and block issue.
 Fix truckspawn.
 Fix sniper spawn.
+Fixed additional pair of sniper spawns.
 Loc file.
+Revised new sniper roofs for increased visibility.
+Fixed escape softlock issues.
+Applied starting friendly elements to limit damage on spawn.
+Added bain lines on sniper spawn.
 
 Todo:
 Loc fix -  difficulty asset insertion.

@@ -1,3 +1,4 @@
+Note this heist was edited without consideration for lower difficulty adjustment.
 Current changes:
 New environment. Sun rotated.
 All ladders removed.
