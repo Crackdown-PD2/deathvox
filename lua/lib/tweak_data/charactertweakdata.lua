@@ -1880,10 +1880,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard.surrender = presets.surrender.easy
 	self.deathvox_guard.move_speed = presets.move_speed.very_fast -- tentative.
 	self.deathvox_guard.ecm_vulnerability = 0 -- DV guards ignore feedback. Removing safety net in stealth.
-	
 	self.deathvox_guard.dodge = presets.dodge.deathvox_guard
 	self.deathvox_guard.deathguard = true -- unlikely to be relevant usually, but adds slight safety window during pathing step.
-	self.deathvox_guard.no_arrest = true -- removing the arrest loophole.
 	self.deathvox_guard.factory_weapon_id = {"wpn_deathvox_guard_pistol"}
 	self.deathvox_guard.use_factory = true
 	self.deathvox_guard.HEALTH_INIT = 15
@@ -1892,8 +1890,12 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard.access = "any"
 	table.insert(self._enemy_list, "deathvox_guard")
 	
-	self.deathvox_gman = deep_clone(self.deathvox_guard)
+	self.deathvox_gman = deep_clone(self.deathvox_guard) -- Still needs the weapons for murkies. Need to see if any murky guards use shotguns-but I don't think they do. Will use as base for murk enemy edits.
 	self.deathvox_gman.ignore_ecm_for_pager = true
+	self.deathvox_gman.HEALTH_INIT = 120
+	self.deathvox_gman.headshot_dmg_mul = 1
+	self.deathvox_guard.dodge = presets.dodge.deathvox
+	self.deathvox_gman.no_arrest = true -- removing the arrest loophole only for these guys. Too frustrating otherwise.
 	table.insert(self._enemy_list, "deathvox_gman")
 	
 	self.deathvox_lightar = deep_clone(self.city_swat)
