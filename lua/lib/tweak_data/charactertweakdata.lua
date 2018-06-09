@@ -1894,6 +1894,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_gman.ignore_ecm_for_pager = true
 	self.deathvox_gman.HEALTH_INIT = 120
 	self.deathvox_gman.headshot_dmg_mul = 1
+	self.deathvox_gman.ignore_headshot = true -- the only "gimmick" of gmen, like other murkies, is no headshot mult and decently high health.
 	self.deathvox_guard.dodge = presets.dodge.deathvox
 	self.deathvox_gman.no_arrest = true -- removing the arrest loophole only for these guys. Too frustrating otherwise.
 	table.insert(self._enemy_list, "deathvox_gman")
