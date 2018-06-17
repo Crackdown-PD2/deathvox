@@ -1,4 +1,7 @@
 <table name="arm_und">
+	<AddFiles directory="assets">
+	<texture load="true" path="guis/textures/crackdown"/>
+	</AddFiles>
 	<AssetUpdates id="-1" provider="modworkshop" use_local_dir="true" version="1"/>
 	<Localization default="english.txt" directory="loc"/>
 	<level ai_group_type="america" briefing_dialog="Play_pln_at1_brf_05" cube="cube_apply_heist_bank" id="arm_und_CD" intro_event="Play_pln_at1_intro_06" max_bags="22" music="heist">
@@ -46,7 +49,7 @@
 			</mod>
 		</script_data_mods>
 	</level>
-	<narrative briefing_event="pln_at1_cbf_01" contact="bain" dlc="armored_transport" id="arm_und" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_underpass" region="street" spawn_chance_multiplier="0.5">
+	<narrative briefing_event="pln_at1_cbf_01" contact="bain" icon="guis/textures/crackdown" dlc="armored_transport" id="arm_und" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_underpass" region="street" spawn_chance_multiplier="0.5">
 		<chain>
 			<table dlc="armored_transport" level_id="arm_und_CD" type="d" type_id="heist_type_assault">
 				<mission_filter>

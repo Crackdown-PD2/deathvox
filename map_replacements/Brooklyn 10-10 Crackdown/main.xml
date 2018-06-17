@@ -1,6 +1,9 @@
 <table name="spa">
 	<Localization default="english.txt" directory="loc"/>
-	<narrative briefing_dialog="Play_pln_bb1_brf_01" briefing_event="pln_spa_cbf_01" contact="the_continental" cube="cube_apply_heist_bank" dlc="spa" ghost_bonus="0.15" id="spa" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_brooklyn1010" max_bags="28" region="street">
+	<AddFiles directory="assets">
+		<texture load="true" path="guis/textures/crackdown"/>
+	</AddFiles>
+	<narrative briefing_dialog="Play_pln_bb1_brf_01" briefing_event="pln_spa_cbf_01" contact="the_continental" icon="guis/textures/crackdown" cube="cube_apply_heist_bank" dlc="spa" ghost_bonus="0.15" id="spa" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_brooklyn1010" max_bags="28" region="street">
 		<chain>
 			<table dlc="spa" level_id="spa_CD" type="d" type_id="heist_type_assault"/>
 		</chain>
