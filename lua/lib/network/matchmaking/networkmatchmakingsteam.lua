@@ -1,1 +1,1 @@
-NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY = "crackdown-5-15-18"
+NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY = "crackdown-release-1"
