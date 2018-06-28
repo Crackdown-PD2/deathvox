@@ -1,5 +1,5 @@
 <unit type="wpn" slot="1" >
-	<object file="units/pd2_dlc_gage_assault/weapons/wpn_fps_gre_m79/wpn_fps_gre_m79" />
+	<object file="units/pd2_dlc_bbq/weapons/wpn_fps_gre_m32/wpn_fps_gre_m32" />
 	<dependencies>
 		<depends_on bnk="soundbanks/weapon_gl40"/>
 		<depends_on unit="units/pd2_dlc_gage_assault/weapons/wpn_launcher_frag_grenade/wpn_launcher_frag_grenade"/>

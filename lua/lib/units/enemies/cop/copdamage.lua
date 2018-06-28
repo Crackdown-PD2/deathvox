@@ -169,6 +169,9 @@ function CopDamage:damage_explosion(attack_data)
 			variant = attack_data.variant,
 			head_shot = head
 		}
+		if data.name == "deathvox_grenadier" then
+			self._unit:damage():run_sequence_simple("grenadier_glass_break")
+		end
 
 		managers.statistics:killed_by_anyone(data)
 
@@ -391,6 +394,12 @@ function CopDamage:damage_bullet(attack_data)
 			variant = attack_data.variant
 		}
 
+		log("is headshot: " .. tostring(data.head_shot))
+		log("tweak table: " .. tostring(data.name))
+		if data.head_shot and data.name == "deathvox_grenadier" then
+			self._unit:damage():run_sequence_simple("grenadier_glass_break")
+		end
+		
 		if managers.groupai:state():all_criminals()[attack_data.attacker_unit:key()] then
 			managers.statistics:killed_by_anyone(data)
 		end

@@ -12,6 +12,12 @@
 		<file :name="shared_textures/bulldozer_visor_il.texture" force="false"/>
 		<file :name="shared_textures/bulldozer_df.texture" force="false"/>
 		
+        <file :name="shared_textures/bulldozer_nm.texture" force="false"/>
+        <file :name="shared_textures/medicdozer_visor_il.texture" force="false"/>
+        <file :name="shared_textures/material_body_df.texture" force="false"/>
+        <file :name="shared_textures/material_body_nm.texture" force="false"/>
+        <file :name="shared_textures/glass_op.texture" force="false"/>
+		
 		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.material_config" force="false"/>
 		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.object" force="false"/>
 		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.cooked_physics" force="false"/>
@@ -235,6 +241,7 @@
 		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.material_config" force="false"/>
 		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier_contour.material_config" force="false"/>
 		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier_husk.unit" force="false" load="true"/>
+		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.sequence_manager" force="false"/>
 	</group>
 
 	<!-- All weapons -->
