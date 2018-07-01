@@ -1883,7 +1883,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 	self.deathvox_guard.dodge = presets.dodge.deathvox_guard
 	self.deathvox_guard.deathguard = true -- unlikely to be relevant usually, but adds slight safety window during pathing step.
-	self.deathvox_guard.no_arrest = true -- removing the arrest loophole.
+	self.deathvox_guard.no_arrest = false -- Trust me on this, it's miserable to stealth right now without it. We'll re
 	self.deathvox_guard.factory_weapon_id = {"wpn_deathvox_guard_pistol"}
 	self.deathvox_guard.use_factory = true
 	self.deathvox_guard.HEALTH_INIT = 15
@@ -1894,6 +1894,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 	self.deathvox_gman = deep_clone(self.deathvox_guard)
 	self.deathvox_gman.ignore_ecm_for_pager = true
+	self.deathvox_guard.no_arrest = true -- removing arrest for gmen specifically, instead.
 	table.insert(self._enemy_list, "deathvox_gman")
 	
 	self.deathvox_lightar = deep_clone(self.city_swat)
@@ -2005,7 +2006,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.detection = presets.detection.normal
 	self.deathvox_shield.ignore_medic_revive_animation = true  --no revive animation. In base.
 	self.deathvox_shield.damage.hurt_severity = presets.hurt_severities.only_explosion_hurts
-	self.deathvox_shield.suppression = presets.suppression.no_supress -- I think this is in resto, if not it now is.
+	self.deathvox_shield.suppression = nil -- presets.suppression.no_supress 
 	self.deathvox_shield.surrender = nil
 	self.deathvox_shield.move_speed = presets.move_speed.very_fast -- same as base.
 	self.deathvox_shield.ecm_vulnerability = .9 -- same as base.
@@ -2029,7 +2030,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic.detection = presets.detection.normal
 	self.deathvox_medic.ignore_medic_revive_animation = true  --no revive animation.
 	self.deathvox_medic.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- added to make code consistent.
-	self.deathvox_medic.suppression = presets.suppression.no_supress -- in base.
+	self.deathvox_medic.suppression = nil -- presets.suppression.no_supress 
 	self.deathvox_medic.surrender = nil -- correcting surrender bug.
 	self.deathvox_medic.move_speed = presets.move_speed.very_fast
 	self.deathvox_medic.surrender_break_time = {7, 12} 
@@ -2059,7 +2060,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.ignore_medic_revive_animation = true  --no revive animation.
 	self.deathvox_taser.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire
 	self.deathvox_taser.damage.hurt_severity.tase = false -- if this works, great, horrible things will arise.
-	self.deathvox_taser.suppression = presets.suppression.no_supress -- consistent form added.
+	self.deathvox_taser.suppression = nil -- presets.suppression.no_supress 
 	self.deathvox_taser.surrender = nil -- correcting surrender bug.
 	self.deathvox_taser.move_speed = presets.move_speed.fast
 	self.deathvox_taser.surrender_break_time = {7, 12} 
@@ -2108,7 +2109,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper.tags = {"sniper"} -- just making sure tag applies.
 	self.deathvox_sniper.detection = presets.detection.normal
 	self.deathvox_sniper.ignore_medic_revive_animation = false  -- revive animation.
-	self.deathvox_sniper.suppression = presets.suppression.no_supress -- this actually makes snipers way less annoying!
+	self.deathvox_sniper.suppression = nil -- this actually makes snipers way less annoying!
 	self.deathvox_sniper.surrender = nil -- correcting surrender bug.
 	self.deathvox_sniper.move_speed = presets.move_speed.normal -- same as base.
 	self.deathvox_sniper.surrender_break_time = {4, 6} 
@@ -2138,7 +2139,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.detection = presets.detection.normal
 	self.deathvox_tank.ignore_medic_revive_animation = false  -- revive animation.
 	self.deathvox_tank.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase -- new with final 2017 pass. Probably not a change, needs to stay.
-	self.deathvox_tank.suppression = presets.suppression.no_supress
+	self.deathvox_tank.suppression = nil
 	self.deathvox_tank.surrender = nil
 	self.deathvox_tank.surrender_break_time = {4, 6}
 	self.deathvox_tank.ecm_vulnerability = 0.85
@@ -2159,7 +2160,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guarddozer.tags = {"tank"} -- just making sure tag applies.
 	self.deathvox_guarddozer.ignore_medic_revive_animation = false  -- revive animation.
 	self.deathvox_guarddozer.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase -- new with final 2017 pass. Probably not a change, needs to stay.
-	self.deathvox_guarddozer.suppression = presets.suppression.no_supress
+	self.deathvox_guarddozer.suppression = nil
 	self.deathvox_guarddozer.surrender = nil
 	self.deathvox_guarddozer.surrender_break_time = {4, 6}
 	self.deathvox_guarddozer.ecm_vulnerability = 0.85
