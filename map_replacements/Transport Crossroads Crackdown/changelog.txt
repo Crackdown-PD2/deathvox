@@ -1,0 +1,26 @@
+Current changes:
+Removed needless dev textures. 
+Moved some startup elements to dev area to begin mapping effects.
+Mapped and relocated spawn and startup structures.
+Set trucks to 8.
+Set loot per truck to 6.
+Set loot to jewelry
+Placed 3 new sniper locations.
+Altered sniper loop to force 4 or 5 max.
+Locked extra cars to none to avoid link and block issue.
+Fix truckspawn.
+Fix sniper spawn.
+Fixed additional pair of sniper spawns.
+Loc file.
+Revised new sniper roofs for increased visibility.
+Fixed escape softlock issues.
+Applied starting friendly elements to limit damage on spawn.
+Added bain lines on sniper spawn.
+
+Todo:
+
+
+Notes:
+Note this heist was edited without consideration for lower difficulty adjustment.
+
+Note that immediately prior to launch, an irregularity in asset extraction caused a crash on load. We had to remove several props (all vent models from roofs) to make the map run. Some of these vents serve as cover; We have recorded their locations and will restore them in a later patch if it becomes possible and if time permits.

@@ -2,7 +2,7 @@ Note this heist was edited without consideration for lower difficulty adjustment
 Current changes:
 Lock loot to gold or cash.
 Lock required loot to 10. Doublechecked, validated.
-Adjust number of trucks to 6. Requires testing.
+Adjust number of trucks to 6.
 Environment- intensify fog close range. Set to 3003 from 4004. Environment packed.
 Removed links to completely undeveloped trucks to avoid confusion.
 Locked escort to FBI.

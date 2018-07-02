@@ -1,0 +1,19 @@
+Current changes:
+set random a, b and c to 3
+set random cloakers to 4
+set random snipers (100389) to 3
+implemented hatches, flash
+Escape task adjusted to 10 seconds from 5
+Halved loop delay on boat and chopper spawns
+loc
+Working turrets.
+First turret spawns on initial ambush, 2 and 3 spawn on gangway task.
+First turret spawn delayed direct chain after van departure by 5 seconds.
+
+Todo:
+Prep for Winters reintroduction.
+
+Notes:
+Note this heist was edited without consideration for lower difficulty adjustment.
+
+Note that immediately prior to launch, an irregularity in asset extraction caused a crash on load. We had to remove a debris decal from the art1 continent; We have recorded its locations and will restore it in a later patch if it becomes possible and if time permits.
