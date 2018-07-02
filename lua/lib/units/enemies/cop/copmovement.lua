@@ -25,7 +25,8 @@ function CopMovement:init(unit)
 	CopMovement._action_variants.deathvox_shield.walk = ShieldCopActionWalk
 	CopMovement._action_variants.deathvox_heavyar = security_variant
 	CopMovement._action_variants.deathvox_lightar = security_variant
-	CopMovement._action_variants.deathvox_medic = security_variant
+	CopMovement._action_variants.deathvox_medic = clone(security_variant)
+	CopMovement._action_variants.deathvox_medic.heal = MedicActionHeal
 	CopMovement._action_variants.deathvox_guard = security_variant
 	CopMovement._action_variants.deathvox_gman = security_variant
 	CopMovement._action_variants.deathvox_lightshot = security_variant
@@ -46,6 +47,7 @@ function CopMovement:init(unit)
 	CopMovement._action_variants.deathvox_lmgdozer.walk = TankCopActionWalk
 	CopMovement._action_variants.deathvox_medicdozer = clone(security_variant)
 	CopMovement._action_variants.deathvox_medicdozer.walk = TankCopActionWalk
+	CopMovement._action_variants.deathvox_medicdozer.heal = MedicActionHeal
 	old_init(self, unit)
 end
 
