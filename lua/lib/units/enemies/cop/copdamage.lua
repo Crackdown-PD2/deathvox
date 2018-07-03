@@ -335,6 +335,7 @@ function CopDamage:damage_bullet(attack_data)
 
 	damage = self:_apply_damage_reduction(damage)
 	attack_data.raw_damage = damage
+	attack_data.headshot = head
 	local damage_percent = math.ceil(math.clamp(damage / self._HEALTH_INIT_PRECENT, 1, self._HEALTH_GRANULARITY))
 	damage = damage_percent * self._HEALTH_INIT_PRECENT
 	damage, damage_percent = self:_apply_min_health_limit(damage, damage_percent)
@@ -480,5 +481,7 @@ function CopDamage:damage_bullet(attack_data)
 	self:_send_bullet_attack_result(attack_data, attacker, damage_percent, body_index, hit_offset_height, variant)
 	self:_on_damage_received(attack_data)
 
+	result.attack_data = attack_data
+	
 	return result
 end
