@@ -1106,6 +1106,29 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 			500,
 			500
 		}
+		self.besiege.regroup.duration = {
+			30,
+			30,
+			30
+		}
+		self.besiege.assault.hostage_hesitation_delay = {
+			30,
+			30,
+			30
+		}
+		self.besiege.assault.delay = {
+			30,
+			20,
+			10
+		}
+		self.besiege.assault.sustain_duration_balance_mul = {
+			1,
+			1,
+			1,
+			1
+		}
+		log("End task data setup")
+		self.besiege.assault.fade_duration = 15
 		if Global.game_settings and Global.game_settings.single_player then
 			self.besiege.assault.groups = {
 				gorgon = { 0.05,0.05,0.05  },
