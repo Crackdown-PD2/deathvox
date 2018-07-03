@@ -28,7 +28,7 @@ function CopInventory:add_unit_by_name(new_unit_name, equip)
 	managers.mutators:modify_value("CopInventory:add_unit_by_name", self)
 	self:_chk_spawn_shield(new_unit)
 
-	log("CRACKDOWN: tweak: " .. self._unit:base()._tweak_table)
+	
 	local setup_data = {}
 	if Network:is_server() then
 		setup_data = {
@@ -205,7 +205,7 @@ function CopInventory:add_unit_by_factory_blueprint(factory_name, equip, instant
 	new_unit:base():set_cosmetics_data(cosmetics)
 	new_unit:base():assemble_from_blueprint(factory_name, blueprint)
 	new_unit:base():check_npc()
-	log("CRACKDOWN: tweak: " .. self._unit:base()._tweak_table)
+	
 	local setup_data = {
 		user_unit = nil,
 		ignore_units = {},

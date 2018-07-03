@@ -172,7 +172,7 @@ function GroupAIStateBesiege:_upd_assault_task()
 
 	if task_data.phase == "anticipation" then
 		if task_spawn_allowance <= 0 then
-			log("spawn_pool empty: -----------FADE-------------")
+			
 
 			task_data.phase = "fade"
 			task_data.phase_end_t = t + self._tweak_data.assault.fade_duration
@@ -182,7 +182,7 @@ function GroupAIStateBesiege:_upd_assault_task()
 			managers.mission:call_global_event("start_assault")
 			managers.hud:start_assault(self._assault_number)
 			self:_set_rescue_state(false)
-			log("-----------BUILD-------------")
+			
 			task_data.phase = "build"
 			task_data.phase_end_t = self._t + self._tweak_data.assault.build_duration
 			task_data.is_hesitating = nil
@@ -215,14 +215,14 @@ function GroupAIStateBesiege:_upd_assault_task()
 		end
 	elseif task_data.phase == "build" then
 		if task_spawn_allowance <= 0 then
-			log("-----------FADE-------------")
+			
 			task_data.phase = "fade"
 			task_data.phase_end_t = t + self._tweak_data.assault.fade_duration
 		elseif task_data.phase_end_t < t then
 			local sustain_duration = math.lerp(self:_get_difficulty_dependent_value(self._tweak_data.assault.sustain_duration_min), self:_get_difficulty_dependent_value(self._tweak_data.assault.sustain_duration_max), math.random()) * self:_get_balancing_multiplier(self._tweak_data.assault.sustain_duration_balance_mul)
 
 			managers.crime_spree:run_func("OnEnterSustainPhase", sustain_duration)
-			log("-----------SUSTAIN-------------")
+			
 			task_data.phase = "sustain"
 			task_data.phase_end_t = t + sustain_duration
 		end
@@ -231,11 +231,11 @@ function GroupAIStateBesiege:_upd_assault_task()
 		task_spawn_allowance = managers.crime_spree:modify_value("GroupAIStateBesiege:SustainSpawnAllowance", task_spawn_allowance, force_pool)
 
 		if task_spawn_allowance <= 0 then
-			log("-----------FADE-------------")
+			
 			task_data.phase = "fade"
 			task_data.phase_end_t = t + self._tweak_data.assault.fade_duration
 		elseif end_t < t and not self._hunt_mode then
-			log("-----------FADE-------------")
+			
 			task_data.phase = "fade"
 			task_data.phase_end_t = t + self._tweak_data.assault.fade_duration
 		end
@@ -248,7 +248,7 @@ function GroupAIStateBesiege:_upd_assault_task()
 
 			if enemies_left < min_enemies_left or task_data.phase_end_t + 350 < t then
 				if task_data.phase_end_t - 8 < t and not task_data.said_retreat then
-					log("-----------ANNOUNCING RETREAT-------------")
+					
 					task_data.said_retreat = true
 
 					self:_police_announce_retreat()
@@ -259,7 +259,7 @@ function GroupAIStateBesiege:_upd_assault_task()
 			end
 
 			if task_data.force_end or end_assault then
-				log("assault task clear")
+				
 
 				task_data.active = nil
 				task_data.phase = nil
@@ -371,7 +371,7 @@ function GroupAIStateBesiege:_upd_regroup_task()
 		self:_assign_assault_groups_to_retire()
 
 		if regroup_task.end_t < self._t then
-			log("ending regroup")
+			
 			self:_end_regroup_task()
 		end
 	end

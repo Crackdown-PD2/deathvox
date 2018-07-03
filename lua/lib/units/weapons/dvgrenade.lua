@@ -1,6 +1,6 @@
 DVGrenade = DVGrenade or blt_class(FragGrenade)
 
-log("FUCK ADSFGSDFGHWSHGRFWSRJKHHJG")
+
 function DVGrenade:create_sweep_data()
 	self._sweep_data = {slot_mask = self._slot_mask}
 	self._sweep_data.slot_mask = managers.mutators:modify_value("ProjectileBase:create_sweep_data:slot_mask", managers.slot:get_mask("players"))

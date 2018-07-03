@@ -179,7 +179,7 @@ function DeathVoxGrenadierWeaponBase:_fire_raycast(user_unit, from_pos, directio
 			mvector3.set(mvec_from_pos, from_pos)
 			mvector3.set(mvec_direction, direction)
 			mvector3.multiply(mvec_direction, 100)
-			log("multiplied by 100")
+			
 			mvector3.add(mvec_from_pos, mvec_direction)
 			if not self._client_authoritative then
 				unit = ProjectileBase.throw_projectile("dv_grenadier_grenade", mvec_from_pos, direction)

@@ -1127,7 +1127,7 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 			1,
 			1
 		}
-		log("End task data setup")
+		
 		self.besiege.assault.fade_duration = 15
 		if Global.game_settings and Global.game_settings.single_player then
 			self.besiege.assault.groups = {

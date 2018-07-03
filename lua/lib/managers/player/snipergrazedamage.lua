@@ -26,7 +26,7 @@ function SniperGrazeDamage:on_weapon_fired(weapon_unit, result)
 			local result = hit.damage_result
 			local attack_data = result.attack_data
 			if not attack_data then
-				log("graze didn't work, no attack data")
+				
 				return
 			end
 			local headshot_kill = attack_data.headshot and result.type == "death" or result.type == "healed"

@@ -395,8 +395,8 @@ function CopDamage:damage_bullet(attack_data)
 			variant = attack_data.variant
 		}
 
-		log("is headshot: " .. tostring(data.head_shot))
-		log("tweak table: " .. tostring(data.name))
+		
+		
 		if data.head_shot and data.name == "deathvox_grenadier" then
 			self._unit:damage():run_sequence_simple("grenadier_glass_break")
 		end

@@ -128,7 +128,7 @@ function CopLogicTravel.enter(data, new_logic_name, enter_params)
 	if not data.team then
 		data.unit:movement():set_team(managers.groupai:state()._teams["law1"])
 		if data.team then
-			log("Unit spawned without team set, this has been corrected and defaulted to law1.")
+			
 		end
 	end
 	my_data.path_safely = data.team.foes[tweak_data.levels:get_default_team_ID("player")]

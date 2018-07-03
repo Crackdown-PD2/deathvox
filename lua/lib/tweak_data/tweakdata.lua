@@ -1,4 +1,4 @@
-log("FUCK THIS GAME SO HARD")
+
 tweak_data.projectiles.dv_grenadier_grenade = {
 	damage = 0,
 	launch_speed = 1250,

@@ -2267,11 +2267,11 @@ end
 local deathvox_mod_instance = ModInstance
 function CharacterTweakData:_set_sm_wish()
 
-	log("UNLOADING_ASSETS")
+	
 	deathvox_mod_instance:GetSuperMod():GetAssetLoader():FreeAssetGroup("cops")
-	log("LOADING_ASSETS")
+	
 	deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("cops")
-	log("DONE LOADING ASSETS")
+	
 	if SystemInfo:platform() == Idstring("PS3") then
 		self:_multiply_all_hp(1, 1)
 	else
@@ -2686,7 +2686,7 @@ function CharacterTweakData:_set_characters_weapon_preset(preset)
 		"deathvox_grenadier"
 	}
 	for _, name in ipairs(all_units) do
-		log(name)
+		
 		self[name].weapon = self.presets.weapon[preset]
 	end
 end

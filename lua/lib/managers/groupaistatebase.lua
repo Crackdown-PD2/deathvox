@@ -74,9 +74,9 @@ function GroupAIStateBase:on_enemy_unregistered(unit)
 
 	local unit_type = unit:base()._tweak_table
 	local is_special = unit:movement()._tweak_data.is_special_unit
-	log("unregistering enemy: " .. unit_type)
+	
 	if is_special then
-		log("is special: " .. is_special)
+		
 	end
 	
 	if self._special_unit_types[unit_type] or is_special then
@@ -153,9 +153,9 @@ function GroupAIStateBase:on_enemy_registered(unit)
 
 	local unit_type = unit:base()._tweak_table
 	local is_special = unit:movement()._tweak_data.is_special_unit
-	log("registering enemy: " .. unit_type)
+	
 	if is_special then
-		log("is special: " .. is_special)
+		
 	end
 	if self._special_unit_types[unit_type] or is_special then
 		if is_special then
