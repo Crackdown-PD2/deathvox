@@ -42,9 +42,11 @@ local sm_wish = {
 --snipers. commenting out in case we get custom unit appearance.
 --		["units/payday2/characters/ene_sniper_1/ene_sniper_1"] = 
 --		["units/payday2/characters/ene_sniper_2/ene_sniper_2"] = 
---taser.
+--tasers.
 		["units/payday2/characters/ene_tazer_1/ene_tazer_1"] = "units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser",
---bulldozers.
+		["units/pd2_dlc_gitgud/characters/ene_zeal_tazer/ene_zeal_tazer"] = "units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser",
+
+--bulldozers.		
 		["units/payday2/characters/ene_bulldozer_1/ene_bulldozer_1"] = "units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer",
 		["units/payday2/characters/ene_bulldozer_2/ene_bulldozer_2"] = "units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer",
 		["units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"] = "units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer",
