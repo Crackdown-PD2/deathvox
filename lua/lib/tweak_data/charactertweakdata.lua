@@ -2174,7 +2174,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guarddozer.damage.explosion_damage_mul = 0.5  -- new with final 2017 pass. Requires scrutiny.
 	self.deathvox_guarddozer.is_special_unit = "tank"
 	self.deathvox_guarddozer.no_retreat = false
-	self.deathvox_guarddozer.access = "any"
+	self.deathvox_guarddozer.access = "tank"
 	self.deathvox_guarddozer.no_arrest = false
 	self.deathvox_guarddozer.calls_in = true
 	self.deathvox_guarddozer.detection = presets.detection.guard
@@ -2189,13 +2189,13 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_blackdozer = deep_clone(self.deathvox_tank)
 	self.deathvox_blackdozer.use_factory = true -- Use a factory weapon
 	self.deathvox_blackdozer.factory_weapon_id = {"wpn_deathvox_blackdozer"} 
-	self.deathvox_blackdozer.access = "walk"
+	self.deathvox_blackdozer.access = "tank"
 	table.insert(self._enemy_list, "deathvox_blackdozer")
 
 	self.deathvox_lmgdozer = deep_clone(self.deathvox_tank)
 	self.deathvox_lmgdozer.use_factory = true -- Use a factory weapon
 	self.deathvox_lmgdozer.factory_weapon_id = {"wpn_deathvox_lmgdozer"} 
-	self.deathvox_lmgdozer.access = "walk"
+	self.deathvox_lmgdozer.access = "tank"
 	table.insert(self._enemy_list, "deathvox_lmgdozer")
 	
 	self.deathvox_medicdozer = deep_clone(self.deathvox_tank)
@@ -2204,7 +2204,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medicdozer.factory_weapon_id = {"wpn_deathvox_medicdozer_smg"} 
 	self.deathvox_medicdozer.dv_medic_heal = true -- don't touch, makes him use the death vox healing
 	self.deathvox_medicdozer.custom_voicework = "medicdozer"
-	self.deathvox_medicdozer.access = "walk"
+	self.deathvox_medicdozer.access = "tank"
 	self.deathvox_medicdozer.disable_medic_heal_voice = true
 	table.insert(self._enemy_list, "deathvox_medicdozer")
 
