@@ -2,7 +2,7 @@
 <assets base_path="assets/" target="scripted" load_group="cops">
 
 	<!-- All characters -->
-	<group name="units/pd2_mod_gageammo/characters/">
+	<group name="units/pd2_mod_gageammo/characters/" from_type="custom_xml" to_type="binary">
 	
 		<file :name="shared_textures/swat_heavy_nm.texture"/>
 		<file :name="shared_textures/ene_zeal_swat_df.texture"/>
@@ -29,7 +29,7 @@
 		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.cooked_physics"/>
 		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.model"/>
 		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.unit"/>
-		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.sequence_manager"/>
+		<xml :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.sequence_manager"/>
 		<file :name="ene_acc_shield_new_swat/shield_il.texture"/>
 		<file :name="ene_acc_shield_new_swat/shield_df.texture"/>
 		<file :name="ene_acc_shield_new_swat/shield_nm.texture"/>
@@ -70,7 +70,7 @@
 		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.object"/>
 		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.cooked_physics"/>
 		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.model"/>
-		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.sequence_manager"/>
+		<xml :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.sequence_manager"/>
 		<!--DV Heavy Assault Rifle-->
 		<file :name="ene_deathvox_heavyar/swat_heavy_df.texture"/>
 		<file :name="ene_deathvox_heavyar/swat_heavy_head_df.texture"/>
@@ -145,7 +145,7 @@
 		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.object"/>
 		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.cooked_physics"/>
 		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.model"/>
-		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.sequence_manager"/>
+		<xml :name="ene_deathvox_greendozer/ene_deathvox_greendozer.sequence_manager"/>
 
 		<!--DV Heavy Shotgun-->
 		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.unit"/>
@@ -157,7 +157,7 @@
 		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.object"/>
 		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.cooked_physics"/>
 		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.model"/>
-		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.sequence_manager"/>
+		<xml :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.sequence_manager"/>
 
 
 		<!--DV Heavy Assault Rifle-->
@@ -170,7 +170,7 @@
 		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.object"/>
 		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.cooked_physics"/>
 		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.model"/>
-		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.sequence_manager"/>
+		<xml :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.sequence_manager"/>
 
 		<!--DV Light Assault Rifle-->
 		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.unit"/>
@@ -182,7 +182,7 @@
 		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.object"/>
 		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.cooked_physics"/>
 		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.model"/>
-		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.sequence_manager"/>
+		<xml :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.sequence_manager"/>
 
 		<!--DV Taser-->
 		<file :name="ene_deathvox_taser/ene_deathvox_taser.unit"/>
@@ -208,7 +208,7 @@
 		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker_contour.material_config"/>
 		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.material_config"/>
 		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.object"/>
-		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.sequence_manager"/>
+		<xml :name="ene_deathvox_cloaker/ene_deathvox_cloaker.sequence_manager"/>
 		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.cooked_physics"/>
 		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.model"/>
 
@@ -241,7 +241,7 @@
 		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.material_config"/>
 		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier_contour.material_config"/>
 		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier_husk.unit"/>
-		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.sequence_manager"/>
+		<xml :name="ene_deathvox_grenadier/ene_deathvox_grenadier.sequence_manager"/>
 	</group>
 
 	<!-- All weapons -->
