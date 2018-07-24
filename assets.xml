@@ -4,266 +4,266 @@
 	<!-- All characters -->
 	<group name="units/pd2_mod_gageammo/characters/">
 	
-		<file :name="shared_textures/swat_heavy_nm.texture" force="false"/>
-		<file :name="shared_textures/ene_zeal_swat_df.texture" force="false"/>
-		<file :name="shared_textures/ene_zeal_swat_head_df.texture" force="false"/>
-		<file :name="shared_textures/ene_zeal_swat_nm.texture" force="false"/>
-		<file :name="shared_textures/ene_zeal_swat_head_nm.texture" force="false"/>
-		<file :name="shared_textures/bulldozer_visor_il.texture" force="false"/>
-		<file :name="shared_textures/bulldozer_df.texture" force="false"/>
+		<file :name="shared_textures/swat_heavy_nm.texture"/>
+		<file :name="shared_textures/ene_zeal_swat_df.texture"/>
+		<file :name="shared_textures/ene_zeal_swat_head_df.texture"/>
+		<file :name="shared_textures/ene_zeal_swat_nm.texture"/>
+		<file :name="shared_textures/ene_zeal_swat_head_nm.texture"/>
+		<file :name="shared_textures/bulldozer_visor_il.texture"/>
+		<file :name="shared_textures/bulldozer_df.texture"/>
 		
-        <file :name="shared_textures/bulldozer_nm.texture" force="false"/>
-        <file :name="shared_textures/medicdozer_visor_il.texture" force="false"/>
-        <file :name="shared_textures/material_body_df.texture" force="false"/>
-        <file :name="shared_textures/material_body_nm.texture" force="false"/>
-        <file :name="shared_textures/glass_op.texture" force="false"/>
+        <file :name="shared_textures/bulldozer_nm.texture"/>
+        <file :name="shared_textures/medicdozer_visor_il.texture"/>
+        <file :name="shared_textures/material_body_df.texture"/>
+        <file :name="shared_textures/material_body_nm.texture"/>
+        <file :name="shared_textures/glass_op.texture"/>
 		
-		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.material_config" force="false"/>
-		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.object" force="false"/>
-		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.cooked_physics" force="false"/>
-		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.model" force="false"/>
-		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.unit" load="true"/>
+		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.material_config"/>
+		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.object"/>
+		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.cooked_physics"/>
+		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.model"/>
+		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.unit"/>
 		
-		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.material_config" force="false"/>
-		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.object" force="false"/>
-		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.cooked_physics" force="false"/>
-		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.model" force="false"/>
-		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.unit" load="true"/>
-		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.sequence_manager" load="true"/>
-		<file :name="ene_acc_shield_new_swat/shield_il.texture" force="false"/>
-		<file :name="ene_acc_shield_new_swat/shield_df.texture" force="false"/>
-		<file :name="ene_acc_shield_new_swat/shield_nm.texture" force="false"/>
+		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.material_config"/>
+		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.object"/>
+		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.cooked_physics"/>
+		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.model"/>
+		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.unit"/>
+		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.sequence_manager"/>
+		<file :name="ene_acc_shield_new_swat/shield_il.texture"/>
+		<file :name="ene_acc_shield_new_swat/shield_df.texture"/>
+		<file :name="ene_acc_shield_new_swat/shield_nm.texture"/>
 		
 		<!--DV Guard-->
-		<file :name="ene_deathvox_guard/ene_deathvox_guard.unit" load="true"/>
-		<file :name="ene_deathvox_guard/ene_deathvox_guard_husk.unit" load="true"/>
+		<file :name="ene_deathvox_guard/ene_deathvox_guard.unit"/>
+		<file :name="ene_deathvox_guard/ene_deathvox_guard_husk.unit"/>
 
-		<file :name="shared_textures/gman_df.texture" force="false"/>
-		<file :name="shared_textures/gman_nm.texture" force="false"/>
-		<file :name="shared_textures/gman_head_df.texture" force="false"/>
-		<file :name="shared_textures/gman_head_nm.texture" force="false"/>
+		<file :name="shared_textures/gman_df.texture"/>
+		<file :name="shared_textures/gman_nm.texture"/>
+		<file :name="shared_textures/gman_head_df.texture"/>
+		<file :name="shared_textures/gman_head_nm.texture"/>
 		
 		<!--DV G-Men-->
-		<file :name="ene_deathvox_gman/ene_deathvox_gman_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_gman/ene_deathvox_gman.material_config" force="false"/>
-		<file :name="ene_deathvox_gman/ene_deathvox_gman.object" force="false"/>
-		<file :name="ene_deathvox_gman/ene_deathvox_gman.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_gman/ene_deathvox_gman.model" force="false"/>
-		<file :name="ene_deathvox_gman/ene_deathvox_gman.unit" load="true"/>
-		<file :name="ene_deathvox_gman/ene_deathvox_gman_husk.unit" load="true"/>
+		<file :name="ene_deathvox_gman/ene_deathvox_gman_contour.material_config"/>
+		<file :name="ene_deathvox_gman/ene_deathvox_gman.material_config"/>
+		<file :name="ene_deathvox_gman/ene_deathvox_gman.object"/>
+		<file :name="ene_deathvox_gman/ene_deathvox_gman.cooked_physics"/>
+		<file :name="ene_deathvox_gman/ene_deathvox_gman.model"/>
+		<file :name="ene_deathvox_gman/ene_deathvox_gman.unit"/>
+		<file :name="ene_deathvox_gman/ene_deathvox_gman_husk.unit"/>
 		
-		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight.material_config" force="false"/>
-		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight.object" force="false"/>
-		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight.model" force="false"/>
-		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight.unit" load="true"/>
-		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight_husk.unit" load="true"/>
+		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight_contour.material_config"/>
+		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight.material_config"/>
+		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight.object"/>
+		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight.cooked_physics"/>
+		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight.model"/>
+		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight.unit"/>
+		<file :name="ene_deathvox_gman_flashlight/ene_deathvox_gman_flashlight_husk.unit"/>
 		
 		<!--DV Guard Dozer-->
-		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.unit" load="true"/>
-		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer_husk.unit" load="true"/>
-		<file :name="ene_deathvox_guarddozer/bulldozer_nm.texture" force="false"/>
-		<file :name="ene_deathvox_guarddozer/bulldozer_df.texture" force="false"/>
-		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.material_config" force="false"/>
-		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.object" force="false"/>
-		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.model" force="false"/>
-		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.sequence_manager" force="false"/>
+		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.unit"/>
+		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer_husk.unit"/>
+		<file :name="ene_deathvox_guarddozer/bulldozer_nm.texture"/>
+		<file :name="ene_deathvox_guarddozer/bulldozer_df.texture"/>
+		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer_contour.material_config"/>
+		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.material_config"/>
+		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.object"/>
+		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.cooked_physics"/>
+		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.model"/>
+		<file :name="ene_deathvox_guarddozer/ene_deathvox_guarddozer.sequence_manager"/>
 		<!--DV Heavy Assault Rifle-->
-		<file :name="ene_deathvox_heavyar/swat_heavy_df.texture" force="false"/>
-		<file :name="ene_deathvox_heavyar/swat_heavy_head_df.texture" force="false"/>
-		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar.material_config" force="false"/>
-		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar.object" force="false"/>
-		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar.model" force="false"/>
-		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar.unit" load="true"/>
-		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar_husk.unit" load="true"/>
+		<file :name="ene_deathvox_heavyar/swat_heavy_df.texture"/>
+		<file :name="ene_deathvox_heavyar/swat_heavy_head_df.texture"/>
+		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar_contour.material_config"/>
+		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar.material_config"/>
+		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar.object"/>
+		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar.cooked_physics"/>
+		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar.model"/>
+		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar.unit"/>
+		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar_husk.unit"/>
 
 
 		<!--DV Light Assault Rifle-->
-		<file :name="ene_deathvox_lightar/ene_deathvox_lightar.unit" load="true"/>
-		<file :name="ene_deathvox_lightar/ene_deathvox_lightar_husk.unit" load="true"/>
-		<file :name="ene_deathvox_lightar/ene_deathvox_lightar_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_lightar/ene_deathvox_lightar.material_config" force="false"/>
-		<file :name="ene_deathvox_lightar/ene_deathvox_lightar.object" force="false"/>
-		<file :name="ene_deathvox_lightar/ene_deathvox_lightar.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_lightar/ene_deathvox_lightar.model" force="false"/>
+		<file :name="ene_deathvox_lightar/ene_deathvox_lightar.unit"/>
+		<file :name="ene_deathvox_lightar/ene_deathvox_lightar_husk.unit"/>
+		<file :name="ene_deathvox_lightar/ene_deathvox_lightar_contour.material_config"/>
+		<file :name="ene_deathvox_lightar/ene_deathvox_lightar.material_config"/>
+		<file :name="ene_deathvox_lightar/ene_deathvox_lightar.object"/>
+		<file :name="ene_deathvox_lightar/ene_deathvox_lightar.cooked_physics"/>
+		<file :name="ene_deathvox_lightar/ene_deathvox_lightar.model"/>
 
 		<!--DV Medic-->
-		<file :name="ene_deathvox_medic/ene_deathvox_medic.unit" load="true"/>
-		<file :name="ene_deathvox_medic/ene_deathvox_medic_husk.unit" load="true"/>
-		<file :name="ene_deathvox_medic/ene_medic_df.texture" force="false"/>
-		<file :name="ene_deathvox_medic/ene_medic_head_df.texture" force="false"/>
-		<file :name="ene_deathvox_medic/ene_deathvox_medic_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_medic/ene_deathvox_medic.material_config" force="false"/>
-		<file :name="ene_deathvox_medic/ene_deathvox_medic.object" force="false"/>
-		<file :name="ene_deathvox_medic/ene_deathvox_medic.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_medic/ene_deathvox_medic.model" force="false"/>
+		<file :name="ene_deathvox_medic/ene_deathvox_medic.unit"/>
+		<file :name="ene_deathvox_medic/ene_deathvox_medic_husk.unit"/>
+		<file :name="ene_deathvox_medic/ene_medic_df.texture"/>
+		<file :name="ene_deathvox_medic/ene_medic_head_df.texture"/>
+		<file :name="ene_deathvox_medic/ene_deathvox_medic_contour.material_config"/>
+		<file :name="ene_deathvox_medic/ene_deathvox_medic.material_config"/>
+		<file :name="ene_deathvox_medic/ene_deathvox_medic.object"/>
+		<file :name="ene_deathvox_medic/ene_deathvox_medic.cooked_physics"/>
+		<file :name="ene_deathvox_medic/ene_deathvox_medic.model"/>
 		<!--DV Shield-->
-		<file :name="ene_deathvox_shield/ene_deathvox_shield.unit" load="true"/>
-		<file :name="ene_deathvox_shield/ene_deathvox_shield_husk.unit" load="true"/>
-		<file :name="ene_deathvox_shield/ene_deathvox_shield_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_shield/ene_deathvox_shield.material_config" force="false"/>
-		<file :name="ene_deathvox_shield/ene_deathvox_shield.object" force="false"/>
-		<file :name="ene_deathvox_shield/ene_deathvox_shield.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_shield/ene_deathvox_shield.model" force="false"/>
+		<file :name="ene_deathvox_shield/ene_deathvox_shield.unit"/>
+		<file :name="ene_deathvox_shield/ene_deathvox_shield_husk.unit"/>
+		<file :name="ene_deathvox_shield/ene_deathvox_shield_contour.material_config"/>
+		<file :name="ene_deathvox_shield/ene_deathvox_shield.material_config"/>
+		<file :name="ene_deathvox_shield/ene_deathvox_shield.object"/>
+		<file :name="ene_deathvox_shield/ene_deathvox_shield.cooked_physics"/>
+		<file :name="ene_deathvox_shield/ene_deathvox_shield.model"/>
 
 		<!--DV Heavy Assault Rifle-->
-		<file :name="ene_deathvox_heavyshot/swat_heavy_df.texture" force="false"/>
-		<file :name="ene_deathvox_heavyshot/swat_heavy_head_df.texture" force="false"/>
-		<file :name="ene_deathvox_heavyshot/swat_heavy_head_il.texture" force="false"/>
-		<file :name="ene_deathvox_heavyshot/swat_joker_head_il.texture" force="false"/>
-		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot.material_config" force="false"/>
-		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot.object" force="false"/>
-		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot.model" force="false"/>
-		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot.unit" load="true"/>
-		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot_husk.unit" load="true"/>
+		<file :name="ene_deathvox_heavyshot/swat_heavy_df.texture"/>
+		<file :name="ene_deathvox_heavyshot/swat_heavy_head_df.texture"/>
+		<file :name="ene_deathvox_heavyshot/swat_heavy_head_il.texture"/>
+		<file :name="ene_deathvox_heavyshot/swat_joker_head_il.texture"/>
+		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot.material_config"/>
+		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot_contour.material_config"/>
+		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot.object"/>
+		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot.cooked_physics"/>
+		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot.model"/>
+		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot.unit"/>
+		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot_husk.unit"/>
 
 		<!--DV Light Assault Rifle-->
-		<file :name="ene_deathvox_lightshot/ene_zeal_swat_df.texture" force="false"/>
-		<file :name="ene_deathvox_lightshot/ene_deathvox_lightshot.unit" load="true"/>
-		<file :name="ene_deathvox_lightshot/ene_deathvox_lightshot_husk.unit" load="true"/>
-		<file :name="ene_deathvox_lightshot/ene_deathvox_lightshot_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_lightshot/ene_deathvox_lightshot.material_config" force="false"/>
-		<file :name="ene_deathvox_lightshot/ene_deathvox_lightshot.object" force="false"/>
-		<file :name="ene_deathvox_lightshot/ene_deathvox_lightshot.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_lightshot/ene_deathvox_lightshot.model" force="false"/>
+		<file :name="ene_deathvox_lightshot/ene_zeal_swat_df.texture"/>
+		<file :name="ene_deathvox_lightshot/ene_deathvox_lightshot.unit"/>
+		<file :name="ene_deathvox_lightshot/ene_deathvox_lightshot_husk.unit"/>
+		<file :name="ene_deathvox_lightshot/ene_deathvox_lightshot_contour.material_config"/>
+		<file :name="ene_deathvox_lightshot/ene_deathvox_lightshot.material_config"/>
+		<file :name="ene_deathvox_lightshot/ene_deathvox_lightshot.object"/>
+		<file :name="ene_deathvox_lightshot/ene_deathvox_lightshot.cooked_physics"/>
+		<file :name="ene_deathvox_lightshot/ene_deathvox_lightshot.model"/>
 
 
 		<!--DV Light Shotgun-->
-		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.unit" load="true"/>
-		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer_husk.unit" load="true"/>
-		<file :name="ene_deathvox_greendozer/bulldozer_nm.texture" force="false"/>
-		<file :name="ene_deathvox_greendozer/bulldozer_df.texture" force="false"/>
-		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.material_config" force="false"/>
-		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.object" force="false"/>
-		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.model" force="false"/>
-		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.sequence_manager" force="false"/>
+		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.unit"/>
+		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer_husk.unit"/>
+		<file :name="ene_deathvox_greendozer/bulldozer_nm.texture"/>
+		<file :name="ene_deathvox_greendozer/bulldozer_df.texture"/>
+		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer_contour.material_config"/>
+		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.material_config"/>
+		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.object"/>
+		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.cooked_physics"/>
+		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.model"/>
+		<file :name="ene_deathvox_greendozer/ene_deathvox_greendozer.sequence_manager"/>
 
 		<!--DV Heavy Shotgun-->
-		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.unit" load="true"/>
-		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer_husk.unit" load="true"/>
-		<file :name="ene_deathvox_blackdozer/bulldozer_nm.texture" force="false"/>
-		<file :name="ene_deathvox_blackdozer/bulldozer_df.texture" force="false"/>
-		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.material_config" force="false"/>
-		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.object" force="false"/>
-		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.model" force="false"/>
-		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.sequence_manager" force="false"/>
+		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.unit"/>
+		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer_husk.unit"/>
+		<file :name="ene_deathvox_blackdozer/bulldozer_nm.texture"/>
+		<file :name="ene_deathvox_blackdozer/bulldozer_df.texture"/>
+		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer_contour.material_config"/>
+		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.material_config"/>
+		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.object"/>
+		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.cooked_physics"/>
+		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.model"/>
+		<file :name="ene_deathvox_blackdozer/ene_deathvox_blackdozer.sequence_manager"/>
 
 
 		<!--DV Heavy Assault Rifle-->
-		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.unit" load="true"/>
-		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer_husk.unit" load="true"/>
-		<file :name="ene_deathvox_lmgdozer/bulldozer_nm.texture" force="false"/>
-		<file :name="ene_deathvox_lmgdozer/bulldozer_df.texture" force="false"/>
-		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.material_config" force="false"/>
-		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.object" force="false"/>
-		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.model" force="false"/>
-		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.sequence_manager" force="false"/>
+		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.unit"/>
+		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer_husk.unit"/>
+		<file :name="ene_deathvox_lmgdozer/bulldozer_nm.texture"/>
+		<file :name="ene_deathvox_lmgdozer/bulldozer_df.texture"/>
+		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer_contour.material_config"/>
+		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.material_config"/>
+		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.object"/>
+		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.cooked_physics"/>
+		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.model"/>
+		<file :name="ene_deathvox_lmgdozer/ene_deathvox_lmgdozer.sequence_manager"/>
 
 		<!--DV Light Assault Rifle-->
-		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.unit" load="true"/>
-		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer_husk.unit" load="true"/>
-		<file :name="ene_deathvox_medicdozer/bulldozer_nm.texture" force="false"/>
-		<file :name="ene_deathvox_medicdozer/bulldozer_df.texture" force="false"/>
-		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.material_config" force="false"/>
-		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.object" force="false"/>
-		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.model" force="false"/>
-		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.sequence_manager" force="false"/>
+		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.unit"/>
+		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer_husk.unit"/>
+		<file :name="ene_deathvox_medicdozer/bulldozer_nm.texture"/>
+		<file :name="ene_deathvox_medicdozer/bulldozer_df.texture"/>
+		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer_contour.material_config"/>
+		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.material_config"/>
+		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.object"/>
+		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.cooked_physics"/>
+		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.model"/>
+		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.sequence_manager"/>
 
 		<!--DV Taser-->
-		<file :name="ene_deathvox_taser/ene_deathvox_taser.unit" load="true"/>
-		<file :name="ene_deathvox_taser/ene_deathvox_taser_husk.unit" load="true"/>
-		<file :name="ene_deathvox_taser/taser_body_df.texture" force="false"/>
-		<file :name="ene_deathvox_taser/helmets_heavy_taser_atlas_df.texture" force="false"/>
-		<file :name="ene_deathvox_taser/helmets_heavy_taser_atlas_il.texture" force="false"/>
-		<file :name="ene_deathvox_taser/heads_atlas_df.texture" force="false"/>
-		<file :name="ene_deathvox_taser/heads_atlas_nm.texture" force="false"/>
-		<file :name="ene_deathvox_taser/ene_deathvox_taser_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_taser/ene_deathvox_taser.material_config" force="false"/>
-		<file :name="ene_deathvox_taser/ene_deathvox_taser.object" force="false"/>
-		<file :name="ene_deathvox_taser/ene_deathvox_taser.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_taser/ene_deathvox_taser.model" force="false"/>
+		<file :name="ene_deathvox_taser/ene_deathvox_taser.unit"/>
+		<file :name="ene_deathvox_taser/ene_deathvox_taser_husk.unit"/>
+		<file :name="ene_deathvox_taser/taser_body_df.texture"/>
+		<file :name="ene_deathvox_taser/helmets_heavy_taser_atlas_df.texture"/>
+		<file :name="ene_deathvox_taser/helmets_heavy_taser_atlas_il.texture"/>
+		<file :name="ene_deathvox_taser/heads_atlas_df.texture"/>
+		<file :name="ene_deathvox_taser/heads_atlas_nm.texture"/>
+		<file :name="ene_deathvox_taser/ene_deathvox_taser_contour.material_config"/>
+		<file :name="ene_deathvox_taser/ene_deathvox_taser.material_config"/>
+		<file :name="ene_deathvox_taser/ene_deathvox_taser.object"/>
+		<file :name="ene_deathvox_taser/ene_deathvox_taser.cooked_physics"/>
+		<file :name="ene_deathvox_taser/ene_deathvox_taser.model"/>
 
 		<!--DV Cloaker-->
-		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.unit" load="true"/>
-		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker_husk.unit" load="true"/>
-		<file :name="ene_deathvox_cloaker/zeal_cloaker_body_df.texture" force="false"/>
-		<file :name="ene_deathvox_cloaker/zeal_cloaker_body_nm.texture" force="false"/>
-		<file :name="ene_deathvox_cloaker/zeal_cloaker_head_df.texture" force="false"/>
-		<file :name="ene_deathvox_cloaker/zeal_cloaker_head_nm.texture" force="false"/>
-		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.material_config" force="false"/>
-		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.object" force="false"/>
-		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.sequence_manager" force="false"/>
-		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.model" force="false"/>
+		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.unit"/>
+		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker_husk.unit"/>
+		<file :name="ene_deathvox_cloaker/zeal_cloaker_body_df.texture"/>
+		<file :name="ene_deathvox_cloaker/zeal_cloaker_body_nm.texture"/>
+		<file :name="ene_deathvox_cloaker/zeal_cloaker_head_df.texture"/>
+		<file :name="ene_deathvox_cloaker/zeal_cloaker_head_nm.texture"/>
+		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker_contour.material_config"/>
+		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.material_config"/>
+		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.object"/>
+		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.sequence_manager"/>
+		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.cooked_physics"/>
+		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.model"/>
 
-		<file :name="ene_deathvox_cloaker/debris/ene_spook_head_debris.material_config" force="false"/>
-		<file :name="ene_deathvox_cloaker/debris/ene_spook_head_debris.object" force="false"/>
-		<file :name="ene_deathvox_cloaker/debris/ene_spook_head_debris.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_cloaker/debris/ene_spook_head_debris.model" force="false"/>
-		<file :name="ene_deathvox_cloaker/debris/ene_spook_head_debris.unit" load="true"/>
+		<file :name="ene_deathvox_cloaker/debris/ene_spook_head_debris.material_config"/>
+		<file :name="ene_deathvox_cloaker/debris/ene_spook_head_debris.object"/>
+		<file :name="ene_deathvox_cloaker/debris/ene_spook_head_debris.cooked_physics"/>
+		<file :name="ene_deathvox_cloaker/debris/ene_spook_head_debris.model"/>
+		<file :name="ene_deathvox_cloaker/debris/ene_spook_head_debris.unit"/>
 	
-		<file :name="ene_deathvox_cloaker/debris/ene_spook_upper_body_debris.object" force="false"/>
-		<file :name="ene_deathvox_cloaker/debris/ene_spook_upper_body_debris.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_cloaker/debris/ene_spook_upper_body_debris.model" force="false"/>
-		<file :name="ene_deathvox_cloaker/debris/ene_spook_upper_body_debris.unit" load="true"/>
+		<file :name="ene_deathvox_cloaker/debris/ene_spook_upper_body_debris.object"/>
+		<file :name="ene_deathvox_cloaker/debris/ene_spook_upper_body_debris.cooked_physics"/>
+		<file :name="ene_deathvox_cloaker/debris/ene_spook_upper_body_debris.model"/>
+		<file :name="ene_deathvox_cloaker/debris/ene_spook_upper_body_debris.unit"/>
 		
 		<!--DV Light Shotgun-->
-		<file :name="ene_deathvox_sniper_assault/ene_deathvox_sniper_assault.unit" load="true"/>
-		<file :name="ene_deathvox_sniper_assault/ene_deathvox_sniper_assault_husk.unit" load="true"/>
+		<file :name="ene_deathvox_sniper_assault/ene_deathvox_sniper_assault.unit"/>
+		<file :name="ene_deathvox_sniper_assault/ene_deathvox_sniper_assault_husk.unit"/>
 
 		<!--DV Grenadier-->
-		<file :name="shared_textures/grenadier_atlas_df.texture" force="false"/>
-		<file :name="shared_textures/grenadier_atlas_il.texture" force="false"/>
-		<file :name="shared_textures/grenadier_atlas_nm.texture" force="false"/>
-		<file :name="shared_textures/grenadier_atlas_il.texture" force="false"/>
-		<file :name="shared_textures/grenadier_body_df.texture" force="false"/>
-		<file :name="shared_textures/grenadier_body_nm.texture" force="false"/>
-		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.object" force="false"/>
-		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.model" force="false"/>
-		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.unit" force="false" load="false"/>
-		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.material_config" force="false"/>
-		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier_husk.unit" force="false" load="true"/>
-		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.sequence_manager" force="false"/>
+		<file :name="shared_textures/grenadier_atlas_df.texture"/>
+		<file :name="shared_textures/grenadier_atlas_il.texture"/>
+		<file :name="shared_textures/grenadier_atlas_nm.texture"/>
+		<file :name="shared_textures/grenadier_atlas_il.texture"/>
+		<file :name="shared_textures/grenadier_body_df.texture"/>
+		<file :name="shared_textures/grenadier_body_nm.texture"/>
+		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.object"/>
+		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.cooked_physics"/>
+		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.model"/>
+		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.unit"/>
+		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.material_config"/>
+		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier_contour.material_config"/>
+		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier_husk.unit"/>
+		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.sequence_manager"/>
 	</group>
 
 	<!-- All weapons -->
 	<group name="units/pd2_mod_gageammo/pew_pew_lasers/">
-		<file :name="wpn_deathvox_guard_pistol.unit" load="true" force="true"/>
-		<file :name="wpn_deathvox_medic_pistol.unit" load="true" force="true"/>
-		<file :name="wpn_deathvox_light_ar.unit" load="true" force="true"/>
-		<file :name="wpn_deathvox_heavy_ar.unit" load="true" force="true"/>
-		<file :name="wpn_deathvox_shotgun_light.unit" load="true" force="true"/>
-		<file :name="wpn_deathvox_shotgun_heavy.unit" load="true" force="true"/>
-		<file :name="wpn_deathvox_sniper.unit" load="true" force="true"/>
-		<file :name="wpn_deathvox_medicdozer_smg.unit" load="true" force="true"/>
-		<file :name="wpn_deathvox_grenadier.unit" load="true" force="true"/>
-		<file :name="wpn_deathvox_grenadier_grenade.unit" load="true" force="true"/>
-		<file :name="wpn_deathvox_greendozer.unit" load="true" force="true"/>
-		<file :name="wpn_deathvox_blackdozer.unit" load="true" force="true"/>
-		<file :name="wpn_deathvox_lmgdozer.unit" load="true" force="true"/>
-		<file :name="wpn_deathvox_cloaker.unit" load="true" force="true"/>
+		<file :name="wpn_deathvox_guard_pistol.unit"/>
+		<file :name="wpn_deathvox_medic_pistol.unit"/>
+		<file :name="wpn_deathvox_light_ar.unit"/>
+		<file :name="wpn_deathvox_heavy_ar.unit"/>
+		<file :name="wpn_deathvox_shotgun_light.unit"/>
+		<file :name="wpn_deathvox_shotgun_heavy.unit"/>
+		<file :name="wpn_deathvox_sniper.unit"/>
+		<file :name="wpn_deathvox_medicdozer_smg.unit"/>
+		<file :name="wpn_deathvox_grenadier.unit"/>
+		<file :name="wpn_deathvox_grenadier_grenade.unit"/>
+		<file :name="wpn_deathvox_greendozer.unit"/>
+		<file :name="wpn_deathvox_blackdozer.unit"/>
+		<file :name="wpn_deathvox_lmgdozer.unit"/>
+		<file :name="wpn_deathvox_cloaker.unit"/>
 	</group>
 
-	<file name="effects/particles/explosions/cs_grenade_smoke.effect" load="false" force="true"/>
-	<file name="effects/particles/weapons/trail_dv_sniper.effect" load="false" force="true"/>
-	<file name="effects/pd2_mod_gageammo/particles/character/flashlight_ss.effect" load="false" force="true"/>
-	<file name="guis/textures/pd2/mission_briefing/assets/assets_risklevel_6.texture" force="false"/>
+	<file name="effects/particles/explosions/cs_grenade_smoke.effect"/>
+	<file name="effects/particles/weapons/trail_dv_sniper.effect"/>
+	<file name="effects/pd2_mod_gageammo/particles/character/flashlight_ss.effect"/>
+	<file name="guis/textures/pd2/mission_briefing/assets/assets_risklevel_6.texture"/>
 </assets>
