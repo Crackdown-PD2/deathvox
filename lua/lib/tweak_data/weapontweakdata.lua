@@ -243,7 +243,7 @@ function WeaponTweakData:_set_sm_wish()
 	self.npc_melee.knife_1.damage = 7
 	self.npc_melee.fists.damage = 4
 	--begin swat turret stats.
-	self.swat_van_turret_module.HEALTH_INIT = math.huge --test value.
+	self.swat_van_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
 	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300
 	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3 -- tentative, base is 7
 	self.swat_van_turret_module.FIRE_DMG_MUL = 0.1
@@ -252,7 +252,7 @@ function WeaponTweakData:_set_sm_wish()
 	self.swat_van_turret_module.SHIELD_DAMAGE_CLAMP = 350
 	self.swat_van_turret_module.BODY_DAMAGE_CLAMP = 4200
 	self.swat_van_turret_module.DAMAGE = 3.5
-	self.swat_van_turret_module.CLIP_SIZE = 500 --reduced from base game stat.
+	self.swat_van_turret_module.CLIP_SIZE = 500 --reduced from base game stat, 800.
 	self.swat_van_turret_module.AUTO_REPAIR = true
 	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = math.huge --validated, works.
 	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
@@ -283,8 +283,8 @@ function WeaponTweakData:_set_sm_wish()
 	self.ceiling_turret_module_longer_range.FIRE_RANGE = 30000
 	self.ceiling_turret_module_longer_range.DETECTION_RANGE = self.ceiling_turret_module_longer_range.FIRE_RANGE
 	-- AA turret; used on Henry's Rock.
-	self.aa_turret_module.HEALTH_INIT = math.huge -- test value.
-	self.aa_turret_module.SHIELD_HEALTH_INIT = math.huge -- test value.
+	self.aa_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.SHIELD_HEALTH_INIT = 999999 -- functionally immortal.
 	self.aa_turret_module.EXPLOSION_DMG_MUL = 0
 	self.aa_turret_module.FIRE_DMG_MUL = 0
 	self.aa_turret_module.BAG_DMG_MUL = 0
