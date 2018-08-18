@@ -1889,7 +1889,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard.HEALTH_INIT = 15
 	self.deathvox_guard.headshot_dmg_mul = 3
 	self.deathvox_guard.weapon = deep_clone(presets.weapon.deathvox)
-	self.deathvox_guard.access = "any"
+	self.deathvox_guard.access = "security" --fixes SO problem
 	table.insert(self._enemy_list, "deathvox_guard")
 	
 	self.deathvox_gman = deep_clone(self.deathvox_guard)
