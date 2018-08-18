@@ -10,6 +10,7 @@
 
 	<post :script_path="tweak_data/charactertweakdata.lua" :hook_id="tweak_data/charactertweakdata"/>
 	<post :script_path="tweak_data/groupaitweakdata.lua" :hook_id="tweak_data/groupaitweakdata"/>
+	<post :script_path="tweak_data/skirmishtweakdata.lua" :hook_id="tweak_data/skirmishtweakdata"/>
 
 	<post :script_path="tweak_data/weapontweakdata.lua" :hook_id="tweak_data/weapontweakdata"/>
 	<post :script_path="tweak_data/blackmarket/projectilestweakdata.lua" :hook_id="tweak_data/blackmarket/projectilestweakdata"/>
@@ -43,6 +44,7 @@
 
 	<post :script_path="managers/groupaistatebase.lua" :hook_id="managers/group_ai_states/groupaistatebase"/>
 	<post :script_path="managers/achievmentmanager.lua" :hook_id="managers/achievmentmanager"/>
+	<post :script_path="managers/menumanager.lua" :hook_id="managers/menumanager"/>
 	<post :script_path="managers/group_ai_states/groupaistatebesiege.lua" :hook_id="managers/group_ai_states/groupaistatebesiege"/>
 	<post :script_path="managers/player/snipergrazedamage.lua" :hook_id="managers/player/snipergrazedamage"/>
 
