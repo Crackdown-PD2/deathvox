@@ -155,8 +155,8 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_grenadier.sounds.prefix = "mgl_npc"
 	self.deathvox_grenadier.use_data.selection_index = 2
 	self.deathvox_grenadier.DAMAGE = 0
-	self.deathvox_grenadier.muzzleflash = "effects/payday2/particles/weapons/762_auto"
-	self.deathvox_grenadier.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556"
+	self.deathvox_grenadier.muzzleflash = "effects/payday2/particles/weapons/big_762_auto" -- increased visibility on fire.
+	self.deathvox_grenadier.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty" -- appears to produce no effect.
 	self.deathvox_grenadier.CLIP_AMMO_MAX = 9999999
 	self.deathvox_grenadier.NR_CLIPS_MAX = 9999999
 	self.deathvox_grenadier.looped_reload_speed = 10
@@ -242,12 +242,14 @@ function WeaponTweakData:_set_sm_wish()
 	self.npc_melee.baton.damage = 5
 	self.npc_melee.knife_1.damage = 7
 	self.npc_melee.fists.damage = 4
+	
 	self.swat_van_turret_module.HEALTH_INIT = 40000
 	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 500
 	self.swat_van_turret_module.DAMAGE = 3
 	self.swat_van_turret_module.CLIP_SIZE = 600
-	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 696969
+	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 999999
 	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3
+	
 	self.ceiling_turret_module.HEALTH_INIT = 40000
 	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 350
 	self.ceiling_turret_module.DAMAGE = 3.5
