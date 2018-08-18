@@ -31,7 +31,7 @@ function GroupAIStateBesiege:_upd_group_spawning()
 				if sp_data.delay_t < self._t then
 					local units = category.unit_types[current_unit_type]
 					produce_data.name = units[math.random(#units)]
-					produce_data.name = managers.crime_spree:modify_value("GroupAIStateBesiege:SpawningUnit", produce_data.name)
+					produce_data.name = managers.modifiers:modify_value("GroupAIStateBesiege:SpawningUnit", produce_data.name)
 					local spawned_unit = sp_data.mission_element:produce(produce_data)
 					local u_key = spawned_unit:key()
 					local objective = nil
@@ -221,14 +221,14 @@ function GroupAIStateBesiege:_upd_assault_task()
 		elseif task_data.phase_end_t < t then
 			local sustain_duration = math.lerp(self:_get_difficulty_dependent_value(self._tweak_data.assault.sustain_duration_min), self:_get_difficulty_dependent_value(self._tweak_data.assault.sustain_duration_max), math.random()) * self:_get_balancing_multiplier(self._tweak_data.assault.sustain_duration_balance_mul)
 
-			managers.crime_spree:run_func("OnEnterSustainPhase", sustain_duration)
+			managers.modifiers:run_func("OnEnterSustainPhase", sustain_duration)
 			
 			task_data.phase = "sustain"
 			task_data.phase_end_t = t + sustain_duration
 		end
 	elseif task_data.phase == "sustain" then
 		local end_t = self:assault_phase_end_time()
-		task_spawn_allowance = managers.crime_spree:modify_value("GroupAIStateBesiege:SustainSpawnAllowance", task_spawn_allowance, force_pool)
+		task_spawn_allowance = managers.modifiers:modify_value("GroupAIStateBesiege:SustainSpawnAllowance", task_spawn_allowance, force_pool)
 
 		if task_spawn_allowance <= 0 then
 			

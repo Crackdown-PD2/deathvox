@@ -91,7 +91,7 @@ function CopDamage:damage_explosion(attack_data)
 		end
 	end
 
-	damage = managers.crime_spree:modify_value("CopDamage:DamageExplosion", damage, self._unit:base()._tweak_table)
+	damage = managers.modifiers:modify_value("CopDamage:DamageExplosion", damage, self._unit:base()._tweak_table)
 
 	if self._unit:base():char_tweak().DAMAGE_CLAMP_EXPLOSION then
 		damage = math.min(damage, self._unit:base():char_tweak().DAMAGE_CLAMP_EXPLOSION)
