@@ -103,13 +103,13 @@
 			<value_node value="14400"/>
 		</min_mission_xp>
 		<payout>
-			<value_node value="0"/>
-			<value_node value="0"/>
-			<value_node value="0"/>
-			<value_node value="0"/>
-			<value_node value="0"/>
-			<value_node value="0"/>
-			<value_node value="0"/>
+			<value_node value="30500"/>
+			<value_node value="34000"/>
+			<value_node value="50000"/>
+			<value_node value="62000"/>
+			<value_node value="74000"/>
+			<value_node value="74000"/>
+			<value_node value="74000"/>
 		</payout>
 	</narrative>
 </table>
