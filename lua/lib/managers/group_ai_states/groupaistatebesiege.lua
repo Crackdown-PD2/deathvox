@@ -377,6 +377,19 @@ function GroupAIStateBesiege:_upd_regroup_task()
 	end
 end
 
-function GroupAIStateBesiege:_check_spawn_phalanx()
-	return false
+function GroupAIStateBesiege:_check_phalanx_damage_reduction_increase()
+end
+
+function GroupAIStateBesiege:set_phalanx_damage_reduction_buff(damage_reduction)
+	local law1team = self:_get_law1_team()
+	damage_reduction = damage_reduction or -1
+	law1team.damage_reduction = nil
+	self:set_damage_reduction_buff_hud()
+
+	if Network:is_server() then
+		managers.network:session():send_to_peers_synched("sync_damage_reduction_buff", damage_reduction)
+	end
+end
+
+function GroupAIStateBesiege:set_damage_reduction_buff_hud()
 end

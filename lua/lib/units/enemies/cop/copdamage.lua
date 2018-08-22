@@ -545,3 +545,202 @@ function CopDamage:die(attack_data)
 	self:_on_death()
 	managers.mutators:notify(Message.OnCopDamageDeath, self, attack_data)
 end
+
+function CopDamage:damage_tase(attack_data)
+	if self._dead or self._invulnerable then
+		if self._invulnerable then
+			print("INVULNERABLE!  Not tasing.")
+		end
+
+		return
+	end
+
+	if PlayerDamage.is_friendly_fire(self, attack_data.attacker_unit) then
+		return "friendly_fire"
+	end
+
+	if self._tase_effect then
+		World:effect_manager():fade_kill(self._tase_effect)
+	end
+
+	self._tase_effect = World:effect_manager():spawn(self._tase_effect_table)
+	local result = nil
+	local damage = attack_data.damage
+
+	if attack_data.attacker_unit == managers.player:player_unit() then
+		local critical_hit, crit_damage = self:roll_critical_hit(attack_data)
+		damage = crit_damage
+
+		if attack_data.weapon_unit then
+			if critical_hit then
+				managers.hud:on_crit_confirmed()
+			else
+				managers.hud:on_hit_confirmed()
+			end
+		end
+	end
+
+	damage = self:_apply_damage_reduction(damage)
+	damage = math.clamp(damage, 0, self._HEALTH_INIT)
+	local damage_percent = math.ceil(damage / self._HEALTH_INIT_PRECENT)
+	damage = damage_percent * self._HEALTH_INIT_PRECENT
+	damage, damage_percent = self:_apply_min_health_limit(damage, damage_percent)
+
+	if self._health <= damage then
+		attack_data.damage = self._health
+		result = {
+			variant = "bullet",
+			type = "death"
+		}
+
+		self:die(attack_data)
+		self:chk_killshot(attack_data.attacker_unit, "tase")
+	else
+		attack_data.damage = damage
+		local type = "taser_tased"
+
+		if not self._char_tweak.damage.hurt_severity.tase or alive(managers.groupai:state():phalanx_vip()) then
+			type = "none"
+		end
+
+		result = {
+			type = type,
+			variant = attack_data.variant
+		}
+
+		self:_apply_damage_to_health(damage)
+	end
+
+	attack_data.result = result
+	attack_data.pos = attack_data.col_ray.position
+	local head = nil
+
+	if self._head_body_name then
+		head = attack_data.col_ray.body and self._head_body_key and attack_data.col_ray.body:key() == self._head_body_key
+		local body = self._unit:body(self._head_body_name)
+
+		self:_spawn_head_gadget({
+			position = body:position(),
+			rotation = body:rotation(),
+			dir = -attack_data.col_ray.ray
+		})
+	end
+
+	local attacker = attack_data.attacker_unit
+
+	if not attacker or attacker:id() == -1 then
+		attacker = self._unit
+	end
+
+	if result.type == "death" then
+		local data = {
+			name = self._unit:base()._tweak_table,
+			stats_name = self._unit:base()._stats_name,
+			owner = attack_data.owner,
+			weapon_unit = attack_data.weapon_unit,
+			variant = attack_data.variant,
+			head_shot = head
+		}
+
+		managers.statistics:killed_by_anyone(data)
+
+		local attacker_unit = attack_data.attacker_unit
+
+		if attacker_unit and attacker_unit:base() and attacker_unit:base().thrower_unit then
+			attacker_unit = attacker_unit:base():thrower_unit()
+			data.weapon_unit = attack_data.attacker_unit
+		end
+
+		if attacker_unit == managers.player:player_unit() then
+			if alive(attacker_unit) then
+				self:_comment_death(attacker_unit, self._unit)
+			end
+
+			self:_show_death_hint(self._unit:base()._tweak_table)
+			managers.statistics:killed(data)
+
+			if CopDamage.is_civilian(self._unit:base()._tweak_table) then
+				managers.money:civilian_killed()
+			end
+
+			self:_check_damage_achievements(attack_data, false)
+		end
+	end
+
+	local weapon_unit = attack_data.weapon_unit
+
+	if alive(weapon_unit) and weapon_unit:base() and weapon_unit:base().add_damage_result then
+		weapon_unit:base():add_damage_result(self._unit, result.type == "death", damage_percent)
+	end
+
+	local variant = result.variant == "heavy" and 1 or 0
+
+	self:_send_tase_attack_result(attack_data, damage_percent, variant)
+	self:_on_damage_received(attack_data)
+
+	return result
+end
+
+function CopDamage:get_damage_type(damage_percent, category)
+	local hurt_table = self._char_tweak.damage.hurt_severity[category or "bullet"]
+	if alive(managers.groupai:state():phalanx_vip()) then
+		hurt_table = {
+			tase = false,
+			bullet = {
+				health_reference = 1,
+				zones = {{none = 1}}
+			},
+			explosion = {
+				health_reference = 1,
+				zones = {{none = 1}}
+			},
+			melee = {
+				health_reference = 1,
+				zones = {{none = 1}}
+			},
+			fire = {
+				health_reference = 1,
+				zones = {{none = 1}}
+			},
+			poison = {
+				health_reference = 1,
+				zones = {{none = 1}}
+			}
+		}
+	end
+
+	local dmg = damage_percent / self._HEALTH_GRANULARITY
+
+	if hurt_table.health_reference == "full" then
+		-- Nothing
+	else
+		dmg = hurt_table.health_reference == "current" and math.min(1, (self._HEALTH_INIT * dmg) / self._health) or math.min(1, (self._HEALTH_INIT * dmg) / hurt_table.health_reference)
+	end
+
+	local zone = nil
+
+	for i_zone, test_zone in ipairs(hurt_table.zones) do
+		if i_zone == #hurt_table.zones or dmg < test_zone.health_limit then
+			zone = test_zone
+
+			break
+		end
+	end
+
+	local rand_nr = math.random()
+	local total_w = 0
+
+	for sev_name, hurt_type in pairs(self._hurt_severities) do
+		local weight = zone[sev_name]
+
+		if weight and weight > 0 then
+			total_w = total_w + weight
+
+			if rand_nr <= total_w then
+				return hurt_type or "dmg_rcv"
+			end
+		end
+	end
+
+	return "dmg_rcv"
+end
