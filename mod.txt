@@ -13,7 +13,7 @@
     {
         "identifier" : "crackdown_autoupdate",
         "host": {
-            "meta": "https://raw.githubusercontent.com/Crackdown-PD2/deathvox/master/meta.json"
+            "meta": "https://raw.githubusercontent.com/Crackdown-PD2/deathvox/autoupdate/meta.json"
         }
     }
  ]
