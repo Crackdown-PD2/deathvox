@@ -2305,6 +2305,15 @@ function CharacterTweakData:_set_sm_wish()
 	
 	self.chavez_boss.HEALTH_INIT = 900
 	
+	self.phalanx_vip = deep_clone(self.phalanx_minion) -- killable winters to prevent soft-lock
+	self.phalanx_vip.HEALTH_INIT = 300
+	self.phalanx_vip.DAMAGE_CLAMP_BULLET = 100
+	self.phalanx_vip.DAMAGE_CLAMP_EXPLOSION = self.phalanx_vip.DAMAGE_CLAMP_BULLET
+	self.phalanx_vip.can_be_tased = false
+	self.phalanx_vip.immune_to_knock_down = true
+	self.phalanx_vip.immune_to_concussion = true
+	self.phalanx_vip.ends_assault_on_death = true
+	
 	self:_set_characters_weapon_preset("deathvox")
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	self:_set_characters_melee_preset("2")
