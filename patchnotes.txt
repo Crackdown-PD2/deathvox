@@ -1,0 +1,13 @@
+Adds auto-updating to CRACKDOWN.
+
+Adds 3 new HOLDOUT Maps (Ovengrill, Yacht, and Boiling Point.)
+Holdout has been rebalanced and reworked to suit CRACKDOWN.
+Holdout now utilizes the CRACKDOWN difficulty, and no longer ramps up the health and damage of enemies.
+
+Captain Winters is now killable and has been reintroduced.
+Captain Winters's buff has been reworked:
+He no longer gives passive damage resistance. 
+Instead, cops no longer flinch from bullets or become stunlocked by tasers and fire.
+
+Adds 3 new CRACKDOWN heist edits.
+Adds a new stealth-only enemy.
