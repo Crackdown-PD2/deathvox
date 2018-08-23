@@ -538,10 +538,27 @@ function CopDamage:die(attack_data)
 	end
 
 	if self._unit:base():char_tweak().ends_assault_on_death then
+		-- this was a bad idea
+		--[[for u_key, u_data in pairs(managers.enemy:all_enemies()) do
+			if alive(u_data.unit) then
+				local action_data = {
+					variant = "fire",
+					damage = u_data.unit:character_damage()._HEALTH_INIT,
+					weapon_unit = nil,
+					attacker_unit = nil,
+					col_ray = {unit = u_data.unit},
+					is_fire_dot_damage = true,
+					is_molotov = false
+				}
+				u_data.unit:character_damage():damage_fire(action_data)
+			end
+		end]]--
+		managers.fire:_remove_hell_fire_from_all()
+		managers.groupai:state():unregister_phalanx_vip(self._unit)
 		managers.groupai:state():force_end_assault_phase()
 		managers.hud:set_buff_enabled("vip", false)
 	end
-	
+	managers.fire:_remove_hell_fire(self._unit)
 	self:_on_death()
 	managers.mutators:notify(Message.OnCopDamageDeath, self, attack_data)
 end
@@ -554,13 +571,17 @@ function CopDamage:damage_tase(attack_data)
 
 		return
 	end
-
+	
 	if PlayerDamage.is_friendly_fire(self, attack_data.attacker_unit) then
 		return "friendly_fire"
 	end
 
 	if self._tase_effect then
 		World:effect_manager():fade_kill(self._tase_effect)
+	end
+
+	if alive(managers.groupai:state():phalanx_vip()) then
+		return
 	end
 
 	self._tase_effect = World:effect_manager():spawn(self._tase_effect_table)
@@ -599,7 +620,7 @@ function CopDamage:damage_tase(attack_data)
 		attack_data.damage = damage
 		local type = "taser_tased"
 
-		if not self._char_tweak.damage.hurt_severity.tase or alive(managers.groupai:state():phalanx_vip()) then
+		if not self._char_tweak.damage.hurt_severity.tase then
 			type = "none"
 		end
 
@@ -684,7 +705,7 @@ end
 function CopDamage:get_damage_type(damage_percent, category)
 	local hurt_table = self._char_tweak.damage.hurt_severity[category or "bullet"]
 	if alive(managers.groupai:state():phalanx_vip()) then
-		hurt_table = {
+		local table_to_use = {
 			tase = false,
 			bullet = {
 				health_reference = 1,
@@ -707,6 +728,7 @@ function CopDamage:get_damage_type(damage_percent, category)
 				zones = {{none = 1}}
 			}
 		}
+		hurt_table = table_to_use[category or "bullet"]
 	end
 
 	local dmg = damage_percent / self._HEALTH_GRANULARITY
