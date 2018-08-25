@@ -1,0 +1,25 @@
+Heist: Bank Heist: Cash
+Version: 7
+
+Current changes:
+Pinch implemented.
+Vault position locked.
+Manager shifted.
+gmen added.
+surveillance locked.
+Remove podium.
+Sniper spawn increased, onset moved up.
+fixed gman animations.
+Locked out keycard spawn.
+Locked cash spawn.
+Rand drill spawn reactivated
+Slight further conversation changes.
+
+Todo:
+Disable worst office civ set. (not needed)
+gman swapin
+
+Notes:
+Generally the easiest and most straightforward of the five planned Harvest and Trustee variants.
+Stealth is intended to teach players a) how the new stealth unit works, and b) how to bypass the lobby.
+Loud is focused on keeping players inside the bank, with rapid and increased sniper spawns and a "pinch" by the swat turrets.

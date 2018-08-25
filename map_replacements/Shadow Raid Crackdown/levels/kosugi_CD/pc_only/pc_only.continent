@@ -1,0 +1,226 @@
+<table>
+	<editor_groups>
+		<table continent="pc_only" name="decals_01" reference="400023">
+			<units>
+				<value_node value="400023"/>
+				<value_node value="400024"/>
+				<value_node value="400027"/>
+				<value_node value="400028"/>
+				<value_node value="400029"/>
+				<value_node value="400031"/>
+				<value_node value="400034"/>
+				<value_node value="400036"/>
+				<value_node value="400037"/>
+				<value_node value="400038"/>
+				<value_node value="400039"/>
+				<value_node value="400041"/>
+				<value_node value="400042"/>
+				<value_node value="400043"/>
+				<value_node value="400044"/>
+				<value_node value="400045"/>
+				<value_node value="400046"/>
+				<value_node value="400050"/>
+				<value_node value="400051"/>
+				<value_node value="400052"/>
+				<value_node value="400054"/>
+				<value_node value="400057"/>
+				<value_node value="400058"/>
+				<value_node value="400059"/>
+				<value_node value="400062"/>
+				<value_node value="400064"/>
+				<value_node value="400066"/>
+				<value_node value="400067"/>
+				<value_node value="400068"/>
+				<value_node value="400070"/>
+				<value_node value="400071"/>
+				<value_node value="400074"/>
+				<value_node value="400075"/>
+				<value_node value="400076"/>
+				<value_node value="400077"/>
+				<value_node value="400078"/>
+				<value_node value="400083"/>
+				<value_node value="400089"/>
+				<value_node value="400090"/>
+				<value_node value="400091"/>
+				<value_node value="400092"/>
+				<value_node value="400093"/>
+				<value_node value="400094"/>
+				<value_node value="400095"/>
+				<value_node value="400096"/>
+			</units>
+		</table>
+	</editor_groups>
+	<statics>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_a_spot_1m" name_id="com_ext_parking_garage_decal_a_spot_1m_001" position="25 -5400 1079.07" rotation="0 0.707107 -2.98023e-008 -0.707107" unit_id="400023"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_stain_a_4m" name_id="com_ext_parking_garage_decal_stain_a_4m_001" position="50 -5600 1080.31" rotation="0.707107 0 -2.98023e-008 -0.707107" unit_id="400024"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_stain_a_corner_inner_4m" name_id="com_ext_parking_garage_decal_stain_a_corner_inner_4m_001" position="-375 -4450 1275.41" rotation="-0.707107 0.707107 3.09086e-008 -3.09086e-008" unit_id="400027"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_stain_a_corner_inner_4m" name_id="com_ext_parking_garage_decal_stain_a_corner_inner_4m_002" position="-375 -4025 1275.41" rotation="-0.707107 0.707107 3.09086e-008 -3.09086e-008" unit_id="400028"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_stain_4m" name_id="com_ext_parking_garage_decal_stain_4m_001" position="325 -5600 748.037" rotation="0.707107 0 -2.98023e-008 -0.707107" unit_id="400029"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_stain_a_corner_inner_4m" name_id="com_ext_parking_garage_decal_stain_a_corner_inner_4m_003" position="25 -5600 977.411" rotation="0 0 0.707107 -0.707107" unit_id="400031"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_a_spot_1m" name_id="com_ext_parking_garage_decal_a_spot_1m_002" position="-375 -4284 1145.35" rotation="0.707107 0 0.707107 -0" unit_id="400034"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_a_hanging" name_id="ind_ext_level_duct_1_a_hanging_013" position="-862 -4650 1611.84" rotation="0 0 0.707107 -0.707107" unit_id="400036"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_a_hanging" name_id="ind_ext_level_duct_1_a_hanging_014" position="-862 -4850 1611.84" rotation="0 0 0.707107 -0.707107" unit_id="400037"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_b_curve" name_id="ind_ext_level_duct_1_b_curve_004" position="-862 -4850 1611.84" rotation="0 0 0.707107 -0.707107" unit_id="400038"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/str/str_ext_deco_gutter_c" name_id="str_ext_deco_gutter_c_001" position="300 -5150 576.01" rotation="0 0 -5.96046e-008 -1" unit_id="400039"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_a_hanging" name_id="ind_ext_level_duct_1_a_hanging_015" position="0 -5103 775.941" rotation="0 0 -5.96046e-008 -1" unit_id="400041"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_a_spot_1m" name_id="com_ext_parking_garage_decal_a_spot_1m_003" position="200 -5425 648.205" rotation="0 0.707107 -2.98023e-008 -0.707107" unit_id="400042"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/str/str_ext_deco_gutter_a" name_id="str_ext_deco_gutter_a_001" position="6475 -550 977.5" rotation="0 0 1 -0" unit_id="400043"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_a_hanging" name_id="ind_ext_level_duct_1_a_hanging_016" position="0 -5183 775.941" rotation="0 0 1 -0" unit_id="400044"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_a_hanging" name_id="ind_ext_level_duct_1_a_hanging_017" position="-957 -4865 1611.84" rotation="0 0 1.49012e-007 -1" unit_id="400045"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_stain_a_corner_inner_4m" name_id="com_ext_parking_garage_decal_stain_a_corner_inner_4m_004" position="-375 -4450 977.411" rotation="0.5 -0.5 0.5 -0.5" unit_id="400046"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_a_hanging" name_id="ind_ext_level_duct_1_a_hanging_019" position="-200 -5103 775.941" rotation="0 0 -5.96046e-008 -1" unit_id="400050"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_stain_4m" name_id="com_ext_parking_garage_decal_stain_4m_002" position="-100 -5600 748.037" rotation="0.707107 0 -2.98023e-008 -0.707107" unit_id="400051"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_stain_a_4m" name_id="com_ext_parking_garage_decal_stain_a_4m_002" position="-900 -5625 1476.01" rotation="0.707107 0 -2.98023e-008 -0.707107" unit_id="400052"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_stain_a_corner_inner_4m" name_id="com_ext_parking_garage_decal_stain_a_corner_inner_4m_005" position="-425 -5600 977.411" rotation="0 0 1 -0" unit_id="400054"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_a_hanging" name_id="ind_ext_level_duct_1_a_hanging_021" position="-1157 -4865 1611.84" rotation="0 0 1.49012e-007 -1" unit_id="400057"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_a_hanging" name_id="ind_ext_level_duct_1_a_hanging_022" position="-400 -5103 775.941" rotation="0 0 -5.96046e-008 -1" unit_id="400058"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/world/brushes/puddle/puddle_5" name_id="puddle_5_001" position="-125 -5450 580.01" rotation="0 0 0.707107 -0.707107" unit_id="400059"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_a_spot_1m" name_id="com_ext_parking_garage_decal_a_spot_1m_004" position="-200 -5375 576.01" rotation="0 0 -5.96046e-008 -1" unit_id="400062"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_a_hanging" name_id="ind_ext_level_duct_1_a_hanging_024" position="-1350 -4865 1611.84" rotation="0 0 1.49012e-007 -1" unit_id="400064"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_concrete_decal_edge_a" name_id="com_ext_parking_garage_concrete_decal_edge_a_002" position="-950 -4850 1149.35" rotation="0.707107 0 0.707107 -0" unit_id="400066"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/str/str_ext_deco_gutter_a" name_id="str_ext_deco_gutter_a_002" position="-800 -5050 977.411" rotation="0 0 1 -0" unit_id="400067"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/str/str_ext_deco_gutter_a" name_id="str_ext_deco_gutter_a_003" position="-400 -5000 576.01" rotation="0 0 1 -0" unit_id="400068"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_b_curve" name_id="ind_ext_level_duct_1_b_curve_007" position="-695 -5198 775.941" rotation="0 0 -0.707107 -0.707107" unit_id="400070"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_a_hanging" name_id="ind_ext_level_duct_1_a_hanging_025" position="-695 -5198 775.941" rotation="0 0 -0.707107 -0.707107" unit_id="400071"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_concrete_decal_edge_a" name_id="com_ext_parking_garage_concrete_decal_edge_a_003" position="-550 -5425 653.951" rotation="0.5 0.5 0.5 -0.5" unit_id="400074"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_leak_a_1m" name_id="com_ext_parking_garage_decal_leak_a_1m_006" position="-1550 -4947 1620.72" rotation="0.5 -0.5 0.5 -0.5" unit_id="400075"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_a_hanging" name_id="ind_ext_level_duct_1_a_hanging_027" position="-695 -5398 775.941" rotation="0 0 -0.707107 -0.707107" unit_id="400076"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_a_hanging" name_id="ind_ext_level_duct_1_a_hanging_028" position="-695 -5598 775.941" rotation="0 0 -0.707107 -0.707107" unit_id="400077"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_a_hanging" name_id="ind_ext_level_duct_1_a_hanging_029" position="-695 -5798 775.941" rotation="0 0 -0.707107 -0.707107" unit_id="400078"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_stain_a_4m" name_id="com_ext_parking_garage_decal_stain_a_4m_003" position="-975 -4625 668.303" rotation="0 0.707107 -0.707107 -0" unit_id="400083"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_a_hanging" name_id="ind_ext_level_duct_1_a_hanging_033" position="-2135 -5210 1599.47" rotation="0 0 -0.707107 -0.707107" unit_id="400089"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_b_curve" name_id="ind_ext_level_duct_1_b_curve_008" position="-2150 -5115 1599.47" rotation="0 0 -5.96046e-008 -1" unit_id="400090"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_a_hanging" name_id="ind_ext_level_duct_1_a_hanging_034" position="-2150 -5115 1599.47" rotation="0 0 -5.96046e-008 -1" unit_id="400091"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_a_hanging" name_id="ind_ext_level_duct_1_a_hanging_035" position="-2135 -5410 1599.47" rotation="0 0 -0.707107 -0.707107" unit_id="400092"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_stain_a_4m" name_id="com_ext_parking_garage_decal_stain_a_4m_004" position="-2250 -5200 1569.29" rotation="0.707107 0 -2.98023e-008 -0.707107" unit_id="400093"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_a_hanging" name_id="ind_ext_level_duct_1_a_hanging_036" position="-2350 -5115 1599.47" rotation="0 0 -5.96046e-008 -1" unit_id="400094"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_duct_1_a_hanging" name_id="ind_ext_level_duct_1_a_hanging_037" position="-2550 -5115 1599.47" rotation="0 0 -5.96046e-008 -1" unit_id="400095"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_decal_a_spot_4m" name_id="com_ext_parking_garage_decal_a_spot_4m_002" position="-2350 -5650 1389.89" rotation="0 0.707107 -0.707107 -0" unit_id="400096"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/pd2_dlc1/props/str_prop_alley_graffiti/str_prop_decal_graffitti_croll420tag" name_id="str_prop_decal_graffitti_croll420tag_001" position="6200 921 1058.05" rotation="-0.5 0.5 0.5 -0.5" unit_id="400010"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/pd2_dlc1/props/str_prop_alley_graffiti/str_prop_decal_graffitti_illuminatistencil" name_id="str_prop_decal_graffitti_illuminatistencil_001" position="6600 -175 1102.78" rotation="0.5 0.5 -0.5 -0.5" unit_id="400011"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/pd2_dlc1/props/str_prop_alley_graffiti/str_prop_decal_graffitti_stingertag" name_id="str_prop_decal_graffitti_stingertag_001" position="6200 2254 1078.45" rotation="-0.5 0.5 0.5 -0.5" unit_id="400012"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/pd2_dlc1/props/str_prop_alley_graffiti/str_prop_decal_graffitti_stingerthrowup" name_id="str_prop_decal_graffitti_stingerthrowup_001" position="6999.65 4025 1138.49" rotation="-0.706676 -0.0246777 0.0246777 -0.706676" unit_id="400013"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/pd2_dlc1/props/str_prop_alley_graffiti/str_prop_decal_graffitti_coldbloodedpiece" name_id="str_prop_decal_graffitti_coldbloodedpiece_001" position="7558.98 4025 1093.39" rotation="-0.706676 0.0246777 -0.0246777 -0.706676" unit_id="400014"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/props/str_prop_decal_graffiti_clans/str_prop_decal_graffiti_clans_tse" name_id="str_prop_decal_graffiti_clans_tse_001" position="6600 450 1079.31" rotation="0.707107 9.05133e-008 -0.707107 -1.35217e-007" unit_id="400018"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/pd2_dlc1/props/str_prop_alley_graffiti/str_prop_decal_graffitti_bginistag" name_id="str_prop_decal_graffitti_bginistag_001" position="6277 4825 1166.9" rotation="-0.705788 0.0431679 -0.0431678 -0.705788" unit_id="400019"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/com_ext_parking_garage/com_ext_parking_garage_concrete_decal_edge_a" name_id="com_ext_parking_garage_concrete_decal_edge_a_001" position="6200 2425 1102.99" rotation="0 0.707107 0 -0.707107" unit_id="400020"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_decal_10" name_id="ind_ext_decal_10_003" position="6433 -164 973.5" rotation="-0.0984103 0.700225 -0.0984103 -0.700225" unit_id="400021"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/pd2_dlc2/props/csgo_prop_sewer_decal/csgo_prop_sewer_decal_a" name_id="csgo_prop_sewer_decal_a_001" position="-1200.26 -5615 142.801" rotation="0 0 0 -1" unit_id="400026"/>
+		</table>
+		<table>
+			<unit_data continent="pc_only" name="units/pd2_dlc2/props/csgo_prop_sewer_decal/csgo_prop_sewer_decal_b" name_id="csgo_prop_sewer_decal_b_001" position="-1800.26 -4665 142.109" rotation="0 0 -0.707107 -0.707107" unit_id="400048"/>
+		</table>
+	</statics>
+	<values>
+		<workviews/>
+	</values>
+</table>

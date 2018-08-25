@@ -192,6 +192,10 @@
 
 	<decal_surfaces default_material="flesh" />
 
+	<effects>
+		<effect_spawner name="es_light" enabled="true" object="e_light" effect="effects/pd2_mod_gageammo/particles/character/flashlight_ss" />
+	</effects>
+
 	<graphics>
 		<graphic_group name="character" enabled="true" culling_object="g_body">
 
@@ -222,5 +226,9 @@
 			
 		</graphic_group>
 	</graphics>
+
+	<lights>
+		<light multiplier="identity" far_range="400" name="ls_light" enabled="true" type="spot|specular" />
+	</lights>
 
 </dynamic_object>
