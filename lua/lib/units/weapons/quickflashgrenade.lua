@@ -39,7 +39,7 @@ function QuickFlashGrenade:_state_bounced()
 	local light = World:create_light("omni|specular")
 
 	light:set_far_range(tweak_data.group_ai.flash_grenade.light_range)
-	light:set_color(Vector3(0, 255, 0))
+	light:set_color(Vector3(0, 0, 255))
 	light:set_position(self._unit:position())
 	light:set_specular_multiplier(tweak_data.group_ai.flash_grenade.light_specular)
 	light:set_enable(true)
