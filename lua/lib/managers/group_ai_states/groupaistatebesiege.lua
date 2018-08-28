@@ -8,30 +8,39 @@ function GroupAIStateBesiege:provide_covering_fire(group_to_cover)
 		end
 		local units_to_check = World:find_units_quick("sphere", lu_data.unit:position(), 2000, managers.slot:get_mask("enemies"))
 		for _, enemy in ipairs(units_to_check) do
+			local fuck = false
 			local u_data = self._police[enemy:key()]
-			local brain = lu_data.unit:brain()
-			local current_objective = brain:objective()
-			if u_data.tactics_map and  u_data.tactics_map.provide_coverfire and current_objective.area then
-				local grp_objective = {
-					attitude = "engage",
-					pose = "stand",
-					type = "assault_area",
-					stance = "hos",
-					attitude = "engage",
-					moving_in = false,
-					open_fire = true,
-					pushed = false,
-					charge = false,
-					interrupt_dis = 0,
-					tactic = current_objective.tactic,
-					area = current_objective.area,
-					coarse_path = {{
-						current_objective.area.pos_nav_seg,
-						mvector3.copy(current_objective.area.pos)
-					}}
-				}
+			for eu_key, eu_data in pairs(group_to_cover.units) do
+				if u_data == eu_data then
+					fuck = true
+					break
+				end
+			end
+			if not fuck then
+				local brain = lu_data.unit:brain()
+				local current_objective = brain:objective()
+				if u_data.tactics_map and  u_data.tactics_map.provide_coverfire and current_objective.area then
+					local grp_objective = {
+						attitude = "engage",
+						pose = "stand",
+						type = "assault_area",
+						stance = "hos",
+						attitude = "engage",
+						moving_in = false,
+						open_fire = true,
+						pushed = false,
+						charge = false,
+						interrupt_dis = 0,
+						tactic = current_objective.tactic,
+						area = current_objective.area,
+						coarse_path = {{
+							current_objective.area.pos_nav_seg,
+							mvector3.copy(current_objective.area.pos)
+						}}
+					}
 
-				self:_set_objective_to_enemy_group(u_data.group, grp_objective)
+					self:_set_objective_to_enemy_group(u_data.group, grp_objective)
+				end
 			end
 		end
 	end

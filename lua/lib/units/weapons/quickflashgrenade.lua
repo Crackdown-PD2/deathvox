@@ -13,14 +13,12 @@ function QuickFlashGrenade:make_flash(detonate_pos, range, ignore_units)
 
 	table.insert(ignore_units, self._unit)
 
-	local affected, line_of_sight, travel_dis, linear_dis = self:_chk_dazzle_local_player(detonate_pos, range, ignore_units)
-
+	local affected = World:find_units_quick("sphere", detonate_pos, 2000, managers.slot:get_mask("players"))
 	if affected then
-		managers.environment_controller:set_concussion_grenade(detonate_pos, line_of_sight, travel_dis, linear_dis, tweak_data.character.flashbang_multiplier)
+		managers.environment_controller._concussion_duration = 3
+		managers.environment_controller._current_concussion = 1 * managers.environment_controller._concussion_duration
 
-		local sound_eff_mul = math.clamp(1 - (travel_dis or linear_dis) / range, 0.3, 1)
-
-		managers.player:player_unit():character_damage():on_concussion(sound_eff_mul)
+		managers.player:player_unit():character_damage():on_concussion(3)
 	end
 end
 
