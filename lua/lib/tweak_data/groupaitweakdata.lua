@@ -245,24 +245,31 @@ end
 
 
 function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
+	old_spawn_group(self, difficulty_index)
 	self._tactics = {
 			deathvox_grenad_follow = {
 				"shield_cover",
 				"ranged_fire",
 				"provide_coverfire",
 				"provide_support",
-				"deathguard"
+				"deathguard",
+				"flash_grenade",
+				"smoke_grenade"
 				},
 			deathvox_grenad_lead = {
 				"ranged_fire",
 				"provide_coverfire",
-				"deathguard"
+				"deathguard",
+				"flash_grenade",
+				"smoke_grenade"
 				},
 			deathvox_grenad_pinch = {
 				"ranged_fire",
 				"provide_coverfire",
 				"provide_support",
-				"deathguard"
+				"deathguard",
+				"flash_grenade",
+				"smoke_grenade"
 				},
 			deathvox_medic = {
 				"shield_cover",
@@ -296,7 +303,8 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"charge",
 				"provide_coverfire",
 				"provide_support",
-				"deathguard"
+				"deathguard",
+				"flash_grenade"
 				},
 			deathvox_spooc_shield = {
 				"shield_cover",
@@ -304,12 +312,15 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"provide_coverfire",
 				"provide_support",
 				"smoke_grenade",
-				"deathguard"
+				"deathguard",
+				"flash_grenade"
 				},
 			deathvox_swat_charge = {
 				"charge",
 				"provide_coverfire",
-				"provide_support"
+				"provide_support",
+				"flash_grenade",
+				"smoke_grenade"
 				},
 			deathvox_swat_flank = {
 				"flank",
@@ -353,6 +364,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				},
 			deathvox_tazer_lead = {
 				"flash_grenade",
+				"smoke_grenade",
 				"charge",
 				"provide_coverfire",
 				"provide_support"
@@ -368,12 +380,14 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			deathvox_supportflash = {
 				"charge",
 				"flash_grenade",
+				"smoke_grenade",
 				"provide_coverfire",
 				"provide_support"
 				},
 			deathvox_supportsmoke = {
 				"flank",
 				"smoke_grenade",
+				"flash_grenade",
 				"provide_coverfire",
 				"provide_support"
 				},	
@@ -452,8 +466,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"shield_cover",
 				"smoke_grenade"
 				}
-		}
-	old_spawn_group(self, difficulty_index)
+	}
 	self.enemy_spawn_groups.gorgon = {
 		amount = {3, 3},
 		spawn = {

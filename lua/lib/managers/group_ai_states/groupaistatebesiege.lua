@@ -393,3 +393,67 @@ end
 
 function GroupAIStateBesiege:set_damage_reduction_buff_hud()
 end
+
+function GroupAIStateBesiege:_chk_group_use_flash_grenade(group, task_data, detonate_pos)
+	if task_data.use_smoke and not self:is_smoke_grenade_active() then
+		local duration = tweak_data.group_ai.flash_grenade_lifetime
+
+		for u_key, u_data in pairs(group.units) do
+			if u_data.tactics_map and u_data.tactics_map.flash_grenade then
+				if not detonate_pos then
+					if u_data.group and u_data.group.objective and u_data.group.objective.area then
+						if u_data.group.objective.type == "assault_area" or u_data.group.objective.type == "reenforce_area" then
+							detonate_pos = mvector3.copy(u_data.group.objective.area.pos)
+						else
+							detonate_pos = mvector3.copy(u_data.m_pos)
+						end
+					else
+						detonate_pos = mvector3.copy(u_data.m_pos)
+					end
+				end
+
+				if detonate_pos then
+					u_data.unit:sound():say("d02", true)
+					u_data.unit:movement():play_redirect("throw_grenade")
+					self:detonate_smoke_grenade(detonate_pos, detonate_pos, duration, true)
+
+					task_data.use_smoke_timer = self._t + math.lerp(tweak_data.group_ai.smoke_and_flash_grenade_timeout[1], tweak_data.group_ai.smoke_and_flash_grenade_timeout[2], math.random() ^ 0.5)
+					task_data.use_smoke = false
+					return true
+				end
+			end
+		end
+	end
+end
+
+function GroupAIStateBesiege:_chk_group_use_smoke_grenade(group, task_data, detonate_pos)
+	if task_data.use_smoke and not self:is_smoke_grenade_active() then
+		local duration = tweak_data.group_ai.smoke_grenade_lifetime
+
+		for u_key, u_data in pairs(group.units) do
+			if u_data.tactics_map and u_data.tactics_map.smoke_grenade then
+				if not detonate_pos then
+					if u_data.group and u_data.group.objective and u_data.group.objective.area then
+						if u_data.group.objective.type == "assault_area" or u_data.group.objective.type == "reenforce_area" then
+							detonate_pos = mvector3.copy(u_data.group.objective.area.pos)
+						else
+							detonate_pos = mvector3.copy(u_data.m_pos)
+						end
+					else
+						detonate_pos = mvector3.copy(u_data.m_pos)
+					end
+				end
+
+				if detonate_pos then
+					u_data.unit:sound():say("d02", true)
+					u_data.unit:movement():play_redirect("throw_grenade")
+					self:detonate_smoke_grenade(detonate_pos, detonate_pos, duration, false)
+
+					task_data.use_smoke_timer = self._t + math.lerp(tweak_data.group_ai.smoke_and_flash_grenade_timeout[1], tweak_data.group_ai.smoke_and_flash_grenade_timeout[2], math.random() ^ 0.5)
+					task_data.use_smoke = false
+					return true
+				end
+			end
+		end
+	end
+end
