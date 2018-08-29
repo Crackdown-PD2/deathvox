@@ -3,8 +3,6 @@ if not _G.deathvox then
 	_G.deathvox.ModPath = ModPath
 	blt.xaudio.setup()
 	local deathvox_mod_instance = ModInstance
-	deathvox_mod_instance:GetSuperMod():GetAssetLoader():FreeAssetGroup("cops")
-
 	deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("cops")
 	
 	if _G.voiceline_framework then
