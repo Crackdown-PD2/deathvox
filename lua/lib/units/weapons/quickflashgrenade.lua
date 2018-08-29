@@ -12,13 +12,18 @@ function QuickFlashGrenade:make_flash(detonate_pos, range, ignore_units)
 	ignore_units = ignore_units or {}
 
 	table.insert(ignore_units, self._unit)
+	local player = managers.player:player_unit()
 
-	local affected = World:find_units_quick("sphere", detonate_pos, 2000, managers.slot:get_mask("players"))
-	if affected then
+	if not alive(player) then
+		return
+	end
+	local m_pl_head_pos = player:movement():m_head_pos()
+	local linear_dis = mvector3.distance(detonate_pos, m_pl_head_pos)
+	if range >= linear_dis then
 		managers.environment_controller._concussion_duration = 3
-		managers.environment_controller._current_concussion = 1 * managers.environment_controller._concussion_duration
+		managers.environment_controller._current_concussion = math.clamp(1 - linear_dis / range, 0.3, 1) * managers.environment_controller._concussion_duration
 
-		managers.player:player_unit():character_damage():on_concussion(3)
+		managers.player:player_unit():character_damage():on_concussion(math.clamp(1 - linear_dis / range, 0.3, 1))
 	end
 end
 
