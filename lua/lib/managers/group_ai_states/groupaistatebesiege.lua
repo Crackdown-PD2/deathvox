@@ -19,7 +19,7 @@ function GroupAIStateBesiege:provide_covering_fire(group_to_cover)
 			if not fuck then
 				local brain = lu_data.unit:brain()
 				local current_objective = brain:objective()
-				if u_data.tactics_map and  u_data.tactics_map.provide_coverfire and current_objective.area then
+				if u_data.tactics_map and  u_data.tactics_map.provide_coverfire and current_objective and current_objective.area then
 					local grp_objective = {
 						attitude = "engage",
 						pose = "stand",
