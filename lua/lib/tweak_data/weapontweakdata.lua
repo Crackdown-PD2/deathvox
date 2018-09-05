@@ -155,8 +155,8 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_grenadier.sounds.prefix = "mgl_npc"
 	self.deathvox_grenadier.use_data.selection_index = 2
 	self.deathvox_grenadier.DAMAGE = 0
-	self.deathvox_grenadier.muzzleflash = "effects/payday2/particles/weapons/762_auto"
-	self.deathvox_grenadier.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556"
+	self.deathvox_grenadier.muzzleflash = "effects/payday2/particles/weapons/big_762_auto" -- increased visibility on fire.
+	self.deathvox_grenadier.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty" -- appears to produce no effect.
 	self.deathvox_grenadier.CLIP_AMMO_MAX = 9999999
 	self.deathvox_grenadier.NR_CLIPS_MAX = 9999999
 	self.deathvox_grenadier.looped_reload_speed = 10
