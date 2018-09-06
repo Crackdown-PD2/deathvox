@@ -185,15 +185,15 @@
 		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.sequence_manager" force="false"/>
 
 		<!--DV Taser-->
-		<file :name="ene_deathvox_taser/ene_deathvox_taser.unit" load="true"/>
-		<file :name="ene_deathvox_taser/ene_deathvox_taser_husk.unit" load="true"/>
-		<file :name="ene_deathvox_taser/taser_body_df.texture" force="false"/>
-		<file :name="ene_deathvox_taser/helmets_heavy_taser_atlas_df.texture" force="false"/>
-		<file :name="ene_deathvox_taser/helmets_heavy_taser_atlas_il.texture" force="false"/>
-		<file :name="ene_deathvox_taser/heads_atlas_df.texture" force="false"/>
-		<file :name="ene_deathvox_taser/heads_atlas_nm.texture" force="false"/>
+		<file :name="ene_deathvox_taser/ene_deathvox_taser.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_taser/ene_deathvox_taser_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_taser/ene_deathvox_taser_nm.texture" force="false"/>
+		<file :name="ene_deathvox_taser/ene_deathvox_taser_df.texture" force="false"/>
 		<file :name="ene_deathvox_taser/ene_deathvox_taser_contour.material_config" force="false"/>
 		<file :name="ene_deathvox_taser/ene_deathvox_taser.material_config" force="false"/>
+		<file :name="ene_deathvox_taser/ene_deathvox_taser_head_nm.texture" force="false"/>
+		<file :name="ene_deathvox_taser/ene_deathvox_taser_head_df.texture" force="false"/>
+		<file :name="ene_deathvox_taser/ene_deathvox_taser_head_il.texture" force="false"/>
 		<file :name="ene_deathvox_taser/ene_deathvox_taser.object" force="false"/>
 		<file :name="ene_deathvox_taser/ene_deathvox_taser.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_taser/ene_deathvox_taser.model" force="false"/>
