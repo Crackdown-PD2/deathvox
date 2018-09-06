@@ -106,6 +106,10 @@ function CopDamage:damage_explosion(attack_data)
 	damage = damage_percent * self._HEALTH_INIT_PRECENT
 	damage, damage_percent = self:_apply_min_health_limit(damage, damage_percent)
 
+	if self._unit:movement():cool() and self._unit:base():char_tweak()["stealth_instant_kill"] then
+		damage = self._HEALTH_INIT
+	end
+	
 	if self._immortal then
 		damage = math.min(damage, self._health - 1)
 	end
@@ -289,6 +293,10 @@ function CopDamage:damage_bullet(attack_data)
 		if spott_dst[1] < dst then
 			damage = damage * spott_dst[2]
 		end
+	end
+
+	if self._unit:movement():cool() and self._unit:base():char_tweak()["stealth_instant_kill"] then
+		damage = self._HEALTH_INIT
 	end
 
 	local headshot = false

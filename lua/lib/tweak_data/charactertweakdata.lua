@@ -7,9 +7,182 @@ function CharacterTweakData:init(tweak_data)
 	origin_init(self, tweak_data)
 	self:_init_deathvox(presets)
 end
-
+--mods/deathvox/lua/lib/tweak_data/charactertweakdata.lua:18: '}' expected (to close '{' at line 14) near 'hard'
 function CharacterTweakData:_presets(tweak_data)
 	local presets = origin_presets(self, tweak_data)
+	presets.base.stealth_instant_kill = true
+	presets.health_tables = {
+		deathvox_guard = {
+			not_a_real_difficulty = {health = 15, headshot_mult = 3},
+			normal = {health = 15, headshot_mult = 3},
+			hard = {health = 15, headshot_mult = 3},
+			very_hard = {health = 15, headshot_mult = 3},
+			overkill = {health = 15, headshot_mult = 3},
+			mayhem = {health = 15, headshot_mult = 3},
+			death_wish = {health = 15, headshot_mult = 3},
+			crackdown = {health = 15, headshot_mult = 3}
+		},
+		deathvox_gman = {
+			not_a_real_difficulty = {health = 15, headshot_mult = 3},
+			normal = {health = 15, headshot_mult = 3},
+			hard = {health = 15, headshot_mult = 3},
+			very_hard = {health = 15, headshot_mult = 3},
+			overkill = {health = 15, headshot_mult = 3},
+			mayhem = {health = 15, headshot_mult = 3},
+			death_wish = {health = 15, headshot_mult = 3},
+			crackdown = {health = 15, headshot_mult = 3}
+		},
+		deathvox_lightar = {
+			not_a_real_difficulty = {health = 48, headshot_mult = 3},
+			normal = {health = 48, headshot_mult = 3},
+			hard = {health = 48, headshot_mult = 3},
+			very_hard = {health = 48, headshot_mult = 3},
+			overkill = {health = 48, headshot_mult = 3},
+			mayhem = {health = 48, headshot_mult = 3},
+			death_wish = {health = 48, headshot_mult = 3},
+			crackdown = {health = 420, headshot_mult = 3}
+		},
+		deathvox_heavyar = {
+			not_a_real_difficulty = {health = 101, headshot_mult = 3},
+			normal = {health = 101, headshot_mult = 3},
+			hard = {health = 101, headshot_mult = 3},
+			very_hard = {health = 101, headshot_mult = 3},
+			overkill = {health = 101, headshot_mult = 3},
+			mayhem = {health = 101, headshot_mult = 3},
+			death_wish = {health = 101, headshot_mult = 3},
+			crackdown = {health = 101, headshot_mult = 3}
+		},
+		deathvox_lightshot = {
+			not_a_real_difficulty = {health = 48, headshot_mult = 3},
+			normal = {health = 48, headshot_mult = 3},
+			hard = {health = 48, headshot_mult = 3},
+			very_hard = {health = 48, headshot_mult = 3},
+			overkill = {health = 48, headshot_mult = 3},
+			mayhem = {health = 48, headshot_mult = 3},
+			death_wish = {health = 48, headshot_mult = 3},
+			crackdown = {health = 48, headshot_mult = 3}
+		},
+		deathvox_heavyshot = {
+			not_a_real_difficulty = {health = 101, headshot_mult = 3},
+			normal = {health = 101, headshot_mult = 3},
+			hard = {health = 101, headshot_mult = 3},
+			very_hard = {health = 101, headshot_mult = 3},
+			overkill = {health = 101, headshot_mult = 3},
+			mayhem = {health = 101, headshot_mult = 3},
+			death_wish = {health = 101, headshot_mult = 3},
+			crackdown = {health = 101, headshot_mult = 3}
+		},
+		deathvox_shield = {
+			not_a_real_difficulty = {health = 72, headshot_mult = 3},
+			normal = {health = 72, headshot_mult = 3},
+			hard = {health = 72, headshot_mult = 3},
+			very_hard = {health = 72, headshot_mult = 3},
+			overkill = {health = 72, headshot_mult = 3},
+			mayhem = {health = 72, headshot_mult = 3},
+			death_wish = {health = 72, headshot_mult = 3},
+			crackdown = {health = 72, headshot_mult = 3}
+		},
+		deathvox_medic = {
+			not_a_real_difficulty = {health = 48, headshot_mult = 3},
+			normal = {health = 48, headshot_mult = 3},
+			hard = {health = 48, headshot_mult = 3},
+			very_hard = {health = 48, headshot_mult = 3},
+			overkill = {health = 48, headshot_mult = 3},
+			mayhem = {health = 48, headshot_mult = 3},
+			death_wish = {health = 48, headshot_mult = 3},
+			crackdown = {health = 48, headshot_mult = 3}
+		},
+		deathvox_taser = {
+			not_a_real_difficulty = {health = 101, headshot_mult = 3},
+			normal = {health = 101, headshot_mult = 3},
+			hard = {health = 101, headshot_mult = 3},
+			very_hard = {health = 101, headshot_mult = 3},
+			overkill = {health = 101, headshot_mult = 3},
+			mayhem = {health = 101, headshot_mult = 3},
+			death_wish = {health = 101, headshot_mult = 3},
+			crackdown = {health = 101, headshot_mult = 3}
+		},
+		deathvox_cloaker = {
+			not_a_real_difficulty = {health = 96, headshot_mult = 3},
+			normal = {health = 96, headshot_mult = 3},
+			hard = {health = 96, headshot_mult = 3},
+			very_hard = {health = 96, headshot_mult = 3},
+			overkill = {health = 96, headshot_mult = 3},
+			mayhem = {health = 96, headshot_mult = 3},
+			death_wish = {health = 96, headshot_mult = 3},
+			crackdown = {health = 96, headshot_mult = 3}
+		},
+		deathvox_sniper = {
+			not_a_real_difficulty = {health = 15, headshot_mult = 3},
+			normal = {health = 15, headshot_mult = 3},
+			hard = {health = 15, headshot_mult = 3},
+			very_hard = {health = 15, headshot_mult = 3},
+			overkill = {health = 15, headshot_mult = 3},
+			mayhem = {health = 15, headshot_mult = 3},
+			death_wish = {health = 15, headshot_mult = 3},
+			crackdown = {health = 15, headshot_mult = 3}
+		},
+		deathvox_greendozer = {
+			not_a_real_difficulty = {health = 875, headshot_mult = 5},
+			normal = {health = 875, headshot_mult = 5},
+			hard = {health = 875, headshot_mult = 5},
+			very_hard = {health = 875, headshot_mult = 5},
+			overkill = {health = 875, headshot_mult = 5},
+			mayhem = {health = 875, headshot_mult = 5},
+			death_wish = {health = 875, headshot_mult = 5},
+			crackdown = {health = 875, headshot_mult = 5}
+		},
+		deathvox_blackdozer = {
+			not_a_real_difficulty = {health = 875, headshot_mult = 5},
+			normal = {health = 875, headshot_mult = 5},
+			hard = {health = 875, headshot_mult = 5},
+			very_hard = {health = 875, headshot_mult = 5},
+			overkill = {health = 875, headshot_mult = 5},
+			mayhem = {health = 875, headshot_mult = 5},
+			death_wish = {health = 875, headshot_mult = 5},
+			crackdown = {health = 875, headshot_mult = 5}
+		},
+		deathvox_lmgdozer = {
+			not_a_real_difficulty = {health = 875, headshot_mult = 5},
+			normal = {health = 875, headshot_mult = 5},
+			hard = {health = 875, headshot_mult = 5},
+			very_hard = {health = 875, headshot_mult = 5},
+			overkill = {health = 875, headshot_mult = 5},
+			mayhem = {health = 875, headshot_mult = 5},
+			death_wish = {health = 875, headshot_mult = 5},
+			crackdown = {health = 875, headshot_mult = 5}
+		},
+		deathvox_medicdozer = {
+			not_a_real_difficulty = {health = 875, headshot_mult = 5},
+			normal = {health = 875, headshot_mult = 5},
+			hard = {health = 875, headshot_mult = 5},
+			very_hard = {health = 875, headshot_mult = 5},
+			overkill = {health = 875, headshot_mult = 5},
+			mayhem = {health = 875, headshot_mult = 5},
+			death_wish = {health = 875, headshot_mult = 5},
+			crackdown = {health = 875, headshot_mult = 5}
+		},
+		deathvox_guarddozer = {
+			not_a_real_difficulty = {health = 875, headshot_mult = 5},
+			normal = {health = 875, headshot_mult = 5},
+			hard = {health = 875, headshot_mult = 5},
+			very_hard = {health = 875, headshot_mult = 5},
+			overkill = {health = 875, headshot_mult = 5},
+			mayhem = {health = 875, headshot_mult = 5},
+			death_wish = {health = 875, headshot_mult = 5},
+			crackdown = {health = 875, headshot_mult = 5}
+		},
+		deathvox_grenadier = {
+			not_a_real_difficulty = {health = 101, headshot_mult = 3},
+			normal = {health = 101, headshot_mult = 3},
+			hard = {health = 101, headshot_mult = 3},
+			very_hard = {health = 101, headshot_mult = 3},
+			overkill = {health = 101, headshot_mult = 3},
+			mayhem = {health = 101, headshot_mult = 3},
+			death_wish = {health = 101, headshot_mult = 3},
+			crackdown = {health = 101, headshot_mult = 3}
+		}
+	}
 	presets.dodge.deathvox = {
 		speed = 1.7,
 		occasions = {
@@ -2124,7 +2297,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper.headshot_dmg_mul = 3
 	self.deathvox_sniper.is_special_unit = "sniper"
 	self.deathvox_sniper.access = "any"
-
+	table.insert(self._enemy_list, "deathvox_sniper")
 	self.deathvox_sniper_assault = deep_clone(self.deathvox_sniper)
 	self.deathvox_sniper_assault.move_speed = presets.move_speed.very_fast
 	self.deathvox_sniper_assault.deathguard = true
@@ -2178,6 +2351,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guarddozer.no_arrest = false
 	self.deathvox_guarddozer.calls_in = true
 	self.deathvox_guarddozer.detection = presets.detection.guard
+	self.deathvox_guarddozer.stealth_instant_kill = false
 	table.insert(self._enemy_list, "deathvox_guarddozer")
 	
 	self.deathvox_greendozer = deep_clone(self.deathvox_tank)
@@ -2264,13 +2438,48 @@ function CharacterTweakData:_init_deathvox(presets)
  	table.insert(self._enemy_list, "deathvox_grenadier")
 	
 end
+
+function CharacterTweakData:crackdown_health_setup()
+	local difficulties = {
+		"easy",
+		"normal",
+		"hard",
+		"overkill",
+		"overkill_145",
+		"easy_wish",
+		"overkill_290",
+		"sm_wish"
+	}
+	local better_names = {
+		"not_a_real_difficulty",
+		"normal",
+		"hard",
+		"very_hard",
+		"overkill",
+		"mayhem",
+		"death_wish",
+		"crackdown"
+	}
+	local difficulty_index = table.index_of(difficulties, Global.game_settings.difficulty)
+	local diff_name = better_names[difficulty_index]
+	for _, enemy_type in ipairs(self._enemy_list) do
+		if self.presets.health_tables[enemy_type] then
+			local health_table = self.presets.health_tables[enemy_type]
+			if health_table then
+				local chosen_diff = health_table[diff_name]
+				if chosen_diff then
+					self[enemy_type].HEALTH_INIT = chosen_diff["health"]
+					self[enemy_type].headshot_dmg_mul = chosen_diff["headshot_mult"]
+				end
+			end
+		end
+	end
+end
+			
+
 function CharacterTweakData:_set_sm_wish()
 	
-	if SystemInfo:platform() == Idstring("PS3") then
-		self:_multiply_all_hp(1, 1)
-	else
-		self:_multiply_all_hp(1, 1)
-	end
+	self:crackdown_health_setup()
 	self:_multiply_weapon_delay(self.presets.weapon.normal, 0)
 	self:_multiply_weapon_delay(self.presets.weapon.good, 0)
 	self:_multiply_weapon_delay(self.presets.weapon.expert, 0)
