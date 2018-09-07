@@ -47168,7 +47168,7 @@
 					<entry key="amount" type="number" value="0"/>
 					<entry key="base_delay" type="number" value="0"/>
 					<entry key="enabled" type="boolean" value="true"/>
-					<entry key="enemy" type="string" value="units/pd2_mod_gageammo/characters/ene_deathvox_gman/ene_deathvox_gman"/>
+					<entry key="enemy" type="string" value="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight"/>
 					<entry key="execute_on_startup" type="boolean" value="false"/>
 					<entry key="force_pickup" type="string" value="none"/>
 					<entry key="interval" type="number" value="5"/>

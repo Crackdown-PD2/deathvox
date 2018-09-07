@@ -253,7 +253,7 @@ function WeaponTweakData:_set_sm_wish()
 	self.swat_van_turret_module.DAMAGE = 3.5
 	self.swat_van_turret_module.CLIP_SIZE = 500 --reduced from base game stat, 800.
 	self.swat_van_turret_module.AUTO_REPAIR = true
-	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = math.huge --validated, works.
+	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 696969
 	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
 	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
 	self.swat_van_turret_module.CAN_GO_IDLE = false
@@ -293,7 +293,7 @@ function WeaponTweakData:_set_sm_wish()
 	self.aa_turret_module.DAMAGE = 3.5
 	self.aa_turret_module.CLIP_SIZE = 800
 	self.aa_turret_module.AUTO_REPAIR = true 
-	self.aa_turret_module.AUTO_REPAIR_MAX_COUNT = math.huge
+	self.aa_turret_module.AUTO_REPAIR_MAX_COUNT = 696969
 	self.aa_turret_module.AUTO_REPAIR_DURATION = 30
 	self.aa_turret_module.AUTO_RELOAD_DURATION = 8
 	self.aa_turret_module.CAN_GO_IDLE = false

@@ -58,6 +58,14 @@
 		<file :name="ene_deathvox_gman/ene_deathvox_gman.unit" load="true"/>
 		<file :name="ene_deathvox_gman/ene_deathvox_gman_husk.unit" load="true"/>
 		
+		<file :name="ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight.material_config" force="false"/>
+		<file :name="ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight.object" force="false"/>
+		<file :name="ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight.model" force="false"/>
+		<file :name="ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight.unit" load="true"/>
+		<file :name="ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight_husk.unit" load="true"/>
+		
 
 		
 		<!--DV Guard Dozer-->

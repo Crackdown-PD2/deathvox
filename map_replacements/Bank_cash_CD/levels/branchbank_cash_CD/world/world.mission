@@ -86,10 +86,6 @@
 							<entry key="delay" type="number" value="0"/>
 							<entry key="id" type="number" value="100016"/>
 						</entry>
-						<entry index="19" type="table">
-							<entry key="delay" type="number" value="0"/>
-							<entry key="id" type="number" value="100018"/>
-						</entry>
 					</entry>
 					<entry key="position" type="vector3" value="-429 2617 2085"/>
 					<entry key="rotation" type="quaternion" value="0 0 0 -1"/>
@@ -5784,19 +5780,19 @@
 						</entry>
 						<entry index="6" type="table">
 							<entry key="delay" type="number" value="0"/>
-							<entry key="id" type="number" value="103336"/>
+							<entry key="id" type="number" value="103278"/>
 						</entry>
 						<entry index="7" type="table">
 							<entry key="delay" type="number" value="0"/>
-							<entry key="id" type="number" value="103316"/>
+							<entry key="id" type="number" value="103281"/>
 						</entry>
 						<entry index="8" type="table">
 							<entry key="delay" type="number" value="0"/>
-							<entry key="id" type="number" value="103281"/>
+							<entry key="id" type="number" value="103316"/>
 						</entry>
 						<entry index="9" type="table">
 							<entry key="delay" type="number" value="0"/>
-							<entry key="id" type="number" value="103278"/>
+							<entry key="id" type="number" value="103336"/>
 						</entry>
 						<entry index="10" type="table">
 							<entry key="delay" type="number" value="0"/>
@@ -5804,11 +5800,11 @@
 						</entry>
 						<entry index="11" type="table">
 							<entry key="delay" type="number" value="0"/>
-							<entry key="id" type="number" value="104315"/>
+							<entry key="id" type="number" value="104314"/>
 						</entry>
 						<entry index="12" type="table">
 							<entry key="delay" type="number" value="0"/>
-							<entry key="id" type="number" value="104314"/>
+							<entry key="id" type="number" value="104315"/>
 						</entry>
 						<entry index="13" type="table">
 							<entry key="delay" type="number" value="0"/>
@@ -71780,7 +71776,7 @@
 			</entry>
 			<entry index="2499" type="table">
 				<entry key="class" type="string" value="ElementFilter"/>
-				<entry key="editor_name" type="string" value="filter_CD_nopodium"/>
+				<entry key="editor_name" type="string" value="filter_CD_nopodium_unused"/>
 				<entry key="id" type="number" value="100018"/>
 				<entry key="script" type="string" value="default"/>
 				<entry key="values" type="table">
