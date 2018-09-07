@@ -322,21 +322,3 @@ function SkirmishTweakData:_init_spawn_group_weights(tweak_data)  -- Everything 
 
 	setmetatable(tweak_data.group_ai.skirmish.assault, skirmish_assault_meta)
 end
-
-function SkirmishTweakData:_init_ransom_amounts()
-	self.ransom_amounts = { -- cash values scale up a lot every 3 waves, since every 3 waves new shit unlocks usually
-		1600000,
-		1840000,
-		2120000,
-		24400000,
-		28100000,
-		32400000,
-		373000000,
-		429000000,
-		494000000
-	}
-
-	for i, ransom in ipairs(self.ransom_amounts) do
-		self.ransom_amounts[i] = ransom + (self.ransom_amounts[i - 1] or 0)
-	end
-end
