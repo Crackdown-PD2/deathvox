@@ -252,6 +252,36 @@
 		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.sequence_manager" force="false"/>
 	</group>
 
+	<group name="units/payday2/characters/">
+		<file :name="ene_city_swat_1/ene_city_swat_1.model" force="false"/>
+		<file :name="ene_city_swat_2/ene_city_swat_2.model" force="false"/>
+		<file :name="ene_city_swat_3/ene_city_swat_3.model" force="false"/>
+		<file :name="ene_fbi_swat_1/ene_fbi_swat_1.model" force="false"/>
+		<file :name="ene_fbi_swat_2/ene_fbi_swat_2.model" force="false"/>
+	
+		<file :name="ene_shield_1/ene_shield_1.model" force="false"/>
+		<file :name="ene_shield_1/ene_shield_1.material_config" force="false"/>
+		<file :name="ene_shield_1/ene_shield_1_contour.material_config" force="false"/>
+	
+		<file :name="shared_textures/ene_city_heavy_df.texture" force="false"/>
+		<file :name="shared_textures/ene_city_heavy_nm.texture" force="false"/>
+		<file :name="shared_textures/ene_medic_df.texture" force="false"/>
+		<file :name="shared_textures/ene_medic_head_df.texture" force="false"/>
+		<file :name="shared_textures/ene_medic_head_nm.texture" force="false"/>
+		<file :name="shared_textures/ene_medic_nm.texture" force="false"/>
+		<file :name="shared_textures/helmets_atlas_df.texture" force="false"/>
+		<file :name="shared_textures/helmets_atlas_nm.texture" force="false"/>
+		<file :name="shared_textures/helmets_heavy_taser_atlas_df.texture" force="false"/>
+		<file :name="shared_textures/helmets_heavy_taser_atlas_nm.texture" force="false"/>
+		<file :name="shared_textures/spook_heavy_df.texture" force="false"/>
+		<file :name="shared_textures/spook_heavy_nm.texture" force="false"/>
+		<file :name="shared_textures/swat_body_df.texture" force="false"/>
+		<file :name="shared_textures/swat_body_nm.texture" force="false"/>
+		<file :name="shared_textures/swat_city_df.texture" force="false"/>
+		<file :name="shared_textures/swat_fbi_body_df.texture" force="false"/>
+		<file :name="shared_textures/taser_body_df.texture" force="false"/>
+		<file :name="shared_textures/taser_body_nm.texture" force="false"/>
+	</group>
 	<!-- All weapons -->
 	<group name="units/pd2_mod_gageammo/pew_pew_lasers/">
 		<file :name="wpn_deathvox_guard_pistol.unit" load="true" force="true"/>
