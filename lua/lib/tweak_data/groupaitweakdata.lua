@@ -1081,19 +1081,6 @@ end
 function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 	old_task_data(self, difficulty_index, difficulty)
 	if difficulty_index == 8 then
-		self.flash_grenade = {
-			timer = 5,
-			light_range = 300,
-			range = 2000,
-			light_specular = 1,
-			beep_fade_speed = 4,
-			beep_multi = 0.3,
-			light_color = Vector3(255, 0, 0),
-			beep_speed = {
-				0.1,
-				0.025
-			}
-		}
 		self.besiege.assault.force_balance_mul = {
 			1,
 			1,
