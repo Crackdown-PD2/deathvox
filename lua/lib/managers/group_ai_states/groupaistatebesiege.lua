@@ -1,3 +1,6 @@
+function GroupAIStateBesiege:_check_spawn_phalanx()
+end
+
 function GroupAIStateBesiege:provide_covering_fire(group_to_cover)
 	if group_to_cover and group_to_cover.units then
 		local lu_key, lu_data = nil, nil
