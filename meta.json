@@ -1,7 +1,7 @@
 [
     {
         "ident": "crackdown_autoupdate",
-        "hash": "43e7cd36567c755be88e60bde45ba418527c692af982d45fbedb8b5a8c792772",
+        "hash": "55e58d68e2408a45397e57800f84d41bba77b9e876b3149751d3df36890d3015",
         "download": "https://github.com/Crackdown-PD2/deathvox/archive/master.zip",
         "patchnotes": "https://raw.githubusercontent.com/Crackdown-PD2/deathvox/autoupdate/patchnotes.txt"
     }
