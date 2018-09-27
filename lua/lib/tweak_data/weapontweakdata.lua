@@ -1,6 +1,158 @@
 local old_init = WeaponTweakData.init
 function WeaponTweakData:init(tweak_data)
 	old_init(self, tweak_data)
+	self.damage_tables = {
+		deathvox_guard_pistol = {
+			not_a_real_difficulty = {damage = 500},
+			normal = {damage = 500},
+			hard = {damage = 500},
+			very_hard = {damage = 500},
+			overkill = {damage = 600},
+			mayhem = {damage = 750},
+			death_wish = {damage = 750},
+			crackdown = {damage = 875}
+		},
+		deathvox_medic_pistol = {
+			not_a_real_difficulty = {damage = 7.5},
+			normal = {damage = 7.5},
+			hard = {damage = 7.5},
+			very_hard = {damage = 7.5},
+			overkill = {damage = 7.5},
+			mayhem = {damage = 7.5},
+			death_wish = {damage = 7.5},
+			crackdown = {damage = 7.5}
+		},
+		deathvox_light_ar = {
+			not_a_real_difficulty = {damage = 500},
+			normal = {damage = 500},
+			hard = {damage = 500},
+			very_hard = {damage = 500},
+			overkill = {damage = 600},
+			mayhem = {damage = 750},
+			death_wish = {damage = 750},
+			crackdown = {damage = 875}
+		},
+		deathvox_heavy_ar = {
+			not_a_real_difficulty = {damage = 500},
+			normal = {damage = 500},
+			hard = {damage = 500},
+			very_hard = {damage = 500},
+			overkill = {damage = 600},
+			mayhem = {damage = 750},
+			death_wish = {damage = 750},
+			crackdown = {damage = 875}
+		},
+        deathvox_shotgun_light = {
+			not_a_real_difficulty = {damage = 500},
+			normal = {damage = 500},
+			hard = {damage = 500},
+			very_hard = {damage = 500},
+			overkill = {damage = 600},
+			mayhem = {damage = 750},
+			death_wish = {damage = 750},
+			crackdown = {damage = 875}
+		},
+		deathvox_shotgun_heavy = {
+			not_a_real_difficulty = {damage = 500},
+			normal = {damage = 500},
+			hard = {damage = 500},
+			very_hard = {damage = 500},
+			overkill = {damage = 600},
+			mayhem = {damage = 750},
+			death_wish = {damage = 750},
+			crackdown = {damage = 875}
+		},
+		deathvox_sniper = {
+			not_a_real_difficulty = {damage = 500},
+			normal = {damage = 500},
+			hard = {damage = 500},
+			very_hard = {damage = 500},
+			overkill = {damage = 600},
+			mayhem = {damage = 750},
+			death_wish = {damage = 750},
+			crackdown = {damage = 875}
+		},
+		deathvox_medicdozer_smg = {
+			not_a_real_difficulty = {damage = 500},
+			normal = {damage = 500},
+			hard = {damage = 500},
+			very_hard = {damage = 500},
+			overkill = {damage = 600},
+			mayhem = {damage = 750},
+			death_wish = {damage = 750},
+			crackdown = {damage = 875}
+		},
+		deathvox_grenadier = {
+			not_a_real_difficulty = {damage = 500},
+			normal = {damage = 500},
+			hard = {damage = 500},
+			very_hard = {damage = 500},
+			overkill = {damage = 600},
+			mayhem = {damage = 750},
+			death_wish = {damage = 750},
+			crackdown = {damage = 875}
+		},
+		deathvox_cloaker = {
+			not_a_real_difficulty = {damage = 500},
+			normal = {damage = 500},
+			hard = {damage = 500},
+			very_hard = {damage = 500},
+			overkill = {damage = 600},
+			mayhem = {damage = 750},
+			death_wish = {damage = 750},
+			crackdown = {damage = 875}
+		},
+		deathvox_sniper = {
+			not_a_real_difficulty = {damage = 500},
+			normal = {damage = 500},
+			hard = {damage = 500},
+			very_hard = {damage = 500},
+			overkill = {damage = 600},
+			mayhem = {damage = 750},
+			death_wish = {damage = 750},
+			crackdown = {damage = 875}
+		},
+		deathvox_greendozer = {
+			not_a_real_difficulty = {damage = 500},
+			normal = {damage = 500},
+			hard = {damage = 500},
+			very_hard = {damage = 500},
+			overkill = {damage = 600},
+			mayhem = {damage = 750},
+			death_wish = {damage = 750},
+			crackdown = {damage = 875}
+		},
+		deathvox_blackdozer = {
+			not_a_real_difficulty = {damage = 500},
+			normal = {damage = 500},
+			hard = {damage = 500},
+			very_hard = {damage = 500},
+			overkill = {damage = 600},
+			mayhem = {damage = 750},
+			death_wish = {damage = 750},
+			crackdown = {damage = 875}
+		},
+		deathvox_lmgdozer = { 
+			not_a_real_difficulty = {damage = 500},
+			normal = {damage = 500},
+			hard = {damage = 500},
+			very_hard = {damage = 500},
+			overkill = {damage = 600},
+			mayhem = {damage = 750},
+			death_wish = {damage = 750},
+			crackdown = {damage = 875}
+		},
+		deathvox_medicdozer = {
+			not_a_real_difficulty = {damage = 500},
+			normal = {damage = 500},
+			hard = {damage = 500},
+			very_hard = {damage = 500},
+			overkill = {damage = 600},
+			mayhem = {damage = 750},
+			death_wish = {damage = 750},
+			crackdown = {damage = 875}
+		}
+	}
 
 	self.deathvox_guard_pistol = deep_clone(self.packrat_crew)
 	self.deathvox_medic_pistol = deep_clone(self.mateba_crew)
