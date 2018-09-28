@@ -1,34 +1,23 @@
+local _G = _G
+local io = io
+local file = file
+
 if not _G.deathvox then
 	_G.deathvox = {}
 	_G.deathvox.ModPath = ModPath
 	blt.xaudio.setup()
 	local deathvox_mod_instance = ModInstance
 	deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("cops")
-	
 	if _G.voiceline_framework then
 		_G.voiceline_framework:register_unit("grenadier")
-		_G.voiceline_framework:register_line_type("grenadier", "death")
-		_G.voiceline_framework:register_line_type("grenadier", "spawn")
-		_G.voiceline_framework:register_line_type("grenadier", "contact")
-		_G.voiceline_framework:register_line_type("grenadier", "use_gas")
-		
-		_G.voiceline_framework:register_voiceline("grenadier", "death", ModPath .. "assets/oggs/voiceover/grenadier/grenadier_death1.ogg")
-		_G.voiceline_framework:register_voiceline("grenadier", "death", ModPath .. "assets/oggs/voiceover/grenadier/grenadier_death2.ogg")
-		_G.voiceline_framework:register_voiceline("grenadier", "death", ModPath .. "assets/oggs/voiceover/grenadier/grenadier_death3.ogg")
-		_G.voiceline_framework:register_voiceline("grenadier", "death", ModPath .. "assets/oggs/voiceover/grenadier/grenadier_death4.ogg")
-		
-		_G.voiceline_framework:register_voiceline("grenadier", "spawn", ModPath .. "assets/oggs/voiceover/grenadier/grenadier_spawn1.ogg")
-		_G.voiceline_framework:register_voiceline("grenadier", "spawn", ModPath .. "assets/oggs/voiceover/grenadier/grenadier_spawn2.ogg")
-		_G.voiceline_framework:register_voiceline("grenadier", "spawn", ModPath .. "assets/oggs/voiceover/grenadier/grenadier_spawn3.ogg")
-		
-		_G.voiceline_framework:register_voiceline("grenadier", "contact", ModPath .. "assets/oggs/voiceover/grenadier/grenadier_contact1.ogg")
-		_G.voiceline_framework:register_voiceline("grenadier", "contact", ModPath .. "assets/oggs/voiceover/grenadier/grenadier_contact2.ogg")
-		_G.voiceline_framework:register_voiceline("grenadier", "contact", ModPath .. "assets/oggs/voiceover/grenadier/grenadier_contact3.ogg")
-		
-		_G.voiceline_framework:register_voiceline("grenadier", "use_gas", ModPath .. "assets/oggs/voiceover/grenadier/grenadier_gas_1.ogg")
-		_G.voiceline_framework:register_voiceline("grenadier", "use_gas", ModPath .. "assets/oggs/voiceover/grenadier/grenadier_gas_2.ogg")
-		_G.voiceline_framework:register_voiceline("grenadier", "use_gas", ModPath .. "assets/oggs/voiceover/grenadier/grenadier_gas_3.ogg")
-		_G.voiceline_framework:register_voiceline("grenadier", "use_gas", ModPath .. "assets/oggs/voiceover/grenadier/grenadier_gas_4.ogg")
+		local fuck =  Application:nice_path( "./" .. ModPath .. "assets/oggs/voiceover/grenadier", true )
+		for index, directory in pairs(file.GetDirectories(fuck)) do
+			local ass = Application:nice_path( "./" .. ModPath .. "assets/oggs/voiceover/grenadier/" .. directory, true )
+			_G.voiceline_framework.register_line_type("go fuck yourself lua", "grenadier", tostring(directory))
+			for index2, filez in pairs(file.GetFiles(ass)) do
+				_G.voiceline_framework:register_voiceline("grenadier", tostring(directory), ModPath .. "assets/oggs/voiceover/grenadier/" .. tostring(directory) .. "/" .. tostring(filez))
+			end
+		end
 		
 		_G.voiceline_framework:register_unit("medicdozer")
 		_G.voiceline_framework:register_line_type("medicdozer", "heal")
