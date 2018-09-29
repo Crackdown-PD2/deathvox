@@ -3044,7 +3044,7 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_medicdozer",
 			"ene_deathvox_grenadier",
 			"ene_deathvox_gman",
-			"ene_deathvox_gman_flashlight",
+			"ene_deathvox_gman_noflashlight",
 			"ene_deathvox_guarddozer"
 		}
 	}
