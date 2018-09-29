@@ -2042,6 +2042,10 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.weapon.deathvox.is_sniper = deep_clone(presets.weapon.deathvox.is_light_rifle)
 	presets.weapon.deathvox.is_rifle = deep_clone(presets.weapon.deathvox.is_light_rifle)
 	presets.weapon.deathvox.mossberg = deep_clone(presets.weapon.deathvox.is_light_shotgun)
+	presets.weapon.normal = deep_clone(presets.weapon.deathvox)
+	presets.weapon.good = deep_clone(presets.weapon.deathvox)
+	presets.weapon.expert = deep_clone(presets.weapon.deathvox)
+	presets.weapon.deathwish = deep_clone(presets.weapon.deathvox)
 	return presets
 end
 	
@@ -2527,8 +2531,6 @@ function CharacterTweakData:_set_sm_wish()
 	self:_set_specials_melee_preset("2.5")
 	self.sniper = deep_clone(self.deathvox_sniper)
 	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
-	self.security.no_arrest = true
-	self.gensec.no_arrest = true
 	
 	if job == "kosugi" or job == "dark" then
 		self.city_swat.no_arrest = true
@@ -2545,212 +2547,7 @@ function CharacterTweakData:_set_sm_wish()
 	self.concussion_multiplier = 2
 end
 function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
-	self.security.HEALTH_INIT = self.security.HEALTH_INIT * hp_mul
-	self.gensec.HEALTH_INIT = self.gensec.HEALTH_INIT * hp_mul
-	self.cop.HEALTH_INIT = self.cop.HEALTH_INIT * hp_mul
-	self.cop_scared.HEALTH_INIT = self.cop_scared.HEALTH_INIT * hp_mul
-	self.cop_female.HEALTH_INIT = self.cop_female.HEALTH_INIT * hp_mul
-	self.fbi.HEALTH_INIT = self.fbi.HEALTH_INIT * hp_mul
-	self.medic.HEALTH_INIT = self.medic.HEALTH_INIT * hp_mul
-	self.bolivian.HEALTH_INIT = self.bolivian.HEALTH_INIT * hp_mul
-	self.bolivian_indoors.HEALTH_INIT = self.bolivian_indoors.HEALTH_INIT * hp_mul
-	self.drug_lord_boss.HEALTH_INIT = self.drug_lord_boss.HEALTH_INIT * hp_mul
-	self.drug_lord_boss_stealth.HEALTH_INIT = self.drug_lord_boss_stealth.HEALTH_INIT * hp_mul
-	self.fbi_swat.HEALTH_INIT = self.fbi_swat.HEALTH_INIT * hp_mul
-	self.city_swat.HEALTH_INIT = self.city_swat.HEALTH_INIT * hp_mul
-	self.swat.HEALTH_INIT = self.swat.HEALTH_INIT * hp_mul
-	self.heavy_swat.HEALTH_INIT = self.heavy_swat.HEALTH_INIT * hp_mul
-	self.heavy_swat_sniper.HEALTH_INIT = self.heavy_swat_sniper.HEALTH_INIT * hp_mul
-	self.fbi_heavy_swat.HEALTH_INIT = self.fbi_heavy_swat.HEALTH_INIT * hp_mul
-	self.sniper.HEALTH_INIT = self.sniper.HEALTH_INIT * hp_mul
-	self.gangster.HEALTH_INIT = self.gangster.HEALTH_INIT * hp_mul
-	self.mobster.HEALTH_INIT = self.mobster.HEALTH_INIT * hp_mul
-	self.mobster_boss.HEALTH_INIT = self.mobster_boss.HEALTH_INIT * hp_mul
-	self.chavez_boss.HEALTH_INIT = self.chavez_boss.HEALTH_INIT * hp_mul
-	self.hector_boss.HEALTH_INIT = self.hector_boss.HEALTH_INIT * hp_mul
-	self.hector_boss_no_armor.HEALTH_INIT = self.hector_boss_no_armor.HEALTH_INIT * hp_mul
-	self.biker_boss.HEALTH_INIT = self.biker_boss.HEALTH_INIT * hp_mul
-	self.biker.HEALTH_INIT = self.biker.HEALTH_INIT * hp_mul
-	self.tank.HEALTH_INIT = self.tank.HEALTH_INIT * hp_mul
-	self.tank_mini.HEALTH_INIT = self.tank_mini.HEALTH_INIT * hp_mul
-	self.tank_medic.HEALTH_INIT = self.tank_medic.HEALTH_INIT * hp_mul
-	self.tank_hw.HEALTH_INIT = self.tank_hw.HEALTH_INIT * hp_mul
-	self.spooc.HEALTH_INIT = self.spooc.HEALTH_INIT * hp_mul
-	self.shield.HEALTH_INIT = self.shield.HEALTH_INIT * hp_mul
-	self.phalanx_minion.HEALTH_INIT = self.phalanx_minion.HEALTH_INIT * hp_mul
-	self.phalanx_vip.HEALTH_INIT = self.phalanx_vip.HEALTH_INIT * hp_mul
-	self.taser.HEALTH_INIT = self.taser.HEALTH_INIT * hp_mul
-	self.biker_escape.HEALTH_INIT = self.biker_escape.HEALTH_INIT * hp_mul
-	self.deathvox_guard.HEALTH_INIT = self.deathvox_guard.HEALTH_INIT * hp_mul
-	self.deathvox_heavyar.HEALTH_INIT = self.deathvox_heavyar.HEALTH_INIT * hp_mul
-	self.deathvox_heavyshot.HEALTH_INIT = self.deathvox_heavyshot.HEALTH_INIT * hp_mul
-	self.deathvox_lightar.HEALTH_INIT = self.deathvox_lightar.HEALTH_INIT * hp_mul
-	self.deathvox_lightshot.HEALTH_INIT = self.deathvox_lightshot.HEALTH_INIT * hp_mul
-	self.deathvox_shield.HEALTH_INIT = self.deathvox_shield.HEALTH_INIT * hp_mul
-	self.deathvox_medic.HEALTH_INIT = self.deathvox_medic.HEALTH_INIT * hp_mul
-
-	self.deathvox_taser.HEALTH_INIT = self.deathvox_taser.HEALTH_INIT * hp_mul
-	self.deathvox_cloaker.HEALTH_INIT = self.deathvox_cloaker.HEALTH_INIT * hp_mul
-	self.deathvox_sniper_assault.HEALTH_INIT = self.deathvox_sniper_assault.HEALTH_INIT * hp_mul
-	self.deathvox_greendozer.HEALTH_INIT = self.deathvox_greendozer.HEALTH_INIT * hp_mul
-	self.deathvox_blackdozer.HEALTH_INIT = self.deathvox_blackdozer.HEALTH_INIT * hp_mul
-	self.deathvox_lmgdozer.HEALTH_INIT = self.deathvox_lmgdozer.HEALTH_INIT * hp_mul
-	self.deathvox_medicdozer.HEALTH_INIT = self.deathvox_medicdozer.HEALTH_INIT * hp_mul
-	self.deathvox_grenadier.HEALTH_INIT = self.deathvox_grenadier.HEALTH_INIT * hp_mul
-	
-	if self.security.headshot_dmg_mul then
-		self.security.headshot_dmg_mul = self.security.headshot_dmg_mul * hs_mul
-	end
-	if self.gensec.headshot_dmg_mul then
-		self.gensec.headshot_dmg_mul = self.gensec.headshot_dmg_mul * hs_mul
-	end
-	if self.cop.headshot_dmg_mul then
-		self.cop.headshot_dmg_mul = self.cop.headshot_dmg_mul * hs_mul
-	end
-	if self.cop_scared.headshot_dmg_mul then
-		self.cop_scared.headshot_dmg_mul = self.cop_scared.headshot_dmg_mul * hs_mul
-	end
-	if self.cop_female.headshot_dmg_mul then
-		self.cop_female.headshot_dmg_mul = self.cop_female.headshot_dmg_mul * hs_mul
-	end
-	if self.fbi.headshot_dmg_mul then
-		self.fbi.headshot_dmg_mul = self.fbi.headshot_dmg_mul * hs_mul
-	end
-	if self.medic.headshot_dmg_mul then
-		self.medic.headshot_dmg_mul = self.medic.headshot_dmg_mul * hs_mul
-	end
-	if self.fbi_swat.headshot_dmg_mul then
-		self.fbi_swat.headshot_dmg_mul = self.fbi_swat.headshot_dmg_mul * hs_mul
-	end
-	if self.city_swat.headshot_dmg_mul then
-		self.city_swat.headshot_dmg_mul = self.city_swat.headshot_dmg_mul * hs_mul
-	end
-	if self.swat.headshot_dmg_mul then
-		self.swat.headshot_dmg_mul = self.swat.headshot_dmg_mul * hs_mul
-	end
-	if self.heavy_swat.headshot_dmg_mul then
-		self.heavy_swat.headshot_dmg_mul = self.heavy_swat.headshot_dmg_mul * hs_mul
-	end
-	if self.heavy_swat_sniper.headshot_dmg_mul then
-		self.heavy_swat_sniper.headshot_dmg_mul = self.heavy_swat_sniper.headshot_dmg_mul * hs_mul
-	end
-	if self.fbi_heavy_swat.headshot_dmg_mul then
-		self.fbi_heavy_swat.headshot_dmg_mul = self.fbi_heavy_swat.headshot_dmg_mul * hs_mul
-	end
-	if self.sniper.headshot_dmg_mul then
-		self.sniper.headshot_dmg_mul = self.sniper.headshot_dmg_mul * hs_mul
-	end
-	if self.gangster.headshot_dmg_mul then
-		self.gangster.headshot_dmg_mul = self.gangster.headshot_dmg_mul * hs_mul
-	end
-	if self.hector_boss.headshot_dmg_mul then
-		self.hector_boss.headshot_dmg_mul = self.hector_boss.headshot_dmg_mul * hs_mul
-	end
-	if self.hector_boss_no_armor.headshot_dmg_mul then
-		self.hector_boss_no_armor.headshot_dmg_mul = self.hector_boss_no_armor.headshot_dmg_mul * hs_mul
-	end
-	if self.mobster.headshot_dmg_mul then
-		self.mobster.headshot_dmg_mul = self.mobster.headshot_dmg_mul * hs_mul
-	end
-	if self.mobster_boss.headshot_dmg_mul then
-		self.mobster_boss.headshot_dmg_mul = self.mobster_boss.headshot_dmg_mul * hs_mul
-	end
-	if self.biker.headshot_dmg_mul then
-		self.biker.headshot_dmg_mul = self.biker.headshot_dmg_mul * hs_mul
-	end
-	if self.biker_boss.headshot_dmg_mul then
-		self.biker_boss.headshot_dmg_mul = self.biker_boss.headshot_dmg_mul * hs_mul
-	end
-	if self.tank.headshot_dmg_mul then
-		self.tank.headshot_dmg_mul = self.tank.headshot_dmg_mul * hs_mul
-	end
-	if self.tank_mini.headshot_dmg_mul then
-		self.tank_mini.headshot_dmg_mul = self.tank_mini.headshot_dmg_mul * hs_mul
-	end
-	if self.tank_medic.headshot_dmg_mul then
-		self.tank_medic.headshot_dmg_mul = self.tank_medic.headshot_dmg_mul * hs_mul
-	end
-	if self.chavez_boss.headshot_dmg_mul then
-		self.chavez_boss.headshot_dmg_mul = self.chavez_boss.headshot_dmg_mul * hs_mul
-	end
-	if self.tank_hw.headshot_dmg_mul then
-		self.tank_hw.headshot_dmg_mul = self.tank_hw.headshot_dmg_mul * hs_mul
-	end
-	if self.spooc.headshot_dmg_mul then
-		self.spooc.headshot_dmg_mul = self.spooc.headshot_dmg_mul * hs_mul
-	end
-	if self.shield.headshot_dmg_mul then
-		self.shield.headshot_dmg_mul = self.shield.headshot_dmg_mul * hs_mul
-	end
-	if self.phalanx_minion.headshot_dmg_mul then
-		self.phalanx_minion.headshot_dmg_mul = self.phalanx_minion.headshot_dmg_mul * hs_mul
-	end
-	if self.phalanx_vip.headshot_dmg_mul then
-		self.phalanx_vip.headshot_dmg_mul = self.phalanx_vip.headshot_dmg_mul * hs_mul
-	end
-	if self.taser.headshot_dmg_mul then
-		self.taser.headshot_dmg_mul = self.taser.headshot_dmg_mul * hs_mul
-	end
-	if self.biker_escape.headshot_dmg_mul then
-		self.biker_escape.headshot_dmg_mul = self.biker_escape.headshot_dmg_mul * hs_mul
-	end
-	if self.drug_lord_boss.headshot_dmg_mul then
-		self.drug_lord_boss.headshot_dmg_mul = self.drug_lord_boss.headshot_dmg_mul * hs_mul
-	end
-	if self.drug_lord_boss_stealth.headshot_dmg_mul then
-		self.drug_lord_boss_stealth.headshot_dmg_mul = self.drug_lord_boss_stealth.headshot_dmg_mul * hs_mul
-	end
-	if self.bolivian.headshot_dmg_mul then
-		self.bolivian.headshot_dmg_mul = self.bolivian.headshot_dmg_mul * hs_mul
-	end
-	if self.bolivian_indoors.headshot_dmg_mul then
-		self.bolivian_indoors.headshot_dmg_mul = self.bolivian_indoors.headshot_dmg_mul * hs_mul
-	end
-	if self.deathvox_guard.headshot_dmg_mul then
-		self.deathvox_guard.headshot_dmg_mul = self.deathvox_guard.headshot_dmg_mul * hs_mul
-	end
-	if self.deathvox_heavyar.headshot_dmg_mul then
-		self.deathvox_heavyar.headshot_dmg_mul = self.deathvox_heavyar.headshot_dmg_mul * hs_mul
-	end
-	if self.deathvox_heavyshot.headshot_dmg_mul then
-		self.deathvox_heavyshot.headshot_dmg_mul = self.deathvox_heavyshot.headshot_dmg_mul * hs_mul
-	end
-	if self.deathvox_lightar.headshot_dmg_mul then
-		self.deathvox_lightar.headshot_dmg_mul = self.deathvox_lightar.headshot_dmg_mul * hs_mul
-	end
-	if self.deathvox_medic.headshot_dmg_mul then
-		self.deathvox_medic.headshot_dmg_mul = self.deathvox_medic.headshot_dmg_mul * hs_mul
-	end
-	if self.deathvox_shield.headshot_dmg_mul then
-		self.deathvox_shield.headshot_dmg_mul = self.deathvox_shield.headshot_dmg_mul * hs_mul
-	end
-	if self.deathvox_lightshot.headshot_dmg_mul then
-		self.deathvox_lightshot.headshot_dmg_mul = self.deathvox_lightshot.headshot_dmg_mul * hs_mul
-	end
-	if self.deathvox_taser.headshot_dmg_mul then
-		self.deathvox_taser.headshot_dmg_mul = self.deathvox_taser.headshot_dmg_mul * hs_mul
-	end
-	if self.deathvox_cloaker.headshot_dmg_mul then
-		self.deathvox_cloaker.headshot_dmg_mul = self.deathvox_cloaker.headshot_dmg_mul * hs_mul
-	end
-	if self.deathvox_sniper_assault.headshot_dmg_mul then
-		self.deathvox_sniper_assault.headshot_dmg_mul = self.deathvox_sniper_assault.headshot_dmg_mul * hs_mul
-	end
-	if self.deathvox_greendozer.headshot_dmg_mul then
-		self.deathvox_greendozer.headshot_dmg_mul = self.deathvox_greendozer.headshot_dmg_mul * hs_mul
-	end
-	if self.deathvox_blackdozer.headshot_dmg_mul then
-		self.deathvox_blackdozer.headshot_dmg_mul = self.deathvox_blackdozer.headshot_dmg_mul * hs_mul
-	end
-	if self.deathvox_lmgdozer.headshot_dmg_mul then
-		self.deathvox_lmgdozer.headshot_dmg_mul = self.deathvox_lmgdozer.headshot_dmg_mul * hs_mul
-	end
-	if self.deathvox_medicdozer.headshot_dmg_mul then
-		self.deathvox_medicdozer.headshot_dmg_mul = self.deathvox_medicdozer.headshot_dmg_mul * hs_mul
-	end
-	if self.deathvox_grenadier.headshot_dmg_mul then
-		self.deathvox_grenadier.headshot_dmg_mul = self.deathvox_grenadier.headshot_dmg_mul * hs_mul
-	end
+	self:crackdown_health_setup()
 end
 
 function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
@@ -3021,6 +2818,58 @@ function CharacterTweakData:_set_specials_melee_preset(preset)
 	for _, name in ipairs(all_units) do
 		self[name].melee_weapon_dmg_multiplier = preset
 	end
+end
+
+function CharacterTweakData:_init_region_cop()
+	self._default_chatter = "dispatch_generic_message"
+	self._unit_prefixes = {
+		cop = "l",
+		swat = "l",
+		heavy_swat = "l",
+		taser = "tsr",
+		cloaker = "clk",
+		bulldozer = "bdz",
+		medic = "mdc"
+	}
+end
+
+function CharacterTweakData:_init_region_fbi()
+	self._default_chatter = "dispatch_generic_message"
+	self._unit_prefixes = {
+		cop = "l",
+		swat = "l",
+		heavy_swat = "l",
+		taser = "tsr",
+		cloaker = "clk",
+		bulldozer = "bdz",
+		medic = "mdc"
+	}
+end
+
+function CharacterTweakData:_init_region_gensec()
+	self._default_chatter = "dispatch_generic_message"
+	self._unit_prefixes = {
+		cop = "l",
+		swat = "l",
+		heavy_swat = "l",
+		taser = "tsr",
+		cloaker = "clk",
+		bulldozer = "bdz",
+		medic = "mdc"
+	}
+end
+
+function CharacterTweakData:_init_region_zeal()
+	self._default_chatter = "dispatch_generic_message"
+	self._unit_prefixes = {
+		cop = "l",
+		swat = "l",
+		heavy_swat = "l",
+		taser = "tsr",
+		cloaker = "clk",
+		bulldozer = "bdz",
+		medic = "mdc"
+	}
 end
 
 function CharacterTweakData:character_map()

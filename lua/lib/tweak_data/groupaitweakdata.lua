@@ -9,237 +9,345 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		acrobatic = true,
 		walk = true
 	}
-	if difficulty_index == 8 then -- reducing dozer spawncap to 2, test value 5/19. Should indirectly address other balance issues.
-		self.special_unit_spawn_limits = {
-			tank = 2,
-			taser = 4,
-			boom = 2,
-			spooc = 4,
-			shield = 6,
-			medic = 4,
-			ass_sniper = 3
-		}
-	end
-	-- Death Vox
+	self.special_unit_spawn_limits = {
+		tank = 2,
+		taser = 4,
+		boom = 2,
+		spooc = 4,
+		shield = 6,
+		medic = 4,
+		ass_sniper = 3
+	}
 	self.unit_categories.deathvox_guard = {
 		unit_types = {
-			america = {
+			cop = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard")
 			},
-			russia = {
+			fbi = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard")
 			},
-			zombie = {
+			gensec = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard")
-			}						
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard")
+			}		
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard"
 		},
 		access = access_type_all
 	}
 	self.unit_categories.deathvox_grenadier = {
 		unit_types = {
-			america = {
+			cop = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier")
 			},
-			russia = {
+			fbi = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier")
 			},
-			zombie = {
+			gensec = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier")
-			}						
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier")
+			}		
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier"
 		},
 		access = access_type_all,
 		special_type = "boom"
 	}
 	self.unit_categories.deathvox_lightar = {
 		unit_types = {
-			america = {
+			cop = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar")
 			},
-			russia = {
+			fbi = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar")
 			},
-			zombie = {
+			gensec = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar")
-			}						
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar")
+			}
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar"
 		},
 		access = access_type_all
 	}
 	self.unit_categories.deathvox_heavyar = {
 		unit_types = {
-			america = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
-			},				
-			russia = {
+			cop = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
 			},
-			zombie = {
+			fbi = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
-			}					
+			},
+			gensec = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
+			}			
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar"
 		},
 		access = access_type_all
 	}
 	self.unit_categories.deathvox_lightshot = {
 		unit_types = {
-			america = {
+			cop = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot")
 			},
-			russia = {
+			fbi = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot")
 			},
-			zombie = {
+			gensec = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot")
-			}					
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot")
+			}						
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot"
 		},
 		access = access_type_all
 	}
 	self.unit_categories.deathvox_heavyshot = {
 		unit_types = {
-			america = {
+			cop = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
 			},
-			russia = {
+			fbi = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
 			},
-			zombie = {
+			gensec = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
-			}						
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
+			}					
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot"
 		},
 		access = access_type_all
 	}
 	self.unit_categories.deathvox_shield = {
 		unit_types = {
-			america = {
+			cop = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield")
 			},
-			russia = {
+			fbi = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield")
 			},
-			zombie = {
+			gensec = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield")
-			}						
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield")
+			}				
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield"
 		},
 		access = access_type_all,
 		special_type = "shield"
 	}
 	self.unit_categories.deathvox_medic = {
 		unit_types = {
-			america = {
+			cop = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic")
 			},
-			russia = {
+			fbi = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic")
 			},
-			zombie = {
+			gensec = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic")
-			}						
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic")
+			}	
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic"
 		},
 		access = access_type_all,
 		special_type = "medic"
 	}
 	self.unit_categories.deathvox_taser = {
 		unit_types = {
-			america = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser"),
+			cop = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser")
 			},
-			russia = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser"),
+			fbi = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser")
 			},
-			zombie = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser"),
-			}					
+			gensec = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser")
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser")
+			}				
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser"
 		},
 		access = access_type_all,
 		special_type = "taser"
 	}
 	self.unit_categories.deathvox_greendozer = {
 		unit_types = {
-			america = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer"),
+			cop = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer")
 			},
-			russia = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer"),
+			fbi = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer")
 			},
-			zombie = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer"),
-			}					
+			gensec = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer")
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer")
+			}		
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer"
 		},
 		access = access_type_all,
 		special_type = "tank"
 	}
 	self.unit_categories.deathvox_medicdozer = {
 		unit_types = {
-			america = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer"),
-			},				
-			russia = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer"),
+			cop = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer")
 			},
-			zombie = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer"),
+			fbi = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer")
+			},
+			gensec = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer")
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer")
 			}					
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer"
 		},
 		access = access_type_all,
 		special_type = "tank"
 	}
 	self.unit_categories.deathvox_blackdozer = {
 		unit_types = {
-			america = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer"),
+			cop = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer")
 			},
-			russia = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer"),
+			fbi = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer")
 			},
-			zombie = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer"),
-			}				
+			gensec = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer")
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer")
+			}					
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer"
 		},
 		access = access_type_all,
 		special_type = "tank"
 	}
 	self.unit_categories.deathvox_lmgdozer = {
 		unit_types = {
-			america = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer"),
+			cop = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer")
 			},
-			russia = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer"),
+			fbi = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer")
 			},
-			zombie = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer"),
-			}					
+			gensec = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer")
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer")
+			}				
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer"
 		},
 		access = access_type_all,
 		special_type = "tank"
 	}
 	self.unit_categories.deathvox_cloaker = {
 		unit_types = {
-			america = {
+			cop = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker")
 			},
-			russia = {
+			fbi = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker")
 			},
-			zombie = {
+			gensec = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker")
-			}					
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker")
+			}
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker"
 		},
 		access = access_type_all,
 		special_type = "spooc"
-	}
-	self.unit_categories.deathvox_sniper_assault = {
-		unit_types = {
-			america = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_sniper_assault/ene_deathvox_sniper_assault"),
-			},
-			russia = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_sniper_assault/ene_deathvox_sniper_assault"),
-			},
-			zombie = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_sniper_assault/ene_deathvox_sniper_assault"),
-			}					
-		},
-		access = access_type_all,
-		special_type = "ass_sniper"
 	}
 end
 
