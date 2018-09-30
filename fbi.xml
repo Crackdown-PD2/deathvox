@@ -21,6 +21,34 @@
 		<file :name="ene_deathvox_fbi_taser/ene_deathvox_fbi_taser.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_fbi_taser/ene_deathvox_fbi_taser.model" force="false"/>
 		<file :name="ene_deathvox_fbi_taser/taser_body_df.texture" force="false"/>
+		
+		
+		<file :name="ene_deathvox_fbi_swat/ene_deathvox_fbi_swat.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_swat/ene_deathvox_fbi_swat_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_swat/ene_deathvox_fbi_swat_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_swat/ene_deathvox_fbi_swat.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_swat/ene_deathvox_fbi_swat.object" force="false"/>
+		<file :name="ene_deathvox_fbi_swat/ene_deathvox_fbi_swat.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_fbi_swat/ene_deathvox_fbi_swat.model" force="false"/>
+		
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.object" force="false"/>
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.model" force="false"/>
+		
+		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat.object" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat.model" force="false"/>
+		
+		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot_husk.unit" load="true" force="false"/>
 	
 	</group>
 </assets>

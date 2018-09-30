@@ -23,5 +23,37 @@
 		<file :name="ene_deathvox_gensec_taser/taser_body_df.texture" force="false"/>
 		<file :name="ene_deathvox_gensec_taser/helmets_heavy_taser_atlas_df.texture" force="false"/>
 	
+		<file :name="ene_deathvox_gensec_swat/ene_deathvox_gensec_swat.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_swat/ene_deathvox_gensec_swat_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_swat/ene_deathvox_gensec_swat_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_swat/ene_deathvox_gensec_swat.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_swat/ene_deathvox_gensec_swat.object" force="false"/>
+		<file :name="ene_deathvox_gensec_swat/ene_deathvox_gensec_swat.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_gensec_swat/ene_deathvox_gensec_swat.model" force="false"/>
+		
+		<file :name="ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot.object" force="false"/>
+		<file :name="ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot.model" force="false"/>
+		
+		<file :name="ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat.object" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat.model" force="false"/>
+		
+		<file :name="ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot.object" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot.model" force="false"/>
+	
 	</group>
 </assets>
