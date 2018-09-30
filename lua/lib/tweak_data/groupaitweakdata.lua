@@ -18,6 +18,75 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		medic = 4,
 		ass_sniper = 3
 	}
+	self.unit_categories.deathvox_fbi_veteran = {
+		unit_types = {
+			cop = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")
+			},
+			fbi = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")
+			},
+			gensec = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")
+			}		
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran"
+		},
+		access = access_type_all
+	}
+	self.unit_categories.deathvox_fbi_rookie = {
+		unit_types = {
+			cop = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie")
+			},
+			fbi = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie")
+			},
+			gensec = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie")
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie")
+			}		
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie"
+		},
+		access = access_type_all
+	}
+	self.unit_categories.deathvox_fbi_hrt = {
+		unit_types = {
+			cop = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt")
+			},
+			fbi = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt")
+			},
+			gensec = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt")
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt")
+			}		
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt"
+		},
+		access = access_type_all
+	}
 	self.unit_categories.deathvox_cop_pistol = {
 		unit_types = {
 			cop = {

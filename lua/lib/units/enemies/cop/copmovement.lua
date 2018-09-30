@@ -53,6 +53,11 @@ function CopMovement:init(unit)
 	CopMovement._action_variants.deathvox_cop_revolver = security_variant
 	CopMovement._action_variants.deathvox_cop_shotgun = security_variant
 	CopMovement._action_variants.deathvox_cop_smg = security_variant
+	
+	CopMovement._action_variants.deathvox_fbi_hrt = security_variant
+	CopMovement._action_variants.deathvox_fbi_veteran = security_variant
+	CopMovement._action_variants.deathvox_fbi_rookie = security_variant
+
 	old_init(self, unit)
 end
 

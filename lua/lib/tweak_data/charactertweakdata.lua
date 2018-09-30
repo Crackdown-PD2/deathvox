@@ -221,6 +221,46 @@ function CharacterTweakData:_presets(tweak_data)
 			mayhem = {health = 15, headshot_mult = 3},
 			death_wish = {health = 15, headshot_mult = 3},
 			crackdown = {health = 15, headshot_mult = 3}
+		},
+		deathvox_cop_smg = {  -- mk 2 values complete. Consistent on all diffs. Higher health corresponds to armor.
+			not_a_real_difficulty = {health = 10, headshot_mult = 1},
+			normal = {health = 22, headshot_mult = 3},
+			hard = {health = 22, headshot_mult = 3},
+			very_hard = {health = 22, headshot_mult = 3},
+			overkill = {health = 22, headshot_mult = 3},
+			mayhem = {health = 22, headshot_mult = 3},
+			death_wish = {health = 22, headshot_mult = 3},
+			crackdown = {health = 22, headshot_mult = 3}
+		},
+		deathvox_fbi_hrt = {  -- mk 2 values complete. Consistent on all diffs.
+			not_a_real_difficulty = {health = 10, headshot_mult = 1},
+			normal = {health = 22, headshot_mult = 3},
+			hard = {health = 22, headshot_mult = 3},
+			very_hard = {health = 22, headshot_mult = 3},
+			overkill = {health = 22, headshot_mult = 3},
+			mayhem = {health = 22, headshot_mult = 3},
+			death_wish = {health = 22, headshot_mult = 3},
+			crackdown = {health = 22, headshot_mult = 3}
+		},
+		deathvox_fbi_rookie = {  -- mk 2 values complete. Consistent on all diffs.
+			not_a_real_difficulty = {health = 10, headshot_mult = 1},
+			normal = {health = 15, headshot_mult = 3},
+			hard = {health = 15, headshot_mult = 3},
+			very_hard = {health = 15, headshot_mult = 3},
+			overkill = {health = 15, headshot_mult = 3},
+			mayhem = {health = 15, headshot_mult = 3},
+			death_wish = {health = 15, headshot_mult = 3},
+			crackdown = {health = 15, headshot_mult = 3}
+		},
+		deathvox_fbi_veteran = {  -- mk 2 values complete. Consistent on all diffs.
+			not_a_real_difficulty = {health = 10, headshot_mult = 1},
+			normal = {health = 15, headshot_mult = 3},
+			hard = {health = 15, headshot_mult = 3},
+			very_hard = {health = 15, headshot_mult = 3},
+			overkill = {health = 15, headshot_mult = 3},
+			mayhem = {health = 15, headshot_mult = 3},
+			death_wish = {health = 15, headshot_mult = 3},
+			crackdown = {health = 15, headshot_mult = 3}
 		}
 	}
 	presets.dodge.deathvox = {
@@ -2511,6 +2551,21 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cop_shotgun.use_factory = true
 	self.deathvox_cop_shotgun.factory_weapon_id = {"wpn_deathvox_cop_shotgun"}
  	table.insert(self._enemy_list, "deathvox_cop_shotgun")
+	
+	self.deathvox_fbi_rookie = deep_clone(self.deathvox_cop_pistol)
+	self.deathvox_fbi_rookie.use_factory = true
+	self.deathvox_fbi_rookie.factory_weapon_id = {"wpn_deathvox_cop_pistol"}
+ 	table.insert(self._enemy_list, "deathvox_fbi_rookie")
+
+	self.deathvox_fbi_hrt = deep_clone(self.deathvox_cop_smg)
+	self.deathvox_fbi_hrt.use_factory = true
+	self.deathvox_fbi_hrt.factory_weapon_id = {"wpn_deathvox_cop_smg"}
+ 	table.insert(self._enemy_list, "deathvox_fbi_hrt")
+	
+	self.deathvox_fbi_veteran = deep_clone(self.deathvox_cop_shotgun)
+	self.deathvox_fbi_veteran.use_factory = true
+	self.deathvox_fbi_veteran.factory_weapon_id = {"wpn_deathvox_heavy_ar"}
+ 	table.insert(self._enemy_list, "deathvox_fbi_veteran")
 	
 end
 

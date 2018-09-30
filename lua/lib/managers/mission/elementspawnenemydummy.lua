@@ -8,7 +8,10 @@ local enemy_replacements = {
 		["units/payday2/characters/ene_cop_3/ene_cop_3"] = "deathvox_cop_shotgun",
 		["units/payday2/characters/ene_cop_4/ene_cop_4"] = "deathvox_cop_smg",
 	
-	
+	-- "Classic" FBI, one of the units players want to see back. We may adjust and sub in a new weaponpreset for them though.
+		["units/payday2/characters/ene_fbi_1/ene_fbi_1"] = "deathvox_fbi_rookie",
+		["units/payday2/characters/ene_fbi_2/ene_fbi_2"] = "deathvox_fbi_veteran",
+		["units/payday2/characters/ene_fbi_3/ene_fbi_3"] = "deathvox_fbi_hrt",
 --city swats.
 		["units/payday2/characters/ene_city_swat_1/ene_city_swat_1"] = "deathvox_lightar",
 		["units/payday2/characters/ene_city_swat_2/ene_city_swat_2"] = "deathvox_lightshot",
@@ -115,11 +118,6 @@ local enemy_replacements = {
 --		["units/pd2_dlc_hvh/characters/ene_bulldozer_hvh_3/ene_bulldozer_hvh_3"] = "deathvox_lmgdozer",
 
 -- Other units.
-	
--- "Classic" FBI, one of the units players want to see back. We may adjust and sub in a new weaponpreset for them though.
---		["units/payday2/characters/ene_fbi_1/ene_fbi_1"] = 
---		["units/payday2/characters/ene_fbi_2/ene_fbi_2"] = 
---		["units/payday2/characters/ene_fbi_3/ene_fbi_3"] = 
 
 -- Security Guards, not directly replacing. There are  more of these to document! 
 --	I need to check against the full pool and identify roles. Some have pistols, some have smgs, some have shotties.

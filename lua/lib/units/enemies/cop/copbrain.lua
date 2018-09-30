@@ -71,6 +71,11 @@ function CopBrain:post_init()
 	CopBrain._logic_variants.deathvox_cop_revolver = security_variant
 	CopBrain._logic_variants.deathvox_cop_shotgun = security_variant
 	CopBrain._logic_variants.deathvox_cop_smg = security_variant
+	
+	CopBrain._logic_variants.deathvox_fbi_hrt = security_variant
+	CopBrain._logic_variants.deathvox_fbi_veteran = security_variant
+	CopBrain._logic_variants.deathvox_fbi_rookie = security_variant
+
 	old_init(self)
 end
 

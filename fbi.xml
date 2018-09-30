@@ -89,6 +89,30 @@
 		<file :name="ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker.model" force="false"/>
 		<file :name="ene_deathvox_fbi_cloaker/spook_heavy_df.texture" force="false"/>
 		<file :name="ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker.sequence_manager" force="false"/>
+		
+		<file :name="ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie.object" force="false"/>
+		<file :name="ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie.model" force="false"/>
+		
+		<file :name="ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran.object" force="false"/>
+		<file :name="ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran.model" force="false"/>
+		
+		<file :name="ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt.object" force="false"/>
+		<file :name="ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt.model" force="false"/>
 	
 	</group>
 </assets>
