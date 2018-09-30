@@ -49,6 +49,36 @@
 		
 		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot_husk.unit" load="true" force="false"/>
+		
+	
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.object" force="false"/>
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.model" force="false"/>
+		
+		<file :name="ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer.object" force="false"/>
+		<file :name="ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer.model" force="false"/>
+		<file :name="ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer.sequence_manager" force="false"/>
+		
+		<file :name="ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer.object" force="false"/>
+		<file :name="ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer.model" force="false"/>
+		<file :name="ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer.sequence_manager" force="false"/>
+		
+		<file :name="ene_deathvox_fbi_shield/ene_deathvox_fbi_shield.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_shield/ene_deathvox_fbi_shield_husk.unit" load="true" force="false"/>
 	
 	</group>
 </assets>

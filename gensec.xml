@@ -54,6 +54,18 @@
 		<file :name="ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot.object" force="false"/>
 		<file :name="ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot.model" force="false"/>
+		
+		<file :name="ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer.object" force="false"/>
+		<file :name="ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer.model" force="false"/>
+		<file :name="ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer.sequence_manager" force="false"/>
+	
+		<file :name="ene_deathvox_gensec_shield/ene_deathvox_gensec_shield.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_shield/ene_deathvox_gensec_shield_husk.unit" load="true" force="false"/>
 	
 	</group>
 </assets>

@@ -86,5 +86,13 @@
 		<file :name="ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot.model" force="false"/>
 	
+		<file :name="ene_deathvox_cop_shield/ene_deathvox_cop_shield.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_cop_shield/ene_deathvox_cop_shield_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_cop_shield/ene_deathvox_cop_shield_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_cop_shield/ene_deathvox_cop_shield.material_config" force="false"/>
+		<file :name="ene_deathvox_cop_shield/ene_deathvox_cop_shield.object" force="false"/>
+		<file :name="ene_deathvox_cop_shield/ene_deathvox_cop_shield.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_cop_shield/ene_deathvox_cop_shield.model" force="false"/>
+
 	</group>
 </assets>

@@ -53,13 +53,13 @@ local enemy_replacements = {
 
 --bulldozers.		
 		["units/payday2/characters/ene_bulldozer_1/ene_bulldozer_1"] = "deathvox_greendozer",
-		["units/payday2/characters/ene_bulldozer_2/ene_bulldozer_2"] = "blackdozer",
+		["units/payday2/characters/ene_bulldozer_2/ene_bulldozer_2"] = "deathvox_blackdozer",
 		["units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"] = "deathvox_lmgdozer",
 	
 --Z-dozers. According to the spawner the order's different on OD. I've replicated it. Need to check into this though.
 		["units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer/ene_zeal_bulldozer"] = "deathvox_lmgdozer",
 		["units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_2/ene_zeal_bulldozer_2"] = "deathvox_greendozer",
-		["units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_3/ene_zeal_bulldozer_3"] = "blackdozer",
+		["units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_3/ene_zeal_bulldozer_3"] = "deathvox_blackdozer",
 
 -- Medicdozer, in case of scripted use in future.
 --		["units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"] = 	
@@ -105,7 +105,7 @@ local enemy_replacements = {
 --akan dozers.
 		["units/pd2_dlc_mad/characters/ene_akan_fbi_tank_r870/ene_akan_fbi_tank_r870"] = "deathvox_greendozer",
 		["units/pd2_dlc_mad/characters/ene_akan_fbi_tank_rpk_lmg/ene_akan_fbi_tank_rpk_lmg"] = "deathvox_lmgdozer",
-		["units/pd2_dlc_mad/characters/ene_akan_fbi_tank_saiga/ene_akan_fbi_tank_saiga"] = "blackdozer",
+		["units/pd2_dlc_mad/characters/ene_akan_fbi_tank_saiga/ene_akan_fbi_tank_saiga"] = "deathvox_blackdozer",
 -- Zombie cops below.
 	
 -- Zombie Special units.
@@ -230,13 +230,8 @@ end
 function ElementSpawnEnemyDummy:get_enemy_by_diff(enemy_to_check, ai_type)
 	local unit_categories = tweak_data.group_ai.unit_categories
 	if unit_categories[enemy_to_check] then
-		log("FOUND UNIT " .. enemy_to_check)
 		local unit_to_check = unit_categories[enemy_to_check]
-		log(tostring(unit_to_check))
-		log(ai_type)
 		if unit_to_check.unit_type_spawner[ai_type] then
-			log("FOUND AI TYPE " .. ai_type)
-			log(tostring(unit_to_check.unit_type_spawner[ai_type]))
 			return unit_to_check.unit_type_spawner[ai_type]
 		end
 	end
