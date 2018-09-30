@@ -420,22 +420,22 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 	self.unit_categories.deathvox_cloaker = {
 		unit_types = {
 			cop = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker")
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker")
 			},
 			fbi = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker")
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker")
 			},
 			gensec = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker")
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_gensec_cloaker/ene_deathvox_gensec_cloaker")
 			},
 			zeal = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker")
 			}
 		},
 		unit_type_spawner = {
-			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker",
-			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker",
-			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker",
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_gensec_cloaker/ene_deathvox_gensec_cloaker",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker"
 		},
 		access = access_type_all,

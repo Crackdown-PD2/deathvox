@@ -79,6 +79,16 @@
 		
 		<file :name="ene_deathvox_fbi_shield/ene_deathvox_fbi_shield.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_shield/ene_deathvox_fbi_shield_husk.unit" load="true" force="false"/>
+		
+		<file :name="ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker.object" force="false"/>
+		<file :name="ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker.model" force="false"/>
+		<file :name="ene_deathvox_fbi_cloaker/spook_heavy_df.texture" force="false"/>
+		<file :name="ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker.sequence_manager" force="false"/>
 	
 	</group>
 </assets>

@@ -67,5 +67,8 @@
 		<file :name="ene_deathvox_gensec_shield/ene_deathvox_gensec_shield.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_gensec_shield/ene_deathvox_gensec_shield_husk.unit" load="true" force="false"/>
 	
+		<file :name="ene_deathvox_gensec_cloaker/ene_deathvox_gensec_cloaker.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_cloaker/ene_deathvox_gensec_cloaker_husk.unit" load="true" force="false"/>
+	
 	</group>
 </assets>
