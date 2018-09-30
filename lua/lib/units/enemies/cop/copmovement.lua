@@ -48,6 +48,11 @@ function CopMovement:init(unit)
 	CopMovement._action_variants.deathvox_medicdozer = clone(security_variant)
 	CopMovement._action_variants.deathvox_medicdozer.walk = TankCopActionWalk
 	CopMovement._action_variants.deathvox_medicdozer.heal = MedicActionHeal
+	
+	CopMovement._action_variants.deathvox_cop_pistol = security_variant
+	CopMovement._action_variants.deathvox_cop_revolver = security_variant
+	CopMovement._action_variants.deathvox_cop_shotgun = security_variant
+	CopMovement._action_variants.deathvox_cop_smg = security_variant
 	old_init(self, unit)
 end
 

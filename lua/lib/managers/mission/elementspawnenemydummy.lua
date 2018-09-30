@@ -3,6 +3,11 @@ local enemy_replacements = {
 	
 -- Beat police.
 -- need to populate as necesary.
+		["units/payday2/characters/ene_cop_1/ene_cop_1"] = "deathvox_cop_pistol",
+		["units/payday2/characters/ene_cop_2/ene_cop_2"] = "deathvox_cop_revolver",
+		["units/payday2/characters/ene_cop_3/ene_cop_3"] = "deathvox_cop_shotgun",
+		["units/payday2/characters/ene_cop_4/ene_cop_4"] = "deathvox_cop_smg",
+	
 	
 --city swats.
 		["units/payday2/characters/ene_city_swat_1/ene_city_swat_1"] = "deathvox_lightar",

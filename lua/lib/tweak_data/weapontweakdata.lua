@@ -2,155 +2,193 @@ local old_init = WeaponTweakData.init
 function WeaponTweakData:init(tweak_data)
 	old_init(self, tweak_data)
 	self.damage_tables = {
-		deathvox_guard_pistol = {
-			not_a_real_difficulty = {damage = 500},
-			normal = {damage = 500},
-			hard = {damage = 500},
-			very_hard = {damage = 500},
-			overkill = {damage = 600},
-			mayhem = {damage = 750},
-			death_wish = {damage = 750},
-			crackdown = {damage = 875}
+		deathvox_guard_pistol = { 
+			not_a_real_difficulty = {damage = 10},
+			normal = {damage = 3},
+			hard = {damage = 3},
+			very_hard = {damage = 3},
+			overkill = {damage = 3},
+			mayhem = {damage = 3},
+			death_wish = {damage = 3},
+			crackdown = {damage = 6}
 		},
-		deathvox_medic_pistol = {
-			not_a_real_difficulty = {damage = 7.5},
+--We need to consider splitting guard and g-man to give g-man an absolute handcannon.
+--Like with base cops, there are different guards with different guns. 
+--Ideally, we can set them up to use the same presets as base cop.
+--This means so cop smg will also be used by guards with smgs.        
+        --cop bronco
+        --cop shotgun
+        --cop pistol
+        --cop smg
+        --rookie pistol (maybe copy cop pistol?)
+        --HRT smg
+        --Veteran AR (maybe copy heavy AR?)
+-- note light and heavy baselines are not used for beat cop type enemies. These will be implemented separately. They correspond to swat unit types (blue, yellow) instead.
+		deathvox_light_ar = {
+			not_a_real_difficulty = {damage = 10},
+			normal = {damage = 2}, -- blue swat.
+			hard = {damage = 2},
+			very_hard = {damage = 2},
+			overkill = {damage = 4.5}, -- green.
+			mayhem = {damage = 6}, -- elite.
+			death_wish = {damage = 6},
+			crackdown = {damage = 7.5} -- zeal.
+		},
+		deathvox_heavy_ar = {
+			not_a_real_difficulty = {damage = 10},
+			normal = {damage = 4}, -- yellow swat.
+			hard = {damage = 4},
+			very_hard = {damage = 4},
+			overkill = {damage = 6}, -- tan.
+			mayhem = {damage = 8}, -- elite.
+			death_wish = {damage = 8},
+			crackdown = {damage = 10} -- zeal.
+		},
+        deathvox_shotgun_light = {
+			not_a_real_difficulty = {damage = 10},
+			normal = {damage = 6}, -- blue swat.
+			hard = {damage = 6},
+			very_hard = {damage = 6},
+			overkill = {damage = 7}, -- green.
+			mayhem = {damage = 8}, -- elite.
+			death_wish = {damage = 8},
+			crackdown = {damage = 9} -- zeal.
+		},
+		deathvox_shotgun_heavy = {
+			not_a_real_difficulty = {damage = 10},
+			normal = {damage = 8}, -- yellow swat.
+			hard = {damage = 8},
+			very_hard = {damage = 8},
+			overkill = {damage = 9.5}, -- tan.
+			mayhem = {damage = 11}, -- elite.
+			death_wish = {damage = 11},
+			crackdown = {damage = 13} -- zeal.
+		},
+        --shield?
+        deathvox_medic_pistol = { -- note needs to be a different, non-penetrating value on lower diffs. 
+-- may need split?
+			not_a_real_difficulty = {damage = 10},
+			normal = {damage = 3}, -- blue.
+			hard = {damage = 3}, --start.
+			very_hard = {damage = 3},
+			overkill = {damage = 5}, -- green.
+			mayhem = {damage = 6},  -- elite.
+			death_wish = {damage = 6},
+			crackdown = {damage = 8} -- zeal
+		},
+        -- taser?
+		deathvox_cloaker = {
+			not_a_real_difficulty = {damage = 10},
+			normal = {damage = 4.5},
+			hard = {damage = 4.5}, -- start.
+			very_hard = {damage = 4.5},
+			overkill = {damage = 4.5},
+			mayhem = {damage = 4.5},
+			death_wish = {damage = 4.5},
+			crackdown = {damage = 7.5} -- zeal. Increase from prior values, matched to light AR.
+		},
+		deathvox_sniper = { -- focus much more on aim/focus delay than damage shift.
+-- no need for asset coherence on this unit only, as at a distance. Discuss typing with group.
+-- Note possible use in other modes.
+			not_a_real_difficulty = {damage = 10},
+			normal = {damage = 16}, -- blue.
+			hard = {damage = 16},
+			very_hard = {damage = 18},
+			overkill = {damage = 20}, -- green.
+			mayhem = {damage = 20},
+			death_wish = {damage = 20},
+			crackdown = {damage = 24}
+		},
+		deathvox_greendozer = {
+			not_a_real_difficulty = {damage = 10},
+			normal = {damage = 24},
+			hard = {damage = 24},
+			very_hard = {damage = 24}, -- start.
+			overkill = {damage = 24},
+			mayhem = {damage = 24},
+			death_wish = {damage = 24},
+			crackdown = {damage = 50} -- zeal.
+		},
+		deathvox_blackdozer = {
+			not_a_real_difficulty = {damage = 10},
+			normal = {damage = 18},
+			hard = {damage = 18},
+			very_hard = {damage = 18},
+			overkill = {damage = 18}, -- start.
+			mayhem = {damage = 18},
+			death_wish = {damage = 18},
+			crackdown = {damage = 22.5} -- zeal.
+		},
+		deathvox_lmgdozer = { 
+			not_a_real_difficulty = {damage = 10},
+			normal = {damage = 10},
+			hard = {damage = 10},
+			very_hard = {damage = 10},
+			overkill = {damage = 10},
+			mayhem = {damage = 10}, -- start. Skull.
+			death_wish = {damage = 10},
+			crackdown = {damage = 12} -- zeal. Value increased.
+		},
+        deathvox_medicdozer_smg = {
+			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 7.5},
 			hard = {damage = 7.5},
 			very_hard = {damage = 7.5},
 			overkill = {damage = 7.5},
 			mayhem = {damage = 7.5},
 			death_wish = {damage = 7.5},
-			crackdown = {damage = 7.5}
+			crackdown = {damage = 7.5} -- start. zeal. Increase from prior values, matched to light AR.
 		},
-		deathvox_light_ar = {
-			not_a_real_difficulty = {damage = 500},
-			normal = {damage = 500},
-			hard = {damage = 500},
-			very_hard = {damage = 500},
-			overkill = {damage = 600},
-			mayhem = {damage = 750},
-			death_wish = {damage = 750},
-			crackdown = {damage = 875}
+-- Grenadier damage values are a fallback, as they do not do real damage; they never "hit".
+        deathvox_grenadier = {
+			not_a_real_difficulty = {damage = 10},
+			normal = {damage = 10},
+			hard = {damage = 10},
+			very_hard = {damage = 10},
+			overkill = {damage = 10},
+			mayhem = {damage = 10},
+			death_wish = {damage = 10},
+			crackdown = {damage = 10} -- start.
 		},
-		deathvox_heavy_ar = {
-			not_a_real_difficulty = {damage = 500},
-			normal = {damage = 500},
-			hard = {damage = 500},
-			very_hard = {damage = 500},
-			overkill = {damage = 600},
-			mayhem = {damage = 750},
-			death_wish = {damage = 750},
-			crackdown = {damage = 875}
+		deathvox_cop_pistol = { 
+			not_a_real_difficulty = {damage = 10},
+			normal = {damage = 3},
+			hard = {damage = 3},
+			very_hard = {damage = 3},
+			overkill = {damage = 3},
+			mayhem = {damage = 3},
+			death_wish = {damage = 3},
+			crackdown = {damage = 6}
 		},
-        deathvox_shotgun_light = {
-			not_a_real_difficulty = {damage = 500},
-			normal = {damage = 500},
-			hard = {damage = 500},
-			very_hard = {damage = 500},
-			overkill = {damage = 600},
-			mayhem = {damage = 750},
-			death_wish = {damage = 750},
-			crackdown = {damage = 875}
+		deathvox_cop_revolver = { 
+			not_a_real_difficulty = {damage = 10},
+			normal = {damage = 3},
+			hard = {damage = 3},
+			very_hard = {damage = 3},
+			overkill = {damage = 3},
+			mayhem = {damage = 3},
+			death_wish = {damage = 3},
+			crackdown = {damage = 6}
 		},
-		deathvox_shotgun_heavy = {
-			not_a_real_difficulty = {damage = 500},
-			normal = {damage = 500},
-			hard = {damage = 500},
-			very_hard = {damage = 500},
-			overkill = {damage = 600},
-			mayhem = {damage = 750},
-			death_wish = {damage = 750},
-			crackdown = {damage = 875}
+		deathvox_cop_shotgun = { 
+			not_a_real_difficulty = {damage = 10},
+			normal = {damage = 3},
+			hard = {damage = 3},
+			very_hard = {damage = 3},
+			overkill = {damage = 3},
+			mayhem = {damage = 3},
+			death_wish = {damage = 3},
+			crackdown = {damage = 6}
 		},
-		deathvox_sniper = {
-			not_a_real_difficulty = {damage = 500},
-			normal = {damage = 500},
-			hard = {damage = 500},
-			very_hard = {damage = 500},
-			overkill = {damage = 600},
-			mayhem = {damage = 750},
-			death_wish = {damage = 750},
-			crackdown = {damage = 875}
-		},
-		deathvox_medicdozer_smg = {
-			not_a_real_difficulty = {damage = 500},
-			normal = {damage = 500},
-			hard = {damage = 500},
-			very_hard = {damage = 500},
-			overkill = {damage = 600},
-			mayhem = {damage = 750},
-			death_wish = {damage = 750},
-			crackdown = {damage = 875}
-		},
-		deathvox_grenadier = {
-			not_a_real_difficulty = {damage = 500},
-			normal = {damage = 500},
-			hard = {damage = 500},
-			very_hard = {damage = 500},
-			overkill = {damage = 600},
-			mayhem = {damage = 750},
-			death_wish = {damage = 750},
-			crackdown = {damage = 875}
-		},
-		deathvox_cloaker = {
-			not_a_real_difficulty = {damage = 500},
-			normal = {damage = 500},
-			hard = {damage = 500},
-			very_hard = {damage = 500},
-			overkill = {damage = 600},
-			mayhem = {damage = 750},
-			death_wish = {damage = 750},
-			crackdown = {damage = 875}
-		},
-		deathvox_sniper = {
-			not_a_real_difficulty = {damage = 500},
-			normal = {damage = 500},
-			hard = {damage = 500},
-			very_hard = {damage = 500},
-			overkill = {damage = 600},
-			mayhem = {damage = 750},
-			death_wish = {damage = 750},
-			crackdown = {damage = 875}
-		},
-		deathvox_greendozer = {
-			not_a_real_difficulty = {damage = 500},
-			normal = {damage = 500},
-			hard = {damage = 500},
-			very_hard = {damage = 500},
-			overkill = {damage = 600},
-			mayhem = {damage = 750},
-			death_wish = {damage = 750},
-			crackdown = {damage = 875}
-		},
-		deathvox_blackdozer = {
-			not_a_real_difficulty = {damage = 500},
-			normal = {damage = 500},
-			hard = {damage = 500},
-			very_hard = {damage = 500},
-			overkill = {damage = 600},
-			mayhem = {damage = 750},
-			death_wish = {damage = 750},
-			crackdown = {damage = 875}
-		},
-		deathvox_lmgdozer = { 
-			not_a_real_difficulty = {damage = 500},
-			normal = {damage = 500},
-			hard = {damage = 500},
-			very_hard = {damage = 500},
-			overkill = {damage = 600},
-			mayhem = {damage = 750},
-			death_wish = {damage = 750},
-			crackdown = {damage = 875}
-		},
-		deathvox_medicdozer = {
-			not_a_real_difficulty = {damage = 500},
-			normal = {damage = 500},
-			hard = {damage = 500},
-			very_hard = {damage = 500},
-			overkill = {damage = 600},
-			mayhem = {damage = 750},
-			death_wish = {damage = 750},
-			crackdown = {damage = 875}
+		deathvox_cop_smg = { 
+			not_a_real_difficulty = {damage = 10},
+			normal = {damage = 3},
+			hard = {damage = 3},
+			very_hard = {damage = 3},
+			overkill = {damage = 3},
+			mayhem = {damage = 3},
+			death_wish = {damage = 3},
+			crackdown = {damage = 6}
 		}
 	}
 
@@ -168,6 +206,27 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_cloaker = deep_clone(self.schakal_crew)
 	self.deathvox_blackdozer = deep_clone(self.saiga_crew)
 	self.deathvox_greendozer = deep_clone(self.r870_crew)
+
+	self.deathvox_cop_pistol = deep_clone(self.c45_npc)
+	
+	self.deathvox_cop_revolver = deep_clone(self.raging_bull_crew)
+	self.deathvox_cop_revolver.sounds.prefix = "rbull_npc"
+	self.deathvox_cop_revolver.DAMAGE = 4
+	self.deathvox_cop_revolver.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.deathvox_cop_revolver.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.deathvox_cop_revolver.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty"
+	self.deathvox_cop_revolver.CLIP_AMMO_MAX = 6
+	self.deathvox_cop_revolver.NR_CLIPS_MAX = 8
+	self.deathvox_cop_revolver.hold = "pistol"
+	self.deathvox_cop_revolver.alert_size = 5000
+	self.deathvox_cop_revolver.suppression = 1.8
+	self.deathvox_cop_revolver.FIRE_MODE = "single"
+	
+	self.deathvox_cop_shotgun = deep_clone(self.r870_npc)
+	self.deathvox_cop_shotgun.rays = nil
+	self.deathvox_cop_shotgun.spread = nil
+	
+	self.deathvox_cop_smg = deep_clone(self.mp5_npc)
 
 	self.deathvox_light_ar.sounds.prefix = "aug_npc" -- dont worry about this
 	self.deathvox_light_ar.use_data.selection_index = 2 -- dont worry about this

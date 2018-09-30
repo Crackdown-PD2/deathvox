@@ -181,6 +181,46 @@ function CharacterTweakData:_presets(tweak_data)
 			mayhem = {health = 96, headshot_mult = 3},
 			death_wish = {health = 96, headshot_mult = 3},
 			crackdown = {health = 101, headshot_mult = 3}
+		},
+		deathvox_cop_smg = {  -- mk 1 values complete. Consistent below CD.
+			not_a_real_difficulty = {health = 4, headshot_mult = 3},
+			normal = {health = 4, headshot_mult = 3},
+			hard = {health = 4, headshot_mult = 3},
+			very_hard = {health = 4, headshot_mult = 3},
+			overkill = {health = 4, headshot_mult = 3},
+			mayhem = {health = 4, headshot_mult = 3},
+			death_wish = {health = 4, headshot_mult = 3},
+			crackdown = {health = 15, headshot_mult = 3}
+		},
+		deathvox_cop_revolver = {  -- mk 1 values complete. Consistent below CD.
+			not_a_real_difficulty = {health = 4, headshot_mult = 3},
+			normal = {health = 4, headshot_mult = 3},
+			hard = {health = 4, headshot_mult = 3},
+			very_hard = {health = 4, headshot_mult = 3},
+			overkill = {health = 4, headshot_mult = 3},
+			mayhem = {health = 4, headshot_mult = 3},
+			death_wish = {health = 4, headshot_mult = 3},
+			crackdown = {health = 15, headshot_mult = 3}
+		},
+		deathvox_cop_pistol = {  -- mk 1 values complete. Consistent below CD.
+			not_a_real_difficulty = {health = 4, headshot_mult = 3},
+			normal = {health = 4, headshot_mult = 3},
+			hard = {health = 4, headshot_mult = 3},
+			very_hard = {health = 4, headshot_mult = 3},
+			overkill = {health = 4, headshot_mult = 3},
+			mayhem = {health = 4, headshot_mult = 3},
+			death_wish = {health = 4, headshot_mult = 3},
+			crackdown = {health = 15, headshot_mult = 3}
+		},
+		deathvox_cop_shotgun = {  -- mk 1 values complete. Consistent below CD.
+			not_a_real_difficulty = {health = 4, headshot_mult = 3},
+			normal = {health = 4, headshot_mult = 3},
+			hard = {health = 4, headshot_mult = 3},
+			very_hard = {health = 4, headshot_mult = 3},
+			overkill = {health = 4, headshot_mult = 3},
+			mayhem = {health = 4, headshot_mult = 3},
+			death_wish = {health = 4, headshot_mult = 3},
+			crackdown = {health = 15, headshot_mult = 3}
 		}
 	}
 	presets.dodge.deathvox = {
@@ -2440,6 +2480,37 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_grenadier.is_special_unit = "boom"
 	self.deathvox_grenadier.custom_voicework = "grenadier"
  	table.insert(self._enemy_list, "deathvox_grenadier")
+	
+	self.deathvox_cop = deep_clone(self.cop)
+	self.deathvox_cop.weapon = presets.weapon.deathvox
+	self.deathvox_cop.HEALTH_INIT = 4
+	self.deathvox_cop.headshot_dmg_mul = 2
+	self.deathvox_cop.access = "cop"
+	self.deathvox_cop.silent_priority_shout = "f37"
+	self.deathvox_cop.dodge = presets.dodge.average
+	self.deathvox_cop.deathguard = true
+	self.deathvox_cop.chatter = presets.enemy_chatter.cop
+	self.deathvox_cop.steal_loot = true
+
+	self.deathvox_cop_pistol = deep_clone(self.deathvox_cop)
+	self.deathvox_cop_pistol.use_factory = true
+	self.deathvox_cop_pistol.factory_weapon_id = {"wpn_deathvox_cop_pistol"}
+ 	table.insert(self._enemy_list, "deathvox_cop_pistol")
+	
+	self.deathvox_cop_revolver = deep_clone(self.deathvox_cop)
+	self.deathvox_cop_revolver.use_factory = true
+	self.deathvox_cop_revolver.factory_weapon_id = {"wpn_deathvox_cop_revolver"}
+ 	table.insert(self._enemy_list, "deathvox_cop_revolver")
+	
+	self.deathvox_cop_smg = deep_clone(self.deathvox_cop)
+	self.deathvox_cop_smg.use_factory = true
+	self.deathvox_cop_smg.factory_weapon_id = {"wpn_deathvox_cop_smg"}
+ 	table.insert(self._enemy_list, "deathvox_cop_smg")
+	
+	self.deathvox_cop_shotgun = deep_clone(self.deathvox_cop)
+	self.deathvox_cop_shotgun.use_factory = true
+	self.deathvox_cop_shotgun.factory_weapon_id = {"wpn_deathvox_cop_shotgun"}
+ 	table.insert(self._enemy_list, "deathvox_cop_shotgun")
 	
 end
 

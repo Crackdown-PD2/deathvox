@@ -18,6 +18,98 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		medic = 4,
 		ass_sniper = 3
 	}
+	self.unit_categories.deathvox_cop_pistol = {
+		unit_types = {
+			cop = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol")
+			},
+			fbi = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol")
+			},
+			gensec = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol")
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol")
+			}		
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol"
+		},
+		access = access_type_all
+	}
+	self.unit_categories.deathvox_cop_revolver = {
+		unit_types = {
+			cop = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver")
+			},
+			fbi = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver")
+			},
+			gensec = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver")
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver")
+			}		
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver"
+		},
+		access = access_type_all
+	}
+	self.unit_categories.deathvox_cop_shotgun = {
+		unit_types = {
+			cop = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun")
+			},
+			fbi = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun")
+			},
+			gensec = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun")
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun")
+			}		
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun"
+		},
+		access = access_type_all
+	}
+	self.unit_categories.deathvox_cop_smg = {
+		unit_types = {
+			cop = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg")
+			},
+			fbi = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg")
+			},
+			gensec = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg")
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg")
+			}		
+		},
+		unit_type_spawner = {
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg"
+		},
+		access = access_type_all
+	}
 	self.unit_categories.deathvox_guard = {
 		unit_types = {
 			cop = {

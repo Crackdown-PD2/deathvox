@@ -66,6 +66,11 @@ function CopBrain:post_init()
 	CopBrain._logic_variants.deathvox_lmgdozer.attack = TankCopLogicAttack
 	CopBrain._logic_variants.deathvox_medicdozer = clone(security_variant)
 	CopBrain._logic_variants.deathvox_medicdozer.attack = TankCopLogicAttack
+
+	CopBrain._logic_variants.deathvox_cop_pistol = security_variant
+	CopBrain._logic_variants.deathvox_cop_revolver = security_variant
+	CopBrain._logic_variants.deathvox_cop_shotgun = security_variant
+	CopBrain._logic_variants.deathvox_cop_smg = security_variant
 	old_init(self)
 end
 

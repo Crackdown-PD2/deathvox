@@ -21,6 +21,7 @@ local bezier_curve = {
 	1,
 	1
 }
+
 function CopActionShoot:update(t)
 	local vis_state = self._ext_base:lod_stage()
 	vis_state = vis_state or 4
@@ -84,7 +85,8 @@ function CopActionShoot:update(t)
 				self._autofiring = nil
 				self._autoshots_fired = nil
 			end
-			if alive(managers.groupai:state():phalanx_vip()) then -- allow reloads while moving
+
+			--if not self._ext_anim.base_no_reload then /// npcs can now reload while moving
 				local res = CopActionReload._play_reload(self)
 
 				if res then
@@ -94,19 +96,7 @@ function CopActionShoot:update(t)
 				if Network:is_server() then
 					managers.network:session():send_to_peers("reload_weapon_cop", self._unit)
 				end
-			else
-				if not self._ext_anim.base_no_reload then
-					local res = CopActionReload._play_reload(self)
-
-					if res then
-						self._machine:set_speed(res, self._reload_speed)
-					end
-
-					if Network:is_server() then
-						managers.network:session():send_to_peers("reload_weapon_cop", self._unit)
-					end
-				end
-			end
+			--end
 		elseif self._autofiring then
 			if not target_vec or not self._common_data.allow_fire then
 				self._weapon_base:stop_autofire()
@@ -143,7 +133,7 @@ function CopActionShoot:update(t)
 						self._unit:unit_data().mission_element:event("killshot", self._unit)
 					end
 
-					if not ext_anim.recoil and vis_state == 1 and not ext_anim.base_no_recoil and not ext_anim.move then
+					if not ext_anim.recoil and vis_state == 1 and not ext_anim.base_no_recoil and not ext_anim.move and not self._unit:base():has_tag("tank") then --prevent Dozers from using recoil animations, aka aiming their guns, they introduced this with Housewarming Party and never fixed it
 						self._ext_movement:play_redirect("recoil_auto")
 					end
 
@@ -216,8 +206,32 @@ function CopActionShoot:update(t)
 			if shoot then
 				local melee = nil
 
-				if autotarget and (not self._common_data.melee_countered_t or t - self._common_data.melee_countered_t > 15) and target_dis < 130 and self._w_usage_tweak.melee_speed and self._melee_timeout_t < t then
-					melee = self:_chk_start_melee(target_vec, target_dis, autotarget, target_pos)
+				if (not self._common_data.melee_countered_t or t - self._common_data.melee_countered_t > 15) and self._w_usage_tweak.melee_speed and self._melee_timeout_t < t and not alive(self._ext_inventory and self._ext_inventory._shield_unit) then --prevent units equipped with shields from doing melee attacks
+					if autotarget then
+						if target_dis < 130 then
+							melee = self:_chk_start_melee(target_vec, target_dis, autotarget, target_pos)
+						end
+					else
+						if Network:is_server() then --prevent husks from attempting to melee each other
+							local is_sentry = self._attention and self._attention.unit and self._attention.unit:base() and self._attention.unit:base().sentry_gun
+							local is_player_husk = self._attention and self._attention.unit and self._attention.unit:base() and self._attention.unit:base().is_husk_player
+
+							local head_pos = self._unit:movement():m_head_pos()
+							local att_movement = self._attention and self._attention.unit and self._attention.unit.movement and self._attention.unit:movement() or nil
+							local u_head_pos = att_movement and att_movement.m_head_pos and att_movement:m_head_pos() or nil
+							local covered_by_shield = u_head_pos and World:raycast("ray", head_pos, u_head_pos, "ignore_unit", {self._unit}, "slot_mask", managers.slot:get_mask("enemy_shield_check"))
+
+							if target_dis < 180 and not is_sentry and not is_player_husk then
+								if self._attention and self._attention.unit and self._attention.unit:base() and (self._attention.unit:base()._tweak_table == "phalanx_minion" or self._attention.unit:base()._tweak_table == "phalanx_vip" or self._attention.unit:base():has_tag("tank")) then
+									if not covered_by_shield then
+										melee = self:_chk_start_melee(target_vec, target_dis, nil, target_pos) --if a phalanx/dozer unit isn't protected by it's shield, attempt a melee attack
+									end
+								else
+									melee = self:_chk_start_melee(target_vec, target_dis, nil, target_pos)
+								end
+							end
+						end
+					end
 				end
 
 				if not melee then
@@ -260,21 +274,21 @@ function CopActionShoot:update(t)
 
 						self._autoshots_fired = 0
 
-						if vis_state == 1 and not ext_anim.base_no_recoil and not ext_anim.move then
+						if vis_state == 1 and not ext_anim.base_no_recoil and not ext_anim.move and not self._unit:base():has_tag("tank") then --same as the other check above
 							self._ext_movement:play_redirect("recoil_auto")
 						end
 					else
 						local spread = self._spread
 
-						if autotarget then
-							local new_target_pos = self._shoot_history and self:_get_unit_shoot_pos(t, target_pos, target_dis, self._w_usage_tweak, falloff, i_range, autotarget)
+						local new_target_pos = self._shoot_history and self:_get_unit_shoot_pos(t, target_pos, target_dis, self._w_usage_tweak, falloff, i_range, autotarget)
 
+						--if autotarget then /// removing this stupid autotarget check allows single shot for NPCs to actually use accuracy stats in charactertweakdata and work properly just like autofire, instead of depending on spread alone
 							if new_target_pos then
 								target_pos = new_target_pos
 							else
 								spread = math.min(20, spread)
 							end
-						end
+						--end
 
 						local spread_pos = temp_vec2
 
@@ -306,5 +320,222 @@ function CopActionShoot:update(t)
 
 	if self._ext_anim.base_need_upd then
 		self._ext_movement:upd_m_head_pos()
+	end
+end
+
+function CopActionShoot:_chk_start_melee(target_vec, target_dis, autotarget, target_pos)
+	local melee_weapon = self._unit:base():melee_weapon()
+	local is_weapon = melee_weapon == "weapon"
+	local state = self._ext_movement:play_redirect(is_weapon and "melee" or "melee_item")
+
+	if state then
+		if not is_weapon then
+			local anim_attack_vars = self._common_data.char_tweak.melee_anims or {
+				"var1",
+				"var2"
+			}
+			local melee_var = self:_pseudorandom(#anim_attack_vars)
+
+			self._common_data.machine:set_parameter(state, anim_attack_vars[melee_var], 1)
+
+			local param = tweak_data.weapon.npc_melee[melee_weapon].animation_param
+
+			self._common_data.machine:set_parameter(state, param, 1)
+		end
+
+		if is_weapon then
+			local anim_speed = self._w_usage_tweak.melee_speed
+
+			self._common_data.machine:set_speed(state, anim_speed)
+		end
+
+		managers.network:session():send_to_peers_synched("play_distance_interact_redirect", self._unit, is_weapon and "melee" or "melee_item") --let other players see when npcs attempt a melee attack instead of nothing, why isn't this in vanilla?
+
+		self._melee_timeout_t = TimerManager:game():time() + (self._w_usage_tweak.melee_retry_delay and math.lerp(self._w_usage_tweak.melee_retry_delay[1], self._w_usage_tweak.melee_retry_delay[2], self:_pseudorandom()) or 1)
+	else
+		debug_pause_unit(self._common_data.unit, "[CopActionShoot:_chk_start_melee] redirect failed in state", self._common_data.machine:segment_state(Idstring("base")), self._common_data.unit)
+	end
+
+	return state and true
+end
+
+function CopActionShoot:anim_clbk_melee_strike()
+	--some checks to prevent crashes + no autotarget (local player) requirement
+	if not self._attention then
+		return
+	end
+
+	if not self._attention.unit then
+		return
+	end
+
+	if not alive(self._attention.unit) then
+		return
+	end
+
+	local shoot_from_pos = self._shoot_from_pos
+	local ext_anim = self._ext_anim
+	local target_pos, target_vec, target_dis, autotarget = self:_get_target_pos(shoot_from_pos, self._attention, TimerManager:game():time())
+	local max_dix = autotarget and 165 or 180
+
+	--prevent husks from hitting each other and prevent crashing as a client
+	if not autotarget and not Network:is_server() then
+		return
+	end
+
+	--prevent npcs from hitting sentries/turrets and player husks + distance check
+	if (not autotarget and self._attention.unit:base() and (self._attention.unit:base().sentry_gun or self._attention.unit:base().is_husk_player)) or target_dis >= max_dix then
+		return
+	end
+
+	local min_dot = math.lerp(0, 0.4, target_dis / max_dix)
+	local tar_vec_flat = temp_vec2
+
+	mvec3_set(tar_vec_flat, target_vec)
+	mvec3_set_z(tar_vec_flat, 0)
+	mvec3_norm(tar_vec_flat)
+
+	local fwd = self._common_data.fwd
+	local fwd_dot = mvec3_dot(fwd, tar_vec_flat)
+
+	if fwd_dot < min_dot then
+		return
+	end
+
+	local push_vel = target_vec:with_z(0.1):normalized() * 600
+	local melee_weapon = self._unit:base():melee_weapon()
+	local is_weapon = melee_weapon == "weapon"
+	local damage = is_weapon and self._w_usage_tweak.melee_dmg or tweak_data.weapon.npc_melee[melee_weapon].damage
+	local dmg_mul = is_weapon and 1 or self._common_data.char_tweak.melee_weapon_dmg_multiplier or 1
+	dmg_mul = dmg_mul * (1 + self._unit:base():get_total_buff("base_damage"))
+	damage = damage * dmg_mul
+
+	--unit and target heads to use for calculations and a shield obstruction check
+	local head_pos = self._unit:movement():m_head_pos()
+	local att_movement = self._attention.unit.movement and self._attention.unit:movement() or nil
+	local u_head_pos = att_movement and att_movement.m_head_pos and att_movement:m_head_pos() or nil
+	local covered_by_shield = u_head_pos and World:raycast("ray", head_pos, u_head_pos, "ignore_unit", {self._unit}, "slot_mask", managers.slot:get_mask("enemy_shield_check"))
+
+	local knock_shield = nil
+
+	--if the target is a normal Shield unit and they're protected by their shield, knock them back
+	if not autotarget then
+		if self._attention.unit:base() and self._attention.unit:base()._tweak_table == "shield" and covered_by_shield then
+			knock_shield = true
+		end
+	end
+
+	--separate autotarget and non-autotarget values (mostly if unused) + shield_knock
+	local action_data = {
+		variant = "melee",
+		damage = knock_shield and 0 or damage,
+		damage_effect = damage * 2,
+		weapon_unit = not autotarget and nil or self._weapon_unit,
+		attacker_unit = not autotarget and self._unit or self._common_data.unit,
+		melee_weapon = not autotarget and nil or melee_weapon,
+		push_vel = not autotarget and nil or push_vel,
+		shield_knock = knock_shield and true or nil,
+		col_ray = {
+			body = not autotarget and self._attention.unit.body and self._attention.unit:body("body") or nil, --need the Idstring for sentries for this to work against them without crashing
+			position = not autotarget and mvector3.copy(u_head_pos) or (head_pos + fwd * 50),
+			ray = not autotarget and mvector3.copy(u_head_pos - head_pos) or mvector3.copy(target_vec)
+		}
+	}
+	local defense_data = self._attention.unit:character_damage():damage_melee(action_data) --would use damage_bullet against sentries, using damage_melee might also be the reason this can sometimes cause clients to crash, still working on this
+
+	if defense_data then
+		if defense_data == "countered" then
+			self._common_data.melee_countered_t = TimerManager:game():time()
+			local action_data = {
+				damage_effect = 1,
+				damage = 0,
+				variant = "counter_spooc",
+				attacker_unit = self._strike_unit,
+				col_ray = {
+					body = self._unit:body("body"),
+					position = self._common_data.pos + math.UP * 100
+				},
+				attack_dir = -1 * target_vec:normalized(),
+				name_id = managers.blackmarket:equipped_melee_weapon()
+			}
+
+			self._unit:character_damage():damage_melee(action_data)
+
+			return
+		else
+			if melee_weapon then --because of the parameters above, this intentionally doesn't work against players
+				local hit_offset_height = math.clamp(head_pos.z - self._attention.unit:movement():m_pos().z, 0, 300)
+				local hit_pos = mvector3.copy(self._attention.unit:movement():m_pos())
+
+				mvector3.set_z(hit_pos, hit_pos.z + hit_offset_height)
+
+				local hit_rot = hit_pos - head_pos
+
+				--SEMTRY TARGET SOUND AND EFFECTS - UNUSED FOR NOW
+				--[[if self._attention.unit:base() and self._attention.unit:base().sentry_gun then
+					if melee_weapon == "knife_1" then
+						self._attention.unit:sound():play("knife_hit_gen", nil, true)
+					elseif melee_weapon == "fists" then
+						self._attention.unit:sound():play("fist_hit_gen", nil, true)
+					elseif melee_weapon == "helloween" then
+						self._attention.unit:sound():play("knuckles_hit_gen", nil, true)
+					elseif melee_weapon == "baton" or melee_weapon == "weapon" then
+						self._attention.unit:sound():play("melee_hit_gen", nil, true)
+					end
+
+					World:effect_manager():spawn({
+						effect = Idstring("bullet_hit"),
+						position = hit_pos,
+						normal = hit_rot
+					})
+				else]]
+					if knock_shield then
+						if melee_weapon == "knife_1" then
+							self._attention.unit:sound():play("knife_hit_gen", nil, true)
+						elseif melee_weapon == "fists" then
+							self._attention.unit:sound():play("fist_hit_gen", nil, true)
+						elseif melee_weapon == "helloween" then
+							self._attention.unit:sound():play("knuckles_hit_gen", nil, true) --not all sounds work, I guess they're just not loaded
+						elseif melee_weapon == "baton" or melee_weapon == "weapon" then
+							self._attention.unit:sound():play("melee_hit_gen", nil, true)
+						end
+					else
+						if melee_weapon == "knife_1" then
+							self._attention.unit:sound():play("knife_hit_body", nil, true)
+						elseif melee_weapon == "fists" then
+							self._attention.unit:sound():play("fist_hit_body", nil, true)
+						elseif melee_weapon == "helloween" then
+							self._attention.unit:sound():play("knuckles_hit_body", nil, true)
+						elseif melee_weapon == "baton" or melee_weapon == "weapon" then
+							self._attention.unit:sound():play("melee_hit_body", nil, true)
+						end
+
+						World:effect_manager():spawn({
+							effect = Idstring("effects/payday2/particles/impacts/blood/blood_impact_a"),
+							position = hit_pos,
+							normal = hit_rot
+						})
+					end
+				--end
+				if defense_data.type == "death" then
+					if self._unit:in_slot(managers.slot:get_mask("criminals_no_deployables")) then
+						CopDamage:_AI_comment_death(self._unit, self._attention.unit) --copdamage lacks special enemy kill callouts for damage_melee
+					elseif self._unit:base() and self._unit:base():has_tag("tank") then --optional stuff below
+						if not self._attention.unit:in_slot(managers.slot:get_mask("criminals_no_deployables")) then
+							local attack_dir, distance = nil
+
+							if self._unit then
+								attack_dir = hit_pos - head_pos
+								distance = mvector3.normalize(attack_dir)
+							else
+								attack_dir = self._attention.unit:rotation():y()
+							end
+
+							managers.game_play_central:do_shotgun_push(self._attention.unit, hit_pos, attack_dir, distance) --Dozers will send people flying with their fists/titan staffs, for actual shotgun pushes (between NPCs), refer to https://steamcommunity.com/app/218620/discussions/14/1693785669872895579/?ctp=2#c1697175413682056426
+						end
+					end
+				end
+			end
+		end
 	end
 end

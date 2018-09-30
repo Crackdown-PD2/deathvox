@@ -21,5 +21,37 @@
 		<file :name="ene_deathvox_cop_taser/ene_deathvox_cop_taser.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_cop_taser/ene_deathvox_cop_taser.model" force="false"/>
 	
+		<file :name="ene_deathvox_cop_pistol/ene_deathvox_cop_pistol.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_cop_pistol/ene_deathvox_cop_pistol_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_cop_pistol/ene_deathvox_cop_pistol_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_cop_pistol/ene_deathvox_cop_pistol.material_config" force="false"/>
+		<file :name="ene_deathvox_cop_pistol/ene_deathvox_cop_pistol.object" force="false"/>
+		<file :name="ene_deathvox_cop_pistol/ene_deathvox_cop_pistol.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_cop_pistol/ene_deathvox_cop_pistol.model" force="false"/>
+		
+		<file :name="ene_deathvox_cop_revolver/ene_deathvox_cop_revolver.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_cop_revolver/ene_deathvox_cop_revolver_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_cop_revolver/ene_deathvox_cop_revolver_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_cop_revolver/ene_deathvox_cop_revolver.material_config" force="false"/>
+		<file :name="ene_deathvox_cop_revolver/ene_deathvox_cop_revolver.object" force="false"/>
+		<file :name="ene_deathvox_cop_revolver/ene_deathvox_cop_revolver.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_cop_revolver/ene_deathvox_cop_revolver.model" force="false"/>
+		
+		<file :name="ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun.material_config" force="false"/>
+		<file :name="ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun.object" force="false"/>
+		<file :name="ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun.model" force="false"/>
+		
+		<file :name="ene_deathvox_cop_smg/ene_deathvox_cop_smg.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_cop_smg/ene_deathvox_cop_smg_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_cop_smg/ene_deathvox_cop_smg_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_cop_smg/ene_deathvox_cop_smg.material_config" force="false"/>
+		<file :name="ene_deathvox_cop_smg/ene_deathvox_cop_smg.object" force="false"/>
+		<file :name="ene_deathvox_cop_smg/ene_deathvox_cop_smg.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_cop_smg/ene_deathvox_cop_smg.model" force="false"/>
+	
 	</group>
 </assets>
