@@ -1016,7 +1016,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		amount = {4, 4},
 		spawn = {
 			{
-				unit = "FBI_suit_stealth_MP5",
+				unit = "deathvox_fbi_hrt",
 				freq = 1,
 				amount_min = 3,
 				amount_max = 3,
@@ -1038,7 +1038,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		amount = {4, 4},
 		spawn = {
 			{
-				unit = "FBI_suit_M4_MP5",
+				unit = "deathvox_fbi_veteran",
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
@@ -1103,7 +1103,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		amount = {4, 4},
 		spawn = {
 			{
-				unit = "FBI_suit_M4_MP5",
+				unit = "deathvox_fbi_veteran",
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
