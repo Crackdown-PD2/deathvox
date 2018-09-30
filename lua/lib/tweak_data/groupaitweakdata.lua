@@ -184,22 +184,22 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 	self.unit_categories.deathvox_medic = {
 		unit_types = {
 			cop = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic")
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cop_medic/ene_deathvox_cop_medic")
 			},
 			fbi = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic")
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_fbi_medic/ene_deathvox_fbi_medic")
 			},
 			gensec = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic")
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_gensec_medic/ene_deathvox_gensec_medic")
 			},
 			zeal = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic")
 			}	
 		},
 		unit_type_spawner = {
-			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic",
-			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic",
-			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic",
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_cop_medic/ene_deathvox_cop_medic",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_fbi_medic/ene_deathvox_fbi_medic",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_gensec_medic/ene_deathvox_gensec_medic",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic"
 		},
 		access = access_type_all,
@@ -208,22 +208,22 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 	self.unit_categories.deathvox_taser = {
 		unit_types = {
 			cop = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser")
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser")
 			},
 			fbi = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser")
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser")
 			},
 			gensec = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser")
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser")
 			},
 			zeal = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser")
 			}				
 		},
 		unit_type_spawner = {
-			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser",
-			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser",
-			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser",
+			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser",
+			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser",
+			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser"
 		},
 		access = access_type_all,

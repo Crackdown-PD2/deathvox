@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<assets base_path="assets/" target="scripted" load_group="fbicops">
+
+	<group name="units/pd2_mod_gageammo/characters/">
+	
+		<file :name="ene_deathvox_fbi_medic/ene_deathvox_fbi_medic.unit" load="true"/>
+		<file :name="ene_deathvox_fbi_medic/ene_deathvox_fbi_medic_husk.unit" load="true"/>
+		<file :name="ene_deathvox_fbi_medic/ene_medic_df.texture" force="false"/>
+		<file :name="ene_deathvox_fbi_medic/ene_medic_head_df.texture" force="false"/>
+		<file :name="ene_deathvox_fbi_medic/ene_deathvox_fbi_medic_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_medic/ene_deathvox_fbi_medic.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_medic/ene_deathvox_fbi_medic.object" force="false"/>
+		<file :name="ene_deathvox_fbi_medic/ene_deathvox_fbi_medic.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_fbi_medic/ene_deathvox_fbi_medic.model" force="false"/>
+
+		<file :name="ene_deathvox_fbi_taser/ene_deathvox_fbi_taser.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_taser/ene_deathvox_fbi_taser_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_taser/ene_deathvox_fbi_taser_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_taser/ene_deathvox_fbi_taser.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_taser/ene_deathvox_fbi_taser.object" force="false"/>
+		<file :name="ene_deathvox_fbi_taser/ene_deathvox_fbi_taser.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_fbi_taser/ene_deathvox_fbi_taser.model" force="false"/>
+		<file :name="ene_deathvox_fbi_taser/taser_body_df.texture" force="false"/>
+	
+	</group>
+</assets>

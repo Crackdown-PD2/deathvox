@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<assets base_path="assets/" target="scripted" load_group="genseccops">
+
+	<group name="units/pd2_mod_gageammo/characters/">
+	
+		<file :name="ene_deathvox_gensec_medic/ene_deathvox_gensec_medic.unit" load="true"/>
+		<file :name="ene_deathvox_gensec_medic/ene_deathvox_gensec_medic_husk.unit" load="true"/>
+		<file :name="ene_deathvox_gensec_medic/ene_medic_df.texture" force="false"/>
+		<file :name="ene_deathvox_gensec_medic/ene_medic_head_df.texture" force="false"/>
+		<file :name="ene_deathvox_gensec_medic/ene_deathvox_gensec_medic_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_medic/ene_deathvox_gensec_medic.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_medic/ene_deathvox_gensec_medic.object" force="false"/>
+		<file :name="ene_deathvox_gensec_medic/ene_deathvox_gensec_medic.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_gensec_medic/ene_deathvox_gensec_medic.model" force="false"/>
+
+		<file :name="ene_deathvox_gensec_taser/ene_deathvox_gensec_taser.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_taser/ene_deathvox_gensec_taser_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_taser/ene_deathvox_gensec_taser_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_taser/ene_deathvox_gensec_taser.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_taser/ene_deathvox_gensec_taser.object" force="false"/>
+		<file :name="ene_deathvox_gensec_taser/ene_deathvox_gensec_taser.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_gensec_taser/ene_deathvox_gensec_taser.model" force="false"/>
+		<file :name="ene_deathvox_gensec_taser/taser_body_df.texture" force="false"/>
+		<file :name="ene_deathvox_gensec_taser/helmets_heavy_taser_atlas_df.texture" force="false"/>
+	
+	</group>
+</assets>

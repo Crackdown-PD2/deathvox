@@ -7,7 +7,16 @@ if not _G.deathvox then
 	_G.deathvox.ModPath = ModPath
 	blt.xaudio.setup()
 	local deathvox_mod_instance = ModInstance
+	log("==============Loading Crackdown Assets==============")
+	log("Loading Crackdown Cops")
 	deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("cops")
+	log("Loading SWAT Cops")
+	deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("copcops")
+	log("Loading FBI Cops")
+	deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("fbicops")
+	log("Loading Gensec Cops")
+	deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("genseccops")
+	log("Finished loading!")
 	if _G.voiceline_framework then
 		_G.voiceline_framework:register_unit("grenadier")
 		local fuck =  Application:nice_path( "./" .. ModPath .. "assets/oggs/voiceover/grenadier", true )
