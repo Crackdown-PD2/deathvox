@@ -300,5 +300,3 @@ function WeaponTweakData:_set_sm_wish()
 	self.aa_turret_module.CAN_GO_IDLE = true
 	self.aa_turret_module.IDLE_WAIT_TIME = 10
 end
-
-end
