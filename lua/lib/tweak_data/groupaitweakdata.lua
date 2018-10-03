@@ -736,6 +736,105 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"smoke_grenade"
 				}
 	}
+	-- Normal spawngroups
+	self.enemy_spawn_groups.first_responders = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_cop_pistol",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_ranged,
+				rank = 2
+			},
+			{
+				unit = "deathvox_cop_revolver",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_ranged,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.swat_team = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_cop_smg",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 2
+			},
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.pushers = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 3
+			},
+			{
+				unit = "deathvox_cop_shotgun",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 2
+			},
+			{
+				unit = "deathvox_lightshot",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.sheriff = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_lightshot",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 2
+			},
+			{
+				unit = "deathvox_cop_revolver",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 1
+			}
+		}
+	}
+	-- Hard spawngroups
+	-- Very Hard spawngroups
+	-- Overkill spawngroups
+	-- Mayhem spawngroups
+	-- Death Wish spawngroups
+	-- Crackdown spawngroups
 	self.enemy_spawn_groups.gorgon = {
 		amount = {3, 3},
 		spawn = {
