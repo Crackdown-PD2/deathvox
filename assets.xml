@@ -281,6 +281,12 @@
 		<file :name="shared_textures/swat_fbi_body_df.texture" force="false"/>
 		<file :name="shared_textures/taser_body_df.texture" force="false"/>
 		<file :name="shared_textures/taser_body_nm.texture" force="false"/>
+		
+		<file :name="shared_textures/dark_glass_op.texture" force="false"/>
+		<file :name="shared_textures/dark_glass_df.texture" force="false"/>
+		
+		<file :name="shared_textures/tank_glass_op.texture" force="false"/>
+		<file :name="shared_textures/tank_glass_df.texture" force="false"/>
 	</group>
 	<!-- All weapons -->
 	<group name="units/pd2_mod_gageammo/pew_pew_lasers/">

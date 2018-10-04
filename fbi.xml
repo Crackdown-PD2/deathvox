@@ -49,7 +49,12 @@
 		
 		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot_husk.unit" load="true" force="false"/>
-		
+		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot.object" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot.model" force="false"/>
+	
 	
 		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot_husk.unit" load="true" force="false"/>

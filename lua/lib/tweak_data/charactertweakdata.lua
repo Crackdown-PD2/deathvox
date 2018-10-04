@@ -2155,6 +2155,9 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_gman")
 	
 	self.deathvox_lightar = deep_clone(self.city_swat)
+	self.deathvox_lightar.speech_prefix_p1 = "l1d"
+	self.deathvox_lightar.speech_prefix_p2 = nil
+	self.deathvox_lightar.speech_prefix_count = nil
 	self.deathvox_lightar.detection = presets.detection.normal
 	self.deathvox_lightar.ignore_medic_revive_animation = true  --no revive animation.
 	self.deathvox_lightar.suppression = presets.suppression.hard_agg
@@ -2180,6 +2183,9 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_lightar")
 	
 	self.deathvox_heavyar = deep_clone(self.city_swat)
+	self.deathvox_heavyar.speech_prefix_p1 = "l4d"
+	self.deathvox_heavyar.speech_prefix_p2 = nil
+	self.deathvox_heavyar.speech_prefix_count = nil
 	self.deathvox_heavyar.detection = presets.detection.normal
 	self.deathvox_heavyar.ignore_medic_revive_animation = true  --no revive animation.
 	self.deathvox_heavyar.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- revised per feedback.
@@ -2207,6 +2213,9 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_heavyar")
 	
 	self.deathvox_lightshot = deep_clone(self.city_swat)
+	self.deathvox_lightshot.speech_prefix_p1 = "l1d"
+	self.deathvox_lightshot.speech_prefix_p2 = nil
+	self.deathvox_lightshot.speech_prefix_count = nil
 	self.deathvox_lightshot.detection = presets.detection.normal
 	self.deathvox_lightshot.ignore_medic_revive_animation = true  --no revive animation.
 	self.deathvox_lightshot.suppression = presets.suppression.hard_agg -- tentative.
@@ -2232,6 +2241,9 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_lightshot")
 	
 	self.deathvox_heavyshot = deep_clone(self.city_swat)
+	self.deathvox_heavyshot.speech_prefix_p1 = "l4d"
+	self.deathvox_heavyshot.speech_prefix_p2 = nil
+	self.deathvox_heavyshot.speech_prefix_count = nil
 	self.deathvox_heavyshot.detection = presets.detection.normal
 	self.deathvox_heavyshot.ignore_medic_revive_animation = true  --no revive animation.
 	self.deathvox_heavyshot.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- revised per feedback.
@@ -3020,7 +3032,40 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_grenadier",
 			"ene_deathvox_gman",
 			"ene_deathvox_gman_noflashlight",
-			"ene_deathvox_guarddozer"
+			"ene_deathvox_guarddozer",
+			"ene_deathvox_gensec_taser",
+			"ene_deathvox_gensec_swatshot",
+			"ene_deathvox_gensec_swat",
+			"ene_deathvox_gensec_shield",
+			"ene_deathvox_gensec_medic",
+			"ene_deathvox_gensec_lmgdozer",
+			"ene_deathvox_gensec_heavyswatshot",
+			"ene_deathvox_gensec_heavyswat",
+			"ene_deathvox_gensec_cloaker",
+			"ene_deathvox_fbi_veteran",
+			"ene_deathvox_fbi_taser",
+			"ene_deathvox_fbi_swatshot",
+			"ene_deathvox_fbi_swat",
+			"ene_deathvox_fbi_shield",
+			"ene_deathvox_fbi_rookie",
+			"ene_deathvox_fbi_medic",
+			"ene_deathvox_fbi_hrt",
+			"ene_deathvox_fbi_heavyswatshot",
+			"ene_deathvox_fbi_heavyswat",
+			"ene_deathvox_fbi_greendozer",
+			"ene_deathvox_fbi_cloaker",
+			"ene_deathvox_fbi_blackdozer",
+			"ene_deathvox_cop_taser",
+			"ene_deathvox_cop_swatshot",
+			"ene_deathvox_cop_swat",
+			"ene_deathvox_cop_smg",
+			"ene_deathvox_cop_shotgun",
+			"ene_deathvox_cop_shield",
+			"ene_deathvox_cop_revolver",
+			"ene_deathvox_cop_pistol",
+			"ene_deathvox_cop_medic",
+			"ene_deathvox_cop_heavyswatshot",
+			"ene_deathvox_cop_heavyswat"
 		}
 	}
 	return char_map
