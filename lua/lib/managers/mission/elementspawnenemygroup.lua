@@ -6,6 +6,19 @@ end
 
 function ElementSpawnEnemyGroup:spawn_groups()
 	local dv_spawngroups = {
+		-- Normal
+		"normal_first_responders",
+		"normal_pushers",
+		"normal_sheriff",
+		"normal_swat_team",
+		"normal_recon",
+		-- Hard
+		"hard_first_responders",
+		"hard_pushers",
+		"hard_sheriff",
+		"hard_swat_team",
+		"hard_recon",
+		-- Crackdown
 		"dv_group_1",
 		"dv_group_2_std",
 		"dv_group_2_med",
@@ -24,7 +37,12 @@ function ElementSpawnEnemyGroup:spawn_groups()
 		"damocles",
 		"caduceus",
 		"atropos",
-		"aegeas"
+		"aegeas",
+		"recovery_unit",
+		"too_group",
+		"styx",
+		"recon",
+		"hoplon"
 	}
 	dv_spawngroups = i_hate_lua(dv_spawngroups)
 	local opt = self._values.preferred_spawn_groups

@@ -489,7 +489,7 @@ function GroupAIStateBesiege:_upd_group_spawning()
 		for _, sp_data in ipairs(spawn_points) do
 			local category = group_ai_tweak.unit_categories[u_type_name]
 
-			if (sp_data.accessibility == "any" or category.access[sp_data.accessibility]) and (not sp_data.amount or sp_data.amount > 0) and sp_data.mission_element:enabled() then
+			if (sp_data.accessibility == "any" or category.access[sp_data.accessibility]) and (not sp_data.amount or sp_data.amount > 0) and sp_data.mission_element:enabled() and category.unit_types[current_unit_type] then
 				hopeless = false
 
 				if sp_data.delay_t < self._t then
@@ -920,4 +920,56 @@ function GroupAIStateBesiege:_chk_group_use_smoke_grenade(group, task_data, deto
 			end
 		end
 	end
+end
+
+function GroupAIStateBesiege:assign_enemy_to_group_ai(unit, team_id)
+	local u_tracker = unit:movement():nav_tracker()
+	local seg = u_tracker:nav_segment()
+	local area = self:get_area_from_nav_seg_id(seg)
+	local current_unit_type = tweak_data.levels:get_ai_group_type()
+	local u_name = unit:name()
+	local u_category = nil
+
+	for cat_name, category in pairs(tweak_data.group_ai.unit_categories) do
+		local units = category.unit_types[current_unit_type]
+		if units then
+			for _, test_u_name in ipairs(units) do
+				if u_name == test_u_name then
+					u_category = cat_name
+
+					break
+				end
+			end
+		end
+	end
+
+	local group_desc = {
+		size = 1,
+		type = u_category or "custom"
+	}
+	local group = self:_create_group(group_desc)
+	group.team = self._teams[team_id]
+	local grp_objective = nil
+	local objective = unit:brain():objective()
+	local grp_obj_type = self._task_data.assault.active and "assault_area" or "recon_area"
+
+	if objective then
+		grp_objective = {
+			type = grp_obj_type,
+			area = objective.area or objective.nav_seg and self:get_area_from_nav_seg_id(objective.nav_seg) or area
+		}
+		objective.grp_objective = grp_objective
+	else
+		grp_objective = {
+			type = grp_obj_type,
+			area = area
+		}
+	end
+
+	grp_objective.moving_out = false
+	group.objective = grp_objective
+	group.has_spawned = true
+
+	self:_add_group_member(group, unit:key())
+	self:set_enemy_assigned(area, unit:key())
 end

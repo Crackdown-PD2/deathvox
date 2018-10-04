@@ -18,6 +18,12 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		medic = 4,
 		ass_sniper = 3
 	}
+	for _, category in ipairs(self.unit_categories) do
+		category.unit_types["cop"] = category.unit_types["america"]
+		category.unit_types["fbi"] = category.unit_types["america"]
+		category.unit_types["gensec"] = category.unit_types["america"]
+		category.unit_types["zeal"] = category.unit_types["america"]
+	end
 	self.unit_categories.deathvox_fbi_veteran = {
 		unit_types = {
 			cop = {
@@ -737,7 +743,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				}
 	}
 	-- Normal spawngroups
-	self.enemy_spawn_groups.first_responders = {
+	self.enemy_spawn_groups.normal_first_responders = {
 		amount = {3, 3},
 		spawn = {
 			{
@@ -758,7 +764,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			}
 		}
 	}
-	self.enemy_spawn_groups.swat_team = {
+	self.enemy_spawn_groups.normal_swat_team = {
 		amount = {3, 3},
 		spawn = {
 			{
@@ -779,7 +785,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			}
 		}
 	}
-	self.enemy_spawn_groups.pushers = {
+	self.enemy_spawn_groups.normal_pushers = {
 		amount = {3, 3},
 		spawn = {
 			{
@@ -808,7 +814,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			}
 		}
 	}
-	self.enemy_spawn_groups.sheriff = {
+	self.enemy_spawn_groups.normal_sheriff = {
 		amount = {3, 3},
 		spawn = {
 			{
@@ -829,7 +835,157 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			}
 		}
 	}
+	self.enemy_spawn_groups.normal_recon = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_fbi_rookie",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 2
+			},
+			{
+				unit = "deathvox_cop_pistol",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 1
+			}
+		}
+	}
 	-- Hard spawngroups
+	self.enemy_spawn_groups.hard_first_responders = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_cop_smg",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 3
+			},
+			{
+				unit = "deathvox_taser",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 2
+			},
+			{
+				unit = "deathvox_heavyshot",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.hard_swat_team = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 3,
+				amount_max = 3,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 2
+			},
+			{
+				unit = "deathvox_heavyshot",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.hard_pushers = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 3
+			},
+			{
+				unit = "deathvox_lightshot",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 2
+			},
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.hard_sheriff = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_cop_revolver",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 3
+			},
+			{
+				unit = "deathvox_lightshot",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 2
+			},
+			{
+				unit = "deathvox_heavyar",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.hard_recon = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_cop_shotgun",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 2
+			},
+			{
+				unit = "deathvox_fbi_rookie",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 1
+			}
+		}
+	}
 	-- Very Hard spawngroups
 	-- Overkill spawngroups
 	-- Mayhem spawngroups
@@ -1445,116 +1601,101 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		}
 	}
 end
-
+DIFF_NORMAL = 2
+DIFF_HARD = 3
+DIFF_VERY_HARD = 4
+DIFF_OVERKILL = 5
+DIFF_MAYHEM = 6
+DIFF_DEATHWISH = 7
+DIFF_CRACKDOWN = 8
 function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 	old_task_data(self, difficulty_index, difficulty)
-	if difficulty_index == 8 then
-		self.besiege.assault.force_balance_mul = {
-			1,
-			1,
-			1,
-			1
+	self.besiege.assault.force_balance_mul = {1,1,1,1}
+	self.besiege.assault.force_pool_balance_mul = {1,1,1,1}
+	self.besiege.recon.force_balance_mul = {1,1,1,1}
+	if difficulty_index == DIFF_NORMAL then
+		self.besiege.recon.force = {10,10,10}
+		self.besiege.recon.interval = {30,30,30}
+		self.besiege.assault.force = {20,20,20}
+		self.besiege.assault.force_pool = {100,100,100}
+		self.besiege.regroup.duration = {30,30,30}
+		self.besiege.assault.hostage_hesitation_delay = {30,30,30}
+		self.besiege.assault.delay = {60,50,40}
+		self.besiege.assault.sustain_duration_balance_mul = {1,1,1,1}
+		self.besiege.assault.fade_duration = 30
+		self.besiege.assault.groups = {
+			normal_first_responders = { 1,1,1 },
+			normal_pushers = { 1,1,1 },
+			normal_sheriff = { 1,1,1 },
+			normal_swat_team = { 1,1,1 },
 		}
-		self.besiege.assault.force_pool_balance_mul = {
-			1,
-			1,
-			1,
-			1
+		self.besiege.reenforce.groups = {
+			normal_first_responders = { 1,1,1 },
+			normal_pushers = { 1,1,1 },
+			normal_sheriff = { 1,1,1 },
+			normal_swat_team = { 1,1,1 },
 		}
-		self.besiege.recon.force_balance_mul = {
-			1,
-			1,
-			1,
-			1
+		self.besiege.recon.groups = {
+			normal_recon = { 1,1,1 },
 		}
-		self.besiege.recon.force = {
-			20,
-			20,
-			20
+	end
+	if difficulty_index == DIFF_HARD then
+		self.besiege.recon.force = {10,10,10}
+		self.besiege.recon.interval = {30,30,30}
+		self.besiege.assault.force = {25,25,25}
+		self.besiege.assault.force_pool = {125,125,125}
+		self.besiege.regroup.duration = {30,30,30}
+		self.besiege.assault.hostage_hesitation_delay = {30,30,30}
+		self.besiege.assault.delay = {50,40,30}
+		self.besiege.assault.sustain_duration_balance_mul = {1,1,1,1}
+		self.besiege.assault.fade_duration = 30
+		self.besiege.assault.groups = {
+			hard_first_responders = { 1,1,1 },
+			hard_pushers = { 1,1,1 },
+			hard_sheriff = { 1,1,1 },
+			hard_swat_team = { 1,1,1 }
 		}
-		self.besiege.recon.interval = {
-			20,
-			20,
-			20
+		self.besiege.reenforce.groups = {
+			hard_first_responders = { 1,1,1 },
+			hard_pushers = { 1,1,1 },
+			hard_sheriff = { 1,1,1 },
+			hard_swat_team = { 1,1,1 }
 		}
-		self.besiege.assault.force = {
-			50,
-			50,
-			50
+		self.besiege.recon.groups = {
+			hard_recon = { 1,1,1 }
 		}
-		self.besiege.assault.force_pool = {
-			500,
-			500,
-			500
-		}
-		self.besiege.regroup.duration = {
-			30,
-			30,
-			30
-		}
-		self.besiege.assault.hostage_hesitation_delay = {
-			30,
-			30,
-			30
-		}
-		self.besiege.assault.delay = {
-			30,
-			20,
-			10
-		}
-		self.besiege.assault.sustain_duration_balance_mul = {
-			1,
-			1,
-			1,
-			1
-		}
-		
+	end
+	if difficulty_index == DIFF_CRACKDOWN then
+		self.besiege.recon.force = {20,20,20}
+		self.besiege.recon.interval = {20,20,20}
+		self.besiege.assault.force = {50,50,50}
+		self.besiege.assault.force_pool = {500,500,500}
+		self.besiege.regroup.duration = {30,30,30}
+		self.besiege.assault.hostage_hesitation_delay = {30,30,30}
+		self.besiege.assault.delay = {30,20,10}
+		self.besiege.assault.sustain_duration_balance_mul = {1,1,1,1}
 		self.besiege.assault.fade_duration = 15
-		if Global.game_settings and Global.game_settings.single_player then
-			self.besiege.assault.groups = {
-				gorgon = { 0.05,0.05,0.05  },
-				atlas = { 0.05,0.05,0.05  },
-				chimera = { 0.05,0.05,0.05  },
-				zeus = { 0.05,0.05,0.05  },
-				janus = { 0.05,0.05,0.05 },
-				epeius = { 0.05,0.05,0.05  },
-				damocles = { 0.05,0.05,0.05  },
-				caduceus = { 0.05,0.05,0.05  },
-				atropos = { 0.05,0.05,0.05 },
-				aegeas = { 0.05,0.05,0.05 },
-				dv_group_1 = {0.1, 0.1, 0.1},
-				dv_group_2_std = { 0.05,0.05,0.05  },
-				dv_group_2_med = { 0.05,0.05,0.05  },
-				dv_group_3_std = { 0.05,0.05,0.05  },
-				dv_group_3_med = { 0.05,0.05,0.05  },
-				dv_group_4_std = { 0.05,0.05,0.05  },
-				dv_group_4_med = { 0.05,0.05,0.05  },
-				dv_group_5_std = { 0.05,0.05,0.05  },
-				dv_group_5_med = { 0.05,0.05,0.05  }
-			}
-		else
-			self.besiege.assault.groups = {
-				gorgon = { 0.05,0.05,0.05  },
-				atlas = { 0.05,0.05,0.05  },
-				chimera = { 0.05,0.05,0.05  },
-				zeus = { 0.05,0.05,0.05  },
-				janus = { 0.05,0.05,0.05 },
-				epeius = { 0.05,0.05,0.05  },
-				damocles = { 0.05,0.05,0.05  },
-				caduceus = { 0.05,0.05,0.05  },
-				atropos = { 0.05,0.05,0.05 },
-				aegeas = { 0.05,0.05,0.05 },
-				dv_group_1 = {0.1, 0.1, 0.1},
-				dv_group_2_std = { 0.05,0.05,0.05  },
-				dv_group_2_med = { 0.05,0.05,0.05  },
-				dv_group_3_std = { 0.05,0.05,0.05  },
-				dv_group_3_med = { 0.05,0.05,0.05  },
-				dv_group_4_std = { 0.05,0.05,0.05  },
-				dv_group_4_med = { 0.05,0.05,0.05  },
-				dv_group_5_std = { 0.05,0.05,0.05  },
-				dv_group_5_med = { 0.05,0.05,0.05  }
-			}
-		end
+		self.besiege.assault.groups = {
+			gorgon = { 0.05,0.05,0.05  },
+			atlas = { 0.05,0.05,0.05  },
+			chimera = { 0.05,0.05,0.05  },
+			zeus = { 0.05,0.05,0.05  },
+			janus = { 0.05,0.05,0.05 },
+			epeius = { 0.05,0.05,0.05  },
+			damocles = { 0.05,0.05,0.05  },
+			caduceus = { 0.05,0.05,0.05  },
+			atropos = { 0.05,0.05,0.05 },
+			aegeas = { 0.05,0.05,0.05 },
+			dv_group_1 = {0.1, 0.1, 0.1},
+			dv_group_2_std = { 0.05,0.05,0.05  },
+			dv_group_2_med = { 0.05,0.05,0.05  },
+			dv_group_3_std = { 0.05,0.05,0.05  },
+			dv_group_3_med = { 0.05,0.05,0.05  },
+			dv_group_4_std = { 0.05,0.05,0.05  },
+			dv_group_4_med = { 0.05,0.05,0.05  },
+			dv_group_5_std = { 0.05,0.05,0.05  },
+			dv_group_5_med = { 0.05,0.05,0.05  }
+		}
 		self.besiege.reenforce.groups = {
 			dv_group_1 = {0.2, 0.2, 0.2},
 			dv_group_2_std = { 0.1,0.1,0.1 },
