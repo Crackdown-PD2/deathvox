@@ -9,15 +9,88 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		acrobatic = true,
 		walk = true
 	}
-	self.special_unit_spawn_limits = {
-		tank = 2,
-		taser = 4,
-		boom = 2,
-		spooc = 4,
-		shield = 6,
-		medic = 4,
-		ass_sniper = 3
-	}
+	if difficulty_index == 1 then -- Easy special unit caps. unused.
+		self.special_unit_spawn_limits = {
+			shield = 0,
+			taser = 0,
+			medic = 0,
+			tank = 0,
+			spooc = 0,
+			boom = 0,
+			ass_sniper = 0
+		}
+    if difficulty_index == 2 then -- Normal special unit caps.
+		self.special_unit_spawn_limits = {
+			shield = 3,
+			taser = 0,
+			medic = 0,
+			tank = 0,
+			spooc = 0,
+			boom = 0,
+			ass_sniper = 0
+		}
+    if difficulty_index == 3 then -- Hard special unit caps.
+		self.special_unit_spawn_limits = {
+			shield = 3,
+			taser = 2,
+			medic = 2,
+			tank = 0,
+			spooc = 0,
+			boom = 0,
+			ass_sniper = 0
+		}
+    if difficulty_index == 4 then -- Very Hard special unit caps.
+		self.special_unit_spawn_limits = {
+			shield = 4,
+			taser = 2,
+			medic = 2,
+			tank = 1,
+			spooc = 0,
+			boom = 0,
+			ass_sniper = 0
+		}
+    if difficulty_index == 5 then -- OVK special unit caps.
+		self.special_unit_spawn_limits = {
+			shield = 4,
+			taser = 3,
+			medic = 3,
+			tank = 2,
+			spooc = 2,
+			boom = 0,
+			ass_sniper = 0
+		}
+    if difficulty_index == 6 then -- Mayhem special unit caps. 
+    -- note, focus of this transition is coordinated unit groups.
+		self.special_unit_spawn_limits = {
+			shield = 4,
+			taser = 3,
+			medic = 3,
+			tank = 2,
+			spooc = 3,
+			boom = 0,
+			ass_sniper = 0
+		}
+    if difficulty_index == 7 then -- Death Sentence special unit caps.
+		self.special_unit_spawn_limits = {
+			shield = 4,
+			taser = 4,
+			medic = 4,
+			tank = 2,
+			spooc = 3,
+			boom = 0,
+			ass_sniper = 0
+		}
+    if difficulty_index == 8 then -- Crackdown special unit caps.
+		self.special_unit_spawn_limits = {
+			shield = 6,
+			taser = 4,
+			medic = 4,
+			tank = 2,
+			spooc = 4,
+			boom = 2,
+			ass_sniper = 0
+		}
+	end
 	for _, category in ipairs(self.unit_categories) do
 		category.unit_types["cop"] = category.unit_types["america"]
 		category.unit_types["fbi"] = category.unit_types["america"]
@@ -589,19 +662,28 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"smoke_grenade",
 				"deathguard",
 				"flash_grenade"
+				},			
+			deathvox_simple_charge = {
+				"charge",
+				"provide_coverfire",
+				"provide_support",
+				},
+			deathvox_swat_flashcharge = {
+				"flash_grenade",
+				"charge",
+				"provide_coverfire",
+				"provide_support"
 				},
 			deathvox_swat_charge = {
 				"charge",
 				"provide_coverfire",
-				"provide_support",
-				"flash_grenade",
-				"smoke_grenade"
+				"provide_support"
 				},
 			deathvox_swat_flank = {
 				"flank",
 				"provide_coverfire",
 				"provide_support"
-				},	
+				},
 			deathvox_swat_ranged = {
 				"ranged_fire",
 				"provide_coverfire",
@@ -639,7 +721,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				},
 			deathvox_tazer_lead = {
 				"flash_grenade",
-				"smoke_grenade",
 				"charge",
 				"provide_coverfire",
 				"provide_support"
@@ -653,16 +734,14 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"deathguard"
 				},
 			deathvox_supportflash = {
-				"charge",
 				"flash_grenade",
-				"smoke_grenade",
+				"charge",				
 				"provide_coverfire",
 				"provide_support"
 				},
 			deathvox_supportsmoke = {
-				"flank",
 				"smoke_grenade",
-				"flash_grenade",
+				"flank",
 				"provide_coverfire",
 				"provide_support"
 				},	
@@ -742,7 +821,259 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"smoke_grenade"
 				}
 	}
-	-- Normal spawngroups
+-- Normal spawngroups
+--Introductory difficulty.
+--all tactics placeholders.
+-- most spawngroups on the lower third have uniform charge or flank behaviors.
+-- Ranged fire is more common on lower difficulties- it's functionally low threat.								
+	self.enemy_spawn_groups.normal_solopistol = {
+		amount = {1, 1},
+		spawn = {
+			{
+				unit = "deathvox_cop_pistol",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_ranged,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.normal_soloshot = {
+		amount = {1, 1},
+		spawn = {
+			{
+				unit = "deathvox_cop_shotgun",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.normal_solorevolver = {
+		amount = {1, 1},
+		spawn = {
+			{
+				unit = "deathvox_cop_revolver",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.normal_solosmg = {
+		amount = {1, 1},
+		spawn = {
+			{
+				unit = "deathvox_cop_smg",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.normal_revolvergroup = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_cop_pistol",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_ranged,
+				rank = 2
+			},
+			{
+				unit = "deathvox_cop_revolver",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.normal_shotgroup = {
+		amount = {2, 2},
+		spawn = {
+			{
+				unit = "deathvox_cop_pistol",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 2
+			},
+			{
+				unit = "deathvox_cop_shotgun",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.normal_smggroup = {
+		amount = {2, 2},
+		spawn = {
+			{
+				unit = "deathvox_cop_pistol",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 2
+			},
+			{
+				unit = "deathvox_cop_smg",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.normal_copcombo = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_cop_bronco",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 3
+			},
+			{
+				unit = "deathvox_cop_shotgun",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 2
+			},
+			{
+				unit = "deathvox_cop_smg",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.normal_ARswat = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 3,
+				amount_max = 3,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.normal_swatcombo = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 2
+			},
+			{
+				unit = "deathvox_lightshot",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.normal_shieldbasic = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_cop_pistol",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 2
+			},
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.normal_shieldbasic = {
+		amount = {2, 2},
+		spawn = {
+			{
+				unit = "deathvox_cop_shotgun",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 2
+			},
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 1
+			}
+		}
+	}
+-- Normal recon groups. also calls single bronco, single smg.
+	self.enemy_spawn_groups.normal_rookiepair = {
+		amount = {2, 2},
+		spawn = {
+			{
+				unit = "deathvox_fbi_rookie",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.normal_rookie = {
+		amount = {1, 1},
+		spawn = {
+			{
+				unit = "deathvox_fbi_rookie",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}	
+-- goof groups begin.
 	self.enemy_spawn_groups.normal_first_responders = {
 		amount = {3, 3},
 		spawn = {
@@ -856,7 +1187,330 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			}
 		}
 	}
-	-- Hard spawngroups
+-- Hard spawngroups
+-- Beat cops, SWATs, some Heavy Swat.
+-- Introduces enemy priority and encourages group play.
+-- Shield, Taser, Medic.
+-- Very limited tactics. mostly rush, some flank, limited nade use.
+
+--Hard recon groups
+	self.enemy_spawn_groups.hard_smggroup = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_cop_pistol",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 2
+			},
+			{
+				unit = "deathvox_cop_smg",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.hard_copcombo = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_cop_smg",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 2
+			},
+			{
+				unit = "deathvox_cop_shotgun",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.hard_medicgroup = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_medic,
+				rank = 2
+			},
+			{
+				unit = "deathvox_cop_pistol",
+				freq = 1,
+				amount_min = 3,
+				amount_max = 3,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.hard_revolvermedic = {
+		amount = {2, 2},
+		spawn = {
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_medic,
+				rank = 2
+			},
+			{
+				unit = "deathvox_cop_revolver",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}							
+	self.enemy_spawn_groups.hard_argroup = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 3,
+				amount_max = 3,
+				tactics = self._tactics.deathvox_swat_ranged,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_ranged,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.hard_lightgroup = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 3,
+				amount_max = 3,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_lightshot",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.hard_flankswat = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 3,
+				amount_max = 3,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_lightshot",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.hard_mixgroup = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 3,
+				amount_max = 3,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_heavyshot",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.hard_shieldlight = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.hard_shieldsmg = {
+		amount = {2, 2},
+		spawn = {
+			{
+				unit = "deathvox_cop_smg",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.hard_shieldheavy = {
+		amount = {2, 2},
+		spawn = {
+			{
+				unit = "deathvox_heavyar",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.hard_taser = {
+		amount = {1, 1},
+		spawn = {
+			{
+				unit = "deathvox_taser",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_flashcharge,
+				rank = 1
+			}
+		}
+	}
+--Hard recon groups.
+	self.enemy_spawn_groups.hard_rookiemedic = {
+		amount = {2, 2},
+		spawn = {
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 2
+			},
+			{
+				unit = "deathvox_fbi_rookie",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 1
+			}
+		}
+	}
+	self.enemy_spawn_groups.hard_rookiecombo = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_cop_smg",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 3
+			},
+			{
+				unit = "deathvox_cop_shotgun",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 2
+			},
+			{
+				unit = "deathvox_fbi_rookie",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 1
+			}
+		}
+	}			
+	self.enemy_spawn_groups.hard_rookieshotgun = {
+		amount = {2, 2},
+		spawn = {
+			{
+				unit = "deathvox_cop_shotgun",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 2
+			},
+			{
+				unit = "deathvox_fbi_rookie",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 1
+			}
+		}
+	}							
+	--goof groups start here.
 	self.enemy_spawn_groups.hard_first_responders = {
 		amount = {4, 4},
 		spawn = {
