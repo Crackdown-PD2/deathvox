@@ -601,23 +601,19 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"provide_coverfire",
 				"provide_support",
 				"deathguard",
-				"flash_grenade",
-				"smoke_grenade"
+				"flash_grenade"
 				},
 			deathvox_grenad_lead = {
 				"ranged_fire",
 				"provide_coverfire",
-				"deathguard",
-				"flash_grenade",
-				"smoke_grenade"
+				"deathguard"
 				},
 			deathvox_grenad_pinch = {
 				"ranged_fire",
+				"flash_grenade",
 				"provide_coverfire",
 				"provide_support",
 				"deathguard",
-				"flash_grenade",
-				"smoke_grenade"
 				},
 			deathvox_medic = {
 				"shield_cover",
@@ -717,6 +713,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"charge",
 				"provide_coverfire",
 				"provide_support",
+				"flash_grenade",
 				"deathguard"
 				},
 			deathvox_tazer_lead = {
@@ -961,7 +958,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				rank = 2
 			},
 			{
-				unit = "deathvox_cop_bronco",
+				unit = "deathvox_cop_revolver",
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
@@ -1640,10 +1637,432 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			}
 		}
 	}
-	-- Very Hard spawngroups
-	-- Overkill spawngroups
-	-- Mayhem spawngroups
-	-- Death Wish spawngroups
+-- Very Hard spawngroups
+-- SWAT, Heavy SWAT, comprehensive.
+-- generally complete enemy set introducing types and core play.
+-- Shields, Tasers, Bulldozer (Green), Medics.
+								
+-- 4 light AR. ranged.
+	self.enemy_spawn_groups.vhard_lightARranged = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 4,
+				amount_max = 4,
+				tactics = self._tactics.deathvox_swat_ranged,
+				rank = 1
+			}
+		}
+	}
+-- 4 light AR. charge.
+	self.enemy_spawn_groups.vhard_lightARcharge = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 4,
+				amount_max = 4,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 1
+			}
+		}
+	}	
+-- 3 light AR, medic. charge.
+	self.enemy_spawn_groups.vhard_lightARchargeMed = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 3,
+				amount_max = 3,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 3,
+				amount_max = 3,
+				tactics = self._tactics.deathvox_medic,
+				rank = 1
+			}
+		}
+	}
+-- 3 light AR, medic. flank.
+	self.enemy_spawn_groups.vhard_lightARflankMed = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 3,
+				amount_max = 3,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 3,
+				amount_max = 3,
+				tactics = self._tactics.deathvox_medic,
+				rank = 1
+			}
+		}
+	}
+-- 2 light shot 2 light AR. charge.
+	self.enemy_spawn_groups.vhard_lightmixcharge = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_lightshot",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 1
+			}
+		}
+	}	
+-- 2 light shot 1 AR light, medic. charge.
+	self.enemy_spawn_groups.vhard_lightmixchargeMed = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_lightshot",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 3
+			},
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_medic,
+				rank = 2
+			},
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 1
+			},
+		}
+	}
+-- 2 light shot 1 AR light, medic. flank.
+	self.enemy_spawn_groups.vhard_lightmixflankMed = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_lightshot",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 3
+			},
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_medic,
+				rank = 2
+			},
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 1
+			},
+		}
+	}
+-- 2 heavy ar 2 light AR. charge.
+	self.enemy_spawn_groups.vhard_mixARcharge = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_heavyar",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 1
+			}
+		}
+	}									
+-- 2 heavy shot 2 light AR. charge.
+	self.enemy_spawn_groups.vhard_mixbothcharge = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_heavyshot",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 1
+			}
+		}
+	}
+-- 2 heavy shot 2 heavy AR. charge.
+	self.enemy_spawn_groups.vhard_mixbothcharge = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_heavyshot",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_heavyar",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_charge,
+				rank = 1
+			}
+		}
+	}
+-- 1 Taser 2 Heavy AR.
+	self.enemy_spawn_groups.vhard_taserARgroup = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_taser",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tazer_lead,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_heavyar",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_charge,
+				rank = 1
+			}
+		}
+	}
+-- 1 Taser 2 Heavy shot.
+	self.enemy_spawn_groups.vhard_tasershotgroup = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_taser",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tazer_lead,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_heavyshot",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_charge,
+				rank = 1
+			}
+		}
+	}
+-- 1 Shield, 3 light AR.
+	self.enemy_spawn_groups.vhard_shieldlightgroup = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_lightar",
+				freq = 1,
+				amount_min = 3,
+				amount_max = 3,
+				tactics = self._tactics.deathvox_charge,
+				rank = 1
+			}
+		}
+	}
+-- 2 Shield, 2 Heavy AR.
+	self.enemy_spawn_groups.vhard_shieldheavyARgroup = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_heavyar",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_charge,
+				rank = 1
+			}
+		}
+	}
+-- 2 Shield, 2 Heavy shot.
+	self.enemy_spawn_groups.vhard_shieldheavyshotgroup = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_heavyshot",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_charge,
+				rank = 1
+			}
+		}
+	}
+--Bulldozer solo.	
+	self.enemy_spawn_groups.vhard_bullsolo = {
+		amount = {1, 1},
+		spawn = {
+			{
+				unit = "deathvox_greendozer",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tank_rush,
+				rank = 1
+			}
+		}
+	}							
+-- Very Hard recon roups						
+-- SWAT, HRT, Medic, Taser
+	
+-- 2 HRT, Medic
+	self.enemy_spawn_groups.vhard_hrtmedic = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_fbi_hrt",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_supportsmoke,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_medic,
+				rank = 1
+			}
+		}
+	}
+-- Taser, 2 HRT
+	self.enemy_spawn_groups.vhard_hrttaser = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_taser",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_supportflash,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_fbi_hrt",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}
+-- Overkill spawngroups
+-- Green, Tan
+-- Mixed special groups begin on this difficulty, but they are not designed for strong challenge.
+-- Limited case dependence, standout behaviors. 
+-- Lock to 4 units for all but dozers and cloakers. only one ranged all light, all others mixed light/heavy.
+-- Shields, Tasers, Bulldozers (R870, SAIGA), Cloakers, Medics
+
+-- 2 shield, 1 light shot 1 light AR
+
+-- Bulldozer solo (green)
+-- Bulldozer solo (black)
+
+-- Solo cloaker.
+
+			
+-- Overkill recon groups
+-- HRT, Veteran, Medic, Cloaker, Taser
+
+-- 2 HRT, 1 Veteran
+-- Solo cloaker		
+-- more
+
+-- Mayhem spawngroups
+								
+-- Mayhem recon groups
+								
+-- Death Wish spawngroups
+								
+-- Death Wish recon groups
+								
 	-- Crackdown spawngroups
 	self.enemy_spawn_groups.gorgon = {
 		amount = {3, 3},
