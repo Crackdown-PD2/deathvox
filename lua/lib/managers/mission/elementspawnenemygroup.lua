@@ -46,6 +46,9 @@ function ElementSpawnEnemyGroup:spawn_groups()
 	}
 	dv_spawngroups = i_hate_lua(dv_spawngroups)
 	local opt = self._values.preferred_spawn_groups
+	if not opt then
+		opt = {}
+	end
 	for cat_name, team in pairs(tweak_data.group_ai.enemy_spawn_groups) do
 		if dv_spawngroups[cat_name] then
 			table.insert(opt, cat_name)
