@@ -269,6 +269,8 @@
 		<file :name="shared_textures/ene_medic_head_df.texture" force="false"/>
 		<file :name="shared_textures/ene_medic_head_nm.texture" force="false"/>
 		<file :name="shared_textures/ene_medic_nm.texture" force="false"/>
+		<file :name="shared_textures/helmets_atlas_2_df.texture" force="false"/>
+		<file :name="shared_textures/heads_atlas_2_df.texture" force="false"/>
 		<file :name="shared_textures/helmets_atlas_df.texture" force="false"/>
 		<file :name="shared_textures/helmets_atlas_nm.texture" force="false"/>
 		<file :name="shared_textures/helmets_heavy_taser_atlas_df.texture" force="false"/>
