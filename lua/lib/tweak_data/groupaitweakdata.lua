@@ -670,12 +670,24 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"provide_coverfire",
 				"provide_support"
 				},
+			deathvox_swat_smokecharge = {
+				"smoke_grenade",
+				"charge",
+				"provide_coverfire",
+				"provide_support"
+				},
 			deathvox_swat_charge = {
 				"charge",
 				"provide_coverfire",
 				"provide_support"
 				},
 			deathvox_swat_flank = {
+				"flank",
+				"provide_coverfire",
+				"provide_support"
+				},
+			deathvox_swat_smokeflank = {
+				"smoke_grenade",
 				"flank",
 				"provide_coverfire",
 				"provide_support"
@@ -1638,7 +1650,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		}
 	}
 -- Very Hard spawngroups
--- SWAT, Heavy SWAT, comprehensive.
+-- Green, Tan, comprehensive.
 -- generally complete enemy set introducing types and core play.
 -- Shields, Tasers, Bulldozer (Green), Medics.
 								
@@ -2034,7 +2046,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		}
 	}
 -- Overkill spawngroups
--- Green, Tan
+-- Green, Tan, full conventional groups.
 -- Mixed special groups begin on this difficulty, but they are not designed for strong challenge.
 -- Limited case dependence, standout behaviors. 
 -- Lock to 4 units for all but dozers and cloakers. only one ranged all light, all others mixed light/heavy.
