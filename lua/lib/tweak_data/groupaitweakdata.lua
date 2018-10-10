@@ -2524,14 +2524,12 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				rank = 1
 			}
 		}
-	}
-
-			
+	}			
 -- Overkill recon groups
 -- HRT, Veteran, Medic, Cloaker, Taser
 
 -- 2 Veteran, 1 medic
-	self.enemy_spawn_groups.ovk_hrtvetmed = {
+	self.enemy_spawn_groups.ovk_vetmed = {
 		amount = {3, 3},
 		spawn = {
 			{
@@ -2822,16 +2820,42 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			}
 		}
 	}
-	self.enemy_spawn_groups.mh_template = {
-		amount = {4, 4},
+	
+	}
+-- Begin Mayhem coordinated mixed special groups. Introduction of elites does most of work.
+-- Shields, Tasers, Bulldozers (R870, SAIGA), Cloakers, Medics
+-- LMG Dozer solo
+	self.enemy_spawn_groups.mh_whitedozer = {
+		amount = {1, 1},
+		spawn = {
+			{
+				unit = "deathvox_lmgdozer",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tank_lead,
+				rank = 1
+			}
+		}
+-- shield, black dozer, medic
+	self.enemy_spawn_groups.mh_blackpaladin = {
+		amount = {3, 3},
 		spawn = {
 			{
 				unit = "deathvox_shield",
 				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
+				amount_min = 1,
+				amount_max = 1,
 				tactics = self._tactics.deathvox_shield_lead,
 				rank = 3
+			},
+			{
+				unit = "deathvox_blackdozer",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tank_cover,
+				rank = 2
 			},
 			{
 				unit = "deathvox_medic",
@@ -2839,26 +2863,205 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				amount_min = 1,
 				amount_max = 1,
 				tactics = self._tactics.deathvox_medic,
-				rank = 2
-			},
+				rank = 1
+			}
+		}
+-- shield, green dozer, medic
+	self.enemy_spawn_groups.mh_greenpaladin = {
+		amount = {3, 3},
+		spawn = {
 			{
-				unit = "deathvox_lightshot",
+				unit = "deathvox_shield",
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_shieldcharge,
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 3
+			},
+			{
+				unit = "deathvox_greendozer",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tank_cover,
+				rank = 2
+			},
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_medic,
+				rank = 1
+			}
+		}
+-- taser, cloaker
+	self.enemy_spawn_groups.mh_takedown = {
+		amount = {2, 2},
+		spawn = {
+			{
+				unit = "deathvox_taser",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tazer_lead,
+				rank = 2
+			},
+			{
+				unit = "deathvox_cloaker",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_spooc_pinch,
+				rank = 1
+			}
+		}
+-- shield pair, medic
+	self.enemy_spawn_groups.mh_castle = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 2
+			},
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_medic,
+				rank = 1
+			}
+		}
+-- taser duo. note simple tactic.
+	self.enemy_spawn_groups.mh_taserpair = {
+		amount = {2, 2},
+		spawn = {
+			{
+				unit = "deathvox_taser",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_tazer_lead,
+				rank = 1
+			}
+		}
+-- 2 cloakers.
+	self.enemy_spawn_groups.mh_spoocpair = {
+		amount = {2, 2},
+		spawn = {
+			{
+				unit = "deathvox_cloaker",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_spooc_lead,
+				rank = 2
+			},
+			{
+				unit = "deathvox_cloaker",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_spooc_pinch,
 				rank = 1
 			}
 		}
 	}
--- Begin Mayhem coordinated mixed special groups. Introduction of elites does most of work.
--- Shields, Tasers, Bulldozers (R870, SAIGA), Cloakers, Medics
--- 
-								
-								
+--Dozer duo.
+	self.enemy_spawn_groups.mh_partners = {
+		amount = {2, 2},
+		spawn = {
+			{
+				unit = "deathvox_greendozer",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_tank_lead,
+				rank = 3
+			},
+			{
+				unit = "deathvox_blackdozer",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox__tank_lead,
+				rank = 1
+			}
+		}
 -- Mayhem recon groups
 -- Veteran, HRT, Medic, Cloaker, Taser
-
+-- 2 Veteran, 2 medic
+	self.enemy_spawn_groups.mh_vetmed = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_fbi_veteran",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_fbi_medic",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_medic,
+				rank = 1
+			}
+		}
+	}
+-- 2 HRT, 1 Veteran
+	self.enemy_spawn_groups.mh_hrtvetmix = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_fbi_hrt",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_supportsmoke,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_fbi_veteran",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 1
+			}
+		}
+	}
+-- repeat mh cloakerpair
+-- Taser, 2 HRT
+	self.enemy_spawn_groups.mh_hrttaser = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_taser",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_supportflash,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_fbi_hrt",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}
 -- Death Wish spawngroups
 -- Elites.
 -- begin DW Elites.
@@ -3086,15 +3289,288 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 	}
 -- Begin DW coordinated mixed special groups. Note full coordination, no basic swat.
 -- Shields, Tasers, Bulldozers (R870, SAIGA, LMG), Cloakers, Medics.
-								
-								
+-- Shield, LMG Dozer, medic
+	self.enemy_spawn_groups.dw_skullpaladin = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 3
+			},
+			{
+				unit = "deathvox_lmgdozer",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tank_cover,
+				rank = 2
+			},
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_medic,
+				rank = 1
+			},
+		}								
+-- Blackdozer, Taser
+	self.enemy_spawn_groups.dw_blackball = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_blackdozer",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tank_lead,
+				rank = 2
+			},
+			{
+				unit = "deathvox_taser",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_tazer_follow,
+				rank = 1
+			}
+		}
+-- Greendozer, medic, cloaker
+	self.enemy_spawn_groups.dw_greeneye = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_blackdozer",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tank_lead,
+				rank = 3
+			},
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_medic,
+				rank = 2
+			},
+			{
+				unit = "deathvox_cloaker",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_spooc_pinch,
+				rank = 1
+			},
+		}																
+-- 2 Tasers, cloaker. Note more complex tactic set
+	self.enemy_spawn_groups.dw_takedowner = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_taser",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tazer_lead,
+				rank = 3
+			},
+			{
+				unit = "deathvox_taser",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tazer_follow,
+				rank = 2
+			},
+			{
+				unit = "deathvox_cloaker",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_spooc_pinch,
+				rank = 1
+			},
+		}
+-- Cloaker pair. Note NOT used in recon, use trio instead.
+	self.enemy_spawn_groups_dw_spoocpair = {
+		amount = {2, 2},
+		spawn = {
+			{
+				unit = "deathvox_cloaker",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_spooc_lead,
+				rank = 2
+			},
+			{
+				unit = "deathvox_cloaker",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_spooc_pinch,
+				rank = 1
+			}
+		}
+	}
+-- 2 Shields, taser, medic
+	self.enemy_spawn_groups_dw_citadel = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 3
+			},
+			{
+				unit = "deathvox_tazer",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tazer_follow,
+				rank = 2
+			},
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_medic,
+				rank = 1
+			}
+		}
+	}
+-- 2 Shields, taser, medic
+	self.enemy_spawn_groups_dw_citadel = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_shield",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_shield_lead,
+				rank = 3
+			},
+			{
+				unit = "deathvox_tazer",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_tazer_follow,
+				rank = 2
+			},
+			{
+				unit = "deathvox_medic",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_medic,
+				rank = 1
+			}
+		}
+	}
 -- Death Wish recon groups
 -- Veteran, HRT, Medic, Cloaker, Taser
-
-
+-- 2 Veteran, 2 medic
+	self.enemy_spawn_groups.dw_vetmed = {
+		amount = {4, 4},
+		spawn = {
+			{
+				unit = "deathvox_fbi_veteran",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_fbi_medic",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_medic,
+				rank = 1
+			}
+		}
+	}
+-- 2 HRT, 1 Veteran
+	self.enemy_spawn_groups.dw_hrtvetmix = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_fbi_hrt",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_supportsmoke,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_fbi_veteran",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_swat_flank,
+				rank = 1
+			}
+		}
+	}
+-- Triple cloaker, oh my
+	self.enemy_spawn_groups.dw_spooctrio = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_cloaker",
+				freq = 1,
+				amount_min = 1,
+				amount_max = 1,
+				tactics = self._tactics.deathvox_spooc_lead,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_cloaker",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_spooc_pinch,
+				rank = 1
+			}
+		}
+	}
+-- 2 Taser, 2 HRT
+	self.enemy_spawn_groups.dw_hrttaser = {
+		amount = {3, 3},
+		spawn = {
+			{
+				unit = "deathvox_taser",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_supportflash,
+				rank = 2
+			},			
+			{
+				unit = "deathvox_fbi_hrt",
+				freq = 1,
+				amount_min = 2,
+				amount_max = 2,
+				tactics = self._tactics.deathvox_simple_charge,
+				rank = 1
+			}
+		}
+	}
 -- Crackdown spawngroups
 -- Begin CD Standard Spawngroups.
-
 	self.enemy_spawn_groups.cd_group_1 = {
 		amount = {4, 4},
 		spawn = {
@@ -3108,7 +3584,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			}
 		}
 	}
-
 	self.enemy_spawn_groups.cd_group_2_std = {
 		amount = {4, 4},
 		spawn = {
@@ -3790,26 +4265,26 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 			caduceus = { 0.05,0.05,0.05  },
 			atropos = { 0.05,0.05,0.05 },
 			aegeas = { 0.05,0.05,0.05 },
-			dv_group_1 = {0.1, 0.1, 0.1},
-			dv_group_2_std = { 0.05,0.05,0.05  },
-			dv_group_2_med = { 0.05,0.05,0.05  },
-			dv_group_3_std = { 0.05,0.05,0.05  },
-			dv_group_3_med = { 0.05,0.05,0.05  },
-			dv_group_4_std = { 0.05,0.05,0.05  },
-			dv_group_4_med = { 0.05,0.05,0.05  },
-			dv_group_5_std = { 0.05,0.05,0.05  },
-			dv_group_5_med = { 0.05,0.05,0.05  }
+			cd_group_1 = {0.1, 0.1, 0.1},
+			cd_group_2_std = { 0.05,0.05,0.05  },
+			cd_group_2_med = { 0.05,0.05,0.05  },
+			cd_group_3_std = { 0.05,0.05,0.05  },
+			cd_group_3_med = { 0.05,0.05,0.05  },
+			cd_group_4_std = { 0.05,0.05,0.05  },
+			cd_group_4_med = { 0.05,0.05,0.05  },
+			cd_group_5_std = { 0.05,0.05,0.05  },
+			cd_group_5_med = { 0.05,0.05,0.05  }
 		}
 		self.besiege.reenforce.groups = {
-			dv_group_1 = {0.2, 0.2, 0.2},
-			dv_group_2_std = { 0.1,0.1,0.1 },
-			dv_group_2_med = { 0.1,0.1,0.1 },
-			dv_group_3_std = { 0.1,0.1,0.1 },
-			dv_group_3_med = { 0.1,0.1,0.1 },
-			dv_group_4_std = { 0.1,0.1,0.1 },
-			dv_group_4_med = { 0.1,0.1,0.1 },
-			dv_group_5_std = { 0.1,0.1,0.1 },
-			dv_group_5_med = { 0.1,0.1,0.1 }
+			cd_group_1 = {0.2, 0.2, 0.2},
+			cd_group_2_std = { 0.1,0.1,0.1 },
+			cd_group_2_med = { 0.1,0.1,0.1 },
+			cd_group_3_std = { 0.1,0.1,0.1 },
+			cd_group_3_med = { 0.1,0.1,0.1 },
+			cd_group_4_std = { 0.1,0.1,0.1 },
+			cd_group_4_med = { 0.1,0.1,0.1 },
+			cd_group_5_std = { 0.1,0.1,0.1 },
+			cd_group_5_med = { 0.1,0.1,0.1 }
 		}
 		self.besiege.recon.groups = {
 			recovery_unit = { 0.2,0.2,0.2 },
