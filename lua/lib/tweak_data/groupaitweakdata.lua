@@ -1886,7 +1886,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				amount_max = 1,
 				tactics = self._tactics.deathvox_swat_medic,
 				rank = 2
-			}
+			},
 			{
 				unit = "deathvox_lightar",
 				freq = 1,
@@ -1938,7 +1938,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				amount_max = 1,
 				tactics = self._tactics.deathvox_swat_medic,
 				rank = 2
-			}
+			},
 			{
 				unit = "deathvox_lightar",
 				freq = 1,
@@ -1990,7 +1990,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				amount_max = 1,
 				tactics = self._tactics.deathvox_swat_medic,
 				rank = 2
-			}
+			},
 			{
 				unit = "deathvox_lightshot",
 				freq = 1,
@@ -2020,7 +2020,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				amount_max = 1,
 				tactics = self._tactics.deathvox_swat_medic,
 				rank = 2
-			}
+			},
 			{
 				unit = "deathvox_lightar",
 				freq = 1,
@@ -2232,7 +2232,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				amount_max = 1,
 				tactics = self._tactics.deathvox_shield_lead,
 				rank = 2
-			}
+			},
 			{
 				unit = "deathvox_greendozer",
 				freq = 1,
@@ -2254,7 +2254,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				amount_max = 1,
 				tactics = self._tactics.deathvox_shield_lead,
 				rank = 2
-			}
+			},
 			{
 				unit = "deathvox_blackdozer",
 				freq = 1,
@@ -3083,7 +3083,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				amount_max = 1,
 				tactics = self._tactics.deathvox_medic,
 				rank = 1
-			},
+			}
 		}	
 	}							
 -- Blackdozer, Taser
@@ -3135,7 +3135,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				amount_max = 1,
 				tactics = self._tactics.deathvox_spooc_pinch,
 				rank = 1
-			},
+			}
 		}
 	}																
 -- 2 Tasers, cloaker. Note more complex tactic set
@@ -3165,7 +3165,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				amount_max = 1,
 				tactics = self._tactics.deathvox_spooc_pinch,
 				rank = 1
-			},
+			}
 		}
 	}
 -- Cloaker pair. Note NOT used in recon, use trio instead.
