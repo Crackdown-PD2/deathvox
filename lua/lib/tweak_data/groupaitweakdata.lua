@@ -19,6 +19,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			boom = 0,
 			ass_sniper = 0
 		}
+	end
     if difficulty_index == 2 then -- Normal special unit caps.
 		self.special_unit_spawn_limits = {
 			shield = 3,
@@ -29,6 +30,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			boom = 0,
 			ass_sniper = 0
 		}
+	end
     if difficulty_index == 3 then -- Hard special unit caps.
 		self.special_unit_spawn_limits = {
 			shield = 3,
@@ -39,6 +41,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			boom = 0,
 			ass_sniper = 0
 		}
+	end
     if difficulty_index == 4 then -- Very Hard special unit caps.
 		self.special_unit_spawn_limits = {
 			shield = 4,
@@ -49,6 +52,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			boom = 0,
 			ass_sniper = 0
 		}
+	end
     if difficulty_index == 5 then -- OVK special unit caps.
 		self.special_unit_spawn_limits = {
 			shield = 4,
@@ -59,6 +63,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			boom = 0,
 			ass_sniper = 0
 		}
+	end
     if difficulty_index == 6 then -- Mayhem special unit caps. 
     -- note, focus of this transition is coordinated unit groups.
 		self.special_unit_spawn_limits = {
@@ -70,7 +75,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			boom = 0,
 			ass_sniper = 0
 		}
-    if difficulty_index == 7 then -- Death Sentence special unit caps.
+	end
+    if difficulty_index == 7 then -- Death Wish special unit caps.
 		self.special_unit_spawn_limits = {
 			shield = 4,
 			taser = 4,
@@ -80,6 +86,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			boom = 0,
 			ass_sniper = 0
 		}
+	end
     if difficulty_index == 8 then -- Crackdown special unit caps.
 		self.special_unit_spawn_limits = {
 			shield = 6,
@@ -591,7 +598,6 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 	}
 end
 
-
 function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 	old_spawn_group(self, difficulty_index)
 	self._tactics = {
@@ -1031,7 +1037,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			}
 		}
 	}
-	self.enemy_spawn_groups.normal_shieldbasic = {
+	self.enemy_spawn_groups.normal_shieldbasicpistol = {
 		amount = {3, 3},
 		spawn = {
 			{
@@ -1096,120 +1102,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				amount_min = 1,
 				amount_max = 1,
 				tactics = self._tactics.deathvox_simple_charge,
-				rank = 1
-			}
-		}
-	}	
--- goof groups begin.
-	self.enemy_spawn_groups.normal_first_responders = {
-		amount = {3, 3},
-		spawn = {
-			{
-				unit = "deathvox_cop_pistol",
-				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_ranged,
-				rank = 2
-			},
-			{
-				unit = "deathvox_cop_revolver",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_ranged,
-				rank = 1
-			}
-		}
-	}
-	self.enemy_spawn_groups.normal_swat_team = {
-		amount = {3, 3},
-		spawn = {
-			{
-				unit = "deathvox_cop_smg",
-				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_flank,
-				rank = 2
-			},
-			{
-				unit = "deathvox_lightar",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_flank,
-				rank = 1
-			}
-		}
-	}
-	self.enemy_spawn_groups.normal_pushers = {
-		amount = {3, 3},
-		spawn = {
-			{
-				unit = "deathvox_shield",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_shield_lead,
-				rank = 3
-			},
-			{
-				unit = "deathvox_cop_shotgun",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
-				rank = 2
-			},
-			{
-				unit = "deathvox_lightshot",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
-				rank = 1
-			}
-		}
-	}
-	self.enemy_spawn_groups.normal_sheriff = {
-		amount = {3, 3},
-		spawn = {
-			{
-				unit = "deathvox_lightshot",
-				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_flank,
-				rank = 2
-			},
-			{
-				unit = "deathvox_cop_revolver",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_flank,
-				rank = 1
-			}
-		}
-	}
-	self.enemy_spawn_groups.normal_recon = {
-		amount = {3, 3},
-		spawn = {
-			{
-				unit = "deathvox_fbi_rookie",
-				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_flank,
-				rank = 2
-			},
-			{
-				unit = "deathvox_cop_pistol",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_flank,
 				rank = 1
 			}
 		}
@@ -1536,136 +1428,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				rank = 1
 			},
 		}
-	}							
-	--goof groups start here.
-	self.enemy_spawn_groups.hard_first_responders = {
-		amount = {4, 4},
-		spawn = {
-			{
-				unit = "deathvox_cop_smg",
-				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
-				rank = 3
-			},
-			{
-				unit = "deathvox_taser",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
-				rank = 2
-			},
-			{
-				unit = "deathvox_heavyshot",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
-				rank = 1
-			}
-		}
-	}
-	self.enemy_spawn_groups.hard_swat_team = {
-		amount = {4, 4},
-		spawn = {
-			{
-				unit = "deathvox_lightar",
-				freq = 1,
-				amount_min = 3,
-				amount_max = 3,
-				tactics = self._tactics.deathvox_swat_flank,
-				rank = 2
-			},
-			{
-				unit = "deathvox_heavyshot",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_flank,
-				rank = 1
-			}
-		}
-	}
-	self.enemy_spawn_groups.hard_pushers = {
-		amount = {3, 3},
-		spawn = {
-			{
-				unit = "deathvox_shield",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_shield_lead,
-				rank = 3
-			},
-			{
-				unit = "deathvox_lightshot",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
-				rank = 2
-			},
-			{
-				unit = "deathvox_medic",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
-				rank = 1
-			}
-		}
-	}
-	self.enemy_spawn_groups.hard_sheriff = {
-		amount = {4, 4},
-		spawn = {
-			{
-				unit = "deathvox_cop_revolver",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_flank,
-				rank = 3
-			},
-			{
-				unit = "deathvox_lightshot",
-				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_flank,
-				rank = 2
-			},
-			{
-				unit = "deathvox_heavyar",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_flank,
-				rank = 1
-			}
-		}
-	}
-	self.enemy_spawn_groups.hard_recon = {
-		amount = {3, 3},
-		spawn = {
-			{
-				unit = "deathvox_cop_shotgun",
-				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_flank,
-				rank = 2
-			},
-			{
-				unit = "deathvox_fbi_rookie",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_flank,
-				rank = 1
-			}
-		}
 	}
 -- Very Hard spawngroups
 -- Green, Tan, comprehensive.
@@ -1871,7 +1633,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		}
 	}
 -- 2 heavy shot 2 heavy AR. charge.
-	self.enemy_spawn_groups.vhard_mixbothcharge = {
+	self.enemy_spawn_groups.vhard_mixheavybothcharge = {
 		amount = {4, 4},
 		spawn = {
 			{
@@ -2084,7 +1846,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		}
 	}	
 --2 heavy AR 2 light AR charge
-	self.enemy_spawn_groups.ovk_mixARcharge = {
+	self.enemy_spawn_groups.ovk_mixheavyARcharge = {
 		amount = {4, 4},
 		spawn = {
 			{
@@ -2820,8 +2582,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			}
 		}
 	}
-	
-	}
 -- Begin Mayhem coordinated mixed special groups. Introduction of elites does most of work.
 -- Shields, Tasers, Bulldozers (R870, SAIGA), Cloakers, Medics
 -- LMG Dozer solo
@@ -2837,6 +2597,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				rank = 1
 			}
 		}
+	}
 -- shield, black dozer, medic
 	self.enemy_spawn_groups.mh_blackpaladin = {
 		amount = {3, 3},
@@ -2866,6 +2627,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				rank = 1
 			}
 		}
+	}
 -- shield, green dozer, medic
 	self.enemy_spawn_groups.mh_greenpaladin = {
 		amount = {3, 3},
@@ -2895,6 +2657,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				rank = 1
 			}
 		}
+	}
 -- taser, cloaker
 	self.enemy_spawn_groups.mh_takedown = {
 		amount = {2, 2},
@@ -2916,6 +2679,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				rank = 1
 			}
 		}
+	}
 -- shield pair, medic
 	self.enemy_spawn_groups.mh_castle = {
 		amount = {3, 3},
@@ -2937,6 +2701,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				rank = 1
 			}
 		}
+	}
 -- taser duo. note simple tactic.
 	self.enemy_spawn_groups.mh_taserpair = {
 		amount = {2, 2},
@@ -2950,6 +2715,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				rank = 1
 			}
 		}
+	}
 -- 2 cloakers.
 	self.enemy_spawn_groups.mh_spoocpair = {
 		amount = {2, 2},
@@ -2993,6 +2759,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				rank = 1
 			}
 		}
+	}
 -- Mayhem recon groups
 -- Veteran, HRT, Medic, Cloaker, Taser
 -- 2 Veteran, 2 medic
@@ -3065,7 +2832,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 -- Death Wish spawngroups
 -- Elites.
 -- begin DW Elites.
-		self.enemy_spawn_groups.dw_group_1 = {
+	self.enemy_spawn_groups.dw_group_1 = {
 		amount = {4, 4},
 		spawn = {
 			{
@@ -3317,7 +3084,8 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				tactics = self._tactics.deathvox_medic,
 				rank = 1
 			},
-		}								
+		}	
+	}							
 -- Blackdozer, Taser
 	self.enemy_spawn_groups.dw_blackball = {
 		amount = {3, 3},
@@ -3339,6 +3107,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				rank = 1
 			}
 		}
+	}
 -- Greendozer, medic, cloaker
 	self.enemy_spawn_groups.dw_greeneye = {
 		amount = {3, 3},
@@ -3367,7 +3136,8 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				tactics = self._tactics.deathvox_spooc_pinch,
 				rank = 1
 			},
-		}																
+		}
+	}																
 -- 2 Tasers, cloaker. Note more complex tactic set
 	self.enemy_spawn_groups.dw_takedowner = {
 		amount = {3, 3},
@@ -3397,8 +3167,9 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				rank = 1
 			},
 		}
+	}
 -- Cloaker pair. Note NOT used in recon, use trio instead.
-	self.enemy_spawn_groups_dw_spoocpair = {
+	self.enemy_spawn_groups.dw_spoocpair = {
 		amount = {2, 2},
 		spawn = {
 			{
@@ -3420,7 +3191,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		}
 	}
 -- 2 Shields, taser, medic
-	self.enemy_spawn_groups_dw_citadel = {
+	self.enemy_spawn_groups.dw_citadel = {
 		amount = {4, 4},
 		spawn = {
 			{
@@ -3449,39 +3220,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			}
 		}
 	}
--- 2 Shields, taser, medic
-	self.enemy_spawn_groups_dw_citadel = {
-		amount = {4, 4},
-		spawn = {
-			{
-				unit = "deathvox_shield",
-				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
-				tactics = self._tactics.deathvox_shield_lead,
-				rank = 3
-			},
-			{
-				unit = "deathvox_tazer",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_tazer_follow,
-				rank = 2
-			},
-			{
-				unit = "deathvox_medic",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_medic,
-				rank = 1
-			}
-		}
-	}
--- Death Wish recon groups
--- Veteran, HRT, Medic, Cloaker, Taser
--- 2 Veteran, 2 medic
 	self.enemy_spawn_groups.dw_vetmed = {
 		amount = {4, 4},
 		spawn = {
@@ -3792,7 +3530,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			}
 		}
 	}
-								
 -- Begin CD special groups. Note full coordination, no basic swat.
 
 	self.enemy_spawn_groups.gorgon = {
@@ -4203,19 +3940,36 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 		self.besiege.assault.sustain_duration_balance_mul = {1,1,1,1}
 		self.besiege.assault.fade_duration = 30
 		self.besiege.assault.groups = {
-			normal_first_responders = { 1,1,1 },
-			normal_pushers = { 1,1,1 },
-			normal_sheriff = { 1,1,1 },
-			normal_swat_team = { 1,1,1 },
+			normal_solopistol = { 1,1,1 },
+			normal_soloshot = { 1,1,1 },
+			normal_solorevolver = { 1,1,1 },
+			normal_solosmg = { 1,1,1 },
+			normal_revolvergroup = { 1,1,1 },
+			normal_shotgroup = { 1,1,1 },
+			normal_smggroup = { 1,1,1 },
+			normal_copcombo = { 1,1,1 },
+			normal_ARswat = { 1,1,1 },
+			normal_swatcombo = { 1,1,1 },
+			normal_shieldbasicpistol = { 1,1,1 },
+			normal_shieldbasic = { 1,1,1 }
 		}
 		self.besiege.reenforce.groups = {
-			normal_first_responders = { 1,1,1 },
-			normal_pushers = { 1,1,1 },
-			normal_sheriff = { 1,1,1 },
-			normal_swat_team = { 1,1,1 },
+			normal_solopistol = { 1,1,1 },
+			normal_soloshot = { 1,1,1 },
+			normal_solorevolver = { 1,1,1 },
+			normal_solosmg = { 1,1,1 },
+			normal_revolvergroup = { 1,1,1 },
+			normal_shotgroup = { 1,1,1 },
+			normal_smggroup = { 1,1,1 },
+			normal_copcombo = { 1,1,1 },
+			normal_ARswat = { 1,1,1 },
+			normal_swatcombo = { 1,1,1 },
+			normal_shieldbasicpistol = { 1,1,1 },
+			normal_shieldbasic = { 1,1,1 }
 		}
 		self.besiege.recon.groups = {
-			normal_recon = { 1,1,1 },
+			normal_rookiepair = { 1,1,1 },
+			normal_rookie = { 1,1,1 }
 		}
 	end
 	if difficulty_index == DIFF_HARD then
@@ -4229,19 +3983,253 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 		self.besiege.assault.sustain_duration_balance_mul = {1,1,1,1}
 		self.besiege.assault.fade_duration = 30
 		self.besiege.assault.groups = {
-			hard_first_responders = { 1,1,1 },
-			hard_pushers = { 1,1,1 },
-			hard_sheriff = { 1,1,1 },
-			hard_swat_team = { 1,1,1 }
+			hard_smggroup = { 1,1,1 },
+			hard_copcombo = { 1,1,1 },
+			hard_medicgroup = { 1,1,1 },
+			hard_revolvermedic = { 1,1,1 },
+			hard_argroupranged = { 1,1,1 },
+			hard_lightgroup = { 1,1,1 },
+			hard_flankswat = { 1,1,1 },
+			hard_mixgroup = { 1,1,1 },
+			hard_shieldlight = { 1,1,1 },
+			hard_shieldsmg = { 1,1,1 },
+			hard_shieldheavy = { 1,1,1 },
+			hard_taser = { 1,1,1 }
 		}
 		self.besiege.reenforce.groups = {
-			hard_first_responders = { 1,1,1 },
-			hard_pushers = { 1,1,1 },
-			hard_sheriff = { 1,1,1 },
-			hard_swat_team = { 1,1,1 }
+			hard_smggroup = { 1,1,1 },
+			hard_copcombo = { 1,1,1 },
+			hard_medicgroup = { 1,1,1 },
+			hard_revolvermedic = { 1,1,1 },
+			hard_argroupranged = { 1,1,1 },
+			hard_lightgroup = { 1,1,1 },
+			hard_flankswat = { 1,1,1 },
+			hard_mixgroup = { 1,1,1 },
+			hard_shieldlight = { 1,1,1 },
+			hard_shieldsmg = { 1,1,1 },
+			hard_shieldheavy = { 1,1,1 },
+			hard_taser = { 1,1,1 }
 		}
 		self.besiege.recon.groups = {
-			hard_recon = { 1,1,1 }
+			hard_rookiemedic = { 1,1,1 },
+			hard_rookiecombo = { 1,1,1 },
+			hard_rookieshotgun = { 1,1,1 }
+		}
+	end
+	if difficulty_index == DIFF_VERY_HARD then
+		self.besiege.recon.force = {10,10,10}
+		self.besiege.recon.interval = {30,30,30}
+		self.besiege.assault.force = {30,30,30}
+		self.besiege.assault.force_pool = {150,150,150}
+		self.besiege.regroup.duration = {30,30,30}
+		self.besiege.assault.hostage_hesitation_delay = {25,25,25}
+		self.besiege.assault.delay = {40,30,20}
+		self.besiege.assault.sustain_duration_balance_mul = {1,1,1,1}
+		self.besiege.assault.fade_duration = 25
+		self.besiege.assault.groups = {
+			vhard_lightARranged = { 1,1,1 },
+			vhard_lightARcharge = { 1,1,1 },
+			vhard_lightARchargeMed = { 1,1,1 },
+			vhard_lightARflankMed = { 1,1,1 },
+			vhard_lightmixcharge = { 1,1,1 },
+			vhard_lightmixchargeMed = { 1,1,1 },
+			vhard_lightmixflankMed = { 1,1,1 },
+			vhard_mixARcharge = { 1,1,1 },
+			vhard_mixbothcharge = { 1,1,1 },
+			vhard_mixheavybothcharge = { 1,1,1 },
+			vhard_taserARgroup = { 1,1,1 },
+			vhard_tasershotgroup = { 1,1,1 },
+			vhard_shieldlightgroup = { 1,1,1 },
+			vhard_shieldheavyARgroup = { 1,1,1 },
+			vhard_shieldheavyshotgroup = { 1,1,1 },
+			vhard_bullsolo = { 1,1,1 }
+		}
+		self.besiege.reenforce.groups = {
+			vhard_lightARranged = { 1,1,1 },
+			vhard_lightARcharge = { 1,1,1 },
+			vhard_lightARchargeMed = { 1,1,1 },
+			vhard_lightARflankMed = { 1,1,1 },
+			vhard_lightmixcharge = { 1,1,1 },
+			vhard_lightmixchargeMed = { 1,1,1 },
+			vhard_lightmixflankMed = { 1,1,1 },
+			vhard_mixARcharge = { 1,1,1 },
+			vhard_mixbothcharge = { 1,1,1 },
+			vhard_mixheavybothcharge = { 1,1,1 },
+			vhard_taserARgroup = { 1,1,1 },
+			vhard_tasershotgroup = { 1,1,1 },
+			vhard_shieldlightgroup = { 1,1,1 },
+			vhard_shieldheavyARgroup = { 1,1,1 },
+			vhard_shieldheavyshotgroup = { 1,1,1 },
+			vhard_bullsolo = { 1,1,1 }
+		}
+		self.besiege.recon.groups = {
+			vhard_hrtmedic = { 1,1,1 },
+			vhard_hrttaser = { 1,1,1 }
+		}
+	end
+	if difficulty_index == DIFF_OVERKILL then
+		self.besiege.recon.force = {10,10,10}
+		self.besiege.recon.interval = {30,30,30}
+		self.besiege.assault.force = {35,35,35}
+		self.besiege.assault.force_pool = {175,175,175}
+		self.besiege.regroup.duration = {30,30,30}
+		self.besiege.assault.hostage_hesitation_delay = {25,25,25}
+		self.besiege.assault.delay = {40,30,20}
+		self.besiege.assault.sustain_duration_balance_mul = {1,1,1,1}
+		self.besiege.assault.fade_duration = 25
+		self.besiege.assault.groups = {
+			ovk_mixARcharge = { 1,1,1 },
+			ovk_mixheavyARcharge = { 1,1,1 },
+			ovk_comboARcharge = { 1,1,1 },
+			ovk_mixcombocharge = { 1,1,1 },
+			ovk_mixcombomediccharge = { 1,1,1 },
+			ovk_mixshotcharge = { 1,1,1 },
+			ovk_shotcombomedicflank = { 1,1,1 },
+			ovk_arcombomedicflank = { 1,1,1 },
+			ovk_heavycombocharge = { 1,1,1 },
+			ovk_lightcomboflank = { 1,1,1 },
+			ovk_shieldcombo = { 1,1,1 },
+			ovk_shieldshot = { 1,1,1 },
+			ovk_tazerAR = { 1,1,1 },
+			ovk_tazershot = { 1,1,1 },
+			ovk_tazermedic = { 1,1,1 },
+			ovk_greendozer = { 1,1,1 },
+			ovk_blackdozer = { 1,1,1 },
+			ovk_greenknight = { 1,1,1 },
+			ovk_blackknight = { 1,1,1 },
+			ovk_spoocpair = { 1,1,1 }
+		}
+		self.besiege.reenforce.groups = {
+			ovk_mixARcharge = { 1,1,1 },
+			ovk_mixheavyARcharge = { 1,1,1 },
+			ovk_comboARcharge = { 1,1,1 },
+			ovk_mixcombocharge = { 1,1,1 },
+			ovk_mixcombomediccharge = { 1,1,1 },
+			ovk_mixshotcharge = { 1,1,1 },
+			ovk_shotcombomedicflank = { 1,1,1 },
+			ovk_arcombomedicflank = { 1,1,1 },
+			ovk_heavycombocharge = { 1,1,1 },
+			ovk_lightcomboflank = { 1,1,1 },
+			ovk_shieldcombo = { 1,1,1 },
+			ovk_shieldshot = { 1,1,1 },
+			ovk_tazerAR = { 1,1,1 },
+			ovk_tazershot = { 1,1,1 },
+			ovk_tazermedic = { 1,1,1 },
+			ovk_greendozer = { 1,1,1 },
+			ovk_blackdozer = { 1,1,1 },
+			ovk_greenknight = { 1,1,1 },
+			ovk_blackknight = { 1,1,1 },
+			ovk_spoocpair = { 1,1,1 }
+		}
+		self.besiege.recon.groups = {
+			ovk_vetmed = { 1,1,1 },
+			ovk_hrtvetmix = { 1,1,1 },
+			ovk_hrttaser = { 1,1,1 }
+		}
+	end
+	if difficulty_index == DIFF_MAYHEM then
+		self.besiege.recon.force = {10,10,10}
+		self.besiege.recon.interval = {30,30,30}
+		self.besiege.assault.force = {40,40,40}
+		self.besiege.assault.force_pool = {200,200,200}
+		self.besiege.regroup.duration = {30,30,30}
+		self.besiege.assault.hostage_hesitation_delay = {20,20,20}
+		self.besiege.assault.delay = {30,20,10}
+		self.besiege.assault.sustain_duration_balance_mul = {1,1,1,1}
+		self.besiege.assault.fade_duration = 20
+		self.besiege.assault.groups = {
+			mh_group_1 = { 1,1,1 },
+			mh_group_2_std = { 1,1,1 },
+			mh_group_2_med = { 1,1,1 },
+			mh_group_3_std = { 1,1,1 },
+			mh_group_3_med = { 1,1,1 },
+			mh_group_4_std = { 1,1,1 },
+			mh_group_4_med = { 1,1,1 },
+			mh_group_5_std = { 1,1,1 },
+			mh_group_5_med = { 1,1,1 },
+			mh_whitedozer = { 1,1,1 },
+			mh_blackpaladin = { 1,1,1 },
+			mh_greenpaladin = { 1,1,1 },
+			mh_takedown = { 1,1,1 },
+			mh_castle = { 1,1,1 },
+			mh_taserpair = { 1,1,1 },
+			mh_spoocpair = { 1,1,1 },
+			mh_partners = { 1,1,1 }
+		}
+		self.besiege.reenforce.groups = {
+			mh_group_1 = { 1,1,1 },
+			mh_group_2_std = { 1,1,1 },
+			mh_group_2_med = { 1,1,1 },
+			mh_group_3_std = { 1,1,1 },
+			mh_group_3_med = { 1,1,1 },
+			mh_group_4_std = { 1,1,1 },
+			mh_group_4_med = { 1,1,1 },
+			mh_group_5_std = { 1,1,1 },
+			mh_group_5_med = { 1,1,1 },
+			mh_whitedozer = { 1,1,1 },
+			mh_blackpaladin = { 1,1,1 },
+			mh_greenpaladin = { 1,1,1 },
+			mh_takedown = { 1,1,1 },
+			mh_castle = { 1,1,1 },
+			mh_taserpair = { 1,1,1 },
+			mh_spoocpair = { 1,1,1 },
+			mh_partners = { 1,1,1 }
+		}
+		self.besiege.recon.groups = {
+			mh_vetmed = { 1,1,1 },
+			mh_hrtvetmix = { 1,1,1 },
+			mh_hrttaser = { 1,1,1 }
+		}
+	end
+	if difficulty_index == DIFF_DEATHWISH then
+		self.besiege.recon.force = {10,10,10}
+		self.besiege.recon.interval = {30,30,30}
+		self.besiege.assault.force = {45,45,45}
+		self.besiege.assault.force_pool = {250,250,250}
+		self.besiege.regroup.duration = {30,30,30}
+		self.besiege.assault.hostage_hesitation_delay = {20,20,20}
+		self.besiege.assault.delay = {30,20,10}
+		self.besiege.assault.sustain_duration_balance_mul = {1,1,1,1}
+		self.besiege.assault.fade_duration = 20
+		self.besiege.assault.groups = {
+			dw_group_1 = { 1,1,1 },
+			dw_group_2_std = { 1,1,1 },
+			dw_group_2_med = { 1,1,1 },
+			dw_group_3_std = { 1,1,1 },
+			dw_group_3_med = { 1,1,1 },
+			dw_group_4_std = { 1,1,1 },
+			dw_group_4_med = { 1,1,1 },
+			dw_group_5_std = { 1,1,1 },
+			dw_group_5_med = { 1,1,1 },
+			dw_skullpaladin = { 1,1,1 },
+			dw_blackball = { 1,1,1 },
+			dw_greeneye = { 1,1,1 },
+			dw_takedowner = { 1,1,1 },
+			dw_spoocpair = { 1,1,1 },
+			dw_citadel = { 1,1,1 }
+		}
+		self.besiege.reenforce.groups = {
+			dw_group_1 = { 1,1,1 },
+			dw_group_2_std = { 1,1,1 },
+			dw_group_2_med = { 1,1,1 },
+			dw_group_3_std = { 1,1,1 },
+			dw_group_3_med = { 1,1,1 },
+			dw_group_4_std = { 1,1,1 },
+			dw_group_4_med = { 1,1,1 },
+			dw_group_5_std = { 1,1,1 },
+			dw_group_5_med = { 1,1,1 },
+			dw_skullpaladin = { 1,1,1 },
+			dw_blackball = { 1,1,1 },
+			dw_greeneye = { 1,1,1 },
+			dw_takedowner = { 1,1,1 },
+			dw_spoocpair = { 1,1,1 },
+			dw_citadel = { 1,1,1 }
+		}
+		self.besiege.recon.groups = {
+			dw_vetmed = { 1,1,1 },
+			dw_hrtvetmix = { 1,1,1 },
+			dw_spooctrio = { 1,1,1 },
+			dw_hrttaser = { 1,1,1 }
 		}
 	end
 	if difficulty_index == DIFF_CRACKDOWN then
