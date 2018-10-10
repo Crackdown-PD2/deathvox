@@ -1082,10 +1082,10 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 	old_task_data(self, difficulty_index, difficulty)
 	if difficulty_index == 8 then
 		self.besiege.assault.force_balance_mul = {
-			1,
-			1,
-			1,
-			1
+			42,
+			46,
+			50,
+			50
 		}
 		self.besiege.assault.force_pool_balance_mul = {
 			1,
@@ -1110,9 +1110,9 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 			20
 		}
 		self.besiege.assault.force = {
-			50,
-			50,
-			50
+			1,
+			1,
+			1
 		}
 		self.besiege.assault.force_pool = {
 			500,
