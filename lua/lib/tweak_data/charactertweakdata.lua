@@ -2471,7 +2471,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medicdozer = deep_clone(self.deathvox_tank)
 	self.deathvox_medicdozer.tags = {"tank", "medic"}
 	self.deathvox_medicdozer.use_factory = true -- Use a factory weapon
-	self.deathvox_medicdozer.factory_weapon_id = {"wpn_deathvox_medicdozer_smg"} 
+	self.deathvox_medicdozer.factory_weapon_id = {"wpn_deathvox_heavy_ar"} 
 	self.deathvox_medicdozer.dv_medic_heal = true -- don't touch, makes him use the death vox healing
 	self.deathvox_medicdozer.custom_voicework = "medicdozer"
 	self.deathvox_medicdozer.access = "tank"
