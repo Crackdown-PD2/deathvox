@@ -927,7 +927,7 @@ function CharacterTweakData:_presets(tweak_data)
 					0,
 					0,
 					1,
-					0
+					1
 				}
 			},
 			{
@@ -945,7 +945,7 @@ function CharacterTweakData:_presets(tweak_data)
 					0,
 					0,
 					1,
-					0
+					1
 				}
 			},
 			{
@@ -1100,7 +1100,7 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = 0.85,
+				dmg_mul = 0.8,
 				r = 2000,
 				acc = {
 					0.7,
@@ -1118,7 +1118,7 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = 0.7,
+				dmg_mul = 0.65,
 				r = 3000,
 				acc = {
 					0.65,
@@ -1136,15 +1136,15 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = 0.6,
+				dmg_mul = 0.55,
 				r = 6000, -- uses longer range, per vanilla, to maintain long falloff tail.
 				acc = {
-					0.45, -- increased tail accuracy. Vanilla values .25-.7.
+					0.35, -- increased tail accuracy. Vanilla values .25-.7.
 					0.7
 				},
 				recoil = {
 					1.5, -- increased tail recoil to reduce attack rate. Vanilla values 1-2.
-					2
+					2.5
 				},
 				mode = {
 					1,
@@ -1182,8 +1182,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = {
-					1,
-					1.1
+					0.8,
+					1
 				},
 				mode = {
 					1,
@@ -1200,8 +1200,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = { -- slight recoil reduction. Vanilla stats 1-1.25.
-					1,
-					1.2
+					0.9,
+					1.1
 				},
 				mode = {
 					1,
@@ -2101,7 +2101,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyar.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- revised per feedback.
 	self.deathvox_heavyar.suppression = presets.suppression.hard_agg -- tentative.
 	self.deathvox_heavyar.surrender = presets.surrender.hard --tentative.
-	self.deathvox_heavyar.move_speed = presets.move_speed.very_fast
+	self.deathvox_heavyar.move_speed = presets.move_speed.fast
 	self.deathvox_heavyar.surrender_break_time = {6, 8}
 	self.deathvox_heavyar.ecm_vulnerability = 1
 	self.deathvox_heavyar.ecm_hurts = {
@@ -2153,7 +2153,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyshot.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- revised per feedback.
 	self.deathvox_heavyshot.suppression = presets.suppression.hard_agg -- tentative.
 	self.deathvox_heavyshot.surrender = presets.surrender.hard -- tentative.
-	self.deathvox_heavyshot.move_speed = presets.move_speed.very_fast
+	self.deathvox_heavyshot.move_speed = presets.move_speed.fast
 	self.deathvox_heavyshot.surrender_break_time = {6, 8} 
 	self.deathvox_heavyshot.ecm_vulnerability = 1
 	self.deathvox_heavyshot.ecm_hurts = {
