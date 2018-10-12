@@ -2067,7 +2067,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 	self.deathvox_gman = deep_clone(self.deathvox_guard)
 	self.deathvox_gman.ignore_ecm_for_pager = true
-	self.deathvox_gman.no_arrest = true -- removing arrest for gmen specifically, instead.
+	self.deathvox_guard.surrender = nil -- cannot be intimidated.
+	self.deathvox_gman.no_arrest = false -- caused too many issues.
 	table.insert(self._enemy_list, "deathvox_gman")
 	
 	self.deathvox_lightar = deep_clone(self.city_swat)
