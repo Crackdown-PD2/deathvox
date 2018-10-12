@@ -83,7 +83,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_shotgun_light.sounds.prefix = "remington_npc"
 	self.deathvox_shotgun_light.use_data.selection_index = 2
-	self.deathvox_shotgun_light.DAMAGE = 9 -- Base damage 90.
+	self.deathvox_shotgun_light.DAMAGE = 12 -- Base damage 120.
 	self.deathvox_shotgun_light.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_shotgun_light.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug_semi"
 	self.deathvox_shotgun_light.CLIP_AMMO_MAX = 6
@@ -97,7 +97,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_shotgun_heavy.sounds.prefix = "benelli_m4_npc"
 	self.deathvox_shotgun_heavy.use_data.selection_index = 2
-	self.deathvox_shotgun_heavy.DAMAGE = 13 -- Base damage 130.
+	self.deathvox_shotgun_heavy.DAMAGE = 15 -- Base damage 150.
 	self.deathvox_shotgun_heavy.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_shotgun_heavy.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug"
 	self.deathvox_shotgun_heavy.auto.fire_rate = 0.14
