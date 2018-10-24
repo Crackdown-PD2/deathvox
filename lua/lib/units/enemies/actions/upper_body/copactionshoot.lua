@@ -87,14 +87,26 @@ function CopActionShoot:update(t)
 			end
 
 			--if not self._ext_anim.base_no_reload then /// npcs can now reload while moving
-				local res = CopActionReload._play_reload(self)
+				if self._weap_tweak.reload == "looped" then --self-explanatory
+					local anim_multiplier = self._weap_tweak.looped_reload_speed or 1
 
-				if res then
-					self._machine:set_speed(res, self._reload_speed)
-				end
+					anim_multiplier = anim_multiplier * (self._reload_speed or 1)
 
-				if Network:is_server() then
-					managers.network:session():send_to_peers("reload_weapon_cop", self._unit)
+					local res = CopActionReload._play_reload(self, t, anim_multiplier)
+
+					if res then
+						self._machine:set_speed(res, anim_multiplier)
+					end
+				else
+					local res = CopActionReload._play_reload(self)
+
+					if res then
+						self._machine:set_speed(res, self._reload_speed)
+					end
+
+					if Network:is_server() then
+						managers.network:session():send_to_peers("reload_weapon_cop", self._unit)
+					end
 				end
 			--end
 		elseif self._autofiring then
@@ -316,6 +328,10 @@ function CopActionShoot:update(t)
 				end
 			end
 		end
+	end
+
+	if self._weap_tweak.reload == "looped" then
+		CopActionReload.update_looped(self, t)
 	end
 
 	if self._ext_anim.base_need_upd then

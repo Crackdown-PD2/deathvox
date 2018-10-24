@@ -225,6 +225,8 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_cop_shotgun = deep_clone(self.r870_npc)
 	self.deathvox_cop_shotgun.rays = nil
 	self.deathvox_cop_shotgun.spread = nil
+	self.deathvox_cop_shotgun.reload = "looped"
+	self.deathvox_cop_shotgun.looped_reload_speed = 0.8 -- time it takes to shove each shell in
 	
 	self.deathvox_cop_smg = deep_clone(self.mp5_npc)
 
@@ -443,6 +445,8 @@ function WeaponTweakData:init(tweak_data)
     self.deathvox_greendozer.suppression = 1.8
     self.deathvox_greendozer.is_shotgun = true
     self.deathvox_greendozer.usage = "is_dozer_pump"
+	self.deathvox_greendozer.reload = "looped"
+	self.deathvox_greendozer.looped_reload_speed = 0.8 -- time it takes to shove each shell in
 end
 
 function WeaponTweakData:_set_sm_wish()

@@ -2371,6 +2371,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker.is_special_unit = "spooc"
 	self.deathvox_cloaker.access = "any"
 	self.deathvox_cloaker.no_retreat = false
+	self.deathvox_cloaker.spooc_attack_use_smoke_chance = 0
 
 	table.insert(self._enemy_list, "deathvox_cloaker") 
 
