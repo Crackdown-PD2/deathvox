@@ -32,7 +32,7 @@
 		<post :script_path="cop/logics/coplogictravel.lua" :hook_id="cop/logics/coplogictravel"/>
 		<post :script_path="cop/logics/coplogicbase.lua" :hook_id="cop/logics/coplogicbase"/>
 		<post :script_path="spooc/logics/spooclogicattack.lua" :hook_id="spooc/logics/spooclogicattack"/>
-		<post :script_path="spooc/actions/lower_body/logics/actionspooc.lua" :hook_id="spooc/actions/lower_body/actionspooc"/>
+		<post :script_path="spooc/actions/lower_body/actionspooc.lua" :hook_id="spooc/actions/lower_body/actionspooc"/>
 		<post :script_path="actions/upper_body/copactionshoot.lua" :hook_id="cop/actions/upper_body/copactionshoot"/>
 		<post :script_path="actions/upper_body/copactiontase.lua" :hook_id="cop/actions/upper_body/copactiontase"/>
 		<post :script_path="actions/upper_body/copactionhealed.lua" :hook_id="cop/actions/upper_body/copactionhealed"/>
