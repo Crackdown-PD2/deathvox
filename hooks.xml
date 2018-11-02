@@ -59,6 +59,7 @@
 	<post :script_path="managers/group_ai_states/groupaistatebesiege.lua" :hook_id="managers/group_ai_states/groupaistatebesiege"/>
 	<post :script_path="managers/player/snipergrazedamage.lua" :hook_id="managers/player/snipergrazedamage"/>
 	<post :script_path="managers/navigationmanager.lua" :hook_id="managers/navigationmanager"/>
+	<post :script_path="managers/hud/hudassaultcorner.lua" :hook_id="managers/hud/hudassaultcorner"/>
 
 	<post :script_path="managers/mission/elementspawnenemygroup.lua" :hook_id="managers/mission/elementspawnenemygroup"/>
 	<post :script_path="managers/mission/elementspawnenemydummy.lua" :hook_id="managers/mission/elementspawnenemydummy"/>
