@@ -1,6 +1,7 @@
 Hooks:Add("LocalizationManagerPostInit", "DeathVox_Localization", function(loc)
 	LocalizationManager:add_localized_strings({
 		["menu_risk_sm_wish"] = "Crackdown. A beary hard difficulty.",
+		["menu_difficulty_sm_wish"] = "Crackdown",
 		["hud_assault_cop_assault"] = "POLICE ASSAULT IN PROGRESS",
 		["hud_assault_cop_cover"] = "STAY IN COVER",
 		["hud_assault_fbi_assault"] = "FBI ASSAULT IN PROGRESS",
