@@ -29,7 +29,12 @@ function HuskCopDamage:die(variant)
 	if self._unit:base():char_tweak().die_sound_event then
 		self._unit:sound():play(self._unit:base():char_tweak().die_sound_event, nil, nil)
 	end
-
+	if self._unit:base().looping_voice then
+		self._unit:base().looping_voice:set_looping(false)
+		self._unit:base().looping_voice:stop()
+		self._unit:base().looping_voice:close()
+		self._unit:base().looping_voice = nil
+	end
 	if self._unit:base():char_tweak().ends_assault_on_death then
 		managers.hud:set_buff_enabled("vip", false)
 	end
