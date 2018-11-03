@@ -208,6 +208,32 @@ local enemy_replacements = {
 	
 -- Headless Zealdozer.
 --		["units/pd2_dlc_help/characters/ene_zeal_bulldozer_halloween/ene_zeal_bulldozer_halloween"]	
+
+		["units/zdann/characters/ene_ger_city_heavy_g36/ene_ger_city_heavy_g36"] = "deathvox_heavyar",
+		["units/zdann/characters/ene_ger_city_heavy_r870/ene_ger_city_heavy_r870"] = "deathvox_heavyshot",
+		["units/zdann/characters/ene_ger_city_swat_1/ene_ger_city_swat_1"] = "deathvox_lightar",
+		["units/zdann/characters/ene_ger_city_swat_2/ene_ger_city_swat_2"] = "deathvox_lightshot",
+		["units/zdann/characters/ene_ger_city_swat_3/ene_ger_city_swat_3"] = "deathvox_lightar",
+		["units/zdann/characters/ene_ger_city_swat_r870/ene_ger_city_swat_r870"] = "deathvox_lightshot",
+		["units/zdann/characters/ene_ger_fbi_heavy_1/ene_ger_fbi_heavy_1"] = "deathvox_heavyar",
+		["units/zdann/characters/ene_ger_fbi_heavy_r870/ene_ger_fbi_heavy_r870"] = "deathvox_heavyshot",
+		["units/zdann/characters/ene_ger_fbi_swat_1/ene_ger_fbi_swat_1"] = "deathvox_lightar",
+		["units/zdann/characters/ene_ger_fbi_swat_2/ene_ger_fbi_swat_2"] = "deathvox_lightshot",
+		["units/zdann/characters/ene_ger_flamer_1/ene_ger_flamer_1"] = "deathvox_greendozer",
+		["units/zdann/characters/ene_ger_flamer_2/ene_ger_flamer_2"] = "deathvox_blackdozer",
+		["units/zdann/characters/ene_ger_flamer_3/ene_ger_flamer_3"] = "deathvox_lmgdozer",
+		["units/zdann/characters/ene_ger_flamer_4/ene_ger_flamer_4"] = "deathvox_lmgdozer", -- todo: implement flamer class for flamerdozer, need to add 4 bikerdozer anyways
+		["units/zdann/characters/ene_ger_guard_1/ene_ger_guard_1"] = "deathvox_guard",
+		["units/zdann/characters/ene_ger_guard_2/ene_ger_guard_2"] = "deathvox_guard",
+		["units/zdann/characters/ene_ger_medic_m4/ene_ger_medic_m4"] = "deathvox_medic",
+		["units/zdann/characters/ene_ger_medic_r870/ene_ger_medic_r870"] = "deathvox_medic",
+		["units/zdann/characters/ene_ger_shield_1/ene_ger_shield_1"] = "deathvox_shield",
+		["units/zdann/characters/ene_ger_shield_2/ene_ger_shield_2"] = "deathvox_shield",
+		["units/zdann/characters/ene_ger_shield_city/ene_ger_shield_city"] = "deathvox_shield",
+		["units/zdann/characters/ene_ger_swat_1/ene_ger_swat_1"] = "deathvox_lightar",
+		["units/zdann/characters/ene_ger_swat_2/ene_ger_swat_2"] = "deathvox_lightshot",
+		["units/zdann/characters/ene_ger_swat_heavy_1/ene_ger_swat_heavy_1"] = "deathvox_heavyar",
+		["units/zdann/characters/ene_ger_swat_heavy_r870/ene_ger_swat_heavy_r870"] = "deathvox_heavyshot"
 	}
 function ElementSpawnEnemyDummy:init(...)
 	ElementSpawnEnemyDummy.super.init(self, ...)
