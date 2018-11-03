@@ -17,6 +17,8 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Localization", function(loc)
 		["hud_assault_classic_assault"] = "POLICE ASSAULT IN PROGRESS",
 		["hud_assault_classic_cover"] = "STAY IN COVER",
 		["hud_assault_zombie_assault"] = "ALL HEIST AND NO DRILL",
-		["hud_assault_zombie_cover"] = "MAKES BAIN A DULL SAFE"
+		["hud_assault_zombie_cover"] = "MAKES BAIN A DULL SAFE",
+		["hud_assault_gsg9_assault"] = "Angriff der Polizei im Gange",
+		["hud_assault_gsg9_cover"]	= "In Deckung bleiben"
 	})
 end)
