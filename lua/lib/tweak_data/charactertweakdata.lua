@@ -263,6 +263,65 @@ function CharacterTweakData:_presets(tweak_data)
 			crackdown = {health = 22, headshot_mult = 3}
 		}
 	}
+	presets.move_speed.shield_vf = { --custom shield move speed preset, shields never use anything except crouching cbt stances so it shouldn't be a problem
+		stand = {
+			walk = {
+				ntl = {
+					strafe = 335,
+					fwd = 485,
+					bwd = 310
+				},
+				hos = {
+					strafe = 335,
+					fwd = 485,
+					bwd = 310
+				},
+				cbt = {
+					strafe = 335,
+					fwd = 485,
+					bwd = 310
+				}
+			},
+			run = {
+				hos = {
+					strafe = 340,
+					fwd = 670,
+					bwd = 325
+				},
+				cbt = {
+					strafe = 335,
+					fwd = 485,
+					bwd = 310
+				}
+			}
+		},
+		crouch = {
+			walk = {
+				hos = {
+					strafe = 335,
+					fwd = 485,
+					bwd = 310
+				},
+				cbt = {
+					strafe = 335,
+					fwd = 485,
+					bwd = 310
+				}
+			},
+			run = {
+				hos = {
+					strafe = 335,
+					fwd = 485,
+					bwd = 310
+				},
+				cbt = {
+					strafe = 335,
+					fwd = 485,
+					bwd = 310
+				}
+			}
+		}
+	}
 	presets.dodge.deathvox = {
 		speed = 1.7,
 		occasions = {
@@ -2277,7 +2336,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.damage.hurt_severity = presets.hurt_severities.only_explosion_hurts
 	self.deathvox_shield.suppression = nil -- presets.suppression.no_supress 
 	self.deathvox_shield.surrender = nil
-	self.deathvox_shield.move_speed = presets.move_speed.very_fast -- same as base.
+	self.deathvox_shield.move_speed = presets.move_speed.shield_vf -- using a custom shield speed preset, untested
 	self.deathvox_shield.ecm_vulnerability = .9 -- same as base.
 	self.deathvox_shield.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8} -- same as general enemies, less than vanilla.
