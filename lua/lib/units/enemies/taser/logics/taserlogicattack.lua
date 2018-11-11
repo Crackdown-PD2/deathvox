@@ -44,3 +44,21 @@ function TaserLogicAttack.enter(data, new_logic_name, enter_params)
 
 	data.unit:brain():set_attention_settings({cbt = true})
 end
+
+function TaserLogicAttack._chk_reaction_to_attention_object(data, attention_data, stationary)
+	local reaction = CopLogicIdle._chk_reaction_to_attention_object(data, attention_data, stationary)
+
+	if reaction < AIAttentionObject.REACT_SHOOT or not attention_data.criminal_record or not attention_data.is_person then
+		return reaction
+	end
+
+	if attention_data.is_human_player and not attention_data.unit:movement():is_taser_attack_allowed() then
+		return AIAttentionObject.REACT_COMBAT
+	end
+
+	if (attention_data.is_human_player or not attention_data.unit:movement():chk_action_forbidden("hurt")) and attention_data.verified and attention_data.verified_dis <= data.internal_data.tase_distance and data.tase_delay_t < data.t then
+		return AIAttentionObject.REACT_SPECIAL_ATTACK --Fixes tasers not opening fire on things at ranges beyond their tasing range.
+	end
+
+	return reaction
+end
