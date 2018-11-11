@@ -92,7 +92,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			shield = 6,
 			taser = 4,
 			medic = 4,
-			tank = 2,
+			tank = 3,
 			spooc = 4,
 			boom = 2,
 			ass_sniper = 0
