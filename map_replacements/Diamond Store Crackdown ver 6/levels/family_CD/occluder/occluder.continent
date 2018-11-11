@@ -1,0 +1,10 @@
+<table>
+	<statics>
+		<table>
+			<unit_data continent="occluder" name="units/payday2/mockup/occluder_diamond" name_id="occluder_diamond_001" position="300 793 0" rotation="0 0 0 -1" unit_id="400011"/>
+		</table>
+	</statics>
+	<values>
+		<workviews/>
+	</values>
+</table>

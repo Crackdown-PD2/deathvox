@@ -29,12 +29,10 @@ function HuskCopDamage:die(variant)
 	if self._unit:base():char_tweak().die_sound_event then
 		self._unit:sound():play(self._unit:base():char_tweak().die_sound_event, nil, nil)
 	end
-	if self._unit:base():char_tweak().custom_voicework then
-		local voicelines = _G.deathvox.BufferedSounds[self._unit:base():char_tweak().custom_voicework]
-		if voicelines and voicelines["death"] then
-			self._unit:base():play_voiceline(voicelines.death, true)
-		end
-	end
 
+	if self._unit:base():char_tweak().ends_assault_on_death then
+		managers.hud:set_buff_enabled("vip", false)
+	end
+	
 	self:_on_death()
 end

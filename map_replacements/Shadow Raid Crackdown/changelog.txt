@@ -1,0 +1,27 @@
+Heist: Shadow Raid
+Version: 8
+
+Current changes:
+Despawn sewer crowbar
+Lock front corner guard
+Lock gman front gate guard
+Simultaneous chopper events
+removed back ladder
+Opened roof and balcony doors at spawn
+added gman locational spawn to surveillance
+localization fixed.
+Removed "ezladder".
+Adjusted crowbar positions.
+Adjusted back guards.
+Altered front gate gman animation.
+
+Todo:
+Identify further gman substitutes- consider swap for keycard guard, rather than in addition, as superior ECM rush defense.
+gman swapin
+
+
+Notes:
+Add rooftop guard? no, no nav in area.
+consider lasers in vault? no, not needed, no good surfaces for laser structure.
+Consider increased loot req; what will current spawn structure bear? Not needed, current req nicely splits the difference.
+Change trap enemies? No, not needed.

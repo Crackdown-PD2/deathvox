@@ -6,7 +6,7 @@
 	<extensions>
 		<extension name="unit_data" class="ScriptUnitData" />
 		<extension name="base" class="HuskCopBase" >
-			<var name="_tweak_table" value="deathvox_guard" />
+			<var name="_tweak_table" value="deathvox_gman" />
 			<var name="_default_weapon_id" value="c45" />
 		</extension>
 		<extension name="inventory" class="HuskCopInventory" />

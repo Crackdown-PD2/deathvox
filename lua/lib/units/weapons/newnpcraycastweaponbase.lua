@@ -90,5 +90,107 @@ function NewNPCRaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, d
 	return result
 end
 
+-- add weapon firing animation
+-- Lifted directly from HD weapon customization by Shiny Hoppip
+local fire_original = NewNPCRaycastWeaponBase.fire
+function NewNPCRaycastWeaponBase:fire(...)
+  local result = fire_original(self, ...)
+   self:tweak_data_anim_play("fire")
+  return result
+end
+
+local fire_blank_original = NewNPCRaycastWeaponBase.fire_blank
+function NewNPCRaycastWeaponBase:fire_blank(...)
+  local result = fire_blank_original(self, ...)
+   self:tweak_data_anim_play("fire")
+  return result
+end
+
+local auto_fire_blank_original = NewNPCRaycastWeaponBase.auto_fire_blank
+function NewNPCRaycastWeaponBase:auto_fire_blank(...)
+  local result = auto_fire_blank_original(self, ...)
+   self:tweak_data_anim_play("fire")
+  return result
+end
+
+local tweak_data_anim_play_original = NewNPCRaycastWeaponBase.tweak_data_anim_play
+function NewNPCRaycastWeaponBase:tweak_data_anim_play(anim, ...)
+  local unit_anim = self:_get_tweak_data_weapon_animation(anim)
+  -- disable animations that don't have a unit to prevent crashing
+  if not self._checked_anims[unit_anim] then
+	for part_id, data in pairs(self._parts) do
+	  if data.animations and data.animations[unit_anim] and not data.unit then
+		data.animations[unit_anim] = nil
+	  end
+	end
+	self._checked_anims[unit_anim] = true
+  end
+  return tweak_data_anim_play_original(self, anim, ...)
+end
+
+local setup_original = NewNPCRaycastWeaponBase.setup
+function NewNPCRaycastWeaponBase:setup(...)
+  setup_original(self, ...)
+
+  self._checked_anims = {}
+end
+
+
+function NewNPCRaycastWeaponBase:add_damage_multiplier(damage_multiplier)
+	self._damage = self._damage * damage_multiplier
+end
+
+local destroy_original = NewNPCRaycastWeaponBase.destroy
+function NewNPCRaycastWeaponBase:destroy(...)
+  if alive(self._collider_unit) then
+    World:delete_unit(self._collider_unit)
+  end
+  return destroy_original(self, ...)
+end
+
 DeathVoxSniperWeaponBase = DeathVoxSniperWeaponBase or blt_class(NewNPCRaycastWeaponBase)
 DeathVoxSniperWeaponBase.TRAIL_EFFECT = Idstring("effects/particles/weapons/trail_dv_sniper")
+
+DeathVoxGrenadierWeaponBase = DeathVoxGrenadierWeaponBase or blt_class(NewNPCRaycastWeaponBase)
+function DeathVoxGrenadierWeaponBase:init(unit)
+	DeathVoxGrenadierWeaponBase.super.init(self, unit)
+	self._grenade_cooldown = 0
+	self._grenade_cooldown_max = 10
+	self._firing_status = 0 -- 0 for can fire, 1 for speaking
+	self._speaking_cooldown = 1
+	self._speak_cool = 0
+end
+
+function DeathVoxGrenadierWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoot_player, shoot_through_data)
+	local t = TimerManager:main():time()
+	if self._grenade_cooldown > t or self._speak_cool > t then
+		return {}
+	end
+	if self._firing_status == 0 then
+		self._firing_status = 1
+		user_unit:sound():say("use_gas", true, nil, true)
+		self._speak_cool = t + self._speaking_cooldown
+		return {}
+	else
+		if not Network:is_client() then
+			local unit = nil
+			local mvec_from_pos = Vector3()
+			local mvec_direction = Vector3()
+			mvector3.set(mvec_from_pos, from_pos)
+			mvector3.set(mvec_direction, direction)
+			mvector3.multiply(mvec_direction, 100)
+			
+			mvector3.add(mvec_from_pos, mvec_direction)
+			if not self._client_authoritative then
+				unit = ProjectileBase.throw_projectile("dv_grenadier_grenade", mvec_from_pos, direction)
+			end
+			self._firing_status = 0
+			self._grenade_cooldown = t + self._grenade_cooldown_max
+			return {}
+		end
+	end
+	return {}
+end
+
+
+

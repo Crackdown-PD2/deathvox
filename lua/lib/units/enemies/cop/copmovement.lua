@@ -18,42 +18,17 @@ local action_variants = {
 	}
 }
 local security_variant = action_variants.security
-function CopMovement:init(unit)
-	old_init(self, unit)
-	CopMovement._action_variants.cop_civ = security_variant
-	CopMovement._action_variants.fbi_female = security_variant
-	CopMovement._action_variants.hrt = security_variant
-	CopMovement._action_variants.fbi_swat_vet = security_variant
-	CopMovement._action_variants.city_swat_titan = security_variant
-	CopMovement._action_variants.city_swat_titan_assault = security_variant
-	CopMovement._action_variants.boom = security_variant
-	CopMovement._action_variants.rboom = security_variant
-	CopMovement._action_variants.fbi_vet = security_variant
-	CopMovement._action_variants.spring = clone(security_variant)
-	CopMovement._action_variants.summers = security_variant
-	CopMovement._action_variants.boom_summers = security_variant
-	CopMovement._action_variants.taser_summers = security_variant
-	CopMovement._action_variants.omnia_lpf = security_variant
-	CopMovement._action_variants.medic_summers = security_variant
-	CopMovement._action_variants.tank_titan = clone(security_variant)
-	CopMovement._action_variants.tank_titan.walk = TankCopActionWalk
-	CopMovement._action_variants.tank_titan_assault = clone(security_variant)
-	CopMovement._action_variants.tank_titan_assault.walk = TankCopActionWalk
-	CopMovement._action_variants.tank_biker = clone(security_variant)
-	CopMovement._action_variants.tank_biker.walk = TankCopActionWalk
-	CopMovement._action_variants.biker_guard = security_variant
-	CopMovement._action_variants.phalanx_minion_assault = clone(security_variant)
-	CopMovement._action_variants.phalanx_minion_assault.hurt = ShieldActionHurt
-	CopMovement._action_variants.phalanx_minion_assault.walk = ShieldCopActionWalk
-	CopMovement._action_variants.spooc_titan = security_variant
 
+function CopMovement:init(unit)
 	CopMovement._action_variants.deathvox_shield = clone(security_variant)
 	CopMovement._action_variants.deathvox_shield.hurt = ShieldActionHurt
 	CopMovement._action_variants.deathvox_shield.walk = ShieldCopActionWalk
 	CopMovement._action_variants.deathvox_heavyar = security_variant
 	CopMovement._action_variants.deathvox_lightar = security_variant
-	CopMovement._action_variants.deathvox_medic = security_variant
+	CopMovement._action_variants.deathvox_medic = clone(security_variant)
+	CopMovement._action_variants.deathvox_medic.heal = MedicActionHeal
 	CopMovement._action_variants.deathvox_guard = security_variant
+	CopMovement._action_variants.deathvox_gman = security_variant
 	CopMovement._action_variants.deathvox_lightshot = security_variant
 	CopMovement._action_variants.deathvox_heavyshot = security_variant
 
@@ -64,13 +39,16 @@ function CopMovement:init(unit)
 	
 	CopMovement._action_variants.deathvox_greendozer = clone(security_variant)
 	CopMovement._action_variants.deathvox_greendozer.walk = TankCopActionWalk
+	CopMovement._action_variants.deathvox_guarddozer = clone(security_variant)
+	CopMovement._action_variants.deathvox_guarddozer.walk = TankCopActionWalk
 	CopMovement._action_variants.deathvox_blackdozer = clone(security_variant)
 	CopMovement._action_variants.deathvox_blackdozer.walk = TankCopActionWalk
 	CopMovement._action_variants.deathvox_lmgdozer = clone(security_variant)
 	CopMovement._action_variants.deathvox_lmgdozer.walk = TankCopActionWalk
 	CopMovement._action_variants.deathvox_medicdozer = clone(security_variant)
 	CopMovement._action_variants.deathvox_medicdozer.walk = TankCopActionWalk
-
+	CopMovement._action_variants.deathvox_medicdozer.heal = MedicActionHeal
+	old_init(self, unit)
 end
 
 function CopMovement:post_init()
@@ -105,6 +83,7 @@ function CopMovement:post_init()
 	self._unit:kill_mover()
 	self._unit:set_driving("script")
 	self._unit:unit_data().has_alarm_pager = self._tweak_data.has_alarm_pager
+	self._unit:unit_data().ignore_ecm_for_pager = self._tweak_data.ignore_ecm_for_pager
 	local event_list = {
 		"bleedout",
 		"light_hurt",

@@ -9,9 +9,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		acrobatic = true,
 		walk = true
 	}
-	if difficulty_index == 8 then
+	if difficulty_index == 8 then -- reducing dozer spawncap to 2, test value 5/19. Should indirectly address other balance issues.
 		self.special_unit_spawn_limits = {
-			tank = 3,
+			tank = 2,
 			taser = 4,
 			boom = 2,
 			spooc = 4,
@@ -245,29 +245,37 @@ end
 
 
 function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
+	old_spawn_group(self, difficulty_index)
 	self._tactics = {
-			deathvox_swat_flank = {
-				"flank",
-				"charge",
-				"provide_coverfire",
-				"provide_support"
-				},	
-			deathvox_swat_ranged = {
+			deathvox_grenad_follow = {
+				"shield_cover",
 				"ranged_fire",
 				"provide_coverfire",
 				"provide_support",
-				"charge"
+				"deathguard",
+				"flash_grenade",
+				"smoke_grenade"
 				},
-			deathvox_swat_charge = {
-				"charge",
+			deathvox_grenad_lead = {
+				"ranged_fire",
 				"provide_coverfire",
-				"provide_support"
+				"deathguard",
+				"flash_grenade",
+				"smoke_grenade"
+				},
+			deathvox_grenad_pinch = {
+				"ranged_fire",
+				"provide_coverfire",
+				"provide_support",
+				"deathguard",
+				"flash_grenade",
+				"smoke_grenade"
 				},
 			deathvox_medic = {
 				"shield_cover",
-				"provide_support",
+				"charge",
 				"provide_coverfire",
-				"charge"
+				"provide_support"
 				},
 			deathvox_shield_lead = {
 				"shield",
@@ -282,18 +290,47 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"charge",
 				"deathguard"
 				},
-			deathvox_tazer_lead = {
+			deathvox_spooc_lead = {
+				"charge",
 				"flash_grenade",
+				"provide_coverfire",
+				"smoke_grenade",
+				"deathguard"
+				},
+			deathvox_spooc_pinch = {
+				"flank",
+				"smoke_grenade",
 				"charge",
 				"provide_coverfire",
-				"provide_support"
+				"provide_support",
+				"deathguard",
+				"flash_grenade"
 				},
-			deathvox_tazer_follow = {
+			deathvox_spooc_shield = {
 				"shield_cover",
 				"charge",
 				"provide_coverfire",
 				"provide_support",
-				"deathguard"
+				"smoke_grenade",
+				"deathguard",
+				"flash_grenade"
+				},
+			deathvox_swat_charge = {
+				"charge",
+				"provide_coverfire",
+				"provide_support",
+				"flash_grenade",
+				"smoke_grenade"
+				},
+			deathvox_swat_flank = {
+				"flank",
+				"provide_coverfire",
+				"provide_support"
+				},	
+			deathvox_swat_ranged = {
+				"ranged_fire",
+				"provide_coverfire",
+				"provide_support",
 				},
 			deathvox_tank_cover = {
 				"shield_cover",
@@ -318,53 +355,23 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"deathguard",
 				"murder"
 				},
-			deathvox_spooc_lead = {
+			deathvox_tazer_follow = {
+				"shield_cover",
+				"charge",
+				"provide_coverfire",
+				"provide_support",
+				"deathguard"
+				},
+			deathvox_tazer_lead = {
 				"flash_grenade",
-				"charge",
-				"provide_coverfire",
-				"smoke_grenade",
-				"deathguard"
-				},
-			deathvox_spooc_pinch = {
-				"flank",
 				"smoke_grenade",
 				"charge",
 				"provide_coverfire",
-				"provide_support",
-				"deathguard"
-				},
-			deathvox_spooc_shield = {
-				"shield_cover",
-				"charge",
-				"provide_coverfire",
-				"provide_support",
-				"smoke_grenade",
-				"deathguard"
-				},
-			deathvox_grenad_lead = {
-				"charge",
-				"ranged_fire",
-				"provide_coverfire",
-				"deathguard"
-				},
-			deathvox_grenad_follow = {
-				"shield_cover",
-				"ranged_fire",
-				"provide_coverfire",
-				"provide_support",
-				"deathguard"
-				},
-			deathvox_grenad_pinch = {
-				"flank",
-				"ranged_fire",
-				"provide_coverfire",
-				"provide_support",
-				"deathguard"
+				"provide_support"
 				},
 			deathvox_sniper = {
 				"shield_cover",
 				"ranged_fire",
-				"charge",
 				"provide_coverfire",
 				"provide_support",
 				"murder",
@@ -372,14 +379,15 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				},
 			deathvox_supportflash = {
 				"charge",
-				"flank",
 				"flash_grenade",
+				"smoke_grenade",
 				"provide_coverfire",
 				"provide_support"
 				},
 			deathvox_supportsmoke = {
 				"flank",
 				"smoke_grenade",
+				"flash_grenade",
 				"provide_coverfire",
 				"provide_support"
 				},	
@@ -458,10 +466,9 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"shield_cover",
 				"smoke_grenade"
 				}
-		}
-	old_spawn_group(self, difficulty_index)
+	}
 	self.enemy_spawn_groups.gorgon = {
-		amount = {4, 4},
+		amount = {3, 3},
 		spawn = {
 			{
 				unit = "deathvox_taser",
@@ -469,13 +476,13 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				amount_min = 1,
 				amount_max = 1,
 				tactics = self._tactics.deathvox_tazer_lead,
-				rank = 2
+				rank = 3
 			},
 			{
 				unit = "deathvox_taser",
 				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
+				amount_min = 1,
+				amount_max = 1,
 				tactics = self._tactics.deathvox_tazer_follow,
 				rank = 2
 			},
@@ -536,7 +543,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_tank_pinch,
+				tactics = self._tactics.deathvox_tank_lead,
 				rank = 3
 			},
 			{
@@ -548,11 +555,11 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				rank = 2
 			},
 			{
-				unit = "deathvox_blackdozer",
+				unit = "deathvox_cloaker",
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_tank_lead,
+				tactics = self._tactics.deathvox_spooc_pinch,
 				rank = 1
 			}
 		}
@@ -582,33 +589,25 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_grenad_lead,
+				tactics = self._tactics.deathvox_grenad_follow,
 				rank = 1
 			}
 		}
 	}
 
-	self.enemy_spawn_groups.artemis = {
-		amount = {4, 4},
+	self.enemy_spawn_groups.janus = {
+		amount = {2, 2},
 		spawn = {
 			{
-				unit = "deathvox_sniper_assault",
+				unit = "deathvox_blackdozer",
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_sniper,
-				rank = 3
-			},
-			{
-				unit = "deathvox_shield",
-				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
-				tactics = self._tactics.deathvox_shield_support,
+				tactics = self._tactics.deathvox_tank_lead,
 				rank = 2
 			},
 			{
-				unit = "deathvox_medic",
+				unit = "deathvox_medicdozer",
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
@@ -700,7 +699,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				amount_min = 1,
 				amount_max = 1,
 				tactics = self._tactics.deathvox_grenad_lead,
-				rank = 1
+				rank = 3
 			},
 			{
 				unit = "deathvox_cloaker",
@@ -722,29 +721,20 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 	}
 
 	self.enemy_spawn_groups.aegeas = {
-		amount = {3, 3},
+		amount = {4, 4},
 		spawn = {
-			{
-				unit = "deathvox_grenadier",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = self._tactics.deathvox_grenad_lead,
-				rank = 3
-			},
 			{
 				unit = "deathvox_shield",
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_shield_support,
+				tactics = self._tactics.deathvox_shield_lead,
 				rank = 2
-			},
-			{
+			},				{
 				unit = "deathvox_grenadier",
 				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
+				amount_min = 2,
+				amount_max = 2,
 				tactics = self._tactics.deathvox_grenad_follow,
 				rank = 1
 			}
@@ -870,25 +860,9 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			{
 				unit = "deathvox_heavyar",
 				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = deathvox_swat_ranged,
-				rank = 1
-			},
-			{
-				unit = "deathvox_sniper_assault",
-				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
-				tactics = self._tactics.deathvox_sniper,
-				rank = 2
-			},
-			{
-				unit = "deathvox_heavyar",
-				freq = 1,
-				amount_min = 1,
-				amount_max = 1,
-				tactics = deathvox_swat_ranged,
+				amount_min = 4,
+				amount_max = 4,
+				tactics = self._tactics.deathvox_swat_ranged,
 				rank = 1
 			}
 		}
@@ -952,7 +926,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_swat_flank,
 				rank = 2
 			},
 			{
@@ -1108,38 +1082,111 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 	old_task_data(self, difficulty_index, difficulty)
 	if difficulty_index == 8 then
 		self.besiege.assault.force_balance_mul = {
-			3,
-			3.2,
-			3.5,
-			3.9
+			42,
+			46,
+			50,
+			50
 		}
 		self.besiege.assault.force_pool_balance_mul = {
-			2.7,
-			2.9,
-			3.1,
-			3.3
+			1,
+			1,
+			1,
+			1
 		}
-		self.besiege.assault.groups = {
-			gorgon = { 0.05,0.05,0.05  },
-			atlas = { 0.05,0.05,0.05  },
-			chimera = { 0.05,0.05,0.05  },
-			zeus = { 0.05,0.05,0.05  },
-			artemis = { 0.05,0.05,0.05 },
-			epeius = { 0.05,0.05,0.05  },
-			damocles = { 0.05,0.05,0.05  },
-			caduceus = { 0.05,0.05,0.05  },
-			atropos = { 0.05,0.05,0.05 },
-			aegeas = { 0.05,0.05,0.05 },
-			dv_group_1 = {0.1, 0.1, 0.1},
-			dv_group_2_std = { 0.05,0.05,0.05  },
-			dv_group_2_med = { 0.05,0.05,0.05  },
-			dv_group_3_std = { 0.05,0.05,0.05  },
-			dv_group_3_med = { 0.05,0.05,0.05  },
-			dv_group_4_std = { 0.05,0.05,0.05  },
-			dv_group_4_med = { 0.05,0.05,0.05  },
-			dv_group_5_std = { 0.05,0.05,0.05  },
-			dv_group_5_med = { 0.05,0.05,0.05  }
+		self.besiege.recon.force_balance_mul = {
+			1,
+			1,
+			1,
+			1
 		}
+		self.besiege.recon.force = {
+			20,
+			20,
+			20
+		}
+		self.besiege.recon.interval = {
+			20,
+			20,
+			20
+		}
+		self.besiege.assault.force = {
+			1,
+			1,
+			1
+		}
+		self.besiege.assault.force_pool = {
+			500,
+			500,
+			500
+		}
+		self.besiege.regroup.duration = {
+			30,
+			30,
+			30
+		}
+		self.besiege.assault.hostage_hesitation_delay = {
+			30,
+			30,
+			30
+		}
+		self.besiege.assault.delay = {
+			30,
+			20,
+			10
+		}
+		self.besiege.assault.sustain_duration_balance_mul = {
+			1,
+			1,
+			1,
+			1
+		}
+		
+		self.besiege.assault.fade_duration = 15
+		if Global.game_settings and Global.game_settings.single_player then
+			self.besiege.assault.groups = {
+				gorgon = { 0.05,0.05,0.05  },
+				atlas = { 0.05,0.05,0.05  },
+				chimera = { 0.05,0.05,0.05  },
+				zeus = { 0.05,0.05,0.05  },
+				janus = { 0.05,0.05,0.05 },
+				epeius = { 0.05,0.05,0.05  },
+				damocles = { 0.05,0.05,0.05  },
+				caduceus = { 0.05,0.05,0.05  },
+				atropos = { 0.05,0.05,0.05 },
+				aegeas = { 0.05,0.05,0.05 },
+				dv_group_1 = {0.1, 0.1, 0.1},
+				dv_group_2_std = { 0.05,0.05,0.05  },
+				dv_group_2_med = { 0.05,0.05,0.05  },
+				dv_group_3_std = { 0.05,0.05,0.05  },
+				dv_group_3_med = { 0.05,0.05,0.05  },
+				dv_group_4_std = { 0.05,0.05,0.05  },
+				dv_group_4_med = { 0.05,0.05,0.05  },
+				dv_group_5_std = { 0.05,0.05,0.05  },
+				dv_group_5_med = { 0.05,0.05,0.05  }
+			}
+		else
+			self.besiege.assault.groups = {
+				gorgon = { 0.05,0.05,0.05  },
+				atlas = { 0.05,0.05,0.05  },
+				chimera = { 0.05,0.05,0.05  },
+				zeus = { 0.05,0.05,0.05  },
+				janus = { 0.05,0.05,0.05 },
+				epeius = { 0.05,0.05,0.05  },
+				damocles = { 0.05,0.05,0.05  },
+				caduceus = { 0.05,0.05,0.05  },
+				atropos = { 0.05,0.05,0.05 },
+				aegeas = { 0.05,0.05,0.05 },
+				dv_group_1 = {0.1, 0.1, 0.1},
+				dv_group_2_std = { 0.05,0.05,0.05  },
+				dv_group_2_med = { 0.05,0.05,0.05  },
+				dv_group_3_std = { 0.05,0.05,0.05  },
+				dv_group_3_med = { 0.05,0.05,0.05  },
+				dv_group_4_std = { 0.05,0.05,0.05  },
+				dv_group_4_med = { 0.05,0.05,0.05  },
+				dv_group_5_std = { 0.05,0.05,0.05  },
+				dv_group_5_med = { 0.05,0.05,0.05  }
+			}
+		end
 		self.besiege.reenforce.groups = {
 			dv_group_1 = {0.2, 0.2, 0.2},
 			dv_group_2_std = { 0.1,0.1,0.1 },

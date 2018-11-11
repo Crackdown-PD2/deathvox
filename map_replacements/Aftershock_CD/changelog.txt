@@ -1,0 +1,17 @@
+Note this heist was edited without consideration for lower difficulty adjustment.
+Current changes:
+New environment. Sun rotated.
+All ladders removed.
+Sniper loop 1 initialization chance set to 100%.
+Second sniper added to second sniper loop.
+Second sniper loop spawns in pairs.
+Truck spawn pairs adjusted.
+Number of safes per truck adjusted.
+Number of trucks adjusted.
+Player spawnpoint randomization restricted to prevent harm to new truck configuration.
+Localization complete.
+Blocker revised in final area. Blocker rotated for easier conveyance.
+Fire effects changed, some redundant ones removed. Some fires placed with offset delay to avoid sync.
+
+Todo:
+Loc fix -  difficulty asset insertion.

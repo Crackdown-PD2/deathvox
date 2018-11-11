@@ -1,3 +1,19 @@
+local mvec3_set = mvector3.set
+local mvec3_add = mvector3.add
+local mvec3_dot = mvector3.dot
+local mvec3_sub = mvector3.subtract
+local mvec3_mul = mvector3.multiply
+local mvec3_norm = mvector3.normalize
+local mvec3_dir = mvector3.direction
+local mvec3_set_l = mvector3.set_length
+local mvec3_len = mvector3.length
+local mvec3_dis = mvector3.distance_sq
+local math_clamp = math.clamp
+local math_lerp = math.lerp
+local tmp_vec1 = Vector3()
+local tmp_vec2 = Vector3()
+local tmp_rot1 = Rotation()
+
 function RaycastWeaponBase:_weapon_tweak_data_id()
 	local override_gadget = self:gadget_overrides_weapon_functions()
 	if override_gadget then
@@ -27,4 +43,3 @@ function RaycastWeaponBase:set_laser_enabled(state)
 		end
 	end
 end
-

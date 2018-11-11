@@ -1,0 +1,499 @@
+<table>
+	<editor_groups>
+		<table continent="falco" name="falco_02" reference="500000">
+			<units>
+				<value_node value="500000"/>
+				<value_node value="500001"/>
+				<value_node value="500002"/>
+				<value_node value="500004"/>
+				<value_node value="500005"/>
+				<value_node value="500006"/>
+				<value_node value="500007"/>
+				<value_node value="500008"/>
+				<value_node value="500009"/>
+				<value_node value="500010"/>
+				<value_node value="500011"/>
+				<value_node value="500012"/>
+				<value_node value="500013"/>
+				<value_node value="500014"/>
+				<value_node value="500015"/>
+				<value_node value="500017"/>
+				<value_node value="500018"/>
+				<value_node value="500019"/>
+				<value_node value="500020"/>
+				<value_node value="500021"/>
+				<value_node value="500022"/>
+				<value_node value="500023"/>
+				<value_node value="500024"/>
+				<value_node value="500025"/>
+				<value_node value="500027"/>
+				<value_node value="500029"/>
+				<value_node value="500030"/>
+				<value_node value="500031"/>
+				<value_node value="500032"/>
+				<value_node value="500033"/>
+				<value_node value="500034"/>
+				<value_node value="500036"/>
+				<value_node value="500037"/>
+				<value_node value="500038"/>
+				<value_node value="500039"/>
+				<value_node value="500040"/>
+				<value_node value="500041"/>
+				<value_node value="500042"/>
+				<value_node value="500043"/>
+				<value_node value="500047"/>
+				<value_node value="500048"/>
+				<value_node value="500049"/>
+				<value_node value="500050"/>
+				<value_node value="500051"/>
+				<value_node value="500053"/>
+				<value_node value="500054"/>
+				<value_node value="500055"/>
+				<value_node value="500056"/>
+				<value_node value="500057"/>
+				<value_node value="500058"/>
+				<value_node value="500060"/>
+				<value_node value="500061"/>
+				<value_node value="500062"/>
+				<value_node value="500063"/>
+				<value_node value="500064"/>
+				<value_node value="500065"/>
+				<value_node value="500066"/>
+				<value_node value="500067"/>
+				<value_node value="500068"/>
+				<value_node value="500069"/>
+				<value_node value="500070"/>
+				<value_node value="500071"/>
+				<value_node value="500072"/>
+				<value_node value="500073"/>
+				<value_node value="500074"/>
+				<value_node value="500075"/>
+				<value_node value="500076"/>
+				<value_node value="500077"/>
+				<value_node value="500078"/>
+				<value_node value="500079"/>
+				<value_node value="500080"/>
+				<value_node value="500081"/>
+				<value_node value="500083"/>
+				<value_node value="500084"/>
+				<value_node value="500085"/>
+				<value_node value="500086"/>
+				<value_node value="500087"/>
+				<value_node value="500088"/>
+				<value_node value="500089"/>
+				<value_node value="500090"/>
+				<value_node value="500091"/>
+				<value_node value="500092"/>
+				<value_node value="500093"/>
+				<value_node value="500094"/>
+				<value_node value="500095"/>
+				<value_node value="500096"/>
+				<value_node value="500097"/>
+				<value_node value="500098"/>
+				<value_node value="500099"/>
+				<value_node value="500100"/>
+				<value_node value="500101"/>
+				<value_node value="500102"/>
+				<value_node value="500103"/>
+				<value_node value="500104"/>
+				<value_node value="500105"/>
+				<value_node value="500106"/>
+				<value_node value="500107"/>
+				<value_node value="500108"/>
+				<value_node value="500109"/>
+				<value_node value="500110"/>
+				<value_node value="500111"/>
+				<value_node value="500112"/>
+				<value_node value="500113"/>
+				<value_node value="500114"/>
+				<value_node value="500115"/>
+				<value_node value="500116"/>
+				<value_node value="500117"/>
+				<value_node value="500118"/>
+				<value_node value="500119"/>
+				<value_node value="500120"/>
+			</units>
+		</table>
+	</editor_groups>
+	<statics>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_sign_falcogini/com_prop_sign_falcogini_2x2m" name_id="com_prop_sign_falcogini_2x2m_001" position="763.992 -2288 261" rotation="0 0 -0.707106 -0.707108" unit_id="500000"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/architecture/lux/lux_int_lightspot1_mid_a" name_id="lux_int_lightspot1_mid_a_025" position="1040.99 -1677 399.456" rotation="0 0 1.78814e-006 -1" unit_id="500001"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/architecture/lux/lux_int_lightspot1_mid_a" name_id="lux_int_lightspot1_mid_a_026" position="1308.99 -1677 399.456" rotation="0 0 1.78814e-006 -1" unit_id="500002"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/lights/light_spot_shadow_projection_01/light_spot_shadow_projection_01" name_id="light_spot_shadow_projection_01_019" position="1813.99 -1705.01 459.456" projection_light="ls_spot" rotation="1 -1.78814e-006 7.4607e-014 -4.37114e-008" unit_id="500004">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.776471 0.737255 0.584314" enabled="true" falloff_exponent="1" far_range="500" multiplier="@IDbca13ba1d306f87b@" name="ls_spot" near_range="80" spot_angle_end="75" spot_angle_start="43"/>
+				</lights>
+				<projection_textures ls_spot="units/lights/spot_light_projection_textures/spotprojection_06_downlight_df"/>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/architecture/lux/lux_int_lightspot1_mid_a" name_id="lux_int_lightspot1_mid_a_027" position="1815.99 -1677.01 399.456" rotation="0 0 1.78814e-006 -1" unit_id="500005"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/lights/light_spot_shadow_projection_01/light_spot_shadow_projection_01" name_id="light_spot_shadow_projection_01_020" position="2069.99 -1705.01 497.456" projection_light="ls_spot" rotation="1 -1.78814e-006 7.4607e-014 -4.37114e-008" unit_id="500006">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.776471 0.737255 0.584314" enabled="true" falloff_exponent="1" far_range="500" multiplier="@IDbca13ba1d306f87b@" name="ls_spot" near_range="80" spot_angle_end="53" spot_angle_start="43"/>
+				</lights>
+				<projection_textures ls_spot="units/lights/spot_light_projection_textures/spotprojection_06_downlight_df"/>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/lights/light_spot_shadow_projection_01/light_spot_shadow_projection_01" name_id="light_spot_shadow_projection_01_021" position="2193.99 -2653.01 479.456" projection_light="ls_spot" rotation="1 -1.78814e-006 7.4607e-014 -4.37114e-008" unit_id="500007">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.752941 0.705882 0.603922" enabled="true" falloff_exponent="1" far_range="500" multiplier="@IDbca13ba1d306f87b@" name="ls_spot" near_range="80" spot_angle_end="96" spot_angle_start="43"/>
+				</lights>
+				<projection_textures ls_spot="units/lights/spot_light_projection_textures/spotprojection_06_downlight_df"/>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/lights/light_spot_shadow_projection_01/light_spot_shadow_projection_01" name_id="light_spot_shadow_projection_01_022" position="2193.99 -2958.01 498.456" projection_light="ls_spot" rotation="1 -1.78814e-006 7.4607e-014 -4.37114e-008" unit_id="500008">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.752941 0.705882 0.603922" enabled="true" falloff_exponent="1" far_range="500" multiplier="@IDbca13ba1d306f87b@" name="ls_spot" near_range="80" spot_angle_end="69" spot_angle_start="43"/>
+				</lights>
+				<projection_textures ls_spot="units/lights/spot_light_projection_textures/spotprojection_06_downlight_df"/>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/lights/light_spot_shadow_projection_01/light_spot_shadow_projection_01" name_id="light_spot_shadow_projection_01_023" position="2221.99 -2152.01 479.456" projection_light="ls_spot" rotation="1 -1.78814e-006 7.4607e-014 -4.37114e-008" unit_id="500009">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.752941 0.705882 0.603922" enabled="true" falloff_exponent="1" far_range="500" multiplier="@IDbca13ba1d306f87b@" name="ls_spot" near_range="80" spot_angle_end="96" spot_angle_start="43"/>
+				</lights>
+				<projection_textures ls_spot="units/lights/spot_light_projection_textures/spotprojection_06_downlight_df"/>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spray_a" name_id="com_prop_carcleaning_spray_a_001" position="1715.99 -1961.01 162.617" rotation="0 0 0.960432 0.278513" unit_id="500010"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spray_a" name_id="com_prop_carcleaning_spray_a_002" position="1718.99 -1974.01 162.617" rotation="0 0 0.923879 0.382684" unit_id="500011"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spray_a" name_id="com_prop_carcleaning_spray_a_003" position="1715.99 -1947.01 162.617" rotation="0 0 0.997761 -0.0668757" unit_id="500012"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spray_a" name_id="com_prop_carcleaning_spray_a_004" position="1715.99 -1936.01 162.617" rotation="0 0 0.979118 -0.203292" unit_id="500013"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spray_a" name_id="com_prop_carcleaning_spray_a_005" position="1715.99 -1926.01 162.617" rotation="0 0 0.999862 0.0165937" unit_id="500014"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spray_a" name_id="com_prop_carcleaning_spray_a_006" position="1715.99 -1911.01 162.617" rotation="0 0 0.999862 0.0165937" unit_id="500015"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/lights/light_spot_shadow_projection_01/light_spot_shadow_projection_01" name_id="light_spot_shadow_projection_01_024" position="2221.99 -1833.01 484.456" projection_light="ls_spot" rotation="1 -1.78814e-006 7.4607e-014 -4.37114e-008" unit_id="500017">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.776471 0.737255 0.584314" enabled="true" falloff_exponent="1" far_range="500" multiplier="@IDbca13ba1d306f87b@" name="ls_spot" near_range="80" spot_angle_end="75" spot_angle_start="43"/>
+				</lights>
+				<projection_textures ls_spot="units/lights/spot_light_projection_textures/spotprojection_06_downlight_df"/>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/architecture/lux/lux_int_lightspot1_mid_a" name_id="lux_int_lightspot1_mid_a_028" position="2070.99 -1677.01 399.456" rotation="0 0 1.78814e-006 -1" unit_id="500018"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spray_a" name_id="com_prop_carcleaning_spray_a_007" position="1753.63 -1975.03 162.617" rotation="0 0 0.0194505 -0.999811" unit_id="500019"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spray_a" name_id="com_prop_carcleaning_spray_a_008" position="1753.72 -1960.03 162.617" rotation="0 0 0.0194505 -0.999811" unit_id="500020"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spray_a" name_id="com_prop_carcleaning_spray_a_009" position="1753.77 -1950.03 162.617" rotation="0 0 -0.200494 -0.979695" unit_id="500021"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spray_a" name_id="com_prop_carcleaning_spray_a_010" position="1753.84 -1939.03 162.617" rotation="0 0 -0.0640254 -0.997948" unit_id="500022"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spray_a" name_id="com_prop_carcleaning_spray_a_011" position="1750.99 -1912.01 162.617" rotation="0 0 0.385322 -0.922782" unit_id="500023"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spray_a" name_id="com_prop_carcleaning_spray_a_012" position="1753.92 -1925.03 162.617" rotation="0 0 0.281256 -0.959633" unit_id="500024"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_d" name_id="com_prop_carcleaning_motoroil_d_002" position="1757.99 -1687.01 192.161" rotation="0 0 0.346632 -0.938001" unit_id="500025"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_d" name_id="com_prop_carcleaning_motoroil_d_004" position="1810.99 -1687.01 192.161" rotation="0 0 0.401409 -0.915899" unit_id="500027"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/architecture/lux/lux_int_lightspot1_mid_a" name_id="lux_int_lightspot1_mid_a_029" position="2236.99 -2650.01 399.456" rotation="0 0 1.78814e-006 -1" unit_id="500029"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_cans_a" name_id="com_prop_carcleaning_cans_a_001" position="1721.99 -1974.01 92.6165" rotation="0 0 0.996236 -0.0866846" unit_id="500030"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_cans_a" name_id="com_prop_carcleaning_cans_a_002" position="1721.99 -1952.01 92.6165" rotation="0 0 -0.259069 -0.965859" unit_id="500031"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/architecture/lux/lux_int_lightspot1_mid_a" name_id="lux_int_lightspot1_mid_a_030" position="2236.99 -2156.01 399.456" rotation="0 0 1.78814e-006 -1" unit_id="500032"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_cans_a" name_id="com_prop_carcleaning_cans_a_003" position="1721.99 -1931.01 92.6165" rotation="0 0 -0.259069 -0.965859" unit_id="500033"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_cans_a" name_id="com_prop_carcleaning_cans_a_004" position="1721.99 -1906.01 92.6165" rotation="0 0 1.78814e-006 -1" unit_id="500034"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_c" name_id="com_prop_carcleaning_motoroil_c_002" position="1767.63 -1690.65 132.161" rotation="0 0 1.78814e-006 -1" unit_id="500036"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_cans_a" name_id="com_prop_carcleaning_cans_a_005" position="1756.99 -1974.01 92.6165" rotation="0 0 0.996236 -0.0866846" unit_id="500037"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/architecture/lux/lux_int_lightspot1_mid_a" name_id="lux_int_lightspot1_mid_a_031" position="2236.99 -2958.01 399.456" rotation="0 0 1.78814e-006 -1" unit_id="500038"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_cans_a" name_id="com_prop_carcleaning_cans_a_006" position="1756.99 -1952.01 92.6165" rotation="0 0 -0.259069 -0.965859" unit_id="500039"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_cans_a" name_id="com_prop_carcleaning_cans_a_007" position="1756.99 -1931.01 92.6165" rotation="0 0 -0.259069 -0.965859" unit_id="500040"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_cans_a" name_id="com_prop_carcleaning_cans_a_008" position="1756.99 -1906.01 92.6165" rotation="0 0 1.78814e-006 -1" unit_id="500041"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/architecture/lux/lux_int_lightspot1_mid_a" name_id="lux_int_lightspot1_mid_a_032" position="2236.99 -1848.01 399.456" rotation="0 0 1.78814e-006 -1" unit_id="500042"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_d" name_id="com_prop_carcleaning_motoroil_d_006" position="1885.99 -1687.01 192.161" rotation="0 0 1.78814e-006 -1" unit_id="500043"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_sign_falcogini/com_prop_sign_falcogini_2x2m" name_id="com_prop_sign_falcogini_2x2m_002" position="2192.99 -2289.01 311.012" rotation="0 0 -0.707106 -0.707108" unit_id="500047"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_c" name_id="com_prop_carcleaning_motoroil_c_004" position="1845.63 -1690.65 132.161" rotation="0 0 -0.331807 -0.943347" unit_id="500048"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spray_a" name_id="com_prop_carcleaning_spray_a_013" position="1850.99 -2770.01 85.3947" rotation="0 0 0.658236 -0.752812" unit_id="500049"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_a" name_id="com_prop_carcleaning_motoroil_a_002" position="1766.99 -1690.01 72.8251" rotation="0 0 0.562607 -0.826724" unit_id="500050"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_b" name_id="com_prop_carcleaning_motoroil_b_001" position="1854.99 -2815.01 84.5939" rotation="0 0 1.78814e-006 -1" unit_id="500051"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_b" name_id="com_prop_carcleaning_motoroil_b_002" position="1854.99 -2834.01 84.5939" rotation="0 0 0.193794 -0.981042" unit_id="500053"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spray_a" name_id="com_prop_carcleaning_spray_a_014" position="1864.99 -2770.01 85.3947" rotation="0 0 0.876067 -0.48219" unit_id="500054"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_b" name_id="com_prop_carcleaning_motoroil_b_003" position="1854.99 -2864.01 84.5939" rotation="0 0 -0.147008 -0.989135" unit_id="500055"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spray_a" name_id="com_prop_carcleaning_spray_a_015" position="1850.99 -2920.01 85.3947" rotation="0 0 0.658236 -0.752812" unit_id="500056"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_b" name_id="com_prop_carcleaning_motoroil_b_004" position="1854.99 -2884.01 84.5939" rotation="0 0 -0.02712 -0.999632" unit_id="500057"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spray_a" name_id="com_prop_carcleaning_spray_a_016" position="1877.99 -2767.01 85.3947" rotation="0 0 0.92388 -0.382683" unit_id="500058"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spray_a" name_id="com_prop_carcleaning_spray_a_017" position="1864.99 -2920.01 85.3947" rotation="0 0 0.876067 -0.48219" unit_id="500060"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spray_a" name_id="com_prop_carcleaning_spray_a_018" position="1877.99 -2917.01 85.3947" rotation="0 0 0.92388 -0.382683" unit_id="500061"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_c" name_id="com_prop_carcleaning_motoroil_c_006" position="1914.63 -1690.65 132.161" rotation="0 0 0.0641631 -0.997939" unit_id="500062"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_a" name_id="com_prop_carcleaning_motoroil_a_004" position="1900.99 -2808.01 85.8251" rotation="0 0 0.98328 0.182102" unit_id="500063"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_a" name_id="com_prop_carcleaning_motoroil_a_005" position="1816.99 -1690.01 72.8251" rotation="0 0 -0.838744 -0.544526" unit_id="500064"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_a" name_id="com_prop_carcleaning_motoroil_a_006" position="1900.99 -2835.01 85.8251" rotation="0 0 0.982406 -0.186759" unit_id="500065"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_a" name_id="com_prop_carcleaning_motoroil_a_007" position="1900.99 -2858.01 85.8251" rotation="0 0 -0.186759 -0.982406" unit_id="500066"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_a" name_id="com_prop_carcleaning_motoroil_a_008" position="1900.99 -2877.01 85.8251" rotation="0 0 -0.382683 -0.92388" unit_id="500067"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_a" name_id="com_prop_carcleaning_motoroil_a_009" position="1849.99 -2816.01 37.8251" rotation="0 0 0.92388 -0.382683" unit_id="500068"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_a" name_id="com_prop_carcleaning_motoroil_a_010" position="1849.99 -2835.01 37.8251" rotation="0 0 0.982406 -0.186758" unit_id="500069"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_cans_a" name_id="com_prop_carcleaning_cans_a_009" position="1857.99 -2776.01 38.281" rotation="0 0 0.866155 0.499776" unit_id="500070"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_a" name_id="com_prop_carcleaning_motoroil_a_011" position="1849.99 -2858.01 37.8251" rotation="0 0 -0.186758 -0.982406" unit_id="500071"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_a" name_id="com_prop_carcleaning_motoroil_a_012" position="1849.99 -2885.01 37.8251" rotation="0 0 0.182103 -0.983279" unit_id="500072"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_e" name_id="com_prop_carcleaning_motoroil_e_001" position="1856.99 -1683.01 72.1608" rotation="0 0 1.78814e-006 -1" unit_id="500073"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_cans_a" name_id="com_prop_carcleaning_cans_a_010" position="1857.99 -2926.01 38.281" rotation="0 0 0.866155 0.499776" unit_id="500074"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_e" name_id="com_prop_carcleaning_motoroil_e_002" position="1868.99 -1695.01 72.1608" rotation="0 0 0.341294 -0.939957" unit_id="500075"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_cans_a" name_id="com_prop_carcleaning_cans_a_011" position="1878.99 -2776.01 38.281" rotation="0 0 0.866155 0.499776" unit_id="500076"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/res_prop_eday_shirts/res_prop_eday_shirt_10" name_id="res_prop_eday_shirt_10_001" position="2214.99 -2203.01 237.05" rotation="0 0 1.78814e-006 -1" unit_id="500077"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/res_prop_eday_shirts/res_prop_eday_shirt_10" name_id="res_prop_eday_shirt_10_002" position="2227.99 -2203.01 242.05" rotation="0 0 1.78814e-006 -1" unit_id="500078"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_cans_a" name_id="com_prop_carcleaning_cans_a_012" position="1878.99 -2926.01 38.281" rotation="0 0 0.866155 0.499776" unit_id="500079"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_cans_a" name_id="com_prop_carcleaning_cans_a_013" position="1900.99 -2776.01 38.281" rotation="0 0 0.643149 -0.765741" unit_id="500080"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_e" name_id="com_prop_carcleaning_motoroil_e_003" position="1899.99 -2803.01 37.8251" rotation="0 0 0.382684 -0.923879" unit_id="500081"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_e" name_id="com_prop_carcleaning_motoroil_e_004" position="1894.99 -1683.01 72.1608" rotation="0 0 1.78814e-006 -1" unit_id="500083"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_e" name_id="com_prop_carcleaning_motoroil_e_005" position="1899.99 -2825.01 37.8251" rotation="0 0 -0.707106 -0.707108" unit_id="500084"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_e" name_id="com_prop_carcleaning_motoroil_e_006" position="1899.99 -2843.01 37.8251" rotation="0 0 0.923879 0.382684" unit_id="500085"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_e" name_id="com_prop_carcleaning_motoroil_e_007" position="1899.99 -2872.01 37.8251" rotation="0 0 0.92388 -0.382683" unit_id="500086"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_e" name_id="com_prop_carcleaning_motoroil_e_008" position="1906.99 -1695.01 72.1608" rotation="0 0 1.78814e-006 -1" unit_id="500087"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_e" name_id="com_prop_carcleaning_motoroil_e_009" position="1903.99 -2890.01 37.8251" rotation="0 0 0.923879 0.382684" unit_id="500088"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_cans_a" name_id="com_prop_carcleaning_cans_a_014" position="1900.99 -2926.01 38.281" rotation="0 0 0.643149 -0.765741" unit_id="500089"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_motoroil_e" name_id="com_prop_carcleaning_motoroil_e_010" position="1924.99 -1695.01 72.1608" rotation="0 0 1.78814e-006 -1" unit_id="500090"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_c" name_id="com_prop_carcleaning_spraycan_c_001" position="2125.99 -1680.01 192.594" rotation="0 0 1.78814e-006 -1" unit_id="500091"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_c" name_id="com_prop_carcleaning_spraycan_c_002" position="2149.99 -1680.01 192.594" rotation="0 0 1.78814e-006 -1" unit_id="500092"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_c" name_id="com_prop_carcleaning_spraycan_c_003" position="2179.99 -1680.01 192.594" rotation="0 0 -0.382681 -0.923881" unit_id="500093"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_c" name_id="com_prop_carcleaning_spraycan_c_004" position="2226.99 -1800.01 192.594" rotation="0 0 1.78814e-006 -1" unit_id="500094"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_c" name_id="com_prop_carcleaning_spraycan_c_005" position="2226.99 -1777.01 192.594" rotation="0 0 -0.707106 -0.707108" unit_id="500095"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_c" name_id="com_prop_carcleaning_spraycan_c_006" position="2216.99 -1680.01 192.594" rotation="0 0 1.78814e-006 -1" unit_id="500096"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_c" name_id="com_prop_carcleaning_spraycan_c_007" position="2232.99 -1741.01 192.594" rotation="0 0 -0.707106 -0.707108" unit_id="500097"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_b" name_id="com_prop_carcleaning_spraycan_b_001" position="2132.99 -1683.01 132.594" rotation="0 0 1.78814e-006 -1" unit_id="500098"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_c" name_id="com_prop_carcleaning_spraycan_c_008" position="2232.99 -1721.01 192.594" rotation="0 0 1.78814e-006 -1" unit_id="500099"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_c" name_id="com_prop_carcleaning_spraycan_c_009" position="2229.99 -1693.01 192.594" rotation="0 0 0.490054 -0.871692" unit_id="500100"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/res_prop_eday_shirts/res_prop_eday_shirt_10" name_id="res_prop_eday_shirt_10_003" position="2214.99 -2203.01 128.05" rotation="0 0 1.78814e-006 -1" unit_id="500101"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/res_prop_eday_shirts/res_prop_eday_shirt_10" name_id="res_prop_eday_shirt_10_004" position="2227.99 -2203.01 132.05" rotation="0 0 1.78814e-006 -1" unit_id="500102"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_b" name_id="com_prop_carcleaning_spraycan_b_002" position="2162.99 -1683.01 132.594" rotation="0 0 0.750518 -0.66085" unit_id="500103"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_b" name_id="com_prop_carcleaning_spraycan_b_003" position="2180.99 -1683.01 132.594" rotation="0 0 1.78814e-006 -1" unit_id="500104"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_a" name_id="com_prop_carcleaning_spraycan_a_001" position="2107.99 -1680.01 72.5939" rotation="0 0 1.78814e-006 -1" unit_id="500105"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_b" name_id="com_prop_carcleaning_spraycan_b_004" position="2202.99 -1683.01 132.594" rotation="0 0 1.78814e-006 -1" unit_id="500106"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_b" name_id="com_prop_carcleaning_spraycan_b_005" position="2232.99 -1789.01 132.594" rotation="0 0 1.78814e-006 -1" unit_id="500107"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_b" name_id="com_prop_carcleaning_spraycan_b_006" position="2232.99 -1765.01 132.594" rotation="0 0 -0.707106 -0.707108" unit_id="500108"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_b" name_id="com_prop_carcleaning_spraycan_b_007" position="2232.99 -1735.01 132.594" rotation="0 0 1.78814e-006 -1" unit_id="500109"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_b" name_id="com_prop_carcleaning_spraycan_b_008" position="2232.99 -1711.01 132.594" rotation="0 0 -0.707106 -0.707108" unit_id="500110"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_b" name_id="com_prop_carcleaning_spraycan_b_009" position="2232.99 -1683.01 132.594" rotation="0 0 0.661803 -0.749678" unit_id="500111"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_a" name_id="com_prop_carcleaning_spraycan_a_002" position="2139.99 -1680.01 72.5939" rotation="0 0 0.923879 0.382684" unit_id="500112"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_a" name_id="com_prop_carcleaning_spraycan_a_003" position="2166.99 -1680.01 72.5939" rotation="0 0 1.78814e-006 -1" unit_id="500113"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_a" name_id="com_prop_carcleaning_spraycan_a_004" position="2202.99 -1680.01 72.5939" rotation="0 0 -0.382681 -0.923881" unit_id="500114"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_a" name_id="com_prop_carcleaning_spraycan_a_005" position="2230.99 -1800.01 72.5939" rotation="0 0 1.78814e-006 -1" unit_id="500115"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_a" name_id="com_prop_carcleaning_spraycan_a_006" position="2230.99 -1783.01 72.5939" rotation="0 0 -0.707106 -0.707108" unit_id="500116"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_a" name_id="com_prop_carcleaning_spraycan_a_007" position="2230.99 -1766.01 72.5939" rotation="0 0 1.78814e-006 -1" unit_id="500117"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_a" name_id="com_prop_carcleaning_spraycan_a_008" position="2230.99 -1732.01 72.5939" rotation="0 0 0.923879 0.382684" unit_id="500118"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_a" name_id="com_prop_carcleaning_spraycan_a_009" position="2230.99 -1696.01 72.5939" rotation="0 0 -0.707106 -0.707108" unit_id="500119"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/payday2/props/com_prop_carcleaning_spray/com_prop_carcleaning_spraycan_a" name_id="com_prop_carcleaning_spraycan_a_010" position="2230.99 -1680.01 72.5939" rotation="0 0 1.78814e-006 -1" unit_id="500120"/>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/lights/light_spot_shadow_projection_01/light_spot_shadow_projection_01" name_id="light_spot_shadow_projection_01_025" position="1313.99 -1724.83 457.266" projection_light="ls_spot" rotation="0.996917 -1.78263e-006 1.40296e-007 -0.0784592" unit_id="500003">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.776471 0.737255 0.584314" enabled="true" falloff_exponent="1" far_range="500" multiplier="@IDbca13ba1d306f87b@" name="ls_spot" near_range="80" spot_angle_end="75" spot_angle_start="43"/>
+				</lights>
+				<projection_textures ls_spot="units/lights/spot_light_projection_textures/spotprojection_06_downlight_df"/>
+			</unit_data>
+		</table>
+		<table>
+			<unit_data continent="falco" name="units/lights/light_spot_shadow_projection_01/light_spot_shadow_projection_01" name_id="light_spot_shadow_projection_01_026" position="1038.99 -1724.83 457.266" projection_light="ls_spot" rotation="0.996917 -1.78263e-006 1.40296e-007 -0.0784592" unit_id="500121">
+				<lights>
+					<table clipping_values="10000 -10000 0" color="0.776471 0.737255 0.584314" enabled="true" falloff_exponent="1" far_range="500" multiplier="@IDbca13ba1d306f87b@" name="ls_spot" near_range="80" spot_angle_end="75" spot_angle_start="43"/>
+				</lights>
+				<projection_textures ls_spot="units/lights/spot_light_projection_textures/spotprojection_06_downlight_df"/>
+			</unit_data>
+		</table>
+	</statics>
+	<values>
+		<workviews/>
+	</values>
+</table>

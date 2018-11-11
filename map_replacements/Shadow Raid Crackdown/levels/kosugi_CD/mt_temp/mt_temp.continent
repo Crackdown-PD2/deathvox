@@ -1,0 +1,405 @@
+<table>
+	<editor_groups>
+		<table continent="mt_temp" name="side_entrance" reference="500003">
+			<units>
+				<value_node value="500003"/>
+				<value_node value="500004"/>
+				<value_node value="500005"/>
+				<value_node value="500007"/>
+				<value_node value="500008"/>
+				<value_node value="500009"/>
+				<value_node value="500010"/>
+				<value_node value="500011"/>
+				<value_node value="500012"/>
+				<value_node value="500013"/>
+				<value_node value="500014"/>
+				<value_node value="500016"/>
+				<value_node value="500017"/>
+				<value_node value="500018"/>
+				<value_node value="500020"/>
+				<value_node value="500021"/>
+				<value_node value="500024"/>
+				<value_node value="500025"/>
+				<value_node value="500026"/>
+				<value_node value="500027"/>
+				<value_node value="500029"/>
+				<value_node value="500032"/>
+				<value_node value="500033"/>
+				<value_node value="500034"/>
+				<value_node value="500035"/>
+				<value_node value="500036"/>
+				<value_node value="500038"/>
+				<value_node value="500039"/>
+				<value_node value="500042"/>
+				<value_node value="500043"/>
+				<value_node value="500047"/>
+				<value_node value="500049"/>
+				<value_node value="500051"/>
+				<value_node value="500052"/>
+				<value_node value="500053"/>
+				<value_node value="500055"/>
+				<value_node value="500057"/>
+				<value_node value="500059"/>
+				<value_node value="500061"/>
+				<value_node value="500062"/>
+				<value_node value="500063"/>
+				<value_node value="500065"/>
+				<value_node value="500069"/>
+				<value_node value="500094"/>
+				<value_node value="500095"/>
+				<value_node value="500098"/>
+				<value_node value="500099"/>
+				<value_node value="500100"/>
+				<value_node value="500107"/>
+				<value_node value="500109"/>
+				<value_node value="500110"/>
+				<value_node value="500112"/>
+				<value_node value="500122"/>
+				<value_node value="500126"/>
+				<value_node value="500127"/>
+				<value_node value="500129"/>
+				<value_node value="500130"/>
+				<value_node value="500133"/>
+				<value_node value="500136"/>
+				<value_node value="500142"/>
+				<value_node value="500145"/>
+				<value_node value="500149"/>
+				<value_node value="500150"/>
+				<value_node value="500151"/>
+				<value_node value="500154"/>
+				<value_node value="500155"/>
+				<value_node value="500157"/>
+				<value_node value="500158"/>
+				<value_node value="500161"/>
+				<value_node value="500165"/>
+				<value_node value="500166"/>
+				<value_node value="500169"/>
+				<value_node value="500170"/>
+				<value_node value="500171"/>
+				<value_node value="500173"/>
+				<value_node value="500178"/>
+				<value_node value="500181"/>
+				<value_node value="500182"/>
+				<value_node value="500183"/>
+				<value_node value="500184"/>
+				<value_node value="500186"/>
+				<value_node value="500187"/>
+				<value_node value="500188"/>
+			</units>
+		</table>
+	</editor_groups>
+	<statics>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c_outer_corner" name_id="ind_ext_stairs_c_outer_corner_003" position="-3575 -1225 1375" rotation="0 0 0.707107 -0.707107" unit_id="500003"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c" name_id="ind_ext_stairs_c_001" position="-3375 -1225 1375" rotation="0 0 0.707107 -0.707107" unit_id="500004"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c" name_id="ind_ext_stairs_c_002" position="-3175 -1225 1375" rotation="0 0 0.707107 -0.707107" unit_id="500005"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c" name_id="ind_ext_stairs_c_003" position="-2975 -1225 1375" rotation="0 0 0.707107 -0.707107" unit_id="500007"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c" name_id="ind_ext_stairs_c_004" position="-2775 -1225 1375" rotation="0 0 0.707107 -0.707107" unit_id="500008"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c" name_id="ind_ext_stairs_c_005" position="-3775 -1425 1375" rotation="0 0 0 -1" unit_id="500009"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_dock_bld/ind_ext_dock_beam_small_4m" name_id="ind_ext_dock_beam_small_4m_018" position="-3575 -1425 1375.94" rotation="0 0 1 -0" unit_id="500010"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c" name_id="ind_ext_stairs_c_006" position="-2575 -1225 1375" rotation="0 0 0.707107 -0.707107" unit_id="500011"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c" name_id="ind_ext_stairs_c_007" position="-2375 -1225 1375" rotation="0 0 0.707107 -0.707107" unit_id="500012"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_dock_bld/ind_ext_dock_beam_small_4m" name_id="ind_ext_dock_beam_small_4m_019" position="-2975 -1425 1375.94" rotation="0 0 1 -0" unit_id="500013"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c" name_id="ind_ext_stairs_c_008" position="-2175 -1225 1375" rotation="0 0 0.707107 -0.707107" unit_id="500014"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c" name_id="ind_ext_stairs_c_009" position="-1975 -1225 1375" rotation="0 0 0.707107 -0.707107" unit_id="500016"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c" name_id="ind_ext_stairs_c_010" position="-3775 -1625 1375" rotation="0 0 0 -1" unit_id="500017"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c" name_id="ind_ext_stairs_c_011" position="-1775 -1225 1375" rotation="0 0 0.707107 -0.707107" unit_id="500018"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_dock_bld/ind_ext_dock_beam_small_4m" name_id="ind_ext_dock_beam_small_4m_020" position="-2375 -1425 1375.94" rotation="0 0 1 -0" unit_id="500020"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c" name_id="ind_ext_stairs_c_012" position="-1575 -1225 1375" rotation="0 0 0.707107 -0.707107" unit_id="500021"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c" name_id="ind_ext_stairs_c_013" position="-3775 -1825 1375" rotation="0 0 0 -1" unit_id="500024"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c" name_id="ind_ext_stairs_c_014" position="-1375 -1225 1375" rotation="0 0 0.707107 -0.707107" unit_id="500025"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_dock_bld/ind_ext_dock_beam_small_4m" name_id="ind_ext_dock_beam_small_4m_021" position="-3375 -2025 1775" rotation="0 0 0.707106 -0.707108" unit_id="500026"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_dock_bld/ind_ext_dock_beam_small_4m" name_id="ind_ext_dock_beam_small_4m_022" position="-1775 -1425 1375.94" rotation="0 0 1 -0" unit_id="500027"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c" name_id="ind_ext_stairs_c_015" position="-1175 -1225 1375" rotation="0 0 0.707107 -0.707107" unit_id="500029"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c_one_side" name_id="ind_ext_stairs_c_one_side_047" position="-3775 -2025 1375" rotation="0 0 0 -1" unit_id="500032"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_inner_conner" name_id="ind_ext_stairs_inner_conner_005" position="-3575 -2225 1775" rotation="0 0 1 -0" unit_id="500033"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_inner_conner" name_id="ind_ext_stairs_inner_conner_006" position="-3575 -2225 1775" rotation="0 0 0.707107 -0.707107" unit_id="500034"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c_base" name_id="ind_ext_stairs_c_base_006" position="-3375 -2225 1775" rotation="0 0 1 -0" unit_id="500035"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_inner_conner" name_id="ind_ext_stairs_inner_conner_007" position="-3375 -2225 1775" rotation="0 0 0.707107 -0.707107" unit_id="500036"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_dock_bld/ind_ext_dock_beam_small_4m" name_id="ind_ext_dock_beam_small_4m_023" position="-3375 -2025 1375" rotation="0 0 0.707106 -0.707108" unit_id="500038"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_dock_bld/ind_ext_dock_beam_small_4m" name_id="ind_ext_dock_beam_small_4m_024" position="-1175 -1425 1375.94" rotation="0 0 1 -0" unit_id="500039"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_b" name_id="ind_ext_stairs_b_004" position="-3775 -2225 1375" rotation="0 0 0 -1" unit_id="500042"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_b" name_id="ind_ext_stairs_b_005" position="-875.001 -1225 1175" rotation="0 0 0.707107 -0.707107" unit_id="500043"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c_half" name_id="ind_ext_stairs_c_half_002" position="-775.001 -1225 1175" rotation="0 0 0.707107 -0.707107" unit_id="500047"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_c_outer_corner" name_id="ind_ext_stairs_c_outer_corner_004" position="-3375 -2225 1375" rotation="0 0 1 -0" unit_id="500049"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/world/props/mansion/man_cover_int_shipping_crate_wide/man_cover_int_shipping_crate_wide" name_id="man_cover_int_shipping_crate_wide_049" position="-3429 -2080 976" rotation="0 0 -0.707107 -0.707107" unit_id="500051"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_b_ending" name_id="ind_ext_stairs_b_ending_004" position="-3775 -2225 975" rotation="0 0 0 -1" unit_id="500052"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_b" name_id="ind_ext_stairs_b_006" position="-3375 -2525 1575" rotation="0 0 1 -0" unit_id="500053"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_dock_bld/ind_ext_dock_beam_small_4m" name_id="ind_ext_dock_beam_small_4m_025" position="-3775 -2725 1575" rotation="0 0 -0.707107 -0.707107" unit_id="500055"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_b_ending" name_id="ind_ext_stairs_b_ending_005" position="-475.001 -1225 975" rotation="0 0 0.707107 -0.707107" unit_id="500057"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_dock_bld/ind_ext_dock_beam_small_4m" name_id="ind_ext_dock_beam_small_4m_027" position="-3375 -2725 1575" rotation="0 0 1 -1.19209e-007" unit_id="500059"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_a" name_id="ind_ext_stairs_a_001" position="-3375 -2725 1575" rotation="0 0 1 -0" unit_id="500061"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_b" name_id="ind_ext_stairs_b_007" position="-3375 -2525 1175" rotation="0 0 1 -0" unit_id="500062"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_dock_bld/ind_ext_dock_beam_small_4m" name_id="ind_ext_dock_beam_small_4m_028" position="-3775 -2725 1175" rotation="0 0 -0.707107 -0.707107" unit_id="500063"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_dock_bld/ind_ext_dock_beam_small_4m" name_id="ind_ext_dock_beam_small_4m_029" position="-3375 -2725 1175" rotation="0 0 1 -1.19209e-007" unit_id="500065"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_a" name_id="ind_ext_stairs_a_002" position="-3375 -2725 1175" rotation="0 0 1 -0" unit_id="500069"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_warehouse_set/ind_prop_warehouse_box_g" name_id="ind_prop_warehouse_box_g_001" position="1050 -3993 1104.57" rotation="0 0 0 -1" unit_id="500094"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/pd2_dlc1/props/ind_ext_prop_details/ind_ext_prop_lamp_02_on" name_id="ind_ext_prop_lamp_02_on_005" position="1450 -3825 1201.94" rotation="-0.5 -0.5 -0.5 -0.5" unit_id="500095"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_warehouse_set/ind_prop_warehouse_pallet" name_id="ind_prop_warehouse_pallet_001" position="1050 -3975 975" rotation="0 0 0 -1" unit_id="500098"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/world/props/mansion/man_cover_int_shipping_crate_wide/man_cover_int_shipping_crate_wide" name_id="man_cover_int_shipping_crate_wide_050" position="1050.63 -3983.98 993" rotation="0 0 -0.0349554 -0.999389" unit_id="500099"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_warehouse_set/ind_prop_warehouse_box_c" name_id="ind_prop_warehouse_box_c_005" position="984.485 -4109.25 1104" rotation="0 0 -0.700909 -0.71325" unit_id="500100"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/world/props/mansion/man_cover_int_shipping_crate_wide/man_cover_int_shipping_crate_wide" name_id="man_cover_int_shipping_crate_wide_051" position="980 -4109 993" rotation="0 0 -0.731354 -0.681998" unit_id="500107"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_warehouse_set/ind_prop_warehouse_pallet" name_id="ind_prop_warehouse_pallet_002" position="975 -4109 975" rotation="0 0 -0.707107 -0.707107" unit_id="500109"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" mesh_variation="state_door_open" name="units/payday2/props/gen_prop_door_ind_01/gen_prop_door_ind_01" name_id="gen_prop_door_ind_01_002" position="1166 -4016 975" rotation="0 0 0.707107 -0.707107" unit_id="500110"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" mesh_variation="state_door_open" name="units/payday2/props/gen_prop_door_ind_01/gen_prop_door_ind_01" name_id="gen_prop_door_ind_01_005" position="1416 -3884 975" rotation="0 0 0 -1" unit_id="500112"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_mechanical_electricity_stations/ind_prop_mechanical_electricity_station_b" name_id="ind_prop_mechanical_electricity_station_b_001" position="1050 -4225 975" rotation="0 0 0.707107 -0.707107" unit_id="500122"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_mechanical_electricity_stations/ind_prop_mechanical_electricity_station_d" name_id="ind_prop_mechanical_electricity_station_d_004" position="1050 -4292 975" rotation="0 0 0.707107 -0.707107" unit_id="500126"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/pd2_dlc1/props/ind_ext_prop_details/ind_ext_prop_lamp_02_on" name_id="ind_ext_prop_lamp_02_on_013" position="625 -4625 1200" rotation="-0.5 -0.5 -0.5 -0.5" unit_id="500127"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_mechanical_electricity_stations/ind_prop_mechanical_electricity_station_c" name_id="ind_prop_mechanical_electricity_station_c_003" position="1050 -4354 975" rotation="0 0 0.707107 -0.707107" unit_id="500129"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" mesh_variation="state_door_open" name="units/payday2/props/gen_prop_door_ind_01/gen_prop_door_ind_01" name_id="gen_prop_door_ind_01_006" position="634.001 -4566 975" rotation="0 0 1 -8.9407e-007" unit_id="500130"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_mechanical_heater_station/ind_prop_mechanical_heater_station_c" name_id="ind_prop_mechanical_heater_station_c_001" position="1425 -4188 975" rotation="0 0 0.707107 -0.707107" unit_id="500133"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_mechanical_electricity_stations/ind_prop_mechanical_electricity_station_a" name_id="ind_prop_mechanical_electricity_station_a_001" position="1050 -4424 975" rotation="0 0 0.707107 -0.707107" unit_id="500136"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_mechanical_electricity_stations/ind_prop_mechanical_electricity_station_c" name_id="ind_prop_mechanical_electricity_station_c_004" position="1425 -4326 975" rotation="0 0 -0.707107 -0.707107" unit_id="500142"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_mechanical_electricity_stations/ind_prop_mechanical_electricity_station_d" name_id="ind_prop_mechanical_electricity_station_d_005" position="1425 -4388 975" rotation="0 0 -0.707107 -0.707107" unit_id="500145"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_mechanical_electricity_stations/ind_prop_mechanical_electricity_station_b" name_id="ind_prop_mechanical_electricity_station_b_002" position="1425 -4463 975" rotation="0 0 -0.707107 -0.707107" unit_id="500149"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" mesh_variation="state_door_open" name="units/payday2/props/gen_prop_door_ind_01/gen_prop_door_ind_01" name_id="gen_prop_door_ind_01_007" position="1016 -4684 975" rotation="0 0 0 -1" unit_id="500150"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/gen_prop_posters/gen_prop_plate_b" name_id="gen_prop_plate_b_001" position="1025 -4800 1225" rotation="0 0 1 -8.9407e-007" unit_id="500151"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_warehouse_set/ind_prop_warehouse_pallet_pile" name_id="ind_prop_warehouse_pallet_pile_005" position="681 -4850 975" rotation="0 0 -0.707107 -0.707107" unit_id="500154"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_warehouse_set/ind_prop_warehouse_box_e" name_id="ind_prop_warehouse_box_e_010" position="681 -4904 1066" rotation="0 0 1 -0" unit_id="500155"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_mechanical_electricity_stations/ind_prop_mechanical_electricity_station_a" name_id="ind_prop_mechanical_electricity_station_a_002" position="1425 -4538 975" rotation="0 0 -0.707107 -0.707107" unit_id="500157"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_warehouse_set/ind_prop_warehouse_pallet" name_id="ind_prop_warehouse_pallet_024" position="681.004 -4937.21 1053.02" rotation="-0.448863 0.441096 -0.5543 -0.544709" unit_id="500158"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/world/props/fire_extinguisher/fire_extinguisher" name_id="fire_extinguisher_001" position="1017 -4825 1000" rotation="0 0 -0.707107 -0.707106" unit_id="500161"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/off_prop_generic_shelf_wire/off_prop_generic_shelf_wire_a" name_id="off_prop_generic_shelf_wire_a_001" position="1142 -4786 975" rotation="0 0 -0.694381 -0.719608" unit_id="500165"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_warehouse_set/ind_prop_warehouse_box_plastic_shelf_b" name_id="ind_prop_warehouse_box_plastic_shelf_b_001" position="1142 -4786 960" rotation="0 0 -0.694381 -0.719608" unit_id="500166"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_mechanical_heater_station/ind_prop_mechanical_heater_station_a" name_id="ind_prop_mechanical_heater_station_a_001" position="1425 -4701 975" rotation="0 0 0.707107 -0.707107" unit_id="500169"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/off_prop_generic_shelf_wire/off_prop_generic_shelf_wire_a" name_id="off_prop_generic_shelf_wire_a_002" position="1275 -4790 975" rotation="0 0 -0.707107 -0.707107" unit_id="500170"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/ind_prop_warehouse_set/ind_prop_warehouse_box_plastic_shelf_a" name_id="ind_prop_warehouse_box_plastic_shelf_a_001" position="1275 -4790 975" rotation="0 0 -0.707107 -0.707107" unit_id="500171"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/world/props/mansion/man_cover_int_shipping_crate_wide/man_cover_int_shipping_crate_wide" name_id="man_cover_int_shipping_crate_wide_052" position="979 -5019 975.47" rotation="0 0 -0.707107 -0.707107" unit_id="500173"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" mesh_variation="deactivate_door" name="units/payday2/props/gen_prop_door_ind_01/gen_prop_door_ind_01" name_id="gen_prop_door_ind_01_008" position="1016 -5084 975" rotation="0 0 0 -1" unit_id="500178"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_0_window_big" name_id="ind_ext_level_0_window_big_001" position="1097 -5219 1075.94" rotation="0 0 -0.707107 -0.707107" unit_id="500181"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/gen_prop_plywood/gen_prop_plywood" name_id="gen_prop_plywood_001" position="1376 -5219 1265.94" rotation="-3.09086e-008 0.707107 3.09086e-008 -0.707107" unit_id="500182"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/props/gen_prop_container_a/gen_prop_container_a_yellow" name_id="gen_prop_container_a_yellow_001" position="1025 -5425 575.941" rotation="0 0 -0.707107 -0.707107" unit_id="500183"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/world/vegetation/forest/zones/forest/zone_forrest_bush_1/zone_forrest_bush_1" name_id="zone_forrest_bush_1_016" position="-3250 -6625 575" rotation="0 0 -0.707107 -0.707107" unit_id="500184"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/world/vegetation/forest/zones/forest/zone_forrest_bush_1/zone_forrest_bush_1" name_id="zone_forrest_bush_1_017" position="-1300 -6400 575" rotation="0 0 1 -0" unit_id="500186"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/world/vegetation/forest/zones/forest/zone_forrest_bush_1/zone_forrest_bush_1" name_id="zone_forrest_bush_1_018" position="-2525 -7050 575" rotation="0 0 0 -1" unit_id="500187"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/vegetation/str_veg_bush_dense/str_veg_bush_dense_b" name_id="str_veg_bush_dense_b_006" position="-2600 -7050 525" rotation="0 0 0 -1" unit_id="500188"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" hide_on_projection_light="true" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_0_window_big" name_id="ind_ext_level_0_window_big_002" position="697 -5219 1075.94" rotation="0 0 -0.707107 -0.707107" unit_id="500205"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_level_0_roof_door" name_id="ind_ext_level_0_roof_door_018" position="1450 -3925 1226.94" rotation="0 0 1 -0" unit_id="500206"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_warehouse_walls_01" name_id="ind_ext_warehouse_walls_01_002" position="1700 -6625 0" rotation="0 0 0 -1" unit_id="500208"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_inner_conner" name_id="ind_ext_stairs_inner_conner_008" position="-3575 -2225 1375" rotation="0 0 1 -0" unit_id="500198"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_stairs_inner_conner" name_id="ind_ext_stairs_inner_conner_009" position="-3575 -2225 1375" rotation="0 0 0.707107 -0.707107" unit_id="500199"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_warehouse_walls_03" name_id="ind_ext_warehouse_walls_03_001" position="0 0 0" rotation="0 0 -2.68221e-007 -1" unit_id="500123"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/pd2_dlc1/props/ind_ext_prop_details/ind_ext_prop_lamp_02_on" name_id="ind_ext_prop_lamp_02_on_020" position="-1875 -1000 1225.94" rotation="-0.5 0.5 0.5 -0.5" unit_id="500006"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_warehouse_window_night_no_destruction" name_id="ind_ext_warehouse_window_night_no_destruction_001" position="-933 -2393 1850" rotation="0 0 -0.707107 -0.707107" unit_id="500000"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_warehouse_window_night_no_destruction" name_id="ind_ext_warehouse_window_night_no_destruction_002" position="-2123 -1978 1850" rotation="0 0 1 -1.19209e-007" unit_id="500001"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_warehouse_window_night_no_destruction" name_id="ind_ext_warehouse_window_night_no_destruction_003" position="-933 -2802 1850" rotation="0 0 -0.707107 -0.707107" unit_id="500002"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_warehouse_window_night_no_destruction" name_id="ind_ext_warehouse_window_night_no_destruction_004" position="-2833 -1978 1850" rotation="0 0 1 -1.19209e-007" unit_id="500015"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_warehouse_window_night_no_destruction" name_id="ind_ext_warehouse_window_night_no_destruction_005" position="-3242 -1978 1850" rotation="0 0 1 -1.19209e-007" unit_id="500019"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_warehouse_window_night_no_destruction" name_id="ind_ext_warehouse_window_night_no_destruction_006" position="-933 -3840 1850" rotation="0 0 -0.707107 -0.707107" unit_id="500022"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_warehouse_window_night_no_destruction" name_id="ind_ext_warehouse_window_night_no_destruction_007" position="-3625 -1978 1850" rotation="0 0 1 -1.19209e-007" unit_id="500023"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_warehouse_window_night_no_destruction" name_id="ind_ext_warehouse_window_night_no_destruction_008" position="-933 -4248 1850" rotation="0 0 -0.707107 -0.707107" unit_id="500028"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_warehouse_window_night_no_destruction" name_id="ind_ext_warehouse_window_night_no_destruction_009" position="-1185 -4873 1850" rotation="0 0 0 -1" unit_id="500030"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_warehouse_window_night_no_destruction" name_id="ind_ext_warehouse_window_night_no_destruction_010" position="-1972 -4873 1850" rotation="0 0 0 -1" unit_id="500031"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_warehouse_window_night_no_destruction" name_id="ind_ext_warehouse_window_night_no_destruction_011" position="-2573 -4873 1850" rotation="0 0 0 -1" unit_id="500037"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_warehouse_window_night_no_destruction" name_id="ind_ext_warehouse_window_night_no_destruction_012" position="-2982 -4873 1850" rotation="0 0 0 -1" unit_id="500040"/>
+		</table>
+		<table>
+			<unit_data continent="mt_temp" name="units/payday2/architecture/ind/ind_ext_level/ind_ext_warehouse_window_night_no_destruction" name_id="ind_ext_warehouse_window_night_no_destruction_013" position="-1714 -1981 1850" rotation="0 0 1 -1.19209e-007" unit_id="500041"/>
+		</table>
+	</statics>
+	<values>
+		<workviews/>
+	</values>
+</table>

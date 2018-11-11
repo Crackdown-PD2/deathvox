@@ -10,7 +10,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_shotgun_heavy = deep_clone(self.ben_crew)
 	self.deathvox_sniper = deep_clone(self.wa2000_crew)
 	self.deathvox_medicdozer_smg = deep_clone(self.polymer_crew)
-	self.deathvox_grenadier = deep_clone(self.contraband_crew)
+	self.deathvox_grenadier = deep_clone(self.m32_crew)
 	
 	self.deathvox_lmgdozer = deep_clone(self.m249_crew)
 	self.deathvox_cloaker = deep_clone(self.schakal_crew)
@@ -19,7 +19,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_light_ar.sounds.prefix = "aug_npc" -- dont worry about this
 	self.deathvox_light_ar.use_data.selection_index = 2 -- dont worry about this
-	self.deathvox_light_ar.DAMAGE = 6 -- Base damage 60.
+	self.deathvox_light_ar.DAMAGE = 7.5 -- Base damage 75.
 	self.deathvox_light_ar.muzzleflash = "effects/payday2/particles/weapons/556_auto" -- dont worry about this
 	self.deathvox_light_ar.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556" -- dont worry about this
 	self.deathvox_light_ar.CLIP_AMMO_MAX = 30 -- How many shots before they gotta reload
@@ -37,7 +37,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_heavy_ar.sounds.prefix = "fn_fal_npc"
 	self.deathvox_heavy_ar.use_data.selection_index = 2
-	self.deathvox_heavy_ar.DAMAGE = 7.5 -- base damage 75.
+	self.deathvox_heavy_ar.DAMAGE = 10 -- base damage 100.
 	self.deathvox_heavy_ar.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_heavy_ar.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556"
 	self.deathvox_heavy_ar.CLIP_AMMO_MAX = 20
@@ -52,7 +52,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_guard_pistol.sounds.prefix = "packrat_npc"
 	self.deathvox_guard_pistol.use_data.selection_index = 1
-	self.deathvox_guard_pistol.DAMAGE = 4 -- base damage 40
+	self.deathvox_guard_pistol.DAMAGE = 6 -- base damage 60
 	self.deathvox_guard_pistol.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
 	self.deathvox_guard_pistol.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
 	self.deathvox_guard_pistol.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
@@ -67,7 +67,7 @@ function WeaponTweakData:init(tweak_data)
 	
 	self.deathvox_medic_pistol.sounds.prefix = "mateba_npc"
 	self.deathvox_medic_pistol.use_data.selection_index = 1
-	self.deathvox_medic_pistol.DAMAGE = 6 -- base 60 damage.
+	self.deathvox_medic_pistol.DAMAGE = 8 -- base 80 damage.
 	self.deathvox_medic_pistol.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
 	self.deathvox_medic_pistol.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
 	self.deathvox_medic_pistol.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty"
@@ -79,10 +79,11 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_medic_pistol.suppression = 1.8
 	self.deathvox_medic_pistol.usage = "is_revolver"
 	self.deathvox_medic_pistol.anim_usage = "is_revolver"
+	self.deathvox_medic_pistol.armor_piercing = true -- armor piercing.
 
 	self.deathvox_shotgun_light.sounds.prefix = "remington_npc"
 	self.deathvox_shotgun_light.use_data.selection_index = 2
-	self.deathvox_shotgun_light.DAMAGE = 7.5 -- Base damage 75.
+	self.deathvox_shotgun_light.DAMAGE = 12 -- Base damage 120.
 	self.deathvox_shotgun_light.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_shotgun_light.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug_semi"
 	self.deathvox_shotgun_light.CLIP_AMMO_MAX = 6
@@ -96,7 +97,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_shotgun_heavy.sounds.prefix = "benelli_m4_npc"
 	self.deathvox_shotgun_heavy.use_data.selection_index = 2
-	self.deathvox_shotgun_heavy.DAMAGE = 10 -- Base damage 100
+	self.deathvox_shotgun_heavy.DAMAGE = 15 -- Base damage 150.
 	self.deathvox_shotgun_heavy.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_shotgun_heavy.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug"
 	self.deathvox_shotgun_heavy.auto.fire_rate = 0.14
@@ -109,11 +110,11 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_shotgun_heavy.suppression = 1.8
 	self.deathvox_shotgun_heavy.is_shotgun = true
 	self.deathvox_shotgun_heavy.usage = "is_heavy_shotgun"
-	self.deathvox_shotgun_heavy.anim_usage = "is_shotgun_mag"
+	self.deathvox_shotgun_heavy.anim_usage = "is_shotgun_pump"
 
-	self.deathvox_sniper.sounds.prefix = "lakner_npc"
+	self.deathvox_sniper.sounds.prefix = "sniper_npc"
 	self.deathvox_sniper.use_data.selection_index = 2
-	self.deathvox_sniper.DAMAGE = 24 -- base 240, drop with distance, check other vals.
+	self.deathvox_sniper.DAMAGE = 24 -- base 240, drop with distance. Same as DW and OD.
 	self.deathvox_sniper.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
 	self.deathvox_sniper.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
 	self.deathvox_sniper.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
@@ -134,7 +135,7 @@ function WeaponTweakData:init(tweak_data)
 	
 	self.deathvox_medicdozer_smg.sounds.prefix = "polymer_npc"
 	self.deathvox_medicdozer_smg.use_data.selection_index = 1
-	self.deathvox_medicdozer_smg.DAMAGE = 4.5 -- Vanilla base is 20, adjusting up to 45.
+	self.deathvox_medicdozer_smg.DAMAGE = 4.5 -- Vanilla base is 20, adjusting up to 45. Matched to other smgs.
 	self.deathvox_medicdozer_smg.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
 	self.deathvox_medicdozer_smg.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
 	self.deathvox_medicdozer_smg.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
@@ -151,15 +152,17 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_medicdozer_smg.suppression = 1	
 	self.deathvox_medicdozer_smg.usage = "is_tank_smg"
 	
-	self.deathvox_grenadier.sounds.prefix = "contraband_npc"
+	self.deathvox_grenadier.sounds.prefix = "mgl_npc"
 	self.deathvox_grenadier.use_data.selection_index = 2
-	self.deathvox_grenadier.DAMAGE = 6
-	self.deathvox_grenadier.muzzleflash = "effects/payday2/particles/weapons/762_auto"
-	self.deathvox_grenadier.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556"
-	self.deathvox_grenadier.CLIP_AMMO_MAX = 20
-	self.deathvox_grenadier.NR_CLIPS_MAX = 5
-	self.deathvox_grenadier.pull_magazine_during_reload = "rifle"
-	self.deathvox_grenadier.auto.fire_rate = 0.098
+	self.deathvox_grenadier.DAMAGE = 0
+	self.deathvox_grenadier.muzzleflash = "effects/payday2/particles/weapons/big_762_auto" -- increased visibility on fire.
+	self.deathvox_grenadier.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty" -- appears to produce no effect.
+	self.deathvox_grenadier.CLIP_AMMO_MAX = 9999999
+	self.deathvox_grenadier.NR_CLIPS_MAX = 9999999
+	self.deathvox_grenadier.looped_reload_speed = 10
+	self.deathvox_grenadier.timers = {reload_not_empty = 10}
+	self.deathvox_grenadier.timers.reload_empty = self.deathvox_grenadier.timers.reload_not_empty
+	self.deathvox_grenadier.auto.fire_rate = 1
 	self.deathvox_grenadier.hold = {
 		"bullpup",
 		"rifle"
@@ -167,10 +170,13 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_grenadier.reload = "rifle"
 	self.deathvox_grenadier.alert_size = 5000
 	self.deathvox_grenadier.suppression = 1
+	self.deathvox_grenadier.usage = "is_heavy_rifle"
+	self.deathvox_grenadier.anim_usage = "is_shotgun_pump"
+	self.deathvox_grenadier.no_trail = true
 	
     self.deathvox_lmgdozer.sounds.prefix = "m249_npc"
     self.deathvox_lmgdozer.use_data.selection_index = 2
-    self.deathvox_lmgdozer.DAMAGE = 10
+    self.deathvox_lmgdozer.DAMAGE = 10 -- Base damage 100, matched to DW.
     self.deathvox_lmgdozer.muzzleflash = "effects/payday2/particles/weapons/big_762_auto"
     self.deathvox_lmgdozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556_lmg"
     self.deathvox_lmgdozer.CLIP_AMMO_MAX = 200
@@ -183,7 +189,7 @@ function WeaponTweakData:init(tweak_data)
    
     self.deathvox_cloaker.sounds.prefix = "schakal_npc"
     self.deathvox_cloaker.use_data.selection_index = 1
-    self.deathvox_cloaker.DAMAGE = 4.5
+    self.deathvox_cloaker.DAMAGE = 4.5 -- Base damage 45, matched to other smgs
     self.deathvox_cloaker.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
     self.deathvox_cloaker.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
     self.deathvox_cloaker.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
@@ -202,11 +208,11 @@ function WeaponTweakData:init(tweak_data)
    
     self.deathvox_blackdozer.sounds.prefix = "saiga_npc"
     self.deathvox_blackdozer.use_data.selection_index = 2
-    self.deathvox_blackdozer.DAMAGE = 22.5
+    self.deathvox_blackdozer.DAMAGE = 22.5 --Base damage 225, matched to DW.
     self.deathvox_blackdozer.muzzleflash = "effects/payday2/particles/weapons/762_auto"
     self.deathvox_blackdozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug"
     self.deathvox_blackdozer.auto.fire_rate = 0.14
-    self.deathvox_blackdozer.CLIP_AMMO_MAX = 7
+    self.deathvox_blackdozer.CLIP_AMMO_MAX = 11
     self.deathvox_blackdozer.NR_CLIPS_MAX = 10
     self.deathvox_blackdozer.hold = "rifle"
     self.deathvox_blackdozer.alert_size = 4500
@@ -216,7 +222,7 @@ function WeaponTweakData:init(tweak_data)
    
     self.deathvox_greendozer.sounds.prefix = "remington_npc"
     self.deathvox_greendozer.use_data.selection_index = 2
-    self.deathvox_greendozer.DAMAGE = 40
+    self.deathvox_greendozer.DAMAGE = 50 --Base damage 500, Compare DW 400, DS 560.
     self.deathvox_greendozer.muzzleflash = "effects/payday2/particles/weapons/762_auto"
     self.deathvox_greendozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug_semi"
     self.deathvox_greendozer.CLIP_AMMO_MAX = 6
@@ -233,16 +239,63 @@ function WeaponTweakData:_set_sm_wish()
 	self.m4_npc.DAMAGE = 3
 	self.g36_npc.DAMAGE = 5
 	self.r870_npc.DAMAGE = 7
-	self.swat_van_turret_module.HEALTH_INIT = 40000
-	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 500
-	self.swat_van_turret_module.DAMAGE = 3
-	self.swat_van_turret_module.CLIP_SIZE = 600
+	self.npc_melee.baton.damage = 5
+	self.npc_melee.knife_1.damage = 7
+	self.npc_melee.fists.damage = 4
+	self.swat_van_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
+	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300
+	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3 -- tentative, base is 7
+	self.swat_van_turret_module.FIRE_DMG_MUL = 0.1
+	self.swat_van_turret_module.BAG_DMG_MUL = 100
+	self.swat_van_turret_module.SHIELD_DMG_MUL = 1
+	self.swat_van_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.swat_van_turret_module.BODY_DAMAGE_CLAMP = 4200
+	self.swat_van_turret_module.DAMAGE = 3.5
+	self.swat_van_turret_module.CLIP_SIZE = 500 --reduced from base game stat, 800.
+	self.swat_van_turret_module.AUTO_REPAIR = true
 	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 696969
-	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3
+	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
+	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
+	self.swat_van_turret_module.CAN_GO_IDLE = false
+	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
+	--Ceiling turrets.
 	self.ceiling_turret_module.HEALTH_INIT = 40000
-	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 350
+	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 700
+	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 3 -- tentative, base is 7
+	self.ceiling_turret_module.FIRE_DMG_MUL = 0.1
+	self.ceiling_turret_module.BAG_DMG_MUL = 100
+	self.ceiling_turret_module.SHIELD_DMG_MUL = 1
+	self.ceiling_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.ceiling_turret_module.BODY_DAMAGE_CLAMP =  4200
 	self.ceiling_turret_module.DAMAGE = 3.5
 	self.ceiling_turret_module.CLIP_SIZE = 800
-	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 3
-	self.ceiling_turret_module.BAG_DMG_MUL = 50
+	self.ceiling_turret_module.AUTO_REPAIR = false
+	self.ceiling_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.ceiling_turret_module.AUTO_REPAIR_DURATION = 1
+	self.ceiling_turret_module.AUTO_RELOAD_DURATION = 8
+	self.ceiling_turret_module.CAN_GO_IDLE = false
+	self.ceiling_turret_module.IDLE_WAIT_TIME = 1
+	--unusual variants in base game files; may or may not be used.
+	self.ceiling_turret_module_no_idle = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range.CAN_GO_IDLE = false
+	self.ceiling_turret_module_longer_range.FIRE_RANGE = 30000
+	self.ceiling_turret_module_longer_range.DETECTION_RANGE = self.ceiling_turret_module_longer_range.FIRE_RANGE
+	-- AA turret; used on Henry's Rock.
+	self.aa_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.SHIELD_HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.EXPLOSION_DMG_MUL = 0
+	self.aa_turret_module.FIRE_DMG_MUL = 0
+	self.aa_turret_module.BAG_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DAMAGE_CLAMP = 10
+	self.aa_turret_module.BODY_DAMAGE_CLAMP = 10
+	self.aa_turret_module.DAMAGE = 3.5
+	self.aa_turret_module.CLIP_SIZE = 800
+	self.aa_turret_module.AUTO_REPAIR = true 
+	self.aa_turret_module.AUTO_REPAIR_MAX_COUNT = 696969
+	self.aa_turret_module.AUTO_REPAIR_DURATION = 30
+	self.aa_turret_module.AUTO_RELOAD_DURATION = 8
+	self.aa_turret_module.CAN_GO_IDLE = false
+	self.aa_turret_module.IDLE_WAIT_TIME = 10
 end

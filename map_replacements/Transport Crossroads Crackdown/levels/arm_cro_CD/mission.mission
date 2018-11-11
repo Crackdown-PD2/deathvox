@@ -1,0 +1,6 @@
+<table>
+	<editor_only file="editor_only/editor_only"/>
+	<mt_temp file="mt_temp/mt_temp"/>
+	<pc_only file="pc_only/pc_only"/>
+	<world file="world/world"/>
+</table>

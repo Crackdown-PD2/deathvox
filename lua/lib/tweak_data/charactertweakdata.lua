@@ -1,14 +1,188 @@
 local origin_init = CharacterTweakData.init
 local origin_presets = CharacterTweakData._presets
+local origin_charmap = CharacterTweakData.character_map
 
 function CharacterTweakData:init(tweak_data)
 	local presets = self:_presets(tweak_data)
 	origin_init(self, tweak_data)
 	self:_init_deathvox(presets)
 end
-
+--mods/deathvox/lua/lib/tweak_data/charactertweakdata.lua:18: '}' expected (to close '{' at line 14) near 'hard'
 function CharacterTweakData:_presets(tweak_data)
 	local presets = origin_presets(self, tweak_data)
+	presets.base.stealth_instant_kill = true
+	presets.health_tables = {
+		deathvox_guard = {  -- mk 1 values complete. Consistent below CD.
+			not_a_real_difficulty = {health = 4, headshot_mult = 3},
+			normal = {health = 4, headshot_mult = 3},
+			hard = {health = 4, headshot_mult = 3},
+			very_hard = {health = 4, headshot_mult = 3},
+			overkill = {health = 4, headshot_mult = 3},
+			mayhem = {health = 4, headshot_mult = 3},
+			death_wish = {health = 4, headshot_mult = 3},
+			crackdown = {health = 15, headshot_mult = 3}
+		},
+		deathvox_gman = { -- mk 1 values complete. Consistent below CD.
+			not_a_real_difficulty = {health = 4, headshot_mult = 3}, 
+			normal = {health = 4, headshot_mult = 3},
+			hard = {health = 4, headshot_mult = 3},
+			very_hard = {health = 4, headshot_mult = 3},
+			overkill = {health = 4, headshot_mult = 3},
+			mayhem = {health = 4, headshot_mult = 3},
+			death_wish = {health = 4, headshot_mult = 3},
+			crackdown = {health = 15, headshot_mult = 3}
+		},
+		deathvox_lightar = { -- mk 1 values complete. Mostly vanilla based.
+			not_a_real_difficulty = {health = 8, headshot_mult = 2},
+			normal = {health = 8, headshot_mult = 2},
+			hard = {health = 8, headshot_mult = 2},
+			very_hard = {health = 16, headshot_mult = 3},
+			overkill = {health = 32, headshot_mult = 3},
+			mayhem = {health = 32, headshot_mult = 3},
+			death_wish = {health = 32, headshot_mult = 3},
+			crackdown = {health = 48, headshot_mult = 3}
+		},
+		deathvox_lightshot = { -- mk 1 values complete. Mostly vanilla based.
+			not_a_real_difficulty = {health = 8, headshot_mult = 2},
+			normal = {health = 8, headshot_mult = 2},
+			hard = {health = 8, headshot_mult = 2},
+			very_hard = {health = 16, headshot_mult = 3},
+			overkill = {health = 32, headshot_mult = 3},
+			mayhem = {health = 32, headshot_mult = 3},
+			death_wish = {health = 32, headshot_mult = 3},
+			crackdown = {health = 48, headshot_mult = 3}
+		},
+        deathvox_heavyar = { -- mk 1 values complete. Mostly vanilla based.
+			not_a_real_difficulty = {health = 16, headshot_mult = 3},
+			normal = {health = 16, headshot_mult = 3},
+			hard = {health = 16, headshot_mult = 3},
+			very_hard = {health = 32, headshot_mult = 3},
+			overkill = {health = 48, headshot_mult = 3},
+			mayhem = {health = 96, headshot_mult = 3},
+			death_wish = {health = 96, headshot_mult = 3},
+			crackdown = {health = 101, headshot_mult = 3}
+		},
+		deathvox_heavyshot = { -- mk 1 values complete. Mostly vanilla based.
+			not_a_real_difficulty = {health = 16, headshot_mult = 3},
+			normal = {health = 16, headshot_mult = 3},
+			hard = {health = 16, headshot_mult = 3},
+			very_hard = {health = 32, headshot_mult = 3},
+			overkill = {health = 48, headshot_mult = 3},
+			mayhem = {health = 96, headshot_mult = 3},
+			death_wish = {health = 96, headshot_mult = 3},
+			crackdown = {health = 101, headshot_mult = 3}
+		},
+		deathvox_shield = { -- mk 1 values complete. Mostly vanilla based with increase.
+			not_a_real_difficulty = {health = 24, headshot_mult = 3},
+			normal = {health = 24, headshot_mult = 3},
+			hard = {health = 24, headshot_mult = 3},
+			very_hard = {health = 48, headshot_mult = 3},
+			overkill = {health = 72, headshot_mult = 3},
+			mayhem = {health = 72, headshot_mult = 3},
+			death_wish = {health = 72, headshot_mult = 3},
+			crackdown = {health = 72, headshot_mult = 3}
+		},
+		deathvox_medic = { -- mk 1 values complete. Based on light.
+			not_a_real_difficulty = {health = 8, headshot_mult = 2},
+			normal = {health = 8, headshot_mult = 2},
+			hard = {health = 8, headshot_mult = 2},
+			very_hard = {health = 16, headshot_mult = 3},
+			overkill = {health = 32, headshot_mult = 3},
+			mayhem = {health = 32, headshot_mult = 3},
+			death_wish = {health = 32, headshot_mult = 3},
+			crackdown = {health = 48, headshot_mult = 3}
+		},
+		deathvox_taser = { -- mk 1 values complete. Based on heavy.
+			not_a_real_difficulty = {health = 16, headshot_mult = 3},
+			normal = {health = 16, headshot_mult = 3},
+			hard = {health = 16, headshot_mult = 3},
+			very_hard = {health = 32, headshot_mult = 3},
+			overkill = {health = 48, headshot_mult = 3},
+			mayhem = {health = 96, headshot_mult = 3},
+			death_wish = {health = 96, headshot_mult = 3},
+			crackdown = {health = 101, headshot_mult = 3}
+		},
+		deathvox_cloaker = { -- mk 1 values complete. Mostly dv_shield based.
+			not_a_real_difficulty = {health = 24, headshot_mult = 3},
+			normal = {health = 24, headshot_mult = 3},
+			hard = {health = 24, headshot_mult = 3},
+			very_hard = {health = 48, headshot_mult = 3},
+			overkill = {health = 72, headshot_mult = 3},
+			mayhem = {health = 72, headshot_mult = 3},
+			death_wish = {health = 72, headshot_mult = 3},
+			crackdown = {health = 96, headshot_mult = 3}
+		},
+		deathvox_sniper = { -- mk 1 values complete. lower difficulty curve structure
+			not_a_real_difficulty = {health = 8, headshot_mult = 3},
+			normal = {health = 8, headshot_mult = 3},
+			hard = {health = 8, headshot_mult = 3},
+			very_hard = {health = 8, headshot_mult = 3},
+			overkill = {health = 12, headshot_mult = 3},
+			mayhem = {health = 12, headshot_mult = 3},
+			death_wish = {health = 12, headshot_mult = 3},
+			crackdown = {health = 15, headshot_mult = 3}
+		},
+		deathvox_greendozer = { -- mk 1 values complete. Limited range toward upper limit. Note may want to adjust head mult/HP up to incentivize headshot, but risky.
+			not_a_real_difficulty = {health = 500, headshot_mult = 5},
+			normal = {health = 500, headshot_mult = 5},
+			hard = {health = 500, headshot_mult = 5},
+			very_hard = {health = 500, headshot_mult = 5},
+			overkill = {health = 600, headshot_mult = 5},
+			mayhem = {health = 750, headshot_mult = 5},
+			death_wish = {health = 750, headshot_mult = 5},
+			crackdown = {health = 875, headshot_mult = 5}
+		},
+		deathvox_blackdozer = { -- mk 1 values complete. Copies greendozer.
+			not_a_real_difficulty = {health = 500, headshot_mult = 5},
+			normal = {health = 500, headshot_mult = 5},
+			hard = {health = 500, headshot_mult = 5},
+			very_hard = {health = 500, headshot_mult = 5},
+			overkill = {health = 600, headshot_mult = 5},
+			mayhem = {health = 750, headshot_mult = 5},
+			death_wish = {health = 750, headshot_mult = 5},
+			crackdown = {health = 875, headshot_mult = 5}
+		},
+		deathvox_lmgdozer = { -- mk 1 values complete. Copies greendozer.
+			not_a_real_difficulty = {health = 500, headshot_mult = 5},
+			normal = {health = 500, headshot_mult = 5},
+			hard = {health = 500, headshot_mult = 5},
+			very_hard = {health = 500, headshot_mult = 5},
+			overkill = {health = 600, headshot_mult = 5},
+			mayhem = {health = 750, headshot_mult = 5},
+			death_wish = {health = 750, headshot_mult = 5},
+			crackdown = {health = 875, headshot_mult = 5}
+		},
+		deathvox_medicdozer = { -- mk 1 values complete. Copies greendozer.
+			not_a_real_difficulty = {health = 500, headshot_mult = 5},
+			normal = {health = 500, headshot_mult = 5},
+			hard = {health = 500, headshot_mult = 5},
+			very_hard = {health = 500, headshot_mult = 5},
+			overkill = {health = 600, headshot_mult = 5},
+			mayhem = {health = 750, headshot_mult = 5},
+			death_wish = {health = 750, headshot_mult = 5},
+			crackdown = {health = 875, headshot_mult = 5}
+		},
+		deathvox_guarddozer = { -- mk 1 values complete. Copies greendozer.
+			not_a_real_difficulty = {health = 500, headshot_mult = 5},
+			normal = {health = 500, headshot_mult = 5},
+			hard = {health = 500, headshot_mult = 5},
+			very_hard = {health = 500, headshot_mult = 5},
+			overkill = {health = 600, headshot_mult = 5},
+			mayhem = {health = 750, headshot_mult = 5},
+			death_wish = {health = 750, headshot_mult = 5},
+			crackdown = {health = 875, headshot_mult = 5}
+		},
+		deathvox_grenadier = { -- mk 1 values complete. Based on heavy.
+			not_a_real_difficulty = {health = 16, headshot_mult = 3},
+			normal = {health = 16, headshot_mult = 3},
+			hard = {health = 16, headshot_mult = 3},
+			very_hard = {health = 32, headshot_mult = 3},
+			overkill = {health = 48, headshot_mult = 3},
+			mayhem = {health = 96, headshot_mult = 3},
+			death_wish = {health = 96, headshot_mult = 3},
+			crackdown = {health = 101, headshot_mult = 3}
+		}
+	}
 	presets.dodge.deathvox = {
 		speed = 1.7,
 		occasions = {
@@ -66,76 +240,119 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.dodge.deathvoxninja = {
+	presets.dodge.deathvoxchavez = {
 		speed = 1.7,
 		occasions = {
 			hit = {
-				chance = 0.9,
-				check_timeout = {0, 1},
+				chance = 1,
+				check_timeout = {0, 3},
 				variations = {
-					side_step = {
-						chance = 3,
+					dive = {
+						chance = 2,
+						timeout = {1, 2},
 						shoot_chance = 1,
-						shoot_accuracy = 0.7,
-						timeout = {1, 2}
+						shoot_accuracy = 0.9
 					},
 					roll = {
 						chance = 1,
-						timeout = {1.2, 2}
-					},
-					wheel = {
-						chance = 2,
-						shoot_chance = 1, -- test value. May or may not operate action, crash.
-						shoot_accuracy = 0.8,
 						timeout = {1.2, 2}
 					}
 				}
 			},
 			preemptive = {
-				chance = 0.9,
-				check_timeout = {0, 1},
+				chance = 1,
+				check_timeout = {0, 3},
 				variations = {
-					side_step = {
-						chance = 1,
+					dive = {
+						chance = 2,
+						timeout = {1, 2},
 						shoot_chance = 1,
-						shoot_accuracy = 0.8,
-						timeout = {1, 2}
+						shoot_accuracy = 0.9
 					},
 					roll = {
-						chance = 2,
-						timeout = {1.2, 2}
-					},
-					wheel = {
-						chance = 2,
-						shoot_chance = 1, -- test value. May or may not operate action, crash.
-						shoot_accuracy = 0.8,
+						chance = 1,
 						timeout = {1.2, 2}
 					}
 				}
 			},
 			scared = {
 				chance = 0.9,
+				check_timeout = {0, 2},
+				variations = {
+					roll = {
+						chance = 1,
+						timeout = {1.2, 2}
+					},
+					dive = {
+						chance = 2,
+						timeout = {1, 2},
+						shoot_chance = 1,
+						shoot_accuracy = 0.9
+					}
+				}
+			}
+		}
+	}
+	presets.dodge.deathvoxninja = {
+		speed = 1.7,
+		occasions = {
+			hit = {
+				chance = 1,
 				check_timeout = {0, 1},
+				variations = {
+					roll = {
+						chance = 2,
+						timeout = {1, 1.5}
+					},
+					wheel = {
+						chance = 1,
+						shoot_chance = 0.9,
+						shoot_accuracy = 0.8,
+						timeout = {1, 1.5}
+					}
+				}
+			},
+			preemptive = {
+				chance = 1,
+				check_timeout = {0, .6},
 				variations = {
 					side_step = {
 						chance = 1,
 						shoot_chance = 0.8,
 						shoot_accuracy = 0.6,
-						timeout = {1, 2}
+						timeout = {1, 1.5}
+					},
+					roll = {
+						chance = 2,
+						timeout = {1, 1.5}
+					},
+					wheel = {
+						chance = 2,
+						shoot_chance = 0.9,
+						shoot_accuracy = 0.8,
+						timeout = {1, 1.5}
+					}
+				}
+			},
+			scared = {
+				chance = 1,
+				check_timeout = {0, 0.6},
+				variations = {
+					side_step = {
+						chance = 1,
+						shoot_chance = 0.8,
+						shoot_accuracy = 0.6,
+						timeout = {1, 1.5}
 					},
 					roll = {
 						chance = 3,
-						timeout = {1.2, 2}
+						timeout = {1, 1.5}
 					},
 					wheel = {
 						chance = 3,
-						shoot_chance = 1, -- test value. May or may not operate action, crash.
+						shoot_chance = 0.9,
 						shoot_accuracy = 0.8,
-						timeout = {1.2, 2}
-					},
-					dive = {
-						chance = 1,
-						timeout = {1.2, 2}
+						timeout = {1, 1.5}
 					}
 				}
 			}
@@ -443,7 +660,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_shotgun_pump = { -- mark 4 values complete. Assumes base damage 400. basis is presets.weapon.deathwish.is_shotgun_pump. Extremely dangerous close range, much less so further out.
+	presets.weapon.deathvox.is_shotgun_pump = { -- mark 5 values complete. Assumes base damage 500. Extremely dangerous close range, less so further out. Slower to fire.
 		aim_delay = {
 			0,
 			0
@@ -517,7 +734,7 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = .350,
+				dmg_mul = .400,
 				r = 2000,
 				acc = {
 					0.45,
@@ -554,7 +771,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_shotgun_mag = { -- mark 3 values complete. assumes base damage 225. Basis is presets.weapon.deathwish.is_shotgun_pump. Much more even arc distribution-focus/shotcount becomes crucial.
+	presets.weapon.deathvox.is_shotgun_mag = { -- mark 4 values complete. assumes base damage 225. The danger isn't the damage, it's the low recoil! Extremely hazardous at close range.
 		aim_delay = {
 			0,
 			0
@@ -581,8 +798,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = {
-					1,
-					1.1
+					0.5,
+					1.0
 				},
 				mode = {
 					0,
@@ -599,8 +816,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = {
-					1,
-					1.25
+					0.5,
+					1.0
 				},
 				mode = {
 					0,
@@ -617,8 +834,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.85
 				},
 				recoil = {
-					1,
-					1.5
+					0.7,
+					1.1
 				},
 				mode = {
 					1,
@@ -635,7 +852,7 @@ function CharacterTweakData:_presets(tweak_data)
 					0.65
 				},
 				recoil = {
-					1.25,
+					1.0,
 					1.5
 				},
 				mode = {
@@ -710,7 +927,7 @@ function CharacterTweakData:_presets(tweak_data)
 					0,
 					0,
 					1,
-					0
+					1
 				}
 			},
 			{
@@ -728,7 +945,7 @@ function CharacterTweakData:_presets(tweak_data)
 					0,
 					0,
 					1,
-					0
+					1
 				}
 			},
 			{
@@ -883,7 +1100,7 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = 0.85,
+				dmg_mul = 0.8,
 				r = 2000,
 				acc = {
 					0.7,
@@ -901,7 +1118,7 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = 0.7,
+				dmg_mul = 0.65,
 				r = 3000,
 				acc = {
 					0.65,
@@ -919,15 +1136,15 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = 0.6,
+				dmg_mul = 0.55,
 				r = 6000, -- uses longer range, per vanilla, to maintain long falloff tail.
 				acc = {
-					0.45, -- increased tail accuracy. Vanilla values .25-.7.
+					0.35, -- increased tail accuracy. Vanilla values .25-.7.
 					0.7
 				},
 				recoil = {
 					1.5, -- increased tail recoil to reduce attack rate. Vanilla values 1-2.
-					2
+					2.5
 				},
 				mode = {
 					1,
@@ -965,8 +1182,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = {
-					1,
-					1.1
+					0.8,
+					1
 				},
 				mode = {
 					1,
@@ -983,8 +1200,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = { -- slight recoil reduction. Vanilla stats 1-1.25.
-					1,
-					1.2
+					0.9,
+					1.1
 				},
 				mode = {
 					1,
@@ -1411,7 +1628,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_lmg = { --mark 3 values complete. Basis is presets.weapon.deathwish.is_lmg. Assumes 100 base damage. Used for LMG Dozers, certain scripted enemies. using a balance between expert and DW values here.
+	presets.weapon.deathvox.is_lmg = { --mark 4 values complete. Assumes 100 base damage. Going to treat it as a bullethose, making it much more dangerous to approach directly.
 		aim_delay = { 
 			0.1,
 			0.1
@@ -1429,9 +1646,9 @@ function CharacterTweakData:_presets(tweak_data)
 			far = 6000,
 			close = 2000
 		},
-		autofire_rounds = {
-			25,
-			50
+		autofire_rounds = { -- experimental autofire increase. prev values 25, 50.
+			55,
+			70
 		},
 		FALLOFF = { 
 			{
@@ -1680,6 +1897,139 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
+	presets.weapon.deathvox.akimbo_pistol = { --mark 1 adjustment. Needs damage increase.
+		aim_delay = {
+			0,
+			0
+		},
+		focus_delay = 0,
+		focus_dis = 200,
+		spread = 20,
+		miss_dis = 50,
+		RELOAD_SPEED = 1.4, -- validated, unchanged.
+		melee_speed = presets.weapon.expert.is_pistol.melee_speed,
+		melee_dmg = 20,
+		melee_retry_delay = presets.weapon.expert.is_pistol.melee_retry_delay,
+		autofire_rounds = { -- experimental autofire increase. prev values 25, 50.
+			8,
+			10
+		},
+			range = {
+			optimal = 3200, -- validated, unchanged.
+			far = 5000,
+			close = 2000
+		},
+		FALLOFF = {
+			{
+				dmg_mul = 1,
+				r = 100,
+				acc = {
+					0.9,
+					0.95
+				},
+				recoil = {
+					0.15,
+					0.25
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = 1,
+				r = 500,
+				acc = {
+					0.9,
+					0.95
+				},
+				recoil = {
+					0.15,
+					0.3
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = .8,
+				r = 1000,
+				acc = {
+					0.7,
+					0.8
+				},
+				recoil = {
+					0.25,
+					0.3
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = .65,
+				r = 2000,
+				acc = {
+					0.6,
+					0.7
+				},
+				recoil = {
+					0.4,
+					0.5
+				},
+				mode = {
+					0,
+					1,
+					0,
+					0
+				}
+			},
+			{
+				dmg_mul = .6,
+				r = 3000,
+				acc = {
+					0.6,
+					0.65
+				},
+				recoil = {
+					0.6,
+					0.8
+				},
+				mode = {
+					0,
+					1,
+					0,
+					0
+				}
+			},
+			{
+				dmg_mul = .5, -- no flat damage.
+				r = 4000,
+				acc = {
+					0.2,
+					0.60 -- no infinite range.
+				},
+				recoil = {
+					1,
+					1.5
+				},
+				mode = {
+					0,
+					1,
+					0,
+					0
+				}
+			}
+		}
+	}
 	presets.weapon.deathvox.is_tank_smg = deep_clone(presets.weapon.deathvox.is_smg) --Used for medidozer. May separate.
 	presets.weapon.deathvox.is_cloaker_smg = deep_clone(presets.weapon.deathvox.is_smg) -- clone similar to other vars.
 	presets.weapon.deathvox.is_dozer_saiga = deep_clone(presets.weapon.deathvox.is_shotgun_mag)
@@ -1691,14 +2041,14 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.weapon.deathvox.rifle = deep_clone(presets.weapon.deathvox.is_light_rifle)
 	presets.weapon.deathvox.is_sniper = deep_clone(presets.weapon.deathvox.is_light_rifle)
 	presets.weapon.deathvox.is_rifle = deep_clone(presets.weapon.deathvox.is_light_rifle)
-	presets.weapon.deathvox.akimbo_pistol = deep_clone(presets.weapon.deathvox.is_pistol) -- Will revise for test version of Chavez boss at future date.
 	presets.weapon.deathvox.mossberg = deep_clone(presets.weapon.deathvox.is_light_shotgun)
 	return presets
 end
 	
 function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard = deep_clone(self.security)
-	self.deathvox_guard.detection = presets.detection.guard -- normal, guard, sniper, gang_member, civilian, blind
+	self.deathvox_guard.detection = presets.detection.guard
+	self.deathvox_guard.ignore_medic_revive_animation = true --no revive animation.
 	self.deathvox_guard.suppression = nil -- presets.suppression.no_supress
 	self.deathvox_guard.surrender = presets.surrender.easy
 	self.deathvox_guard.move_speed = presets.move_speed.very_fast -- tentative.
@@ -1706,26 +2056,33 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 	self.deathvox_guard.dodge = presets.dodge.deathvox_guard
 	self.deathvox_guard.deathguard = true -- unlikely to be relevant usually, but adds slight safety window during pathing step.
-	self.deathvox_guard.no_arrest = true -- removing the arrest loophole.
+	self.deathvox_guard.no_arrest = false -- Trust me on this, it's miserable to stealth right now without it. We'll re
 	self.deathvox_guard.factory_weapon_id = {"wpn_deathvox_guard_pistol"}
 	self.deathvox_guard.use_factory = true
 	self.deathvox_guard.HEALTH_INIT = 15
 	self.deathvox_guard.headshot_dmg_mul = 3
 	self.deathvox_guard.weapon = deep_clone(presets.weapon.deathvox)
-	self.deathvox_guard.access = "any"
+	self.deathvox_guard.access = "security" --fixes SO problem
 	table.insert(self._enemy_list, "deathvox_guard")
+	
+	self.deathvox_gman = deep_clone(self.deathvox_guard)
+	self.deathvox_gman.ignore_ecm_for_pager = true
+	self.deathvox_guard.surrender = nil -- cannot be intimidated.
+	self.deathvox_gman.no_arrest = false -- caused too many issues.
+	table.insert(self._enemy_list, "deathvox_gman")
 	
 	self.deathvox_lightar = deep_clone(self.city_swat)
 	self.deathvox_lightar.detection = presets.detection.normal
-	self.deathvox_lightar.suppression = presets.suppression.hard_agg -- tentative. Need to consider effect, may be too much.
-	self.deathvox_lightar.surrender = presets.surrender.normal --tentative. hard for heavy, normal for light.
+	self.deathvox_lightar.ignore_medic_revive_animation = true  --no revive animation.
+	self.deathvox_lightar.suppression = presets.suppression.hard_agg
+	self.deathvox_lightar.surrender = presets.surrender.normal -- hard for heavy, normal for light.
 	self.deathvox_lightar.move_speed = presets.move_speed.very_fast
-	self.deathvox_lightar.surrender_break_time = {6, 8} --should be fairly fast, used in base for fbi heavy swat.
+	self.deathvox_lightar.surrender_break_time = {6, 8}
 	self.deathvox_lightar.ecm_vulnerability = 1
 	self.deathvox_lightar.ecm_hurts = {
-		ears = {min_duration = 6, max_duration = 8} -- base game taser value. Gen base is 8-10.
+		ears = {min_duration = 6, max_duration = 8}
 	}
-	self.deathvox_lightar.dodge = presets.dodge.deathvox
+	self.deathvox_lightar.dodge = presets.dodge.deathvoxninja
 	self.deathvox_lightar.deathguard = true
 	self.deathvox_lightar.no_arrest = true
 	self.deathvox_lightar.steal_loot = true
@@ -1736,14 +2093,16 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightar.HEALTH_INIT = 48
 	self.deathvox_lightar.headshot_dmg_mul = 3
 	self.deathvox_lightar.access = "any"
+	self.deathvox_lightar.custom_voicework = "light"
 	table.insert(self._enemy_list, "deathvox_lightar")
 	
 	self.deathvox_heavyar = deep_clone(self.city_swat)
 	self.deathvox_heavyar.detection = presets.detection.normal
-	self.deathvox_heavyar.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- new with final 2017 pass.
+	self.deathvox_heavyar.ignore_medic_revive_animation = true  --no revive animation.
+	self.deathvox_heavyar.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- revised per feedback.
 	self.deathvox_heavyar.suppression = presets.suppression.hard_agg -- tentative.
 	self.deathvox_heavyar.surrender = presets.surrender.hard --tentative.
-	self.deathvox_heavyar.move_speed = presets.move_speed.very_fast
+	self.deathvox_heavyar.move_speed = presets.move_speed.fast
 	self.deathvox_heavyar.surrender_break_time = {6, 8}
 	self.deathvox_heavyar.ecm_vulnerability = 1
 	self.deathvox_heavyar.ecm_hurts = {
@@ -1759,12 +2118,14 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyar.use_factory = true
 	self.deathvox_heavyar.HEALTH_INIT = 101 -- new with final 2017 pass.
 	self.deathvox_heavyar.headshot_dmg_mul = 3
-	self.deathvox_heavyar.damage.explosion_damage_mul = 0.9
+	self.deathvox_heavyar.damage.explosion_damage_mul = 0.7
 	self.deathvox_heavyar.access = "any"
+	self.deathvox_heavyar.custom_voicework = "heavy"
 	table.insert(self._enemy_list, "deathvox_heavyar")
 	
 	self.deathvox_lightshot = deep_clone(self.city_swat)
 	self.deathvox_lightshot.detection = presets.detection.normal
+	self.deathvox_lightshot.ignore_medic_revive_animation = true  --no revive animation.
 	self.deathvox_lightshot.suppression = presets.suppression.hard_agg -- tentative.
 	self.deathvox_lightshot.surrender = presets.surrender.normal -- tentative.
 	self.deathvox_lightshot.move_speed = presets.move_speed.very_fast
@@ -1773,7 +2134,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightshot.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8}
 	}
-	self.deathvox_lightshot.dodge = presets.dodge.deathvox
+	self.deathvox_lightshot.dodge = presets.dodge.deathvoxninja
 	self.deathvox_lightshot.deathguard = true
 	self.deathvox_lightshot.no_arrest = true
 	self.deathvox_lightshot.steal_loot = true
@@ -1784,14 +2145,16 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightshot.HEALTH_INIT = 48
 	self.deathvox_lightshot.headshot_dmg_mul = 3
 	self.deathvox_lightshot.access = "any"
+	self.deathvox_lightshot.custom_voicework = "light"
 	table.insert(self._enemy_list, "deathvox_lightshot")
 	
 	self.deathvox_heavyshot = deep_clone(self.city_swat)
 	self.deathvox_heavyshot.detection = presets.detection.normal
-	self.deathvox_heavyshot.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- new with final 2017 pass.
+	self.deathvox_heavyshot.ignore_medic_revive_animation = true  --no revive animation.
+	self.deathvox_heavyshot.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- revised per feedback.
 	self.deathvox_heavyshot.suppression = presets.suppression.hard_agg -- tentative.
 	self.deathvox_heavyshot.surrender = presets.surrender.hard -- tentative.
-	self.deathvox_heavyshot.move_speed = presets.move_speed.very_fast
+	self.deathvox_heavyshot.move_speed = presets.move_speed.fast
 	self.deathvox_heavyshot.surrender_break_time = {6, 8} 
 	self.deathvox_heavyshot.ecm_vulnerability = 1
 	self.deathvox_heavyshot.ecm_hurts = {
@@ -1807,22 +2170,24 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyshot.use_factory = true
 	self.deathvox_heavyshot.HEALTH_INIT = 101 -- new with final 2017 pass.
 	self.deathvox_heavyshot.headshot_dmg_mul = 3
-	self.deathvox_heavyshot.damage.explosion_damage_mul = 0.9
+	self.deathvox_heavyshot.damage.explosion_damage_mul = 0.7
 	self.deathvox_heavyshot.access = "any"
+	self.deathvox_heavyshot.custom_voicework = "heavy"
 	table.insert(self._enemy_list, "deathvox_heavyshot")
 	
 	self.deathvox_shield = deep_clone(self.shield)
 	self.deathvox_shield.tags = {"shield"} -- just to be sure it's being applied.
 	self.deathvox_shield.detection = presets.detection.normal
+	self.deathvox_shield.ignore_medic_revive_animation = true  --no revive animation. In base.
 	self.deathvox_shield.damage.hurt_severity = presets.hurt_severities.only_explosion_hurts
-	self.deathvox_shield.suppression = presets.suppression.no_supress -- I think this is in resto, if not it now is.
+	self.deathvox_shield.suppression = nil -- presets.suppression.no_supress 
 	self.deathvox_shield.surrender = nil
 	self.deathvox_shield.move_speed = presets.move_speed.very_fast -- same as base.
 	self.deathvox_shield.ecm_vulnerability = .9 -- same as base.
 	self.deathvox_shield.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8} -- same as general enemies, less than vanilla.
 	}
-	self.deathvox_shield.deathguard = false
+	self.deathvox_shield.deathguard = true
 	self.deathvox_shield.no_arrest = true
 	self.deathvox_shield.steal_loot = true -- this is new.
 	self.deathvox_shield.rescue_hostages = false
@@ -1831,14 +2196,16 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.headshot_dmg_mul = 3
 	self.deathvox_shield.is_special_unit = "shield"	
 	self.deathvox_shield.access = "any"
+	self.deathvox_shield.no_retreat = false
 	table.insert(self._enemy_list, "deathvox_shield")
 	
 	self.deathvox_medic = deep_clone(self.medic)
 	self.deathvox_medic.tags = {"medic"} --just making sure tag applies.
 	self.deathvox_medic.detection = presets.detection.normal
+	self.deathvox_medic.ignore_medic_revive_animation = true  --no revive animation.
 	self.deathvox_medic.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- added to make code consistent.
-	self.deathvox_medic.suppression = presets.suppression.no_supress -- tentative, in base.
-	self.deathvox_medic.surrender = presets.surrender.special 
+	self.deathvox_medic.suppression = nil -- presets.suppression.no_supress 
+	self.deathvox_medic.surrender = nil -- correcting surrender bug.
 	self.deathvox_medic.move_speed = presets.move_speed.very_fast
 	self.deathvox_medic.surrender_break_time = {7, 12} 
 	self.deathvox_medic.ecm_vulnerability = 1
@@ -1858,15 +2225,17 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic.headshot_dmg_mul = 3
 	self.deathvox_medic.is_special_unit = "medic"
 	self.deathvox_medic.access = "any"
+	self.deathvox_medic.no_retreat = false
 	table.insert(self._enemy_list, "deathvox_medic") 
 
 	self.deathvox_taser = deep_clone(self.taser)
 	self.deathvox_taser.tags = {"taser"} -- just making sure tag applies.
 	self.deathvox_taser.detection = presets.detection.normal
+	self.deathvox_taser.ignore_medic_revive_animation = true  --no revive animation.
 	self.deathvox_taser.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire
 	self.deathvox_taser.damage.hurt_severity.tase = false -- if this works, great, horrible things will arise.
-	self.deathvox_taser.suppression = presets.suppression.no_supress -- consistent form added.
-	self.deathvox_taser.surrender = presets.surrender.special 
+	self.deathvox_taser.suppression = nil -- presets.suppression.no_supress 
+	self.deathvox_taser.surrender = nil -- correcting surrender bug.
 	self.deathvox_taser.move_speed = presets.move_speed.fast
 	self.deathvox_taser.surrender_break_time = {7, 12} 
 	self.deathvox_taser.ecm_vulnerability = 0.9 -- in base
@@ -1882,13 +2251,16 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.headshot_dmg_mul = 3
 	self.deathvox_taser.is_special_unit = "taser"
 	self.deathvox_taser.access = "any"
+	self.deathvox_taser.custom_voicework = "taser"
+	self.deathvox_taser.no_retreat = false
 	table.insert(self._enemy_list, "deathvox_taser") 
 
 	self.deathvox_cloaker = deep_clone(self.spooc)
 	self.deathvox_cloaker.tags = {"spooc"} -- just making sure tag applies.
 	self.deathvox_cloaker.detection = presets.detection.normal
+	self.deathvox_cloaker.ignore_medic_revive_animation = true  --no revive animation.
 	self.deathvox_cloaker.suppression = nil
-	self.deathvox_cloaker.surrender = presets.surrender.special 
+	self.deathvox_cloaker.surrender = nil
 	self.deathvox_cloaker.move_speed = presets.move_speed.lightning
 	self.deathvox_cloaker.HEALTH_INIT = 96
 	self.deathvox_cloaker.headshot_dmg_mul = 3
@@ -1903,15 +2275,17 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker.use_factory = true
 	self.deathvox_cloaker.is_special_unit = "spooc"
 	self.deathvox_cloaker.access = "any"
+	self.deathvox_cloaker.no_retreat = false
 
 	table.insert(self._enemy_list, "deathvox_cloaker") 
 
 	self.deathvox_sniper = deep_clone(self.sniper)
 	self.deathvox_sniper.tags = {"sniper"} -- just making sure tag applies.
 	self.deathvox_sniper.detection = presets.detection.normal
-	self.deathvox_sniper.suppression = presets.suppression.no_supress -- this actually makes snipers way less annoying!
-	self.deathvox_sniper.surrender = presets.surrender.special 
-	self.deathvox_sniper.move_speed = presets.move_speed.normal
+	self.deathvox_sniper.ignore_medic_revive_animation = false  -- revive animation.
+	self.deathvox_sniper.suppression = nil -- this actually makes snipers way less annoying!
+	self.deathvox_sniper.surrender = nil -- correcting surrender bug.
+	self.deathvox_sniper.move_speed = presets.move_speed.normal -- same as base.
 	self.deathvox_sniper.surrender_break_time = {4, 6} 
 	self.deathvox_sniper.ecm_vulnerability = 0
 	self.deathvox_sniper.no_arrest = true
@@ -1924,11 +2298,11 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper.headshot_dmg_mul = 3
 	self.deathvox_sniper.is_special_unit = "sniper"
 	self.deathvox_sniper.access = "any"
-
+	table.insert(self._enemy_list, "deathvox_sniper")
 	self.deathvox_sniper_assault = deep_clone(self.deathvox_sniper)
 	self.deathvox_sniper_assault.move_speed = presets.move_speed.very_fast
 	self.deathvox_sniper_assault.deathguard = true
-	self.deathvox_sniper_assault.HEALTH_INIT = 34
+	self.deathvox_sniper_assault.HEALTH_INIT = 15
 	self.deathvox_sniper_assault.headshot_dmg_mul = 3
 	self.deathvox_sniper_assault.is_special_unit = "ass_sniper"
 	self.deathvox_sniper_assault.access = "any"
@@ -1937,48 +2311,75 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank = deep_clone(self.tank)
 	self.deathvox_tank.tags = {"tank"} -- just making sure tag applies.
 	self.deathvox_tank.detection = presets.detection.normal
+	self.deathvox_tank.ignore_medic_revive_animation = false  -- revive animation.
 	self.deathvox_tank.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase -- new with final 2017 pass. Probably not a change, needs to stay.
-	self.deathvox_tank.suppression = presets.suppression.no_supress
+	self.deathvox_tank.suppression = nil
 	self.deathvox_tank.surrender = nil
 	self.deathvox_tank.surrender_break_time = {4, 6}
 	self.deathvox_tank.ecm_vulnerability = 0.85
-	self.deathvox_taser.ecm_hurts = {
+	self.deathvox_tank.ecm_hurts = {
         ears = {min_duration = 1, max_duration = 3} -- tentative, in base
     }
 	self.deathvox_tank.deathguard = true
 	self.deathvox_tank.no_arrest = true
 	self.deathvox_tank.steal_loot = nil
 	self.deathvox_tank.rescue_hostages = false
-	self.deathvox_tank.HEALTH_INIT = 675
-	self.deathvox_tank.damage.explosion_damage_mul = 0.7  -- new with final 2017 pass. Highly tentative. I do not believe this will effect armor. Requires scrutiny.
+	self.deathvox_tank.HEALTH_INIT = 875
+	self.deathvox_tank.damage.explosion_damage_mul = 0.5  -- new with final 2017 pass. Requires scrutiny.
 	self.deathvox_tank.is_special_unit = "tank"
 	self.deathvox_tank.access = "walk"
+	self.deathvox_tank.no_retreat = false
 
-    self.deathvox_greendozer = deep_clone(self.deathvox_tank) -- pro OOP strats
+	self.deathvox_guarddozer = deep_clone(self.security)
+	self.deathvox_guarddozer.tags = {"tank"} -- just making sure tag applies.
+	self.deathvox_guarddozer.ignore_medic_revive_animation = false  -- revive animation.
+	self.deathvox_guarddozer.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase -- new with final 2017 pass. Probably not a change, needs to stay.
+	self.deathvox_guarddozer.suppression = nil
+	self.deathvox_guarddozer.surrender = nil
+	self.deathvox_guarddozer.surrender_break_time = {4, 6}
+	self.deathvox_guarddozer.ecm_vulnerability = 0.85
+	self.deathvox_guarddozer.ecm_hurts = {
+        ears = {min_duration = 1, max_duration = 3} -- tentative, in base
+    }
+	self.deathvox_guarddozer.deathguard = true
+	self.deathvox_guarddozer.steal_loot = nil
+	self.deathvox_guarddozer.rescue_hostages = false
+	self.deathvox_guarddozer.HEALTH_INIT = 875
+	self.deathvox_guarddozer.damage.explosion_damage_mul = 0.5  -- new with final 2017 pass. Requires scrutiny.
+	self.deathvox_guarddozer.is_special_unit = "tank"
+	self.deathvox_guarddozer.no_retreat = false
+	self.deathvox_guarddozer.access = "tank"
+	self.deathvox_guarddozer.no_arrest = false
+	self.deathvox_guarddozer.calls_in = true
+	self.deathvox_guarddozer.detection = presets.detection.guard
+	self.deathvox_guarddozer.stealth_instant_kill = false
+	table.insert(self._enemy_list, "deathvox_guarddozer")
+	
+	self.deathvox_greendozer = deep_clone(self.deathvox_tank)
 	self.deathvox_greendozer.use_factory = true -- Use a factory weapon
 	self.deathvox_greendozer.factory_weapon_id = {"wpn_deathvox_greendozer"} 
 	self.deathvox_greendozer.access = "tank"
 	table.insert(self._enemy_list, "deathvox_greendozer")
 
-    self.deathvox_blackdozer = deep_clone(self.deathvox_tank)
+	self.deathvox_blackdozer = deep_clone(self.deathvox_tank)
 	self.deathvox_blackdozer.use_factory = true -- Use a factory weapon
 	self.deathvox_blackdozer.factory_weapon_id = {"wpn_deathvox_blackdozer"} 
-	self.deathvox_blackdozer.access = "walk"
+	self.deathvox_blackdozer.access = "tank"
 	table.insert(self._enemy_list, "deathvox_blackdozer")
 
-    self.deathvox_lmgdozer = deep_clone(self.deathvox_tank)
+	self.deathvox_lmgdozer = deep_clone(self.deathvox_tank)
 	self.deathvox_lmgdozer.use_factory = true -- Use a factory weapon
 	self.deathvox_lmgdozer.factory_weapon_id = {"wpn_deathvox_lmgdozer"} 
-	self.deathvox_lmgdozer.access = "walk"
+	self.deathvox_lmgdozer.access = "tank"
 	table.insert(self._enemy_list, "deathvox_lmgdozer")
 	
-    self.deathvox_medicdozer = deep_clone(self.deathvox_tank)
+	self.deathvox_medicdozer = deep_clone(self.deathvox_tank)
 	self.deathvox_medicdozer.tags = {"tank", "medic"}
 	self.deathvox_medicdozer.use_factory = true -- Use a factory weapon
 	self.deathvox_medicdozer.factory_weapon_id = {"wpn_deathvox_medicdozer_smg"} 
-	self.deathvox_medicdozer.dv_medic_heal = true -- dont touch, makes him use the death vox healing
+	self.deathvox_medicdozer.dv_medic_heal = true -- don't touch, makes him use the death vox healing
 	self.deathvox_medicdozer.custom_voicework = "medicdozer"
-	self.deathvox_medicdozer.access = "walk"
+	self.deathvox_medicdozer.access = "tank"
 	self.deathvox_medicdozer.disable_medic_heal_voice = true
 	table.insert(self._enemy_list, "deathvox_medicdozer")
 
@@ -1990,18 +2391,17 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_grenadier.melee_weapon_dmg_multiplier = 1
 	self.deathvox_grenadier.weapon_safety_range = 1000
 	self.deathvox_grenadier.detection = presets.detection.normal
+	self.deathvox_grenadier.ignore_medic_revive_animation = true  -- no revive animation.
 	self.deathvox_grenadier.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire -- immune to poison. new with final 2017 pass.
 	self.deathvox_grenadier.HEALTH_INIT = 101
 	self.deathvox_grenadier.HEALTH_SUICIDE_LIMIT = 0.25
 	self.deathvox_grenadier.flammable = true
 	self.deathvox_grenadier.use_animation_on_fire_damage = true
-	--self.deathvox_grenadier.damage.explosion_damage_mul = 0.5
 	self.deathvox_grenadier.damage.fire_damage_mul = 1
-	self.deathvox_grenadier.damage.hurt_severity = presets.hurt_severities.base
 	self.deathvox_grenadier.headshot_dmg_mul = 3
 	self.deathvox_grenadier.bag_dmg_mul = 6
 	self.deathvox_grenadier.move_speed = presets.move_speed.fast
-	self.deathvox_grenadier.no_retreat = true
+	self.deathvox_grenadier.no_retreat = false
 	self.deathvox_grenadier.no_arrest = true
 	self.deathvox_grenadier.surrender = nil
 	self.deathvox_grenadier.ecm_vulnerability = 0.9
@@ -2040,12 +2440,47 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 end
 
-function CharacterTweakData:_set_sm_wish()
-	if SystemInfo:platform() == Idstring("PS3") then
-		self:_multiply_all_hp(1, 1)
-	else
-		self:_multiply_all_hp(1, 1)
+function CharacterTweakData:crackdown_health_setup()
+	local difficulties = {
+		"easy",
+		"normal",
+		"hard",
+		"overkill",
+		"overkill_145",
+		"easy_wish",
+		"overkill_290",
+		"sm_wish"
+	}
+	local better_names = {
+		"not_a_real_difficulty",
+		"normal",
+		"hard",
+		"very_hard",
+		"overkill",
+		"mayhem",
+		"death_wish",
+		"crackdown"
+	}
+	local difficulty_index = table.index_of(difficulties, Global.game_settings.difficulty)
+	local diff_name = better_names[difficulty_index]
+	for _, enemy_type in ipairs(self._enemy_list) do
+		if self.presets.health_tables[enemy_type] then
+			local health_table = self.presets.health_tables[enemy_type]
+			if health_table then
+				local chosen_diff = health_table[diff_name]
+				if chosen_diff then
+					self[enemy_type].HEALTH_INIT = chosen_diff["health"]
+					self[enemy_type].headshot_dmg_mul = chosen_diff["headshot_mult"]
+				end
+			end
+		end
 	end
+end
+			
+
+function CharacterTweakData:_set_sm_wish()
+	
+	self:crackdown_health_setup()
 	self:_multiply_weapon_delay(self.presets.weapon.normal, 0)
 	self:_multiply_weapon_delay(self.presets.weapon.good, 0)
 	self:_multiply_weapon_delay(self.presets.weapon.expert, 0)
@@ -2053,14 +2488,39 @@ function CharacterTweakData:_set_sm_wish()
 	self:_multiply_weapon_delay(self.presets.weapon.gang_member, 0)
 	self.security = deep_clone(self.deathvox_guard) -- fucking broke piece of shit movement stuff
 	self.gensec = deep_clone(self.deathvox_guard)
+	
 	self.bolivian_indoors.HEALTH_INIT = 36
+	self.bolivian_indoors.no_arrest = true
+	self.bolivian.HEALTH_INIT = 36
 	self.gangster.HEALTH_INIT = 36
 	self.biker.HEALTH_INIT = 36
 	self.biker_escape.HEALTH_INIT = 36
+
+	if job == "man" then
+		self.fbi.calls_in = nil
+		self.cop_female.calls_in = nil
+		self.cop.calls_in = nil
+	end	
+	
 	self.cop.HEALTH_INIT = 15
+
+	self.cop_female.HEALTH_INIT = 15
+	self.fbi.HEALTH_INIT = 48
+	
+	self.chavez_boss.HEALTH_INIT = 900
+	
+	self.phalanx_vip = deep_clone(self.phalanx_minion) -- killable winters to prevent soft-lock
+	self.phalanx_vip.HEALTH_INIT = 300
+	self.phalanx_vip.DAMAGE_CLAMP_BULLET = 100
+	self.phalanx_vip.DAMAGE_CLAMP_EXPLOSION = self.phalanx_vip.DAMAGE_CLAMP_BULLET
+	self.phalanx_vip.can_be_tased = false
+	self.phalanx_vip.immune_to_knock_down = true
+	self.phalanx_vip.immune_to_concussion = true
+	self.phalanx_vip.ends_assault_on_death = true
+	
 	self:_set_characters_weapon_preset("deathvox")
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
-	self:_set_characters_melee_preset("3")
+	self:_set_characters_melee_preset("2")
 	self:_set_specials_weapon_preset("deathvox")
 	self.shield.weapon.is_pistol.melee_speed = nil
 	self.shield.weapon.is_pistol.melee_dmg = nil
@@ -2070,7 +2530,7 @@ function CharacterTweakData:_set_sm_wish()
 	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	self.security.no_arrest = true
 	self.gensec.no_arrest = true
-	self.bolivian_indoors.no_arrest = true
+	
 	if job == "kosugi" or job == "dark" then
 		self.city_swat.no_arrest = true
 	else
@@ -2079,9 +2539,9 @@ function CharacterTweakData:_set_sm_wish()
 	self:_multiply_all_speeds(1, 1)
 	self.presets.gang_member_damage.HEALTH_INIT = 525
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.75
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 525
 	self.old_hoxton_mission.HEALTH_INIT = 525
 	self.spa_vip.HEALTH_INIT = 525
-	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 525
 	self.flashbang_multiplier = 2
 	self.concussion_multiplier = 2
 end
@@ -2439,7 +2899,7 @@ function CharacterTweakData:_set_characters_weapon_preset(preset)
 		"deathvox_grenadier"
 	}
 	for _, name in ipairs(all_units) do
-		log(name)
+		
 		self[name].weapon = self.presets.weapon[preset]
 	end
 end
@@ -2565,527 +3025,29 @@ function CharacterTweakData:_set_specials_melee_preset(preset)
 end
 
 function CharacterTweakData:character_map()
-	local char_map = {
-		basic = {
-			path = "units/payday2/characters/",
-			list = {
-				"civ_female_bank_1",
-				"civ_female_bank_manager_1",
-				"civ_female_bikini_1",
-				"civ_female_bikini_2",
-				"civ_female_casual_1",
-				"civ_female_casual_2",
-				"civ_female_casual_3",
-				"civ_female_casual_4",
-				"civ_female_casual_5",
-				"civ_female_casual_6",
-				"civ_female_casual_7",
-				"civ_female_casual_8",
-				"civ_female_casual_9",
-				"civ_female_casual_10",
-				"civ_female_crackwhore_1",
-				"civ_female_curator_1",
-				"civ_female_curator_2",
-				"civ_female_hostess_apron_1",
-				"civ_female_hostess_jacket_1",
-				"civ_female_hostess_shirt_1",
-				"civ_female_party_1",
-				"civ_female_party_2",
-				"civ_female_party_3",
-				"civ_female_party_4",
-				"civ_female_waitress_1",
-				"civ_female_waitress_2",
-				"civ_female_waitress_3",
-				"civ_female_waitress_4",
-				"civ_female_wife_trophy_1",
-				"civ_female_wife_trophy_2",
-				"civ_male_bank_1",
-				"civ_male_bank_2",
-				"civ_male_bank_manager_1",
-				"civ_male_bank_manager_3",
-				"civ_male_bank_manager_4",
-				"civ_male_bank_manager_5",
-				"civ_male_bartender_1",
-				"civ_male_bartender_2",
-				"civ_male_business_1",
-				"civ_male_business_2",
-				"civ_male_casual_1",
-				"civ_male_casual_2",
-				"civ_male_casual_3",
-				"civ_male_casual_4",
-				"civ_male_casual_5",
-				"civ_male_casual_6",
-				"civ_male_casual_7",
-				"civ_male_casual_8",
-				"civ_male_casual_9",
-				"civ_male_casual_12",
-				"civ_male_casual_13",
-				"civ_male_casual_14",
-				"civ_male_curator_1",
-				"civ_male_curator_2",
-				"civ_male_curator_3",
-				"civ_male_dj_1",
-				"civ_male_italian_robe_1",
-				"civ_male_janitor_1",
-				"civ_male_janitor_2",
-				"civ_male_janitor_3",
-				"civ_male_meth_cook_1",
-				"civ_male_party_1",
-				"civ_male_party_2",
-				"civ_male_party_3",
-				"civ_male_pilot_1",
-				"civ_male_scientist_1",
-				"civ_male_miami_store_clerk_1",
-				"civ_male_taxman",
-				"civ_male_trucker_1",
-				"civ_male_worker_1",
-				"civ_male_worker_2",
-				"civ_male_worker_3",
-				"civ_male_worker_docks_1",
-				"civ_male_worker_docks_2",
-				"civ_male_worker_docks_3",
-				"civ_male_dog_abuser_1",
-				"civ_male_dog_abuser_2",
-				"ene_biker_1",
-				"ene_biker_2",
-				"ene_biker_3",
-				"ene_biker_4",
-				"ene_bulldozer_1",
-				"ene_bulldozer_2",
-				"ene_bulldozer_2_hw",
-				"ene_bulldozer_3",
-				"ene_bulldozer_4",
-				"ene_city_swat_1",
-				"ene_city_swat_2",
-				"ene_city_swat_3",
-				"ene_city_swat_heavy_1",
-				"ene_city_swat_heavy_2",
-				"ene_murkywater_1",
-				"ene_murkywater_2",
-				"ene_cop_1",
-				"ene_cop_2",
-				"ene_cop_3",
-				"ene_cop_4",
-				"ene_fbi_1",
-				"ene_fbi_2",
-				"ene_fbi_3",
-				"ene_fbi_boss_1",
-				"ene_fbi_female_1",
-				"ene_fbi_female_2",
-				"ene_fbi_female_3",
-				"ene_fbi_female_4",
-				"ene_fbi_heavy_1",
-				"ene_fbi_heavy_r870",
-				"ene_fbi_office_1",
-				"ene_fbi_office_2",
-				"ene_fbi_office_3",
-				"ene_fbi_office_4",
-				"ene_fbi_swat_1",
-				"ene_fbi_swat_2",
-				"ene_fbi_swat_3",
-				"ene_gang_black_1",
-				"ene_gang_black_2",
-				"ene_gang_black_3",
-				"ene_gang_black_4",
-				"ene_gang_mexican_1",
-				"ene_gang_mexican_2",
-				"ene_gang_mexican_3",
-				"ene_gang_mexican_4",
-				"ene_gang_russian_1",
-				"ene_gang_russian_2",
-				"ene_gang_russian_3",
-				"ene_gang_russian_4",
-				"ene_gang_russian_5",
-				"ene_gang_mobster_1",
-				"ene_gang_mobster_2",
-				"ene_gang_mobster_3",
-				"ene_gang_mobster_4",
-				"ene_gang_mobster_boss",
-				"ene_guard_national_1",
-				"ene_hoxton_breakout_guard_1",
-				"ene_hoxton_breakout_guard_2",
-				"ene_male_tgt_1",
-				"ene_murkywater_1",
-				"ene_murkywater_2",
-				"ene_prisonguard_female_1",
-				"ene_prisonguard_male_1",
-				"ene_secret_service_1",
-				"ene_secret_service_2",
-				"ene_security_1",
-				"ene_security_2",
-				"ene_security_3",
-				"ene_security_4",
-				"ene_security_5",
-				"ene_security_6",
-				"ene_security_7",
-				"ene_security_8",
-				"ene_shield_1",
-				"ene_shield_2",
-				"ene_city_shield",
-				"ene_shield_gensec",
-				"ene_phalanx_1",
-				"ene_vip_1",
-				"ene_vip_2",
-				"ene_sniper_1",
-				"ene_sniper_2",
-				"ene_spook_1",
-				"ene_swat_1",
-				"ene_swat_2",
-				"ene_swat_heavy_1",
-				"ene_swat_heavy_r870",
-				"ene_tazer_1",
-				"npc_old_hoxton_prisonsuit_1",
-				"npc_old_hoxton_prisonsuit_2",
-				"ene_medic_r870",
-				"ene_medic_m4",
-				"ene_city_heavy_r870",
-				"ene_city_heavy_g36",
-				"ene_guard_biker_1",
-				"ene_murky_heavy_m4",
-				"ene_murky_heavy_r870"
-			}
-		},
-		dlc1 = {
-			path = "units/pd2_dlc1/characters/",
-			list = {
-				"civ_male_bank_manager_2",
-				"civ_male_casual_10",
-				"civ_male_casual_11",
-				"civ_male_firefighter_1",
-				"civ_male_paramedic_1",
-				"civ_male_paramedic_2",
-				"ene_security_gensec_1",
-				"ene_security_gensec_2"
-			}
-		},
-		dlc2 = {
-			path = "units/pd2_dlc2/characters/",
-			list = {
-				"civ_female_bank_assistant_1",
-				"civ_female_bank_assistant_2"
-			}
-		},
-		mansion = {
-			path = "units/pd2_mcmansion/characters/",
-			list = {
-				"ene_male_hector_1",
-				"ene_male_hector_2",
-				"ene_hoxton_breakout_guard_1",
-				"ene_hoxton_breakout_guard_2"
-			}
-		},
-		cage = {
-			path = "units/pd2_dlc_cage/characters/",
-			list = {
-				"civ_female_bank_2"
-			}
-		},
-		arena = {
-			path = "units/pd2_dlc_arena/characters/",
-			list = {
-				"civ_female_fastfood_1",
-				"civ_female_party_alesso_1",
-				"civ_female_party_alesso_2",
-				"civ_female_party_alesso_3",
-				"civ_female_party_alesso_4",
-				"civ_female_party_alesso_5",
-				"civ_female_party_alesso_6",
-				"civ_male_party_alesso_1",
-				"civ_male_party_alesso_2",
-				"civ_male_alesso_booth",
-				"civ_male_fastfood_1",
-				"ene_guard_security_heavy_2",
-				"ene_guard_security_heavy_1"
-			}
-		},
-		kenaz = {
-			path = "units/pd2_dlc_casino/characters/",
-			list = {
-				"civ_male_casino_1",
-				"civ_male_casino_2",
-				"civ_male_casino_3",
-				"civ_male_casino_4",
-				"ene_secret_service_1_casino",
-				"civ_male_business_casino_1",
-				"civ_male_business_casino_2",
-				"civ_male_impersonator",
-				"civ_female_casino_1",
-				"civ_female_casino_2",
-				"civ_female_casino_3",
-				"civ_male_casino_pitboss"
-			}
-		},
-		vip = {
-			path = "units/pd2_dlc_vip/characters/",
-			list = {
-				"ene_vip_1",
-				"ene_vip_2",
-				"ene_phalanx_1"
-			}
-		},
-		holly = {
-			path = "units/pd2_dlc_holly/characters/",
-			list = {
-				"civ_male_hobo_1",
-				"civ_male_hobo_2",
-				"civ_male_hobo_3",
-				"civ_male_hobo_4",
-				"ene_gang_hispanic_1",
-				"ene_gang_hispanic_3",
-				"ene_gang_hispanic_2"
-			}
-		},
-		red = {
-			path = "units/pd2_dlc_red/characters/",
-			list = {
-				"civ_female_inside_man_1"
-			}
-		},
-		dinner = {
-			path = "units/pd2_dlc_dinner/characters/",
-			list = {
-				"civ_male_butcher_2",
-				"civ_male_butcher_1"
-			}
-		},
-		pal = {
-			path = "units/pd2_dlc_pal/characters/",
-			list = {
-				"civ_male_mitch"
-			}
-		},
-		cane = {
-			path = "units/pd2_dlc_cane/characters/",
-			list = {
-				"civ_male_helper_1",
-				"civ_male_helper_2",
-				"civ_male_helper_3",
-				"civ_male_helper_4"
-			}
-		},
-		berry = {
-			path = "units/pd2_dlc_berry/characters/",
-			list = {
-				"ene_murkywater_no_light",
-				"npc_locke"
-			}
-		},
-		peta = {
-			path = "units/pd2_dlc_peta/characters/",
-			list = {
-				"civ_male_boris"
-			}
-		},
-		mad = {
-			path = "units/pd2_dlc_mad/characters/",
-			list = {
-				"civ_male_scientist_01",
-				"civ_male_scientist_02",
-				"ene_akan_fbi_heavy_g36",
-				"ene_akan_fbi_heavy_r870",
-				"ene_akan_fbi_shield_sr2_smg",
-				"ene_akan_fbi_spooc_asval_smg",
-				"ene_akan_fbi_swat_ak47_ass",
-				"ene_akan_fbi_swat_dw_ak47_ass",
-				"ene_akan_fbi_swat_dw_r870",
-				"ene_akan_fbi_swat_dw_ump",
-				"ene_akan_fbi_swat_r870",
-				"ene_akan_fbi_swat_ump",
-				"ene_akan_fbi_tank_r870",
-				"ene_akan_fbi_tank_rpk_lmg",
-				"ene_akan_fbi_tank_saiga",
-				"ene_akan_cs_cop_ak47_ass",
-				"ene_akan_cs_cop_akmsu_smg",
-				"ene_akan_cs_cop_asval_smg",
-				"ene_akan_cs_cop_r870",
-				"ene_akan_cs_heavy_ak47_ass",
-				"ene_akan_cs_heavy_r870",
-				"ene_akan_cs_shield_c45",
-				"ene_akan_cs_swat_ak47_ass",
-				"ene_akan_cs_swat_r870",
-				"ene_akan_cs_swat_sniper_svd_snp",
-				"ene_akan_cs_tazer_ak47_ass",
-				"ene_akan_fbi_heavy_dw",
-				"ene_akan_fbi_heavy_dw_r870",
-				"ene_akan_fbi_1",
-				"ene_akan_fbi_2",
-				"ene_akan_veteran_1",
-				"ene_akan_veteran_2",
-				"ene_akan_grenadier_1",
-				"ene_akan_medic_m4"
-			}
-		},
-		born = {
-			path = "units/pd2_dlc_born/characters/",
-			list = {
-				"ene_gang_biker_boss",
-				"ene_biker_female_1",
-				"ene_biker_female_2",
-				"ene_biker_female_3",
-				"npc_male_mechanic"
-			}
-		},
-		flat = {
-			path = "units/pd2_dlc_flat/characters/",
-			list = {
-				"npc_chavez",
-				"npc_jamaican"
-			}
-		},
-		help = {
-			path = "units/pd2_dlc_help/characters/",
-			list = {
-				"ene_zeal_bulldozer_halloween"
-			}
-		},
-		glace = {
-			path = "units/pd2_dlc_glace/characters/",
-			list = {
-				"npc_chinese_prisoner",
-				"npc_prisoner_1",
-				"npc_prisoner_2",
-				"npc_prisoner_3",
-				"npc_prisoner_4",
-				"npc_prisoner_5",
-				"npc_prisoner_6",
-				"npc_yakuza_prisoner"
-			}
-		},
-		moon = {
-			path = "units/pd2_dlc_moon/characters/",
-			list = {
-				"civ_male_pilot_2"
-			}
-		},
-		friend = {
-			path = "units/pd2_dlc_friend/characters/",
-			list = {
-				"ene_bolivian_thug_outdoor_01",
-				"ene_bolivian_thug_outdoor_02",
-				"ene_drug_lord_boss",
-				"ene_security_manager",
-				"ene_thug_indoor_01",
-				"ene_thug_indoor_02"
-			}
-		},
-		gitgud = {
-			path = "units/pd2_dlc_gitgud/characters/",
-			list = {
-				"ene_zeal_bulldozer",
-				"ene_zeal_bulldozer_2",
-				"ene_zeal_bulldozer_3",
-				"ene_zeal_cloaker",
-				"ene_zeal_swat",
-				"ene_zeal_city_1",
-				"ene_zeal_city_2",
-				"ene_zeal_swat_heavy",
-				"ene_zeal_heavy_shield",
-				"ene_zeal_swat_shield"
-			}
-		},
-		spa = {
-			path = "units/pd2_dlc_spa/characters/",
-			list = {
-				"ene_sniper_3",
-				"npc_spa",
-				"npc_spa_2",
-				"npc_spa_3",
-				"npc_gage"
-			}
-		},
-		fish = {
-			path = "units/pd2_dlc_lxy/characters/",
-			list = {
-				"civ_female_guest_gala_1",
-				"civ_female_guest_gala_2",
-				"civ_male_guest_gala_1",
-				"civ_male_guest_gala_2",
-				"civ_male_camera_crew_1"
-			}
-		},
-		slu = {
-			path = "units/pd2_dlc_slu/characters/",
-			list = {"npc_vlad", "npc_sophia"}
-		},
-		run = {
-			path = "units/pd2_dlc_run/characters/",
-			list = {"npc_matt"}
-		},
-		drm = {
-			path = "units/pd2_dlc_drm/characters/",
-			list = {
-				"ene_bulldozer_medic",
-				"ene_bulldozer_minigun",
-				"ene_zeal_swat_heavy_sniper"
-			}
-		},
-		wwh = {
-			path = "units/pd2_dlc_wwh/characters/",
-			list = {
-				"ene_female_crew",
-				"ene_male_crew_01",
-				"ene_male_crew_02",
-				"ene_captain",
-				"ene_locke"
-			}			
-		},		
-		dah = {
-			path = "units/pd2_dlc_dah/characters/",
-			list = {
-				"npc_male_cfo",
-				"npc_male_ralph"
-			}
-		},		
-		hvh = {
-			path = "units/pd2_dlc_hvh/characters/",
-			list = {
-				"ene_cop_hvh_1",
-				"ene_cop_hvh_2",
-				"ene_cop_hvh_3",
-				"ene_cop_hvh_4",
-				"ene_swat_hvh_1",
-				"ene_swat_hvh_2",
-				"ene_fbi_hvh_1",
-				"ene_fbi_hvh_2",
-				"ene_fbi_hvh_3",
-				"ene_spook_hvh_1",
-				"ene_swat_heavy_hvh_1",
-				"ene_swat_heavy_hvh_r870",
-				"ene_tazer_hvh_1",
-				"ene_shield_hvh_1",
-				"ene_shield_hvh_2",
-				"ene_medic_hvh_r870",
-				"ene_medic_hvh_m4",
-				"ene_bulldozer_hvh_1",
-				"ene_bulldozer_hvh_2",
-				"ene_bulldozer_hvh_3",
-				"ene_fbi_swat_hvh_1",
-				"ene_fbi_swat_hvh_2",
-				"ene_fbi_heavy_hvh_1",
-				"ene_fbi_heavy_hvh_r870",
-				"ene_sniper_hvh_2"
-			}
-		},
-		gageammo = {
-			path = "units/pd2_mod_gageammo/characters/",
-			list = {
-				"ene_deathvox_guard",
-				"ene_deathvox_heavyar",
-				"ene_deathvox_lightar",
-				"ene_deathvox_medic",
-				"ene_deathvox_shield",
-				"ene_deathvox_lightshot",
-				"ene_deathvox_heavyshot",
-				"ene_deathvox_taser",
-				"ene_deathvox_cloaker",
-				"ene_deathvox_sniper_assault",
-				"ene_deathvox_greendozer",
-				"ene_deathvox_blackdozer",
-				"ene_deathvox_lmgdozer",
-				"ene_deathvox_medicdozer",
-				"ene_deathvox_grenadier"
-			}
-		}				
+	local char_map = origin_charmap(self)
+	char_map.gageammo = {
+		path = "units/pd2_mod_gageammo/characters/",
+		list = {
+			"ene_deathvox_guard",
+			"ene_deathvox_heavyar",
+			"ene_deathvox_lightar",
+			"ene_deathvox_medic",
+			"ene_deathvox_shield",
+			"ene_deathvox_lightshot",
+			"ene_deathvox_heavyshot",
+			"ene_deathvox_taser",
+			"ene_deathvox_cloaker",
+			"ene_deathvox_sniper_assault",
+			"ene_deathvox_greendozer",
+			"ene_deathvox_blackdozer",
+			"ene_deathvox_lmgdozer",
+			"ene_deathvox_medicdozer",
+			"ene_deathvox_grenadier",
+			"ene_deathvox_gman",
+			"ene_deathvox_gman_flashlight",
+			"ene_deathvox_guarddozer"
+		}
 	}
 	return char_map
 end
