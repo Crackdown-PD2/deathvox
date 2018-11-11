@@ -153,15 +153,23 @@ function CopMovement:post_init()
 	end
 	self:_post_init()
 end
-
+difficulty_skins = {
+	swat = "nil-mint-0",
+	fbi = "m16_cs4-mint-0",
+	gensec = "contraband_css-mint-0",
+	zeal = "l85a2_cs4-mint-0",
+	murky = "new_m4_skf-mint-0",
+	classic = "amcar_same-mint-0"
+}
 
 function CopMovement:add_weapons()
 	if self._tweak_data.use_factory then
 		local weapon_to_use = self._tweak_data.factory_weapon_id[ math.random( #self._tweak_data.factory_weapon_id ) ]
-		local weapon_cosmetic = self._tweak_data.weapon_cosmetic_string
+		local faction = tweak_data.levels:get_ai_group_type()
+		local weapon_cosmetic = difficulty_skins[faction]
 		if weapon_to_use then
 			if weapon_cosmetic then
-				self._unit:inventory():add_unit_by_factory_name(weapon_to_use, false, false, weapon_cosmetic, "")
+				self._unit:inventory():add_unit_by_factory_name(weapon_to_use, false, false, nil, weapon_cosmetic)
 			else
 				self._unit:inventory():add_unit_by_factory_name(weapon_to_use, false, false, nil, "")
 			end
