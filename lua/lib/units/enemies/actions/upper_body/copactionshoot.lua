@@ -75,6 +75,7 @@ function CopActionShoot:update(t)
 	end
 
 	if not ext_anim.reload and not ext_anim.equip and not ext_anim.melee then
+	
 		if ext_anim.equip then
 			-- Nothing
 		elseif self._weapon_base:clip_empty() then
@@ -108,7 +109,7 @@ function CopActionShoot:update(t)
 				if Network:is_server() then
 					managers.network:session():send_to_peers("reload_weapon_cop", self._unit)
 				end
-			--end
+			end
 		elseif self._autofiring then
 			if not target_vec or not self._common_data.allow_fire then
 				self._weapon_base:stop_autofire()
@@ -319,7 +320,6 @@ function CopActionShoot:update(t)
 							if not ext_anim.base_no_recoil and not ext_anim.move then
 								self._ext_movement:play_redirect("recoil_single")
 							end
-
 							self._shoot_t = t + (self._common_data.is_suppressed and 1.5 or 1) * math.lerp(falloff.recoil[1], falloff.recoil[2], self:_pseudorandom())
 						else
 							self._shoot_t = t + falloff.recoil[2]

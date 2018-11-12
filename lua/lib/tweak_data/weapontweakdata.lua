@@ -191,7 +191,7 @@ function WeaponTweakData:init(tweak_data)
 			crackdown = {damage = 6}
 		}
 	}
-
+	self._gun_list_cd = {}
 	self.deathvox_guard_pistol = deep_clone(self.packrat_crew)
 	self.deathvox_medic_pistol = deep_clone(self.mateba_crew)
 	self.deathvox_light_ar = deep_clone(self.aug_crew)
@@ -208,7 +208,8 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_greendozer = deep_clone(self.r870_crew)
 
 	self.deathvox_cop_pistol = deep_clone(self.c45_npc)
-	
+	table.insert(self._gun_list_cd, "deathvox_cop_pistol")
+
 	self.deathvox_cop_revolver = deep_clone(self.raging_bull_crew)
 	self.deathvox_cop_revolver.sounds.prefix = "rbull_npc"
 	self.deathvox_cop_revolver.DAMAGE = 4
@@ -221,15 +222,18 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_cop_revolver.alert_size = 5000
 	self.deathvox_cop_revolver.suppression = 1.8
 	self.deathvox_cop_revolver.FIRE_MODE = "single"
+	table.insert(self._gun_list_cd, "deathvox_cop_revolver")
 	
 	self.deathvox_cop_shotgun = deep_clone(self.r870_npc)
 	self.deathvox_cop_shotgun.rays = nil
 	self.deathvox_cop_shotgun.spread = nil
 	self.deathvox_cop_shotgun.reload = "looped"
 	self.deathvox_cop_shotgun.looped_reload_speed = 0.8 -- time it takes to shove each shell in
+	table.insert(self._gun_list_cd, "deathvox_cop_shotgun")
 	
 	self.deathvox_cop_smg = deep_clone(self.mp5_npc)
-
+	table.insert(self._gun_list_cd, "deathvox_cop_smg")
+	
 	self.deathvox_light_ar.sounds.prefix = "aug_npc" -- dont worry about this
 	self.deathvox_light_ar.use_data.selection_index = 2 -- dont worry about this
 	self.deathvox_light_ar.DAMAGE = 7.5 -- Base damage 75.
@@ -247,6 +251,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_light_ar.suppression = 1 -- dont worry about this
 	self.deathvox_light_ar.usage = "is_light_rifle"
 	self.deathvox_light_ar.anim_usage = "is_bullpup"
+	table.insert(self._gun_list_cd, "deathvox_light_ar")
 
 	self.deathvox_heavy_ar.sounds.prefix = "fn_fal_npc"
 	self.deathvox_heavy_ar.use_data.selection_index = 2
@@ -262,6 +267,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_heavy_ar.suppression = 1
 	self.deathvox_heavy_ar.usage = "is_heavy_rifle"
 	self.deathvox_heavy_ar.anim_usage = "is_rifle"
+	table.insert(self._gun_list_cd, "deathvox_heavy_ar")
 
 	self.deathvox_guard_pistol.sounds.prefix = "packrat_npc"
 	self.deathvox_guard_pistol.use_data.selection_index = 1
@@ -277,7 +283,8 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_guard_pistol.suppression = 1
 	self.deathvox_guard_pistol.usage = "is_pistol"
 	self.deathvox_guard_pistol.anim_usage = "is_pistol"
-	
+	table.insert(self._gun_list_cd, "deathvox_guard_pistol")
+
 	self.deathvox_medic_pistol.sounds.prefix = "mateba_npc"
 	self.deathvox_medic_pistol.use_data.selection_index = 1
 	self.deathvox_medic_pistol.DAMAGE = 8 -- base 80 damage.
@@ -293,6 +300,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_medic_pistol.usage = "is_revolver"
 	self.deathvox_medic_pistol.anim_usage = "is_revolver"
 	self.deathvox_medic_pistol.armor_piercing = true -- armor piercing.
+	table.insert(self._gun_list_cd, "deathvox_medic_pistol")
 
 	self.deathvox_shotgun_light.sounds.prefix = "remington_npc"
 	self.deathvox_shotgun_light.use_data.selection_index = 2
@@ -307,6 +315,9 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_shotgun_light.is_shotgun = true 
 	self.deathvox_shotgun_light.usage = "is_light_shotgun"
 	self.deathvox_shotgun_light.anim_usage = "is_shotgun_pump"
+	self.deathvox_shotgun_light.reload = "looped"
+	self.deathvox_shotgun_light.looped_reload_speed = 0.8 -- time it takes to shove each shell in
+	table.insert(self._gun_list_cd, "deathvox_shotgun_light")
 
 	self.deathvox_shotgun_heavy.sounds.prefix = "benelli_m4_npc"
 	self.deathvox_shotgun_heavy.use_data.selection_index = 2
@@ -324,6 +335,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_shotgun_heavy.is_shotgun = true
 	self.deathvox_shotgun_heavy.usage = "is_heavy_shotgun"
 	self.deathvox_shotgun_heavy.anim_usage = "is_shotgun_pump"
+	table.insert(self._gun_list_cd, "deathvox_shotgun_heavy")
 
 	self.deathvox_sniper.sounds.prefix = "sniper_npc"
 	self.deathvox_sniper.use_data.selection_index = 2
@@ -340,11 +352,12 @@ function WeaponTweakData:init(tweak_data)
 		"rifle"
 	}
 	self.deathvox_sniper.alert_size = 5000
-	self.deathvox_sniper.suppression = 1	
+	self.deathvox_sniper.suppression = false	
 	self.deathvox_sniper.armor_piercing = true
 	self.deathvox_sniper.usage = "is_assault_sniper"
 	self.deathvox_sniper.anim_usage = "is_bullpup"
 	self.deathvox_sniper.disable_sniper_laser = true
+	table.insert(self._gun_list_cd, "deathvox_sniper")
 	
 	self.deathvox_medicdozer_smg.sounds.prefix = "polymer_npc"
 	self.deathvox_medicdozer_smg.use_data.selection_index = 1
@@ -364,7 +377,8 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_medicdozer_smg.alert_size = 5000
 	self.deathvox_medicdozer_smg.suppression = 1	
 	self.deathvox_medicdozer_smg.usage = "is_tank_smg"
-	
+	table.insert(self._gun_list_cd, "deathvox_medicdozer_smg")
+
 	self.deathvox_grenadier.sounds.prefix = "mgl_npc"
 	self.deathvox_grenadier.use_data.selection_index = 2
 	self.deathvox_grenadier.DAMAGE = 0
@@ -386,7 +400,8 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_grenadier.usage = "is_heavy_rifle"
 	self.deathvox_grenadier.anim_usage = "is_shotgun_pump"
 	self.deathvox_grenadier.no_trail = true
-	
+	table.insert(self._gun_list_cd, "deathvox_grenadier")
+
     self.deathvox_lmgdozer.sounds.prefix = "m249_npc"
     self.deathvox_lmgdozer.use_data.selection_index = 2
     self.deathvox_lmgdozer.DAMAGE = 10 -- Base damage 100, matched to DW.
@@ -399,7 +414,8 @@ function WeaponTweakData:init(tweak_data)
     self.deathvox_lmgdozer.alert_size = 5000
     self.deathvox_lmgdozer.suppression = 1
     self.deathvox_lmgdozer.usage = "is_dozer_lmg"
-   
+   	table.insert(self._gun_list_cd, "deathvox_lmgdozer")
+
     self.deathvox_cloaker.sounds.prefix = "schakal_npc"
     self.deathvox_cloaker.use_data.selection_index = 1
     self.deathvox_cloaker.DAMAGE = 4.5 -- Base damage 45, matched to other smgs
@@ -418,7 +434,8 @@ function WeaponTweakData:init(tweak_data)
     self.deathvox_cloaker.alert_size = 5000
     self.deathvox_cloaker.suppression = 1
     self.deathvox_cloaker.usage = "is_cloaker_smg"
-   
+   	table.insert(self._gun_list_cd, "deathvox_cloaker")
+	
     self.deathvox_blackdozer.sounds.prefix = "saiga_npc"
     self.deathvox_blackdozer.use_data.selection_index = 2
     self.deathvox_blackdozer.DAMAGE = 22.5 --Base damage 225, matched to DW.
@@ -432,7 +449,8 @@ function WeaponTweakData:init(tweak_data)
     self.deathvox_blackdozer.suppression = 1.8
     self.deathvox_blackdozer.is_shotgun = true
     self.deathvox_blackdozer.usage = "is_dozer_saiga"
-   
+   	table.insert(self._gun_list_cd, "deathvox_blackdozer")
+	
     self.deathvox_greendozer.sounds.prefix = "remington_npc"
     self.deathvox_greendozer.use_data.selection_index = 2
     self.deathvox_greendozer.DAMAGE = 50 --Base damage 500, Compare DW 400, DS 560.
@@ -447,6 +465,43 @@ function WeaponTweakData:init(tweak_data)
     self.deathvox_greendozer.usage = "is_dozer_pump"
 	self.deathvox_greendozer.reload = "looped"
 	self.deathvox_greendozer.looped_reload_speed = 0.8 -- time it takes to shove each shell in
+	table.insert(self._gun_list_cd, "deathvox_greendozer")
+	local difficulties = {
+		"easy",
+		"normal",
+		"hard",
+		"overkill",
+		"overkill_145",
+		"easy_wish",
+		"overkill_290",
+		"sm_wish"
+	}
+	local better_names = {
+		"not_a_real_difficulty",
+		"normal",
+		"hard",
+		"very_hard",
+		"overkill",
+		"mayhem",
+		"death_wish",
+		"crackdown"
+	}
+	if Global and Global.game_settings and Global.game_settings.difficulty then
+		local difficulty_index = table.index_of(difficulties, Global.game_settings.difficulty)
+		local diff_name = better_names[difficulty_index]
+		log(diff_name .. " DIFFICULTY NAME SHIT")
+		for _, weapon_type in ipairs(self._gun_list_cd) do
+			if self.damage_tables[weapon_type] then
+				local damage_table = self.damage_tables[weapon_type]
+				if damage_table then
+					local chosen_diff = damage_table[diff_name]
+					if chosen_diff then
+						self[weapon_type].DAMAGE = chosen_diff["damage"]
+					end
+				end
+			end
+		end
+	end
 end
 
 function WeaponTweakData:_set_sm_wish()
