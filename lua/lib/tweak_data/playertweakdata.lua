@@ -1,25 +1,30 @@
 function PlayerTweakData:_set_easy()
 	self.damage.automatic_respawn_time = 150
+	self.damage.MIN_DAMAGE_INTERVAL = 0.45
 end
 
 function PlayerTweakData:_set_normal()
 	self.damage.automatic_respawn_time = 120
+	self.damage.MIN_DAMAGE_INTERVAL = 0.45
 end
 
 function PlayerTweakData:_set_hard()
 	self.damage.automatic_respawn_time = 220
 	self.damage.DOWNED_TIME_DEC = 7
 	self.damage.DOWNED_TIME_MIN = 5
+	self.damage.MIN_DAMAGE_INTERVAL = 0.45
 end
 
 function PlayerTweakData:_set_overkill()
 	self.damage.DOWNED_TIME_DEC = 10
 	self.damage.DOWNED_TIME_MIN = 5
+	self.damage.MIN_DAMAGE_INTERVAL = 0.45
 end
 
 function PlayerTweakData:_set_overkill_145()
 	self.damage.DOWNED_TIME_DEC = 15
 	self.damage.DOWNED_TIME_MIN = 1
+	self.damage.MIN_DAMAGE_INTERVAL = 0.35
 end
 
 function PlayerTweakData:_set_easy_wish()
