@@ -40,6 +40,11 @@ function CharacterTweakData:get_ai_group_type() -- We can use this to easily swa
 	map_faction_override["dinner"] = "classic"
 	map_faction_override["man"] = "classic"
 	map_faction_override["nmh"] = "classic"
+	-- whurr's map edits
+	map_faction_override["bridge"] = "classic"
+	map_faction_override["apartment"] = "classic"
+	map_faction_override["street"] = "classic"
+	map_faction_override["bank"] = "classic"
 	-- todo: setup akan on BP, murky on all murky heists, and classics on classic heists
 	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
 	if diff_index <= 3 then
