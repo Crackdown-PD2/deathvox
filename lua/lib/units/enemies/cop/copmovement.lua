@@ -154,7 +154,7 @@ function CopMovement:post_init()
 	self:_post_init()
 end
 difficulty_skins = {
-	swat = "nil-mint-0",
+	cop = "nil-mint-0",
 	fbi = "m16_cs4-mint-0",
 	gensec = "contraband_css-mint-0",
 	zeal = "l85a2_cs4-mint-0",

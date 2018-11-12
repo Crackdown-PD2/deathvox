@@ -320,5 +320,9 @@
 	<file name="effects/pd2_mod_gageammo/particles/explosions/hellfire_endless.effect" load="false" force="true"/>
 	<file name="effects/pd2_mod_gageammo/particles/explosions/hellfire_endless_cheap.effect" load="false" force="true"/>
 	<file name="effects/pd2_mod_gageammo/particles/explosions/hellfire_endless_nolight.effect" load="false" force="true"/>
-	<file name="guis/textures/pd2/mission_briefing/assets/assets_risklevel_6.texture" force="false"/>
+	<file name="guis/textures/pd2/mission_briefing/assets/assets_risklevel_6.texture" force="false"/>	
+	<file name="units/payday2/weapons/wpn_npc_m4_yellow/wpn_npc_m4_yellow.model" force="false"/>
+	<file name="units/payday2/weapons/wpn_npc_m4_yellow/wpn_npc_m4_yellow.material_config" force="false"/>	
+	<file name="units/payday2/weapons/wpn_npc_m4_yellow/m4_yellow_df.texture" force="false"/>
+	<file name="units/payday2/weapons/wpn_npc_m4_yellow/m4_yellow_nm.texture" force="false"/>
 </assets>

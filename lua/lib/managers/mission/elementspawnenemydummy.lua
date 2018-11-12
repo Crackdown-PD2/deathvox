@@ -257,6 +257,8 @@ function ElementSpawnEnemyDummy:get_enemy_by_diff(enemy_to_check, ai_type)
 		local unit_to_check = unit_categories[enemy_to_check]
 		if unit_to_check.unit_type_spawner[ai_type] then
 			return unit_to_check.unit_type_spawner[ai_type]
+		else
+			return unit_to_check.unit_type_spawner["cop"]
 		end
 	end
 	return "units/payday2/characters/ene_swat_1/ene_swat_1"

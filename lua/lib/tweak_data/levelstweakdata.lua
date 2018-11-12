@@ -3,7 +3,7 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 											 -- This makes swapping difficulties on the fly much, much easier, along with maintaining a clean codebase.
 	local level_id
 	if Global.level_data and Global.level_data.level_id then
-		level_data = Global.level_data.level_id
+		level_id = Global.level_data.level_id
 	end
 	
 	if not Global.game_settings then
@@ -19,7 +19,18 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 		"overkill_290",
 		"sm_wish"
 	}
-	local map_faction_override = {} -- todo: setup akan on BP, murky on all murky heists, and classics on classic heists
+	local map_faction_override = {}
+	--map_faction_override["Enemy_Spawner"] = "classic"
+	map_faction_override["pal"] = "classic"
+	map_faction_override["dah"] = "classic"
+	map_faction_override["red2"] = "classic"
+	map_faction_override["glace"] = "classic"
+	map_faction_override["run"] = "classic"
+	map_faction_override["flat"] = "classic"
+	map_faction_override["dinner"] = "classic"
+	map_faction_override["man"] = "classic"
+	map_faction_override["nmh"] = "classic"
+	-- todo: setup akan on BP, murky on all murky heists, and classics on classic heists
 	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
 	if diff_index <= 3 then
 		group_to_use = "cop"

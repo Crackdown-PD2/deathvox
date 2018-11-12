@@ -7,7 +7,60 @@ function CharacterTweakData:init(tweak_data)
 	origin_init(self, tweak_data)
 	self:_init_deathvox(presets)
 end
---mods/deathvox/lua/lib/tweak_data/charactertweakdata.lua:18: '}' expected (to close '{' at line 14) near 'hard'
+
+function CharacterTweakData:get_ai_group_type() -- We can use this to easily swap visuals for "factions" based on difficulty.
+	local group_to_use = "zeal" 			 -- Aka, instead of 1500 difficulty if's to change the group based on what difficulty it is, we can just instead change what faction it's looking for.
+											 -- This makes swapping difficulties on the fly much, much easier, along with maintaining a clean codebase.
+	local level_id
+	if Global.level_data and Global.level_data.level_id then
+		level_id = Global.level_data.level_id
+	end
+	
+	if not Global.game_settings then
+		return group_to_use
+	end
+	local difficulties = {
+		"easy",
+		"normal",
+		"hard",
+		"overkill",
+		"overkill_145",
+		"easy_wish",
+		"overkill_290",
+		"sm_wish"
+	}
+	local map_faction_override = {}
+	--map_faction_override["Enemy_Spawner"] = "classic"
+	map_faction_override["pal"] = "classic"
+	map_faction_override["dah"] = "classic"
+	map_faction_override["red2"] = "classic"
+	map_faction_override["glace"] = "classic"
+	map_faction_override["run"] = "classic"
+	map_faction_override["flat"] = "classic"
+	map_faction_override["dinner"] = "classic"
+	map_faction_override["man"] = "classic"
+	map_faction_override["nmh"] = "classic"
+	-- todo: setup akan on BP, murky on all murky heists, and classics on classic heists
+	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
+	if diff_index <= 3 then
+		group_to_use = "cop"
+	elseif diff_index <= 5 then
+		group_to_use = "fbi"
+	elseif diff_index <= 7 then
+		group_to_use = "gensec"
+	end
+	if level_id then
+		if map_faction_override[level_id] then
+			group_to_use = map_faction_override[level_id]
+		end
+	end
+	if diff_index == 8 then -- kataru's reach is true
+		group_to_use = "zeal"
+	end
+	return group_to_use
+end
+
+
 function CharacterTweakData:_presets(tweak_data)
 	local presets = origin_presets(self, tweak_data)
 	presets.base.stealth_instant_kill = true
@@ -2210,10 +2263,13 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 	self.deathvox_gman = deep_clone(self.deathvox_guard)
 	self.deathvox_gman.ignore_ecm_for_pager = true
-	self.deathvox_guard.surrender = nil -- cannot be intimidated.
+	self.deathvox_gman.surrender = nil -- cannot be intimidated.
 	self.deathvox_gman.no_arrest = false -- caused too many issues.
 	table.insert(self._enemy_list, "deathvox_gman")
-	
+	local is_classic
+	if self:get_ai_group_type() == "classic" then
+		is_classic = true
+	end
 	self.deathvox_lightar = deep_clone(self.city_swat)
 	self.deathvox_lightar.speech_prefix_p1 = "l1d"
 	self.deathvox_lightar.speech_prefix_p2 = nil
@@ -2239,7 +2295,11 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightar.HEALTH_INIT = 48
 	self.deathvox_lightar.headshot_dmg_mul = 3
 	self.deathvox_lightar.access = "any"
-	self.deathvox_lightar.custom_voicework = "light"
+	if is_classic then
+		self.deathvox_lightar.custom_voicework = "pdth"
+	else
+		self.deathvox_lightar.custom_voicework = "light"
+	end
 	table.insert(self._enemy_list, "deathvox_lightar")
 	
 	self.deathvox_heavyar = deep_clone(self.city_swat)
@@ -2269,7 +2329,11 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyar.headshot_dmg_mul = 3
 	self.deathvox_heavyar.damage.explosion_damage_mul = 0.7
 	self.deathvox_heavyar.access = "any"
-	self.deathvox_heavyar.custom_voicework = "heavy"
+	if is_classic then
+		self.deathvox_heavyar.custom_voicework = "pdth"
+	else
+		self.deathvox_heavyar.custom_voicework = "heavy"
+	end
 	table.insert(self._enemy_list, "deathvox_heavyar")
 	
 	self.deathvox_lightshot = deep_clone(self.city_swat)
@@ -2297,7 +2361,11 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightshot.HEALTH_INIT = 48
 	self.deathvox_lightshot.headshot_dmg_mul = 3
 	self.deathvox_lightshot.access = "any"
-	self.deathvox_lightshot.custom_voicework = "light"
+	if is_classic then
+		self.deathvox_lightshot.custom_voicework = "pdth"
+	else
+		self.deathvox_lightshot.custom_voicework = "light"
+	end
 	table.insert(self._enemy_list, "deathvox_lightshot")
 	
 	self.deathvox_heavyshot = deep_clone(self.city_swat)
@@ -2327,7 +2395,11 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyshot.headshot_dmg_mul = 3
 	self.deathvox_heavyshot.damage.explosion_damage_mul = 0.7
 	self.deathvox_heavyshot.access = "any"
-	self.deathvox_heavyshot.custom_voicework = "heavy"
+	if is_classic then
+		self.deathvox_heavyshot.custom_voicework = "pdth"
+	else
+		self.deathvox_heavyshot.custom_voicework = "heavy"
+	end
 	table.insert(self._enemy_list, "deathvox_heavyshot")
 	
 	self.deathvox_shield = deep_clone(self.shield)
@@ -2485,6 +2557,9 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.is_special_unit = "tank"
 	self.deathvox_tank.access = "walk"
 	self.deathvox_tank.no_retreat = false
+	if is_classic then
+		self.deathvox_tank.custom_voicework = "pdthdozer"
+	end
 
 	self.deathvox_guarddozer = deep_clone(self.security)
 	self.deathvox_guarddozer.tags = {"tank"} -- just making sure tag applies.
@@ -3070,6 +3145,20 @@ function CharacterTweakData:_init_region_zeal()
 		medic = "mdc"
 	}
 end
+
+function CharacterTweakData:_init_region_classic()
+	self._default_chatter = "dispatch_generic_message"
+	self._unit_prefixes = {
+		cop = "l",
+		swat = "l",
+		heavy_swat = "l",
+		taser = "tsr",
+		cloaker = "clk",
+		bulldozer = "bdz",
+		medic = "mdc"
+	}
+end
+
 
 function CharacterTweakData:character_map()
 	local char_map = origin_charmap(self)
