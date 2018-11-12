@@ -3877,7 +3877,8 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				amount_max = 2,
 				tactics = self._tactics.deathvox_shield_lead,
 				rank = 2
-			},				{
+			},				
+			{
 				unit = "deathvox_grenadier",
 				freq = 1,
 				amount_min = 2,
@@ -4325,11 +4326,11 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 		self.besiege.assault.sustain_duration_balance_mul = {1,1,1,1}
 		self.besiege.assault.fade_duration = 15
 		self.besiege.assault.groups = {
-			gorgon = { 0.05,0.05,0.05  },
+			gorgon = { 0.075,0.075,0.075  },
 			atlas = { 0.05,0.05,0.05  },
 			chimera = { 0.05,0.05,0.05  },
 			zeus = { 0.05,0.05,0.05  },
-			janus = { 0.05,0.05,0.05 },
+			janus = { 0.025,0.025,0.025 },
 			epeius = { 0.05,0.05,0.05  },
 			damocles = { 0.05,0.05,0.05  },
 			caduceus = { 0.05,0.05,0.05  },
