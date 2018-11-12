@@ -2822,6 +2822,8 @@ function CharacterTweakData:_set_sm_wish()
 end
 function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 	self:crackdown_health_setup()
+	self.sniper = deep_clone(self.deathvox_sniper)
+	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 end
 
 function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)

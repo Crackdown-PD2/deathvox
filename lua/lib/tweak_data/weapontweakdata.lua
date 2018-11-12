@@ -352,7 +352,7 @@ function WeaponTweakData:init(tweak_data)
 		"rifle"
 	}
 	self.deathvox_sniper.alert_size = 5000
-	self.deathvox_sniper.suppression = false	
+	self.deathvox_sniper.suppression = 1	
 	self.deathvox_sniper.armor_piercing = true
 	self.deathvox_sniper.usage = "is_assault_sniper"
 	self.deathvox_sniper.anim_usage = "is_bullpup"
