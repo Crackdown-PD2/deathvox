@@ -3215,7 +3215,24 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_cop_pistol",
 			"ene_deathvox_cop_medic",
 			"ene_deathvox_cop_heavyswatshot",
-			"ene_deathvox_cop_heavyswat"
+			"ene_deathvox_cop_heavyswat",
+			"ene_deathvox_classic_blackdozer",
+			"ene_deathvox_classic_cloaker",
+			"ene_deathvox_classic_cop_pistol",
+			"ene_deathvox_classic_cop_revolver",
+			"ene_deathvox_classic_cop_shotgun",
+			"ene_deathvox_classic_cop_smg",
+			"ene_deathvox_classic_greendozer",
+			"ene_deathvox_classic_heavyswat",
+			"ene_deathvox_classic_heavyswatshot",
+			"ene_deathvox_classic_hrt",
+			"ene_deathvox_classic_lmgdozer",
+			"ene_deathvox_classic_medic",
+			"ene_deathvox_classic_shield",
+			"ene_deathvox_classic_swat",
+			"ene_deathvox_classic_swatshot",
+			"ene_deathvox_classic_taser",
+			"ene_deathvox_classic_veteran"
 		}
 	}
 	return char_map
