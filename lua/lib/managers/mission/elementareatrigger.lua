@@ -79,7 +79,7 @@ local function project_instigators_enemies(self)
 		end
 	else
 		for _, data in pairs(all_enemies) do
-			if not data.is_converted and not data.unit:anim_data().surrender then
+			if not data.is_converted and data.unit and data.unit:anim_data() and not data.unit:anim_data().surrender then
 				instigators[instigators_nr] = data.unit
 				instigators_nr = instigators_nr + 1
 			end

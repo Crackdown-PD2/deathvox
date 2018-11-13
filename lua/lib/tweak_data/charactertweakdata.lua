@@ -30,7 +30,7 @@ function CharacterTweakData:get_ai_group_type() -- We can use this to easily swa
 		"sm_wish"
 	}
 	local map_faction_override = {} -- todo: global this
-	--map_faction_override["Enemy_Spawner"] = "classic"
+	map_faction_override["Enemy_Spawner"] = "classic"
 	map_faction_override["pal"] = "classic"
 	map_faction_override["dah"] = "classic"
 	map_faction_override["red2"] = "classic"
