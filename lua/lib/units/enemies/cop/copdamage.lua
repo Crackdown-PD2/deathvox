@@ -796,3 +796,27 @@ function CopDamage:get_damage_type(damage_percent, category)
 
 	return "dmg_rcv"
 end
+
+local cops_to_intimidate = {}
+FullSpeedSwarm.cops_to_intimidate = cops_to_intimidate
+
+local fs_original_copdamage_damagemelee = CopDamage.damage_melee
+function CopDamage:damage_melee(attack_data, ...)
+	if attack_data.variant == 'taser_tased' then
+		if self._char_tweak.surrender and self._char_tweak.surrender ~= tweak_data.character.presets.special then
+			cops_to_intimidate[self._unit:key()] = TimerManager:game():time()
+		end
+	end
+	return fs_original_copdamage_damagemelee(self, attack_data, ...)
+end
+
+local fs_original_copdamage_syncdamagemelee = CopDamage.sync_damage_melee
+function CopDamage:sync_damage_melee(variant, ...)
+	if variant == 5 then
+		if self._char_tweak.surrender and self._char_tweak.surrender ~= tweak_data.character.presets.special then
+			cops_to_intimidate[self._unit:key()] = TimerManager:game():time()
+		end
+	end
+	return fs_original_copdamage_syncdamagemelee(self, variant, ...)
+end
+

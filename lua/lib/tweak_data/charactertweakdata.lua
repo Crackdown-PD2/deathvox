@@ -29,8 +29,8 @@ function CharacterTweakData:get_ai_group_type() -- We can use this to easily swa
 		"overkill_290",
 		"sm_wish"
 	}
-	local map_faction_override = {}
-	map_faction_override["Enemy_Spawner"] = "classic"
+	local map_faction_override = {} -- todo: global this
+	--map_faction_override["Enemy_Spawner"] = "classic"
 	map_faction_override["pal"] = "classic"
 	map_faction_override["dah"] = "classic"
 	map_faction_override["red2"] = "classic"
@@ -2832,6 +2832,8 @@ function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 end
 
 function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
+	walk_mul = 1 -- max hack so I dont have to copypaste the difficulty sets FOR NOW
+	run_mul = 1
 	local all_units = {
 		"security",
 		"gensec",

@@ -489,7 +489,6 @@ function WeaponTweakData:init(tweak_data)
 	if Global and Global.game_settings and Global.game_settings.difficulty then
 		local difficulty_index = table.index_of(difficulties, Global.game_settings.difficulty)
 		local diff_name = better_names[difficulty_index]
-		log(diff_name .. " DIFFICULTY NAME SHIT")
 		for _, weapon_type in ipairs(self._gun_list_cd) do
 			if self.damage_tables[weapon_type] then
 				local damage_table = self.damage_tables[weapon_type]
