@@ -2243,6 +2243,47 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.weapon.good = deep_clone(presets.weapon.deathvox)
 	presets.weapon.expert = deep_clone(presets.weapon.deathvox)
 	presets.weapon.deathwish = deep_clone(presets.weapon.deathvox)
+	presets.detection.deathvox = { -- Correct angles for cops so they can actually see you during loud.
+		idle = {},
+		combat = {},
+		recon = {},
+		guard = {},
+		ntl = {}
+	}
+	presets.detection.deathvox.idle.dis_max = 10000
+	presets.detection.deathvox.idle.angle_max = 240
+	presets.detection.deathvox.idle.delay = {
+		0,
+		0
+	}
+	presets.detection.deathvox.idle.use_uncover_range = true
+	presets.detection.deathvox.combat.dis_max = 10000
+	presets.detection.deathvox.combat.angle_max = 240
+	presets.detection.deathvox.combat.delay = {
+		0,
+		0
+	}
+	presets.detection.deathvox.combat.use_uncover_range = true
+	presets.detection.deathvox.recon.dis_max = 10000
+	presets.detection.deathvox.recon.angle_max = 240
+	presets.detection.deathvox.recon.delay = {
+		0,
+		0
+	}
+	presets.detection.deathvox.recon.use_uncover_range = true
+	presets.detection.deathvox.guard.dis_max = 10000
+	presets.detection.deathvox.guard.angle_max = 240
+	presets.detection.deathvox.guard.delay = {
+		0,
+		0
+	}
+	presets.detection.deathvox.ntl.dis_max = 4000
+	presets.detection.deathvox.ntl.angle_max = 120
+	presets.detection.deathvox.ntl.delay = {
+		0.2,
+		2
+	}
+	
 	return presets
 end
 	
@@ -2279,7 +2320,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightar.speech_prefix_p1 = "l1d"
 	self.deathvox_lightar.speech_prefix_p2 = nil
 	self.deathvox_lightar.speech_prefix_count = nil
-	self.deathvox_lightar.detection = presets.detection.normal
+	self.deathvox_lightar.detection = presets.detection.deathvox
 	self.deathvox_lightar.ignore_medic_revive_animation = true  --no revive animation.
 	self.deathvox_lightar.suppression = presets.suppression.hard_agg
 	self.deathvox_lightar.surrender = presets.surrender.normal -- hard for heavy, normal for light.
@@ -2311,7 +2352,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyar.speech_prefix_p1 = "l4d"
 	self.deathvox_heavyar.speech_prefix_p2 = nil
 	self.deathvox_heavyar.speech_prefix_count = nil
-	self.deathvox_heavyar.detection = presets.detection.normal
+	self.deathvox_heavyar.detection = presets.detection.deathvox
 	self.deathvox_heavyar.ignore_medic_revive_animation = true  --no revive animation.
 	self.deathvox_heavyar.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- revised per feedback.
 	self.deathvox_heavyar.suppression = presets.suppression.hard_agg -- tentative.
@@ -2345,7 +2386,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightshot.speech_prefix_p1 = "l1d"
 	self.deathvox_lightshot.speech_prefix_p2 = nil
 	self.deathvox_lightshot.speech_prefix_count = nil
-	self.deathvox_lightshot.detection = presets.detection.normal
+	self.deathvox_lightshot.detection = presets.detection.deathvox
 	self.deathvox_lightshot.ignore_medic_revive_animation = true  --no revive animation.
 	self.deathvox_lightshot.suppression = presets.suppression.hard_agg -- tentative.
 	self.deathvox_lightshot.surrender = presets.surrender.normal -- tentative.
@@ -2377,7 +2418,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyshot.speech_prefix_p1 = "l4d"
 	self.deathvox_heavyshot.speech_prefix_p2 = nil
 	self.deathvox_heavyshot.speech_prefix_count = nil
-	self.deathvox_heavyshot.detection = presets.detection.normal
+	self.deathvox_heavyshot.detection = presets.detection.deathvox
 	self.deathvox_heavyshot.ignore_medic_revive_animation = true  --no revive animation.
 	self.deathvox_heavyshot.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- revised per feedback.
 	self.deathvox_heavyshot.suppression = presets.suppression.hard_agg -- tentative.
@@ -2409,7 +2450,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 	self.deathvox_shield = deep_clone(self.shield)
 	self.deathvox_shield.tags = {"shield"} -- just to be sure it's being applied.
-	self.deathvox_shield.detection = presets.detection.normal
+	self.deathvox_shield.detection = presets.detection.deathvox
 	self.deathvox_shield.ignore_medic_revive_animation = true  --no revive animation. In base.
 	self.deathvox_shield.damage.hurt_severity = presets.hurt_severities.only_explosion_hurts
 	self.deathvox_shield.suppression = nil -- presets.suppression.no_supress 
@@ -2433,7 +2474,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 	self.deathvox_medic = deep_clone(self.medic)
 	self.deathvox_medic.tags = {"medic"} --just making sure tag applies.
-	self.deathvox_medic.detection = presets.detection.normal
+	self.deathvox_medic.detection = presets.detection.deathvox
 	self.deathvox_medic.ignore_medic_revive_animation = true  --no revive animation.
 	self.deathvox_medic.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- added to make code consistent.
 	self.deathvox_medic.suppression = nil -- presets.suppression.no_supress 
@@ -2462,7 +2503,7 @@ function CharacterTweakData:_init_deathvox(presets)
 
 	self.deathvox_taser = deep_clone(self.taser)
 	self.deathvox_taser.tags = {"taser"} -- just making sure tag applies.
-	self.deathvox_taser.detection = presets.detection.normal
+	self.deathvox_taser.detection = presets.detection.deathvox
 	self.deathvox_taser.ignore_medic_revive_animation = true  --no revive animation.
 	self.deathvox_taser.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire
 	self.deathvox_taser.damage.hurt_severity.tase = false -- if this works, great, horrible things will arise.
@@ -2489,7 +2530,7 @@ function CharacterTweakData:_init_deathvox(presets)
 
 	self.deathvox_cloaker = deep_clone(self.spooc)
 	self.deathvox_cloaker.tags = {"spooc"} -- just making sure tag applies.
-	self.deathvox_cloaker.detection = presets.detection.normal
+	self.deathvox_cloaker.detection = presets.detection.deathvox
 	self.deathvox_cloaker.ignore_medic_revive_animation = true  --no revive animation.
 	self.deathvox_cloaker.suppression = nil
 	self.deathvox_cloaker.surrender = nil
@@ -2514,7 +2555,7 @@ function CharacterTweakData:_init_deathvox(presets)
 
 	self.deathvox_sniper = deep_clone(self.sniper)
 	self.deathvox_sniper.tags = {"sniper"} -- just making sure tag applies.
-	self.deathvox_sniper.detection = presets.detection.normal
+	self.deathvox_sniper.detection = presets.detection.deathvox
 	self.deathvox_sniper.ignore_medic_revive_animation = false  -- revive animation.
 	self.deathvox_sniper.suppression = nil -- this actually makes snipers way less annoying!
 	self.deathvox_sniper.surrender = nil -- correcting surrender bug.
@@ -2543,7 +2584,7 @@ function CharacterTweakData:_init_deathvox(presets)
 
 	self.deathvox_tank = deep_clone(self.tank)
 	self.deathvox_tank.tags = {"tank"} -- just making sure tag applies.
-	self.deathvox_tank.detection = presets.detection.normal
+	self.deathvox_tank.detection = presets.detection.deathvox
 	self.deathvox_tank.ignore_medic_revive_animation = false  -- revive animation.
 	self.deathvox_tank.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase -- new with final 2017 pass. Probably not a change, needs to stay.
 	self.deathvox_tank.suppression = nil
@@ -2626,7 +2667,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_grenadier.melee_weapon = "knife_1"
 	self.deathvox_grenadier.melee_weapon_dmg_multiplier = 1
 	self.deathvox_grenadier.weapon_safety_range = 1000
-	self.deathvox_grenadier.detection = presets.detection.normal
+	self.deathvox_grenadier.detection = presets.detection.deathvox
 	self.deathvox_grenadier.ignore_medic_revive_animation = true  -- no revive animation.
 	self.deathvox_grenadier.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire -- immune to poison. new with final 2017 pass.
 	self.deathvox_grenadier.HEALTH_INIT = 101
@@ -2684,6 +2725,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cop.deathguard = true
 	self.deathvox_cop.chatter = presets.enemy_chatter.cop
 	self.deathvox_cop.steal_loot = true
+	self.deathvox_cop.detection = presets.detection.deathvox
 
 	self.deathvox_cop_pistol = deep_clone(self.deathvox_cop)
 	self.deathvox_cop_pistol.use_factory = true

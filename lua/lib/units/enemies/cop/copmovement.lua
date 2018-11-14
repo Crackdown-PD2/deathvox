@@ -483,7 +483,7 @@ function CopMovement:set_position(pos)
 	self._nav_tracker:move(pos)
 	self._unit:set_position(pos)
 
-	if self.fs_do_track then
+	if self.fs_do_track and _qf then
 		local new_seg = _qf:find_nav_segment(pos, true)
 		local old_seg = self._cur_seg
 		if new_seg ~= old_seg then
