@@ -240,6 +240,16 @@ function CharacterTweakData:_presets(tweak_data)
 			death_wish = {health = 96, headshot_mult = 3},
 			crackdown = {health = 101, headshot_mult = 3}
 		},
+		deathvox_cop_pistol = {  -- mk 2 values complete. Consistent on all diffs.
+			not_a_real_difficulty = {health = 10, headshot_mult = 1},
+			normal = {health = 15, headshot_mult = 3},
+			hard = {health = 15, headshot_mult = 3},
+			very_hard = {health = 15, headshot_mult = 3},
+			overkill = {health = 15, headshot_mult = 3},
+			mayhem = {health = 15, headshot_mult = 3},
+			death_wish = {health = 15, headshot_mult = 3},
+			crackdown = {health = 15, headshot_mult = 3}
+		},
 		deathvox_cop_smg = {  -- mk 2 values complete. Consistent on all diffs. Higher health corresponds to armor.
 			not_a_real_difficulty = {health = 10, headshot_mult = 1},
 			normal = {health = 22, headshot_mult = 3},
@@ -260,16 +270,6 @@ function CharacterTweakData:_presets(tweak_data)
 			death_wish = {health = 15, headshot_mult = 3},
 			crackdown = {health = 15, headshot_mult = 3}
 		},
-		deathvox_cop_pistol = {  -- mk 2 values complete. Consistent on all diffs.
-			not_a_real_difficulty = {health = 10, headshot_mult = 1},
-			normal = {health = 15, headshot_mult = 3},
-			hard = {health = 15, headshot_mult = 3},
-			very_hard = {health = 15, headshot_mult = 3},
-			overkill = {health = 15, headshot_mult = 3},
-			mayhem = {health = 15, headshot_mult = 3},
-			death_wish = {health = 15, headshot_mult = 3},
-			crackdown = {health = 15, headshot_mult = 3}
-		},
 		deathvox_cop_shotgun = {  -- mk 2 values complete. Consistent on all diffs.
 			not_a_real_difficulty = {health = 10, headshot_mult = 1},
 			normal = {health = 15, headshot_mult = 3},
@@ -279,16 +279,6 @@ function CharacterTweakData:_presets(tweak_data)
 			mayhem = {health = 15, headshot_mult = 3},
 			death_wish = {health = 15, headshot_mult = 3},
 			crackdown = {health = 15, headshot_mult = 3}
-		},
-		deathvox_cop_smg = {  -- mk 2 values complete. Consistent on all diffs. Higher health corresponds to armor.
-			not_a_real_difficulty = {health = 10, headshot_mult = 1},
-			normal = {health = 22, headshot_mult = 3},
-			hard = {health = 22, headshot_mult = 3},
-			very_hard = {health = 22, headshot_mult = 3},
-			overkill = {health = 22, headshot_mult = 3},
-			mayhem = {health = 22, headshot_mult = 3},
-			death_wish = {health = 22, headshot_mult = 3},
-			crackdown = {health = 22, headshot_mult = 3}
 		},
 		deathvox_fbi_rookie = {  -- mk 1 values complete. Consistent on all diffs.
 			not_a_real_difficulty = {health = 10, headshot_mult = 1},
