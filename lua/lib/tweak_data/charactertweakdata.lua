@@ -142,8 +142,8 @@ function CharacterTweakData:_presets(tweak_data)
 		},
 		deathvox_medic = { -- mk 2 values complete. Based on light.
 			not_a_real_difficulty = {health = 8, headshot_mult = 2},
-			normal = {health = 18, headshot_mult = 2},
-			hard = {health = 18, headshot_mult = 2},
+			normal = {health = 18, headshot_mult = 3},
+			hard = {health = 18, headshot_mult = 3},
 			very_hard = {health = 24, headshot_mult = 3},
 			overkill = {health = 24, headshot_mult = 3},
 			mayhem = {health = 32, headshot_mult = 3},
@@ -292,7 +292,7 @@ function CharacterTweakData:_presets(tweak_data)
 		},
 		deathvox_fbi_hrt = {  -- mk 1 values complete. Consistent on all diffs. Higher health corresponds to armor.
 			not_a_real_difficulty = {health = 10, headshot_mult = 1},
-			normal = {health = 22, headshot_mult = 2},
+			normal = {health = 22, headshot_mult = 3},
 			hard = {health = 22, headshot_mult = 3},
 			very_hard = {health = 22, headshot_mult = 3},
 			overkill = {health = 22, headshot_mult = 3},
