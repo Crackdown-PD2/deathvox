@@ -2283,10 +2283,10 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard.ignore_medic_revive_animation = true --no revive animation. may require curving on lower diffs.
 	self.deathvox_guard.suppression = nil -- should be easy on diffs below CD.
 	self.deathvox_guard.surrender = presets.surrender.easy
-	self..move_speed = presets.move_speed.very_fast -- should be normal on diffs below CD.
+	self.deathvox_guard.move_speed = presets.move_speed.very_fast -- should be normal on diffs below CD.
 	self.deathvox_guard.ecm_vulnerability = 0 -- should be changed for lower diffs. See commented out code below for values.
 --	self.deathvox_guard.ecm_vulnerability = 1
---	self.security.ecm_hurts = {
+--	self.deathvox_guard.ecm_hurts = {
 --		ears = {
 --			max_duration = 10,
 --			min_duration = 8
