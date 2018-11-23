@@ -1,6 +1,6 @@
 {
  "name" : "Crackdown"
- "description" : "Reimagining of One Down difficulty",
+ "description" : "Reimagining of PAYDAY 2's difficulty.",
  "author" : "Iamgoofball and Discendo Vox",
  "contact" : "https://discord.gg/BdN4as7",
  "version" : "BETA",
