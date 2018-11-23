@@ -9,8 +9,8 @@ function CharacterTweakData:init(tweak_data)
 end
 
 function CharacterTweakData:get_ai_group_type() -- We can use this to easily swap visuals for "factions" based on difficulty.
-	local group_to_use = "zeal" 			 -- Aka, instead of 1500 difficulty if's to change the group based on what difficulty it is, we can just instead change what faction it's looking for.
-											 -- This makes swapping difficulties on the fly much, much easier, along with maintaining a clean codebase.
+	local group_to_use = "zeal" 		-- Aka, instead of 1500 difficulty if's to change the group based on what difficulty it is, we can just instead change what faction it's looking for.
+						-- This makes swapping difficulties on the fly much, much easier, along with maintaining a clean codebase.
 	local level_id
 	if Global.level_data and Global.level_data.level_id then
 		level_id = Global.level_data.level_id
@@ -110,7 +110,7 @@ function CharacterTweakData:_presets(tweak_data)
 			death_wish = {health = 32, headshot_mult = 3},
 			crackdown = {health = 48, headshot_mult = 3}
 		},
-        deathvox_heavyar = { -- mk 1 values complete. Mostly vanilla based.
+        	deathvox_heavyar = { -- mk 1 values complete. Mostly vanilla based.
 			not_a_real_difficulty = {health = 16, headshot_mult = 3},
 			normal = {health = 16, headshot_mult = 3},
 			hard = {health = 16, headshot_mult = 3},
@@ -240,6 +240,16 @@ function CharacterTweakData:_presets(tweak_data)
 			death_wish = {health = 96, headshot_mult = 3},
 			crackdown = {health = 101, headshot_mult = 3}
 		},
+		deathvox_cop_pistol = {  -- mk 2 values complete. Consistent on all diffs.
+			not_a_real_difficulty = {health = 10, headshot_mult = 1},
+			normal = {health = 15, headshot_mult = 3},
+			hard = {health = 15, headshot_mult = 3},
+			very_hard = {health = 15, headshot_mult = 3},
+			overkill = {health = 15, headshot_mult = 3},
+			mayhem = {health = 15, headshot_mult = 3},
+			death_wish = {health = 15, headshot_mult = 3},
+			crackdown = {health = 15, headshot_mult = 3}
+		},
 		deathvox_cop_smg = {  -- mk 2 values complete. Consistent on all diffs. Higher health corresponds to armor.
 			not_a_real_difficulty = {health = 10, headshot_mult = 1},
 			normal = {health = 22, headshot_mult = 3},
@@ -260,16 +270,6 @@ function CharacterTweakData:_presets(tweak_data)
 			death_wish = {health = 15, headshot_mult = 3},
 			crackdown = {health = 15, headshot_mult = 3}
 		},
-		deathvox_cop_pistol = {  -- mk 2 values complete. Consistent on all diffs.
-			not_a_real_difficulty = {health = 10, headshot_mult = 1},
-			normal = {health = 15, headshot_mult = 3},
-			hard = {health = 15, headshot_mult = 3},
-			very_hard = {health = 15, headshot_mult = 3},
-			overkill = {health = 15, headshot_mult = 3},
-			mayhem = {health = 15, headshot_mult = 3},
-			death_wish = {health = 15, headshot_mult = 3},
-			crackdown = {health = 15, headshot_mult = 3}
-		},
 		deathvox_cop_shotgun = {  -- mk 2 values complete. Consistent on all diffs.
 			not_a_real_difficulty = {health = 10, headshot_mult = 1},
 			normal = {health = 15, headshot_mult = 3},
@@ -279,16 +279,6 @@ function CharacterTweakData:_presets(tweak_data)
 			mayhem = {health = 15, headshot_mult = 3},
 			death_wish = {health = 15, headshot_mult = 3},
 			crackdown = {health = 15, headshot_mult = 3}
-		},
-		deathvox_cop_smg = {  -- mk 2 values complete. Consistent on all diffs. Higher health corresponds to armor.
-			not_a_real_difficulty = {health = 10, headshot_mult = 1},
-			normal = {health = 22, headshot_mult = 3},
-			hard = {health = 22, headshot_mult = 3},
-			very_hard = {health = 22, headshot_mult = 3},
-			overkill = {health = 22, headshot_mult = 3},
-			mayhem = {health = 22, headshot_mult = 3},
-			death_wish = {health = 22, headshot_mult = 3},
-			crackdown = {health = 22, headshot_mult = 3}
 		},
 		deathvox_fbi_rookie = {  -- mk 1 values complete. Consistent on all diffs.
 			not_a_real_difficulty = {health = 10, headshot_mult = 1},
@@ -2290,15 +2280,21 @@ end
 function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard = deep_clone(self.security)
 	self.deathvox_guard.detection = presets.detection.guard
-	self.deathvox_guard.ignore_medic_revive_animation = true --no revive animation.
-	self.deathvox_guard.suppression = nil -- presets.suppression.no_supress
+	self.deathvox_guard.ignore_medic_revive_animation = true --no revive animation. may require curving on lower diffs.
+	self.deathvox_guard.suppression = nil -- should be easy on diffs below CD.
 	self.deathvox_guard.surrender = presets.surrender.easy
-	self.deathvox_guard.move_speed = presets.move_speed.very_fast -- tentative.
-	self.deathvox_guard.ecm_vulnerability = 0 -- DV guards ignore feedback. Removing safety net in stealth.
-	
-	self.deathvox_guard.dodge = presets.dodge.deathvox_guard
-	self.deathvox_guard.deathguard = true -- unlikely to be relevant usually, but adds slight safety window during pathing step.
-	self.deathvox_guard.no_arrest = false -- Trust me on this, it's miserable to stealth right now without it. We'll re
+	self.deathvox_guard.move_speed = presets.move_speed.very_fast -- should be normal on diffs below CD.
+	self.deathvox_guard.ecm_vulnerability = 0 -- should be changed for lower diffs. See commented out code below for values.
+--	self.deathvox_guard.ecm_vulnerability = 1
+--	self.deathvox_guard.ecm_hurts = {
+--		ears = {
+--			max_duration = 10,
+--			min_duration = 8
+--		}
+--	}	
+	self.deathvox_guard.dodge = presets.dodge.deathvox_guard -- should be poor on diffs below CD.
+	self.deathvox_guard.deathguard = true 
+	self.deathvox_guard.no_arrest = false 
 	self.deathvox_guard.factory_weapon_id = {"wpn_deathvox_guard_pistol"}
 	self.deathvox_guard.use_factory = true
 	self.deathvox_guard.HEALTH_INIT = 15
@@ -2310,7 +2306,9 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_gman = deep_clone(self.deathvox_guard)
 	self.deathvox_gman.ignore_ecm_for_pager = true
 	self.deathvox_gman.surrender = nil -- cannot be intimidated.
-	self.deathvox_gman.no_arrest = false -- caused too many issues.
+	self.deathvox_gman.move_speed = presets.move_speed.very_fast
+	self.deathvox_gman.dodge = presets.dodge.deathvox_guard
+	self.deathvox_gman.no_arrest = false -- causes too many issues.
 	table.insert(self._enemy_list, "deathvox_gman")
 	local is_classic
 	if self:get_ai_group_type() == "classic" then
@@ -2321,16 +2319,16 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightar.speech_prefix_p2 = nil
 	self.deathvox_lightar.speech_prefix_count = nil
 	self.deathvox_lightar.detection = presets.detection.deathvox
-	self.deathvox_lightar.ignore_medic_revive_animation = true  --no revive animation.
-	self.deathvox_lightar.suppression = presets.suppression.hard_agg
-	self.deathvox_lightar.surrender = presets.surrender.normal -- hard for heavy, normal for light.
-	self.deathvox_lightar.move_speed = presets.move_speed.very_fast
+	self.deathvox_lightar.ignore_medic_revive_animation = true  -- no revive animation. may require curving on lower diffs.
+	self.deathvox_lightar.suppression = presets.suppression.hard_agg -- should be hard_def on N through OVK.
+	self.deathvox_lightar.surrender = presets.surrender.hard -- should be normal on diffs below CD.
+	self.deathvox_lightar.move_speed = presets.move_speed.very_fast -- should be fast on diffs N, H.
 	self.deathvox_lightar.surrender_break_time = {6, 8}
 	self.deathvox_lightar.ecm_vulnerability = 1
 	self.deathvox_lightar.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8}
 	}
-	self.deathvox_lightar.dodge = presets.dodge.deathvoxninja
+	self.deathvox_lightar.dodge = presets.dodge.deathvoxninja -- should be athletic on diffs below CD.
 	self.deathvox_lightar.deathguard = true
 	self.deathvox_lightar.no_arrest = true
 	self.deathvox_lightar.steal_loot = true
@@ -2348,22 +2346,54 @@ function CharacterTweakData:_init_deathvox(presets)
 	end
 	table.insert(self._enemy_list, "deathvox_lightar")
 	
+	self.deathvox_lightshot = deep_clone(self.city_swat)
+	self.deathvox_lightshot.speech_prefix_p1 = "l1d"
+	self.deathvox_lightshot.speech_prefix_p2 = nil
+	self.deathvox_lightshot.speech_prefix_count = nil
+	self.deathvox_lightshot.detection = presets.detection.deathvox
+	self.deathvox_lightshot.ignore_medic_revive_animation = true  -- no revive animation. may require curving on lower diffs.
+	self.deathvox_lightshot.suppression = presets.suppression.hard_agg -- should be hard_def on N through OVK.
+	self.deathvox_lightshot.surrender = presets.surrender.normal -- should be normal on diffs below CD.
+	self.deathvox_lightshot.move_speed = presets.move_speed.very_fast -- should be fast on diffs N, H.
+	self.deathvox_lightshot.surrender_break_time = {6, 8} 
+	self.deathvox_lightshot.ecm_vulnerability = 1
+	self.deathvox_lightshot.ecm_hurts = {
+		ears = {min_duration = 6, max_duration = 8}
+	}
+	self.deathvox_lightshot.dodge = presets.dodge.deathvoxninja -- should be athletic on diffs below CD.
+	self.deathvox_lightshot.deathguard = true
+	self.deathvox_lightshot.no_arrest = true
+	self.deathvox_lightshot.steal_loot = true
+	self.deathvox_lightshot.rescue_hostages = true
+	self.deathvox_lightshot.weapon = deep_clone(presets.weapon.deathvox)
+	self.deathvox_lightshot.factory_weapon_id = {"wpn_deathvox_shotgun_light"}
+	self.deathvox_lightshot.use_factory = true
+	self.deathvox_lightshot.HEALTH_INIT = 48
+	self.deathvox_lightshot.headshot_dmg_mul = 3
+	self.deathvox_lightshot.access = "any"
+	if is_classic then
+		self.deathvox_lightshot.custom_voicework = "pdth"
+	else
+		self.deathvox_lightshot.custom_voicework = "light"
+	end
+	table.insert(self._enemy_list, "deathvox_lightshot")
+	
 	self.deathvox_heavyar = deep_clone(self.city_swat)
 	self.deathvox_heavyar.speech_prefix_p1 = "l4d"
 	self.deathvox_heavyar.speech_prefix_p2 = nil
 	self.deathvox_heavyar.speech_prefix_count = nil
 	self.deathvox_heavyar.detection = presets.detection.deathvox
-	self.deathvox_heavyar.ignore_medic_revive_animation = true  --no revive animation.
-	self.deathvox_heavyar.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- revised per feedback.
-	self.deathvox_heavyar.suppression = presets.suppression.hard_agg -- tentative.
-	self.deathvox_heavyar.surrender = presets.surrender.hard --tentative.
-	self.deathvox_heavyar.move_speed = presets.move_speed.fast
+	self.deathvox_heavyar.ignore_medic_revive_animation = true  --no revive animation. may require curving on lower diffs.
+	self.deathvox_heavyar.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- may require curving on lower diffs.
+	self.deathvox_heavyar.suppression = presets.suppression.hard_agg -- hard_agg on all diffs.
+	self.deathvox_heavyar.surrender = presets.surrender.special -- should be normal on N/H, hard on VH-DW.
+	self.deathvox_heavyar.move_speed = presets.move_speed.fast -- fast on all diffs.
 	self.deathvox_heavyar.surrender_break_time = {6, 8}
 	self.deathvox_heavyar.ecm_vulnerability = 1
 	self.deathvox_heavyar.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8}
 	}
-	self.deathvox_heavyar.dodge = presets.dodge.deathvox
+	self.deathvox_heavyar.dodge = presets.dodge.deathvox -- should be heavy on diffs below CD.
 	self.deathvox_heavyar.deathguard = true
 	self.deathvox_heavyar.no_arrest = true
 	self.deathvox_heavyar.steal_loot = true
@@ -2382,54 +2412,22 @@ function CharacterTweakData:_init_deathvox(presets)
 	end
 	table.insert(self._enemy_list, "deathvox_heavyar")
 	
-	self.deathvox_lightshot = deep_clone(self.city_swat)
-	self.deathvox_lightshot.speech_prefix_p1 = "l1d"
-	self.deathvox_lightshot.speech_prefix_p2 = nil
-	self.deathvox_lightshot.speech_prefix_count = nil
-	self.deathvox_lightshot.detection = presets.detection.deathvox
-	self.deathvox_lightshot.ignore_medic_revive_animation = true  --no revive animation.
-	self.deathvox_lightshot.suppression = presets.suppression.hard_agg -- tentative.
-	self.deathvox_lightshot.surrender = presets.surrender.normal -- tentative.
-	self.deathvox_lightshot.move_speed = presets.move_speed.very_fast
-	self.deathvox_lightshot.surrender_break_time = {6, 8} 
-	self.deathvox_lightshot.ecm_vulnerability = 1
-	self.deathvox_lightshot.ecm_hurts = {
-		ears = {min_duration = 6, max_duration = 8}
-	}
-	self.deathvox_lightshot.dodge = presets.dodge.deathvoxninja
-	self.deathvox_lightshot.deathguard = true
-	self.deathvox_lightshot.no_arrest = true
-	self.deathvox_lightshot.steal_loot = true
-	self.deathvox_lightshot.rescue_hostages = true
-	self.deathvox_lightshot.weapon = deep_clone(presets.weapon.deathvox)
-	self.deathvox_lightshot.factory_weapon_id = {"wpn_deathvox_shotgun_light"}
-	self.deathvox_lightshot.use_factory = true
-	self.deathvox_lightshot.HEALTH_INIT = 48
-	self.deathvox_lightshot.headshot_dmg_mul = 3
-	self.deathvox_lightshot.access = "any"
-	if is_classic then
-		self.deathvox_lightshot.custom_voicework = "pdth"
-	else
-		self.deathvox_lightshot.custom_voicework = "light"
-	end
-	table.insert(self._enemy_list, "deathvox_lightshot")
-	
 	self.deathvox_heavyshot = deep_clone(self.city_swat)
 	self.deathvox_heavyshot.speech_prefix_p1 = "l4d"
 	self.deathvox_heavyshot.speech_prefix_p2 = nil
 	self.deathvox_heavyshot.speech_prefix_count = nil
 	self.deathvox_heavyshot.detection = presets.detection.deathvox
-	self.deathvox_heavyshot.ignore_medic_revive_animation = true  --no revive animation.
-	self.deathvox_heavyshot.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- revised per feedback.
-	self.deathvox_heavyshot.suppression = presets.suppression.hard_agg -- tentative.
-	self.deathvox_heavyshot.surrender = presets.surrender.hard -- tentative.
-	self.deathvox_heavyshot.move_speed = presets.move_speed.fast
+	self.deathvox_heavyshot.ignore_medic_revive_animation = true  -- no revive animation. may require curving on lower diffs.
+	self.deathvox_heavyshot.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- may require curving on lower diffs.
+	self.deathvox_heavyshot.suppression = presets.suppression.hard_agg -- hard_agg on all diffs.
+	self.deathvox_heavyshot.surrender = presets.surrender.special -- should be normal on N/H, hard on VH-DW.
+	self.deathvox_heavyshot.move_speed = presets.move_speed.fast -- fast on all diffs.
 	self.deathvox_heavyshot.surrender_break_time = {6, 8} 
 	self.deathvox_heavyshot.ecm_vulnerability = 1
 	self.deathvox_heavyshot.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8}
 	}
-	self.deathvox_heavyshot.dodge = presets.dodge.deathvox
+	self.deathvox_heavyshot.dodge = presets.dodge.deathvox -- should be heavy on diffs below CD.
 	self.deathvox_heavyshot.deathguard = true
 	self.deathvox_heavyshot.no_arrest = true
 	self.deathvox_heavyshot.steal_loot = true
@@ -2439,7 +2437,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyshot.use_factory = true
 	self.deathvox_heavyshot.HEALTH_INIT = 101 -- new with final 2017 pass.
 	self.deathvox_heavyshot.headshot_dmg_mul = 3
-	self.deathvox_heavyshot.damage.explosion_damage_mul = 0.7
+	self.deathvox_heavyshot.damage.explosion_damage_mul = 0.7 -- may require curving on lower diffs.
 	self.deathvox_heavyshot.access = "any"
 	if is_classic then
 		self.deathvox_heavyshot.custom_voicework = "pdth"
@@ -2453,16 +2451,16 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.detection = presets.detection.deathvox
 	self.deathvox_shield.ignore_medic_revive_animation = true  --no revive animation. In base.
 	self.deathvox_shield.damage.hurt_severity = presets.hurt_severities.only_explosion_hurts
-	self.deathvox_shield.suppression = nil -- presets.suppression.no_supress 
+	self.deathvox_shield.suppression = nil
 	self.deathvox_shield.surrender = nil
-	self.deathvox_shield.move_speed = presets.move_speed.shield_vf -- using a custom shield speed preset, untested
+	self.deathvox_shield.move_speed = presets.move_speed.shield_vf -- using a custom shield speed preset, untested. same on all diffs.
 	self.deathvox_shield.ecm_vulnerability = .9 -- same as base.
 	self.deathvox_shield.ecm_hurts = {
-		ears = {min_duration = 6, max_duration = 8} -- same as general enemies, less than vanilla.
+		ears = {min_duration = 6, max_duration = 8} -- same as general enemies, less than vanilla. leave for all diffs.
 	}
 	self.deathvox_shield.deathguard = true
 	self.deathvox_shield.no_arrest = true
-	self.deathvox_shield.steal_loot = true -- this is new.
+	self.deathvox_shield.steal_loot = nil -- setting this true harmed gameplay.
 	self.deathvox_shield.rescue_hostages = false
 	self.deathvox_shield.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_shield.HEALTH_INIT = 72
@@ -2475,25 +2473,25 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic = deep_clone(self.medic)
 	self.deathvox_medic.tags = {"medic"} --just making sure tag applies.
 	self.deathvox_medic.detection = presets.detection.deathvox
-	self.deathvox_medic.ignore_medic_revive_animation = true  --no revive animation.
+	self.deathvox_medic.ignore_medic_revive_animation = true  --no revive animation. may require curving on lower diffs.
 	self.deathvox_medic.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- added to make code consistent.
-	self.deathvox_medic.suppression = nil -- presets.suppression.no_supress 
-	self.deathvox_medic.surrender = nil -- correcting surrender bug.
-	self.deathvox_medic.move_speed = presets.move_speed.very_fast
+	self.deathvox_medic.suppression = nil
+	self.deathvox_medic.surrender = nil
+	self.deathvox_medic.move_speed = presets.move_speed.very_fast -- same for all diffs.
 	self.deathvox_medic.surrender_break_time = {7, 12} 
 	self.deathvox_medic.ecm_vulnerability = 1
 	self.deathvox_medic.ecm_hurts = {
 		ears = {min_duration = 8, max_duration = 10}
 	}
-	self.deathvox_medic.dodge = presets.dodge.deathvox
+	self.deathvox_medic.dodge = presets.dodge.deathvox -- should be athletic for lower diffs.
 	self.deathvox_medic.deathguard = false
 	self.deathvox_medic.no_arrest = true 
 	self.deathvox_medic.steal_loot = nil
 	self.deathvox_medic.rescue_hostages = false
 	self.deathvox_medic.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_medic.use_factory = true
-	self.deathvox_medic.dv_medic_heal = true -- dont touch, makes him use the death vox healing
-	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_medic_pistol"}
+	self.deathvox_medic.dv_medic_heal = true -- dont touch, makes him use the death vox healing. Note should be disabled for lower diffs.
+	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_medic_pistol"} -- Note should be other weapons for lower diffs. Discuss with Finale.
 	self.deathvox_medic.HEALTH_INIT = 48
 	self.deathvox_medic.headshot_dmg_mul = 3
 	self.deathvox_medic.is_special_unit = "medic"
@@ -2504,18 +2502,18 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser = deep_clone(self.taser)
 	self.deathvox_taser.tags = {"taser"} -- just making sure tag applies.
 	self.deathvox_taser.detection = presets.detection.deathvox
-	self.deathvox_taser.ignore_medic_revive_animation = true  --no revive animation.
-	self.deathvox_taser.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire
+	self.deathvox_taser.ignore_medic_revive_animation = true  --no revive animation. may require curving on lower diffs.
+	self.deathvox_taser.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire -- may require curving on lower diffs.
 	self.deathvox_taser.damage.hurt_severity.tase = false -- if this works, great, horrible things will arise.
-	self.deathvox_taser.suppression = nil -- presets.suppression.no_supress 
-	self.deathvox_taser.surrender = nil -- correcting surrender bug.
-	self.deathvox_taser.move_speed = presets.move_speed.fast
+	self.deathvox_taser.suppression = nil 
+	self.deathvox_taser.surrender = nil 
+	self.deathvox_taser.move_speed = presets.move_speed.very_fast -- should be fast on Normal-Overkill.
 	self.deathvox_taser.surrender_break_time = {7, 12} 
-	self.deathvox_taser.ecm_vulnerability = 0.9 -- in base
+	self.deathvox_taser.ecm_vulnerability = 0.9 -- in base.
 	self.deathvox_taser.ecm_hurts = {
-		ears = {min_duration = 6, max_duration = 8} -- in base
+		ears = {min_duration = 6, max_duration = 8} -- in base.
 	}
-	self.deathvox_taser.dodge = presets.dodge.deathvox
+	self.deathvox_taser.dodge = presets.dodge.deathvox -- should be athletic on MH/DW, heavy on VH/OVK, average on N/H. 
 	self.deathvox_taser.deathguard = true 
 	self.deathvox_taser.no_arrest = true
 	self.deathvox_taser.steal_loot = nil
@@ -2531,15 +2529,15 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker = deep_clone(self.spooc)
 	self.deathvox_cloaker.tags = {"spooc"} -- just making sure tag applies.
 	self.deathvox_cloaker.detection = presets.detection.deathvox
-	self.deathvox_cloaker.ignore_medic_revive_animation = true  --no revive animation.
+	self.deathvox_cloaker.ignore_medic_revive_animation = true  --no revive animation. same on all diffs.
 	self.deathvox_cloaker.suppression = nil
 	self.deathvox_cloaker.surrender = nil
-	self.deathvox_cloaker.move_speed = presets.move_speed.lightning
+	self.deathvox_cloaker.move_speed = presets.move_speed.lightning -- same on all diffs.
 	self.deathvox_cloaker.HEALTH_INIT = 96
 	self.deathvox_cloaker.headshot_dmg_mul = 3
 	self.deathvox_cloaker.surrender_break_time = {4, 6} 
 	self.deathvox_cloaker.ecm_vulnerability = 0
-	self.deathvox_cloaker.dodge = presets.dodge.deathvoxninja
+	self.deathvox_cloaker.dodge = presets.dodge.deathvoxninja -- should be ninja on all diffs below CD.
 	self.deathvox_cloaker.deathguard = true 
 	self.deathvox_cloaker.no_arrest = true
 	self.deathvox_cloaker.steal_loot = nil
@@ -2557,9 +2555,9 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper.tags = {"sniper"} -- just making sure tag applies.
 	self.deathvox_sniper.detection = presets.detection.deathvox
 	self.deathvox_sniper.ignore_medic_revive_animation = false  -- revive animation.
-	self.deathvox_sniper.suppression = nil -- this actually makes snipers way less annoying!
-	self.deathvox_sniper.surrender = nil -- correcting surrender bug.
-	self.deathvox_sniper.move_speed = presets.move_speed.normal -- same as base.
+	self.deathvox_sniper.suppression = nil -- same on all diffs.
+	self.deathvox_sniper.surrender = nil 
+	self.deathvox_sniper.move_speed = presets.move_speed.normal -- same as base. Same on all diffs.
 	self.deathvox_sniper.surrender_break_time = {4, 6} 
 	self.deathvox_sniper.ecm_vulnerability = 0
 	self.deathvox_sniper.no_arrest = true
@@ -2568,12 +2566,13 @@ function CharacterTweakData:_init_deathvox(presets)
 
 	self.deathvox_sniper.use_factory = true -- Use a factory weapon
 	self.deathvox_sniper.factory_weapon_id = {"wpn_deathvox_sniper"}
-	self.deathvox_sniper.HEALTH_INIT = 15 -- note does not match assault, consider revise.
+	self.deathvox_sniper.HEALTH_INIT = 15 
 	self.deathvox_sniper.headshot_dmg_mul = 3
 	self.deathvox_sniper.is_special_unit = "sniper"
 	self.deathvox_sniper.access = "any"
 	table.insert(self._enemy_list, "deathvox_sniper")
-	self.deathvox_sniper_assault = deep_clone(self.deathvox_sniper)
+	
+	self.deathvox_sniper_assault = deep_clone(self.deathvox_sniper) -- note unit not in use due to poor feedback.
 	self.deathvox_sniper_assault.move_speed = presets.move_speed.very_fast
 	self.deathvox_sniper_assault.deathguard = true
 	self.deathvox_sniper_assault.HEALTH_INIT = 15
@@ -2586,20 +2585,21 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.tags = {"tank"} -- just making sure tag applies.
 	self.deathvox_tank.detection = presets.detection.deathvox
 	self.deathvox_tank.ignore_medic_revive_animation = false  -- revive animation.
-	self.deathvox_tank.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase -- new with final 2017 pass. Probably not a change, needs to stay.
+	self.deathvox_tank.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase -- same on all diffs.
 	self.deathvox_tank.suppression = nil
 	self.deathvox_tank.surrender = nil
 	self.deathvox_tank.surrender_break_time = {4, 6}
+	self.deathvox_tank.move_speed = presets.move_speed.slow -- same on all diffs. Same as base. Note revise for "special" dozers.
 	self.deathvox_tank.ecm_vulnerability = 0.85
 	self.deathvox_tank.ecm_hurts = {
-        ears = {min_duration = 1, max_duration = 3} -- tentative, in base
+        ears = {min_duration = 1, max_duration = 3} 
     }
 	self.deathvox_tank.deathguard = true
 	self.deathvox_tank.no_arrest = true
 	self.deathvox_tank.steal_loot = nil
 	self.deathvox_tank.rescue_hostages = false
 	self.deathvox_tank.HEALTH_INIT = 875
-	self.deathvox_tank.damage.explosion_damage_mul = 0.5  -- new with final 2017 pass. Requires scrutiny.
+	self.deathvox_tank.damage.explosion_damage_mul = 0.5  -- may require curving on lower diffs.
 	self.deathvox_tank.is_special_unit = "tank"
 	self.deathvox_tank.access = "walk"
 	self.deathvox_tank.no_retreat = false
@@ -2610,7 +2610,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guarddozer = deep_clone(self.security)
 	self.deathvox_guarddozer.tags = {"tank"} -- just making sure tag applies.
 	self.deathvox_guarddozer.ignore_medic_revive_animation = false  -- revive animation.
-	self.deathvox_guarddozer.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase -- new with final 2017 pass. Probably not a change, needs to stay.
+	self.deathvox_guarddozer.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase -- same on all diffs.
 	self.deathvox_guarddozer.suppression = nil
 	self.deathvox_guarddozer.surrender = nil
 	self.deathvox_guarddozer.surrender_break_time = {4, 6}
@@ -2622,7 +2622,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guarddozer.steal_loot = nil
 	self.deathvox_guarddozer.rescue_hostages = false
 	self.deathvox_guarddozer.HEALTH_INIT = 875
-	self.deathvox_guarddozer.damage.explosion_damage_mul = 0.5  -- new with final 2017 pass. Requires scrutiny.
+	self.deathvox_guarddozer.damage.explosion_damage_mul = 0.5  -- may require curving on lower diffs.
 	self.deathvox_guarddozer.is_special_unit = "tank"
 	self.deathvox_guarddozer.no_retreat = false
 	self.deathvox_guarddozer.access = "tank"
@@ -2668,8 +2668,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_grenadier.melee_weapon_dmg_multiplier = 1
 	self.deathvox_grenadier.weapon_safety_range = 1000
 	self.deathvox_grenadier.detection = presets.detection.deathvox
-	self.deathvox_grenadier.ignore_medic_revive_animation = true  -- no revive animation.
-	self.deathvox_grenadier.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire -- immune to poison. new with final 2017 pass.
+	self.deathvox_grenadier.ignore_medic_revive_animation = true  -- no revive animation. do not touch.
+	self.deathvox_grenadier.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire -- immune to poison.
 	self.deathvox_grenadier.HEALTH_INIT = 101
 	self.deathvox_grenadier.HEALTH_SUICIDE_LIMIT = 0.25
 	self.deathvox_grenadier.flammable = true
@@ -2717,11 +2717,13 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 	self.deathvox_cop = deep_clone(self.cop)
 	self.deathvox_cop.weapon = presets.weapon.deathvox
-	self.deathvox_cop.HEALTH_INIT = 4
-	self.deathvox_cop.headshot_dmg_mul = 2
+	self.deathvox_cop.HEALTH_INIT = 15 -- adding current design doc stat. same for all but smg.
+	self.deathvox_cop.headshot_dmg_mul = 3
 	self.deathvox_cop.access = "cop"
 	self.deathvox_cop.silent_priority_shout = "f37"
-	self.deathvox_cop.dodge = presets.dodge.average
+	self.deathvox_cop.dodge = presets.dodge.average -- same on all diffs. cloned to all cop units.
+	self.deathvox_cop.suppression = presets.suppression.easy -- same on all diffs. cloned to all cop units.
+	self.deathvox_cop.surrender = presets.surrender.easy -- same on all diffs. cloned to all cop units.
 	self.deathvox_cop.deathguard = true
 	self.deathvox_cop.chatter = presets.enemy_chatter.cop
 	self.deathvox_cop.steal_loot = true
@@ -2738,6 +2740,7 @@ function CharacterTweakData:_init_deathvox(presets)
  	table.insert(self._enemy_list, "deathvox_cop_revolver")
 	
 	self.deathvox_cop_smg = deep_clone(self.deathvox_cop)
+	self.deathvox_cop_smg.HEALTH_INIT = 22 -- based on flak jacket model, revise if incorrect.
 	self.deathvox_cop_smg.use_factory = true
 	self.deathvox_cop_smg.factory_weapon_id = {"wpn_deathvox_cop_smg"}
  	table.insert(self._enemy_list, "deathvox_cop_smg")
@@ -2747,17 +2750,26 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cop_shotgun.factory_weapon_id = {"wpn_deathvox_cop_shotgun"}
  	table.insert(self._enemy_list, "deathvox_cop_shotgun")
 	
-	self.deathvox_fbi_rookie = deep_clone(self.deathvox_cop_pistol)
+	self.deathvox_fbi_rookie = deep_clone(self.deathvox_cop_pistol) 
+	self.deathvox_fbi_rookie.dodge = presets.dodge.poor -- same on all diffs.
+	self.deathvox_fbi_rookie.suppression = presets.suppression.easy -- same on all diffs. cloned to all cop units.
+	self.deathvox_fbi_rookie.surrender = presets.surrender.easy -- same on all diffs. cloned to all cop units.
 	self.deathvox_fbi_rookie.use_factory = true
 	self.deathvox_fbi_rookie.factory_weapon_id = {"wpn_deathvox_cop_pistol"}
  	table.insert(self._enemy_list, "deathvox_fbi_rookie")
 
-	self.deathvox_fbi_hrt = deep_clone(self.deathvox_cop_smg)
+	self.deathvox_fbi_hrt = deep_clone(self.deathvox_cop_smg) -- note retains smg health.
+	self.deathvox_fbi_hrt.dodge = presets.dodge.athletic -- same on all diffs.
+	self.deathvox_fbi_hrt.suppression = presets.suppression.hard_agg -- same on all diffs.
+	self.deathvox_fbi_hrt.surrender = presets.surrender.hard -- same on all diffs.
 	self.deathvox_fbi_hrt.use_factory = true
 	self.deathvox_fbi_hrt.factory_weapon_id = {"wpn_deathvox_cop_smg"}
  	table.insert(self._enemy_list, "deathvox_fbi_hrt")
 	
-	self.deathvox_fbi_veteran = deep_clone(self.deathvox_cop_shotgun)
+	self.deathvox_fbi_veteran = deep_clone(self.deathvox_cop_smg) -- note retains smg health.
+	self.deathvox_fbi_veteran.dodge = presets.dodge.athletic -- same on all diffs.
+	self.deathvox_fbi_veteran.suppression = nil -- same on all diffs.
+	self.deathvox_fbi_veteran.surrender = nil -- same on all diffs.
 	self.deathvox_fbi_veteran.use_factory = true
 	self.deathvox_fbi_veteran.factory_weapon_id = {"wpn_deathvox_heavy_ar"}
  	table.insert(self._enemy_list, "deathvox_fbi_veteran")
