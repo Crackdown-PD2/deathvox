@@ -578,29 +578,29 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}		
-	--[[presets.weapon.deathvox = {
-		is_pistol = {},-- used for guards and numerous scripted enemies, as well as beat police. Assumes base damage 40.
-		is_revolver = {},-- used for medics and numerous scripted enemies, as well as beat police. Assumes base damage 60.
-		is_rifle = {}, -- clones heavy ar. Used enemy types unknown. assumes base damage 75.
-		is_lmg = {},-- used for scripted boss enemies, lmg dozers. Assumes base damage 100.
-		is_shotgun_pump = {}, -- used for green dozers. Assumes base damage 400.
-		is_shotgun_mag = {}, -- used for saiga dozers. Assumes base damage 225.
-		mossberg = {}, -- scripted enemy (e.g. beat cop) shotgun. clones light shotgun. Assumes base damage 75.
-		is_smg = {}, -- Ased for shield, variety of enemies. Assumes base damage 45.
-		mp9 = {}, -- Clones smg. Used primarily by security, FBI HRT.
-		rifle = {}, -- clones light ar. Used enemy types unknown. Assumes base damage 60.
-		mac11 = {}, -- Clones smg. Used primarily by criminal enemies. Assumes base damage 45.
+	--[[presets.weapon.deathvox = { -- these notes are mostly out of date. Need further revision to ensure clear usage tracing.
+		is_pistol = {},-- used for guards and numerous scripted enemies, as well as beat police.
+		is_revolver = {},-- used for medics and numerous scripted enemies, as well as beat police.
+		is_rifle = {}, -- clones heavy ar. Used enemy types unknown.
+		is_lmg = {},-- used for scripted boss enemies, lmg dozers.
+		is_shotgun_pump = {}, -- used for green dozers.
+		is_shotgun_mag = {}, -- used for saiga dozers.
+		mossberg = {}, -- scripted enemy (e.g. beat cop) shotgun. clones light shotgun.
+		is_smg = {}, -- Used for variety of enemies?
+		mp9 = {}, -- Clones smg. Used primarily by security, FBI HRT?
+		rifle = {}, -- clones light ar. Used enemy types unknown.
+		mac11 = {}, -- Clones smg. Used primarily by criminal enemies.
 		akimbo_pistol = {}, -- used by boss enemy on Panic Room. Clones pistol.
 		mini = {}, -- unused aside from Spring, crime spree enemy. Will revise in future build for possible scripted use.
-		flamethrower = {}, -- Used for Summers.
-		is_light_rifle = {}, -- Used for light AR SWAT, Tasers, Grenadiers. Assumes base damage 60.
-		is_heavy_rifle = {}, -- Used for heavy AR. Assumes base damage 75.
-		is_light_shotgun = {}, -- Used for light shotgun SWAT. Assumes base damage 75.
-		is_heavy_shotgun = {}, -- Used for heavy shotgun SWAT. Assumes base damage 100.
-		is_tank_smg = {}, -- used for medic dozer. Clones smg. Assumes base damage 45.
-		is_bullpup = {}, -- clones light rifle. Assumes base damage 60.
-		is_sniper = {}, -- initializing sniper. Assumes base damage 240.
-		is_assault_sniper = {} -- initializing assault sniper preset. Assumes base damage 240.
+		flamethrower = {}, -- Currently unused.
+		is_light_rifle = {}, -- Used for light AR SWAT. 
+		is_heavy_rifle = {}, -- Used for heavy AR.
+		is_light_shotgun = {}, -- Used for light shotgun SWAT.
+		is_heavy_shotgun = {}, -- Used for heavy shotgun SWAT.
+		is_tank_smg = {}, -- used for medic dozer. Clones smg.
+		is_bullpup = {}, -- clones light rifle.
+		is_sniper = {}, -- initializing sniper.
+		is_assault_sniper = {} -- initializing assault sniper preset.
 	}]]--
 	presets.weapon.deathvox = deep_clone(presets.weapon.deathwish)
 	--note to self- clean up is_revolver and make consistent.
