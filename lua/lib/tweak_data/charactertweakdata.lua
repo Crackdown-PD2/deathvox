@@ -2768,8 +2768,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 	self.deathvox_fbi_veteran = deep_clone(self.deathvox_cop_smg) -- note retains smg health.
 	self.deathvox_fbi_veteran.dodge = presets.dodge.athletic -- same on all diffs.
-	self.deathvox_fbi_veteran.suppression = presets.suppression.nil -- same on all diffs.
-	self.deathvox_fbi_veteran.surrender = presets.surrender.never -- same on all diffs.
+	self.deathvox_fbi_veteran.suppression = nil -- same on all diffs.
+	self.deathvox_fbi_veteran.surrender = nil -- same on all diffs.
 	self.deathvox_fbi_veteran.use_factory = true
 	self.deathvox_fbi_veteran.factory_weapon_id = {"wpn_deathvox_heavy_ar"}
  	table.insert(self._enemy_list, "deathvox_fbi_veteran")
