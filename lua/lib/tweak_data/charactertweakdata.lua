@@ -90,87 +90,87 @@ function CharacterTweakData:_presets(tweak_data)
 			death_wish = {health = 4, headshot_mult = 3},
 			crackdown = {health = 15, headshot_mult = 3}
 		},
-		deathvox_lightar = { -- mk 1 values complete. Mostly vanilla based.
+		deathvox_lightar = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
 			not_a_real_difficulty = {health = 8, headshot_mult = 2},
-			normal = {health = 8, headshot_mult = 2},
-			hard = {health = 8, headshot_mult = 2},
-			very_hard = {health = 16, headshot_mult = 3},
-			overkill = {health = 32, headshot_mult = 3},
+			normal = {health = 18, headshot_mult = 3},
+			hard = {health = 18, headshot_mult = 3},
+			very_hard = {health = 24, headshot_mult = 3},
+			overkill = {health = 24, headshot_mult = 3},
 			mayhem = {health = 32, headshot_mult = 3},
 			death_wish = {health = 32, headshot_mult = 3},
 			crackdown = {health = 48, headshot_mult = 3}
 		},
-		deathvox_lightshot = { -- mk 1 values complete. Mostly vanilla based.
+		deathvox_lightshot = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
 			not_a_real_difficulty = {health = 8, headshot_mult = 2},
-			normal = {health = 8, headshot_mult = 2},
-			hard = {health = 8, headshot_mult = 2},
-			very_hard = {health = 16, headshot_mult = 3},
-			overkill = {health = 32, headshot_mult = 3},
+			normal = {health = 18, headshot_mult = 3},
+			hard = {health = 18, headshot_mult = 3},
+			very_hard = {health = 24, headshot_mult = 3},
+			overkill = {health = 24, headshot_mult = 3},
 			mayhem = {health = 32, headshot_mult = 3},
 			death_wish = {health = 32, headshot_mult = 3},
 			crackdown = {health = 48, headshot_mult = 3}
 		},
-        	deathvox_heavyar = { -- mk 1 values complete. Mostly vanilla based.
+        	deathvox_heavyar = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
 			not_a_real_difficulty = {health = 16, headshot_mult = 3},
-			normal = {health = 16, headshot_mult = 3},
-			hard = {health = 16, headshot_mult = 3},
-			very_hard = {health = 32, headshot_mult = 3},
-			overkill = {health = 48, headshot_mult = 3},
-			mayhem = {health = 96, headshot_mult = 3},
-			death_wish = {health = 96, headshot_mult = 3},
-			crackdown = {health = 101, headshot_mult = 3}
-		},
-		deathvox_heavyshot = { -- mk 1 values complete. Mostly vanilla based.
-			not_a_real_difficulty = {health = 16, headshot_mult = 3},
-			normal = {health = 16, headshot_mult = 3},
-			hard = {health = 16, headshot_mult = 3},
-			very_hard = {health = 32, headshot_mult = 3},
-			overkill = {health = 48, headshot_mult = 3},
-			mayhem = {health = 96, headshot_mult = 3},
-			death_wish = {health = 96, headshot_mult = 3},
-			crackdown = {health = 101, headshot_mult = 3}
-		},
-		deathvox_shield = { -- mk 1 values complete. Mostly vanilla based with increase.
-			not_a_real_difficulty = {health = 24, headshot_mult = 3},
-			normal = {health = 24, headshot_mult = 3},
-			hard = {health = 24, headshot_mult = 3},
+			normal = {health = 25, headshot_mult = 3},
+			hard = {health = 25, headshot_mult = 3},
 			very_hard = {health = 48, headshot_mult = 3},
-			overkill = {health = 72, headshot_mult = 3},
+			overkill = {health = 48, headshot_mult = 3},
+			mayhem = {health = 96, headshot_mult = 3},
+			death_wish = {health = 96, headshot_mult = 3},
+			crackdown = {health = 101, headshot_mult = 3}
+		},
+		deathvox_heavyshot = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
+			not_a_real_difficulty = {health = 16, headshot_mult = 3},
+			normal = {health = 25, headshot_mult = 3},
+			hard = {health = 25, headshot_mult = 3},
+			very_hard = {health = 48, headshot_mult = 3},
+			overkill = {health = 48, headshot_mult = 3},
+			mayhem = {health = 96, headshot_mult = 3},
+			death_wish = {health = 96, headshot_mult = 3},
+			crackdown = {health = 101, headshot_mult = 3}
+		},
+		deathvox_shield = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
+			not_a_real_difficulty = {health = 24, headshot_mult = 3},
+			normal = {health = 25, headshot_mult = 3},
+			hard = {health = 25, headshot_mult = 3},
+			very_hard = {health = 40, headshot_mult = 3},
+			overkill = {health = 40, headshot_mult = 3},
 			mayhem = {health = 72, headshot_mult = 3},
 			death_wish = {health = 72, headshot_mult = 3},
 			crackdown = {health = 72, headshot_mult = 3}
 		},
-		deathvox_medic = { -- mk 1 values complete. Based on light.
+		deathvox_medic = { -- mk 2 values complete. Based on light.
 			not_a_real_difficulty = {health = 8, headshot_mult = 2},
-			normal = {health = 8, headshot_mult = 2},
-			hard = {health = 8, headshot_mult = 2},
-			very_hard = {health = 16, headshot_mult = 3},
-			overkill = {health = 32, headshot_mult = 3},
+			normal = {health = 18, headshot_mult = 2},
+			hard = {health = 18, headshot_mult = 2},
+			very_hard = {health = 24, headshot_mult = 3},
+			overkill = {health = 24, headshot_mult = 3},
 			mayhem = {health = 32, headshot_mult = 3},
 			death_wish = {health = 32, headshot_mult = 3},
 			crackdown = {health = 48, headshot_mult = 3}
 		},
-		deathvox_taser = { -- mk 1 values complete. Based on heavy.
+		deathvox_taser = { -- mk 2 values complete. Based on heavy.
 			not_a_real_difficulty = {health = 16, headshot_mult = 3},
-			normal = {health = 16, headshot_mult = 3},
-			hard = {health = 16, headshot_mult = 3},
-			very_hard = {health = 32, headshot_mult = 3},
+			normal = {health = 25, headshot_mult = 3},
+			hard = {health = 25, headshot_mult = 3},
+			very_hard = {health = 48, headshot_mult = 3},
 			overkill = {health = 48, headshot_mult = 3},
 			mayhem = {health = 96, headshot_mult = 3},
 			death_wish = {health = 96, headshot_mult = 3},
 			crackdown = {health = 101, headshot_mult = 3}
 		},
-		deathvox_cloaker = { -- mk 1 values complete. Mostly dv_shield based.
+		deathvox_cloaker = { -- mk 2 values complete. Now light-based. Will require further scrutiny.
 			not_a_real_difficulty = {health = 24, headshot_mult = 3},
 			normal = {health = 24, headshot_mult = 3},
 			hard = {health = 24, headshot_mult = 3},
-			very_hard = {health = 48, headshot_mult = 3},
-			overkill = {health = 72, headshot_mult = 3},
-			mayhem = {health = 72, headshot_mult = 3},
-			death_wish = {health = 72, headshot_mult = 3},
-			crackdown = {health = 96, headshot_mult = 3}
+			very_hard = {health = 24, headshot_mult = 3},
+			overkill = {health = 24, headshot_mult = 3},
+			mayhem = {health = 48, headshot_mult = 3},
+			death_wish = {health = 48, headshot_mult = 3},
+			crackdown = {health = 48, headshot_mult = 3}
 		},
-		deathvox_sniper = { -- mk 1 values complete. lower difficulty curve structure
+		deathvox_sniper = { -- mk 1 values complete. lower difficulty curve structure.
 			not_a_real_difficulty = {health = 8, headshot_mult = 3},
 			normal = {health = 8, headshot_mult = 3},
 			hard = {health = 8, headshot_mult = 3},
@@ -180,11 +180,11 @@ function CharacterTweakData:_presets(tweak_data)
 			death_wish = {health = 12, headshot_mult = 3},
 			crackdown = {health = 15, headshot_mult = 3}
 		},
-		deathvox_greendozer = { -- mk 1 values complete. Limited range toward upper limit. Note may want to adjust head mult/HP up to incentivize headshot, but risky.
+		deathvox_greendozer = { -- mk 2 values complete. Tiering implemented.
 			not_a_real_difficulty = {health = 500, headshot_mult = 5},
 			normal = {health = 500, headshot_mult = 5},
 			hard = {health = 500, headshot_mult = 5},
-			very_hard = {health = 500, headshot_mult = 5},
+			very_hard = {health = 600, headshot_mult = 5},
 			overkill = {health = 600, headshot_mult = 5},
 			mayhem = {health = 750, headshot_mult = 5},
 			death_wish = {health = 750, headshot_mult = 5},
@@ -194,7 +194,7 @@ function CharacterTweakData:_presets(tweak_data)
 			not_a_real_difficulty = {health = 500, headshot_mult = 5},
 			normal = {health = 500, headshot_mult = 5},
 			hard = {health = 500, headshot_mult = 5},
-			very_hard = {health = 500, headshot_mult = 5},
+			very_hard = {health = 600, headshot_mult = 5},
 			overkill = {health = 600, headshot_mult = 5},
 			mayhem = {health = 750, headshot_mult = 5},
 			death_wish = {health = 750, headshot_mult = 5},
@@ -204,17 +204,17 @@ function CharacterTweakData:_presets(tweak_data)
 			not_a_real_difficulty = {health = 500, headshot_mult = 5},
 			normal = {health = 500, headshot_mult = 5},
 			hard = {health = 500, headshot_mult = 5},
-			very_hard = {health = 500, headshot_mult = 5},
+			very_hard = {health = 600, headshot_mult = 5},
 			overkill = {health = 600, headshot_mult = 5},
 			mayhem = {health = 750, headshot_mult = 5},
 			death_wish = {health = 750, headshot_mult = 5},
 			crackdown = {health = 875, headshot_mult = 5}
 		},
-		deathvox_medicdozer = { -- mk 1 values complete. Copies greendozer.
+		deathvox_medicdozer = { -- mk 2 values complete. Copies greendozer.
 			not_a_real_difficulty = {health = 500, headshot_mult = 5},
 			normal = {health = 500, headshot_mult = 5},
 			hard = {health = 500, headshot_mult = 5},
-			very_hard = {health = 500, headshot_mult = 5},
+			very_hard = {health = 600, headshot_mult = 5},
 			overkill = {health = 600, headshot_mult = 5},
 			mayhem = {health = 750, headshot_mult = 5},
 			death_wish = {health = 750, headshot_mult = 5},
@@ -224,17 +224,17 @@ function CharacterTweakData:_presets(tweak_data)
 			not_a_real_difficulty = {health = 500, headshot_mult = 5},
 			normal = {health = 500, headshot_mult = 5},
 			hard = {health = 500, headshot_mult = 5},
-			very_hard = {health = 500, headshot_mult = 5},
+			very_hard = {health = 600, headshot_mult = 5},
 			overkill = {health = 600, headshot_mult = 5},
 			mayhem = {health = 750, headshot_mult = 5},
 			death_wish = {health = 750, headshot_mult = 5},
 			crackdown = {health = 875, headshot_mult = 5}
 		},
-		deathvox_grenadier = { -- mk 1 values complete. Based on heavy.
+		deathvox_grenadier = { -- mk 2 values complete. Based on heavy.
 			not_a_real_difficulty = {health = 16, headshot_mult = 3},
-			normal = {health = 16, headshot_mult = 3},
-			hard = {health = 16, headshot_mult = 3},
-			very_hard = {health = 32, headshot_mult = 3},
+			normal = {health = 24, headshot_mult = 3},
+			hard = {health = 24, headshot_mult = 3},
+			very_hard = {health = 48, headshot_mult = 3},
 			overkill = {health = 48, headshot_mult = 3},
 			mayhem = {health = 96, headshot_mult = 3},
 			death_wish = {health = 96, headshot_mult = 3},
