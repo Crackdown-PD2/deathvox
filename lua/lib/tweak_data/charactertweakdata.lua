@@ -9,8 +9,8 @@ function CharacterTweakData:init(tweak_data)
 end
 
 function CharacterTweakData:get_ai_group_type() -- We can use this to easily swap visuals for "factions" based on difficulty.
-	local group_to_use = "zeal" 			 -- Aka, instead of 1500 difficulty if's to change the group based on what difficulty it is, we can just instead change what faction it's looking for.
-											 -- This makes swapping difficulties on the fly much, much easier, along with maintaining a clean codebase.
+	local group_to_use = "zeal" 		-- Aka, instead of 1500 difficulty if's to change the group based on what difficulty it is, we can just instead change what faction it's looking for.
+						-- This makes swapping difficulties on the fly much, much easier, along with maintaining a clean codebase.
 	local level_id
 	if Global.level_data and Global.level_data.level_id then
 		level_id = Global.level_data.level_id
@@ -110,7 +110,7 @@ function CharacterTweakData:_presets(tweak_data)
 			death_wish = {health = 32, headshot_mult = 3},
 			crackdown = {health = 48, headshot_mult = 3}
 		},
-        deathvox_heavyar = { -- mk 1 values complete. Mostly vanilla based.
+        	deathvox_heavyar = { -- mk 1 values complete. Mostly vanilla based.
 			not_a_real_difficulty = {health = 16, headshot_mult = 3},
 			normal = {health = 16, headshot_mult = 3},
 			hard = {health = 16, headshot_mult = 3},
@@ -2307,7 +2307,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_gman.ignore_ecm_for_pager = true
 	self.deathvox_gman.surrender = nil -- cannot be intimidated.
 	self.deathvox_gman.move_speed = presets.move_speed.very_fast
-	self.deathvox_guard.dodge = presets.dodge.deathvox_guard
+	self.deathvox_gman.dodge = presets.dodge.deathvox_guard
 	self.deathvox_gman.no_arrest = false -- causes too many issues.
 	table.insert(self._enemy_list, "deathvox_gman")
 	local is_classic
@@ -2351,7 +2351,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightshot.speech_prefix_p2 = nil
 	self.deathvox_lightshot.speech_prefix_count = nil
 	self.deathvox_lightshot.detection = presets.detection.deathvox
-	self.deathvox_lightshot.ignore_medic_revive_animation = true  --no revive animation. may require curving on lower diffs.
+	self.deathvox_lightshot.ignore_medic_revive_animation = true  -- no revive animation. may require curving on lower diffs.
 	self.deathvox_lightshot.suppression = presets.suppression.hard_agg -- should be hard_def on N through OVK.
 	self.deathvox_lightshot.surrender = presets.surrender.normal -- should be normal on diffs below CD.
 	self.deathvox_lightshot.move_speed = presets.move_speed.very_fast -- should be fast on diffs N, H.
@@ -2417,7 +2417,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyshot.speech_prefix_p2 = nil
 	self.deathvox_heavyshot.speech_prefix_count = nil
 	self.deathvox_heavyshot.detection = presets.detection.deathvox
-	self.deathvox_heavyshot.ignore_medic_revive_animation = true  --no revive animation. may require curving on lower diffs.
+	self.deathvox_heavyshot.ignore_medic_revive_animation = true  -- no revive animation. may require curving on lower diffs.
 	self.deathvox_heavyshot.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- may require curving on lower diffs.
 	self.deathvox_heavyshot.suppression = presets.suppression.hard_agg -- hard_agg on all diffs.
 	self.deathvox_heavyshot.surrender = presets.surrender.special -- should be normal on N/H, hard on VH-DW.
