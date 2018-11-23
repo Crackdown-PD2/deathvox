@@ -4,12 +4,12 @@ function WeaponTweakData:init(tweak_data)
 	self.damage_tables = {
 		deathvox_guard_pistol = { 
 			not_a_real_difficulty = {damage = 10},
-			normal = {damage = 3},
-			hard = {damage = 3},
-			very_hard = {damage = 3},
-			overkill = {damage = 3},
-			mayhem = {damage = 3},
-			death_wish = {damage = 3},
+			normal = {damage = 2},
+			hard = {damage = 2},
+			very_hard = {damage = 2},
+			overkill = {damage = 2},
+			mayhem = {damage = 2},
+			death_wish = {damage = 2},
 			crackdown = {damage = 6}
 		},
 --We need to consider splitting guard and g-man to give g-man an absolute handcannon.
@@ -28,8 +28,8 @@ function WeaponTweakData:init(tweak_data)
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 2}, -- blue swat.
 			hard = {damage = 2},
-			very_hard = {damage = 2},
-			overkill = {damage = 4.5}, -- green.
+			very_hard = {damage = 4.5}, -- green.
+			overkill = {damage = 4.5},
 			mayhem = {damage = 6}, -- elite.
 			death_wish = {damage = 6},
 			crackdown = {damage = 7.5} -- zeal.
@@ -38,8 +38,8 @@ function WeaponTweakData:init(tweak_data)
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 4}, -- yellow swat.
 			hard = {damage = 4},
-			very_hard = {damage = 4},
-			overkill = {damage = 6}, -- tan.
+			very_hard = {damage = 6}, -- tan.
+			overkill = {damage = 6},
 			mayhem = {damage = 8}, -- elite.
 			death_wish = {damage = 8},
 			crackdown = {damage = 10} -- zeal.
@@ -48,8 +48,8 @@ function WeaponTweakData:init(tweak_data)
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 6}, -- blue swat.
 			hard = {damage = 6},
-			very_hard = {damage = 6},
-			overkill = {damage = 7}, -- green.
+			very_hard = {damage = 7}, -- green.
+			overkill = {damage = 7},
 			mayhem = {damage = 8}, -- elite.
 			death_wish = {damage = 8},
 			crackdown = {damage = 9} -- zeal.
@@ -58,8 +58,8 @@ function WeaponTweakData:init(tweak_data)
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 8}, -- yellow swat.
 			hard = {damage = 8},
-			very_hard = {damage = 8},
-			overkill = {damage = 9.5}, -- tan.
+			very_hard = {damage = 9.5}, -- tan.
+			overkill = {damage = 9.5},
 			mayhem = {damage = 11}, -- elite.
 			death_wish = {damage = 11},
 			crackdown = {damage = 13} -- zeal.
@@ -68,10 +68,10 @@ function WeaponTweakData:init(tweak_data)
         deathvox_medic_pistol = { -- note needs to be a different, non-penetrating value on lower diffs. 
 -- may need split?
 			not_a_real_difficulty = {damage = 10},
-			normal = {damage = 3}, -- blue.
-			hard = {damage = 3}, --start.
-			very_hard = {damage = 3},
-			overkill = {damage = 5}, -- green.
+			normal = {damage = 2}, -- blue.
+			hard = {damage = 2}, --start.
+			very_hard = {damage = 4}, -- green.
+			overkill = {damage = 4},
 			mayhem = {damage = 6},  -- elite.
 			death_wish = {damage = 6},
 			crackdown = {damage = 8} -- zeal
@@ -150,45 +150,45 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 10},
 			crackdown = {damage = 10} -- start.
 		},
-		deathvox_cop_pistol = { 
+		deathvox_cop_pistol = {  -- mk 2 values. based on guard pistol.
 			not_a_real_difficulty = {damage = 10},
-			normal = {damage = 3},
-			hard = {damage = 3},
-			very_hard = {damage = 3},
-			overkill = {damage = 3},
-			mayhem = {damage = 3},
-			death_wish = {damage = 3},
+			normal = {damage = 2},
+			hard = {damage = 2},
+			very_hard = {damage = 2},
+			overkill = {damage = 2},
+			mayhem = {damage = 2},
+			death_wish = {damage = 2},
+			crackdown = {damage = 2}
+		},
+		deathvox_cop_revolver = { -- mk 2 values. based on middle value medic.
+			not_a_real_difficulty = {damage = 10},
+			normal = {damage = 4},
+			hard = {damage = 4},
+			very_hard = {damage = 4},
+			overkill = {damage = 4},
+			mayhem = {damage = 4},
+			death_wish = {damage = 4},
+			crackdown = {damage = 4}
+		},
+		deathvox_cop_shotgun = {  -- mk 2 values. based on lowest value light shot.
+			not_a_real_difficulty = {damage = 10},
+			normal = {damage = 6},
+			hard = {damage = 6},
+			very_hard = {damage = 6},
+			overkill = {damage = 6},
+			mayhem = {damage = 6},
+			death_wish = {damage = 6},
 			crackdown = {damage = 6}
 		},
-		deathvox_cop_revolver = { 
+		deathvox_cop_smg = {  -- mk 2 values. based on midpoint between pistol and revolver.
 			not_a_real_difficulty = {damage = 10},
-			normal = {damage = 3},
-			hard = {damage = 3},
-			very_hard = {damage = 3},
-			overkill = {damage = 3},
-			mayhem = {damage = 3},
-			death_wish = {damage = 3},
-			crackdown = {damage = 6}
-		},
-		deathvox_cop_shotgun = { 
-			not_a_real_difficulty = {damage = 10},
-			normal = {damage = 3},
-			hard = {damage = 3},
-			very_hard = {damage = 3},
-			overkill = {damage = 3},
-			mayhem = {damage = 3},
-			death_wish = {damage = 3},
-			crackdown = {damage = 6}
-		},
-		deathvox_cop_smg = { 
-			not_a_real_difficulty = {damage = 10},
-			normal = {damage = 3},
-			hard = {damage = 3},
-			very_hard = {damage = 3},
-			overkill = {damage = 3},
-			mayhem = {damage = 3},
-			death_wish = {damage = 3},
-			crackdown = {damage = 6}
+			normal = {damage = 2.5},
+			hard = {damage = 2.5},
+			very_hard = {damage = 2.5},
+			overkill = {damage = 2.5},
+			mayhem = {damage = 2.5},
+			death_wish = {damage = 2.5},
+			crackdown = {damage = 2.5}
 		}
 	}
 	self._gun_list_cd = {}
@@ -544,6 +544,23 @@ function WeaponTweakData:_set_sm_wish()
 	self.ceiling_turret_module.AUTO_RELOAD_DURATION = 8
 	self.ceiling_turret_module.CAN_GO_IDLE = false
 	self.ceiling_turret_module.IDLE_WAIT_TIME = 1
+	--Crate turrets.
+	self.crate_turret_module.HEALTH_INIT = 40000
+	self.crate_turret_module.SHIELD_HEALTH_INIT = 700
+	self.crate_turret_module.EXPLOSION_DMG_MUL = 3 -- tentative, base is 7
+	self.crate_turret_module.FIRE_DMG_MUL = 0.1
+	self.crate_turret_module.BAG_DMG_MUL = 100
+	self.crate_turret_module.SHIELD_DMG_MUL = 1
+	self.crate_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.crate_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.crate_turret_module.DAMAGE = 3.5
+	self.crate_turret_module.CLIP_SIZE = 400 -- reduced due to locations used being mostly close range.
+	self.crate_turret_module.AUTO_REPAIR = false
+	self.crate_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.crate_turret_module.AUTO_REPAIR_DURATION = 1
+	self.crate_turret_module.AUTO_RELOAD_DURATION = 8
+	self.crate_turret_module.CAN_GO_IDLE = false
+	self.crate_turret_module.IDLE_WAIT_TIME = 1
 	--unusual variants in base game files; may or may not be used.
 	self.ceiling_turret_module_no_idle = deep_clone(self.ceiling_turret_module)
 	self.ceiling_turret_module_longer_range = deep_clone(self.ceiling_turret_module)
