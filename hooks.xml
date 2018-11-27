@@ -69,9 +69,10 @@
 	<!-- full speed swarm/iter hell below -->
 	<post script_path="lua/core/lib/managers/coreportalmanager.lua" hook_id="core/lib/managers/coreportalmanager"/>
 	<post script_path="lua/core/lib/managers/coreshapemanager.lua" hook_id="core/lib/managers/coreshapemanager"/>
-	<post script_path="lua/core/lib/managers/mission/coreelementarea.lua" hook_id="core/lib/managers/mission/coreelementarea"/>
-	<post script_path="lua/core/lib/managers/mission/coreelementshape.lua" hook_id="core/lib/managers/mission/coreelementshape"/>
-	<post script_path="lua/core/lib/managers/mission/coremissionmanager.lua" hook_id="core/lib/managers/mission/coremissionmanager"/>
+        <!-- below unhooked until further vetting can occur.
+ 	<post script_path="lua/core/lib/managers/mission/coreelementarea.lua" hook_id="core/lib/managers/mission/coreelementarea"/>
+	<post script_path="lua/core/lib/managers/mission/coreelementshape.lua" hook_id="core/lib/managers/mission/coreelementshape"/> 
+	<post script_path="lua/core/lib/managers/mission/coremissionmanager.lua" hook_id="core/lib/managers/mission/coremissionmanager"/> -->
 	<post script_path="lua/core/lib/utils/corecode.lua" hook_id="core/lib/utils/corecode"/>
 	<post script_path="lua/core/lib/utils/coreevent.lua" hook_id="core/lib/utils/coreevent"/>
 	<post script_path="lua/core/lib/utils/coremath.lua" hook_id="core/lib/utils/coremath"/>
