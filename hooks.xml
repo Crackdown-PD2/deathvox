@@ -67,10 +67,10 @@
 	
 	<post :script_path="network/matchmaking/networkmatchmakingsteam.lua" :hook_id="network/matchmaking/networkmatchmakingsteam"/>
 	<!-- full speed swarm/iter hell below -->
+	<!-- these five files were causing a crash and are unhooked until further vetting can occur. 
 	<post script_path="lua/core/lib/managers/coreportalmanager.lua" hook_id="core/lib/managers/coreportalmanager"/>
 	<post script_path="lua/core/lib/managers/coreshapemanager.lua" hook_id="core/lib/managers/coreshapemanager"/>
-        <!-- below unhooked until further vetting can occur.
- 	<post script_path="lua/core/lib/managers/mission/coreelementarea.lua" hook_id="core/lib/managers/mission/coreelementarea"/>
+    	<post script_path="lua/core/lib/managers/mission/coreelementarea.lua" hook_id="core/lib/managers/mission/coreelementarea"/>
 	<post script_path="lua/core/lib/managers/mission/coreelementshape.lua" hook_id="core/lib/managers/mission/coreelementshape"/> 
 	<post script_path="lua/core/lib/managers/mission/coremissionmanager.lua" hook_id="core/lib/managers/mission/coremissionmanager"/> -->
 	<post script_path="lua/core/lib/utils/corecode.lua" hook_id="core/lib/utils/corecode"/>
