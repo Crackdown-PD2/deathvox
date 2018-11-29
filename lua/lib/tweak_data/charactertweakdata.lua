@@ -2321,7 +2321,11 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightar.ignore_medic_revive_animation = true  -- no revive animation. may require curving on lower diffs.
 	self.deathvox_lightar.suppression = presets.suppression.hard_agg -- should be hard_def on N through OVK.
 	self.deathvox_lightar.surrender = presets.surrender.hard -- should be normal on diffs below CD.
-	self.deathvox_lightar.move_speed = presets.move_speed.very_fast -- should be fast on diffs N, H.
+	if diff_index <= 3 then
+	self.deathvox_lightar.move_speed = presets.move_speed.fast
+	else
+	self.deathvox_lightar.move_speed = presets.move_speed.very_fast
+	end
 	self.deathvox_lightar.surrender_break_time = {6, 8}
 	self.deathvox_lightar.ecm_vulnerability = 1
 	self.deathvox_lightar.ecm_hurts = {
@@ -2353,7 +2357,11 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightshot.ignore_medic_revive_animation = true  -- no revive animation. may require curving on lower diffs.
 	self.deathvox_lightshot.suppression = presets.suppression.hard_agg -- should be hard_def on N through OVK.
 	self.deathvox_lightshot.surrender = presets.surrender.normal -- should be normal on diffs below CD.
-	self.deathvox_lightshot.move_speed = presets.move_speed.very_fast -- should be fast on diffs N, H.
+	if diff_index <= 3 then
+	self.deathvox_lightshot.move_speed = presets.move_speed.fast
+	else
+	self.deathvox_lightshot.move_speed = presets.move_speed.very_fast
+	end
 	self.deathvox_lightshot.surrender_break_time = {6, 8} 
 	self.deathvox_lightshot.ecm_vulnerability = 1
 	self.deathvox_lightshot.ecm_hurts = {
