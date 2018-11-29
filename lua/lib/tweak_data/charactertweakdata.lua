@@ -2277,7 +2277,6 @@ function CharacterTweakData:_presets(tweak_data)
 end
 	
 function CharacterTweakData:_init_deathvox(presets)
-	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty) -- I think this only needs to be declared here? we shall see.
 	self.deathvox_guard = deep_clone(self.security)
 	self.deathvox_guard.detection = presets.detection.guard
 	self.deathvox_guard.ignore_medic_revive_animation = true --no revive animation. may require curving on lower diffs.
