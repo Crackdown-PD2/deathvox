@@ -1,6 +1,7 @@
 function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap visuals for "factions" based on difficulty.
-	local group_to_use = "zeal" 			 -- Aka, instead of 1500 difficulty if's to change the group based on what difficulty it is, we can just instead change what faction it's looking for.
-											 -- This makes swapping difficulties on the fly much, much easier, along with maintaining a clean codebase.
+	local group_to_use = "zeal" 			 
+	-- Instead of if statements, we can just instead change what faction it's looking for.
+	-- This makes swapping difficulties on the fly much, much easier, along with maintaining a clean codebase.
 	local level_id
 	if Global.level_data and Global.level_data.level_id then
 		level_id = Global.level_data.level_id
@@ -20,7 +21,7 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 		"sm_wish"
 	}
 	local map_faction_override = {}
-	map_faction_override["Enemy_Spawner"] = "classic"
+	map_faction_override["Enemy_Spawner"] = "classic" -- manually remove if testing base units.
 	map_faction_override["pal"] = "classic"
 	map_faction_override["dah"] = "classic"
 	map_faction_override["red2"] = "classic"
@@ -49,7 +50,7 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 			group_to_use = map_faction_override[level_id]
 		end
 	end
-	if diff_index == 8 then -- kataru's reach is true
+	if diff_index == 8 then -- zeal units on CD for all maps.
 		group_to_use = "zeal"
 	end
 	return group_to_use
