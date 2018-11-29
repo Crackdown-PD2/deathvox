@@ -1,5 +1,5 @@
 Heist: Bank Heist: Cash
-Version: 7
+Version: 8
 
 Current changes:
 Pinch implemented.
@@ -14,10 +14,14 @@ Locked out keycard spawn.
 Locked cash spawn.
 Rand drill spawn reactivated
 Slight further conversation changes.
+tentative fix for gman pathing bug
+fix for gmen spawning on lower difficulties.
+
 
 Todo:
 Disable worst office civ set. (not needed)
-gman swapin
+gman graphical issues.
+examine enemy arrival period.
 
 Notes:
 Generally the easiest and most straightforward of the five planned Harvest and Trustee variants.
