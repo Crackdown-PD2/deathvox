@@ -2321,6 +2321,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightar.ignore_medic_revive_animation = true  -- no revive animation. may require curving on lower diffs.
 	self.deathvox_lightar.suppression = presets.suppression.hard_agg -- should be hard_def on N through OVK.
 	self.deathvox_lightar.surrender = presets.surrender.hard -- should be normal on diffs below CD.
+	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
 	if diff_index <= 3 then
 	self.deathvox_lightar.move_speed = presets.move_speed.fast
 	else
@@ -2357,6 +2358,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightshot.ignore_medic_revive_animation = true  -- no revive animation. may require curving on lower diffs.
 	self.deathvox_lightshot.suppression = presets.suppression.hard_agg -- should be hard_def on N through OVK.
 	self.deathvox_lightshot.surrender = presets.surrender.normal -- should be normal on diffs below CD.
+	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
 	if diff_index <= 3 then
 	self.deathvox_lightshot.move_speed = presets.move_speed.fast
 	else
