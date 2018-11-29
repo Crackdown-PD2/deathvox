@@ -2323,7 +2323,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightar.suppression = presets.suppression.hard_agg -- should be hard_def on N through OVK.
 	self.deathvox_lightar.surrender = presets.surrender.hard -- should be normal on diffs below CD.
 	if diff_index <= 3 then -- BEGIN DIFF IF TEST
-	self.deathvox_lightar.move_speed = presets.move_speed.fast
+	self.deathvox_lightar.move_speed = presets.move_speed.very_slow -- test value
 	else
 	self.deathvox_lightar.move_speed = presets.move_speed.very_fast
 	end
@@ -2359,7 +2359,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightshot.suppression = presets.suppression.hard_agg -- should be hard_def on N through OVK.
 	self.deathvox_lightshot.surrender = presets.surrender.normal -- should be normal on diffs below CD.
 	if diff_index <= 3 then -- BEGIN DIFF IF TEST
-	self.deathvox_lightshot.move_speed = presets.move_speed.fast
+	self.deathvox_lightshot.move_speed = presets.move_speed.very_slow -- test value
 	else
 	self.deathvox_lightshot.move_speed = presets.move_speed.very_fast
 	end
