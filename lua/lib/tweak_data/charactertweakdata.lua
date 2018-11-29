@@ -8,10 +8,9 @@ function CharacterTweakData:init(tweak_data)
 	self:_init_deathvox(presets)
 end
 
-function CharacterTweakData:get_ai_group_type() -- We can use this to easily swap visuals for "factions" based on difficulty.
-	local group_to_use = "zeal" 		-- Aka, instead of 1500 difficulty if's to change the group based on what difficulty it is, we can just instead change what faction it's looking for.
-						-- This makes swapping difficulties on the fly much, much easier, along with maintaining a clean codebase.
-	local level_id
+function CharacterTweakData:get_ai_group_type() -- I believe this function has been split and is uncalled. Will test removal in future branch.
+	local group_to_use = "zeal" 		
+						
 	if Global.level_data and Global.level_data.level_id then
 		level_id = Global.level_data.level_id
 	end
@@ -2451,9 +2450,10 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.detection = presets.detection.deathvox
 	self.deathvox_shield.ignore_medic_revive_animation = true  --no revive animation. In base.
 	self.deathvox_shield.damage.hurt_severity = presets.hurt_severities.only_explosion_hurts
+	self.deathvox_shield.damage.hurt_severity.tase = false
 	self.deathvox_shield.suppression = nil
 	self.deathvox_shield.surrender = nil
-	self.deathvox_shield.move_speed = presets.move_speed.shield_vf -- using a custom shield speed preset, untested. same on all diffs.
+	self.deathvox_shield.move_speed = presets.move_speed.shield_vf -- using a custom shield speed preset. same on all diffs.
 	self.deathvox_shield.ecm_vulnerability = .9 -- same as base.
 	self.deathvox_shield.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8} -- same as general enemies, less than vanilla. leave for all diffs.
@@ -2491,7 +2491,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_medic.use_factory = true
 	self.deathvox_medic.dv_medic_heal = true -- dont touch, makes him use the death vox healing. Note should be disabled for lower diffs.
-	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_medic_pistol"} -- Note should be other weapons for lower diffs. Discuss with Finale.
+	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_medic_pistol"} -- Note should be olight AR/shot for lower diffs.
 	self.deathvox_medic.HEALTH_INIT = 48
 	self.deathvox_medic.headshot_dmg_mul = 3
 	self.deathvox_medic.is_special_unit = "medic"
@@ -2507,7 +2507,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.damage.hurt_severity.tase = false -- if this works, great, horrible things will arise.
 	self.deathvox_taser.suppression = nil 
 	self.deathvox_taser.surrender = nil 
-	self.deathvox_taser.move_speed = presets.move_speed.very_fast -- should be fast on Normal-Overkill.
+	self.deathvox_taser.move_speed = presets.move_speed.very_fast -- should be fast on N-OVK.
 	self.deathvox_taser.surrender_break_time = {7, 12} 
 	self.deathvox_taser.ecm_vulnerability = 0.9 -- in base.
 	self.deathvox_taser.ecm_hurts = {
