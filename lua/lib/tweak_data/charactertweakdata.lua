@@ -8,7 +8,7 @@ function CharacterTweakData:init(tweak_data)
 	self:_init_deathvox(presets)
 end
 
-function CharacterTweakData:get_ai_group_type() -- I believe this function has been split and is uncalled. Will test removal in future branch.
+function CharacterTweakData:get_ai_group_type()
 	local group_to_use = "zeal" 		
 						
 	if Global.level_data and Global.level_data.level_id then
@@ -2462,7 +2462,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.no_arrest = true
 	self.deathvox_shield.steal_loot = nil -- setting this true harmed gameplay.
 	self.deathvox_shield.rescue_hostages = false
-	self.deathvox_shield.weapon = deep_clone(presets.weapon.deathvox)
+	self.deathvox_shield.weapon = deep_clone(presets.weapon.deathvox) -- should be pistol on N,H.
 	self.deathvox_shield.HEALTH_INIT = 72
 	self.deathvox_shield.headshot_dmg_mul = 3
 	self.deathvox_shield.is_special_unit = "shield"	
@@ -2491,7 +2491,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_medic.use_factory = true
 	self.deathvox_medic.dv_medic_heal = true -- dont touch, makes him use the death vox healing. Note should be disabled for lower diffs.
-	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_medic_pistol"} -- Note should be olight AR/shot for lower diffs.
+	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_medic_pistol"} -- Should be light AR for diffs below CD.
 	self.deathvox_medic.HEALTH_INIT = 48
 	self.deathvox_medic.headshot_dmg_mul = 3
 	self.deathvox_medic.is_special_unit = "medic"
@@ -2504,7 +2504,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.detection = presets.detection.deathvox
 	self.deathvox_taser.ignore_medic_revive_animation = true  --no revive animation. may require curving on lower diffs.
 	self.deathvox_taser.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire -- may require curving on lower diffs.
-	self.deathvox_taser.damage.hurt_severity.tase = false -- if this works, great, horrible things will arise.
+	self.deathvox_taser.damage.hurt_severity.tase = false
 	self.deathvox_taser.suppression = nil 
 	self.deathvox_taser.surrender = nil 
 	self.deathvox_taser.move_speed = presets.move_speed.very_fast -- should be fast on N-OVK.
@@ -2565,7 +2565,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper.rescue_hostages = false
 
 	self.deathvox_sniper.use_factory = true -- Use a factory weapon
-	self.deathvox_sniper.factory_weapon_id = {"wpn_deathvox_sniper"}
+	self.deathvox_sniper.factory_weapon_id = {"wpn_deathvox_sniper"} -- should be laser and not tracer on diffs below CD.
 	self.deathvox_sniper.HEALTH_INIT = 15 
 	self.deathvox_sniper.headshot_dmg_mul = 3
 	self.deathvox_sniper.is_special_unit = "sniper"
