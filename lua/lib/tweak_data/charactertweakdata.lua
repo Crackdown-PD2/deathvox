@@ -8,10 +8,9 @@ function CharacterTweakData:init(tweak_data)
 	self:_init_deathvox(presets)
 end
 
-function CharacterTweakData:get_ai_group_type() -- We can use this to easily swap visuals for "factions" based on difficulty.
-	local group_to_use = "zeal" 		-- Aka, instead of 1500 difficulty if's to change the group based on what difficulty it is, we can just instead change what faction it's looking for.
-						-- This makes swapping difficulties on the fly much, much easier, along with maintaining a clean codebase.
-	local level_id
+function CharacterTweakData:get_ai_group_type()
+	local group_to_use = "zeal" 		
+						
 	if Global.level_data and Global.level_data.level_id then
 		level_id = Global.level_data.level_id
 	end
@@ -90,87 +89,87 @@ function CharacterTweakData:_presets(tweak_data)
 			death_wish = {health = 4, headshot_mult = 3},
 			crackdown = {health = 15, headshot_mult = 3}
 		},
-		deathvox_lightar = { -- mk 1 values complete. Mostly vanilla based.
+		deathvox_lightar = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
 			not_a_real_difficulty = {health = 8, headshot_mult = 2},
-			normal = {health = 8, headshot_mult = 2},
-			hard = {health = 8, headshot_mult = 2},
-			very_hard = {health = 16, headshot_mult = 3},
-			overkill = {health = 32, headshot_mult = 3},
+			normal = {health = 18, headshot_mult = 3},
+			hard = {health = 18, headshot_mult = 3},
+			very_hard = {health = 24, headshot_mult = 3},
+			overkill = {health = 24, headshot_mult = 3},
 			mayhem = {health = 32, headshot_mult = 3},
 			death_wish = {health = 32, headshot_mult = 3},
 			crackdown = {health = 48, headshot_mult = 3}
 		},
-		deathvox_lightshot = { -- mk 1 values complete. Mostly vanilla based.
+		deathvox_lightshot = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
 			not_a_real_difficulty = {health = 8, headshot_mult = 2},
-			normal = {health = 8, headshot_mult = 2},
-			hard = {health = 8, headshot_mult = 2},
-			very_hard = {health = 16, headshot_mult = 3},
-			overkill = {health = 32, headshot_mult = 3},
+			normal = {health = 18, headshot_mult = 3},
+			hard = {health = 18, headshot_mult = 3},
+			very_hard = {health = 24, headshot_mult = 3},
+			overkill = {health = 24, headshot_mult = 3},
 			mayhem = {health = 32, headshot_mult = 3},
 			death_wish = {health = 32, headshot_mult = 3},
 			crackdown = {health = 48, headshot_mult = 3}
 		},
-        	deathvox_heavyar = { -- mk 1 values complete. Mostly vanilla based.
+        	deathvox_heavyar = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
 			not_a_real_difficulty = {health = 16, headshot_mult = 3},
-			normal = {health = 16, headshot_mult = 3},
-			hard = {health = 16, headshot_mult = 3},
-			very_hard = {health = 32, headshot_mult = 3},
-			overkill = {health = 48, headshot_mult = 3},
-			mayhem = {health = 96, headshot_mult = 3},
-			death_wish = {health = 96, headshot_mult = 3},
-			crackdown = {health = 101, headshot_mult = 3}
-		},
-		deathvox_heavyshot = { -- mk 1 values complete. Mostly vanilla based.
-			not_a_real_difficulty = {health = 16, headshot_mult = 3},
-			normal = {health = 16, headshot_mult = 3},
-			hard = {health = 16, headshot_mult = 3},
-			very_hard = {health = 32, headshot_mult = 3},
-			overkill = {health = 48, headshot_mult = 3},
-			mayhem = {health = 96, headshot_mult = 3},
-			death_wish = {health = 96, headshot_mult = 3},
-			crackdown = {health = 101, headshot_mult = 3}
-		},
-		deathvox_shield = { -- mk 1 values complete. Mostly vanilla based with increase.
-			not_a_real_difficulty = {health = 24, headshot_mult = 3},
-			normal = {health = 24, headshot_mult = 3},
-			hard = {health = 24, headshot_mult = 3},
+			normal = {health = 25, headshot_mult = 3},
+			hard = {health = 25, headshot_mult = 3},
 			very_hard = {health = 48, headshot_mult = 3},
-			overkill = {health = 72, headshot_mult = 3},
+			overkill = {health = 48, headshot_mult = 3},
+			mayhem = {health = 96, headshot_mult = 3},
+			death_wish = {health = 96, headshot_mult = 3},
+			crackdown = {health = 101, headshot_mult = 3}
+		},
+		deathvox_heavyshot = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
+			not_a_real_difficulty = {health = 16, headshot_mult = 3},
+			normal = {health = 25, headshot_mult = 3},
+			hard = {health = 25, headshot_mult = 3},
+			very_hard = {health = 48, headshot_mult = 3},
+			overkill = {health = 48, headshot_mult = 3},
+			mayhem = {health = 96, headshot_mult = 3},
+			death_wish = {health = 96, headshot_mult = 3},
+			crackdown = {health = 101, headshot_mult = 3}
+		},
+		deathvox_shield = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
+			not_a_real_difficulty = {health = 24, headshot_mult = 3},
+			normal = {health = 25, headshot_mult = 3},
+			hard = {health = 25, headshot_mult = 3},
+			very_hard = {health = 40, headshot_mult = 3},
+			overkill = {health = 40, headshot_mult = 3},
 			mayhem = {health = 72, headshot_mult = 3},
 			death_wish = {health = 72, headshot_mult = 3},
 			crackdown = {health = 72, headshot_mult = 3}
 		},
-		deathvox_medic = { -- mk 1 values complete. Based on light.
+		deathvox_medic = { -- mk 2 values complete. Based on light.
 			not_a_real_difficulty = {health = 8, headshot_mult = 2},
-			normal = {health = 8, headshot_mult = 2},
-			hard = {health = 8, headshot_mult = 2},
-			very_hard = {health = 16, headshot_mult = 3},
-			overkill = {health = 32, headshot_mult = 3},
+			normal = {health = 18, headshot_mult = 3},
+			hard = {health = 18, headshot_mult = 3},
+			very_hard = {health = 24, headshot_mult = 3},
+			overkill = {health = 24, headshot_mult = 3},
 			mayhem = {health = 32, headshot_mult = 3},
 			death_wish = {health = 32, headshot_mult = 3},
 			crackdown = {health = 48, headshot_mult = 3}
 		},
-		deathvox_taser = { -- mk 1 values complete. Based on heavy.
+		deathvox_taser = { -- mk 2 values complete. Based on heavy.
 			not_a_real_difficulty = {health = 16, headshot_mult = 3},
-			normal = {health = 16, headshot_mult = 3},
-			hard = {health = 16, headshot_mult = 3},
-			very_hard = {health = 32, headshot_mult = 3},
+			normal = {health = 25, headshot_mult = 3},
+			hard = {health = 25, headshot_mult = 3},
+			very_hard = {health = 48, headshot_mult = 3},
 			overkill = {health = 48, headshot_mult = 3},
 			mayhem = {health = 96, headshot_mult = 3},
 			death_wish = {health = 96, headshot_mult = 3},
 			crackdown = {health = 101, headshot_mult = 3}
 		},
-		deathvox_cloaker = { -- mk 1 values complete. Mostly dv_shield based.
+		deathvox_cloaker = { -- mk 2 values complete. Now light-based. Will require further scrutiny.
 			not_a_real_difficulty = {health = 24, headshot_mult = 3},
 			normal = {health = 24, headshot_mult = 3},
 			hard = {health = 24, headshot_mult = 3},
-			very_hard = {health = 48, headshot_mult = 3},
-			overkill = {health = 72, headshot_mult = 3},
-			mayhem = {health = 72, headshot_mult = 3},
-			death_wish = {health = 72, headshot_mult = 3},
-			crackdown = {health = 96, headshot_mult = 3}
+			very_hard = {health = 24, headshot_mult = 3},
+			overkill = {health = 24, headshot_mult = 3},
+			mayhem = {health = 48, headshot_mult = 3},
+			death_wish = {health = 48, headshot_mult = 3},
+			crackdown = {health = 48, headshot_mult = 3}
 		},
-		deathvox_sniper = { -- mk 1 values complete. lower difficulty curve structure
+		deathvox_sniper = { -- mk 1 values complete. lower difficulty curve structure.
 			not_a_real_difficulty = {health = 8, headshot_mult = 3},
 			normal = {health = 8, headshot_mult = 3},
 			hard = {health = 8, headshot_mult = 3},
@@ -180,11 +179,11 @@ function CharacterTweakData:_presets(tweak_data)
 			death_wish = {health = 12, headshot_mult = 3},
 			crackdown = {health = 15, headshot_mult = 3}
 		},
-		deathvox_greendozer = { -- mk 1 values complete. Limited range toward upper limit. Note may want to adjust head mult/HP up to incentivize headshot, but risky.
+		deathvox_greendozer = { -- mk 2 values complete. Tiering implemented.
 			not_a_real_difficulty = {health = 500, headshot_mult = 5},
 			normal = {health = 500, headshot_mult = 5},
 			hard = {health = 500, headshot_mult = 5},
-			very_hard = {health = 500, headshot_mult = 5},
+			very_hard = {health = 600, headshot_mult = 5},
 			overkill = {health = 600, headshot_mult = 5},
 			mayhem = {health = 750, headshot_mult = 5},
 			death_wish = {health = 750, headshot_mult = 5},
@@ -194,7 +193,7 @@ function CharacterTweakData:_presets(tweak_data)
 			not_a_real_difficulty = {health = 500, headshot_mult = 5},
 			normal = {health = 500, headshot_mult = 5},
 			hard = {health = 500, headshot_mult = 5},
-			very_hard = {health = 500, headshot_mult = 5},
+			very_hard = {health = 600, headshot_mult = 5},
 			overkill = {health = 600, headshot_mult = 5},
 			mayhem = {health = 750, headshot_mult = 5},
 			death_wish = {health = 750, headshot_mult = 5},
@@ -204,17 +203,17 @@ function CharacterTweakData:_presets(tweak_data)
 			not_a_real_difficulty = {health = 500, headshot_mult = 5},
 			normal = {health = 500, headshot_mult = 5},
 			hard = {health = 500, headshot_mult = 5},
-			very_hard = {health = 500, headshot_mult = 5},
+			very_hard = {health = 600, headshot_mult = 5},
 			overkill = {health = 600, headshot_mult = 5},
 			mayhem = {health = 750, headshot_mult = 5},
 			death_wish = {health = 750, headshot_mult = 5},
 			crackdown = {health = 875, headshot_mult = 5}
 		},
-		deathvox_medicdozer = { -- mk 1 values complete. Copies greendozer.
+		deathvox_medicdozer = { -- mk 2 values complete. Copies greendozer.
 			not_a_real_difficulty = {health = 500, headshot_mult = 5},
 			normal = {health = 500, headshot_mult = 5},
 			hard = {health = 500, headshot_mult = 5},
-			very_hard = {health = 500, headshot_mult = 5},
+			very_hard = {health = 600, headshot_mult = 5},
 			overkill = {health = 600, headshot_mult = 5},
 			mayhem = {health = 750, headshot_mult = 5},
 			death_wish = {health = 750, headshot_mult = 5},
@@ -224,17 +223,17 @@ function CharacterTweakData:_presets(tweak_data)
 			not_a_real_difficulty = {health = 500, headshot_mult = 5},
 			normal = {health = 500, headshot_mult = 5},
 			hard = {health = 500, headshot_mult = 5},
-			very_hard = {health = 500, headshot_mult = 5},
+			very_hard = {health = 600, headshot_mult = 5},
 			overkill = {health = 600, headshot_mult = 5},
 			mayhem = {health = 750, headshot_mult = 5},
 			death_wish = {health = 750, headshot_mult = 5},
 			crackdown = {health = 875, headshot_mult = 5}
 		},
-		deathvox_grenadier = { -- mk 1 values complete. Based on heavy.
+		deathvox_grenadier = { -- mk 2 values complete. Based on heavy.
 			not_a_real_difficulty = {health = 16, headshot_mult = 3},
-			normal = {health = 16, headshot_mult = 3},
-			hard = {health = 16, headshot_mult = 3},
-			very_hard = {health = 32, headshot_mult = 3},
+			normal = {health = 24, headshot_mult = 3},
+			hard = {health = 24, headshot_mult = 3},
+			very_hard = {health = 48, headshot_mult = 3},
 			overkill = {health = 48, headshot_mult = 3},
 			mayhem = {health = 96, headshot_mult = 3},
 			death_wish = {health = 96, headshot_mult = 3},
@@ -292,7 +291,7 @@ function CharacterTweakData:_presets(tweak_data)
 		},
 		deathvox_fbi_hrt = {  -- mk 1 values complete. Consistent on all diffs. Higher health corresponds to armor.
 			not_a_real_difficulty = {health = 10, headshot_mult = 1},
-			normal = {health = 22, headshot_mult = 2},
+			normal = {health = 22, headshot_mult = 3},
 			hard = {health = 22, headshot_mult = 3},
 			very_hard = {health = 22, headshot_mult = 3},
 			overkill = {health = 22, headshot_mult = 3},
@@ -578,29 +577,29 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}		
-	--[[presets.weapon.deathvox = {
-		is_pistol = {},-- used for guards and numerous scripted enemies, as well as beat police. Assumes base damage 40.
-		is_revolver = {},-- used for medics and numerous scripted enemies, as well as beat police. Assumes base damage 60.
-		is_rifle = {}, -- clones heavy ar. Used enemy types unknown. assumes base damage 75.
-		is_lmg = {},-- used for scripted boss enemies, lmg dozers. Assumes base damage 100.
-		is_shotgun_pump = {}, -- used for green dozers. Assumes base damage 400.
-		is_shotgun_mag = {}, -- used for saiga dozers. Assumes base damage 225.
-		mossberg = {}, -- scripted enemy (e.g. beat cop) shotgun. clones light shotgun. Assumes base damage 75.
-		is_smg = {}, -- Ased for shield, variety of enemies. Assumes base damage 45.
-		mp9 = {}, -- Clones smg. Used primarily by security, FBI HRT.
-		rifle = {}, -- clones light ar. Used enemy types unknown. Assumes base damage 60.
-		mac11 = {}, -- Clones smg. Used primarily by criminal enemies. Assumes base damage 45.
+	--[[presets.weapon.deathvox = { -- these notes are mostly out of date. Need further revision to ensure clear usage tracing.
+		is_pistol = {},-- used for guards and numerous scripted enemies, as well as beat police.
+		is_revolver = {},-- used for medics and numerous scripted enemies, as well as beat police.
+		is_rifle = {}, -- clones heavy ar. Used enemy types unknown.
+		is_lmg = {},-- used for scripted boss enemies, lmg dozers.
+		is_shotgun_pump = {}, -- used for green dozers.
+		is_shotgun_mag = {}, -- used for saiga dozers.
+		mossberg = {}, -- scripted enemy (e.g. beat cop) shotgun. clones light shotgun.
+		is_smg = {}, -- Used for variety of enemies?
+		mp9 = {}, -- Clones smg. Used primarily by security, FBI HRT?
+		rifle = {}, -- clones light ar. Used enemy types unknown.
+		mac11 = {}, -- Clones smg. Used primarily by criminal enemies.
 		akimbo_pistol = {}, -- used by boss enemy on Panic Room. Clones pistol.
 		mini = {}, -- unused aside from Spring, crime spree enemy. Will revise in future build for possible scripted use.
-		flamethrower = {}, -- Used for Summers.
-		is_light_rifle = {}, -- Used for light AR SWAT, Tasers, Grenadiers. Assumes base damage 60.
-		is_heavy_rifle = {}, -- Used for heavy AR. Assumes base damage 75.
-		is_light_shotgun = {}, -- Used for light shotgun SWAT. Assumes base damage 75.
-		is_heavy_shotgun = {}, -- Used for heavy shotgun SWAT. Assumes base damage 100.
-		is_tank_smg = {}, -- used for medic dozer. Clones smg. Assumes base damage 45.
-		is_bullpup = {}, -- clones light rifle. Assumes base damage 60.
-		is_sniper = {}, -- initializing sniper. Assumes base damage 240.
-		is_assault_sniper = {} -- initializing assault sniper preset. Assumes base damage 240.
+		flamethrower = {}, -- Currently unused.
+		is_light_rifle = {}, -- Used for light AR SWAT. 
+		is_heavy_rifle = {}, -- Used for heavy AR.
+		is_light_shotgun = {}, -- Used for light shotgun SWAT.
+		is_heavy_shotgun = {}, -- Used for heavy shotgun SWAT.
+		is_tank_smg = {}, -- used for medic dozer. Clones smg.
+		is_bullpup = {}, -- clones light rifle.
+		is_sniper = {}, -- initializing sniper.
+		is_assault_sniper = {} -- initializing assault sniper preset.
 	}]]--
 	presets.weapon.deathvox = deep_clone(presets.weapon.deathwish)
 	--note to self- clean up is_revolver and make consistent.
@@ -2451,9 +2450,10 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.detection = presets.detection.deathvox
 	self.deathvox_shield.ignore_medic_revive_animation = true  --no revive animation. In base.
 	self.deathvox_shield.damage.hurt_severity = presets.hurt_severities.only_explosion_hurts
+	self.deathvox_shield.damage.hurt_severity.tase = false
 	self.deathvox_shield.suppression = nil
 	self.deathvox_shield.surrender = nil
-	self.deathvox_shield.move_speed = presets.move_speed.shield_vf -- using a custom shield speed preset, untested. same on all diffs.
+	self.deathvox_shield.move_speed = presets.move_speed.shield_vf -- using a custom shield speed preset. same on all diffs.
 	self.deathvox_shield.ecm_vulnerability = .9 -- same as base.
 	self.deathvox_shield.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8} -- same as general enemies, less than vanilla. leave for all diffs.
@@ -2462,7 +2462,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.no_arrest = true
 	self.deathvox_shield.steal_loot = nil -- setting this true harmed gameplay.
 	self.deathvox_shield.rescue_hostages = false
-	self.deathvox_shield.weapon = deep_clone(presets.weapon.deathvox)
+	self.deathvox_shield.weapon = deep_clone(presets.weapon.deathvox) -- should be pistol on N,H.
 	self.deathvox_shield.HEALTH_INIT = 72
 	self.deathvox_shield.headshot_dmg_mul = 3
 	self.deathvox_shield.is_special_unit = "shield"	
@@ -2491,7 +2491,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_medic.use_factory = true
 	self.deathvox_medic.dv_medic_heal = true -- dont touch, makes him use the death vox healing. Note should be disabled for lower diffs.
-	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_medic_pistol"} -- Note should be other weapons for lower diffs. Discuss with Finale.
+	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_medic_pistol"} -- Should be light AR for diffs below CD.
 	self.deathvox_medic.HEALTH_INIT = 48
 	self.deathvox_medic.headshot_dmg_mul = 3
 	self.deathvox_medic.is_special_unit = "medic"
@@ -2504,10 +2504,10 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.detection = presets.detection.deathvox
 	self.deathvox_taser.ignore_medic_revive_animation = true  --no revive animation. may require curving on lower diffs.
 	self.deathvox_taser.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire -- may require curving on lower diffs.
-	self.deathvox_taser.damage.hurt_severity.tase = false -- if this works, great, horrible things will arise.
+	self.deathvox_taser.damage.hurt_severity.tase = false
 	self.deathvox_taser.suppression = nil 
 	self.deathvox_taser.surrender = nil 
-	self.deathvox_taser.move_speed = presets.move_speed.very_fast -- should be fast on Normal-Overkill.
+	self.deathvox_taser.move_speed = presets.move_speed.very_fast -- should be fast on N-OVK.
 	self.deathvox_taser.surrender_break_time = {7, 12} 
 	self.deathvox_taser.ecm_vulnerability = 0.9 -- in base.
 	self.deathvox_taser.ecm_hurts = {
@@ -2565,7 +2565,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper.rescue_hostages = false
 
 	self.deathvox_sniper.use_factory = true -- Use a factory weapon
-	self.deathvox_sniper.factory_weapon_id = {"wpn_deathvox_sniper"}
+	self.deathvox_sniper.factory_weapon_id = {"wpn_deathvox_sniper"} -- should be laser and not tracer on diffs below CD.
 	self.deathvox_sniper.HEALTH_INIT = 15 
 	self.deathvox_sniper.headshot_dmg_mul = 3
 	self.deathvox_sniper.is_special_unit = "sniper"
