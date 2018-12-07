@@ -4,7 +4,12 @@
 
 » Break into the immobilized trucks
 » Crack open the strongboxes
-» Get the loot to the getaway vehicle",
+» Get the loot to the getaway vehicle
+
+This heist currently will not function properly on difficulties below Crackdown.
+",
 	"heist_arm_und_CD_name" : "Transport: Underpass Crackdown",
-	"heist_arm_und_CD_brief" : "We hit the Gensec convoy at the underpass, en-route from Dulles to their depot in McLean, so expect rich pickings. Get whatever's in the trucks to the escape driver. We're deep in Indian country here, gentlemen, so expect a fast response from DC's finest."
+	"heist_arm_und_CD_brief" : "We hit the Gensec convoy at the underpass, en-route from Dulles to their depot in McLean, so expect rich pickings. Get whatever's in the trucks to the escape driver. We're deep in Indian country here, gentlemen, so expect a fast response from DC's finest.
+	
+This heist currently will not function properly on difficulties below Crackdown."
 }
