@@ -4,8 +4,12 @@
 
 » Break into the immobilized trucks
 » Crack open the strongboxes
-» Get the loot to the getaway vehicle",
+» Get the loot to the getaway vehicle
+
+This heist currently will not function properly on difficulties below Crackdown.",
 	"heist_arm_cro_CD_name" : "Transport: Crossroads Crackdown",
-	"heist_arm_cro_CD_brief" : "We've forced the Gensec trucks off the road at the corner of McCarty and James. Sure it had those Time Out hipsters shitting into their latte macchiatos. You're going to need to get into the trucks, and then break open the strongboxes inside. Whatever they're carrying, get it, and get out."
+	"heist_arm_cro_CD_brief" : "We've forced the Gensec trucks off the road at the corner of McCarty and James. Sure it had those Time Out hipsters shitting into their latte macchiatos. You're going to need to get into the trucks, and then break open the strongboxes inside. Whatever they're carrying, get it, and get out.
+	
+This heist currently will not function properly on difficulties below Crackdown."
 }
 
