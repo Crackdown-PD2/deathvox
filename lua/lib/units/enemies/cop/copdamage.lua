@@ -148,12 +148,6 @@ function CopDamage:damage_explosion(attack_data)
 	if self._head_body_name and attack_data.variant ~= "stun" then
 		head = attack_data.col_ray.body and self._head_body_key and attack_data.col_ray.body:key() == self._head_body_key
 		local body = self._unit:body(self._head_body_name)
-
-		self:_spawn_head_gadget({
-			position = body:position(),
-			rotation = body:rotation(),
-			dir = -attack_data.col_ray.ray
-		})
 	end
 
 	local attacker = attack_data.attacker_unit
@@ -175,6 +169,16 @@ function CopDamage:damage_explosion(attack_data)
 		}
 		if data.name == "deathvox_grenadier" then
 			self._unit:damage():run_sequence_simple("grenadier_glass_break")
+		else
+			if self._head_body_name and attack_data.variant ~= "stun" then --moved this here so that only explosive kills send helmets flying for consistency's sake (since headshot damage doesn't change if a helmet is there or not)
+				local body = self._unit:body(self._head_body_name)
+
+				self:_spawn_head_gadget({
+					position = body:position(),
+					rotation = body:rotation(),
+					dir = -attack_data.col_ray.ray
+				})
+			end
 		end
 
 		managers.statistics:killed_by_anyone(data)
@@ -205,6 +209,10 @@ function CopDamage:damage_explosion(attack_data)
 			end
 
 			self:_check_damage_achievements(attack_data, false)
+		else
+			if attacker_unit and managers.groupai:state():is_unit_team_AI(attacker_unit) then --enable team AI special kill callouts (first check is there to prevent a crash if the explosive was enviromental)
+				self:_AI_comment_death(attacker_unit, self._unit)
+			end
 		end
 	end
 
@@ -239,7 +247,7 @@ function CopDamage:damage_bullet(attack_data)
 		managers.player:send_message(Message.OnEnemyShot, nil, attack_data.attacker_unit, self._unit, attack_data and attack_data.variant or "bullet")
 	end
 
-	if self._has_plate and attack_data.col_ray.body and attack_data.col_ray.body:name() == self._ids_plate_name and not attack_data.armor_piercing then
+	if self._has_plate and attack_data.col_ray.body and attack_data.col_ray.body:name() == self._ids_plate_name and not attack_data.armor_piercing and not attack_data.is_melee_attack then --melee attack check to prevent issues with NPC vs NPC melee and body armor
 		local armor_pierce_roll = math.rand(1)
 		local armor_pierce_value = 0
 
@@ -541,10 +549,24 @@ function CopDamage:die(attack_data)
 		end
 	end
 
-	if self._unit:base():char_tweak().die_sound_event then
-		self._unit:sound():play(self._unit:base():char_tweak().die_sound_event, nil, nil)
-	end
+	if self._unit:base():has_tag("spooc") then
+		self._unit:sound():play(self._unit:base():char_tweak().die_sound_event, nil, nil) --ensure that spoocs stop their looping presence sound
 
+		--if not self._unit:movement():cool() then --optional, to reinforce the idea of silent kills if desired
+			self._unit:sound():say("x02a_any_3p", nil, nil) --death voiceline, can't use char_tweak().die_sound_event since spoocs have the presence loop stop there (this ensures both are played, unlike in vanilla)
+		--end
+	else
+		--if not self._unit:movement():cool() then
+			self._unit:sound():say(self._unit:base():char_tweak().die_sound_event or "x02a_any_3p", nil, nil) --death voiceline determined through char_tweak().die_sound_event, otherwise use default
+		--end
+	end
+	
+	if self._unit:base().looping_voice then
+		self._unit:base().looping_voice:set_looping(false)
+		self._unit:base().looping_voice:stop()
+		self._unit:base().looping_voice:close()
+		self._unit:base().looping_voice = nil
+	end
 	if self._unit:base():char_tweak().ends_assault_on_death then
 		-- this was a bad idea
 		--[[for u_key, u_data in pairs(managers.enemy:all_enemies()) do
@@ -774,3 +796,27 @@ function CopDamage:get_damage_type(damage_percent, category)
 
 	return "dmg_rcv"
 end
+
+local cops_to_intimidate = {}
+FullSpeedSwarm.cops_to_intimidate = cops_to_intimidate
+
+local fs_original_copdamage_damagemelee = CopDamage.damage_melee
+function CopDamage:damage_melee(attack_data, ...)
+	if attack_data.variant == 'taser_tased' then
+		if self._char_tweak.surrender and self._char_tweak.surrender ~= tweak_data.character.presets.special then
+			cops_to_intimidate[self._unit:key()] = TimerManager:game():time()
+		end
+	end
+	return fs_original_copdamage_damagemelee(self, attack_data, ...)
+end
+
+local fs_original_copdamage_syncdamagemelee = CopDamage.sync_damage_melee
+function CopDamage:sync_damage_melee(variant, ...)
+	if variant == 5 then
+		if self._char_tweak.surrender and self._char_tweak.surrender ~= tweak_data.character.presets.special then
+			cops_to_intimidate[self._unit:key()] = TimerManager:game():time()
+		end
+	end
+	return fs_original_copdamage_syncdamagemelee(self, variant, ...)
+end
+

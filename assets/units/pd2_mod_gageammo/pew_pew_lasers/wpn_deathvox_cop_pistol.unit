@@ -1,0 +1,12 @@
+<unit type="wpn" slot="1" >
+	<object file="units/payday2/weapons/wpn_fps_pis_1911/wpn_fps_pis_1911" />
+	<dependencies>
+		<depends_on bnk="soundbanks/weapon_c45"/>
+	</dependencies>
+	<extensions>
+		<extension class="ScriptUnitData" name="unit_data" />
+		<extension name="base" class="NewNPCRaycastWeaponBase" >
+			<var name="name_id" value="deathvox_cop_pistol" />
+		</extension>
+	</extensions>
+</unit>

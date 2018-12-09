@@ -222,8 +222,4 @@
 		</graphic_group>
 	</graphics>
 
-	<lights>
-		<light multiplier="identity" far_range="400" name="ls_light" enabled="true" type="spot|specular" />
-	</lights>
-
 </dynamic_object>

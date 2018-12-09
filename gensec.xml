@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<assets base_path="assets/" target="scripted" load_group="genseccops">
+
+	<group name="units/pd2_mod_gageammo/characters/">
+	
+		<file :name="ene_deathvox_gensec_medic/ene_deathvox_gensec_medic.unit" load="true"/>
+		<file :name="ene_deathvox_gensec_medic/ene_deathvox_gensec_medic_husk.unit" load="true"/>
+		<file :name="ene_deathvox_gensec_medic/ene_medic_df.texture" force="false"/>
+		<file :name="ene_deathvox_gensec_medic/ene_medic_head_df.texture" force="false"/>
+		<file :name="ene_deathvox_gensec_medic/ene_deathvox_gensec_medic_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_medic/ene_deathvox_gensec_medic.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_medic/ene_deathvox_gensec_medic.object" force="false"/>
+		<file :name="ene_deathvox_gensec_medic/ene_deathvox_gensec_medic.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_gensec_medic/ene_deathvox_gensec_medic.model" force="false"/>
+
+		<file :name="ene_deathvox_gensec_taser/ene_deathvox_gensec_taser.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_taser/ene_deathvox_gensec_taser_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_taser/ene_deathvox_gensec_taser_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_taser/ene_deathvox_gensec_taser.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_taser/ene_deathvox_gensec_taser.object" force="false"/>
+		<file :name="ene_deathvox_gensec_taser/ene_deathvox_gensec_taser.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_gensec_taser/ene_deathvox_gensec_taser.model" force="false"/>
+		<file :name="ene_deathvox_gensec_taser/taser_body_df.texture" force="false"/>
+		<file :name="ene_deathvox_gensec_taser/helmets_heavy_taser_atlas_df.texture" force="false"/>
+	
+		<file :name="ene_deathvox_gensec_swat/ene_deathvox_gensec_swat.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_swat/ene_deathvox_gensec_swat_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_swat/ene_deathvox_gensec_swat_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_swat/ene_deathvox_gensec_swat.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_swat/ene_deathvox_gensec_swat.object" force="false"/>
+		<file :name="ene_deathvox_gensec_swat/ene_deathvox_gensec_swat.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_gensec_swat/ene_deathvox_gensec_swat.model" force="false"/>
+		
+		<file :name="ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot.object" force="false"/>
+		<file :name="ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot.model" force="false"/>
+		
+		<file :name="ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat.object" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat.model" force="false"/>
+		
+		<file :name="ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot.object" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot.model" force="false"/>
+		
+		<file :name="ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer.material_config" force="false"/>
+		<file :name="ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer.object" force="false"/>
+		<file :name="ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer.model" force="false"/>
+		<file :name="ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer.sequence_manager" force="false"/>
+	
+		<file :name="ene_deathvox_gensec_shield/ene_deathvox_gensec_shield.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_shield/ene_deathvox_gensec_shield_husk.unit" load="true" force="false"/>
+	
+		<file :name="ene_deathvox_gensec_cloaker/ene_deathvox_gensec_cloaker.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_gensec_cloaker/ene_deathvox_gensec_cloaker_husk.unit" load="true" force="false"/>
+	
+	</group>
+</assets>
