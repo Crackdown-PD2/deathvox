@@ -304,6 +304,44 @@
 		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.model" force="false"/>
 		<file :name="ene_deathvox_medicdozer/ene_deathvox_medicdozer.sequence_manager" force="false"/>
 
+		<!--DV Medic DoZer Bits-->
+		<file :name="ene_acc_deathvox_medicdozer_helmet_plate/ene_acc_deathvox_medicdozer_helmet_plate.object" force="false"/>
+		<file :name="ene_acc_deathvox_medicdozer_helmet_plate/ene_acc_deathvox_medicdozer_helmet_plate.cooked_physics" force="false"/>
+		<file :name="ene_acc_deathvox_medicdozer_helmet_plate/ene_acc_deathvox_medicdozer_helmet_plate.model" force="false"/>
+		<file :name="ene_acc_deathvox_medicdozer_helmet_plate/ene_acc_deathvox_medicdozer_helmet_plate.unit" load="true"/>
+		<file :name="ene_acc_deathvox_medicdozer_helmet_plate/ene_acc_deathvox_medicdozer_helmet_plate.material_config" force="false"/>
+
+		<file :name="ene_acc_deathvox_medicdozer_throat/ene_acc_deathvox_medicdozer_throat.object" force="false"/>
+		<file :name="ene_acc_deathvox_medicdozer_throat/ene_acc_deathvox_medicdozer_throat.cooked_physics" force="false"/>
+		<file :name="ene_acc_deathvox_medicdozer_throat/ene_acc_deathvox_medicdozer_throat.model" force="false"/>
+		<file :name="ene_acc_deathvox_medicdozer_throat/ene_acc_deathvox_medicdozer_throat.unit" load="true"/>
+		<file :name="ene_acc_deathvox_medicdozer_throat/ene_acc_deathvox_medicdozer_throat.material_config" force="false"/>
+
+		<file :name="ene_acc_deathvox_medicdozer_neck/ene_acc_deathvox_medicdozer_neck.object" force="false"/>
+		<file :name="ene_acc_deathvox_medicdozer_neck/ene_acc_deathvox_medicdozer_neck.cooked_physics" force="false"/>
+		<file :name="ene_acc_deathvox_medicdozer_neck/ene_acc_deathvox_medicdozer_neck.model" force="false"/>
+		<file :name="ene_acc_deathvox_medicdozer_neck/ene_acc_deathvox_medicdozer_neck.unit" load="true"/>
+		<file :name="ene_acc_deathvox_medicdozer_neck/ene_acc_deathvox_medicdozer_neck.material_config" force="false"/>		
+
+		<file :name="ene_acc_deathvox_medicdozer_chest/ene_acc_deathvox_medicdozer_chest.object" force="false"/>
+		<file :name="ene_acc_deathvox_medicdozer_chest/ene_acc_deathvox_medicdozer_chest.cooked_physics" force="false"/>
+		<file :name="ene_acc_deathvox_medicdozer_chest/ene_acc_deathvox_medicdozer_chest.model" force="false"/>
+		<file :name="ene_acc_deathvox_medicdozer_chest/ene_acc_deathvox_medicdozer_chest.unit" load="true"/>
+		<file :name="ene_acc_deathvox_medicdozer_chest/ene_acc_deathvox_medicdozer_chest.material_config" force="false"/>		
+
+		<file :name="ene_acc_deathvox_medicdozer_back/ene_acc_deathvox_medicdozer_back.object" force="false"/>
+		<file :name="ene_acc_deathvox_medicdozer_back/ene_acc_deathvox_medicdozer_back.cooked_physics" force="false"/>
+		<file :name="ene_acc_deathvox_medicdozer_back/ene_acc_deathvox_medicdozer_back.model" force="false"/>
+		<file :name="ene_acc_deathvox_medicdozer_back/ene_acc_deathvox_medicdozer_back.unit" load="true"/>
+		<file :name="ene_acc_deathvox_medicdozer_back/ene_acc_deathvox_medicdozer_back.material_config" force="false"/>	
+
+		<file :name="ene_acc_deathvox_medicdozer_stomache/ene_acc_deathvox_medicdozer_stomache.object" force="false"/>
+		<file :name="ene_acc_deathvox_medicdozer_stomache/ene_acc_deathvox_medicdozer_stomache.cooked_physics" force="false"/>
+		<file :name="ene_acc_deathvox_medicdozer_stomache/ene_acc_deathvox_medicdozer_stomache.model" force="false"/>
+		<file :name="ene_acc_deathvox_medicdozer_stomache/ene_acc_deathvox_medicdozer_stomache.unit" load="true"/>
+		<file :name="ene_acc_deathvox_medicdozer_stomache/ene_acc_deathvox_medicdozer_stomache.material_config" force="false"/>	
+		
+
 		<!--DV Taser-->
 		<file :name="ene_deathvox_taser/ene_deathvox_taser.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_taser/ene_deathvox_taser_husk.unit" load="true" force="false"/>
