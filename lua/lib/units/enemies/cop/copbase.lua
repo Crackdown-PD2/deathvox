@@ -1,5 +1,3 @@
-CopBase.fs_lod_stage = CopBase.lod_stage
-
 function CopBase:_chk_spawn_gear()
 	local tweak = tweak_data.narrative.jobs[managers.job:current_real_job_id()]
 	if self._unit:base():char_tweak().ends_assault_on_death then
@@ -29,7 +27,7 @@ function CopBase:_chk_spawn_gear()
 	if alive(managers.groupai:state():phalanx_vip()) then
 		managers.fire:_add_hellfire_enemy(self._unit)
 	end
-	if (self._tweak_table == "spooc" or self._tweak_table == "deathvox_cloaker") and tweak and tweak.is_christmas_heist then -- todo: enable this for every cop on Christmas
+	if (self._tweak_table == "spooc" or self._tweak_table == "deathvox_cloaker") and tweak and tweak.is_christmas_heist then
 		local align_obj_name = Idstring("Head")
 		local align_obj = self._unit:get_object(align_obj_name)
 		self._headwear_unit = World:spawn_unit(Idstring("units/payday2/characters/ene_acc_spook_santa_hat/ene_acc_spook_santa_hat"), Vector3(), Rotation())
