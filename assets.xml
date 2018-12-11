@@ -18,19 +18,7 @@
         <file :name="shared_textures/material_body_df.texture" force="false"/>
         <file :name="shared_textures/material_body_nm.texture" force="false"/>
         <file :name="shared_textures/glass_op.texture" force="false"/>
-		
-		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.material_config" force="false"/>
-		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.object" force="false"/>
-		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.cooked_physics" force="false"/>
-		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.model" force="false"/>
-		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.unit" load="true"/>
-		
-		<file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.material_config" force="false"/>
-		<file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.object" force="false"/>
-		<file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.cooked_physics" force="false"/>
-		<file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.model" force="false"/>
-		<file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.unit" load="true"/>
-		
+						
 		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.material_config" force="false"/>
 		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.object" force="false"/>
 		<file :name="ene_acc_shield_new_swat/ene_acc_shield_new_swat.cooked_physics" force="false"/>
@@ -89,6 +77,13 @@
 		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar.model" force="false"/>
 		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar.unit" load="true"/>
 		<file :name="ene_deathvox_heavyar/ene_deathvox_heavyar_husk.unit" load="true"/>
+		
+		<!--DV Heavy AR Helmet-->
+		<file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.material_config" force="false"/>
+		<file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.object" force="false"/>
+		<file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.cooked_physics" force="false"/>
+		<file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.model" force="false"/>
+		<file :name="ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet.unit" load="true"/>				
 
 
 		<!--DV Light Assault Rifle-->
@@ -99,6 +94,13 @@
 		<file :name="ene_deathvox_lightar/ene_deathvox_lightar.object" force="false"/>
 		<file :name="ene_deathvox_lightar/ene_deathvox_lightar.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_lightar/ene_deathvox_lightar.model" force="false"/>
+		
+		<!--DV SWAT Masks-->
+		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.material_config" force="false"/>
+		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.object" force="false"/>
+		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.cooked_physics" force="false"/>
+		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.model" force="false"/>
+		<file :name="ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet.unit" load="true"/>		
 
 		<!--DV Medic-->
 		<file :name="ene_deathvox_medic/ene_deathvox_medic.unit" load="true"/>
@@ -119,7 +121,7 @@
 		<file :name="ene_deathvox_shield/ene_deathvox_shield.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_shield/ene_deathvox_shield.model" force="false"/>
 
-		<!--DV Heavy Assault Rifle-->
+		<!--DV Heavy Shotgunner-->
 		<file :name="ene_deathvox_heavyshot/swat_heavy_df.texture" force="false"/>
 		<file :name="ene_deathvox_heavyshot/swat_heavy_head_df.texture" force="false"/>
 		<file :name="ene_deathvox_heavyshot/swat_heavy_head_il.texture" force="false"/>
@@ -131,6 +133,13 @@
 		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot.model" force="false"/>
 		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot.unit" load="true"/>
 		<file :name="ene_deathvox_heavyshot/ene_deathvox_heavyshot_husk.unit" load="true"/>
+		
+		<!--DV Heavy Shotgunner Helmet-->
+		<file :name="ene_acc_zeal_swat_heavy_sg_helmet/ene_acc_zeal_swat_heavy_sg_helmet.material_config" force="false"/>
+		<file :name="ene_acc_zeal_swat_heavy_sg_helmet/ene_acc_zeal_swat_heavy_sg_helmet.object" force="false"/>
+		<file :name="ene_acc_zeal_swat_heavy_sg_helmet/ene_acc_zeal_swat_heavy_sg_helmet.cooked_physics" force="false"/>
+		<file :name="ene_acc_zeal_swat_heavy_sg_helmet/ene_acc_zeal_swat_heavy_sg_helmet.model" force="false"/>
+		<file :name="ene_acc_zeal_swat_heavy_sg_helmet/ene_acc_zeal_swat_heavy_sg_helmet.unit" load="true"/>		
 
 		<!--DV Light Assault Rifle-->
 		<file :name="ene_deathvox_lightshot/ene_zeal_swat_df.texture" force="false"/>
@@ -355,6 +364,13 @@
 		<file :name="ene_deathvox_taser/ene_deathvox_taser.object" force="false"/>
 		<file :name="ene_deathvox_taser/ene_deathvox_taser.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_taser/ene_deathvox_taser.model" force="false"/>
+
+		<!--DV Taser Helmet-->
+		<file :name="ene_acc_deathvox_taser_helmet/ene_acc_deathvox_taser_helmet.unit" load="true" force="false"/>
+		<file :name="ene_acc_deathvox_taser_helmet/ene_acc_deathvox_taser_helmet.material_config" force="false"/>
+		<file :name="ene_acc_deathvox_taser_helmet/ene_acc_deathvox_taser_helmet.object" force="false"/>
+		<file :name="ene_acc_deathvox_taser_helmet/ene_acc_deathvox_taser_helmet.cooked_physics" force="false"/>
+		<file :name="ene_acc_deathvox_taser_helmet/ene_acc_deathvox_taser_helmet.model" force="false"/>		
 
 		<!--DV Cloaker-->
 		<file :name="ene_deathvox_cloaker/ene_deathvox_cloaker.unit" load="true"/>
