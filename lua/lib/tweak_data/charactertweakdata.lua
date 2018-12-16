@@ -2300,6 +2300,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard.headshot_dmg_mul = 3
 	self.deathvox_guard.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_guard.access = "security" --fixes SO problem
+	self.deathvox_guard.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
 	table.insert(self._enemy_list, "deathvox_guard")
 	
 	self.deathvox_gman = deep_clone(self.deathvox_guard)
@@ -2308,6 +2309,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_gman.move_speed = presets.move_speed.very_fast
 	self.deathvox_gman.dodge = presets.dodge.deathvox_guard
 	self.deathvox_gman.no_arrest = false -- causes too many issues.
+	self.deathvox_gman.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
 	table.insert(self._enemy_list, "deathvox_gman")
 	local is_classic
 	if self:get_ai_group_type() == "classic" then
@@ -2727,27 +2729,32 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cop.deathguard = true
 	self.deathvox_cop.chatter = presets.enemy_chatter.cop
 	self.deathvox_cop.steal_loot = true
+	self.deathvox_cop.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
 	self.deathvox_cop.detection = presets.detection.deathvox
 
 	self.deathvox_cop_pistol = deep_clone(self.deathvox_cop)
 	self.deathvox_cop_pistol.use_factory = true
 	self.deathvox_cop_pistol.factory_weapon_id = {"wpn_deathvox_cop_pistol"}
+	self.deathvox_cop_pistol.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_cop_pistol")
 	
 	self.deathvox_cop_revolver = deep_clone(self.deathvox_cop)
 	self.deathvox_cop_revolver.use_factory = true
 	self.deathvox_cop_revolver.factory_weapon_id = {"wpn_deathvox_cop_revolver"}
+	self.deathvox_cop_revolver.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_cop_revolver")
 	
 	self.deathvox_cop_smg = deep_clone(self.deathvox_cop)
 	self.deathvox_cop_smg.HEALTH_INIT = 22 -- based on flak jacket model, revise if incorrect.
 	self.deathvox_cop_smg.use_factory = true
 	self.deathvox_cop_smg.factory_weapon_id = {"wpn_deathvox_cop_smg"}
+	self.deathvox_cop_smg.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_cop_smg")
 	
 	self.deathvox_cop_shotgun = deep_clone(self.deathvox_cop)
 	self.deathvox_cop_shotgun.use_factory = true
 	self.deathvox_cop_shotgun.factory_weapon_id = {"wpn_deathvox_cop_shotgun"}
+	self.deathvox_cop_shotgun.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_cop_shotgun")
 	
 	self.deathvox_fbi_rookie = deep_clone(self.deathvox_cop_pistol) 
@@ -2756,6 +2763,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_fbi_rookie.surrender = presets.surrender.easy -- same on all diffs. cloned to all cop units.
 	self.deathvox_fbi_rookie.use_factory = true
 	self.deathvox_fbi_rookie.factory_weapon_id = {"wpn_deathvox_cop_pistol"}
+	self.deathvox_fbi_rookie.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_fbi_rookie")
 
 	self.deathvox_fbi_hrt = deep_clone(self.deathvox_cop_smg) -- note retains smg health.
@@ -2764,6 +2772,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_fbi_hrt.surrender = presets.surrender.hard -- same on all diffs.
 	self.deathvox_fbi_hrt.use_factory = true
 	self.deathvox_fbi_hrt.factory_weapon_id = {"wpn_deathvox_cop_smg"}
+	self.deathvox_fbi_hrt.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_fbi_hrt")
 	
 	self.deathvox_fbi_veteran = deep_clone(self.deathvox_cop_smg) -- note retains smg health.
@@ -2772,6 +2781,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_fbi_veteran.surrender = nil -- same on all diffs.
 	self.deathvox_fbi_veteran.use_factory = true
 	self.deathvox_fbi_veteran.factory_weapon_id = {"wpn_deathvox_heavy_ar"}
+	self.deathvox_fbi_veteran.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_fbi_veteran")
 	
 end

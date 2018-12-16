@@ -92,7 +92,15 @@
 		<file :name="ene_deathvox_gensec_shield/ene_deathvox_gensec_shield.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_gensec_shield/ene_deathvox_gensec_shield_husk.unit" load="true" force="false"/>
 
+		<file :name="ene_acc_deathvox_gensec_shield/ene_acc_deathvox_gensec_shield.unit" load="true" force="false"/>
+		<file :name="ene_acc_deathvox_gensec_shield/ene_acc_deathvox_gensec_shield.object" load="true" force="false"/>
+		<file :name="ene_acc_deathvox_gensec_shield/ene_acc_deathvox_gensec_shield.material_config" load="true" force="false"/>
+		<file :name="ene_acc_deathvox_gensec_shield/ene_acc_deathvox_gensec_shield.cooked_physics" load="true" force="false"/>
+		<file :name="ene_acc_deathvox_gensec_shield/ene_acc_deathvox_gensec_shield.model" load="true" force="false"/>		
+
 		<!--DV Gensec Cloaker-->							
+		<file :name="ene_deathvox_gensec_shield/ene_deathvox_gensec_shield_husk.unit" load="true" force="false"/>		
+			
 		<file :name="ene_deathvox_gensec_cloaker/ene_deathvox_gensec_cloaker.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_gensec_cloaker/ene_deathvox_gensec_cloaker_husk.unit" load="true" force="false"/>
 	

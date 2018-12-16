@@ -457,7 +457,10 @@
 		<file :name="shared_textures/tank_glass_df.texture" force="false"/>		
 		
 		<file :name="shared_textures/genshill_helm_nm.texture" force="false"/>
-		<file :name="shared_textures/genshill_helm_df.texture" force="false"/>
+		<file :name="shared_textures/genshill_helm_df.texture" force="false"/>		
+		
+		<file :name="shared_textures/ene_acc_deathvox_gensec_shield_nm.texture" force="false"/>
+		<file :name="shared_textures/ene_acc_deathvox_gensec_shield_df.texture" force="false"/>
 	</group>
 	<!-- All weapons -->
 	<group name="units/pd2_mod_gageammo/pew_pew_lasers/">
