@@ -112,7 +112,7 @@ function CopActionTase:update(t)
 
 	local fwd_dot = mvector3.dot(self._common_data.fwd, target_vec_flat)
 
-	if fwd_dot > 0.5 then
+	if fwd_dot > 0.6 then
 		if not self._modifier_on then
 			self._modifier_on = true
 
