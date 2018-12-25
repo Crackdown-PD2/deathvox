@@ -2825,33 +2825,49 @@ end
 
 function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 
+	self:crackdown_health_setup() -- applies health scaling structure.
+	
 end -- end NORMAL specific tweaks.
 
 function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 
+	self:crackdown_health_setup() -- applies health scaling structure.
+	
 end -- end HARD specific tweaks.
 
 function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 
+	self:crackdown_health_setup() -- applies health scaling structure.
+	
 end -- end VERY HARD specific tweaks.
 
 function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begin.
 
+	self:crackdown_health_setup() -- applies health scaling structure.
+	
 end -- end OVERKILL specific tweaks.
 
 function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 
+	self:crackdown_health_setup() -- applies health scaling structure.
+	
 end -- end MAYHEM specific tweaks.
+
+	self:crackdown_health_setup() -- applies health scaling structure.
 
 function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks begin.
 
+	self:crackdown_health_setup() -- applies health scaling structure.
+	
 end -- end DEATH WISH specific tweaks.
 
 function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
+
+	self:crackdown_health_setup() -- applies health scaling structure.
 	
 -- NOTE material below this point iamgoofball legacy code. Identify purposes, clean, annotate as able.
 	
-	self:crackdown_health_setup()
+
 	self:_multiply_weapon_delay(self.presets.weapon.normal, 0)
 	self:_multiply_weapon_delay(self.presets.weapon.good, 0)
 	self:_multiply_weapon_delay(self.presets.weapon.expert, 0)
@@ -2867,7 +2883,7 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.biker.HEALTH_INIT = 36
 	self.biker_escape.HEALTH_INIT = 36
 
-	if job == "man" then -- note examine purpose.
+	if job == "man" then -- fixes base game alert bug on Counterfeit. Need to apply to all diffs.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
 		self.cop.calls_in = nil
@@ -2905,6 +2921,7 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	else
 		self.city_swat.no_arrest = false
 	end
+	
 	self:_multiply_all_speeds(1, 1)
 	self.presets.gang_member_damage.HEALTH_INIT = 525
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.75
