@@ -2822,9 +2822,34 @@ function CharacterTweakData:crackdown_health_setup()
 		end
 	end
 end
-			
 
-function CharacterTweakData:_set_sm_wish()
+function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
+
+end -- end NORMAL specific tweaks.
+
+function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
+
+end -- end HARD specific tweaks.
+
+function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
+
+end -- end VERY HARD specific tweaks.
+
+function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begin.
+
+end -- end OVERKILL specific tweaks.
+
+function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
+
+end -- end MAYHEM specific tweaks.
+
+function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks begin.
+
+end -- end DEATH WISH specific tweaks.
+
+function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
+	
+-- NOTE material below this point iamgoofball legacy code. Identify purposes, clean, annotate as able.
 	
 	self:crackdown_health_setup()
 	self:_multiply_weapon_delay(self.presets.weapon.normal, 0)
@@ -2842,16 +2867,16 @@ function CharacterTweakData:_set_sm_wish()
 	self.biker.HEALTH_INIT = 36
 	self.biker_escape.HEALTH_INIT = 36
 
-	if job == "man" then
+	if job == "man" then -- note examine purpose.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
 		self.cop.calls_in = nil
 	end	
 	
-	self.cop.HEALTH_INIT = 15
+	self.cop.HEALTH_INIT = 15 -- note need to see if can be removed.
 
-	self.cop_female.HEALTH_INIT = 15
-	self.fbi.HEALTH_INIT = 48
+	self.cop_female.HEALTH_INIT = 15 -- note need to see if can be removed.
+	self.fbi.HEALTH_INIT = 48 -- note need to see if can be removed.
 	
 	self.chavez_boss.HEALTH_INIT = 900
 	
@@ -2868,9 +2893,9 @@ function CharacterTweakData:_set_sm_wish()
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	self:_set_characters_melee_preset("2")
 	self:_set_specials_weapon_preset("deathvox")
-	self.shield.weapon.is_pistol.melee_speed = nil
-	self.shield.weapon.is_pistol.melee_dmg = nil
-	self.shield.weapon.is_pistol.melee_retry_delay = nil
+	self.shield.weapon.is_pistol.melee_speed = nil -- note need to see if can be removed.
+	self.shield.weapon.is_pistol.melee_dmg = nil -- note need to see if can be removed.
+	self.shield.weapon.is_pistol.melee_retry_delay = nil -- note need to see if can be removed.
 	self:_set_specials_melee_preset("2.5")
 	self.sniper = deep_clone(self.deathvox_sniper)
 	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
@@ -2888,7 +2913,8 @@ function CharacterTweakData:_set_sm_wish()
 	self.spa_vip.HEALTH_INIT = 525
 	self.flashbang_multiplier = 2
 	self.concussion_multiplier = 2
-end
+end  -- end CRACKDOWN specific tweaks.
+
 function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 	self:crackdown_health_setup()
 	self.sniper = deep_clone(self.deathvox_sniper)
