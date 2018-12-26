@@ -259,15 +259,15 @@ function SkirmishTweakData:_init_spawn_group_weights(tweak_data)  -- Everything 
 		}
 	}
 	local ordered_spawn_group_names = {
-		"dv_group_1",
-		"dv_group_2_std",
-		"dv_group_2_med",
-		"dv_group_3_std",
+		"cd_group_1",
+		"cd_group_2_std ",
+		"cd_group_2_med ",
+		"cd_group_3_std",
 		"dv_group_3_med",
-		"dv_group_4_std",
-		"dv_group_4_med",
-		"dv_group_5_std",
-		"dv_group_5_med",
+		"cd_group_4_std",
+		"cd_group_4_med",
+		"cd_group_5_std",
+		"cd_group_5_med",
 		"gorgon",
 		"atlas",
 		"chimera",
