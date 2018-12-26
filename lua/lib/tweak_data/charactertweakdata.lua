@@ -2826,6 +2826,24 @@ end
 function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
+--	guard
+--	gman
+--	lightar
+--	lightshot
+--	heavyar
+--	heavyshot
+--	shield
+--	medic
+--	taser
+--	cloaker
+--	sniper
+--	guarddozer
+--	greendozer
+--	blackdozer
+--	lmgdozer
+--	medicdozer
+--	grenadier
+	
 	
 end -- end NORMAL specific tweaks.
 
