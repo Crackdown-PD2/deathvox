@@ -2838,6 +2838,7 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 --	cloaker
 --	sniper
 --	guarddozer
+--	tank
 --	greendozer
 --	blackdozer
 --	lmgdozer
@@ -2850,39 +2851,158 @@ end -- end NORMAL specific tweaks.
 function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
-	
+--	guard
+--	gman
+--	lightar
+--	lightshot
+--	heavyar
+--	heavyshot
+--	shield
+--	medic
+--	taser
+--	cloaker
+--	sniper
+--	guarddozer
+--	tank
+--	greendozer
+--	blackdozer
+--	lmgdozer
+--	medicdozer
+--	grenadier
 end -- end HARD specific tweaks.
 
 function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
-	
+--	guard
+--	gman
+--	lightar
+--	lightshot
+--	heavyar
+--	heavyshot
+--	shield
+--	medic
+--	taser
+--	cloaker
+--	sniper
+--	guarddozer
+--	tank
+--	greendozer
+--	blackdozer
+--	lmgdozer
+--	medicdozer
+--	grenadier	
 end -- end VERY HARD specific tweaks.
 
 function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
-	
+--	guard
+--	gman
+--	lightar
+--	lightshot
+--	heavyar
+--	heavyshot
+--	shield
+--	medic
+--	taser
+--	cloaker
+--	sniper
+--	guarddozer
+--	tank
+--	greendozer
+--	blackdozer
+--	lmgdozer
+--	medicdozer
+--	grenadier	
 end -- end OVERKILL specific tweaks.
 
 function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
-	
+--	guard
+--	gman
+--	lightar
+--	lightshot
+--	heavyar
+--	heavyshot
+--	shield
+--	medic
+--	taser
+--	cloaker
+--	sniper
+--	guarddozer
+--	tank
+--	greendozer
+--	blackdozer
+--	lmgdozer
+--	medicdozer
+--	grenadier	
 end -- end MAYHEM specific tweaks.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
-
+--	guard
+--	gman
+--	lightar
+--	lightshot
+--	heavyar
+--	heavyshot
+--	shield
+--	medic
+--	taser
+--	cloaker
+--	sniper
+--	guarddozer
+--	tank
+--	greendozer
+--	blackdozer
+--	lmgdozer
+--	medicdozer
+--	grenadier
 function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
-	
+--	guard
+--	gman
+--	lightar
+--	lightshot
+--	heavyar
+--	heavyshot
+--	shield
+--	medic
+--	taser
+--	cloaker
+--	sniper
+--	guarddozer
+--	tank
+--	greendozer
+--	blackdozer
+--	lmgdozer
+--	medicdozer
+--	grenadier	
 end -- end DEATH WISH specific tweaks.
 
 function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
-	
+--	guard
+--	gman
+--	lightar
+--	lightshot
+--	heavyar
+--	heavyshot
+--	shield
+--	medic
+--	taser
+--	cloaker
+--	sniper
+--	guarddozer
+--	tank
+--	greendozer
+--	blackdozer
+--	lmgdozer
+--	medicdozer
+--	grenadier	
 -- NOTE material below this point iamgoofball legacy code. Identify purposes, clean, annotate as able.
 	
 
