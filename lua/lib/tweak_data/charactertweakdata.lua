@@ -2826,25 +2826,87 @@ end
 function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
---	guard
---	gman
---	lightar
---	lightshot
---	heavyar
---	heavyshot
---	shield
---	medic
---	taser
---	cloaker
---	sniper
---	guarddozer
---	tank
---	greendozer
---	blackdozer
---	lmgdozer
---	medicdozer
---	grenadier
+--guard
+--	set ignore medic revive animation to false (all below CD)
+--	set suppress to easy (all below CD)
+--	set movespeed to normal (all below CD)
+--	set following ecm_vulnerabilities: (all below CD)
+--	self.deathvox_guard.ecm_vulnerability = 1
+--	self.deathvox_guard.ecm_hurts = {
+--		ears = {
+--			max_duration = 10,
+--			min_duration = 8
+--		}
+--	}	
+--	set dodge to poor (all below CD)
 	
+--gman
+--	NOTE need to separately define below in init set, then can ignore in per diff set.
+--	set ignore medic revive animation to true
+--	set suppression to = nil
+--	set ecm_vulnerability = 0
+
+--lightar
+--	set ignore medic revive animation to false (all below CD)
+--	set suppression to hard_def (N thru OVK)
+--	set surrender to normal (all below CD)
+--	set move_speed to fast (N, H)
+--	set dodge to athletic (all below CD)
+	
+--lightshot
+--	set ignore medic revive animation to false (all below CD)
+--	set suppression to hard_def (N thru OVK)
+--	set surrender to normal (all below CD)
+--	set move_speed to fast (N, H)
+--	set dodge to athletic (all below CD)
+	
+--heavyar
+--	set ignore medic revive animation to false (all below MH)
+--	NOTE consider curving hurt severities on lower diffs.
+--	set surrender to normal (on N/H, hard on VH-DW)
+--	NOTE need to come back around and rework surrender preset, special preset has issue. Need new one?
+--	set dodge to heavy (all below CD)
+--	NOTE consider adjust damage.explosion_damage_mul curved on lower diffs.
+	
+--heavyshot
+--	set ignore medic revive animation to false (all below MH)
+--	NOTE consider curving hurt severities on lower diffs.
+--	set surrender to normal (on N/H, hard on VH-DW)
+--	NOTE need to come back around and rework surrender preset, special preset has issue. Need new one?
+--	set dodge to heavy (all below CD)
+--	NOTE consider adjust damage.explosion_damage_mul curved on lower diffs.
+	
+--shield
+--	NOTE ask others to examine weapon use. Is this even functioning properly? Should be pistol on N/H, seems to work?
+
+--medic
+--	set ignore medic revive animation to false (all below CD)
+--	set dodge to athletic (all below CD)
+--	set dv_medic_heal to false (all below CD)
+--	NOTE needs to use light AR on diffs below CD. No armor pen! ask team.
+	
+--taser
+--	NOTE ask others to examine weapon use. Is this functioning properly? how is it curved?
+--	set ignore medic revive animation to false (all below MH)
+--	NOTE consider curving hurt severities on lower diffs. note tase severity defined separately.
+--	set move_speed to fast (N-OVK)
+--	set dodge to heavy (on N/H, average on VH/OVK, athletic on MH/DW)
+	
+--cloaker
+--	set dodge to ninja (all below CD)
+
+--sniper
+--	NOTE need to use laser, not tracer, on diffs below CD.
+--	NOTE discuss implementation and use of jarey's glint effect on lower diffs, curve structure.
+
+--tank
+--	NOTE explosion resist does not appear to require curving.
+--	No specific unit curving for dozers, which all sync off of tank effects.
+--guarddozer
+--	NOTE not synced to tank, which is appropriate.
+--	NOTE explosion resist does not appear to require curving.
+--grenadier
+--	No specific unit curving for grenadier.
 	
 end -- end NORMAL specific tweaks.
 
@@ -2852,7 +2914,6 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
 --	guard
---	gman
 --	lightar
 --	lightshot
 --	heavyar
@@ -2862,20 +2923,12 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 --	taser
 --	cloaker
 --	sniper
---	guarddozer
---	tank
---	greendozer
---	blackdozer
---	lmgdozer
---	medicdozer
---	grenadier
 end -- end HARD specific tweaks.
 
 function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
 --	guard
---	gman
 --	lightar
 --	lightshot
 --	heavyar
@@ -2885,20 +2938,12 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 --	taser
 --	cloaker
 --	sniper
---	guarddozer
---	tank
---	greendozer
---	blackdozer
---	lmgdozer
---	medicdozer
---	grenadier	
 end -- end VERY HARD specific tweaks.
 
 function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
 --	guard
---	gman
 --	lightar
 --	lightshot
 --	heavyar
@@ -2908,20 +2953,12 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 --	taser
 --	cloaker
 --	sniper
---	guarddozer
---	tank
---	greendozer
---	blackdozer
---	lmgdozer
---	medicdozer
---	grenadier	
 end -- end OVERKILL specific tweaks.
 
 function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
 --	guard
---	gman
 --	lightar
 --	lightshot
 --	heavyar
@@ -2931,18 +2968,10 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 --	taser
 --	cloaker
 --	sniper
---	guarddozer
---	tank
---	greendozer
---	blackdozer
---	lmgdozer
---	medicdozer
---	grenadier	
 end -- end MAYHEM specific tweaks.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
 --	guard
---	gman
 --	lightar
 --	lightshot
 --	heavyar
@@ -2952,18 +2981,10 @@ end -- end MAYHEM specific tweaks.
 --	taser
 --	cloaker
 --	sniper
---	guarddozer
---	tank
---	greendozer
---	blackdozer
---	lmgdozer
---	medicdozer
---	grenadier
 function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
 --	guard
---	gman
 --	lightar
 --	lightshot
 --	heavyar
@@ -2973,36 +2994,11 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 --	taser
 --	cloaker
 --	sniper
---	guarddozer
---	tank
---	greendozer
---	blackdozer
---	lmgdozer
---	medicdozer
---	grenadier	
 end -- end DEATH WISH specific tweaks.
 
 function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
---	guard
---	gman
---	lightar
---	lightshot
---	heavyar
---	heavyshot
---	shield
---	medic
---	taser
---	cloaker
---	sniper
---	guarddozer
---	tank
---	greendozer
---	blackdozer
---	lmgdozer
---	medicdozer
---	grenadier	
 -- NOTE material below this point iamgoofball legacy code. Identify purposes, clean, annotate as able.
 	
 
