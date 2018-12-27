@@ -604,7 +604,7 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.weapon.deathvox = deep_clone(presets.weapon.deathwish)
 	--note to self- clean up is_revolver and make consistent.
 	presets.weapon.deathvox.is_revolver = { -- used by medics.
-		aim_delay = { -- mark 3 values complete.
+		aim_delay = { -- mark 3 values.
 		0,
 		0
 		},
@@ -717,7 +717,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_pistol = { -- mark 3 values complete. Currently valid for guards, beat police, low level enemies. basis: presets.weapon.deathwish.is_pistol.
+	presets.weapon.deathvox.is_pistol = { -- mark 3 values. Currently valid for guards, beat police, low level enemies. basis: presets.weapon.deathwish.is_pistol.
 		aim_delay = {
 			0,
 			0
@@ -846,7 +846,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_shotgun_pump = { -- mark 5 values complete. Assumes base damage 500. Extremely dangerous close range, less so further out. Slower to fire.
+	presets.weapon.deathvox.is_shotgun_pump = { -- mark 5 values. Assumes CD base damage 500. Extremely dangerous close range, less so further out. Slower to fire.
 		aim_delay = {
 			0,
 			0
@@ -957,7 +957,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_shotgun_mag = { -- mark 4 values complete. assumes base damage 225. The danger isn't the damage, it's the low recoil! Extremely hazardous at close range.
+	presets.weapon.deathvox.is_shotgun_mag = { -- mark 4 values. Assumes CD base damage 225. The danger isn't the damage, it's the low recoil! Extremely hazardous at close range.
 		aim_delay = {
 			0,
 			0
@@ -997,7 +997,7 @@ function CharacterTweakData:_presets(tweak_data)
 			{
 				dmg_mul = 1,
 				r = 500,
-				acc = { -- reduced lower end, vanilla .7.
+				acc = { -- reduced lower end, base game .7.
 					0.5,
 					0.95
 				},
@@ -1015,7 +1015,7 @@ function CharacterTweakData:_presets(tweak_data)
 			{
 				dmg_mul = .93,
 				r = 1000,
-				acc = { -- reduced lower end, vanilla .5.
+				acc = { -- reduced lower end, base game .5.
 					0.4,
 					0.85
 				},
@@ -1033,7 +1033,7 @@ function CharacterTweakData:_presets(tweak_data)
 			{
 				dmg_mul = .7,
 				r = 2000,
-				acc = { -- reduced lower end, vanilla .35.
+				acc = { -- reduced lower end, base game .35.
 					0.35,
 					0.65
 				},
@@ -1069,7 +1069,7 @@ function CharacterTweakData:_presets(tweak_data)
 		}
 	}
 
-	presets.weapon.deathvox.is_light_rifle = { -- mark 3 values complete. basis is presets.weapon.deathwish.is_rifle. General goal- more shots, less damage, reduced range.
+	presets.weapon.deathvox.is_light_rifle = { -- mark 3 values. basis is presets.weapon.deathwish.is_rifle. General goal- more shots, less damage, reduced range.
 		aim_delay = {
 			0,
 			0
@@ -1141,7 +1141,7 @@ function CharacterTweakData:_presets(tweak_data)
 					0.7,
 					0.9
 				},
-				recoil = { --reduced to increase attack rate at lower range. Vanilla values .35-.55. No changes to later ranges.
+				recoil = { --reduced to increase attack rate at lower range. Base game values .35-.55. No changes to later ranges.
 					0.25,
 					0.45
 				},
@@ -1323,13 +1323,13 @@ function CharacterTweakData:_presets(tweak_data)
 			},
 			{
 				dmg_mul = 0.55,
-				r = 6000, -- uses longer range, per vanilla, to maintain long falloff tail.
+				r = 6000, -- uses longer range, per base game, to maintain long falloff tail.
 				acc = {
-					0.35, -- increased tail accuracy. Vanilla values .25-.7.
+					0.35, -- increased tail accuracy. Base game values .25-.7.
 					0.7
 				},
 				recoil = {
-					1.5, -- increased tail recoil to reduce attack rate. Vanilla values 1-2.
+					1.5, -- increased tail recoil to reduce attack rate. Base game values 1-2.
 					2.5
 				},
 				mode = {
@@ -1354,7 +1354,7 @@ function CharacterTweakData:_presets(tweak_data)
 		melee_speed = 1,
 		melee_dmg = 20,
 		melee_retry_delay = presets.weapon.expert.is_shotgun_pump.melee_retry_delay,
-		range = { -- validated, unchanged. I believe same for all shotgun enemy types in vanilla.
+		range = { -- validated, unchanged. I believe same for all shotgun enemy types in base game.
 			optimal = 3000,
 			far = 5000,
 			close = 2000
@@ -1490,7 +1490,7 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = 1, -- less falloff at close range versus vanilla.
+				dmg_mul = 1, -- less falloff at close range versus base game.
 				r = 500,
 				acc = {
 					0.7,
@@ -1528,7 +1528,7 @@ function CharacterTweakData:_presets(tweak_data)
 			{
 				dmg_mul = .4,
 				r = 2000,
-				acc = { -- slight max accuracy increase, vanilla stats .45-.7.
+				acc = { -- slight max accuracy increase, base game stats .45-.7.
 					0.45,
 					0.75
 				},
@@ -1696,7 +1696,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.mini = { -- unused and unchanged as of mark 3 revisions.
+	presets.weapon.deathvox.mini = { -- unused and unchanged.
 		aim_delay = {
 			0.1,
 			0.2
@@ -1961,7 +1961,7 @@ function CharacterTweakData:_presets(tweak_data)
 		melee_speed = presets.weapon.normal.is_rifle.melee_speed,
 		melee_dmg = presets.weapon.normal.is_rifle.melee_dmg,
 		melee_retry_delay = presets.weapon.normal.is_rifle.melee_retry_delay,
-		range = { --validated, unchanged. Will need to see values used by crimespree zeal heavy snipers for assault snipers.
+		range = { --validated, unchanged.
 			optimal = 15000,
 			far = 15000,
 			close = 15000
@@ -2221,9 +2221,9 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.weapon.deathvox.is_dozer_saiga = deep_clone(presets.weapon.deathvox.is_shotgun_mag)
 	presets.weapon.deathvox.is_dozer_pump = deep_clone(presets.weapon.deathvox.is_shotgun_pump)
 	presets.weapon.deathvox.is_dozer_lmg = deep_clone(presets.weapon.deathvox.is_lmg)
-	presets.weapon.deathvox.is_bullpup = deep_clone(presets.weapon.deathvox.is_light_rifle) -- moving this clone down from inappropriate position above.
-	presets.weapon.deathvox.mac11 = deep_clone(presets.weapon.deathvox.is_smg) -- revises erroneous clone of pistol from previous setup.
-	presets.weapon.deathvox.mp9 = deep_clone(presets.weapon.deathvox.is_smg) -- revises erroneous clone of pistol from previous setup.
+	presets.weapon.deathvox.is_bullpup = deep_clone(presets.weapon.deathvox.is_light_rifle) 
+	presets.weapon.deathvox.mac11 = deep_clone(presets.weapon.deathvox.is_smg) 
+	presets.weapon.deathvox.mp9 = deep_clone(presets.weapon.deathvox.is_smg) 
 	presets.weapon.deathvox.rifle = deep_clone(presets.weapon.deathvox.is_light_rifle)
 	presets.weapon.deathvox.is_sniper = deep_clone(presets.weapon.deathvox.is_light_rifle)
 	presets.weapon.deathvox.is_rifle = deep_clone(presets.weapon.deathvox.is_light_rifle)
@@ -2300,16 +2300,19 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard.headshot_dmg_mul = 3
 	self.deathvox_guard.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_guard.access = "security" --fixes SO problem
-	self.deathvox_guard.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
+	self.deathvox_guard.die_sound_event = "x01a_any_3p" -- pain lines are death lines for these units.
 	table.insert(self._enemy_list, "deathvox_guard")
-	
+
 	self.deathvox_gman = deep_clone(self.deathvox_guard)
+	self.deathvox_gman.ignore_medic_revive_animation = true --no revive animation.
 	self.deathvox_gman.ignore_ecm_for_pager = true
+	self.deathvox_gman.suppression = nil
 	self.deathvox_gman.surrender = nil -- cannot be intimidated.
 	self.deathvox_gman.move_speed = presets.move_speed.very_fast
+	self.deathvox_gman.ecm_vulnerability = 0
 	self.deathvox_gman.dodge = presets.dodge.deathvox_guard
 	self.deathvox_gman.no_arrest = false -- causes too many issues.
-	self.deathvox_gman.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
+	self.deathvox_gman.die_sound_event = "x01a_any_3p" -- pain lines are death lines for these units.
 	table.insert(self._enemy_list, "deathvox_gman")
 	local is_classic
 	if self:get_ai_group_type() == "classic" then
@@ -2404,7 +2407,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyar.use_factory = true
 	self.deathvox_heavyar.HEALTH_INIT = 101 -- new with final 2017 pass.
 	self.deathvox_heavyar.headshot_dmg_mul = 3
-	self.deathvox_heavyar.damage.explosion_damage_mul = 0.7
+	self.deathvox_heavyar.damage.explosion_damage_mul = 0.7 -- may require curving on lower diffs.
 	self.deathvox_heavyar.access = "any"
 	if is_classic then
 		self.deathvox_heavyar.custom_voicework = "pdth"
@@ -2515,7 +2518,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8} -- in base.
 	}
-	self.deathvox_taser.dodge = presets.dodge.deathvox -- should be athletic on MH/DW, heavy on VH/OVK, average on N/H. 
+	self.deathvox_taser.dodge = presets.dodge.deathvox -- should be athletic on MH/DW, average on VH/OVK, heavy on N/H. 
 	self.deathvox_taser.deathguard = true 
 	self.deathvox_taser.no_arrest = true
 	self.deathvox_taser.steal_loot = nil
@@ -2839,12 +2842,6 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 --		}
 --	}	
 --	set dodge to poor (all below CD)
-	
---gman
---	NOTE need to separately define below in init set, then can ignore in per diff set.
---	set ignore medic revive animation to true
---	set suppression to = nil
---	set ecm_vulnerability = 0
 
 --lightar
 --	set ignore medic revive animation to false (all below CD)
@@ -2902,11 +2899,13 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 --tank
 --	NOTE explosion resist does not appear to require curving.
 --	No specific unit curving for dozers, which all sync off of tank effects.
+	
 --guarddozer
 --	NOTE not synced to tank, which is appropriate.
 --	NOTE explosion resist does not appear to require curving.
---grenadier
---	No specific unit curving for grenadier.
+		
+--turrets
+--	NOTE need to check if turret changes are being applied to lower difficulties.
 	
 end -- end NORMAL specific tweaks.
 
