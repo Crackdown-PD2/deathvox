@@ -2831,8 +2831,8 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 	self:crackdown_health_setup() -- applies health scaling structure.
 -- guard - NORMAL
 	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
-	self.deathvox_guard.suppression = easy -- easy suppression below CD
-	self.deathvox_guard.move_speed = presets.move_speed.normal -- normal movespeed below CD
+	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
+	self.deathvox_guard.move_speed = deep_clone(self.presets.move_speed.normal) -- normal movespeed below CD
 	self.deathvox_guard.ecm_vulnerability = 1 -- ecm vuln below CD
 	self.deathvox_guard.ecm_hurts = {
 		ears = {
@@ -2840,20 +2840,20 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 			min_duration = 8
 		}
 	}	
-	self.deathvox_guard.dodge = presets.dodge.poor -- poor dodge below CD
+	self.deathvox_guard.dodge = deep_clone(self.presets.dodge.poor) -- poor dodge below CD
 --lightar - NORMAL
 	self.deathvox_lightar.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightar.suppression = presets.suppression.hard_def -- suppression to hard_def (N thru OVK)
-	self.deathvox_lightar.surrender = presets.surrender.normal  --	surrender to normal (all below CD)
-	self.deathvox_lightar.move_speed = presets.move_speed.fast -- move_speed to fast (N, H)
-	self.deathvox_lightar.dodge = presets.dodge.athletic --	dodge to athletic (all below CD)
+	self.deathvox_lightar.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightar.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
+	self.deathvox_lightar.move_speed = deep_clone(self.presets.move_speed.fast) -- move_speed to fast (N, H)
+	self.deathvox_lightar.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
 	
 --lightshot - NORMAL
 	self.deathvox_lightshot.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightshot.suppression = presets.suppression.hard_def -- suppression to hard_def (N thru OVK)
-	self.deathvox_lightshot.surrender = presets.surrender.normal  -- surrender to normal (all below CD)
-	self.deathvox_lightshot.move_speed = presets.move_speed.fast -- move_speed to fast (N, H)
-	self.deathvox_lightshot.dodge = presets.dodge.athletic -- dodge to athletic (all below CD)
+	self.deathvox_lightshot.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (all below CD)
+	self.deathvox_lightshot.move_speed = deep_clone(self.presets.move_speed.fast) -- move_speed to fast (N, H)
+	self.deathvox_lightshot.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
 	
 --heavyar - NORMAL
 --	set ignore medic revive animation to false (all below MH)
@@ -2912,8 +2912,8 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	self:crackdown_health_setup() -- applies health scaling structure.
 -- guard - HARD
 	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
-	self.deathvox_guard.suppression = easy -- easy suppression below CD
-	self.deathvox_guard.move_speed = presets.move_speed.normal -- normal movespeed below CD
+	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
+	self.deathvox_guard.move_speed = deep_clone(self.presets.move_speed.normal) -- normal movespeed below CD
 	self.deathvox_guard.ecm_vulnerability = 1 -- ecm vuln below CD
 	self.deathvox_guard.ecm_hurts = {
 		ears = {
@@ -2921,21 +2921,21 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 			min_duration = 8
 		}
 	}	
-	self.deathvox_guard.dodge = presets.dodge.poor -- poor dodge below CD
+	self.deathvox_guard.dodge = deep_clone(self.presets.dodge.poor) -- poor dodge below CD
 
 --	lightar - HARD
 	self.deathvox_lightar.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightar.suppression = presets.suppression.hard_def -- suppression to hard_def (N thru OVK)
-	self.deathvox_lightar.surrender = presets.surrender.normal  --	surrender to normal (all below CD)
-	self.deathvox_lightar.move_speed = presets.move_speed.fast -- move_speed to fast (N, H)
-	self.deathvox_lightar.dodge = presets.dodge.athletic --	dodge to athletic (all below CD)
+	self.deathvox_lightar.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightar.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
+	self.deathvox_lightar.move_speed = deep_clone(self.presets.move_speed.fast) -- move_speed to fast (N, H)
+	self.deathvox_lightar.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
 	
 --	lightshot - HARD
 	self.deathvox_lightshot.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightshot.suppression = presets.suppression.hard_def -- suppression to hard_def (N thru OVK)
-	self.deathvox_lightshot.surrender = presets.surrender.normal  -- surrender to normal (all below CD)
-	self.deathvox_lightshot.move_speed = presets.move_speed.fast -- move_speed to fast (N, H)
-	self.deathvox_lightshot.dodge = presets.dodge.athletic -- dodge to athletic (all below CD)
+	self.deathvox_lightshot.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (all below CD)
+	self.deathvox_lightshot.move_speed = deep_clone(self.presets.move_speed.fast) -- move_speed to fast (N, H)
+	self.deathvox_lightshot.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
 	
 --	heavyar - HARD
 --	heavyshot - HARD
@@ -2951,8 +2951,8 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 	self:crackdown_health_setup() -- applies health scaling structure.
 -- guard - VERY HARD
 	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
-	self.deathvox_guard.suppression = easy -- easy suppression below CD
-	self.deathvox_guard.move_speed = presets.move_speed.normal -- normal movespeed below CD
+	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
+	self.deathvox_guard.move_speed = deep_clone(self.presets.move_speed.normal) -- normal movespeed below CD
 	self.deathvox_guard.ecm_vulnerability = 1 -- ecm vuln below CD
 	self.deathvox_guard.ecm_hurts = {
 		ears = {
@@ -2960,19 +2960,19 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 			min_duration = 8
 		}
 	}	
-	self.deathvox_guard.dodge = presets.dodge.poor -- poor dodge below CD
+	self.deathvox_guard.dodge = deep_clone(self.presets.dodge.poor) -- poor dodge below CD
 
 --	lightar - VERY HARD
 	self.deathvox_lightar.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightar.suppression = presets.suppression.hard_def -- suppression to hard_def (N thru OVK)
-	self.deathvox_lightar.surrender = presets.surrender.normal  --	surrender to normal (all below CD)
-	self.deathvox_lightar.dodge = presets.dodge.athletic --	dodge to athletic (all below CD)
+	self.deathvox_lightar.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightar.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
+	self.deathvox_lightar.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
 	
 --	lightshot - VERY HARD
 	self.deathvox_lightshot.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightshot.suppression = presets.suppression.hard_def -- suppression to hard_def (N thru OVK)
-	self.deathvox_lightshot.surrender = presets.surrender.normal  -- surrender to normal (all below CD)
-	self.deathvox_lightshot.dodge = presets.dodge.athletic -- dodge to athletic (all below CD)
+	self.deathvox_lightshot.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (all below CD)
+	self.deathvox_lightshot.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
 	
 --	heavyar - VERY HARD
 --	heavyshot - VERY HARD
@@ -2988,8 +2988,8 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	self:crackdown_health_setup() -- applies health scaling structure.
 -- guard - OVERKILL
 	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
-	self.deathvox_guard.suppression = easy -- easy suppression below CD
-	self.deathvox_guard.move_speed = presets.move_speed.normal -- normal movespeed below CD
+	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
+	self.deathvox_guard.move_speed = deep_clone(self.presets.move_speed.normal) -- normal movespeed below CD
 	self.deathvox_guard.ecm_vulnerability = 1 -- ecm vuln below CD
 	self.deathvox_guard.ecm_hurts = {
 		ears = {
@@ -2997,19 +2997,19 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 			min_duration = 8
 		}
 	}	
-	self.deathvox_guard.dodge = presets.dodge.poor -- poor dodge below CD
+	self.deathvox_guard.dodge = deep_clone(self.presets.dodge.poor) -- poor dodge below CD
 
 --	lightar - OVERKILL
 	self.deathvox_lightar.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightar.suppression = presets.suppression.hard_def -- suppression to hard_def (N thru OVK)
-	self.deathvox_lightar.surrender = presets.surrender.normal  --	surrender to normal (all below CD)
-	self.deathvox_lightar.dodge = presets.dodge.athletic --	dodge to athletic (all below CD)
+	self.deathvox_lightar.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightar.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
+	self.deathvox_lightar.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
 	
 --	lightshot - OVERKILL
 	self.deathvox_lightshot.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightshot.suppression = presets.suppression.hard_def -- suppression to hard_def (N thru OVK)
-	self.deathvox_lightshot.surrender = presets.surrender.normal  -- surrender to normal (all below CD)
-	self.deathvox_lightshot.dodge = presets.dodge.athletic -- dodge to athletic (all below CD)
+	self.deathvox_lightshot.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (all below CD)
+	self.deathvox_lightshot.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
 	
 --	heavyar - OVERKILL
 --	heavyshot - OVERKILL
@@ -3025,8 +3025,8 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self:crackdown_health_setup() -- applies health scaling structure.
 --guard - MAYHEM
 	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
-	self.deathvox_guard.suppression = easy -- easy suppression below CD
-	self.deathvox_guard.move_speed = presets.move_speed.normal -- normal movespeed below CD
+	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
+	self.deathvox_guard.move_speed = deep_clone(self.presets.move_speed.normal) -- normal movespeed below CD
 	self.deathvox_guard.ecm_vulnerability = 1 -- ecm vuln below CD
 	self.deathvox_guard.ecm_hurts = {
 		ears = {
@@ -3034,17 +3034,17 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 			min_duration = 8
 		}
 	}	
-	self.deathvox_guard.dodge = presets.dodge.poor -- poor dodge below CD
+	self.deathvox_guard.dodge = deep_clone(self.presets.dodge.poor) -- poor dodge below CD
 
 --	lightar - MAYHEM
 	self.deathvox_lightar.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightar.surrender = presets.surrender.normal  --	surrender to normal (all below CD)
-	self.deathvox_lightar.dodge = presets.dodge.athletic --	dodge to athletic (all below CD)
+	self.deathvox_lightar.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
+	self.deathvox_lightar.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
 	
 --	lightshot - MAYHEM
 	self.deathvox_lightshot.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightshot.surrender = presets.surrender.normal  -- surrender to normal (all below CD)
-	self.deathvox_lightshot.dodge = presets.dodge.athletic -- dodge to athletic (all below CD)
+	self.deathvox_lightshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (all below CD)
+	self.deathvox_lightshot.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
 --	heavyar - MAYHEM
 --	heavyshot - MAYHEM
 --	shield - MAYHEM
@@ -3059,8 +3059,8 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	self:crackdown_health_setup() -- applies health scaling structure.
 --guard - DEATH WISH
 	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
-	self.deathvox_guard.suppression = easy -- easy suppression below CD
-	self.deathvox_guard.move_speed = presets.move_speed.normal -- normal movespeed below CD
+	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
+	self.deathvox_guard.move_speed = deep_clone(self.presets.move_speed.normal) -- normal movespeed below CD
 	self.deathvox_guard.ecm_vulnerability = 1 -- ecm vuln below CD
 	self.deathvox_guard.ecm_hurts = {
 		ears = {
@@ -3068,17 +3068,17 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 			min_duration = 8
 		}
 	}	
-	self.deathvox_guard.dodge = presets.dodge.poor -- poor dodge below CD
+	self.deathvox_guard.dodge = deep_clone(self.presets.dodge.poor) -- poor dodge below CD
 
 --	lightar - DEATH WISH
 	self.deathvox_lightar.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightar.surrender = presets.surrender.normal  --	surrender to normal (all below CD)
-	self.deathvox_lightar.dodge = presets.dodge.athletic --	dodge to athletic (all below CD)
+	self.deathvox_lightar.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
+	self.deathvox_lightar.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
 	
 --	lightshot - DEATH WISH
 	self.deathvox_lightshot.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightshot.surrender = presets.surrender.normal  -- surrender to normal (all below CD)
-	self.deathvox_lightshot.dodge = presets.dodge.athletic -- dodge to athletic (all below CD)
+	self.deathvox_lightshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (all below CD)
+	self.deathvox_lightshot.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
 
 --	heavyar - DEATH WISH
 --	heavyshot - DEATH WISH
