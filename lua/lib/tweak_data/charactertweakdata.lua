@@ -2919,7 +2919,6 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
-	self:_set_specials_melee_preset("2.5") -- applies enemy melee scaling structure.
 	self.presets.gang_member_damage.HEALTH_INIT = 250 -- bot health values. Manually set for each diff.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
 	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 250
@@ -2988,7 +2987,6 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
-	self:_set_specials_melee_preset("2.5") -- applies enemy melee scaling structure.
 	
 	self.presets.gang_member_damage.HEALTH_INIT = 300 -- bot health values. Manually set for each diff.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
@@ -3056,7 +3054,6 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
-	self:_set_specials_melee_preset("2.5") -- applies enemy melee scaling structure.
 	
 	self.presets.gang_member_damage.HEALTH_INIT = 300 -- bot health values. Manually set for each diff.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
@@ -3125,7 +3122,6 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
-	self:_set_specials_melee_preset("2.5") -- applies enemy melee scaling structure.
 	
 	self.presets.gang_member_damage.HEALTH_INIT = 400 -- bot health values. Manually set for each diff.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
@@ -3187,7 +3183,6 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
-	self:_set_specials_melee_preset("2.5") -- applies enemy melee scaling structure.
 	
 	self.presets.gang_member_damage.HEALTH_INIT = 400 -- bot health values. Manually set for each diff.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
@@ -3249,7 +3244,6 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
-	self:_set_specials_melee_preset("2.5") -- applies enemy melee scaling structure.
 	
 -- NOTE material below this point iamgoofball legacy code. Identify purposes, clean, annotate as able.
 	
@@ -3272,9 +3266,9 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 
 	
-	self.shield.weapon.is_pistol.melee_speed = nil -- note need to see if can be removed.
-	self.shield.weapon.is_pistol.melee_dmg = nil -- note need to see if can be removed.
-	self.shield.weapon.is_pistol.melee_retry_delay = nil -- note need to see if can be removed.
+	-- self.shield.weapon.is_pistol.melee_speed = nil -- note need to see if can be removed.
+	-- self.shield.weapon.is_pistol.melee_dmg = nil -- note need to see if can be removed.
+	-- self.shield.weapon.is_pistol.melee_retry_delay = nil -- note need to see if can be removed.
 
 	self.sniper = deep_clone(self.deathvox_sniper)
 	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
