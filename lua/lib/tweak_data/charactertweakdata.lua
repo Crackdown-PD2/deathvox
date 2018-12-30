@@ -2627,7 +2627,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guarddozer.steal_loot = nil
 	self.deathvox_guarddozer.rescue_hostages = false
 	self.deathvox_guarddozer.HEALTH_INIT = 875
-	self.deathvox_guarddozer.damage.explosion_damage_mul = 0.5  -- may require curving on lower diffs.
+	self.deathvox_guarddozer.damage.explosion_damage_mul = 0.7  -- may require curving on lower diffs.
 	self.deathvox_guarddozer.is_special_unit = "tank"
 	self.deathvox_guarddozer.no_retreat = false
 	self.deathvox_guarddozer.access = "tank"
@@ -2886,14 +2886,14 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 --	set dodge to heavy (on N/H, average on VH/OVK, athletic on MH/DW)
 	
 --cloaker - NORMAL
---	set dodge to ninja (all below CD)
+	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
 
 --sniper - NORMAL
 --	NOTE need to use laser, not tracer, on diffs below CD.
 --	NOTE discuss implementation and use of jarey's glint effect on lower diffs, curve structure.
 
 --tank
---	NOTE explosion resist does not appear to require curving.
+	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.
 	
 --guarddozer
@@ -2958,7 +2958,13 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	
 --	taser - HARD
 --	cloaker - HARD
+	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
+	
 --	sniper - HARD
+--	tank - HARD
+	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
+--	No specific unit curving for dozers, which all sync off of tank effects.
+	
 end -- end HARD specific tweaks.
 
 function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
@@ -3012,7 +3018,13 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 	
 --	taser - VERY HARD
 --	cloaker - VERY HARD
+	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
+	
 --	sniper - VERY HARD
+--	tank - VERY HARD
+	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
+--	No specific unit curving for dozers, which all sync off of tank effects.
+	
 end -- end VERY HARD specific tweaks.
 
 function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begin.
@@ -3066,7 +3078,13 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	
 --	taser - OVERKILL
 --	cloaker - OVERKILL
+	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
+	
 --	sniper - OVERKILL
+--	tank - OVERKILL
+	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
+--	No specific unit curving for dozers, which all sync off of tank effects.
+	
 end -- end OVERKILL specific tweaks.
 
 function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
@@ -3114,7 +3132,13 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	
 --	taser - MAYHEM
 --	cloaker - MAYHEM
+	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
+	
 --	sniper - MAYHEM
+--	tank - MAYHEM
+	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
+--	No specific unit curving for dozers, which all sync off of tank effects.	
+
 end -- end MAYHEM specific tweaks.
 
 function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks begin.
@@ -3162,7 +3186,13 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	
 --	taser - DEATH WISH
 --	cloaker - DEATH WISH
+	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
+	
 --	sniper - DEATH WISH
+--	tank - DEATH WISH
+	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
+--	No specific unit curving for dozers, which all sync off of tank effects.	
+
 end -- end DEATH WISH specific tweaks.
 
 function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
