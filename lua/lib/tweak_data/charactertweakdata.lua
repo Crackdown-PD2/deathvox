@@ -2829,6 +2829,12 @@ end
 function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
+	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self.presets.gang_member_damage.HEALTH_INIT = 250 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 250
+	
 -- guard - NORMAL
 	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
 	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
@@ -2908,6 +2914,11 @@ end -- end NORMAL specific tweaks.
 function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
+	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self.presets.gang_member_damage.HEALTH_INIT = 250 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 250
 -- guard - HARD
 	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
 	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
@@ -2970,6 +2981,12 @@ end -- end HARD specific tweaks.
 function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
+	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
+	
+	self.presets.gang_member_damage.HEALTH_INIT = 300 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 300
 -- guard - VERY HARD
 	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
 	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
@@ -3030,6 +3047,12 @@ end -- end VERY HARD specific tweaks.
 function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
+	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self.presets.gang_member_damage.HEALTH_INIT = 300 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 300
+	
 -- guard - OVERKILL
 	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
 	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
@@ -3090,6 +3113,11 @@ end -- end OVERKILL specific tweaks.
 function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
+	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self.presets.gang_member_damage.HEALTH_INIT = 400 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 400
 --guard - MAYHEM
 	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
 	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
@@ -3144,6 +3172,11 @@ end -- end MAYHEM specific tweaks.
 function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
+	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self.presets.gang_member_damage.HEALTH_INIT = 400 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 400
 --guard - DEATH WISH
 	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
 	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
@@ -3198,6 +3231,8 @@ end -- end DEATH WISH specific tweaks.
 function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 
 	self:crackdown_health_setup() -- applies health scaling structure.
+	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
 -- NOTE material below this point iamgoofball legacy code. Identify purposes, clean, annotate as able.
 	
 
@@ -3215,10 +3250,10 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 		self.cop.calls_in = nil
 	end	
 	
-	self:_set_characters_weapon_preset("deathvox")
+
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	self:_set_characters_melee_preset("2")
-	self:_set_specials_weapon_preset("deathvox")
+	
 	self.shield.weapon.is_pistol.melee_speed = nil -- note need to see if can be removed.
 	self.shield.weapon.is_pistol.melee_dmg = nil -- note need to see if can be removed.
 	self.shield.weapon.is_pistol.melee_retry_delay = nil -- note need to see if can be removed.
@@ -3233,9 +3268,6 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	end
 	
 	self:_multiply_all_speeds(1, 1)
-	self.presets.gang_member_damage.HEALTH_INIT = 525
-	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.75
-	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 525
 	self.old_hoxton_mission.HEALTH_INIT = 525
 	self.spa_vip.HEALTH_INIT = 525
 	self.flashbang_multiplier = 2
