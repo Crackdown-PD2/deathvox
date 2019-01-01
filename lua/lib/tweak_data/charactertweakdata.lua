@@ -2832,7 +2832,13 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
-	self:_set_specials_melee_preset("2.5") -- applies enemy melee scaling structure.
+	
+	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+		self.fbi.calls_in = nil
+		self.cop_female.calls_in = nil
+		self.cop.calls_in = nil
+	end	
+	
 	self.presets.gang_member_damage.HEALTH_INIT = 250 -- bot health values. Manually set for each diff.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
 	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 250
@@ -2919,6 +2925,13 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
+	
+	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+		self.fbi.calls_in = nil
+		self.cop_female.calls_in = nil
+		self.cop.calls_in = nil
+	end	
+	
 	self.presets.gang_member_damage.HEALTH_INIT = 250 -- bot health values. Manually set for each diff.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
 	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 250
@@ -2988,6 +3001,12 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 	
+	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+		self.fbi.calls_in = nil
+		self.cop_female.calls_in = nil
+		self.cop.calls_in = nil
+	end	
+	
 	self.presets.gang_member_damage.HEALTH_INIT = 300 -- bot health values. Manually set for each diff.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
 	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 300
@@ -3054,6 +3073,12 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
+	
+	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+		self.fbi.calls_in = nil
+		self.cop_female.calls_in = nil
+		self.cop.calls_in = nil
+	end	
 	
 	self.presets.gang_member_damage.HEALTH_INIT = 300 -- bot health values. Manually set for each diff.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
@@ -3123,6 +3148,12 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 	
+	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+		self.fbi.calls_in = nil
+		self.cop_female.calls_in = nil
+		self.cop.calls_in = nil
+	end	
+	
 	self.presets.gang_member_damage.HEALTH_INIT = 400 -- bot health values. Manually set for each diff.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
 	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 400
@@ -3183,10 +3214,17 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
+
+	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+		self.fbi.calls_in = nil
+		self.cop_female.calls_in = nil
+		self.cop.calls_in = nil
+	end	
 	
 	self.presets.gang_member_damage.HEALTH_INIT = 400 -- bot health values. Manually set for each diff.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
 	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 400
+	
 --guard - DEATH WISH
 	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
 	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
@@ -3245,6 +3283,16 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 	
+	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+		self.fbi.calls_in = nil
+		self.cop_female.calls_in = nil
+		self.cop.calls_in = nil
+	end	
+	
+	self.presets.gang_member_damage.HEALTH_INIT = 500 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 500
+	
 -- NOTE material below this point iamgoofball legacy code. Identify purposes, clean, annotate as able.
 	
 
@@ -3256,19 +3304,7 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.security = deep_clone(self.deathvox_guard) -- apparently fixes "broke movement stuff".
 	self.gensec = deep_clone(self.deathvox_guard)
 	
-	if job == "man" then -- fixes base game alert bug on Counterfeit. Need to apply to all diffs.
-		self.fbi.calls_in = nil
-		self.cop_female.calls_in = nil
-		self.cop.calls_in = nil
-	end	
-	
-
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
-
-	
-	-- self.shield.weapon.is_pistol.melee_speed = nil -- note need to see if can be removed.
-	-- self.shield.weapon.is_pistol.melee_dmg = nil -- note need to see if can be removed.
-	-- self.shield.weapon.is_pistol.melee_retry_delay = nil -- note need to see if can be removed.
 
 	self.sniper = deep_clone(self.deathvox_sniper)
 	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
