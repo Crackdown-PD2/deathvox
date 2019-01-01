@@ -2380,7 +2380,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_lightshot")
 	
 	self.deathvox_heavyar = deep_clone(self.city_swat)
-	self.deathvox_heavyar.speech_prefix_p1 = "l4d"
+	self.deathvox_heavyar.speech_prefix_p1 = "l3d"
 	self.deathvox_heavyar.speech_prefix_p2 = nil
 	self.deathvox_heavyar.speech_prefix_count = nil
 	self.deathvox_heavyar.detection = presets.detection.deathvox
@@ -2448,6 +2448,9 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_heavyshot")
 	
 	self.deathvox_shield = deep_clone(self.shield)
+	self.deathvox_shield.speech_prefix_p1 = "l5d"
+	self.deathvox_shield.speech_prefix_p2 = nil
+	self.deathvox_shield.speech_prefix_count = nil
 	self.deathvox_shield.tags = {"shield"} -- just to be sure it's being applied.
 	self.deathvox_shield.detection = presets.detection.deathvox
 	self.deathvox_shield.ignore_medic_revive_animation = true  --no revive animation. In base.
