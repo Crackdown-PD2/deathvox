@@ -3301,7 +3301,8 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self:_multiply_weapon_delay(self.presets.weapon.expert, 0)
 	self:_multiply_weapon_delay(self.presets.weapon.sniper, 0)
 	self:_multiply_weapon_delay(self.presets.weapon.gang_member, 0)
-	self.security = deep_clone(self.deathvox_guard) -- apparently fixes "broke movement stuff".
+	
+	self.security = deep_clone(self.deathvox_guard) --  Requires further testing. May be fix for heist-specific crash tied to initial custom unit spawn.
 	self.gensec = deep_clone(self.deathvox_guard)
 	
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
@@ -3309,14 +3310,14 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.sniper = deep_clone(self.deathvox_sniper)
 	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	
-	if job == "kosugi" or job == "dark" then
-		self.city_swat.no_arrest = true
-	else
-		self.city_swat.no_arrest = false
-	end
+--	if job == "kosugi" or job == "dark" then -- believed to be outdated unit role change for murky stealth guards. testing removal.
+--		self.city_swat.no_arrest = true
+--	else
+--		self.city_swat.no_arrest = false
+--	end
 	
 	self:_multiply_all_speeds(1, 1)
-	self.old_hoxton_mission.HEALTH_INIT = 525
+--	self.old_hoxton_mission.HEALTH_INIT = 525 -- testing removal of oldhox HP set code.
 	self.spa_vip.HEALTH_INIT = 525
 	self.flashbang_multiplier = 2
 	self.concussion_multiplier = 2
@@ -3328,16 +3329,16 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.cop_female.HEALTH_INIT = 15 -- note need to see if can be removed.
 	self.fbi.HEALTH_INIT = 48 -- note need to see if can be removed.
 	
-	self.chavez_boss.HEALTH_INIT = 900 -- ask team if these are in use.
-	self.bolivian_indoors.HEALTH_INIT = 36 
+	self.chavez_boss.HEALTH_INIT = 900 -- ask testers if these are in use
+	self.bolivian_indoors.HEALTH_INIT = 1000 
 	self.bolivian_indoors.no_arrest = true
-	self.bolivian.HEALTH_INIT = 36
-	self.gangster.HEALTH_INIT = 36
-	self.biker.HEALTH_INIT = 36
-	self.biker_escape.HEALTH_INIT = 36
+	self.bolivian.HEALTH_INIT = 1000
+	self.gangster.HEALTH_INIT = 1000
+	self.biker.HEALTH_INIT = 1000
+	self.biker_escape.HEALTH_INIT = 1000
 	
 	self.phalanx_vip = deep_clone(self.phalanx_minion) -- killable winters to prevent soft-lock
-	self.phalanx_vip.HEALTH_INIT = 300
+	self.phalanx_vip.HEALTH_INIT = 300 -- currently unused captain code. Not touching until captain implemented.
 	self.phalanx_vip.DAMAGE_CLAMP_BULLET = 100
 	self.phalanx_vip.DAMAGE_CLAMP_EXPLOSION = self.phalanx_vip.DAMAGE_CLAMP_BULLET
 	self.phalanx_vip.can_be_tased = false
