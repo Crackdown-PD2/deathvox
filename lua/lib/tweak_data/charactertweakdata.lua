@@ -604,7 +604,7 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.weapon.deathvox = deep_clone(presets.weapon.deathwish)
 	--note to self- clean up is_revolver and make consistent.
 	presets.weapon.deathvox.is_revolver = { -- used by medics.
-		aim_delay = { -- mark 3 values complete.
+		aim_delay = { -- mark 3 values.
 		0,
 		0
 		},
@@ -717,7 +717,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_pistol = { -- mark 3 values complete. Currently valid for guards, beat police, low level enemies. basis: presets.weapon.deathwish.is_pistol.
+	presets.weapon.deathvox.is_pistol = { -- mark 3 values. Currently valid for guards, beat police, low level enemies. basis: presets.weapon.deathwish.is_pistol.
 		aim_delay = {
 			0,
 			0
@@ -846,7 +846,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_shotgun_pump = { -- mark 5 values complete. Assumes base damage 500. Extremely dangerous close range, less so further out. Slower to fire.
+	presets.weapon.deathvox.is_shotgun_pump = { -- mark 5 values. Assumes CD base damage 500. Extremely dangerous close range, less so further out. Slower to fire.
 		aim_delay = {
 			0,
 			0
@@ -957,7 +957,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_shotgun_mag = { -- mark 4 values complete. assumes base damage 225. The danger isn't the damage, it's the low recoil! Extremely hazardous at close range.
+	presets.weapon.deathvox.is_shotgun_mag = { -- mark 4 values. Assumes CD base damage 225. The danger isn't the damage, it's the low recoil! Extremely hazardous at close range.
 		aim_delay = {
 			0,
 			0
@@ -997,7 +997,7 @@ function CharacterTweakData:_presets(tweak_data)
 			{
 				dmg_mul = 1,
 				r = 500,
-				acc = { -- reduced lower end, vanilla .7.
+				acc = { -- reduced lower end, base game .7.
 					0.5,
 					0.95
 				},
@@ -1015,7 +1015,7 @@ function CharacterTweakData:_presets(tweak_data)
 			{
 				dmg_mul = .93,
 				r = 1000,
-				acc = { -- reduced lower end, vanilla .5.
+				acc = { -- reduced lower end, base game .5.
 					0.4,
 					0.85
 				},
@@ -1033,7 +1033,7 @@ function CharacterTweakData:_presets(tweak_data)
 			{
 				dmg_mul = .7,
 				r = 2000,
-				acc = { -- reduced lower end, vanilla .35.
+				acc = { -- reduced lower end, base game .35.
 					0.35,
 					0.65
 				},
@@ -1069,7 +1069,7 @@ function CharacterTweakData:_presets(tweak_data)
 		}
 	}
 
-	presets.weapon.deathvox.is_light_rifle = { -- mark 3 values complete. basis is presets.weapon.deathwish.is_rifle. General goal- more shots, less damage, reduced range.
+	presets.weapon.deathvox.is_light_rifle = { -- mark 3 values. basis is presets.weapon.deathwish.is_rifle. General goal- more shots, less damage, reduced range.
 		aim_delay = {
 			0,
 			0
@@ -1141,7 +1141,7 @@ function CharacterTweakData:_presets(tweak_data)
 					0.7,
 					0.9
 				},
-				recoil = { --reduced to increase attack rate at lower range. Vanilla values .35-.55. No changes to later ranges.
+				recoil = { --reduced to increase attack rate at lower range. Base game values .35-.55. No changes to later ranges.
 					0.25,
 					0.45
 				},
@@ -1323,13 +1323,13 @@ function CharacterTweakData:_presets(tweak_data)
 			},
 			{
 				dmg_mul = 0.55,
-				r = 6000, -- uses longer range, per vanilla, to maintain long falloff tail.
+				r = 6000, -- uses longer range, per base game, to maintain long falloff tail.
 				acc = {
-					0.35, -- increased tail accuracy. Vanilla values .25-.7.
+					0.35, -- increased tail accuracy. Base game values .25-.7.
 					0.7
 				},
 				recoil = {
-					1.5, -- increased tail recoil to reduce attack rate. Vanilla values 1-2.
+					1.5, -- increased tail recoil to reduce attack rate. Base game values 1-2.
 					2.5
 				},
 				mode = {
@@ -1354,7 +1354,7 @@ function CharacterTweakData:_presets(tweak_data)
 		melee_speed = 1,
 		melee_dmg = 20,
 		melee_retry_delay = presets.weapon.expert.is_shotgun_pump.melee_retry_delay,
-		range = { -- validated, unchanged. I believe same for all shotgun enemy types in vanilla.
+		range = { -- validated, unchanged. I believe same for all shotgun enemy types in base game.
 			optimal = 3000,
 			far = 5000,
 			close = 2000
@@ -1490,7 +1490,7 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = 1, -- less falloff at close range versus vanilla.
+				dmg_mul = 1, -- less falloff at close range versus base game.
 				r = 500,
 				acc = {
 					0.7,
@@ -1528,7 +1528,7 @@ function CharacterTweakData:_presets(tweak_data)
 			{
 				dmg_mul = .4,
 				r = 2000,
-				acc = { -- slight max accuracy increase, vanilla stats .45-.7.
+				acc = { -- slight max accuracy increase, base game stats .45-.7.
 					0.45,
 					0.75
 				},
@@ -1696,7 +1696,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.mini = { -- unused and unchanged as of mark 3 revisions.
+	presets.weapon.deathvox.mini = { -- unused and unchanged.
 		aim_delay = {
 			0.1,
 			0.2
@@ -1961,7 +1961,7 @@ function CharacterTweakData:_presets(tweak_data)
 		melee_speed = presets.weapon.normal.is_rifle.melee_speed,
 		melee_dmg = presets.weapon.normal.is_rifle.melee_dmg,
 		melee_retry_delay = presets.weapon.normal.is_rifle.melee_retry_delay,
-		range = { --validated, unchanged. Will need to see values used by crimespree zeal heavy snipers for assault snipers.
+		range = { --validated, unchanged.
 			optimal = 15000,
 			far = 15000,
 			close = 15000
@@ -2221,9 +2221,9 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.weapon.deathvox.is_dozer_saiga = deep_clone(presets.weapon.deathvox.is_shotgun_mag)
 	presets.weapon.deathvox.is_dozer_pump = deep_clone(presets.weapon.deathvox.is_shotgun_pump)
 	presets.weapon.deathvox.is_dozer_lmg = deep_clone(presets.weapon.deathvox.is_lmg)
-	presets.weapon.deathvox.is_bullpup = deep_clone(presets.weapon.deathvox.is_light_rifle) -- moving this clone down from inappropriate position above.
-	presets.weapon.deathvox.mac11 = deep_clone(presets.weapon.deathvox.is_smg) -- revises erroneous clone of pistol from previous setup.
-	presets.weapon.deathvox.mp9 = deep_clone(presets.weapon.deathvox.is_smg) -- revises erroneous clone of pistol from previous setup.
+	presets.weapon.deathvox.is_bullpup = deep_clone(presets.weapon.deathvox.is_light_rifle) 
+	presets.weapon.deathvox.mac11 = deep_clone(presets.weapon.deathvox.is_smg) 
+	presets.weapon.deathvox.mp9 = deep_clone(presets.weapon.deathvox.is_smg) 
 	presets.weapon.deathvox.rifle = deep_clone(presets.weapon.deathvox.is_light_rifle)
 	presets.weapon.deathvox.is_sniper = deep_clone(presets.weapon.deathvox.is_light_rifle)
 	presets.weapon.deathvox.is_rifle = deep_clone(presets.weapon.deathvox.is_light_rifle)
@@ -2300,16 +2300,19 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard.headshot_dmg_mul = 3
 	self.deathvox_guard.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_guard.access = "security" --fixes SO problem
-	self.deathvox_guard.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
+	self.deathvox_guard.die_sound_event = "x01a_any_3p" -- pain lines are death lines for these units.
 	table.insert(self._enemy_list, "deathvox_guard")
-	
+
 	self.deathvox_gman = deep_clone(self.deathvox_guard)
+	self.deathvox_gman.ignore_medic_revive_animation = true --no revive animation.
 	self.deathvox_gman.ignore_ecm_for_pager = true
+	self.deathvox_gman.suppression = nil
 	self.deathvox_gman.surrender = nil -- cannot be intimidated.
 	self.deathvox_gman.move_speed = presets.move_speed.very_fast
+	self.deathvox_gman.ecm_vulnerability = 0
 	self.deathvox_gman.dodge = presets.dodge.deathvox_guard
 	self.deathvox_gman.no_arrest = false -- causes too many issues.
-	self.deathvox_gman.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
+	self.deathvox_gman.die_sound_event = "x01a_any_3p" -- pain lines are death lines for these units.
 	table.insert(self._enemy_list, "deathvox_gman")
 	local is_classic
 	if self:get_ai_group_type() == "classic" then
@@ -2404,7 +2407,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyar.use_factory = true
 	self.deathvox_heavyar.HEALTH_INIT = 101 -- new with final 2017 pass.
 	self.deathvox_heavyar.headshot_dmg_mul = 3
-	self.deathvox_heavyar.damage.explosion_damage_mul = 0.7
+	self.deathvox_heavyar.damage.explosion_damage_mul = 0.7 -- may require curving on lower diffs.
 	self.deathvox_heavyar.access = "any"
 	if is_classic then
 		self.deathvox_heavyar.custom_voicework = "pdth"
@@ -2518,7 +2521,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8} -- in base.
 	}
-	self.deathvox_taser.dodge = presets.dodge.deathvox -- should be athletic on MH/DW, heavy on VH/OVK, average on N/H. 
+	self.deathvox_taser.dodge = presets.dodge.deathvox -- should be athletic on MH/DW, average on VH/OVK, heavy on N/H. 
 	self.deathvox_taser.deathguard = true 
 	self.deathvox_taser.no_arrest = true
 	self.deathvox_taser.steal_loot = nil
@@ -2604,7 +2607,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.steal_loot = nil
 	self.deathvox_tank.rescue_hostages = false
 	self.deathvox_tank.HEALTH_INIT = 875
-	self.deathvox_tank.damage.explosion_damage_mul = 0.5  -- may require curving on lower diffs.
+	self.deathvox_tank.damage.explosion_damage_mul = 0.3  -- may require curving on lower diffs.
 	self.deathvox_tank.is_special_unit = "tank"
 	self.deathvox_tank.access = "walk"
 	self.deathvox_tank.no_retreat = false
@@ -2627,7 +2630,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guarddozer.steal_loot = nil
 	self.deathvox_guarddozer.rescue_hostages = false
 	self.deathvox_guarddozer.HEALTH_INIT = 875
-	self.deathvox_guarddozer.damage.explosion_damage_mul = 0.5  -- may require curving on lower diffs.
+	self.deathvox_guarddozer.damage.explosion_damage_mul = 0.7  -- may require curving on lower diffs.
 	self.deathvox_guarddozer.is_special_unit = "tank"
 	self.deathvox_guarddozer.no_retreat = false
 	self.deathvox_guarddozer.access = "tank"
@@ -2825,41 +2828,520 @@ function CharacterTweakData:crackdown_health_setup()
 		end
 	end
 end
-			
 
-function CharacterTweakData:_set_sm_wish()
-	
-	self:crackdown_health_setup()
-	self:_multiply_weapon_delay(self.presets.weapon.normal, 0)
-	self:_multiply_weapon_delay(self.presets.weapon.good, 0)
-	self:_multiply_weapon_delay(self.presets.weapon.expert, 0)
-	self:_multiply_weapon_delay(self.presets.weapon.sniper, 0)
-	self:_multiply_weapon_delay(self.presets.weapon.gang_member, 0)
-	self.security = deep_clone(self.deathvox_guard) -- fucking broke piece of shit movement stuff
-	self.gensec = deep_clone(self.deathvox_guard)
-	
-	self.bolivian_indoors.HEALTH_INIT = 36
-	self.bolivian_indoors.no_arrest = true
-	self.bolivian.HEALTH_INIT = 36
-	self.gangster.HEALTH_INIT = 36
-	self.biker.HEALTH_INIT = 36
-	self.biker_escape.HEALTH_INIT = 36
+function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 
-	if job == "man" then
+	self:crackdown_health_setup() -- applies health scaling structure.
+	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
+	
+	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
 		self.cop.calls_in = nil
 	end	
 	
-	self.cop.HEALTH_INIT = 15
-
-	self.cop_female.HEALTH_INIT = 15
-	self.fbi.HEALTH_INIT = 48
+	self.presets.gang_member_damage.HEALTH_INIT = 250 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 250
 	
-	self.chavez_boss.HEALTH_INIT = 900
+-- guard - NORMAL
+	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
+	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
+	self.deathvox_guard.move_speed = deep_clone(self.presets.move_speed.normal) -- normal movespeed below CD
+	self.deathvox_guard.ecm_vulnerability = 1 -- ecm vuln below CD
+	self.deathvox_guard.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}	
+	self.deathvox_guard.dodge = deep_clone(self.presets.dodge.poor) -- poor dodge below CD
+--lightar - NORMAL
+	self.deathvox_lightar.ignore_medic_revive_animation = false -- medic revive anim (below CD)
+	self.deathvox_lightar.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightar.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
+	self.deathvox_lightar.move_speed = deep_clone(self.presets.move_speed.fast) -- move_speed to fast (N, H)
+	self.deathvox_lightar.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
+	
+--lightshot - NORMAL
+	self.deathvox_lightshot.ignore_medic_revive_animation = false -- medic revive anim (below CD)
+	self.deathvox_lightshot.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (all below CD)
+	self.deathvox_lightshot.move_speed = deep_clone(self.presets.move_speed.fast) -- move_speed to fast (N, H)
+	self.deathvox_lightshot.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
+	
+--heavyar - NORMAL
+	self.deathvox_heavyar.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
+--	NOTE consider curving hurt severities on lower diffs.
+	self.deathvox_heavyar.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (on N/H, hard on VH-DW)
+	self.deathvox_heavyar.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
+	self.deathvox_heavyar.damage.explosion_damage_mul = 1 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
+	
+--heavyshot - NORMAL
+	self.deathvox_heavyshot.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
+--	NOTE consider curving hurt severities on lower diffs.
+	self.deathvox_heavyshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (on N/H, hard on VH-DW)
+	self.deathvox_heavyshot.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
+	self.deathvox_heavyshot.damage.explosion_damage_mul = 1 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
+	
+--shield - NORMAL
+--	NOTE ask others to examine weapon use. Is this even functioning properly? Should be pistol on N/H, seems to work?
+
+--medic - NORMAL
+	self.deathvox_medic.ignore_medic_revive_animation = false -- medic revive anim (all below CD)
+	self.deathvox_medic.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
+	self.deathvox_medic.dv_medic_heal = false -- dv_medic_heal to false (all below CD)
+	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
+	
+--taser - NORMAL
+--	NOTE ask others to examine weapon use. Is this functioning properly? how is it curved?
+--	set ignore medic revive animation to false (all below MH)
+--	NOTE consider curving hurt severities on lower diffs. note tase severity defined separately.
+--	set move_speed to fast (N-OVK)
+--	set dodge to heavy (on N/H, average on VH/OVK, athletic on MH/DW)
+	
+--cloaker - NORMAL
+	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
+
+--sniper - NORMAL
+--	NOTE need to use laser, not tracer, on diffs below CD.
+--	NOTE discuss implementation and use of jarey's glint effect on lower diffs, curve structure.
+
+--tank
+	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
+--	No specific unit curving for dozers, which all sync off of tank effects.
+	
+--guarddozer
+--	NOTE not synced to tank, which is appropriate.
+--	NOTE explosion resist does not appear to require curving.
+		
+--turrets
+--	NOTE turrets need adjustment on lower difficulties.
+	
+end -- end NORMAL specific tweaks.
+
+function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
+
+	self:crackdown_health_setup() -- applies health scaling structure.
+	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
+	
+	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+		self.fbi.calls_in = nil
+		self.cop_female.calls_in = nil
+		self.cop.calls_in = nil
+	end	
+	
+	self.presets.gang_member_damage.HEALTH_INIT = 250 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 250
+-- guard - HARD
+	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
+	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
+	self.deathvox_guard.move_speed = deep_clone(self.presets.move_speed.normal) -- normal movespeed below CD
+	self.deathvox_guard.ecm_vulnerability = 1 -- ecm vuln below CD
+	self.deathvox_guard.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}	
+	self.deathvox_guard.dodge = deep_clone(self.presets.dodge.poor) -- poor dodge below CD
+
+--	lightar - HARD
+	self.deathvox_lightar.ignore_medic_revive_animation = false -- medic revive anim (below CD)
+	self.deathvox_lightar.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightar.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
+	self.deathvox_lightar.move_speed = deep_clone(self.presets.move_speed.fast) -- move_speed to fast (N, H)
+	self.deathvox_lightar.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
+	
+--	lightshot - HARD
+	self.deathvox_lightshot.ignore_medic_revive_animation = false -- medic revive anim (below CD)
+	self.deathvox_lightshot.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (all below CD)
+	self.deathvox_lightshot.move_speed = deep_clone(self.presets.move_speed.fast) -- move_speed to fast (N, H)
+	self.deathvox_lightshot.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
+	
+--	heavyar - HARD
+	self.deathvox_heavyar.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
+--	NOTE consider curving hurt severities on lower diffs.
+	self.deathvox_heavyar.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (on N/H, hard on VH-DW)
+	self.deathvox_heavyar.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
+	self.deathvox_heavyar.damage.explosion_damage_mul = 1 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
+	
+--	heavyshot - HARD
+	self.deathvox_heavyshot.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
+--	NOTE consider curving hurt severities on lower diffs.
+	self.deathvox_heavyshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (on N/H, hard on VH-DW)
+	self.deathvox_heavyshot.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
+	self.deathvox_heavyshot.damage.explosion_damage_mul = 1 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
+		
+--	shield - HARD
+--	medic - HARD
+	self.deathvox_medic.ignore_medic_revive_animation = false -- medic revive anim (all below CD)
+	self.deathvox_medic.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
+	self.deathvox_medic.dv_medic_heal = false -- dv_medic_heal to false (all below CD)
+	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
+	
+--	taser - HARD
+--	cloaker - HARD
+	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
+	
+--	sniper - HARD
+--	tank - HARD
+	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
+--	No specific unit curving for dozers, which all sync off of tank effects.
+	
+end -- end HARD specific tweaks.
+
+function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
+
+	self:crackdown_health_setup() -- applies health scaling structure.
+	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
+	
+	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+		self.fbi.calls_in = nil
+		self.cop_female.calls_in = nil
+		self.cop.calls_in = nil
+	end	
+	
+	self.presets.gang_member_damage.HEALTH_INIT = 300 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 300
+-- guard - VERY HARD
+	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
+	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
+	self.deathvox_guard.move_speed = deep_clone(self.presets.move_speed.normal) -- normal movespeed below CD
+	self.deathvox_guard.ecm_vulnerability = 1 -- ecm vuln below CD
+	self.deathvox_guard.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}	
+	self.deathvox_guard.dodge = deep_clone(self.presets.dodge.poor) -- poor dodge below CD
+
+--	lightar - VERY HARD
+	self.deathvox_lightar.ignore_medic_revive_animation = false -- medic revive anim (below CD)
+	self.deathvox_lightar.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightar.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
+	self.deathvox_lightar.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
+	
+--	lightshot - VERY HARD
+	self.deathvox_lightshot.ignore_medic_revive_animation = false -- medic revive anim (below CD)
+	self.deathvox_lightshot.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (all below CD)
+	self.deathvox_lightshot.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
+	
+--	heavyar - VERY HARD
+	self.deathvox_heavyar.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
+--	NOTE consider curving hurt severities on lower diffs.
+	self.deathvox_heavyar.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
+	self.deathvox_heavyar.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
+	self.deathvox_heavyar.damage.explosion_damage_mul = 0.8 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
+	
+--	heavyshot - VERY HARD
+	self.deathvox_heavyshot.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
+--	NOTE consider curving hurt severities on lower diffs.
+	self.deathvox_heavyshot.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
+	self.deathvox_heavyshot.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
+	self.deathvox_heavyshot.damage.explosion_damage_mul = 0.8 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
+	
+--	shield - VERY HARD
+--	medic - VERY HARD
+	self.deathvox_medic.ignore_medic_revive_animation = false -- medic revive anim (all below CD)
+	self.deathvox_medic.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
+	self.deathvox_medic.dv_medic_heal = false -- dv_medic_heal to false (all below CD)
+	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
+	
+--	taser - VERY HARD
+--	cloaker - VERY HARD
+	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
+	
+--	sniper - VERY HARD
+--	tank - VERY HARD
+	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
+--	No specific unit curving for dozers, which all sync off of tank effects.
+	
+end -- end VERY HARD specific tweaks.
+
+function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begin.
+
+	self:crackdown_health_setup() -- applies health scaling structure.
+	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
+	
+	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+		self.fbi.calls_in = nil
+		self.cop_female.calls_in = nil
+		self.cop.calls_in = nil
+	end	
+	
+	self.presets.gang_member_damage.HEALTH_INIT = 300 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 300
+	
+-- guard - OVERKILL
+	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
+	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
+	self.deathvox_guard.move_speed = deep_clone(self.presets.move_speed.normal) -- normal movespeed below CD
+	self.deathvox_guard.ecm_vulnerability = 1 -- ecm vuln below CD
+	self.deathvox_guard.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}	
+	self.deathvox_guard.dodge = deep_clone(self.presets.dodge.poor) -- poor dodge below CD
+
+--	lightar - OVERKILL
+	self.deathvox_lightar.ignore_medic_revive_animation = false -- medic revive anim (below CD)
+	self.deathvox_lightar.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightar.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
+	self.deathvox_lightar.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
+	
+--	lightshot - OVERKILL
+	self.deathvox_lightshot.ignore_medic_revive_animation = false -- medic revive anim (below CD)
+	self.deathvox_lightshot.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (all below CD)
+	self.deathvox_lightshot.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
+	
+--	heavyar - OVERKILL
+	self.deathvox_heavyar.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
+--	NOTE consider curving hurt severities on lower diffs.
+	self.deathvox_heavyar.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
+	self.deathvox_heavyar.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
+	self.deathvox_heavyar.damage.explosion_damage_mul = 0.8 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
+	
+--	heavyshot - OVERKILL
+	self.deathvox_heavyshot.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
+--	NOTE consider curving hurt severities on lower diffs.
+	self.deathvox_heavyshot.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
+	self.deathvox_heavyshot.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
+	self.deathvox_heavyshot.damage.explosion_damage_mul = 0.8 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
+	
+--	shield - OVERKILL
+--	medic - OVERKILL
+	self.deathvox_medic.ignore_medic_revive_animation = false -- medic revive anim (all below CD)
+	self.deathvox_medic.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
+	self.deathvox_medic.dv_medic_heal = false -- dv_medic_heal to false (all below CD)
+	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
+	
+--	taser - OVERKILL
+--	cloaker - OVERKILL
+	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
+	
+--	sniper - OVERKILL
+--	tank - OVERKILL
+	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
+--	No specific unit curving for dozers, which all sync off of tank effects.
+	
+end -- end OVERKILL specific tweaks.
+
+function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
+
+	self:crackdown_health_setup() -- applies health scaling structure.
+	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
+	
+	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+		self.fbi.calls_in = nil
+		self.cop_female.calls_in = nil
+		self.cop.calls_in = nil
+	end	
+	
+	self.presets.gang_member_damage.HEALTH_INIT = 400 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 400
+--guard - MAYHEM
+	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
+	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
+	self.deathvox_guard.move_speed = deep_clone(self.presets.move_speed.normal) -- normal movespeed below CD
+	self.deathvox_guard.ecm_vulnerability = 1 -- ecm vuln below CD
+	self.deathvox_guard.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}	
+	self.deathvox_guard.dodge = deep_clone(self.presets.dodge.poor) -- poor dodge below CD
+
+--	lightar - MAYHEM
+	self.deathvox_lightar.ignore_medic_revive_animation = false -- medic revive anim (below CD)
+	self.deathvox_lightar.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
+	self.deathvox_lightar.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
+	
+--	lightshot - MAYHEM
+	self.deathvox_lightshot.ignore_medic_revive_animation = false -- medic revive anim (below CD)
+	self.deathvox_lightshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (all below CD)
+	self.deathvox_lightshot.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
+	
+--	heavyar - MAYHEM
+--	NOTE consider curving hurt severities on lower diffs.
+	self.deathvox_heavyar.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
+	self.deathvox_heavyar.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
+	
+--	heavyshot - MAYHEM
+--	NOTE consider curving hurt severities on lower diffs.
+	self.deathvox_heavyshot.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
+	self.deathvox_heavyshot.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
+	
+--	shield - MAYHEM
+--	medic - MAYHEM
+	self.deathvox_medic.ignore_medic_revive_animation = false -- medic revive anim (all below CD)
+	self.deathvox_medic.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
+	self.deathvox_medic.dv_medic_heal = false -- dv_medic_heal to false (all below CD)
+	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
+	
+--	taser - MAYHEM
+--	cloaker - MAYHEM
+	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
+	
+--	sniper - MAYHEM
+--	tank - MAYHEM
+	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
+--	No specific unit curving for dozers, which all sync off of tank effects.	
+
+end -- end MAYHEM specific tweaks.
+
+function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks begin.
+
+	self:crackdown_health_setup() -- applies health scaling structure.
+	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
+
+	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+		self.fbi.calls_in = nil
+		self.cop_female.calls_in = nil
+		self.cop.calls_in = nil
+	end	
+	
+	self.presets.gang_member_damage.HEALTH_INIT = 400 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 400
+	
+--guard - DEATH WISH
+	self.deathvox_guard.ignore_medic_revive_animation = false --medic revive anim below CD
+	self.deathvox_guard.suppression = deep_clone(self.presets.suppression.easy) -- easy suppression below CD
+	self.deathvox_guard.move_speed = deep_clone(self.presets.move_speed.normal) -- normal movespeed below CD
+	self.deathvox_guard.ecm_vulnerability = 1 -- ecm vuln below CD
+	self.deathvox_guard.ecm_hurts = {
+		ears = {
+			max_duration = 10,
+			min_duration = 8
+		}
+	}	
+	self.deathvox_guard.dodge = deep_clone(self.presets.dodge.poor) -- poor dodge below CD
+
+--	lightar - DEATH WISH
+	self.deathvox_lightar.ignore_medic_revive_animation = false -- medic revive anim (below CD)
+	self.deathvox_lightar.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
+	self.deathvox_lightar.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
+	
+--	lightshot - DEATH WISH
+	self.deathvox_lightshot.ignore_medic_revive_animation = false -- medic revive anim (below CD)
+	self.deathvox_lightshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (all below CD)
+	self.deathvox_lightshot.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
+
+--	heavyar - DEATH WISH
+--	NOTE consider curving hurt severities on lower diffs.
+	self.deathvox_heavyar.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
+	self.deathvox_heavyar.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)	
+
+--	heavyshot - DEATH WISH
+--	NOTE consider curving hurt severities on lower diffs.
+	self.deathvox_heavyshot.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
+	self.deathvox_heavyshot.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
+	
+--	shield - DEATH WISH
+--	medic - DEATH WISH
+	self.deathvox_medic.ignore_medic_revive_animation = false -- medic revive anim (all below CD)
+	self.deathvox_medic.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
+	self.deathvox_medic.dv_medic_heal = false -- dv_medic_heal to false (all below CD)
+	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
+	
+--	taser - DEATH WISH
+--	cloaker - DEATH WISH
+	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
+	
+--	sniper - DEATH WISH
+--	tank - DEATH WISH
+	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
+--	No specific unit curving for dozers, which all sync off of tank effects.	
+
+end -- end DEATH WISH specific tweaks.
+
+function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
+
+	self:crackdown_health_setup() -- applies health scaling structure.
+	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
+	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
+	
+	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+		self.fbi.calls_in = nil
+		self.cop_female.calls_in = nil
+		self.cop.calls_in = nil
+	end	
+	
+	self.presets.gang_member_damage.HEALTH_INIT = 500 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
+	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 500
+	
+-- NOTE material below this point iamgoofball legacy code. Identify purposes, clean, annotate as able.
+	
+
+	self:_multiply_weapon_delay(self.presets.weapon.normal, 0)
+	self:_multiply_weapon_delay(self.presets.weapon.good, 0)
+	self:_multiply_weapon_delay(self.presets.weapon.expert, 0)
+	self:_multiply_weapon_delay(self.presets.weapon.sniper, 0)
+	self:_multiply_weapon_delay(self.presets.weapon.gang_member, 0)
+	
+	self.security = deep_clone(self.deathvox_guard) --  Requires further testing. May be fix for heist-specific crash tied to initial custom unit spawn.
+	self.gensec = deep_clone(self.deathvox_guard)
+	
+	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+
+	self.sniper = deep_clone(self.deathvox_sniper)
+	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	
+--	if job == "kosugi" or job == "dark" then -- believed to be outdated unit role change for murky stealth guards. testing removal.
+--		self.city_swat.no_arrest = true
+--	else
+--		self.city_swat.no_arrest = false
+--	end
+	
+	self:_multiply_all_speeds(1, 1)
+--	self.old_hoxton_mission.HEALTH_INIT = 525 -- testing removal of oldhox HP set code.
+	self.spa_vip.HEALTH_INIT = 525
+	self.flashbang_multiplier = 2
+	self.concussion_multiplier = 2
+	
+-- Begin goofball legacy health changes.
+	
+	self.cop.HEALTH_INIT = 15 -- note need to see if can be removed.
+
+	self.cop_female.HEALTH_INIT = 15 -- note need to see if can be removed.
+	self.fbi.HEALTH_INIT = 48 -- note need to see if can be removed.
+	
+	self.chavez_boss.HEALTH_INIT = 900 -- ask testers if these are in use
+	self.bolivian_indoors.HEALTH_INIT = 1000 
+	self.bolivian_indoors.no_arrest = true
+	self.bolivian.HEALTH_INIT = 1000
+	self.gangster.HEALTH_INIT = 1000
+	self.biker.HEALTH_INIT = 1000
+	self.biker_escape.HEALTH_INIT = 1000
 	
 	self.phalanx_vip = deep_clone(self.phalanx_minion) -- killable winters to prevent soft-lock
-	self.phalanx_vip.HEALTH_INIT = 300
+	self.phalanx_vip.HEALTH_INIT = 300 -- currently unused captain code. Not touching until captain implemented.
 	self.phalanx_vip.DAMAGE_CLAMP_BULLET = 100
 	self.phalanx_vip.DAMAGE_CLAMP_EXPLOSION = self.phalanx_vip.DAMAGE_CLAMP_BULLET
 	self.phalanx_vip.can_be_tased = false
@@ -2867,31 +3349,8 @@ function CharacterTweakData:_set_sm_wish()
 	self.phalanx_vip.immune_to_concussion = true
 	self.phalanx_vip.ends_assault_on_death = true
 	
-	self:_set_characters_weapon_preset("deathvox")
-	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
-	self:_set_characters_melee_preset("2")
-	self:_set_specials_weapon_preset("deathvox")
-	self.shield.weapon.is_pistol.melee_speed = nil
-	self.shield.weapon.is_pistol.melee_dmg = nil
-	self.shield.weapon.is_pistol.melee_retry_delay = nil
-	self:_set_specials_melee_preset("2.5")
-	self.sniper = deep_clone(self.deathvox_sniper)
-	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
-	
-	if job == "kosugi" or job == "dark" then
-		self.city_swat.no_arrest = true
-	else
-		self.city_swat.no_arrest = false
-	end
-	self:_multiply_all_speeds(1, 1)
-	self.presets.gang_member_damage.HEALTH_INIT = 525
-	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.75
-	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 525
-	self.old_hoxton_mission.HEALTH_INIT = 525
-	self.spa_vip.HEALTH_INIT = 525
-	self.flashbang_multiplier = 2
-	self.concussion_multiplier = 2
-end
+end  -- end CRACKDOWN specific tweaks.
+
 function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 	self:crackdown_health_setup()
 	self.sniper = deep_clone(self.deathvox_sniper)
