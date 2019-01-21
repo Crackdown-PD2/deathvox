@@ -12,17 +12,6 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 2},
 			crackdown = {damage = 6}
 		},
---We need to consider splitting guard and g-man to give g-man an absolute handcannon.
---Like with base cops, there are different guards with different guns. 
---Ideally, we can set them up to use the same presets as base cop.
---This means so cop smg will also be used by guards with smgs.        
-        --cop bronco
-        --cop shotgun
-        --cop pistol
-        --cop smg
-        --rookie pistol (maybe copy cop pistol?)
-        --HRT smg
-        --Veteran AR (maybe copy heavy AR?)
 -- note light and heavy baselines are not used for beat cop type enemies. These will be implemented separately. They correspond to swat unit types (blue, yellow) instead.
 		deathvox_light_ar = {
 			not_a_real_difficulty = {damage = 10},
@@ -65,8 +54,7 @@ function WeaponTweakData:init(tweak_data)
 			crackdown = {damage = 13} -- zeal.
 		},
         --shield?
-        deathvox_medic_pistol = { -- note needs to be a different, non-penetrating value on lower diffs. 
--- may need split?
+        deathvox_medic_pistol = { -- note uses light ar on difficulties below CD.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 2}, -- blue.
 			hard = {damage = 2}, --start.
@@ -89,7 +77,6 @@ function WeaponTweakData:init(tweak_data)
 		},
 		deathvox_sniper = { -- focus much more on aim/focus delay than damage shift.
 -- no need for asset coherence on this unit only, as at a distance. Discuss typing with group.
--- Note possible use in other modes.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 16}, -- blue.
 			hard = {damage = 16},
@@ -239,10 +226,10 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_light_ar.DAMAGE = 7.5 -- Base damage 75.
 	self.deathvox_light_ar.muzzleflash = "effects/payday2/particles/weapons/556_auto" -- dont worry about this
 	self.deathvox_light_ar.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556" -- dont worry about this
-	self.deathvox_light_ar.CLIP_AMMO_MAX = 30 -- How many shots before they gotta reload
-	self.deathvox_light_ar.NR_CLIPS_MAX = 5 -- dont worry about this
-	self.deathvox_light_ar.pull_magazine_during_reload = "rifle" -- dont worry about this
-	self.deathvox_light_ar.auto.fire_rate = 0.08 -- Firing delay in seconds(?)
+	self.deathvox_light_ar.CLIP_AMMO_MAX = 30 -- How many shots before reload
+	self.deathvox_light_ar.NR_CLIPS_MAX = 5 -- Unused
+	self.deathvox_light_ar.pull_magazine_during_reload = "rifle" -- magazine used during reload.
+	self.deathvox_light_ar.auto.fire_rate = 0.08 -- Firing delay in seconds
 	self.deathvox_light_ar.hold = { -- dont worry about this
 		"bullpup",
 		"rifle"
@@ -402,70 +389,71 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_grenadier.no_trail = true
 	table.insert(self._gun_list_cd, "deathvox_grenadier")
 
-    self.deathvox_lmgdozer.sounds.prefix = "m249_npc"
-    self.deathvox_lmgdozer.use_data.selection_index = 2
-    self.deathvox_lmgdozer.DAMAGE = 10 -- Base damage 100, matched to DW.
-    self.deathvox_lmgdozer.muzzleflash = "effects/payday2/particles/weapons/big_762_auto"
-    self.deathvox_lmgdozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556_lmg"
-    self.deathvox_lmgdozer.CLIP_AMMO_MAX = 200
-    self.deathvox_lmgdozer.NR_CLIPS_MAX = 2
-    self.deathvox_lmgdozer.auto.fire_rate = 0.08
-    self.deathvox_lmgdozer.hold = "rifle"
-    self.deathvox_lmgdozer.alert_size = 5000
-    self.deathvox_lmgdozer.suppression = 1
-    self.deathvox_lmgdozer.usage = "is_dozer_lmg"
+	self.deathvox_lmgdozer.sounds.prefix = "m249_npc"
+	self.deathvox_lmgdozer.use_data.selection_index = 2
+	self.deathvox_lmgdozer.DAMAGE = 10 -- Base damage 100, matched to DW.
+	self.deathvox_lmgdozer.muzzleflash = "effects/payday2/particles/weapons/big_762_auto"
+	self.deathvox_lmgdozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556_lmg"
+	self.deathvox_lmgdozer.CLIP_AMMO_MAX = 200
+	self.deathvox_lmgdozer.NR_CLIPS_MAX = 2
+	self.deathvox_lmgdozer.auto.fire_rate = 0.08
+	self.deathvox_lmgdozer.hold = "rifle"
+	self.deathvox_lmgdozer.alert_size = 5000
+	self.deathvox_lmgdozer.suppression = 1
+	self.deathvox_lmgdozer.usage = "is_dozer_lmg"
    	table.insert(self._gun_list_cd, "deathvox_lmgdozer")
 
-    self.deathvox_cloaker.sounds.prefix = "schakal_npc"
-    self.deathvox_cloaker.use_data.selection_index = 1
-    self.deathvox_cloaker.DAMAGE = 4.5 -- Base damage 45, matched to other smgs
-    self.deathvox_cloaker.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
-    self.deathvox_cloaker.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
-    self.deathvox_cloaker.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
-    self.deathvox_cloaker.CLIP_AMMO_MAX = 30
-    self.deathvox_cloaker.NR_CLIPS_MAX = 5
-    self.deathvox_cloaker.pull_magazine_during_reload = "pistol"
-    self.deathvox_cloaker.auto.fire_rate = 0.092
-    self.deathvox_cloaker.hold = {
+	self.deathvox_cloaker.sounds.prefix = "schakal_npc"
+	self.deathvox_cloaker.use_data.selection_index = 1
+	self.deathvox_cloaker.DAMAGE = 4.5 -- Base damage 45, matched to other smgs
+	self.deathvox_cloaker.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
+	self.deathvox_cloaker.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
+	self.deathvox_cloaker.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
+	self.deathvox_cloaker.CLIP_AMMO_MAX = 30
+	self.deathvox_cloaker.NR_CLIPS_MAX = 5
+	self.deathvox_cloaker.pull_magazine_during_reload = "pistol"
+	self.deathvox_cloaker.auto.fire_rate = 0.092
+	self.deathvox_cloaker.hold = {
         "bullpup",
         "rifle"
-    }
-    self.deathvox_cloaker.hold = "rifle"
-    self.deathvox_cloaker.alert_size = 5000
-    self.deathvox_cloaker.suppression = 1
-    self.deathvox_cloaker.usage = "is_cloaker_smg"
-   	table.insert(self._gun_list_cd, "deathvox_cloaker")
+	}
+	self.deathvox_cloaker.hold = "rifle"
+	self.deathvox_cloaker.alert_size = 5000
+	self.deathvox_cloaker.suppression = 1
+	self.deathvox_cloaker.usage = "is_cloaker_smg"
+	table.insert(self._gun_list_cd, "deathvox_cloaker")
 	
-    self.deathvox_blackdozer.sounds.prefix = "saiga_npc"
-    self.deathvox_blackdozer.use_data.selection_index = 2
-    self.deathvox_blackdozer.DAMAGE = 22.5 --Base damage 225, matched to DW.
-    self.deathvox_blackdozer.muzzleflash = "effects/payday2/particles/weapons/762_auto"
-    self.deathvox_blackdozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug"
-    self.deathvox_blackdozer.auto.fire_rate = 0.14
-    self.deathvox_blackdozer.CLIP_AMMO_MAX = 11
-    self.deathvox_blackdozer.NR_CLIPS_MAX = 10
-    self.deathvox_blackdozer.hold = "rifle"
-    self.deathvox_blackdozer.alert_size = 4500
-    self.deathvox_blackdozer.suppression = 1.8
-    self.deathvox_blackdozer.is_shotgun = true
-    self.deathvox_blackdozer.usage = "is_dozer_saiga"
-   	table.insert(self._gun_list_cd, "deathvox_blackdozer")
+	self.deathvox_blackdozer.sounds.prefix = "saiga_npc"
+	self.deathvox_blackdozer.use_data.selection_index = 2
+	self.deathvox_blackdozer.DAMAGE = 22.5 --Base damage 225, matched to DW.
+	self.deathvox_blackdozer.muzzleflash = "effects/payday2/particles/weapons/762_auto"
+	self.deathvox_blackdozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug"
+	self.deathvox_blackdozer.auto.fire_rate = 0.14
+	self.deathvox_blackdozer.CLIP_AMMO_MAX = 11
+	self.deathvox_blackdozer.NR_CLIPS_MAX = 10
+	self.deathvox_blackdozer.hold = "rifle"
+	self.deathvox_blackdozer.alert_size = 4500
+	self.deathvox_blackdozer.suppression = 1.8
+	self.deathvox_blackdozer.is_shotgun = true
+	self.deathvox_blackdozer.usage = "is_dozer_saiga"
+	table.insert(self._gun_list_cd, "deathvox_blackdozer")
 	
-    self.deathvox_greendozer.sounds.prefix = "remington_npc"
-    self.deathvox_greendozer.use_data.selection_index = 2
-    self.deathvox_greendozer.DAMAGE = 50 --Base damage 500, Compare DW 400, DS 560.
-    self.deathvox_greendozer.muzzleflash = "effects/payday2/particles/weapons/762_auto"
-    self.deathvox_greendozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug_semi"
-    self.deathvox_greendozer.CLIP_AMMO_MAX = 6
-    self.deathvox_greendozer.NR_CLIPS_MAX = 4
-    self.deathvox_greendozer.hold = "rifle"
-    self.deathvox_greendozer.alert_size = 4500
-    self.deathvox_greendozer.suppression = 1.8
-    self.deathvox_greendozer.is_shotgun = true
-    self.deathvox_greendozer.usage = "is_dozer_pump"
+	self.deathvox_greendozer.sounds.prefix = "remington_npc"
+	self.deathvox_greendozer.use_data.selection_index = 2
+	self.deathvox_greendozer.DAMAGE = 50 --Base damage 500, Compare DW 400, DS 560.
+	self.deathvox_greendozer.muzzleflash = "effects/payday2/particles/weapons/762_auto"
+	self.deathvox_greendozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug_semi"
+	self.deathvox_greendozer.CLIP_AMMO_MAX = 6
+	self.deathvox_greendozer.NR_CLIPS_MAX = 4
+	self.deathvox_greendozer.hold = "rifle"
+	self.deathvox_greendozer.alert_size = 4500
+	self.deathvox_greendozer.suppression = 1.8
+	self.deathvox_greendozer.is_shotgun = true
+	self.deathvox_greendozer.usage = "is_dozer_pump"
 	self.deathvox_greendozer.reload = "looped"
 	self.deathvox_greendozer.looped_reload_speed = 0.8 -- time it takes to shove each shell in
 	table.insert(self._gun_list_cd, "deathvox_greendozer")
+
 	local difficulties = {
 		"easy",
 		"normal",
@@ -504,7 +492,7 @@ function WeaponTweakData:init(tweak_data)
 	end
 end
 
-function WeaponTweakData:_set_sm_wish()
+function WeaponTweakData:_set_sm_wish() -- note need to set some of these values for other diffs.
 	self.ak47_ass_npc.DAMAGE = 3
 	self.m4_npc.DAMAGE = 3
 	self.g36_npc.DAMAGE = 5
@@ -523,11 +511,12 @@ function WeaponTweakData:_set_sm_wish()
 	self.swat_van_turret_module.DAMAGE = 3.5
 	self.swat_van_turret_module.CLIP_SIZE = 500 --reduced from base game stat, 800.
 	self.swat_van_turret_module.AUTO_REPAIR = true
-	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 696969
+	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 999
 	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
 	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
 	self.swat_van_turret_module.CAN_GO_IDLE = false
 	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
+	
 	--Ceiling turrets.
 	self.ceiling_turret_module.HEALTH_INIT = 40000
 	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 700
@@ -545,7 +534,8 @@ function WeaponTweakData:_set_sm_wish()
 	self.ceiling_turret_module.AUTO_RELOAD_DURATION = 8
 	self.ceiling_turret_module.CAN_GO_IDLE = false
 	self.ceiling_turret_module.IDLE_WAIT_TIME = 1
-	--Crate turrets.
+	
+	--Crate turrets. Clone Ceiling turrets with slight revisions.
 	self.crate_turret_module.HEALTH_INIT = 40000
 	self.crate_turret_module.SHIELD_HEALTH_INIT = 700
 	self.crate_turret_module.EXPLOSION_DMG_MUL = 3 -- tentative, base is 7
@@ -562,12 +552,14 @@ function WeaponTweakData:_set_sm_wish()
 	self.crate_turret_module.AUTO_RELOAD_DURATION = 8
 	self.crate_turret_module.CAN_GO_IDLE = false
 	self.crate_turret_module.IDLE_WAIT_TIME = 1
+	
 	--unusual variants in base game files; may or may not be used.
 	self.ceiling_turret_module_no_idle = deep_clone(self.ceiling_turret_module)
 	self.ceiling_turret_module_longer_range = deep_clone(self.ceiling_turret_module)
 	self.ceiling_turret_module_longer_range.CAN_GO_IDLE = false
 	self.ceiling_turret_module_longer_range.FIRE_RANGE = 30000
 	self.ceiling_turret_module_longer_range.DETECTION_RANGE = self.ceiling_turret_module_longer_range.FIRE_RANGE
+	
 	-- AA turret; used on Henry's Rock.
 	self.aa_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
 	self.aa_turret_module.SHIELD_HEALTH_INIT = 999999 -- functionally immortal.
@@ -580,7 +572,7 @@ function WeaponTweakData:_set_sm_wish()
 	self.aa_turret_module.DAMAGE = 3.5
 	self.aa_turret_module.CLIP_SIZE = 800
 	self.aa_turret_module.AUTO_REPAIR = true 
-	self.aa_turret_module.AUTO_REPAIR_MAX_COUNT = 696969
+	self.aa_turret_module.AUTO_REPAIR_MAX_COUNT = 999
 	self.aa_turret_module.AUTO_REPAIR_DURATION = 30
 	self.aa_turret_module.AUTO_RELOAD_DURATION = 8
 	self.aa_turret_module.CAN_GO_IDLE = false
