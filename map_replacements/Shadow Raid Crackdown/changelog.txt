@@ -1,5 +1,5 @@
 Heist: Shadow Raid
-Version: 8
+Version: 9
 
 Current changes:
 Despawn sewer crowbar
@@ -14,10 +14,11 @@ Removed "ezladder".
 Adjusted crowbar positions.
 Adjusted back guards.
 Altered front gate gman animation.
+Disable cage crowbar interaction until enter cage.
+
 
 Todo:
-Identify further gman substitutes- consider swap for keycard guard, rather than in addition, as superior ECM rush defense.
-gman swapin
+All complete.
 
 
 Notes:
