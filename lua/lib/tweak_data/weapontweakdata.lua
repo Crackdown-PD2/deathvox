@@ -29,9 +29,9 @@ function WeaponTweakData:init(tweak_data)
 			hard = {damage = 4},
 			very_hard = {damage = 6}, -- tan.
 			overkill = {damage = 6},
-			mayhem = {damage = 8}, -- elite.
-			death_wish = {damage = 8},
-			crackdown = {damage = 10} -- zeal.
+			mayhem = {damage = 7.5}, -- elite.
+			death_wish = {damage = 7.5},
+			crackdown = {damage = 9} -- zeal.
 		},
         deathvox_shotgun_light = {
 			not_a_real_difficulty = {damage = 10},
@@ -39,8 +39,8 @@ function WeaponTweakData:init(tweak_data)
 			hard = {damage = 6},
 			very_hard = {damage = 7}, -- green.
 			overkill = {damage = 7},
-			mayhem = {damage = 8}, -- elite.
-			death_wish = {damage = 8},
+			mayhem = {damage = 7.5}, -- elite.
+			death_wish = {damage = 7.5},
 			crackdown = {damage = 9} -- zeal.
 		},
 		deathvox_shotgun_heavy = {
@@ -49,9 +49,9 @@ function WeaponTweakData:init(tweak_data)
 			hard = {damage = 8},
 			very_hard = {damage = 9.5}, -- tan.
 			overkill = {damage = 9.5},
-			mayhem = {damage = 11}, -- elite.
-			death_wish = {damage = 11},
-			crackdown = {damage = 13} -- zeal.
+			mayhem = {damage = 10}, -- elite.
+			death_wish = {damage = 10},
+			crackdown = {damage = 11} -- zeal.
 		},
         --shield?
         deathvox_medic_pistol = { -- note uses light ar on difficulties below CD.
@@ -68,11 +68,11 @@ function WeaponTweakData:init(tweak_data)
 		deathvox_cloaker = {
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 4.5},
-			hard = {damage = 4.5}, -- start.
-			very_hard = {damage = 4.5},
-			overkill = {damage = 4.5},
-			mayhem = {damage = 4.5},
-			death_wish = {damage = 4.5},
+			hard = {damage = 6}, -- start. Match to higher layer light AR to preserve unit coherence.
+			very_hard = {damage = 6},
+			overkill = {damage = 6},
+			mayhem = {damage = 6}, 
+			death_wish = {damage = 6},
 			crackdown = {damage = 7.5} -- zeal. Increase from prior values, matched to light AR.
 		},
 		deathvox_sniper = { -- focus much more on aim/focus delay than damage shift.
@@ -104,7 +104,7 @@ function WeaponTweakData:init(tweak_data)
 			overkill = {damage = 18}, -- start.
 			mayhem = {damage = 18},
 			death_wish = {damage = 18},
-			crackdown = {damage = 22.5} -- zeal.
+			crackdown = {damage = 22.5} -- zeal. matched to DW.
 		},
 		deathvox_lmgdozer = { 
 			not_a_real_difficulty = {damage = 10},
@@ -112,9 +112,9 @@ function WeaponTweakData:init(tweak_data)
 			hard = {damage = 10},
 			very_hard = {damage = 10},
 			overkill = {damage = 10},
-			mayhem = {damage = 10}, -- start. Skull.
+			mayhem = {damage = 10}, -- start. Skull. Matched to DW.
 			death_wish = {damage = 10},
-			crackdown = {damage = 12} -- zeal. Value increased.
+			crackdown = {damage = 12} -- zeal. Value increased. Matched to intended minidozer.
 		},
         deathvox_medicdozer_smg = {
 			not_a_real_difficulty = {damage = 10},
@@ -126,16 +126,16 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 7.5},
 			crackdown = {damage = 7.5} -- start. zeal. Increase from prior values, matched to light AR.
 		},
--- Grenadier damage values are a fallback, as they do not do real damage; they never "hit".
+-- Grenadier damage values are zero as they are actually used to target their grenades.
         deathvox_grenadier = {
 			not_a_real_difficulty = {damage = 10},
-			normal = {damage = 10},
-			hard = {damage = 10},
-			very_hard = {damage = 10},
-			overkill = {damage = 10},
-			mayhem = {damage = 10},
-			death_wish = {damage = 10},
-			crackdown = {damage = 10} -- start.
+			normal = {damage = 0},
+			hard = {damage = 0},
+			very_hard = {damage = 0},
+			overkill = {damage = 0},
+			mayhem = {damage = 0},
+			death_wish = {damage = 0},
+			crackdown = {damage = 0} -- start.
 		},
 		deathvox_cop_pistol = {  -- mk 2 values. based on guard pistol.
 			not_a_real_difficulty = {damage = 10},
@@ -199,7 +199,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_cop_revolver = deep_clone(self.raging_bull_crew)
 	self.deathvox_cop_revolver.sounds.prefix = "rbull_npc"
-	self.deathvox_cop_revolver.DAMAGE = 4
+	self.deathvox_cop_revolver.DAMAGE = 4 -- DEPRECATED due to use of damage table.
 	self.deathvox_cop_revolver.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
 	self.deathvox_cop_revolver.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
 	self.deathvox_cop_revolver.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty"
@@ -215,7 +215,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_cop_shotgun.rays = nil
 	self.deathvox_cop_shotgun.spread = nil
 	self.deathvox_cop_shotgun.reload = "looped"
-	self.deathvox_cop_shotgun.looped_reload_speed = 0.8 -- time it takes to shove each shell in
+	self.deathvox_cop_shotgun.looped_reload_speed = 0.8 -- time it takes to reload each shell.
 	table.insert(self._gun_list_cd, "deathvox_cop_shotgun")
 	
 	self.deathvox_cop_smg = deep_clone(self.mp5_npc)
@@ -223,7 +223,7 @@ function WeaponTweakData:init(tweak_data)
 	
 	self.deathvox_light_ar.sounds.prefix = "aug_npc" -- dont worry about this
 	self.deathvox_light_ar.use_data.selection_index = 2 -- dont worry about this
-	self.deathvox_light_ar.DAMAGE = 7.5 -- Base damage 75.
+	self.deathvox_light_ar.DAMAGE = 7.5 -- DEPRECATED due to use of damage table.
 	self.deathvox_light_ar.muzzleflash = "effects/payday2/particles/weapons/556_auto" -- dont worry about this
 	self.deathvox_light_ar.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556" -- dont worry about this
 	self.deathvox_light_ar.CLIP_AMMO_MAX = 30 -- How many shots before reload
@@ -242,7 +242,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_heavy_ar.sounds.prefix = "fn_fal_npc"
 	self.deathvox_heavy_ar.use_data.selection_index = 2
-	self.deathvox_heavy_ar.DAMAGE = 10 -- base damage 100.
+	self.deathvox_heavy_ar.DAMAGE = 10 -- DEPRECATED due to use of damage table.
 	self.deathvox_heavy_ar.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_heavy_ar.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556"
 	self.deathvox_heavy_ar.CLIP_AMMO_MAX = 20
@@ -258,7 +258,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_guard_pistol.sounds.prefix = "packrat_npc"
 	self.deathvox_guard_pistol.use_data.selection_index = 1
-	self.deathvox_guard_pistol.DAMAGE = 6 -- base damage 60
+	self.deathvox_guard_pistol.DAMAGE = 6 -- DEPRECATED due to use of damage table.
 	self.deathvox_guard_pistol.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
 	self.deathvox_guard_pistol.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
 	self.deathvox_guard_pistol.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
@@ -274,7 +274,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_medic_pistol.sounds.prefix = "mateba_npc"
 	self.deathvox_medic_pistol.use_data.selection_index = 1
-	self.deathvox_medic_pistol.DAMAGE = 8 -- base 80 damage.
+	self.deathvox_medic_pistol.DAMAGE = 8 -- DEPRECATED due to use of damage table.
 	self.deathvox_medic_pistol.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
 	self.deathvox_medic_pistol.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
 	self.deathvox_medic_pistol.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty"
@@ -291,7 +291,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_shotgun_light.sounds.prefix = "remington_npc"
 	self.deathvox_shotgun_light.use_data.selection_index = 2
-	self.deathvox_shotgun_light.DAMAGE = 12 -- Base damage 120.
+	self.deathvox_shotgun_light.DAMAGE = 12 -- DEPRECATED due to use of damage table.
 	self.deathvox_shotgun_light.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_shotgun_light.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug_semi"
 	self.deathvox_shotgun_light.CLIP_AMMO_MAX = 6
@@ -303,12 +303,12 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_shotgun_light.usage = "is_light_shotgun"
 	self.deathvox_shotgun_light.anim_usage = "is_shotgun_pump"
 	self.deathvox_shotgun_light.reload = "looped"
-	self.deathvox_shotgun_light.looped_reload_speed = 0.8 -- time it takes to shove each shell in
+	self.deathvox_shotgun_light.looped_reload_speed = 0.8 -- time it takes to reload each shell
 	table.insert(self._gun_list_cd, "deathvox_shotgun_light")
 
 	self.deathvox_shotgun_heavy.sounds.prefix = "benelli_m4_npc"
 	self.deathvox_shotgun_heavy.use_data.selection_index = 2
-	self.deathvox_shotgun_heavy.DAMAGE = 15 -- Base damage 150.
+	self.deathvox_shotgun_heavy.DAMAGE = 15 -- DEPRECATED due to use of damage table.
 	self.deathvox_shotgun_heavy.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_shotgun_heavy.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug"
 	self.deathvox_shotgun_heavy.auto.fire_rate = 0.14
@@ -316,7 +316,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_shotgun_heavy.NR_CLIPS_MAX = 4
 	self.deathvox_shotgun_heavy.hold = "rifle"
 	self.deathvox_shotgun_heavy.reload = "looped"
-	self.deathvox_shotgun_heavy.looped_reload_speed = 0.8 -- time it takes to shove each shell in
+	self.deathvox_shotgun_heavy.looped_reload_speed = 0.8 -- time it takes to reload each shell
 	self.deathvox_shotgun_heavy.alert_size = 4500
 	self.deathvox_shotgun_heavy.suppression = 1.8
 	self.deathvox_shotgun_heavy.is_shotgun = true
@@ -326,7 +326,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_sniper.sounds.prefix = "sniper_npc"
 	self.deathvox_sniper.use_data.selection_index = 2
-	self.deathvox_sniper.DAMAGE = 24 -- base 240, drop with distance. Same as DW and OD.
+	self.deathvox_sniper.DAMAGE = 24 -- DEPRECATED due to use of damage table.
 	self.deathvox_sniper.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
 	self.deathvox_sniper.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
 	self.deathvox_sniper.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
@@ -348,7 +348,7 @@ function WeaponTweakData:init(tweak_data)
 	
 	self.deathvox_medicdozer_smg.sounds.prefix = "polymer_npc"
 	self.deathvox_medicdozer_smg.use_data.selection_index = 1
-	self.deathvox_medicdozer_smg.DAMAGE = 4.5 -- Vanilla base is 20, adjusting up to 45. Matched to other smgs.
+	self.deathvox_medicdozer_smg.DAMAGE = 4.5 -- DEPRECATED due to use of damage table.
 	self.deathvox_medicdozer_smg.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
 	self.deathvox_medicdozer_smg.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
 	self.deathvox_medicdozer_smg.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
@@ -368,7 +368,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_grenadier.sounds.prefix = "mgl_npc"
 	self.deathvox_grenadier.use_data.selection_index = 2
-	self.deathvox_grenadier.DAMAGE = 0
+	self.deathvox_grenadier.DAMAGE = 0 -- irrelevant, as does not fire bullets. DEPRECATED due to use of damage table.
 	self.deathvox_grenadier.muzzleflash = "effects/payday2/particles/weapons/big_762_auto" -- increased visibility on fire.
 	self.deathvox_grenadier.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty" -- appears to produce no effect.
 	self.deathvox_grenadier.CLIP_AMMO_MAX = 9999999
@@ -391,7 +391,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_lmgdozer.sounds.prefix = "m249_npc"
 	self.deathvox_lmgdozer.use_data.selection_index = 2
-	self.deathvox_lmgdozer.DAMAGE = 10 -- Base damage 100, matched to DW.
+	self.deathvox_lmgdozer.DAMAGE = 10 -- DEPRECATED due to use of damage table.
 	self.deathvox_lmgdozer.muzzleflash = "effects/payday2/particles/weapons/big_762_auto"
 	self.deathvox_lmgdozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556_lmg"
 	self.deathvox_lmgdozer.CLIP_AMMO_MAX = 200
@@ -405,7 +405,7 @@ function WeaponTweakData:init(tweak_data)
 
 	self.deathvox_cloaker.sounds.prefix = "schakal_npc"
 	self.deathvox_cloaker.use_data.selection_index = 1
-	self.deathvox_cloaker.DAMAGE = 4.5 -- Base damage 45, matched to other smgs
+	self.deathvox_cloaker.DAMAGE = 4.5 -- DEPRECATED due to use of damage table.
 	self.deathvox_cloaker.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
 	self.deathvox_cloaker.muzzleflash_silenced = "effects/payday2/particles/weapons/9mm_auto_silence"
 	self.deathvox_cloaker.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
@@ -425,7 +425,7 @@ function WeaponTweakData:init(tweak_data)
 	
 	self.deathvox_blackdozer.sounds.prefix = "saiga_npc"
 	self.deathvox_blackdozer.use_data.selection_index = 2
-	self.deathvox_blackdozer.DAMAGE = 22.5 --Base damage 225, matched to DW.
+	self.deathvox_blackdozer.DAMAGE = 22.5 -- DEPRECATED due to use of damage table.
 	self.deathvox_blackdozer.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_blackdozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug"
 	self.deathvox_blackdozer.auto.fire_rate = 0.14
@@ -440,7 +440,7 @@ function WeaponTweakData:init(tweak_data)
 	
 	self.deathvox_greendozer.sounds.prefix = "remington_npc"
 	self.deathvox_greendozer.use_data.selection_index = 2
-	self.deathvox_greendozer.DAMAGE = 50 --Base damage 500, Compare DW 400, DS 560.
+	self.deathvox_greendozer.DAMAGE = 50 -- DEPRECATED due to use of damage table. Compare DW 400, DS 560.
 	self.deathvox_greendozer.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_greendozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug_semi"
 	self.deathvox_greendozer.CLIP_AMMO_MAX = 6
@@ -451,7 +451,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_greendozer.is_shotgun = true
 	self.deathvox_greendozer.usage = "is_dozer_pump"
 	self.deathvox_greendozer.reload = "looped"
-	self.deathvox_greendozer.looped_reload_speed = 0.8 -- time it takes to shove each shell in
+	self.deathvox_greendozer.looped_reload_speed = 0.8 -- time it takes to reload each shell.
 	table.insert(self._gun_list_cd, "deathvox_greendozer")
 
 	local difficulties = {
