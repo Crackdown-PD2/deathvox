@@ -2598,7 +2598,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.surrender = nil
 	self.deathvox_tank.surrender_break_time = {4, 6}
 	self.deathvox_tank.move_speed = presets.move_speed.slow -- same on all diffs. Same as base. Note revise for "special" dozers.
-	self.deathvox_tank.ecm_vulnerability = 0.85
+	self.deathvox_tank.ecm_vulnerability = 0 -- addressing base game ECM vuln bug.
 	self.deathvox_tank.ecm_hurts = {
         ears = {min_duration = 1, max_duration = 3} 
     }
@@ -2622,9 +2622,9 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guarddozer.suppression = nil
 	self.deathvox_guarddozer.surrender = nil
 	self.deathvox_guarddozer.surrender_break_time = {4, 6}
-	self.deathvox_guarddozer.ecm_vulnerability = 0.85
+	self.deathvox_guarddozer.ecm_vulnerability = 0 -- addressing base game ECM vuln bug.
 	self.deathvox_guarddozer.ecm_hurts = {
-        ears = {min_duration = 1, max_duration = 3} -- tentative, in base
+        ears = {min_duration = 1, max_duration = 3}
     }
 	self.deathvox_guarddozer.deathguard = true
 	self.deathvox_guarddozer.steal_loot = nil
