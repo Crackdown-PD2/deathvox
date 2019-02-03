@@ -2916,9 +2916,13 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 --guarddozer
 --	NOTE not synced to tank, which is appropriate.
 --	NOTE explosion resist does not appear to require curving.
-		
+	
 --turrets
 --	NOTE turrets need adjustment on lower difficulties.
+	
+-- begin NORMAL scripted unit alterations.
+	
+-- end NORMAL scripted unit alterations.
 	
 end -- end NORMAL specific tweaks.
 
@@ -2995,6 +2999,13 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.
 	
+--turrets
+--	NOTE turrets need adjustment on lower difficulties.
+	
+-- begin HARD scripted unit alterations.
+	
+-- end HARD scripted unit alterations.	
+
 end -- end HARD specific tweaks.
 
 function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
@@ -3067,6 +3078,13 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 --	tank - VERY HARD
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.
+	
+--turrets
+--	NOTE turrets need adjustment on lower difficulties.
+	
+-- begin VERY HARD scripted unit alterations.
+	
+-- end VERY HARD scripted unit alterations.	
 	
 end -- end VERY HARD specific tweaks.
 
@@ -3142,6 +3160,14 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.
 	
+--turrets
+--	NOTE turrets need adjustment on lower difficulties.
+	
+-- begin OVERKILL scripted unit alterations.
+	
+-- end OVERKILL scripted unit alterations.	
+	
+	
 end -- end OVERKILL specific tweaks.
 
 function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
@@ -3209,6 +3235,13 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.	
 
+--turrets
+--	NOTE turrets need adjustment on lower difficulties.
+	
+-- begin MAYHEM scripted unit alterations.
+	
+-- end MAYHEM scripted unit alterations.	
+	
 end -- end MAYHEM specific tweaks.
 
 function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks begin.
@@ -3277,6 +3310,13 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.	
 
+--turrets
+--	NOTE turrets need adjustment on lower difficulties.
+	
+-- begin DEATH WISH scripted unit alterations.
+	
+-- end DEATH WISH scripted unit alterations.
+	
 end -- end DEATH WISH specific tweaks.
 
 function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
@@ -3329,16 +3369,10 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	
 	self.cop.HEALTH_INIT = 15 -- note need to see if can be removed.
 
-	self.cop_female.HEALTH_INIT = 15 -- note need to see if can be removed.
+
 	self.fbi.HEALTH_INIT = 48 -- note need to see if can be removed.
 	
-	self.chavez_boss.HEALTH_INIT = 900 -- ask testers if these are in use
-	self.bolivian_indoors.HEALTH_INIT = 1000 
-	self.bolivian_indoors.no_arrest = true
-	self.bolivian.HEALTH_INIT = 1000
-	self.gangster.HEALTH_INIT = 1000
-	self.biker.HEALTH_INIT = 1000
-	self.biker_escape.HEALTH_INIT = 1000
+
 	
 	self.phalanx_vip = deep_clone(self.phalanx_minion) -- killable winters to prevent soft-lock
 	self.phalanx_vip.HEALTH_INIT = 300 -- currently unused captain code. Not touching until captain implemented.
@@ -3348,6 +3382,23 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.phalanx_vip.immune_to_knock_down = true
 	self.phalanx_vip.immune_to_concussion = true
 	self.phalanx_vip.ends_assault_on_death = true
+	
+--turrets
+--	NOTE turrets need adjustment on lower difficulties.
+	
+-- begin DEATH WISH scripted unit alterations.
+	
+	self.cop_female.HEALTH_INIT = 15 -- note need to see if can be removed.
+	
+	self.chavez_boss.HEALTH_INIT = 900 -- ask testers if these are in use
+	self.bolivian_indoors.HEALTH_INIT = 1000 
+	self.bolivian_indoors.no_arrest = true
+	self.bolivian.HEALTH_INIT = 1000
+	self.gangster.HEALTH_INIT = 1000
+	self.biker.HEALTH_INIT = 1000
+	self.biker_escape.HEALTH_INIT = 1000	
+
+-- end DEATH WISH scripted unit alterations.
 	
 end  -- end CRACKDOWN specific tweaks.
 
