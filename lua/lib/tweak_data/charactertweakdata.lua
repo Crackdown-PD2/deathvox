@@ -3353,52 +3353,58 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.sniper = deep_clone(self.deathvox_sniper)
 	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	
---	if job == "kosugi" or job == "dark" then -- believed to be outdated unit role change for murky stealth guards. testing removal.
---		self.city_swat.no_arrest = true
---	else
---		self.city_swat.no_arrest = false
---	end
-	
 	self:_multiply_all_speeds(1, 1)
---	self.old_hoxton_mission.HEALTH_INIT = 525 -- testing removal of oldhox HP set code.
 	self.spa_vip.HEALTH_INIT = 525
 	self.flashbang_multiplier = 2
 	self.concussion_multiplier = 2
 	
 -- Begin goofball legacy health changes.
 	
-	self.cop.HEALTH_INIT = 15 -- note need to see if can be removed.
-
-
-	self.fbi.HEALTH_INIT = 48 -- note need to see if can be removed.
-	
-
+-- currently unused captain code. Not touching until captain implemented.
 	
 	self.phalanx_vip = deep_clone(self.phalanx_minion) -- killable winters to prevent soft-lock
-	self.phalanx_vip.HEALTH_INIT = 300 -- currently unused captain code. Not touching until captain implemented.
+	self.phalanx_vip.HEALTH_INIT = 4000 
 	self.phalanx_vip.DAMAGE_CLAMP_BULLET = 100
 	self.phalanx_vip.DAMAGE_CLAMP_EXPLOSION = self.phalanx_vip.DAMAGE_CLAMP_BULLET
+	self.phalanx_vip.damage.explosion_damage_mul = 0.4 
 	self.phalanx_vip.can_be_tased = false
 	self.phalanx_vip.immune_to_knock_down = true
 	self.phalanx_vip.immune_to_concussion = true
 	self.phalanx_vip.ends_assault_on_death = true
 	
+--	self.phalanx_minion
+	
 --turrets
 --	NOTE turrets need adjustment on lower difficulties.
 	
--- begin DEATH WISH scripted unit alterations.
-	
-	self.cop_female.HEALTH_INIT = 15 -- note need to see if can be removed.
-	
-	self.chavez_boss.HEALTH_INIT = 900 -- ask testers if these are in use
-	self.bolivian_indoors.HEALTH_INIT = 1000 
-	self.bolivian_indoors.no_arrest = true
-	self.bolivian.HEALTH_INIT = 1000
-	self.gangster.HEALTH_INIT = 1000
-	self.biker.HEALTH_INIT = 1000
-	self.biker_escape.HEALTH_INIT = 1000	
+-- begin CRACKDOWN scripted unit alterations.
 
--- end DEATH WISH scripted unit alterations.
+-- scripted police types.
+	
+	self.cop = deep_clone(self.deathvox_cop)
+	
+
+--	scripted criminal types.
+	self.gangster.HEALTH_INIT = 48 -- setting to light swat value initially.
+	self.biker.HEALTH_INIT = 48
+	self.biker_escape.HEALTH_INIT = 48
+	self.bolivian.HEALTH_INIT = 48
+	self.bolivian_indoors.HEALTH_INIT = 48
+
+--	scripted Murky unit types.
+
+	
+	
+-- bosses
+--	self.mobster_boss.HEALTH_INIT = 900   --  Commissar boss.
+--	self.biker_boss.HEALTH_INIT = 900    --  
+--	self.hector_boss.HEALTH_INIT = 900
+--	self.hector_boss_no_armor.HEALTH_INIT = 900
+--	self.chavez_boss.HEALTH_INIT = 900
+--	self.drug_lord_boss.HEALTH_INIT = 900
+--	self.drug_lord_boss_stealth.HEALTH_INIT = 900
+	
+-- end CRACKDOWN scripted unit alterations.
 	
 end  -- end CRACKDOWN specific tweaks.
 
