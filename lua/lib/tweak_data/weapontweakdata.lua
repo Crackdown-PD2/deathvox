@@ -494,6 +494,7 @@ end
 
 function WeaponTweakData:_set_sm_wish() -- note need to set some of these values for other diffs.
 	self.ak47_ass_npc.DAMAGE = 3
+	self.contraband_npc.DAMAGE = 90   -- used exclusively by Sosa. Draft value will be 11. Compare with 90 base for heavy swat.
 	self.m4_npc.DAMAGE = 3
 	self.g36_npc.DAMAGE = 5
 	self.r870_npc.DAMAGE = 7
@@ -502,7 +503,7 @@ function WeaponTweakData:_set_sm_wish() -- note need to set some of these values
 	self.npc_melee.fists.damage = 4
 	self.swat_van_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
 	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300
-	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3 -- tentative, base is 7
+	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3 -- base is 7
 	self.swat_van_turret_module.FIRE_DMG_MUL = 0.1
 	self.swat_van_turret_module.BAG_DMG_MUL = 100
 	self.swat_van_turret_module.SHIELD_DMG_MUL = 1
@@ -520,7 +521,7 @@ function WeaponTweakData:_set_sm_wish() -- note need to set some of these values
 	--Ceiling turrets.
 	self.ceiling_turret_module.HEALTH_INIT = 40000
 	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 700
-	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 3 -- tentative, base is 7
+	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 3 -- base is 7
 	self.ceiling_turret_module.FIRE_DMG_MUL = 0.1
 	self.ceiling_turret_module.BAG_DMG_MUL = 100
 	self.ceiling_turret_module.SHIELD_DMG_MUL = 1
@@ -538,7 +539,7 @@ function WeaponTweakData:_set_sm_wish() -- note need to set some of these values
 	--Crate turrets. Clone Ceiling turrets with slight revisions.
 	self.crate_turret_module.HEALTH_INIT = 40000
 	self.crate_turret_module.SHIELD_HEALTH_INIT = 700
-	self.crate_turret_module.EXPLOSION_DMG_MUL = 3 -- tentative, base is 7
+	self.crate_turret_module.EXPLOSION_DMG_MUL = 3 -- base is 7
 	self.crate_turret_module.FIRE_DMG_MUL = 0.1
 	self.crate_turret_module.BAG_DMG_MUL = 100
 	self.crate_turret_module.SHIELD_DMG_MUL = 1
