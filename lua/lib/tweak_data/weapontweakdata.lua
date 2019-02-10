@@ -492,18 +492,32 @@ function WeaponTweakData:init(tweak_data)
 	end
 end
 
-function WeaponTweakData:_set_sm_wish() -- note need to set some of these values for other diffs.
+function WeaponTweakData:_set_sm_wish() -- note need to set each of these values to match equivalent weapon, then populate across diffs.
 	self.ak47_ass_npc.DAMAGE = 3
-	self.contraband_npc.DAMAGE = 90   -- used exclusively by Sosa. Draft value will be 11. Compare with 90 base for heavy swat.
+	self.contraband_npc.DAMAGE = 11   -- apparently used exclusively by Sosa. Draft value 11. Compare with 90 base for heavy swat.
 	self.m4_npc.DAMAGE = 3
 	self.g36_npc.DAMAGE = 5
 	self.r870_npc.DAMAGE = 7
+--	self.m4_yellow_npc.DAMAGE = 3
+--	self.m14_npc.DAMAGE = 3
+--	self.m14_sniper_npc.DAMAGE = 3
+--	self:_init_data_x_c45_npc()
+--	self.ak47_ass_npc.DAMAGE = 0.1
+--	self.mp5_npc.DAMAGE = 0.3
+--	self.c45_npc.DAMAGE = 0.1
+--	self.raging_bull_npc.DAMAGE = 0.6
+--	self.ump_npc.DAMAGE = 0.3
+--	self.mp9_npc.DAMAGE = 0.1
+--	self.m14_sniper_npc.DAMAGE = 1
+--	self.mac11_npc.DAMAGE = 0.3
+--	self.smoke_npc.DAMAGE = 0.6	-- vit secret enemy weapon.
+
 	self.npc_melee.baton.damage = 5
 	self.npc_melee.knife_1.damage = 7
 	self.npc_melee.fists.damage = 4
 	self.swat_van_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
 	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300
-	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3 -- base is 7
+	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3 -- base game value is 7.
 	self.swat_van_turret_module.FIRE_DMG_MUL = 0.1
 	self.swat_van_turret_module.BAG_DMG_MUL = 100
 	self.swat_van_turret_module.SHIELD_DMG_MUL = 1
@@ -521,7 +535,7 @@ function WeaponTweakData:_set_sm_wish() -- note need to set some of these values
 	--Ceiling turrets.
 	self.ceiling_turret_module.HEALTH_INIT = 40000
 	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 700
-	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 3 -- base is 7
+	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 3 -- base game value is 7
 	self.ceiling_turret_module.FIRE_DMG_MUL = 0.1
 	self.ceiling_turret_module.BAG_DMG_MUL = 100
 	self.ceiling_turret_module.SHIELD_DMG_MUL = 1
@@ -539,7 +553,7 @@ function WeaponTweakData:_set_sm_wish() -- note need to set some of these values
 	--Crate turrets. Clone Ceiling turrets with slight revisions.
 	self.crate_turret_module.HEALTH_INIT = 40000
 	self.crate_turret_module.SHIELD_HEALTH_INIT = 700
-	self.crate_turret_module.EXPLOSION_DMG_MUL = 3 -- base is 7
+	self.crate_turret_module.EXPLOSION_DMG_MUL = 3 -- base game value is 7
 	self.crate_turret_module.FIRE_DMG_MUL = 0.1
 	self.crate_turret_module.BAG_DMG_MUL = 100
 	self.crate_turret_module.SHIELD_DMG_MUL = 1
