@@ -3380,7 +3380,7 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 
 -- scripted police types.
 	
-	self.cop = deep_clone(self.deathvox_cop)
+	self.cop = deep_clone(self.deathvox_cop) -- inverse copy of cop tweakdata. Testing if valid.
 	
 
 --	scripted criminal types.
@@ -3393,21 +3393,21 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 
 --	scripted Murky unit types.
 
-	
+	self.city_swat = deep_clone(self.deathvox_heavyar) -- inverse copy of city_swat tweakdata. Testing if valid.
 	
 -- bosses
 --	self.mobster_boss.HEALTH_INIT = 900   --  Commissar boss.
 --	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
 --	self.biker_boss.HEALTH_INIT = 900
---	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)	
+--	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
 --	self.hector_boss.HEALTH_INIT = 900
 --	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
 --	self.hector_boss_no_armor.HEALTH_INIT = 15
 --	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
 --	self.chavez_boss.HEALTH_INIT = 900
---	self.chavez_boss.weapon = deep_clone(presets.weapon.deathvox.akimbo_pistol)
+--	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
 --	self.drug_lord_boss.HEALTH_INIT = 900
---	self.drug_lord_boss.weapon = deep_clone(presets.weapon.deathvox.is_heavyar)	
+--	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
 --	self.drug_lord_boss_stealth.HEALTH_INIT = 15
 --	self.drug_lord_boss_stealth.weapon = deep_clone(presets.weapon.deathvox.is_revolver)
 	
