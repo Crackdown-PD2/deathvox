@@ -1695,42 +1695,42 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.mini = { -- unused and unchanged.
+	presets.weapon.deathvox.mini = { -- initial draft values for first pass. Values placeholder until detailed rof calc pass.
 		aim_delay = {
 			0.1,
 			0.2
 		},
 		focus_delay = 4,
-		focus_dis = 800,
-		spread = 20,
-		miss_dis = 40,
+		focus_dis = 800, -- reexamine
+		spread = 20, -- reexamine
+		miss_dis = 40, -- reexamine
 		RELOAD_SPEED = 0.5,
-		melee_speed = 1,
-		melee_dmg = 25,
+		melee_speed = 1, -- examine for revision.
+		melee_dmg = 40,
 		melee_retry_delay = {
 			1,
 			2
 		},
-		range = {
+		range = { -- review for adjustment in light of new role. Primarily sees use at close range, some medium.
 			optimal = 2500,
 			far = 5000,
 			close = 1000
 		},
 		autofire_rounds = {
-			20,
-			40
+			400,
+			500
 		},
 		FALLOFF = {
 			{
-				dmg_mul = 5,
+				dmg_mul = 1,
 				r = 100,
 				acc = {
 					0.6,
 					0.9
 				},
 				recoil = {
-					0.4,
-					0.7
+					2,
+					3
 				},
 				mode = {
 					0,
@@ -1740,73 +1740,73 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = 4,
+				dmg_mul = 1,
 				r = 500,
 				acc = {
 					0.5,
 					0.7
 				},
 				recoil = {
-					0.4,
-					0.7
+					2,
+					3
 				},
 				mode = {
 					0,
-					1,
-					2,
-					8
+					0,
+					0,
+					1
 				}
 			},
 			{
-				dmg_mul = 3.5,
+				dmg_mul = .8,
 				r = 1000,
 				acc = {
 					0.4,
 					0.6
 				},
 				recoil = {
-					0.45,
-					0.8
+					2,
+					3
 				},
 				mode = {
-					1,
-					3,
-					6,
-					6
-				}
-			},
-			{
-				dmg_mul = 3,
-				r = 2000,
-				acc = {
-					0.2,
-					0.5
-				},
-				recoil = {
-					0.45,
-					0.8
-				},
-				mode = {
-					1,
-					2,
-					2,
+					0,
+					0,
+					0,
 					1
 				}
 			},
 			{
-				dmg_mul = 3,
+				dmg_mul = .6,
+				r = 2000,
+				acc = {
+					0.1,
+					0.2
+				},
+				recoil = {
+					4,
+					5
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = .3,
 				r = 3000,
 				acc = {
 					0.1,
 					0.35
 				},
 				recoil = {
-					1,
-					1.2
+					3,
+					6
 				},
 				mode = {
-					4,
-					2,
+					0,
+					0,
 					1,
 					0
 				}
@@ -2097,7 +2097,7 @@ function CharacterTweakData:_presets(tweak_data)
 		melee_retry_delay = presets.weapon.expert.is_pistol.melee_retry_delay,
 		autofire_rounds = { -- experimental autofire increase. prev values 25, 50.
 			8,
-			10
+			12
 		},
 			range = {
 			optimal = 3200, -- validated, unchanged.
