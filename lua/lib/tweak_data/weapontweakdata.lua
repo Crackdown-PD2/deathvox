@@ -492,9 +492,62 @@ function WeaponTweakData:init(tweak_data)
 	end
 end
 
-function WeaponTweakData:_set_sm_wish() -- note need to set each of these values to match equivalent weapon, then populate across diffs.
+-- Begin difficulty scripted weapon damage value population.
+
+-- Begin NORMAL difficulty damage values. 
+
+--function WeaponTweakData:_set_normal()
+
+-- Begin NORMAL Turret values.
+
+--end
+
+-- Begin HARD difficulty damage values. 
+
+--function WeaponTweakData:_set_hard()
+
+-- Begin HARD Turret values.
+
+--end
+
+-- Begin VERY HARD difficulty damage values. 
+
+--function WeaponTweakData:_set_overkill()
+
+-- Begin VERY HARD Turret values.
+
+--end
+
+-- Begin OVERKILL difficulty damage values. 
+
+--function WeaponTweakData:_set_overkill_145()
+
+-- Begin OVERKILL Turret values.
+
+--end
+
+-- Begin MAYHEM difficulty damage values. 
+
+--function WeaponTweakData:_set_easy_wish()
+
+-- Begin MAYHEM Turret values.
+
+--end
+
+-- Begin DEATHWISH difficulty damage values. 
+
+--function WeaponTweakData:_set_overkill_290()
+
+-- Begin DEATHWISH Turret values.
+
+--end
+
+-- Begin CRACKDOWN difficulty damage values. 
+
+-- note need to set each of these values to match equivalent weapon, then populate across diffs.
+function WeaponTweakData:_set_sm_wish() 
 	self.ak47_ass_npc.DAMAGE = 3
-	self.contraband_npc.DAMAGE = 11   -- apparently used exclusively by Sosa. Draft value 11. Compare with 90 base for heavy swat.
+	self.contraband_npc.DAMAGE = 11   -- apparently used exclusively by Sosa. Draft value 11. Compare with 9 base for heavy swat.
 	self.m4_npc.DAMAGE = 3
 	self.g36_npc.DAMAGE = 5
 	self.r870_npc.DAMAGE = 7
@@ -511,10 +564,17 @@ function WeaponTweakData:_set_sm_wish() -- note need to set each of these values
 --	self.m14_sniper_npc.DAMAGE = 1
 --	self.mac11_npc.DAMAGE = 0.3
 --	self.smoke_npc.DAMAGE = 0.6	-- vit secret enemy weapon.
-
+--	self.mini_npc.DAMAGE = 12	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
+	
+-- below code is goofball legacy and needs to be identified and commented.	
 	self.npc_melee.baton.damage = 5
 	self.npc_melee.knife_1.damage = 7
 	self.npc_melee.fists.damage = 4
+
+-- end goofball legacy code block.
+
+-- Begin CRACKDOWN Turret values.
+	
 	self.swat_van_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
 	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300
 	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3 -- base game value is 7.
