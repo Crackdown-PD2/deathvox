@@ -1,7 +1,7 @@
 local mvec_to = Vector3()
 local mvec_spread = Vector3()
 local mvec1 = Vector3()
---[[ 
+
 --goof wrote this, originally. it appears to be intended to prevent piercing bullet raycasts from piercing infinitely. 
 --however, this breaks team ai's AP ammo crew boost, and goof's changes don't appear to do anything else, so i'm gonna disable it for the time being
 
