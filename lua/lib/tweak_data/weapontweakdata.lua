@@ -554,13 +554,13 @@ function WeaponTweakData:_set_sm_wish()
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
 --	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
 	self.x_c45_npc.DAMAGE = 8	-- chavez weapon. Check name and syntax. Map to medic pistol.
---	self.ak47_npc.DAMAGE = 9	-- possibly used by mobster units. Should map to heavy AR.
+	self.ak47_npc.DAMAGE = 9	-- possibly used by mobster units. Should map to heavy AR.
 	self.mp5_npc.DAMAGE = 7.5	-- smg used by number of units. map to smg.
 	self.mp9_npc.DAMAGE = 7.5	-- shield only.	Should map to smg.
 	self.c45_npc.DAMAGE = 6	-- pistol used by variety of units. Map to guard pistol for now.
 	self.raging_bull_npc.DAMAGE = 8	-- bronco used by variety of units. Should map to revolver. Make sure no armor pierce.
---	self.mac11_npc.DAMAGE = 7.5	-- smg used by number of criminal units. Map to smg.
---	self.smoke_npc.DAMAGE = 9	-- vit secret enemy weapon. Map to Heavy AR.
+	self.mac11_npc.DAMAGE = 7.5	-- smg used by number of criminal units. Map to smg.
+	self.smoke_npc.DAMAGE = 9	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 12	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
 	
 -- below code is goofball legacy and needs to be identified and commented.	
