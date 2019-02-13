@@ -3,13 +3,22 @@ local old_spawn_group = GroupAITweakData._init_enemy_spawn_groups
 local old_task_data = GroupAITweakData._init_task_data
 function GroupAITweakData:_init_chatter_data()
 		self.enemy_chatter = {}
+		self.enemy_chatter = {}
 		self.enemy_chatter.aggressive = {
 			radius = 700,
-			max_nr = 20,
+			max_nr = 10,
 			duration = {2, 4},
 			interval = {0.75, 1.5},
 			group_min = 0,
 			queue = "g90"
+		}		
+		self.enemy_chatter.open_fire = {
+			radius = 1000,
+			max_nr = 10,
+			duration = {2, 4},
+			interval = {0.75, 1.5},
+			group_min = 0,
+			queue = "att"
 		}
 		self.enemy_chatter.aggressive_captain = {
 			radius = 700,
@@ -17,15 +26,23 @@ function GroupAITweakData:_init_chatter_data()
 			duration = {2, 4},
 			interval = {0.75, 1.5},
 			group_min = 0,
-			queue = "a05"
+			queue = "att"
 		}			
 		self.enemy_chatter.retreat = {
-			radius = 900,
+			radius = 2000,
 			max_nr = 20,
 			duration = {2, 4},
 			interval = {0.75, 1.5},
 			group_min = 0,
 			queue = "m01"
+		}		
+		self.enemy_chatter.deathguard = {
+			radius = 900,
+			max_nr = 2,
+			duration = {2, 4},
+			interval = {2, 3},
+			group_min = 0,
+			queue = "i03"
 		}
 		self.enemy_chatter.contact = {
 			radius = 700,
@@ -36,17 +53,25 @@ function GroupAITweakData:_init_chatter_data()
 			queue = "c01"
 		}
 		self.enemy_chatter.clear = {
-			radius = 700,
-			max_nr = 10,
-			duration = {2, 4},
-			interval = {1.5, 2.5},
-			group_min = 0,
-			queue = "clr"
+		    radius = 700,
+		    max_nr = 1,
+		    duration = {60, 60},
+		    interval = {5, 6},
+		    group_min = 0,
+		    queue = "clr"
 		}
+		self.enemy_chatter.clear_whisper = {
+		    radius = 700,
+		    max_nr = 2,
+		    duration = {60, 60},
+		    interval = {4, 6},
+		    group_min = 0,
+		    queue = "a05"
+		}		
 		self.enemy_chatter.go_go = {
 			radius = 700,
 			max_nr = 20,
-			duration = {2, 4},
+			duration = {2, 2},
 			interval = {0.75, 1.5},
 			group_min = 0,
 			queue = "mov"
@@ -76,7 +101,7 @@ function GroupAITweakData:_init_chatter_data()
 			queue = "t01"
 		}
 		self.enemy_chatter.ready = {
-			radius = 700,
+			radius = 1000,
 			max_nr = 20,
 			duration = {2, 4},
 			interval = {0.75, 1.5},
@@ -84,18 +109,18 @@ function GroupAITweakData:_init_chatter_data()
 			queue = "rdy"
 		}
 		self.enemy_chatter.smoke = {
-			radius = 1000,
-			max_nr = 20,
-			duration = {2, 4},
-			interval = {0.75, 1.5},
+			radius = 2000,
+			max_nr = 3,
+		    duration = {60, 60},
+		    interval = {0.1, 0.1},
 			group_min = 0,
 			queue = "d01"
 		}
 		self.enemy_chatter.flash_grenade = {
-			radius = 700,
-			max_nr = 20,
-			duration = {2, 4},
-			interval = {0.75, 1.5},
+			radius = 2000,
+			max_nr = 3,
+		    duration = {60, 60},
+		    interval = {0.1, 0.1},
 			group_min = 0,
 			queue = "d02"
 		}
@@ -162,7 +187,15 @@ function GroupAITweakData:_init_chatter_data()
 			interval = {0.5, 1},
 			group_min = 0,
 			queue = "tsr"
-		}	
+		}
+		self.enemy_chatter.heal_chatter = {
+			radius = 700,
+			max_nr = 10,
+			duration = {2, 4},
+			interval = {1.5, 2.5},
+			group_min = 0,
+			queue = "heal"
+		}		
 end
 	
 function GroupAITweakData:_init_unit_categories(difficulty_index)

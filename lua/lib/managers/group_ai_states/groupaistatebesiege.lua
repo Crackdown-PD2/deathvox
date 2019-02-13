@@ -1,6 +1,73 @@
 function GroupAIStateBesiege:_check_spawn_phalanx()
 end
 
+	function GroupAIStateBesiege:_voice_looking_for_angle(group)
+		for u_key, unit_data in pairs(group.units) do
+			if unit_data.char_tweak.chatter.ready and self:chk_say_enemy_chatter(unit_data.unit, unit_data.m_pos, "look_for_angle") then
+			else
+			end
+		end
+	end	
+	
+	function GroupAIStateBesiege:_voice_open_fire_start(group)
+		for u_key, unit_data in pairs(group.units) do
+			if unit_data.char_tweak.chatter.ready and self:chk_say_enemy_chatter(unit_data.unit, unit_data.m_pos, "open_fire") then
+			else
+			end
+		end
+	end
+
+	function GroupAIStateBesiege:_voice_push_in(group)
+		for u_key, unit_data in pairs(group.units) do
+			if unit_data.char_tweak.chatter.ready and self:chk_say_enemy_chatter(unit_data.unit, unit_data.m_pos, "push") then
+			else
+			end
+		end
+	end
+
+	function GroupAIStateBesiege:_voice_gtfo(group)
+		for u_key, unit_data in pairs(group.units) do
+			if unit_data.char_tweak.chatter.ready and self:chk_say_enemy_chatter(unit_data.unit, unit_data.m_pos, "retreat") then
+			else
+			end
+		end
+	end
+	
+	function GroupAIStateBesiege:_voice_deathguard_start(group)
+		for u_key, unit_data in pairs(group.units) do
+			if unit_data.char_tweak.chatter.ready and self:chk_say_enemy_chatter(unit_data.unit, unit_data.m_pos, "deathguard") then
+			else
+			end
+		end
+	end	
+	
+	function GroupAIStateBesiege:_voice_smoke(group)
+		for u_key, unit_data in pairs(group.units) do
+			if unit_data.char_tweak.chatter.ready and self:chk_say_enemy_chatter(unit_data.unit, unit_data.m_pos, "smoke") then
+			else
+			end
+		end
+	end	
+	
+	function GroupAIStateBesiege:_voice_flash(group)
+		for u_key, unit_data in pairs(group.units) do
+			if unit_data.char_tweak.chatter.ready and self:chk_say_enemy_chatter(unit_data.unit, unit_data.m_pos, "flash_grenade") then
+			else
+			end
+		end
+	end
+
+	function GroupAIStateBesiege:_voice_dont_delay_assault(group)
+		local time = self._t
+		for u_key, unit_data in pairs(group.units) do
+			if not unit_data.unit:sound():speaking(time) then
+				unit_data.unit:sound():say("p01", true, nil)
+				return true
+			end
+		end
+		return false
+	end
+
 function GroupAIStateBesiege:provide_covering_fire(group_to_cover)
 	if group_to_cover and group_to_cover.units then
 		local lu_key, lu_data = nil, nil
@@ -909,7 +976,7 @@ function GroupAIStateBesiege:_chk_group_use_smoke_grenade(group, task_data, deto
 				end
 
 				if detonate_pos then
-					u_data.unit:sound():say("d02", true)
+					u_data.unit:sound():say("d01", true)
 					u_data.unit:movement():play_redirect("throw_grenade")
 					self:detonate_smoke_grenade(detonate_pos, detonate_pos, duration, false)
 

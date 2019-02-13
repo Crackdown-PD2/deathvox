@@ -44,7 +44,7 @@ function CharacterTweakData:get_ai_group_type()
 	map_faction_override["apartment"] = "classic"
 	map_faction_override["street"] = "classic"
 	map_faction_override["bank"] = "classic"
-	-- todo: setup akan on BP, murky on all murky heists, and classics on classic heists
+	-- todo: setup reapers on BP, murky on all murky heists, and classics on classic heists
 	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
 	if diff_index <= 3 then
 		group_to_use = "cop"
@@ -68,6 +68,66 @@ end
 function CharacterTweakData:_presets(tweak_data)
 	local presets = origin_presets(self, tweak_data)
 	presets.base.stealth_instant_kill = true
+	presets.enemy_chatter = {
+        no_chatter = {},
+        cop = {
+            follow_me = true,
+            clear = true,
+            ready = true,
+            contact = true,
+            suppress = true,
+            smoke = true,
+            push = true,
+            open_fire = true,
+            retreat = true,
+            deathguard = true,
+            go_go = true,
+            aggressive = true,
+            follow_me = true,
+            clear_whisper = true,
+            look_for_angle = true,
+            flash_grenade = true,
+            smoke = true
+        },
+        swat = {
+            follow_me = true,
+            clear = true,
+            ready = true,
+            contact = true,
+            suppress = true,
+            smoke = true,
+            push = true,
+            open_fire = true,
+            retreat = true,
+            deathguard = true,
+            go_go = true,
+            aggressive = true,
+            follow_me = true,
+            clear_whisper = true,
+            look_for_angle = true,
+            flash_grenade = true,
+            smoke = true
+        },
+        shield = {
+            follow_me = true,
+            clear = true,
+            ready = true,
+            contact = true,
+            suppress = true,
+            smoke = true,
+            push = true,
+            open_fire = true,
+            retreat = true,
+            deathguard = true,
+            go_go = true,
+            aggressive = true,
+            follow_me = true,
+            clear_whisper = true,
+            look_for_angle = true,
+            flash_grenade = true,
+            smoke = true
+        }
+	}
 	presets.health_tables = {
 		deathvox_guard = {  -- mk 1 values complete. Consistent below CD.
 			not_a_real_difficulty = {health = 4, headshot_mult = 3},
