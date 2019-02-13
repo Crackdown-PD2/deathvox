@@ -29,7 +29,10 @@ function CharacterTweakData:get_ai_group_type()
 		"sm_wish"
 	}
 	local map_faction_override = {}
+	-- unit test map override function below. Uncomment to apply classic units.
 	--map_faction_override["Enemy_Spawner"] = "classic"
+	
+	-- Classic overrides begin here.
 	map_faction_override["pal"] = "classic"
 	map_faction_override["dah"] = "classic"
 	map_faction_override["red2"] = "classic"
@@ -39,11 +42,18 @@ function CharacterTweakData:get_ai_group_type()
 	map_faction_override["dinner"] = "classic"
 	map_faction_override["man"] = "classic"
 	map_faction_override["nmh"] = "classic"
-	-- whurr's map edits
+	-- whurr's map edit faction overrides begin here.
 	map_faction_override["bridge"] = "classic"
 	map_faction_override["apartment"] = "classic"
 	map_faction_override["street"] = "classic"
 	map_faction_override["bank"] = "classic"
+	
+	--akan override begins here.
+	
+	--Murky overrides begin here.
+	
+	--Halloween overrides begin here.
+	
 	-- todo: setup akan on BP, murky on all murky heists, and classics on classic heists
 	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
 	if diff_index <= 3 then
@@ -52,14 +62,13 @@ function CharacterTweakData:get_ai_group_type()
 		group_to_use = "fbi"
 	elseif diff_index <= 7 then
 		group_to_use = "gensec"
+	elseif diff_index == 8 then 
+		group_to_use = "zeal"
 	end
 	if level_id then
 		if map_faction_override[level_id] then
 			group_to_use = map_faction_override[level_id]
 		end
-	end
-	if diff_index == 8 then -- kataru's reach is true
-		group_to_use = "zeal"
 	end
 	return group_to_use
 end
@@ -427,7 +436,7 @@ function CharacterTweakData:_presets(tweak_data)
 		}
 	}
 	presets.dodge.deathvoxchavez = {
-		speed = 1.7,
+		speed = 2,
 		occasions = {
 			hit = {
 				chance = 1,
@@ -2916,9 +2925,6 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 --	NOTE not synced to tank, which is appropriate.
 --	NOTE explosion resist does not appear to require curving.
 	
---turrets
---	NOTE turrets need adjustment on lower difficulties.
-	
 -- begin NORMAL scripted unit alterations.
 	
 -- end NORMAL scripted unit alterations.
@@ -2998,9 +3004,6 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.
 	
---turrets
---	NOTE turrets need adjustment on lower difficulties.
-	
 -- begin HARD scripted unit alterations.
 	
 -- end HARD scripted unit alterations.	
@@ -3077,9 +3080,6 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 --	tank - VERY HARD
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.
-	
---turrets
---	NOTE turrets need adjustment on lower difficulties.
 	
 -- begin VERY HARD scripted unit alterations.
 	
@@ -3159,9 +3159,6 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.
 	
---turrets
---	NOTE turrets need adjustment on lower difficulties.
-	
 -- begin OVERKILL scripted unit alterations.
 	
 -- end OVERKILL scripted unit alterations.	
@@ -3234,9 +3231,6 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.	
 
---turrets
---	NOTE turrets need adjustment on lower difficulties.
-	
 -- begin MAYHEM scripted unit alterations.
 	
 -- end MAYHEM scripted unit alterations.	
@@ -3308,9 +3302,6 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 --	tank - DEATH WISH
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.	
-
---turrets
---	NOTE turrets need adjustment on lower difficulties.
 	
 -- begin DEATH WISH scripted unit alterations.
 	
@@ -3365,7 +3356,7 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.phalanx_vip.HEALTH_INIT = 4000 
 	self.phalanx_vip.DAMAGE_CLAMP_BULLET = 100
 	self.phalanx_vip.DAMAGE_CLAMP_EXPLOSION = self.phalanx_vip.DAMAGE_CLAMP_BULLET
-	self.phalanx_vip.damage.explosion_damage_mul = 0.4 
+	self.phalanx_vip.damage.explosion_damage_mul = 0.3 
 	self.phalanx_vip.can_be_tased = false
 	self.phalanx_vip.immune_to_knock_down = true
 	self.phalanx_vip.immune_to_concussion = true
@@ -3373,8 +3364,6 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	
 --	self.phalanx_minion
 	
---turrets
---	NOTE turrets need adjustment on lower difficulties.
 	
 -- begin CRACKDOWN scripted unit alterations.
 
@@ -3398,15 +3387,24 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 -- bosses
 --	self.mobster_boss.HEALTH_INIT = 900   --  Commissar boss.
 --	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
+--	self.mobster_boss.hurt_severity = only_light_hurt
+--	self.mobster_boss.ecm_vulnerability = 0
 --	self.biker_boss.HEALTH_INIT = 900
 --	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
 --	self.hector_boss.HEALTH_INIT = 900
+--	self.hector_boss.hurt_severity = only_light_hurt
+--	self.hector_boss.ecm_vulnerability = 0
 --	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
 --	self.hector_boss_no_armor.HEALTH_INIT = 15
 --	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
 --	self.chavez_boss.HEALTH_INIT = 900
+--	self.chavez_boss.move_speed = presets.move_speed.deathvoxchavez
+--	self.chavez_boss.damage.hurt_severity = no_hurts_no_tase
+--	self.chavez_boss.ecm_vulnerability = 0
 --	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
 --	self.drug_lord_boss.HEALTH_INIT = 900
+--	self.drug_lord_boss.hurt_severity = no_hurts_no_tase
+--	self.drug_lord_boss.ecm_vulnerability = 0
 --	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
 --	self.drug_lord_boss_stealth.HEALTH_INIT = 15
 --	self.drug_lord_boss_stealth.weapon = deep_clone(presets.weapon.deathvox.is_revolver)
