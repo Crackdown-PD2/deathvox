@@ -2993,6 +2993,21 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 	
 -- begin NORMAL scripted unit alterations.
 	
+-- Captain and minion. To be populated.
+	
+-- 	scripted police types.
+	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
+--	scripted Murky unit types.
+	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+--	scripted criminal types.
+	self.gangster.HEALTH_INIT = 18 -- match to light SWAT value.
+	self.mobster.HEALTH_INIT = 18	
+	self.biker.HEALTH_INIT = 18
+	self.biker_escape.HEALTH_INIT = 18
+	self.bolivian.HEALTH_INIT = 18
+	self.bolivian_indoors.HEALTH_INIT = 18
+	
+-- bosses. To be populated.
 -- end NORMAL scripted unit alterations.
 	
 end -- end NORMAL specific tweaks.
@@ -3072,6 +3087,22 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	
 -- begin HARD scripted unit alterations.
 	
+-- Captain and minion. To be populated.
+	
+-- 	scripted police types.
+	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
+--	scripted Murky unit types.
+	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+--	scripted criminal types.
+	self.gangster.HEALTH_INIT = 18 -- match to light SWAT value.
+	self.mobster.HEALTH_INIT = 18	
+	self.biker.HEALTH_INIT = 18
+	self.biker_escape.HEALTH_INIT = 18
+	self.bolivian.HEALTH_INIT = 18
+	self.bolivian_indoors.HEALTH_INIT = 18
+	
+-- bosses. To be populated.
+	
 -- end HARD scripted unit alterations.	
 
 end -- end HARD specific tweaks.
@@ -3148,6 +3179,22 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 --	No specific unit curving for dozers, which all sync off of tank effects.
 	
 -- begin VERY HARD scripted unit alterations.
+
+-- Captain and minion. To be populated.
+	
+-- 	scripted police types.
+	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
+--	scripted Murky unit types.
+	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+--	scripted criminal types.
+	self.gangster.HEALTH_INIT = 24 -- match to light SWAT value.
+	self.mobster.HEALTH_INIT = 24	
+	self.biker.HEALTH_INIT = 24
+	self.biker_escape.HEALTH_INIT = 24
+	self.bolivian.HEALTH_INIT = 24
+	self.bolivian_indoors.HEALTH_INIT = 24
+	
+-- bosses. To be populated.	
 	
 -- end VERY HARD scripted unit alterations.	
 	
@@ -3227,6 +3274,22 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	
 -- begin OVERKILL scripted unit alterations.
 	
+-- Captain and minion. To be populated.
+	
+-- 	scripted police types.
+	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
+--	scripted Murky unit types.
+	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+--	scripted criminal types.
+	self.gangster.HEALTH_INIT = 24 -- match to light SWAT value.
+	self.mobster.HEALTH_INIT = 24	
+	self.biker.HEALTH_INIT = 24
+	self.biker_escape.HEALTH_INIT = 24
+	self.bolivian.HEALTH_INIT = 24
+	self.bolivian_indoors.HEALTH_INIT = 24
+	
+-- bosses. To be populated.
+	
 -- end OVERKILL scripted unit alterations.	
 	
 	
@@ -3298,6 +3361,22 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 --	No specific unit curving for dozers, which all sync off of tank effects.	
 
 -- begin MAYHEM scripted unit alterations.
+
+-- Captain and minion. To be populated.
+	
+-- 	scripted police types.
+	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
+--	scripted Murky unit types.
+	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+--	scripted criminal types.
+	self.gangster.HEALTH_INIT = 32 -- match to light SWAT value.
+	self.mobster.HEALTH_INIT = 32	
+	self.biker.HEALTH_INIT = 32
+	self.biker_escape.HEALTH_INIT = 32
+	self.bolivian.HEALTH_INIT = 32
+	self.bolivian_indoors.HEALTH_INIT = 32
+	
+-- bosses. To be populated.	
 	
 -- end MAYHEM scripted unit alterations.	
 	
@@ -3370,6 +3449,22 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 --	No specific unit curving for dozers, which all sync off of tank effects.	
 	
 -- begin DEATH WISH scripted unit alterations.
+
+-- Captain and minion. To be populated.
+	
+-- 	scripted police types.
+	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
+--	scripted Murky unit types.
+	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+--	scripted criminal types.
+	self.gangster.HEALTH_INIT = 32 -- match to light SWAT value.
+	self.mobster.HEALTH_INIT = 32	
+	self.biker.HEALTH_INIT = 32
+	self.biker_escape.HEALTH_INIT = 32
+	self.bolivian.HEALTH_INIT = 32
+	self.bolivian_indoors.HEALTH_INIT = 32
+	
+-- bosses. To be populated.
 	
 -- end DEATH WISH scripted unit alterations.
 	
@@ -3433,22 +3528,17 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	
 -- begin CRACKDOWN scripted unit alterations.
 
--- scripted police types.
-	
-	self.cop = deep_clone(self.deathvox_cop) -- inverse copy of cop tweakdata. Testing if valid.
-	
-
+-- 	scripted police types.
+	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
+--	scripted Murky unit types.
+	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
 --	scripted criminal types.
-	self.gangster.HEALTH_INIT = 48 -- setting to light swat hp value initially.
+	self.gangster.HEALTH_INIT = 48 -- match to light SWAT value.
 	self.mobster.HEALTH_INIT = 48	
 	self.biker.HEALTH_INIT = 48
 	self.biker_escape.HEALTH_INIT = 48
 	self.bolivian.HEALTH_INIT = 48
 	self.bolivian_indoors.HEALTH_INIT = 48
-
---	scripted Murky unit types.
-
-	self.city_swat = deep_clone(self.deathvox_heavyar) -- inverse copy of city_swat tweakdata. Testing if valid.
 	
 -- bosses
 --	self.mobster_boss.HEALTH_INIT = 900   --  Commissar boss.
