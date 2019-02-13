@@ -13,7 +13,7 @@ function WeaponTweakData:init(tweak_data)
 			crackdown = {damage = 6}
 		},
 -- note light and heavy baselines are not used for beat cop type enemies. These will be implemented separately. They correspond to swat unit types (blue, yellow) instead.
-		deathvox_light_ar = {
+	deathvox_light_ar = {
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 2}, -- blue swat.
 			hard = {damage = 2},
@@ -23,7 +23,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 6},
 			crackdown = {damage = 7.5} -- zeal.
 		},
-		deathvox_heavy_ar = {
+	deathvox_heavy_ar = {
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 4}, -- yellow swat.
 			hard = {damage = 4},
@@ -43,7 +43,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 7.5},
 			crackdown = {damage = 9} -- zeal.
 		},
-		deathvox_shotgun_heavy = {
+	deathvox_shotgun_heavy = {
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 8}, -- yellow swat.
 			hard = {damage = 8},
@@ -53,7 +53,6 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 10},
 			crackdown = {damage = 11} -- zeal.
 		},
-        --shield?
         deathvox_medic_pistol = { -- note uses light ar on difficulties below CD.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 2}, -- blue.
@@ -64,8 +63,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 6},
 			crackdown = {damage = 8} -- zeal
 		},
-        -- taser?
-		deathvox_cloaker = {
+	deathvox_cloaker = {
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 4.5},
 			hard = {damage = 6}, -- start. Match to higher layer light AR to preserve unit coherence.
@@ -75,7 +73,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 6},
 			crackdown = {damage = 7.5} -- zeal. Increase from prior values, matched to light AR.
 		},
-		deathvox_sniper = { -- focus much more on aim/focus delay than damage shift.
+	deathvox_sniper = { -- focus much more on aim/focus delay than damage shift.
 -- no need for asset coherence on this unit only, as at a distance. Discuss typing with group.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 16}, -- blue.
@@ -86,7 +84,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 20},
 			crackdown = {damage = 24}
 		},
-		deathvox_greendozer = {
+	deathvox_greendozer = {
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 24},
 			hard = {damage = 24},
@@ -96,7 +94,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 24},
 			crackdown = {damage = 50} -- zeal.
 		},
-		deathvox_blackdozer = {
+	deathvox_blackdozer = {
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 18},
 			hard = {damage = 18},
@@ -106,7 +104,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 18},
 			crackdown = {damage = 22.5} -- zeal. matched to DW.
 		},
-		deathvox_lmgdozer = { 
+	deathvox_lmgdozer = { 
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 10},
 			hard = {damage = 10},
@@ -137,7 +135,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 0},
 			crackdown = {damage = 0} -- start.
 		},
-		deathvox_cop_pistol = {  -- mk 2 values. based on guard pistol.
+	deathvox_cop_pistol = {  -- mk 2 values. based on guard pistol.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 2},
 			hard = {damage = 2},
@@ -147,7 +145,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 2},
 			crackdown = {damage = 2}
 		},
-		deathvox_cop_revolver = { -- mk 2 values. based on middle value medic.
+	deathvox_cop_revolver = { -- mk 2 values. based on middle value medic.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 4},
 			hard = {damage = 4},
@@ -157,7 +155,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 4},
 			crackdown = {damage = 4}
 		},
-		deathvox_cop_shotgun = {  -- mk 2 values. based on lowest value light shot.
+	deathvox_cop_shotgun = {  -- mk 2 values. based on lowest value light shot.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 6},
 			hard = {damage = 6},
@@ -546,24 +544,23 @@ end
 
 -- note need to set each of these values to match equivalent weapon, then populate across diffs.
 function WeaponTweakData:_set_sm_wish() 
-	self.ak47_ass_npc.DAMAGE = 3
+--	self.ak47_ass_npc.DAMAGE = 9	-- possibly unused aside from akan. Should map to heavy AR.
 	self.contraband_npc.DAMAGE = 11   -- apparently used exclusively by Sosa. Draft value 11. Compare with 9 base for heavy swat.
-	self.m4_npc.DAMAGE = 3
-	self.g36_npc.DAMAGE = 5
-	self.r870_npc.DAMAGE = 7
---	self.m4_yellow_npc.DAMAGE = 3
---	self.m14_npc.DAMAGE = 3
---	self.m14_sniper_npc.DAMAGE = 3
---	self:_init_data_x_c45_npc()
---	self.ak47_ass_npc.DAMAGE = 0.1
---	self.mp5_npc.DAMAGE = 0.3
---	self.c45_npc.DAMAGE = 0.1
---	self.raging_bull_npc.DAMAGE = 0.6
---	self.ump_npc.DAMAGE = 0.3
---	self.mp9_npc.DAMAGE = 0.1
---	self.m14_sniper_npc.DAMAGE = 1
---	self.mac11_npc.DAMAGE = 0.3
---	self.smoke_npc.DAMAGE = 0.6	-- vit secret enemy weapon.
+	self.m4_npc.DAMAGE = 9		-- possibly unused by remaining scripted enemies. Should map to heavy AR.
+	self.g36_npc.DAMAGE = 7.5		-- possibly unused by remaining scripted enemies. Should map to light AR.
+--	self.ump_npc.DAMAGE = 9	-- possibly unused by remaining scripted enemies. Should map to heavy AR.
+	self.r870_npc.DAMAGE = 9	-- Used by several police and criminal units. Should map to light shotgun.
+	self.m4_yellow_npc.DAMAGE = 7.5	-- populates taser damage after other fixes applied. Match to light AR.
+--	self.m14_npc.DAMAGE = 3		-- possibly unused.
+--	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
+	self.x_c45_npc.DAMAGE = 8	-- chavez weapon. Check name and syntax. Map to medic pistol.
+--	self.ak47_npc.DAMAGE = 9	-- possibly used by mobster units. Should map to heavy AR.
+	self.mp5_npc.DAMAGE = 7.5	-- smg used by number of units. map to smg.
+	self.mp9_npc.DAMAGE = 7.5	-- shield only.	Should map to smg.
+	self.c45_npc.DAMAGE = 6	-- pistol used by variety of units. Map to guard pistol for now.
+	self.raging_bull_npc.DAMAGE = 8	-- bronco used by variety of units. Should map to revolver. Make sure no armor pierce.
+--	self.mac11_npc.DAMAGE = 7.5	-- smg used by number of criminal units. Map to smg.
+--	self.smoke_npc.DAMAGE = 9	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 12	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
 	
 -- below code is goofball legacy and needs to be identified and commented.	
