@@ -506,11 +506,11 @@ function WeaponTweakData:_set_normal()
 --	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
 	self.x_c45_npc.DAMAGE = 4	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
 	self.ak47_npc.DAMAGE = 4	-- possibly used by mobster units. Map to heavy AR.
-	self.mp5_npc.DAMAGE = 2		-- smg used by number of units. Map to smg.
-	self.mp9_npc.DAMAGE = 2		-- shield only.	Map to smg.
-	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to guard pistol.
-	self.raging_bull_npc.DAMAGE = 2	-- bronco used by variety of units. Draft map to medic revolver. Make sure no armor pierce.
-	self.mac11_npc.DAMAGE = 2	-- smg used by number of criminal units. Map to smg.
+	self.mp5_npc.DAMAGE = 2.5	-- smg used by number of units. Map to cop smg.
+	self.mp9_npc.DAMAGE = 2.5	-- shield only.	Map to cop smg.
+	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to cop pistol.
+	self.raging_bull_npc.DAMAGE = 4	-- bronco used by variety of units. Draft map to cop revolver. Make sure no armor pierce.
+	self.mac11_npc.DAMAGE = 2.5	-- smg used by number of criminal units. Map to cop smg.
 	self.smoke_npc.DAMAGE = 4	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
 	
@@ -532,11 +532,11 @@ function WeaponTweakData:_set_hard()
 --	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
 	self.x_c45_npc.DAMAGE = 4	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
 	self.ak47_npc.DAMAGE = 4	-- possibly used by mobster units. Map to heavy AR.
-	self.mp5_npc.DAMAGE = 2		-- smg used by number of units. Map to smg.
-	self.mp9_npc.DAMAGE = 2		-- shield only.	Map to smg.
-	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to guard pistol.
-	self.raging_bull_npc.DAMAGE = 2	-- bronco used by variety of units. Draft map to medic revolver. Make sure no armor pierce.
-	self.mac11_npc.DAMAGE = 2	-- smg used by number of criminal units. Map to smg.
+	self.mp5_npc.DAMAGE = 2.5	-- smg used by number of units. Map to cop smg.
+	self.mp9_npc.DAMAGE = 2.5	-- shield only.	Map to cop smg.
+	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to cop pistol.
+	self.raging_bull_npc.DAMAGE = 4	-- bronco used by variety of units. Draft map to cop revolver. Make sure no armor pierce.
+	self.mac11_npc.DAMAGE = 2.5	-- smg used by number of criminal units. Map to cop smg.
 	self.smoke_npc.DAMAGE = 4	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
 	
@@ -558,11 +558,11 @@ function WeaponTweakData:_set_overkill()
 --	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
 	self.x_c45_npc.DAMAGE = 6	-- chavez weapon. Check name and syntax. Map to medic revolver + 20.
 	self.ak47_npc.DAMAGE = 6	-- possibly used by mobster units. Map to heavy AR.
-	self.mp5_npc.DAMAGE = 4.5	-- smg used by number of units. Map to smg.
-	self.mp9_npc.DAMAGE = 4.5	-- shield only.	Map to smg.
-	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to guard pistol.
-	self.raging_bull_npc.DAMAGE = 4	-- bronco used by variety of units. Draft map to medic revolver. Make sure no armor pierce.
-	self.mac11_npc.DAMAGE = 4.5	-- smg used by number of criminal units. Map to smg.
+	self.mp5_npc.DAMAGE = 4.5	-- smg used by number of units. Map to cop smg.
+	self.mp9_npc.DAMAGE = 4.5	-- shield only.	Map to cop smg.
+	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to cop pistol.
+	self.raging_bull_npc.DAMAGE = 4	-- bronco used by variety of units. Draft map to cop revolver. Make sure no armor pierce.
+	self.mac11_npc.DAMAGE = 4.5	-- smg used by number of criminal units. Map to cop smg.
 	self.smoke_npc.DAMAGE = 6	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
 	
@@ -582,13 +582,13 @@ function WeaponTweakData:_set_overkill_145()
 	self.m4_yellow_npc.DAMAGE = 4.5	-- populates taser damage after other fixes applied. Map to light AR.
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
 --	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
-	self.x_c45_npc.DAMAGE = 6	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
+	self.x_c45_npc.DAMAGE = 6	-- chavez weapon. Check name and syntax. Map to medic revolver + 20.
 	self.ak47_npc.DAMAGE = 6	-- possibly used by mobster units. Map to heavy AR.
-	self.mp5_npc.DAMAGE = 4.5	-- smg used by number of units. Map to smg.
-	self.mp9_npc.DAMAGE = 4.5	-- shield only.	Map to smg.
-	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to guard pistol.
-	self.raging_bull_npc.DAMAGE = 4	-- bronco used by variety of units. Draft map to medic revolver. Make sure no armor pierce.
-	self.mac11_npc.DAMAGE = 4.5	-- smg used by number of criminal units. Map to smg.
+	self.mp5_npc.DAMAGE = 4.5	-- smg used by number of units. Map to cop smg.
+	self.mp9_npc.DAMAGE = 4.5	-- shield only.	Map to cop smg.
+	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to cop pistol.
+	self.raging_bull_npc.DAMAGE = 4	-- bronco used by variety of units. Draft map to cop revolver. Make sure no armor pierce.
+	self.mac11_npc.DAMAGE = 4.5	-- smg used by number of criminal units. Map to cop smg.
 	self.smoke_npc.DAMAGE = 6	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
 	
@@ -610,11 +610,11 @@ function WeaponTweakData:_set_easy_wish()
 --	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
 	self.x_c45_npc.DAMAGE = 8	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
 	self.ak47_npc.DAMAGE = 7.5	-- possibly used by mobster units. Map to heavy AR.
-	self.mp5_npc.DAMAGE = 6		-- smg used by number of units. Map to smg.
-	self.mp9_npc.DAMAGE = 6		-- shield only.	Map to smg.
-	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to guard pistol.
-	self.raging_bull_npc.DAMAGE = 6	-- bronco used by variety of units. Draft map to medic revolver. Make sure no armor pierce.
-	self.mac11_npc.DAMAGE = 6	-- smg used by number of criminal units. Map to smg.
+	self.mp5_npc.DAMAGE = 6		-- smg used by number of units. Map to cop smg.
+	self.mp9_npc.DAMAGE = 6		-- shield only.	Map to cop smg.
+	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to cop pistol.
+	self.raging_bull_npc.DAMAGE = 6	-- bronco used by variety of units. Draft map to cop revolver. Make sure no armor pierce.
+	self.mac11_npc.DAMAGE = 6	-- smg used by number of criminal units. Map to cop smg.
 	self.smoke_npc.DAMAGE = 7.5	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
 	
@@ -625,22 +625,22 @@ end
 -- Begin DEATHWISH difficulty damage values. 
 
 function WeaponTweakData:_set_overkill_290()
-	self.ak47_ass_npc.DAMAGE = 7.5	-- possibly unused aside from akan. Map to heavy AR.
+	self.ak47_ass_npc.DAMAGE = 7.5	-- possibly unused aside from akan. Should map to heavy AR.
 	self.contraband_npc.DAMAGE = 9   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
 	self.m4_npc.DAMAGE = 7.5	-- possibly unused by remaining scripted enemies. Map to heavy AR.
 	self.g36_npc.DAMAGE = 6		-- possibly unused by remaining scripted enemies. Map to light AR.
 	self.ump_npc.DAMAGE = 6		-- possibly unused by remaining scripted enemies. Map to light AR.
 	self.r870_npc.DAMAGE = 7.5	-- Used by several police and criminal units. Draft map to light shotgun.
-	self.m4_yellow_npc.DAMAGE = 6	-- populates taser damage after other fixes applied. Match to light AR.
+	self.m4_yellow_npc.DAMAGE = 6	-- populates taser damage after other fixes applied. Map to light AR.
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
 --	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
 	self.x_c45_npc.DAMAGE = 8	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
 	self.ak47_npc.DAMAGE = 7.5	-- possibly used by mobster units. Map to heavy AR.
-	self.mp5_npc.DAMAGE = 6		-- smg used by number of units. Map to smg.
-	self.mp9_npc.DAMAGE = 6		-- shield only.	Map to smg.
-	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to guard pistol.
-	self.raging_bull_npc.DAMAGE = 6	-- bronco used by variety of units. Draft map to medic revolver. Make sure no armor pierce.
-	self.mac11_npc.DAMAGE = 6	-- smg used by number of criminal units. Map to smg.
+	self.mp5_npc.DAMAGE = 6		-- smg used by number of units. Map to cop smg.
+	self.mp9_npc.DAMAGE = 6		-- shield only.	Map to cop smg.
+	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to cop pistol.
+	self.raging_bull_npc.DAMAGE = 6	-- bronco used by variety of units. Draft map to cop revolver. Make sure no armor pierce.
+	self.mac11_npc.DAMAGE = 6	-- smg used by number of criminal units. Map to cop smg.
 	self.smoke_npc.DAMAGE = 7.5	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
 	
@@ -663,11 +663,11 @@ function WeaponTweakData:_set_sm_wish()
 --	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
 	self.x_c45_npc.DAMAGE = 10	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
 	self.ak47_npc.DAMAGE = 9	-- possibly used by mobster units. Map to heavy AR.
-	self.mp5_npc.DAMAGE = 7.5	-- smg used by number of units. Map to smg.
-	self.mp9_npc.DAMAGE = 7.5	-- shield only.	Map to smg.
-	self.c45_npc.DAMAGE = 6		-- pistol used by variety of units. Draft map to guard pistol.
-	self.raging_bull_npc.DAMAGE = 8	-- bronco used by variety of units. Draft map to medic revolver. Make sure no armor pierce.
-	self.mac11_npc.DAMAGE = 7.5	-- smg used by number of criminal units. Map to smg.
+	self.mp5_npc.DAMAGE = 7.5	-- smg used by number of units. Map to cop smg.
+	self.mp9_npc.DAMAGE = 7.5	-- shield only.	Map to cop smg.
+	self.c45_npc.DAMAGE = 6		-- pistol used by variety of units. Draft map to cop pistol.
+	self.raging_bull_npc.DAMAGE = 8	-- bronco used by variety of units. Draft map to cop revolver. Make sure no armor pierce.
+	self.mac11_npc.DAMAGE = 7.5	-- smg used by number of criminal units. Map to cop smg.
 	self.smoke_npc.DAMAGE = 9	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 12	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
 	
