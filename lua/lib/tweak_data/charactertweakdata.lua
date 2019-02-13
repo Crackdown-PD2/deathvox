@@ -3453,23 +3453,23 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 -- bosses
 --	self.mobster_boss.HEALTH_INIT = 900   --  Commissar boss.
 --	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
---	self.mobster_boss.hurt_severity = only_light_hurt_no_stuns
+--	self.mobster_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
 --	self.mobster_boss.ecm_vulnerability = 0
 --	self.biker_boss.HEALTH_INIT = 900
 --	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
 --	self.hector_boss.HEALTH_INIT = 900
---	self.hector_boss.hurt_severity = only_light_hurt_no_stuns
+--	self.hector_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
 --	self.hector_boss.ecm_vulnerability = 0
 --	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
 --	self.hector_boss_no_armor.HEALTH_INIT = 15
 --	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
 --	self.chavez_boss.HEALTH_INIT = 900
 --	self.chavez_boss.move_speed = presets.move_speed.deathvoxchavez
---	self.chavez_boss.damage.hurt_severity = no_hurts_no_tase
+--	self.chavez_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
 --	self.chavez_boss.ecm_vulnerability = 0
 --	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
 --	self.drug_lord_boss.HEALTH_INIT = 900
---	self.drug_lord_boss.hurt_severity = only_light_hurt_no_stuns
+--	self.drug_lord_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
 --	self.drug_lord_boss.ecm_vulnerability = 0
 --	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
 --	self.drug_lord_boss_stealth.HEALTH_INIT = 15
