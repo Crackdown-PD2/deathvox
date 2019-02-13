@@ -159,13 +159,10 @@ function CopLogicTravel.enter(data, new_logic_name, enter_params)
     	end
     	
     	if my_data.coarse_path then
-    		if data.char_tweak.chatter.clear and
-    			data.unit:anim_data().idle and
-    			not ( data.attention_obj and data.attention_obj.reaction >= AIAttentionObject.REACT_COMBAT and data.attention_obj.verified_t and data.attention_obj.verified_t < 10 )
-    		then
+    		if not managers.groupai:state():whisper_mode() and data.char_tweak.chatter.clear and data.unit:anim_data().idle and not ( data.attention_obj and data.attention_obj.reaction >= AIAttentionObject.REACT_COMBAT and data.attention_obj.verified_t and data.attention_obj.verified_t < 10 ) then
     			managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, "clear" )
     		end
-    	end		
+    	end			
     	  
     	CopLogicTravel.queue_update(data, data.internal_data, delay)
     end	
