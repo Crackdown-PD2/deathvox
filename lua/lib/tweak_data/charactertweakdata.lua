@@ -319,6 +319,9 @@ function CharacterTweakData:_presets(tweak_data)
 			crackdown = {health = 22, headshot_mult = 3}
 		}
 	}
+
+-- Begin new movespeed presets.
+
 	presets.move_speed.shield_vf = { --custom shield move speed preset, shields never use anything except crouching cbt stances so it shouldn't be a problem
 		stand = {
 			walk = {
@@ -378,6 +381,9 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
+
+-- Begin new dodge presets.
+
 	presets.dodge.deathvox = {
 		speed = 1.7,
 		occasions = {
@@ -585,7 +591,67 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			}
 		}
-	}		
+	}
+	
+--Begin new hurt presets.
+	presets.hurt_severities.only_light_hurt_no_stuns = {
+        	tase = false,
+        	bullet = {
+           	health_reference = 1,
+           	zones = {
+       		{
+         		light = 1
+               		}
+		}
+       	},
+		explosion = {
+            	health_reference = 1,
+            	zones = {
+                {
+                	light = 1
+                	}
+        	}
+        },
+        	melee = {
+        		health_reference = 1,
+       		zones = {
+                {
+                	light = 1
+                	}
+            	}
+        },
+        	fire = {
+        	health_reference = 1,
+            	zones = {
+                {
+                	light = 1
+                	}
+		}
+        },
+        	poison = {
+        	health_reference = 1,
+            	zones = {
+                {
+                	light = 1
+                	}
+            	}
+        }
+    }
+	
+-- Begin revised surrender presets.
+	presets.surrender.normal = {
+		base_chance = 0.3,
+		significant_chance = 0.35,
+			reasons = {
+				health = {
+					[1.0] = 0.1,
+					[0.5] = 0.5,
+					[0.1] = 0.9
+				}
+			},
+			factors = {}
+	}
+	
 	--[[presets.weapon.deathvox = { -- these notes are mostly out of date. Need further revision to ensure clear usage tracing.
 		is_pistol = {},-- used for guards and numerous scripted enemies, as well as beat police.
 		is_revolver = {},-- used for medics and numerous scripted enemies, as well as beat police.
@@ -3387,12 +3453,12 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 -- bosses
 --	self.mobster_boss.HEALTH_INIT = 900   --  Commissar boss.
 --	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
---	self.mobster_boss.hurt_severity = only_light_hurt
+--	self.mobster_boss.hurt_severity = only_light_hurt_no_stuns
 --	self.mobster_boss.ecm_vulnerability = 0
 --	self.biker_boss.HEALTH_INIT = 900
 --	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
 --	self.hector_boss.HEALTH_INIT = 900
---	self.hector_boss.hurt_severity = only_light_hurt
+--	self.hector_boss.hurt_severity = only_light_hurt_no_stuns
 --	self.hector_boss.ecm_vulnerability = 0
 --	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
 --	self.hector_boss_no_armor.HEALTH_INIT = 15
@@ -3403,7 +3469,7 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 --	self.chavez_boss.ecm_vulnerability = 0
 --	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
 --	self.drug_lord_boss.HEALTH_INIT = 900
---	self.drug_lord_boss.hurt_severity = no_hurts_no_tase
+--	self.drug_lord_boss.hurt_severity = only_light_hurt_no_stuns
 --	self.drug_lord_boss.ecm_vulnerability = 0
 --	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
 --	self.drug_lord_boss_stealth.HEALTH_INIT = 15
