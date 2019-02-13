@@ -135,7 +135,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 0},
 			crackdown = {damage = 0} -- start.
 		},
-	deathvox_cop_pistol = {  -- mk 2 values. based on guard pistol.
+	deathvox_cop_pistol = {  -- mk 3 values. Previously 4 lock, now mapped to guard pistol.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 2},
 			hard = {damage = 2},
@@ -143,37 +143,37 @@ function WeaponTweakData:init(tweak_data)
 			overkill = {damage = 2},
 			mayhem = {damage = 2},
 			death_wish = {damage = 2},
-			crackdown = {damage = 2}
+			crackdown = {damage = 6}
 		},
-	deathvox_cop_revolver = { -- mk 2 values. based on middle value medic.
+	deathvox_cop_revolver = { -- mk 3 values. Previously 4 lock, now start at four and follow medic pistol.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 4},
 			hard = {damage = 4},
 			very_hard = {damage = 4},
 			overkill = {damage = 4},
-			mayhem = {damage = 4},
-			death_wish = {damage = 4},
-			crackdown = {damage = 4}
+			mayhem = {damage = 6},
+			death_wish = {damage = 6},
+			crackdown = {damage = 8}
 		},
-	deathvox_cop_shotgun = {  -- mk 2 values. based on lowest value light shot.
+	deathvox_cop_shotgun = {  -- mk 3 values. Previously 6 lock, now mapped to light shot.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 6},
 			hard = {damage = 6},
-			very_hard = {damage = 6},
-			overkill = {damage = 6},
-			mayhem = {damage = 6},
-			death_wish = {damage = 6},
-			crackdown = {damage = 6}
+			very_hard = {damage = 7},
+			overkill = {damage = 7},
+			mayhem = {damage = 7.5},
+			death_wish = {damage = 7.5},
+			crackdown = {damage = 9}
 		},
-		deathvox_cop_smg = {  -- mk 2 values. based on midpoint between pistol and revolver.
+	deathvox_cop_smg = {  -- mk 3 values. previously 2.5 lock, now begin at 2.5 then mapped to light AR.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 2.5},
 			hard = {damage = 2.5},
-			very_hard = {damage = 2.5},
-			overkill = {damage = 2.5},
-			mayhem = {damage = 2.5},
-			death_wish = {damage = 2.5},
-			crackdown = {damage = 2.5}
+			very_hard = {damage = 4.5},
+			overkill = {damage = 4.5},
+			mayhem = {damage = 6},
+			death_wish = {damage = 6},
+			crackdown = {damage = 7.5}
 		}
 	}
 	self._gun_list_cd = {}
@@ -494,7 +494,7 @@ end
 
 -- Begin NORMAL difficulty damage values. 
 
---function WeaponTweakData:_set_normal()
+function WeaponTweakData:_set_normal()
 	self.ak47_ass_npc.DAMAGE = 4	-- possibly unused aside from akan. Map to heavy AR.
 	self.contraband_npc.DAMAGE = 6   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
 	self.m4_npc.DAMAGE = 4		-- possibly unused by remaining scripted enemies. Map to heavy AR.
@@ -516,11 +516,11 @@ end
 	
 -- Begin NORMAL Turret values.
 
---end
+end
 
 -- Begin HARD difficulty damage values. 
 
---function WeaponTweakData:_set_hard()
+function WeaponTweakData:_set_hard()
 	self.ak47_ass_npc.DAMAGE = 4	-- possibly unused aside from akan. Map to heavy AR.
 	self.contraband_npc.DAMAGE = 6   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
 	self.m4_npc.DAMAGE = 4		-- possibly unused by remaining scripted enemies. Map to heavy AR.
@@ -542,11 +542,11 @@ end
 	
 -- Begin HARD Turret values.
 
---end
+end
 
 -- Begin VERY HARD difficulty damage values. 
 
---function WeaponTweakData:_set_overkill()
+function WeaponTweakData:_set_overkill()
 	self.ak47_ass_npc.DAMAGE = 6	-- possibly unused aside from akan. Map to heavy AR.
 	self.contraband_npc.DAMAGE = 7.5   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
 	self.m4_npc.DAMAGE = 6		-- possibly unused by remaining scripted enemies. Map to heavy AR.
@@ -568,11 +568,11 @@ end
 	
 -- Begin VERY HARD Turret values.
 
---end
+end
 
 -- Begin OVERKILL difficulty damage values. 
 
---function WeaponTweakData:_set_overkill_145()
+function WeaponTweakData:_set_overkill_145()
 	self.ak47_ass_npc.DAMAGE = 6	-- possibly unused aside from akan. Map to heavy AR.
 	self.contraband_npc.DAMAGE = 7.5   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
 	self.m4_npc.DAMAGE = 6		-- possibly unused by remaining scripted enemies. Map to heavy AR.
@@ -594,11 +594,11 @@ end
 	
 -- Begin OVERKILL Turret values.
 
---end
+end
 
 -- Begin MAYHEM difficulty damage values. 
 
---function WeaponTweakData:_set_easy_wish()
+function WeaponTweakData:_set_easy_wish()
 	self.ak47_ass_npc.DAMAGE = 7.5	-- possibly unused aside from akan. Should map to heavy AR.
 	self.contraband_npc.DAMAGE = 9   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
 	self.m4_npc.DAMAGE = 7.5	-- possibly unused by remaining scripted enemies. Map to heavy AR.
@@ -620,11 +620,11 @@ end
 	
 -- Begin MAYHEM Turret values.
 
---end
+end
 
 -- Begin DEATHWISH difficulty damage values. 
 
---function WeaponTweakData:_set_overkill_290()
+function WeaponTweakData:_set_overkill_290()
 	self.ak47_ass_npc.DAMAGE = 7.5	-- possibly unused aside from akan. Map to heavy AR.
 	self.contraband_npc.DAMAGE = 9   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
 	self.m4_npc.DAMAGE = 7.5	-- possibly unused by remaining scripted enemies. Map to heavy AR.
@@ -646,7 +646,7 @@ end
 	
 -- Begin DEATHWISH Turret values.
 
---end
+end
 
 -- Begin CRACKDOWN difficulty damage values. 
 
