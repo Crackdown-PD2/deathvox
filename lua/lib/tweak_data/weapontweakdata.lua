@@ -755,7 +755,7 @@ function WeaponTweakData:_set_overkill()
 	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 1 -- Reduced repair count for FBI.
 	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
 	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
-	self.swat_van_turret_module.CAN_GO_IDLE = false
+	self.swat_van_turret_module.CAN_GO_IDLE = true
 	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
 	
 	--Ceiling turrets.
@@ -865,7 +865,7 @@ function WeaponTweakData:_set_overkill_145()
 	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 1 -- Reduced repair count for FBI.
 	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
 	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
-	self.swat_van_turret_module.CAN_GO_IDLE = false
+	self.swat_van_turret_module.CAN_GO_IDLE = true
 	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
 	
 	--Ceiling turrets.
@@ -975,7 +975,7 @@ function WeaponTweakData:_set_easy_wish()
 	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 2 -- same as base game.
 	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
 	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
-	self.swat_van_turret_module.CAN_GO_IDLE = false
+	self.swat_van_turret_module.CAN_GO_IDLE = true
 	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
 	
 	--Ceiling turrets.
@@ -1085,7 +1085,7 @@ function WeaponTweakData:_set_overkill_290()
 	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 2 -- same as base game.
 	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
 	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
-	self.swat_van_turret_module.CAN_GO_IDLE = false
+	self.swat_van_turret_module.CAN_GO_IDLE = true
 	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
 	
 	--Ceiling turrets.
@@ -1195,7 +1195,7 @@ function WeaponTweakData:_set_sm_wish()
 	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 999
 	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
 	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
-	self.swat_van_turret_module.CAN_GO_IDLE = false
+	self.swat_van_turret_module.CAN_GO_IDLE = true
 	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
 	
 	--Ceiling turrets.
