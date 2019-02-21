@@ -516,6 +516,84 @@ function WeaponTweakData:_set_normal()
 	
 -- Begin NORMAL Turret values.
 
+	self.swat_van_turret_module.HEALTH_INIT = 15000 -- compare 35k base game. Note no repair though.
+	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
+	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 7 -- Full explosive mult.
+	self.swat_van_turret_module.FIRE_DMG_MUL = 0.1
+	self.swat_van_turret_module.BAG_DMG_MUL = 100
+	self.swat_van_turret_module.SHIELD_DMG_MUL = 1
+	self.swat_van_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.swat_van_turret_module.BODY_DAMAGE_CLAMP = 4200
+	self.swat_van_turret_module.DAMAGE = 0.5	-- same as base game hard.
+	self.swat_van_turret_module.CLIP_SIZE = 200 -- compare base game stat, 400.
+	self.swat_van_turret_module.AUTO_REPAIR = false -- No repair for SWAT tier.
+	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 1 
+	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
+	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
+	self.swat_van_turret_module.CAN_GO_IDLE = false
+	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
+	
+	--Ceiling turrets.
+	self.ceiling_turret_module.HEALTH_INIT = 15000 -- compare 35k base game. Note no repair though.
+	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
+	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 7 -- Full explosive mult.
+	self.ceiling_turret_module.FIRE_DMG_MUL = 0.1
+	self.ceiling_turret_module.BAG_DMG_MUL = 100
+	self.ceiling_turret_module.SHIELD_DMG_MUL = 1
+	self.ceiling_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.ceiling_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.ceiling_turret_module.DAMAGE = 0.5	-- same as base game hard.
+	self.ceiling_turret_module.CLIP_SIZE = 200 -- compare base game stat, 400.
+	self.ceiling_turret_module.AUTO_REPAIR = false
+	self.ceiling_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.ceiling_turret_module.AUTO_REPAIR_DURATION = 1
+	self.ceiling_turret_module.AUTO_RELOAD_DURATION = 8
+	self.ceiling_turret_module.CAN_GO_IDLE = false
+	self.ceiling_turret_module.IDLE_WAIT_TIME = 1
+	
+	--Crate turrets. Clone Ceiling turrets with slight revisions.
+	self.crate_turret_module.HEALTH_INIT = 15000 -- compare 35k base game. Note low damage.
+	self.crate_turret_module.SHIELD_HEALTH_INIT = 500 -- Same as base game overkill.
+	self.crate_turret_module.EXPLOSION_DMG_MUL = 7 -- Full explosive mult.
+	self.crate_turret_module.FIRE_DMG_MUL = 0.1
+	self.crate_turret_module.BAG_DMG_MUL = 100
+	self.crate_turret_module.SHIELD_DMG_MUL = 1
+	self.crate_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.crate_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.crate_turret_module.DAMAGE = 0.5	-- same as base game hard.
+	self.crate_turret_module.CLIP_SIZE = 150 -- reduced due to locations used being mostly close range.
+	self.crate_turret_module.AUTO_REPAIR = false
+	self.crate_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.crate_turret_module.AUTO_REPAIR_DURATION = 1
+	self.crate_turret_module.AUTO_RELOAD_DURATION = 8
+	self.crate_turret_module.CAN_GO_IDLE = false
+	self.crate_turret_module.IDLE_WAIT_TIME = 1
+	
+	--unusual variants in base game files; may or may not be used.
+	self.ceiling_turret_module_no_idle = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range.CAN_GO_IDLE = false
+	self.ceiling_turret_module_longer_range.FIRE_RANGE = 30000
+	self.ceiling_turret_module_longer_range.DETECTION_RANGE = self.ceiling_turret_module_longer_range.FIRE_RANGE
+	
+	-- AA turret; used on Henry's Rock.
+	self.aa_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.SHIELD_HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.EXPLOSION_DMG_MUL = 0
+	self.aa_turret_module.FIRE_DMG_MUL = 0
+	self.aa_turret_module.BAG_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DAMAGE_CLAMP = 10
+	self.aa_turret_module.BODY_DAMAGE_CLAMP = 10
+	self.aa_turret_module.DAMAGE = 0.5
+	self.aa_turret_module.CLIP_SIZE = 200
+	self.aa_turret_module.AUTO_REPAIR = true 
+	self.aa_turret_module.AUTO_REPAIR_MAX_COUNT = 999
+	self.aa_turret_module.AUTO_REPAIR_DURATION = 30
+	self.aa_turret_module.AUTO_RELOAD_DURATION = 8
+	self.aa_turret_module.CAN_GO_IDLE = false
+	self.aa_turret_module.IDLE_WAIT_TIME = 10	
+	
 end
 
 -- Begin HARD difficulty damage values. 
@@ -542,6 +620,83 @@ function WeaponTweakData:_set_hard()
 	
 -- Begin HARD Turret values.
 
+	self.swat_van_turret_module.HEALTH_INIT = 15000 -- compare 35k base game. Note no repair though.
+	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
+	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 7 -- Full explosive mult.
+	self.swat_van_turret_module.FIRE_DMG_MUL = 0.1
+	self.swat_van_turret_module.BAG_DMG_MUL = 100
+	self.swat_van_turret_module.SHIELD_DMG_MUL = 1
+	self.swat_van_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.swat_van_turret_module.BODY_DAMAGE_CLAMP = 4200
+	self.swat_van_turret_module.DAMAGE = 0.5	-- same as base game hard.
+	self.swat_van_turret_module.CLIP_SIZE = 200 -- compare base game stat, 400.
+	self.swat_van_turret_module.AUTO_REPAIR = false -- No repair for SWAT tier.
+	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 1 
+	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
+	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
+	self.swat_van_turret_module.CAN_GO_IDLE = false
+	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
+	
+	--Ceiling turrets.
+	self.ceiling_turret_module.HEALTH_INIT = 15000 -- compare 35k base game. Note no repair though.
+	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
+	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 7 -- Full explosive mult.
+	self.ceiling_turret_module.FIRE_DMG_MUL = 0.1
+	self.ceiling_turret_module.BAG_DMG_MUL = 100
+	self.ceiling_turret_module.SHIELD_DMG_MUL = 1
+	self.ceiling_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.ceiling_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.ceiling_turret_module.DAMAGE = 0.5	-- same as base game hard.
+	self.ceiling_turret_module.CLIP_SIZE = 200 -- compare base game stat, 400.
+	self.ceiling_turret_module.AUTO_REPAIR = false
+	self.ceiling_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.ceiling_turret_module.AUTO_REPAIR_DURATION = 1
+	self.ceiling_turret_module.AUTO_RELOAD_DURATION = 8
+	self.ceiling_turret_module.CAN_GO_IDLE = false
+	self.ceiling_turret_module.IDLE_WAIT_TIME = 1
+	
+	--Crate turrets. Clone Ceiling turrets with slight revisions.
+	self.crate_turret_module.HEALTH_INIT = 15000 -- compare 35k base game. Note low damage.
+	self.crate_turret_module.SHIELD_HEALTH_INIT = 500 -- Same as base game overkill.
+	self.crate_turret_module.EXPLOSION_DMG_MUL = 7 -- Full explosive mult.
+	self.crate_turret_module.FIRE_DMG_MUL = 0.1
+	self.crate_turret_module.BAG_DMG_MUL = 100
+	self.crate_turret_module.SHIELD_DMG_MUL = 1
+	self.crate_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.crate_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.crate_turret_module.DAMAGE = 0.5	-- same as base game hard.
+	self.crate_turret_module.CLIP_SIZE = 150 -- reduced due to locations used being mostly close range.
+	self.crate_turret_module.AUTO_REPAIR = false
+	self.crate_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.crate_turret_module.AUTO_REPAIR_DURATION = 1
+	self.crate_turret_module.AUTO_RELOAD_DURATION = 8
+	self.crate_turret_module.CAN_GO_IDLE = false
+	self.crate_turret_module.IDLE_WAIT_TIME = 1
+	
+	--unusual variants in base game files; may or may not be used.
+	self.ceiling_turret_module_no_idle = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range.CAN_GO_IDLE = false
+	self.ceiling_turret_module_longer_range.FIRE_RANGE = 30000
+	self.ceiling_turret_module_longer_range.DETECTION_RANGE = self.ceiling_turret_module_longer_range.FIRE_RANGE
+	
+	-- AA turret; used on Henry's Rock.
+	self.aa_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.SHIELD_HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.EXPLOSION_DMG_MUL = 0
+	self.aa_turret_module.FIRE_DMG_MUL = 0
+	self.aa_turret_module.BAG_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DAMAGE_CLAMP = 10
+	self.aa_turret_module.BODY_DAMAGE_CLAMP = 10
+	self.aa_turret_module.DAMAGE = 0.5
+	self.aa_turret_module.CLIP_SIZE = 200
+	self.aa_turret_module.AUTO_REPAIR = true 
+	self.aa_turret_module.AUTO_REPAIR_MAX_COUNT = 999
+	self.aa_turret_module.AUTO_REPAIR_DURATION = 30
+	self.aa_turret_module.AUTO_RELOAD_DURATION = 8
+	self.aa_turret_module.CAN_GO_IDLE = false
+	self.aa_turret_module.IDLE_WAIT_TIME = 10
 end
 
 -- Begin VERY HARD difficulty damage values. 
@@ -568,6 +723,84 @@ function WeaponTweakData:_set_overkill()
 	
 -- Begin VERY HARD Turret values.
 
+	self.swat_van_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
+	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
+	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 5 -- reduced XP mult versus SWAT tier.
+	self.swat_van_turret_module.FIRE_DMG_MUL = 0.1
+	self.swat_van_turret_module.BAG_DMG_MUL = 100
+	self.swat_van_turret_module.SHIELD_DMG_MUL = 1
+	self.swat_van_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.swat_van_turret_module.BODY_DAMAGE_CLAMP = 4200
+	self.swat_van_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.swat_van_turret_module.CLIP_SIZE = 300 -- compare base game stat, 400.
+	self.swat_van_turret_module.AUTO_REPAIR = true
+	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 1 -- Reduced repair count for FBI.
+	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
+	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
+	self.swat_van_turret_module.CAN_GO_IDLE = false
+	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
+	
+	--Ceiling turrets.
+	self.ceiling_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
+	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 500 -- Same as base game overkill.
+	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 5 -- reduced XP mult versus SWAT tier.
+	self.ceiling_turret_module.FIRE_DMG_MUL = 0.1
+	self.ceiling_turret_module.BAG_DMG_MUL = 100
+	self.ceiling_turret_module.SHIELD_DMG_MUL = 1
+	self.ceiling_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.ceiling_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.ceiling_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.ceiling_turret_module.CLIP_SIZE = 300 -- compare base game stat, 400.
+	self.ceiling_turret_module.AUTO_REPAIR = false
+	self.ceiling_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.ceiling_turret_module.AUTO_REPAIR_DURATION = 1
+	self.ceiling_turret_module.AUTO_RELOAD_DURATION = 8
+	self.ceiling_turret_module.CAN_GO_IDLE = false
+	self.ceiling_turret_module.IDLE_WAIT_TIME = 1
+	
+	--Crate turrets. Clone Ceiling turrets with slight revisions.
+	self.crate_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
+	self.crate_turret_module.SHIELD_HEALTH_INIT = 500 -- Same as base game overkill.
+	self.crate_turret_module.EXPLOSION_DMG_MUL = 5 -- reduced XP mult versus SWAT tier.
+	self.crate_turret_module.FIRE_DMG_MUL = 0.1
+	self.crate_turret_module.BAG_DMG_MUL = 100
+	self.crate_turret_module.SHIELD_DMG_MUL = 1
+	self.crate_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.crate_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.crate_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.crate_turret_module.CLIP_SIZE = 200 -- reduced due to locations used being mostly close range.
+	self.crate_turret_module.AUTO_REPAIR = false
+	self.crate_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.crate_turret_module.AUTO_REPAIR_DURATION = 1
+	self.crate_turret_module.AUTO_RELOAD_DURATION = 8
+	self.crate_turret_module.CAN_GO_IDLE = false
+	self.crate_turret_module.IDLE_WAIT_TIME = 1
+	
+	--unusual variants in base game files; may or may not be used.
+	self.ceiling_turret_module_no_idle = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range.CAN_GO_IDLE = false
+	self.ceiling_turret_module_longer_range.FIRE_RANGE = 30000
+	self.ceiling_turret_module_longer_range.DETECTION_RANGE = self.ceiling_turret_module_longer_range.FIRE_RANGE
+
+	-- AA turret; used on Henry's Rock.
+	self.aa_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.SHIELD_HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.EXPLOSION_DMG_MUL = 0
+	self.aa_turret_module.FIRE_DMG_MUL = 0
+	self.aa_turret_module.BAG_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DAMAGE_CLAMP = 10
+	self.aa_turret_module.BODY_DAMAGE_CLAMP = 10
+	self.aa_turret_module.DAMAGE = 2.0
+	self.aa_turret_module.CLIP_SIZE = 300
+	self.aa_turret_module.AUTO_REPAIR = true 
+	self.aa_turret_module.AUTO_REPAIR_MAX_COUNT = 999
+	self.aa_turret_module.AUTO_REPAIR_DURATION = 30
+	self.aa_turret_module.AUTO_RELOAD_DURATION = 8
+	self.aa_turret_module.CAN_GO_IDLE = false
+	self.aa_turret_module.IDLE_WAIT_TIME = 10
+	
 end
 
 -- Begin OVERKILL difficulty damage values. 
@@ -594,6 +827,84 @@ function WeaponTweakData:_set_overkill_145()
 	
 -- Begin OVERKILL Turret values.
 
+	self.swat_van_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
+	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
+	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 5 -- reduced XP mult versus SWAT tier.
+	self.swat_van_turret_module.FIRE_DMG_MUL = 0.1
+	self.swat_van_turret_module.BAG_DMG_MUL = 100
+	self.swat_van_turret_module.SHIELD_DMG_MUL = 1
+	self.swat_van_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.swat_van_turret_module.BODY_DAMAGE_CLAMP = 4200
+	self.swat_van_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.swat_van_turret_module.CLIP_SIZE = 300 -- compare base game stat, 400.
+	self.swat_van_turret_module.AUTO_REPAIR = true
+	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 1 -- Reduced repair count for FBI.
+	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
+	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
+	self.swat_van_turret_module.CAN_GO_IDLE = false
+	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
+	
+	--Ceiling turrets.
+	self.ceiling_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
+	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 500 -- Same as base game overkill.
+	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 5 -- reduced XP mult versus SWAT tier.
+	self.ceiling_turret_module.FIRE_DMG_MUL = 0.1
+	self.ceiling_turret_module.BAG_DMG_MUL = 100
+	self.ceiling_turret_module.SHIELD_DMG_MUL = 1
+	self.ceiling_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.ceiling_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.ceiling_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.ceiling_turret_module.CLIP_SIZE = 300 -- compare base game stat, 400.
+	self.ceiling_turret_module.AUTO_REPAIR = false
+	self.ceiling_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.ceiling_turret_module.AUTO_REPAIR_DURATION = 1
+	self.ceiling_turret_module.AUTO_RELOAD_DURATION = 8
+	self.ceiling_turret_module.CAN_GO_IDLE = false
+	self.ceiling_turret_module.IDLE_WAIT_TIME = 1
+	
+	--Crate turrets. Clone Ceiling turrets with slight revisions.
+	self.crate_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
+	self.crate_turret_module.SHIELD_HEALTH_INIT = 500 -- Same as base game overkill.
+	self.crate_turret_module.EXPLOSION_DMG_MUL = 5 -- reduced XP mult versus SWAT tier.
+	self.crate_turret_module.FIRE_DMG_MUL = 0.1
+	self.crate_turret_module.BAG_DMG_MUL = 100
+	self.crate_turret_module.SHIELD_DMG_MUL = 1
+	self.crate_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.crate_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.crate_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.crate_turret_module.CLIP_SIZE = 200 -- reduced due to locations used being mostly close range.
+	self.crate_turret_module.AUTO_REPAIR = false
+	self.crate_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.crate_turret_module.AUTO_REPAIR_DURATION = 1
+	self.crate_turret_module.AUTO_RELOAD_DURATION = 8
+	self.crate_turret_module.CAN_GO_IDLE = false
+	self.crate_turret_module.IDLE_WAIT_TIME = 1
+	
+	--unusual variants in base game files; may or may not be used.
+	self.ceiling_turret_module_no_idle = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range.CAN_GO_IDLE = false
+	self.ceiling_turret_module_longer_range.FIRE_RANGE = 30000
+	self.ceiling_turret_module_longer_range.DETECTION_RANGE = self.ceiling_turret_module_longer_range.FIRE_RANGE
+	
+	-- AA turret; used on Henry's Rock.
+	self.aa_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.SHIELD_HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.EXPLOSION_DMG_MUL = 0
+	self.aa_turret_module.FIRE_DMG_MUL = 0
+	self.aa_turret_module.BAG_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DAMAGE_CLAMP = 10
+	self.aa_turret_module.BODY_DAMAGE_CLAMP = 10
+	self.aa_turret_module.DAMAGE = 2.0
+	self.aa_turret_module.CLIP_SIZE = 300
+	self.aa_turret_module.AUTO_REPAIR = true 
+	self.aa_turret_module.AUTO_REPAIR_MAX_COUNT = 999
+	self.aa_turret_module.AUTO_REPAIR_DURATION = 30
+	self.aa_turret_module.AUTO_RELOAD_DURATION = 8
+	self.aa_turret_module.CAN_GO_IDLE = false
+	self.aa_turret_module.IDLE_WAIT_TIME = 10
+	
 end
 
 -- Begin MAYHEM difficulty damage values. 
@@ -620,6 +931,84 @@ function WeaponTweakData:_set_easy_wish()
 	
 -- Begin MAYHEM Turret values.
 
+	self.swat_van_turret_module.HEALTH_INIT = 30000 -- compare 400k base game.
+	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD, "vivinite" shield.
+	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3 -- Same as CD, "vivinite" shield.
+	self.swat_van_turret_module.FIRE_DMG_MUL = 0.1
+	self.swat_van_turret_module.BAG_DMG_MUL = 100
+	self.swat_van_turret_module.SHIELD_DMG_MUL = 1
+	self.swat_van_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.swat_van_turret_module.BODY_DAMAGE_CLAMP = 4200
+	self.swat_van_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.swat_van_turret_module.CLIP_SIZE = 400 -- compare base game stat, 800.
+	self.swat_van_turret_module.AUTO_REPAIR = true
+	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 2 -- same as base game.
+	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
+	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
+	self.swat_van_turret_module.CAN_GO_IDLE = false
+	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
+	
+	--Ceiling turrets.
+	self.ceiling_turret_module.HEALTH_INIT = 30000 -- compare 400k base game.
+	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 700 -- Same as CD, "vivinite" shield.
+	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 3 -- base game value is 7
+	self.ceiling_turret_module.FIRE_DMG_MUL = 0.1
+	self.ceiling_turret_module.BAG_DMG_MUL = 100
+	self.ceiling_turret_module.SHIELD_DMG_MUL = 1
+	self.ceiling_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.ceiling_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.ceiling_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.ceiling_turret_module.CLIP_SIZE = 400 -- compare base game stat, 800.
+	self.ceiling_turret_module.AUTO_REPAIR = false
+	self.ceiling_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.ceiling_turret_module.AUTO_REPAIR_DURATION = 1
+	self.ceiling_turret_module.AUTO_RELOAD_DURATION = 8
+	self.ceiling_turret_module.CAN_GO_IDLE = false
+	self.ceiling_turret_module.IDLE_WAIT_TIME = 1
+	
+	--Crate turrets. Clone Ceiling turrets with slight revisions.
+	self.crate_turret_module.HEALTH_INIT = 30000 -- compare 400k base game.
+	self.crate_turret_module.SHIELD_HEALTH_INIT = 700 -- Same as CD, "vivinite" shield.
+	self.crate_turret_module.EXPLOSION_DMG_MUL = 3 -- base game value is 7
+	self.crate_turret_module.FIRE_DMG_MUL = 0.1
+	self.crate_turret_module.BAG_DMG_MUL = 100
+	self.crate_turret_module.SHIELD_DMG_MUL = 1
+	self.crate_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.crate_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.crate_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.crate_turret_module.CLIP_SIZE = 250 -- reduced due to locations used being mostly close range.
+	self.crate_turret_module.AUTO_REPAIR = false
+	self.crate_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.crate_turret_module.AUTO_REPAIR_DURATION = 1
+	self.crate_turret_module.AUTO_RELOAD_DURATION = 8
+	self.crate_turret_module.CAN_GO_IDLE = false
+	self.crate_turret_module.IDLE_WAIT_TIME = 1
+	
+	--unusual variants in base game files; may or may not be used.
+	self.ceiling_turret_module_no_idle = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range.CAN_GO_IDLE = false
+	self.ceiling_turret_module_longer_range.FIRE_RANGE = 30000
+	self.ceiling_turret_module_longer_range.DETECTION_RANGE = self.ceiling_turret_module_longer_range.FIRE_RANGE
+	
+	-- AA turret; used on Henry's Rock.
+	self.aa_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.SHIELD_HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.EXPLOSION_DMG_MUL = 0
+	self.aa_turret_module.FIRE_DMG_MUL = 0
+	self.aa_turret_module.BAG_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DAMAGE_CLAMP = 10
+	self.aa_turret_module.BODY_DAMAGE_CLAMP = 10
+	self.aa_turret_module.DAMAGE = 2.0
+	self.aa_turret_module.CLIP_SIZE = 400
+	self.aa_turret_module.AUTO_REPAIR = true 
+	self.aa_turret_module.AUTO_REPAIR_MAX_COUNT = 999
+	self.aa_turret_module.AUTO_REPAIR_DURATION = 30
+	self.aa_turret_module.AUTO_RELOAD_DURATION = 8
+	self.aa_turret_module.CAN_GO_IDLE = false
+	self.aa_turret_module.IDLE_WAIT_TIME = 10	
+	
 end
 
 -- Begin DEATHWISH difficulty damage values. 
@@ -646,6 +1035,84 @@ function WeaponTweakData:_set_overkill_290()
 	
 -- Begin DEATHWISH Turret values.
 
+	self.swat_van_turret_module.HEALTH_INIT = 30000 -- compare 400k base game.
+	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD, "vivinite" shield.
+	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3 -- Same as CD, "vivinite" shield.
+	self.swat_van_turret_module.FIRE_DMG_MUL = 0.1
+	self.swat_van_turret_module.BAG_DMG_MUL = 100
+	self.swat_van_turret_module.SHIELD_DMG_MUL = 1
+	self.swat_van_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.swat_van_turret_module.BODY_DAMAGE_CLAMP = 4200
+	self.swat_van_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.swat_van_turret_module.CLIP_SIZE = 400 -- compare base game stat, 800.
+	self.swat_van_turret_module.AUTO_REPAIR = true
+	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 2 -- same as base game.
+	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
+	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
+	self.swat_van_turret_module.CAN_GO_IDLE = false
+	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
+	
+	--Ceiling turrets.
+	self.ceiling_turret_module.HEALTH_INIT = 30000 -- compare 400k base game.
+	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 700 -- Same as CD, "vivinite" shield.
+	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 3 -- base game value is 7
+	self.ceiling_turret_module.FIRE_DMG_MUL = 0.1
+	self.ceiling_turret_module.BAG_DMG_MUL = 100
+	self.ceiling_turret_module.SHIELD_DMG_MUL = 1
+	self.ceiling_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.ceiling_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.ceiling_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.ceiling_turret_module.CLIP_SIZE = 400 -- compare base game stat, 800.
+	self.ceiling_turret_module.AUTO_REPAIR = false
+	self.ceiling_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.ceiling_turret_module.AUTO_REPAIR_DURATION = 1
+	self.ceiling_turret_module.AUTO_RELOAD_DURATION = 8
+	self.ceiling_turret_module.CAN_GO_IDLE = false
+	self.ceiling_turret_module.IDLE_WAIT_TIME = 1
+	
+	--Crate turrets. Clone Ceiling turrets with slight revisions.
+	self.crate_turret_module.HEALTH_INIT = 30000 -- compare 400k base game.
+	self.crate_turret_module.SHIELD_HEALTH_INIT = 700 -- Same as CD, "vivinite" shield.
+	self.crate_turret_module.EXPLOSION_DMG_MUL = 3 -- base game value is 7
+	self.crate_turret_module.FIRE_DMG_MUL = 0.1
+	self.crate_turret_module.BAG_DMG_MUL = 100
+	self.crate_turret_module.SHIELD_DMG_MUL = 1
+	self.crate_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.crate_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.crate_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.crate_turret_module.CLIP_SIZE = 250 -- reduced due to locations used being mostly close range.
+	self.crate_turret_module.AUTO_REPAIR = false
+	self.crate_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.crate_turret_module.AUTO_REPAIR_DURATION = 1
+	self.crate_turret_module.AUTO_RELOAD_DURATION = 8
+	self.crate_turret_module.CAN_GO_IDLE = false
+	self.crate_turret_module.IDLE_WAIT_TIME = 1
+	
+	--unusual variants in base game files; may or may not be used.
+	self.ceiling_turret_module_no_idle = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range.CAN_GO_IDLE = false
+	self.ceiling_turret_module_longer_range.FIRE_RANGE = 30000
+	self.ceiling_turret_module_longer_range.DETECTION_RANGE = self.ceiling_turret_module_longer_range.FIRE_RANGE
+	
+	-- AA turret; used on Henry's Rock.
+	self.aa_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.SHIELD_HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.EXPLOSION_DMG_MUL = 0
+	self.aa_turret_module.FIRE_DMG_MUL = 0
+	self.aa_turret_module.BAG_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DAMAGE_CLAMP = 10
+	self.aa_turret_module.BODY_DAMAGE_CLAMP = 10
+	self.aa_turret_module.DAMAGE = 2.0
+	self.aa_turret_module.CLIP_SIZE = 400
+	self.aa_turret_module.AUTO_REPAIR = true 
+	self.aa_turret_module.AUTO_REPAIR_MAX_COUNT = 999
+	self.aa_turret_module.AUTO_REPAIR_DURATION = 30
+	self.aa_turret_module.AUTO_RELOAD_DURATION = 8
+	self.aa_turret_module.CAN_GO_IDLE = false
+	self.aa_turret_module.IDLE_WAIT_TIME = 10
+	
 end
 
 -- Begin CRACKDOWN difficulty damage values. 
