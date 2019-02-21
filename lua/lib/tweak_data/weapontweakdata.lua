@@ -514,6 +514,12 @@ function WeaponTweakData:_set_normal()
 	self.smoke_npc.DAMAGE = 4	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
 	
+-- below code is goofball legacy believed to reinitialize enemy melee values.	
+	self.npc_melee.baton.damage = 5
+	self.npc_melee.knife_1.damage = 7
+	self.npc_melee.fists.damage = 4
+-- end goofball legacy code block.
+	
 -- Begin NORMAL Turret values.
 
 	self.swat_van_turret_module.HEALTH_INIT = 15000 -- compare 35k base game. Note no repair though.
@@ -617,6 +623,12 @@ function WeaponTweakData:_set_hard()
 	self.mac11_npc.DAMAGE = 2.5	-- smg used by number of criminal units. Map to cop smg.
 	self.smoke_npc.DAMAGE = 4	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
+
+-- below code is goofball legacy believed to reinitialize enemy melee values.	
+	self.npc_melee.baton.damage = 5
+	self.npc_melee.knife_1.damage = 7
+	self.npc_melee.fists.damage = 4
+-- end goofball legacy code block.
 	
 -- Begin HARD Turret values.
 
@@ -720,6 +732,12 @@ function WeaponTweakData:_set_overkill()
 	self.mac11_npc.DAMAGE = 4.5	-- smg used by number of criminal units. Map to cop smg.
 	self.smoke_npc.DAMAGE = 6	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
+
+-- below code is goofball legacy believed to reinitialize enemy melee values.	
+	self.npc_melee.baton.damage = 5
+	self.npc_melee.knife_1.damage = 7
+	self.npc_melee.fists.damage = 4
+-- end goofball legacy code block.	
 	
 -- Begin VERY HARD Turret values.
 
@@ -824,6 +842,12 @@ function WeaponTweakData:_set_overkill_145()
 	self.mac11_npc.DAMAGE = 4.5	-- smg used by number of criminal units. Map to cop smg.
 	self.smoke_npc.DAMAGE = 6	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
+
+-- below code is goofball legacy believed to reinitialize enemy melee values.	
+	self.npc_melee.baton.damage = 5
+	self.npc_melee.knife_1.damage = 7
+	self.npc_melee.fists.damage = 4
+-- end goofball legacy code block.
 	
 -- Begin OVERKILL Turret values.
 
@@ -928,6 +952,12 @@ function WeaponTweakData:_set_easy_wish()
 	self.mac11_npc.DAMAGE = 6	-- smg used by number of criminal units. Map to cop smg.
 	self.smoke_npc.DAMAGE = 7.5	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
+
+-- below code is goofball legacy believed to reinitialize enemy melee values.	
+	self.npc_melee.baton.damage = 5
+	self.npc_melee.knife_1.damage = 7
+	self.npc_melee.fists.damage = 4
+-- end goofball legacy code block.
 	
 -- Begin MAYHEM Turret values.
 
@@ -1033,6 +1063,12 @@ function WeaponTweakData:_set_overkill_290()
 	self.smoke_npc.DAMAGE = 7.5	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
 	
+-- below code is goofball legacy believed to reinitialize enemy melee values.	
+	self.npc_melee.baton.damage = 5
+	self.npc_melee.knife_1.damage = 7
+	self.npc_melee.fists.damage = 4
+-- end goofball legacy code block.	
+
 -- Begin DEATHWISH Turret values.
 
 	self.swat_van_turret_module.HEALTH_INIT = 30000 -- compare 400k base game.
@@ -1117,7 +1153,6 @@ end
 
 -- Begin CRACKDOWN difficulty damage values. 
 
--- note need to set each of these values to match equivalent weapon, then populate across diffs.
 function WeaponTweakData:_set_sm_wish() 
 	self.ak47_ass_npc.DAMAGE = 9	-- possibly unused aside from akan. Map to heavy AR.
 	self.contraband_npc.DAMAGE = 11   -- apparently used exclusively by Sosa. Draft value 11. Compare with 9 base for heavy swat.
@@ -1138,11 +1173,10 @@ function WeaponTweakData:_set_sm_wish()
 	self.smoke_npc.DAMAGE = 9	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 12	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
 	
--- below code is goofball legacy and needs to be identified and commented.	
+-- below code is goofball legacy believed to reinitialize enemy melee values.	
 	self.npc_melee.baton.damage = 5
 	self.npc_melee.knife_1.damage = 7
 	self.npc_melee.fists.damage = 4
-
 -- end goofball legacy code block.
 
 -- Begin CRACKDOWN Turret values.
