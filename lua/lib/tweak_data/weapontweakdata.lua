@@ -13,7 +13,7 @@ function WeaponTweakData:init(tweak_data)
 			crackdown = {damage = 6}
 		},
 -- note light and heavy baselines are not used for beat cop type enemies. These will be implemented separately. They correspond to swat unit types (blue, yellow) instead.
-		deathvox_light_ar = {
+	deathvox_light_ar = {
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 2}, -- blue swat.
 			hard = {damage = 2},
@@ -23,7 +23,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 6},
 			crackdown = {damage = 7.5} -- zeal.
 		},
-		deathvox_heavy_ar = {
+	deathvox_heavy_ar = {
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 4}, -- yellow swat.
 			hard = {damage = 4},
@@ -43,7 +43,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 7.5},
 			crackdown = {damage = 9} -- zeal.
 		},
-		deathvox_shotgun_heavy = {
+	deathvox_shotgun_heavy = {
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 8}, -- yellow swat.
 			hard = {damage = 8},
@@ -53,7 +53,6 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 10},
 			crackdown = {damage = 11} -- zeal.
 		},
-        --shield?
         deathvox_medic_pistol = { -- note uses light ar on difficulties below CD.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 2}, -- blue.
@@ -64,8 +63,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 6},
 			crackdown = {damage = 8} -- zeal
 		},
-        -- taser?
-		deathvox_cloaker = {
+	deathvox_cloaker = {
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 4.5},
 			hard = {damage = 6}, -- start. Match to higher layer light AR to preserve unit coherence.
@@ -75,7 +73,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 6},
 			crackdown = {damage = 7.5} -- zeal. Increase from prior values, matched to light AR.
 		},
-		deathvox_sniper = { -- focus much more on aim/focus delay than damage shift.
+	deathvox_sniper = { -- focus much more on aim/focus delay than damage shift.
 -- no need for asset coherence on this unit only, as at a distance. Discuss typing with group.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 16}, -- blue.
@@ -86,7 +84,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 20},
 			crackdown = {damage = 24}
 		},
-		deathvox_greendozer = {
+	deathvox_greendozer = {
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 24},
 			hard = {damage = 24},
@@ -96,7 +94,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 24},
 			crackdown = {damage = 50} -- zeal.
 		},
-		deathvox_blackdozer = {
+	deathvox_blackdozer = {
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 18},
 			hard = {damage = 18},
@@ -106,7 +104,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 18},
 			crackdown = {damage = 22.5} -- zeal. matched to DW.
 		},
-		deathvox_lmgdozer = { 
+	deathvox_lmgdozer = { 
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 10},
 			hard = {damage = 10},
@@ -137,7 +135,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 0},
 			crackdown = {damage = 0} -- start.
 		},
-		deathvox_cop_pistol = {  -- mk 2 values. based on guard pistol.
+	deathvox_cop_pistol = {  -- mk 3 values. Previously 4 lock, now mapped to guard pistol.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 2},
 			hard = {damage = 2},
@@ -145,37 +143,37 @@ function WeaponTweakData:init(tweak_data)
 			overkill = {damage = 2},
 			mayhem = {damage = 2},
 			death_wish = {damage = 2},
-			crackdown = {damage = 2}
+			crackdown = {damage = 6}
 		},
-		deathvox_cop_revolver = { -- mk 2 values. based on middle value medic.
+	deathvox_cop_revolver = { -- mk 3 values. Previously 4 lock, now start at four and follow medic pistol.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 4},
 			hard = {damage = 4},
 			very_hard = {damage = 4},
 			overkill = {damage = 4},
-			mayhem = {damage = 4},
-			death_wish = {damage = 4},
-			crackdown = {damage = 4}
+			mayhem = {damage = 6},
+			death_wish = {damage = 6},
+			crackdown = {damage = 8}
 		},
-		deathvox_cop_shotgun = {  -- mk 2 values. based on lowest value light shot.
+	deathvox_cop_shotgun = {  -- mk 3 values. Previously 6 lock, now mapped to light shot.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 6},
 			hard = {damage = 6},
-			very_hard = {damage = 6},
-			overkill = {damage = 6},
-			mayhem = {damage = 6},
-			death_wish = {damage = 6},
-			crackdown = {damage = 6}
+			very_hard = {damage = 7},
+			overkill = {damage = 7},
+			mayhem = {damage = 7.5},
+			death_wish = {damage = 7.5},
+			crackdown = {damage = 9}
 		},
-		deathvox_cop_smg = {  -- mk 2 values. based on midpoint between pistol and revolver.
+	deathvox_cop_smg = {  -- mk 3 values. previously 2.5 lock, now begin at 2.5 then mapped to light AR.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 2.5},
 			hard = {damage = 2.5},
-			very_hard = {damage = 2.5},
-			overkill = {damage = 2.5},
-			mayhem = {damage = 2.5},
-			death_wish = {damage = 2.5},
-			crackdown = {damage = 2.5}
+			very_hard = {damage = 4.5},
+			overkill = {damage = 4.5},
+			mayhem = {damage = 6},
+			death_wish = {damage = 6},
+			crackdown = {damage = 7.5}
 		}
 	}
 	self._gun_list_cd = {}
@@ -492,17 +490,700 @@ function WeaponTweakData:init(tweak_data)
 	end
 end
 
-function WeaponTweakData:_set_sm_wish() -- note need to set some of these values for other diffs.
-	self.ak47_ass_npc.DAMAGE = 3
-	self.m4_npc.DAMAGE = 3
-	self.g36_npc.DAMAGE = 5
-	self.r870_npc.DAMAGE = 7
+-- Begin difficulty scripted weapon damage value population.
+
+-- Begin NORMAL difficulty damage values. 
+
+function WeaponTweakData:_set_normal()
+	self.ak47_ass_npc.DAMAGE = 4	-- possibly unused aside from akan. Map to heavy AR.
+	self.contraband_npc.DAMAGE = 6   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
+	self.m4_npc.DAMAGE = 4		-- possibly unused by remaining scripted enemies. Map to heavy AR.
+	self.g36_npc.DAMAGE = 2		-- possibly unused by remaining scripted enemies. Map to light AR.
+	self.ump_npc.DAMAGE = 2		-- possibly unused by remaining scripted enemies. Map to light AR.
+	self.r870_npc.DAMAGE = 6	-- Used by several police and criminal units. Draft map to light shotgun.
+	self.m4_yellow_npc.DAMAGE = 2	-- populates taser damage after other fixes applied. Map to light AR.
+--	self.m14_npc.DAMAGE = 3		-- possibly unused.
+--	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
+	self.x_c45_npc.DAMAGE = 4	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
+	self.ak47_npc.DAMAGE = 4	-- possibly used by mobster units. Map to heavy AR.
+	self.mp5_npc.DAMAGE = 2.5	-- smg used by number of units. Map to cop smg.
+	self.mp9_npc.DAMAGE = 2.5	-- shield only.	Map to cop smg.
+	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to cop pistol.
+	self.raging_bull_npc.DAMAGE = 4	-- bronco used by variety of units. Draft map to cop revolver. Make sure no armor pierce.
+	self.mac11_npc.DAMAGE = 2.5	-- smg used by number of criminal units. Map to cop smg.
+	self.smoke_npc.DAMAGE = 4	-- vit secret enemy weapon. Map to Heavy AR.
+--	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
+	
+-- below code is goofball legacy believed to reinitialize enemy melee values.	
 	self.npc_melee.baton.damage = 5
 	self.npc_melee.knife_1.damage = 7
 	self.npc_melee.fists.damage = 4
+-- end goofball legacy code block.
+	
+-- Begin NORMAL Turret values.
+
+	self.swat_van_turret_module.HEALTH_INIT = 15000 -- compare 35k base game. Note no repair though.
+	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
+	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 7 -- Full explosive mult.
+	self.swat_van_turret_module.FIRE_DMG_MUL = 0.1
+	self.swat_van_turret_module.BAG_DMG_MUL = 100
+	self.swat_van_turret_module.SHIELD_DMG_MUL = 1
+	self.swat_van_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.swat_van_turret_module.BODY_DAMAGE_CLAMP = 4200
+	self.swat_van_turret_module.DAMAGE = 0.5	-- same as base game hard.
+	self.swat_van_turret_module.CLIP_SIZE = 200 -- compare base game stat, 400.
+	self.swat_van_turret_module.AUTO_REPAIR = false -- No repair for SWAT tier.
+	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 1 
+	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
+	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
+	self.swat_van_turret_module.CAN_GO_IDLE = false
+	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
+	
+	--Ceiling turrets.
+	self.ceiling_turret_module.HEALTH_INIT = 15000 -- compare 35k base game. Note no repair though.
+	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
+	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 7 -- Full explosive mult.
+	self.ceiling_turret_module.FIRE_DMG_MUL = 0.1
+	self.ceiling_turret_module.BAG_DMG_MUL = 100
+	self.ceiling_turret_module.SHIELD_DMG_MUL = 1
+	self.ceiling_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.ceiling_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.ceiling_turret_module.DAMAGE = 0.5	-- same as base game hard.
+	self.ceiling_turret_module.CLIP_SIZE = 200 -- compare base game stat, 400.
+	self.ceiling_turret_module.AUTO_REPAIR = false
+	self.ceiling_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.ceiling_turret_module.AUTO_REPAIR_DURATION = 1
+	self.ceiling_turret_module.AUTO_RELOAD_DURATION = 8
+	self.ceiling_turret_module.CAN_GO_IDLE = false
+	self.ceiling_turret_module.IDLE_WAIT_TIME = 1
+	
+	--Crate turrets. Clone Ceiling turrets with slight revisions.
+	self.crate_turret_module.HEALTH_INIT = 15000 -- compare 35k base game. Note low damage.
+	self.crate_turret_module.SHIELD_HEALTH_INIT = 500 -- Same as base game overkill.
+	self.crate_turret_module.EXPLOSION_DMG_MUL = 7 -- Full explosive mult.
+	self.crate_turret_module.FIRE_DMG_MUL = 0.1
+	self.crate_turret_module.BAG_DMG_MUL = 100
+	self.crate_turret_module.SHIELD_DMG_MUL = 1
+	self.crate_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.crate_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.crate_turret_module.DAMAGE = 0.5	-- same as base game hard.
+	self.crate_turret_module.CLIP_SIZE = 150 -- reduced due to locations used being mostly close range.
+	self.crate_turret_module.AUTO_REPAIR = false
+	self.crate_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.crate_turret_module.AUTO_REPAIR_DURATION = 1
+	self.crate_turret_module.AUTO_RELOAD_DURATION = 8
+	self.crate_turret_module.CAN_GO_IDLE = false
+	self.crate_turret_module.IDLE_WAIT_TIME = 1
+	
+	--unusual variants in base game files; may or may not be used.
+	self.ceiling_turret_module_no_idle = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range.CAN_GO_IDLE = false
+	self.ceiling_turret_module_longer_range.FIRE_RANGE = 30000
+	self.ceiling_turret_module_longer_range.DETECTION_RANGE = self.ceiling_turret_module_longer_range.FIRE_RANGE
+	
+	-- AA turret; used on Henry's Rock.
+	self.aa_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.SHIELD_HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.EXPLOSION_DMG_MUL = 0
+	self.aa_turret_module.FIRE_DMG_MUL = 0
+	self.aa_turret_module.BAG_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DAMAGE_CLAMP = 10
+	self.aa_turret_module.BODY_DAMAGE_CLAMP = 10
+	self.aa_turret_module.DAMAGE = 0.5
+	self.aa_turret_module.CLIP_SIZE = 200
+	self.aa_turret_module.AUTO_REPAIR = true 
+	self.aa_turret_module.AUTO_REPAIR_MAX_COUNT = 999
+	self.aa_turret_module.AUTO_REPAIR_DURATION = 30
+	self.aa_turret_module.AUTO_RELOAD_DURATION = 8
+	self.aa_turret_module.CAN_GO_IDLE = false
+	self.aa_turret_module.IDLE_WAIT_TIME = 10	
+	
+end
+
+-- Begin HARD difficulty damage values. 
+
+function WeaponTweakData:_set_hard()
+	self.ak47_ass_npc.DAMAGE = 4	-- possibly unused aside from akan. Map to heavy AR.
+	self.contraband_npc.DAMAGE = 6   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
+	self.m4_npc.DAMAGE = 4		-- possibly unused by remaining scripted enemies. Map to heavy AR.
+	self.g36_npc.DAMAGE = 2		-- possibly unused by remaining scripted enemies. Map to light AR.
+	self.ump_npc.DAMAGE = 2		-- possibly unused by remaining scripted enemies. Map to light AR.
+	self.r870_npc.DAMAGE = 6	-- Used by several police and criminal units. Draft map to light shotgun.
+	self.m4_yellow_npc.DAMAGE = 2	-- populates taser damage after other fixes applied. Map to light AR.
+--	self.m14_npc.DAMAGE = 3		-- possibly unused.
+--	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
+	self.x_c45_npc.DAMAGE = 4	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
+	self.ak47_npc.DAMAGE = 4	-- possibly used by mobster units. Map to heavy AR.
+	self.mp5_npc.DAMAGE = 2.5	-- smg used by number of units. Map to cop smg.
+	self.mp9_npc.DAMAGE = 2.5	-- shield only.	Map to cop smg.
+	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to cop pistol.
+	self.raging_bull_npc.DAMAGE = 4	-- bronco used by variety of units. Draft map to cop revolver. Make sure no armor pierce.
+	self.mac11_npc.DAMAGE = 2.5	-- smg used by number of criminal units. Map to cop smg.
+	self.smoke_npc.DAMAGE = 4	-- vit secret enemy weapon. Map to Heavy AR.
+--	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
+
+-- below code is goofball legacy believed to reinitialize enemy melee values.	
+	self.npc_melee.baton.damage = 5
+	self.npc_melee.knife_1.damage = 7
+	self.npc_melee.fists.damage = 4
+-- end goofball legacy code block.
+	
+-- Begin HARD Turret values.
+
+	self.swat_van_turret_module.HEALTH_INIT = 15000 -- compare 35k base game. Note no repair though.
+	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
+	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 7 -- Full explosive mult.
+	self.swat_van_turret_module.FIRE_DMG_MUL = 0.1
+	self.swat_van_turret_module.BAG_DMG_MUL = 100
+	self.swat_van_turret_module.SHIELD_DMG_MUL = 1
+	self.swat_van_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.swat_van_turret_module.BODY_DAMAGE_CLAMP = 4200
+	self.swat_van_turret_module.DAMAGE = 0.5	-- same as base game hard.
+	self.swat_van_turret_module.CLIP_SIZE = 200 -- compare base game stat, 400.
+	self.swat_van_turret_module.AUTO_REPAIR = false -- No repair for SWAT tier.
+	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 1 
+	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
+	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
+	self.swat_van_turret_module.CAN_GO_IDLE = false
+	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
+	
+	--Ceiling turrets.
+	self.ceiling_turret_module.HEALTH_INIT = 15000 -- compare 35k base game. Note no repair though.
+	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
+	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 7 -- Full explosive mult.
+	self.ceiling_turret_module.FIRE_DMG_MUL = 0.1
+	self.ceiling_turret_module.BAG_DMG_MUL = 100
+	self.ceiling_turret_module.SHIELD_DMG_MUL = 1
+	self.ceiling_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.ceiling_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.ceiling_turret_module.DAMAGE = 0.5	-- same as base game hard.
+	self.ceiling_turret_module.CLIP_SIZE = 200 -- compare base game stat, 400.
+	self.ceiling_turret_module.AUTO_REPAIR = false
+	self.ceiling_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.ceiling_turret_module.AUTO_REPAIR_DURATION = 1
+	self.ceiling_turret_module.AUTO_RELOAD_DURATION = 8
+	self.ceiling_turret_module.CAN_GO_IDLE = false
+	self.ceiling_turret_module.IDLE_WAIT_TIME = 1
+	
+	--Crate turrets. Clone Ceiling turrets with slight revisions.
+	self.crate_turret_module.HEALTH_INIT = 15000 -- compare 35k base game. Note low damage.
+	self.crate_turret_module.SHIELD_HEALTH_INIT = 500 -- Same as base game overkill.
+	self.crate_turret_module.EXPLOSION_DMG_MUL = 7 -- Full explosive mult.
+	self.crate_turret_module.FIRE_DMG_MUL = 0.1
+	self.crate_turret_module.BAG_DMG_MUL = 100
+	self.crate_turret_module.SHIELD_DMG_MUL = 1
+	self.crate_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.crate_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.crate_turret_module.DAMAGE = 0.5	-- same as base game hard.
+	self.crate_turret_module.CLIP_SIZE = 150 -- reduced due to locations used being mostly close range.
+	self.crate_turret_module.AUTO_REPAIR = false
+	self.crate_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.crate_turret_module.AUTO_REPAIR_DURATION = 1
+	self.crate_turret_module.AUTO_RELOAD_DURATION = 8
+	self.crate_turret_module.CAN_GO_IDLE = false
+	self.crate_turret_module.IDLE_WAIT_TIME = 1
+	
+	--unusual variants in base game files; may or may not be used.
+	self.ceiling_turret_module_no_idle = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range.CAN_GO_IDLE = false
+	self.ceiling_turret_module_longer_range.FIRE_RANGE = 30000
+	self.ceiling_turret_module_longer_range.DETECTION_RANGE = self.ceiling_turret_module_longer_range.FIRE_RANGE
+	
+	-- AA turret; used on Henry's Rock.
+	self.aa_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.SHIELD_HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.EXPLOSION_DMG_MUL = 0
+	self.aa_turret_module.FIRE_DMG_MUL = 0
+	self.aa_turret_module.BAG_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DAMAGE_CLAMP = 10
+	self.aa_turret_module.BODY_DAMAGE_CLAMP = 10
+	self.aa_turret_module.DAMAGE = 0.5
+	self.aa_turret_module.CLIP_SIZE = 200
+	self.aa_turret_module.AUTO_REPAIR = true 
+	self.aa_turret_module.AUTO_REPAIR_MAX_COUNT = 999
+	self.aa_turret_module.AUTO_REPAIR_DURATION = 30
+	self.aa_turret_module.AUTO_RELOAD_DURATION = 8
+	self.aa_turret_module.CAN_GO_IDLE = false
+	self.aa_turret_module.IDLE_WAIT_TIME = 10
+end
+
+-- Begin VERY HARD difficulty damage values. 
+
+function WeaponTweakData:_set_overkill()
+	self.ak47_ass_npc.DAMAGE = 6	-- possibly unused aside from akan. Map to heavy AR.
+	self.contraband_npc.DAMAGE = 7.5   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
+	self.m4_npc.DAMAGE = 6		-- possibly unused by remaining scripted enemies. Map to heavy AR.
+	self.g36_npc.DAMAGE = 4.5	-- possibly unused by remaining scripted enemies. Map to light AR.
+	self.ump_npc.DAMAGE = 4.5	-- possibly unused by remaining scripted enemies. Map to light AR.
+	self.r870_npc.DAMAGE = 7	-- Used by several police and criminal units. Draft map to light shotgun.
+	self.m4_yellow_npc.DAMAGE = 4.5	-- populates taser damage after other fixes applied. Map to light AR.
+--	self.m14_npc.DAMAGE = 3		-- possibly unused.
+--	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
+	self.x_c45_npc.DAMAGE = 6	-- chavez weapon. Check name and syntax. Map to medic revolver + 20.
+	self.ak47_npc.DAMAGE = 6	-- possibly used by mobster units. Map to heavy AR.
+	self.mp5_npc.DAMAGE = 4.5	-- smg used by number of units. Map to cop smg.
+	self.mp9_npc.DAMAGE = 4.5	-- shield only.	Map to cop smg.
+	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to cop pistol.
+	self.raging_bull_npc.DAMAGE = 4	-- bronco used by variety of units. Draft map to cop revolver. Make sure no armor pierce.
+	self.mac11_npc.DAMAGE = 4.5	-- smg used by number of criminal units. Map to cop smg.
+	self.smoke_npc.DAMAGE = 6	-- vit secret enemy weapon. Map to Heavy AR.
+--	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
+
+-- below code is goofball legacy believed to reinitialize enemy melee values.	
+	self.npc_melee.baton.damage = 5
+	self.npc_melee.knife_1.damage = 7
+	self.npc_melee.fists.damage = 4
+-- end goofball legacy code block.	
+	
+-- Begin VERY HARD Turret values.
+
+	self.swat_van_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
+	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
+	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 5 -- reduced XP mult versus SWAT tier.
+	self.swat_van_turret_module.FIRE_DMG_MUL = 0.1
+	self.swat_van_turret_module.BAG_DMG_MUL = 100
+	self.swat_van_turret_module.SHIELD_DMG_MUL = 1
+	self.swat_van_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.swat_van_turret_module.BODY_DAMAGE_CLAMP = 4200
+	self.swat_van_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.swat_van_turret_module.CLIP_SIZE = 300 -- compare base game stat, 400.
+	self.swat_van_turret_module.AUTO_REPAIR = true
+	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 1 -- Reduced repair count for FBI.
+	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
+	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
+	self.swat_van_turret_module.CAN_GO_IDLE = true
+	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
+	
+	--Ceiling turrets.
+	self.ceiling_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
+	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 500 -- Same as base game overkill.
+	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 5 -- reduced XP mult versus SWAT tier.
+	self.ceiling_turret_module.FIRE_DMG_MUL = 0.1
+	self.ceiling_turret_module.BAG_DMG_MUL = 100
+	self.ceiling_turret_module.SHIELD_DMG_MUL = 1
+	self.ceiling_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.ceiling_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.ceiling_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.ceiling_turret_module.CLIP_SIZE = 300 -- compare base game stat, 400.
+	self.ceiling_turret_module.AUTO_REPAIR = false
+	self.ceiling_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.ceiling_turret_module.AUTO_REPAIR_DURATION = 1
+	self.ceiling_turret_module.AUTO_RELOAD_DURATION = 8
+	self.ceiling_turret_module.CAN_GO_IDLE = false
+	self.ceiling_turret_module.IDLE_WAIT_TIME = 1
+	
+	--Crate turrets. Clone Ceiling turrets with slight revisions.
+	self.crate_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
+	self.crate_turret_module.SHIELD_HEALTH_INIT = 500 -- Same as base game overkill.
+	self.crate_turret_module.EXPLOSION_DMG_MUL = 5 -- reduced XP mult versus SWAT tier.
+	self.crate_turret_module.FIRE_DMG_MUL = 0.1
+	self.crate_turret_module.BAG_DMG_MUL = 100
+	self.crate_turret_module.SHIELD_DMG_MUL = 1
+	self.crate_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.crate_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.crate_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.crate_turret_module.CLIP_SIZE = 200 -- reduced due to locations used being mostly close range.
+	self.crate_turret_module.AUTO_REPAIR = false
+	self.crate_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.crate_turret_module.AUTO_REPAIR_DURATION = 1
+	self.crate_turret_module.AUTO_RELOAD_DURATION = 8
+	self.crate_turret_module.CAN_GO_IDLE = false
+	self.crate_turret_module.IDLE_WAIT_TIME = 1
+	
+	--unusual variants in base game files; may or may not be used.
+	self.ceiling_turret_module_no_idle = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range.CAN_GO_IDLE = false
+	self.ceiling_turret_module_longer_range.FIRE_RANGE = 30000
+	self.ceiling_turret_module_longer_range.DETECTION_RANGE = self.ceiling_turret_module_longer_range.FIRE_RANGE
+
+	-- AA turret; used on Henry's Rock.
+	self.aa_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.SHIELD_HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.EXPLOSION_DMG_MUL = 0
+	self.aa_turret_module.FIRE_DMG_MUL = 0
+	self.aa_turret_module.BAG_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DAMAGE_CLAMP = 10
+	self.aa_turret_module.BODY_DAMAGE_CLAMP = 10
+	self.aa_turret_module.DAMAGE = 2.0
+	self.aa_turret_module.CLIP_SIZE = 300
+	self.aa_turret_module.AUTO_REPAIR = true 
+	self.aa_turret_module.AUTO_REPAIR_MAX_COUNT = 999
+	self.aa_turret_module.AUTO_REPAIR_DURATION = 30
+	self.aa_turret_module.AUTO_RELOAD_DURATION = 8
+	self.aa_turret_module.CAN_GO_IDLE = false
+	self.aa_turret_module.IDLE_WAIT_TIME = 10
+	
+end
+
+-- Begin OVERKILL difficulty damage values. 
+
+function WeaponTweakData:_set_overkill_145()
+	self.ak47_ass_npc.DAMAGE = 6	-- possibly unused aside from akan. Map to heavy AR.
+	self.contraband_npc.DAMAGE = 7.5   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
+	self.m4_npc.DAMAGE = 6		-- possibly unused by remaining scripted enemies. Map to heavy AR.
+	self.g36_npc.DAMAGE = 4.5	-- possibly unused by remaining scripted enemies. Map to light AR.
+	self.ump_npc.DAMAGE = 4.5	-- possibly unused by remaining scripted enemies. Map to light AR.
+	self.r870_npc.DAMAGE = 7	-- Used by several police and criminal units. Draft map to light shotgun.
+	self.m4_yellow_npc.DAMAGE = 4.5	-- populates taser damage after other fixes applied. Map to light AR.
+--	self.m14_npc.DAMAGE = 3		-- possibly unused.
+--	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
+	self.x_c45_npc.DAMAGE = 6	-- chavez weapon. Check name and syntax. Map to medic revolver + 20.
+	self.ak47_npc.DAMAGE = 6	-- possibly used by mobster units. Map to heavy AR.
+	self.mp5_npc.DAMAGE = 4.5	-- smg used by number of units. Map to cop smg.
+	self.mp9_npc.DAMAGE = 4.5	-- shield only.	Map to cop smg.
+	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to cop pistol.
+	self.raging_bull_npc.DAMAGE = 4	-- bronco used by variety of units. Draft map to cop revolver. Make sure no armor pierce.
+	self.mac11_npc.DAMAGE = 4.5	-- smg used by number of criminal units. Map to cop smg.
+	self.smoke_npc.DAMAGE = 6	-- vit secret enemy weapon. Map to Heavy AR.
+--	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
+
+-- below code is goofball legacy believed to reinitialize enemy melee values.	
+	self.npc_melee.baton.damage = 5
+	self.npc_melee.knife_1.damage = 7
+	self.npc_melee.fists.damage = 4
+-- end goofball legacy code block.
+	
+-- Begin OVERKILL Turret values.
+
+	self.swat_van_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
+	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
+	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 5 -- reduced XP mult versus SWAT tier.
+	self.swat_van_turret_module.FIRE_DMG_MUL = 0.1
+	self.swat_van_turret_module.BAG_DMG_MUL = 100
+	self.swat_van_turret_module.SHIELD_DMG_MUL = 1
+	self.swat_van_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.swat_van_turret_module.BODY_DAMAGE_CLAMP = 4200
+	self.swat_van_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.swat_van_turret_module.CLIP_SIZE = 300 -- compare base game stat, 400.
+	self.swat_van_turret_module.AUTO_REPAIR = true
+	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 1 -- Reduced repair count for FBI.
+	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
+	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
+	self.swat_van_turret_module.CAN_GO_IDLE = true
+	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
+	
+	--Ceiling turrets.
+	self.ceiling_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
+	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 500 -- Same as base game overkill.
+	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 5 -- reduced XP mult versus SWAT tier.
+	self.ceiling_turret_module.FIRE_DMG_MUL = 0.1
+	self.ceiling_turret_module.BAG_DMG_MUL = 100
+	self.ceiling_turret_module.SHIELD_DMG_MUL = 1
+	self.ceiling_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.ceiling_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.ceiling_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.ceiling_turret_module.CLIP_SIZE = 300 -- compare base game stat, 400.
+	self.ceiling_turret_module.AUTO_REPAIR = false
+	self.ceiling_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.ceiling_turret_module.AUTO_REPAIR_DURATION = 1
+	self.ceiling_turret_module.AUTO_RELOAD_DURATION = 8
+	self.ceiling_turret_module.CAN_GO_IDLE = false
+	self.ceiling_turret_module.IDLE_WAIT_TIME = 1
+	
+	--Crate turrets. Clone Ceiling turrets with slight revisions.
+	self.crate_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
+	self.crate_turret_module.SHIELD_HEALTH_INIT = 500 -- Same as base game overkill.
+	self.crate_turret_module.EXPLOSION_DMG_MUL = 5 -- reduced XP mult versus SWAT tier.
+	self.crate_turret_module.FIRE_DMG_MUL = 0.1
+	self.crate_turret_module.BAG_DMG_MUL = 100
+	self.crate_turret_module.SHIELD_DMG_MUL = 1
+	self.crate_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.crate_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.crate_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.crate_turret_module.CLIP_SIZE = 200 -- reduced due to locations used being mostly close range.
+	self.crate_turret_module.AUTO_REPAIR = false
+	self.crate_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.crate_turret_module.AUTO_REPAIR_DURATION = 1
+	self.crate_turret_module.AUTO_RELOAD_DURATION = 8
+	self.crate_turret_module.CAN_GO_IDLE = false
+	self.crate_turret_module.IDLE_WAIT_TIME = 1
+	
+	--unusual variants in base game files; may or may not be used.
+	self.ceiling_turret_module_no_idle = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range.CAN_GO_IDLE = false
+	self.ceiling_turret_module_longer_range.FIRE_RANGE = 30000
+	self.ceiling_turret_module_longer_range.DETECTION_RANGE = self.ceiling_turret_module_longer_range.FIRE_RANGE
+	
+	-- AA turret; used on Henry's Rock.
+	self.aa_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.SHIELD_HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.EXPLOSION_DMG_MUL = 0
+	self.aa_turret_module.FIRE_DMG_MUL = 0
+	self.aa_turret_module.BAG_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DAMAGE_CLAMP = 10
+	self.aa_turret_module.BODY_DAMAGE_CLAMP = 10
+	self.aa_turret_module.DAMAGE = 2.0
+	self.aa_turret_module.CLIP_SIZE = 300
+	self.aa_turret_module.AUTO_REPAIR = true 
+	self.aa_turret_module.AUTO_REPAIR_MAX_COUNT = 999
+	self.aa_turret_module.AUTO_REPAIR_DURATION = 30
+	self.aa_turret_module.AUTO_RELOAD_DURATION = 8
+	self.aa_turret_module.CAN_GO_IDLE = false
+	self.aa_turret_module.IDLE_WAIT_TIME = 10
+	
+end
+
+-- Begin MAYHEM difficulty damage values. 
+
+function WeaponTweakData:_set_easy_wish()
+	self.ak47_ass_npc.DAMAGE = 7.5	-- possibly unused aside from akan. Should map to heavy AR.
+	self.contraband_npc.DAMAGE = 9   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
+	self.m4_npc.DAMAGE = 7.5	-- possibly unused by remaining scripted enemies. Map to heavy AR.
+	self.g36_npc.DAMAGE = 6		-- possibly unused by remaining scripted enemies. Map to light AR.
+	self.ump_npc.DAMAGE = 6		-- possibly unused by remaining scripted enemies. Map to light AR.
+	self.r870_npc.DAMAGE = 7.5	-- Used by several police and criminal units. Draft map to light shotgun.
+	self.m4_yellow_npc.DAMAGE = 6	-- populates taser damage after other fixes applied. Map to light AR.
+--	self.m14_npc.DAMAGE = 3		-- possibly unused.
+--	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
+	self.x_c45_npc.DAMAGE = 8	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
+	self.ak47_npc.DAMAGE = 7.5	-- possibly used by mobster units. Map to heavy AR.
+	self.mp5_npc.DAMAGE = 6		-- smg used by number of units. Map to cop smg.
+	self.mp9_npc.DAMAGE = 6		-- shield only.	Map to cop smg.
+	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to cop pistol.
+	self.raging_bull_npc.DAMAGE = 6	-- bronco used by variety of units. Draft map to cop revolver. Make sure no armor pierce.
+	self.mac11_npc.DAMAGE = 6	-- smg used by number of criminal units. Map to cop smg.
+	self.smoke_npc.DAMAGE = 7.5	-- vit secret enemy weapon. Map to Heavy AR.
+--	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
+
+-- below code is goofball legacy believed to reinitialize enemy melee values.	
+	self.npc_melee.baton.damage = 5
+	self.npc_melee.knife_1.damage = 7
+	self.npc_melee.fists.damage = 4
+-- end goofball legacy code block.
+	
+-- Begin MAYHEM Turret values.
+
+	self.swat_van_turret_module.HEALTH_INIT = 30000 -- compare 400k base game.
+	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD, "vivinite" shield.
+	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3 -- Same as CD, "vivinite" shield.
+	self.swat_van_turret_module.FIRE_DMG_MUL = 0.1
+	self.swat_van_turret_module.BAG_DMG_MUL = 100
+	self.swat_van_turret_module.SHIELD_DMG_MUL = 1
+	self.swat_van_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.swat_van_turret_module.BODY_DAMAGE_CLAMP = 4200
+	self.swat_van_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.swat_van_turret_module.CLIP_SIZE = 400 -- compare base game stat, 800.
+	self.swat_van_turret_module.AUTO_REPAIR = true
+	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 2 -- same as base game.
+	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
+	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
+	self.swat_van_turret_module.CAN_GO_IDLE = true
+	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
+	
+	--Ceiling turrets.
+	self.ceiling_turret_module.HEALTH_INIT = 30000 -- compare 400k base game.
+	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 700 -- Same as CD, "vivinite" shield.
+	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 3 -- base game value is 7
+	self.ceiling_turret_module.FIRE_DMG_MUL = 0.1
+	self.ceiling_turret_module.BAG_DMG_MUL = 100
+	self.ceiling_turret_module.SHIELD_DMG_MUL = 1
+	self.ceiling_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.ceiling_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.ceiling_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.ceiling_turret_module.CLIP_SIZE = 400 -- compare base game stat, 800.
+	self.ceiling_turret_module.AUTO_REPAIR = false
+	self.ceiling_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.ceiling_turret_module.AUTO_REPAIR_DURATION = 1
+	self.ceiling_turret_module.AUTO_RELOAD_DURATION = 8
+	self.ceiling_turret_module.CAN_GO_IDLE = false
+	self.ceiling_turret_module.IDLE_WAIT_TIME = 1
+	
+	--Crate turrets. Clone Ceiling turrets with slight revisions.
+	self.crate_turret_module.HEALTH_INIT = 30000 -- compare 400k base game.
+	self.crate_turret_module.SHIELD_HEALTH_INIT = 700 -- Same as CD, "vivinite" shield.
+	self.crate_turret_module.EXPLOSION_DMG_MUL = 3 -- base game value is 7
+	self.crate_turret_module.FIRE_DMG_MUL = 0.1
+	self.crate_turret_module.BAG_DMG_MUL = 100
+	self.crate_turret_module.SHIELD_DMG_MUL = 1
+	self.crate_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.crate_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.crate_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.crate_turret_module.CLIP_SIZE = 250 -- reduced due to locations used being mostly close range.
+	self.crate_turret_module.AUTO_REPAIR = false
+	self.crate_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.crate_turret_module.AUTO_REPAIR_DURATION = 1
+	self.crate_turret_module.AUTO_RELOAD_DURATION = 8
+	self.crate_turret_module.CAN_GO_IDLE = false
+	self.crate_turret_module.IDLE_WAIT_TIME = 1
+	
+	--unusual variants in base game files; may or may not be used.
+	self.ceiling_turret_module_no_idle = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range.CAN_GO_IDLE = false
+	self.ceiling_turret_module_longer_range.FIRE_RANGE = 30000
+	self.ceiling_turret_module_longer_range.DETECTION_RANGE = self.ceiling_turret_module_longer_range.FIRE_RANGE
+	
+	-- AA turret; used on Henry's Rock.
+	self.aa_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.SHIELD_HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.EXPLOSION_DMG_MUL = 0
+	self.aa_turret_module.FIRE_DMG_MUL = 0
+	self.aa_turret_module.BAG_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DAMAGE_CLAMP = 10
+	self.aa_turret_module.BODY_DAMAGE_CLAMP = 10
+	self.aa_turret_module.DAMAGE = 2.0
+	self.aa_turret_module.CLIP_SIZE = 400
+	self.aa_turret_module.AUTO_REPAIR = true 
+	self.aa_turret_module.AUTO_REPAIR_MAX_COUNT = 999
+	self.aa_turret_module.AUTO_REPAIR_DURATION = 30
+	self.aa_turret_module.AUTO_RELOAD_DURATION = 8
+	self.aa_turret_module.CAN_GO_IDLE = false
+	self.aa_turret_module.IDLE_WAIT_TIME = 10	
+	
+end
+
+-- Begin DEATHWISH difficulty damage values. 
+
+function WeaponTweakData:_set_overkill_290()
+	self.ak47_ass_npc.DAMAGE = 7.5	-- possibly unused aside from akan. Should map to heavy AR.
+	self.contraband_npc.DAMAGE = 9   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
+	self.m4_npc.DAMAGE = 7.5	-- possibly unused by remaining scripted enemies. Map to heavy AR.
+	self.g36_npc.DAMAGE = 6		-- possibly unused by remaining scripted enemies. Map to light AR.
+	self.ump_npc.DAMAGE = 6		-- possibly unused by remaining scripted enemies. Map to light AR.
+	self.r870_npc.DAMAGE = 7.5	-- Used by several police and criminal units. Draft map to light shotgun.
+	self.m4_yellow_npc.DAMAGE = 6	-- populates taser damage after other fixes applied. Map to light AR.
+--	self.m14_npc.DAMAGE = 3		-- possibly unused.
+--	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
+	self.x_c45_npc.DAMAGE = 8	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
+	self.ak47_npc.DAMAGE = 7.5	-- possibly used by mobster units. Map to heavy AR.
+	self.mp5_npc.DAMAGE = 6		-- smg used by number of units. Map to cop smg.
+	self.mp9_npc.DAMAGE = 6		-- shield only.	Map to cop smg.
+	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to cop pistol.
+	self.raging_bull_npc.DAMAGE = 6	-- bronco used by variety of units. Draft map to cop revolver. Make sure no armor pierce.
+	self.mac11_npc.DAMAGE = 6	-- smg used by number of criminal units. Map to cop smg.
+	self.smoke_npc.DAMAGE = 7.5	-- vit secret enemy weapon. Map to Heavy AR.
+--	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
+	
+-- below code is goofball legacy believed to reinitialize enemy melee values.	
+	self.npc_melee.baton.damage = 5
+	self.npc_melee.knife_1.damage = 7
+	self.npc_melee.fists.damage = 4
+-- end goofball legacy code block.	
+
+-- Begin DEATHWISH Turret values.
+
+	self.swat_van_turret_module.HEALTH_INIT = 30000 -- compare 400k base game.
+	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD, "vivinite" shield.
+	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3 -- Same as CD, "vivinite" shield.
+	self.swat_van_turret_module.FIRE_DMG_MUL = 0.1
+	self.swat_van_turret_module.BAG_DMG_MUL = 100
+	self.swat_van_turret_module.SHIELD_DMG_MUL = 1
+	self.swat_van_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.swat_van_turret_module.BODY_DAMAGE_CLAMP = 4200
+	self.swat_van_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.swat_van_turret_module.CLIP_SIZE = 400 -- compare base game stat, 800.
+	self.swat_van_turret_module.AUTO_REPAIR = true
+	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 2 -- same as base game.
+	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
+	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
+	self.swat_van_turret_module.CAN_GO_IDLE = true
+	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
+	
+	--Ceiling turrets.
+	self.ceiling_turret_module.HEALTH_INIT = 30000 -- compare 400k base game.
+	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 700 -- Same as CD, "vivinite" shield.
+	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 3 -- base game value is 7
+	self.ceiling_turret_module.FIRE_DMG_MUL = 0.1
+	self.ceiling_turret_module.BAG_DMG_MUL = 100
+	self.ceiling_turret_module.SHIELD_DMG_MUL = 1
+	self.ceiling_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.ceiling_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.ceiling_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.ceiling_turret_module.CLIP_SIZE = 400 -- compare base game stat, 800.
+	self.ceiling_turret_module.AUTO_REPAIR = false
+	self.ceiling_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.ceiling_turret_module.AUTO_REPAIR_DURATION = 1
+	self.ceiling_turret_module.AUTO_RELOAD_DURATION = 8
+	self.ceiling_turret_module.CAN_GO_IDLE = false
+	self.ceiling_turret_module.IDLE_WAIT_TIME = 1
+	
+	--Crate turrets. Clone Ceiling turrets with slight revisions.
+	self.crate_turret_module.HEALTH_INIT = 30000 -- compare 400k base game.
+	self.crate_turret_module.SHIELD_HEALTH_INIT = 700 -- Same as CD, "vivinite" shield.
+	self.crate_turret_module.EXPLOSION_DMG_MUL = 3 -- base game value is 7
+	self.crate_turret_module.FIRE_DMG_MUL = 0.1
+	self.crate_turret_module.BAG_DMG_MUL = 100
+	self.crate_turret_module.SHIELD_DMG_MUL = 1
+	self.crate_turret_module.SHIELD_DAMAGE_CLAMP = 350
+	self.crate_turret_module.BODY_DAMAGE_CLAMP =  4200
+	self.crate_turret_module.DAMAGE = 2.0	-- same as base game overkill.
+	self.crate_turret_module.CLIP_SIZE = 250 -- reduced due to locations used being mostly close range.
+	self.crate_turret_module.AUTO_REPAIR = false
+	self.crate_turret_module.AUTO_REPAIR_MAX_COUNT = 1
+	self.crate_turret_module.AUTO_REPAIR_DURATION = 1
+	self.crate_turret_module.AUTO_RELOAD_DURATION = 8
+	self.crate_turret_module.CAN_GO_IDLE = false
+	self.crate_turret_module.IDLE_WAIT_TIME = 1
+	
+	--unusual variants in base game files; may or may not be used.
+	self.ceiling_turret_module_no_idle = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range = deep_clone(self.ceiling_turret_module)
+	self.ceiling_turret_module_longer_range.CAN_GO_IDLE = false
+	self.ceiling_turret_module_longer_range.FIRE_RANGE = 30000
+	self.ceiling_turret_module_longer_range.DETECTION_RANGE = self.ceiling_turret_module_longer_range.FIRE_RANGE
+	
+	-- AA turret; used on Henry's Rock.
+	self.aa_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.SHIELD_HEALTH_INIT = 999999 -- functionally immortal.
+	self.aa_turret_module.EXPLOSION_DMG_MUL = 0
+	self.aa_turret_module.FIRE_DMG_MUL = 0
+	self.aa_turret_module.BAG_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DMG_MUL = 0
+	self.aa_turret_module.SHIELD_DAMAGE_CLAMP = 10
+	self.aa_turret_module.BODY_DAMAGE_CLAMP = 10
+	self.aa_turret_module.DAMAGE = 2.0
+	self.aa_turret_module.CLIP_SIZE = 400
+	self.aa_turret_module.AUTO_REPAIR = true 
+	self.aa_turret_module.AUTO_REPAIR_MAX_COUNT = 999
+	self.aa_turret_module.AUTO_REPAIR_DURATION = 30
+	self.aa_turret_module.AUTO_RELOAD_DURATION = 8
+	self.aa_turret_module.CAN_GO_IDLE = false
+	self.aa_turret_module.IDLE_WAIT_TIME = 10
+	
+end
+
+-- Begin CRACKDOWN difficulty damage values. 
+
+function WeaponTweakData:_set_sm_wish() 
+	self.ak47_ass_npc.DAMAGE = 9	-- possibly unused aside from akan. Map to heavy AR.
+	self.contraband_npc.DAMAGE = 11   -- apparently used exclusively by Sosa. Draft value 11. Compare with 9 base for heavy swat.
+	self.m4_npc.DAMAGE = 9		-- possibly unused by remaining scripted enemies. Map to heavy AR.
+	self.g36_npc.DAMAGE = 7.5	-- possibly unused by remaining scripted enemies. Map to light AR.
+	self.ump_npc.DAMAGE = 7.5	-- possibly unused by remaining scripted enemies. Map to light AR.
+	self.r870_npc.DAMAGE = 9	-- Used by several police and criminal units. Draft map to light shotgun.
+	self.m4_yellow_npc.DAMAGE = 7.5	-- populates taser damage after other fixes applied. Map to light AR.
+--	self.m14_npc.DAMAGE = 3		-- possibly unused.
+--	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
+	self.x_c45_npc.DAMAGE = 10	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
+	self.ak47_npc.DAMAGE = 9	-- possibly used by mobster units. Map to heavy AR.
+	self.mp5_npc.DAMAGE = 7.5	-- smg used by number of units. Map to cop smg.
+	self.mp9_npc.DAMAGE = 7.5	-- shield only.	Map to cop smg.
+	self.c45_npc.DAMAGE = 6		-- pistol used by variety of units. Draft map to cop pistol.
+	self.raging_bull_npc.DAMAGE = 8	-- bronco used by variety of units. Draft map to cop revolver. Make sure no armor pierce.
+	self.mac11_npc.DAMAGE = 7.5	-- smg used by number of criminal units. Map to cop smg.
+	self.smoke_npc.DAMAGE = 9	-- vit secret enemy weapon. Map to Heavy AR.
+--	self.mini_npc.DAMAGE = 12	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
+	
+-- below code is goofball legacy believed to reinitialize enemy melee values.	
+	self.npc_melee.baton.damage = 5
+	self.npc_melee.knife_1.damage = 7
+	self.npc_melee.fists.damage = 4
+-- end goofball legacy code block.
+
+-- Begin CRACKDOWN Turret values.
+	
 	self.swat_van_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
 	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300
-	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3 -- tentative, base is 7
+	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3 -- base game value is 7.
 	self.swat_van_turret_module.FIRE_DMG_MUL = 0.1
 	self.swat_van_turret_module.BAG_DMG_MUL = 100
 	self.swat_van_turret_module.SHIELD_DMG_MUL = 1
@@ -514,13 +1195,13 @@ function WeaponTweakData:_set_sm_wish() -- note need to set some of these values
 	self.swat_van_turret_module.AUTO_REPAIR_MAX_COUNT = 999
 	self.swat_van_turret_module.AUTO_REPAIR_DURATION = 30
 	self.swat_van_turret_module.AUTO_RELOAD_DURATION = 8
-	self.swat_van_turret_module.CAN_GO_IDLE = false
+	self.swat_van_turret_module.CAN_GO_IDLE = true
 	self.swat_van_turret_module.IDLE_WAIT_TIME = 10
 	
 	--Ceiling turrets.
 	self.ceiling_turret_module.HEALTH_INIT = 40000
 	self.ceiling_turret_module.SHIELD_HEALTH_INIT = 700
-	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 3 -- tentative, base is 7
+	self.ceiling_turret_module.EXPLOSION_DMG_MUL = 3 -- base game value is 7
 	self.ceiling_turret_module.FIRE_DMG_MUL = 0.1
 	self.ceiling_turret_module.BAG_DMG_MUL = 100
 	self.ceiling_turret_module.SHIELD_DMG_MUL = 1
@@ -538,7 +1219,7 @@ function WeaponTweakData:_set_sm_wish() -- note need to set some of these values
 	--Crate turrets. Clone Ceiling turrets with slight revisions.
 	self.crate_turret_module.HEALTH_INIT = 40000
 	self.crate_turret_module.SHIELD_HEALTH_INIT = 700
-	self.crate_turret_module.EXPLOSION_DMG_MUL = 3 -- tentative, base is 7
+	self.crate_turret_module.EXPLOSION_DMG_MUL = 3 -- base game value is 7
 	self.crate_turret_module.FIRE_DMG_MUL = 0.1
 	self.crate_turret_module.BAG_DMG_MUL = 100
 	self.crate_turret_module.SHIELD_DMG_MUL = 1

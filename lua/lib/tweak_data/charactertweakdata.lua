@@ -29,7 +29,10 @@ function CharacterTweakData:get_ai_group_type()
 		"sm_wish"
 	}
 	local map_faction_override = {}
+	-- unit test map override function below. Uncomment to apply classic units.
 	--map_faction_override["Enemy_Spawner"] = "classic"
+	
+	-- Classic overrides begin here.
 	map_faction_override["pal"] = "classic"
 	map_faction_override["dah"] = "classic"
 	map_faction_override["red2"] = "classic"
@@ -39,12 +42,18 @@ function CharacterTweakData:get_ai_group_type()
 	map_faction_override["dinner"] = "classic"
 	map_faction_override["man"] = "classic"
 	map_faction_override["nmh"] = "classic"
-	-- whurr's map edits
+	-- whurr's map edit faction overrides begin here.
 	map_faction_override["bridge"] = "classic"
 	map_faction_override["apartment"] = "classic"
 	map_faction_override["street"] = "classic"
 	map_faction_override["bank"] = "classic"
-	-- todo: setup reapers on BP, murky on all murky heists, and classics on classic heists
+  
+	--akan override begins here.
+	
+	--Murky overrides begin here.
+	
+	--Halloween overrides begin here.
+  
 	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
 	if diff_index <= 3 then
 		group_to_use = "cop"
@@ -52,14 +61,13 @@ function CharacterTweakData:get_ai_group_type()
 		group_to_use = "fbi"
 	elseif diff_index <= 7 then
 		group_to_use = "gensec"
+	elseif diff_index == 8 then 
+		group_to_use = "zeal"
 	end
 	if level_id then
 		if map_faction_override[level_id] then
 			group_to_use = map_faction_override[level_id]
 		end
-	end
-	if diff_index == 8 then -- kataru's reach is true
-		group_to_use = "zeal"
 	end
 	return group_to_use
 end
@@ -370,6 +378,9 @@ function CharacterTweakData:_presets(tweak_data)
 			crackdown = {health = 22, headshot_mult = 3}
 		}
 	}
+
+-- Begin new movespeed presets.
+
 	presets.move_speed.shield_vf = { --custom shield move speed preset, shields never use anything except crouching cbt stances so it shouldn't be a problem
 		stand = {
 			walk = {
@@ -429,6 +440,9 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
+
+-- Begin new dodge presets.
+
 	presets.dodge.deathvox = {
 		speed = 1.7,
 		occasions = {
@@ -487,7 +501,7 @@ function CharacterTweakData:_presets(tweak_data)
 		}
 	}
 	presets.dodge.deathvoxchavez = {
-		speed = 1.7,
+		speed = 2,
 		occasions = {
 			hit = {
 				chance = 1,
@@ -636,7 +650,67 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			}
 		}
-	}		
+	}
+	
+--Begin new hurt presets.
+	presets.hurt_severities.only_light_hurt_no_stuns = {
+        	tase = false,
+        	bullet = {
+           	health_reference = 1,
+           	zones = {
+       		{
+         		light = 1
+               		}
+		}
+       	},
+		explosion = {
+            	health_reference = 1,
+            	zones = {
+                {
+                	light = 1
+                	}
+        	}
+        },
+        	melee = {
+        		health_reference = 1,
+       		zones = {
+                {
+                	light = 1
+                	}
+            	}
+        },
+        	fire = {
+        	health_reference = 1,
+            	zones = {
+                {
+                	light = 1
+                	}
+		}
+        },
+        	poison = {
+        	health_reference = 1,
+            	zones = {
+                {
+                	light = 1
+                	}
+            	}
+        }
+    }
+	
+-- Begin revised surrender presets.
+	presets.surrender.normal = {
+		base_chance = 0.3,
+		significant_chance = 0.35,
+			reasons = {
+				health = {
+					[1.0] = 0.1,
+					[0.5] = 0.5,
+					[0.1] = 0.9
+				}
+			},
+			factors = {}
+	}
+	
 	--[[presets.weapon.deathvox = { -- these notes are mostly out of date. Need further revision to ensure clear usage tracing.
 		is_pistol = {},-- used for guards and numerous scripted enemies, as well as beat police.
 		is_revolver = {},-- used for medics and numerous scripted enemies, as well as beat police.
@@ -662,7 +736,6 @@ function CharacterTweakData:_presets(tweak_data)
 		is_assault_sniper = {} -- initializing assault sniper preset.
 	}]]--
 	presets.weapon.deathvox = deep_clone(presets.weapon.deathwish)
-	--note to self- clean up is_revolver and make consistent.
 	presets.weapon.deathvox.is_revolver = { -- used by medics.
 		aim_delay = { -- mark 3 values.
 		0,
@@ -1756,42 +1829,42 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.mini = { -- unused and unchanged.
+	presets.weapon.deathvox.mini = { -- initial draft values for first pass. Values placeholder until detailed rof calc pass.
 		aim_delay = {
 			0.1,
 			0.2
 		},
 		focus_delay = 4,
-		focus_dis = 800,
-		spread = 20,
-		miss_dis = 40,
+		focus_dis = 800, -- reexamine
+		spread = 20, -- reexamine
+		miss_dis = 40, -- reexamine
 		RELOAD_SPEED = 0.5,
-		melee_speed = 1,
-		melee_dmg = 25,
+		melee_speed = 1, -- examine for revision.
+		melee_dmg = 40,
 		melee_retry_delay = {
 			1,
 			2
 		},
-		range = {
+		range = { -- review for adjustment in light of new role. Primarily sees use at close range, some medium.
 			optimal = 2500,
 			far = 5000,
 			close = 1000
 		},
 		autofire_rounds = {
-			20,
-			40
+			400,
+			500
 		},
 		FALLOFF = {
 			{
-				dmg_mul = 5,
+				dmg_mul = 1,
 				r = 100,
 				acc = {
 					0.6,
 					0.9
 				},
 				recoil = {
-					0.4,
-					0.7
+					2,
+					3
 				},
 				mode = {
 					0,
@@ -1801,73 +1874,73 @@ function CharacterTweakData:_presets(tweak_data)
 				}
 			},
 			{
-				dmg_mul = 4,
+				dmg_mul = 1,
 				r = 500,
 				acc = {
 					0.5,
 					0.7
 				},
 				recoil = {
-					0.4,
-					0.7
+					2,
+					3
 				},
 				mode = {
 					0,
-					1,
-					2,
-					8
+					0,
+					0,
+					1
 				}
 			},
 			{
-				dmg_mul = 3.5,
+				dmg_mul = .8,
 				r = 1000,
 				acc = {
 					0.4,
 					0.6
 				},
 				recoil = {
-					0.45,
-					0.8
+					2,
+					3
 				},
 				mode = {
-					1,
-					3,
-					6,
-					6
-				}
-			},
-			{
-				dmg_mul = 3,
-				r = 2000,
-				acc = {
-					0.2,
-					0.5
-				},
-				recoil = {
-					0.45,
-					0.8
-				},
-				mode = {
-					1,
-					2,
-					2,
+					0,
+					0,
+					0,
 					1
 				}
 			},
 			{
-				dmg_mul = 3,
+				dmg_mul = .6,
+				r = 2000,
+				acc = {
+					0.1,
+					0.2
+				},
+				recoil = {
+					4,
+					5
+				},
+				mode = {
+					0,
+					0,
+					0,
+					1
+				}
+			},
+			{
+				dmg_mul = .3,
 				r = 3000,
 				acc = {
 					0.1,
 					0.35
 				},
 				recoil = {
-					1,
-					1.2
+					3,
+					6
 				},
 				mode = {
-					4,
-					2,
+					0,
+					0,
 					1,
 					0
 				}
@@ -2158,7 +2231,7 @@ function CharacterTweakData:_presets(tweak_data)
 		melee_retry_delay = presets.weapon.expert.is_pistol.melee_retry_delay,
 		autofire_rounds = { -- experimental autofire increase. prev values 25, 50.
 			8,
-			10
+			12
 		},
 			range = {
 			optimal = 3200, -- validated, unchanged.
@@ -2976,9 +3049,25 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 --guarddozer
 --	NOTE not synced to tank, which is appropriate.
 --	NOTE explosion resist does not appear to require curving.
-		
---turrets
---	NOTE turrets need adjustment on lower difficulties.
+	
+-- begin NORMAL scripted unit alterations.
+	
+-- Captain and minion. To be populated.
+	
+-- 	scripted police types.
+	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
+--	scripted Murky unit types.
+	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+--	scripted criminal types.
+	self.gangster.HEALTH_INIT = 18 -- match to light SWAT value.
+	self.mobster.HEALTH_INIT = 18	
+	self.biker.HEALTH_INIT = 18
+	self.biker_escape.HEALTH_INIT = 18
+	self.bolivian.HEALTH_INIT = 18
+	self.bolivian_indoors.HEALTH_INIT = 18
+	
+-- bosses. To be populated.
+-- end NORMAL scripted unit alterations.
 	
 end -- end NORMAL specific tweaks.
 
@@ -3055,6 +3144,26 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.
 	
+-- begin HARD scripted unit alterations.
+	
+-- Captain and minion. To be populated.
+	
+-- 	scripted police types.
+	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
+--	scripted Murky unit types.
+	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+--	scripted criminal types.
+	self.gangster.HEALTH_INIT = 18 -- match to light SWAT value.
+	self.mobster.HEALTH_INIT = 18	
+	self.biker.HEALTH_INIT = 18
+	self.biker_escape.HEALTH_INIT = 18
+	self.bolivian.HEALTH_INIT = 18
+	self.bolivian_indoors.HEALTH_INIT = 18
+	
+-- bosses. To be populated.
+	
+-- end HARD scripted unit alterations.	
+
 end -- end HARD specific tweaks.
 
 function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
@@ -3127,6 +3236,26 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 --	tank - VERY HARD
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.
+	
+-- begin VERY HARD scripted unit alterations.
+
+-- Captain and minion. To be populated.
+	
+-- 	scripted police types.
+	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
+--	scripted Murky unit types.
+	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+--	scripted criminal types.
+	self.gangster.HEALTH_INIT = 24 -- match to light SWAT value.
+	self.mobster.HEALTH_INIT = 24	
+	self.biker.HEALTH_INIT = 24
+	self.biker_escape.HEALTH_INIT = 24
+	self.bolivian.HEALTH_INIT = 24
+	self.bolivian_indoors.HEALTH_INIT = 24
+	
+-- bosses. To be populated.	
+	
+-- end VERY HARD scripted unit alterations.	
 	
 end -- end VERY HARD specific tweaks.
 
@@ -3202,6 +3331,27 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.
 	
+-- begin OVERKILL scripted unit alterations.
+	
+-- Captain and minion. To be populated.
+	
+-- 	scripted police types.
+	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
+--	scripted Murky unit types.
+	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+--	scripted criminal types.
+	self.gangster.HEALTH_INIT = 24 -- match to light SWAT value.
+	self.mobster.HEALTH_INIT = 24	
+	self.biker.HEALTH_INIT = 24
+	self.biker_escape.HEALTH_INIT = 24
+	self.bolivian.HEALTH_INIT = 24
+	self.bolivian_indoors.HEALTH_INIT = 24
+	
+-- bosses. To be populated.
+	
+-- end OVERKILL scripted unit alterations.	
+	
+	
 end -- end OVERKILL specific tweaks.
 
 function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
@@ -3269,6 +3419,26 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.	
 
+-- begin MAYHEM scripted unit alterations.
+
+-- Captain and minion. To be populated.
+	
+-- 	scripted police types.
+	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
+--	scripted Murky unit types.
+	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+--	scripted criminal types.
+	self.gangster.HEALTH_INIT = 32 -- match to light SWAT value.
+	self.mobster.HEALTH_INIT = 32	
+	self.biker.HEALTH_INIT = 32
+	self.biker_escape.HEALTH_INIT = 32
+	self.bolivian.HEALTH_INIT = 32
+	self.bolivian_indoors.HEALTH_INIT = 32
+	
+-- bosses. To be populated.	
+	
+-- end MAYHEM scripted unit alterations.	
+	
 end -- end MAYHEM specific tweaks.
 
 function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks begin.
@@ -3336,7 +3506,27 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 --	tank - DEATH WISH
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.	
+	
+-- begin DEATH WISH scripted unit alterations.
 
+-- Captain and minion. To be populated.
+	
+-- 	scripted police types.
+	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
+--	scripted Murky unit types.
+	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+--	scripted criminal types.
+	self.gangster.HEALTH_INIT = 32 -- match to light SWAT value.
+	self.mobster.HEALTH_INIT = 32	
+	self.biker.HEALTH_INIT = 32
+	self.biker_escape.HEALTH_INIT = 32
+	self.bolivian.HEALTH_INIT = 32
+	self.bolivian_indoors.HEALTH_INIT = 32
+	
+-- bosses. To be populated.
+	
+-- end DEATH WISH scripted unit alterations.
+	
 end -- end DEATH WISH specific tweaks.
 
 function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
@@ -3373,41 +3563,68 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.sniper = deep_clone(self.deathvox_sniper)
 	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	
---	if job == "kosugi" or job == "dark" then -- believed to be outdated unit role change for murky stealth guards. testing removal.
---		self.city_swat.no_arrest = true
---	else
---		self.city_swat.no_arrest = false
---	end
-	
 	self:_multiply_all_speeds(1, 1)
---	self.old_hoxton_mission.HEALTH_INIT = 525 -- testing removal of oldhox HP set code.
 	self.spa_vip.HEALTH_INIT = 525
 	self.flashbang_multiplier = 2
 	self.concussion_multiplier = 2
 	
 -- Begin goofball legacy health changes.
 	
-	self.cop.HEALTH_INIT = 15 -- note need to see if can be removed.
-
-	self.cop_female.HEALTH_INIT = 15 -- note need to see if can be removed.
-	self.fbi.HEALTH_INIT = 48 -- note need to see if can be removed.
-	
-	self.chavez_boss.HEALTH_INIT = 900 -- ask testers if these are in use
-	self.bolivian_indoors.HEALTH_INIT = 1000 
-	self.bolivian_indoors.no_arrest = true
-	self.bolivian.HEALTH_INIT = 1000
-	self.gangster.HEALTH_INIT = 1000
-	self.biker.HEALTH_INIT = 1000
-	self.biker_escape.HEALTH_INIT = 1000
+-- currently unused captain code. Not touching until captain implemented.
 	
 	self.phalanx_vip = deep_clone(self.phalanx_minion) -- killable winters to prevent soft-lock
-	self.phalanx_vip.HEALTH_INIT = 300 -- currently unused captain code. Not touching until captain implemented.
+	self.phalanx_vip.HEALTH_INIT = 4000 
 	self.phalanx_vip.DAMAGE_CLAMP_BULLET = 100
 	self.phalanx_vip.DAMAGE_CLAMP_EXPLOSION = self.phalanx_vip.DAMAGE_CLAMP_BULLET
+	self.phalanx_vip.damage.explosion_damage_mul = 0.3 
 	self.phalanx_vip.can_be_tased = false
 	self.phalanx_vip.immune_to_knock_down = true
 	self.phalanx_vip.immune_to_concussion = true
 	self.phalanx_vip.ends_assault_on_death = true
+	
+--	self.phalanx_minion
+	
+	
+-- begin CRACKDOWN scripted unit alterations.
+
+-- 	scripted police types.
+	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
+--	scripted Murky unit types.
+	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+--	scripted criminal types.
+	self.gangster.HEALTH_INIT = 48 -- match to light SWAT value.
+	self.mobster.HEALTH_INIT = 48	
+	self.biker.HEALTH_INIT = 48
+	self.biker_escape.HEALTH_INIT = 48
+	self.bolivian.HEALTH_INIT = 48
+	self.bolivian_indoors.HEALTH_INIT = 48
+	
+-- bosses
+--	self.mobster_boss.HEALTH_INIT = 900   --  Commissar boss.
+--	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
+--	self.mobster_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+--	self.mobster_boss.ecm_vulnerability = 0
+--	self.biker_boss.HEALTH_INIT = 900
+--	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
+--	self.hector_boss.HEALTH_INIT = 900
+--	self.hector_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+--	self.hector_boss.ecm_vulnerability = 0
+--	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
+--	self.hector_boss_no_armor.HEALTH_INIT = 15
+--	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
+--	self.chavez_boss.HEALTH_INIT = 900
+--	self.chavez_boss.move_speed = presets.move_speed.deathvoxchavez
+--	self.chavez_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
+--	self.chavez_boss.ecm_vulnerability = 0
+--	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
+--	self.drug_lord_boss.HEALTH_INIT = 900
+--	self.drug_lord_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+--	self.drug_lord_boss.ecm_vulnerability = 0
+--	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
+--	self.drug_lord_boss_stealth.HEALTH_INIT = 15
+--	self.drug_lord_boss_stealth.weapon = deep_clone(presets.weapon.deathvox.is_revolver)
+	
+-- end CRACKDOWN scripted unit alterations.
 	
 end  -- end CRACKDOWN specific tweaks.
 
