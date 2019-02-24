@@ -55,3 +55,10 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 	end
 	return group_to_use
 end
+
+-- fix for safehouse raid failing to spawn assault group enemies. Base heist uses "safehouse" data that clones beseige.
+local old_level_init = LevelsTweakData.init
+function LevelsTweakData:init()
+    old_level_init(self)
+    self.chill_combat.group_ai_state = "besiege"
+end
