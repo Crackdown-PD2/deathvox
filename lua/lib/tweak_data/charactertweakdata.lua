@@ -61,13 +61,14 @@ function CharacterTweakData:get_ai_group_type()
 		group_to_use = "fbi"
 	elseif diff_index <= 7 then
 		group_to_use = "gensec"
-	elseif diff_index == 8 then 
-		group_to_use = "zeal"
 	end
 	if level_id then
 		if map_faction_override[level_id] then
 			group_to_use = map_faction_override[level_id]
 		end
+	end
+	if diff_index == 8 then -- zeal units on CD for all maps.
+		group_to_use = "zeal"
 	end
 	return group_to_use
 end
