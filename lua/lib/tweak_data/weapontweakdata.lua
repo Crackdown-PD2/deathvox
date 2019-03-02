@@ -559,7 +559,7 @@ function WeaponTweakData:_set_normal()
 	
 	--Crate turrets. Clone Ceiling turrets with slight revisions.
 	self.crate_turret_module.HEALTH_INIT = 15000 -- compare 35k base game. Note low damage.
-	self.crate_turret_module.SHIELD_HEALTH_INIT = 500 -- Same as base game overkill.
+	self.crate_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as base game overkill.
 	self.crate_turret_module.EXPLOSION_DMG_MUL = 7 -- Full explosive mult.
 	self.crate_turret_module.FIRE_DMG_MUL = 0.1
 	self.crate_turret_module.BAG_DMG_MUL = 100
@@ -669,7 +669,7 @@ function WeaponTweakData:_set_hard()
 	
 	--Crate turrets. Clone Ceiling turrets with slight revisions.
 	self.crate_turret_module.HEALTH_INIT = 15000 -- compare 35k base game. Note low damage.
-	self.crate_turret_module.SHIELD_HEALTH_INIT = 500 -- Same as base game overkill.
+	self.crate_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
 	self.crate_turret_module.EXPLOSION_DMG_MUL = 7 -- Full explosive mult.
 	self.crate_turret_module.FIRE_DMG_MUL = 0.1
 	self.crate_turret_module.BAG_DMG_MUL = 100
