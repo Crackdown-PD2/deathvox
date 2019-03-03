@@ -63,7 +63,7 @@ function NewNPCRaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, d
 
 			if i > 1 then
 			--use CD's method of self:_get_spread() as it was in goof's code before this
-				mvector3.spread(mvec_spread, self:_get_spread()) 
+				mvector3.spread(mvec_spread, self:_get_spread(user_unit)) 
 --> removed manual spread calculations from vanilla here
 			end
 
