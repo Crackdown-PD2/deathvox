@@ -706,6 +706,7 @@ function GroupAIStateBesiege:_upd_assault_task()
 			
 
 			task_data.phase = "fade"
+		
 			task_data.phase_end_t = t + self._tweak_data.assault.fade_duration
 		elseif task_data.phase_end_t < t then
 			self._assault_number = self._assault_number + 1
@@ -764,10 +765,34 @@ function GroupAIStateBesiege:_upd_assault_task()
 		if task_spawn_allowance <= 0 then
 			
 			task_data.phase = "fade"
+			local time = self._t
+		    for group_id, group in pairs(self._groups) do
+	            for u_key, u_data in pairs(group.units) do
+		        local nav_seg_id = u_data.tracker:nav_segment()
+		        local current_objective = group.objective
+		            if current_objective.coarse_path then
+		                if not u_data.unit:sound():speaking(time) then
+	                        u_data.unit:sound():say("m01", true)
+		                end	
+	                end					   
+		        end	
+		    end
 			task_data.phase_end_t = t + self._tweak_data.assault.fade_duration
 		elseif end_t < t and not self._hunt_mode then
 			
 			task_data.phase = "fade"
+			local time = self._t
+		    for group_id, group in pairs(self._groups) do
+	            for u_key, u_data in pairs(group.units) do
+		        local nav_seg_id = u_data.tracker:nav_segment()
+		        local current_objective = group.objective
+		            if current_objective.coarse_path then
+		                if not u_data.unit:sound():speaking(time) then
+	                        u_data.unit:sound():say("m01", true)
+		                end	
+	                end					   
+		        end	
+		    end
 			task_data.phase_end_t = t + self._tweak_data.assault.fade_duration
 		end
 	else
@@ -783,6 +808,18 @@ function GroupAIStateBesiege:_upd_assault_task()
 					task_data.said_retreat = true
 
 					self:_police_announce_retreat()
+					local time = self._t
+		            for group_id, group in pairs(self._groups) do
+	                    for u_key, u_data in pairs(group.units) do
+		                local nav_seg_id = u_data.tracker:nav_segment()
+		                local current_objective = group.objective
+		                    if current_objective.coarse_path then
+		                        if not u_data.unit:sound():speaking(time) then
+	                                u_data.unit:sound():say("m01", true)
+		                        end	
+	                        end					   
+		                end	
+		            end
 				end
 			end
 			if task_data.phase_end_t < t and self:_count_criminals_engaged_force(4) <= 3 then
@@ -796,6 +833,18 @@ function GroupAIStateBesiege:_upd_assault_task()
 				task_data.phase = nil
 				task_data.said_retreat = nil
 				task_data.force_end = nil
+				local time = self._t
+		        for group_id, group in pairs(self._groups) do
+	                for u_key, u_data in pairs(group.units) do
+		            local nav_seg_id = u_data.tracker:nav_segment()
+		            local current_objective = group.objective
+		                if current_objective.coarse_path then
+		                    if not u_data.unit:sound():speaking(time) then
+	                            u_data.unit:sound():say("m01", true)
+		                    end	
+	                    end					   
+		            end	
+		        end
 
 				managers.mission:call_global_event("end_assault")
 				self:_begin_regroup_task()
