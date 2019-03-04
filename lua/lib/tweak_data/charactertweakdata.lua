@@ -3030,11 +3030,12 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
 	
 --taser - NORMAL
---	NOTE ask others to examine weapon use. Is this functioning properly? how is it curved?
 --	set ignore medic revive animation to false (all below MH)
---	NOTE consider curving hurt severities on lower diffs. note tase severity defined separately.
+	self.deathvox_taser.ignore_medic_revive_animation = false
 --	set move_speed to fast (N-OVK)
+	self.deathvox_taser.move_speed = deep_clone(self.presets.move_speed.fast)
 --	set dodge to heavy (on N/H, average on VH/OVK, athletic on MH/DW)
+	self.deathvox_taser.dodge = deep_clone(self.presets.dodge.heavy)
 	
 --cloaker - NORMAL
 	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
@@ -3137,6 +3138,13 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
 	
 --	taser - HARD
+--	set ignore medic revive animation to false (all below MH)
+	self.deathvox_taser.ignore_medic_revive_animation = false
+--	set move_speed to fast (N-OVK)
+	self.deathvox_taser.move_speed = deep_clone(self.presets.move_speed.fast)
+--	set dodge to heavy (on N/H, average on VH/OVK, athletic on MH/DW)
+	self.deathvox_taser.dodge = deep_clone(self.presets.dodge.heavy)
+	
 --	cloaker - HARD
 	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
 	
@@ -3230,6 +3238,13 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
 	
 --	taser - VERY HARD
+--	set ignore medic revive animation to false (all below MH)
+	self.deathvox_taser.ignore_medic_revive_animation = false
+--	set move_speed to fast (N-OVK)
+	self.deathvox_taser.move_speed = deep_clone(self.presets.move_speed.fast)
+--	set dodge to heavy (on N/H, average on VH/OVK, athletic on MH/DW)
+	self.deathvox_taser.dodge = deep_clone(self.presets.dodge.average)
+	
 --	cloaker - VERY HARD
 	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
 	
@@ -3324,6 +3339,13 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
 	
 --	taser - OVERKILL
+--	set ignore medic revive animation to false (all below MH)
+	self.deathvox_taser.ignore_medic_revive_animation = false
+--	set move_speed to fast (N-OVK)
+	self.deathvox_taser.move_speed = deep_clone(self.presets.move_speed.fast)
+--	set dodge to heavy (on N/H, average on VH/OVK, athletic on MH/DW)
+	self.deathvox_taser.dodge = deep_clone(self.presets.dodge.average)
+	
 --	cloaker - OVERKILL
 	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
 	
@@ -3412,6 +3434,9 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
 	
 --	taser - MAYHEM
+--	set dodge to heavy (on N/H, average on VH/OVK, athletic on MH/DW)
+	self.deathvox_taser.dodge = deep_clone(self.presets.dodge.athletic)
+		
 --	cloaker - MAYHEM
 	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
 	
@@ -3500,6 +3525,9 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
 	
 --	taser - DEATH WISH
+--	set dodge to heavy (on N/H, average on VH/OVK, athletic on MH/DW)
+	self.deathvox_taser.dodge = deep_clone(self.presets.dodge.athletic)	
+
 --	cloaker - DEATH WISH
 	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
 	
