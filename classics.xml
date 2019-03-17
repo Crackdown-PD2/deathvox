@@ -190,6 +190,12 @@
 		<file :name="ene_deathvox_classic_cloaker/ene_deathvox_classic_cloaker.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_classic_cloaker/ene_deathvox_classic_cloaker.model" force="false"/>
 		<file :name="ene_deathvox_classic_cloaker/ene_deathvox_classic_cloaker.sequence_manager" force="false"/>
+		<file :name="ene_deathvox_classic_cloaker/cloaker_goggle.effect" force="false"/>
+		<file :name="ene_deathvox_classic_cloaker/ene_spook_classic_body_df.texture" force="false"/>
+		<file :name="ene_deathvox_classic_cloaker/ene_spook_classic_body_nm.texture" force="false"/>
+		<file :name="ene_deathvox_classic_cloaker/ene_spook_classic_nvg_df.texture" force="false"/>
+		<file :name="ene_deathvox_classic_cloaker/ene_spook_classic_nvg_il.texture" force="false"/>
+		<file :name="ene_deathvox_classic_cloaker/ene_spook_classic_gasmask_df.texture" force="false"/>
 	
 		<file :name="ene_deathvox_classic_medic/ene_deathvox_classic_medic.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_classic_medic/ene_deathvox_classic_medic_husk.unit" load="true" force="false"/>
