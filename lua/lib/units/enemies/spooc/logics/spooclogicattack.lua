@@ -5,7 +5,7 @@ function SpoocLogicAttack._upd_spooc_attack(data, my_data)
 	if focus_enemy.nav_tracker and focus_enemy.is_person and focus_enemy.criminal_record and not focus_enemy.criminal_record.status and not my_data.spooc_attack and AIAttentionObject.REACT_SHOOT <= focus_enemy.reaction and data.spooc_attack_timeout_t < data.t and not data.unit:movement():chk_action_forbidden("walk") and not focus_enemy.unit:movement():zipline_unit() and focus_enemy.unit:movement():is_SPOOC_attack_allowed() then
 		
 		--If they're close, just do the kick, no raycast needed, I tested this, and it didn't have any negative effects, just made them kick more often, feel free to remove this if it causes any problems, though.
-		if focus_enemy.verified and focus_enemy.verified_dis <= 250 then 
+		if focus_enemy.verified and focus_enemy.verified_dis <= 250 and math.abs(data.m_pos.z - focus_enemy.m_pos.z) < 100 then 
 			if my_data.attention_unit ~= focus_enemy.u_key then
 				CopLogicBase._set_attention(data, focus_enemy)
 				

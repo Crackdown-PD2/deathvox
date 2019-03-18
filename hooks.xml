@@ -42,6 +42,7 @@
 	</group>
 
 	<post :script_path="units/beings/player/states/playertased.lua" :hook_id="units/beings/player/states/playertased"/>
+	<post :script_path="units/beings/player/playerdamage.lua" :hook_id="units/beings/player/playerdamage"/>
 
 	<post :script_path="units/weapons/quickcsgrenade.lua" :hook_id="units/weapons/grenades/quickcsgrenade"/>
 	<post :script_path="units/weapons/quickflashgrenade.lua" :hook_id="units/weapons/grenades/quickflashgrenade"/>

@@ -45,6 +45,81 @@ function TaserLogicAttack.enter(data, new_logic_name, enter_params)
 	data.unit:brain():set_attention_settings({cbt = true})
 end
 
+function TaserLogicAttack._upd_enemy_detection(data)
+	managers.groupai:state():on_unit_detection_updated(data.unit)
+
+	data.t = TimerManager:game():time()
+	local my_data = data.internal_data
+	local min_reaction = AIAttentionObject.REACT_AIM
+
+	CopLogicBase._upd_attention_obj_detection(data, min_reaction, nil)
+
+	local under_multiple_fire = nil
+	local alert_chk_t = data.t - 1.2
+	
+	--set to a higher value to account for jokers, and players, might fix tasers letting go of people for no noticeable reason
+	--i'll make a cleaner version of this if it works and solves the problem where it just removes under_multiple_fire altogether
+	for key, enemy_data in pairs(data.detected_attention_objects) do
+		if enemy_data.dmg_t and alert_chk_t < enemy_data.dmg_t then
+			under_multiple_fire = (under_multiple_fire or 0) + 1
+
+			if under_multiple_fire > 12 then 
+				under_multiple_fire = true
+
+				break
+			end
+		end
+	end
+
+	local find_new_focus_enemy = nil
+	local tasing = my_data.tasing
+	local tased_u_key = tasing and tasing.target_u_key
+	local tase_in_effect = tasing and tasing.target_u_data.unit:movement():tased()
+
+	if tase_in_effect or tasing and data.t - tasing.start_t < math.max(1, data.char_tweak.weapon.is_rifle.aim_delay_tase[2] * 1.5) then
+		if under_multiple_fire then
+			find_new_focus_enemy = true
+		end
+	else
+		find_new_focus_enemy = true
+	end
+
+	if not find_new_focus_enemy then
+		return
+	end
+
+	local new_attention, new_prio_slot, new_reaction = CopLogicIdle._get_priority_attention(data, data.detected_attention_objects, TaserLogicAttack._chk_reaction_to_attention_object)
+	local old_att_obj = data.attention_obj
+
+	CopLogicBase._set_attention_obj(data, new_attention, new_reaction)
+	CopLogicAttack._chk_exit_attack_logic(data, new_reaction)
+
+	if my_data ~= data.internal_data then
+		return
+	end
+
+	if new_attention then
+		if old_att_obj then
+			if old_att_obj.u_key ~= new_attention.u_key then
+				CopLogicAttack._cancel_charge(data, my_data)
+
+				if not data.unit:movement():chk_action_forbidden("walk") then
+					CopLogicAttack._cancel_walking_to_cover(data, my_data)
+				end
+
+				CopLogicAttack._set_best_cover(data, my_data, nil)
+				TaserLogicAttack._chk_play_charge_weapon_sound(data, my_data, new_attention)
+			end
+		else
+			TaserLogicAttack._chk_play_charge_weapon_sound(data, my_data, new_attention)
+		end
+	elseif old_att_obj then
+		CopLogicAttack._cancel_charge(data, my_data)
+	end
+
+	TaserLogicAttack._upd_aim(data, my_data, new_reaction)
+end
+
 function TaserLogicAttack._chk_reaction_to_attention_object(data, attention_data, stationary)
 	local reaction = CopLogicIdle._chk_reaction_to_attention_object(data, attention_data, stationary)
 

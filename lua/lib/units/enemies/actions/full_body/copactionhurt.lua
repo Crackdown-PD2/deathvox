@@ -506,7 +506,11 @@ function CopActionHurt:init(action_desc, common_data)
 				end
 			end
 		elseif action_type == "death" then
+		    if self._unit:base():has_tag("medic") or self._unit:base():has_tag("taser") or self._unit:base():has_tag("tank") or self._unit:base():has_tag("shield") then
+				self._unit:sound():say("x02a_any_3p", true)		
+			end	
 			--nothing because copdamage now does this, way better since it's not animation-dependant as well
+			--for some reason specials dont play nice with the die sound shit so they're done here still - EvilBobarino
 		elseif action_type == "counter_tased" or action_type == "taser_tased" then
 			if self._unit:base():has_tag("taser") then
 				self._unit:sound():say("tasered", true)

@@ -65,7 +65,7 @@ local enemy_replacements = {
 		["units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_3/ene_zeal_bulldozer_3"] = "deathvox_blackdozer",
 
 -- Medicdozer, in case of scripted use in future.
---		["units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"] = 	
+		["units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"] = 	"deathvox_medicdozer",
 -- Minidozer, in case of scripted use in future.
 --		["units/pd2_dlc_drm/characters/ene_bulldozer_minigun/ene_bulldozer_minigun"] = 
 -- sm_ enemies currently unused.

@@ -71,40 +71,40 @@
 			<sound action="'play'" event="'bulldozer_collar_plate_shatter'" object="'Neck'"/>
 		</sequence>
 		<body name="'body_helmet_plate'">
-			<endurance damage="64" explosion="9999999999999999999999999">
+			<endurance damage="38" lock="3" explosion="100">
 				<run_sequence name="'int_seq_helmet_plate'"/>
 			</endurance>
 		</body>
 		<body name="'body_helmet_glass'">
-			<endurance damage="32" explosion="9999999999999999999999999">
+			<endurance damage="19" lock="3" explosion="100">
 				<run_sequence name="'int_seq_helmet_glass_01'"/>
 			</endurance>
-			<endurance damage="64" explosion="9999999999999999999999999">
+			<endurance damage="38" lock="3" explosion="100">
 				<run_sequence name="'int_seq_helmet_glass_02'"/>
 			</endurance>
 		</body>
 		<body name="'body_armor_chest'">
-			<endurance damage="99999999999999999999999999" explosion="99999999999999999999999999">
+			<endurance lock="3">
 				<run_sequence name="'int_seq_armor_chest'"/>
 			</endurance>
 		</body>
 		<body name="'body_armor_stomache'">
-			<endurance damage="99999999999999999999999999" explosion="99999999999999999999999999">
+			<endurance lock="3">
 				<run_sequence name="'int_seq_armor_stomache'"/>
 			</endurance>
 		</body>
 		<body name="'body_armor_back'">
-			<endurance damage="99999999999999999999999999" explosion="99999999999999999999999999">
+			<endurance lock="3">
 				<run_sequence name="'int_seq_armor_back'"/>
 			</endurance>
 		</body>
 		<body name="'body_armor_throat'">
-			<endurance damage="99999999999999999999999999" explosion="99999999999999999999999999">
+			<endurance damage="25" lock="3" explosion="200">
 				<run_sequence name="'int_seq_armor_throat'"/>
 			</endurance>
 		</body>
 		<body name="'body_armor_neck'">
-			<endurance damage="99999999999999999999999999" explosion="99999999999999999999999999">
+			<endurance damage="25" lock="3" explosion="200">
 				<run_sequence name="'int_seq_armor_neck'"/>
 			</endurance>
 		</body>

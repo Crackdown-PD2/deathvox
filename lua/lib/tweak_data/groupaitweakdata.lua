@@ -1,7 +1,211 @@
 local old_unit_cat = GroupAITweakData._init_unit_categories
 local old_spawn_group = GroupAITweakData._init_enemy_spawn_groups
 local old_task_data = GroupAITweakData._init_task_data
-
+function GroupAITweakData:_init_chatter_data()
+		self.enemy_chatter = {}
+        --[[
+		notes:
+		radius seems to do nothing no discernable difference between 10 and 90000000000000000000000000000000, game theory how many cops in a radius can say a certain chatter
+		max_nr probably how many chatters can go off at once
+		duration ??? longer ones i grabbed from v009/pdth
+		inerval is cooldown
+		group_min seems to be how many cops need to be in a group for the line to play
+		queue what call is used in chatter
+		]]--
+		self.enemy_chatter.aggressive = {
+			radius = 700,
+			max_nr = 10,
+			duration = {3, 4},
+			interval = {1.5, 2},
+			group_min = 0,
+			queue = "g90"
+		}		
+		self.enemy_chatter.open_fire = {
+			radius = 1000,
+			max_nr = 10,
+			duration = {2, 4},
+			interval = {0.75, 1.5},
+			group_min = 0,
+			queue = "att"
+		}
+		self.enemy_chatter.aggressive_captain = {
+			radius = 700,
+			max_nr = 20,
+			duration = {2, 4},
+			interval = {0.75, 1.5},
+			group_min = 0,
+			queue = "att"
+		}			
+		self.enemy_chatter.retreat = {
+			radius = 700,
+			max_nr = 20,
+			duration = {2, 4},
+			interval = {0.25, 0.75},
+			group_min = 0,
+			queue = "m01"
+		}		
+		self.enemy_chatter.deathguard = { --this isnt actually kill lines those are done in playerdamage
+			radius = 3000,
+			max_nr = 5,
+			duration = {2, 4},
+			interval = {2, 3},
+			group_min = 0,
+			queue = "r01"
+		}
+		self.enemy_chatter.contact = {
+			radius = 700,
+			max_nr = 5,
+			duration = {1, 3},
+			interval = {0.75, 1.5},
+			group_min = 2,
+			queue = "c01"
+		}
+		self.enemy_chatter.clear = {
+			radius = 700,
+		    max_nr = 1,
+		    duration = {60, 60},
+		    interval = {0.75, 1.5},
+		    group_min = 2,
+		    queue = "clr"
+		}
+		self.enemy_chatter.clear_whisper = {
+		    radius = 700,
+		    max_nr = 2,
+		    duration = {60, 60},
+		    interval = {6, 6}, --longer cooldown than in resmod
+		    group_min = 0,
+		    queue = "a05"
+		}		
+		self.enemy_chatter.go_go = {
+			radius =  1000,
+			max_nr = 20,
+			duration = {2, 2},
+			interval = {0.75, 1},
+			group_min = 0,
+			queue = "mov"
+		}
+		self.enemy_chatter.push = {
+			radius = 1000,
+			max_nr = 20,
+			duration = {2, 4},
+			interval = {0.75, 1.5},
+			group_min = 0,
+			queue = "pus"
+		}
+		self.enemy_chatter.reload = {
+			radius = 700,
+			max_nr = 20,
+			duration = {2, 4},
+			interval = {0.75, 1.5},
+			group_min = 0,
+			queue = "rrl"
+		}
+		self.enemy_chatter.look_for_angle = {
+			radius = 700,
+			max_nr = 20,
+			duration = {2, 4},
+			interval = {0.75, 1.5},
+			group_min = 0,
+			queue = "t01"
+		}
+		self.enemy_chatter.ready = {
+			radius = 1000,
+			max_nr = 20,
+			duration = {2, 4},
+			interval = {0.75, 1.5},
+			group_min = 0,
+			queue = "rdy"
+		}
+		self.enemy_chatter.smoke = {
+			radius = 1000,
+			max_nr = 3,
+		    duration = {2, 2},
+		    interval = {0.1, 0.1},
+			group_min = 0,
+			queue = "d01"
+		}
+		self.enemy_chatter.flash_grenade = {
+			radius = 1000,
+			max_nr = 3,
+		    duration = {2, 2},
+		    interval = {0.1, 0.1},
+			group_min = 0,
+			queue = "d02"
+		}
+		self.enemy_chatter.ecm = {
+			radius = 1000,
+			max_nr = 20,
+			duration = {2, 4},
+			interval = {0.75, 1.5},
+			group_min = 0,
+			queue = "ch3"
+		}
+		self.enemy_chatter.saw = {
+			radius = 1000,
+			max_nr = 20,
+			duration = {2, 4},
+			interval = {0.75, 1.5},
+			group_min = 0,
+			queue = "ch4"
+		}
+		self.enemy_chatter.trip_mines = {
+			radius = 1000,
+			max_nr = 20,
+			duration = {2, 4},
+			interval = {0.75, 1.5},
+			group_min = 0,
+			queue = "ch1"
+		}
+		self.enemy_chatter.sentry = {
+			radius = 1000,
+			max_nr = 20,
+			duration = {2, 4},
+			interval = {0.75, 1.5},
+			group_min = 0,
+			queue = "ch2"
+		}
+		self.enemy_chatter.incomming_tank = {
+			radius = 1500,
+			max_nr = 0,
+			duration = {10, 10},
+			interval = {0.5, 1},
+			group_min = 0,
+			queue = "bdz"
+		}
+		self.enemy_chatter.incomming_spooc = {
+			radius = 1200,
+			max_nr = 0,
+			duration = {10, 10},
+			interval = {0.5, 1},
+			group_min = 0,
+			queue = "clk"
+		}
+		self.enemy_chatter.incomming_shield = {
+			radius = 1500,
+			max_nr = 0,
+			duration = {10, 10},
+			interval = {0.5, 1},
+			group_min = 0,
+			queue = "shd"
+		}
+		self.enemy_chatter.incomming_taser = {
+			radius = 1500,
+			max_nr = 0,
+			duration = {60, 60},
+			interval = {0.5, 1},
+			group_min = 0,
+			queue = "tsr"
+		}
+		self.enemy_chatter.heal_chatter = {
+			radius = 700,
+			max_nr = 10,
+			duration = {2, 4},
+			interval = {1.5, 2.5},
+			group_min = 0,
+			queue = "heal"
+		}			
+end
+	
 function GroupAITweakData:_init_unit_categories(difficulty_index)
 	old_unit_cat(self, difficulty_index)
 	local access_type_walk_only = {walk = true}
@@ -1194,7 +1398,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 -- Shield, Taser, Medic.
 -- Very limited tactics. mostly rush, some flank, limited nade use.
 
---Hard recon groups
+--Hard spawngroups
 	self.enemy_spawn_groups.hard_smggroup = {
 		amount = {3, 3},
 		spawn = {
@@ -1283,7 +1487,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		amount = {4, 4},
 		spawn = {
 			{
-				unit = "deathvox_lightar",
+				unit = "deathvox_heavyar",
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
@@ -1456,7 +1660,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_medic,
 				rank = 1
 			}
 		}
@@ -1559,8 +1763,8 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			{
 				unit = "deathvox_medic",
 				freq = 1,
-				amount_min = 3,
-				amount_max = 3,
+				amount_min = 1,
+				amount_max = 1,
 				tactics = self._tactics.deathvox_medic,
 				rank = 1
 			}
@@ -1581,8 +1785,8 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			{
 				unit = "deathvox_medic",
 				freq = 1,
-				amount_min = 3,
-				amount_max = 3,
+				amount_min = 1,
+				amount_max = 1,
 				tactics = self._tactics.deathvox_medic,
 				rank = 1
 			}
@@ -1753,7 +1957,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_charge,
+				tactics = self._tactics.deathvox_swat_charge,
 				rank = 1
 			}
 		}
@@ -1775,7 +1979,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_charge,
+				tactics = self._tactics.deathvox_swat_charge,
 				rank = 1
 			}
 		}
@@ -1797,7 +2001,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 3,
 				amount_max = 3,
-				tactics = self._tactics.deathvox_charge,
+				tactics = self._tactics.deathvox_swat_shieldcharge,
 				rank = 1
 			}
 		}
@@ -1819,7 +2023,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_charge,
+				tactics = self._tactics.deathvox_swat_shieldcharge,
 				rank = 1
 			}
 		}
@@ -1841,7 +2045,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_charge,
+				tactics = self._tactics.deathvox_swat_shieldcharge,
 				rank = 1
 			}
 		}
@@ -1914,14 +2118,14 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 -- Lock to 4 units for all but dozers and cloakers. only one ranged all light, all others mixed light/heavy.
 -- Shields, Tasers, Bulldozers (R870, SAIGA), Cloakers, Medics
 --4 light ranged AR
-	self.enemy_spawn_groups.ovk_mixARcharge = {
+	self.enemy_spawn_groups.ovk_argroupranged = {
 		amount = {4, 4},
 		spawn = {
 			{
 				unit = "deathvox_lightar",
 				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
+				amount_min = 4,
+				amount_max = 4,
 				tactics = self._tactics.deathvox_swat_ranged,
 				rank = 1
 			}
@@ -1966,7 +2170,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_medic,
+				tactics = self._tactics.deathvox_medic,
 				rank = 2
 			},
 			{
@@ -2018,7 +2222,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_medic,
+				tactics = self._tactics.deathvox_medic,
 				rank = 2
 			},
 			{
@@ -2070,7 +2274,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_medic,
+				tactics = self._tactics.deathvox_medic,
 				rank = 2
 			},
 			{
@@ -2204,7 +2408,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_swat_shieldcharge,
 				rank = 1
 			}
 		}
@@ -2354,16 +2558,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			{
 				unit = "deathvox_cloaker",
 				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
+				amount_min = 1,
+				amount_max = 1,
 				tactics = self._tactics.deathvox_spooc_lead,
 				rank = 2
 			},
 			{
 				unit = "deathvox_cloaker",
 				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
+				amount_min = 1,
+				amount_max = 1,
 				tactics = self._tactics.deathvox_spooc_pinch,
 				rank = 1
 			}
@@ -2827,8 +3031,8 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			{
 				unit = "deathvox_greendozer",
 				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
+				amount_min = 1,
+				amount_max = 1,
 				tactics = self._tactics.deathvox_tank_lead,
 				rank = 3
 			},
@@ -3195,7 +3399,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		amount = {3, 3},
 		spawn = {
 			{
-				unit = "deathvox_blackdozer",
+				unit = "deathvox_greendozer",
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
@@ -3302,6 +3506,9 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			}
 		}
 	}
+
+-- begin DW recon groups
+
 	self.enemy_spawn_groups.dw_vetmed = {
 		amount = {4, 4},
 		spawn = {
@@ -3483,7 +3690,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_swat_flank,
 				rank = 3
 			},
 			{
@@ -3958,7 +4165,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 	}
 
 	self.enemy_spawn_groups.hoplon = {
-		amount = {4, 4},
+		amount = {3, 3},
 		spawn = {
 			{
 				unit = "deathvox_shield",
@@ -3971,8 +4178,8 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			{
 				unit = "deathvox_grenadier",
 				freq = 1,
-				amount_min = 2,
-				amount_max = 2,
+				amount_min = 1,
+				amount_max = 1,
 				tactics = self._tactics.deathvox_grenad_follow,
 				rank = 1
 			}
@@ -4161,7 +4368,7 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 		self.besiege.assault.sustain_duration_balance_mul = {1,1,1,1}
 		self.besiege.assault.fade_duration = 25
 		self.besiege.assault.groups = {
-			ovk_mixARcharge = { 1,1,1 },
+			ovk_argroupranged = { 1,1,1 },
 			ovk_mixheavyARcharge = { 1,1,1 },
 			ovk_comboARcharge = { 1,1,1 },
 			ovk_mixcombocharge = { 1,1,1 },
