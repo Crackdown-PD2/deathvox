@@ -143,7 +143,18 @@ function WeaponFactoryTweakData:init(...)
 		"wpn_fps_lmg_m249_s_para",
 		"wpn_fps_lmg_m249_upper_reciever"
 	}
+
+	self.wpn_deathvox_cop_pistol = deep_clone(self.wpn_fps_pis_1911_npc)
+	self.wpn_deathvox_cop_pistol.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_cop_pistol"
 	
+	self.wpn_deathvox_cop_revolver = deep_clone(self.wpn_fps_pis_rage_npc)
+	self.wpn_deathvox_cop_revolver.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_cop_revolver"
+	
+	self.wpn_deathvox_cop_shotgun = deep_clone(self.wpn_fps_sho_spas12_npc)
+	self.wpn_deathvox_cop_shotgun.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_cop_shotgun"
+	
+	self.wpn_deathvox_cop_smg = deep_clone(self.wpn_fps_smg_mp5_npc)
+	self.wpn_deathvox_cop_smg.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_cop_smg"
 	
 	self.wpn_deathvox_guard_pistol.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_guard_pistol"
 	self.wpn_deathvox_medic_pistol.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_medic_pistol"

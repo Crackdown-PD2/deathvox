@@ -1,6 +1,73 @@
 function GroupAIStateBesiege:_check_spawn_phalanx()
 end
 
+	function GroupAIStateBesiege:_voice_looking_for_angle(group)
+		for u_key, unit_data in pairs(group.units) do
+			if unit_data.char_tweak.chatter.ready and self:chk_say_enemy_chatter(unit_data.unit, unit_data.m_pos, "look_for_angle") then
+			else
+			end
+		end
+	end	
+	
+	function GroupAIStateBesiege:_voice_open_fire_start(group)
+		for u_key, unit_data in pairs(group.units) do
+			if unit_data.char_tweak.chatter.ready and self:chk_say_enemy_chatter(unit_data.unit, unit_data.m_pos, "open_fire") then
+			else
+			end
+		end
+	end
+
+	function GroupAIStateBesiege:_voice_push_in(group)
+		for u_key, unit_data in pairs(group.units) do
+			if unit_data.char_tweak.chatter.ready and self:chk_say_enemy_chatter(unit_data.unit, unit_data.m_pos, "push") then
+			else
+			end
+		end
+	end
+
+	function GroupAIStateBesiege:_voice_gtfo(group)
+		for u_key, unit_data in pairs(group.units) do
+			if unit_data.char_tweak.chatter.ready and self:chk_say_enemy_chatter(unit_data.unit, unit_data.m_pos, "retreat") then
+			else
+			end
+		end
+	end
+	
+	function GroupAIStateBesiege:_voice_deathguard_start(group)
+		for u_key, unit_data in pairs(group.units) do
+			if unit_data.char_tweak.chatter.ready and self:chk_say_enemy_chatter(unit_data.unit, unit_data.m_pos, "deathguard") then
+			else
+			end
+		end
+	end	
+	
+	function GroupAIStateBesiege:_voice_smoke(group)
+		for u_key, unit_data in pairs(group.units) do
+			if unit_data.char_tweak.chatter.ready and self:chk_say_enemy_chatter(unit_data.unit, unit_data.m_pos, "smoke") then
+			else
+			end
+		end
+	end	
+	
+	function GroupAIStateBesiege:_voice_flash(group)
+		for u_key, unit_data in pairs(group.units) do
+			if unit_data.char_tweak.chatter.ready and self:chk_say_enemy_chatter(unit_data.unit, unit_data.m_pos, "flash_grenade") then
+			else
+			end
+		end
+	end
+
+	function GroupAIStateBesiege:_voice_dont_delay_assault(group)
+		local time = self._t
+		for u_key, unit_data in pairs(group.units) do
+			if not unit_data.unit:sound():speaking(time) then
+				unit_data.unit:sound():say("p01", true, nil)
+				return true
+			end
+		end
+		return false
+	end
+
 function GroupAIStateBesiege:provide_covering_fire(group_to_cover)
 	if group_to_cover and group_to_cover.units then
 		local lu_key, lu_data = nil, nil
@@ -489,7 +556,7 @@ function GroupAIStateBesiege:_upd_group_spawning()
 		for _, sp_data in ipairs(spawn_points) do
 			local category = group_ai_tweak.unit_categories[u_type_name]
 
-			if (sp_data.accessibility == "any" or category.access[sp_data.accessibility]) and (not sp_data.amount or sp_data.amount > 0) and sp_data.mission_element:enabled() then
+			if (sp_data.accessibility == "any" or category.access[sp_data.accessibility]) and (not sp_data.amount or sp_data.amount > 0) and sp_data.mission_element:enabled() and category.unit_types[current_unit_type] then
 				hopeless = false
 
 				if sp_data.delay_t < self._t then
@@ -639,6 +706,7 @@ function GroupAIStateBesiege:_upd_assault_task()
 			
 
 			task_data.phase = "fade"
+		
 			task_data.phase_end_t = t + self._tweak_data.assault.fade_duration
 		elseif task_data.phase_end_t < t then
 			self._assault_number = self._assault_number + 1
@@ -697,10 +765,34 @@ function GroupAIStateBesiege:_upd_assault_task()
 		if task_spawn_allowance <= 0 then
 			
 			task_data.phase = "fade"
+			local time = self._t
+		    for group_id, group in pairs(self._groups) do
+	            for u_key, u_data in pairs(group.units) do
+		        local nav_seg_id = u_data.tracker:nav_segment()
+		        local current_objective = group.objective
+		            if current_objective.coarse_path then
+		                if not u_data.unit:sound():speaking(time) then
+	                        u_data.unit:sound():say("m01", true)
+		                end	
+	                end					   
+		        end	
+		    end
 			task_data.phase_end_t = t + self._tweak_data.assault.fade_duration
 		elseif end_t < t and not self._hunt_mode then
 			
 			task_data.phase = "fade"
+			local time = self._t
+		    for group_id, group in pairs(self._groups) do
+	            for u_key, u_data in pairs(group.units) do
+		        local nav_seg_id = u_data.tracker:nav_segment()
+		        local current_objective = group.objective
+		            if current_objective.coarse_path then
+		                if not u_data.unit:sound():speaking(time) then
+	                        u_data.unit:sound():say("m01", true)
+		                end	
+	                end					   
+		        end	
+		    end
 			task_data.phase_end_t = t + self._tweak_data.assault.fade_duration
 		end
 	else
@@ -716,6 +808,18 @@ function GroupAIStateBesiege:_upd_assault_task()
 					task_data.said_retreat = true
 
 					self:_police_announce_retreat()
+					local time = self._t
+		            for group_id, group in pairs(self._groups) do
+	                    for u_key, u_data in pairs(group.units) do
+		                local nav_seg_id = u_data.tracker:nav_segment()
+		                local current_objective = group.objective
+		                    if current_objective.coarse_path then
+		                        if not u_data.unit:sound():speaking(time) then
+	                                u_data.unit:sound():say("m01", true)
+		                        end	
+	                        end					   
+		                end	
+		            end
 				end
 			end
 			if task_data.phase_end_t < t and self:_count_criminals_engaged_force(4) <= 3 then
@@ -729,6 +833,18 @@ function GroupAIStateBesiege:_upd_assault_task()
 				task_data.phase = nil
 				task_data.said_retreat = nil
 				task_data.force_end = nil
+				local time = self._t
+		        for group_id, group in pairs(self._groups) do
+	                for u_key, u_data in pairs(group.units) do
+		            local nav_seg_id = u_data.tracker:nav_segment()
+		            local current_objective = group.objective
+		                if current_objective.coarse_path then
+		                    if not u_data.unit:sound():speaking(time) then
+	                            u_data.unit:sound():say("m01", true)
+		                    end	
+	                    end					   
+		            end	
+		        end
 
 				managers.mission:call_global_event("end_assault")
 				self:_begin_regroup_task()
@@ -909,7 +1025,7 @@ function GroupAIStateBesiege:_chk_group_use_smoke_grenade(group, task_data, deto
 				end
 
 				if detonate_pos then
-					u_data.unit:sound():say("d02", true)
+					u_data.unit:sound():say("d01", true)
 					u_data.unit:movement():play_redirect("throw_grenade")
 					self:detonate_smoke_grenade(detonate_pos, detonate_pos, duration, false)
 
@@ -920,4 +1036,56 @@ function GroupAIStateBesiege:_chk_group_use_smoke_grenade(group, task_data, deto
 			end
 		end
 	end
+end
+
+function GroupAIStateBesiege:assign_enemy_to_group_ai(unit, team_id)
+	local u_tracker = unit:movement():nav_tracker()
+	local seg = u_tracker:nav_segment()
+	local area = self:get_area_from_nav_seg_id(seg)
+	local current_unit_type = tweak_data.levels:get_ai_group_type()
+	local u_name = unit:name()
+	local u_category = nil
+
+	for cat_name, category in pairs(tweak_data.group_ai.unit_categories) do
+		local units = category.unit_types[current_unit_type]
+		if units then
+			for _, test_u_name in ipairs(units) do
+				if u_name == test_u_name then
+					u_category = cat_name
+
+					break
+				end
+			end
+		end
+	end
+
+	local group_desc = {
+		size = 1,
+		type = u_category or "custom"
+	}
+	local group = self:_create_group(group_desc)
+	group.team = self._teams[team_id]
+	local grp_objective = nil
+	local objective = unit:brain():objective()
+	local grp_obj_type = self._task_data.assault.active and "assault_area" or "recon_area"
+
+	if objective then
+		grp_objective = {
+			type = grp_obj_type,
+			area = objective.area or objective.nav_seg and self:get_area_from_nav_seg_id(objective.nav_seg) or area
+		}
+		objective.grp_objective = grp_objective
+	else
+		grp_objective = {
+			type = grp_obj_type,
+			area = area
+		}
+	end
+
+	grp_objective.moving_out = false
+	group.objective = grp_objective
+	group.has_spawned = true
+
+	self:_add_group_member(group, unit:key())
+	self:set_enemy_assigned(area, unit:key())
 end
