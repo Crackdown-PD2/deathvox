@@ -14,12 +14,11 @@ Removed "ezladder".
 Adjusted crowbar positions.
 Adjusted back guards.
 Altered front gate gman animation.
-increased loot requirement.
-Further crowbar hiding fix.
-Swapped gmen.
+Disable cage crowbar interaction until enter cage.
+
 
 Todo:
-
+All complete.
 
 
 Notes:
