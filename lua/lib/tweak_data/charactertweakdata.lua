@@ -2976,7 +2976,7 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 		self.cop.calls_in = nil
 	end	
 	
-	self.presets.gang_member_damage.HEALTH_INIT = 250 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.HEALTH_INIT = 300 -- bot health values. Adjusted upward at tester request.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
 	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 250
 	
@@ -3086,7 +3086,7 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 		self.cop.calls_in = nil
 	end	
 	
-	self.presets.gang_member_damage.HEALTH_INIT = 250 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.HEALTH_INIT = 300 -- bot health values. Adjusted upward at tester request.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
 	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 250
 -- guard - HARD
@@ -3188,7 +3188,7 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 		self.cop.calls_in = nil
 	end	
 	
-	self.presets.gang_member_damage.HEALTH_INIT = 300 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.HEALTH_INIT = 400 -- bot health values. Adjusted upward at tester request.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
 	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 300
 -- guard - VERY HARD
@@ -3288,7 +3288,7 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 		self.cop.calls_in = nil
 	end	
 	
-	self.presets.gang_member_damage.HEALTH_INIT = 300 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.HEALTH_INIT = 400 -- bot health values. Adjusted upward at tester request.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
 	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 300
 	
