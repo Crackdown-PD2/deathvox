@@ -2970,7 +2970,7 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 	
-	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+	if job == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
 		self.cop.calls_in = nil
@@ -3080,7 +3080,7 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 	
-	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+	if job == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
 		self.cop.calls_in = nil
@@ -3182,7 +3182,7 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 	
-	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+	if job == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
 		self.cop.calls_in = nil
@@ -3282,7 +3282,7 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 	
-	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+	if job == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
 		self.cop.calls_in = nil
@@ -3384,7 +3384,7 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 	
-	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+	if job == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
 		self.cop.calls_in = nil
@@ -3474,7 +3474,7 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 
-	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+	if job == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
 		self.cop.calls_in = nil
@@ -3565,7 +3565,7 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 	
-	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+	if job == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
 		self.cop.calls_in = nil
