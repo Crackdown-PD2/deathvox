@@ -1,0 +1,24 @@
+<weapons>
+	<!--
+		A weapon category. This currently doesn't do anything, but please still put the weapons in the
+		correct category, both for cleanliness and so we can do stuff with it later (eg, potentially moving
+		weapons into different tabs in the purchase screen depending on where they are here).
+
+		Also note that there is no technical basis for the IDs - please keep them to lowercase, numbers and
+		underscores, however you can call them whatever you like - I'd recommend copying the names from the
+		spreadsheet for consistency.
+	-->
+	<category id="light_ar">
+		<!--
+			A weapon tag - specifies the various properties about a weapon.
+
+			The name used here must be the name used internally by PD2. For some weapons (eg, amcar and ak74) it's
+			immediately obvious what weapon it corresponds to in-game, but for other weapons (such as p226, which
+			is the Signature .40) please leave a comment on the previous line or at the end of the line noting the
+			in-game name.
+
+			Additionally, please feel free to use comments to explain why you made a certain change.
+		-->
+		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+	</category>
+</weapons>

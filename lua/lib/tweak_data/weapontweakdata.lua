@@ -1,3 +1,5 @@
+local Balance = blt.vm.dofile(ModPath .. "lua/sys/weapon_balance.lua")
+
 local old_init = WeaponTweakData.init
 function WeaponTweakData:init(tweak_data)
 	old_init(self, tweak_data)
@@ -488,6 +490,9 @@ function WeaponTweakData:init(tweak_data)
 			end
 		end
 	end
+
+	-- Modify the playable weapons
+	Balance:apply_weapons(self)
 end
 
 -- Begin difficulty scripted weapon damage value population.
