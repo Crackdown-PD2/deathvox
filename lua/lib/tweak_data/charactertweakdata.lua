@@ -2970,13 +2970,13 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 	
-	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+	if level_id == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
 		self.cop.calls_in = nil
 	end	
 	
-	self.presets.gang_member_damage.HEALTH_INIT = 250 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.HEALTH_INIT = 300 -- bot health values. Adjusted upward at tester request.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
 	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 250
 	
@@ -3080,13 +3080,13 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 	
-	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+	if level_id == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
 		self.cop.calls_in = nil
 	end	
 	
-	self.presets.gang_member_damage.HEALTH_INIT = 250 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.HEALTH_INIT = 300 -- bot health values. Adjusted upward at tester request.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
 	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 250
 -- guard - HARD
@@ -3182,13 +3182,13 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 	
-	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+	if level_id == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
 		self.cop.calls_in = nil
 	end	
 	
-	self.presets.gang_member_damage.HEALTH_INIT = 300 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.HEALTH_INIT = 400 -- bot health values. Adjusted upward at tester request.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
 	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 300
 -- guard - VERY HARD
@@ -3282,13 +3282,13 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 	
-	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+	if level_id == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
 		self.cop.calls_in = nil
 	end	
 	
-	self.presets.gang_member_damage.HEALTH_INIT = 300 -- bot health values. Manually set for each diff.
+	self.presets.gang_member_damage.HEALTH_INIT = 400 -- bot health values. Adjusted upward at tester request.
 	self.presets.gang_member_damage.MIN_DAMAGE_INTERVAL = 0.35
 	self.presets.gang_member_damage.BLEED_OUT_HEALTH_INIT = 300
 	
@@ -3384,7 +3384,7 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 	
-	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+	if level_id == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
 		self.cop.calls_in = nil
@@ -3474,7 +3474,7 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 
-	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+	if level_id == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
 		self.cop.calls_in = nil
@@ -3565,7 +3565,7 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 	
-	if job == "man" then -- fixes base game alert bug on Counterfeit. Must be separately invoked on each diff in current setup.
+	if level_id == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
 		self.cop.calls_in = nil
