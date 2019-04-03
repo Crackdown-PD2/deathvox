@@ -8,6 +8,7 @@
 		<depends_on bnk="soundbanks/regular_vox" />
 		<depends_on bnk="soundbanks/regular_sfx" />
 		<depends_on effect="effects/particles/bullet_hit/glass_breakable/bullet_hit_glass_breakable" />
+		<depends_on unit="units/payday2/weapons/wpn_npc_ump/wpn_npc_ump" />
 	</dependencies>
 
 	<extensions>
@@ -15,7 +16,7 @@
 		<extension name="base" class="HuskCopBase" >
 			<var name="can_be_marked" value="true" />
 			<var name="_tweak_table" value="deathvox_medicdozer" />
-			<var name="_default_weapon_id" value="mp5" />
+			<var name="_default_weapon_id" value="ump" /> <!--this looks ok right??-->
 			<var name="_stats_name" value="medic" />
 		</extension>
 		<extension name="inventory" class="HuskCopInventory" />

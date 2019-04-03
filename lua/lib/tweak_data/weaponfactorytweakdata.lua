@@ -1,7 +1,7 @@
 local old_init = WeaponFactoryTweakData.init
 function WeaponFactoryTweakData:init(...)
 	old_init(self, ...)
-	self.wpn_deathvox_medicdozer_smg = deep_clone(self.wpn_fps_smg_polymer_npc)
+	--[[self.wpn_deathvox_medicdozer_smg = deep_clone(self.wpn_fps_smg_polymer_npc)
 	self.wpn_deathvox_medicdozer_smg.default_blueprint = {
 		"wpn_fps_smg_polymer_body_standard",
 		"wpn_fps_smg_polymer_bolt_standard",
@@ -81,7 +81,7 @@ function WeaponFactoryTweakData:init(...)
 		"wpn_fps_sho_ben_fg_standard",
 		"wpn_fps_sho_ben_s_collapsable"
 	}
-
+    ]]--
 	self.wpn_deathvox_sniper = deep_clone(self.wpn_fps_snp_wa2000_npc)
 	self.wpn_deathvox_sniper.default_blueprint = {
 		"wpn_fps_snp_wa2000_body_standard",
@@ -92,7 +92,7 @@ function WeaponFactoryTweakData:init(...)
 		"wpn_fps_snp_wa2000_g_stealth",
 		"wpn_fps_upg_o_spot"
 	}
-
+    
 	self.wpn_deathvox_grenadier = deep_clone(self.wpn_fps_gre_m32_npc)
 	self.wpn_deathvox_grenadier.default_blueprint = {
 		"wpn_fps_gre_m32_barrel",
@@ -103,7 +103,7 @@ function WeaponFactoryTweakData:init(...)
 		"wpn_fps_upg_m4_s_standard_vanilla"
 	}
 	
-	self.wpn_deathvox_cloaker = deep_clone(self.wpn_fps_smg_schakal_npc)
+	--[[self.wpn_deathvox_cloaker = deep_clone(self.wpn_fps_smg_schakal_npc)
 	self.wpn_deathvox_cloaker.default_blueprint = {
 		"wpn_fps_smg_schakal_b_standard",
 		"wpn_fps_smg_schakal_body_lower",
@@ -169,5 +169,5 @@ function WeaponFactoryTweakData:init(...)
 	self.wpn_deathvox_cloaker.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_cloaker"
 	self.wpn_deathvox_greendozer.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_greendozer"
 	self.wpn_deathvox_blackdozer.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_blackdozer"
-	self.wpn_deathvox_lmgdozer.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_lmgdozer"
+	self.wpn_deathvox_lmgdozer.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_lmgdozer"]]--
 end
