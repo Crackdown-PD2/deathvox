@@ -418,6 +418,14 @@
 		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.sequence_manager" force="false"/>
 	</group>
 
+	<!--M4 Taser-->
+	<group name="units/payday2/weapons/">
+		<file :name="wpn_npc_m4_yellow/m4_yellow_nm.texture" force="true"/>	
+		<file :name="wpn_npc_m4_yellow/m4_yellow_df.texture" force="true"/>			
+		<file :name="wpn_npc_m4_yellow/wpn_npc_m4_yellow.material_config" force="true"/>					
+		<file :name="wpn_npc_m4_yellow/wpn_npc_m4_yellow.model" force="true"/>			
+	</group>
+	
 	<group name="units/payday2/characters/">
 		<file :name="ene_city_swat_1/ene_city_swat_1.model" force="false"/>
 		<file :name="ene_city_swat_2/ene_city_swat_2.model" force="false"/>
