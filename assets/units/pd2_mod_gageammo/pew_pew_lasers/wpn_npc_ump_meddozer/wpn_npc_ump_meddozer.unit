@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<unit type="wpn" slot="13">
+	<object file="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_ump_meddozer/wpn_npc_ump_meddozer" />
+	<dependencies>
+		<depends_on effect="effects/particles/weapons/rifle/muzzleflash_3dp" />
+		<depends_on effect="effects/particles/weapons/sniper_trail" />
+		<depends_on bnk="soundbanks/weapon_com5"/>
+	</dependencies>
+	<extensions>
+		<extension name="unit_data" class="ScriptUnitData" />
+		<extension name="base" class="NPCRaycastWeaponBase" >
+			<var name="name_id" value="deathvox_medicdozer_smg" />
+			<var name="_multivoice" value="true" />
+		</extension>
+		<extension name="damage" class="UnitDamage" />
+	</extensions>
+	
+	<sounds>
+		<soundsource name="root" source="rp_wpn_npc_ump" />
+		<default_soundsource source="rp_wpn_npc_ump" />
+	</sounds>
+</unit>

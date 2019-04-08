@@ -6,14 +6,13 @@
 	<dependencies>
 		
 		<depends_on unit="units/payday2/characters/ene_acc_swat_helmet/ene_acc_swat_helmet" />
-		<depends_on unit="units/payday2/weapons/wpn_npc_mp5/wpn_npc_mp5" />
 	</dependencies>
 
 	<extensions>
 		<extension name="unit_data" class="ScriptUnitData" />
 		<extension name="base" class="HuskCopBase" >
 			<var name="_tweak_table" value="deathvox_lightar" />
-			<var name="_default_weapon_id" value="mp5" />
+			<var name="_default_weapon_id" value="deathvox_light_ar" />
 		</extension>
 		<extension name="inventory" class="HuskCopInventory" />
 		<extension name="brain" class="HuskCopBrain" />

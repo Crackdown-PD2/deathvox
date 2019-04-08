@@ -7,14 +7,13 @@
 		
 		<depends_on bnk="soundbanks/regular_vox" />
 		<depends_on unit="units/payday2/characters/ene_acc_swat_heavy_helmet/ene_acc_swat_heavy_helmet" />
-		<depends_on unit="units/payday2/weapons/wpn_npc_benelli/wpn_npc_benelli" />
 	</dependencies>
 
 	<extensions>
 		<extension name="unit_data" class="ScriptUnitData" />
 		<extension name="base" class="CopBase" >
 			<var name="_tweak_table" value="deathvox_heavyshot" />
-			<var name="_default_weapon_id" value="benelli" />
+			<var name="_default_weapon_id" value="deathvox_shotgun_heavy" />
 		</extension>
 		<extension name="inventory" class="CopInventory" />
 		<extension name="brain" class="CopBrain" />
