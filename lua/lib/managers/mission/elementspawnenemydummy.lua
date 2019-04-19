@@ -5,8 +5,8 @@ local enemy_replacements = {
 -- need to populate as necesary.
 		["units/payday2/characters/ene_cop_1/ene_cop_1"] = "deathvox_cop_pistol",
 		["units/payday2/characters/ene_cop_2/ene_cop_2"] = "deathvox_cop_revolver",
-		["units/payday2/characters/ene_cop_3/ene_cop_3"] = "deathvox_cop_shotgun",
-		["units/payday2/characters/ene_cop_4/ene_cop_4"] = "deathvox_cop_smg",
+		["units/payday2/characters/ene_cop_3/ene_cop_3"] = "deathvox_cop_smg",
+		["units/payday2/characters/ene_cop_4/ene_cop_4"] = "deathvox_cop_shotgun",
 	
 	-- "Classic" FBI, one of the units players want to see back. We may adjust and sub in a new weaponpreset for them though.
 		["units/payday2/characters/ene_fbi_1/ene_fbi_1"] = "deathvox_fbi_rookie",
