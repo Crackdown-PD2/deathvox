@@ -1,18 +1,16 @@
 local enemy_replacements = {
--- this version last edited by vox Feb 26 2018.
 	
 -- Beat police.
--- need to populate as necesary.
 		["units/payday2/characters/ene_cop_1/ene_cop_1"] = "deathvox_cop_pistol",
 		["units/payday2/characters/ene_cop_2/ene_cop_2"] = "deathvox_cop_revolver",
 		["units/payday2/characters/ene_cop_3/ene_cop_3"] = "deathvox_cop_smg",
 		["units/payday2/characters/ene_cop_4/ene_cop_4"] = "deathvox_cop_shotgun",
 	
-	-- "Classic" FBI, one of the units players want to see back. We may adjust and sub in a new weaponpreset for them though.
+-- "Classic" FBI units. Now principally used in assault breaks.
 		["units/payday2/characters/ene_fbi_1/ene_fbi_1"] = "deathvox_fbi_rookie",
 		["units/payday2/characters/ene_fbi_2/ene_fbi_2"] = "deathvox_fbi_veteran",
 		["units/payday2/characters/ene_fbi_3/ene_fbi_3"] = "deathvox_fbi_hrt",
---city swats.
+--City swats.
 		["units/payday2/characters/ene_city_swat_1/ene_city_swat_1"] = "deathvox_lightar",
 		["units/payday2/characters/ene_city_swat_2/ene_city_swat_2"] = "deathvox_lightshot",
 		["units/payday2/characters/ene_city_swat_3/ene_city_swat_3"] = "deathvox_lightar",
@@ -59,7 +57,7 @@ local enemy_replacements = {
 		["units/payday2/characters/ene_bulldozer_2/ene_bulldozer_2"] = "deathvox_blackdozer",
 		["units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"] = "deathvox_lmgdozer",
 	
---Z-dozers. According to the spawner the order's different on OD. I've replicated it. Need to check into this though.
+--Z-dozers. According to the spawner the order's different on DS. I've replicated it. Need to check into this though.
 		["units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer/ene_zeal_bulldozer"] = "deathvox_lmgdozer",
 		["units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_2/ene_zeal_bulldozer_2"] = "deathvox_greendozer",
 		["units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_3/ene_zeal_bulldozer_3"] = "deathvox_blackdozer",
@@ -209,6 +207,7 @@ local enemy_replacements = {
 -- Headless Zealdozer.
 --		["units/pd2_dlc_help/characters/ene_zeal_bulldozer_halloween/ene_zeal_bulldozer_halloween"]	
 
+-- German unit replacement for specific custom heists.
 		["units/zdann/characters/ene_ger_city_heavy_g36/ene_ger_city_heavy_g36"] = "deathvox_heavyar",
 		["units/zdann/characters/ene_ger_city_heavy_r870/ene_ger_city_heavy_r870"] = "deathvox_heavyshot",
 		["units/zdann/characters/ene_ger_city_swat_1/ene_ger_city_swat_1"] = "deathvox_lightar",
