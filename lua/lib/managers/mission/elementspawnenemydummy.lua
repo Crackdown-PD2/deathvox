@@ -57,13 +57,13 @@ local enemy_replacements = {
 		["units/payday2/characters/ene_bulldozer_2/ene_bulldozer_2"] = "deathvox_blackdozer",
 		["units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"] = "deathvox_lmgdozer",
 	
---Z-dozers. According to the spawner the order's different on DS. I've replicated it. Need to check into this though.
+--Z-dozers. DS unit order is irregular- confirmed correct.
 		["units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer/ene_zeal_bulldozer"] = "deathvox_lmgdozer",
 		["units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_2/ene_zeal_bulldozer_2"] = "deathvox_greendozer",
 		["units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_3/ene_zeal_bulldozer_3"] = "deathvox_blackdozer",
 
 -- Medicdozer, in case of scripted use in future.
-		["units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"] = 	"deathvox_medicdozer",
+		["units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"] = "deathvox_medicdozer",
 -- Minidozer, in case of scripted use in future.
 --		["units/pd2_dlc_drm/characters/ene_bulldozer_minigun/ene_bulldozer_minigun"] = 
 -- sm_ enemies currently unused.
@@ -118,7 +118,7 @@ local enemy_replacements = {
 -- Other units.
 
 -- Security Guards, not directly replacing. There are  more of these to document! 
---	I need to check against the full pool and identify roles. Some have pistols, some have smgs, some have shotties.
+--	I need to check against the full pool and identify roles. Some have pistols, some have smgs, some have shotguns.
 --		["units/payday2/characters/ene_security_1/ene_security_1"] = "units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard",
 --		["units/payday2/characters/ene_security_2/ene_security_2"] = "units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard",
 --		["units/payday2/characters/ene_security_3/ene_security_3"] = "units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard",
@@ -191,7 +191,7 @@ local enemy_replacements = {
 -- Sniper:
 --		["units/pd2_dlc_spa/characters/ene_sniper_3/ene_sniper_3"] = 
 	
--- Bosses.
+-- Bosses. Now handled via direct reference in charactertweakdata.
 -- Commissar.
 -- Sosa.
 -- Unarmored Sosa.
@@ -202,7 +202,7 @@ local enemy_replacements = {
 -- Undercover (RvD 1).
 -- FBI Boss (Hoxbreak 2).
 	
--- Headless TitanDozer.	There might be multiple specified for different heists.
+-- Headless TitanDozer.	There are be multiple specified for different heists- further inquiry needed.
 	
 -- Headless Zealdozer.
 --		["units/pd2_dlc_help/characters/ene_zeal_bulldozer_halloween/ene_zeal_bulldozer_halloween"]	
