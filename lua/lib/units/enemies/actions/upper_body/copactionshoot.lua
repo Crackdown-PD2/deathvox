@@ -469,8 +469,8 @@ function CopActionShoot:anim_clbk_melee_strike()
 		origin = head_pos,
 		col_ray = {
 			body = not autotarget and self._attention.unit.body and self._attention.unit:body("body") or nil, --need the Idstring for sentries for this to work against them without crashing
-			position = not autotarget and mvector3.copy(u_head_pos) or (head_pos + fwd * 50),
-			ray = not autotarget and mvector3.copy(u_head_pos - head_pos) or mvector3.copy(target_vec)
+			position = not autotarget and u_head_pos and mvector3.copy(u_head_pos) or (head_pos + fwd * 50),
+			ray = not autotarget and u_head_pos and mvector3.copy(u_head_pos - head_pos) or mvector3.copy(target_vec)
 		}
 	}
 	local defense_data = (autotarget or knock_shield) and self._attention.unit:character_damage():damage_melee(action_data) or self._attention.unit:character_damage():damage_bullet(action_data)
