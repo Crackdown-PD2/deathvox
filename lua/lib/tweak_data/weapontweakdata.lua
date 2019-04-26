@@ -193,20 +193,20 @@ function WeaponTweakData:init(tweak_data)
 		}
 	}
 	self._gun_list_cd = {}
-	self.deathvox_guard_pistol = deep_clone(self.packrat_npc)
+	self.deathvox_guard_pistol = deep_clone(self.c45_npc)
 	self.deathvox_medic_pistol = deep_clone(self.raging_bull_npc)
-	self.deathvox_light_ar = deep_clone(self.aug_npc)
-	self.deathvox_heavy_ar = deep_clone(self.fal_npc)
+	self.deathvox_light_ar = deep_clone(self.g36_npc)
+	self.deathvox_heavy_ar = deep_clone(self.m4_npc)
 	self.deathvox_shotgun_light = deep_clone(self.r870_npc)
-	self.deathvox_shotgun_heavy = deep_clone(self.ben_npc)
+	self.deathvox_shotgun_heavy = deep_clone(self.benelli_npc)
 	self.deathvox_sniper = deep_clone(self.wa2000_crew)
-	self.deathvox_medicdozer_smg = deep_clone(self.ump_npc)
+	self.deathvox_medicdozer_smg = deep_clone(self.mp5_npc)
 	self.deathvox_grenadier = deep_clone(self.m32_crew)
 	
 	self.deathvox_lmgdozer = deep_clone(self.m249_npc)
-	self.deathvox_cloaker = deep_clone(self.ump_npc)
+	self.deathvox_cloaker = deep_clone(self.mp5_tactical_npc)
 	self.deathvox_blackdozer = deep_clone(self.saiga_npc)
-	self.deathvox_greendozer = deep_clone(self.r870_npn)
+	self.deathvox_greendozer = deep_clone(self.r870_npc)
 
 	self.deathvox_cop_pistol = deep_clone(self.c45_npc)
 	table.insert(self._gun_list_cd, "deathvox_cop_pistol")
@@ -325,7 +325,6 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_shotgun_heavy.DAMAGE = 15 -- DEPRECATED due to use of damage table.
 	self.deathvox_shotgun_heavy.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_shotgun_heavy.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug"
-	self.deathvox_shotgun_heavy.auto.fire_rate = 0.14
 	self.deathvox_shotgun_heavy.CLIP_AMMO_MAX = 8
 	self.deathvox_shotgun_heavy.NR_CLIPS_MAX = 4
 	self.deathvox_shotgun_heavy.hold = "rifle"
