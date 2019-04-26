@@ -8,7 +8,7 @@ function CharacterTweakData:init(tweak_data)
 	self:_init_deathvox(presets)
 end
 
---[[function CharacterTweakData:_create_table_structure()
+function CharacterTweakData:_create_table_structure()
 	self.weap_ids = {
 		"beretta92",
 		"c45",
@@ -103,7 +103,7 @@ end
 		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_mp5/wpn_npc_mp5"),
 		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_beretta92/wpn_npc_beretta92")			
 	}
-end]]--
+end
 
 function CharacterTweakData:get_ai_group_type()
 	local group_to_use = "zeal" 		
