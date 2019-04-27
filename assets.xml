@@ -483,7 +483,14 @@
 		<file :name="wpn_npc_r870_dozer/wpn_npc_r870_dozer.model" force="false"/>
 		<file :name="wpn_npc_r870_dozer/wpn_npc_r870_dozer.unit" load="true"/>
 		<file :name="wpn_npc_r870_dozer/r870_df.texture" force="false"/>
-		<!--removed CD med bronco due to infinite loading-->			
+		<!--CD med bronco-->			
+		<file :name="wpn_npc_raging_bull_med/wpn_npc_raging_bull_med.material_config" force="false"/>		
+		<file :name="wpn_npc_raging_bull_med/wpn_npc_raging_bull_med_contour.material_config" force="false"/>
+		<file :name="wpn_npc_raging_bull_med/wpn_npc_raging_bull_med.object" force="false"/>
+		<file :name="wpn_npc_raging_bull_med/wpn_npc_raging_bull_med.cooked_physics" force="false"/>
+		<file :name="wpn_npc_raging_bull_med/wpn_npc_raging_bull_med.model" force="false"/>
+		<file :name="wpn_npc_raging_bull_med/wpn_npc_raging_bull_med.unit" load="true"/>
+		<file :name="wpn_npc_raging_bull_med/bull_df.texture" force="false"/>		
 		<!--ump for medic dozers-->
 		<file :name="wpn_npc_ump_meddozer/wpn_npc_ump_meddozer.material_config" force="false"/>		
 		<file :name="wpn_npc_ump_meddozer/wpn_npc_ump_meddozer_contour.material_config" force="false"/>
