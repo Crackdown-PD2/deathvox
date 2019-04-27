@@ -54,7 +54,9 @@ function CharacterTweakData:_create_table_structure()
 		"deathvox_cop_pistol",
 		"deathvox_cop_revolver",
 		"deathvox_cop_smg",
-		"deathvox_guard_pistol"
+		"deathvox_guard_pistol",
+		"deathvox_grenadier",
+		"deathvox_sniper"
 	}
 	self.weap_unit_names = {
 		Idstring("units/payday2/weapons/wpn_npc_beretta92/wpn_npc_beretta92"),
@@ -101,7 +103,9 @@ function CharacterTweakData:_create_table_structure()
 		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_c45/wpn_npc_c45"),
 		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_raging_bull/wpn_npc_raging_bull"),
 		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_mp5/wpn_npc_mp5"),
-		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_beretta92/wpn_npc_beretta92")			
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_beretta92/wpn_npc_beretta92"),
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_grenadier"),
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_sniper")	
 	}
 end
 
