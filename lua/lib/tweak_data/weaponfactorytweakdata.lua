@@ -82,6 +82,7 @@ function WeaponFactoryTweakData:init(...)
 		"wpn_fps_sho_ben_s_collapsable"
 	}
     ]]--
+	
 	self.wpn_deathvox_sniper = deep_clone(self.wpn_fps_snp_wa2000_npc)
 	self.wpn_deathvox_sniper.default_blueprint = {
 		"wpn_fps_snp_wa2000_body_standard",
@@ -162,11 +163,13 @@ function WeaponFactoryTweakData:init(...)
 	self.wpn_deathvox_heavy_ar.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_heavy_ar"
 	self.wpn_deathvox_shotgun_light.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_shotgun_light"
 	self.wpn_deathvox_shotgun_heavy.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_shotgun_heavy"
+    	self.wpn_deathvox_medicdozer_smg.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_medicdozer_smg"]]--
+	
 	self.wpn_deathvox_sniper.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_sniper"
-	self.wpn_deathvox_medicdozer_smg.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_medicdozer_smg"
+
 	self.wpn_deathvox_grenadier.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_grenadier"
 	
-	self.wpn_deathvox_cloaker.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_cloaker"
+	--[[self.wpn_deathvox_cloaker.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_cloaker"
 	self.wpn_deathvox_greendozer.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_greendozer"
 	self.wpn_deathvox_blackdozer.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_blackdozer"
 	self.wpn_deathvox_lmgdozer.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_lmgdozer"]]--
