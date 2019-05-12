@@ -199,7 +199,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_heavy_ar = deep_clone(self.m4_npc)
 	self.deathvox_shotgun_light = deep_clone(self.r870_npc)
 	self.deathvox_shotgun_heavy = deep_clone(self.benelli_npc)
-	self.deathvox_sniper = deep_clone(self.wa2000_crew)
+	self.deathvox_sniper = deep_clone(self.m14_sniper_npc)
 	self.deathvox_medicdozer_smg = deep_clone(self.mp5_npc)
 	self.deathvox_grenadier = deep_clone(self.m32_crew)
 	
@@ -337,6 +337,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_shotgun_heavy.anim_usage = "is_shotgun_pump"
 	table.insert(self._gun_list_cd, "deathvox_shotgun_heavy")
 
+	self.deathvox_sniper.categories = {"snp"}
 	self.deathvox_sniper.sounds.prefix = "sniper_npc"
 	self.deathvox_sniper.use_data.selection_index = 2
 	self.deathvox_sniper.DAMAGE = 24 -- DEPRECATED due to use of damage table.
@@ -345,18 +346,15 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_sniper.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
 	self.deathvox_sniper.CLIP_AMMO_MAX = 10
 	self.deathvox_sniper.NR_CLIPS_MAX = 5
-	self.deathvox_sniper.pull_magazine_during_reload = "rifle"
-	self.deathvox_sniper.auto.fire_rate = 0.5
-	self.deathvox_sniper.hold = {
-		"bullpup",
-		"rifle"
-	}
+	--self.deathvox_sniper.pull_magazine_during_reload = "rifle"
+	--self.deathvox_sniper.auto.fire_rate = 0.5
 	self.deathvox_sniper.alert_size = 5000
 	self.deathvox_sniper.suppression = 1	
 	self.deathvox_sniper.armor_piercing = true
 	self.deathvox_sniper.usage = "is_assault_sniper"
-	self.deathvox_sniper.anim_usage = "is_bullpup"
-	self.deathvox_sniper.disable_sniper_laser = true
+	self.deathvox_sniper.anim_usage = "is_rifle"
+    self.deathvox_sniper.use_laser = false
+    self.deathvox_sniper.disable_sniper_laser = true	
 	table.insert(self._gun_list_cd, "deathvox_sniper")
 	
 	self.deathvox_medicdozer_smg.sounds.prefix = "polymer_npc"
@@ -1327,6 +1325,10 @@ function WeaponTweakData:_set_sm_wish()
 	
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
 --	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
+	--Sniper Trail for Snipers
+	self.m14_sniper_npc.sniper_trail = true
+	self.deathvox_sniper.sniper_trail = true
+	
 	
 	self.mp5_npc.DAMAGE = 7.5	-- smg used by number of units. Map to cop smg.
 	self.mp9_npc.DAMAGE = 7.5	-- shield only.	Map to cop smg.
@@ -1342,7 +1344,7 @@ function WeaponTweakData:_set_sm_wish()
 	self.npc_melee.fists.damage = 4
 -- end goofball legacy code block.
 -- Begin CRACKDOWN Turret values.
-	
+
 	self.swat_van_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
 	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300
 	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3 -- base game value is 7.

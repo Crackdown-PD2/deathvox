@@ -105,7 +105,7 @@ function CharacterTweakData:_create_table_structure()
 		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_mp5/wpn_npc_mp5"),
 		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_beretta92/wpn_npc_beretta92"),
 		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_grenadier"),
-		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_sniper")	
+		Idstring("units/payday2/weapons/wpn_npc_sniper/wpn_npc_sniper")	
 	}
 end
 
@@ -2833,8 +2833,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper.steal_loot = nil
 	self.deathvox_sniper.rescue_hostages = false
 
-	self.deathvox_sniper.use_factory = true -- Use a factory weapon
-	self.deathvox_sniper.factory_weapon_id = {"wpn_deathvox_sniper"} -- should be laser and not tracer on diffs below CD.
+	--self.deathvox_sniper.use_factory = true -- Use a factory weapon
+	--self.deathvox_sniper.factory_weapon_id = {"wpn_deathvox_sniper"} -- should be laser and not tracer on diffs below CD.
 	self.deathvox_sniper.HEALTH_INIT = 15 
 	self.deathvox_sniper.headshot_dmg_mul = 3
 	self.deathvox_sniper.is_special_unit = "sniper"
@@ -3715,9 +3715,15 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.gensec = deep_clone(self.deathvox_guard)
 	
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
-
 	self.sniper = deep_clone(self.deathvox_sniper)
 	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	--sniper weapon BS pls dont touch - Evilbobarino
+	self.weap_unit_names[13] = Idstring("units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd")
+    --seriously please dont it will make me sad :<
+    self.deathvox_sniper.weapon.is_rifle.use_laser = false
+    self.sniper.weapon.is_rifle.use_laser = false
+    self.deathvox_sniper.disable_sniper_laser = true
+    self.sniper.weapon.disable_sniper_laser = true
 	
 	self:_multiply_all_speeds(1, 1)
 	self.spa_vip.HEALTH_INIT = 525

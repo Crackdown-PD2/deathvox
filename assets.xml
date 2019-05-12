@@ -418,12 +418,27 @@
 		<file :name="ene_deathvox_grenadier/ene_deathvox_grenadier.sequence_manager" force="false"/>
 	</group>
 
-	<!--M4 Taser-->
+	<!--M4 Taser and Snipers-->
 	<group name="units/payday2/weapons/">
 		<file :name="wpn_npc_m4_yellow/m4_yellow_nm.texture" force="true"/>	
 		<file :name="wpn_npc_m4_yellow/m4_yellow_df.texture" force="true"/>			
 		<file :name="wpn_npc_m4_yellow/wpn_npc_m4_yellow.material_config" force="true"/>					
-		<file :name="wpn_npc_m4_yellow/wpn_npc_m4_yellow.model" force="true"/>			
+		<file :name="wpn_npc_m4_yellow/wpn_npc_m4_yellow.model" force="true"/>		
+
+		<file :name="wpn_npc_sniper_cd/wpn_npc_sniper_cd.material_config" force="false"/>		
+		<file :name="wpn_npc_sniper_cd/wpn_npc_sniper_cd.object" force="false"/>
+		<file :name="wpn_npc_sniper_cd/wpn_npc_sniper_cd.cooked_physics" force="false"/>
+		<file :name="wpn_npc_sniper_cd/wpn_npc_sniper_cd.model" force="false"/>
+		<file :name="wpn_npc_sniper_cd/wpn_npc_sniper_cd.unit" load="true"/>
+		<file :name="wpn_npc_sniper_cd/wpn_npc_sniper_p1_df.texture" force="false"/>	
+		
+		<file :name="wpn_npc_sniper/wpn_npc_sniper.material_config" force="true"/>		
+		<file :name="wpn_npc_sniper/wpn_npc_sniper_contour.material_config" force="true"/>		
+		<file :name="wpn_npc_sniper/wpn_npc_sniper.object" force="true"/>
+		<file :name="wpn_npc_sniper/wpn_npc_sniper.model" force="true"/>
+		<file :name="wpn_npc_sniper/wpn_npc_sniper.unit" force="true" load="true"/>
+		<file :name="wpn_npc_sniper/wpn_npc_sniper_p1_df.texture" force="true"/>	
+		<file :name="wpn_npc_sniper/material_flare_il.texture" force="false"/>		
 	</group>
 	
 	<group name="units/payday2/characters/">
@@ -519,7 +534,6 @@
 		<file :name="wpn_npc_raging_bull/wpn_npc_raging_bull.unit" load="true"/>
 		<file :name="wpn_npc_saiga/wpn_npc_saiga.unit" load="true"/>	
 	</group>
-
 	<file name="effects/particles/explosions/cs_grenade_smoke.effect" load="false" force="true"/>
 	<file name="effects/particles/weapons/trail_dv_sniper.effect" load="false" force="true"/>
 	<file name="effects/pd2_mod_gageammo/particles/character/flashlight_ss.effect" load="false" force="true"/>

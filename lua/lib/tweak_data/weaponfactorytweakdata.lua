@@ -81,7 +81,7 @@ function WeaponFactoryTweakData:init(...)
 		"wpn_fps_sho_ben_fg_standard",
 		"wpn_fps_sho_ben_s_collapsable"
 	}
-    ]]--
+    
 	
 	self.wpn_deathvox_sniper = deep_clone(self.wpn_fps_snp_wa2000_npc)
 	self.wpn_deathvox_sniper.default_blueprint = {
@@ -92,7 +92,7 @@ function WeaponFactoryTweakData:init(...)
 		"wpn_fps_upg_fl_ass_peq15",
 		"wpn_fps_snp_wa2000_g_stealth",
 		"wpn_fps_upg_o_spot"
-	}
+	}]]--
     
 	self.wpn_deathvox_grenadier = deep_clone(self.wpn_fps_gre_m32_npc)
 	self.wpn_deathvox_grenadier.default_blueprint = {
@@ -165,7 +165,7 @@ function WeaponFactoryTweakData:init(...)
 	self.wpn_deathvox_shotgun_heavy.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_shotgun_heavy"
     	self.wpn_deathvox_medicdozer_smg.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_medicdozer_smg"]]--
 	
-	self.wpn_deathvox_sniper.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_sniper"
+	--self.wpn_deathvox_sniper.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_sniper"
 
 	self.wpn_deathvox_grenadier.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_grenadier"
 	
