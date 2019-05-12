@@ -430,4 +430,20 @@ function CopMovement:damage_clbk(my_unit, damage_info)
 			self._queued_actions = {}
 		end
 	end
+	
+	
+		function CopMovement:play_redirect(redirect_name, at_time)
+		--Not pretty but groupai didn't like me checking unit slots
+		--stolen from SC stops hosatges using greande throw anims
+		if redirect_name == "throw_grenade" then 
+			if self._unit:in_slot(16) or self._unit:in_slot(22) then	
+				return 
+			end
+		end
+		
+		local result = self._unit:play_redirect(Idstring(redirect_name), at_time)
+		
+
+		return result ~= Idstring("") and result
+	end
 end

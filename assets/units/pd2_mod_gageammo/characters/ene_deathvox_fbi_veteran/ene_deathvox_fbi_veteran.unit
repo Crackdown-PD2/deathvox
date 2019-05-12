@@ -12,7 +12,7 @@
 		<extension name="unit_data" class="ScriptUnitData" />
 		<extension name="base" class="CopBase" >
 			<var name="_tweak_table" value="deathvox_fbi_veteran" />
-			<var name="_default_weapon_id" value="m4" />
+			<var name="_default_weapon_id" value="deathvox_heavy_ar" />
 		</extension>
 		<extension name="inventory" class="CopInventory" />
 		<extension name="brain" class="CopBrain" />

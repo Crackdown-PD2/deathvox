@@ -14,8 +14,8 @@
 		<extension name="unit_data" class="ScriptUnitData" />
 		<extension name="base" class="HuskCopBase" >
 			<var name="can_be_marked" value="true" />
-			<var name="_tweak_table" value="spooc" />
-			<var name="_default_weapon_id" value="mp5_tactical" />
+			<var name="_tweak_table" value="deathvox_cloaker" />
+			<var name="_default_weapon_id" value="deathvox_cloaker" />
 		</extension>
 		<extension name="inventory" class="HuskCopInventory" />
 		<extension name="brain" class="HuskCopBrain" />

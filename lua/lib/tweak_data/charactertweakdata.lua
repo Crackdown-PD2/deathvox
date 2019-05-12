@@ -8,6 +8,107 @@ function CharacterTweakData:init(tweak_data)
 	self:_init_deathvox(presets)
 end
 
+function CharacterTweakData:_create_table_structure()
+	self.weap_ids = {
+		"beretta92",
+		"c45",
+		"raging_bull",
+		"m4",
+		"m4_yellow",
+		"ak47",
+		"r870",
+		"mossberg",
+		"mp5",
+		"mp5_tactical",
+		"mp9",
+		"mac11",
+		"m14_sniper_npc",
+		"saiga",
+		"m249",
+		"benelli",
+		"g36",
+		"ump",
+		"scar_murky",
+		"rpk_lmg",
+		"svd_snp",
+		"akmsu_smg",
+		"asval_smg",
+		"sr2_smg",
+		"ak47_ass",
+		"x_c45",
+		"sg417",
+		"svdsil_snp",
+		"mini",
+		"heavy_zeal_sniper",
+		"smoke",
+		"deathvox_light_ar",
+		"deathvox_heavy_ar",
+		"deathvox_shotgun_light",
+		"deathvox_shotgun_heavy",
+		"deathvox_medic_pistol",
+		"deathvox_cloaker",
+		"deathvox_greendozer",
+		"deathvox_blackdozer",
+		"deathvox_lmgdozer",
+		"deathvox_medicdozer_smg",
+		"deathvox_cop_pistol",
+		"deathvox_cop_revolver",
+		"deathvox_cop_smg",
+		"deathvox_guard_pistol",
+		"deathvox_grenadier",
+		"deathvox_sniper"
+	}
+	self.weap_unit_names = {
+		Idstring("units/payday2/weapons/wpn_npc_beretta92/wpn_npc_beretta92"),
+		Idstring("units/payday2/weapons/wpn_npc_c45/wpn_npc_c45"),
+		Idstring("units/payday2/weapons/wpn_npc_raging_bull/wpn_npc_raging_bull"),
+		Idstring("units/payday2/weapons/wpn_npc_m4/wpn_npc_m4"),
+		Idstring("units/payday2/weapons/wpn_npc_m4_yellow/wpn_npc_m4_yellow"),
+		Idstring("units/payday2/weapons/wpn_npc_ak47/wpn_npc_ak47"),
+		Idstring("units/payday2/weapons/wpn_npc_r870/wpn_npc_r870"),
+		Idstring("units/payday2/weapons/wpn_npc_sawnoff_shotgun/wpn_npc_sawnoff_shotgun"),
+		Idstring("units/payday2/weapons/wpn_npc_mp5/wpn_npc_mp5"),
+		Idstring("units/payday2/weapons/wpn_npc_mp5_tactical/wpn_npc_mp5_tactical"),
+		Idstring("units/payday2/weapons/wpn_npc_smg_mp9/wpn_npc_smg_mp9"),
+		Idstring("units/payday2/weapons/wpn_npc_mac11/wpn_npc_mac11"),
+		Idstring("units/payday2/weapons/wpn_npc_sniper/wpn_npc_sniper"),
+		Idstring("units/payday2/weapons/wpn_npc_saiga/wpn_npc_saiga"),
+		Idstring("units/payday2/weapons/wpn_npc_lmg_m249/wpn_npc_lmg_m249"),
+		Idstring("units/payday2/weapons/wpn_npc_benelli/wpn_npc_benelli"),
+		Idstring("units/payday2/weapons/wpn_npc_g36/wpn_npc_g36"),
+		Idstring("units/payday2/weapons/wpn_npc_ump/wpn_npc_ump"),
+		Idstring("units/payday2/weapons/wpn_npc_scar_murkywater/wpn_npc_scar_murkywater"),
+		Idstring("units/pd2_dlc_mad/weapons/wpn_npc_rpk/wpn_npc_rpk"),
+		Idstring("units/pd2_dlc_mad/weapons/wpn_npc_svd/wpn_npc_svd"),
+		Idstring("units/pd2_dlc_mad/weapons/wpn_npc_akmsu/wpn_npc_akmsu"),
+		Idstring("units/pd2_dlc_mad/weapons/wpn_npc_asval/wpn_npc_asval"),
+		Idstring("units/pd2_dlc_mad/weapons/wpn_npc_sr2/wpn_npc_sr2"),
+		Idstring("units/pd2_dlc_mad/weapons/wpn_npc_ak47/wpn_npc_ak47"),
+		Idstring("units/payday2/weapons/wpn_npc_c45/wpn_npc_x_c45"),
+		Idstring("units/pd2_dlc_chico/weapons/wpn_npc_sg417/wpn_npc_sg417"),
+		Idstring("units/pd2_dlc_spa/weapons/wpn_npc_svd_silenced/wpn_npc_svd_silenced"),
+		Idstring("units/pd2_dlc_drm/weapons/wpn_npc_mini/wpn_npc_mini"),
+		Idstring("units/pd2_dlc_drm/weapons/wpn_npc_heavy_zeal_sniper/wpn_npc_heavy_zeal_sniper"),
+		Idstring("units/pd2_dlc_uno/weapons/wpn_npc_smoke/wpn_npc_smoke"),
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_s553/wpn_npc_s553"),
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_m4/wpn_npc_m4"),
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_r870/wpn_npc_r870"),
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_benelli/wpn_npc_benelli"),
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_raging_bull_med/wpn_npc_raging_bull_med"),
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_mp5_tactical/wpn_npc_mp5_tactical"),
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_r870_dozer/wpn_npc_r870_dozer"),
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_saiga/wpn_npc_saiga"),
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_lmg_m249/wpn_npc_lmg_m249"),
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_ump_meddozer/wpn_npc_ump_meddozer"),
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_c45/wpn_npc_c45"),
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_raging_bull/wpn_npc_raging_bull"),
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_mp5/wpn_npc_mp5"),
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_beretta92/wpn_npc_beretta92"),
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_grenadier"),
+		Idstring("units/payday2/weapons/wpn_npc_sniper/wpn_npc_sniper")	
+	}
+end
+
 function CharacterTweakData:get_ai_group_type()
 	local group_to_use = "zeal" 		
 						
@@ -42,6 +143,12 @@ function CharacterTweakData:get_ai_group_type()
 	map_faction_override["dinner"] = "classic"
 	map_faction_override["man"] = "classic"
 	map_faction_override["nmh"] = "classic"
+	-- Classics also as NYPD 
+	map_faction_override["spa"] = "classic"
+	map_faction_override["brb"] = "classic"
+	-- Classic overrides for holdout.
+	map_faction_override["skm_run"] = "classic"
+	map_faction_override["skm_red2"] = "classic"	
 	-- whurr's map edit faction overrides begin here.
 	map_faction_override["bridge"] = "classic"
 	map_faction_override["apartment"] = "classic"
@@ -113,6 +220,25 @@ function CharacterTweakData:_presets(tweak_data)
             aggressive = true,
             follow_me = true,
             clear_whisper = true,
+            look_for_angle = true,
+            flash_grenade = true,
+            smoke = true
+        },
+        geeeeeman = {
+            follow_me = true,
+            clear = true,
+            ready = true,
+            contact = true,
+            suppress = true,
+            smoke = true,
+            push = true,
+            open_fire = true,
+            retreat = true,
+            deathguard = true,
+            go_go = true,
+            aggressive = true,
+            follow_me = true,
+            --clear_whisper = true, gmen shouldnt have this
             look_for_angle = true,
             flash_grenade = true,
             smoke = true
@@ -2428,8 +2554,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard.dodge = presets.dodge.deathvox_guard -- should be poor on diffs below CD.
 	self.deathvox_guard.deathguard = true 
 	self.deathvox_guard.no_arrest = false 
-	self.deathvox_guard.factory_weapon_id = {"wpn_deathvox_guard_pistol"}
-	self.deathvox_guard.use_factory = true
+	--self.deathvox_guard.factory_weapon_id = {"wpn_deathvox_guard_pistol"}
+	self.deathvox_guard.use_factory = false
 	self.deathvox_guard.HEALTH_INIT = 15
 	self.deathvox_guard.headshot_dmg_mul = 3
 	self.deathvox_guard.weapon = deep_clone(presets.weapon.deathvox)
@@ -2447,6 +2573,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_gman.dodge = presets.dodge.deathvox_guard
 	self.deathvox_gman.no_arrest = false -- causes too many issues.
 	self.deathvox_gman.die_sound_event = "x01a_any_3p" -- pain lines are death lines for these units.
+	self.deathvox_gman.chatter = presets.enemy_chatter.geeeeeman --stops them using clear whisper
 	table.insert(self._enemy_list, "deathvox_gman")
 	local is_classic
 	if self:get_ai_group_type() == "classic" then
@@ -2472,15 +2599,15 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightar.steal_loot = true
 	self.deathvox_lightar.rescue_hostages = true
 	self.deathvox_lightar.weapon = deep_clone(presets.weapon.deathvox)
-	self.deathvox_lightar.factory_weapon_id = {"wpn_deathvox_light_ar"}
-	self.deathvox_lightar.use_factory = true
+	--self.deathvox_lightar.factory_weapon_id = {"wpn_deathvox_light_ar"}
+	self.deathvox_lightar.use_factory = false
 	self.deathvox_lightar.HEALTH_INIT = 48
 	self.deathvox_lightar.headshot_dmg_mul = 3
 	self.deathvox_lightar.access = "any"
 	if is_classic then
-		self.deathvox_lightar.custom_voicework = "pdth"
+		self.deathvox_lightar.custom_voicework = nil
 	else
-		self.deathvox_lightar.custom_voicework = "light"
+		self.deathvox_lightar.custom_voicework = nil
 	end
 	table.insert(self._enemy_list, "deathvox_lightar")
 	
@@ -2504,15 +2631,15 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightshot.steal_loot = true
 	self.deathvox_lightshot.rescue_hostages = true
 	self.deathvox_lightshot.weapon = deep_clone(presets.weapon.deathvox)
-	self.deathvox_lightshot.factory_weapon_id = {"wpn_deathvox_shotgun_light"}
-	self.deathvox_lightshot.use_factory = true
+	--self.deathvox_lightshot.factory_weapon_id = {"wpn_deathvox_shotgun_light"}
+	self.deathvox_lightshot.use_factory = false
 	self.deathvox_lightshot.HEALTH_INIT = 48
 	self.deathvox_lightshot.headshot_dmg_mul = 3
 	self.deathvox_lightshot.access = "any"
 	if is_classic then
-		self.deathvox_lightshot.custom_voicework = "pdth"
+		self.deathvox_lightshot.custom_voicework = nil
 	else
-		self.deathvox_lightshot.custom_voicework = "light"
+		self.deathvox_lightshot.custom_voicework = nil
 	end
 	table.insert(self._enemy_list, "deathvox_lightshot")
 	
@@ -2537,16 +2664,16 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyar.steal_loot = true
 	self.deathvox_heavyar.rescue_hostages = true
 	self.deathvox_heavyar.weapon = deep_clone(presets.weapon.deathvox)
-	self.deathvox_heavyar.factory_weapon_id = {"wpn_deathvox_heavy_ar"}
-	self.deathvox_heavyar.use_factory = true
+	--self.deathvox_heavyar.factory_weapon_id = {"wpn_deathvox_heavy_ar"}
+	self.deathvox_heavyar.use_factory = false
 	self.deathvox_heavyar.HEALTH_INIT = 101 -- new with final 2017 pass.
 	self.deathvox_heavyar.headshot_dmg_mul = 3
 	self.deathvox_heavyar.damage.explosion_damage_mul = 0.7 -- may require curving on lower diffs.
 	self.deathvox_heavyar.access = "any"
 	if is_classic then
-		self.deathvox_heavyar.custom_voicework = "pdth"
+		self.deathvox_heavyar.custom_voicework = nil
 	else
-		self.deathvox_heavyar.custom_voicework = "heavy"
+		self.deathvox_heavyar.custom_voicework = nil
 	end
 	table.insert(self._enemy_list, "deathvox_heavyar")
 	
@@ -2571,16 +2698,16 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyshot.steal_loot = true
 	self.deathvox_heavyshot.rescue_hostages = true
 	self.deathvox_heavyshot.weapon = deep_clone(presets.weapon.deathvox)
-	self.deathvox_heavyshot.factory_weapon_id = {"wpn_deathvox_shotgun_heavy"}
-	self.deathvox_heavyshot.use_factory = true
+	--self.deathvox_heavyshot.factory_weapon_id = {"wpn_deathvox_shotgun_heavy"}
+	self.deathvox_heavyshot.use_factory = false
 	self.deathvox_heavyshot.HEALTH_INIT = 101 -- new with final 2017 pass.
 	self.deathvox_heavyshot.headshot_dmg_mul = 3
 	self.deathvox_heavyshot.damage.explosion_damage_mul = 0.7 -- may require curving on lower diffs.
 	self.deathvox_heavyshot.access = "any"
 	if is_classic then
-		self.deathvox_heavyshot.custom_voicework = "pdth"
+		self.deathvox_heavyshot.custom_voicework = nil
 	else
-		self.deathvox_heavyshot.custom_voicework = "heavy"
+		self.deathvox_heavyshot.custom_voicework = nil
 	end
 	table.insert(self._enemy_list, "deathvox_heavyshot")
 	
@@ -2631,9 +2758,9 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic.steal_loot = nil
 	self.deathvox_medic.rescue_hostages = false
 	self.deathvox_medic.weapon = deep_clone(presets.weapon.deathvox)
-	self.deathvox_medic.use_factory = true
+	self.deathvox_medic.use_factory = false
 	self.deathvox_medic.dv_medic_heal = true -- dont touch, makes him use the death vox healing. Note should be disabled for lower diffs.
-	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_medic_pistol"} -- Should be light AR for diffs below CD.
+	--self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_medic_pistol"} -- Should be light AR for diffs below CD.
 	self.deathvox_medic.HEALTH_INIT = 48
 	self.deathvox_medic.headshot_dmg_mul = 3
 	self.deathvox_medic.is_special_unit = "medic"
@@ -2684,8 +2811,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker.no_arrest = true
 	self.deathvox_cloaker.steal_loot = nil
 	self.deathvox_cloaker.rescue_hostages = false
-	self.deathvox_cloaker.factory_weapon_id = {"wpn_deathvox_cloaker"}
-	self.deathvox_cloaker.use_factory = true
+	--self.deathvox_cloaker.factory_weapon_id = {"wpn_deathvox_cloaker"}
+	self.deathvox_cloaker.use_factory = false
 	self.deathvox_cloaker.is_special_unit = "spooc"
 	self.deathvox_cloaker.access = "any"
 	self.deathvox_cloaker.no_retreat = false
@@ -2706,8 +2833,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper.steal_loot = nil
 	self.deathvox_sniper.rescue_hostages = false
 
-	self.deathvox_sniper.use_factory = true -- Use a factory weapon
-	self.deathvox_sniper.factory_weapon_id = {"wpn_deathvox_sniper"} -- should be laser and not tracer on diffs below CD.
+	--self.deathvox_sniper.use_factory = true -- Use a factory weapon
+	--self.deathvox_sniper.factory_weapon_id = {"wpn_deathvox_sniper"} -- should be laser and not tracer on diffs below CD.
 	self.deathvox_sniper.HEALTH_INIT = 15 
 	self.deathvox_sniper.headshot_dmg_mul = 3
 	self.deathvox_sniper.is_special_unit = "sniper"
@@ -2746,7 +2873,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.access = "walk"
 	self.deathvox_tank.no_retreat = false
 	if is_classic then
-		self.deathvox_tank.custom_voicework = "pdthdozer"
+		self.deathvox_tank.custom_voicework = nil
 	end
 
 	self.deathvox_guarddozer = deep_clone(self.security)
@@ -2775,31 +2902,31 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_guarddozer")
 	
 	self.deathvox_greendozer = deep_clone(self.deathvox_tank)
-	self.deathvox_greendozer.use_factory = true -- Use a factory weapon
-	self.deathvox_greendozer.factory_weapon_id = {"wpn_deathvox_greendozer"} 
+	self.deathvox_greendozer.use_factory = false -- Use a factory weapon
+	--self.deathvox_greendozer.factory_weapon_id = {"wpn_deathvox_greendozer"} 
 	self.deathvox_greendozer.access = "tank"
 	table.insert(self._enemy_list, "deathvox_greendozer")
 
 	self.deathvox_blackdozer = deep_clone(self.deathvox_tank)
-	self.deathvox_blackdozer.use_factory = true -- Use a factory weapon
-	self.deathvox_blackdozer.factory_weapon_id = {"wpn_deathvox_blackdozer"} 
+	self.deathvox_blackdozer.use_factory = false -- Use a factory weapon
+	--self.deathvox_blackdozer.factory_weapon_id = {"wpn_deathvox_blackdozer"} 
 	self.deathvox_blackdozer.access = "tank"
 	table.insert(self._enemy_list, "deathvox_blackdozer")
 
 	self.deathvox_lmgdozer = deep_clone(self.deathvox_tank)
-	self.deathvox_lmgdozer.use_factory = true -- Use a factory weapon
-	self.deathvox_lmgdozer.factory_weapon_id = {"wpn_deathvox_lmgdozer"} 
+	self.deathvox_lmgdozer.use_factory = false -- Use a factory weapon
+	--self.deathvox_lmgdozer.factory_weapon_id = {"wpn_deathvox_lmgdozer"} 
 	self.deathvox_lmgdozer.access = "tank"
 	table.insert(self._enemy_list, "deathvox_lmgdozer")
 	
 	self.deathvox_medicdozer = deep_clone(self.deathvox_tank)
 	self.deathvox_medicdozer.tags = {"tank", "medic"}
-	self.deathvox_medicdozer.use_factory = true -- Use a factory weapon
-	self.deathvox_medicdozer.factory_weapon_id = {"wpn_deathvox_heavy_ar"} 
+	self.deathvox_medicdozer.use_factory = false -- Use a factory weapon
+	--self.deathvox_medicdozer.factory_weapon_id = {"wpn_deathvox_heavy_ar"} 
 	self.deathvox_medicdozer.dv_medic_heal = true -- don't touch, makes him use the death vox healing
-	self.deathvox_medicdozer.custom_voicework = "medicdozer"
+	--self.deathvox_medicdozer.custom_voicework = "medicdozer"
 	self.deathvox_medicdozer.access = "tank"
-	self.deathvox_medicdozer.disable_medic_heal_voice = true
+	--self.deathvox_medicdozer.disable_medic_heal_voice = true
 	table.insert(self._enemy_list, "deathvox_medicdozer")
 
 	self.deathvox_grenadier = deep_clone(presets.base)
@@ -2873,27 +3000,27 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cop.detection = presets.detection.deathvox
 
 	self.deathvox_cop_pistol = deep_clone(self.deathvox_cop)
-	self.deathvox_cop_pistol.use_factory = true
-	self.deathvox_cop_pistol.factory_weapon_id = {"wpn_deathvox_cop_pistol"}
+	self.deathvox_cop_pistol.use_factory = false
+	--self.deathvox_cop_pistol.factory_weapon_id = {"wpn_deathvox_cop_pistol"}
 	self.deathvox_cop_pistol.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_cop_pistol")
 	
 	self.deathvox_cop_revolver = deep_clone(self.deathvox_cop)
-	self.deathvox_cop_revolver.use_factory = true
-	self.deathvox_cop_revolver.factory_weapon_id = {"wpn_deathvox_cop_revolver"}
+	self.deathvox_cop_revolver.use_factory = false
+	--self.deathvox_cop_revolver.factory_weapon_id = {"wpn_deathvox_cop_revolver"}
 	self.deathvox_cop_revolver.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_cop_revolver")
 	
 	self.deathvox_cop_smg = deep_clone(self.deathvox_cop)
 	self.deathvox_cop_smg.HEALTH_INIT = 22 -- based on flak jacket model, revise if incorrect.
-	self.deathvox_cop_smg.use_factory = true
-	self.deathvox_cop_smg.factory_weapon_id = {"wpn_deathvox_cop_smg"}
+	self.deathvox_cop_smg.use_factory = false
+	--self.deathvox_cop_smg.factory_weapon_id = {"wpn_deathvox_cop_smg"}
 	self.deathvox_cop_smg.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_cop_smg")
 	
 	self.deathvox_cop_shotgun = deep_clone(self.deathvox_cop)
-	self.deathvox_cop_shotgun.use_factory = true
-	self.deathvox_cop_shotgun.factory_weapon_id = {"wpn_deathvox_cop_shotgun"}
+	self.deathvox_cop_shotgun.use_factory = false
+	--self.deathvox_cop_shotgun.factory_weapon_id = {"wpn_deathvox_cop_shotgun"}
 	self.deathvox_cop_shotgun.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_cop_shotgun")
 	
@@ -2901,8 +3028,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_fbi_rookie.dodge = presets.dodge.poor -- same on all diffs.
 	self.deathvox_fbi_rookie.suppression = presets.suppression.easy -- same on all diffs. cloned to all cop units.
 	self.deathvox_fbi_rookie.surrender = presets.surrender.easy -- same on all diffs. cloned to all cop units.
-	self.deathvox_fbi_rookie.use_factory = true
-	self.deathvox_fbi_rookie.factory_weapon_id = {"wpn_deathvox_cop_pistol"}
+	self.deathvox_fbi_rookie.use_factory = false
+	--self.deathvox_fbi_rookie.factory_weapon_id = {"wpn_deathvox_cop_pistol"}
 	self.deathvox_fbi_rookie.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_fbi_rookie")
 
@@ -2910,8 +3037,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_fbi_hrt.dodge = presets.dodge.athletic -- same on all diffs.
 	self.deathvox_fbi_hrt.suppression = presets.suppression.hard_agg -- same on all diffs.
 	self.deathvox_fbi_hrt.surrender = presets.surrender.hard -- same on all diffs.
-	self.deathvox_fbi_hrt.use_factory = true
-	self.deathvox_fbi_hrt.factory_weapon_id = {"wpn_deathvox_cop_smg"}
+	self.deathvox_fbi_hrt.use_factory = false
+	--self.deathvox_fbi_hrt.factory_weapon_id = {"wpn_deathvox_cop_smg"}
 	self.deathvox_fbi_hrt.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_fbi_hrt")
 	
@@ -2919,8 +3046,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_fbi_veteran.dodge = presets.dodge.athletic -- same on all diffs.
 	self.deathvox_fbi_veteran.suppression = nil -- same on all diffs.
 	self.deathvox_fbi_veteran.surrender = nil -- same on all diffs.
-	self.deathvox_fbi_veteran.use_factory = true
-	self.deathvox_fbi_veteran.factory_weapon_id = {"wpn_deathvox_heavy_ar"}
+	self.deathvox_fbi_veteran.use_factory = false
+	--self.deathvox_fbi_veteran.factory_weapon_id = {"wpn_deathvox_heavy_ar"}
 	self.deathvox_fbi_veteran.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_fbi_veteran")
 	
@@ -3027,7 +3154,7 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 	self.deathvox_medic.ignore_medic_revive_animation = false -- medic revive anim (all below CD)
 	self.deathvox_medic.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
 	self.deathvox_medic.dv_medic_heal = false -- dv_medic_heal to false (all below CD)
-	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
+	--self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
 	
 --taser - NORMAL
 --	set ignore medic revive animation to false (all below MH)
@@ -3135,7 +3262,7 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	self.deathvox_medic.ignore_medic_revive_animation = false -- medic revive anim (all below CD)
 	self.deathvox_medic.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
 	self.deathvox_medic.dv_medic_heal = false -- dv_medic_heal to false (all below CD)
-	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
+	--self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
 	
 --	taser - HARD
 --	set ignore medic revive animation to false (all below MH)
@@ -3235,7 +3362,7 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 	self.deathvox_medic.ignore_medic_revive_animation = false -- medic revive anim (all below CD)
 	self.deathvox_medic.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
 	self.deathvox_medic.dv_medic_heal = false -- dv_medic_heal to false (all below CD)
-	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
+	--self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
 	
 --	taser - VERY HARD
 --	set ignore medic revive animation to false (all below MH)
@@ -3336,7 +3463,7 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	self.deathvox_medic.ignore_medic_revive_animation = false -- medic revive anim (all below CD)
 	self.deathvox_medic.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
 	self.deathvox_medic.dv_medic_heal = false -- dv_medic_heal to false (all below CD)
-	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
+	--self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
 	
 --	taser - OVERKILL
 --	set ignore medic revive animation to false (all below MH)
@@ -3431,7 +3558,7 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self.deathvox_medic.ignore_medic_revive_animation = false -- medic revive anim (all below CD)
 	self.deathvox_medic.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
 	self.deathvox_medic.dv_medic_heal = false -- dv_medic_heal to false (all below CD)
-	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
+	--self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
 	
 --	taser - MAYHEM
 --	set dodge to heavy (on N/H, average on VH/OVK, athletic on MH/DW)
@@ -3522,7 +3649,7 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	self.deathvox_medic.ignore_medic_revive_animation = false -- medic revive anim (all below CD)
 	self.deathvox_medic.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
 	self.deathvox_medic.dv_medic_heal = false -- dv_medic_heal to false (all below CD)
-	self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
+	--self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_light_ar"} -- light AR (all below CD). Note uses weaponfactory.
 	
 --	taser - DEATH WISH
 --	set dodge to heavy (on N/H, average on VH/OVK, athletic on MH/DW)
@@ -3588,9 +3715,15 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.gensec = deep_clone(self.deathvox_guard)
 	
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
-
 	self.sniper = deep_clone(self.deathvox_sniper)
 	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	--sniper weapon BS pls dont touch - Evilbobarino
+	self.weap_unit_names[13] = Idstring("units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd")
+    --seriously please dont it will make me sad :<
+    self.deathvox_sniper.weapon.is_rifle.use_laser = false
+    self.sniper.weapon.is_rifle.use_laser = false
+    self.deathvox_sniper.disable_sniper_laser = true
+    self.sniper.weapon.disable_sniper_laser = true
 	
 	self:_multiply_all_speeds(1, 1)
 	self.spa_vip.HEALTH_INIT = 525

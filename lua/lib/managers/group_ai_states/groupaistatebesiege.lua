@@ -772,7 +772,7 @@ function GroupAIStateBesiege:_upd_assault_task()
 		        local current_objective = group.objective
 		            if current_objective.coarse_path then
 		                if not u_data.unit:sound():speaking(time) then
-	                        u_data.unit:sound():say("m01", true)
+	                        u_data.unit:sound():say("r01", true)
 		                end	
 	                end					   
 		        end	

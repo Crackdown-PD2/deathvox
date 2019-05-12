@@ -7,13 +7,14 @@
 		
 		<depends_on bnk="soundbanks/regular_vox" />
 		<depends_on unit="units/pd2_mod_gageammo/characters/ene_acc_zeal_swat_heavy_sg_helmet/ene_acc_zeal_swat_heavy_sg_helmet" />
+		
 	</dependencies>
 
 	<extensions>
 		<extension name="unit_data" class="ScriptUnitData" />
 		<extension name="base" class="CopBase" >
 			<var name="_tweak_table" value="deathvox_heavyshot" />
-			<var name="_default_weapon_id" value="r870" />
+			<var name="_default_weapon_id" value="deathvox_shotgun_heavy" />
 		</extension>
 		<extension name="inventory" class="CopInventory" />
 		<extension name="brain" class="CopBrain" />
