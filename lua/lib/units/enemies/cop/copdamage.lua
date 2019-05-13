@@ -157,6 +157,15 @@ function CopDamage:damage_explosion(attack_data)
 	end
 
 	result.ignite_character = attack_data.ignite_character
+	
+		
+	if attack_data.weapon_unit and attack_data.weapon_unit:base().is_category and attack_data.weapon_unit:base():is_category("saw") then
+		managers.groupai:state():chk_say_enemy_chatter(self._unit, self._unit:movement():m_pos(), "saw")
+	end
+	
+	if attack_data.attacker_unit:base().sentry_gun then
+		managers.groupai:state():chk_say_enemy_chatter(self._unit, self._unit:movement():m_pos(), "sentry")
+	end	
 
 	if result.type == "death" then
 		local data = {
@@ -420,14 +429,6 @@ function CopDamage:damage_bullet(attack_data)
 		if managers.groupai:state():all_criminals()[attack_data.attacker_unit:key()] then
 			managers.statistics:killed_by_anyone(data)
 		end
-		
-		if attack_data.weapon_unit and attack_data.weapon_unit:base().is_category and attack_data.weapon_unit:base():is_category("saw") then
-			managers.groupai:state():chk_say_enemy_chatter(self._unit, self._unit:movement():m_pos(), "saw")
-		end
-		
-		if attack_data.attacker_unit:base().sentry_gun then
-			managers.groupai:state():chk_say_enemy_chatter(self._unit, self._unit:movement():m_pos(), "sentry")
-		end	
 
 		if attack_data.attacker_unit == managers.player:player_unit() then
 			local special_comment = self:_check_special_death_conditions(attack_data.variant, attack_data.col_ray.body, attack_data.attacker_unit, attack_data.weapon_unit)
