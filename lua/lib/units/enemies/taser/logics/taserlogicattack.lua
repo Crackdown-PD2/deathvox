@@ -120,8 +120,151 @@ function TaserLogicAttack._upd_enemy_detection(data)
 	TaserLogicAttack._upd_aim(data, my_data, new_reaction)
 end
 
+function TaserLogicAttack._upd_aim(data, my_data, reaction)
+	local shoot, aim = nil
+	local focus_enemy = data.attention_obj
+	local tase = reaction == AIAttentionObject.REACT_SPECIAL_ATTACK
+
+	if focus_enemy then
+		if tase then
+			shoot = true
+		elseif focus_enemy.verified then
+			if focus_enemy.verified_dis > 1500 or my_data.alert_t and data.t - my_data.alert_t < 6 then
+				shoot = true
+
+				if focus_enemy.verified_dis > 1500 and data.unit:anim_data().run then
+					local walk_to_pos = data.unit:movement():get_walk_to_pos()
+
+					if walk_to_pos then
+						local move_vec = walk_to_pos - data.m_pos
+						local enemy_vec = focus_enemy.m_pos - data.m_pos
+
+						mvector3.normalize(enemy_vec)
+
+						if mvector3.dot(enemy_vec, move_vec) < 0.6 then
+							shoot = nil
+						end
+					end
+				end
+			end
+		elseif focus_enemy.verified_t and data.t - focus_enemy.verified_t < 10 then
+			aim = true
+
+			if my_data.shooting and data.t - focus_enemy.verified_t < 1 then
+				shoot = true
+			end
+		elseif focus_enemy.verified_dis <= 1500 and my_data.walking_to_cover_shoot_pos then
+			aim = true
+		end
+	end
+
+	if shoot and (my_data.walking_to_cover_shoot_pos or tase and my_data.moving_to_cover) and not data.unit:movement():chk_action_forbidden("walk") then
+		local new_action = {
+			body_part = 2,
+			type = "idle"
+		}
+
+		data.unit:brain():action_request(new_action)
+	end
+
+	if focus_enemy and data.logic.chk_should_turn(data, my_data) then
+		local enemy_pos = (focus_enemy.verified or focus_enemy.nearly_visible) and focus_enemy.m_pos or focus_enemy.verified_pos
+
+		CopLogicAttack._chk_request_action_turn_to_enemy(data, my_data, data.m_pos, enemy_pos)
+	end
+
+	if aim or shoot then
+		if focus_enemy.verified then
+			if my_data.attention_unit ~= focus_enemy.u_key then
+				CopLogicBase._set_attention(data, focus_enemy)
+
+				my_data.attention_unit = focus_enemy.u_key
+			end
+		elseif my_data.attention_unit ~= focus_enemy.verified_pos then
+			CopLogicBase._set_attention_on_pos(data, mvector3.copy(focus_enemy.verified_pos))
+
+			my_data.attention_unit = mvector3.copy(focus_enemy.verified_pos)
+		end
+
+		if not data.unit:anim_data().reload and not data.unit:movement():chk_action_forbidden("action") then
+			if tase then
+				if (not my_data.tasing or my_data.tasing.target_u_data ~= focus_enemy) and not data.unit:movement():chk_action_forbidden("walk") and not focus_enemy.unit:movement():zipline_unit() then
+					if my_data.attention_unit ~= focus_enemy.u_key then
+						CopLogicBase._set_attention(data, focus_enemy)
+
+						my_data.attention_unit = focus_enemy.u_key
+					end
+
+					local tase_action = {
+						body_part = 3,
+						type = "tase"
+					}
+
+					if data.unit:brain():action_request(tase_action) then
+						my_data.tasing = {
+							target_u_data = focus_enemy,
+							target_u_key = focus_enemy.u_key,
+							start_t = data.t
+						}
+
+						CopLogicAttack._cancel_charge(data, my_data)
+						managers.groupai:state():on_tase_start(data.key, focus_enemy.u_key)
+					end
+				end
+			elseif shoot and not my_data.shooting then
+				local shoot_action = {
+					type = "shoot",
+					body_part = 3
+				}
+
+				if data.unit:brain():action_request(shoot_action) then
+					my_data.shooting = true
+				end
+			end
+		end
+	else
+		if my_data.shooting or my_data.tasing then
+			local new_action = nil
+
+			if data.unit:anim_data().reload then
+				new_action = {
+					body_part = 3,
+					type = "reload"
+				}
+			else
+				new_action = {
+					body_part = 3,
+					type = "idle"
+				}
+			end
+
+			data.unit:brain():action_request(new_action)
+		elseif not data.unit:anim_data().run then
+			local ammo_max, ammo = data.unit:inventory():equipped_unit():base():ammo_info()
+
+			if ammo / ammo_max < 0.2 then
+				local new_action = {
+					body_part = 3,
+					type = "reload"
+				}
+
+				data.unit:brain():action_request(new_action)
+			end
+		end
+
+		if my_data.attention_unit then
+			CopLogicBase._reset_attention(data)
+
+			my_data.attention_unit = nil
+		end
+	end
+
+	CopLogicAttack.aim_allow_fire(shoot, aim, data, my_data)
+end
+
 function TaserLogicAttack._chk_reaction_to_attention_object(data, attention_data, stationary)
 	local reaction = CopLogicIdle._chk_reaction_to_attention_object(data, attention_data, stationary)
+	local tase_length = data.internal_data.tase_distance or 1500 --safety net to prevent random crashes
 
 	if reaction < AIAttentionObject.REACT_SHOOT or not attention_data.criminal_record or not attention_data.is_person then
 		return reaction
@@ -131,8 +274,8 @@ function TaserLogicAttack._chk_reaction_to_attention_object(data, attention_data
 		return AIAttentionObject.REACT_COMBAT
 	end
 
-	if (attention_data.is_human_player or not attention_data.unit:movement():chk_action_forbidden("hurt")) and attention_data.verified and attention_data.verified_dis <= data.internal_data.tase_distance and data.tase_delay_t < data.t then
-		return AIAttentionObject.REACT_SPECIAL_ATTACK --Fixes tasers not opening fire on things at ranges beyond their tasing range.
+	if (attention_data.is_human_player or not attention_data.unit:movement():chk_action_forbidden("hurt")) and attention_data.verified and attention_data.verified_dis <= tase_length and data.tase_delay_t < data.t then
+		return AIAttentionObject.REACT_SPECIAL_ATTACK --christ this was surprisingly way simpler than i thought it was
 	end
 
 	return reaction
