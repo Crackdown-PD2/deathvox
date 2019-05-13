@@ -68,7 +68,7 @@ function CopActionTase:on_attention(attention)
 	local aim_delay = weapon_usage_tweak.aim_delay
 	local lerp_dis = math.min(1, target_vec:length() / self._falloff[#self._falloff].r)
 	local shoot_delay = math.lerp(aim_delay[1], aim_delay[2], lerp_dis)
-	self._mod_enable_t = t + 0.1 --This is normally bound to shoot delay, but really, the taser only has a .1 aim delay, so it shouldn't matter.
+	self._mod_enable_t = t + 0.2 --This is normally bound to shoot delay, but really, the taser only has a .1 aim delay, so it shouldn't matter.
 	self._tasing_local_unit = nil
 	self._tasing_player = nil
 
@@ -76,13 +76,13 @@ function CopActionTase:on_attention(attention)
 		self._common_data.ext_network:send("action_tase_event", 1)
 
 		if not attention_unit:base().is_husk_player then
-			self._shoot_t = TimerManager:game():time() + 0.15 --keep it consistent, tase is executed first, if it fails, then open fire 
+			self._shoot_t = TimerManager:game():time() + 0.25 --keep it consistent, tase is executed first, if it fails, then open fire 
 			self._tasing_local_unit = attention_unit
 			self._line_of_fire_slotmask = managers.slot:get_mask("bullet_impact_targets_no_criminals")
 			self._tasing_player = attention_unit:base().is_local_player
 		end
 	elseif attention_unit:base().is_local_player then
-		self._shoot_t = TimerManager:game():time() + 0.15 --keep it consistent, tase is executed first, if it fails, then open fire 
+		self._shoot_t = TimerManager:game():time() + 0.25 --keep it consistent, tase is executed first, if it fails, then open fire 
 		self._tasing_local_unit = attention_unit
 		self._line_of_fire_slotmask = managers.slot:get_mask("bullet_impact_targets")
 		self._tasing_player = true
@@ -118,7 +118,7 @@ function CopActionTase:update(t)
 
 			self._machine:force_modifier(self._modifier_name)
 
-			self._mod_enable_t = t + 0.1 --execute tase check first
+			self._mod_enable_t = t + 0.2 --execute tase check first
 		end
 
 		self._modifier:set_target_y(target_vec)
