@@ -424,10 +424,6 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_cloaker.NR_CLIPS_MAX = 5
 	--self.deathvox_cloaker.pull_magazine_during_reload = "pistol"
 	self.deathvox_cloaker.auto.fire_rate = 0.092
-	self.deathvox_cloaker.hold = {
-        "bullpup",
-        "rifle"
-	}
 	self.deathvox_cloaker.hold = "rifle"
 	self.deathvox_cloaker.alert_size = 5000
 	self.deathvox_cloaker.suppression = 1
@@ -456,11 +452,12 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_greendozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug_semi"
 	self.deathvox_greendozer.CLIP_AMMO_MAX = 6
 	self.deathvox_greendozer.NR_CLIPS_MAX = 4
-	self.deathvox_greendozer.hold = "rifle"
+	self.deathvox_greendozer.hold = "shot"
 	self.deathvox_greendozer.alert_size = 4500
 	self.deathvox_greendozer.suppression = 1.8
 	self.deathvox_greendozer.is_shotgun = true
 	self.deathvox_greendozer.usage = "is_dozer_pump"
+	self.deathvox_greendozer.anim_usage = "is_shotgun_pump"
 	self.deathvox_greendozer.reload = "looped"
 	self.deathvox_greendozer.looped_reload_speed = 0.8 -- time it takes to reload each shell.
 	table.insert(self._gun_list_cd, "deathvox_greendozer")
