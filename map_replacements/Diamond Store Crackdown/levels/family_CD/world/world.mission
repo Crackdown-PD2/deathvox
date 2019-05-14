@@ -35751,6 +35751,10 @@
 					<entry key="mode_assault" type="boolean" value="true"/>
 					<entry key="mode_control" type="boolean" value="true"/>
 					<entry key="on_executed" type="table">
+						<entry index="1" type="table">
+							<entry key="delay" type="number" value="0"/>
+							<entry key="id" type="number" value="100028"/>
+						</entry>
 					</entry>
 					<entry key="platform_win32" type="boolean" value="true"/>
 					<entry key="player_1" type="boolean" value="true"/>

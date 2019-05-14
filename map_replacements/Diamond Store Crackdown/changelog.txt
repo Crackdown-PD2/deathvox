@@ -1,5 +1,5 @@
 Heist: Diamond Store
-Version: 6
+Version: 7
 
 Current changes:
 Create filter
@@ -15,10 +15,10 @@ added gman position on back stairs
 localization applied
 camera spawnset adjusted
 Added one sniper, adjusted loop to slightly increase number.
+Fixed keypad issue on lower difficulties (thanks to Rex and Ranzer)
 
 Todo:
 Consider adding sniper(s) (no)
 Examine removing back stairs (no)
-Need to add gman unit type, perform swap.
 
 Notes:
