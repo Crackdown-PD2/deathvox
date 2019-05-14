@@ -368,10 +368,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_medicdozer_smg.reload = "rifle"
 	self.deathvox_medicdozer_smg.pull_magazine_during_reload = "smg"
 	self.deathvox_medicdozer_smg.auto.fire_rate = 0.05
-	self.deathvox_medicdozer_smg.hold = {
-		"bullpup",
-		"rifle"
-	}
+	self.deathvox_medicdozer_smg.hold = "rifle"
 	self.deathvox_medicdozer_smg.alert_size = 5000
 	self.deathvox_medicdozer_smg.suppression = 1	
 	self.deathvox_medicdozer_smg.usage = "is_tank_smg"
@@ -422,9 +419,11 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_cloaker.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
 	self.deathvox_cloaker.CLIP_AMMO_MAX = 30
 	self.deathvox_cloaker.NR_CLIPS_MAX = 5
-	--self.deathvox_cloaker.pull_magazine_during_reload = "pistol"
 	self.deathvox_cloaker.auto.fire_rate = 0.092
-	self.deathvox_cloaker.hold = "rifle"
+	self.deathvox_cloaker.hold = {
+		"bullpup",
+		"rifle"
+	}
 	self.deathvox_cloaker.alert_size = 5000
 	self.deathvox_cloaker.suppression = 1
 	self.deathvox_cloaker.usage = "is_cloaker_smg"
@@ -447,7 +446,7 @@ function WeaponTweakData:init(tweak_data)
 	
 	self.deathvox_greendozer.sounds.prefix = "remington_npc"
 	self.deathvox_greendozer.use_data.selection_index = 2
-	self.deathvox_greendozer.DAMAGE = 50 -- DEPRECATED due to use of damage table. Compare DW 400, DS 560.
+	self.deathvox_greendozer.DAMAGE = 50 -- DEPRECATED due to use of damage table.
 	self.deathvox_greendozer.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_greendozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug_semi"
 	self.deathvox_greendozer.CLIP_AMMO_MAX = 6
