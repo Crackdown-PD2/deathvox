@@ -2771,7 +2771,6 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.headshot_dmg_mul = 3
 	self.deathvox_taser.is_special_unit = "taser"
 	self.deathvox_taser.access = "any"
-	self.deathvox_taser.custom_voicework = "taser"
 	self.deathvox_taser.no_retreat = false
 	table.insert(self._enemy_list, "deathvox_taser") 
 
