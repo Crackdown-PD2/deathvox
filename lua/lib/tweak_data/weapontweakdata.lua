@@ -1,5 +1,21 @@
 local old_init = WeaponTweakData.init
 function WeaponTweakData:init(tweak_data)
+	--[[i dunno where to put this but heres a list of what weapons enemies use
+	      heavy ar wpn_npc_m4
+          light ar wpn_npc_s553
+          heavy shot wpn_npc_benelli
+          light shot wpn_npc_r870
+          gman wpn_npc_r870
+          other pistol nerds wpn_npc_c45
+          revolver bois wpn_npc_raging_bull
+          dozer wpn_npc_r870_dozer
+          cd med wpn_npc_raging_bull_med
+          cop smg wpn_npc_mp5
+          meddozer wpn_npc_ump_meddozer
+          dozer lmg wpn_npc_lmg_m249
+          dozer black wpn_npc_saiga
+		  cloaker wpn_npc_mp5_tactical
+	]]--	  
 	old_init(self, tweak_data)
 	self.damage_tables = {
 		deathvox_guard_pistol = { 
@@ -177,25 +193,25 @@ function WeaponTweakData:init(tweak_data)
 		}
 	}
 	self._gun_list_cd = {}
-	self.deathvox_guard_pistol = deep_clone(self.packrat_crew)
-	self.deathvox_medic_pistol = deep_clone(self.mateba_crew)
-	self.deathvox_light_ar = deep_clone(self.aug_crew)
-	self.deathvox_heavy_ar = deep_clone(self.fal_crew)
-	self.deathvox_shotgun_light = deep_clone(self.r870_crew)
-	self.deathvox_shotgun_heavy = deep_clone(self.ben_crew)
-	self.deathvox_sniper = deep_clone(self.wa2000_crew)
-	self.deathvox_medicdozer_smg = deep_clone(self.polymer_crew)
+	self.deathvox_guard_pistol = deep_clone(self.c45_npc)
+	self.deathvox_medic_pistol = deep_clone(self.raging_bull_npc)
+	self.deathvox_light_ar = deep_clone(self.g36_npc)
+	self.deathvox_heavy_ar = deep_clone(self.m4_npc)
+	self.deathvox_shotgun_light = deep_clone(self.r870_npc)
+	self.deathvox_shotgun_heavy = deep_clone(self.benelli_npc)
+	self.deathvox_sniper = deep_clone(self.m14_sniper_npc)
+	self.deathvox_medicdozer_smg = deep_clone(self.mp5_npc)
 	self.deathvox_grenadier = deep_clone(self.m32_crew)
 	
-	self.deathvox_lmgdozer = deep_clone(self.m249_crew)
-	self.deathvox_cloaker = deep_clone(self.schakal_crew)
-	self.deathvox_blackdozer = deep_clone(self.saiga_crew)
-	self.deathvox_greendozer = deep_clone(self.r870_crew)
+	self.deathvox_lmgdozer = deep_clone(self.m249_npc)
+	self.deathvox_cloaker = deep_clone(self.mp5_tactical_npc)
+	self.deathvox_blackdozer = deep_clone(self.saiga_npc)
+	self.deathvox_greendozer = deep_clone(self.r870_npc)
 
 	self.deathvox_cop_pistol = deep_clone(self.c45_npc)
 	table.insert(self._gun_list_cd, "deathvox_cop_pistol")
 
-	self.deathvox_cop_revolver = deep_clone(self.raging_bull_crew)
+	self.deathvox_cop_revolver = deep_clone(self.raging_bull_npc)
 	self.deathvox_cop_revolver.sounds.prefix = "rbull_npc"
 	self.deathvox_cop_revolver.DAMAGE = 4 -- DEPRECATED due to use of damage table.
 	self.deathvox_cop_revolver.muzzleflash = "effects/payday2/particles/weapons/9mm_auto"
@@ -219,33 +235,33 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_cop_smg = deep_clone(self.mp5_npc)
 	table.insert(self._gun_list_cd, "deathvox_cop_smg")
 	
-	self.deathvox_light_ar.sounds.prefix = "aug_npc" -- dont worry about this
+	self.deathvox_light_ar.sounds.prefix = "g36_npc" -- dont worry about this
 	self.deathvox_light_ar.use_data.selection_index = 2 -- dont worry about this
 	self.deathvox_light_ar.DAMAGE = 7.5 -- DEPRECATED due to use of damage table.
 	self.deathvox_light_ar.muzzleflash = "effects/payday2/particles/weapons/556_auto" -- dont worry about this
 	self.deathvox_light_ar.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556" -- dont worry about this
 	self.deathvox_light_ar.CLIP_AMMO_MAX = 30 -- How many shots before reload
 	self.deathvox_light_ar.NR_CLIPS_MAX = 5 -- Unused
-	self.deathvox_light_ar.pull_magazine_during_reload = "rifle" -- magazine used during reload.
+	--self.deathvox_light_ar.pull_magazine_during_reload = "rifle" -- magazine used during reload.
 	self.deathvox_light_ar.auto.fire_rate = 0.08 -- Firing delay in seconds
-	self.deathvox_light_ar.hold = { -- dont worry about this
+	--[[self.deathvox_light_ar.hold = { -- dont worry about this
 		"bullpup",
 		"rifle"
-	}
+	}]]--
 	self.deathvox_light_ar.alert_size = 5000 -- how far away in AlmirUnits(tm) it alerts people
 	self.deathvox_light_ar.suppression = 1 -- dont worry about this
 	self.deathvox_light_ar.usage = "is_light_rifle"
-	self.deathvox_light_ar.anim_usage = "is_bullpup"
+	self.deathvox_light_ar.anim_usage = "is_rifle"
 	table.insert(self._gun_list_cd, "deathvox_light_ar")
 
-	self.deathvox_heavy_ar.sounds.prefix = "fn_fal_npc"
+	self.deathvox_heavy_ar.sounds.prefix = "m4_npc"
 	self.deathvox_heavy_ar.use_data.selection_index = 2
 	self.deathvox_heavy_ar.DAMAGE = 10 -- DEPRECATED due to use of damage table.
 	self.deathvox_heavy_ar.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_heavy_ar.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556"
 	self.deathvox_heavy_ar.CLIP_AMMO_MAX = 20
 	self.deathvox_heavy_ar.NR_CLIPS_MAX = 5
-	self.deathvox_heavy_ar.pull_magazine_during_reload = "rifle"
+	--self.deathvox_heavy_ar.pull_magazine_during_reload = "rifle"
 	self.deathvox_heavy_ar.auto.fire_rate = 0.08
 	self.deathvox_heavy_ar.hold = "rifle"
 	self.deathvox_heavy_ar.alert_size = 5000
@@ -262,7 +278,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_guard_pistol.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
 	self.deathvox_guard_pistol.CLIP_AMMO_MAX = 15
 	self.deathvox_guard_pistol.NR_CLIPS_MAX = 5
-	self.deathvox_guard_pistol.pull_magazine_during_reload = "pistol"
+	--self.deathvox_guard_pistol.pull_magazine_during_reload = "pistol"
 	self.deathvox_guard_pistol.hold = "pistol"
 	self.deathvox_guard_pistol.alert_size = 2500
 	self.deathvox_guard_pistol.suppression = 1
@@ -309,7 +325,6 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_shotgun_heavy.DAMAGE = 15 -- DEPRECATED due to use of damage table.
 	self.deathvox_shotgun_heavy.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_shotgun_heavy.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug"
-	self.deathvox_shotgun_heavy.auto.fire_rate = 0.14
 	self.deathvox_shotgun_heavy.CLIP_AMMO_MAX = 8
 	self.deathvox_shotgun_heavy.NR_CLIPS_MAX = 4
 	self.deathvox_shotgun_heavy.hold = "rifle"
@@ -322,6 +337,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_shotgun_heavy.anim_usage = "is_shotgun_pump"
 	table.insert(self._gun_list_cd, "deathvox_shotgun_heavy")
 
+	self.deathvox_sniper.categories = {"snp"}
 	self.deathvox_sniper.sounds.prefix = "sniper_npc"
 	self.deathvox_sniper.use_data.selection_index = 2
 	self.deathvox_sniper.DAMAGE = 24 -- DEPRECATED due to use of damage table.
@@ -330,18 +346,15 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_sniper.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
 	self.deathvox_sniper.CLIP_AMMO_MAX = 10
 	self.deathvox_sniper.NR_CLIPS_MAX = 5
-	self.deathvox_sniper.pull_magazine_during_reload = "rifle"
-	self.deathvox_sniper.auto.fire_rate = 0.5
-	self.deathvox_sniper.hold = {
-		"bullpup",
-		"rifle"
-	}
+	--self.deathvox_sniper.pull_magazine_during_reload = "rifle"
+	--self.deathvox_sniper.auto.fire_rate = 0.5
 	self.deathvox_sniper.alert_size = 5000
 	self.deathvox_sniper.suppression = 1	
 	self.deathvox_sniper.armor_piercing = true
 	self.deathvox_sniper.usage = "is_assault_sniper"
-	self.deathvox_sniper.anim_usage = "is_bullpup"
-	self.deathvox_sniper.disable_sniper_laser = true
+	self.deathvox_sniper.anim_usage = "is_rifle"
+    self.deathvox_sniper.use_laser = false
+    self.deathvox_sniper.disable_sniper_laser = true	
 	table.insert(self._gun_list_cd, "deathvox_sniper")
 	
 	self.deathvox_medicdozer_smg.sounds.prefix = "polymer_npc"
@@ -355,10 +368,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_medicdozer_smg.reload = "rifle"
 	self.deathvox_medicdozer_smg.pull_magazine_during_reload = "smg"
 	self.deathvox_medicdozer_smg.auto.fire_rate = 0.05
-	self.deathvox_medicdozer_smg.hold = {
-		"bullpup",
-		"rifle"
-	}
+	self.deathvox_medicdozer_smg.hold = "rifle"
 	self.deathvox_medicdozer_smg.alert_size = 5000
 	self.deathvox_medicdozer_smg.suppression = 1	
 	self.deathvox_medicdozer_smg.usage = "is_tank_smg"
@@ -409,13 +419,11 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_cloaker.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
 	self.deathvox_cloaker.CLIP_AMMO_MAX = 30
 	self.deathvox_cloaker.NR_CLIPS_MAX = 5
-	self.deathvox_cloaker.pull_magazine_during_reload = "pistol"
 	self.deathvox_cloaker.auto.fire_rate = 0.092
 	self.deathvox_cloaker.hold = {
-        "bullpup",
-        "rifle"
+		"bullpup",
+		"rifle"
 	}
-	self.deathvox_cloaker.hold = "rifle"
 	self.deathvox_cloaker.alert_size = 5000
 	self.deathvox_cloaker.suppression = 1
 	self.deathvox_cloaker.usage = "is_cloaker_smg"
@@ -438,16 +446,17 @@ function WeaponTweakData:init(tweak_data)
 	
 	self.deathvox_greendozer.sounds.prefix = "remington_npc"
 	self.deathvox_greendozer.use_data.selection_index = 2
-	self.deathvox_greendozer.DAMAGE = 50 -- DEPRECATED due to use of damage table. Compare DW 400, DS 560.
+	self.deathvox_greendozer.DAMAGE = 50 -- DEPRECATED due to use of damage table.
 	self.deathvox_greendozer.muzzleflash = "effects/payday2/particles/weapons/762_auto"
 	self.deathvox_greendozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug_semi"
 	self.deathvox_greendozer.CLIP_AMMO_MAX = 6
 	self.deathvox_greendozer.NR_CLIPS_MAX = 4
-	self.deathvox_greendozer.hold = "rifle"
+	self.deathvox_greendozer.hold = "shot"
 	self.deathvox_greendozer.alert_size = 4500
 	self.deathvox_greendozer.suppression = 1.8
 	self.deathvox_greendozer.is_shotgun = true
 	self.deathvox_greendozer.usage = "is_dozer_pump"
+	self.deathvox_greendozer.anim_usage = "is_shotgun_pump"
 	self.deathvox_greendozer.reload = "looped"
 	self.deathvox_greendozer.looped_reload_speed = 0.8 -- time it takes to reload each shell.
 	table.insert(self._gun_list_cd, "deathvox_greendozer")
@@ -494,18 +503,45 @@ end
 
 -- Begin NORMAL difficulty damage values. 
 
+-- Fuglore here, I'd like to say that 1. You'll probably have to change some of the weapon usages if you haven't yet, and 2. You'll probably have to change some of the .unit files to have varied gun setups as to not cause horrible clashes in damage, and 3. You might have to add new weapon presets for Dozers, as their usages will be comparatively messy due to the Greendozer using the R870 and the LMGDozer using is_rifle behavior.
+
+-- Begin difficulty scripted weapon damage value population.
+
+-- Begin NORMAL difficulty damage values.
+
 function WeaponTweakData:_set_normal()
-	self.ak47_ass_npc.DAMAGE = 4	-- possibly unused aside from akan. Map to heavy AR.
+
+	--Rifles
+	self.m4_npc.DAMAGE = 4		-- Heavy SWAT Riflemen. Mapped to heavy AR.
+	self.g36_npc.DAMAGE = 2		-- Light SWAT Riflemen, possibly. Mapped to light AR.
+	self.ump_npc.DAMAGE = 2		-- Light SWAT Riflemen, possibly. Mapped to light AR.
+	self.akmsu_smg_npc.DAMAGE = 2		-- Light SWAT Riflemen, possibly. Mapped to light AR.
+	self.ak47_ass_npc.DAMAGE = 2 -- possibly unused aside from akan. Mapped to light AR.
+	self.ak47_npc.DAMAGE = 4	-- possibly used by mobster units. Map to heavy AR.
+	self.scar_npc.DAMAGE = 2 --Scripted murky units, possibly useful for later custom units? Mapped to light AR.
+	
+	--Shotguns
+	self.r870_npc.DAMAGE = 6	-- Light SWAT Shotgunners. Mapped to Light Shotgun.
+	self.benelli_npc.DAMAGE = 8 -- Heavy SWAT Shotgunners. Mapped to Heavy Shotgun.
+	
+	--Unique/Special Weapons (scripted, special enemies, bosses)
 	self.contraband_npc.DAMAGE = 6   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
-	self.m4_npc.DAMAGE = 4		-- possibly unused by remaining scripted enemies. Map to heavy AR.
-	self.g36_npc.DAMAGE = 2		-- possibly unused by remaining scripted enemies. Map to light AR.
-	self.ump_npc.DAMAGE = 2		-- possibly unused by remaining scripted enemies. Map to light AR.
-	self.r870_npc.DAMAGE = 6	-- Used by several police and criminal units. Draft map to light shotgun.
+	self.x_c45_npc.DAMAGE = 4	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
+	
 	self.m4_yellow_npc.DAMAGE = 2	-- populates taser damage after other fixes applied. Map to light AR.
+	
+	self.mossberg_npc.DAMAGE = 24 --temporary Greendozer Shotgun, not enough shotguns to map to all units, consider Bulldozer-specific weapon presets?
+	self.saiga_npc.DAMAGE = 18 --Blackdozer Saiga, mapped to Deathvox Blackdozer.
+	self.m249_npc.DAMAGE = 10 --LMGDozer M249, has is_rifle behavior, needs to have it's usage changed. consider Bulldozer-specific weapon presets?
+	self.rpk_lmg_npc.DAMAGE = 10 --LMGDozer M249, AKAN faction, has is_rifle behavior, normal M249.
+	self.s552_npc.DAMAGE = 7.5 --No info on what or who uses it, so it might be better used as the MedicDozer weapon, damage mapped as such, unsure whether it actually exists as a weapon in the game's files, however.
+	
+	self.mp5_tactical_npc.DAMAGE = 4.5 --Used by Cloaker, mapped to Deathvox Cloaker SMG.
+	self.asval_smg_npc.DAMAGE = 4.5 --Used by Akan Cloaker, mapped to Deathvox Cloaker SMG.
+	
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
 --	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
-	self.x_c45_npc.DAMAGE = 4	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
-	self.ak47_npc.DAMAGE = 4	-- possibly used by mobster units. Map to heavy AR.
+	
 	self.mp5_npc.DAMAGE = 2.5	-- smg used by number of units. Map to cop smg.
 	self.mp9_npc.DAMAGE = 2.5	-- shield only.	Map to cop smg.
 	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to cop pistol.
@@ -605,17 +641,37 @@ end
 -- Begin HARD difficulty damage values. 
 
 function WeaponTweakData:_set_hard()
-	self.ak47_ass_npc.DAMAGE = 4	-- possibly unused aside from akan. Map to heavy AR.
+	--Rifles
+	self.m4_npc.DAMAGE = 4		-- Heavy SWAT Riflemen. Mapped to heavy AR.
+	self.g36_npc.DAMAGE = 2		-- Light SWAT Riflemen, possibly. Mapped to light AR.
+	self.ump_npc.DAMAGE = 2		-- Light SWAT Riflemen, possibly. Mapped to light AR.
+	self.akmsu_smg_npc.DAMAGE = 2		-- Light SWAT Riflemen, possibly. Mapped to light AR.
+	self.ak47_ass_npc.DAMAGE = 2 -- possibly unused aside from akan. Mapped to light AR.
+	self.ak47_npc.DAMAGE = 4	-- possibly used by mobster units. Map to heavy AR.
+	self.scar_npc.DAMAGE = 2 --Scripted murky units, possibly useful for later custom units? Mapped to light AR.
+	
+	--Shotguns
+	self.r870_npc.DAMAGE = 6	-- Light SWAT Shotgunners. Mapped to Light Shotgun.
+	self.benelli_npc.DAMAGE = 8 -- Heavy SWAT Shotgunners. Mapped to Heavy Shotgun.
+	
+	--Unique/Special Weapons (scripted, special enemies, bosses)
 	self.contraband_npc.DAMAGE = 6   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
-	self.m4_npc.DAMAGE = 4		-- possibly unused by remaining scripted enemies. Map to heavy AR.
-	self.g36_npc.DAMAGE = 2		-- possibly unused by remaining scripted enemies. Map to light AR.
-	self.ump_npc.DAMAGE = 2		-- possibly unused by remaining scripted enemies. Map to light AR.
-	self.r870_npc.DAMAGE = 6	-- Used by several police and criminal units. Draft map to light shotgun.
+	self.x_c45_npc.DAMAGE = 4	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
+	
 	self.m4_yellow_npc.DAMAGE = 2	-- populates taser damage after other fixes applied. Map to light AR.
+	
+	self.mossberg_npc.DAMAGE = 24 --temporary Greendozer Shotgun, not enough shotguns to map to all units, consider Bulldozer-specific weapon presets?
+	self.saiga_npc.DAMAGE = 18 --Blackdozer Saiga, mapped to Deathvox Blackdozer.
+	self.m249_npc.DAMAGE = 10 --LMGDozer M249, has is_rifle behavior, needs to have it's usage changed. consider Bulldozer-specific weapon presets?
+	self.rpk_lmg_npc.DAMAGE = 10 --LMGDozer M249, AKAN faction, has is_rifle behavior, normal M249.
+	self.s552_npc.DAMAGE = 7.5 --No info on what or who uses it, so it might be better used as the MedicDozer weapon, damage mapped as such, unsure whether it actually exists as a weapon in the game's files, however.
+	
+	self.mp5_tactical_npc.DAMAGE = 6 --Used by Cloaker, mapped to Deathvox Cloaker SMG.
+	self.asval_smg_npc.DAMAGE = 6 --Used by Akan Cloaker, mapped to Deathvox Cloaker SMG.
+	
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
 --	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
-	self.x_c45_npc.DAMAGE = 4	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
-	self.ak47_npc.DAMAGE = 4	-- possibly used by mobster units. Map to heavy AR.
+	
 	self.mp5_npc.DAMAGE = 2.5	-- smg used by number of units. Map to cop smg.
 	self.mp9_npc.DAMAGE = 2.5	-- shield only.	Map to cop smg.
 	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to cop pistol.
@@ -623,7 +679,7 @@ function WeaponTweakData:_set_hard()
 	self.mac11_npc.DAMAGE = 2.5	-- smg used by number of criminal units. Map to cop smg.
 	self.smoke_npc.DAMAGE = 4	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
-
+	
 -- below code is goofball legacy believed to reinitialize enemy melee values.	
 	self.npc_melee.baton.damage = 5
 	self.npc_melee.knife_1.damage = 7
@@ -714,17 +770,37 @@ end
 -- Begin VERY HARD difficulty damage values. 
 
 function WeaponTweakData:_set_overkill()
-	self.ak47_ass_npc.DAMAGE = 6	-- possibly unused aside from akan. Map to heavy AR.
+	--Rifles
+	self.m4_npc.DAMAGE = 6		-- Heavy SWAT Riflemen. Mapped to heavy AR.
+	self.g36_npc.DAMAGE = 4.5		-- Light SWAT Riflemen, possibly. Mapped to light AR.
+	self.ump_npc.DAMAGE = 4.5		-- Light SWAT Riflemen, possibly. Mapped to light AR.
+	self.akmsu_smg_npc.DAMAGE = 4.5		-- Light SWAT Riflemen, possibly. Mapped to light AR.
+	self.ak47_ass_npc.DAMAGE = 4.5 -- possibly unused aside from akan. Mapped to light AR.
+	self.ak47_npc.DAMAGE = 6	-- possibly used by mobster units. Map to heavy AR.
+	self.scar_npc.DAMAGE = 4.5 --Scripted murky units, possibly useful for later custom units? Mapped to light AR.
+	
+	--Shotguns
+	self.r870_npc.DAMAGE = 7	-- Light SWAT Shotgunners. Mapped to Light Shotgun.
+	self.benelli_npc.DAMAGE = 9.5 -- Heavy SWAT Shotgunners. Mapped to Heavy Shotgun.
+	
+	--Unique/Special Weapons (scripted, special enemies, bosses)
 	self.contraband_npc.DAMAGE = 7.5   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
-	self.m4_npc.DAMAGE = 6		-- possibly unused by remaining scripted enemies. Map to heavy AR.
-	self.g36_npc.DAMAGE = 4.5	-- possibly unused by remaining scripted enemies. Map to light AR.
-	self.ump_npc.DAMAGE = 4.5	-- possibly unused by remaining scripted enemies. Map to light AR.
-	self.r870_npc.DAMAGE = 7	-- Used by several police and criminal units. Draft map to light shotgun.
+	self.x_c45_npc.DAMAGE = 6	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
+	
 	self.m4_yellow_npc.DAMAGE = 4.5	-- populates taser damage after other fixes applied. Map to light AR.
+	
+	self.mossberg_npc.DAMAGE = 24 --temporary Greendozer Shotgun, not enough shotguns to map to all units, consider Bulldozer-specific weapon presets?
+	self.saiga_npc.DAMAGE = 18 --Blackdozer Saiga, mapped to Deathvox Blackdozer.
+	self.m249_npc.DAMAGE = 10 --LMGDozer M249, has is_rifle behavior, needs to have it's usage changed. consider Bulldozer-specific weapon presets?
+	self.rpk_lmg_npc.DAMAGE = 10 --LMGDozer M249, AKAN faction, has is_rifle behavior, normal M249.
+	self.s552_npc.DAMAGE = 7.5 --No info on what or who uses it, so it might be better used as the MedicDozer weapon, damage mapped as such, unsure whether it actually exists as a weapon in the game's files, however.
+	
+	self.mp5_tactical_npc.DAMAGE = 6 --Used by Cloaker, mapped to Deathvox Cloaker SMG.
+	self.asval_smg_npc.DAMAGE = 6 --Used by Akan Cloaker, mapped to Deathvox Cloaker SMG.
+	
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
 --	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
-	self.x_c45_npc.DAMAGE = 6	-- chavez weapon. Check name and syntax. Map to medic revolver + 20.
-	self.ak47_npc.DAMAGE = 6	-- possibly used by mobster units. Map to heavy AR.
+	
 	self.mp5_npc.DAMAGE = 4.5	-- smg used by number of units. Map to cop smg.
 	self.mp9_npc.DAMAGE = 4.5	-- shield only.	Map to cop smg.
 	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to cop pistol.
@@ -732,12 +808,13 @@ function WeaponTweakData:_set_overkill()
 	self.mac11_npc.DAMAGE = 4.5	-- smg used by number of criminal units. Map to cop smg.
 	self.smoke_npc.DAMAGE = 6	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
-
+	
 -- below code is goofball legacy believed to reinitialize enemy melee values.	
 	self.npc_melee.baton.damage = 5
 	self.npc_melee.knife_1.damage = 7
 	self.npc_melee.fists.damage = 4
--- end goofball legacy code block.	
+-- end goofball legacy code block.
+
 	
 -- Begin VERY HARD Turret values.
 
@@ -824,17 +901,37 @@ end
 -- Begin OVERKILL difficulty damage values. 
 
 function WeaponTweakData:_set_overkill_145()
-	self.ak47_ass_npc.DAMAGE = 6	-- possibly unused aside from akan. Map to heavy AR.
+	--Rifles
+	self.m4_npc.DAMAGE = 6		-- Heavy SWAT Riflemen. Mapped to heavy AR.
+	self.g36_npc.DAMAGE = 4.5		-- Light SWAT Riflemen, possibly. Mapped to light AR.
+	self.ump_npc.DAMAGE = 4.5		-- Light SWAT Riflemen, possibly. Mapped to light AR.
+	self.akmsu_smg_npc.DAMAGE = 4.5		-- Light SWAT Riflemen, possibly. Mapped to light AR.
+	self.ak47_ass_npc.DAMAGE = 4.5 -- possibly unused aside from akan. Mapped to light AR.
+	self.ak47_npc.DAMAGE = 6	-- possibly used by mobster units. Map to heavy AR.
+	self.scar_npc.DAMAGE = 4.5 --Scripted murky units, possibly useful for later custom units? Mapped to light AR.
+	
+	--Shotguns
+	self.r870_npc.DAMAGE = 7	-- Light SWAT Shotgunners. Mapped to Light Shotgun.
+	self.benelli_npc.DAMAGE = 9.5 -- Heavy SWAT Shotgunners. Mapped to Heavy Shotgun.
+	
+	--Unique/Special Weapons (scripted, special enemies, bosses)
 	self.contraband_npc.DAMAGE = 7.5   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
-	self.m4_npc.DAMAGE = 6		-- possibly unused by remaining scripted enemies. Map to heavy AR.
-	self.g36_npc.DAMAGE = 4.5	-- possibly unused by remaining scripted enemies. Map to light AR.
-	self.ump_npc.DAMAGE = 4.5	-- possibly unused by remaining scripted enemies. Map to light AR.
-	self.r870_npc.DAMAGE = 7	-- Used by several police and criminal units. Draft map to light shotgun.
+	self.x_c45_npc.DAMAGE = 6	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
+	
 	self.m4_yellow_npc.DAMAGE = 4.5	-- populates taser damage after other fixes applied. Map to light AR.
+	
+	self.mossberg_npc.DAMAGE = 24 --temporary Greendozer Shotgun, not enough shotguns to map to all units, consider Bulldozer-specific weapon presets?
+	self.saiga_npc.DAMAGE = 18 --Blackdozer Saiga, mapped to Deathvox Blackdozer.
+	self.m249_npc.DAMAGE = 10 --LMGDozer M249, has is_rifle behavior, needs to have it's usage changed. consider Bulldozer-specific weapon presets?
+	self.rpk_lmg_npc.DAMAGE = 10 --LMGDozer M249, AKAN faction, has is_rifle behavior, normal M249.
+	self.s552_npc.DAMAGE = 7.5 --No info on what or who uses it, so it might be better used as the MedicDozer weapon, damage mapped as such, unsure whether it actually exists as a weapon in the game's files, however.
+	
+	self.mp5_tactical_npc.DAMAGE = 6 --Used by Cloaker, mapped to Deathvox Cloaker SMG.
+	self.asval_smg_npc.DAMAGE = 6 --Used by Akan Cloaker, mapped to Deathvox Cloaker SMG.
+	
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
 --	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
-	self.x_c45_npc.DAMAGE = 6	-- chavez weapon. Check name and syntax. Map to medic revolver + 20.
-	self.ak47_npc.DAMAGE = 6	-- possibly used by mobster units. Map to heavy AR.
+	
 	self.mp5_npc.DAMAGE = 4.5	-- smg used by number of units. Map to cop smg.
 	self.mp9_npc.DAMAGE = 4.5	-- shield only.	Map to cop smg.
 	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to cop pistol.
@@ -842,7 +939,7 @@ function WeaponTweakData:_set_overkill_145()
 	self.mac11_npc.DAMAGE = 4.5	-- smg used by number of criminal units. Map to cop smg.
 	self.smoke_npc.DAMAGE = 6	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
-
+	
 -- below code is goofball legacy believed to reinitialize enemy melee values.	
 	self.npc_melee.baton.damage = 5
 	self.npc_melee.knife_1.damage = 7
@@ -934,25 +1031,45 @@ end
 -- Begin MAYHEM difficulty damage values. 
 
 function WeaponTweakData:_set_easy_wish()
-	self.ak47_ass_npc.DAMAGE = 7.5	-- possibly unused aside from akan. Should map to heavy AR.
+	--Rifles
+	self.m4_npc.DAMAGE = 7.5		-- Heavy SWAT Riflemen. Mapped to heavy AR.
+	self.g36_npc.DAMAGE = 6		-- Light SWAT Riflemen, possibly. Mapped to light AR.
+	self.ump_npc.DAMAGE = 6		-- Light SWAT Riflemen, possibly. Mapped to light AR.
+	self.akmsu_smg_npc.DAMAGE = 6		-- Light SWAT Riflemen, possibly. Mapped to light AR, Akan.
+	self.ak47_ass_npc.DAMAGE = 6 -- possibly unused aside from akan. Mapped to light AR.
+	self.ak47_npc.DAMAGE = 7.5	-- possibly used by mobster units. Map to heavy AR.
+	self.scar_npc.DAMAGE = 6 --Scripted murky units, possibly useful for later custom units? Mapped to light AR.
+	
+	--Shotguns
+	self.r870_npc.DAMAGE = 7.5	-- Light SWAT Shotgunners. Mapped to Light Shotgun.
+	self.benelli_npc.DAMAGE = 10 -- Heavy SWAT Shotgunners. Mapped to Heavy Shotgun.
+	
+	--Unique/Special Weapons (scripted, special enemies, bosses)
 	self.contraband_npc.DAMAGE = 9   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
-	self.m4_npc.DAMAGE = 7.5	-- possibly unused by remaining scripted enemies. Map to heavy AR.
-	self.g36_npc.DAMAGE = 6		-- possibly unused by remaining scripted enemies. Map to light AR.
-	self.ump_npc.DAMAGE = 6		-- possibly unused by remaining scripted enemies. Map to light AR.
-	self.r870_npc.DAMAGE = 7.5	-- Used by several police and criminal units. Draft map to light shotgun.
+	self.x_c45_npc.DAMAGE = 8	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
+	
 	self.m4_yellow_npc.DAMAGE = 6	-- populates taser damage after other fixes applied. Map to light AR.
+	
+	self.mossberg_npc.DAMAGE = 24 --temporary Greendozer Shotgun, not enough shotguns to map to all units, consider Bulldozer-specific weapon presets?
+	self.saiga_npc.DAMAGE = 18 --Blackdozer Saiga, mapped to Deathvox Blackdozer.
+	self.m249_npc.DAMAGE = 10 --LMGDozer M249, has is_rifle behavior, needs to have it's usage changed. consider Bulldozer-specific weapon presets?
+	self.rpk_lmg_npc.DAMAGE = 10 --LMGDozer M249, AKAN faction, has is_rifle behavior, normal M249.
+	self.s552_npc.DAMAGE = 7.5 --No info on what or who uses it, so it might be better used as the MedicDozer weapon, damage mapped as such, unsure whether it actually exists as a weapon in the game's files, however.
+	
+	self.mp5_tactical_npc.DAMAGE = 6 --Used by Cloaker, mapped to Deathvox Cloaker SMG.
+	self.asval_smg_npc.DAMAGE = 6 --Used by Akan Cloaker, mapped to Deathvox Cloaker SMG.
+	
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
 --	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
-	self.x_c45_npc.DAMAGE = 8	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
-	self.ak47_npc.DAMAGE = 7.5	-- possibly used by mobster units. Map to heavy AR.
-	self.mp5_npc.DAMAGE = 6		-- smg used by number of units. Map to cop smg.
-	self.mp9_npc.DAMAGE = 6		-- shield only.	Map to cop smg.
+	
+	self.mp5_npc.DAMAGE = 6	-- smg used by number of units. Map to cop smg.
+	self.mp9_npc.DAMAGE = 6	-- shield only.	Map to cop smg.
 	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to cop pistol.
 	self.raging_bull_npc.DAMAGE = 6	-- bronco used by variety of units. Draft map to cop revolver. Make sure no armor pierce.
-	self.mac11_npc.DAMAGE = 6	-- smg used by number of criminal units. Map to cop smg.
+	self.mac11_npc.DAMAGE = 4.5	-- smg used by number of criminal units. Map to cop smg.
 	self.smoke_npc.DAMAGE = 7.5	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
-
+	
 -- below code is goofball legacy believed to reinitialize enemy melee values.	
 	self.npc_melee.baton.damage = 5
 	self.npc_melee.knife_1.damage = 7
@@ -1044,22 +1161,42 @@ end
 -- Begin DEATHWISH difficulty damage values. 
 
 function WeaponTweakData:_set_overkill_290()
-	self.ak47_ass_npc.DAMAGE = 7.5	-- possibly unused aside from akan. Should map to heavy AR.
+	--Rifles
+	self.m4_npc.DAMAGE = 7.5		-- Heavy SWAT Riflemen. Mapped to heavy AR.
+	self.g36_npc.DAMAGE = 6		-- Light SWAT Riflemen, possibly. Mapped to light AR.
+	self.ump_npc.DAMAGE = 6		-- Light SWAT Riflemen, possibly. Mapped to light AR.
+	self.akmsu_smg_npc.DAMAGE = 6		-- Light SWAT Riflemen, possibly. Mapped to light AR, Akan.
+	self.ak47_ass_npc.DAMAGE = 6 -- possibly unused aside from akan. Mapped to light AR.
+	self.ak47_npc.DAMAGE = 7.5	-- possibly used by mobster units. Map to heavy AR.
+	self.scar_npc.DAMAGE = 6 --Scripted murky units, possibly useful for later custom units? Mapped to light AR.
+	
+	--Shotguns
+	self.r870_npc.DAMAGE = 7.5	-- Light SWAT Shotgunners. Mapped to Light Shotgun.
+	self.benelli_npc.DAMAGE = 10 -- Heavy SWAT Shotgunners. Mapped to Heavy Shotgun.
+	
+	--Unique/Special Weapons (scripted, special enemies, bosses)
 	self.contraband_npc.DAMAGE = 9   -- apparently used exclusively by Sosa. Draft value up one tier from heavy AR.
-	self.m4_npc.DAMAGE = 7.5	-- possibly unused by remaining scripted enemies. Map to heavy AR.
-	self.g36_npc.DAMAGE = 6		-- possibly unused by remaining scripted enemies. Map to light AR.
-	self.ump_npc.DAMAGE = 6		-- possibly unused by remaining scripted enemies. Map to light AR.
-	self.r870_npc.DAMAGE = 7.5	-- Used by several police and criminal units. Draft map to light shotgun.
+	self.x_c45_npc.DAMAGE = 8	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
+	
 	self.m4_yellow_npc.DAMAGE = 6	-- populates taser damage after other fixes applied. Map to light AR.
+	
+	self.mossberg_npc.DAMAGE = 24 --temporary Greendozer Shotgun, not enough shotguns to map to all units, consider Bulldozer-specific weapon presets?
+	self.saiga_npc.DAMAGE = 18 --Blackdozer Saiga, mapped to Deathvox Blackdozer.
+	self.m249_npc.DAMAGE = 10 --LMGDozer M249, has is_rifle behavior, needs to have it's usage changed. consider Bulldozer-specific weapon presets?
+	self.rpk_lmg_npc.DAMAGE = 10 --LMGDozer M249, AKAN faction, has is_rifle behavior, normal M249.
+	self.s552_npc.DAMAGE = 7.5 --No info on what or who uses it, so it might be better used as the MedicDozer weapon, damage mapped as such, unsure whether it actually exists as a weapon in the game's files, however.
+	
+	self.mp5_tactical_npc.DAMAGE = 6 --Used by Cloaker, mapped to Deathvox Cloaker SMG.
+	self.asval_smg_npc.DAMAGE = 6 --Used by Akan Cloaker, mapped to Deathvox Cloaker SMG.
+	
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
 --	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
-	self.x_c45_npc.DAMAGE = 8	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
-	self.ak47_npc.DAMAGE = 7.5	-- possibly used by mobster units. Map to heavy AR.
-	self.mp5_npc.DAMAGE = 6		-- smg used by number of units. Map to cop smg.
-	self.mp9_npc.DAMAGE = 6		-- shield only.	Map to cop smg.
+	
+	self.mp5_npc.DAMAGE = 6	-- smg used by number of units. Map to cop smg.
+	self.mp9_npc.DAMAGE = 6	-- shield only.	Map to cop smg.
 	self.c45_npc.DAMAGE = 2		-- pistol used by variety of units. Draft map to cop pistol.
 	self.raging_bull_npc.DAMAGE = 6	-- bronco used by variety of units. Draft map to cop revolver. Make sure no armor pierce.
-	self.mac11_npc.DAMAGE = 6	-- smg used by number of criminal units. Map to cop smg.
+	self.mac11_npc.DAMAGE = 4.5	-- smg used by number of criminal units. Map to cop smg.
 	self.smoke_npc.DAMAGE = 7.5	-- vit secret enemy weapon. Map to Heavy AR.
 --	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
 	
@@ -1067,7 +1204,7 @@ function WeaponTweakData:_set_overkill_290()
 	self.npc_melee.baton.damage = 5
 	self.npc_melee.knife_1.damage = 7
 	self.npc_melee.fists.damage = 4
--- end goofball legacy code block.	
+-- end goofball legacy code block.
 
 -- Begin DEATHWISH Turret values.
 
@@ -1154,33 +1291,56 @@ end
 -- Begin CRACKDOWN difficulty damage values. 
 
 function WeaponTweakData:_set_sm_wish() 
-	self.ak47_ass_npc.DAMAGE = 9	-- possibly unused aside from akan. Map to heavy AR.
-	self.contraband_npc.DAMAGE = 11   -- apparently used exclusively by Sosa. Draft value 11. Compare with 9 base for heavy swat.
-	self.m4_npc.DAMAGE = 9		-- possibly unused by remaining scripted enemies. Map to heavy AR.
-	self.g36_npc.DAMAGE = 7.5	-- possibly unused by remaining scripted enemies. Map to light AR.
-	self.ump_npc.DAMAGE = 7.5	-- possibly unused by remaining scripted enemies. Map to light AR.
-	self.r870_npc.DAMAGE = 9	-- Used by several police and criminal units. Draft map to light shotgun.
+	--Rifles
+	self.m4_npc.DAMAGE = 9	-- Heavy SWAT Riflemen. Mapped to heavy AR.
+	self.g36_npc.DAMAGE = 7.5		-- Light SWAT Riflemen, possibly. Mapped to light AR.
+	self.ump_npc.DAMAGE = 7.5		-- Light SWAT Riflemen, possibly. Mapped to light AR.
+	self.akmsu_smg_npc.DAMAGE = 7.5		-- Light SWAT Riflemen, possibly. Mapped to light AR, Akan.
+	self.ak47_ass_npc.DAMAGE = 7.5 -- possibly unused aside from akan. Mapped to light AR.
+	self.ak47_npc.DAMAGE = 9	-- possibly used by mobster units. Map to heavy AR.
+	self.scar_npc.DAMAGE = 7.5 --Scripted murky units, possibly useful for later custom units? Mapped to light AR.
+	
+	--Shotguns
+	self.r870_npc.DAMAGE = 9	-- Light SWAT Shotgunners. Mapped to Light Shotgun.
+	self.benelli_npc.DAMAGE = 11 -- Heavy SWAT Shotgunners. Mapped to Heavy Shotgun.
+	
+	--Unique/Special Weapons (scripted, special enemies, bosses)
+	self.contraband_npc.DAMAGE = 11  -- apparently used exclusively by Sosa. Heavy AR + 20.
+	self.x_c45_npc.DAMAGE = 10	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
+	
 	self.m4_yellow_npc.DAMAGE = 7.5	-- populates taser damage after other fixes applied. Map to light AR.
+	
+	self.mossberg_npc.DAMAGE = 50 --temporary Greendozer Shotgun. not enough shotguns to map to all units, consider Bulldozer-specific weapon presets?
+	self.saiga_npc.DAMAGE = 22.5 --Blackdozer Saiga, mapped to Deathvox Blackdozer.
+	self.m249_npc.DAMAGE = 12 --LMGDozer M249, has is_rifle behavior, needs to have it's usage changed. consider Bulldozer-specific weapon presets?
+	self.rpk_lmg_npc.DAMAGE = 10 --LMGDozer M249, AKAN faction, has is_rifle behavior, normal M249.
+	self.s552_npc.DAMAGE = 7.5 --No info on what or who uses it, so it might be better used as the MedicDozer weapon, damage mapped as such, unsure whether it actually exists as a weapon in the game's files, however.
+	
+	self.mp5_tactical_npc.DAMAGE = 7.5 --Used by Cloaker, mapped to Deathvox Cloaker SMG.
+	self.asval_smg_npc.DAMAGE = 7.5 --Used by Akan Cloaker, mapped to Deathvox Cloaker SMG.
+	
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
 --	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
-	self.x_c45_npc.DAMAGE = 10	-- chavez weapon. Check name and syntax. Draft map to medic revolver + 20.
-	self.ak47_npc.DAMAGE = 9	-- possibly used by mobster units. Map to heavy AR.
+	--Sniper Trail for Snipers
+	self.m14_sniper_npc.sniper_trail = true
+	self.deathvox_sniper.sniper_trail = true
+	
+	
 	self.mp5_npc.DAMAGE = 7.5	-- smg used by number of units. Map to cop smg.
 	self.mp9_npc.DAMAGE = 7.5	-- shield only.	Map to cop smg.
 	self.c45_npc.DAMAGE = 6		-- pistol used by variety of units. Draft map to cop pistol.
 	self.raging_bull_npc.DAMAGE = 8	-- bronco used by variety of units. Draft map to cop revolver. Make sure no armor pierce.
 	self.mac11_npc.DAMAGE = 7.5	-- smg used by number of criminal units. Map to cop smg.
 	self.smoke_npc.DAMAGE = 9	-- vit secret enemy weapon. Map to Heavy AR.
---	self.mini_npc.DAMAGE = 12	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
+--	self.mini_npc.DAMAGE = 10	-- minigun damage. Used only for specific scripted enemies. Draft value assumes general lmg usage.
 	
 -- below code is goofball legacy believed to reinitialize enemy melee values.	
 	self.npc_melee.baton.damage = 5
 	self.npc_melee.knife_1.damage = 7
 	self.npc_melee.fists.damage = 4
 -- end goofball legacy code block.
-
 -- Begin CRACKDOWN Turret values.
-	
+
 	self.swat_van_turret_module.HEALTH_INIT = 999999 -- functionally immortal.
 	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300
 	self.swat_van_turret_module.EXPLOSION_DMG_MUL = 3 -- base game value is 7.

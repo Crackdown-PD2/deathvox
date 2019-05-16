@@ -3,10 +3,10 @@
 		<texture load="true" path="guis/textures/crackdown"/>
 	</AddFiles>
 	<Localization default="english.txt" directory="loc"/>
-	<level ai_group_type="America" briefing_dialog="Play_pln_at1_brf_01" cube="cube_apply_heist_bank" id="arm_cro_CD" max_bags="48" music="heist">
-		<add file="levels/arm_cro_CD/add.xml"/>
+	<level ai_group_type="America" briefing_dialog="Play_pln_at1_brf_01" cube="cube_apply_heist_bank" id="cd_arm_cro" intro_event="Play_pln_at1_intro_02" max_bags="48" music="heist">
+		<add file="levels/cd_arm_cro/add.xml"/>
 		<assets/>
-		<include directory="levels/arm_cro_CD">
+		<include directory="levels/cd_arm_cro">
 			<file file="world.world" type="generic_xml"/>
 			<file file="continents.continents" type="custom_xml"/>
 			<file file="mission.mission" type="custom_xml"/>
@@ -23,9 +23,6 @@
 			<file file="mt_temp/mt_temp.mission" type="generic_xml"/>
 			<file file="cover_data.cover_data" type="custom_xml"/>
 		</include>
-		<intro_event>
-			<value_node value="Play_pln_at1_intro_02"/>
-		</intro_event>
 		<outro_event>
 			<value_node value="Play_pln_at1_end_01"/>
 			<value_node value="Play_pln_at1_end_02"/>
@@ -43,16 +40,13 @@
 			<value_node value="levels/narratives/armadillo/arm_cro/pc_only/pc_only"/>
 			<value_node value="levels/narratives/armadillo/arm_cro/editor_only/editor_only"/>
 			<value_node value="levels/narratives/armadillo/arm_cro/mt_temp/mt_temp"/>
+			<value_node value="levels/narratives/bain/shadow_raid/editor_only/editor_only"/>
 		</packages>
-		<script_data_mods directory="scriptdata">
-			<mod replacement="objectives.objective" replacement_type="custom_xml" target_ext="objective" target_path="gamedata/objectives">
-				<options merge_mode="add" mode="add"/>
-			</mod>
-		</script_data_mods>
+		<script_data_mods directory="scriptdata"/>
 	</level>
-	<narrative briefing_event="pln_at1_cbf_01" contact="bain" dlc="armored_transport" icon="guis/textures/crackdown" id="arm_cro" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_crossroads" region="street" spawn_chance_multiplier="0.5">
+	<narrative briefing_event="pln_at1_cbf_01" contact="bain" dlc="armored_transport" icon="guis/textures/crackdown" id="cd_arm_cro" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_crossroads" region="street" spawn_chance_multiplier="0.5">
 		<chain>
-			<table dlc="armored_transport" level_id="arm_cro_CD" type="d" type_id="heist_type_assault">
+			<table dlc="armored_transport" level_id="cd_arm_cro" type="d" type_id="heist_type_assault">
 				<mission_filter>
 					<value_node value="4"/>
 				</mission_filter>
@@ -74,7 +68,6 @@
 			<value_node value="cn_branchbank1"/>
 			<value_node value="cn_branchbank3"/>
 		</crimenet_videos>
-		<debrief_event/>
 		<experience_mul>
 			<value_node value="1"/>
 			<value_node value="1"/>

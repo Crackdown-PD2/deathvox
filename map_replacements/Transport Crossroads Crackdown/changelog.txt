@@ -1,26 +1,31 @@
+Version 15
+
 Current changes:
 Removed needless dev textures. 
-Moved some startup elements to dev area to begin mapping effects.
-Mapped and relocated spawn and startup structures.
-Set trucks to 8.
-Set loot per truck to 6.
-Set loot to jewelry
+Set trucks to 8. Created new randomization structure.
+Set loot per truck to 6. Believed working.
+Set loot to jewelry only. Now confirmed working.
 Placed 3 new sniper locations.
-Altered sniper loop to force 4 or 5 max.
-Locked extra cars to none to avoid link and block issue.
-Fix truckspawn.
-Fix sniper spawn.
-Fixed additional pair of sniper spawns.
+Altered sniper loop to force 4 max.
+Set required loot to 24.
 Loc file.
-Revised new sniper roofs for increased visibility.
-Fixed escape softlock issues.
-Applied starting friendly elements to limit damage on spawn.
-Added bain lines on sniper spawn.
+navmesh creation. 
+Fix failure to spawn trucks, courtesy of Whurrhurr.
+Fixed intro problem, courtesy of Whurrhurr.
+Potentially fixed filter loot error.
+Potentially fixed escape site based redirect block on some van positions. Not necessary?
+
+Rex Managed:
+    -Truck IF/ELSE elements
+    -Replacement Car elements
+    -Player Spawns
+    -Extra Cars
+    -Difficulty loot amount
+Fixed:
+    -Missing break_window for Truck 04
+Added:
+    -Debug elements on Trucks, Cars, Loot Reqs. and Escapes
+    
+Finally fixed remaining prop issues (lamps, trashcan, trees).    
 
 Todo:
-
-
-Notes:
-Note this heist was edited without consideration for lower difficulty adjustment.
-
-Note that immediately prior to launch, an irregularity in asset extraction caused a crash on load. We had to remove several props (all vent models from roofs) to make the map run. Some of these vents serve as cover; We have recorded their locations and will restore them in a later patch if it becomes possible and if time permits.

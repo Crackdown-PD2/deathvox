@@ -1,0 +1,24 @@
+Heist: Diamond Store
+Version: 7
+
+Current changes:
+Create filter
+Lock escapes to front of store
+Lock turret to yes
+Reactivate back sniper
+Lock side door to gone
+Lock cameras to Titan
+Loot set to 23
+2 additional civilians added to pool
+Lock keypad to security
+added gman position on back stairs
+localization applied
+camera spawnset adjusted
+Added one sniper, adjusted loop to slightly increase number.
+Fixed keypad issue on lower difficulties (thanks to Rex and Ranzer)
+
+Todo:
+Consider adding sniper(s) (no)
+Examine removing back stairs (no)
+
+Notes:

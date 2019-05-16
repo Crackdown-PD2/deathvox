@@ -30,7 +30,7 @@ if not _G.deathvox then
 			end
 		end
 		
-		_G.voiceline_framework:register_unit("pdth")
+		--[[_G.voiceline_framework:register_unit("pdth")
 		local fuck =  Application:nice_path( "./" .. ModPath .. "assets/oggs/voiceover/pdth", true )
 		for index, directory in pairs(file.GetDirectories(fuck)) do
 			local ass = Application:nice_path( "./" .. ModPath .. "assets/oggs/voiceover/pdth/" .. directory, true )
@@ -54,7 +54,7 @@ if not _G.deathvox then
 		_G.voiceline_framework:register_line_type("medicdozer", "heal")
 		for i = 1, 31 do
 			_G.voiceline_framework:register_voiceline("medicdozer", "heal", ModPath .. "assets/oggs/voiceover/medicdozer/heal" .. i .. ".ogg")
-		end
+		end]]--
 		_G.deathvox.grenadier_gas_duration = 15
 	else
 		
