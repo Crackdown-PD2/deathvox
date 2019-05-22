@@ -129,7 +129,7 @@ function TaserLogicAttack._upd_aim(data, my_data, reaction)
 		if tase then
 			shoot = true
 		elseif focus_enemy.verified then
-			if focus_enemy.verified_dis > 1500 or my_data.alert_t and data.t - my_data.alert_t < 6 then
+			if focus_enemy.verified_dis > 1500 then
 				shoot = true
 
 				if focus_enemy.verified_dis > 1500 and data.unit:anim_data().run then
