@@ -21,4 +21,136 @@
 		-->
 		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
 	</category>
+	<!--ENTRY RUBRIC BEGINS      	-->
+
+	<category id="light_ar">
+		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+			<!--
+				Ingame name: 	
+				Missing features:
+			-->
+	</category>	
+	<!--	ENTRY RUBRIC ENDS	-->
+	
+	
+	<!--COMPLETE CATEGORIES BEGIN    	-->
+
+	<!--COMPLETE CATEGORIES END     	-->
+
+
+	<!--	Assault Rifles Begin	-->
+	<category id="light_ar">
+		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+			<!--
+				Ingame name: 	
+				Missing features:
+			-->
+	</category>	
+
+	<category id="medium_ar">
+		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+			<!--
+				Ingame name: 	
+				Missing features:
+			-->
+	</category>	
+
+	<category id="heavy_ar">
+		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+			<!--
+				Ingame name: 	
+				Missing features:
+			-->
+	</category>
+	
+	<!--	Primary Shotguns Begin	-->
+	
+	<category id="primeshot_full_auto">
+		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+			<!--
+				Ingame name: 	
+				Missing features:
+			-->
+	</category>
+	
+	<category id="primeshot_semi_auto">
+		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+			<!--
+				Ingame name: 	
+				Missing features:
+			-->
+	</category>
+	
+	<category id="primeshot_pump">
+		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+			<!--
+				Ingame name: 	
+				Missing features:
+			-->
+	</category>
+	
+	<category id="primeshot_break">
+		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+			<!--
+				Ingame name: 	
+				Missing features:
+			-->
+	</category>
+	
+	<!--	Light Machine Guns Begin	-->
+	
+	<category id="lmg">
+		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+			<!--
+				Ingame name: 	
+				Missing features:
+			-->
+	</category>
+	
+	<!--	DMRs Begin	-->
+	
+	<category id="dmr">
+		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+			<!--
+				Ingame name: 	
+				Missing features:
+			-->
+	</category>
+	
+	<!--	Sniper Rifles Begin	-->
+	
+	<category id="light_sniper">
+		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+			<!--
+				Ingame name: 	
+				Missing features:
+			-->
+	</category>
+	
+	<category id="medium_sniper">
+		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+			<!--
+				Ingame name: 	
+				Missing features:
+			-->
+	</category>
+	
+	<category id="heavy_sniper">
+		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+			<!--
+				Ingame name: 	
+				Missing features:
+			-->
+	</category>
+	
+	<category id="AMR">
+		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+			<!--
+				Ingame name: 	
+				Missing features:
+			-->
+	</category>
+	
+	<!--	Akimbo Pistols Begin	-->
+	
 </weapons>
