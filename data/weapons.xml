@@ -42,57 +42,185 @@
 	<category id="ar_light">
 		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
 			<!--
-				Ingame name: 	
+				Ingame name: 	Amcar
 				Missing features:
 			-->
+		<weapon name="tecci" mag="100" ammo_pool="400" rof="667" dmg="50" acc="52" stb="100" concealment="10" threat="20" tact_reload="3" full_reload="3.2" equip_time="0.6" pickup_low="8" pickup_high="16" />
+			<!--
+				Ingame name: 	Bootleg 
+				Missing features: (treat as light)
+			-->
+		<weapon name="g36" mag="30" ammo_pool="300" rof="706" dmg="50" acc="92" stb="100" concealment="25" threat="14" tact_reload="2" full_reload="2.6" equip_time="0.6" pickup_low="9" pickup_high="18" />
+			<!--
+				Ingame name: 	JP36
+				Missing features:
+			-->
+		<weapon name="s552" mag="30" ammo_pool="300" rof="714" dmg="50" acc="60" stb="100" concealment="25" threat="14" tact_reload="1.5" full_reload="2.5" equip_time="0.7" pickup_low="8" pickup_high="16" />
+			<!--
+				Ingame name: 	Commando 553
+				Missing features:
+			-->
+		<weapon name="famas" mag="30" ammo_pool="300" rof="1000" dmg="50" acc="72" stb="100" concealment="30" threat="14" tact_reload="2.2" full_reload="2.9" equip_time="0.6" pickup_low="8" pickup_high="16" />
+			<!--
+				Ingame name: 	Clarion
+				Missing features:
+			-->
+		
 	</category>	
 
 	<category id="ar_medium">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="asval" mag="20" ammo_pool="180" rof="545" dmg="80" acc="92" stb="100" concealment="25" threat="15" tact_reload="1.2" full_reload="2.2" equip_time="0.5" pickup_low="7" pickup_high="12" />
 			<!--
-				Ingame name: 	
+				Ingame name: 	Valkyria 
+				Missing features: (note silenced)
+			-->
+		<weapon name="new_m4" mag="30" ammo_pool="210" rof="600" dmg="80" acc="100" stb="100" concealment="20" threat="14" tact_reload="2" full_reload="3" equip_time="0.6" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	CAR4 
+				Missing features: (has DMR kit)
+			-->
+		<weapon name="ak74" mag="30" ammo_pool="210" rof="652" dmg="80" acc="92" stb="100" concealment="20" threat="14" tact_reload="2.1" full_reload="3" equip_time="0.5" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	AK Rifle 
+				Missing features: (has DMR kit)
+			-->
+		<weapon name="g3" mag="20" ammo_pool="225" rof="652" dmg="80" acc="84" stb="100" concealment="20" threat="28" tact_reload="1.3" full_reload="1.8" equip_time="0.65" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	Gewehr 3 (Assault version)
 				Missing features:
 			-->
+		<weapon name="ak5" mag="30" ammo_pool="210" rof="706" dmg="80" acc="100" stb="100" concealment="20" threat="14" tact_reload="1.8" full_reload="2.5" equip_time="0.45" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	AK5
+				Missing features:
+			-->
+		<weapon name="l85a2" mag="30" ammo_pool="210" rof="723" dmg="80" acc="88" stb="100" concealment="20" threat="13" tact_reload="2.8" full_reload="3" equip_time="0.75" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	Queen's Wrath
+				Missing features:
+			-->
+		<weapon name="aug" mag="30" ammo_pool="210" rof="750" dmg="80" acc="80" stb="100" concealment="20" threat="20" tact_reload="2.2" full_reload="2.8" equip_time="0.5" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	UAR
+				Missing features:
+			-->
+		<weapon name="komodo" mag="30" ammo_pool="210" rof="800" dmg="80" acc="88" stb="100" concealment="20" threat="12" tact_reload="2" full_reload="3" equip_time="0.6" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	MTAR 21 AR Medium/Tempest-21 (unidentified)  
+				Missing features:
+			-->
+		<weapon name="galil" mag="30" ammo_pool="210" rof="845" dmg="80" acc="100" stb="76" concealment="20" threat="24" tact_reload="2.5" full_reload="3.4" equip_time="0.6" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	Gecko 7.62
+				Missing features:
+			-->
+		<weapon name="vhs" mag="30" ammo_pool="210" rof="857" dmg="80" acc="72" stb="100" concealment="20" threat="13" tact_reload="2." full_reload="3" equip_time="0.6" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	Lion's Roar
+				Missing features:
+			-->
+		<weapon name="corgi" mag="30" ammo_pool="210" rof="857" dmg="80" acc="72" stb="100" concealment="20" threat="13" tact_reload="2" full_reload="2.3" equip_time="0.6" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	Union 5.56
+				Missing features:
+			-->
+
 	</category>	
 
 	<category id="ar_heavy">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="akm" mag="30" ammo_pool="150" rof="561" dmg="110" acc="100" stb="100" concealment="15" threat="22" tact_reload="2.2" full_reload="3" equip_time="0.5" pickup_low="4" pickup_high="6" />
 			<!--
-				Ingame name: 	
+				Ingame name: 	AK.762
+				Missing features: has DMR kit
+			-->
+		<weapon name="akm_gold" mag="30" ammo_pool="150" rof="561" dmg="110" acc="100" stb="100" concealment="15" threat="22" tact_reload="2.2" full_reload="3" equip_time="0.5" pickup_low="4" pickup_high="6" />
+			<!--
+				Ingame name: 	Golden AK.762
+				Missing features: Has DMR kit, is made of butter
+			-->
+		<weapon name="scar" mag="20" ammo_pool="140" rof="612" dmg="110" acc="100" stb="90" concealment="15" threat="22" tact_reload="1.8" full_reload="2.4" equip_time="0.5" pickup_low="4" pickup_high="6" />
+			<!--
+				Ingame name: 	Eagle Heavy
 				Missing features:
+			-->
+		<weapon name="g3" mag="30" ammo_pool="140" rof="652" dmg="110" acc="100" stb="84" concealment="15" threat="26" tact_reload="1.3" full_reload="1.8" equip_time="0.65" pickup_low="4" pickup_high="6" />
+			<!--
+				Ingame name: 	Gewehr 3
+				Missing features: Has assault version and DMR kit
+			-->
+		<weapon name="flint" mag="30" ammo_pool="160" rof="652" dmg="110" acc="100" stb="100" concealment="15" threat="14" tact_reload="2" full_reload="3" equip_time="0.5" pickup_low="4" pickup_high="6" />
+			<!--
+				Ingame name: 	AK17
+				Missing features:
+			-->
+		<weapon name="fal" mag="30" ammo_pool="140" rof="698" dmg="110" acc="100" stb="86" concealment="15" threat="22" tact_reload="1.8" full_reload="2.4" equip_time="0.6" pickup_low="4" pickup_high="6" />
+			<!--
+				Ingame name: 	Falcon
+				Missing features:
+			-->
+		<weapon name="m16" mag="30" ammo_pool="150" rof="857" dmg="110" acc="96" stb="100" concealment="15" threat="20" tact_reload="2.2" full_reload="3" equip_time="0.6" pickup_low="4" pickup_high="6" />
+			<!--
+				Ingame name: 	AMR-16
+				Missing features: Has DMR Kit
 			-->
 	</category>
 	
 	<!--	Primary Shotguns Begin	-->
 	
 	<category id="shot_prime_full_auto">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="aa12" mag="8" ammo_pool="80" rof="300" dmg="60" acc="40" stb="60" concealment="15" threat="34" tact_reload="2.5" full_reload="2.75" equip_time="0.5" pickup_low="5" pickup_high="6" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: 	Steakout 12G
+				Missing features: Selective Fire
+			-->
+		<weapon name="saiga" mag="8" ammo_pool="80" rof="333" dmg="60" acc="40" stb="60" concealment="20" threat="34" tact_reload="2.5" full_reload="2.75" equip_time="0.6" pickup_low="5" pickup_high="6" />
+			<!--
+				Ingame name: 	IZHMA 12G
+				Missing features: Selective Fire
 			-->
 	</category>
 	
 	<category id="shot_prime_semi_auto">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="spas12" mag="8" ammo_pool="70" rof="300" dmg="110" acc="40" stb="80" concealment="20" threat="34" tact_reload="0.54" full_reload="4.32" equip_time="0.85" pickup_low="4" pickup_high="5" />
 			<!--
-				Ingame name: 	
+				Ingame name: 	Predator 12G
+				Missing features:
+			-->
+		<weapon name="benelli" mag="8" ammo_pool="70" rof="429" dmg="110" acc="40" stb="80" concealment="20" threat="31" tact_reload="0.54" full_reload="3.37" equip_time="0.85" pickup_low="4" pickup_high="5" />
+			<!--
+				Ingame name: 	M1014
 				Missing features:
 			-->
 	</category>
 	
 	<category id="shot_prime_pump">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="r870" mag="8" ammo_pool="50" rof="104" dmg="160" acc="40" stb="100" concealment="20" threat="34" tact_reload="0.54" full_reload="4.5" equip_time="0.85" pickup_low="2" pickup_high="3" />
 			<!--
-				Ingame name: 	
+				Ingame name: 	Reinfeld 880
 				Missing features:
 			-->
+		<weapon name="ksg" mag="10" ammo_pool="50" rof="104" dmg="160" acc="40" stb="100" concealment="20" threat="34" tact_reload="0.54" full_reload="5.64" equip_time="0.85" pickup_low="2" pickup_high="3" />
+			<!--
+				Ingame name: 	Raven
+				Missing features:
+			-->
+
 	</category>
 	
 	<category id="shot_prime_break">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="boot" mag="7" ammo_pool="28" rof="80" dmg="200" acc="40" stb="4" concealment="25" threat="34" tact_reload="1" full_reload="2.8" equip_time="0.85" pickup_low="1" pickup_high="2" />
 			<!--
-				Ingame name: 	
+				Ingame name: 	Breaker 12G
+				Missing features:
+			-->
+		<weapon name="b682" mag="2" ammo_pool="34" rof="500" dmg="200" acc="40" stb="4" concealment="25" threat="37" tact_reload="2" full_reload="2" equip_time="0.55" pickup_low="1" pickup_high="2" />
+			<!--
+				Ingame name: 	Joceline O/U
+				Missing features:
+			-->
+		<weapon name="huntsman" mag="2" ammo_pool="34" rof="500" dmg="200" acc="40" stb="4" concealment="25" threat="37" tact_reload="2" full_reload="2" equip_time="0.6" pickup_low="1" pickup_high="2" />
+			<!--
+				Ingame name: 	Mosconi 12G
 				Missing features:
 			-->
 	</category>
@@ -100,181 +228,504 @@
 	<!--	Light Machine Guns Begin	-->
 	
 	<category id="lmg">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="rpk" mag="100" ammo_pool="200" rof="750" dmg="150" acc="60" stb="68" concealment="5" threat="24" tact_reload="3" full_reload="4" equip_time="0.9" pickup_low="0.4" pickup_high="0.5" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: 	RPK 
+				Missing features: (small mag, moderate acc)
+			-->
+		<weapon name="hk21" mag="20" ammo_pool="260" rof="732" dmg="150" acc="60" stb="68" concealment="5" threat="43" tact_reload="3" full_reload="4" equip_time="0.9" pickup_low="0.4" pickup_high="0.6" />
+			<!--
+				Ingame name: 	Brenner-21 
+				Missing features: (low fire rate, low acc)
+			-->
+		<weapon name="par" mag="200" ammo_pool="300" rof="909" dmg="100" acc="80" stb="92" concealment="5" threat="34" tact_reload="3" full_reload="4" equip_time="0.9" pickup_low="0.5" pickup_high="0.6" />
+			<!--
+				Ingame name: 	KSP 58 
+				Missing features:(see KSP)
+			-->
+		<weapon name="m249" mag="200" ammo_pool="300" rof="909" dmg="100" acc="80" stb="88" concealment="5" threat="34" tact_reload="3" full_reload="4" equip_time="0.9" pickup_low="0.5" pickup_high="0.6" />
+			<!--
+				Ingame name: 	KSP 
+				Missing features:(large mag, very low acc)
+			-->
+		<weapon name="mg42" mag="150" ammo_pool="300" rof="1200" dmg="100" acc="84" stb="100" concealment="5" threat="34" tact_reload="3" full_reload="4" equip_time="0.9" pickup_low="0.5" pickup_high="0.6" />
+			<!--
+				Ingame name: 	Buzzsaw 42 
+				Missing features: (low acc massive fire rate)
 			-->
 	</category>
 	
 	<!--	DMRs Begin	-->
 	
 	<category id="dmr">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="contrabrand" mag="20" ammo_pool="60" rof="612" dmg="160" acc="100" stb="40" concealment="5" threat="2" tact_reload="2" full_reload="2.8" equip_time="0.5" pickup_low="3" pickup_high="4" />
 			<!--
-				Ingame name: 	
+				Ingame name: 	Little Friend
+				Missing features: Convert to light
+			-->
+		<weapon name="sub2000" mag="33" ammo_pool="66" rof="706" dmg="160" acc="100" stb="12" concealment="30" threat="31" tact_reload="2" full_reload="3" equip_time="0.9" pickup_low="3" pickup_high="4" />
+			<!--
+				Ingame name: 	Cavity 9mm
+				Missing features: Concealable DMR
+			-->
+		<weapon name="new_m14" mag="10" ammo_pool="80" rof="706" dmg="160" acc="100" stb="84" concealment="10" threat="34" tact_reload="2" full_reload="2.8" equip_time="0.55" pickup_low="3" pickup_high="4" />
+			<!--
+				Ingame name: 	M308
 				Missing features:
 			-->
+		<weapon name="ching" mag="8" ammo_pool="88" rof="600" dmg="160" acc="100" stb="52" concealment="20" threat="31" tact_reload="2.3" full_reload="1.4" equip_time="0.55" pickup_low="3" pickup_high="4" />
+			<!--
+				Ingame name: 	Galant
+				Missing features:
+			-->
+		<weapon name="new_m4" mag="30" ammo_pool="75" rof="600" dmg="160" acc="100" stb="60" concealment="10" threat="14" tact_reload="2" full_reload="3" equip_time="0.6" pickup_low="3" pickup_high="4" />
+			<!--
+				Ingame name: 	CAR4 (with DMR kit)
+				Missing features:
+			-->
+		<weapon name="ak74" mag="30" ammo_pool="75" rof="652" dmg="160" acc="100" stb="56" concealment="10" threat="14" tact_reload="2.1" full_reload="3" equip_time="0.5" pickup_low="3" pickup_high="4" />
+			<!--
+				Ingame name: 	AK Rifle (with DMR kit)
+				Missing features:
+			-->
+		<weapon name="akm" mag="30" ammo_pool="75" rof="561" dmg="160" acc="100" stb="80" concealment="10" threat="22" tact_reload="2.2" full_reload="3" equip_time="0.5" pickup_low="3" pickup_high="4" />
+			<!--
+				Ingame name: 	AK.762 (with DMR kit)
+				Missing features:
+			-->
+		<weapon name="akm_gold" mag="30" ammo_pool="75" rof="561" dmg="160" acc="100" stb="80" concealment="10" threat="22" tact_reload="2.2" full_reload="3" equip_time="0.5" pickup_low="3" pickup_high="4" />
+			<!--
+				Ingame name: 	Golden AK.762 (with DMR kit)
+				Missing features:
+			-->
+		<weapon name="m16" mag="30" ammo_pool="75" rof="857" dmg="160" acc="100" stb="60" concealment="10" threat="14" tact_reload="2.2" full_reload="3" equip_time="0.6" pickup_low="3" pickup_high="4" />
+			<!--
+				Ingame name: 	AMR-16 (with DMR kit)
+				Missing features:
+			-->
+		<weapon name="g3" mag="10" ammo_pool="75" rof="652" dmg="160" acc="100" stb="84" concealment="10" threat="26" tact_reload="1.3" full_reload="1.8" equip_time="0.65" pickup_low="3" pickup_high="4" />
+			<!--
+				Ingame name: 	Gewehr-3 (with DMR kit)
+				Missing features:
+			-->
+			
 	</category>
 	
 	<!--	Sniper Rifles Begin	-->
 	
 	<category id="sniper_light">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="tti" mag="20" ammo_pool="60" rof="150" dmg="190" acc="100" stb="28" concealment="15" threat="0" tact_reload="2" full_reload="3" equip_time="0.9" pickup_low="2.5" pickup_high="3" />
 			<!--
-				Ingame name: 	
+				Ingame name: 	Contractor
 				Missing features:
 			-->
+		<weapon name="wa2000" mag="10" ammo_pool="60" rof="150" dmg="190" acc="100" stb="28" concealment="25" threat="12" tact_reload="4" full_reload="5" equip_time="0.9" pickup_low="2.5" pickup_high="3" />
+			<!--
+				Ingame name: 	Lebensauger
+				Missing features: Lemon Sorbet
+			-->
+		<weapon name="grv" mag="10" ammo_pool="60" rof="150" dmg="190" acc="100" stb="20" concealment="15" threat="12" tact_reload="2" full_reload="3" equip_time="0.9" pickup_low="2.5" pickup_high="3" />
+			<!--
+				Ingame name: 	Grom
+				Missing features: (unidentified). Note init is different from main entry, siltstone   
+			-->
 	</category>
+
 	
 	<category id="sniper_medium">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="msr" mag="10" ammo_pool="60" rof="60" dmg="250" acc="100" stb="20" concealment="10" threat="26" tact_reload="2.2" full_reload="3" equip_time="0.7" pickup_low="2.5" pickup_high="3" />
 			<!--
-				Ingame name: 	
+				Ingame name: 	Rattlesnake
 				Missing features:
+			-->
+		<weapon name="winchester1874" mag="15" ammo_pool="75" rof="86" dmg="250" acc="100" stb="60" concealment="20" threat="28" tact_reload="0.6" full_reload="0.6" equip_time="0.9" pickup_low="3" pickup_high="4" />
+			<!--
+				Ingame name: 	Repeater
+				Missing features: (lever action)
 			-->
 	</category>
 	
 	<category id="sniper_heavy">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="model70" mag="5" ammo_pool="32" rof="60" dmg="480" acc="100" stb="48" concealment="10" threat="6" tact_reload="3" full_reload="4" equip_time="0.75" pickup_low="1.5" pickup_high="2.5" />
 			<!--
-				Ingame name: 	
+				Ingame name: 	Platypus 70
+				Missing features:
+			-->
+		<weapon name="r93" mag="6" ammo_pool="30" rof="50" dmg="480" acc="100" stb="48" concealment="10" threat="31" tact_reload="2.3" full_reload="3.3" equip_time="0.65" pickup_low="1.5" pickup_high="2.5" />
+			<!--
+				Ingame name: R93	
+				Missing features:
+			-->
+		<weapon name="mosin" mag="5" ammo_pool="25" rof="60" dmg="480" acc="100" stb="20" concealment="15" threat="28" tact_reload="3.3" full_reload="3.3" equip_time="0.5" pickup_low="1.5" pickup_high="2.5" />
+			<!--
+				Ingame name: Nagant	
+				Missing features:
+			-->
+		<weapon name="desertfox" mag="5" ammo_pool="39" rof="69" dmg="480" acc="100" stb="32" concealment="25" threat="28" tact_reload="2.2" full_reload="3.2" equip_time="0.75" pickup_low="1.5" pickup_high="2.5" />
+			<!--
+				Ingame name: Desert Fox	
 				Missing features:
 			-->
 	</category>
 	
 	<category id="sniper_amr">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="m95" mag="5" ammo_pool="20" rof="40" dmg="3500" acc="100" stb="0" concealment="1" threat="42" tact_reload="3.5" full_reload="5" equip_time="0.9" pickup_low="0.25" pickup_high="0.75" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: Thanatos	
+				Missing features: reach out and touch somebody
 			-->
 	</category>
 	
 	<!--	Akimbo Pistols Begin	-->
 	
 	<category id="akim_mach">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="x_g18c" mag="64" ammo_pool="640" rof="909" dmg="50" acc="52" stb="100" concealment="30" threat="11" tact_reload="2.75" full_reload="3" equip_time="0.5" pickup_low="9" pickup_high="18" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: STRYK 	
+				Missing features: (unidentified), brrrat
 			-->
 	</category>
 	
 	<category id="akim_pea">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="x_ppk" mag="28" ammo_pool="360" rof="360" dmg="20" acc="100" stb="100" concealment="35" threat="0" tact_reload="1.8" full_reload="2.8" equip_time="0.5" pickup_low="4" pickup_high="8" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: Gruber Kurz	
+				Missing features: you might as well slap them, it does more damage
 			-->
 	</category>
 	
 	<category id="akim_pocket">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="x_g17" mag="34" ammo_pool="360" rof="480" dmg="50" acc="92" stb="100" concealment="30" threat="8" tact_reload="1.5" full_reload="2.5" equip_time="0.5" pickup_low="3" pickup_high="6" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: Chimano 88	
+				Missing features: attack of the clones
+			-->
+		<weapon name="x_legacy" mag="26" ammo_pool="360" rof="545" dmg="50" acc="92" stb="100" concealment="30" threat="9" tact_reload="1.5" full_reload="2.5" equip_time="0.5" pickup_low="3" pickup_high="6" />
+			<!--
+				Ingame name: M13	
+				Missing features: (unidentified)
+			-->
+		<weapon name="x_jowi" mag="20" ammo_pool="360" rof="667" dmg="50" acc="92" stb="100" concealment="30" threat="9" tact_reload="1.5" full_reload="2.5" equip_time="0.5" pickup_low="3" pickup_high="6" />
+			<!--
+				Ingame name: Chimano Compact	
+				Missing features: 
+			-->
+		<weapon name="x_shrew" mag="34" ammo_pool="360" rof="667" dmg="50" acc="92" stb="100" concealment="30" threat="8" tact_reload="1.5" full_reload="2.5" equip_time="0.5" pickup_low="3" pickup_high="6" />
+			<!--
+				Ingame name: Crosskill Guards	
+				Missing features: 
+			-->
+		<weapon name="x_b92fs" mag="28" ammo_pool="360" rof="667" dmg="50" acc="92" stb="100" concealment="30" threat="6" tact_reload="1.5" full_reload="2.5" equip_time="0.5" pickup_low="3" pickup_high="6" />
+			<!--
+				Ingame name: Bernetti 9	
+				Missing features: 
 			-->
 	</category>
 	
 	<category id="akim_handgun">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="x_1911" mag="20" ammo_pool="180" rof="361" dmg="80" acc="88" stb="48" concealment="30" threat="11" tact_reload="2.5" full_reload="3" equip_time="0.5" pickup_low="2" pickup_high="5" />
 			<!--
-				Ingame name: 	
+				Ingame name: Crosskills	
 				Missing features:
 			-->
+		<weapon name="x_packrat" mag="30" ammo_pool="180" rof="361" dmg="80" acc="88" stb="48" concealment="30" threat="9" tact_reload="2.5" full_reload="3" equip_time="0.5" pickup_low="2" pickup_high="5" />
+			<!--
+				Ingame name: Contractors
+				Missing features: Not to be confused with the sniper of the exact same name
+			-->
+		<weapon name="x_p226" mag="40" ammo_pool="180" rof="361" dmg="80" acc="88" stb="48" concealment="30" threat="11" tact_reload="2.5" full_reload="3" equip_time="0.5" pickup_low="2" pickup_high="5" />
+			<!--
+				Ingame name: Signature .40s
+				Missing features: (unidentified)
+			-->
+		<weapon name="x_c96" mag="40" ammo_pool="180" rof="361" dmg="80" acc="88" stb="48" concealment="30" threat="10" tact_reload="2.5" full_reload="3" equip_time="0.5" pickup_low="2" pickup_high="5" />
+			<!--
+				Ingame name: Broomsticks
+				Missing features: (unidentified)
+			-->
+		<weapon name="x_usp" mag="50" ammo_pool="180" rof="361" dmg="80" acc="88" stb="48" concealment="30" threat="13" tact_reload="2.5" full_reload="3" equip_time="0.5" pickup_low="2" pickup_high="5" />
+			<!--
+				Ingame name: Interceptor 45s	
+				Missing features:
+			-->
+		<weapon name="x_hs2000" mag="54" ammo_pool="180" rof="361" dmg="80" acc="88" stb="48" concealment="30" threat="11" tact_reload="2.5" full_reload="3" equip_time="0.5" pickup_low="2" pickup_high="5" />
+			<!--
+				Ingame name: LEOs	
+				Missing features: (unidentified)
+			-->
+		<weapon name="x_g22c" mag="32" ammo_pool="180" rof="361" dmg="80" acc="88" stb="48" concealment="30" threat="11" tact_reload="2.5" full_reload="3" equip_time="0.5" pickup_low="2" pickup_high="5" />
+			<!--
+				Ingame name: Chimano Customs	
+				Missing features:
+			-->
+
 	</category>
 	
 	<category id="akim_handcannon">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="x_c96" mag="40" ammo_pool="90" rof="361" dmg="110" acc="84" stb="36" concealment="25" threat="0" tact_reload="2.75" full_reload="3" equip_time="0.5" pickup_low="1.5" pickup_high="3" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: 	Broomsticks (L)
+				Missing features: (unidentified) (L?)
 			-->
+		<weapon name="x_deagle" mag="20" ammo_pool="90" rof="240" dmg="110" acc="84" stb="36" concealment="25" threat="24" tact_reload="2.75" full_reload="3" equip_time="0.5" pickup_low="1.5" pickup_high="3" />
+			<!--
+				Ingame name: 	Deagles
+				Missing features: 
+			-->
+		<weapon name="x_breech" mag="16" ammo_pool="90" rof="361" dmg="110" acc="84" stb="36" concealment="25" threat="9" tact_reload="2.75" full_reload="3" equip_time="0.5" pickup_low="1.5" pickup_high="3" />
+			<!--
+				Ingame name: 	Parabellums
+				Missing features: (unidentified) 
+			-->
+		<weapon name="x_sparrow" mag="24" ammo_pool="90" rof="361" dmg="110" acc="84" stb="36" concealment="25" threat="9" tact_reload="2.75" full_reload="3" equip_time="0.5" pickup_low="1.5" pickup_high="3" />
+			<!--
+				Ingame name: 	Baby Deagles
+				Missing features: (unidentified)
+			-->
+		<weapon name="x_p114" mag="28" ammo_pool="90" rof="361" dmg="110" acc="84" stb="36" concealment="25" threat="9" tact_reload="2.75" full_reload="3" equip_time="0.5" pickup_low="1.5" pickup_high="3" />
+			<!--
+				Ingame name: 	White Streaks
+				Missing features: (unidentified)
+			-->
+
 	</category>
 	
 	<category id="akim_revolver">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="x_2006m" mag="12" ammo_pool="72" rof="361" dmg="160" acc="80" stb="0" concealment="25" threat="24" tact_reload="1" full_reload="2" equip_time="0.5" pickup_low="1" pickup_high="2" />
 			<!--
-				Ingame name: 	
+				Ingame name: 	Matever .357s
 				Missing features:
 			-->
+		<weapon name="x_rage" mag="12" ammo_pool="72" rof="361" dmg="160" acc="80" stb="0" concealment="25" threat="24" tact_reload="1" full_reload="2" equip_time="0.5" pickup_low="1" pickup_high="2" />
+			<!--
+				Ingame name: 	Bronco .44s
+				Missing features:
+			-->
+		<weapon name="x_chinchilla" mag="12" ammo_pool="72" rof="361" dmg="160" acc="80" stb="0" concealment="25" threat="24" tact_reload="1" full_reload="2" equip_time="0.5" pickup_low="1" pickup_high="2" />
+			<!--
+				Ingame name: 	Castigo .44s
+				Missing features:
+			-->
+
 	</category>
 	
 	<!--	Akimbo SMGs Begin	-->
 	
 		<category id="akim_smg_light">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="x_uzi" mag="80" ammo_pool="320" rof="698" dmg="50" acc="80" stb="100" concealment="25" threat="13" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="8" pickup_high="16" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: 	uzis
+				Missing features: (unidentified)
 			-->
+			<weapon name="x_shepheard" mag="100" ammo_pool="320" rof="750" dmg="50" acc="60" stb="100" concealment="25" threat="13" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="8" pickup_high="16" />
+			<!--
+				Ingame name: 	Signature SMGs
+				Missing features: (unidentified)
+			-->
+			<weapon name="x_mp5" mag="60" ammo_pool="320" rof="750" dmg="50" acc="72" stb="100" concealment="25" threat="11" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="8" pickup_high="16" />
+			<!--
+				Ingame name: 	Compact-5s
+				Missing features: 
+			-->
+			<weapon name="x_tec9" mag="40" ammo_pool="320" rof="896" dmg="50" acc="52" stb="100" concealment="30" threat="8" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="8" pickup_high="16" />
+			<!--
+				Ingame name: 	Blaster 9mms
+				Missing features: (unidentified)
+			-->
+			<weapon name="x_mp9" mag="60" ammo_pool="320" rof="952" dmg="50" acc="52" stb="100" concealment="25" threat="9" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="8" pickup_high="16" />
+			<!--
+				Ingame name: 	CMPs
+				Missing features: (unidentified)
+			-->
+			<weapon name="x_scorpion" mag="40" ammo_pool="320" rof="100" dmg="50" acc="52" stb="100" concealment="30" threat="8" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="8" pickup_high="16" />
+			<!--
+				Ingame name: 	Cobras
+				Missing features: (unidentified)
+			-->
+			<weapon name="x_baka" mag="64" ammo_pool="320" rof="1200" dmg="50" acc="56" stb="100" concealment="25" threat="11" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="8" pickup_high="16" />
+			<!--
+				Ingame name: 	Micro Uzis
+				Missing features: (unidentified)
+			-->
+
 	</category>
 	
 	<category id="akim_smg_medium">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+			<weapon name="x_olympic" mag="58" ammo_pool="240" rof="682" dmg="70" acc="92" stb="100" concealment="25" threat="20" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="6" pickup_high="10" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: 	Para
+				Missing features: (unidentified)
 			-->
+			<weapon name="x_m1928" mag="100" ammo_pool="240" rof="723" dmg="70" acc="88" stb="100" concealment="20" threat="13" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	Typewriters
+				Missing features: (unidentified)
+			-->
+			<weapon name="x_sr2" mag="64" ammo_pool="240" rof="750" dmg="70" acc="84" stb="100" concealment="25" threat="9" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	Heathers
+				Missing features: 
+			-->
+			<weapon name="x_p90" mag="100" ammo_pool="240" rof="909" dmg="70" acc="80" stb="100" concealment="20" threat="13" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	Kobous 90s
+				Missing features: (unidentified)
+			-->
+			<weapon name="x_mp7" mag="40" ammo_pool="240" rof="952" dmg="70" acc="88" stb="100" concealment="25" threat="8" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	SpecOpses
+				Missing features: (unidentified)
+			-->
+			<weapon name="x_mac10" mag="80" ammo_pool="240" rof="1000" dmg="70" acc="84" stb="100" concealment="20" threat="11" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	Mark 10s
+				Missing features: (unidentified)
+			-->
+			<weapon name="x_polymer" mag="60" ammo_pool="240" rof="1200" dmg="70" acc="88" stb="100" concealment="20" threat="11" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	Kross Vertexes
+				Missing features: (unidentified)
+			-->
+			<weapon name="x_cobray" mag="64" ammo_pool="240" rof="1200" dmg="70" acc="72" stb="100" concealment="20" threat="20" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	Jacket's Pieces
+				Missing features: (unidentified)
+			-->
+
 	</category>
 	
 	<category id="akim_smg_heavy">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+			<weapon name="x_sterling" mag="40" ammo_pool="160" rof="545" dmg="100" acc="60" stb="100" concealment="17" threat="13" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="4" pickup_high="6" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: 	Patchettes
+				Missing features: (unidentified)
 			-->
+			<weapon name="x_erma" mag="80" ammo_pool="160" rof="600" dmg="100" acc="68" stb="100" concealment="20" threat="11" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="4" pickup_high="6" />
+			<!--
+				Ingame name: 	MP40s
+				Missing features: (unidentified)
+			-->
+			<weapon name="x_m45" mag="80" ammo_pool="160" rof="600" dmg="100" acc="60" stb="100" concealment="25" threat="10" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="4" pickup_high="6" />
+			<!--
+				Ingame name: 	Swedish Ks
+				Missing features: (unidentified)
+			-->
+			<weapon name="x_schakal" mag="60" ammo_pool="160" rof="652" dmg="100" acc="64" stb="100" concealment="20" threat="11" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="4" pickup_high="6" />
+			<!--
+				Ingame name: 	Jackals
+				Missing features: (unidentified)
+			-->
+			<weapon name="x_coal" mag="128" ammo_pool="160" rof="652" dmg="100" acc="56" stb="100" concealment="24" threat="11" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="4" pickup_high="6" />
+			<!--
+				Ingame name: 	Tatonkas
+				Missing features: (unidentified)
+			-->
+			<weapon name="x_hajk" mag="68" ammo_pool="160" rof="750" dmg="100" acc="64" stb="100" concealment="19" threat="11" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="4" pickup_high="6" />
+			<!--
+				Ingame name: 	CR 805B
+				Missing features: (unidentified)
+			-->
+			<weapon name="x_akmsu" mag="68" ammo_pool="160" rof="822" dmg="100" acc="64" stb="100" concealment="20" threat="24" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="4" pickup_high="6" />
+			<!--
+				Ingame name: 	Krinkovs
+				Missing features: 
+			-->
+
 	</category>
 	
 	<!--	Akimbo Shotguns Begin	-->
 	
 	<category id="akim_shot">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="x_basset" mag="16" ammo_pool="96" rof="333" dmg="30" acc="40" stb="28" concealment="20" threat="34" tact_reload="3" full_reload="3.5" equip_time="0.5" pickup_low="5" pickup_high="6" />
 			<!--
-				Ingame name: 	
+				Ingame name: 	Brothers Grimm
 				Missing features:
+			-->
+		<weapon name="x_rota" mag="12" ammo_pool="72" rof="333" dmg="80" acc="40" stb="24" concealment="20" threat="34" tact_reload="3" full_reload="3.5" equip_time="0.5" pickup_low="4" pickup_high="5" />
+			<!--
+				Ingame name: 	Goliath
+				Missing features: (unidentified)
+			-->
+		<weapon name="x_judge" mag="10" ammo_pool="60" rof="500" dmg="180" acc="40" stb="0" concealment="30" threat="34" tact_reload="3" full_reload="3.5" equip_time="0.5" pickup_low="0.6" pickup_high="1.5" />
+			<!--
+				Ingame name: 	Judge
+				Missing features: (unidentified)
 			-->
 	</category>
 	
 	<!--	Primary Special Weapons Begin	-->
 	
 	<category id="heavy_weap">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="shuno" mag="800" ammo_pool="400" rof="2000" dmg="100" acc="60" stb="68" concealment="0" threat="42" tact_reload="10" full_reload="10" equip_time="0.9" pickup_low="0.1" pickup_high="0.2" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: 	XL 5.56 Microgun
+				Missing features: (unidentified)
+			-->
+		<weapon name="m134" mag="800" ammo_pool="400" rof="3000" dmg="100" acc="60" stb="68" concealment="0" threat="42" tact_reload="10" full_reload="10" equip_time="0.9" pickup_low="0.1" pickup_high="0.2" />
+			<!--
+				Ingame name: 	Vulcan
+				Missing features: 
 			-->
 	</category>
 	
 	<category id="bow_cross">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="ecp" mag="6" ammo_pool="30" rof="120" dmg="700" acc="100" stb="100" concealment="20" threat="10" tact_reload="3" full_reload="3" equip_time="0.5" pickup_low="0" pickup_high="0" />
 			<!--
-				Ingame name: 	
+				Ingame name: 	Airbow
+				Missing features:
+			-->
+		<weapon name="frankish" mag="6" ammo_pool="50" rof="40" dmg="750" acc="100" stb="100" concealment="20" threat="10" tact_reload="1" full_reload="1" equip_time="0.5" pickup_low="0" pickup_high="0" />
+			<!--
+				Ingame name: 	L. Crossbow
+				Missing features:
+			-->
+		<weapon name="plainsrider" mag="1" ammo_pool="50" rof="300" dmg="1000" acc="100" stb="100" concealment="30" threat="37" tact_reload="1" full_reload="1" equip_time="0.55" pickup_low="0" pickup_high="0" />
+			<!--
+				Ingame name: 	Plainsrider
+				Missing features:
+			-->
+		<weapon name="elastic" mag="1" ammo_pool="30" rof="300" dmg="2000" acc="100" stb="100" concealment="30" threat="37" tact_reload="1.3" full_reload="1.3" equip_time="0.85" pickup_low="0" pickup_high="0" />
+			<!--
+				Ingame name: 	DECA Compound
+				Missing features: (unidentified)
+			-->
+		<weapon name="long" mag="1" ammo_pool="35" rof="300" dmg="2000" acc="100" stb="100" concealment="30" threat="37" tact_reload="1.5" full_reload="1.5" equip_time="0.85" pickup_low="0" pickup_high="0" />
+			<!--
+				Ingame name: 	English Longbow
+				Missing features:
+			-->
+		<weapon name="arblast" mag="1" ammo_pool="37" rof="21" dmg="2000" acc="100" stb="100" concealment="30" threat="10" tact_reload="2" full_reload="2" equip_time="0.5" pickup_low="0" pickup_high="0" />
+			<!--
+				Ingame name: 	H. Crossbow
 				Missing features:
 			-->
 	</category>
 	
 	<category id="gl_prime">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="gre_m79" mag="1" ammo_pool="6" rof="30" dmg="1100" acc="100" stb="100" concealment="25" threat="37" tact_reload="3.1" full_reload="3.1" equip_time="0.6" pickup_low="0.05" pickup_high="0.1" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: GL40 	
+				Missing features: (primary, single shot)
+			-->
+		<weapon name="m32" mag="6" ammo_pool="12" rof="60" dmg="1100" acc="100" stb="100" concealment="5" threat="37" tact_reload="3.96" full_reload="13.96" equip_time="0.85" pickup_low="0.05" pickup_high="0.1" />
+			<!--
+				Ingame name: Piglet 	
+				Missing features: (primary, large cap)
 			-->
 	</category>
 	
 	<category id="flame_prime">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="flamethrower_mk2" mag="900" ammo_pool="900" rof="2000" dmg="100" acc="0" stb="0" concealment="10" threat="37" tact_reload="8.5" full_reload="8.5" equip_time="0.85" pickup_low="1" pickup_high="2" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: 	Flamethrower Mk.1
+				Missing features: thanks ovk
 			-->
 	</category>
 	
 	<category id="saw">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="saw" mag="150" ammo_pool="300" rof="400" dmg="80" acc="8" stb="40" concealment="20" threat="43" tact_reload="3.75" full_reload="3.75" equip_time="0.85" pickup_low="0" pickup_high="0" />
 			<!--
-				Ingame name: 	
+				Ingame name: 	OVE9000 Saw
 				Missing features:
 			-->
 	</category>
