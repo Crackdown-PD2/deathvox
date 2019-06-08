@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <assets base_path="assets/" target="scripted" load_group="fbicops">
 
-	<group name="units/pd2_mod_fbi/characters/">
-		<!--FBI Medic-->						
+	<group name="units/pd2_mod_gageammo/characters/">
+	
 		<file :name="ene_deathvox_fbi_medic/ene_deathvox_fbi_medic.unit" load="true"/>
 		<file :name="ene_deathvox_fbi_medic/ene_deathvox_fbi_medic_husk.unit" load="true"/>
 		<file :name="ene_deathvox_fbi_medic/ene_medic_df.texture" force="false"/>
@@ -12,8 +12,7 @@
 		<file :name="ene_deathvox_fbi_medic/ene_deathvox_fbi_medic.object" force="false"/>
 		<file :name="ene_deathvox_fbi_medic/ene_deathvox_fbi_medic.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_fbi_medic/ene_deathvox_fbi_medic.model" force="false"/>
-		
-		<!--FBI Taser-->					
+
 		<file :name="ene_deathvox_fbi_taser/ene_deathvox_fbi_taser.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_taser/ene_deathvox_fbi_taser_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_taser/ene_deathvox_fbi_taser_contour.material_config" force="false"/>
@@ -23,7 +22,7 @@
 		<file :name="ene_deathvox_fbi_taser/ene_deathvox_fbi_taser.model" force="false"/>
 		<file :name="ene_deathvox_fbi_taser/taser_body_df.texture" force="false"/>
 		
-		<!--FBI SWAT AR-->					
+		
 		<file :name="ene_deathvox_fbi_swat/ene_deathvox_fbi_swat.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_swat/ene_deathvox_fbi_swat_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_swat/ene_deathvox_fbi_swat_contour.material_config" force="false"/>
@@ -31,26 +30,7 @@
 		<file :name="ene_deathvox_fbi_swat/ene_deathvox_fbi_swat.object" force="false"/>
 		<file :name="ene_deathvox_fbi_swat/ene_deathvox_fbi_swat.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_fbi_swat/ene_deathvox_fbi_swat.model" force="false"/>
-				
-		<!--FBI SWAT Heavy AR-->					
-		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat.unit" load="true" force="false"/>
-		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_husk.unit" load="true" force="false"/>
-		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat.material_config" force="false"/>
-		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat.object" force="false"/>
-		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat.model" force="false"/>
 		
-		<!--FBI SWAT Heavy Shotgunner-->					
-		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot.unit" load="true" force="false"/>
-		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot_husk.unit" load="true" force="false"/>
-		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot_contour.material_config" force="false"/>
-		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot.material_config" force="false"/>
-		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot.object" force="false"/>
-		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot.model" force="false"/>
-	
-		<!--FBI SWAT Shotgunner-->					
 		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot_contour.material_config" force="false"/>
@@ -59,7 +39,31 @@
 		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.model" force="false"/>
 		
-		<!--Blackdozer-->				
+		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat.object" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat.model" force="false"/>
+		
+		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot.object" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot.model" force="false"/>
+	
+	
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot_husk.unit" load="true" force="false"/>
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot_contour.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.material_config" force="false"/>
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.object" force="false"/>
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.cooked_physics" force="false"/>
+		<file :name="ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot.model" force="false"/>
+		
 		<file :name="ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer_contour.material_config" force="false"/>
@@ -69,7 +73,6 @@
 		<file :name="ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer.model" force="false"/>
 		<file :name="ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer.sequence_manager" force="false"/>
 		
-		<!--Greendozer-->				
 		<file :name="ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer_contour.material_config" force="false"/>
@@ -82,7 +85,6 @@
 		<file :name="ene_deathvox_fbi_shield/ene_deathvox_fbi_shield.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_shield/ene_deathvox_fbi_shield_husk.unit" load="true" force="false"/>
 		
-		<!--FBI Cloaker-->				
 		<file :name="ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker_contour.material_config" force="false"/>
@@ -93,7 +95,6 @@
 		<file :name="ene_deathvox_fbi_cloaker/spook_heavy_df.texture" force="false"/>
 		<file :name="ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker.sequence_manager" force="false"/>
 		
-		<!--FBI Rookie-->				
 		<file :name="ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie_contour.material_config" force="false"/>
@@ -102,7 +103,6 @@
 		<file :name="ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie.model" force="false"/>
 		
-		<!--FBI Veteran-->		
 		<file :name="ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran_contour.material_config" force="false"/>
@@ -111,7 +111,6 @@
 		<file :name="ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran.model" force="false"/>
 		
-		<!--FBI HRT-->				
 		<file :name="ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt_contour.material_config" force="false"/>
@@ -119,14 +118,6 @@
 		<file :name="ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt.object" force="false"/>
 		<file :name="ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt.model" force="false"/>
-
-		<!--FBI Heavy SWAT Helmet-->				
-		<file :name="ene_acc_fbi_swat_helmet_heavy/ene_acc_fbi_swat_helmet_heavy.unit" load="true" force="false"/>
-		<file :name="ene_acc_fbi_swat_helmet_heavy/ene_acc_fbi_swat_helmet_heavy.material_config" force="false"/>
-		<file :name="ene_acc_fbi_swat_helmet_heavy/ene_acc_fbi_swat_helmet_heavy.object" force="false"/>
-		<file :name="ene_acc_fbi_swat_helmet_heavy/ene_acc_fbi_swat_helmet_heavy.sequence_manager" force="false"/>		
-		<file :name="ene_acc_fbi_swat_helmet_heavy/ene_acc_fbi_swat_helmet_heavy.cooked_physics" force="false"/>
-		<file :name="ene_acc_fbi_swat_helmet_heavy/ene_acc_fbi_swat_helmet_heavy.model" force="false"/>		
 	
 	</group>
 </assets>
