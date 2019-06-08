@@ -4140,19 +4140,6 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_gensec_heavyswatshot",
 			"ene_deathvox_gensec_heavyswat",
 			"ene_deathvox_gensec_cloaker",
-			"ene_deathvox_fbi_veteran",
-			"ene_deathvox_fbi_taser",
-			"ene_deathvox_fbi_swatshot",
-			"ene_deathvox_fbi_swat",
-			"ene_deathvox_fbi_shield",
-			"ene_deathvox_fbi_rookie",
-			"ene_deathvox_fbi_medic",
-			"ene_deathvox_fbi_hrt",
-			"ene_deathvox_fbi_heavyswatshot",
-			"ene_deathvox_fbi_heavyswat",
-			"ene_deathvox_fbi_greendozer",
-			"ene_deathvox_fbi_cloaker",
-			"ene_deathvox_fbi_blackdozer",
 			"ene_deathvox_cop_taser",
 			"ene_deathvox_cop_swatshot",
 			"ene_deathvox_cop_swat",
@@ -4163,7 +4150,12 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_cop_pistol",
 			"ene_deathvox_cop_medic",
 			"ene_deathvox_cop_heavyswatshot",
-			"ene_deathvox_cop_heavyswat",
+			"ene_deathvox_cop_heavyswat"
+		}
+	}
+	char_map.classic = { --no commas needed when starting a new character map.
+		path = "units/pd2_mod_classic/characters/",
+		list = {
 			"ene_deathvox_classic_blackdozer",
 			"ene_deathvox_classic_cloaker",
 			"ene_deathvox_classic_cop_pistol",
@@ -4182,6 +4174,24 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_classic_taser",
 			"ene_deathvox_classic_veteran"
 		}
-	}
+	}	
+	char_map.fbi = {
+		path = "units/pd2_mod_fbi/characters/",
+		list = {
+			"ene_deathvox_fbi_veteran",
+			"ene_deathvox_fbi_taser",
+			"ene_deathvox_fbi_swatshot",
+			"ene_deathvox_fbi_swat",
+			"ene_deathvox_fbi_shield",
+			"ene_deathvox_fbi_rookie",
+			"ene_deathvox_fbi_medic",
+			"ene_deathvox_fbi_hrt",
+			"ene_deathvox_fbi_heavyswatshot",
+			"ene_deathvox_fbi_heavyswat",
+			"ene_deathvox_fbi_greendozer",
+			"ene_deathvox_fbi_cloaker",
+			"ene_deathvox_fbi_blackdozer",
+		}
+	}		
 	return char_map
 end

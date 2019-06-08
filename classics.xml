@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <assets base_path="assets/" target="scripted" load_group="classiccops">
 
-	<group name="units/pd2_mod_gageammo/characters/">
+	<group name="units/pd2_mod_classic/characters/">
 		<file name="units/characters/enemies/textures/police_force_df.texture" force="false"/>	
 		<file name="units/characters/enemies/textures/police_force_nm.texture" force="false"/>	
 		<file :name="ene_deathvox_classic_blackdozer.sequence_manager" force="false"/>
@@ -196,15 +196,14 @@
 		<file :name="ene_deathvox_classic_cloaker/ene_spook_classic_nvg_df.texture" force="false"/>
 		<file :name="ene_deathvox_classic_cloaker/ene_spook_classic_nvg_il.texture" force="false"/>
 		<file :name="ene_deathvox_classic_cloaker/ene_spook_classic_gasmask_df.texture" force="false"/>
-	
+
 		<file :name="ene_deathvox_classic_medic/ene_deathvox_classic_medic.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_classic_medic/ene_deathvox_classic_medic_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_classic_medic/ene_deathvox_classic_medic_contour.material_config" force="false"/>
 		<file :name="ene_deathvox_classic_medic/ene_deathvox_classic_medic.material_config" force="false"/>
 		<file :name="ene_deathvox_classic_medic/ene_deathvox_classic_medic.object" force="false"/>
 		<file :name="ene_deathvox_classic_medic/ene_deathvox_classic_medic.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_classic_medic/ene_deathvox_classic_medic.model" force="false"/>
-	
+		<file :name="ene_deathvox_classic_medic/ene_deathvox_classic_medic.model" force="false"/>		
 
 	</group>
 </assets>
