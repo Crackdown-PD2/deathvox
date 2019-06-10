@@ -4163,7 +4163,12 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_cop_pistol",
 			"ene_deathvox_cop_medic",
 			"ene_deathvox_cop_heavyswatshot",
-			"ene_deathvox_cop_heavyswat",
+			"ene_deathvox_cop_heavyswat"
+		}
+	}
+	char_map.classic = {
+		path = "units/pd2_mod_classic/characters/",
+		list = {
 			"ene_deathvox_classic_blackdozer",
 			"ene_deathvox_classic_cloaker",
 			"ene_deathvox_classic_cop_pistol",
@@ -4182,6 +4187,6 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_classic_taser",
 			"ene_deathvox_classic_veteran"
 		}
-	}
+	}	
 	return char_map
 end

@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <assets base_path="assets/" target="scripted" load_group="classiccops">
-
-	<group name="units/pd2_mod_gageammo/characters/">
+	<group name="units/pd2_mod_classic/characters/">
 		<file name="units/characters/enemies/textures/police_force_df.texture" force="false"/>	
 		<file name="units/characters/enemies/textures/police_force_nm.texture" force="false"/>	
 		<file :name="ene_deathvox_classic_blackdozer.sequence_manager" force="false"/>
@@ -9,10 +8,11 @@
 		<file :name="classic_tank_glass_df.texture" force="false"/>
 		<file :name="classic_tank_glass_op.texture" force="false"/>
 		
-		<file :name="classic_shared_textures/bulldozer_city_df.texture" force="false"/>
 		<file :name="classic_shared_textures/bulldozer_df.texture" force="false"/>
-		<file :name="classic_shared_textures/bulldozer_nm.texture" force="false"/>
+		<file :name="classic_shared_textures/bulldozer_city_df.texture" force="false"/>		
 		<file :name="classic_shared_textures/bulldozer_saiga_df.texture" force="false"/>
+		<file :name="classic_shared_textures/joker_light_swat_df.texture" force="false"/>		
+		<file :name="classic_shared_textures/joker_heavy_akan_df.texture" force="false"/>				
 		<file :name="classic_shared_textures/classic1_df.texture" force="false"/>
 		<file :name="classic_shared_textures/classic2_df.texture" force="false"/>
 		<file :name="classic_shared_textures/classic2_nm.texture" force="false"/>
@@ -28,7 +28,6 @@
 		<file :name="classic_shared_textures/police_df.texture" force="false"/>
 		<file :name="classic_shared_textures/spook_classic_df.texture" force="false"/>
 		<file :name="classic_shared_textures/nypd2_nm.texture" force="false"/>
-		<file :name="classic_shared_textures/murky/helmets_atlas_df.texture" force="false"/>		
 		<file :name="classic_shared_textures/classic_tank_glass_df.texture" force="false"/>
 		<file :name="classic_shared_textures/classic_tank_glass_op.texture" force="false"/>
 		<file :name="classic_shared_textures/helmets_atlas_nm.texture" force="false"/>
@@ -39,11 +38,11 @@
 		<file :name="ene_acc_classic_shield_lights/ene_acc_classic_shield_lights.model" force="false"/>
 		<file :name="ene_acc_classic_shield_lights/ene_acc_classic_shield_lights.unit" load="true" force="false"/>
 		
-		<file :name="ene_acc_murky_hat/ene_acc_murky_hat.material_config" force="false"/>
-		<file :name="ene_acc_murky_hat/ene_acc_murky_hat.object" force="false"/>
-		<file :name="ene_acc_murky_hat/ene_acc_murky_hat.cooked_physics" force="false"/>
-		<file :name="ene_acc_murky_hat/ene_acc_murky_hat.model" force="false"/>
-		<file :name="ene_acc_murky_hat/ene_acc_murky_hat.unit" load="true" force="false"/>
+		<file :name="ene_acc_fbi_cap/ene_acc_fbi_cap.material_config" force="false"/>
+		<file :name="ene_acc_fbi_cap/ene_acc_fbi_cap.object" force="false"/>
+		<file :name="ene_acc_fbi_cap/ene_acc_fbi_cap.cooked_physics" force="false"/>
+		<file :name="ene_acc_fbi_cap/ene_acc_fbi_cap.model" force="false"/>
+		<file :name="ene_acc_fbi_cap/ene_acc_fbi_cap.unit" load="true" force="false"/>
 		
 		<file :name="ene_acc_classic_helmet/ene_acc_classic_helmet.sequence_manager" force="false"/>
 		<file :name="ene_acc_classic_helmet/ene_acc_classic_helmet.material_config" force="false"/>
@@ -107,7 +106,6 @@
 		<file :name="ene_deathvox_classic_hrt/ene_deathvox_classic_hrt.cooked_physics" force="false"/>
 		
 		<file :name="ene_deathvox_classic_taser/mask_df.texture" force="false"/>	
-		<file :name="ene_deathvox_classic_taser/mask_nm.texture" force="false"/>
 		<file :name="ene_deathvox_classic_taser/taser_body_df.texture" force="false"/>		
 		<file :name="ene_deathvox_classic_taser/ene_deathvox_classic_taser.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_classic_taser/ene_deathvox_classic_taser_husk.unit" load="true" force="false"/>
@@ -117,7 +115,7 @@
 		<file :name="ene_deathvox_classic_taser/ene_deathvox_classic_taser.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_classic_taser/ene_deathvox_classic_taser.model" force="false"/>
 	
-		<file :name="ene_deathvox_classic_shield/taser_body_df.texture" force="false"/>		
+		<file :name="ene_deathvox_classic_shield/shield_body_df.texture" force="false"/>		
 		<file :name="ene_deathvox_classic_shield/ene_deathvox_classic_shield.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_classic_shield/ene_deathvox_classic_shield_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_classic_shield/ene_deathvox_classic_shield_contour.material_config" force="false"/>
@@ -173,15 +171,15 @@
 		<file :name="ene_deathvox_classic_blackdozer/ene_deathvox_classic_blackdozer.object" force="false"/>
 		<file :name="ene_deathvox_classic_blackdozer/ene_deathvox_classic_blackdozer.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_classic_blackdozer/ene_deathvox_classic_blackdozer.model" force="false"/>
-		
+
 		<file :name="ene_deathvox_classic_lmgdozer/ene_deathvox_classic_lmgdozer.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_classic_lmgdozer/ene_deathvox_classic_lmgdozer_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_classic_lmgdozer/ene_deathvox_classic_lmgdozer_contour.material_config" force="false"/>
 		<file :name="ene_deathvox_classic_lmgdozer/ene_deathvox_classic_lmgdozer.material_config" force="false"/>
 		<file :name="ene_deathvox_classic_lmgdozer/ene_deathvox_classic_lmgdozer.object" force="false"/>
 		<file :name="ene_deathvox_classic_lmgdozer/ene_deathvox_classic_lmgdozer.cooked_physics" force="false"/>
-		<file :name="ene_deathvox_classic_lmgdozer/ene_deathvox_classic_lmgdozer.model" force="false"/>
-		
+		<file :name="ene_deathvox_classic_lmgdozer/ene_deathvox_classic_lmgdozer.model" force="false"/>		
+				
 		<file :name="ene_deathvox_classic_cloaker/ene_deathvox_classic_cloaker.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_classic_cloaker/ene_deathvox_classic_cloaker_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_classic_cloaker/ene_deathvox_classic_cloaker_contour.material_config" force="false"/>
@@ -204,7 +202,5 @@
 		<file :name="ene_deathvox_classic_medic/ene_deathvox_classic_medic.object" force="false"/>
 		<file :name="ene_deathvox_classic_medic/ene_deathvox_classic_medic.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_classic_medic/ene_deathvox_classic_medic.model" force="false"/>
-	
-
 	</group>
 </assets>
