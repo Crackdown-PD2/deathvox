@@ -4130,40 +4130,7 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_grenadier",
 			"ene_deathvox_gman",
 			"ene_deathvox_gman_noflashlight",
-			"ene_deathvox_guarddozer",
-			"ene_deathvox_gensec_taser",
-			"ene_deathvox_gensec_swatshot",
-			"ene_deathvox_gensec_swat",
-			"ene_deathvox_gensec_shield",
-			"ene_deathvox_gensec_medic",
-			"ene_deathvox_gensec_lmgdozer",
-			"ene_deathvox_gensec_heavyswatshot",
-			"ene_deathvox_gensec_heavyswat",
-			"ene_deathvox_gensec_cloaker",
-			"ene_deathvox_fbi_veteran",
-			"ene_deathvox_fbi_taser",
-			"ene_deathvox_fbi_swatshot",
-			"ene_deathvox_fbi_swat",
-			"ene_deathvox_fbi_shield",
-			"ene_deathvox_fbi_rookie",
-			"ene_deathvox_fbi_medic",
-			"ene_deathvox_fbi_hrt",
-			"ene_deathvox_fbi_heavyswatshot",
-			"ene_deathvox_fbi_heavyswat",
-			"ene_deathvox_fbi_greendozer",
-			"ene_deathvox_fbi_cloaker",
-			"ene_deathvox_fbi_blackdozer",
-			"ene_deathvox_cop_taser",
-			"ene_deathvox_cop_swatshot",
-			"ene_deathvox_cop_swat",
-			"ene_deathvox_cop_smg",
-			"ene_deathvox_cop_shotgun",
-			"ene_deathvox_cop_shield",
-			"ene_deathvox_cop_revolver",
-			"ene_deathvox_cop_pistol",
-			"ene_deathvox_cop_medic",
-			"ene_deathvox_cop_heavyswatshot",
-			"ene_deathvox_cop_heavyswat"
+			"ene_deathvox_guarddozer"
 		}
 	}
 	char_map.classic = {
@@ -4188,5 +4155,53 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_classic_veteran"
 		}
 	}	
+	char_map.fbi = {
+		path = "units/pd2_mod_fbi/characters/",
+		list = {
+			"ene_deathvox_fbi_veteran",
+			"ene_deathvox_fbi_taser",
+			"ene_deathvox_fbi_swatshot",
+			"ene_deathvox_fbi_swat",
+			"ene_deathvox_fbi_shield",
+			"ene_deathvox_fbi_rookie",
+			"ene_deathvox_fbi_medic",
+			"ene_deathvox_fbi_hrt",
+			"ene_deathvox_fbi_heavyswatshot",
+			"ene_deathvox_fbi_heavyswat",
+			"ene_deathvox_fbi_greendozer",
+			"ene_deathvox_fbi_cloaker",
+			"ene_deathvox_fbi_blackdozer"
+		}
+	}	
+	char_map.gensec = {
+		path = "units/pd2_mod_gensec/characters/",
+		list = {
+			"ene_deathvox_gensec_taser",
+			"ene_deathvox_gensec_swatshot",
+			"ene_deathvox_gensec_swat",
+			"ene_deathvox_gensec_shield",
+			"ene_deathvox_gensec_medic",
+			"ene_deathvox_gensec_lmgdozer",
+			"ene_deathvox_gensec_heavyswatshot",
+			"ene_deathvox_gensec_heavyswat",
+			"ene_deathvox_gensec_cloaker"
+		}
+	}		
+	char_map.cops = {
+		path = "units/pd2_mod_cops/characters/",
+		list = {
+			"ene_deathvox_cop_taser",
+			"ene_deathvox_cop_swatshot",
+			"ene_deathvox_cop_swat",
+			"ene_deathvox_cop_smg",
+			"ene_deathvox_cop_shotgun",
+			"ene_deathvox_cop_shield",
+			"ene_deathvox_cop_revolver",
+			"ene_deathvox_cop_pistol",
+			"ene_deathvox_cop_medic",
+			"ene_deathvox_cop_heavyswatshot",
+			"ene_deathvox_cop_heavyswat"
+		}
+	}				
 	return char_map
 end
