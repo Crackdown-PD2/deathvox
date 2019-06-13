@@ -108,7 +108,7 @@ function WeaponTweakData:init(tweak_data)
 			overkill = {damage = 24},
 			mayhem = {damage = 24},
 			death_wish = {damage = 24},
-			crackdown = {damage = 50} -- zeal.
+			crackdown = {damage = 32} -- zeal.
 		},
 	deathvox_blackdozer = {
 			not_a_real_difficulty = {damage = 10},
@@ -126,9 +126,9 @@ function WeaponTweakData:init(tweak_data)
 			hard = {damage = 10},
 			very_hard = {damage = 10},
 			overkill = {damage = 10},
-			mayhem = {damage = 10}, -- start. Skull. Matched to DW.
-			death_wish = {damage = 10},
-			crackdown = {damage = 12} -- zeal. Value increased. Matched to intended minidozer.
+			mayhem = {damage = 8}, -- start. Skull. Matched to DW.
+			death_wish = {damage = 8},
+			crackdown = {damage = 10} -- zeal. Value increased. Matched to intended minidozer.
 		},
         deathvox_medicdozer_smg = {
 			not_a_real_difficulty = {damage = 10},
