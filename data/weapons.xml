@@ -705,12 +705,12 @@
 		<weapon name="gre_m79" mag="1" ammo_pool="6" rof="30" dmg="1100" acc="100" stb="100" concealment="25" threat="37" tact_reload="3.1" full_reload="3.1" equip_time="0.6" pickup_low="0.05" pickup_high="0.1" />
 			<!--
 				Ingame name: GL40 	
-				Missing features: (primary, single shot)
+				Missing features: (primary, single shot), pickup requires skill
 			-->
 		<weapon name="m32" mag="6" ammo_pool="12" rof="60" dmg="1100" acc="100" stb="100" concealment="5" threat="37" tact_reload="3.96" full_reload="13.96" equip_time="0.85" pickup_low="0.05" pickup_high="0.1" />
 			<!--
 				Ingame name: Piglet 	
-				Missing features: (primary, large cap)
+				Missing features: (primary, large cap), pickup requires skill
 			-->
 	</category>
 	
@@ -718,7 +718,7 @@
 		<weapon name="flamethrower_mk2" mag="900" ammo_pool="900" rof="2000" dmg="100" acc="0" stb="0" concealment="10" threat="37" tact_reload="8.5" full_reload="8.5" equip_time="0.85" pickup_low="1" pickup_high="2" />
 			<!--
 				Ingame name: 	Flamethrower Mk.1
-				Missing features: thanks ovk
+				Missing features: thanks ovk for ur names, pickup requires skill
 			-->
 	</category>
 	
@@ -733,125 +733,320 @@
 	<!--	Pistols Begin	-->
 	
 	<category id="pistol_mach">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="glock_18c" mag="32" ammo_pool="320" rof="909" dmg="50" acc="52" stb="100" concealment="30" threat="11" tact_reload="1.25" full_reload="1.5" equip_time="0.35" pickup_low="9" pickup_high="18" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: STRYK 18c	
+				Missing features: Locked to full auto, counts as an SMG
 			-->
 	</category>
 	
 	<category id="pistol_pea">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="ppk" mag="32" ammo_pool="180" rof="480" dmg="20" acc="100" stb="100" concealment="35" threat="0" tact_reload="1.25" full_reload="2" equip_time="0.35" pickup_low="4" pickup_high="5" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: Gruber Kurz	
+				Missing features: damage
 			-->
 	</category>
 	
 	<category id="pistol_pocket">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="g26" mag="10" ammo_pool="180" rof="480" dmg="50" acc="100" stb="48" concealment="30" threat="4" tact_reload="1.47" full_reload="2.12" equip_time="0.35" pickup_low="3" pickup_high="6" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: Chimano Compact	
+				Missing features: this thing is the worst pocket pistol in every way
+			-->
+		<weapon name="glock_17" mag="17" ammo_pool="180" rof="480" dmg="50" acc="100" stb="56" concealment="30" threat="8" tact_reload="1.47" full_reload="2.12" equip_time="0.35" pickup_low="3" pickup_high="6" />
+			<!--
+				Ingame name: Chimano 88	
+				Missing features: 
+			-->
+		<weapon name="shrew" mag="17" ammo_pool="180" rof="480" dmg="50" acc="100" stb="68" concealment="30" threat="8" tact_reload="1.47" full_reload="2.12" equip_time="0.35" pickup_low="3" pickup_high="6" />
+			<!--
+				Ingame name: Crosskill Guard	
+				Missing features: 
+			-->
+		<weapon name="b92fs" mag="14" ammo_pool="180" rof="480" dmg="50" acc="100" stb="72" concealment="30" threat="6" tact_reload="1.47" full_reload="2.12" equip_time="0.35" pickup_low="3" pickup_high="6" />
+			<!--
+				Ingame name: Bernetti 9	
+				Missing features: this thing is a direct upgrade to every other pocket pistol in almost every way
+			-->
+		<weapon name="legacy" mag="13" ammo_pool="180" rof="545" dmg="50" acc="100" stb="48" concealment="30" threat="9" tact_reload="1.5" full_reload="2.15" equip_time="0.35" pickup_low="3" pickup_high="6" />
+			<!--
+				Ingame name: M13 9MM	
+				Missing features: (unidentified)
 			-->
 	</category>
 	
 	<category id="pistol_handgun">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="p226" mag="12" ammo_pool="90" rof="361" dmg="80" acc="100" stb="52" concealment="25" threat="9" tact_reload="1.47" full_reload="2.12" equip_time="0.35" pickup_low="2" pickup_high="5" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: Signature .40	
+				Missing features: 
+			-->
+		<weapon name="c96" mag="10" ammo_pool="90" rof="361" dmg="80" acc="100" stb="60" concealment="25" threat="10" tact_reload="4" full_reload="4.17" equip_time="0.35" pickup_low="2" pickup_high="5" />
+			<!--
+				Ingame name: Broomstick	
+				Missing features: has long barrel version
+			-->
+		<weapon name="colt_1911" mag="10" ammo_pool="90" rof="361" dmg="80" acc="100" stb="56" concealment="25" threat="10" tact_reload="1.47" full_reload="2.12" equip_time="0.35" pickup_low="2" pickup_high="5" />
+			<!--
+				Ingame name: Crosskill	
+				Missing features: 
+			-->
+		<weapon name="packrat" mag="15" ammo_pool="90" rof="361" dmg="80" acc="100" stb="56" concealment="25" threat="9" tact_reload="1.52" full_reload="2.32" equip_time="0.35" pickup_low="2" pickup_high="5" />
+			<!--
+				Ingame name: Contractor	
+				Missing features: 
+			-->
+		<weapon name="usp" mag="13" ammo_pool="90" rof="361" dmg="80" acc="100" stb="48" concealment="25" threat="8" tact_reload="1.47" full_reload="2.2" equip_time="0.35" pickup_low="2" pickup_high="5" />
+			<!--
+				Ingame name: Interceptor 45	
+				Missing features: 
+			-->
+		<weapon name="hs2000" mag="27" ammo_pool="90" rof="361" dmg="80" acc="100" stb="52" concealment="25" threat="9" tact_reload="1.47" full_reload="2.12" equip_time="0.5" pickup_low="2" pickup_high="5" />
+			<!--
+				Ingame name: LEO	
+				Missing features: 
+			-->
+		<weapon name="g22c" mag="16" ammo_pool="90" rof="361" dmg="80" acc="100" stb="48" concealment="25" threat="9" tact_reload="1.47" full_reload="2.2" equip_time="0.35" pickup_low="2" pickup_high="5" />
+			<!--
+				Ingame name: Chimano Custom	
+				Missing features: 
 			-->
 	</category>
 	
 	<category id="pistol_handcannon">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="lemming" mag="19" ammo_pool="45" rof="600" dmg="110" acc="100" stb="36" concealment="25" threat="9" tact_reload="1.5" full_reload="2.15" equip_time="0.35" pickup_low="0.75" pickup_high="1" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: 4/7 AP Pistol
+				Missing features: AP/SP/BP
+			-->
+		<weapon name="p114" mag="12" ammo_pool="60" rof="240" dmg="110" acc="100" stb="28" concealment="25" threat="9" tact_reload="1.47" full_reload="2.12" equip_time="0.35" pickup_low="1.5" pickup_high="3" />
+			<!--
+				Ingame name: White Streak	
+				Missing features: AP
+			-->
+		<weapon name="sparrow" mag="12" ammo_pool="60" rof="240" dmg="110" acc="100" stb="24" concealment="25" threat="9" tact_reload="1.47" full_reload="2.12" equip_time="0.35" pickup_low="1.5" pickup_high="3" />
+			<!--
+				Ingame name: Baby Deagle	
+				Missing features: AP
+			-->
+		<weapon name="deagle" mag="10" ammo_pool="60" rof="240" dmg="110" acc="100" stb="36" concealment="25" threat="24" tact_reload="1.85" full_reload="3.1" equip_time="0.35" pickup_low="1.5" pickup_high="3" />
+			<!--
+				Ingame name: Deagle	
+				Missing features: AP
+			-->
+		<weapon name="c96" mag="20" ammo_pool="60" rof="361" dmg="110" acc="100" stb="92" concealment="25" threat="0" tact_reload="4" full_reload="4.17" equip_time="0.35" pickup_low="1.5" pickup_high="3" />
+			<!--
+				Ingame name: Broomstick	
+				Missing features: AP, Long Barrel Version
+			-->
+		<weapon name="breech" mag="8" ammo_pool="60" rof="361" dmg="110" acc="100" stb="24" concealment="25" threat="9" tact_reload="1.3" full_reload="2.1" equip_time="0.35" pickup_low="1.5" pickup_high="3" />
+			<!--
+				Ingame name: Parabellum 	
+				Missing features: AP
 			-->
 	</category>
 	
 	<category id="pistol_revolver">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="new_raging_bull" mag="6" ammo_pool="60" rof="361" dmg="180" acc="100" stb="24" concealment="20" threat="24" tact_reload="2" full_reload="2" equip_time="0.45" pickup_low="1" pickup_high="2" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: Bronco 	
+				Missing features: AP/SP
+			-->
+		<weapon name="chinchilla" mag="6" ammo_pool="60" rof="361" dmg="180" acc="100" stb="12" concealment="20" threat="24" tact_reload="2" full_reload="2" equip_time="0.45" pickup_low="1" pickup_high="2" />
+			<!--
+				Ingame name: Castigo 	
+				Missing features: AP/SP
+			-->
+		<weapon name="mateba" mag="6" ammo_pool="60" rof="361" dmg="180" acc="100" stb="12" concealment="20" threat="24" tact_reload="2" full_reload="2" equip_time="0.45" pickup_low="1" pickup_high="2" />
+			<!--
+				Ingame name: Matever 	
+				Missing features: AP/SP
 			-->
 	</category>
 	
 	<category id="pistol_revolver_heavy">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="peacemaker" mag="6" ammo_pool="30" rof="240" dmg="480" acc="100" stb="0" concealment="15" threat="43" tact_reload="2.43" full_reload="7.43" equip_time="0.65" pickup_low="1" pickup_high="2" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: Peacemaker 	
+				Missing features: AP/SP/BP
 			-->
 	</category>
 	
 	<!--	SMGs Begin	-->
 	
 	<category id="smg_light">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="uzi" mag="40" ammo_pool="200" rof="698" dmg="50" acc="68" stb="100" concealment="20" threat="13" tact_reload="2.45" full_reload="3.52" equip_time="0.6" pickup_low="8" pickup_high="16" />
 			<!--
-				Ingame name: 	
+				Ingame name: 	Uzi
+				Missing features:
+			-->
+		<weapon name="shepheard" mag="50" ammo_pool="200" rof="750" dmg="50" acc="64" stb="100" concealment="20" threat="11" tact_reload="2.11" full_reload="2.85" equip_time="0.5" pickup_low="8" pickup_high="16" />
+			<!--
+				Ingame name: 	Signature
+				Missing features:
+			-->
+		<weapon name="new_mp5" mag="30" ammo_pool="210" rof="750" dmg="50" acc="64" stb="100" concealment="25" threat="8" tact_reload="2.4" full_reload="3.6" equip_time="0.6" pickup_low="8" pickup_high="16" />
+			<!--
+				Ingame name: 	Compact-5
+				Missing features:
+			-->
+		<weapon name="tec9" mag="20" ammo_pool="220" rof="896" dmg="50" acc="52" stb="100" concealment="30" threat="13" tact_reload="2.31" full_reload="3.28" equip_time="0.6" pickup_low="8" pickup_high="16" />
+			<!--
+				Ingame name: 	Blaster 9mm
+				Missing features:
+			-->
+		<weapon name="mp9" mag="30" ammo_pool="210" rof="952" dmg="50" acc="68" stb="100" concealment="20" threat="8" tact_reload="1.51" full_reload="2.48" equip_time="0.4" pickup_low="8" pickup_high="16" />
+			<!--
+				Ingame name: 	CMP
+				Missing features:
+			-->
+		<weapon name="scorpion" mag="20" ammo_pool="220" rof="1000" dmg="50" acc="52" stb="100" concealment="30" threat="8" tact_reload="2" full_reload="2.75" equip_time="0.5" pickup_low="8" pickup_high="16" />
+			<!--
+				Ingame name: 	Cobra
+				Missing features:
+			-->
+		<weapon name="baka" mag="32" ammo_pool="224" rof="1200" dmg="50" acc="48" stb="100" concealment="30" threat="11" tact_reload="1.85" full_reload="2.6" equip_time="0.5" pickup_low="8" pickup_high="16" />
+			<!--
+				Ingame name: 	Micro Uzi
 				Missing features:
 			-->
 	</category>
 	
 	<category id="smg_medium">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="olympic" mag="29" ammo_pool="150" rof="682" dmg="70" acc="72" stb="100" concealment="20" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.5" pickup_low="6" pickup_high="10" />
 			<!--
-				Ingame name: 	
+				Ingame name: 	Para
+				Missing features:
+			-->
+		<weapon name="m1928" mag="50" ammo_pool="150" rof="723" dmg="70" acc="88" stb="100" concealment="15" threat="12" tact_reload="2" full_reload="3" equip_time="0.75" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	Typewriter
+				Missing features:
+			-->
+		<weapon name="sr2" mag="32" ammo_pool="160" rof="750" dmg="70" acc="84" stb="100" concealment="20" threat="10" tact_reload="2" full_reload="2.75" equip_time="0.5" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	Heather
+				Missing features:
+			-->
+		<weapon name="p90" mag="50" ammo_pool="150" rof="909" dmg="70" acc="76" stb="100" concealment="20" threat="13" tact_reload="2" full_reload="2.5" equip_time="0.65" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	Kobus 90
+				Missing features:
+			-->
+		<weapon name="mp7" mag="20" ammo_pool="160" rof="952" dmg="70" acc="64" stb="100" concealment="20" threat="9" tact_reload="2" full_reload="2.5" equip_time="0.5" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	SpecOps
+				Missing features:
+			-->
+		<weapon name="mac10" mag="40" ammo_pool="160" rof="1000" dmg="70" acc="76" stb="100" concealment="20" threat="11" tact_reload="2" full_reload="2.5" equip_time="0.5" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	Mark 10
+				Missing features:
+			-->
+		<weapon name="cobray" mag="32" ammo_pool="160" rof="1200" dmg="70" acc="72" stb="100" concealment="20" threat="10" tact_reload="2" full_reload="2.5" equip_time="0.5" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	Jacket's Piece
+				Missing features:
+			-->
+		<weapon name="polymer" mag="30" ammo_pool="150" rof="1200" dmg="70" acc="84" stb="100" concealment="15" threat="10" tact_reload="2" full_reload="2.5" equip_time="0.5" pickup_low="6" pickup_high="10" />
+			<!--
+				Ingame name: 	Kross Vertex
 				Missing features:
 			-->
 	</category>
 	
 	<category id="smg_heavy">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="sterling" mag="20" ammo_pool="220" rof="545" dmg="100" acc="56" stb="100" concealment="20" threat="12" tact_reload="2" full_reload="3" equip_time="0.65" pickup_low="4" pickup_high="6" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: 	Patchett L2A1
+				Missing features: (historic), is the ammo count on this a typo?
+			-->
+		<weapon name="erma" mag="40" ammo_pool="80" rof="600" dmg="100" acc="100" stb="80" concealment="25" threat="10" tact_reload="1.8" full_reload="2.8" equip_time="0.5" pickup_low="4" pickup_high="6" />
+			<!--
+				Ingame name: 	MP-40
+				Missing features: 
+			-->
+		<weapon name="m45" mag="2400" ammo_pool="80" rof="600" dmg="100" acc="100" stb="80" concealment="25" threat="10" tact_reload="2.5" full_reload="3.1" equip_time="0.6" pickup_low="4" pickup_high="6" />
+			<!--
+				Ingame name: 	Swedish K
+				Missing features: 
+			-->
+		<weapon name="schakal" mag="30" ammo_pool="90" rof="652" dmg="100" acc="100" stb="100" concealment="15" threat="10" tact_reload="2" full_reload="3" equip_time="0.5" pickup_low="4" pickup_high="6" />
+			<!--
+				Ingame name: 	Jackal
+				Missing features: 
+			-->
+		<weapon name="coal" mag="64" ammo_pool="128" rof="652" dmg="100" acc="80" stb="100" concealment="20" threat="10" tact_reload="2.75" full_reload="3.4" equip_time="0.5" pickup_low="4" pickup_high="6" />
+			<!--
+				Ingame name: 	Tatonka
+				Missing features: 
+			-->
+		<weapon name="hajk" mag="34" ammo_pool="90" rof="750" dmg="100" acc="100" stb="100" concealment="10" threat="10" tact_reload="1.8" full_reload="3" equip_time="0.6" pickup_low="4" pickup_high="6" />
+			<!--
+				Ingame name: 	CR 805B
+				Missing features: 
+			-->
+		<weapon name="akmsu" mag="43" ammo_pool="90" rof="822" dmg="100" acc="92" stb="100" concealment="10" threat="22" tact_reload="2" full_reload="3.1" equip_time="0.6" pickup_low="4" pickup_high="6" />
+			<!--
+				Ingame name: 	Krinkov
+				Missing features: 
 			-->
 	</category>
 	
 	<!--	Secondary Shotguns Begin	-->
 	
 	<category id="shot_second_full_auto">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="basset" mag="8" ammo_pool="96" rof="300" dmg="30" acc="40" stb="60" concealment="30" threat="34" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="5" pickup_high="6" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: Grimm 12G	
+				Missing features: selective fire
+			-->
+		<weapon name="striker" mag="12" ammo_pool="72" rof="429" dmg="60" acc="40" stb="52" concealment="20" threat="34" tact_reload="0.5" full_reload="6" equip_time="0.85" pickup_low="4" pickup_high="5" />
+			<!--
+				Ingame name: 	Street Sweeper
+				Missing features: drum magazine rapid fire
 			-->
 	</category>
 	
 	<category id="shot_second_semi_auto">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="rota" mag="6" ammo_pool="54" rof="333" dmg="70" acc="40" stb="52" concealment="15" threat="34" tact_reload="2.25" full_reload="2.25" equip_time="0.6" pickup_low="4" pickup_high="5" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: 	Goliath 12G
+				Missing features: drum magazine rapid fire
+			-->
+		<weapon name="judge" mag="5" ammo_pool="35" rof="500" dmg="180" acc="40" stb="36" concealment="28" threat="34" tact_reload="2" full_reload="2" equip_time="0.45" pickup_low="0.6" pickup_high="1.5" />
+			<!--
+				Ingame name: 	Judge
+				Missing features: 
 			-->
 	</category>
 	
 	<category id="shot_second_pump">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="m37" mag="7" ammo_pool="46" rof="106" dmg="130" acc="40" stb="52" concealment="25" threat="34" tact_reload="0.8" full_reload="5.5" equip_time="0.85" pickup_low="2" pickup_high="3" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: 	GSPS
+				Missing features: 
+			-->
+		<weapon name="serbu" mag="8" ammo_pool="42" rof="160" dmg="130" acc="40" stb="36" concealment="30" threat="34" tact_reload="0.5" full_reload="4" equip_time="0.6" pickup_low="2" pickup_high="3" />
+			<!--
+				Ingame name: 	Locomotive
+				Missing features: fast pump
 			-->
 	</category>
 	
 	<category id="shot_second_break">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="coach" mag="2" ammo_pool="22" rof="170" dmg="170" acc="100" stb="12" concealment="30" threat="28" tact_reload="2.2" full_reload="2.2" equip_time="0.4" pickup_low="1" pickup_high="2" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: 	Claire 12G
+				Missing features: good animations, (unidentified)
 			-->
 	</category>
 	
 	<!--	Secondary Special Weapons Begin	-->
 	
 	<category id="cross_pistol">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="hunter" mag="1" ammo_pool="35" rof="50" dmg="350" acc="100" stb="100" concealment="30" threat="10" tact_reload="1.2" full_reload="1.2" equip_time="0.5" pickup_low="0" pickup_high="0" />
 			<!--
 				Ingame name: 	
 				Missing features:
@@ -859,34 +1054,49 @@
 	</category>
 	
 	<category id="gl_second">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="slap" mag="1" ammo_pool="6" rof="30" dmg="1100" acc="84" stb="84" concealment="30" threat="37" tact_reload="2.5" full_reload="2.5" equip_time="0.6" pickup_low="0.05" pickup_high="0.1" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: Compact 40mm	
+				Missing features: Pickup requires skill
+			-->
+		<weapon name="china" mag="3" ammo_pool="6" rof="50" dmg="1100" acc="96" stb="92" concealment="20" threat="37" tact_reload="1.66" full_reload="3.32" equip_time="1" pickup_low="0.05" pickup_high="0.1" />
+			<!--
+				Ingame name: China Puff 40mm	
+				Missing features: Pickup requires skill
+			-->
+		<weapon name="arbiter" mag="5" ammo_pool="15" rof="80" dmg="520" acc="96" stb="96" concealment="20" threat="37" tact_reload="3.34" full_reload="4.5" equip_time="0.6" pickup_low="0.09" pickup_high="0.18" />
+			<!--
+				Ingame name: Arbiter	
+				Missing features: Pickup requires skill
 			-->
 	</category>
 	
 	<category id="flame_second">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="system" mag="600" ammo_pool="600" rof="2000" dmg="100" acc="0" stb="0" concealment="20" threat="37" tact_reload="8.5" full_reload="8.5" equip_time="0.85" pickup_low="1" pickup_high="2" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: 	MA-17 Flamethrower
+				Missing features: (unidentified), pickup requires skill
 			-->
 	</category>
 	
 	<category id="saw">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="saw" mag="150" ammo_pool="300" rof="400" dmg="80" acc="8" stb="40" concealment="20" threat="43" tact_reload="3.75" full_reload="3.75" equip_time="0.85" pickup_low="0" pickup_high="0" />
 			<!--
-				Ingame name: 	
+				Ingame name: 	OVE9000 Saw
 				Missing features:
 			-->
 	</category>
 	
 	<category id="rocket">
-		<weapon name="amcar" mag="20" ammo_pool="260" rof="545" dmg="50" acc="100" stb="100" concealment="30" threat="14" tact_reload="2" full_reload="2.5" equip_time="0.55" pickup_low="9" pickup_high="18" />
+		<weapon name="rpg7" mag="1" ammo_pool="4" rof="30" dmg="12500" acc="100" stb="100" concealment="15" threat="37" tact_reload="2" full_reload="2" equip_time="0.85" pickup_low="0.01" pickup_high="0.02" />
 			<!--
-				Ingame name: 	
-				Missing features:
+				Ingame name: 	HRL-7 Rocket Launcher
+				Missing features: Pickup requires skill 
+			-->
+		<weapon name="ray" mag="4" ammo_pool="4" rof="60" dmg="12500" acc="100" stb="100" concealment="0" threat="37" tact_reload="6" full_reload="5.75" equip_time="0.85" pickup_low="0.01" pickup_high="0.02" />
+			<!--
+				Ingame name: 	Commando 101 Rocket Launcher
+				Missing features: Pickup requires skill 
 			-->
 	</category>
 </weapons>
