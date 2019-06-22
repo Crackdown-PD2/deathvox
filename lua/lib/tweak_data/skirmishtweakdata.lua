@@ -295,7 +295,7 @@ function SkirmishTweakData:_init_spawn_group_weights(tweak_data)  -- Everything 
 		"ovk_greenknight" -- #3G one Shield/1 Gdozer
 		"ovk_blackknight", -- #3H one Shield/1 Bdozer
 		"ovk_spoocpair", -- #3I	two cloaker
-		"vhard_hrtmedic", -- #3J two HRT/1 Medic
+		"ovk_hrttaser", -- #3J one taer/two HRT
 
 	-- Gensec Gensecs, dozers (w/LMG), cloakers, medics, shields. Add Veterans.
 		"mh_group_4_std", -- #4A one Hshot/2 Lshot/1 LAR
@@ -319,11 +319,11 @@ function SkirmishTweakData:_init_spawn_group_weights(tweak_data)  -- Everything 
 		"ovk_mixshotcharge", -- #5F two Hshot/2 Lshot
 		"ovk_shieldshot", -- #5G two Shield/2 Lshot		
 		"dw_citadel", -- #5H two Shield/1 taser/1 Medic
-		"mh_taserpair", -- #5I  two tasers
-		"damocles", -- #5J three cloakers
+		"dw_takedowner", -- #5I  two tasers/1 cloaker
+		"dw_spoocpair", -- #5J two cloakers
 		"ovk_greendozer", -- #5K Gdozer
-		"ovk_blackdozer", -- #5L Bdozer
-		"mh_whitedozer", -- #5M Wdozer
+		"dw_blackball", -- #5L Bdozer/1 Taser
+		"dw_skullpaladin", -- #5M one Shield/Wdozer/1 Medic
 		"normal_rookiepair", -- #5N two rookie
 		"ovk_hrttaser", -- #5O one Taser/two HRT
 		"ovk_hrtvetmix", -- #5P two HRT/one veteran
