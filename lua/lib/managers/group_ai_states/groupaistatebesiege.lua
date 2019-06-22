@@ -1115,10 +1115,10 @@ function GroupAIStateBesiege:_assign_skirmish_groups_to_retire(group)
 		local wave_number = self._assault_number
 		
 		if managers.skirmish:is_skirmish() and wave_number and tactics_map then
-			if wave_number == 2 then --wave 2, any units marked with beatcop will retire			
-				if tactics_map.beatcop and group.objective.type ~= "retire" then
+			if wave_number == 2 then --wave 2, any units marked with wave1 will retire			
+				if tactics_map.wave1 and group.objective.type ~= "retire" then
 					local function suitable_grp_func(group)
-						if tactics_map.beatcop and group.objective.type ~= "retire" then
+						if tactics_map.wave1 and group.objective.type ~= "retire" then
 							local grp_objective = {
 								stance = "hos",
 								attitude = "avoid",
@@ -1133,10 +1133,10 @@ function GroupAIStateBesiege:_assign_skirmish_groups_to_retire(group)
 					--log("denied, peasant")
 					self:_assign_groups_to_retire(self._tweak_data.assault.groups, suitable_grp_func)
 				end			
-			elseif wave_number == 3 then --wave 3, any units marked with swat and previous will retire
-				if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" then
+			elseif wave_number == 3 then --wave 3, any units marked with wave2 and previous will retire
+				if tactics_map.wave1 and group.objective.type ~= "retire" or tactics_map.wave2 and group.objective.type ~= "retire" then
 					local function suitable_grp_func(group)
-						if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" then
+						if tactics_map.wave1 and group.objective.type ~= "retire" or tactics_map.wave2 and group.objective.type ~= "retire" then
 							local grp_objective = {
 								stance = "hos",
 								attitude = "avoid",
@@ -1152,9 +1152,9 @@ function GroupAIStateBesiege:_assign_skirmish_groups_to_retire(group)
 					self:_assign_groups_to_retire(self._tweak_data.assault.groups, suitable_grp_func)
 				end	
 			elseif wave_number == 4 then --wave 4, any units marked with fbi and previous will retire
-				if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" or tactics_map.fbigrunt and group.objective.type ~= "retire" then
+				if tactics_map.wave1 and group.objective.type ~= "retire" or tactics_map.wave2 and group.objective.type ~= "retire" or tactics_map.wave3 and group.objective.type ~= "retire" then
 					local function suitable_grp_func(group)
-						if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" or tactics_map.fbigrunt and group.objective.type ~= "retire" then
+						if tactics_map.wave1 and group.objective.type ~= "retire" or tactics_map.wave2 and group.objective.type ~= "retire" or tactics_map.wave3 and group.objective.type ~= "retire" then
 							local grp_objective = {
 								stance = "hos",
 								attitude = "avoid",
@@ -1169,10 +1169,10 @@ function GroupAIStateBesiege:_assign_skirmish_groups_to_retire(group)
 					--log("denied, mook boy")
 					self:_assign_groups_to_retire(self._tweak_data.assault.groups, suitable_grp_func)
 				end	
-			elseif wave_number == 5 then --wave 5, any units marked with gensec and previous will retire
-				if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" or tactics_map.fbigrunt and group.objective.type ~= "retire" or tactics_map.gensec and group.objective.type ~= "retire" then
+			elseif wave_number == 5 then --wave 5, any units marked with wave4 and previous will retire
+				if tactics_map.wave1 and group.objective.type ~= "retire" or tactics_map.wave2 and group.objective.type ~= "retire" or tactics_map.wave3 and group.objective.type ~= "retire" or tactics_map.wave4 and group.objective.type ~= "retire" then
 					local function suitable_grp_func(group)
-						if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" or tactics_map.fbigrunt and group.objective.type ~= "retire" or tactics_map.gensec and group.objective.type ~= "retire" then
+						if tactics_map.wave1 and group.objective.type ~= "retire" or tactics_map.wave2 and group.objective.type ~= "retire" or tactics_map.wave3 and group.objective.type ~= "retire" or tactics_map.wave4 and group.objective.type ~= "retire" then
 							local grp_objective = {
 								stance = "hos",
 								attitude = "avoid",
@@ -1187,10 +1187,10 @@ function GroupAIStateBesiege:_assign_skirmish_groups_to_retire(group)
 					--log("denied, rookies")
 					self:_assign_groups_to_retire(self._tweak_data.assault.groups, suitable_grp_func)
 				end	
-			elseif wave_number == 6 then --wave 6, any units marked with classic and previous will retire
-				if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" or tactics_map.fbigrunt and group.objective.type ~= "retire" or tactics_map.gensec and group.objective.type ~= "retire" or tactics_map.classic and group.objective.type ~= "retire" then
+			elseif wave_number == 6 then --wave 6, any units marked with wave5 and previous will retire
+				if tactics_map.wave1 and group.objective.type ~= "retire" or tactics_map.wave2 and group.objective.type ~= "retire" or tactics_map.wave3 and group.objective.type ~= "retire" or tactics_map.wave4 and group.objective.type ~= "retire" or tactics_map.wave5 and group.objective.type ~= "retire" then
 					local function suitable_grp_func(group)
-						if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" or tactics_map.fbigrunt and group.objective.type ~= "retire" or tactics_map.gensec and group.objective.type ~= "retire" or tactics_map.classic and group.objective.type ~= "retire" then
+						if tactics_map.wave1 and group.objective.type ~= "retire" or tactics_map.wave2 and group.objective.type ~= "retire" or tactics_map.wave3 and group.objective.type ~= "retire" or tactics_map.wave4 and group.objective.type ~= "retire" or tactics_map.wave5 and group.objective.type ~= "retire" then
 							local grp_objective = {
 								stance = "hos",
 								attitude = "avoid",
@@ -1205,10 +1205,10 @@ function GroupAIStateBesiege:_assign_skirmish_groups_to_retire(group)
 					--log("denied, grandpa")
 					self:_assign_groups_to_retire(self._tweak_data.assault.groups, suitable_grp_func)
 				end
-			elseif wave_number >= 7 then --wave 7, any units marked with deathvox/zeal and previous will retire
-				if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" or tactics_map.fbigrunt and group.objective.type ~= "retire" or tactics_map.gensec and group.objective.type ~= "retire" or tactics_map.classic and group.objective.type ~= "retire" or tactics_map.deathvox and group.objective.type ~= "retire" then
+			elseif wave_number >= 7 then --wave 7, any units marked with wave6/zeal and previous will retire
+				if tactics_map.wave1 and group.objective.type ~= "retire" or tactics_map.wave2 and group.objective.type ~= "retire" or tactics_map.wave3 and group.objective.type ~= "retire" or tactics_map.wave4 and group.objective.type ~= "retire" or tactics_map.wave5 and group.objective.type ~= "retire" or tactics_map.wave6 and group.objective.type ~= "retire" then
 					local function suitable_grp_func(group)
-						if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" or tactics_map.fbigrunt and group.objective.type ~= "retire" or tactics_map.gensec and group.objective.type ~= "retire" or tactics_map.classic and group.objective.type ~= "retire" or tactics_map.deathvox and group.objective.type ~= "retire" then
+						if tactics_map.wave1 and group.objective.type ~= "retire" or tactics_map.wave2 and group.objective.type ~= "retire" or tactics_map.wave3 and group.objective.type ~= "retire" or tactics_map.wave4 and group.objective.type ~= "retire" or tactics_map.wave5 and group.objective.type ~= "retire" or tactics_map.wave6 and group.objective.type ~= "retire" then
 							local grp_objective = {
 								stance = "hos",
 								attitude = "avoid",
