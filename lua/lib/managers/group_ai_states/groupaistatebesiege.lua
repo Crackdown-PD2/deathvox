@@ -697,6 +697,10 @@ function GroupAIStateBesiege:_upd_assault_task()
 	local t = self._t
 
 	self:_assign_recon_groups_to_retire()
+	
+	if managers.skirmish:is_skirmish() then --this makes non-fit units retire during anticipation/assault
+		self:_assign_skirmish_groups_to_retire(allowed_groups, suitable_grp_func, group)
+	end
 
 	local force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool) * self:_get_balancing_multiplier(self._tweak_data.assault.force_pool_balance_mul)
 	local task_spawn_allowance = force_pool - (self._hunt_mode and 0 or task_data.force_spawned)
@@ -946,8 +950,11 @@ end
 
 function GroupAIStateBesiege:_upd_regroup_task()
 	local regroup_task = self._task_data.regroup
-
+	
 	if regroup_task.active then
+		if managers.skirmish:is_skirmish() then --this makes non-fit units retreat during regroup, mostly used as a safety measure to make sure there are no leftovers
+			self:_assign_skirmish_groups_to_retire(allowed_groups, suitable_grp_func, group)
+		end
 		self:_assign_assault_groups_to_retire()
 
 		if regroup_task.end_t < self._t then
@@ -1088,4 +1095,201 @@ function GroupAIStateBesiege:assign_enemy_to_group_ai(unit, team_id)
 
 	self:_add_group_member(group, unit:key())
 	self:set_enemy_assigned(area, unit:key())
+end
+
+
+function GroupAIStateBesiege:_assign_skirmish_groups_to_retire(group)
+	--this is horrible, but it works.
+	for group_id, group in pairs(self._groups) do --this acquires the groups currently existing in the level.
+		local group_leader_u_key, group_leader_u_data = self._determine_group_leader(group.units)
+		local tactics_map = nil
+
+		if group_leader_u_data and group_leader_u_data.tactics then
+			tactics_map = {}
+
+			for _, tactic_name in ipairs(group_leader_u_data.tactics) do
+				tactics_map[tactic_name] = true
+			end
+		end
+		
+		local wave_number = self._assault_number
+		
+		if managers.skirmish:is_skirmish() and wave_number and tactics_map then
+			if wave_number == 2 then --wave 2, any units marked with beatcop will retire			
+				if tactics_map.beatcop and group.objective.type ~= "retire" then
+					local function suitable_grp_func(group)
+						if tactics_map.beatcop and group.objective.type ~= "retire" then
+							local grp_objective = {
+								stance = "hos",
+								attitude = "avoid",
+								pose = "crouch",
+								type = "assault_area",
+								area = group.objective.area
+							}
+
+							self:_set_objective_to_enemy_group(group, grp_objective)
+						end
+					end
+					--log("denied, peasant")
+					self:_assign_groups_to_retire(self._tweak_data.assault.groups, suitable_grp_func)
+				end			
+			elseif wave_number == 3 then --wave 3, any units marked with swat and previous will retire
+				if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" then
+					local function suitable_grp_func(group)
+						if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" then
+							local grp_objective = {
+								stance = "hos",
+								attitude = "avoid",
+								pose = "crouch",
+								type = "assault_area",
+								area = group.objective.area
+							}
+
+							self:_set_objective_to_enemy_group(group, grp_objective)
+						end
+					end
+					--log("denied, tactical suckers")
+					self:_assign_groups_to_retire(self._tweak_data.assault.groups, suitable_grp_func)
+				end	
+			elseif wave_number == 4 then --wave 4, any units marked with fbi and previous will retire
+				if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" or tactics_map.fbigrunt and group.objective.type ~= "retire" then
+					local function suitable_grp_func(group)
+						if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" or tactics_map.fbigrunt and group.objective.type ~= "retire" then
+							local grp_objective = {
+								stance = "hos",
+								attitude = "avoid",
+								pose = "crouch",
+								type = "assault_area",
+								area = group.objective.area
+							}
+
+							self:_set_objective_to_enemy_group(group, grp_objective)
+						end
+					end
+					--log("denied, mook boy")
+					self:_assign_groups_to_retire(self._tweak_data.assault.groups, suitable_grp_func)
+				end	
+			elseif wave_number == 5 then --wave 5, any units marked with gensec and previous will retire
+				if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" or tactics_map.fbigrunt and group.objective.type ~= "retire" or tactics_map.gensec and group.objective.type ~= "retire" then
+					local function suitable_grp_func(group)
+						if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" or tactics_map.fbigrunt and group.objective.type ~= "retire" or tactics_map.gensec and group.objective.type ~= "retire" then
+							local grp_objective = {
+								stance = "hos",
+								attitude = "avoid",
+								pose = "crouch",
+								type = "assault_area",
+								area = group.objective.area
+							}
+
+							self:_set_objective_to_enemy_group(group, grp_objective)
+						end
+					end
+					--log("denied, rookies")
+					self:_assign_groups_to_retire(self._tweak_data.assault.groups, suitable_grp_func)
+				end	
+			elseif wave_number == 6 then --wave 6, any units marked with classic and previous will retire
+				if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" or tactics_map.fbigrunt and group.objective.type ~= "retire" or tactics_map.gensec and group.objective.type ~= "retire" or tactics_map.classic and group.objective.type ~= "retire" then
+					local function suitable_grp_func(group)
+						if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" or tactics_map.fbigrunt and group.objective.type ~= "retire" or tactics_map.gensec and group.objective.type ~= "retire" or tactics_map.classic and group.objective.type ~= "retire" then
+							local grp_objective = {
+								stance = "hos",
+								attitude = "avoid",
+								pose = "crouch",
+								type = "assault_area",
+								area = group.objective.area
+							}
+
+							self:_set_objective_to_enemy_group(group, grp_objective)
+						end
+					end
+					--log("denied, grandpa")
+					self:_assign_groups_to_retire(self._tweak_data.assault.groups, suitable_grp_func)
+				end
+			elseif wave_number >= 7 then --wave 7, any units marked with deathvox/zeal and previous will retire
+				if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" or tactics_map.fbigrunt and group.objective.type ~= "retire" or tactics_map.gensec and group.objective.type ~= "retire" or tactics_map.classic and group.objective.type ~= "retire" or tactics_map.deathvox and group.objective.type ~= "retire" then
+					local function suitable_grp_func(group)
+						if tactics_map.beatcop and group.objective.type ~= "retire" or tactics_map.swat and group.objective.type ~= "retire" or tactics_map.fbigrunt and group.objective.type ~= "retire" or tactics_map.gensec and group.objective.type ~= "retire" or tactics_map.classic and group.objective.type ~= "retire" or tactics_map.deathvox and group.objective.type ~= "retire" then
+							local grp_objective = {
+								stance = "hos",
+								attitude = "avoid",
+								pose = "crouch",
+								type = "assault_area",
+								area = group.objective.area
+							}
+
+							self:_set_objective_to_enemy_group(group, grp_objective)
+						end
+					end
+					--log("denied, hell's bells")
+					self:_assign_groups_to_retire(self._tweak_data.assault.groups, suitable_grp_func)
+				end
+			end
+		end
+	end
+end
+
+function GroupAIStateBesiege:_upd_recon_tasks()
+	local task_data = self._task_data.recon.tasks[1]
+	
+	if managers.skirmish:is_skirmish() then --makes unfit units retire during control/recon, mostly used as a safety measure to prevent leftovers
+		self:_assign_skirmish_groups_to_retire(allowed_groups, suitable_grp_func, group)
+	end
+	
+	self:_assign_enemy_groups_to_recon()
+
+	if not task_data then
+		return
+	end
+
+	local t = self._t
+
+	self:_assign_assault_groups_to_retire()
+
+	local target_pos = task_data.target_area.pos
+	local nr_wanted = self:_get_difficulty_dependent_value(self._tweak_data.recon.force) - self:_count_police_force("recon")
+
+	if nr_wanted <= 0 then
+		return
+	end
+
+	local used_event, used_spawn_points, reassigned = nil
+
+	if task_data.use_spawn_event then
+		task_data.use_spawn_event = false
+
+		if self:_try_use_task_spawn_event(t, task_data.target_area, "recon") then
+			used_event = true
+		end
+	end
+
+	if not used_event then
+		local used_group = nil
+
+		if next(self._spawning_groups) then
+			used_group = true
+		else
+			local spawn_group, spawn_group_type = self:_find_spawn_group_near_area(task_data.target_area, self._tweak_data.recon.groups, nil, nil, callback(self, self, "_verify_anticipation_spawn_point"))
+
+			if spawn_group then
+				local grp_objective = {
+					attitude = "avoid",
+					scan = true,
+					stance = "hos",
+					type = "recon_area",
+					area = spawn_group.area,
+					target_area = task_data.target_area
+				}
+
+				self:_spawn_in_group(spawn_group, spawn_group_type, grp_objective)
+
+				used_group = true
+			end
+		end
+	end
+
+	if used_event or used_spawn_points or reassigned then
+		table.remove(self._task_data.recon.tasks, 1)
+
+		self._task_data.recon.next_dispatch_t = t + math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.recon.interval)) + math.random() * self._tweak_data.recon.interval_variation
+	end
 end
