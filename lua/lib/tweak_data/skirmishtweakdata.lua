@@ -307,11 +307,26 @@ function SkirmishTweakData:_init_spawn_group_weights(tweak_data)  -- Everything 
 		"mh_greenpaladin", -- #4G  one shield/1 Gdozer/1 Medic
 		"mh_partners", -- #4H one Gdozer/1 Bdozer
 		"mh_taserpair", -- #4I  two tasers
-		"mh_takedown", -- #4J  one taser/one cloaker
-		"mh_spoocpair", -- #4K  two cloakers
-		"mh_vetmed", -- #4L  two veterans/2 Medics
+		"mh_spoocpair", -- #4J  two cloakers
+		"mh_vetmed", -- #4K  two veterans/2 Medics
 		
 	-- Classic extensive semi-endurance. Full range of units including earlier, e.g. beat police, HRT.
+		"hard_smggroup", -- #5A smg/two pistol
+		"hard_copcombo", -- #5B shot/two smg
+		"normal_revolvergroup", -- #5C one revolver/two pistol
+		"ovk_mixheavyARcharge", -- #5D two HAR/2 LAR
+		"ovk_comboARcharge", -- #5E two HAR/1 Medic/1 LAR
+		"ovk_mixshotcharge", -- #5F two Hshot/2 Lshot
+		"ovk_shieldshot", -- #5G two Shield/2 Lshot		
+		"dw_citadel", -- #5H two Shield/1 taser/1 Medic
+		"mh_taserpair", -- #5I  two tasers
+		"damocles", -- #5J three cloakers
+		"ovk_greendozer", -- #5K Gdozer
+		"ovk_blackdozer", -- #5L Bdozer
+		"mh_whitedozer", -- #5M Wdozer
+		"normal_rookiepair", -- #5N two rookie
+		"ovk_hrttaser", -- #5O one Taser/two HRT
+		"ovk_hrtvetmix", -- #5P two HRT/one veteran
 		
 	-- Zeal shorter than wave 5. Full assault range except grenadiers. Add medicdozers.
 		"cd_group_2_std", -- #6A two Hshot/2 LAR
