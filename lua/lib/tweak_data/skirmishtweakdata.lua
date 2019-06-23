@@ -1,10 +1,10 @@
 function SkirmishTweakData:_init_special_unit_spawn_limits()
 	self.spawn_limit_to_use = {
 		tank = 2,
-		taser = 4,
-		boom = 2,
-		spooc = 4,
-		shield = 6,
+		taser = 3,
+		boom = 0,
+		spooc = 3,
+		shield = 4,
 		medic = 4,
 	}
 	self.special_unit_spawn_limits = {
@@ -70,198 +70,602 @@ function SkirmishTweakData:_init_spawn_group_weights(tweak_data)  -- Everything 
 	local nice_human_readable_table = {
 		{ -- wave 1 beat police
 		  -- Effectively brief warm-up. beat, shield, medic, rookies.
-			2.56, -- 4 heavyar
-			5.55, -- heavyshot/lightar
-			5.55, -- heavyshot/lightar/medic
-			5.55, -- lightshot/lightar
-			5.55, -- lightshot/lightar/medic
-			5.55, -- heavyshot/lightshot/lightar
-			5.55, -- heavyshot/lightshot/lightar/medic
-			5.55, -- heavyar/lightar
-			5.55, -- heavyar/lightar/medic
-			5.55, -- taser/taser/medic
-			0, -- shield/lmgdozer/medic
-			0, --taser/saigadozer/medic/cloaker
-			0, --greendozer/taser/grenadier
-			0, --saigadozer/medicdozer
-			0, --shield/lmgdozer
-			3, --cloakers
-			0, --greendozer/medic/medicdozer
-			0, --grenadier/cloaker/taser
-			0 --shield/grenadier
+		1, -- #1A two rookie
+		1, -- #1B revolver/two pistol
+		1, -- #1C smg/two pistol
+		1, -- #1D shot/two smg
+		1, -- #1E revolver/medic
+		1, -- #1F rookie/medic
+		1, -- #1G shield/shot
+		0, -- #2A one Lshot/3 LAR
+		0, -- #2B one Shield/2 HAR
+		0, -- #2C one Taser/2 HAR
+		0, -- #2D one Taser/2 Hshot
+		0, -- #2E one Shield/2 LAR
+		0, -- #2F three LAR/1 Medic
+		0, -- #2G 2 HRT/1 Medic
+		0, -- #2H one Taser/2 HRT
+		0, -- #3A two HAR/2 LAR
+		0, -- #3B two HAR/1 Medic/1 LAR
+		0, -- #3C two Hshot/2 Lshot
+		0, -- #3D two Shield/1 Medic/ 1 Lshot
+		0, -- #3E two Shield/2 Lshot
+		0, -- #3F two Taser/2 LAR
+		0, -- #3G one Shield/1 Gdozer
+		0, -- #3H one Shield/1 Bdozer
+		0, -- #3I two cloaker
+		0, -- #3J one taser/two HRT
+		0, -- #4A one Hshot/2 Lshot/1 LAR
+		0, -- #4B one Hshot/2 Lshot/1 Medic
+		0, -- #4C two HAR/2 LAR
+		0, -- #4D two HAR/1 LAR/1 Medic
+		0, -- #4E one Wdozer
+		0, -- #4F one shield/1 Bdozer/1 Medic
+		0, -- #4G  one shield/1 Gdozer/1 Medic
+		0, -- #4H one Gdozer/1 Bdozer
+		0, -- #4I  two tasers
+		0, -- #4J  two cloakers
+		0, -- #4K  two veterans/2 Medics
+		0, -- #5A smg/two pistol
+		0, -- #5B shot/two smg
+		0, -- #5C one revolver/two pistol
+		0, -- #5D two HAR/2 LAR
+		0, -- #5E two HAR/1 Medic/1 LAR
+		0, -- #5F two Hshot/2 Lshot
+		0, -- #5G two Shield/2 Lshot		
+		0, -- #5H two Shield/1 taser/1 Medic
+		0, -- #5I  two tasers/1 cloaker
+		0, -- #5J two cloakers
+		0, -- #5K Gdozer
+		0, -- #5L Bdozer/1 Taser
+		0, -- #5M one Shield/Wdozer/1 Medic
+		0, -- #5N two rookie
+		0, -- #5O one Taser/two HRT
+		0, -- #5P two HRT/one veteran
+		0, -- #6A two Hshot/2 LAR
+		0, -- #6B one Hshot/2 Lshot/1 LAR
+		0, -- #6C two HAR/2 LAR
+		0, -- #6D two HAR/1 LAR/1 Medic
+		0, -- #6E two taser/1 Medic
+		0, -- #6F one tazer/1 Bdozer/1 Medic/1 cloaker
+		0, -- #6G one Bdozer/1 Medicdozer
+		0, -- #6H one Shield/1 Gdozer/1 Medic
+		0, -- #6I three shield/1 Wdozer
+		0, -- #6J three cloakers
+		0 -- #6K two veterans/2 Medic
 		},
+		
 		{ -- wave 2 swat
 		  -- swat, shield, medic, taser. Add HRT.
-			5.56, -- 4 heavyar
-			5.55, -- heavyshot/lightar
-			3.55, -- heavyshot/lightar/medic
-			5.55, -- lightshot/lightar
-			3.55, -- lightshot/lightar/medic
-			5.55, -- heavyshot/lightshot/lightar
-			3.55, -- heavyshot/lightshot/lightar/medic
-			5.55, -- heavyar/lightar
-			3.55, -- heavyar/lightar/medic
-			10.55, -- taser/taser/medic
-			0, -- shield/lmgdozer/medic
-			0, --taser/saigadozer/medic/cloaker
-			0, --greendozer/taser/grenadier
-			0, --saigadozer/medicdozer
-			0, --shield/lmgdozer
-			3, --cloakers
-			0, --greendozer/medic/medicdozer
-			0, --grenadier/cloaker/taser
-			0 --shield/grenadier
+		0, -- #1A two rookie
+		0, -- #1B revolver/two pistol
+		0, -- #1C smg/two pistol
+		0, -- #1D shot/two smg
+		0, -- #1E revolver/medic
+		0, -- #1F rookie/medic
+		0, -- #1G shield/shot
+		1, -- #2A one Lshot/3 LAR
+		1, -- #2B one Shield/2 HAR
+		1, -- #2C one Taser/2 HAR
+		1, -- #2D one Taser/2 Hshot
+		1, -- #2E one Shield/2 LAR
+		1, -- #2F three LAR/1 Medic
+		1, -- #2G 2 HRT/1 Medic
+		1, -- #2H one Taser/2 HRT
+		0, -- #3A two HAR/2 LAR
+		0, -- #3B two HAR/1 Medic/1 LAR
+		0, -- #3C two Hshot/2 Lshot
+		0, -- #3D two Shield/1 Medic/ 1 Lshot
+		0, -- #3E two Shield/2 Lshot
+		0, -- #3F two Taser/2 LAR
+		0, -- #3G one Shield/1 Gdozer
+		0, -- #3H one Shield/1 Bdozer
+		0, -- #3I two cloaker
+		0, -- #3J one taser/two HRT
+		0, -- #4A one Hshot/2 Lshot/1 LAR
+		0, -- #4B one Hshot/2 Lshot/1 Medic
+		0, -- #4C two HAR/2 LAR
+		0, -- #4D two HAR/1 LAR/1 Medic
+		0, -- #4E one Wdozer
+		0, -- #4F one shield/1 Bdozer/1 Medic
+		0, -- #4G  one shield/1 Gdozer/1 Medic
+		0, -- #4H one Gdozer/1 Bdozer
+		0, -- #4I  two tasers
+		0, -- #4J  two cloakers
+		0, -- #4K  two veterans/2 Medics
+		0, -- #5A smg/two pistol
+		0, -- #5B shot/two smg
+		0, -- #5C one revolver/two pistol
+		0, -- #5D two HAR/2 LAR
+		0, -- #5E two HAR/1 Medic/1 LAR
+		0, -- #5F two Hshot/2 Lshot
+		0, -- #5G two Shield/2 Lshot		
+		0, -- #5H two Shield/1 taser/1 Medic
+		0, -- #5I  two tasers/1 cloaker
+		0, -- #5J two cloakers
+		0, -- #5K Gdozer
+		0, -- #5L Bdozer/1 Taser
+		0, -- #5M one Shield/Wdozer/1 Medic
+		0, -- #5N two rookie
+		0, -- #5O one Taser/two HRT
+		0, -- #5P two HRT/one veteran
+		0, -- #6A two Hshot/2 LAR
+		0, -- #6B one Hshot/2 Lshot/1 LAR
+		0, -- #6C two HAR/2 LAR
+		0, -- #6D two HAR/1 LAR/1 Medic
+		0, -- #6E two taser/1 Medic
+		0, -- #6F one tazer/1 Bdozer/1 Medic/1 cloaker
+		0, -- #6G one Bdozer/1 Medicdozer
+		0, -- #6H one Shield/1 Gdozer/1 Medic
+		0, -- #6I three shield/1 Wdozer
+		0, -- #6J three cloakers
+		0 -- #6K two veterans/2 Medic
 		},
+		
 		{ -- wave 3 FBI
 		  -- warmup over. FBI, medics, shields, dozers, cloakers, HRT.
-			5.56, -- 4 heavyar
-			3.55, -- heavyshot/lightar
-			3.55, -- heavyshot/lightar/medic
-			3.55, -- lightshot/lightar
-			3.55, -- lightshot/lightar/medic
-			3.55, -- heavyshot/lightshot/lightar
-			3.55, -- heavyshot/lightshot/lightar/medic
-			3.55, -- heavyar/lightar
-			3.55, -- heavyar/lightar/medic
-			5.55, -- taser/taser/medic
-			6, -- shield/lmgdozer/medic
-			0, --taser/saigadozer/medic/cloaker
-			0, --greendozer/taser/grenadier
-			0, --saigadozer/medicdozer
-			6, --shield/lmgdozer
-			4, --cloakers
-			0, --greendozer/medic/medicdozer
-			0, --grenadier/cloaker/taser
-			0 --shield/grenadier
+		0, -- #1A two rookie
+		0, -- #1B revolver/two pistol
+		0, -- #1C smg/two pistol
+		0, -- #1D shot/two smg
+		0, -- #1E revolver/medic
+		0, -- #1F rookie/medic
+		0, -- #1G shield/shot
+		0, -- #2A one Lshot/3 LAR
+		0, -- #2B one Shield/2 HAR
+		0, -- #2C one Taser/2 HAR
+		0, -- #2D one Taser/2 Hshot
+		0, -- #2E one Shield/2 LAR
+		0, -- #2F three LAR/1 Medic
+		0, -- #2G 2 HRT/1 Medic
+		0, -- #2H one Taser/2 HRT
+		1, -- #3A two HAR/2 LAR
+		1, -- #3B two HAR/1 Medic/1 LAR
+		1, -- #3C two Hshot/2 Lshot
+		1, -- #3D two Shield/1 Medic/ 1 Lshot
+		1, -- #3E two Shield/2 Lshot
+		1, -- #3F two Taser/2 LAR
+		1, -- #3G one Shield/1 Gdozer
+		1, -- #3H one Shield/1 Bdozer
+		1, -- #3I two cloaker
+		1, -- #3J one taser/two HRT
+		0, -- #4A one Hshot/2 Lshot/1 LAR
+		0, -- #4B one Hshot/2 Lshot/1 Medic
+		0, -- #4C two HAR/2 LAR
+		0, -- #4D two HAR/1 LAR/1 Medic
+		0, -- #4E one Wdozer
+		0, -- #4F one shield/1 Bdozer/1 Medic
+		0, -- #4G  one shield/1 Gdozer/1 Medic
+		0, -- #4H one Gdozer/1 Bdozer
+		0, -- #4I  two tasers
+		0, -- #4J  two cloakers
+		0, -- #4K  two veterans/2 Medics
+		0, -- #5A smg/two pistol
+		0, -- #5B shot/two smg
+		0, -- #5C one revolver/two pistol
+		0, -- #5D two HAR/2 LAR
+		0, -- #5E two HAR/1 Medic/1 LAR
+		0, -- #5F two Hshot/2 Lshot
+		0, -- #5G two Shield/2 Lshot		
+		0, -- #5H two Shield/1 taser/1 Medic
+		0, -- #5I  two tasers/1 cloaker
+		0, -- #5J two cloakers
+		0, -- #5K Gdozer
+		0, -- #5L Bdozer/1 Taser
+		0, -- #5M one Shield/Wdozer/1 Medic
+		0, -- #5N two rookie
+		0, -- #5O one Taser/two HRT
+		0, -- #5P two HRT/one veteran
+		0, -- #6A two Hshot/2 LAR
+		0, -- #6B one Hshot/2 Lshot/1 LAR
+		0, -- #6C two HAR/2 LAR
+		0, -- #6D two HAR/1 LAR/1 Medic
+		0, -- #6E two taser/1 Medic
+		0, -- #6F one tazer/1 Bdozer/1 Medic/1 cloaker
+		0, -- #6G one Bdozer/1 Medicdozer
+		0, -- #6H one Shield/1 Gdozer/1 Medic
+		0, -- #6I three shield/1 Wdozer
+		0, -- #6J three cloakers
+		0 -- #6K two veterans/2 Medic
 		},
+		
 		{ -- wave 4 Gensec. Mayhem values.
 		  -- Gensecs, dozers (w/LMG), cloakers, medics, shields. Add Veterans.
-			5.56, -- 4 heavyar
-			3.55, -- heavyshot/lightar
-			3.55, -- heavyshot/lightar/medic
-			3.55, -- lightshot/lightar
-			3.55, -- lightshot/lightar/medic
-			3.55, -- heavyshot/lightshot/lightar
-			3.55, -- heavyshot/lightshot/lightar/medic
-			3.55, -- heavyar/lightar
-			3.55, -- heavyar/lightar/medic
-			5.55, -- taser/taser/medic
-			6, -- shield/lmgdozer/medic
-			0, --taser/saigadozer/medic/cloaker
-			0, --greendozer/taser/grenadier
-			0, --saigadozer/medicdozer
-			6, --shield/lmgdozer
-			4, --cloakers
-			0, --greendozer/medic/medicdozer
-			0, --grenadier/cloaker/taser
-			0 --shield/grenadier
+		0, -- #1A two rookie
+		0, -- #1B revolver/two pistol
+		0, -- #1C smg/two pistol
+		0, -- #1D shot/two smg
+		0, -- #1E revolver/medic
+		0, -- #1F rookie/medic
+		0, -- #1G shield/shot
+		0, -- #2A one Lshot/3 LAR
+		0, -- #2B one Shield/2 HAR
+		0, -- #2C one Taser/2 HAR
+		0, -- #2D one Taser/2 Hshot
+		0, -- #2E one Shield/2 LAR
+		0, -- #2F three LAR/1 Medic
+		0, -- #2G 2 HRT/1 Medic
+		0, -- #2H one Taser/2 HRT
+		0, -- #3A two HAR/2 LAR
+		0, -- #3B two HAR/1 Medic/1 LAR
+		0, -- #3C two Hshot/2 Lshot
+		0, -- #3D two Shield/1 Medic/ 1 Lshot
+		0, -- #3E two Shield/2 Lshot
+		0, -- #3F two Taser/2 LAR
+		0, -- #3G one Shield/1 Gdozer
+		0, -- #3H one Shield/1 Bdozer
+		0, -- #3I two cloaker
+		0, -- #3J one taser/two HRT
+		1, -- #4A one Hshot/2 Lshot/1 LAR
+		1, -- #4B one Hshot/2 Lshot/1 Medic
+		1, -- #4C two HAR/2 LAR
+		1, -- #4D two HAR/1 LAR/1 Medic
+		1, -- #4E one Wdozer
+		1, -- #4F one shield/1 Bdozer/1 Medic
+		1, -- #4G  one shield/1 Gdozer/1 Medic
+		1, -- #4H one Gdozer/1 Bdozer
+		1, -- #4I  two tasers
+		1, -- #4J  two cloakers
+		1, -- #4K  two veterans/2 Medics
+		0, -- #5A smg/two pistol
+		0, -- #5B shot/two smg
+		0, -- #5C one revolver/two pistol
+		0, -- #5D two HAR/2 LAR
+		0, -- #5E two HAR/1 Medic/1 LAR
+		0, -- #5F two Hshot/2 Lshot
+		0, -- #5G two Shield/2 Lshot		
+		0, -- #5H two Shield/1 taser/1 Medic
+		0, -- #5I  two tasers/1 cloaker
+		0, -- #5J two cloakers
+		0, -- #5K Gdozer
+		0, -- #5L Bdozer/1 Taser
+		0, -- #5M one Shield/Wdozer/1 Medic
+		0, -- #5N two rookie
+		0, -- #5O one Taser/two HRT
+		0, -- #5P two HRT/one veteran
+		0, -- #6A two Hshot/2 LAR
+		0, -- #6B one Hshot/2 Lshot/1 LAR
+		0, -- #6C two HAR/2 LAR
+		0, -- #6D two HAR/1 LAR/1 Medic
+		0, -- #6E two taser/1 Medic
+		0, -- #6F one tazer/1 Bdozer/1 Medic/1 cloaker
+		0, -- #6G one Bdozer/1 Medicdozer
+		0, -- #6H one Shield/1 Gdozer/1 Medic
+		0, -- #6I three shield/1 Wdozer
+		0, -- #6J three cloakers
+		0 -- #6K two veterans/2 Medic
 		},
+		
 		{ -- wave 5 Classic. Death Wish values.
 		  -- extensive semi-endurance. Full range of units including earlier, e.g. beat police, HRT.
-			2.56, -- 4 heavyar
-			3.55, -- heavyshot/lightar
-			3.55, -- heavyshot/lightar/medic
-			3.55, -- lightshot/lightar
-			3.55, -- lightshot/lightar/medic
-			6.55, -- heavyshot/lightshot/lightar
-			6.55, -- heavyshot/lightshot/lightar/medic
-			0, -- heavyar/lightar
-			0, -- heavyar/lightar/medic
-			5.55, -- taser/taser/medic
-			6, -- shield/lmgdozer/medic
-			0, --taser/saigadozer/medic/cloaker
-			0, --greendozer/taser/grenadier
-			0, --saigadozer/medicdozer
-			6, --shield/lmgdozer
-			4, --cloakers
-			0, --greendozer/medic/medicdozer
-			0, --grenadier/cloaker/taser
-			0 --shield/grenadier
+		0, -- #1A two rookie
+		0, -- #1B revolver/two pistol
+		0, -- #1C smg/two pistol
+		0, -- #1D shot/two smg
+		0, -- #1E revolver/medic
+		0, -- #1F rookie/medic
+		0, -- #1G shield/shot
+		0, -- #2A one Lshot/3 LAR
+		0, -- #2B one Shield/2 HAR
+		0, -- #2C one Taser/2 HAR
+		0, -- #2D one Taser/2 Hshot
+		0, -- #2E one Shield/2 LAR
+		0, -- #2F three LAR/1 Medic
+		0, -- #2G 2 HRT/1 Medic
+		0, -- #2H one Taser/2 HRT
+		0, -- #3A two HAR/2 LAR
+		0, -- #3B two HAR/1 Medic/1 LAR
+		0, -- #3C two Hshot/2 Lshot
+		0, -- #3D two Shield/1 Medic/ 1 Lshot
+		0, -- #3E two Shield/2 Lshot
+		0, -- #3F two Taser/2 LAR
+		0, -- #3G one Shield/1 Gdozer
+		0, -- #3H one Shield/1 Bdozer
+		0, -- #3I two cloaker
+		0, -- #3J one taser/two HRT
+		0, -- #4A one Hshot/2 Lshot/1 LAR
+		0, -- #4B one Hshot/2 Lshot/1 Medic
+		0, -- #4C two HAR/2 LAR
+		0, -- #4D two HAR/1 LAR/1 Medic
+		0, -- #4E one Wdozer
+		0, -- #4F one shield/1 Bdozer/1 Medic
+		0, -- #4G  one shield/1 Gdozer/1 Medic
+		0, -- #4H one Gdozer/1 Bdozer
+		0, -- #4I  two tasers
+		0, -- #4J  two cloakers
+		0, -- #4K  two veterans/2 Medics
+		1, -- #5A smg/two pistol
+		1, -- #5B shot/two smg
+		1, -- #5C one revolver/two pistol
+		1, -- #5D two HAR/2 LAR
+		1, -- #5E two HAR/1 Medic/1 LAR
+		1, -- #5F two Hshot/2 Lshot
+		1, -- #5G two Shield/2 Lshot		
+		1, -- #5H two Shield/1 taser/1 Medic
+		1, -- #5I  two tasers/1 cloaker
+		1, -- #5J two cloakers
+		1, -- #5K Gdozer
+		1, -- #5L Bdozer/1 Taser
+		1, -- #5M one Shield/Wdozer/1 Medic
+		1, -- #5N two rookie
+		1, -- #5O one Taser/two HRT
+		1, -- #5P two HRT/one veteran
+		0, -- #6A two Hshot/2 LAR
+		0, -- #6B one Hshot/2 Lshot/1 LAR
+		0, -- #6C two HAR/2 LAR
+		0, -- #6D two HAR/1 LAR/1 Medic
+		0, -- #6E two taser/1 Medic
+		0, -- #6F one tazer/1 Bdozer/1 Medic/1 cloaker
+		0, -- #6G one Bdozer/1 Medicdozer
+		0, -- #6H one Shield/1 Gdozer/1 Medic
+		0, -- #6I three shield/1 Wdozer
+		0, -- #6J three cloakers
+		0 -- #6K two veterans/2 Medic
 		},
+		
 		{ -- wave 6 Zeal.
 		  -- shorter than wave 5. Full assault range except grenadiers. Add medicdozers.
-			2.56, -- 4 heavyar
-			3.55, -- heavyshot/lightar
-			3.55, -- heavyshot/lightar/medic
-			3.55, -- lightshot/lightar
-			3.55, -- lightshot/lightar/medic
-			6.55, -- heavyshot/lightshot/lightar
-			6.55, -- heavyshot/lightshot/lightar/medic
-			0, -- heavyar/lightar
-			0, -- heavyar/lightar/medic
-			5.55, -- taser/taser/medic
-			6, -- shield/lmgdozer/medic
-			0, --taser/saigadozer/medic/cloaker
-			0, --greendozer/taser/grenadier
-			0, --saigadozer/medicdozer
-			6, --shield/lmgdozer
-			4, --cloakers
-			0, --greendozer/medic/medicdozer
-			0, --grenadier/cloaker/taser
-			0 --shield/grenadier
+		0, -- #1A two rookie
+		0, -- #1B revolver/two pistol
+		0, -- #1C smg/two pistol
+		0, -- #1D shot/two smg
+		0, -- #1E revolver/medic
+		0, -- #1F rookie/medic
+		0, -- #1G shield/shot
+		0, -- #2A one Lshot/3 LAR
+		0, -- #2B one Shield/2 HAR
+		0, -- #2C one Taser/2 HAR
+		0, -- #2D one Taser/2 Hshot
+		0, -- #2E one Shield/2 LAR
+		0, -- #2F three LAR/1 Medic
+		0, -- #2G 2 HRT/1 Medic
+		0, -- #2H one Taser/2 HRT
+		0, -- #3A two HAR/2 LAR
+		0, -- #3B two HAR/1 Medic/1 LAR
+		0, -- #3C two Hshot/2 Lshot
+		0, -- #3D two Shield/1 Medic/ 1 Lshot
+		0, -- #3E two Shield/2 Lshot
+		0, -- #3F two Taser/2 LAR
+		0, -- #3G one Shield/1 Gdozer
+		0, -- #3H one Shield/1 Bdozer
+		0, -- #3I two cloaker
+		0, -- #3J one taser/two HRT
+		0, -- #4A one Hshot/2 Lshot/1 LAR
+		0, -- #4B one Hshot/2 Lshot/1 Medic
+		0, -- #4C two HAR/2 LAR
+		0, -- #4D two HAR/1 LAR/1 Medic
+		0, -- #4E one Wdozer
+		0, -- #4F one shield/1 Bdozer/1 Medic
+		0, -- #4G  one shield/1 Gdozer/1 Medic
+		0, -- #4H one Gdozer/1 Bdozer
+		0, -- #4I  two tasers
+		0, -- #4J  two cloakers
+		0, -- #4K  two veterans/2 Medics
+		0, -- #5A smg/two pistol
+		0, -- #5B shot/two smg
+		0, -- #5C one revolver/two pistol
+		0, -- #5D two HAR/2 LAR
+		0, -- #5E two HAR/1 Medic/1 LAR
+		0, -- #5F two Hshot/2 Lshot
+		0, -- #5G two Shield/2 Lshot		
+		0, -- #5H two Shield/1 taser/1 Medic
+		0, -- #5I  two tasers/1 cloaker
+		0, -- #5J two cloakers
+		0, -- #5K Gdozer
+		0, -- #5L Bdozer/1 Taser
+		0, -- #5M one Shield/Wdozer/1 Medic
+		0, -- #5N two rookie
+		0, -- #5O one Taser/two HRT
+		0, -- #5P two HRT/one veteran
+		1, -- #6A two Hshot/2 LAR
+		1, -- #6B one Hshot/2 Lshot/1 LAR
+		1, -- #6C two HAR/2 LAR
+		1, -- #6D two HAR/1 LAR/1 Medic
+		1, -- #6E two taser/1 Medic
+		1, -- #6F one tazer/1 Bdozer/1 Medic/1 cloaker
+		1, -- #6G one Bdozer/1 Medicdozer
+		1, -- #6H one Shield/1 Gdozer/1 Medic
+		1, -- #6I three shield/1 Wdozer
+		1, -- #6J three cloakers
+		1 -- #6K two veterans/2 Medic
 		},
-		{ -- wave 7 ???
-			3.56, -- 4 heavyar
-			3.55, -- heavyshot/lightar
-			2.55, -- heavyshot/lightar/medic
-			3.55, -- lightshot/lightar
-			2.55, -- lightshot/lightar/medic
-			3.55, -- heavyshot/lightshot/lightar
-			2.55, -- heavyshot/lightshot/lightar/medic
-			3.55, -- heavyar/lightar
-			3.55, -- heavyar/lightar/medic
-			3.55, -- taser/taser/medic
-			4, -- shield/lmgdozer/medic
-			3, --taser/saigadozer/medic/cloaker
-			0, --greendozer/taser/grenadier
-			3, --saigadozer/medicdozer
-			4, --shield/lmgdozer
-			4, --cloakers
-			3, --greendozer/medic/medicdozer
-			0, --grenadier/cloaker/taser
-			0 --shield/grenadier
+		
+		{ -- wave 7 UNUSED
+		0, -- #1A two rookie
+		0, -- #1B revolver/two pistol
+		0, -- #1C smg/two pistol
+		0, -- #1D shot/two smg
+		0, -- #1E revolver/medic
+		0, -- #1F rookie/medic
+		0, -- #1G shield/shot
+		0, -- #2A one Lshot/3 LAR
+		0, -- #2B one Shield/2 HAR
+		0, -- #2C one Taser/2 HAR
+		0, -- #2D one Taser/2 Hshot
+		0, -- #2E one Shield/2 LAR
+		0, -- #2F three LAR/1 Medic
+		0, -- #2G 2 HRT/1 Medic
+		0, -- #2H one Taser/2 HRT
+		0, -- #3A two HAR/2 LAR
+		0, -- #3B two HAR/1 Medic/1 LAR
+		0, -- #3C two Hshot/2 Lshot
+		0, -- #3D two Shield/1 Medic/ 1 Lshot
+		0, -- #3E two Shield/2 Lshot
+		0, -- #3F two Taser/2 LAR
+		0, -- #3G one Shield/1 Gdozer
+		0, -- #3H one Shield/1 Bdozer
+		0, -- #3I two cloaker
+		0, -- #3J one taser/two HRT
+		0, -- #4A one Hshot/2 Lshot/1 LAR
+		0, -- #4B one Hshot/2 Lshot/1 Medic
+		0, -- #4C two HAR/2 LAR
+		0, -- #4D two HAR/1 LAR/1 Medic
+		0, -- #4E one Wdozer
+		0, -- #4F one shield/1 Bdozer/1 Medic
+		0, -- #4G  one shield/1 Gdozer/1 Medic
+		0, -- #4H one Gdozer/1 Bdozer
+		0, -- #4I  two tasers
+		0, -- #4J  two cloakers
+		0, -- #4K  two veterans/2 Medics
+		0, -- #5A smg/two pistol
+		0, -- #5B shot/two smg
+		0, -- #5C one revolver/two pistol
+		0, -- #5D two HAR/2 LAR
+		0, -- #5E two HAR/1 Medic/1 LAR
+		0, -- #5F two Hshot/2 Lshot
+		0, -- #5G two Shield/2 Lshot		
+		0, -- #5H two Shield/1 taser/1 Medic
+		0, -- #5I  two tasers/1 cloaker
+		0, -- #5J two cloakers
+		0, -- #5K Gdozer
+		0, -- #5L Bdozer/1 Taser
+		0, -- #5M one Shield/Wdozer/1 Medic
+		0, -- #5N two rookie
+		0, -- #5O one Taser/two HRT
+		0, -- #5P two HRT/one veteran
+		0, -- #6A two Hshot/2 LAR
+		0, -- #6B one Hshot/2 Lshot/1 LAR
+		0, -- #6C two HAR/2 LAR
+		0, -- #6D two HAR/1 LAR/1 Medic
+		0, -- #6E two taser/1 Medic
+		0, -- #6F one tazer/1 Bdozer/1 Medic/1 cloaker
+		0, -- #6G one Bdozer/1 Medicdozer
+		0, -- #6H one Shield/1 Gdozer/1 Medic
+		0, -- #6I three shield/1 Wdozer
+		0, -- #6J three cloakers
+		0 -- #6K two veterans/2 Medic
 		},
-		{ -- wave 8 no change
-			3.56, -- 4 heavyar
-			3.55, -- heavyshot/lightar
-			2.55, -- heavyshot/lightar/medic
-			3.55, -- lightshot/lightar
-			2.55, -- lightshot/lightar/medic
-			3.55, -- heavyshot/lightshot/lightar
-			2.55, -- heavyshot/lightshot/lightar/medic
-			3.55, -- heavyar/lightar
-			3.55, -- heavyar/lightar/medic
-			3.55, -- taser/taser/medic
-			4, -- shield/lmgdozer/medic
-			3, --taser/saigadozer/medic/cloaker
-			0, --greendozer/taser/grenadier
-			3, --saigadozer/medicdozer
-			4, --shield/lmgdozer
-			4, --cloakers
-			3, --greendozer/medic/medicdozer
-			0, --grenadier/cloaker/taser
-			0 --shield/grenadier
+		
+		{ -- wave 8 UNUSED
+		0, -- #1A two rookie
+		0, -- #1B revolver/two pistol
+		0, -- #1C smg/two pistol
+		0, -- #1D shot/two smg
+		0, -- #1E revolver/medic
+		0, -- #1F rookie/medic
+		0, -- #1G shield/shot
+		0, -- #2A one Lshot/3 LAR
+		0, -- #2B one Shield/2 HAR
+		0, -- #2C one Taser/2 HAR
+		0, -- #2D one Taser/2 Hshot
+		0, -- #2E one Shield/2 LAR
+		0, -- #2F three LAR/1 Medic
+		0, -- #2G 2 HRT/1 Medic
+		0, -- #2H one Taser/2 HRT
+		0, -- #3A two HAR/2 LAR
+		0, -- #3B two HAR/1 Medic/1 LAR
+		0, -- #3C two Hshot/2 Lshot
+		0, -- #3D two Shield/1 Medic/ 1 Lshot
+		0, -- #3E two Shield/2 Lshot
+		0, -- #3F two Taser/2 LAR
+		0, -- #3G one Shield/1 Gdozer
+		0, -- #3H one Shield/1 Bdozer
+		0, -- #3I two cloaker
+		0, -- #3J one taser/two HRT
+		0, -- #4A one Hshot/2 Lshot/1 LAR
+		0, -- #4B one Hshot/2 Lshot/1 Medic
+		0, -- #4C two HAR/2 LAR
+		0, -- #4D two HAR/1 LAR/1 Medic
+		0, -- #4E one Wdozer
+		0, -- #4F one shield/1 Bdozer/1 Medic
+		0, -- #4G  one shield/1 Gdozer/1 Medic
+		0, -- #4H one Gdozer/1 Bdozer
+		0, -- #4I  two tasers
+		0, -- #4J  two cloakers
+		0, -- #4K  two veterans/2 Medics
+		0, -- #5A smg/two pistol
+		0, -- #5B shot/two smg
+		0, -- #5C one revolver/two pistol
+		0, -- #5D two HAR/2 LAR
+		0, -- #5E two HAR/1 Medic/1 LAR
+		0, -- #5F two Hshot/2 Lshot
+		0, -- #5G two Shield/2 Lshot		
+		0, -- #5H two Shield/1 taser/1 Medic
+		0, -- #5I  two tasers/1 cloaker
+		0, -- #5J two cloakers
+		0, -- #5K Gdozer
+		0, -- #5L Bdozer/1 Taser
+		0, -- #5M one Shield/Wdozer/1 Medic
+		0, -- #5N two rookie
+		0, -- #5O one Taser/two HRT
+		0, -- #5P two HRT/one veteran
+		0, -- #6A two Hshot/2 LAR
+		0, -- #6B one Hshot/2 Lshot/1 LAR
+		0, -- #6C two HAR/2 LAR
+		0, -- #6D two HAR/1 LAR/1 Medic
+		0, -- #6E two taser/1 Medic
+		0, -- #6F one tazer/1 Bdozer/1 Medic/1 cloaker
+		0, -- #6G one Bdozer/1 Medicdozer
+		0, -- #6H one Shield/1 Gdozer/1 Medic
+		0, -- #6I three shield/1 Wdozer
+		0, -- #6J three cloakers
+		0 -- #6K two veterans/2 Medic
 		},
-		{ -- wave 9 introduce grenadiers
-			2.56, -- 4 heavyar
-			2.55, -- heavyshot/lightar
-			2.55, -- heavyshot/lightar/medic
-			2.55, -- lightshot/lightar
-			2.55, -- lightshot/lightar/medic
-			2.55, -- heavyshot/lightshot/lightar
-			2.55, -- heavyshot/lightshot/lightar/medic
-			2.55, -- heavyar/lightar
-			2.55, -- heavyar/lightar/medic
-			2.55, -- taser/taser/medic
-			3, -- shield/lmgdozer/medic
-			3, --taser/saigadozer/medic/cloaker
-			3, --greendozer/taser/grenadier
-			3, --saigadozer/medicdozer
-			3, --shield/lmgdozer
-			3, --cloakers
-			3, --greendozer/medic/medicdozer
-			3, --grenadier/cloaker/taser
-			4 --shield/grenadier
+		
+		{ -- wave 9 UNUSED
+		0, -- #1A two rookie
+		0, -- #1B revolver/two pistol
+		0, -- #1C smg/two pistol
+		0, -- #1D shot/two smg
+		0, -- #1E revolver/medic
+		0, -- #1F rookie/medic
+		0, -- #1G shield/shot
+		0, -- #2A one Lshot/3 LAR
+		0, -- #2B one Shield/2 HAR
+		0, -- #2C one Taser/2 HAR
+		0, -- #2D one Taser/2 Hshot
+		0, -- #2E one Shield/2 LAR
+		0, -- #2F three LAR/1 Medic
+		0, -- #2G 2 HRT/1 Medic
+		0, -- #2H one Taser/2 HRT
+		0, -- #3A two HAR/2 LAR
+		0, -- #3B two HAR/1 Medic/1 LAR
+		0, -- #3C two Hshot/2 Lshot
+		0, -- #3D two Shield/1 Medic/ 1 Lshot
+		0, -- #3E two Shield/2 Lshot
+		0, -- #3F two Taser/2 LAR
+		0, -- #3G one Shield/1 Gdozer
+		0, -- #3H one Shield/1 Bdozer
+		0, -- #3I two cloaker
+		0, -- #3J one taser/two HRT
+		0, -- #4A one Hshot/2 Lshot/1 LAR
+		0, -- #4B one Hshot/2 Lshot/1 Medic
+		0, -- #4C two HAR/2 LAR
+		0, -- #4D two HAR/1 LAR/1 Medic
+		0, -- #4E one Wdozer
+		0, -- #4F one shield/1 Bdozer/1 Medic
+		0, -- #4G  one shield/1 Gdozer/1 Medic
+		0, -- #4H one Gdozer/1 Bdozer
+		0, -- #4I  two tasers
+		0, -- #4J  two cloakers
+		0, -- #4K  two veterans/2 Medics
+		0, -- #5A smg/two pistol
+		0, -- #5B shot/two smg
+		0, -- #5C one revolver/two pistol
+		0, -- #5D two HAR/2 LAR
+		0, -- #5E two HAR/1 Medic/1 LAR
+		0, -- #5F two Hshot/2 Lshot
+		0, -- #5G two Shield/2 Lshot		
+		0, -- #5H two Shield/1 taser/1 Medic
+		0, -- #5I  two tasers/1 cloaker
+		0, -- #5J two cloakers
+		0, -- #5K Gdozer
+		0, -- #5L Bdozer/1 Taser
+		0, -- #5M one Shield/Wdozer/1 Medic
+		0, -- #5N two rookie
+		0, -- #5O one Taser/two HRT
+		0, -- #5P two HRT/one veteran
+		0, -- #6A two Hshot/2 LAR
+		0, -- #6B one Hshot/2 Lshot/1 LAR
+		0, -- #6C two HAR/2 LAR
+		0, -- #6D two HAR/1 LAR/1 Medic
+		0, -- #6E two taser/1 Medic
+		0, -- #6F one tazer/1 Bdozer/1 Medic/1 cloaker
+		0, -- #6G one Bdozer/1 Medicdozer
+		0, -- #6H one Shield/1 Gdozer/1 Medic
+		0, -- #6I three shield/1 Wdozer
+		0, -- #6J three cloakers
+		0 -- #6K two veterans/2 Medic
 		}
 	}
 	local ordered_spawn_group_names = { 
@@ -292,7 +696,7 @@ function SkirmishTweakData:_init_spawn_group_weights(tweak_data)  -- Everything 
 		"ovk_shieldcombo", -- #3D two Shield/1 Medic/ 1 Lshot
 		"ovk_shieldshot", -- #3E two Shield/2 Lshot
 		"ovk_tazerAR", -- #3F two Taser/2 LAR
-		"ovk_greenknight" -- #3G one Shield/1 Gdozer
+		"ovk_greenknight", -- #3G one Shield/1 Gdozer
 		"ovk_blackknight", -- #3H one Shield/1 Bdozer
 		"ovk_spoocpair", -- #3I	two cloaker
 		"ovk_hrttaser", -- #3J one taer/two HRT
