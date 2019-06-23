@@ -893,12 +893,14 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"provide_coverfire",
 				"provide_support",
 				"deathguard",
-				"flash_grenade"
+				"flash_grenade",
+				"skirmish"
 				},
 			deathvox_grenad_lead = {
 				"ranged_fire",
 				"provide_coverfire",
-				"deathguard"
+				"deathguard",
+				"skirmish"
 				},
 			deathvox_grenad_pinch = {
 				"ranged_fire",
@@ -906,32 +908,37 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"provide_coverfire",
 				"provide_support",
 				"deathguard",
+				"skirmish"
 				},
 			deathvox_medic = {
 				"shield_cover",
 				"charge",
 				"provide_coverfire",
-				"provide_support"
+				"provide_support",
+				"skirmish"
 				},
 			deathvox_shield_lead = {
 				"shield",
 				"charge",
 				"provide_coverfire",
-				"provide_support"
+				"provide_support",
+				"skirmish"
 				},
 			deathvox_shield_support = {
 				"shield",
 				"provide_coverfire",
 				"provide_support",
 				"charge",
-				"deathguard"
+				"deathguard",
+				"skirmish"
 				},
 			deathvox_spooc_lead = {
 				"charge",
 				"flash_grenade",
 				"provide_coverfire",
 				"smoke_grenade",
-				"deathguard"
+				"deathguard",
+				"skirmish"
 				},
 			deathvox_spooc_pinch = {
 				"flank",
@@ -940,7 +947,8 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"provide_coverfire",
 				"provide_support",
 				"deathguard",
-				"flash_grenade"
+				"flash_grenade",
+				"skirmish"
 				},
 			deathvox_spooc_shield = {
 				"shield_cover",
@@ -949,63 +957,74 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"provide_support",
 				"smoke_grenade",
 				"deathguard",
-				"flash_grenade"
+				"flash_grenade",
+				"skirmish"
 				},			
 			deathvox_simple_charge = {
 				"charge",
 				"provide_coverfire",
 				"provide_support",
+				"skirmish"
 				},
 			deathvox_swat_charge = {
 				"charge",
 				"provide_coverfire",
-				"provide_support"
+				"provide_support",
+				"skirmish"
 				},
 			deathvox_swat_flashcharge = {
 				"flash_grenade",
 				"charge",
 				"provide_coverfire",
-				"provide_support"
+				"provide_support",
+				"skirmish"
 				},
 			deathvox_swat_smokecharge = {
 				"smoke_grenade",
 				"charge",
 				"provide_coverfire",
-				"provide_support"
+				"provide_support",
+				"skirmish"
 				},
 			deathvox_swat_shieldcharge = {
 				"shield_cover",
 				"charge",
 				"provide_coverfire",
-				"provide_support"
+				"provide_support",
+				"skirmish"
 				},
 			deathvox_swat_flank = {
 				"flank",
 				"provide_coverfire",
-				"provide_support"
+				"provide_support",
+				"skirmish"
 				},
 			deathvox_swat_flashflank = {
 				"flash_grenade",
 				"flank",
 				"provide_coverfire",
-				"provide_support"
+				"provide_support",
+				"skirmish"
 				},
 			deathvox_swat_smokeflank = {
 				"smoke_grenade",
 				"flank",
 				"provide_coverfire",
-				"provide_support"
+				"provide_support",
+				"skirmish"
 				},
 			deathvox_swat_shieldflank = {
 				"shield_cover",
 				"flank",
 				"provide_coverfire",
-				"provide_support"
+				"provide_support",
+				"skirmish"
 				},
 			deathvox_swat_ranged = {
 				"ranged_fire",
 				"provide_coverfire",
 				"provide_support",
+				"skirmish"
 				},
 			deathvox_tank_cover = {
 				"shield_cover",
@@ -1013,14 +1032,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"provide_support",
 				"charge",
 				"murder",
-				"deathguard"
+				"deathguard",
+				"skirmish"
 				},
 			deathvox_tank_lead = {
 				"charge",
 				"provide_coverfire",
 				"provide_support",
 				"murder",
-				"deathguard"
+				"deathguard",
+				"skirmish"
 				},
 			deathvox_tank_pinch = {
 				"flank",
@@ -1028,7 +1049,8 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"provide_coverfire",
 				"provide_support",
 				"deathguard",
-				"murder"
+				"murder",
+				"skirmish"
 				},
 			deathvox_tazer_follow = {
 				"shield_cover",
@@ -1036,13 +1058,15 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"provide_coverfire",
 				"provide_support",
 				"flash_grenade",
-				"deathguard"
+				"deathguard",
+				"skirmish"
 				},
 			deathvox_tazer_lead = {
 				"flash_grenade",
 				"charge",
 				"provide_coverfire",
-				"provide_support"
+				"provide_support",
+				"skirmish"
 				},
 			deathvox_sniper = {
 				"shield_cover",
@@ -1050,21 +1074,24 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"provide_coverfire",
 				"provide_support",
 				"murder",
-				"deathguard"
+				"deathguard",
+				"skirmish"
 				},
 			deathvox_supportflash = {
 				"flash_grenade",
 				"charge",				
 				"provide_coverfire",
-				"provide_support"
+				"provide_support",
+				"skirmish"
 				},
 			deathvox_supportsmoke = {
 				"smoke_grenade",
 				"flank",
 				"provide_coverfire",
-				"provide_support"
+				"provide_support",
+				"skirmish"
 				},	
-			swat_shotgun_rush = { --vanilla tactics begin here.
+			swat_shotgun_rush = { -- Base game tactics begin here. Unused in Crackdown
 				"charge",
 				"provide_coverfire",
 				"provide_support",
