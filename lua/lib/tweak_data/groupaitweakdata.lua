@@ -4243,13 +4243,13 @@ DIFF_DEATHWISH = 7
 DIFF_CRACKDOWN = 8
 function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 	old_task_data(self, difficulty_index, difficulty)
-	self.besiege.assault.force_balance_mul = {1,1,1,1}
 	self.besiege.assault.force_pool_balance_mul = {1,1,1,1}
 	self.besiege.recon.force_balance_mul = {1,1,1,1}
 	if difficulty_index == DIFF_NORMAL then
 		self.besiege.recon.force = {10,10,10}
 		self.besiege.recon.interval = {30,30,30}
-		self.besiege.assault.force = {20,20,20}
+		self.besiege.assault.force = {1,1,1} -- note now handled by balance multiplier.
+		self.besiege.assault.force_balance_mul = {20,20,20,20}
 		self.besiege.assault.force_pool = {100,100,100}
 		self.besiege.regroup.duration = {30,30,30}
 		self.besiege.assault.hostage_hesitation_delay = {30,30,30}
@@ -4292,7 +4292,8 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 	if difficulty_index == DIFF_HARD then
 		self.besiege.recon.force = {10,10,10}
 		self.besiege.recon.interval = {30,30,30}
-		self.besiege.assault.force = {28,28,28}
+		self.besiege.assault.force = {1,1,1} -- note now handled by balance multiplier.
+		self.besiege.assault.force_balance_mul = {24,28,28,28}
 		self.besiege.assault.force_pool = {125,125,125}
 		self.besiege.regroup.duration = {30,30,30}
 		self.besiege.assault.hostage_hesitation_delay = {30,30,30}
@@ -4336,7 +4337,8 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 	if difficulty_index == DIFF_VERY_HARD then
 		self.besiege.recon.force = {10,10,10}
 		self.besiege.recon.interval = {30,30,30}
-		self.besiege.assault.force = {32,32,32}
+		self.besiege.assault.force = {1,1,1} -- note now handled by balance multiplier.
+		self.besiege.assault.force_balance_mul = {28,28,32,32}
 		self.besiege.assault.force_pool = {150,150,150}
 		self.besiege.regroup.duration = {30,30,30}
 		self.besiege.assault.hostage_hesitation_delay = {25,25,25}
@@ -4387,7 +4389,8 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 	if difficulty_index == DIFF_OVERKILL then
 		self.besiege.recon.force = {10,10,10}
 		self.besiege.recon.interval = {30,30,30}
-		self.besiege.assault.force = {36,36,36}
+		self.besiege.assault.force = {1,1,1} -- note now handled by balance multiplier.
+		self.besiege.assault.force_balance_mul = {28,32,32,36}
 		self.besiege.assault.force_pool = {175,175,175}
 		self.besiege.regroup.duration = {30,30,30}
 		self.besiege.assault.hostage_hesitation_delay = {25,25,25}
@@ -4447,7 +4450,8 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 	if difficulty_index == DIFF_MAYHEM then
 		self.besiege.recon.force = {10,10,10}
 		self.besiege.recon.interval = {30,30,30}
-		self.besiege.assault.force = {40,40,40}
+		self.besiege.assault.force = {1,1,1} -- note now handled by balance multiplier.
+		self.besiege.assault.force_balance_mul = {32,32,36,40}
 		self.besiege.assault.force_pool = {200,200,200}
 		self.besiege.regroup.duration = {30,30,30}
 		self.besiege.assault.hostage_hesitation_delay = {20,20,20}
@@ -4501,7 +4505,8 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 	if difficulty_index == DIFF_DEATHWISH then
 		self.besiege.recon.force = {10,10,10}
 		self.besiege.recon.interval = {30,30,30}
-		self.besiege.assault.force = {44,44,44}
+		self.besiege.assault.force = {1,1,1} -- note now handled by balance multiplier.
+		self.besiege.assault.force_balance_mul = {32,36,40,44}
 		self.besiege.assault.force_pool = {250,250,250}
 		self.besiege.regroup.duration = {30,30,30}
 		self.besiege.assault.hostage_hesitation_delay = {20,20,20}
@@ -4552,7 +4557,8 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 	if difficulty_index == DIFF_CRACKDOWN then
 		self.besiege.recon.force = {20,20,20}
 		self.besiege.recon.interval = {20,20,20}
-		self.besiege.assault.force = {48,48,48}
+		self.besiege.assault.force = {1,1,1} -- note now handled by balance multiplier.
+		self.besiege.assault.force_balance_mul = {32,36,40,48}
 		self.besiege.assault.force_pool = {500,500,500}
 		self.besiege.regroup.duration = {30,30,30}
 		self.besiege.assault.hostage_hesitation_delay = {30,30,30}
