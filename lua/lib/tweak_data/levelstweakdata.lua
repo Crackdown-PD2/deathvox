@@ -79,9 +79,18 @@ if managers.skirmish:is_skirmish() then
 	return group_to_use
 end
 
--- fix for safehouse raid failing to spawn assault group enemies. Base heist uses "safehouse" data that clones beseige.
+
 local old_level_init = LevelsTweakData.init
 function LevelsTweakData:init()
     old_level_init(self)
+-- fix for safehouse raid failing to spawn assault group enemies. Base heist uses "safehouse" data that clones beseige.
     self.chill_combat.group_ai_state = "besiege"
+-- setting wave count for revised holdouts.
+    self.skm_mus.wave_count = 6
+    self.skm_red2.wave_count = 6
+    self.skm_run.wave_count = 6
+    self.skm_watchdogs_stage2.wave_count = 6
+    self.skmc_fish.wave_count = 6
+    self.skmc_mad.wave_count = 6
+    self.skmc_ovengrill.wave_count = 6
 end
