@@ -11,27 +11,27 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 		return group_to_use
 	end
 	
--- draft implementation of asset swapping between waves for Holdout mode. Courtesy of iamgoofball.
-    if managers.skirmish:is_skirmish() then
-        local current_wave = managers.skirmish:current_wave_number()
-        local wave_table = { -- Basically, the second entry is the first wave, the third entry is the second wave, etc.
-            "skipthisentry",
-            "cop",
-            "cop",
-            "fbi",
-            "gensec",
-            "classic",
-            "zeal",
-            "zeal",
-            "classic",
-            "classic"
-        },
-        if current_wave > 0 and current_wave <= #wave_table then
-            return wave_table[current_wave]
-        else
-            return "classic"
-        end
-    end
+    -- draft implementation of asset swapping between waves for Holdout mode. Courtesy of iamgoofball. commented out for testing
+    --  if managers.skirmish:is_skirmish() then
+    --    local current_wave = managers.skirmish:current_wave_number()
+    --    local wave_table = { -- Basically, the second entry is the first wave, the third entry is the second wave, etc.
+    --        "skipthisentry",
+    --        "cop",
+    --        "cop",
+    --        "fbi",
+    --        "gensec",
+    --        "classic",
+    --        "zeal",
+    --        "zeal",
+    --        "classic",
+    --		"classic"
+    --    }
+    --    if current_wave > 0 and current_wave <= #wave_table then
+    --        return wave_table[current_wave]
+    --    else
+    --        return "classic"
+    --    end
+    --end
 	
 	local difficulties = {
 		"easy",
@@ -83,14 +83,15 @@ end
 local old_level_init = LevelsTweakData.init
 function LevelsTweakData:init()
     old_level_init(self)
--- fix for safehouse raid failing to spawn assault group enemies. Base heist uses "safehouse" data that clones beseige.
+    -- fix for safehouse raid failing to spawn assault group enemies. Base heist uses "safehouse" data that clones beseige.
     self.chill_combat.group_ai_state = "besiege"
--- setting wave count for revised holdouts.
+    -- setting wave count for revised holdouts.
     self.skm_mus.wave_count = 6
     self.skm_red2.wave_count = 6
     self.skm_run.wave_count = 6
     self.skm_watchdogs_stage2.wave_count = 6
-    self.skmc_fish.wave_count = 6
-    self.skmc_mad.wave_count = 6
-    self.skmc_ovengrill.wave_count = 6
+    --this crashes the game so i commented it out
+    --self.skmc_fish.wave_count = 6
+    --self.skmc_mad.wave_count = 6
+    --self.skmc_ovengrill.wave_count = 6
 end

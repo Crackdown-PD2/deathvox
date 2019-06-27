@@ -55,6 +55,7 @@
 	<post :script_path="managers/groupaistatebase.lua" :hook_id="managers/group_ai_states/groupaistatebase"/>
 	<post :script_path="managers/achievmentmanager.lua" :hook_id="managers/achievmentmanager"/>
 	<post :script_path="managers/menumanager.lua" :hook_id="managers/menumanager"/>
+	<post :script_path="managers/skirmishmanager.lua" :hook_id="managers/skirmishmanager"/>
 	<post :script_path="managers/firemanager.lua" :hook_id="managers/firemanager"/>
 	<post :script_path="managers/menu/skirmishcontractboxgui.lua" :hook_id="managers/menu/skirmishcontractboxgui"/>
 	<post :script_path="managers/menu/missionbriefinggui.lua" :hook_id="managers/menu/missionbriefinggui"/>

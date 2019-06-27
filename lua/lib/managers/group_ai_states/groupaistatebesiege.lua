@@ -801,9 +801,6 @@ function GroupAIStateBesiege:_upd_assault_task()
 
 		if not self._hunt_mode then
 			local min_enemies_left = 50
-			if managers.skirmish:is_skirmish() then --this makes non-fit units retire during fade
-				self:_assign_skirmish_groups_to_retire(allowed_groups, suitable_grp_func, group)
-			end
 			
 			if enemies_left < min_enemies_left or task_data.phase_end_t + 350 < t then
 				if task_data.phase_end_t - 8 < t and not task_data.said_retreat then
@@ -945,22 +942,6 @@ function GroupAIStateBesiege:_upd_assault_task()
 	end
 
 	self:_assign_enemy_groups_to_assault(task_data.phase)
-end
-
-function GroupAIStateBesiege:_upd_regroup_task()
-	local regroup_task = self._task_data.regroup
-	
-	if regroup_task.active then
-		if managers.skirmish:is_skirmish() then --this makes non-fit units retreat during regroup, mostly used as a safety measure to make sure there are no leftovers
-			self:_assign_skirmish_groups_to_retire(allowed_groups, suitable_grp_func, group)
-		end
-		self:_assign_assault_groups_to_retire()
-
-		if regroup_task.end_t < self._t then
-			
-			self:_end_regroup_task()
-		end
-	end
 end
 
 function GroupAIStateBesiege:_check_phalanx_damage_reduction_increase()
