@@ -1093,9 +1093,9 @@ function GroupAIStateBesiege:_assign_skirmish_groups_to_retire(group)
 		end
 		
 		if managers.skirmish:is_skirmish() and tactics_map then
-			if tactics_map.skirmish and group.objective.type ~= "retire" then
+			if tactics_map.skirmish and group.objective.type ~= "retire" and not  self._task_data.assault.active then
 				local function suitable_grp_func(group)
-					if tactics_map.skirmish and group.objective.type ~= "retire" then
+					if tactics_map.skirmish and group.objective.type ~= "retire" and not  self._task_data.assault.active then
 						local grp_objective = {
 							stance = "hos",
 							attitude = "avoid",
