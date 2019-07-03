@@ -3808,7 +3808,7 @@
 			<unit_data continent="world" name="units/world/props/street/cementbags_cover/cementbags_cover" name_id="cementbags_cover_054" position="4499 1204 981" rotation="0 0 1 -1.19209e-007" unit_id="102915"/>
 		</table>
 		<table>
-			<unit_data _prev_pos="-792.05 -3068.28 1055.56" _prev_rot="0.259156 0.657905 0.259156 -0.657905" continent="world" local_pos="0 0 0" local_rot="0 0 0 1" mesh_variation="" name="units/payday2/pickups/gen_pku_crowbar/gen_pku_crowbar" name_id="kitchen_crow" position="-792.05 -3068.28 1055.56" rotation="0.259156 0.657905 0.259155 -0.657905" unit_id="101339"/>
+			<unit_data _prev_pos="-792.05 -3068.28 1055.56" _prev_rot="0.259156 0.657905 0.259155 -0.657905" continent="world" local_pos="0 0 0" local_rot="0 0 0 1" mesh_variation="" name="units/payday2/pickups/gen_pku_crowbar/gen_pku_crowbar" name_id="kitchen_crow" position="-792.05 -3068.28 1055.56" rotation="0.259156 0.657905 0.259155 -0.657905" unit_id="101339"/>
 		</table>
 		<table>
 			<unit_data _prev_pos="3211.36 -253.331 1017" _prev_rot="0.0392412 0.0467704 0.543623 -0.837106" continent="world" local_pos="0 0 0" local_rot="0 0 0 1" mesh_variation="" name="units/payday2/pickups/gen_pku_crowbar/gen_pku_crowbar" name_id="frontyard_crow" position="3211.36 -253.331 1017" rotation="0.0392412 0.0467704 0.543623 -0.837106" unit_id="101355"/>
@@ -11879,7 +11879,7 @@
 			<unit_data _prev_pos="-1216 -4383 169.984" _prev_rot="-0.00101425 0.536706 0.0193547 -0.843547" continent="world" local_pos="0 0 0" local_rot="0 0 0 1" mesh_variation="" name="units/payday2/pickups/gen_pku_crowbar/gen_pku_crowbar" name_id="sewercrow" position="-1216 -4383 169.984" rotation="-0.00101793 0.536708 0.0193515 -0.843546" unit_id="103597"/>
 		</table>
 		<table>
-			<unit_data _prev_pos="-794 -3478 1401.17" _prev_rot="-0.00517935 0.706561 0.0186764 -0.707386" continent="world" local_pos="0 0 0" local_rot="0 0 0 1" mesh_variation="" name="units/payday2/pickups/gen_pku_crowbar/gen_pku_crowbar" name_id="crow_surv" position="-794 -3478 1401.17" rotation="-0.00518285 0.706562 0.0186698 -0.707386" unit_id="103598"/>
+			<unit_data _prev_pos="-794 -3478 1401.17" _prev_rot="-0.00518287 0.706562 0.0186698 -0.707386" continent="world" local_pos="0 0 0" local_rot="0 0 0 1" mesh_variation="" name="units/payday2/pickups/gen_pku_crowbar/gen_pku_crowbar" name_id="crow_surv" position="-794 -3478 1401.17" rotation="-0.00518287 0.706562 0.0186698 -0.707386" unit_id="103598"/>
 		</table>
 		<table>
 			<unit_data continent="world" name="units/dev_tools/level_tools/door_blocker/door_blocker" name_id="door_blocker_018" position="241 -3805 1375" rotation="0 0 0 -1" unit_id="103968"/>
