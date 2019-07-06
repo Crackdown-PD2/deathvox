@@ -1,0 +1,10 @@
+{
+	"CD_title": "Crackdown",
+	"CD_desc": "Configure Crackdown settings.",
+	"CD_blank": "",
+
+	"CD_plrrebal": "Player-Side Rebalance",
+	"CD_plrrebal_desc": "Use Crackdown player-side rebalance.",
+
+	"CD_fgsfds": "this line exists entirely so i can copy-paste other lines without screwing with commas"
+}

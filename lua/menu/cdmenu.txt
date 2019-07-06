@@ -1,0 +1,19 @@
+{
+	"menu_id": "CDmenu",
+	"parent_menu_id": "blt_options",
+	"title": "CD_title",
+	"description": "CD_desc",
+	"back_callback": "CDsave",
+	"items":
+	[
+		{
+			"type" : "toggle",
+			"id" : "plrrebal",
+			"title" : "CD_plrrebal",
+			"description" : "CD_plrrebal_desc",
+			"callback" : "CDcb_plrrebal",
+			"value" : "plrrebal",
+			"default_value" : true
+		}
+	]
+}

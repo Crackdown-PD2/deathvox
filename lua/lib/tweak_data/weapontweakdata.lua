@@ -492,7 +492,9 @@ function WeaponTweakData:init(tweak_data)
 	end
 
 	-- Modify the playable weapons
-	Balance:apply_weapons(self)
+	if CDmenu.settings.plrrebal == true then
+		Balance:apply_weapons(self)
+	end
 end
 
 -- Begin difficulty scripted weapon damage value population.
