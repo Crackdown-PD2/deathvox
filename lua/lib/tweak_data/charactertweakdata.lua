@@ -2285,6 +2285,84 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
+	presets.weapon.sniper.is_rifle = { -- directly replaces sniper weapon preset to match deathvox, for proper scaling purposes.
+		aim_delay = {
+			0,
+			0.1
+		},
+		focus_delay = 7,
+		focus_dis = 200,
+		spread = 30,
+		miss_dis = 250,
+		RELOAD_SPEED = 1.25,  -- validated, unchanged.
+		melee_speed = presets.weapon.normal.is_rifle.melee_speed,
+		melee_dmg = presets.weapon.normal.is_rifle.melee_dmg,
+		melee_retry_delay = presets.weapon.normal.is_rifle.melee_retry_delay,
+		range = { --validated, unchanged.
+			optimal = 15000,
+			far = 15000,
+			close = 15000
+		},
+		autofire_rounds = presets.weapon.normal.is_rifle.autofire_rounds,
+		use_laser = true,
+		FALLOFF = { -- note values do not match frank's table. Largely eyeballed, may need revision.
+			{
+				dmg_mul = 1,
+				r = 700,
+				acc = {
+					0.4,
+					0.95
+				},
+				recoil = {
+					2,
+					4
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
+			},
+			{
+				dmg_mul = .95, -- slight falloff, frank indicates flat damage on DW.
+				r = 4500,
+				acc = {
+					0.1,
+					0.75
+				},
+				recoil = {
+					3,
+					4
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
+			},
+			{
+				dmg_mul = .83,
+				r = 12000,
+				acc = {
+					0,
+					0.5
+				},
+				recoil = {
+					3,
+					5
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
+			}
+		}
+	}
+	
 	presets.weapon.deathvox_sniper.is_assault_sniper = deep_clone(presets.weapon.deathvox_sniper.is_rifle)
 	presets.weapon.deathvox.is_assault_sniper = deep_clone(presets.weapon.deathvox_sniper.is_rifle) --defining the assault sniper preset.
 	presets.weapon.deathvox.is_assault_sniper.FALLOFF = { -- revising assault sniper falloff values.
@@ -3544,6 +3622,17 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
 	
 --	sniper - MAYHEM
+	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	self.sniper = deep_clone(self.deathvox_sniper)
+	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	--sniper weapon BS pls dont touch - Evilbobarino
+	--self.weap_unit_names[13] = Idstring("units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd")
+    --seriously please dont it will make me sad :<
+	--i am sorry little one - fuglore
+    self.deathvox_sniper.weapon.is_rifle.use_laser = false
+    self.sniper.weapon.is_rifle.use_laser = false
+    self.deathvox_sniper.disable_sniper_laser = true
+    self.sniper.weapon.disable_sniper_laser = true
 --	tank - MAYHEM
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.	
@@ -3635,6 +3724,17 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
 	
 --	sniper - DEATH WISH
+	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	self.sniper = deep_clone(self.deathvox_sniper)
+	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	--sniper weapon BS pls dont touch - Evilbobarino
+	--self.weap_unit_names[13] = Idstring("units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd")
+    --seriously please dont it will make me sad :<
+	--i am sorry little one - fuglore
+    self.deathvox_sniper.weapon.is_rifle.use_laser = false
+    self.sniper.weapon.is_rifle.use_laser = false
+    self.deathvox_sniper.disable_sniper_laser = true
+    self.sniper.weapon.disable_sniper_laser = true
 --	tank - DEATH WISH
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.	
@@ -3694,8 +3794,9 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.sniper = deep_clone(self.deathvox_sniper)
 	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	--sniper weapon BS pls dont touch - Evilbobarino
-	self.weap_unit_names[13] = Idstring("units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd")
+	--self.weap_unit_names[13] = Idstring("units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd")
     --seriously please dont it will make me sad :<
+	--i am sorry little one - fuglore
     self.deathvox_sniper.weapon.is_rifle.use_laser = false
     self.sniper.weapon.is_rifle.use_laser = false
     self.deathvox_sniper.disable_sniper_laser = true
