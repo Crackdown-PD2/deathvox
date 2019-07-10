@@ -503,11 +503,6 @@ end
 
 -- Begin NORMAL difficulty damage values. 
 
--- Fuglore here, I'd like to say that 1. You'll probably have to change some of the weapon usages if you haven't yet, and 2. You'll probably have to change some of the .unit files to have varied gun setups as to not cause horrible clashes in damage, and 3. You might have to add new weapon presets for Dozers, as their usages will be comparatively messy due to the Greendozer using the R870 and the LMGDozer using is_rifle behavior.
-
--- Begin difficulty scripted weapon damage value population.
-
--- Begin NORMAL difficulty damage values.
 
 function WeaponTweakData:_set_normal()
 
@@ -540,7 +535,7 @@ function WeaponTweakData:_set_normal()
 	self.asval_smg_npc.DAMAGE = 4.5 --Used by Akan Cloaker, mapped to Deathvox Cloaker SMG.
 	
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
---	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
+	self.m14_sniper_npc.DAMAGE = 16	-- possibly fully overwritten.
 	
 	self.mp5_npc.DAMAGE = 2.5	-- smg used by number of units. Map to cop smg.
 	self.mp9_npc.DAMAGE = 2.5	-- shield only.	Map to cop smg.
@@ -670,7 +665,7 @@ function WeaponTweakData:_set_hard()
 	self.asval_smg_npc.DAMAGE = 6 --Used by Akan Cloaker, mapped to Deathvox Cloaker SMG.
 	
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
---	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
+	self.m14_sniper_npc.DAMAGE = 16	-- possibly fully overwritten.
 	
 	self.mp5_npc.DAMAGE = 2.5	-- smg used by number of units. Map to cop smg.
 	self.mp9_npc.DAMAGE = 2.5	-- shield only.	Map to cop smg.
@@ -799,7 +794,7 @@ function WeaponTweakData:_set_overkill()
 	self.asval_smg_npc.DAMAGE = 6 --Used by Akan Cloaker, mapped to Deathvox Cloaker SMG.
 	
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
---	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
+	self.m14_sniper_npc.DAMAGE = 18	-- possibly fully overwritten.
 	
 	self.mp5_npc.DAMAGE = 4.5	-- smg used by number of units. Map to cop smg.
 	self.mp9_npc.DAMAGE = 4.5	-- shield only.	Map to cop smg.
@@ -930,7 +925,7 @@ function WeaponTweakData:_set_overkill_145()
 	self.asval_smg_npc.DAMAGE = 6 --Used by Akan Cloaker, mapped to Deathvox Cloaker SMG.
 	
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
---	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
+	self.m14_sniper_npc.DAMAGE = 20	-- possibly fully overwritten.
 	
 	self.mp5_npc.DAMAGE = 4.5	-- smg used by number of units. Map to cop smg.
 	self.mp9_npc.DAMAGE = 4.5	-- shield only.	Map to cop smg.
@@ -1060,7 +1055,11 @@ function WeaponTweakData:_set_easy_wish()
 	self.asval_smg_npc.DAMAGE = 6 --Used by Akan Cloaker, mapped to Deathvox Cloaker SMG.
 	
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
---	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
+	self.m14_sniper_npc.DAMAGE = 20	-- sniper damage, set according to table.
+	self.m14_sniper_npc.sniper_trail = true
+	self.deathvox_sniper.sniper_trail = true
+	self.m14_sniper_npc.use_laser = false
+    self.m14_sniper_npc.disable_sniper_laser = true
 	
 	self.mp5_npc.DAMAGE = 6	-- smg used by number of units. Map to cop smg.
 	self.mp9_npc.DAMAGE = 6	-- shield only.	Map to cop smg.
@@ -1190,7 +1189,11 @@ function WeaponTweakData:_set_overkill_290()
 	self.asval_smg_npc.DAMAGE = 6 --Used by Akan Cloaker, mapped to Deathvox Cloaker SMG.
 	
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
---	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
+	self.m14_sniper_npc.DAMAGE = 20	-- sniper damage, set according to table.
+	self.m14_sniper_npc.sniper_trail = true
+	self.deathvox_sniper.sniper_trail = true
+	self.m14_sniper_npc.use_laser = false
+    self.m14_sniper_npc.disable_sniper_laser = true
 	
 	self.mp5_npc.DAMAGE = 6	-- smg used by number of units. Map to cop smg.
 	self.mp9_npc.DAMAGE = 6	-- shield only.	Map to cop smg.
@@ -1320,10 +1323,12 @@ function WeaponTweakData:_set_sm_wish()
 	self.asval_smg_npc.DAMAGE = 7.5 --Used by Akan Cloaker, mapped to Deathvox Cloaker SMG.
 	
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
---	self.m14_sniper_npc.DAMAGE = 3	-- possibly fully overwritten.
+	self.m14_sniper_npc.DAMAGE = 24	-- sniper damage, set according to table
 	--Sniper Trail for Snipers
 	self.m14_sniper_npc.sniper_trail = true
 	self.deathvox_sniper.sniper_trail = true
+	self.m14_sniper_npc.use_laser = false
+    self.m14_sniper_npc.disable_sniper_laser = true
 	
 	
 	self.mp5_npc.DAMAGE = 7.5	-- smg used by number of units. Map to cop smg.
