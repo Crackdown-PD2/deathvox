@@ -44,7 +44,7 @@
 		</packages>
 		<script_data_mods directory="scriptdata"/>
 	</level>
-	<narrative briefing_event="pln_at1_cbf_01" contact="bain" dlc="armored_transport" icon="guis/textures/crackdown" id="cd_arm_cro" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_crossroads" region="street" spawn_chance_multiplier="0.5">
+	<narrative briefing_event="pln_at1_cbf_01" contact="bain" dlc="armored_transport" icon="guis/textures/crackdown" id="arm_cro_cd" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_crossroads" region="street" spawn_chance_multiplier="0.5">
 		<chain>
 			<table dlc="armored_transport" level_id="cd_arm_cro" type="d" type_id="heist_type_assault">
 				<mission_filter>

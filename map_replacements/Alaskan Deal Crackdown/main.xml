@@ -44,7 +44,7 @@
 			</mod>
 		</script_data_mods>
 	</level>
-	<narrative briefing_event="Play_loc_wwh_cbf_01" contact="locke" icon="guis/textures/crackdown" id="wwh" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_lockeload" region="street">
+	<narrative briefing_event="Play_loc_wwh_cbf_01" contact="locke" icon="guis/textures/crackdown" id="wwh_cd" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_lockeload" region="street">
 		<chain>
 			<table level_id="wwh_CD" type="d" type_id="heist_type_assault"/>
 		</chain>

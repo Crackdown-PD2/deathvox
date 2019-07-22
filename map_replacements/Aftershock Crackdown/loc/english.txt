@@ -1,6 +1,6 @@
 {
-	"heist_jolly_name" : "Aftershock Crackdown",
-	"heist_jolly_brief" : "I've struck a deal with the biggest syndicate on the West coast, selling their safes on the East coast. Unfortunately, first shipment of safes ran unto a little trouble - a fucking earthquake! Can you believe that!? Get out there, ensure those safes are recovered. Fuck California.
+	"heist_jolly_cd_name" : "Aftershock Crackdown",
+	"heist_jolly_cd_brief" : "I've struck a deal with the biggest syndicate on the West coast, selling their safes on the East coast. Unfortunately, first shipment of safes ran unto a little trouble - a fucking earthquake! Can you believe that!? Get out there, ensure those safes are recovered. Fuck California.
 
 » Find Vlad's trucks
 » Open the trucks

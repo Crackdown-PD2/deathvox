@@ -1,6 +1,6 @@
 {
-	"heist_branchbank_cash_name" : "Bank Heist: Cash Crackdown",
-	"heist_branchbank_cash_brief" : "Bain wants you to do a classic bank hit. This job is about the cash shipment the bank just received.
+	"heist_branchbank_cash_cd_name" : "Bank Heist: Cash Crackdown",
+	"heist_branchbank_cash_cd_brief" : "Bain wants you to do a classic bank hit. This job is about the cash shipment the bank just received.
 
 » Locate the bank
 » Find the thermal drill
