@@ -1,6 +1,6 @@
 {
-	"heist_family_name" : "Diamond Store Crackdown",
-	"heist_family_brief" : "This is a high fashion jewelry store. Mostly diamonds in there. Bain wants a lot of bags. There is an alarm connected to the display cases. It will be a tough one.
+	"heist_family_cd_name" : "Diamond Store Crackdown",
+	"heist_family_cd_brief" : "This is a high fashion jewelry store. Mostly diamonds in there. Bain wants a lot of bags. There is an alarm connected to the display cases. It will be a tough one.
 
 » Case the place carefully.
 » Check for guards, alarms and cameras
