@@ -1,6 +1,6 @@
 {
-	"heist_arm_cro_name" : "Transport: Crossroads Crackdown",
-	"heist_arm_cro_brief" : "Bain has intercepted a convoy of armored Gensec trucks. They're carrying high-value cargo and you need to get in fast and steal it.
+	"heist_arm_cro_cd_name" : "Transport: Crossroads Crackdown",
+	"heist_arm_cro_cd_brief" : "Bain has intercepted a convoy of armored Gensec trucks. They're carrying high-value cargo and you need to get in fast and steal it.
 
 » Break into the immobilized trucks
 » Crack open the strongboxes
