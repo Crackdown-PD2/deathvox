@@ -49,7 +49,7 @@
 			</mod>
 		</script_data_mods>
 	</level>
-	<narrative briefing_event="pln_at1_cbf_01" contact="bain" icon="guis/textures/crackdown" dlc="armored_transport" id="arm_und" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_underpass" region="street" spawn_chance_multiplier="0.5">
+	<narrative briefing_event="pln_at1_cbf_01" contact="bain" icon="guis/textures/crackdown" dlc="armored_transport" id="arm_und_cd" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_underpass" region="street" spawn_chance_multiplier="0.5">
 		<chain>
 			<table dlc="armored_transport" level_id="arm_und_CD" type="d" type_id="heist_type_assault">
 				<mission_filter>
