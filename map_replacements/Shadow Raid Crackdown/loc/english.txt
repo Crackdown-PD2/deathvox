@@ -1,6 +1,6 @@
 {
-	"heist_kosugi_name" : "Shadow Raid Crackdown",
-	"heist_kosugi_brief" : "Murkywater has a bonded warehouse down at the old wharf. See what sort of crap they're shipping back.
+	"heist_kosugi_cd_name" : "Shadow Raid Crackdown",
+	"heist_kosugi_cd_brief" : "Murkywater has a bonded warehouse down at the old wharf. See what sort of crap they're shipping back.
 
 » Break into the warehouse undetected
 » Steal anything valuable you can find
