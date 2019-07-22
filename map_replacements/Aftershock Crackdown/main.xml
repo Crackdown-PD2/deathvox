@@ -3,7 +3,7 @@
 		<texture load="true" path="guis/textures/crackdown"/>
 	</AddFiles>
 	<Localization default="english.txt" directory="loc"/>
-	<narrative briefing_event="vld_as1_cbf_01" contact="vlad" icon="guis/textures/crackdown" debrief_event="vld_as1_17" id="jolly" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_aftershock" region="street">
+	<narrative briefing_event="vld_as1_cbf_01" contact="vlad" icon="guis/textures/crackdown" debrief_event="vld_as1_17" id="jolly_cd" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_aftershock" region="street">
 		<chain>
 			<table level_id="jolly_CD" type="d" type_id="heist_type_assault"/>
 		</chain>
