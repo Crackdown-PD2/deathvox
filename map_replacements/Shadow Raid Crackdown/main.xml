@@ -41,7 +41,7 @@
 		</packages>
 		<script_data_mods directory="scriptdata"/>
 	</level>
-	<narrative briefing_event="pln_ko1_cbf_01" contact="bain" icon="guis/textures/crackdown" id="kosugi" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_shadow_raid" region="street">
+	<narrative briefing_event="pln_ko1_cbf_01" contact="bain" icon="guis/textures/crackdown" id="kosugi_cd" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_shadow_raid" region="street">
 		<chain>
 			<table level_id="kosugi_CD" type="d" type_id="heist_type_assault"/>
 		</chain>
