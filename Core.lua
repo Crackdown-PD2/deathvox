@@ -18,6 +18,8 @@ if not _G.deathvox then
 	deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("genseccops")
 	log("Loading Classic Cops")
 	deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("classiccops")
+	--log("Loading Murkywater Units") uncomment to load murkywater assets. does nothing currently, as there's no assets yet.
+	--deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("murkywater")	
 	log("Finished loading!")
 	if _G.voiceline_framework then
 		_G.voiceline_framework:register_unit("grenadier")

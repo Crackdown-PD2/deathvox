@@ -59,7 +59,10 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 	map_faction_override["apartment"] = "classic"
 	map_faction_override["street"] = "classic"
 	map_faction_override["bank"] = "classic"
-	-- todo: setup akan on BP, murky on all murky heists, and classics on classic heists
+	-- Murkywater Heists	
+	--map_faction_override["pbr"] = "murky"
+	--map_faction_override["vit"] = "murky"
+	--map_faction_override["des"] = "murky"
 	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
 	if diff_index <= 3 then
 		group_to_use = "cop"

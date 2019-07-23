@@ -143,22 +143,23 @@ function CharacterTweakData:get_ai_group_type()
 	map_faction_override["dinner"] = "classic"
 	map_faction_override["man"] = "classic"
 	map_faction_override["nmh"] = "classic"
-	-- Classics also as NYPD 
+	-- Classic faction, also as NYPD. 
 	map_faction_override["spa"] = "classic"
 	map_faction_override["brb"] = "classic"
-	-- Classic overrides for holdout.
+	-- Classic faction overrides for holdout.
 	map_faction_override["skm_run"] = "classic"
 	map_faction_override["skm_red2"] = "classic"	
-	-- whurr's map edit faction overrides begin here.
+	--Faction overrides for Whurr's map edits begin here.
 	map_faction_override["bridge"] = "classic"
 	map_faction_override["apartment"] = "classic"
 	map_faction_override["street"] = "classic"
 	map_faction_override["bank"] = "classic"
-  
-	--akan override begins here.
+	--Murky faction overrides begin here. Uncomment to apply the Murkywater faction on the Whitehouse, Henry's Rock, and Beneath the Mountain heists.
+	--map_faction_override["pbr"] = "murky"
+	--map_faction_override["vit"] = "murky"
+	--map_faction_override["des"] = "murky"
 	
-	--Murky overrides begin here.
-	
+	--Reaper faction overrides begin here.	
 	--Halloween overrides begin here.
   
 	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
@@ -2653,7 +2654,11 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_gman.die_sound_event = "x01a_any_3p" -- pain lines are death lines for these units.
 	self.deathvox_gman.chatter = presets.enemy_chatter.geeeeeman --stops them using clear whisper
 	table.insert(self._enemy_list, "deathvox_gman")
-	local is_classic
+	local is_murky
+	if self:get_ai_group_type() == "murky" then
+		is_murky = true
+	end
+	local is_classic	
 	if self:get_ai_group_type() == "classic" then
 		is_classic = true
 	end
@@ -4207,6 +4212,18 @@ function CharacterTweakData:_init_region_classic()
 		medic = "mdc"
 	}
 end
+function CharacterTweakData:_init_region_murky() --will use these lines for now.
+	self._default_chatter = "dispatch_generic_message"
+	self._unit_prefixes = {
+		cop = "l",
+		swat = "l",
+		heavy_swat = "l",
+		taser = "tsr",
+		cloaker = "clk",
+		bulldozer = "bdz",
+		medic = "mdc"
+	}	
+end
 
 
 function CharacterTweakData:character_map()
@@ -4255,7 +4272,30 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_classic_taser",
 			"ene_deathvox_classic_veteran"
 		}
-	}	
+	}
+	char_map.murky = {
+		path = "units/pd2_mod_gageammo/characters/",
+		list = {
+			"ene_deathvox_guard",
+			"ene_deathvox_heavyar",
+			"ene_deathvox_lightar",
+			"ene_deathvox_medic",
+			"ene_deathvox_shield",
+			"ene_deathvox_lightshot",
+			"ene_deathvox_heavyshot",
+			"ene_deathvox_taser",
+			"ene_deathvox_cloaker",
+			"ene_deathvox_sniper_assault",
+			"ene_deathvox_greendozer",
+			"ene_deathvox_blackdozer",
+			"ene_deathvox_lmgdozer",
+			"ene_deathvox_medicdozer",
+			"ene_deathvox_grenadier",
+			"ene_deathvox_gman",
+			"ene_deathvox_gman_noflashlight",
+			"ene_deathvox_guarddozer"
+		}
+	}		
 	char_map.fbi = {
 		path = "units/pd2_mod_fbi/characters/",
 		list = {
