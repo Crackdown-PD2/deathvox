@@ -244,3 +244,4 @@ function CopBrain:on_suppressed(state)
         end
 	end
 end
+end

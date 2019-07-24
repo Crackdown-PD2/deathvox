@@ -202,6 +202,7 @@ function CharacterTweakData:_presets(tweak_data)
             aggressive = true,
             follow_me = true,
             clear_whisper = true,
+            clear_whisper_2 = true,
             look_for_angle = true,
             flash_grenade = true,
             smoke = true
@@ -240,6 +241,7 @@ function CharacterTweakData:_presets(tweak_data)
             aggressive = true,
             follow_me = true,
             --clear_whisper = true, gmen shouldnt have this
+            --clear_whisper_2 = true, gmen shouldnt have this
             look_for_angle = true,
             flash_grenade = true,
             smoke = true
@@ -2690,9 +2692,10 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_lightar")
 	
 	self.deathvox_lightshot = deep_clone(self.city_swat)
-	self.deathvox_lightshot.speech_prefix_p1 = "l1d"
+	self.deathvox_lightshot.speech_prefix_p1 = "l2d"
 	self.deathvox_lightshot.speech_prefix_p2 = nil
 	self.deathvox_lightshot.speech_prefix_count = nil
+	self.deathvox_lightshot.die_sound_event = "x01a_any_3p" --fucking l2d and having pain lines but not death lines
 	self.deathvox_lightshot.detection = presets.detection.deathvox
 	self.deathvox_lightshot.ignore_medic_revive_animation = true  -- no revive animation. may require curving on lower diffs.
 	self.deathvox_lightshot.suppression = presets.suppression.hard_agg -- should be hard_def on N through OVK.

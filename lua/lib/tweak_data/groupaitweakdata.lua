@@ -5,11 +5,11 @@ function GroupAITweakData:_init_chatter_data()
 		self.enemy_chatter = {}
         --[[
 		notes:
-		radius seems to do nothing no discernable difference between 10 and 90000000000000000000000000000000, game theory how many cops in a radius can say a certain chatter
-		max_nr probably how many chatters can go off at once
+		radius seems to do nothing no discernible difference between 10 and 90000000000000000000000000000000, game theory how many cops in a radius can say a certain chatter
+		max_nr how many chatter calls can go off at once
 		duration ??? longer ones i grabbed from v009/pdth
-		inerval is cooldown
-		group_min seems to be how many cops need to be in a group for the line to play
+		interval is cooldown
+		group_min how many cops need to be in a group for the line to play
 		queue what call is used in chatter
 		]]--
 		self.enemy_chatter.aggressive = {
@@ -72,9 +72,17 @@ function GroupAITweakData:_init_chatter_data()
 		    radius = 700,
 		    max_nr = 2,
 		    duration = {60, 60},
-		    interval = {6, 6}, --longer cooldown than in resmod
+		    interval = {8, 8}, --longer cooldown than in resmod
 		    group_min = 0,
 		    queue = "a05"
+		}		
+		self.enemy_chatter.clear_whisper_2 = {
+		    radius = 700,
+		    max_nr = 2,
+		    duration = {60, 60},
+		    interval = {8, 8}, --longer cooldown than in resmod
+		    group_min = 0,
+		    queue = "a06" --humming, whistling and coughing
 		}		
 		self.enemy_chatter.go_go = {
 			radius =  1000,
