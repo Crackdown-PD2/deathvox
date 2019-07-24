@@ -1179,3 +1179,64 @@ function GroupAIStateBesiege:_upd_recon_tasks()
 		self._task_data.recon.next_dispatch_t = t + math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.recon.interval)) + math.random() * self._tweak_data.recon.interval_variation
 	end
 end
+
+function GroupAIStateBesiege:_begin_assault_task(assault_areas)
+	local assault_task = self._task_data.assault
+	assault_task.active = true
+	assault_task.next_dispatch_t = nil
+	assault_task.target_areas = assault_areas
+	assault_task.phase = "anticipation"
+	assault_task.start_t = self._t
+	local anticipation_duration = self:_get_anticipation_duration(self._tweak_data.assault.anticipation_duration, assault_task.is_first)
+	assault_task.is_first = nil
+	assault_task.phase_end_t = self._t + anticipation_duration
+	if managers.skirmish:is_skirmish() then
+		if assault_task.is_first or self._assault_number and self._assault_number == 1 or not self._assault_number then
+			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_1st))
+		elseif self._assault_number == 2 then
+			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_2nd))
+		elseif self._assault_number == 3 then
+			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_3rd))
+		elseif self._assault_number == 4 then
+			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_4th))
+		elseif self._assault_number == 5 then
+			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_5th))
+		elseif self._assault_number == 6 then
+			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_6th))
+		elseif self._assault_number >= 7 then
+			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_7up))
+		else
+			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_1st))
+			log("bruh moment")
+		end
+	else
+		assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_mul))
+	end
+	assault_task.use_smoke = true
+	assault_task.use_smoke_timer = 0
+	assault_task.use_spawn_event = true
+	assault_task.force_spawned = 0
+
+	if self._hostage_headcount > 0 then
+		assault_task.phase_end_t = assault_task.phase_end_t + self:_get_difficulty_dependent_value(self._tweak_data.assault.hostage_hesitation_delay)
+		assault_task.is_hesitating = true
+		assault_task.voice_delay = self._t + (assault_task.phase_end_t - self._t) / 2
+	end
+
+	self._downs_during_assault = 0
+
+	if self._hunt_mode then
+		assault_task.phase_end_t = 0
+	else
+		managers.hud:setup_anticipation(anticipation_duration)
+		managers.hud:start_anticipation()
+	end
+
+	if self._draw_drama then
+		table.insert(self._draw_drama.assault_hist, {
+			self._t
+		})
+	end
+
+	self._task_data.recon.tasks = {}
+end
