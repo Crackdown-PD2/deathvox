@@ -4700,13 +4700,13 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 	end
 	--This is for holdout/skirmish
 	if difficulty_index <= 8 then
-		self.besiege.assault.force_balance_1st = {16, 16, 16, 16}
-		self.besiege.assault.force_balance_2nd = {16, 16, 16, 16}
-		self.besiege.assault.force_balance_3rd = {24, 24, 24, 24}
-		self.besiege.assault.force_balance_4th = {16, 20, 20, 20}
-		self.besiege.assault.force_balance_5th = {16, 20, 20, 20}
-		self.besiege.assault.force_balance_6th = {16, 20, 20, 20}
-		self.besiege.assault.force_balance_7up = {16, 20, 20, 20}
+		self.besiege.assault.force_balance_1st = {20, 20, 20, 20}
+		self.besiege.assault.force_balance_2nd = {20, 20, 20, 20}
+		self.besiege.assault.force_balance_3rd = {20, 20, 20, 20}
+		self.besiege.assault.force_balance_4th = {28, 32, 32, 36}
+		self.besiege.assault.force_balance_5th = {28, 32, 32, 36}
+		self.besiege.assault.force_balance_6th = {28, 32, 32, 36}
+		self.besiege.assault.force_balance_7up = {28, 32, 32, 36}
 	else
 		--ignore these, they're a fallback
 		self.besiege.assault.force_balance_1st = {16, 16, 16, 16}
