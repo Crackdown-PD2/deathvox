@@ -4707,14 +4707,28 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 		self.besiege.assault.force_balance_5th = {28, 32, 32, 36}
 		self.besiege.assault.force_balance_6th = {28, 32, 32, 36}
 		self.besiege.assault.force_balance_7up = {28, 32, 32, 36}
+		self.besiege.assault.force_pool_skm1 = {80, 80, 80}
+		self.besiege.assault.force_pool_skm2 = {100, 100, 100}
+		self.besiege.assault.force_pool_skm3 = {120, 120, 120}
+		self.besiege.assault.force_pool_skm4 = {150, 150, 150}
+		self.besiege.assault.force_pool_skm5 = {180, 180, 180}
+		self.besiege.assault.force_pool_skm6 = {180, 180, 180}
+		self.besiege.assault.force_pool_skm7 = {180, 180, 180}
 	else
 		--ignore these, they're a fallback
-		self.besiege.assault.force_balance_1st = {16, 16, 16, 16}
-		self.besiege.assault.force_balance_2nd = {16, 16, 16, 16}
-		self.besiege.assault.force_balance_3rd = {16, 20, 20, 20}
-		self.besiege.assault.force_balance_4th = {16, 20, 20, 20}
-		self.besiege.assault.force_balance_5th = {16, 20, 20, 20}
-		self.besiege.assault.force_balance_6th = {16, 20, 20, 20}
-		self.besiege.assault.force_balance_7up = {16, 20, 20, 20}
+		self.besiege.assault.force_balance_1st = {20, 20, 20, 20}
+		self.besiege.assault.force_balance_2nd = {20, 20, 20, 20}
+		self.besiege.assault.force_balance_3rd = {20, 20, 20, 20}
+		self.besiege.assault.force_balance_4th = {28, 32, 32, 36}
+		self.besiege.assault.force_balance_5th = {28, 32, 32, 36}
+		self.besiege.assault.force_balance_6th = {28, 32, 32, 36}
+		self.besiege.assault.force_balance_7up = {28, 32, 32, 36}
+		self.besiege.assault.force_pool_skm1 = {80, 80, 80}
+		self.besiege.assault.force_pool_skm2 = {100, 100, 100}
+		self.besiege.assault.force_pool_skm3 = {120, 120, 120}
+		self.besiege.assault.force_pool_skm4 = {150, 150, 150}
+		self.besiege.assault.force_pool_skm5 = {180, 180, 180}
+		self.besiege.assault.force_pool_skm6 = {180, 180, 180}
+		self.besiege.assault.force_pool_skm7 = {180, 180, 180}
 	end
 end
