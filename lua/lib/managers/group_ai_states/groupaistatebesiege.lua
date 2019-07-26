@@ -698,7 +698,32 @@ function GroupAIStateBesiege:_upd_assault_task()
 
 	self:_assign_recon_groups_to_retire()
 
-	local force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool) * self:_get_balancing_multiplier(self._tweak_data.assault.force_pool_balance_mul)
+	local force_pool = nil
+	--skirmish killcount per-wave stuff
+	if managers.skirmish:is_skirmish() then
+		if task_data.is_first or self._assault_number and self._assault_number == 1 or not self._assault_number then
+			force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool_skm1)
+		elseif self._assault_number == 2 then
+			force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool_skm2)
+			--log("is it working?")
+		elseif self._assault_number == 3 then
+			force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool_skm3)
+		elseif self._assault_number == 4 then
+			force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool_skm4)
+		elseif self._assault_number == 5 then
+			force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool_skm5)
+		elseif self._assault_number == 6 then
+			force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool_skm6)
+		elseif self._assault_number >= 7 then
+			force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool_skm7)
+		else
+			force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool_skm1)
+			--log("bruh moment")
+		end
+	else
+		force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool) * self:_get_balancing_multiplier(self._tweak_data.assault.force_pool_balance_mul)
+	end
+	
 	local task_spawn_allowance = force_pool - (self._hunt_mode and 0 or task_data.force_spawned)
 
 	if task_data.phase == "anticipation" then
@@ -890,7 +915,7 @@ function GroupAIStateBesiege:_upd_assault_task()
 			task_data.target_areas[1] = nearest_area
 		end
 	end
-
+	
 	local nr_wanted = task_data.force - self:_count_police_force("assault")
 
 	if task_data.phase == "anticipation" then
@@ -1180,6 +1205,7 @@ function GroupAIStateBesiege:_upd_recon_tasks()
 	end
 end
 
+
 function GroupAIStateBesiege:_begin_assault_task(assault_areas)
 	local assault_task = self._task_data.assault
 	assault_task.active = true
@@ -1195,6 +1221,7 @@ function GroupAIStateBesiege:_begin_assault_task(assault_areas)
 			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_1st))
 		elseif self._assault_number == 2 then
 			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_2nd))
+			--log("is it working?")
 		elseif self._assault_number == 3 then
 			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_3rd))
 		elseif self._assault_number == 4 then
@@ -1207,7 +1234,7 @@ function GroupAIStateBesiege:_begin_assault_task(assault_areas)
 			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_7up))
 		else
 			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_1st))
-			log("bruh moment")
+			--log("bruh moment")
 		end
 	else
 		assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_mul))
