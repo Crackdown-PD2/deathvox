@@ -27,15 +27,16 @@ function SkirmishTweakData:_init_wave_phase_durations(tweak_data)
 		1
 	}}
 	skirmish_data.assault.build_duration = 30
+	-- functionally, designed to be infinite and make players deplete assault pool
 	skirmish_data.assault.sustain_duration_min = {
-		90,
-		90,
-		90
+		1500,
+		1500,
+		1500
 	}
 	skirmish_data.assault.sustain_duration_max = {
-		90,
-		90,
-		90
+		1500,
+		1500,
+		1500
 	}
 	skirmish_data.assault.sustain_duration_balance_mul = {
 		1,
