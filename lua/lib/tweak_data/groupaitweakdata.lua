@@ -4707,13 +4707,13 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 		self.besiege.assault.force_balance_5th = {28, 32, 32, 36}
 		self.besiege.assault.force_balance_6th = {28, 32, 32, 36}
 		self.besiege.assault.force_balance_7up = {28, 32, 32, 36}
-		self.besiege.assault.force_pool_skm1 = {80, 80, 80}
-		self.besiege.assault.force_pool_skm2 = {100, 100, 100}
-		self.besiege.assault.force_pool_skm3 = {120, 120, 120}
-		self.besiege.assault.force_pool_skm4 = {150, 150, 150}
-		self.besiege.assault.force_pool_skm5 = {180, 180, 180}
-		self.besiege.assault.force_pool_skm6 = {180, 180, 180}
-		self.besiege.assault.force_pool_skm7 = {180, 180, 180}
+		self.besiege.assault.force_pool_skm1 = {90, 90, 90} -- add +10 to compensate for some of the nuances in groupaistatebesiege
+		self.besiege.assault.force_pool_skm2 = {110, 110, 110}
+		self.besiege.assault.force_pool_skm3 = {130, 130, 130}
+		self.besiege.assault.force_pool_skm4 = {160, 160, 160}
+		self.besiege.assault.force_pool_skm5 = {190, 190, 190}
+		self.besiege.assault.force_pool_skm6 = {190, 190, 190}
+		self.besiege.assault.force_pool_skm7 = {190, 190, 190}
 	else
 		--ignore these, they're a fallback
 		self.besiege.assault.force_balance_1st = {20, 20, 20, 20}
@@ -4723,12 +4723,12 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 		self.besiege.assault.force_balance_5th = {28, 32, 32, 36}
 		self.besiege.assault.force_balance_6th = {28, 32, 32, 36}
 		self.besiege.assault.force_balance_7up = {28, 32, 32, 36}
-		self.besiege.assault.force_pool_skm1 = {80, 80, 80}
-		self.besiege.assault.force_pool_skm2 = {100, 100, 100}
-		self.besiege.assault.force_pool_skm3 = {120, 120, 120}
-		self.besiege.assault.force_pool_skm4 = {150, 150, 150}
-		self.besiege.assault.force_pool_skm5 = {180, 180, 180}
-		self.besiege.assault.force_pool_skm6 = {180, 180, 180}
-		self.besiege.assault.force_pool_skm7 = {180, 180, 180}
+		self.besiege.assault.force_pool_skm1 = {90, 90, 90} -- add +10 to compensate for some of the nuances in groupaistatebesiege
+		self.besiege.assault.force_pool_skm2 = {110, 110, 110}
+		self.besiege.assault.force_pool_skm3 = {130, 130, 130}
+		self.besiege.assault.force_pool_skm4 = {160, 160, 160}
+		self.besiege.assault.force_pool_skm5 = {190, 190, 190}
+		self.besiege.assault.force_pool_skm6 = {190, 190, 190}
+		self.besiege.assault.force_pool_skm7 = {190, 190, 190}
 	end
 end
