@@ -568,7 +568,7 @@ function SkirmishTweakData:_init_spawn_group_weights(tweak_data)  -- Everything 
 		},
 		
 		{ -- wave 8 UNUSED
-		1, -- #1A two rookie
+		1, -- #1A two rookie -- TEST VALUE FOR OVERFLOW REPORTING
 		0, -- #1B revolver/two pistol
 		0, -- #1C smg/two pistol
 		0, -- #1D shot/two smg
@@ -659,7 +659,7 @@ function SkirmishTweakData:_init_spawn_group_weights(tweak_data)  -- Everything 
 		0, -- #3D one Shield/3 LAR
 		0, -- #3E two Shield/2 HAR
 		0, -- #3F two Taser/2 LAR
-		1, -- #3G one Gdozer
+		1, -- #3G one Gdozer -- TEST VALUE FOR OVERFLOW REPORTING
 		0, -- #3H two cloaker
 		0, -- #3I one taser/two HRT
 		0, -- #4A two HAR/2 LAR
