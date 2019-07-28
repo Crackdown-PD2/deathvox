@@ -1,12 +1,13 @@
 Hooks:PreHook(SkirmishManager, "on_end_assault", "SkirmishMod_IncreaseDifficulty", function(self)
 	local wave_number = self:current_wave_number() + 1
 	local difficulty = {
-		"hard", --1
+		"normal", --1
 		"hard", --2
-		"overkill_145", --3
-		"overkill_290", --4
-		"sm_wish", --5
-		"sm_wish", --6
+		"overkill", --3
+		"overkill_145", --4
+		"easy_wish", --5
+		"overkill_290", --6
+		"sm_wish", --7
 		"sm_wish",
 		"sm_wish",
 		"sm_wish"
