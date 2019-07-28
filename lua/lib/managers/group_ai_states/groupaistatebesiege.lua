@@ -825,9 +825,16 @@ function GroupAIStateBesiege:_upd_assault_task()
 		local enemies_left = self:_count_police_force("assault")
 
 		if not self._hunt_mode then
-			local min_enemies_left = 50
+		
+			local min_enemies_left = nil
+
+			if managers.skirmish:is_skirmish() then
+				min_enemies_left = 10
+			else
+				min_enemies_left = 50
+			end
 			
-			if enemies_left < min_enemies_left or task_data.phase_end_t + 350 < t then
+			if enemies_left <= min_enemies_left or task_data.phase_end_t + 350 < t then
 				if task_data.phase_end_t - 8 < t and not task_data.said_retreat then
 					
 					task_data.said_retreat = true
