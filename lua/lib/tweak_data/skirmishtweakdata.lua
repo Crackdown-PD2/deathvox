@@ -1,6 +1,6 @@
 function SkirmishTweakData:_init_special_unit_spawn_limits()
 	self.spawn_limit_to_use = {
-		tank = 2,
+		tank = 1,
 		taser = 3,
 		boom = 0,
 		spooc = 3,
