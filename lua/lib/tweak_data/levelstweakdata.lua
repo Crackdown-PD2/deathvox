@@ -11,19 +11,19 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 		return group_to_use
 	end
 	
-    -- draft implementation of asset swapping between waves for Holdout mode. Courtesy of iamgoofball. commented out for testing
+    -- draft implementation of asset swapping between waves for Holdout mode. Courtesy of iamgoofball.
     if managers and managers.skirmish and managers.skirmish:is_skirmish() then
         local current_wave = managers.skirmish:current_wave_number()
-        local wave_table = { -- Basically, the second entry is the first wave, the third entry is the second wave, etc.
-            "cop",
-            "cop",
-            "fbi",
-            "fbi",
-            "gensec",
-            "classic",
-            "zeal",
-            "zeal",
-    		"zeal"
+        local wave_table = {
+        "cop", -- wave 1
+        "cop",
+        "fbi",
+        "fbi",
+        "gensec",
+        "classic",
+        "zeal", -- wave 7
+        "zeal",
+    	"zeal"
         }
 	   if current_wave == 0 or not current_wave then
 			return "cop"
