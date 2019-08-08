@@ -1,3 +1,11 @@
+local mvec3_dis_sq = mvector3.distance_sq
+local mvec3_set = mvector3.set
+local mvec3_set_z = mvector3.set_z
+local mvec3_sub = mvector3.subtract
+local mvec3_add = mvector3.add
+local mvec3_mul = mvector3.multiply
+local mvec3_norm = mvector3.normalize
+
 function PlayerStandard:_update_fwd_ray()
 	local from = self._unit:movement():m_head_pos()
   local range = alive(self._equipped_unit) and self._equipped_unit:base():has_range_distance_scope() and 20000 or 4000 --vanilla
