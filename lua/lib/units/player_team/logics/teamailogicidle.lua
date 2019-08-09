@@ -398,12 +398,13 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 				local near = distance < near_threshold and distance > too_close_threshold
 				local has_alerted = alert_dt < 5
 				local has_damaged = dmg_dt < 2
-				local is_spooc = att_unit:base()._tweak_table == "spooc" --replace all these with has_tag, using _tweak_table for exceptions), I didn't have the time (and I made this script ages ago)
-				local is_taser = att_unit:base()._tweak_table == "taser"
-				local is_medic = att_unit:base()._tweak_table == "medic" or att_unit:base()._tweak_table == "tank_medic"
-				local is_tank = att_unit:base()._tweak_table == "tank" or att_unit:base()._tweak_table == "tank_mini" or att_unit:base()._tweak_table == "tank_hw"
-				local is_sniper = att_unit:base()._tweak_table == "sniper"
-				local is_shield = att_unit:base()._tweak_table == "shield" or att_unit:base()._tweak_table == "phalanx_minion"
+				local has_tag = att_unit:base()._tweak_table and att_unit.base and att_unit:base() and att_unit:base():has_tag
+				local is_spooc = has_tag("spooc")
+				local is_taser = has_tag("taser")
+				local is_medic = has_tag("medic")
+				local is_tank = has_tag("tank") and not has_tag("medic")
+				local is_sniper = has_tag("sniper")
+				local is_shield = has_tag("shield") and not att_unit:base()._tweak_table == "phalanx_vip"
 				local is_captain = att_unit:base()._tweak_table == "phalanx_vip"
 				local is_turret = att_unit:base().sentry_gun
 				local target_priority = distance
@@ -435,13 +436,13 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 						end
 					elseif near then
 						if not is_shielded then
-							if is_spooc then
+							if is_spooc and is_marked then
 								target_priority_slot = 3
-							elseif is_medic then
+							elseif is_medic and is_marked then
 								target_priority_slot = 4
-							elseif is_taser then
+							elseif is_taser and is_marked then
 								target_priority_slot = 5
-							elseif is_tank or is_shield or is_sniper or is_turret then
+							elseif (is_tank or is_shield or is_sniper or is_turret) and is_marked then
 								target_priority_slot = 6
 							elseif has_damaged and has_alerted then
 								target_priority_slot = 7
@@ -455,11 +456,11 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 						end
 					else
 						if not is_shielded then
-							if is_spooc or is_medic then
+							if (is_spooc or is_medic) and is_marked then
 								target_priority_slot = 6
-							elseif is_taser or is_sniper then
+							elseif (is_taser or is_sniper) and is_marked then
 								target_priority_slot = 7
-							elseif is_tank or is_shield or is_turret then
+							elseif (is_tank or is_shield or is_turret) and is_marked then
 								target_priority_slot = 8
 							elseif has_damaged and has_alerted then
 								target_priority_slot = 9
@@ -475,7 +476,7 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 
 					if is_spooc and not is_shielded then
 						if att_unit:brain()._logic_data then
-							if att_unit:brain()._logic_data.internal_data and att_unit:brain()._logic_data.internal_data.spooc_attack then --cloaker is trying to kick someone
+							if att_unit:brain()._logic_data.internal_data and att_unit:brain()._logic_data.internal_data.spooc_attack then --cloaker trying to kick someone, no marking requirement
 								target_priority_slot = 1
 							end
 						end
@@ -483,7 +484,7 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 
 					if is_taser and not is_shielded then
 						if att_unit:brain()._logic_data then
-							if att_unit:brain()._logic_data.internal_data and att_unit:brain()._logic_data.internal_data.tasing then --taser is trying to tase someone
+							if att_unit:brain()._logic_data.internal_data and att_unit:brain()._logic_data.internal_data.tasing then --taser trying to tase someone, no marking requirement
 								target_priority_slot = 1
 							end
 						end
