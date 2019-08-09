@@ -980,7 +980,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_pistol = { -- mark 3 values. Currently valid for guards, beat police, low level enemies. basis: presets.weapon.deathwish.is_pistol.
+	presets.weapon.deathvox.is_pistol = { -- mark 6 values. Revises low recoil rates.
 		aim_delay = {
 			0,
 			0
@@ -1007,8 +1007,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = {
-					0.15,
-					0.25
+					0.4,
+					0.45
 				},
 				mode = {
 					0,
@@ -1025,8 +1025,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = {
-					0.15,
-					0.3
+					0.4,
+					0.45
 				},
 				mode = {
 					0,
@@ -1043,8 +1043,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.8
 				},
 				recoil = {
-					0.25,
-					0.3
+					0.5,
+					0.55
 				},
 				mode = {
 					0,
@@ -1061,8 +1061,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.7
 				},
 				recoil = {
-					0.4,
-					0.5
+					0.55,
+					0.6
 				},
 				mode = {
 					1,
@@ -1332,7 +1332,7 @@ function CharacterTweakData:_presets(tweak_data)
 		}
 	}
 
-	presets.weapon.deathvox.is_light_rifle = { -- mark 3 values. basis is presets.weapon.deathwish.is_rifle. General goal- more shots, less damage, reduced range.
+	presets.weapon.deathvox.is_light_rifle = { -- mark 6 values. Revises low recoil rates. Still higher fire rate (esp at close range), lower damage/acc.
 		aim_delay = {
 			0,
 			0
@@ -1369,8 +1369,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.975
 				},
 				recoil = {
-					0.25,
-					0.3
+					0.4,
+					0.55
 				},
 				mode = {
 					0,
@@ -1387,8 +1387,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = {
-					0.25,
-					0.3
+					0.4,
+					0.55
 				},
 				mode = {
 					0,
@@ -1404,9 +1404,9 @@ function CharacterTweakData:_presets(tweak_data)
 					0.7,
 					0.9
 				},
-				recoil = { --reduced to increase attack rate at lower range. Base game values .35-.55. No changes to later ranges.
-					0.25,
-					0.45
+				recoil = { --reduced to increase attack rate at lower range. 
+					0.5,
+					0.55
 				},
 				mode = {
 					0,
@@ -1423,7 +1423,7 @@ function CharacterTweakData:_presets(tweak_data)
 					0.85
 				},
 				recoil = {
-					0.4,
+					0.7,
 					0.7
 				},
 				mode = {
@@ -1471,7 +1471,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_heavy_rifle = { -- mark 3 values complete. basis is presets.weapon.deathwish.is_rifle. General goal- fewer shots, more damage, greater range.
+	presets.weapon.deathvox.is_heavy_rifle = { -- mark 6 values. basis is presets.weapon.deathwish.is_rifle. General goal is still fewer shots, more damage, greater range.
 		aim_delay = {
 			0,
 			0
@@ -1502,8 +1502,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.975
 				},
 				recoil = {
-					0.25,
-					0.3
+					0.6,
+					0.625
 				},
 				mode = {
 					0,
@@ -1520,8 +1520,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = {
-					0.25,
-					0.3
+					0.6,
+					0.625
 				},
 				mode = {
 					0,
@@ -1538,8 +1538,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.9
 				},
 				recoil = {
-					0.35,
-					0.55
+					0.7,
+					0.8
 				},
 				mode = {
 					0,
@@ -1552,7 +1552,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = 0.8,
 				r = 2000,
 				acc = {
-					0.7,
+					0.75,
 					0.85
 				},
 				recoil = {
@@ -1574,8 +1574,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.75
 				},
 				recoil = {
-					0.7,
-					1.1
+					0.9,
+					1.5
 				},
 				mode = {
 					0,
@@ -2455,8 +2455,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = {
-					0.15,
-					0.25
+					0.4,
+					0.45
 				},
 				mode = {
 					0,
@@ -2473,8 +2473,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = {
-					0.15,
-					0.3
+					0.4,
+					0.45
 				},
 				mode = {
 					0,
@@ -2491,8 +2491,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.8
 				},
 				recoil = {
-					0.25,
-					0.3
+					0.5,
+					0.55
 				},
 				mode = {
 					0,
@@ -2509,8 +2509,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.7
 				},
 				recoil = {
-					0.4,
-					0.5
+					0.55,
+					0.6
 				},
 				mode = {
 					0,
