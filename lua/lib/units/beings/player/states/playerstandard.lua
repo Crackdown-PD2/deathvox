@@ -8,15 +8,17 @@ local mvec3_norm = mvector3.normalize
 
 function PlayerStandard:_update_fwd_ray()
 	local from = self._unit:movement():m_head_pos()
-  local range = alive(self._equipped_unit) and self._equipped_unit:base():has_range_distance_scope() and 20000 or 4000 --vanilla
-	local range = 20000 --allow ADS marking to have the same range as the sniper scopes
+	local has_range_scope = alive(self._equipped_unit) and self._equipped_unit:base():has_range_distance_scope()
+	local range = 20000 --actual intended range
 	local to = self._cam_fwd * range
 
 	mvector3.add(to, from)
 
+	--self._fwd_ray = World:raycast("ray", from, to, "slot_mask", self._slotmask_fwd_ray + self._slotmask_AI_visibility, "ray_type", "ai_vision", "ignore_unit", {}) --marks cameras through walls just fine but has trouble marking NPCs, if someone knows, getting this to work would be great
 	self._fwd_ray = World:raycast("ray", from, to, "slot_mask", self._slotmask_fwd_ray)
 
-	managers.environment_controller:set_dof_distance(math.max(0, math.min(self._fwd_ray and self._fwd_ray.distance or 4000, 4000) - 200), self._state_data.in_steelsight)
+	--actually not fucking with the depth of field this time by clamping the distance for weapons without the special scopes, I never noticed this before because I had DoF turned off
+	managers.environment_controller:set_dof_distance(math.max(0, math.min(self._fwd_ray and (has_range_scope and self._fwd_ray.distance or math.clamp(self._fwd_ray.distance, 0, 4000)) or 4000, 4000) - 200), self._state_data.in_steelsight)
 
 	if alive(self._equipped_unit) then
 		if self._state_data.in_steelsight and self._fwd_ray and self._fwd_ray.unit and self._equipped_unit:base().check_highlight_unit then
@@ -135,10 +137,8 @@ function PlayerStandard:_get_intimidation_action(prime_target, char_table, amoun
 					end
 				end
 			elseif prime_target.unit_type == unit_type_camera then
-				if not prime_target.unit or not prime_target.unit:base() or not prime_target.unit:base().is_friendly then
-					plural = false
-					voice_type = "mark_camera"
-				end
+				plural = false
+				voice_type = "mark_camera"
 			elseif prime_target.unit_type == unit_type_turret then
 				plural = false
 				voice_type = "mark_turret"
@@ -261,7 +261,7 @@ function PlayerStandard:_get_unit_intimidation_action(intimidate_enemies, intimi
 				local can_intimidate = managers.groupai:state():has_room_for_police_hostage() or u_data.unit:anim_data().hands_back or u_data.unit:anim_data().surrender
 
 				if managers.groupai:state():whisper_mode() then
-					if u_data.char_tweak.silent_priority_shout and u_data.unit:movement():cool() then
+					if u_data.unit:movement():cool() and u_data.char_tweak.silent_priority_shout then
 						self:_add_unit_to_char_table(char_table, u_data.unit, unit_type_enemy, highlight_range, false, false, 100, my_head_pos, cam_fwd)
 					elseif not u_data.unit:movement():cool() then
 						if can_intimidate and u_data.char_tweak.surrender and not u_data.char_tweak.surrender.special and not u_data.char_tweak.surrender.never then
@@ -283,7 +283,7 @@ function PlayerStandard:_get_unit_intimidation_action(intimidate_enemies, intimi
 						local other_shields = u_data.unit:base():has_tag("shield") and not u_data.unit:base()._tweak_table == "phalanx_vip"
 						local sniper_type = u_data.unit:base():has_tag("sniper")
 
-						local priority = cloaker_type and 200 or medic_type and 150 and minigun_dozer and 100 or other_dozer_types and 75 or (taser_type or captain) and 50 or other_shields and 25 or 10
+						local priority = (cloaker_type or taser_type) and 200 or medic_type and 150 and minigun_dozer and 100 or other_dozer_types and 75 or captain and 50 or other_shields and 25 or 10
 
 						self:_add_unit_to_char_table(char_table, u_data.unit, unit_type_enemy, highlight_range * (sniper_type and 3 or 1), false, false, priority, my_head_pos, cam_fwd)
 					end
@@ -409,7 +409,7 @@ function PlayerStandard:_get_unit_intimidation_action(intimidate_enemies, intimi
 	if intimidate_enemies then
 		if managers.groupai:state():whisper_mode() then
 			for _, unit in ipairs(SecurityCamera.cameras) do
-				if alive(unit) and unit:enabled() and not unit:base():destroyed() and unit:interaction() and unit:interaction():active() and not unit:interaction():disabled() then
+				if alive(unit) and unit:enabled() and not unit:base():destroyed() and (unit:interaction() and unit:interaction():active() and not unit:interaction():disabled() or unit:base().is_friendly) then --apparently friendly means drones, I don't even (the one in Sosa's mansion won't be marked as it's not enabled)
 					local dist = 2000
 					local prio = 0.001
 
