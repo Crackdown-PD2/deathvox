@@ -35,8 +35,6 @@ function TeamAILogicBase._set_attention_obj(data, new_att_obj, new_reaction)
 			if new_att_obj.settings.pause then
 				new_att_obj.stare_expire_t = nil
 				new_att_obj.pause_expire_t = data.t + math.lerp(new_att_obj.settings.pause[1], new_att_obj.settings.pause[2], math.random())
-
-				print("[TeamAILogicBase._chk_focus_on_attention_object] pausing for", current_attention.pause_expire_t - data.t, "sec")
 			end
 		elseif new_att_obj.pause_expire_t and new_att_obj.pause_expire_t < data.t then
 			new_att_obj.pause_expire_t = nil
@@ -151,13 +149,13 @@ function TeamAILogicBase.shouting_and_marking(data, my_data, criminal)
 			if not civilian and (not allow_domination or not enemy) then --if no valid civilian or enemies (if domination is enabled) to intimidate are found
 				TeamAILogicBase.mark_unit(data, criminal, false) --can actually mark enemies during bleedout and while cuffed, like players (not in casing mode, yet)
 
-				if managers.groupai:state():whisper_mode() and mark_enemy then --turn to face units to mark during stealth
+				--[[if managers.groupai:state():whisper_mode() and mark_enemy then --turn to face units to mark during stealth
 					if (not my_data._intimidate_t or my_data._intimidate_t + 2 < data.t) and not my_data._turning_to_intimidate then --can shout to intimidate and not already turning
 						if CopLogicAttack._chk_request_action_turn_to_enemy(data, my_data, criminal:movement():m_pos(), mark_enemy:movement():m_pos()) then --turn to face the escort if they're not moving
 							my_data._turning_to_intimidate = true
 						end
 					end
-				end
+				end]]
 			end
 
 			if not in_casing_mode and not bleeding_out and not is_cuffed then
