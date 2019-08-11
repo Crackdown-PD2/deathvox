@@ -436,13 +436,13 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 						end
 					elseif near then
 						if not is_shielded then
-							if is_spooc and is_marked then
+							if is_spooc then
 								target_priority_slot = 3
-							elseif is_medic and is_marked then
+							elseif is_medic then
 								target_priority_slot = 4
-							elseif is_taser and is_marked then
+							elseif is_taser then
 								target_priority_slot = 5
-							elseif (is_tank or is_shield or is_sniper or is_turret) and is_marked then
+							elseif is_tank or is_shield or is_sniper or is_turret then
 								target_priority_slot = 6
 							elseif has_damaged and has_alerted then
 								target_priority_slot = 7
