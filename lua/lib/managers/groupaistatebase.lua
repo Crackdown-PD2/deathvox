@@ -17,7 +17,8 @@ function GroupAIStateBase:_init_misc_data()
 		taser = true,
 		boom = true,
 		medic = true,
-		ass_sniper = true
+		ass_sniper = true,
+		phalanx_minion = true
 	}
 end
 
@@ -31,7 +32,8 @@ function GroupAIStateBase:on_simulation_started()
 		taser = true,
 		boom = true,
 		medic = true,
-		ass_sniper = true
+		ass_sniper = true,
+		phalanx_minion = true
 	}
 end
 
@@ -143,7 +145,7 @@ function GroupAIStateBase:on_enemy_unregistered(unit)
 	end
 end
 
--- Lines: 1450 to 1465
+
 function GroupAIStateBase:on_enemy_registered(unit)
 	if self._anticipated_police_force > 0 then
 		self._anticipated_police_force = self._anticipated_police_force - 1
@@ -161,12 +163,36 @@ function GroupAIStateBase:on_enemy_registered(unit)
 		if is_special then
 			self:register_special_unit(unit:key(), is_special)
 		else
-			self:register_special_unit(unit:key(), unit_type)
+			if unit_type == "phalanx_minion" and not unit:base().is_phalanx then
+				self:register_special_unit(unit:key(), "shield")
+			else
+				self:register_special_unit(unit:key(), unit_type)
+			end
 		end
 	end
 
 	if Network:is_client() then
 		unit:movement():set_team(self._teams[tweak_data.levels:get_default_team_ID(unit:base():char_tweak().access == "gangster" and "gangster" or "combatant")])
+	end
+end
+
+function GroupAIStateBase:unregister_special_unit(u_key, category_name)
+	local category = self._special_units[category_name]
+
+	if category_name == "phalanx_minion" and self._special_units["shield"][u_key] then
+		self._special_units["shield"][u_key] = nil
+
+		if not next(self._special_units["shield"]) then
+			self._special_units["shield"] = nil
+		end
+	else
+		if category then
+			category[u_key] = nil
+
+			if not next(category) then
+				self._special_units[category_name] = nil
+			end
+		end
 	end
 end
 
