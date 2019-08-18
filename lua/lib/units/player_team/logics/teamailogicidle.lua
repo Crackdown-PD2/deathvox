@@ -398,7 +398,7 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 				local near = distance < near_threshold and distance > too_close_threshold
 				local has_alerted = alert_dt < 5
 				local has_damaged = dmg_dt < 2
-				local has_tag = att_unit:base()._tweak_table and att_unit.base and att_unit:base() and att_unit:base():has_tag
+				local has_tag = att_unit:base()._tweak_table and att_unit.base and att_unit:base() and att_unit:base().has_tag
 				local is_spooc = has_tag("spooc")
 				local is_taser = has_tag("taser")
 				local is_medic = has_tag("medic")
