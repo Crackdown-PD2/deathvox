@@ -12,7 +12,7 @@
 	<extensions>
 		<extension name="unit_data" class="ScriptUnitData" />
 		<extension name="base" class="CopBase" >
-			<var name="_tweak_table" value="deathvox_heavyswat" />
+			<var name="_tweak_table" value="deathvox_heavyar" />
 			<var name="_default_weapon_id" value="deathvox_heavy_ar" />
 		</extension>
 		<extension name="inventory" class="CopInventory" />

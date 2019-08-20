@@ -23,12 +23,14 @@ function CopMovement:init(unit)
 	CopMovement._action_variants.deathvox_shield = clone(security_variant)
 	CopMovement._action_variants.deathvox_shield.hurt = ShieldActionHurt
 	CopMovement._action_variants.deathvox_shield.walk = ShieldCopActionWalk
-	CopMovement._action_variants.deathvox_heavyswat = security_variant
-	CopMovement._action_variants.deathvox_lightswat = security_variant
+	CopMovement._action_variants.deathvox_heavyar = security_variant
+	CopMovement._action_variants.deathvox_lightar = security_variant
 	CopMovement._action_variants.deathvox_medic = clone(security_variant)
 	CopMovement._action_variants.deathvox_medic.heal = MedicActionHeal
 	CopMovement._action_variants.deathvox_guard = security_variant
 	CopMovement._action_variants.deathvox_gman = security_variant
+	CopMovement._action_variants.deathvox_lightshot = security_variant
+	CopMovement._action_variants.deathvox_heavyshot = security_variant
 
 	CopMovement._action_variants.deathvox_taser = security_variant
 	CopMovement._action_variants.deathvox_sniper_assault = security_variant

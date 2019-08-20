@@ -39,11 +39,13 @@ function CopBrain:post_init()
 	CopBrain._logic_variants.deathvox_shield.intimidated = nil
 	CopBrain._logic_variants.deathvox_shield.flee = nil
 	
-	CopBrain._logic_variants.deathvox_lightswat = security_variant
+	CopBrain._logic_variants.deathvox_heavyar = security_variant
+	CopBrain._logic_variants.deathvox_lightar = security_variant
 	CopBrain._logic_variants.deathvox_medic = security_variant
 	CopBrain._logic_variants.deathvox_guard = security_variant
 	CopBrain._logic_variants.deathvox_gman = security_variant
-	CopBrain._logic_variants.deathvox_heavyswat = security_variant
+	CopBrain._logic_variants.deathvox_lightshot = security_variant
+	CopBrain._logic_variants.deathvox_heavyshot = security_variant
 	
 	CopBrain._logic_variants.deathvox_guarddozer = clone(security_variant)
 	CopBrain._logic_variants.deathvox_guarddozer.attack = TankCopLogicAttack
