@@ -11,7 +11,7 @@
 	<extensions>
 		<extension name="unit_data" class="ScriptUnitData" />
 		<extension name="base" class="HuskCopBase" >
-			<var name="_tweak_table" value="deathvox_lightar" />
+			<var name="_tweak_table" value="deathvox_lightswat" />
 			<var name="_default_weapon_id" value="deathvox_light_ar" />
 		</extension>
 		<extension name="inventory" class="HuskCopInventory" />

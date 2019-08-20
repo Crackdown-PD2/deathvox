@@ -112,74 +112,47 @@ end
 function CharacterTweakData:get_ai_group_type()
 	local group_to_use = "zeal" 		
 						
-	if Global.level_data and Global.level_data.level_id then
-		level_id = Global.level_data.level_id
-	end
-	
-	if not Global.game_settings then
+	local bullshit = self.tweak_data.levels:get_ai_group_type()
+		if not Global.game_settings then
+			return group_to_use
+		end
+		
+		local difficulties = {
+			"easy",
+			"normal",
+			"hard",
+			"overkill",
+			"overkill_145",
+			"easy_wish",
+			"overkill_290",
+			"sm_wish"
+		}
+		local ai_group_type = {}
+		ai_group_type["murkywater"] = "murky"        
+		ai_group_type["zeal"] = "zeal"  
+		ai_group_type["cop"] = "cop" 
+		ai_group_type["gensec"] = "gensec"        			
+		ai_group_type["classic"] = "classic"        		
+		ai_group_type["zombie"] = "zombie"                
+		ai_group_type["russia"] = "russia"        
+  
+		local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
+		if diff_index <= 3 then
+			group_to_use = "cop"
+		elseif diff_index <= 5 then
+			group_to_use = "fbi"
+		elseif diff_index <= 7 then
+			group_to_use = "gensec"
+		end
+		if bullshit then
+			if ai_group_type[bullshit] then
+				group_to_use = ai_group_type[bullshit]
+			end
+		elseif diff_index == 8 then -- zeal units on CD for all maps.
+			group_to_use = "zeal"
+		end        
 		return group_to_use
 	end
-	local difficulties = {
-		"easy",
-		"normal",
-		"hard",
-		"overkill",
-		"overkill_145",
-		"easy_wish",
-		"overkill_290",
-		"sm_wish"
-	}
-	local map_faction_override = {}
-	-- unit test map override function below. Uncomment to apply classic units.
-	--map_faction_override["Enemy_Spawner"] = "classic"
-	
-	-- Classic overrides begin here.
-	map_faction_override["pal"] = "classic"
-	map_faction_override["dah"] = "classic"
-	map_faction_override["red2"] = "classic"
-	map_faction_override["glace"] = "classic"
-	map_faction_override["run"] = "classic"
-	map_faction_override["flat"] = "classic"
-	map_faction_override["dinner"] = "classic"
-	map_faction_override["man"] = "classic"
-	map_faction_override["nmh"] = "classic"
-	-- Classic faction, also as NYPD. 
-	map_faction_override["spa"] = "classic"
-	map_faction_override["brb"] = "classic"
-	-- Classic faction overrides for holdout.
-	map_faction_override["skm_run"] = "classic"
-	map_faction_override["skm_red2"] = "classic"	
-	--Faction overrides for Whurr's map edits begin here.
-	map_faction_override["bridge"] = "classic"
-	map_faction_override["apartment"] = "classic"
-	map_faction_override["street"] = "classic"
-	map_faction_override["bank"] = "classic"
-	--Murky faction overrides begin here. Uncomment to apply the Murkywater faction on the Whitehouse, Henry's Rock, and Beneath the Mountain heists.
-	--map_faction_override["pbr"] = "murky"
-	--map_faction_override["vit"] = "murky"
-	--map_faction_override["des"] = "murky"
-	
-	--Reaper faction overrides begin here.	
-	--Halloween overrides begin here.
-  
-	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
-	if diff_index <= 3 then
-		group_to_use = "cop"
-	elseif diff_index <= 5 then
-		group_to_use = "fbi"
-	elseif diff_index <= 7 then
-		group_to_use = "gensec"
-	end
-	if level_id then
-		if map_faction_override[level_id] then
-			group_to_use = map_faction_override[level_id]
-		end
-	end
-	if diff_index == 8 then -- zeal units on CD for all maps.
-		group_to_use = "zeal"
-	end
-	return group_to_use
-end
 
 
 function CharacterTweakData:_presets(tweak_data)
@@ -287,7 +260,7 @@ function CharacterTweakData:_presets(tweak_data)
 			death_wish = {health = 4, headshot_mult = 3},
 			crackdown = {health = 15, headshot_mult = 3}
 		},
-		deathvox_lightar = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
+		deathvox_lightswat = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
 			not_a_real_difficulty = {health = 8, headshot_mult = 2},
 			normal = {health = 18, headshot_mult = 3},
 			hard = {health = 18, headshot_mult = 3},
@@ -297,27 +270,7 @@ function CharacterTweakData:_presets(tweak_data)
 			death_wish = {health = 32, headshot_mult = 3},
 			crackdown = {health = 48, headshot_mult = 3}
 		},
-		deathvox_lightshot = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
-			not_a_real_difficulty = {health = 8, headshot_mult = 2},
-			normal = {health = 18, headshot_mult = 3},
-			hard = {health = 18, headshot_mult = 3},
-			very_hard = {health = 24, headshot_mult = 3},
-			overkill = {health = 24, headshot_mult = 3},
-			mayhem = {health = 32, headshot_mult = 3},
-			death_wish = {health = 32, headshot_mult = 3},
-			crackdown = {health = 48, headshot_mult = 3}
-		},
-        	deathvox_heavyar = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
-			not_a_real_difficulty = {health = 16, headshot_mult = 3},
-			normal = {health = 25, headshot_mult = 3},
-			hard = {health = 25, headshot_mult = 3},
-			very_hard = {health = 48, headshot_mult = 3},
-			overkill = {health = 48, headshot_mult = 3},
-			mayhem = {health = 96, headshot_mult = 3},
-			death_wish = {health = 96, headshot_mult = 3},
-			crackdown = {health = 101, headshot_mult = 3}
-		},
-		deathvox_heavyshot = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
+        deathvox_heavyswat = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
 			not_a_real_difficulty = {health = 16, headshot_mult = 3},
 			normal = {health = 25, headshot_mult = 3},
 			hard = {health = 25, headshot_mult = 3},
@@ -2664,119 +2617,63 @@ function CharacterTweakData:_init_deathvox(presets)
 	if self:get_ai_group_type() == "classic" then
 		is_classic = true
 	end
-	self.deathvox_lightar = deep_clone(self.city_swat)
-	self.deathvox_lightar.speech_prefix_p1 = "l1d"
-	self.deathvox_lightar.speech_prefix_p2 = nil
-	self.deathvox_lightar.speech_prefix_count = nil
-	self.deathvox_lightar.detection = presets.detection.deathvox
-	self.deathvox_lightar.ignore_medic_revive_animation = true  -- no revive animation. may require curving on lower diffs.
-	self.deathvox_lightar.suppression = presets.suppression.hard_agg -- should be hard_def on N through OVK.
-	self.deathvox_lightar.surrender = presets.surrender.hard -- should be normal on diffs below CD.
-	self.deathvox_lightar.move_speed = presets.move_speed.very_fast -- should be fast on diffs N, H.
-	self.deathvox_lightar.surrender_break_time = {6, 8}
-	self.deathvox_lightar.ecm_vulnerability = 1
-	self.deathvox_lightar.ecm_hurts = {
+	self.deathvox_lightswat = deep_clone(self.city_swat)
+	self.deathvox_lightswat.speech_prefix_p1 = "l1d"
+	self.deathvox_lightswat.speech_prefix_p2 = nil
+	self.deathvox_lightswat.speech_prefix_count = nil
+	self.deathvox_lightswat.detection = presets.detection.deathvox
+	self.deathvox_lightswat.ignore_medic_revive_animation = true  -- no revive animation. may require curving on lower diffs.
+	self.deathvox_lightswat.suppression = presets.suppression.hard_agg -- should be hard_def on N through OVK.
+	self.deathvox_lightswat.surrender = presets.surrender.hard -- should be normal on diffs below CD.
+	self.deathvox_lightswat.move_speed = presets.move_speed.very_fast -- should be fast on diffs N, H.
+	self.deathvox_lightswat.surrender_break_time = {6, 8}
+	self.deathvox_lightswat.ecm_vulnerability = 1
+	self.deathvox_lightswat.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8}
 	}
-	self.deathvox_lightar.dodge = presets.dodge.deathvoxninja -- should be athletic on diffs below CD.
-	self.deathvox_lightar.deathguard = true
-	self.deathvox_lightar.no_arrest = true
-	self.deathvox_lightar.steal_loot = true
-	self.deathvox_lightar.rescue_hostages = true
-	self.deathvox_lightar.weapon = deep_clone(presets.weapon.deathvox)
-	--self.deathvox_lightar.factory_weapon_id = {"wpn_deathvox_light_ar"}
-	self.deathvox_lightar.use_factory = false
-	self.deathvox_lightar.HEALTH_INIT = 48
-	self.deathvox_lightar.headshot_dmg_mul = 3
-	self.deathvox_lightar.access = "any"
-	table.insert(self._enemy_list, "deathvox_lightar")
+	self.deathvox_lightswat.dodge = presets.dodge.deathvoxninja -- should be athletic on diffs below CD.
+	self.deathvox_lightswat.deathguard = true
+	self.deathvox_lightswat.no_arrest = true
+	self.deathvox_lightswat.steal_loot = true
+	self.deathvox_lightswat.rescue_hostages = true
+	self.deathvox_lightswat.weapon = deep_clone(presets.weapon.deathvox)
+	--self.deathvox_lightswat.factory_weapon_id = {"wpn_deathvox_light_ar"}
+	self.deathvox_lightswat.use_factory = false
+	self.deathvox_lightswat.HEALTH_INIT = 48
+	self.deathvox_lightswat.headshot_dmg_mul = 3
+	self.deathvox_lightswat.access = "any"
+	table.insert(self._enemy_list, "deathvox_lightswat")
 	
-	self.deathvox_lightshot = deep_clone(self.city_swat)
-	self.deathvox_lightshot.speech_prefix_p1 = "l2d"
-	self.deathvox_lightshot.speech_prefix_p2 = nil
-	self.deathvox_lightshot.speech_prefix_count = nil
-	self.deathvox_lightshot.die_sound_event = "x01a_any_3p" --fucking l2d and having pain lines but not death lines
-	self.deathvox_lightshot.detection = presets.detection.deathvox
-	self.deathvox_lightshot.ignore_medic_revive_animation = true  -- no revive animation. may require curving on lower diffs.
-	self.deathvox_lightshot.suppression = presets.suppression.hard_agg -- should be hard_def on N through OVK.
-	self.deathvox_lightshot.surrender = presets.surrender.normal -- should be normal on diffs below CD.
-	self.deathvox_lightshot.move_speed = presets.move_speed.very_fast -- should be fast on diffs N, H.
-	self.deathvox_lightshot.surrender_break_time = {6, 8} 
-	self.deathvox_lightshot.ecm_vulnerability = 1
-	self.deathvox_lightshot.ecm_hurts = {
+	
+	self.deathvox_heavyswat = deep_clone(self.city_swat)
+	self.deathvox_heavyswat.speech_prefix_p1 = "l3d"
+	self.deathvox_heavyswat.speech_prefix_p2 = nil
+	self.deathvox_heavyswat.speech_prefix_count = nil
+	self.deathvox_heavyswat.detection = presets.detection.deathvox
+	self.deathvox_heavyswat.ignore_medic_revive_animation = true  --no revive animation. may require curving on lower diffs.
+	self.deathvox_heavyswat.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- may require curving on lower diffs.
+	self.deathvox_heavyswat.suppression = presets.suppression.hard_agg -- hard_agg on all diffs.
+	self.deathvox_heavyswat.surrender = presets.surrender.special -- should be normal on N/H, hard on VH-DW.
+	self.deathvox_heavyswat.move_speed = presets.move_speed.fast -- fast on all diffs.
+	self.deathvox_heavyswat.surrender_break_time = {6, 8}
+	self.deathvox_heavyswat.ecm_vulnerability = 1
+	self.deathvox_heavyswat.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8}
 	}
-	self.deathvox_lightshot.dodge = presets.dodge.deathvoxninja -- should be athletic on diffs below CD.
-	self.deathvox_lightshot.deathguard = true
-	self.deathvox_lightshot.no_arrest = true
-	self.deathvox_lightshot.steal_loot = true
-	self.deathvox_lightshot.rescue_hostages = true
-	self.deathvox_lightshot.weapon = deep_clone(presets.weapon.deathvox)
-	--self.deathvox_lightshot.factory_weapon_id = {"wpn_deathvox_shotgun_light"}
-	self.deathvox_lightshot.use_factory = false
-	self.deathvox_lightshot.HEALTH_INIT = 48
-	self.deathvox_lightshot.headshot_dmg_mul = 3
-	self.deathvox_lightshot.access = "any"
-	table.insert(self._enemy_list, "deathvox_lightshot")
-	
-	self.deathvox_heavyar = deep_clone(self.city_swat)
-	self.deathvox_heavyar.speech_prefix_p1 = "l3d"
-	self.deathvox_heavyar.speech_prefix_p2 = nil
-	self.deathvox_heavyar.speech_prefix_count = nil
-	self.deathvox_heavyar.detection = presets.detection.deathvox
-	self.deathvox_heavyar.ignore_medic_revive_animation = true  --no revive animation. may require curving on lower diffs.
-	self.deathvox_heavyar.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- may require curving on lower diffs.
-	self.deathvox_heavyar.suppression = presets.suppression.hard_agg -- hard_agg on all diffs.
-	self.deathvox_heavyar.surrender = presets.surrender.special -- should be normal on N/H, hard on VH-DW.
-	self.deathvox_heavyar.move_speed = presets.move_speed.fast -- fast on all diffs.
-	self.deathvox_heavyar.surrender_break_time = {6, 8}
-	self.deathvox_heavyar.ecm_vulnerability = 1
-	self.deathvox_heavyar.ecm_hurts = {
-		ears = {min_duration = 6, max_duration = 8}
-	}
-	self.deathvox_heavyar.dodge = presets.dodge.deathvox -- should be heavy on diffs below CD.
-	self.deathvox_heavyar.deathguard = true
-	self.deathvox_heavyar.no_arrest = true
-	self.deathvox_heavyar.steal_loot = true
-	self.deathvox_heavyar.rescue_hostages = true
-	self.deathvox_heavyar.weapon = deep_clone(presets.weapon.deathvox)
-	--self.deathvox_heavyar.factory_weapon_id = {"wpn_deathvox_heavy_ar"}
-	self.deathvox_heavyar.use_factory = false
-	self.deathvox_heavyar.HEALTH_INIT = 101 -- new with final 2017 pass.
-	self.deathvox_heavyar.headshot_dmg_mul = 3
-	self.deathvox_heavyar.damage.explosion_damage_mul = 0.7 -- may require curving on lower diffs.
-	self.deathvox_heavyar.access = "any"
-	table.insert(self._enemy_list, "deathvox_heavyar")
-	
-	self.deathvox_heavyshot = deep_clone(self.city_swat)
-	self.deathvox_heavyshot.speech_prefix_p1 = "l4d"
-	self.deathvox_heavyshot.speech_prefix_p2 = nil
-	self.deathvox_heavyshot.speech_prefix_count = nil
-	self.deathvox_heavyshot.detection = presets.detection.deathvox
-	self.deathvox_heavyshot.ignore_medic_revive_animation = true  -- no revive animation. may require curving on lower diffs.
-	self.deathvox_heavyshot.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- may require curving on lower diffs.
-	self.deathvox_heavyshot.suppression = presets.suppression.hard_agg -- hard_agg on all diffs.
-	self.deathvox_heavyshot.surrender = presets.surrender.special -- should be normal on N/H, hard on VH-DW.
-	self.deathvox_heavyshot.move_speed = presets.move_speed.fast -- fast on all diffs.
-	self.deathvox_heavyshot.surrender_break_time = {6, 8} 
-	self.deathvox_heavyshot.ecm_vulnerability = 1
-	self.deathvox_heavyshot.ecm_hurts = {
-		ears = {min_duration = 6, max_duration = 8}
-	}
-	self.deathvox_heavyshot.dodge = presets.dodge.deathvox -- should be heavy on diffs below CD.
-	self.deathvox_heavyshot.deathguard = true
-	self.deathvox_heavyshot.no_arrest = true
-	self.deathvox_heavyshot.steal_loot = true
-	self.deathvox_heavyshot.rescue_hostages = true
-	self.deathvox_heavyshot.weapon = deep_clone(presets.weapon.deathvox)
-	--self.deathvox_heavyshot.factory_weapon_id = {"wpn_deathvox_shotgun_heavy"}
-	self.deathvox_heavyshot.use_factory = false
-	self.deathvox_heavyshot.HEALTH_INIT = 101 -- new with final 2017 pass.
-	self.deathvox_heavyshot.headshot_dmg_mul = 3
-	self.deathvox_heavyshot.damage.explosion_damage_mul = 0.7 -- may require curving on lower diffs.
-	self.deathvox_heavyshot.access = "any"
-	table.insert(self._enemy_list, "deathvox_heavyshot")
-	
+	self.deathvox_heavyswat.dodge = presets.dodge.deathvox -- should be heavy on diffs below CD.
+	self.deathvox_heavyswat.deathguard = true
+	self.deathvox_heavyswat.no_arrest = true
+	self.deathvox_heavyswat.steal_loot = true
+	self.deathvox_heavyswat.rescue_hostages = true
+	self.deathvox_heavyswat.weapon = deep_clone(presets.weapon.deathvox)
+	--self.deathvox_heavyswat.factory_weapon_id = {"wpn_deathvox_heavy_ar"}
+	self.deathvox_heavyswat.use_factory = false
+	self.deathvox_heavyswat.HEALTH_INIT = 101 -- new with final 2017 pass.
+	self.deathvox_heavyswat.headshot_dmg_mul = 3
+	self.deathvox_heavyswat.damage.explosion_damage_mul = 0.7 -- may require curving on lower diffs.
+	self.deathvox_heavyswat.access = "any"
+	table.insert(self._enemy_list, "deathvox_heavyswat")
+		
 	self.deathvox_shield = deep_clone(self.shield)
 	self.deathvox_shield.speech_prefix_p1 = "l5d"
 	self.deathvox_shield.speech_prefix_p2 = nil
@@ -3182,33 +3079,19 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 	}	
 	self.deathvox_guard.dodge = deep_clone(self.presets.dodge.poor) -- poor dodge below CD
 --lightar - NORMAL
-	self.deathvox_lightar.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightar.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
-	self.deathvox_lightar.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
-	self.deathvox_lightar.move_speed = deep_clone(self.presets.move_speed.fast) -- move_speed to fast (N, H)
-	self.deathvox_lightar.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
-	
---lightshot - NORMAL
-	self.deathvox_lightshot.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightshot.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
-	self.deathvox_lightshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (all below CD)
-	self.deathvox_lightshot.move_speed = deep_clone(self.presets.move_speed.fast) -- move_speed to fast (N, H)
-	self.deathvox_lightshot.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
-	
+	self.deathvox_lightswat.ignore_medic_revive_animation = false -- medic revive anim (below CD)
+	self.deathvox_lightswat.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightswat.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
+	self.deathvox_lightswat.move_speed = deep_clone(self.presets.move_speed.fast) -- move_speed to fast (N, H)
+	self.deathvox_lightswat.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
+		
 --heavyar - NORMAL
-	self.deathvox_heavyar.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
+	self.deathvox_heavyswat.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
 --	NOTE consider curving hurt severities on lower diffs.
-	self.deathvox_heavyar.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (on N/H, hard on VH-DW)
-	self.deathvox_heavyar.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
-	self.deathvox_heavyar.damage.explosion_damage_mul = 1 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
-	
---heavyshot - NORMAL
-	self.deathvox_heavyshot.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
---	NOTE consider curving hurt severities on lower diffs.
-	self.deathvox_heavyshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (on N/H, hard on VH-DW)
-	self.deathvox_heavyshot.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
-	self.deathvox_heavyshot.damage.explosion_damage_mul = 1 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
-	
+	self.deathvox_heavyswat.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (on N/H, hard on VH-DW)
+	self.deathvox_heavyswat.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
+	self.deathvox_heavyswat.damage.explosion_damage_mul = 1 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
+		
 --shield - NORMAL
 --	NOTE ask others to examine weapon use. Is this even functioning properly? Should be pistol on N/H, seems to work?
 
@@ -3248,7 +3131,7 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 -- 	scripted police types.
 	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
 --	scripted Murky unit types.
-	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+	self.city_swat = deep_clone(self.deathvox_heavyswat) -- Inverse copy of city_swat tweakdata. 	
 --	scripted criminal types.
 	self.gangster.HEALTH_INIT = 18 -- match to light SWAT value.
 	self.mobster.HEALTH_INIT = 18	
@@ -3292,33 +3175,19 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	self.deathvox_guard.dodge = deep_clone(self.presets.dodge.poor) -- poor dodge below CD
 
 --	lightar - HARD
-	self.deathvox_lightar.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightar.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
-	self.deathvox_lightar.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
-	self.deathvox_lightar.move_speed = deep_clone(self.presets.move_speed.fast) -- move_speed to fast (N, H)
-	self.deathvox_lightar.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
-	
---	lightshot - HARD
-	self.deathvox_lightshot.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightshot.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
-	self.deathvox_lightshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (all below CD)
-	self.deathvox_lightshot.move_speed = deep_clone(self.presets.move_speed.fast) -- move_speed to fast (N, H)
-	self.deathvox_lightshot.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
-	
---	heavyar - HARD
-	self.deathvox_heavyar.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
---	NOTE consider curving hurt severities on lower diffs.
-	self.deathvox_heavyar.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (on N/H, hard on VH-DW)
-	self.deathvox_heavyar.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
-	self.deathvox_heavyar.damage.explosion_damage_mul = 1 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
-	
---	heavyshot - HARD
-	self.deathvox_heavyshot.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
---	NOTE consider curving hurt severities on lower diffs.
-	self.deathvox_heavyshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (on N/H, hard on VH-DW)
-	self.deathvox_heavyshot.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
-	self.deathvox_heavyshot.damage.explosion_damage_mul = 1 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
+	self.deathvox_lightswat.ignore_medic_revive_animation = false -- medic revive anim (below CD)
+	self.deathvox_lightswat.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightswat.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
+	self.deathvox_lightswat.move_speed = deep_clone(self.presets.move_speed.fast) -- move_speed to fast (N, H)
+	self.deathvox_lightswat.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
 		
+--	heavyar - HARD
+	self.deathvox_heavyswat.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
+--	NOTE consider curving hurt severities on lower diffs.
+	self.deathvox_heavyswat.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (on N/H, hard on VH-DW)
+	self.deathvox_heavyswat.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
+	self.deathvox_heavyswat.damage.explosion_damage_mul = 1 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
+			
 --	shield - HARD
 --	medic - HARD
 	self.deathvox_medic.ignore_medic_revive_animation = false -- medic revive anim (all below CD)
@@ -3349,7 +3218,7 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 -- 	scripted police types.
 	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
 --	scripted Murky unit types.
-	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+	self.city_swat = deep_clone(self.deathvox_heavyswat) -- Inverse copy of city_swat tweakdata. 	
 --	scripted criminal types.
 	self.gangster.HEALTH_INIT = 18 -- match to light SWAT value.
 	self.mobster.HEALTH_INIT = 18	
@@ -3394,31 +3263,18 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 	self.deathvox_guard.dodge = deep_clone(self.presets.dodge.poor) -- poor dodge below CD
 
 --	lightar - VERY HARD
-	self.deathvox_lightar.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightar.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
-	self.deathvox_lightar.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
-	self.deathvox_lightar.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
-	
---	lightshot - VERY HARD
-	self.deathvox_lightshot.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightshot.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
-	self.deathvox_lightshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (all below CD)
-	self.deathvox_lightshot.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
-	
+	self.deathvox_lightswat.ignore_medic_revive_animation = false -- medic revive anim (below CD)
+	self.deathvox_lightswat.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightswat.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
+	self.deathvox_lightswat.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
+		
 --	heavyar - VERY HARD
-	self.deathvox_heavyar.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
+	self.deathvox_heavyswat.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
 --	NOTE consider curving hurt severities on lower diffs.
-	self.deathvox_heavyar.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
-	self.deathvox_heavyar.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
-	self.deathvox_heavyar.damage.explosion_damage_mul = 0.8 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
-	
---	heavyshot - VERY HARD
-	self.deathvox_heavyshot.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
---	NOTE consider curving hurt severities on lower diffs.
-	self.deathvox_heavyshot.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
-	self.deathvox_heavyshot.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
-	self.deathvox_heavyshot.damage.explosion_damage_mul = 0.8 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
-	
+	self.deathvox_heavyswat.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
+	self.deathvox_heavyswat.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
+	self.deathvox_heavyswat.damage.explosion_damage_mul = 0.8 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
+		
 --	shield - VERY HARD
 --	medic - VERY HARD
 	self.deathvox_medic.ignore_medic_revive_animation = false -- medic revive anim (all below CD)
@@ -3449,7 +3305,7 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 -- 	scripted police types.
 	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
 --	scripted Murky unit types.
-	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+	self.city_swat = deep_clone(self.deathvox_heavyswat) -- Inverse copy of city_swat tweakdata. 	
 --	scripted criminal types.
 	self.gangster.HEALTH_INIT = 24 -- match to light SWAT value.
 	self.mobster.HEALTH_INIT = 24	
@@ -3495,31 +3351,18 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	self.deathvox_guard.dodge = deep_clone(self.presets.dodge.poor) -- poor dodge below CD
 
 --	lightar - OVERKILL
-	self.deathvox_lightar.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightar.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
-	self.deathvox_lightar.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
-	self.deathvox_lightar.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
-	
---	lightshot - OVERKILL
-	self.deathvox_lightshot.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightshot.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
-	self.deathvox_lightshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (all below CD)
-	self.deathvox_lightshot.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
-	
+	self.deathvox_lightswat.ignore_medic_revive_animation = false -- medic revive anim (below CD)
+	self.deathvox_lightswat.suppression = deep_clone(self.presets.suppression.hard_def) -- suppression to hard_def (N thru OVK)
+	self.deathvox_lightswat.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
+	self.deathvox_lightswat.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
+		
 --	heavyar - OVERKILL
-	self.deathvox_heavyar.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
+	self.deathvox_heavyswat.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
 --	NOTE consider curving hurt severities on lower diffs.
-	self.deathvox_heavyar.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
-	self.deathvox_heavyar.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
-	self.deathvox_heavyar.damage.explosion_damage_mul = 0.8 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
-	
---	heavyshot - OVERKILL
-	self.deathvox_heavyshot.ignore_medic_revive_animation = false -- medic revive animation false (all below MH)
---	NOTE consider curving hurt severities on lower diffs.
-	self.deathvox_heavyshot.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
-	self.deathvox_heavyshot.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
-	self.deathvox_heavyshot.damage.explosion_damage_mul = 0.8 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
-	
+	self.deathvox_heavyswat.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
+	self.deathvox_heavyswat.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
+	self.deathvox_heavyswat.damage.explosion_damage_mul = 0.8 -- damage.explosion_damage_mul to 1 on N, H, (0.8 on VH, OVK)
+		
 --	shield - OVERKILL
 --	medic - OVERKILL
 	self.deathvox_medic.ignore_medic_revive_animation = false -- medic revive anim (all below CD)
@@ -3550,7 +3393,7 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 -- 	scripted police types.
 	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
 --	scripted Murky unit types.
-	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+	self.city_swat = deep_clone(self.deathvox_heavyswat) -- Inverse copy of city_swat tweakdata. 	
 --	scripted criminal types.
 	self.gangster.HEALTH_INIT = 24 -- match to light SWAT value.
 	self.mobster.HEALTH_INIT = 24	
@@ -3596,25 +3439,15 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self.deathvox_guard.dodge = deep_clone(self.presets.dodge.poor) -- poor dodge below CD
 
 --	lightar - MAYHEM
-	self.deathvox_lightar.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightar.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
-	self.deathvox_lightar.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
-	
---	lightshot - MAYHEM
-	self.deathvox_lightshot.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (all below CD)
-	self.deathvox_lightshot.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
+	self.deathvox_lightswat.ignore_medic_revive_animation = false -- medic revive anim (below CD)
+	self.deathvox_lightswat.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
+	self.deathvox_lightswat.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
 	
 --	heavyar - MAYHEM
 --	NOTE consider curving hurt severities on lower diffs.
-	self.deathvox_heavyar.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
-	self.deathvox_heavyar.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
-	
---	heavyshot - MAYHEM
---	NOTE consider curving hurt severities on lower diffs.
-	self.deathvox_heavyshot.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
-	self.deathvox_heavyshot.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
-	
+	self.deathvox_heavyswat.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
+	self.deathvox_heavyswat.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
+		
 --	shield - MAYHEM
 --	medic - MAYHEM
 	self.deathvox_medic.ignore_medic_revive_animation = false -- medic revive anim (all below CD)
@@ -3652,7 +3485,7 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 -- 	scripted police types.
 	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
 --	scripted Murky unit types.
-	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+	self.city_swat = deep_clone(self.deathvox_heavyswat) -- Inverse copy of city_swat tweakdata. 	
 --	scripted criminal types.
 	self.gangster.HEALTH_INIT = 32 -- match to light SWAT value.
 	self.mobster.HEALTH_INIT = 32	
@@ -3698,24 +3531,14 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	self.deathvox_guard.dodge = deep_clone(self.presets.dodge.poor) -- poor dodge below CD
 
 --	lightar - DEATH WISH
-	self.deathvox_lightar.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightar.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
-	self.deathvox_lightar.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
+	self.deathvox_lightswat.ignore_medic_revive_animation = false -- medic revive anim (below CD)
+	self.deathvox_lightswat.surrender = deep_clone(self.presets.surrender.normal)  --	surrender to normal (all below CD)
+	self.deathvox_lightswat.dodge = deep_clone(self.presets.dodge.athletic) --	dodge to athletic (all below CD)
 	
---	lightshot - DEATH WISH
-	self.deathvox_lightshot.ignore_medic_revive_animation = false -- medic revive anim (below CD)
-	self.deathvox_lightshot.surrender = deep_clone(self.presets.surrender.normal)  -- surrender to normal (all below CD)
-	self.deathvox_lightshot.dodge = deep_clone(self.presets.dodge.athletic) -- dodge to athletic (all below CD)
-
 --	heavyar - DEATH WISH
 --	NOTE consider curving hurt severities on lower diffs.
-	self.deathvox_heavyar.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
-	self.deathvox_heavyar.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)	
-
---	heavyshot - DEATH WISH
---	NOTE consider curving hurt severities on lower diffs.
-	self.deathvox_heavyshot.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
-	self.deathvox_heavyshot.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)
+	self.deathvox_heavyswat.surrender = deep_clone(self.presets.surrender.hard)  -- surrender to normal (on N/H, hard on VH-DW)
+	self.deathvox_heavyswat.dodge = deep_clone(self.presets.dodge.heavy) -- dodge to heavy (all below CD)	
 	
 --	shield - DEATH WISH
 --	medic - DEATH WISH
@@ -3754,7 +3577,7 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 -- 	scripted police types.
 	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
 --	scripted Murky unit types.
-	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+	self.city_swat = deep_clone(self.deathvox_heavyswat) -- Inverse copy of city_swat tweakdata. 	
 --	scripted criminal types.
 	self.gangster.HEALTH_INIT = 32 -- match to light SWAT value.
 	self.mobster.HEALTH_INIT = 32	
@@ -3837,7 +3660,7 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 -- 	scripted police types.
 	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
 --	scripted Murky unit types.
-	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
+	self.city_swat = deep_clone(self.deathvox_heavyswat) -- Inverse copy of city_swat tweakdata. 	
 --	scripted criminal types.
 	self.gangster.HEALTH_INIT = 48 -- match to light SWAT value.
 	self.mobster.HEALTH_INIT = 48	
@@ -3915,10 +3738,8 @@ function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
 		"biker",
 		"taser",
 		"deathvox_guard",
-		"deathvox_heavyar",
-		"deathvox_heavyshot",
-		"deathvox_lightar",
-		"deathvox_lightshot",
+		"deathvox_heavyswat",
+		"deathvox_lightswat",
 		"deathvox_medic",
 		"deathvox_shield",
 		"deathvox_taser",
@@ -3977,10 +3798,8 @@ function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
 	self.biker_escape.SPEED_RUN = self.biker_escape.SPEED_RUN * run_mul
 	self.deathvox_guard.SPEED_RUN = self.deathvox_guard.SPEED_RUN * run_mul
 	self.deathvox_grenadier.SPEED_RUN = self.deathvox_grenadier.SPEED_RUN * run_mul
-	self.deathvox_heavyar.SPEED_RUN = self.deathvox_heavyar.SPEED_RUN * run_mul
-	self.deathvox_heavyshot.SPEED_RUN = self.deathvox_heavyshot.SPEED_RUN * run_mul
-	self.deathvox_lightar.SPEED_RUN = self.deathvox_lightar.SPEED_RUN * run_mul
-	self.deathvox_lightshot.SPEED_RUN = self.deathvox_lightshot.SPEED_RUN * run_mul
+	self.deathvox_heavyswat.SPEED_RUN = self.deathvox_heavyswat.SPEED_RUN * run_mul
+	self.deathvox_lightswat.SPEED_RUN = self.deathvox_lightswat.SPEED_RUN * run_mul
 	self.deathvox_shield.SPEED_RUN = self.deathvox_shield.SPEED_RUN * run_mul
 	self.deathvox_medic.SPEED_RUN = self.deathvox_medic.SPEED_RUN * run_mul
 	
@@ -4010,10 +3829,8 @@ function CharacterTweakData:_set_characters_weapon_preset(preset)
 		"biker",
 		"mobster",
 		"deathvox_guard",
-		"deathvox_heavyar",
-		"deathvox_heavyshot",
-		"deathvox_lightar",
-		"deathvox_lightshot",
+		"deathvox_heavyswat",
+		"deathvox_lightswat",
 		"deathvox_medic",
 		"deathvox_shield",
 		"deathvox_taser",
@@ -4041,10 +3858,8 @@ function CharacterTweakData:_set_characters_dodge_preset(preset)
 		"bolivian_indoors",
 		"drug_lord_boss_stealth",
 		"swat",
-		"deathvox_heavyar",
-		"deathvox_heavyshot",
-		"deathvox_lightar",
-		"deathvox_lightshot",
+		"deathvox_heavyswat",
+		"deathvox_lightswat",
 		"deathvox_medic",
 		"deathvox_taser",
 		"deathvox_cloaker",
@@ -4074,10 +3889,8 @@ function CharacterTweakData:_set_characters_melee_preset(preset)
 		"biker",
 		"mobster",
 		"deathvox_guard",
-		"deathvox_heavyar",
-		"deathvox_heavyshot",
-		"deathvox_lightar",
-		"deathvox_lightshot"
+		"deathvox_heavyswat",
+		"deathvox_lightswat"
 	}
 	for _, name in ipairs(all_units) do
 		self[name].melee_weapon_dmg_multiplier = preset
@@ -4235,8 +4048,8 @@ function CharacterTweakData:character_map()
 		path = "units/pd2_mod_gageammo/characters/",
 		list = {
 			"ene_deathvox_guard",
-			"ene_deathvox_heavyar",
-			"ene_deathvox_lightar",
+			"ene_deathvox_heavyswat",
+			"ene_deathvox_lightswat",
 			"ene_deathvox_medic",
 			"ene_deathvox_shield",
 			"ene_deathvox_lightshot",
@@ -4280,8 +4093,8 @@ function CharacterTweakData:character_map()
 		path = "units/pd2_mod_gageammo/characters/",
 		list = {
 			"ene_deathvox_guard",
-			"ene_deathvox_heavyar",
-			"ene_deathvox_lightar",
+			"ene_deathvox_heavyswat",
+			"ene_deathvox_lightswat",
 			"ene_deathvox_medic",
 			"ene_deathvox_shield",
 			"ene_deathvox_lightshot",

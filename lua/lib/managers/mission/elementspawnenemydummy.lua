@@ -11,27 +11,27 @@ local enemy_replacements = {
 		["units/payday2/characters/ene_fbi_2/ene_fbi_2"] = "deathvox_fbi_veteran",
 		["units/payday2/characters/ene_fbi_3/ene_fbi_3"] = "deathvox_fbi_hrt",
 --City swats.
-		["units/payday2/characters/ene_city_swat_1/ene_city_swat_1"] = "deathvox_lightar",
-		["units/payday2/characters/ene_city_swat_2/ene_city_swat_2"] = "deathvox_lightshot",
-		["units/payday2/characters/ene_city_swat_3/ene_city_swat_3"] = "deathvox_lightar",
-		["units/payday2/characters/ene_city_heavy_r870/ene_city_heavy_r870"] = "deathvox_heavyshot",
-		["units/payday2/characters/ene_city_heavy_g36/ene_city_heavy_g36"] = "deathvox_heavyar",
+		["units/payday2/characters/ene_city_swat_1/ene_city_swat_1"] = "deathvox_lightswat",
+		["units/payday2/characters/ene_city_swat_2/ene_city_swat_2"] = "deathvox_lightswat",
+		["units/payday2/characters/ene_city_swat_3/ene_city_swat_3"] = "deathvox_lightswat",
+		["units/payday2/characters/ene_city_heavy_r870/ene_city_heavy_r870"] = "deathvox_heavyswat",
+		["units/payday2/characters/ene_city_heavy_g36/ene_city_heavy_g36"] = "deathvox_heavyswat",
 
 --fbi swats.
-		["units/payday2/characters/ene_fbi_swat_1/ene_fbi_swat_1"] = "deathvox_lightar",
-		["units/payday2/characters/ene_fbi_swat_2/ene_fbi_swat_2"] = "deathvox_lightshot",
-		["units/payday2/characters/ene_fbi_heavy_1/ene_fbi_heavy_1"] = "deathvox_heavyar",
-		["units/payday2/characters/ene_fbi_heavy_r870/ene_fbi_heavy_r870"] = "deathvox_heavyshot",
+		["units/payday2/characters/ene_fbi_swat_1/ene_fbi_swat_1"] = "deathvox_lightswat",
+		["units/payday2/characters/ene_fbi_swat_2/ene_fbi_swat_2"] = "deathvox_lightswat",
+		["units/payday2/characters/ene_fbi_heavy_1/ene_fbi_heavy_1"] = "deathvox_heavyswat",
+		["units/payday2/characters/ene_fbi_heavy_r870/ene_fbi_heavy_r870"] = "deathvox_heavyswat",
 
 --blue and "white" swats.
-		["units/payday2/characters/ene_swat_1/ene_swat_1"] = "deathvox_lightar",
-		["units/payday2/characters/ene_swat_2/ene_swat_2"] = "deathvox_lightshot",
-		["units/payday2/characters/ene_swat_heavy_1/ene_swat_heavy_1"] = "deathvox_heavyar",
-		["units/payday2/characters/ene_swat_heavy_r870/ene_swat_heavy_r870"] = "deathvox_heavyshot",
+		["units/payday2/characters/ene_swat_1/ene_swat_1"] = "deathvox_lightswat",
+		["units/payday2/characters/ene_swat_2/ene_swat_2"] = "deathvox_lightswat",
+		["units/payday2/characters/ene_swat_heavy_1/ene_swat_heavy_1"] = "deathvox_heavyswat",
+		["units/payday2/characters/ene_swat_heavy_r870/ene_swat_heavy_r870"] = "deathvox_heavyswat",
 
 -- base zeals.
-		["units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat"] = "deathvox_lightar",
-		["units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy"] = "deathvox_heavyar",
+		["units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat"] = "deathvox_lightswat",
+		["units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy"] = "deathvox_heavyswat",
 
 -- SWAT special enemies.
 -- shields.
@@ -70,23 +70,23 @@ local enemy_replacements = {
 
 -- Akan below.	
 -- akan cop enemies.
-		["units/pd2_dlc_mad/characters/ene_akan_cs_cop_ak47_ass/ene_akan_cs_cop_ak47_ass"] = "deathvox_lightar",
-		["units/pd2_dlc_mad/characters/ene_akan_cs_cop_akmsu_smg/ene_akan_cs_cop_akmsu_smg"] = "deathvox_lightar",
-		["units/pd2_dlc_mad/characters/ene_akan_cs_cop_asval_smg/ene_akan_cs_cop_asval_smg"] = "deathvox_lightar",
-		["units/pd2_dlc_mad/characters/ene_akan_cs_cop_r870/ene_akan_cs_cop_r870"] = "deathvox_lightshot",
+		["units/pd2_dlc_mad/characters/ene_akan_cs_cop_ak47_ass/ene_akan_cs_cop_ak47_ass"] = "deathvox_lightswat",
+		["units/pd2_dlc_mad/characters/ene_akan_cs_cop_akmsu_smg/ene_akan_cs_cop_akmsu_smg"] = "deathvox_lightswat",
+		["units/pd2_dlc_mad/characters/ene_akan_cs_cop_asval_smg/ene_akan_cs_cop_asval_smg"] = "deathvox_lightswat",
+		["units/pd2_dlc_mad/characters/ene_akan_cs_cop_r870/ene_akan_cs_cop_r870"] = "deathvox_lightswat",
 -- akan swat enemies.
-		["units/pd2_dlc_mad/characters/ene_akan_cs_heavy_ak47_ass/ene_akan_cs_heavy_ak47_ass"]  = "deathvox_heavyar",
-		["units/pd2_dlc_mad/characters/ene_akan_cs_heavy_r870/ene_akan_cs_heavy_r870"] = "deathvox_heavyshot",
-		["units/pd2_dlc_mad/characters/ene_akan_cs_swat_ak47_ass/ene_akan_cs_swat_ak47_ass"] = "deathvox_lightar",
-		["units/pd2_dlc_mad/characters/ene_akan_cs_swat_r870/ene_akan_cs_swat_r870"] = "deathvox_lightshot",
+		["units/pd2_dlc_mad/characters/ene_akan_cs_heavy_ak47_ass/ene_akan_cs_heavy_ak47_ass"]  = "deathvox_heavyswat",
+		["units/pd2_dlc_mad/characters/ene_akan_cs_heavy_r870/ene_akan_cs_heavy_r870"] = "deathvox_heavyswat",
+		["units/pd2_dlc_mad/characters/ene_akan_cs_swat_ak47_ass/ene_akan_cs_swat_ak47_ass"] = "deathvox_lightswat",
+		["units/pd2_dlc_mad/characters/ene_akan_cs_swat_r870/ene_akan_cs_swat_r870"] = "deathvox_lightswat",
 -- akan fbi enemies.
-		["units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_g36/ene_akan_fbi_heavy_g36"] = "deathvox_heavyar",
-		["units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870"] = "deathvox_heavyshot",
-		["units/pd2_dlc_mad/characters/ene_akan_fbi_swat_r870/ene_akan_fbi_swat_r870"] = "deathvox_lightshot",
-		["units/pd2_dlc_mad/characters/ene_akan_fbi_swat_ak47_ass/ene_akan_fbi_swat_ak47_ass"] = "deathvox_lightar",
+		["units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_g36/ene_akan_fbi_heavy_g36"] = "deathvox_heavyswat",
+		["units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_r870/ene_akan_fbi_heavy_r870"] = "deathvox_heavyswat",
+		["units/pd2_dlc_mad/characters/ene_akan_fbi_swat_r870/ene_akan_fbi_swat_r870"] = "deathvox_lightswat",
+		["units/pd2_dlc_mad/characters/ene_akan_fbi_swat_ak47_ass/ene_akan_fbi_swat_ak47_ass"] = "deathvox_lightswat",
 -- akan dw enemies.
-		["units/pd2_dlc_mad/characters/ene_akan_fbi_swat_dw_ak47_ass/ene_akan_fbi_swat_dw_ak47_ass"] = "deathvox_lightar",
-		["units/pd2_dlc_mad/characters/ene_akan_fbi_swat_dw_r870/ene_akan_fbi_swat_dw_r870"] = "deathvox_lightshot",
+		["units/pd2_dlc_mad/characters/ene_akan_fbi_swat_dw_ak47_ass/ene_akan_fbi_swat_dw_ak47_ass"] = "deathvox_lightswat",
+		["units/pd2_dlc_mad/characters/ene_akan_fbi_swat_dw_r870/ene_akan_fbi_swat_dw_r870"] = "deathvox_lightswat",
 
 -- Akan Specials below.
 -- akan shields.
@@ -208,16 +208,16 @@ local enemy_replacements = {
 --		["units/pd2_dlc_help/characters/ene_zeal_bulldozer_halloween/ene_zeal_bulldozer_halloween"]	
 
 -- German unit replacement for specific custom heists.
-		["units/zdann/characters/ene_ger_city_heavy_g36/ene_ger_city_heavy_g36"] = "deathvox_heavyar",
-		["units/zdann/characters/ene_ger_city_heavy_r870/ene_ger_city_heavy_r870"] = "deathvox_heavyshot",
-		["units/zdann/characters/ene_ger_city_swat_1/ene_ger_city_swat_1"] = "deathvox_lightar",
-		["units/zdann/characters/ene_ger_city_swat_2/ene_ger_city_swat_2"] = "deathvox_lightshot",
-		["units/zdann/characters/ene_ger_city_swat_3/ene_ger_city_swat_3"] = "deathvox_lightar",
-		["units/zdann/characters/ene_ger_city_swat_r870/ene_ger_city_swat_r870"] = "deathvox_lightshot",
-		["units/zdann/characters/ene_ger_fbi_heavy_1/ene_ger_fbi_heavy_1"] = "deathvox_heavyar",
-		["units/zdann/characters/ene_ger_fbi_heavy_r870/ene_ger_fbi_heavy_r870"] = "deathvox_heavyshot",
-		["units/zdann/characters/ene_ger_fbi_swat_1/ene_ger_fbi_swat_1"] = "deathvox_lightar",
-		["units/zdann/characters/ene_ger_fbi_swat_2/ene_ger_fbi_swat_2"] = "deathvox_lightshot",
+		["units/zdann/characters/ene_ger_city_heavy_g36/ene_ger_city_heavy_g36"] = "deathvox_heavyswat",
+		["units/zdann/characters/ene_ger_city_heavy_r870/ene_ger_city_heavy_r870"] = "deathvox_heavyswat",
+		["units/zdann/characters/ene_ger_city_swat_1/ene_ger_city_swat_1"] = "deathvox_lightswat",
+		["units/zdann/characters/ene_ger_city_swat_2/ene_ger_city_swat_2"] = "deathvox_lightswat",
+		["units/zdann/characters/ene_ger_city_swat_3/ene_ger_city_swat_3"] = "deathvox_lightswat",
+		["units/zdann/characters/ene_ger_city_swat_r870/ene_ger_city_swat_r870"] = "deathvox_lightswat",
+		["units/zdann/characters/ene_ger_fbi_heavy_1/ene_ger_fbi_heavy_1"] = "deathvox_heavyswat",
+		["units/zdann/characters/ene_ger_fbi_heavy_r870/ene_ger_fbi_heavy_r870"] = "deathvox_heavyswat",
+		["units/zdann/characters/ene_ger_fbi_swat_1/ene_ger_fbi_swat_1"] = "deathvox_lightswat",
+		["units/zdann/characters/ene_ger_fbi_swat_2/ene_ger_fbi_swat_2"] = "deathvox_lightswat",
 		["units/zdann/characters/ene_ger_flamer_1/ene_ger_flamer_1"] = "deathvox_greendozer",
 		["units/zdann/characters/ene_ger_flamer_2/ene_ger_flamer_2"] = "deathvox_blackdozer",
 		["units/zdann/characters/ene_ger_flamer_3/ene_ger_flamer_3"] = "deathvox_lmgdozer",
@@ -229,10 +229,10 @@ local enemy_replacements = {
 		["units/zdann/characters/ene_ger_shield_1/ene_ger_shield_1"] = "deathvox_shield",
 		["units/zdann/characters/ene_ger_shield_2/ene_ger_shield_2"] = "deathvox_shield",
 		["units/zdann/characters/ene_ger_shield_city/ene_ger_shield_city"] = "deathvox_shield",
-		["units/zdann/characters/ene_ger_swat_1/ene_ger_swat_1"] = "deathvox_lightar",
-		["units/zdann/characters/ene_ger_swat_2/ene_ger_swat_2"] = "deathvox_lightshot",
-		["units/zdann/characters/ene_ger_swat_heavy_1/ene_ger_swat_heavy_1"] = "deathvox_heavyar",
-		["units/zdann/characters/ene_ger_swat_heavy_r870/ene_ger_swat_heavy_r870"] = "deathvox_heavyshot"
+		["units/zdann/characters/ene_ger_swat_1/ene_ger_swat_1"] = "deathvox_lightswat",
+		["units/zdann/characters/ene_ger_swat_2/ene_ger_swat_2"] = "deathvox_lightswat",
+		["units/zdann/characters/ene_ger_swat_heavy_1/ene_ger_swat_heavy_1"] = "deathvox_heavyswat",
+		["units/zdann/characters/ene_ger_swat_heavy_r870/ene_ger_swat_heavy_r870"] = "deathvox_heavyswat"
 	}
 function ElementSpawnEnemyDummy:init(...)
 	ElementSpawnEnemyDummy.super.init(self, ...)
