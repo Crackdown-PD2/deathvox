@@ -376,7 +376,7 @@ function CopActionShoot:_chk_start_melee(target_vec, target_dis, autotarget, tar
 end
 
 function CopActionShoot:anim_clbk_melee_strike()
-	--some checks to prevent crashes + no autotarget (local player) requirement
+	--some checks to prevent crashes
 	if not self._attention then
 		return
 	end
@@ -385,7 +385,27 @@ function CopActionShoot:anim_clbk_melee_strike()
 		return
 	end
 
+	--does not actually mean "not dead", just that it's still existing and didn't despawn (dead bodies count as "alive" in this sense)
 	if not alive(self._attention.unit) then
+		return
+	end
+
+	if not self._attention.unit:base() then
+		return
+	end
+
+	--can be damaged, or at least has that kind of damage functions
+	if not self._attention.unit:character_damage() then
+		return
+	end
+
+	--can take proper melee/bullet damage
+	if not self._attention.unit:character_damage().damage_melee or not self._attention.unit:character_damage().damage_bullet then
+		return
+	end
+
+	--regarding husks, to prevent both server and synced attacks (by server or clients) from crashing by trying to damage them, when they normally take damage locally
+	if self._attention.unit:base().sentry_gun or self._attention.unit:base().is_husk_player then
 		return
 	end
 
@@ -399,8 +419,13 @@ function CopActionShoot:anim_clbk_melee_strike()
 		return
 	end
 
-	--prevent npcs from hitting sentries/turrets and player husks + distance check
-	if (not autotarget and self._attention.unit:base() and (self._attention.unit:base().sentry_gun or self._attention.unit:base().is_husk_player)) or target_dis >= max_dix then
+	--distance check
+	if target_dis >= max_dix then
+		return
+	end
+
+	--the target is actually alive
+	if not autotarget and self._attention.unit:character_damage().dead and not self._attention.unit:character_damage():dead() then
 		return
 	end
 
