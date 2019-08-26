@@ -1,11 +1,132 @@
 local mvec_to = Vector3()
+local mvec_direction = Vector3()
 local mvec_spread = Vector3()
 local mvec1 = Vector3()
+local mvec_spread_direction = Vector3()
+
+function NewNPCRaycastWeaponBase:init(unit)
+	NewRaycastWeaponBase.super.super.init(self, unit, false)
+
+	self._player_manager = managers.player
+	self._unit = unit
+	self._name_id = self.name_id or "m4_crew"
+	self.name_id = nil
+	self._bullet_slotmask = managers.slot:get_mask("bullet_impact_targets")
+	self._blank_slotmask = managers.slot:get_mask("bullet_blank_impact_targets")
+
+	self:_create_use_setups()
+
+	self._setup = {}
+	self._digest_values = false
+
+	self:set_ammo_max(tweak_data.weapon[self._name_id].AMMO_MAX)
+	self:set_ammo_total(self:get_ammo_max())
+	self:set_ammo_max_per_clip(tweak_data.weapon[self._name_id].CLIP_AMMO_MAX)
+	self:set_ammo_remaining_in_clip(self:get_ammo_max_per_clip())
+
+	self._damage = tweak_data.weapon[self._name_id].DAMAGE
+	self._shoot_through_data = {
+		from = Vector3()
+	}
+	self._next_fire_allowed = -1000
+	self._obj_fire = self._unit:get_object(Idstring("fire"))
+	self._sound_fire = SoundDevice:create_source("fire")
+
+	self._sound_fire:link(self._unit:orientation_object())
+
+	self._muzzle_effect = Idstring(self:weapon_tweak_data().muzzleflash or "effects/particles/test/muzzleflash_maingun")
+	self._muzzle_effect_table = {
+		force_synch = false,
+		effect = self._muzzle_effect,
+		parent = self._obj_fire
+	}
+	self._use_shell_ejection_effect = SystemInfo:platform() == Idstring("WIN32")
+
+	if self:weapon_tweak_data().armor_piercing then
+		self._use_armor_piercing = true
+	end
+
+	if self._use_shell_ejection_effect then
+		self._obj_shell_ejection = self._unit:get_object(Idstring("a_shell"))
+		self._shell_ejection_effect = Idstring(self:weapon_tweak_data().shell_ejection or "effects/payday2/particles/weapons/shells/shell_556")
+		self._shell_ejection_effect_table = {
+			effect = self._shell_ejection_effect,
+			parent = self._obj_shell_ejection
+		}
+	end
+
+	self._trail_effect_table = {
+		effect = self.TRAIL_EFFECT,
+		position = Vector3(),
+		normal = Vector3()
+	}
+	self._flashlight_light_lod_enabled = true
+
+	if self._multivoice then
+		if not NewNPCRaycastWeaponBase._next_i_voice[self._name_id] then
+			NewNPCRaycastWeaponBase._next_i_voice[self._name_id] = 1
+		end
+
+		self._voice = NewNPCRaycastWeaponBase._VOICES[NewNPCRaycastWeaponBase._next_i_voice[self._name_id]]
+
+		if NewNPCRaycastWeaponBase._next_i_voice[self._name_id] == #NewNPCRaycastWeaponBase._VOICES then
+			NewNPCRaycastWeaponBase._next_i_voice[self._name_id] = 1
+		else
+			NewNPCRaycastWeaponBase._next_i_voice[self._name_id] = NewNPCRaycastWeaponBase._next_i_voice[self._name_id] + 1
+		end
+	else
+		self._voice = "a"
+	end
+
+	if self._unit:get_object(Idstring("ls_flashlight")) then
+		self._flashlight_data = {
+			light = self._unit:get_object(Idstring("ls_flashlight")),
+			effect = self._unit:effect_spawner(Idstring("flashlight"))
+		}
+
+		self._flashlight_data.light:set_far_range(400)
+		self._flashlight_data.light:set_spot_angle_end(25)
+		self._flashlight_data.light:set_multiplier(2)
+	end
+
+	self._textures = {}
+	self._cosmetics_data = nil
+	self._materials = nil
+
+	managers.mission:add_global_event_listener(tostring(self._unit:key()), {
+		"on_peer_removed"
+	}, callback(self, self, "_on_peer_removed"))
+end
+
+function NewNPCRaycastWeaponBase:setup(setup_data)
+	self._autoaim = setup_data.autoaim
+	self._alert_events = setup_data.alert_AI and {} or nil
+	self._alert_size = tweak_data.weapon[self._name_id].alert_size
+	self._alert_fires = {}
+	self._suppression = tweak_data.weapon[self._name_id].suppression
+	self._bullet_slotmask = setup_data.hit_slotmask or self._bullet_slotmask
+	self._character_slotmask = managers.slot:get_mask("raycastable_characters")
+	self._hit_player = setup_data.hit_player and true or false
+	self._setup = setup_data
+	self._part_stats = managers.weapon_factory:get_stats(self._factory_id, self._blueprint)
+
+	if setup_data.user_unit:in_slot(16) then --allow bots to shoot through each other
+		self._bullet_slotmask = self._bullet_slotmask - World:make_slot_mask(16, 22)
+	end
+end
 
 --goof wrote this, originally. it appears to be intended to prevent piercing bullet raycasts from piercing infinitely. 
 --however, this breaks team ai's AP ammo crew boost, and goof's changes don't appear to do anything else, so i'm gonna disable it for the time being
 
 function NewNPCRaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoot_player, shoot_through_data)
+	--check for the armor piercing skills (can't be done through init), this also allows body armor piercing without having to add a specicic check when hitting body_plate
+	if not self._checked_for_ap and not self._use_armor_piercing then
+		if self._is_team_ai and managers.player:has_category_upgrade("team", "crew_ai_ap_ammo") then
+			self._checked_for_ap = true
+			self._use_armor_piercing = true
+		end
+	end
+
 	local result = {}
 	local hit_unit = nil
 	local ray_distance = shoot_through_data and shoot_through_data.ray_distance or self._weapon_range or 20000
