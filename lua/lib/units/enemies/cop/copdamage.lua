@@ -418,7 +418,7 @@ function CopDamage:damage_bullet(attack_data)
 		end
 	end
 
-	if head then
+	if not self._damage_reduction_multiplier and head then
 		if self._char_tweak.headshot_dmg_mul then
 			damage = damage * self._char_tweak.headshot_dmg_mul * headshot_multiplier
 		else
