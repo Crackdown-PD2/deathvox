@@ -1,3 +1,12 @@
+local mvec_1 = Vector3()
+local mvec_2 = Vector3()
+
+function CopDamage:is_immune_to_shield_knockback()
+	local acting = self._unit:anim_data() and self._unit:anim_data().act
+
+	return self._immune_to_knockback or acting
+end
+
 function CopDamage:_comment_death(attacker, killed_unit, special_comment)
 	local victim_base = killed_unit:base()
 	if special_comment then
