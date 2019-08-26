@@ -289,21 +289,24 @@ function TeamAILogicIdle.on_long_dis_interacted(data, other_unit, secondary)
 			followup_objective = followup_objective
 		}
 
-		data.unit:sound():say("r02a_sin", true)
+		if objective_type == "revive" and not objective_action == "untie" then --not cuffed
+			data.unit:sound():say("r02a_sin", true) --"I'M COMING FOR YOU, STAY AWAY FROM THE LIGHT"
+		end
 	end
 
-	--calling a bot to revive you in case they're not trying to do so will make them drop what they're carring (if it slows them down) if they're not in range of Inspire and it's not on cooldown
-	if data.unit:movement():carrying_bag() and objective.type == "revive" then
-		if not data.unit:movement():carry_tweak().can_run then
+	if data.unit:movement():carrying_bag() and objective.type == "revive" then --carrying a bag and called to revive a player
+		if not data.unit:movement():carry_tweak().can_run then --slowed down by the bag
 			local range_sq = 810000
 			local pos = data.unit:position()
 			local target = revive_unit:position()
 			local dist = mvector3.distance_sq(pos, target)
+			local inspire_available = managers.player:is_custom_cooldown_not_active("team", "crew_inspire")
 
-			local speed_modifier = data.unit:movement():carry_tweak().move_speed_modifier
-			local no_inspire_cooldown = managers.player:is_custom_cooldown_not_active("team", "crew_inspire")
-
-			if dist < range_sq and not no_inspire_cooldown then
+			if dist < range_sq then --within inspire range, taken from teamailogictravel as it's calculated with square distance
+				if not inspire_available then --if inspire is on cooldown, throw the bag, otherwise, don't
+					data.unit:movement():throw_bag()
+				end
+			else --not within inspire range, so throw the bag
 				data.unit:movement():throw_bag()
 			end
 		end
@@ -317,7 +320,10 @@ function TeamAILogicIdle.on_long_dis_interacted(data, other_unit, secondary)
 end
 
 function TeamAILogicIdle._ignore_shield(unit, attention)
-	if managers.groupai:state():is_unit_team_AI(unit) and managers.player:has_category_upgrade("team", "crew_ai_ap_ammo") then --prevent Jokers from thinking they have AP rounds, modify later to use with Kith's Mercenary skill
+	local weapon_base = unit:inventory():equipped_unit() and unit:inventory():equipped_unit().base and unit:inventory():equipped_unit():base()
+	local has_ap_ammo = weapon_base and weapon_base._use_armor_piercing
+
+	if has_ap_ammo then --this way Jokers can also easily check if they have AP ammo
 		return false
 	end
 
@@ -357,7 +363,7 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 	for u_key, attention_data in pairs(attention_objects) do
 		local att_unit = attention_data.unit
 
-		if not attention_data.identified then --thanks, I hate it
+		if not attention_data.identified then
 			-- Nothing
 		elseif attention_data.pause_expire_t then
 			if attention_data.pause_expire_t < data.t then
@@ -381,7 +387,7 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 				reaction_too_mild = true
 			end
 
-			if not reaction_too_mild then --at least until down here (I personally didn't use reaction_too_mild and simply set the stare and pause stuff to nil because fuck that)
+			if not reaction_too_mild then
 				local alert_dt = attention_data.alert_t and data.t - attention_data.alert_t or 10000
 				local dmg_dt = attention_data.dmg_t and data.t - attention_data.dmg_t or 10000
 				local too_close_threshold = 300
@@ -398,20 +404,20 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 				local near = distance < near_threshold and distance > too_close_threshold
 				local has_alerted = alert_dt < 5
 				local has_damaged = dmg_dt < 2
-				local has_tag = att_unit:base()._tweak_table and att_unit.base and att_unit:base() and att_unit:base().has_tag
-				local is_spooc = has_tag("spooc")
-				local is_taser = has_tag("taser")
-				local is_medic = has_tag("medic")
-				local is_tank = has_tag("tank") and not has_tag("medic")
-				local is_sniper = has_tag("sniper")
-				local is_shield = has_tag("shield") and not att_unit:base()._tweak_table == "phalanx_vip"
+				local valid_unit = att_unit:base()._tweak_table and att_unit.base and att_unit:base() --to be sure, better do it this way
+				local is_spooc = valid_unit and att_unit:base():has_tag("spooc")
+				local is_taser = valid_unit and att_unit:base():has_tag("taser")
+				local is_medic = valid_unit and att_unit:base():has_tag("medic")
+				local is_tank = valid_unit and att_unit:base():has_tag("tank") and not att_unit:base():has_tag("medic")
+				local is_sniper = valid_unit and att_unit:base():has_tag("sniper")
+				local is_shield = valid_unit and att_unit:base():has_tag("shield") and not att_unit:base()._tweak_table == "phalanx_vip"
 				local is_captain = att_unit:base()._tweak_table == "phalanx_vip"
 				local is_turret = att_unit:base().sentry_gun
 				local target_priority = distance
 				local target_priority_slot = 0
 				local is_shielded = TeamAILogicIdle._ignore_shield and TeamAILogicIdle._ignore_shield(data.unit, attention_data) or nil
 
-				local is_marked = false --arrange as you see fit, and use this placeholder for specials that require being marked, I'll make it work later since it's really simple
+				local is_marked = att_unit.contour and att_unit:contour() and att_unit:contour()._contour_list
 
 				if visible then
 					if too_close then
