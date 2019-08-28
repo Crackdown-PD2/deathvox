@@ -8,21 +8,59 @@ local mvec3_norm = mvector3.normalize
 
 function PlayerStandard:_update_fwd_ray()
 	local from = self._unit:movement():m_head_pos()
-	local has_range_scope = alive(self._equipped_unit) and self._equipped_unit:base():has_range_distance_scope()
-	local range = 20000 --actual intended range
+	local range = alive(self._equipped_unit) and self._equipped_unit:base():has_range_distance_scope() and 20000 or 4000
 	local to = self._cam_fwd * range
 
 	mvector3.add(to, from)
 
-	--self._fwd_ray = World:raycast("ray", from, to, "slot_mask", self._slotmask_fwd_ray + self._slotmask_AI_visibility, "ray_type", "ai_vision", "ignore_unit", {}) --marks cameras through walls just fine but has trouble marking NPCs, if someone knows, getting this to work would be great
 	self._fwd_ray = World:raycast("ray", from, to, "slot_mask", self._slotmask_fwd_ray)
 
-	--actually not fucking with the depth of field this time by clamping the distance for weapons without the special scopes, I never noticed this before because I had DoF turned off
-	managers.environment_controller:set_dof_distance(math.max(0, math.min(self._fwd_ray and (has_range_scope and self._fwd_ray.distance or math.clamp(self._fwd_ray.distance, 0, 4000)) or 4000, 4000) - 200), self._state_data.in_steelsight)
+	managers.environment_controller:set_dof_distance(math.max(0, math.min(self._fwd_ray and self._fwd_ray.distance or 4000, 4000) - 200), self._state_data.in_steelsight)
 
 	if alive(self._equipped_unit) then
-		if self._state_data.in_steelsight and self._fwd_ray and self._fwd_ray.unit and self._equipped_unit:base().check_highlight_unit then
-			self._equipped_unit:base():check_highlight_unit(self._fwd_ray.unit)
+		if self._state_data.in_steelsight and self._equipped_unit:base().check_highlight_unit then
+			--with this method, range for depth of field and scope distance isn't affected and marking works through glass (or to be more specific, through surfaces that the AI can see through)
+			local marking_from = self._unit:movement():m_head_pos()
+			local marking_to = self._cam_fwd * 20000
+
+			mvector3.add(marking_to, marking_from)
+
+			local ray_hits = nil
+			local hit_person_or_sentry = false
+			local person_mask = managers.slot:get_mask("persons")
+			local sentry_mask = managers.slot:get_mask("sentry_gun")
+			local wall_mask = managers.slot:get_mask("world_geometry", "vehicles")
+			local shield_mask = managers.slot:get_mask("enemy_shield_check")
+			local ai_vision_ids = Idstring("ai_vision")
+
+			ray_hits = World:raycast_all("ray", marking_from, marking_to, "slot_mask", self._slotmask_fwd_ray, "ignore_unit", self._equipped_unit:base()._setup.ignore_units)
+
+			local units_hit = {}
+			local unique_hits = {}
+
+			for i, hit in ipairs(ray_hits) do
+				if not units_hit[hit.unit:key()] then
+					units_hit[hit.unit:key()] = true
+					unique_hits[#unique_hits + 1] = hit
+					hit.hit_position = hit.position
+					hit_person_or_sentry = hit_person_or_sentry or hit.unit:in_slot(person_mask) or hit.unit:in_slot(sentry_mask)
+					local weak_body = hit.body:has_ray_type(ai_vision_ids)
+
+					if hit_person_or_sentry then
+						break
+					elseif hit.unit:in_slot(wall_mask) and weak_body then
+						break
+					elseif hit.unit:in_slot(shield_mask) then
+						break
+					end
+				end
+			end
+
+			for _, hit in ipairs(unique_hits) do
+				if hit.unit then
+					self._equipped_unit:base():check_highlight_unit(hit.unit)
+				end
+			end
 		end
 
 		if self._equipped_unit:base().set_scope_range_distance then
