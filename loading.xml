@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<assets base_path="assets/" target="scripted" load_group="skirmishedit">
+
+    <!-- Skirmish Instance Edit -->
+    <group name="levels/instances/shared/skm_negotiator/world/">
+        <file :name="world.mission"  force="true" />
+    </group>
+</assets>
