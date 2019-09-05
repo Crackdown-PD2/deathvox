@@ -3,6 +3,6 @@
 
     <!-- Skirmish Instance Edit -->
     <group name="levels/instances/shared/skm_negotiator/world/">
-        <file :name="world.mission"  force="true" />
+        <file :name="world.mission"  unload ="true" force="true" />
     </group>
 </assets>
