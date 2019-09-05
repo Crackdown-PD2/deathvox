@@ -167,12 +167,6 @@ local MIN_KNOCK_BACK = 200
 local KNOCK_BACK_CHANCE = 0.8
 
 function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage, blank, no_sound, already_ricocheted)
-	local can_ricochet = weapon_unit:base():weapon_tweak_data().can_ricochet
-
-	if can_ricochet and not already_ricocheted then
-		InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, blank, no_sound, peacemaker_autohit_stats)
-	end
-
 	local hit_unit = col_ray.unit
 	local shield_knock = false
 	local is_shield = hit_unit:in_slot(8) and alive(hit_unit:parent())
