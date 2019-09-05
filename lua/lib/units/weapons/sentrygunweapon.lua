@@ -61,48 +61,16 @@ function SentryGunWeapon:switch_fire_mode()
 	self._unit:event_listener():call("on_switch_fire_mode", self._use_armor_piercing)
 end
 
-function SentryGunWeapon:fire(blanks, expend_ammo, shoot_player, target_unit)
-	if expend_ammo then
-		if self._ammo_total <= 0 then
-			return
-		end
-
-		self:change_ammo(-1)
-	end
-
-	local fire_obj = self._effect_align[self._interleaving_fire]
-	local from_pos = fire_obj:position()
-	local direction = fire_obj:rotation():y()
-
-	mvector3.spread(direction, tweak_data.weapon[self._name_id].SPREAD * self._spread_mul)
-	World:effect_manager():spawn(self._muzzle_effect_table[self._interleaving_fire])
-
-	if self._use_shell_ejection_effect then
-		World:effect_manager():spawn(self._shell_ejection_effect_table)
-	end
-
-	if self._unit:damage() and self._unit:damage():has_sequence("anim_fire_seq") then
-		self._unit:damage():run_sequence_simple("anim_fire_seq")
-	end
-
-	local ray_res = self:_fire_raycast(self._unit, from_pos, direction, shoot_player, target_unit)
-
-	if self._alert_events and ray_res.rays then
-		RaycastWeaponBase._check_alert(self, ray_res.rays, from_pos, direction, self._unit)
-	end
-
-	self._unit:movement():give_recoil()
-	self._unit:event_listener():call("on_fire")
-
-	return ray_res
-end
-
 local mvec_to = Vector3()
 
-function SentryGunWeapon:_fire_raycast(user_unit, from_pos, direction, shoot_player, target_unit, shoot_through_data)
+function SentryGunWeapon:_fire_raycast(from_pos, direction, shoot_player, target_unit)
+	if not self._setup.ignore_units then
+		return
+	end
+
+	local hit_unit = nil
 	local result = {}
-	local hit_unit, col_ray = nil
-	local ray_distance = shoot_through_data and shoot_through_data.ray_distance or tweak_data.weapon[self._name_id].FIRE_RANGE or 20000
+	local ray_distance = tweak_data.weapon[self._name_id].FIRE_RANGE or 20000
 
 	mvector3.set(mvec_to, direction)
 	mvector3.multiply(mvec_to, ray_distance)
@@ -111,95 +79,86 @@ function SentryGunWeapon:_fire_raycast(user_unit, from_pos, direction, shoot_pla
 	self._from = from_pos
 	self._to = mvec_to
 
-	if not self._setup.ignore_units then
-		return
+	local ray_hits = nil
+	local hit_enemy = false
+	local went_through_wall = false
+	local enemy_mask = self._unit:in_slot(25) and managers.slot:get_mask("enemies") or managers.slot:get_mask("criminals")
+	local wall_mask = managers.slot:get_mask("world_geometry", "vehicles")
+	local shield_mask = managers.slot:get_mask("enemy_shield_check")
+	local ai_vision_ids = Idstring("ai_vision")
+	local bulletproof_ids = Idstring("bulletproof")
+
+	if self._use_armor_piercing then
+		ray_hits = World:raycast_wall("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units, "thickness", 40, "thickness_mask", wall_mask) --try to change so that no infinite penetration happens
+	else
+		ray_hits = World:raycast_all("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
 	end
 
-	local ray_from_unit = shoot_through_data and alive(shoot_through_data.ray_from_unit) and shoot_through_data.ray_from_unit or nil
-	local col_ray = (ray_from_unit or World):raycast("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
-	local player_hit, player_ray_data = nil
+	local units_hit = {}
+	local unique_hits = {}
 
-	if shoot_player then
-		player_hit, player_ray_data = RaycastWeaponBase.damage_player(self, col_ray, from_pos, direction)
+	for i, hit in ipairs(ray_hits) do
+		if not units_hit[hit.unit:key()] then
+			units_hit[hit.unit:key()] = true
+			unique_hits[#unique_hits + 1] = hit
+			hit.hit_position = hit.position
+			hit_enemy = hit_enemy or hit.unit:in_slot(enemy_mask)
+			local weak_body = hit.body:has_ray_type(ai_vision_ids)
+			weak_body = weak_body or hit.body:has_ray_type(bulletproof_ids)
 
-		if player_hit then
-			local damage = self:_apply_dmg_mul(self._damage, col_ray or player_ray_data, from_pos)
-
-			InstantBulletBase:on_hit_player(col_ray or player_ray_data, self._unit, user_unit, damage)
+			if not self._use_armor_piercing and hit_enemy then
+				break
+			elseif hit.unit:in_slot(wall_mask) then
+				if weak_body then
+					if self._use_armor_piercing then
+						if went_through_wall then
+							break
+						else
+							went_through_wall = true
+						end
+					else
+						break
+					end
+				end
+			elseif not self._use_armor_piercing and hit.unit:in_slot(shield_mask) then
+				break
+			end
 		end
 	end
 
-	if not player_hit and col_ray then
-		local damage = self:_apply_dmg_mul(self._damage, col_ray, from_pos)
+	for k, col_ray in ipairs(unique_hits) do
+		local player_hit, player_ray_data = nil
 
-		hit_unit = InstantBulletBase:on_collision(col_ray, self._unit, user_unit, damage)
+		if shoot_player then
+			player_hit, player_ray_data = RaycastWeaponBase.damage_player(self, col_ray, from_pos, direction)
+
+			if player_hit then
+				local damage = self:_apply_dmg_mul(self._damage, col_ray or player_ray_data, from_pos)
+
+				InstantBulletBase:on_hit_player(col_ray or player_ray_data, self._unit, self._unit, damage)
+			end
+		end
+
+		if not player_hit and col_ray then
+			local damage = self:_apply_dmg_mul(self._damage, col_ray, from_pos)
+			hit_unit = InstantBulletBase:on_collision(col_ray, self._unit, self._unit, damage)
+		end
 	end
 
 	if (not col_ray or col_ray.unit ~= target_unit) and target_unit and target_unit:character_damage() and target_unit:character_damage().build_suppression then
-		target_unit:character_damage():build_suppression(self._suppression)
-	end
-
-	if not col_ray or col_ray.distance > 600 then
-		self:_spawn_trail_effect(direction, col_ray)
-	end
-
-	if col_ray and col_ray.unit then
-		repeat
-			if hit_unit and not self._use_armor_piercing then
-				break
-			end
-
-			if col_ray.distance < 0.1 or ray_distance - col_ray.distance < 50 then
-				break
-			end
-
-			local has_hit_wall = shoot_through_data and shoot_through_data.has_hit_wall
-			local has_passed_shield = shoot_through_data and shoot_through_data.has_passed_shield
-			local is_shoot_through, is_shield, is_wall = nil
-
-			if not hit_unit then
-				local is_world_geometry = col_ray.unit:in_slot(managers.slot:get_mask("world_geometry", "vehicles"))
-
-				if is_world_geometry then
-					is_shoot_through = not col_ray.body:has_ray_type(Idstring("ai_vision"))
-
-					if not is_shoot_through then
-						if has_hit_wall or not self._use_armor_piercing then
-							break
-						end
-
-						is_wall = true
-					end
-				else
-					if not self._use_armor_piercing then
-						break
-					end
-
-					is_shield = col_ray.unit:in_slot(8) and alive(col_ray.unit:parent())
-				end
-			end
-
-			if not hit_unit and not is_shoot_through and not is_shield and not is_wall then
-				break
-			end
-
-			local ray_from_unit = (hit_unit or is_shield) and col_ray.unit
-			self._shoot_through_data.has_hit_wall = has_hit_wall or is_wall
-			self._shoot_through_data.has_passed_shield = has_passed_shield or is_shield
-			self._shoot_through_data.ray_from_unit = ray_from_unit
-			self._shoot_through_data.ray_distance = ray_distance - col_ray.distance
-
-			mvector3.set(self._shoot_through_data.from, direction)
-			mvector3.multiply(self._shoot_through_data.from, is_shield and 5 or 40)
-			mvector3.add(self._shoot_through_data.from, col_ray.position)
-			managers.game_play_central:queue_fire_raycast(Application:time() + 0.0125, self._unit, user_unit, self._shoot_through_data.from, mvector3.copy(direction), shoot_player, target_unit, self._shoot_through_data)
-		until true
+		target_unit:character_damage():build_suppression(self._suppression) --check
 	end
 
 	result.hit_enemy = hit_unit
 
+	local furthest_hit = unique_hits[#unique_hits]
+
+	if (furthest_hit and furthest_hit.distance > 600 or not furthest_hit) and alive(self._obj_fire) then
+		self:_spawn_trail_effect(direction, furthest_hit)
+	end
+
 	if self._alert_events then
-		result.rays = {col_ray}
+		result.rays = unique_hits
 	end
 
 	return result
