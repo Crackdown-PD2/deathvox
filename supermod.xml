@@ -5,6 +5,5 @@
 	<:include src="cops.xml" />
 	<:include src="fbi.xml" />
 	<:include src="gensec.xml" />
-	<:include src="skirmishedit.xml" />	
 	<:include src="classics.xml" />
 </mod>
