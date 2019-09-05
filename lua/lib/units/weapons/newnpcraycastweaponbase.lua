@@ -127,130 +127,110 @@ function NewNPCRaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, d
 		end
 	end
 
-	local result = {}
 	local hit_unit = nil
-	local ray_distance = shoot_through_data and shoot_through_data.ray_distance or self._weapon_range or 20000
+	local result = {}
+	local ray_distance = self._weapon_range or 20000
 
 	mvector3.set(mvec_to, direction)
 	mvector3.multiply(mvec_to, ray_distance)
 	mvector3.add(mvec_to, from_pos)
 
 	local damage = self._damage * (dmg_mul or 1)
-	local ray_from_unit = shoot_through_data and alive(shoot_through_data.ray_from_unit) and shoot_through_data.ray_from_unit or nil
-	local col_ray = (ray_from_unit or World):raycast("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
---whether intentionally or unintentionally, goof excluded some important parentheses in the line above, which would have a significant difference ^
 
-	if shoot_through_data and shoot_through_data.has_hit_wall then
-		if not col_ray then
-			return result
-		end
+	local ray_hits = nil
+	local hit_enemy = false
+	local went_through_wall = false
+	local enemy_mask = managers.slot:get_mask("enemies")
+	local wall_mask = managers.slot:get_mask("world_geometry", "vehicles")
+	local shield_mask = managers.slot:get_mask("enemy_shield_check")
+	local ai_vision_ids = Idstring("ai_vision")
+	local bulletproof_ids = Idstring("bulletproof")
 
-		mvector3.set(mvec1, col_ray.ray)
-		mvector3.multiply(mvec1, -5)
-		mvector3.add(mvec1, col_ray.position)
+	if self._use_armor_piercing then
+		ray_hits = World:raycast_wall("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units, "thickness", 40, "thickness_mask", wall_mask)
+	else
+		ray_hits = World:raycast_all("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
+	end
 
-		local ray_blocked = World:raycast("ray", mvec1, shoot_through_data.from, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units, "report")
+	local units_hit = {}
+	local unique_hits = {}
 
-		if ray_blocked then
-			return result
-		end
-	end	
---for some reason "cross" isn't defined as a proper method and causes crashes. maybe beardlib or something didn't properly import it? i dunno lol
---and direction is passed properly as a vector3, so it's not that
---> removed two vector3 operations for spread calc using the missing "cross" method here
+	for i, hit in ipairs(ray_hits) do
+		if not units_hit[hit.unit:key()] then
+			units_hit[hit.unit:key()] = true
+			unique_hits[#unique_hits + 1] = hit
+			hit.hit_position = hit.position
+			hit_enemy = hit_enemy or hit.unit:in_slot(enemy_mask)
+			local weak_body = hit.body:has_ray_type(ai_vision_ids)
+			weak_body = weak_body or hit.body:has_ray_type(bulletproof_ids)
 
-	if col_ray then
-		if col_ray.unit:in_slot(self._character_slotmask) then
-			hit_unit = InstantBulletBase:on_collision(col_ray, self._unit, user_unit, damage)
-		elseif shoot_player and self._hit_player and self:damage_player(col_ray, from_pos, direction) then
-			InstantBulletBase:on_hit_player(col_ray, self._unit, user_unit, self._damage * (dmg_mul or 1))
-		else
-			hit_unit = InstantBulletBase:on_collision(col_ray, self._unit, user_unit, damage)
-		end
-	elseif shoot_player and self._hit_player then
-		local hit, ray_data = self:damage_player(col_ray, from_pos, direction)
-
-		if hit then
-			InstantBulletBase:on_hit_player(ray_data, self._unit, user_unit, damage)
+			if not self._use_armor_piercing and hit_enemy then
+				break
+			elseif hit.unit:in_slot(wall_mask) then
+				if weak_body then
+					if self._use_armor_piercing then
+						if went_through_wall then
+							break
+						else
+							went_through_wall = true
+						end
+					else
+						break
+					end
+				end
+			elseif not self._use_armor_piercing and hit.unit:in_slot(shield_mask) then
+				break
+			end
 		end
 	end
 
-	if not col_ray or col_ray.distance > 600 then
-		local name_id = self.non_npc_name_id and self:non_npc_name_id() or self._name_id
-		local num_rays = (tweak_data.weapon[name_id] or {}).rays or 1
-
-		for i = 1, num_rays, 1 do
-			mvector3.set(mvec_spread, direction)
-
-			if i > 1 then
-			--use CD's method of self:_get_spread() as it was in goof's code before this
-				mvector3.spread(mvec_spread, self:_get_spread(user_unit)) 
---> removed manual spread calculations from vanilla here
+	for k, col_ray in ipairs(unique_hits) do
+		if col_ray then
+			if col_ray.unit:in_slot(self._character_slotmask) then
+				hit_unit = InstantBulletBase:on_collision(col_ray, self._unit, user_unit, damage)
+			elseif shoot_player and self._hit_player and self:damage_player(col_ray, from_pos, direction) then
+				InstantBulletBase:on_hit_player(col_ray, self._unit, user_unit, self._damage * (dmg_mul or 1))
+			else
+				hit_unit = InstantBulletBase:on_collision(col_ray, self._unit, user_unit, damage)
 			end
+		elseif shoot_player and self._hit_player then
+			local hit, ray_data = self:damage_player(col_ray, from_pos, direction)
 
-			self:_spawn_trail_effect(mvec_spread, col_ray)
+			if hit then
+				InstantBulletBase:on_hit_player(ray_data, self._unit, user_unit, damage)
+			end
 		end
 	end
 
 	result.hit_enemy = hit_unit
 
-	if self._alert_events then
-		result.rays = {col_ray}
+	local furthest_hit = unique_hits[#unique_hits]
+
+	if (furthest_hit and furthest_hit.distance > 600 or not furthest_hit) and alive(self._obj_fire) then
+		local right = direction:cross(math.UP):normalized()
+		local up = direction:cross(right):normalized()
+		local name_id = self.non_npc_name_id and self:non_npc_name_id() or self._name_id
+		local num_rays = (tweak_data.weapon[name_id] or {}).rays or 1
+
+		for v = 1, num_rays, 1 do
+			mvector3.set(mvec_spread, direction)
+
+			if v > 1 then
+				local spread_x, spread_y = self:_get_spread(user_unit)
+				local theta = math.random() * 360
+				local ax = math.sin(theta) * math.random() * spread_x
+				local ay = math.cos(theta) * math.random() * (spread_y or spread_x)
+
+				mvector3.add(mvec_spread, right * math.rad(ax))
+				mvector3.add(mvec_spread, up * math.rad(ay))
+			end
+
+			self:_spawn_trail_effect(mvec_spread, furthest_hit)
+		end
 	end
 
-	if col_ray and col_ray.unit then
-		local ap_skill = self._is_team_ai and managers.player:has_category_upgrade("team", "crew_ai_ap_ammo")
-
-		repeat --goof's previous code disallowed infinite piercing. maybe we'll bring it back later
-			if hit_unit and not ap_skill then
-				break
-			end
-
-			if col_ray.distance < 0.1 or ray_distance - col_ray.distance < 50 then
-				break
-			end
-
-			local has_hit_wall = shoot_through_data and shoot_through_data.has_hit_wall
-			local has_passed_shield = shoot_through_data and shoot_through_data.has_passed_shield
-			local is_shoot_through, is_shield, is_wall = nil
-
-			if not hit_unit then
-				local is_world_geometry = col_ray.unit:in_slot(managers.slot:get_mask("world_geometry"))
-
-				if is_world_geometry then
-					is_shoot_through = not col_ray.body:has_ray_type(Idstring("ai_vision"))
-
-					if not is_shoot_through then
-						if has_hit_wall or not ap_skill then
-							break
-						end
-
-						is_wall = true
-					end
-				else
-					if not ap_skill then
-						break
-					end
-
-					is_shield = col_ray.unit:in_slot(8) and alive(col_ray.unit:parent())
-				end
-			end
-
-			if not hit_unit and not is_shoot_through and not is_shield and not is_wall then
-				break
-			end
-
-			local ray_from_unit = (hit_unit or is_shield) and col_ray.unit
-			self._shoot_through_data.has_hit_wall = has_hit_wall or is_wall
-			self._shoot_through_data.has_passed_shield = has_passed_shield or is_shield
-			self._shoot_through_data.ray_from_unit = ray_from_unit
-			self._shoot_through_data.ray_distance = ray_distance - col_ray.distance
-
-			mvector3.set(self._shoot_through_data.from, direction)
-			mvector3.multiply(self._shoot_through_data.from, is_shield and 5 or 40)
-			mvector3.add(self._shoot_through_data.from, col_ray.position)
-			managers.game_play_central:queue_fire_raycast(Application:time() + 0.0125, self._unit, user_unit, self._shoot_through_data.from, mvector3.copy(direction), dmg_mul, shoot_player, self._shoot_through_data)
-		until true
+	if self._alert_events then
+		result.rays = unique_hits
 	end
 
 	return result
