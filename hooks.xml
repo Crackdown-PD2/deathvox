@@ -45,7 +45,7 @@
 		<post :script_path="taser/logics/taserlogicattack.lua" :hook_id="taser/logics/taserlogicattack"/>
 	</group>
 
-	!-- Hoxi's Crew Bots Fixes -->
+	 <!-- Hoxi's Crew Bots Fixes  -->
 	<group :script_path="units/player_team/logics" :hook_id="units/player_team/logics">
 		<post :script_path="teamailogicassault.lua" :hook_id="teamailogicassault"/>
 		<post :script_path="teamailogicbase.lua" :hook_id="teamailogicbase"/>
