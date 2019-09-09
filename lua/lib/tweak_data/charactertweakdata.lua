@@ -313,9 +313,9 @@ function CharacterTweakData:_presets(tweak_data)
 			hard = {health = 25, headshot_mult = 3},
 			very_hard = {health = 48, headshot_mult = 3},
 			overkill = {health = 48, headshot_mult = 3},
-			mayhem = {health = 96, headshot_mult = 3},
-			death_wish = {health = 96, headshot_mult = 3},
-			crackdown = {health = 101, headshot_mult = 3}
+			mayhem = {health = 64, headshot_mult = 3},
+			death_wish = {health = 64, headshot_mult = 3},
+			crackdown = {health = 96, headshot_mult = 3}
 		},
 		deathvox_heavyshot = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
 			not_a_real_difficulty = {health = 16, headshot_mult = 3},
@@ -323,9 +323,9 @@ function CharacterTweakData:_presets(tweak_data)
 			hard = {health = 25, headshot_mult = 3},
 			very_hard = {health = 48, headshot_mult = 3},
 			overkill = {health = 48, headshot_mult = 3},
-			mayhem = {health = 96, headshot_mult = 3},
-			death_wish = {health = 96, headshot_mult = 3},
-			crackdown = {health = 101, headshot_mult = 3}
+			mayhem = {health = 64, headshot_mult = 3},
+			death_wish = {health = 64, headshot_mult = 3},
+			crackdown = {health = 96, headshot_mult = 3}
 		},
 		deathvox_shield = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
 			not_a_real_difficulty = {health = 24, headshot_mult = 3},
