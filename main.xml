@@ -6,5 +6,4 @@
 		<event name="assault" start_source="transition.ogg" source="assault.ogg"/>
 		<event name="control" start_source="control_intro.ogg" source="control.ogg"/>
 	</HeistMusic>
-	<AddFiles file="skirmishinstance.xml"/>	
 </table>
