@@ -19,11 +19,11 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
         "cop",
         "fbi",
         "fbi",
+	"fbi",
+        "gensec",
         "gensec",
         "classic",
-        "zeal", -- wave 7
-        "zeal",
-    	"zeal"
+    	"zeal" --wave 9
         }
 	   if current_wave == 0 or not current_wave then
 			return "cop"
@@ -90,10 +90,10 @@ function LevelsTweakData:init()
     -- fix for safehouse raid failing to spawn assault group enemies. Base heist uses "safehouse" data that clones beseige.
     self.chill_combat.group_ai_state = "besiege"
     -- setting wave count for revised holdouts.
-    self.skm_mus.wave_count = 7
-    self.skm_red2.wave_count = 7
-    self.skm_run.wave_count = 7
-    self.skm_watchdogs_stage2.wave_count = 7
+    self.skm_mus.wave_count = 9
+    self.skm_red2.wave_count = 9
+    self.skm_run.wave_count = 9
+    self.skm_watchdogs_stage2.wave_count = 9
     --this crashes the game so i commented it out
     --self.skmc_fish.wave_count = 6
     --self.skmc_mad.wave_count = 6
