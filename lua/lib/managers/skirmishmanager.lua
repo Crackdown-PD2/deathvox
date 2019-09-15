@@ -5,11 +5,11 @@ Hooks:PreHook(SkirmishManager, "on_end_assault", "SkirmishMod_IncreaseDifficulty
 		"hard", --2
 		"overkill", --3
 		"overkill_145", --4
-		"easy_wish", --5
-		"overkill_290", --6
-		"sm_wish", --7
-		"sm_wish",
-		"sm_wish",
+		"overkill_145", --5
+		"easy_wish", --6
+		"overkill_290", --7
+		"overkill_290", --8
+		"sm_wish", --9
 		"sm_wish"
 	}
 	if difficulty[wave_number] then
