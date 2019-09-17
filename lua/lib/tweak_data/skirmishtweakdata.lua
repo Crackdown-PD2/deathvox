@@ -895,7 +895,7 @@ function SkirmishTweakData:_init_spawn_group_weights(tweak_data)  -- Everything 
 		if key == "groups" then
 			local current_wave = managers.skirmish:current_wave_number()
 			local current_wave_index = math.clamp(current_wave, 1, #self.assault.groups)
-			log("Current wave index is " .. current_wave_index)
+			--log("Current wave index is " .. current_wave_index)
 			return self.assault.groups[current_wave_index]
 		else
 			return rawget(t, key)
