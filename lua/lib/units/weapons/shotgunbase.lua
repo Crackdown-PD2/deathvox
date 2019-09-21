@@ -220,7 +220,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 		if col_rays then
 			for _, col_ray in ipairs(unique_hits) do
 				if col_ray then
-					table.insert(col_rays, col_ray)
+					table.insert(col_rays, col_ray) --if something was hit
 				else
 					local ray_to = mvector3.copy(mvec_to)
 					local spread_direction = mvector3.copy(mvec_spread_direction)
@@ -228,7 +228,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 					table.insert(col_rays, {
 						position = ray_to,
 						ray = spread_direction
-					})
+					}) --go to where the ray was going to go anyway
 				end
 			end
 		end
