@@ -54,7 +54,7 @@ end
 
 function SkirmishTweakData:_init_wave_modifiers()
 	self.wave_modifiers = {}
-	self.wave_modifiers[1] = {{class = "ModifierCloakerArrest"}}
+	--self.wave_modifiers[1] = {{class = "ModifierCloakerArrest"}}
 	--self.wave_modifiers[3] = {{class = "ModifierSkulldozers"}} TODO: Introduce skulldozers
 	--[[
 	self.wave_modifiers[5] = {{
