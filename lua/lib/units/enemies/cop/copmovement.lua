@@ -215,59 +215,14 @@ function CopMovement:damage_clbk(my_unit, damage_info)
 		hurt_type = managers.modifiers:modify_value("CopMovement:HurtType", hurt_type)
 	end
 
-	if hurt_type == "knock_down" and self._tweak_data.damage.shield_knocked and alive(self._ext_inventory and self._ext_inventory._shield_unit) then
-		hurt_type = "shield_knock"
-		block_type = "shield_knock"
-		damage_info.variant = "melee"
-		damage_info.result = {
-			variant = "melee",
-			type = "shield_knock"
-		}
-		damage_info.shield_knock = true
-	end
-
 	if hurt_type == "stagger" then
 		hurt_type = "heavy_hurt"
 	end
 
 	local block_type = hurt_type
 
-	if damage_info.variant == "taser_tased" then
-		if (self._tweak_data.can_be_tased or self._tweak_data.can_be_tased == nil) then
-			if damage_info.variant == "stun" and alive(self._ext_inventory and self._ext_inventory._shield_unit) then
-				hurt_type = "shield_knock"
-				block_type = "shield_knock"
-				damage_info.variant = "melee"
-				damage_info.result = {
-					variant = "melee",
-					type = "shield_knock"
-				}
-				damage_info.shield_knock = true
-			end
-		elseif not self._tweak_data.can_be_tased and hurt_type == "death" then
-			hurt_type = "death"
-		elseif not self._tweak_data.can_be_tased then
-			if damage_info.variant == "stun" and alive(self._ext_inventory and self._ext_inventory._shield_unit) then
-				hurt_type = "shield_knock"
-				block_type = "shield_knock"
-				damage_info.variant = "melee"
-				damage_info.result = {
-					variant = "melee",
-					type = "shield_knock"
-				}
-				damage_info.shield_knock = true
-			else
-				hurt_type = nil
-			end
-		end
-	end
-
 	if hurt_type == "knock_down" or hurt_type == "expl_hurt" or hurt_type == "fire_hurt" or hurt_type == "poison_hurt" or hurt_type == "taser_tased" then
 		block_type = "heavy_hurt"
-	end
-
-	if hurt_type == "expl_hurt" and self._unit:base():has_tag("tank") then
-		hurt_type = nil
 	end
 
 	if hurt_type == "death" and self._queued_actions then
@@ -290,17 +245,6 @@ function CopMovement:damage_clbk(my_unit, damage_info)
 	end
 
 	if damage_info.variant == "stun" and alive(self._ext_inventory and self._ext_inventory._shield_unit) then
-		hurt_type = "shield_knock"
-		block_type = "shield_knock"
-		damage_info.variant = "melee"
-		damage_info.result = {
-			variant = "melee",
-			type = "shield_knock"
-		}
-		damage_info.shield_knock = true
-	end
-
-	if hurt_type == ("heavy_hurt" or "stagger") and alive(self._ext_inventory and self._ext_inventory._shield_unit) then
 		hurt_type = "shield_knock"
 		block_type = "shield_knock"
 		damage_info.variant = "melee"
