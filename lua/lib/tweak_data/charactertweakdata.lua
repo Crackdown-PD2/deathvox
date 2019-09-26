@@ -2915,7 +2915,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper_assault.access = "any"
 	table.insert(self._enemy_list, "deathvox_sniper_assault")
 
-	self.deathvox_tank = deep_clone(self.tank)
+	self.deathvox_tank = deep_clone(self.tank) --all dozer variations clone this deathvox_tank set up, changes here apply to green, black, skull and medicdozers equally
 	self.deathvox_tank.tags = {"tank"} -- just making sure tag applies.
 	self.deathvox_tank.detection = presets.detection.deathvox
 	self.deathvox_tank.ignore_medic_revive_animation = false  -- revive animation.
@@ -2923,6 +2923,9 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.suppression = nil
 	self.deathvox_tank.surrender = nil
 	self.deathvox_tank.surrender_break_time = {4, 6}
+	self.deathvox_tank.melee_weapon = "fists" --fixes for melee punching, thank you hoxi
+	self.deathvox_tank.melee_weapon_dmg_multiplier = 2.5
+	self.deathvox_tank.melee_weapon_speed = 0.75
 	self.deathvox_tank.move_speed = presets.move_speed.slow -- same on all diffs. Same as base. Note revise for "special" dozers.
 	self.deathvox_tank.ecm_vulnerability = 0 -- addressing base game ECM vuln bug.
 	self.deathvox_tank.ecm_hurts = {
