@@ -1,0 +1,18 @@
+{
+	"menu_id" : "deathvox_menu_overhauls",
+	"parent_menu_id" : "deathvox_menu_main",
+	"title" : "deathvox_menu_overhauls_title",
+	"description" : "deathvox_menu_overhauls_desc",
+	"back_callback" : "callback_deathvox_close_overhauls",
+	"priority" : 1,
+	"items" : [
+		{
+			"type" : "toggle",
+			"id" : "deathvox_toggle_hoppip",
+			"title" : "deathvox_toggle_hoppip_title",
+			"description" : "deathvox_toggle_hoppip_desc",
+			"callback" : "callback_deathvox_toggle_hoppip",
+			"value" : "useHoppipOverhaul"
+		}
+	]
+}

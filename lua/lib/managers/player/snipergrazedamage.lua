@@ -1,4 +1,9 @@
-function SniperGrazeDamage:on_weapon_fired(weapon_unit, result)
+local orig_graze = SniperGrazeDamage.on_weapon_fired
+function SniperGrazeDamage:on_weapon_fired(weapon_unit, result,...)
+	if not deathvox:IsHoppipOverhaulEnabled() then 
+		return orig_graze(self,weapon_unit,result,...)
+	end
+	
 	if not weapon_unit:base():is_category("snp") then
 		return
 	end

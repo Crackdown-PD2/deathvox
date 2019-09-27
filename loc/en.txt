@@ -1,4 +1,10 @@
 {
     "menu_jukebox_rb_dead_end" : "Dead End",
-    "menu_jukebox_screen_rb_dead_end" : "Dead End"
+    "menu_jukebox_screen_rb_dead_end" : "Dead End",
+	"deathvox_menu_main_title" : "///CRACKDOWN MOD OPTIONS///",
+	"deathvox_menu_main_desc" : "hi finale!",
+	"deathvox_menu_overhauls_title" : "OVERHAULS",
+	"deathvox_menu_overhauls_desc" : "Enable or disable select Gameplay Overhauls",
+	"deathvox_toggle_hoppip_title" : "Hoppip's Light Overhaul",
+	"deathvox_toggle_hoppip_desc" : "Enable this Overhaul (Requires restart)"
 }

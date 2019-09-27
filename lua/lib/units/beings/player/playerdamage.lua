@@ -1,4 +1,8 @@
-function PlayerDamage:damage_bullet(attack_data)
+local orig_dmg_bullet = PlayerDamage.damage_bullet
+function PlayerDamage:damage_bullet(attack_data,...)
+	if not deathvox:IsHoppipOverhaulEnabled() then
+		return orig_dmg_bullet(self,attack_data,...)
+	end
 	if not self:_chk_can_take_dmg() then
 		return
 	end
@@ -171,21 +175,21 @@ function PlayerDamage:damage_bullet(attack_data)
 	self:_call_listeners(damage_info)
 end
 	
-	function PlayerDamage:clbk_kill_taunt_tase(attack_data)
-		if attack_data.attacker_unit and attack_data.attacker_unit:alive() then
+function PlayerDamage:clbk_kill_taunt_tase(attack_data)
+	if attack_data.attacker_unit and attack_data.attacker_unit:alive() then
+		self._kill_taunt_clbk_id = nil
+
+		attack_data.attacker_unit:sound():say("post_tasing_taunt")
+	end
+end		
+
+function PlayerDamage:clbk_kill_taunt_common(attack_data)
+	if attack_data.attacker_unit and attack_data.attacker_unit:alive() then
+		if not attack_data.attacker_unit:base()._tweak_table then
+			return
+		end	
 			self._kill_taunt_clbk_id = nil
 
-			attack_data.attacker_unit:sound():say("post_tasing_taunt")
-		end
-	end		
-	
-	function PlayerDamage:clbk_kill_taunt_common(attack_data)
-		if attack_data.attacker_unit and attack_data.attacker_unit:alive() then
-			if not attack_data.attacker_unit:base()._tweak_table then
-				return
-			end	
-		        self._kill_taunt_clbk_id = nil
-
-			attack_data.attacker_unit:sound():say("i03")
-		end
-	end	
+		attack_data.attacker_unit:sound():say("i03")
+	end
+end	
