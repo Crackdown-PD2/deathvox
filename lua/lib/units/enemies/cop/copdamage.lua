@@ -317,7 +317,11 @@ function CopDamage:damage_bullet(attack_data)
 		end
 
 		if armor_pierce_value <= armor_pierce_roll then
-			local damage_effect_percent = attack_data.damage
+			local damage = attack_data.damage
+			local damage_percent = math.ceil(math.clamp(damage / self._HEALTH_INIT_PRECENT, 1, self._HEALTH_GRANULARITY))
+			damage = damage_percent * self._HEALTH_INIT_PRECENT
+			damage, damage_percent = self:_apply_min_health_limit(damage, damage_percent)
+
 			local result_type = not self._char_tweak.immune_to_knock_down and (attack_data.knock_down and "knock_down" or attack_data.stagger and not self._has_been_staggered and "stagger") or self:get_damage_type(damage_percent, "bullet")
 			
 			local shield_stagger = nil
@@ -369,7 +373,8 @@ function CopDamage:damage_bullet(attack_data)
 			attack_data.result = result
 			attack_data.pos = attack_data.col_ray.position
 			attack_data.damage = 0
-			local damage_percent = 0
+			damage = 0
+			damage_percent = 0
 
 			self:_send_bullet_attack_result(attack_data, attack_data.attacker_unit, damage_percent, body_index, hit_offset_height, variant)
 			self:_on_damage_received(attack_data)
