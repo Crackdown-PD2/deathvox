@@ -309,6 +309,10 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 					final_damage = 0 --basically nullify the hit
 				else
 					final_damage = self:get_damage_falloff(final_damage, col_ray, user_unit)
+
+					if col_ray.unit:character_damage() and col_ray.unit:character_damage().dead and col_ray.unit:character_damage():dead() then --additional check to avoid pushing dead enemies excessively
+						table.insert(units_to_ignore, col_ray.unit:key())
+					end
 				end
 
 				if final_damage > 0 then
