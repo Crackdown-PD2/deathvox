@@ -273,7 +273,9 @@ local MIN_KNOCK_BACK = 200
 local KNOCK_BACK_CHANCE = 0.8
 
 function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage, blank, no_sound, already_ricocheted)
-	if not already_ricocheted and user_unit and user_unit == managers.player:player_unit() and col_ray.unit then
+	local enable_ricochets = false
+
+	if enable_ricochets and not already_ricocheted and user_unit and user_unit == managers.player:player_unit() and col_ray.unit then
 		local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
 
 		if has_category and weapon_unit:base():is_category("assault_rifle", "smg") then --to replace later with the proper skill and procing check (random chance/last bullet/etc)
