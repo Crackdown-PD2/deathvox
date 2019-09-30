@@ -99,79 +99,198 @@ function RaycastWeaponBase:_collect_hits(from, to)
 end
 
 local reflect_result = Vector3()
-local ricochet_angles = {0, 175}
-local ricochet_spread_angle = {10, 30}
-local singlefire_autohit_stats = {MIN_RATIO = 0.6, MAX_RATIO = 1, INIT_RATIO = 0.6, far_dis = 1000, far_angle = 60, near_angle = 60}
-local autofire_autohit_stats = {MIN_RATIO = 0.6, MAX_RATIO = 1, INIT_RATIO = 0.6, far_dis = 2000, far_angle = 60, near_angle = 60}
-local peacemaker_autohit_stats = {MIN_RATIO = 0.6, MAX_RATIO = 1, INIT_RATIO = 0.6, far_dis = 4000, far_angle = 60, near_angle = 60} --but that was some fancy shooting
 
-function InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, blank, no_sound, autohit_stats)
-	local from_pos, to_pos, ignore_unit, latest_data
+function InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, blank, no_sound, guaranteed_hit, restrictive_angles)
+	local ignore_units = {}
+	local can_shoot_through_enemy = nil
+	local can_shoot_through_shield = nil
 
-	from_pos = user_unit:position() + Vector3(0, 0, 150)
-	to_pos = col_ray.hit_position
-	ignore_unit = user_unit
+	if weapon_unit and alive(weapon_unit) then
+		--shoot-through checks that will avoid crashing if the weapon somehow ceases to exist
+		can_shoot_through_enemy = weapon_unit:base()._can_shoot_through_enemy
+		can_shoot_through_shield = weapon_unit:base()._can_shoot_through_shield
 
-	local weapon_base = alive(weapon_unit) and weapon_unit:base()
+		--usually a weapon has itself and its user ignored to avoid unnecessary collisions. These checks are here in case we want player husks to shoot visible ricochets (pretty sure other players can't see the ricochet if only local players can trigger them)
+		if weapon_unit:base()._setup and weapon_unit:base()._setup.ignore_units then
+			ignore_units = weapon_unit:base()._setup.ignore_units
+		else
+			table.insert(ignore_units, weapon_unit)
 
-	if weapon_base and weapon_base.check_autoaim then
-		local autoaim = weapon_base:check_autoaim(from_pos, reflect_result, nil, nil, autohit_stats)
-
-		if autoaim then
-			mvector3.set(reflect_result, autoaim.ray)
-			col_ray = autoaim
+			if user_unit then
+				table.insert(ignore_units, user_unit)
+			end
 		end
 	end
 
-	mvector3.set_zero(reflect_result)
-	mvector3.set(reflect_result, col_ray.ray)
-	mvector3.add(reflect_result, -2 * col_ray.ray:dot(col_ray.normal) * col_ray.normal)
+	local ricochet_range = guaranteed_hit and 1000 or 2000 --modify as you wish
+	local impact_pos = col_ray.hit_position
 
-	local ang = math.abs(mvector3.angle(col_ray.ray, reflect_result))
-	local can_ricochet = not (ang < ricochet_angles[1]) and not (ang > ricochet_angles[2])
+	if guaranteed_hit then
+		local bodies = World:find_bodies("intersect", "sphere", impact_pos, 1000, managers.slot:get_mask("enemies")) --use a sphere to find nearby enemies
+		local can_hit_enemy = false
 
-	mvector3.spread(reflect_result, math.random(ricochet_spread_angle[1], ricochet_spread_angle[2]))
-	from_pos = col_ray.hit_position + col_ray.normal
-	ignore_unit = col_ray.unit
+		if #bodies > 0 then
+			for _, hit_body in ipairs(bodies) do
+				local hit_unit = hit_body:unit()
 
-	if not can_ricochet then
-		return
-	end
+				if hit_unit.character_damage and hit_unit:character_damage() and hit_unit:character_damage().damage_bullet and not hit_unit:character_damage():dead() then --check if the enemy can take bullet damage and they're not dead
+					local hit_ray = World:raycast("ray", impact_pos, hit_body:center_of_mass(), "slot_mask", self:bullet_slotmask(), "ignore_unit", ignore_units) --check if the enemy can actually be hit (isn't obstructed)
 
-	if alive(col_ray.unit) and col_ray.unit:character_damage() then
-		return
+					if hit_ray and hit_ray.unit and hit_ray.unit:key() == hit_unit:key() then --make sure the one that's hit is the same as that was found in this loop
+						mvector3.set(reflect_result, hit_ray.ray)
+						col_ray.ray = hit_ray.ray
+						can_hit_enemy = true
+
+						break --to select and only hit that specific enemy
+					end
+				end
+			end
+
+			if not can_hit_enemy then
+				return
+			end
+		else
+			return
+		end
 	else
-		local ray_data = World:raycast("ray", from_pos, from_pos + reflect_result * autohit_stats.far_dis, "slot_mask", self:bullet_slotmask())
+		mvector3.set_zero(reflect_result)
+		mvector3.set(reflect_result, col_ray.ray) --get the direction of the bullet
+		mvector3.add(reflect_result, -2 * col_ray.ray:dot(col_ray.normal) * col_ray.normal) --use the direction of the bullet to calculate where it should bounce off to
 
-		if ray_data then
-			local trail_effect_table = {
-				effect = Idstring("effects/particles/weapons/weapon_trail"),
-				position = Vector3(),
-				normal = Vector3()
-			}
-			mvector3.set(trail_effect_table.position, from_pos)
-			mvector3.set(trail_effect_table.normal, from_pos + reflect_result * autohit_stats.far_dis)
+		local angle = math.abs(mvector3.angle(col_ray.ray, reflect_result))
+		local allowed_angles = {0, 175}
 
-			local trail = World:effect_manager():spawn(trail_effect_table)
+		if restrictive_angles then
+			allowed_angles = {0, 90}
+		end
 
-			World:effect_manager():set_remaining_lifetime(trail, math.clamp(ray_data.distance / 10000, 0, ray_data.distance))
+		local can_ricochet = not (angle < allowed_angles[1]) and not (angle > allowed_angles[2])
 
-			InstantBulletBase:on_collision(ray_data, weapon_unit, user_unit, damage, blank, no_sound, true)
+		if not can_ricochet then
+			return
+		end
+
+		if not restrictive_angles then --if there's no restriction, apply some spread to avoid perfect 175° bounces
+			local ricochet_spread_angle = {10, 30}
+
+			mvector3.spread(reflect_result, math.random(ricochet_spread_angle[1], ricochet_spread_angle[2]))
 		end
 	end
 
-	return
+	local from_pos = col_ray.hit_position + col_ray.normal
+
+	--usual collect_hits stuff to use proper penetration
+	local ray_hits = nil
+	local hit_enemy = false
+	local enemy_mask = managers.slot:get_mask("enemies")
+	local wall_mask = managers.slot:get_mask("world_geometry", "vehicles")
+	local shield_mask = managers.slot:get_mask("enemy_shield_check")
+	local ai_vision_ids = Idstring("ai_vision")
+	local bulletproof_ids = Idstring("bulletproof")
+
+	ray_hits = World:raycast_all("ray", from_pos, from_pos + reflect_result * ricochet_range, "slot_mask", self:bullet_slotmask(), "ignore_unit", ignore_units)
+
+	local units_hit = {}
+	local unique_hits = {}
+
+	for i, hit in ipairs(ray_hits) do
+		if not units_hit[hit.unit:key()] then
+			units_hit[hit.unit:key()] = true
+			unique_hits[#unique_hits + 1] = hit
+			hit.hit_position = hit.position
+			hit_enemy = hit_enemy or hit.unit:in_slot(enemy_mask)
+			local weak_body = hit.body:has_ray_type(ai_vision_ids)
+			weak_body = weak_body or hit.body:has_ray_type(bulletproof_ids)
+
+			if not can_shoot_through_enemy and hit_enemy then
+				break
+			elseif hit.unit:in_slot(wall_mask) then
+				if weak_body then
+					break
+				end
+			elseif not can_shoot_through_shield and hit.unit:in_slot(shield_mask) then
+				break
+			end
+		end
+	end
+
+	local hit_enemies = {}
+
+	for _, hit in ipairs(unique_hits) do
+		if hit.unit and hit.unit:character_damage() then
+			table.insert(hit_enemies, hit.unit)
+		end
+
+		if guaranteed_hit then
+			if not hit.unit:in_slot(managers.slot:get_mask("civilians")) then --ignore civs with guaranteed hits since you are not able to control where they go to (remove this check if you still want to make them to kill civs that happen to be in the way)
+				InstantBulletBase:on_collision(hit, weapon_unit, user_unit, damage, blank, no_sound, true)
+			end
+		else
+			InstantBulletBase:on_collision(hit, weapon_unit, user_unit, damage, blank, no_sound, true)
+		end
+	end
+
+	for _, d in pairs(hit_enemies) do --if the ricochet hit a character, count it as an actual hit instead of a missed shot
+		managers.statistics:shot_fired({
+			skip_bullet_count = true,
+			hit = true,
+			weapon_unit = weapon_unit
+		})
+	end
+
+	local furthest_hit = unique_hits[#unique_hits]
+
+	--guaranteed hits use sniper trails to show them, while simulated hits simply use a bullet trail
+	if guaranteed_hit then
+		if not self._trail_length then
+			self._trail_length = World:effect_manager():get_initial_simulator_var_vector2(Idstring("effects/particles/weapons/sniper_trail"), Idstring("trail"), Idstring("simulator_length"), Idstring("size"))
+		end
+
+		local trail = World:effect_manager():spawn({
+			effect = Idstring("effects/particles/weapons/sniper_trail"),
+			position = from_pos,
+			normal = reflect_result
+		})
+
+		mvector3.set_y(self._trail_length, furthest_hit and furthest_hit.distance or ricochet_range)
+		World:effect_manager():set_simulator_var_vector2(trail, Idstring("trail"), Idstring("simulator_length"), Idstring("size"), self._trail_length)
+	else
+		local trail = World:effect_manager():spawn({
+			effect = Idstring("effects/particles/weapons/weapon_trail"),
+			position = from_pos,
+			normal = reflect_result
+		})
+
+		if furthest_hit then
+			World:effect_manager():set_remaining_lifetime(trail, math.clamp((furthest_hit.distance - 600) / 10000, 0, furthest_hit.distance))
+		else
+			World:effect_manager():set_remaining_lifetime(trail, math.clamp((ricochet_range - 600) / 10000, 0, ricochet_range))
+		end
+	end
 end
 
 local MIN_KNOCK_BACK = 200
 local KNOCK_BACK_CHANCE = 0.8
 
 function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage, blank, no_sound, already_ricocheted)
+	if not already_ricocheted and user_unit and user_unit == managers.player:player_unit() and col_ray.unit then
+		local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
+
+		if has_category and weapon_unit:base():is_category("assault_rifle", "smg") then --to replace later with the proper skill and procing check (random chance/last bullet/etc)
+			local can_bounce_off = (col_ray.unit:in_slot(managers.slot:get_mask("enemy_shield_check")) and not weapon_unit:base()._can_shoot_through_shield) or (col_ray.body:has_ray_type(Idstring("ai_vision")) or col_ray.body:has_ray_type(Idstring("bulletproof"))) and not weapon_unit:base()._can_shoot_through_wall
+
+			if can_bounce_off then
+				InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, blank, no_sound, true)
+			end
+		end
+	end
+
 	local hit_unit = col_ray.unit
 	local shield_knock = false
-	local is_shield = hit_unit:in_slot(8) and alive(hit_unit:parent())
+	local is_shield = hit_unit:in_slot(managers.slot:get_mask("enemy_shield_check")) and alive(hit_unit:parent())
 
-	if is_shield and not hit_unit:parent():base().is_phalanx and not hit_unit:parent():character_damage():is_immune_to_shield_knockback() and weapon_unit then
+	--more proper checks if the shield can actually be knocked back
+	if weapon_unit and is_shield and not hit_unit:parent():base().is_phalanx and tweak_data.character[hit_unit:parent():base()._tweak_table].damage.shield_knocked and not hit_unit:parent():character_damage():is_immune_to_shield_knockback() then
 		shield_knock = weapon_unit:base()._shield_knock
 		local dmg_ratio = math.min(damage, MIN_KNOCK_BACK)
 		dmg_ratio = dmg_ratio / MIN_KNOCK_BACK + 1
