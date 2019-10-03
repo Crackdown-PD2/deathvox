@@ -123,10 +123,10 @@ function InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, 
 	end
 
 	local ricochet_range = guaranteed_hit and 1000 or 2000 --modify as you wish
-	local impact_pos = col_ray.hit_position
+	local impact_pos = col_ray.hit_position or col_ray.position
 
 	if guaranteed_hit then
-		local bodies = World:find_bodies("intersect", "sphere", impact_pos, 1000, managers.slot:get_mask("enemies")) --use a sphere to find nearby enemies
+		local bodies = World:find_bodies("intersect", "sphere", impact_pos, ricochet_range, managers.slot:get_mask("enemies")) --use a sphere to find nearby enemies
 		local can_hit_enemy = false
 
 		if #bodies > 0 then
@@ -279,7 +279,14 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 		local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
 
 		if has_category and weapon_unit:base():is_category("assault_rifle", "smg") then --to replace later with the proper skill and procing check (random chance/last bullet/etc)
-			local can_bounce_off = (col_ray.unit:in_slot(managers.slot:get_mask("enemy_shield_check")) and not weapon_unit:base()._can_shoot_through_shield) or (col_ray.body:has_ray_type(Idstring("ai_vision")) or col_ray.body:has_ray_type(Idstring("bulletproof"))) and not weapon_unit:base()._can_shoot_through_wall
+			local can_bounce_off = false
+
+			--easier to understand and to add more conditions if desired
+			if not weapon_unit:base()._can_shoot_through_shield and col_ray.unit:in_slot(managers.slot:get_mask("enemy_shield_check")) then
+				can_bounce_off = true
+			elseif not weapon_unit:base()._can_shoot_through_wall and col_ray.unit:in_slot(managers.slot:get_mask("world_geometry", "vehicles")) and (col_ray.body:has_ray_type(Idstring("ai_vision")) or col_ray.body:has_ray_type(Idstring("bulletproof"))) then
+				can_bounce_off = true
+			end
 
 			if can_bounce_off then
 				InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, blank, no_sound, true)
