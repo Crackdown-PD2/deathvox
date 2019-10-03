@@ -364,6 +364,8 @@ function CopDamage:damage_bullet(attack_data)
 				variant = 6
 			elseif result.type == "light_hurt" then
 				variant = 7
+			elseif result.type == "dmg_rcv" then --important, need to sync if there's no reaction
+				variant = 8
 			else
 				variant = 0
 			end
@@ -463,13 +465,15 @@ function CopDamage:damage_bullet(attack_data)
 		end
 	end
 
-	if attack_data.weapon_unit:base().get_add_head_shot_mul then
-		local add_head_shot_mul = attack_data.weapon_unit:base():get_add_head_shot_mul()
+	if not head and attack_data.weapon_unit:base().get_add_head_shot_mul then
+		if self._char_tweak and not self._unit:base():has_tag("tank") and self._char_tweak.headshot_dmg_mul and not self._char_tweak.ignore_headshot then
+			local add_head_shot_mul = attack_data.weapon_unit:base():get_add_head_shot_mul()
 
-		if not head and add_head_shot_mul and self._char_tweak and not self._unit:base():has_tag("tank") then
-			local tweak_headshot_mul = math.max(0, self._char_tweak.headshot_dmg_mul - 1)
-			local mul = tweak_headshot_mul * add_head_shot_mul + 1
-			damage = damage * mul
+			if add_head_shot_mul then
+				local tweak_headshot_mul = math.max(0, self._char_tweak.headshot_dmg_mul - 1)
+				local mul = tweak_headshot_mul * add_head_shot_mul + 1
+				damage = damage * mul
+			end
 		end
 	end
 
@@ -664,6 +668,8 @@ function CopDamage:damage_bullet(attack_data)
 		variant = 6
 	elseif result.type == "light_hurt" then
 		variant = 7
+	elseif result.type == "dmg_rcv" then --important, need to sync if there's no reaction
+		variant = 8
 	else
 		variant = 0
 	end
@@ -1286,8 +1292,10 @@ function CopDamage:sync_damage_bullet(attacker_unit, damage_percent, i_body, hit
 			result_type = "heavy_hurt"
 		elseif variant == 7 then
 			result_type = "light_hurt"
+		elseif variant == 8 then
+			result_type = "dmg_rcv" --important, need to sync if there's no reaction
 		else
-			result_type = self:get_damage_type(damage_percent, "bullet")
+			result_type = self:get_damage_type(damage_percent, "bullet") --to fall back in case other peers don't have the modified code
 		end
 
 		if variant == 3 then
@@ -1592,6 +1600,8 @@ function CopDamage:damage_melee(attack_data)
 		variant = 10
 	elseif result.type == "light_hurt" then
 		variant = 11
+	elseif result.type == "dmg_rcv" then --important, need to sync if there's no reaction
+		variant = 12
 	elseif result.type == "healed" then
 		variant = 7
 	else
@@ -1617,7 +1627,7 @@ function CopDamage:sync_damage_melee(attacker_unit, damage_percent, damage_effec
 
 	if death then
 		local melee_name_id = nil
-		local valid_attacker = attacker_unit.base and attacker_unit:base()
+		local valid_attacker = attacker_unit and alive(attacker_unit) and attacker_unit:base()
 
 		if valid_attacker then
 			if attacker_unit:base().is_husk_player then
@@ -1626,12 +1636,12 @@ function CopDamage:sync_damage_melee(attacker_unit, damage_percent, damage_effec
 
 				melee_name_id = peer:melee_id()
 			else
-				melee_name_id = attacker_unit:base():melee_weapon()
+				melee_name_id = attacker_unit:base().melee_weapon and attacker_unit:base():melee_weapon()
 			end
-		end
 
-		if valid_attacker and melee_name_id then
-			self:_check_special_death_conditions(variant, body, attacker_unit, melee_name_id)
+			if melee_name_id then
+				self:_check_special_death_conditions("melee", body, attacker_unit, melee_name_id)
+			end
 		end
 
 		result = {
@@ -1672,8 +1682,10 @@ function CopDamage:sync_damage_melee(attacker_unit, damage_percent, damage_effec
 			result_type = "heavy_hurt"
 		elseif variant == 11 then
 			result_type = "light_hurt"
+		elseif variant == 12 then
+			result_type = "dmg_rcv" --important, need to sync if there's no reaction
 		else
-			result_type = self:get_damage_type(damage_effect_percent, "melee") or "dmg_rcv"
+			result_type = self:get_damage_type(damage_effect_percent, "melee") --to fall back in case other peers don't have the modified code
 		end
 
 		if variant == 7 then
@@ -1724,18 +1736,19 @@ function CopDamage:sync_damage_melee(attacker_unit, damage_percent, damage_effec
 end
 
 function CopDamage:_check_special_death_conditions(variant, body, attacker_unit, weapon_unit)
-	local special_deaths = self._unit:base():char_tweak().special_deaths --special deaths set in charactertweakdata
-	local is_local_player = attacker_unit == managers.player:player_unit()
-	local is_bot = managers.groupai:state():is_unit_team_AI(attacker_unit)
-	local criminal_melee_weapon = nil
-	
-	if is_bot and not variant == "melee" and weapon_unit == attacker_unit:base():melee_weapon() then --is bot melee weapon
-		variant = "melee"
+	if not attacker_unit then
+		return
 	end
 
-	if variant == "melee" then
-		criminal_melee_weapon = weapon_unit
+	if not alive(attacker_unit) then
+		return
 	end
+
+	if not attacker_unit:base() then
+		return
+	end
+
+	local special_deaths = self._unit:base():char_tweak().special_deaths --special deaths set in charactertweakdata
 
 	if not special_deaths or not special_deaths[variant] then
 		return
@@ -1747,15 +1760,21 @@ function CopDamage:_check_special_death_conditions(variant, body, attacker_unit,
 		return
 	end
 
+	if not managers.groupai:state():all_criminals()[attacker_unit:key()] then --is not a heister character
+		return
+	end
+
 	local attacker_name = managers.criminals:character_name_by_unit(attacker_unit)
 
 	if not body_data.character_name or body_data.character_name ~= attacker_name then
 		return
 	end
 
+	local can_comment = Network:is_server() and managers.groupai:state():is_unit_team_AI(attacker_unit) or attacker_unit == managers.player:player_unit()
+
 	if variant == "melee" then
-		if body_data.melee_weapon_id and criminal_melee_weapon then
-			if body_data.melee_weapon_id == criminal_melee_weapon then
+		if body_data.melee_weapon_id and weapon_unit then
+			if body_data.melee_weapon_id == weapon_unit then
 				if self._unit:damage():has_sequence(body_data.sequence) then
 					if body_data.sound_effect then
 						self._unit:sound():play(body_data.sound_effect, nil, nil)
@@ -1763,7 +1782,7 @@ function CopDamage:_check_special_death_conditions(variant, body, attacker_unit,
 
 					self._unit:damage():run_sequence_simple(body_data.sequence)
 
-					if body_data.special_comment and (is_local_player or is_bot) then --local players or bots sync the voiceline, no need to do this for husks
+					if body_data.special_comment and can_comment then --local players or server bots sync the voiceline, no need to do this for husks
 						return body_data.special_comment
 					end
 				end
@@ -1777,8 +1796,8 @@ function CopDamage:_check_special_death_conditions(variant, body, attacker_unit,
 				return
 			end
 
-			if weapon_unit:base():is_npc() then --npc when it comes to weapons mostly refers to a third-person weapon unit (so, NPCs or player husks)
-				factory_id = utf8.sub(factory_id, 1, -5) --removes the _npc part (or third_unit, forgot which one but it's what it does) from the name to see if it coincides below
+			if weapon_unit:base():is_npc() then --uses newnpcraycastweaponbase (so, bots and player husks)
+				factory_id = utf8.sub(factory_id, 1, -5)
 			end
 
 			local weapon_id = managers.weapon_factory:get_weapon_id_by_factory_id(factory_id) --actual weapon id used in many files
@@ -1788,7 +1807,7 @@ function CopDamage:_check_special_death_conditions(variant, body, attacker_unit,
 					self._unit:damage():run_sequence_simple(body_data.sequence)
 				end
 
-				if body_data.special_comment and (is_local_player or is_bot) then --local players or bots sync the voiceline, no need to do this for husks
+				if body_data.special_comment and can_comment then --local players or server bots sync the voiceline, no need to do this for husks
 					return body_data.special_comment
 				end
 			end
