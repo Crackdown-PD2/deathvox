@@ -323,20 +323,6 @@ function CopDamage:damage_bullet(attack_data)
 			damage, damage_percent = self:_apply_min_health_limit(damage, damage_percent)
 
 			local result_type = not self._char_tweak.immune_to_knock_down and (attack_data.knock_down and "knock_down" or attack_data.stagger and not self._has_been_staggered and "stagger") or self:get_damage_type(damage_percent, "bullet")
-			
-			local shield_stagger = nil
-
-			if (result_type == "knock_down" or result_type == "stagger") and alive(self._unit:inventory() and self._unit:inventory()._shield_unit) then
-				local can_be_shield_knocked = not self._unit:base().is_phalanx and self._char_tweak.damage.shield_knocked and not self:is_immune_to_shield_knockback()
-
-				if can_be_shield_knocked then
-					if result_type == "stagger" then
-						shield_stagger = true
-					end
-
-					result_type = "expl_hurt"
-				end
-			end
 
 			local result = {
 				type = result_type,
@@ -354,10 +340,6 @@ function CopDamage:damage_bullet(attack_data)
 				variant = 3
 			elseif result.type == "expl_hurt" then
 				variant = 4
-
-				if shield_stagger then
-					self._has_been_staggered = true
-				end
 			elseif result.type == "hurt" then
 				variant = 5
 			elseif result.type == "heavy_hurt" then
@@ -368,6 +350,17 @@ function CopDamage:damage_bullet(attack_data)
 				variant = 8
 			else
 				variant = 0
+			end
+
+			if variant == 1 or variant == 2 or variant == 5 or variant == 6 then
+				if alive(self._unit:inventory() and self._unit:inventory()._shield_unit) and self._unit:movement()._anim_global and self._unit:movement()._anim_global == "shield" then
+					local can_be_shield_knocked = not self._unit:base().is_phalanx and self._char_tweak.damage.shield_knocked and not self:is_immune_to_shield_knockback()
+
+					if can_be_shield_knocked then --proper redirecting for hurt animations against shield units, using "expl_hurt" for Shields instead of "shield_knock" for more variety (plus it works with directions to produce different animations)
+						variant = 4
+						result.type = "expl_hurt"
+					end
+				end
 			end
 
 			local body_index = self._unit:get_body_index(attack_data.col_ray.body:name())
@@ -527,20 +520,8 @@ function CopDamage:damage_bullet(attack_data)
 		end
 	else
 		attack_data.damage = damage
-		--proper redirecting for hurt animations against shield units, using "expl_hurt" for Shields instead of "shield_knock" for more variety (plus it works with directions to produce different animations)
+
 		local result_type = not self._char_tweak.immune_to_knock_down and (attack_data.knock_down and "knock_down" or attack_data.stagger and not self._has_been_staggered and "stagger") or self:get_damage_type(damage_percent, "bullet")
-
-		if (result_type == "knock_down" or result_type == "stagger") and alive(self._unit:inventory() and self._unit:inventory()._shield_unit) then
-			local can_be_shield_knocked = not self._unit:base().is_phalanx and self._char_tweak.damage.shield_knocked and not self:is_immune_to_shield_knockback()
-
-			if can_be_shield_knocked then
-				if result_type == "stagger" then
-					shield_stagger = true
-				end
-
-				result_type = "expl_hurt"
-			end
-		end
 
 		result = {
 			type = result_type,
@@ -658,10 +639,6 @@ function CopDamage:damage_bullet(attack_data)
 		variant = 3
 	elseif result.type == "expl_hurt" then
 		variant = 4
-
-		if shield_stagger then
-			self._has_been_staggered = true
-		end
 	elseif result.type == "hurt" then
 		variant = 5
 	elseif result.type == "heavy_hurt" then
@@ -672,6 +649,17 @@ function CopDamage:damage_bullet(attack_data)
 		variant = 8
 	else
 		variant = 0
+	end
+
+	if variant == 1 or variant == 2 or variant == 5 or variant == 6 then
+		if alive(self._unit:inventory() and self._unit:inventory()._shield_unit) and self._unit:movement()._anim_global and self._unit:movement()._anim_global == "shield" then
+			local can_be_shield_knocked = not self._unit:base().is_phalanx and self._char_tweak.damage.shield_knocked and not self:is_immune_to_shield_knockback()
+
+			if can_be_shield_knocked then --proper redirecting for hurt animations against shield units, using "expl_hurt" for Shields instead of "shield_knock" for more variety (plus it works with directions to produce different animations)
+				variant = 4
+				attack_data.result.type = "expl_hurt"
+			end
+		end
 	end
 
 	self:_send_bullet_attack_result(attack_data, attacker, damage_percent, body_index, hit_offset_height, variant)
@@ -2125,4 +2113,258 @@ function CopDamage:damage_fire(attack_data)
 	end
 
 	return result
+end
+
+function CopDamage:damage_simple(attack_data)
+	if self._dead or self._invulnerable then
+		return
+	end
+
+	local is_civilian = CopDamage.is_civilian(self._unit:base()._tweak_table)
+	local result = nil
+	local damage = attack_data.damage
+
+	if self._unit:movement():cool() and self._unit:base():char_tweak()["stealth_instant_kill"] then --allowing stealth insta-kill
+		damage = self._HEALTH_INIT
+	else
+		if self._unit:base():char_tweak().DAMAGE_CLAMP_SHOCK then --no unit has DAMAGE_CLAMP_SHOCK, which is why Winters and the Phalanx can all die instantly to one headshot-proced Graze attack in vanilla
+			damage = math.min(damage, self._unit:base():char_tweak().DAMAGE_CLAMP_SHOCK)
+		elseif self._unit:base():char_tweak().DAMAGE_CLAMP_BULLET then --I would just replace the shock check with the bullet one, but checking for it first allows a custom clamp specifically against Graze to be used
+			damage = math.min(damage, self._unit:base():char_tweak().DAMAGE_CLAMP_BULLET)
+		end
+	end
+
+	damage = math.clamp(damage, 0, self._HEALTH_INIT)
+	local damage_percent = math.ceil(damage / self._HEALTH_INIT_PRECENT)
+	damage = damage_percent * self._HEALTH_INIT_PRECENT
+	damage, damage_percent = self:_apply_min_health_limit(damage, damage_percent)
+
+	if self._immortal then
+		damage = math.min(damage, self._health - 1)
+	end
+
+	if self._health <= damage then
+		if self:check_medic_heal() then
+			attack_data.variant = "healed"
+			result = {
+				type = "healed",
+				variant = attack_data.variant
+			}
+		else
+			attack_data.damage = self._health
+			result = {
+				type = "death",
+				variant = attack_data.variant
+			}
+
+			self:die(attack_data)
+		end
+	else
+		attack_data.damage = damage
+
+		--allowing knock_down and stagger, explanation at the end of the function
+		local weapon_unit = attack_data.attacker_unit and attack_data.attacker_unit:inventory() and attack_data.attacker_unit:inventory():equipped_unit()
+		local knock_down = weapon_unit and weapon_unit:base()._knock_down and weapon_unit:base()._knock_down > 0 and math.random() < weapon_unit:base()._knock_down
+		local stagger = weapon_unit and weapon_unit:base()._stagger
+		local result_type = not self._char_tweak.immune_to_knock_down and (knock_down and "knock_down" or stagger and not self._has_been_staggered and "stagger") or self:get_damage_type(damage_percent)
+
+		result = {
+			type = result_type,
+			variant = attack_data.variant
+		}
+
+		self:_apply_damage_to_health(damage)
+	end
+
+	attack_data.result = result
+	local attacker = attack_data.attacker_unit
+
+	if not attacker or attacker:id() == -1 then
+		attacker = self._unit
+	end
+
+	if result.type == "death" then
+		local data = {
+			name = self._unit:base()._tweak_table,
+			stats_name = self._unit:base()._stats_name,
+			owner = attack_data.owner,
+			weapon_unit = attack_data.weapon_unit,
+			variant = attack_data.variant
+		}
+
+		managers.statistics:killed_by_anyone(data)
+
+		local attacker_unit = attack_data.attacker_unit
+
+		if attacker_unit and attacker_unit:base() and attacker_unit:base().thrower_unit then
+			attacker_unit = attacker_unit:base():thrower_unit()
+			data.weapon_unit = attack_data.attacker_unit
+		end
+
+		if not is_civilian and managers.player:has_category_upgrade("temporary", "overkill_damage_multiplier") and attacker_unit == managers.player:player_unit() and attack_data.weapon_unit and attack_data.weapon_unit:base().weapon_tweak_data and not attack_data.weapon_unit:base().thrower_unit and attack_data.weapon_unit:base():is_category("shotgun", "saw") then
+			managers.player:activate_temporary_upgrade("temporary", "overkill_damage_multiplier")
+		end
+
+		self:chk_killshot(attacker_unit, "shock")
+
+		if attacker_unit == managers.player:player_unit() then
+			if alive(attacker_unit) then
+				self:_comment_death(attacker_unit, self._unit)
+			end
+
+			self:_show_death_hint(self._unit:base()._tweak_table)
+			managers.statistics:killed(data)
+
+			if is_civilian then
+				managers.money:civilian_killed()
+			end
+
+			self:_check_damage_achievements(attack_data, false)
+		else
+			if attacker_unit and alive(attacker_unit) and managers.groupai:state():is_unit_team_AI(attacker_unit) then --no harm in doing it
+				self:_AI_comment_death(attacker_unit, self._unit)
+			end
+		end
+	end
+
+	if not self._no_blood and damage > 0 then
+		managers.game_play_central:sync_play_impact_flesh(attack_data.pos, attack_data.attack_dir)
+	end
+
+	local i_result = nil
+
+	--proper variants (or i_results), whatever this section was supposed to work like in the original file, it's obvious that knock_down and stagger were intended to work with it. If not, somehow, at least syncing the other results should still be done
+	if result.type == "knock_down" then
+		i_result = 1
+	elseif result.type == "stagger" then
+		i_result = 2
+		self._has_been_staggered = true
+	elseif result.type == "healed" then
+		i_result = 3
+	elseif result.type == "expl_hurt" then
+		i_result = 4
+	elseif result.type == "hurt" then
+		i_result = 5
+	elseif result.type == "heavy_hurt" then
+		i_result = 6
+	elseif result.type == "light_hurt" then
+		i_result = 7
+	elseif result.type == "dmg_rcv" then --important, need to sync if there's no reaction
+		i_result = 8
+	else
+		i_result = 0
+	end
+
+	if i_result == 1 or i_result == 2 or i_result == 5 or i_result == 6 then
+		if alive(self._unit:inventory() and self._unit:inventory()._shield_unit) and self._unit:movement()._anim_global and self._unit:movement()._anim_global == "shield" then
+			local can_be_shield_knocked = not self._unit:base().is_phalanx and self._char_tweak.damage.shield_knocked and not self:is_immune_to_shield_knockback()
+
+			if can_be_shield_knocked then --proper redirecting for hurt animations against shield units, using "expl_hurt" for Shields instead of "shield_knock" for more variety (plus it works with directions to produce different animations)
+				attack_data.result.type = "expl_hurt"
+				i_result = 4
+			end
+		end
+	end
+
+	self:_send_simple_attack_result(attacker, damage_percent, self:_get_attack_variant_index(attack_data.result.variant), i_result)
+	self:_on_damage_received(attack_data)
+
+	if not is_civilian and attack_data.attacker_unit and alive(attack_data.attacker_unit) then
+		managers.player:send_message(Message.OnEnemyShot, nil, self._unit, attack_data)
+	end
+
+	return result
+end
+
+function CopDamage:sync_damage_simple(attacker_unit, damage_percent, i_attack_variant, i_result, death)
+	if self._dead then
+		return
+	end
+
+	local damage = damage_percent * self._HEALTH_INIT_PRECENT
+	local attack_data = {}
+	local hit_pos = mvector3.copy(self._unit:movement():m_pos())
+
+	mvector3.set_z(hit_pos, hit_pos.z + 100)
+
+	local variant = CopDamage._ATTACK_VARIANTS[i_attack_variant]
+	attack_data.pos = hit_pos
+	attack_data.attacker_unit = attacker_unit
+	attack_data.variant = variant
+	local attack_dir, distance = nil
+
+	if attacker_unit then
+		attack_dir = hit_pos - attacker_unit:movement():m_head_pos()
+		distance = mvector3.normalize(attack_dir)
+	else
+		attack_dir = self._unit:rotation():y()
+	end
+
+	attack_data.attack_dir = attack_dir
+	local result = nil
+
+	if death then
+		result = {
+			type = "death",
+			variant = variant
+		}
+
+		self:die(attack_data)
+		self:chk_killshot(attacker_unit, variant)
+
+		local data = {
+			head_shot = false,
+			name = self._unit:base()._tweak_table,
+			stats_name = self._unit:base()._stats_name,
+			weapon_unit = attacker_unit and attacker_unit:inventory() and attacker_unit:inventory():equipped_unit(),
+			variant = attack_data.variant
+		}
+
+		if data.weapon_unit then
+			managers.statistics:killed_by_anyone(data)
+		end
+	else
+		local result_type = nil
+
+		if i_result == 1 then
+			result_type = "knock_down"
+		elseif i_result == 2 then
+			result_type = "stagger"
+		elseif i_result == 4 then
+			result_type = "expl_hurt"
+		elseif i_result == 5 then
+			result_type = "hurt"
+		elseif i_result == 6 then
+			result_type = "heavy_hurt"
+		elseif i_result == 7 then
+			result_type = "light_hurt"
+		elseif i_result == 8 then
+			result_type = "dmg_rcv" --important, need to sync if there's no reaction
+		else
+			result_type = self:get_damage_type(damage_percent) --to fall back in case other peers don't have the modified code
+		end
+
+		if i_result == 3 then
+			result_type = "healed"
+		end
+
+		result = {
+			type = result_type,
+			variant = variant
+		}
+
+		if result_type ~= "healed" then
+			self:_apply_damage_to_health(damage)
+		end
+	end
+
+	attack_data.result = result
+	attack_data.damage = damage
+	attack_data.is_synced = true
+
+	if not self._no_blood and damage > 0 then
+		managers.game_play_central:sync_play_impact_flesh(hit_pos, attack_dir)
+	end
+
+	self:_on_damage_received(attack_data)
 end
