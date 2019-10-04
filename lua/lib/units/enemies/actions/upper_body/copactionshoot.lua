@@ -391,14 +391,14 @@ function CopActionShoot:check_melee_start(t, attention, target_dis, autotarget, 
 				else
 					if target_has_shield then
 						if target_is_covered_by_shield then
-							local can_be_knocked = tweak_data.character[attention.unit:base()._tweak_table].damage.shield_knocked and not attention.unit:base().is_phalanx and not attention.unit:character_damage():is_immune_to_shield_knockback()
+							local can_be_knocked = not attention.unit:base().is_phalanx and attention.unit:base():char_tweak().damage.shield_knocked and not attention.unit:character_damage():is_immune_to_shield_knockback()
 
 							if can_be_knocked then
 								return true
 							end
 						else
 							if electrical_melee then
-								local can_be_tased = tweak_data.character[attention.unit:base()._tweak_table].can_be_tased == nil or tweak_data.character[attention.unit:base()._tweak_table].can_be_tased
+								local can_be_tased = attention.unit:base():char_tweak().can_be_tased == nil or attention.unit:base():char_tweak().can_be_tased
 
 								if can_be_tased then
 									return true
@@ -410,7 +410,7 @@ function CopActionShoot:check_melee_start(t, attention, target_dis, autotarget, 
 					else
 						if not target_is_covered_by_shield then
 							if electrical_melee then
-								local can_be_tased = tweak_data.character[attention.unit:base()._tweak_table].can_be_tased == nil or tweak_data.character[attention.unit:base()._tweak_table].can_be_tased
+								local can_be_tased = attention.unit:base():char_tweak().can_be_tased == nil or attention.unit:base():char_tweak().can_be_tased
 
 								if can_be_tased then
 									return true
@@ -552,7 +552,7 @@ function CopActionShoot:anim_clbk_melee_strike()
 		local defense_data = nil
 
 		if hit_unit:in_slot(8) and alive(hit_unit:parent()) then
-			local can_be_knocked = tweak_data.character[hit_unit:parent():base()._tweak_table].damage.shield_knocked and not hit_unit:parent():base().is_phalanx and not hit_unit:parent():character_damage():is_immune_to_shield_knockback()
+			local can_be_knocked = not hit_unit:parent():base().is_phalanx and hit_unit:parent():base():char_tweak().damage.shield_knocked and not hit_unit:parent():character_damage():is_immune_to_shield_knockback()
 
 			if can_be_knocked then
 				shield_knock = true
