@@ -484,6 +484,10 @@ function CopActionShoot:_chk_start_melee(target_vec, target_dis, autotarget, tar
 end
 
 function CopActionShoot:anim_clbk_melee_strike()
+	if not self._attention then --the unit can lose attention right when it's supposed to strike something and simply kill the game without this check
+		return
+	end
+
 	local shoot_from_pos = self._shoot_from_pos
 	local target_pos, target_vec, target_dis, autotarget = self:_get_target_pos(shoot_from_pos, self._attention, TimerManager:game():time())
 
