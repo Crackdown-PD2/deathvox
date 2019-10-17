@@ -2015,7 +2015,14 @@ function CopDamage:build_suppression(amount, panic_chance)
 	end
 
 	local amount_val = nil
-	amount_val = (amount ~= "max" and amount ~= "panic" or sup_tweak.brown_point or sup_tweak.react_point[2]) and (Network:is_server() and self._suppression_hardness_t and t < self._suppression_hardness_t and amount * 0.5 or amount)
+
+	if amount == "max" or amount == "panic" then
+		amount_val = (sup_tweak.brown_point or sup_tweak.react_point)[2]
+	elseif Network:is_server() and self._suppression_hardness_t and t < self._suppression_hardness_t then
+		amount_val = amount * 0.5
+	else
+		amount_val = amount
+	end
 
 	if not Network:is_server() then
 		local sync_amount = nil
