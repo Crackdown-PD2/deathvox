@@ -229,6 +229,19 @@ function NewNPCRaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, d
 		end
 	end
 
+	if self._suppression then
+		local tmp_vec_to = Vector3()
+		local max_distance = ray_distance --ray_distance is usually 200m, modify accordingly
+
+		mvector3.set(tmp_vec_to, mvector3.copy(direction))
+		mvector3.multiply(tmp_vec_to, max_distance)
+		mvector3.add(tmp_vec_to, mvector3.copy(from_pos))
+
+		local suppression_slot_mask = user_unit:in_slot(16) and managers.slot:get_mask("enemies") or managers.slot:get_mask("players", "criminals")
+
+		self:_suppress_units(mvector3.copy(from_pos), tmp_vec_to, 100, suppression_slot_mask, user_unit, nil, max_distance)
+	end
+
 	if self._alert_events then
 		result.rays = unique_hits
 	end
