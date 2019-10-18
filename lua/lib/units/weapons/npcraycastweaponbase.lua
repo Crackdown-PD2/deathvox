@@ -57,6 +57,14 @@
 		local result = {}
 		local ray_distance = self._weapon_range or 20000
 
+		local miss, extra_spread = self:_check_smoke_shot(user_unit, target_unit) --whoops, I don't know how I ended up removing this
+
+		if miss then
+			result.guaranteed_miss = miss
+
+			mvector3.spread(direction, math.rand(unpack(extra_spread)))
+		end
+
 		mvector3.set(mvec_to, direction)
 		mvector3.multiply(mvec_to, ray_distance)
 		mvector3.add(mvec_to, from_pos)
@@ -126,10 +134,6 @@
 			end
 		end
 
-		if (not col_ray or col_ray.unit ~= target_unit) and target_unit and target_unit:character_damage() and target_unit:character_damage().build_suppression then
-			target_unit:character_damage():build_suppression(tweak_data.weapon[self._name_id].suppression) --need to check this later
-		end
-
 		result.hit_enemy = char_hit
 
 		local furthest_hit = unique_hits[#unique_hits]
@@ -146,6 +150,19 @@
 
 				self:_spawn_trail_effect(mvec_spread, furthest_hit)
 			end
+		end
+
+		if self._suppression then
+			local tmp_vec_to = Vector3()
+			local max_distance = ray_distance --ray_distance is usually 200m, modify accordingly
+
+			mvector3.set(tmp_vec_to, mvector3.copy(direction))
+			mvector3.multiply(tmp_vec_to, max_distance)
+			mvector3.add(tmp_vec_to, mvector3.copy(from_pos))
+
+			local suppression_slot_mask = user_unit:in_slot(16) and managers.slot:get_mask("enemies") or managers.slot:get_mask("players", "criminals")
+
+			self:_suppress_units(mvector3.copy(from_pos), tmp_vec_to, 100, suppression_slot_mask, user_unit, suppr_mul, max_distance)
 		end
 
 		if self._alert_events then
