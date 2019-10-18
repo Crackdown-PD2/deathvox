@@ -1,5 +1,6 @@
 local orig_dmg_bullet = PlayerDamage.damage_bullet
 function PlayerDamage:damage_bullet(attack_data,...)
+	
 	if not self:_chk_can_take_dmg() then
 		return
 	end
@@ -189,12 +190,12 @@ function PlayerDamage:clbk_kill_taunt_common(attack_data)
 
 		attack_data.attacker_unit:sound():say("i03")
 	end
-end	
+end
 
 local _chk_dmg_too_soon_orig = PlayerDamage._chk_dmg_too_soon
 function PlayerDamage:_chk_dmg_too_soon(damage, ...)
 	if not deathvox:IsHoppipOverhaulEnabled() then
-		return _calc_armor_damage_original(self, attack_data, ...)
+		return _chk_dmg_too_soon_orig(self, attack_data, ...)
     else
 		local next_allowed_dmg_t = type(self._next_allowed_dmg_t) == "number" and self._next_allowed_dmg_t or Application:digest_value(self._next_allowed_dmg_t, false)
 		local t = managers.player:player_timer():time()
