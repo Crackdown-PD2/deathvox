@@ -194,19 +194,19 @@ end
 local _chk_dmg_too_soon_orig = PlayerDamage._chk_dmg_too_soon
 function PlayerDamage:_chk_dmg_too_soon(damage, ...)
 	if not deathvox:IsHoppipOverhaulEnabled() then
-		return _calc_armor_damage_original(self, attack_data, ...)
-    else
-		local next_allowed_dmg_t = type(self._next_allowed_dmg_t) == "number" and self._next_allowed_dmg_t or Application:digest_value(self._next_allowed_dmg_t, false)
-		local t = managers.player:player_timer():time()
-		if damage <= self._last_received_dmg + 0.01 and next_allowed_dmg_t > t then
-			self._old_last_received_dmg = nil
-			self._old_next_allowed_dmg_t = nil
-			return true
-		end
-		if next_allowed_dmg_t > t then
-			self._old_last_received_dmg = self._last_received_dmg
-			self._old_next_allowed_dmg_t = next_allowed_dmg_t
-		end
+		return _chk_dmg_too_soon_orig(self, damage, ...)
+   	end
+	
+	local next_allowed_dmg_t = type(self._next_allowed_dmg_t) == "number" and self._next_allowed_dmg_t or Application:digest_value(self._next_allowed_dmg_t, false)
+	local t = managers.player:player_timer():time()
+	if damage <= self._last_received_dmg + 0.01 and next_allowed_dmg_t > t then
+		self._old_last_received_dmg = nil
+		self._old_next_allowed_dmg_t = nil
+		return true
+	end
+	if next_allowed_dmg_t > t then
+		self._old_last_received_dmg = self._last_received_dmg
+		self._old_next_allowed_dmg_t = next_allowed_dmg_t
 	end
 end
 
