@@ -42,33 +42,51 @@ local function deathvox_init_menus()
 		log("Loaded menu settings")
 		return self.Settings
 	end
+	
+	function deathvox:ChangeSetting(key,state) --called when changing settings
+		self.Settings[key] = state
+		--The below code would allow settings changed mid-game to apply immediately if the game is offline/populated by only host. It's disabled but you can enable it if you want
+		--[[ 
+		if not managers.network:session() or table.size(managers.network:session():peers()) <= 0 then 
+			deathvox.Session_Settings[key] = state
+		end
+		--]]
+	end
 
 	Hooks:Add("NetworkReceivedData", "NetworkReceivedData_deathvox", function(sender, message, data)
-		if sender == 1 then 
+		if sender == 1 then --only accept sync data from host
 			if message == deathvox.NetworkIDs.Overhauls then
 				deathvox:SyncOptionsFromHost(data)
 			--other sync data interpretation can go here
 			end
 		end
 	end)
-
+	
 	function deathvox:SyncOptionsFromHost(str)
-		if str == "" then 
+		local synced_options = LuaNetworking:StringToTable(str) or {}
+		if not synced_options then 
 			log("CRACKDOWN: ERROR: Bad sync options")
 			self.Session_Settings = self.Session_Settings or {}
 		else
-			local synced_options = LuaNetworking:StringToTable(str) or {}
 			for item,value in pairs(synced_options) do 
-				self.Session_Settings[item] = value
+				if self.syncable_options[item] then 
+					self.Session_Settings[item] = value
+				end
 			end
 		end
 
 	end
 	
-	function deathvox:SyncOptionsToClients()
+	function deathvox:SyncOptionsToClients() --all clients
 		local network_string = LuaNetworking:TableToString(self.Session_Settings)
 		
 		LuaNetworking:SendToPeers(deathvox.NetworkIDs.Overhauls,network_string)
+	end
+	
+	function deathvox:SyncOptionsToClient(peer_id) --single target client; for late joins
+		local network_string = LuaNetworking:TableToString(self.Session_Settings)
+		
+		LuaNetworking:SendToPeer(peer_id,deathvox.NetworkIDs.Overhauls,network_string)
 	end
 	
 	--creates empty menu entries for the main menu and the overhauls submenu, to be populated with options later
@@ -98,7 +116,7 @@ local function deathvox_init_menus()
 
 		MenuCallbackHandler.callback_deathvox_toggle_hoppip = function(self,item) --on keypress
 			local enabled = item:value() == "on"
-			deathvox.Settings.useHoppipOverhaul = enabled
+			deathvox:ChangeSetting("useHoppipOverhaul",enabled)
 			deathvox:Save()
 		end
 	
@@ -115,10 +133,13 @@ if not _G.deathvox then
 	_G.deathvox.SavePath = SavePath
 	_G.deathvox.SaveName = "crackdown.txt"
 	_G.deathvox.SavePathFull = deathvox.SavePath .. deathvox.SaveName
-	deathvox.Settings = {
+	deathvox.Settings = { --options as saved to your BLT save file 
 		useHoppipOverhaul = true
 	}
-	deathvox.Session_Settings = {} --populated only on load, not on changed menu
+	deathvox.syncable_options = { --whitelist: options on this list will be accepted by other clients; if options are not on this list, clients will ignore them and not apply these synced options (from host) on the client's end
+		useHoppipOverhaul = true
+	}
+	deathvox.Session_Settings = {} --populated only on load, not on changed menu. keep this empty
 	deathvox.NetworkIDs = { --string ids for network syncing stuff
 		Overhauls = "overhauls"
 	}
