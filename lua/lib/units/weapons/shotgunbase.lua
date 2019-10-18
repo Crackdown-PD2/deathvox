@@ -71,7 +71,6 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 	self._range = self._range * inc_range_mul --since the shotgun's range is used to determine the length of the rays, Far Away ace will increase it accordingly
 
 	local damage = self:_get_current_damage(dmg_mul)
-	local autoaim, dodge_enemies = self:check_autoaim(from_pos, direction, self._range)
 	local weight = 0.1
 
 	local spread_x, spread_y = self:_get_spread(user_unit)
@@ -149,69 +148,73 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 			end
 		end
 
-		if self._autoaim and autoaim then
-			if hit and hit.unit:in_slot(managers.slot:get_mask("enemies")) then
-				self._autohit_current = (self._autohit_current + weight) / (1 + weight) --decrease autohit chance if an enemy was hit
+		if self._autoaim then
+			local autoaim = self:check_autoaim(from_pos, direction, self._range)
 
-				autoaim = false
-			else
-				autoaim = false
-				local autohit = self:check_autoaim(from_pos, direction, self._range)
+			if autoaim then
+				if hit and hit.unit:in_slot(managers.slot:get_mask("enemies")) then
+					self._autohit_current = (self._autohit_current + weight) / (1 + weight) --decrease autohit chance if an enemy was hit
 
-				if autohit then
-					local autohit_chance = 1 - math.clamp((self._autohit_current - self._autohit_data.MIN_RATIO) / (self._autohit_data.MAX_RATIO - self._autohit_data.MIN_RATIO), 0, 1)
+					autoaim = false
+				else
+					autoaim = false
+					local autohit = self:check_autoaim(from_pos, direction, self._range)
 
-					if math.random() < autohit_chance then
-						self._autohit_current = (self._autohit_current + weight) / (1 + weight) --decrease autohit chance when sucessfully auto-hitting
+					if autohit then
+						local autohit_chance = 1 - math.clamp((self._autohit_current - self._autohit_data.MIN_RATIO) / (self._autohit_data.MAX_RATIO - self._autohit_data.MIN_RATIO), 0, 1)
 
-						mvector3.set(mvec_to, from_pos)
-						mvector3.add_scaled(mvec_to, autohit.ray, self._range)
+						if math.random() < autohit_chance then
+							self._autohit_current = (self._autohit_current + weight) / (1 + weight) --decrease autohit chance when sucessfully auto-hitting
 
-						--proper penetration using one ray, against walls and things like corpses, bots, etc (like other weapons have). HE rounds obviously still stop at the first thing they hit
-						if he_round then
-							ray_hits = World:raycast("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
-						elseif self._can_shoot_through_wall then
-							ray_hits = World:raycast_wall("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units, "thickness", 40, "thickness_mask", wall_mask)
-						else
-							ray_hits = World:raycast_all("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
-						end
+							mvector3.set(mvec_to, from_pos)
+							mvector3.add_scaled(mvec_to, autohit.ray, self._range)
 
-						if he_round then
-							if ray_hits then
-								table.insert(unique_hits, ray_hits)
+							--proper penetration using one ray, against walls and things like corpses, bots, etc (like other weapons have). HE rounds obviously still stop at the first thing they hit
+							if he_round then
+								ray_hits = World:raycast("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
+							elseif self._can_shoot_through_wall then
+								ray_hits = World:raycast_wall("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units, "thickness", 40, "thickness_mask", wall_mask)
+							else
+								ray_hits = World:raycast_all("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
 							end
-						else
-							for i, hit in ipairs(ray_hits) do
-								if not units_hit[hit.unit:key()] then
-									units_hit[hit.unit:key()] = true
-									unique_hits[#unique_hits + 1] = hit
-									hit.hit_position = hit.position
-									hit_an_enemy = hit_an_enemy or hit.unit:in_slot(enemy_mask)
-									local weak_body = hit.body:has_ray_type(ai_vision_ids)
-									weak_body = weak_body or hit.body:has_ray_type(bulletproof_ids)
 
-									if not self._can_shoot_through_enemy and hit_an_enemy then
-										break
-									elseif hit.unit:in_slot(wall_mask) then
-										if weak_body then --actually the other way around, this is a solid wall (just being consistent with vanilla)
-											if self._can_shoot_through_wall then
-												if went_through_wall then
-													break
+							if he_round then
+								if ray_hits then
+									table.insert(unique_hits, ray_hits)
+								end
+							else
+								for i, hit in ipairs(ray_hits) do
+									if not units_hit[hit.unit:key()] then
+										units_hit[hit.unit:key()] = true
+										unique_hits[#unique_hits + 1] = hit
+										hit.hit_position = hit.position
+										hit_an_enemy = hit_an_enemy or hit.unit:in_slot(enemy_mask)
+										local weak_body = hit.body:has_ray_type(ai_vision_ids)
+										weak_body = weak_body or hit.body:has_ray_type(bulletproof_ids)
+
+										if not self._can_shoot_through_enemy and hit_an_enemy then
+											break
+										elseif hit.unit:in_slot(wall_mask) then
+											if weak_body then --actually the other way around, this is a solid wall (just being consistent with vanilla)
+												if self._can_shoot_through_wall then
+													if went_through_wall then
+														break
+													else
+														went_through_wall = true
+													end
 												else
-													went_through_wall = true
+													break
 												end
-											else
-												break
 											end
+										elseif not self._can_shoot_through_shield and hit.unit:in_slot(shield_mask) then
+											break
 										end
-									elseif not self._can_shoot_through_shield and hit.unit:in_slot(shield_mask) then
-										break
 									end
 								end
 							end
+						else
+							self._autohit_current = self._autohit_current / (1 + weight) --increase autohit chance when nothing is hit
 						end
-					else
-						self._autohit_current = self._autohit_current / (1 + weight) --increase autohit chance when nothing is hit
 					end
 				end
 			end
@@ -496,10 +499,19 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 		end
 	end
 
+	if self._suppression then
+		local tmp_vec_to = Vector3()
+
+		mvector3.set(tmp_vec_to, mvector3.copy(direction))
+		mvector3.multiply(tmp_vec_to, self._range)
+		mvector3.add(tmp_vec_to, mvector3.copy(from_pos))
+
+		self:_suppress_units(mvector3.copy(from_pos), tmp_vec_to, 100, managers.slot:get_mask("enemies"), user_unit, suppr_mul, self._range)
+	end
+
 	if not result then
 		result = {
-			hit_enemy = ap_slug and hit_anyone or next(hit_enemies) and true or false,
-			enemies_in_cone = self._suppression and dodge_enemies --proper suppression (calculated in RaycastWeaponBase), unlike vanilla which suppresses enemies all the time, even during stealth
+			hit_enemy = ap_slug and hit_anyone or next(hit_enemies) and true or false
 		}
 
 		if self._alert_events then
