@@ -145,16 +145,25 @@ function SentryGunWeapon:_fire_raycast(from_pos, direction, shoot_player, target
 		end
 	end
 
-	if (not col_ray or col_ray.unit ~= target_unit) and target_unit and target_unit:character_damage() and target_unit:character_damage().build_suppression then
-		target_unit:character_damage():build_suppression(self._suppression) --check
-	end
-
 	result.hit_enemy = hit_unit
 
 	local furthest_hit = unique_hits[#unique_hits]
 
 	if (furthest_hit and furthest_hit.distance > 600 or not furthest_hit) and alive(self._obj_fire) then
 		self:_spawn_trail_effect(direction, furthest_hit)
+	end
+
+	if self._suppression then
+		local tmp_vec_to = Vector3()
+		local max_distance = ray_distance --ray_distance is usually 200m, modify accordingly
+
+		mvector3.set(tmp_vec_to, mvector3.copy(direction))
+		mvector3.multiply(tmp_vec_to, max_distance)
+		mvector3.add(tmp_vec_to, mvector3.copy(from_pos))
+
+		local suppression_slot_mask = self._unit:in_slot(25) and managers.slot:get_mask("enemies") or managers.slot:get_mask("players", "criminals")
+
+		RaycastWeaponBase._suppress_units(self, mvector3.copy(from_pos), tmp_vec_to, 100, suppression_slot_mask, self._unit, nil, max_distance)
 	end
 
 	if self._alert_events then
