@@ -1,4 +1,4 @@
-tlocal mvec_1 = Vector3()
+local mvec_1 = Vector3()
 local mvec_2 = Vector3()
 
 function CopDamage:is_immune_to_shield_knockback()
