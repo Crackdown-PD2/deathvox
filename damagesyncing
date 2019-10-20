@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<tweaks>
+    <!--damage_bullet-->
+    <tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="damage_bullet"/>
+            <param type="int" min="0" max="3" />
+        </search>
+        <target mode="attributes">
+            <attr name="max" value="8"/>
+        </target>
+    </tweak>
+    <!--damage_melee-->
+    <tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="damage_melee"/>
+            <param type="int" min="0" max="7" />
+        </search>
+        <target mode="attributes">
+            <attr name="max" value="12"/>
+        </target>
+    </tweak>
+    <!--damage_simple-->
+    <tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="damage_simple"/>
+            <param type="int" min="0" max="3" />
+        </search>
+        <target mode="attributes">
+            <attr name="max" value="8"/>
+        </target>
+    </tweak>
+    <!--damage_tase-->
+    <tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="damage_tase"/>
+            <param type="int" min="0" max="1" />
+        </search>
+        <target mode="attributes">
+            <attr name="max" value="4"/>
+        </target>
+    </tweak>
+</tweaks>
