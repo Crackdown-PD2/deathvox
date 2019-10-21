@@ -357,7 +357,8 @@ function CopMovement:damage_clbk(my_unit, damage_info)
 			ignite_character = damage_info.ignite_character,
 			start_dot_damage_roll = damage_info.start_dot_damage_roll,
 			is_fire_dot_damage = damage_info.is_fire_dot_damage,
-			fire_dot_data = damage_info.fire_dot_data
+			fire_dot_data = damage_info.fire_dot_data,
+			is_synced = damage_info.is_synced
 		}
 	end
 
