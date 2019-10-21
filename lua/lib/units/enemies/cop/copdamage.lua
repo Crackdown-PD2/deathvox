@@ -1016,9 +1016,7 @@ function CopDamage:damage_tase(attack_data)
 				end
 			end
 
-			result.type = "taser_tased"
-
-			--[[if self._unit:base():has_tag("shield") then
+			if self._unit:base():has_tag("shield") then
 				result.type = "taser_tased"
 			else
 				if self._char_tweak.damage and self._char_tweak.damage.tased_response then
@@ -1039,7 +1037,7 @@ function CopDamage:damage_tase(attack_data)
 
 				result.type = "hurt"
 				attack_data.variant = "tase"
-			end]]
+			end
 		end
 
 		self:_apply_damage_to_health(damage)
@@ -1595,7 +1593,7 @@ function CopDamage:damage_melee(attack_data)
 		local result_type = attack_data.shield_knock and self._char_tweak.damage.shield_knocked and not self._unit:base().is_phalanx and "shield_knock" or attack_data.variant == "counter_tased" and "counter_tased" or attack_data.variant == "taser_tased" and (self._char_tweak.can_be_tased == nil or self._char_tweak.can_be_tased) and "taser_tased" or attack_data.variant == "counter_spooc" and (not self._unit:base():has_tag("tank") and not self._unit:base():has_tag("boss")) and "expl_hurt" or self:get_damage_type(damage_effect_percent, "melee") or "dmg_rcv"
 		local variant = attack_data.variant
 
-		--[[if result_type == "taser_tased" and not self._unit:base():has_tag("shield") then --shields get tased as usual, other enemies get tased similarly to bots
+		if result_type == "taser_tased" and not self._unit:base():has_tag("shield") then --shields get tased as usual, other enemies get tased similarly to bots
 			result_type = "hurt"
 			variant = nil
 			attack_data.variant = "tase"
@@ -1611,7 +1609,7 @@ function CopDamage:damage_melee(attack_data)
 				self._tased_time = 2
 				self._tased_down_time = self._tased_time * 2
 			end
-		end]]
+		end
 
 		result = {
 			type = result_type,
@@ -1793,6 +1791,10 @@ function CopDamage:damage_melee(attack_data)
 end
 
 function CopDamage:sync_damage_melee(attacker_unit, damage_percent, damage_effect_percent, i_body, hit_offset_height, variant, death)
+	if self._dead then --OVK why was this missing, why
+		return
+	end
+
 	local attack_data = {
 		variant = "melee",
 		attacker_unit = attacker_unit
