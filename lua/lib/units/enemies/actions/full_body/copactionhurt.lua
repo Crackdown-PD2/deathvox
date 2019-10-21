@@ -768,6 +768,10 @@ end
 function CopActionHurt:is_network_allowed(action_desc)
 	if not CopActionHurt.network_allowed_hurt_types[action_desc.hurt_type] then
 		return false
+	else
+		if action_desc.variant == "tase" and not managers.groupai:state():is_unit_team_AI(self._unit) then
+			return false
+		end
 	end
 
 	if action_desc.allow_network == false or action_desc.is_synced then --prevent already synced hurts from being sent back to the sender
