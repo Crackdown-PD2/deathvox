@@ -466,6 +466,10 @@ local MIN_KNOCK_BACK = 200
 local KNOCK_BACK_CHANCE = 0.8
 
 function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage, blank, no_sound, already_ricocheted)
+	if not blank and Network:is_client() and user_unit ~= managers.player:player_unit() then
+		blank = true
+	end
+
 	local enable_ricochets = false
 
 	if enable_ricochets and not already_ricocheted and user_unit and user_unit == managers.player:player_unit() and col_ray.unit then
@@ -548,29 +552,31 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 
 	local result = nil
 
-	if alive(weapon_unit) and hit_unit:character_damage() and hit_unit:character_damage().damage_bullet then
-		local is_alive = not hit_unit:character_damage():dead()
-		local knock_down = weapon_unit:base()._knock_down and weapon_unit:base()._knock_down > 0 and math.random() < weapon_unit:base()._knock_down
-		result = self:give_impact_damage(col_ray, weapon_unit, user_unit, damage, weapon_unit:base()._use_armor_piercing, false, knock_down, weapon_unit:base()._stagger, weapon_unit:base()._variant)
+	if not blank then
+		if alive(weapon_unit) and hit_unit:character_damage() and hit_unit:character_damage().damage_bullet then
+			local is_alive = not hit_unit:character_damage():dead()
+			local knock_down = weapon_unit:base()._knock_down and weapon_unit:base()._knock_down > 0 and math.random() < weapon_unit:base()._knock_down
+			result = self:give_impact_damage(col_ray, weapon_unit, user_unit, damage, weapon_unit:base()._use_armor_piercing, false, knock_down, weapon_unit:base()._stagger, weapon_unit:base()._variant)
 
-		if result ~= "friendly_fire" then
-			local is_dead = hit_unit:character_damage():dead()
-			local push_multiplier = self:_get_character_push_multiplier(weapon_unit, is_alive and is_dead)
+			if result ~= "friendly_fire" then
+				local is_dead = hit_unit:character_damage():dead()
+				local push_multiplier = self:_get_character_push_multiplier(weapon_unit, is_alive and is_dead)
 
-			managers.game_play_central:physics_push(col_ray, push_multiplier)
+				managers.game_play_central:physics_push(col_ray, push_multiplier)
+			else
+				play_impact_flesh = false
+			end
 		else
-			play_impact_flesh = false
+			managers.game_play_central:physics_push(col_ray)
 		end
-	else
-		managers.game_play_central:physics_push(col_ray)
-	end
 
-	if play_impact_flesh then
-		managers.game_play_central:play_impact_flesh({
-			col_ray = col_ray,
-			no_sound = no_sound
-		})
-		self:play_impact_sound_and_effects(weapon_unit, col_ray, no_sound)
+		if play_impact_flesh then
+			managers.game_play_central:play_impact_flesh({
+				col_ray = col_ray,
+				no_sound = no_sound
+			})
+			self:play_impact_sound_and_effects(weapon_unit, col_ray, no_sound)
+		end
 	end
 
 	return result
