@@ -764,3 +764,19 @@ function CopActionHurt:clbk_shooting_hurt()
 		self._weapon_unit:base():singleshot(fire_obj:position(), fire_obj:rotation(), 1, false, nil, nil, nil, nil)
 	end
 end
+
+function CopActionHurt:is_network_allowed(action_desc)
+	if not CopActionHurt.network_allowed_hurt_types[action_desc.hurt_type] then
+		return false
+	end
+
+	if action_desc.allow_network == false or action_desc.is_synced then --prevent already synced hurts from being sent back to the sender
+		return false
+	end
+
+	if self._unit:in_slot(managers.slot:get_mask("criminals")) then
+		return false
+	end
+
+	return true
+end
