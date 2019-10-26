@@ -162,6 +162,8 @@ function CopDamage:damage_explosion(attack_data)
 	end
 
 	if self._health <= damage then
+		attack_data.damage = self._health
+
 		if self:check_medic_heal() then
 			attack_data.variant = "healed"
 			result = {
@@ -169,7 +171,6 @@ function CopDamage:damage_explosion(attack_data)
 				variant = attack_data.variant
 			}
 		else
-			attack_data.damage = self._health
 			result = {
 				type = "death",
 				variant = attack_data.variant
@@ -667,6 +668,8 @@ function CopDamage:damage_bullet(attack_data)
 	end
 
 	if self._health <= damage then
+		attack_data.damage = self._health
+
 		if self:check_medic_heal() then
 			result = {
 				type = "healed",
@@ -685,7 +688,6 @@ function CopDamage:damage_bullet(attack_data)
 				end
 			end
 
-			attack_data.damage = self._health
 			result = {
 				type = "death",
 				variant = attack_data.variant
@@ -1552,6 +1554,9 @@ function CopDamage:damage_melee(attack_data)
 	end
 
 	if self._health <= damage then
+		attack_data.damage = self._health
+		damage_effect_percent = 1
+
 		if self:check_medic_heal() then
 			result = {
 				type = "healed",
@@ -1566,8 +1571,6 @@ function CopDamage:damage_melee(attack_data)
 				})
 			end
 
-			damage_effect_percent = 1
-			attack_data.damage = self._health
 			result = {
 				type = "death",
 				variant = attack_data.variant
@@ -2159,13 +2162,14 @@ function CopDamage:damage_fire(attack_data)
 	end
 
 	if self._health <= damage then
+		attack_data.damage = self._health
+
 		if self:check_medic_heal() then
 			result = {
 				type = "healed",
 				variant = attack_data.variant
 			}
 		else
-			attack_data.damage = self._health
 			result = {
 				type = "death",
 				variant = attack_data.variant
@@ -2531,6 +2535,8 @@ function CopDamage:damage_simple(attack_data)
 	end
 
 	if self._health <= damage then
+		attack_data.damage = self._health
+
 		if self:check_medic_heal() then
 			attack_data.variant = "healed"
 			result = {
@@ -2538,7 +2544,6 @@ function CopDamage:damage_simple(attack_data)
 				variant = attack_data.variant
 			}
 		else
-			attack_data.damage = self._health
 			result = {
 				type = "death",
 				variant = attack_data.variant
@@ -2789,6 +2794,8 @@ function CopDamage:damage_dot(attack_data)
 	end
 
 	if self._health <= damage then
+		attack_data.damage = self._health
+
 		if self:check_medic_heal() then
 			attack_data.variant = "healed"
 			result = {
@@ -2796,7 +2803,6 @@ function CopDamage:damage_dot(attack_data)
 				variant = attack_data.variant
 			}
 		else
-			attack_data.damage = self._health
 			result = {
 				type = "death",
 				variant = attack_data.variant
