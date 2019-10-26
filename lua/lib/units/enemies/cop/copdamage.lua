@@ -2,9 +2,13 @@ local mvec_1 = Vector3()
 local mvec_2 = Vector3()
 
 function CopDamage:is_immune_to_shield_knockback()
-	local acting = self._unit:anim_data() and self._unit:anim_data().act
+	if self._immune_to_knockback then
+		return true
+	elseif self._unit:anim_data() and self._unit:anim_data().act then
+		return true
+	end
 
-	return self._immune_to_knockback or acting
+	return false
 end
 
 function CopDamage:_comment_death(attacker, killed_unit, special_comment)
@@ -93,10 +97,16 @@ function CopDamage:damage_explosion(attack_data)
 
 	local result = nil
 	local damage = attack_data.damage
-	damage = damage * (self._char_tweak.damage.explosion_damage_mul or 1)
-	damage = damage * (self._marked_dmg_mul or 1)
+	
+	if self._char_tweak.damage.explosion_damage_mul then
+		damage = damage * self._char_tweak.damage.explosion_damage_mul
+	end
 
-	--HVT ace now also grants its bonus
+	if self._marked_dmg_mul then
+		damage = damage * self._marked_dmg_mul
+	end
+
+	--HVT ace now also grants its bonus for non-projectiles (grenades, etc)
 	if valid_attacker and self._marked_dmg_mul and self._marked_dmg_dist_mul then
 		local attacking_unit = attack_data.attacker_unit
 
@@ -136,20 +146,16 @@ function CopDamage:damage_explosion(attack_data)
 	end
 
 	damage = managers.modifiers:modify_value("CopDamage:DamageExplosion", damage, self._unit:base()._tweak_table)
+	damage = self:_apply_damage_reduction(damage)
 
 	if self._unit:base():char_tweak().DAMAGE_CLAMP_EXPLOSION then
 		damage = math.min(damage, self._unit:base():char_tweak().DAMAGE_CLAMP_EXPLOSION)
 	end
 
-	damage = self:_apply_damage_reduction(damage)
 	damage = math.clamp(damage, 0, self._HEALTH_INIT)
 	local damage_percent = math.ceil(damage / self._HEALTH_INIT_PRECENT)
 	damage = damage_percent * self._HEALTH_INIT_PRECENT
 	damage, damage_percent = self:_apply_min_health_limit(damage, damage_percent)
-
-	if self._unit:movement():cool() and self._unit:base():char_tweak()["stealth_instant_kill"] then
-		damage = self._HEALTH_INIT
-	end
 	
 	if self._immortal then
 		damage = math.min(damage, self._health - 1)
@@ -530,17 +536,6 @@ function CopDamage:damage_bullet(attack_data)
 				variant = 0
 			end
 
-			if variant == 1 or variant == 2 or variant == 5 or variant == 6 then
-				if alive(self._unit:inventory() and self._unit:inventory()._shield_unit) and self._unit:movement()._anim_global and self._unit:movement()._anim_global == "shield" then
-					local can_be_shield_knocked = not self._unit:base().is_phalanx and self._char_tweak.damage.shield_knocked and not self:is_immune_to_shield_knockback()
-
-					if can_be_shield_knocked then --proper redirecting for hurt animations against shield units, using "expl_hurt" for Shields instead of "shield_knock" for more variety (plus it works with directions to produce different animations)
-						variant = 4
-						result.type = "expl_hurt"
-					end
-				end
-			end
-
 			local body_index = self._unit:get_body_index(attack_data.col_ray.body:name())
 			local hit_offset_height = math.clamp(attack_data.col_ray.position.z - self._unit:movement():m_pos().z, 0, 300)
 			attack_data.result = result
@@ -585,7 +580,9 @@ function CopDamage:damage_bullet(attack_data)
 
 	local damage = attack_data.damage
 
-	damage = damage * (self._marked_dmg_mul or 1)
+	if self._marked_dmg_mul then
+		damage = damage * self._marked_dmg_mul
+	end
 
 	if self._marked_dmg_mul and self._marked_dmg_dist_mul then
 		local dst = mvector3.distance(attack_data.origin, self._unit:position())
@@ -648,6 +645,8 @@ function CopDamage:damage_bullet(attack_data)
 		end
 	end
 
+	damage = self:_apply_damage_reduction(damage)
+
 	--proper stealth insta-killing and damage clamping (the latter won't interfere for insta-kills)
 	if self._unit:movement():cool() and self._unit:base():char_tweak()["stealth_instant_kill"] then
 		damage = self._HEALTH_INIT
@@ -657,7 +656,6 @@ function CopDamage:damage_bullet(attack_data)
 		end
 	end
 		
-	damage = self:_apply_damage_reduction(damage)
 	attack_data.raw_damage = damage
 	attack_data.headshot = head
 	local damage_percent = math.ceil(math.clamp(damage / self._HEALTH_INIT_PRECENT, 1, self._HEALTH_GRANULARITY))
@@ -829,17 +827,6 @@ function CopDamage:damage_bullet(attack_data)
 		variant = 0
 	end
 
-	if variant == 1 or variant == 2 or variant == 5 or variant == 6 then
-		if alive(self._unit:inventory() and self._unit:inventory()._shield_unit) and self._unit:movement()._anim_global and self._unit:movement()._anim_global == "shield" then
-			local can_be_shield_knocked = not self._unit:base().is_phalanx and self._char_tweak.damage.shield_knocked and not self:is_immune_to_shield_knockback()
-
-			if can_be_shield_knocked then --proper redirecting for hurt animations against shield units, using "expl_hurt" for Shields instead of "shield_knock" for more variety (plus it works with directions to produce different animations)
-				variant = 4
-				attack_data.result.type = "expl_hurt"
-			end
-		end
-	end
-
 	self:_send_bullet_attack_result(attack_data, attacker, damage_percent, body_index, hit_offset_height, variant)
 	self:_on_damage_received(attack_data)
 
@@ -900,8 +887,8 @@ function CopDamage:die(attack_data)
 	end
 
 	if self._unit:base():has_tag("spooc") then
-		if self._unit:base():char_tweak().die_sound_event then
-			self._unit:sound():play(self._unit:base():char_tweak().die_sound_event, nil, nil) --ensure that spoocs stop their looping presence sound
+		if self._char_tweak.die_sound_event then
+			self._unit:sound():play(self._char_tweak.die_sound_event, nil, nil) --ensure that spoocs stop their looping presence sound
 		end
 
 		--if not self._unit:movement():cool() then --optional, to reinforce the idea of silent kills if desired
@@ -909,8 +896,10 @@ function CopDamage:die(attack_data)
 		--end
 	else
 		--if not self._unit:movement():cool() then
-		if self._unit:base():char_tweak().die_sound_event then
-			self._unit:sound():say(self._unit:base():char_tweak().die_sound_event or "x02a_any_3p", nil, nil) --death voiceline determined through char_tweak().die_sound_event, otherwise use default
+		if self._char_tweak.die_sound_event then --death voiceline determined through char_tweak().die_sound_event, otherwise use default
+			self._unit:sound():say(self._char_tweak.die_sound_event, nil, nil)
+		else
+			self._unit:sound():say("x02a_any_3p", nil, nil)
 		end
 		--end
 	end
@@ -1137,11 +1126,11 @@ function CopDamage:sync_damage_tase(attacker_unit, damage_percent, variant, deat
 			type = "death"
 		}
 
-		self:die("bullet")
+		self:die(attack_data)
 		self:chk_killshot(attacker_unit, "tase")
 
 		local data = {
-			variant = "melee",
+			variant = "bullet",
 			head_shot = false,
 			name = self._unit:base()._tweak_table,
 			stats_name = self._unit:base()._stats_name
@@ -1537,7 +1526,11 @@ function CopDamage:damage_melee(attack_data)
 		end
 	end
 
-	damage = damage * (self._marked_dmg_mul or 1)
+	if self._marked_dmg_mul then
+		damage = damage * self._marked_dmg_mul
+	end
+
+	damage = self:_apply_damage_reduction(damage)
 
 	if self._unit:movement():cool() then --since damage_melee wasn't a thing here, I'm assuming the stealth instant kill check that CD has is intended only for bullets?
 		damage = self._HEALTH_INIT
@@ -1549,7 +1542,6 @@ function CopDamage:damage_melee(attack_data)
 
 	local damage_effect = attack_data.damage_effect
 	local damage_effect_percent = nil
-	damage = self:_apply_damage_reduction(damage)
 	damage = math.clamp(damage, self._HEALTH_INIT_PRECENT, self._HEALTH_INIT)
 	local damage_percent = math.ceil(damage / self._HEALTH_INIT_PRECENT)
 	damage = damage_percent * self._HEALTH_INIT_PRECENT
@@ -2125,8 +2117,13 @@ function CopDamage:damage_fire(attack_data)
 		end
 	end
 
-	damage = damage * (self._char_tweak.damage.fire_damage_mul or 1)
-	damage = damage * (self._marked_dmg_mul or 1)
+	if self._char_tweak.damage.fire_damage_mul then
+		damage = damage * self._char_tweak.damage.fire_damage_mul
+	end
+
+	if self._marked_dmg_mul then
+		damage = damage * self._marked_dmg_mul
+	end
 
 	--HVT ace now also grants its bonus
 	if not attack_data.is_fire_dot_damage and self._marked_dmg_mul and self._marked_dmg_dist_mul then
@@ -2146,11 +2143,12 @@ function CopDamage:damage_fire(attack_data)
 		end
 	end
 
+	damage = self:_apply_damage_reduction(damage)
+
 	if self._unit:base():char_tweak().DAMAGE_CLAMP_FIRE then
 		damage = math.min(damage, self._unit:base():char_tweak().DAMAGE_CLAMP_FIRE)
 	end
 
-	damage = self:_apply_damage_reduction(damage)
 	damage = math.clamp(damage, 0, self._HEALTH_INIT)
 	local damage_percent = math.ceil(damage / self._HEALTH_INIT_PRECENT)
 	damage = damage_percent * self._HEALTH_INIT_PRECENT
@@ -2415,7 +2413,7 @@ function CopDamage:sync_damage_fire(attacker_unit, damage_percent, start_dot_dan
 		end
 
 		result = {
-			variant = "bullet",
+			variant = "fire",
 			type = result_type
 		}
 
@@ -2510,6 +2508,8 @@ function CopDamage:damage_simple(attack_data)
 	local result = nil
 	local damage = attack_data.damage
 
+	damage = self:_apply_damage_reduction(damage) --vanilla also lacks this
+
 	if self._unit:movement():cool() and self._unit:base():char_tweak()["stealth_instant_kill"] then --allowing stealth insta-kill
 		damage = self._HEALTH_INIT
 	else
@@ -2521,7 +2521,6 @@ function CopDamage:damage_simple(attack_data)
 		end
 	end
 
-	damage = self:_apply_damage_reduction(damage) --didn't notice the function was missing this one as well
 	damage = math.clamp(damage, 0, self._HEALTH_INIT)
 	local damage_percent = math.ceil(damage / self._HEALTH_INIT_PRECENT)
 	damage = damage_percent * self._HEALTH_INIT_PRECENT
@@ -2641,17 +2640,6 @@ function CopDamage:damage_simple(attack_data)
 		i_result = 8
 	else
 		i_result = 0
-	end
-
-	if i_result == 1 or i_result == 2 or i_result == 5 or i_result == 6 then
-		if alive(self._unit:inventory() and self._unit:inventory()._shield_unit) and self._unit:movement()._anim_global and self._unit:movement()._anim_global == "shield" then
-			local can_be_shield_knocked = not self._unit:base().is_phalanx and self._char_tweak.damage.shield_knocked and not self:is_immune_to_shield_knockback()
-
-			if can_be_shield_knocked then --proper redirecting for hurt animations against shield units, using "expl_hurt" for Shields instead of "shield_knock" for more variety (plus it works with directions to produce different animations)
-				attack_data.result.type = "expl_hurt"
-				i_result = 4
-			end
-		end
 	end
 
 	self:_send_simple_attack_result(attacker, damage_percent, self:_get_attack_variant_index(attack_data.result.variant), i_result)
@@ -2777,14 +2765,20 @@ function CopDamage:damage_dot(attack_data)
 		end
 	end
 
-	damage = damage * (self._char_tweak.damage.dot_damage_mul or 1)
-	damage = damage * (self._marked_dmg_mul or 1)
+	if self._char_tweak.damage.dot_damage_mul then
+		damage = damage * self._char_tweak.damage.dot_damage_mul
+	end
+
+	if self._marked_dmg_mul then
+		damage = damage * self._marked_dmg_mul
+	end
+
+	damage = self:_apply_damage_reduction(damage)
 
 	if self._char_tweak.DAMAGE_CLAMP_DOT then --never hurts to add these additional clamps as they do nothing if you don't specifically add them in charactertweakdata
 		damage = math.min(damage, self._char_tweak.DAMAGE_CLAMP_DOT)
 	end
 
-	damage = self:_apply_damage_reduction(damage)
 	damage = math.clamp(damage, 0, self._HEALTH_INIT)
 	local damage_percent = math.ceil(damage / self._HEALTH_INIT_PRECENT)
 	damage = damage_percent * self._HEALTH_INIT_PRECENT
@@ -2907,6 +2901,7 @@ function CopDamage:sync_damage_dot(attacker_unit, damage_percent, death, variant
 		end
 	else
 		local result_type = nil
+		local result_variant = nil
 
 		if hurt_animation then
 			result_type = "poison_hurt"
@@ -2916,10 +2911,13 @@ function CopDamage:sync_damage_dot(attacker_unit, damage_percent, death, variant
 
 		if variant == "healed" then
 			result_type = "healed"
+			result_variant = "bullet"
+		else
+			result_variant = variant
 		end
 
 		result = {
-			variant = "bullet",
+			variant = result_variant,
 			type = result_type
 		}
 
@@ -2928,7 +2926,7 @@ function CopDamage:sync_damage_dot(attacker_unit, damage_percent, death, variant
 		end
 	end
 
-	attack_data.variant = variant
+	attack_data.variant = result.variant
 	attack_data.result = result
 	attack_data.damage = damage
 	attack_data.weapon_id = weapon_id
