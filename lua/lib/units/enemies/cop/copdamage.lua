@@ -104,22 +104,22 @@ function CopDamage:damage_explosion(attack_data)
 
 	if self._marked_dmg_mul then
 		damage = damage * self._marked_dmg_mul
-	end
 
-	--HVT ace now also grants its bonus for non-projectiles (grenades, etc)
-	if valid_attacker and self._marked_dmg_mul and self._marked_dmg_dist_mul then
-		local attacking_unit = attack_data.attacker_unit
+		--HVT ace now also grants its bonus for non-projectiles (grenades, etc)
+		if self._marked_dmg_dist_mul and valid_attacker then
+			local attacking_unit = attack_data.attacker_unit
 
-		if attacking_unit and attacking_unit:base() and attacking_unit:base().thrower_unit then
-			attacking_unit = attacking_unit:base():thrower_unit()
-		end
+			if attacking_unit and attacking_unit:base() and attacking_unit:base().thrower_unit then
+				attacking_unit = attacking_unit:base():thrower_unit()
+			end
 
-		if alive(attacking_unit) then
-			local dst = mvector3.distance(attacking_unit:position(), self._unit:position())
-			local spott_dst = tweak_data.upgrades.values.player.marked_inc_dmg_distance[self._marked_dmg_dist_mul]
+			if alive(attacking_unit) then
+				local dst = mvector3.distance(attacking_unit:position(), self._unit:position())
+				local spott_dst = tweak_data.upgrades.values.player.marked_inc_dmg_distance[self._marked_dmg_dist_mul]
 
-			if spott_dst[1] < dst then
-				damage = damage * spott_dst[2]
+				if spott_dst[1] < dst then
+					damage = damage * spott_dst[2]
+				end
 			end
 		end
 	end
@@ -583,14 +583,14 @@ function CopDamage:damage_bullet(attack_data)
 
 	if self._marked_dmg_mul then
 		damage = damage * self._marked_dmg_mul
-	end
 
-	if self._marked_dmg_mul and self._marked_dmg_dist_mul then
-		local dst = mvector3.distance(attack_data.origin, self._unit:position())
-		local spott_dst = tweak_data.upgrades.values.player.marked_inc_dmg_distance[self._marked_dmg_dist_mul]
+		if self._marked_dmg_dist_mul then
+			local dst = mvector3.distance(attack_data.origin, self._unit:position())
+			local spott_dst = tweak_data.upgrades.values.player.marked_inc_dmg_distance[self._marked_dmg_dist_mul]
 
-		if spott_dst[1] < dst then
-			damage = damage * spott_dst[2]
+			if spott_dst[1] < dst then
+				damage = damage * spott_dst[2]
+			end
 		end
 	end
 
