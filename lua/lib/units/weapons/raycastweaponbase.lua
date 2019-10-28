@@ -14,6 +14,64 @@ local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
 local tmp_rot1 = Rotation()
 
+function RaycastWeaponBase:setup(setup_data, damage_multiplier)
+	self._autoaim = setup_data.autoaim
+	local stats = tweak_data.weapon[self._name_id].stats
+	self._alert_events = setup_data.alert_AI and {} or nil
+	self._alert_fires = {}
+	local weapon_stats = tweak_data.weapon.stats
+
+	if stats then
+		self._zoom = self._zoom or weapon_stats.zoom[stats.zoom]
+		self._alert_size = self._alert_size or weapon_stats.alert_size[stats.alert_size]
+		self._suppression = self._suppression or weapon_stats.suppression[stats.suppression]
+		self._spread = self._spread or weapon_stats.spread[stats.spread]
+		self._recoil = self._recoil or weapon_stats.recoil[stats.recoil]
+		self._spread_moving = self._spread_moving or weapon_stats.spread_moving[stats.spread_moving]
+		self._concealment = self._concealment or weapon_stats.concealment[stats.concealment]
+		self._value = self._value or weapon_stats.value[stats.value]
+		self._reload = self._reload or weapon_stats.reload[stats.reload]
+
+		for i, _ in pairs(weapon_stats) do
+			local stat = self["_" .. tostring(i)]
+
+			if not stat then
+				self["_" .. tostring(i)] = weapon_stats[i][5]
+
+				debug_pause("[RaycastWeaponBase] Weapon \"" .. tostring(self._name_id) .. "\" is missing stat \"" .. tostring(i) .. "\"!")
+			end
+		end
+	else
+		debug_pause("[RaycastWeaponBase] Weapon \"" .. tostring(self._name_id) .. "\" is missing stats block!")
+
+		self._zoom = 60
+		self._alert_size = 5000
+		self._suppression = 1
+		self._spread = 1
+		self._recoil = 1
+		self._spread_moving = 1
+		self._reload = 1
+	end
+
+	self._bullet_slotmask = setup_data.hit_slotmask or self._bullet_slotmask
+	self._panic_suppression_chance = setup_data.panic_suppression_skill and self:weapon_tweak_data().panic_suppression_chance
+
+	if self._panic_suppression_chance == 0 then
+		self._panic_suppression_chance = false
+	end
+
+	self._setup = setup_data
+	self._fire_mode = self._fire_mode or tweak_data.weapon[self._name_id].FIRE_MODE or "single"
+
+	if self._setup.timer then
+		self:set_timer(self._setup.timer)
+	end
+
+	if managers.mutators:is_mutator_active(MutatorFriendlyFire) then --add friendly fire against player husks only for players
+		self._bullet_slotmask = self._bullet_slotmask + World:make_slot_mask(3)
+	end
+end
+
 function RaycastWeaponBase:_weapon_tweak_data_id()
 	local override_gadget = self:gadget_overrides_weapon_functions()
 	if override_gadget then
