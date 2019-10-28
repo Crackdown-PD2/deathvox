@@ -237,3 +237,87 @@ function PlayerDamage:_calc_health_damage(attack_data, ...)
 	self._old_next_allowed_dmg_t = nil
 	return _calc_health_damage_original(self, attack_data, ...)
 end
+
+--would edit the whole function and do it properly + fix it while at it, but it hates me and I can't avoid 0 damage results or game crashes if I don't do it this way
+local damage_melee_original = PlayerDamage.damage_melee
+function PlayerDamage:damage_melee(attack_data)
+	local player_unit = managers.player:player_unit()
+
+	if alive(player_unit) and attack_data and attack_data.tase_player then
+		if player_unit:movement():current_state_name() == "standard" or player_unit:movement():current_state_name() == "carry" or player_unit:movement():current_state_name() == "bipod" then
+			if player_unit:movement():current_state_name() == "bipod" then
+				player_unit:movement()._current_state:exit(nil, "tased")
+			end
+
+			player_unit:movement():on_non_lethal_electrocution()
+			managers.player:set_player_state("tased")
+		end
+	end
+
+	damage_melee_original(self, attack_data)
+end
+
+function PlayerDamage:damage_fire(attack_data)
+	if not self:_chk_can_take_dmg() then
+		return
+	end
+
+	local damage_info = {result = {
+		variant = "fire",
+		type = "hurt"
+	}}
+	
+	local pm = managers.player
+	local damage = attack_data.damage or 1
+	local dmg_mul = pm:damage_reduction_skill_multiplier("fire")
+	attack_data.damage = damage * dmg_mul
+
+	local damage_absorption = pm:damage_absorption()
+
+	if damage_absorption > 0 then
+		attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
+	end
+
+	if self._god_mode or self._invulnerable or self._mission_damage_blockers.invulnerable then
+		self:_call_listeners(damage_info)
+
+		return
+	elseif self._unit:movement():current_state().immortal then
+		return
+	elseif self:incapacitated() then
+		return
+	elseif self:is_friendly_fire(attack_data.attacker_unit) then
+		return
+	elseif self:_chk_dmg_too_soon(attack_data.damage) then
+		return
+	end
+
+	self._last_received_dmg = attack_data.damage + attack_data.damage
+	self._next_allowed_dmg_t = Application:digest_value(pm:player_timer():time() + self._dmg_interval, true)
+
+	if self:get_real_armor() > 0 then
+		self._unit:sound():play("player_hit")
+	else
+		self._unit:sound():play("player_hit_permadamage")
+	end
+
+	if attack_data.attacker_unit then
+		self:_hit_direction(attack_data.attacker_unit:position())
+	end
+
+	attack_data.damage = managers.player:modify_value("damage_taken", attack_data.damage, attack_data)
+
+	if self._bleed_out then
+		self:_bleed_out_damage(attack_data)
+
+		return
+	end
+
+	self:_check_chico_heal(attack_data)
+
+	local armor_subtracted = self:_calc_armor_damage(attack_data)
+	attack_data.damage = attack_data.damage - (armor_subtracted or 0)
+	local health_subtracted = self:_calc_health_damage(attack_data)
+
+	self:_call_listeners(damage_info)
+end
