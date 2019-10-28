@@ -6,6 +6,71 @@ local mvec3_add = mvector3.add
 local mvec3_mul = mvector3.multiply
 local mvec3_norm = mvector3.normalize
 
+function PlayerStandard:init(unit)
+	PlayerMovementState.init(self, unit)
+
+	self._tweak_data = tweak_data.player.movement_state.standard
+	self._obj_com = self._unit:get_object(Idstring("rp_mover"))
+	local slot_manager = managers.slot
+	self._slotmask_gnd_ray = slot_manager:get_mask("player_ground_check")
+	self._slotmask_fwd_ray = slot_manager:get_mask("bullet_impact_targets")
+	self._slotmask_bullet_impact_targets = slot_manager:get_mask("bullet_impact_targets")
+	self._slotmask_pickups = slot_manager:get_mask("pickups")
+	self._slotmask_AI_visibility = slot_manager:get_mask("AI_visibility")
+	self._slotmask_long_distance_interaction = slot_manager:get_mask("long_distance_interaction")
+	self._ext_camera = unit:camera()
+	self._ext_movement = unit:movement()
+	self._ext_damage = unit:character_damage()
+	self._ext_inventory = unit:inventory()
+	self._ext_anim = unit:anim_data()
+	self._ext_network = unit:network()
+	self._ext_event_listener = unit:event_listener()
+	self._camera_unit = self._ext_camera._camera_unit
+	self._camera_unit_anim_data = self._camera_unit:anim_data()
+	self._machine = unit:anim_state_machine()
+	self._m_pos = self._ext_movement:m_pos()
+	self._pos = Vector3()
+	self._stick_move = Vector3()
+	self._stick_look = Vector3()
+	self._cam_fwd_flat = Vector3()
+	self._walk_release_t = -100
+	self._last_sent_pos = unit:position()
+	self._last_sent_pos_t = 0
+	self._state_data = unit:movement()._state_data
+	local pm = managers.player
+	self.RUN_AND_RELOAD = pm:has_category_upgrade("player", "run_and_reload")
+	self._pickup_area = 200 * pm:upgrade_value("player", "increased_pickup_area", 1)
+
+	self:set_animation_state("standard")
+
+	self._interaction = managers.interaction
+	self._on_melee_restart_drill = pm:has_category_upgrade("player", "drill_melee_hit_restart_chance")
+	local controller = unit:base():controller()
+
+	if controller:get_type() ~= "pc" and controller:get_type() ~= "vr" then
+		self._input = {}
+
+		table.insert(self._input, BipodDeployControllerInput:new())
+
+		if pm:has_category_upgrade("player", "second_deployable") then
+			table.insert(self._input, SecondDeployableControllerInput:new())
+		end
+	end
+
+	self._input = self._input or {}
+
+	table.insert(self._input, HoldButtonMetaInput:new("night_vision", "weapon_firemode", nil, 0.5))
+
+	self._menu_closed_fire_cooldown = 0
+
+	managers.menu:add_active_changed_callback(callback(self, self, "_on_menu_active_changed"))
+
+	--manually adding the player husk slotmask here when the FF Mutator is enabled, otherwise players won't be able to hit other players' husks with melee
+	if managers.mutators:is_mutator_active(MutatorFriendlyFire) then
+		self._slotmask_bullet_impact_targets = self._slotmask_bullet_impact_targets + World:make_slot_mask(3)
+	end
+end
+
 function PlayerStandard:_update_fwd_ray()
 	local from = self._unit:movement():m_head_pos()
 	local range = alive(self._equipped_unit) and self._equipped_unit:base():has_range_distance_scope() and 20000 or 4000
