@@ -80,6 +80,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 	mvector3.set(mvec_direction, direction)
 	
 	local ray_hits = nil
+	local hit_an_enemy = false
 
 	for i = 1, self._rays, 1 do
 		local theta = math.random() * 360
@@ -93,8 +94,6 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 		mvector3.multiply(mvec_to, self._range) --actually limit the range of the ray using the shotgun's range limit
 		mvector3.add(mvec_to, from_pos)
 
-		local hit_an_enemy = false
-		local went_through_wall = false
 		local enemy_mask = managers.slot:get_mask("enemies")
 		local wall_mask = managers.slot:get_mask("world_geometry", "vehicles")
 		local shield_mask = managers.slot:get_mask("enemy_shield_check") --to clarify, dragon's breath (FlameBulletBase) ignores shield objects completely from the get-go
@@ -114,20 +113,35 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 		local unique_hits = {} --table for collected hits
 
 		if he_round then
+			if hit_an_enemy then --once an enemy gets hit, this is always true until another shot is fired
+				hit_an_enemy = hit_an_enemy
+			end
+
 			if ray_hits then
+				if not hit_an_enemy and ray_hits.unit and ray_hits.unit:in_slot(enemy_mask) then
+					hit_an_enemy = true
+				end
+
 				table.insert(unique_hits, ray_hits)
 			end
 		else
+			local went_through_wall = false
+
 			for i, hit in ipairs(ray_hits) do
 				if not units_hit[hit.unit:key()] then
 					units_hit[hit.unit:key()] = true
 					unique_hits[#unique_hits + 1] = hit
 					hit.hit_position = hit.position
-					hit_an_enemy = hit_an_enemy or hit.unit:in_slot(enemy_mask)
 					local weak_body = hit.body:has_ray_type(ai_vision_ids)
 					weak_body = weak_body or hit.body:has_ray_type(bulletproof_ids)
 
-					if not self._can_shoot_through_enemy and hit_an_enemy then
+					if hit_an_enemy then --once an enemy gets hit, this is always true until another shot is fired
+						hit_an_enemy = hit_an_enemy
+					else
+						hit_an_enemy = hit.unit:in_slot(enemy_mask) and true or false
+					end
+
+					if not self._can_shoot_through_enemy and hit.unit:in_slot(enemy_mask) then
 						break
 					elseif hit.unit:in_slot(wall_mask) then
 						if weak_body then --actually the other way around, this is a solid wall (just being consistent with vanilla)
@@ -152,12 +166,13 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 			local autoaim = self:check_autoaim(from_pos, direction, self._range)
 
 			if autoaim then
-				if hit and hit.unit:in_slot(managers.slot:get_mask("enemies")) then
-					self._autohit_current = (self._autohit_current + weight) / (1 + weight) --decrease autohit chance if an enemy was hit
+				if hit_an_enemy then
+					self._autohit_current = (self._autohit_current + weight) / (1 + weight) --decrease autohit chance
 
 					autoaim = false
 				else
 					autoaim = false
+
 					local autohit = self:check_autoaim(from_pos, direction, self._range)
 
 					if autohit then
@@ -183,16 +198,17 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 									table.insert(unique_hits, ray_hits)
 								end
 							else
+								local went_through_wall = false
+
 								for i, hit in ipairs(ray_hits) do
 									if not units_hit[hit.unit:key()] then
 										units_hit[hit.unit:key()] = true
 										unique_hits[#unique_hits + 1] = hit
 										hit.hit_position = hit.position
-										hit_an_enemy = hit_an_enemy or hit.unit:in_slot(enemy_mask)
 										local weak_body = hit.body:has_ray_type(ai_vision_ids)
 										weak_body = weak_body or hit.body:has_ray_type(bulletproof_ids)
 
-										if not self._can_shoot_through_enemy and hit_an_enemy then
+										if not self._can_shoot_through_enemy and hit.unit:in_slot(enemy_mask) then
 											break
 										elseif hit.unit:in_slot(wall_mask) then
 											if weak_body then --actually the other way around, this is a solid wall (just being consistent with vanilla)
