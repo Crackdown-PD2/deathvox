@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <assets base_path="assets/" target="scripted" load_group="genseccops">
 
-	<group name="units/pd2_mod_gageammo/characters/">
+	<group name="units/pd2_mod_gensec/characters/">
 
 		<!--DV Gensec Medic-->	
 		<file :name="ene_deathvox_gensec_medic/ene_deathvox_gensec_medic.unit" load="true"/>

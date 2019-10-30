@@ -6,4 +6,5 @@
 	<:include src="fbi.xml" />
 	<:include src="gensec.xml" />
 	<:include src="classics.xml" />
+	<tweak definition="damagesyncing.xml" />
 </mod>

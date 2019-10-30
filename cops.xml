@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <assets base_path="assets/" target="scripted" load_group="copcops">
 
-	<group name="units/pd2_mod_gageammo/characters/">
-	
+	<group name="units/pd2_mod_cops/characters/">
+		<!--Police Medic-->		
 		<file :name="ene_deathvox_cop_medic/ene_deathvox_cop_medic.unit" load="true"/>
 		<file :name="ene_deathvox_cop_medic/ene_deathvox_cop_medic_husk.unit" load="true"/>
 		<file :name="ene_deathvox_cop_medic/ene_medic_df.texture" force="false"/>
@@ -12,7 +12,7 @@
 		<file :name="ene_deathvox_cop_medic/ene_deathvox_cop_medic.object" force="false"/>
 		<file :name="ene_deathvox_cop_medic/ene_deathvox_cop_medic.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_cop_medic/ene_deathvox_cop_medic.model" force="false"/>
-
+		<!--Police Taser-->	
 		<file :name="ene_deathvox_cop_taser/ene_deathvox_cop_taser.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_taser/ene_deathvox_cop_taser_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_taser/ene_deathvox_cop_taser_contour.material_config" force="false"/>
@@ -20,7 +20,7 @@
 		<file :name="ene_deathvox_cop_taser/ene_deathvox_cop_taser.object" force="false"/>
 		<file :name="ene_deathvox_cop_taser/ene_deathvox_cop_taser.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_cop_taser/ene_deathvox_cop_taser.model" force="false"/>
-	
+		<!--Police Officer-->		
 		<file :name="ene_deathvox_cop_pistol/ene_deathvox_cop_pistol.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_pistol/ene_deathvox_cop_pistol_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_pistol/ene_deathvox_cop_pistol_contour.material_config" force="false"/>
@@ -28,7 +28,7 @@
 		<file :name="ene_deathvox_cop_pistol/ene_deathvox_cop_pistol.object" force="false"/>
 		<file :name="ene_deathvox_cop_pistol/ene_deathvox_cop_pistol.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_cop_pistol/ene_deathvox_cop_pistol.model" force="false"/>
-		
+		<!--Revolver Police Officer-->				
 		<file :name="ene_deathvox_cop_revolver/ene_deathvox_cop_revolver.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_revolver/ene_deathvox_cop_revolver_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_revolver/ene_deathvox_cop_revolver_contour.material_config" force="false"/>
@@ -36,7 +36,7 @@
 		<file :name="ene_deathvox_cop_revolver/ene_deathvox_cop_revolver.object" force="false"/>
 		<file :name="ene_deathvox_cop_revolver/ene_deathvox_cop_revolver.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_cop_revolver/ene_deathvox_cop_revolver.model" force="false"/>
-		
+		<!--Police Officer Shotgunner-->						
 		<file :name="ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun_contour.material_config" force="false"/>
@@ -44,7 +44,7 @@
 		<file :name="ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun.object" force="false"/>
 		<file :name="ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun.model" force="false"/>
-		
+		<!--Police Officer SMG-->								
 		<file :name="ene_deathvox_cop_smg/ene_deathvox_cop_smg.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_smg/ene_deathvox_cop_smg_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_smg/ene_deathvox_cop_smg_contour.material_config" force="false"/>
@@ -52,8 +52,7 @@
 		<file :name="ene_deathvox_cop_smg/ene_deathvox_cop_smg.object" force="false"/>
 		<file :name="ene_deathvox_cop_smg/ene_deathvox_cop_smg.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_cop_smg/ene_deathvox_cop_smg.model" force="false"/>
-		
-		
+		<!--SWAT Light AR-->								
 		<file :name="ene_deathvox_cop_swat/ene_deathvox_cop_swat.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_swat/ene_deathvox_cop_swat_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_swat/ene_deathvox_cop_swat_contour.material_config" force="false"/>
@@ -61,7 +60,7 @@
 		<file :name="ene_deathvox_cop_swat/ene_deathvox_cop_swat.object" force="false"/>
 		<file :name="ene_deathvox_cop_swat/ene_deathvox_cop_swat.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_cop_swat/ene_deathvox_cop_swat.model" force="false"/>
-		
+		<!--SWAT Shotgunner-->										
 		<file :name="ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot_contour.material_config" force="false"/>
@@ -69,7 +68,7 @@
 		<file :name="ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot.object" force="false"/>
 		<file :name="ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot.model" force="false"/>
-		
+		<!--Heavy SWAT Light AR-->												
 		<file :name="ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat_contour.material_config" force="false"/>
@@ -77,7 +76,7 @@
 		<file :name="ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat.object" force="false"/>
 		<file :name="ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat.model" force="false"/>
-		
+		<!--Heavy SWAT Shotgunner-->														
 		<file :name="ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot_contour.material_config" force="false"/>
@@ -85,7 +84,7 @@
 		<file :name="ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot.object" force="false"/>
 		<file :name="ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot.cooked_physics" force="false"/>
 		<file :name="ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot.model" force="false"/>
-	
+		<!--SWAT Shield-->															
 		<file :name="ene_deathvox_cop_shield/ene_deathvox_cop_shield.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_shield/ene_deathvox_cop_shield_husk.unit" load="true" force="false"/>
 		<file :name="ene_deathvox_cop_shield/ene_deathvox_cop_shield_contour.material_config" force="false"/>

@@ -143,22 +143,23 @@ function CharacterTweakData:get_ai_group_type()
 	map_faction_override["dinner"] = "classic"
 	map_faction_override["man"] = "classic"
 	map_faction_override["nmh"] = "classic"
-	-- Classics also as NYPD 
+	-- Classic faction, also as NYPD. 
 	map_faction_override["spa"] = "classic"
 	map_faction_override["brb"] = "classic"
-	-- Classic overrides for holdout.
+	-- Classic faction overrides for holdout.
 	map_faction_override["skm_run"] = "classic"
 	map_faction_override["skm_red2"] = "classic"	
-	-- whurr's map edit faction overrides begin here.
+	--Faction overrides for Whurr's map edits begin here.
 	map_faction_override["bridge"] = "classic"
 	map_faction_override["apartment"] = "classic"
 	map_faction_override["street"] = "classic"
 	map_faction_override["bank"] = "classic"
-  
-	--akan override begins here.
+	--Murky faction overrides begin here. Uncomment to apply the Murkywater faction on the Whitehouse, Henry's Rock, and Beneath the Mountain heists.
+	--map_faction_override["pbr"] = "murky"
+	--map_faction_override["vit"] = "murky"
+	--map_faction_override["des"] = "murky"
 	
-	--Murky overrides begin here.
-	
+	--Reaper faction overrides begin here.	
 	--Halloween overrides begin here.
   
 	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
@@ -201,6 +202,7 @@ function CharacterTweakData:_presets(tweak_data)
             aggressive = true,
             follow_me = true,
             clear_whisper = true,
+            clear_whisper_2 = true,
             look_for_angle = true,
             flash_grenade = true,
             smoke = true
@@ -239,6 +241,7 @@ function CharacterTweakData:_presets(tweak_data)
             aggressive = true,
             follow_me = true,
             --clear_whisper = true, gmen shouldnt have this
+            --clear_whisper_2 = true, gmen shouldnt have this
             look_for_angle = true,
             flash_grenade = true,
             smoke = true
@@ -310,9 +313,9 @@ function CharacterTweakData:_presets(tweak_data)
 			hard = {health = 25, headshot_mult = 3},
 			very_hard = {health = 48, headshot_mult = 3},
 			overkill = {health = 48, headshot_mult = 3},
-			mayhem = {health = 96, headshot_mult = 3},
-			death_wish = {health = 96, headshot_mult = 3},
-			crackdown = {health = 101, headshot_mult = 3}
+			mayhem = {health = 64, headshot_mult = 3},
+			death_wish = {health = 64, headshot_mult = 3},
+			crackdown = {health = 96, headshot_mult = 3}
 		},
 		deathvox_heavyshot = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
 			not_a_real_difficulty = {health = 16, headshot_mult = 3},
@@ -320,9 +323,9 @@ function CharacterTweakData:_presets(tweak_data)
 			hard = {health = 25, headshot_mult = 3},
 			very_hard = {health = 48, headshot_mult = 3},
 			overkill = {health = 48, headshot_mult = 3},
-			mayhem = {health = 96, headshot_mult = 3},
-			death_wish = {health = 96, headshot_mult = 3},
-			crackdown = {health = 101, headshot_mult = 3}
+			mayhem = {health = 64, headshot_mult = 3},
+			death_wish = {health = 64, headshot_mult = 3},
+			crackdown = {health = 96, headshot_mult = 3}
 		},
 		deathvox_shield = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
 			not_a_real_difficulty = {health = 24, headshot_mult = 3},
@@ -977,7 +980,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_pistol = { -- mark 3 values. Currently valid for guards, beat police, low level enemies. basis: presets.weapon.deathwish.is_pistol.
+	presets.weapon.deathvox.is_pistol = { -- mark 6 values. Revises low recoil rates.
 		aim_delay = {
 			0,
 			0
@@ -1004,8 +1007,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = {
-					0.15,
-					0.25
+					0.4,
+					0.45
 				},
 				mode = {
 					0,
@@ -1022,8 +1025,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = {
-					0.15,
-					0.3
+					0.4,
+					0.45
 				},
 				mode = {
 					0,
@@ -1040,8 +1043,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.8
 				},
 				recoil = {
-					0.25,
-					0.3
+					0.5,
+					0.55
 				},
 				mode = {
 					0,
@@ -1058,8 +1061,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.7
 				},
 				recoil = {
-					0.4,
-					0.5
+					0.55,
+					0.6
 				},
 				mode = {
 					1,
@@ -1329,7 +1332,7 @@ function CharacterTweakData:_presets(tweak_data)
 		}
 	}
 
-	presets.weapon.deathvox.is_light_rifle = { -- mark 3 values. basis is presets.weapon.deathwish.is_rifle. General goal- more shots, less damage, reduced range.
+	presets.weapon.deathvox.is_light_rifle = { -- mark 6 values. Revises low recoil rates. Still higher fire rate (esp at close range), lower damage/acc.
 		aim_delay = {
 			0,
 			0
@@ -1366,8 +1369,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.975
 				},
 				recoil = {
-					0.25,
-					0.3
+					0.4,
+					0.55
 				},
 				mode = {
 					0,
@@ -1384,8 +1387,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = {
-					0.25,
-					0.3
+					0.4,
+					0.55
 				},
 				mode = {
 					0,
@@ -1401,9 +1404,9 @@ function CharacterTweakData:_presets(tweak_data)
 					0.7,
 					0.9
 				},
-				recoil = { --reduced to increase attack rate at lower range. Base game values .35-.55. No changes to later ranges.
-					0.25,
-					0.45
+				recoil = { --reduced to increase attack rate at lower range. 
+					0.5,
+					0.55
 				},
 				mode = {
 					0,
@@ -1420,7 +1423,7 @@ function CharacterTweakData:_presets(tweak_data)
 					0.85
 				},
 				recoil = {
-					0.4,
+					0.7,
 					0.7
 				},
 				mode = {
@@ -1468,7 +1471,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_heavy_rifle = { -- mark 3 values complete. basis is presets.weapon.deathwish.is_rifle. General goal- fewer shots, more damage, greater range.
+	presets.weapon.deathvox.is_heavy_rifle = { -- mark 6 values. basis is presets.weapon.deathwish.is_rifle. General goal is still fewer shots, more damage, greater range.
 		aim_delay = {
 			0,
 			0
@@ -1499,8 +1502,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.975
 				},
 				recoil = {
-					0.25,
-					0.3
+					0.6,
+					0.625
 				},
 				mode = {
 					0,
@@ -1517,8 +1520,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = {
-					0.25,
-					0.3
+					0.6,
+					0.625
 				},
 				mode = {
 					0,
@@ -1535,8 +1538,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.9
 				},
 				recoil = {
-					0.35,
-					0.55
+					0.7,
+					0.8
 				},
 				mode = {
 					0,
@@ -1549,7 +1552,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = 0.8,
 				r = 2000,
 				acc = {
-					0.7,
+					0.75,
 					0.85
 				},
 				recoil = {
@@ -1571,8 +1574,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.75
 				},
 				recoil = {
-					0.7,
-					1.1
+					0.9,
+					1.5
 				},
 				mode = {
 					0,
@@ -2285,6 +2288,84 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
+	presets.weapon.sniper.is_rifle = { -- directly replaces sniper weapon preset to match deathvox, for proper scaling purposes.
+		aim_delay = {
+			0,
+			0.1
+		},
+		focus_delay = 7,
+		focus_dis = 200,
+		spread = 30,
+		miss_dis = 250,
+		RELOAD_SPEED = 1.25,  -- validated, unchanged.
+		melee_speed = presets.weapon.normal.is_rifle.melee_speed,
+		melee_dmg = presets.weapon.normal.is_rifle.melee_dmg,
+		melee_retry_delay = presets.weapon.normal.is_rifle.melee_retry_delay,
+		range = { --validated, unchanged.
+			optimal = 15000,
+			far = 15000,
+			close = 15000
+		},
+		autofire_rounds = presets.weapon.normal.is_rifle.autofire_rounds,
+		use_laser = true,
+		FALLOFF = { -- note values do not match frank's table. Largely eyeballed, may need revision.
+			{
+				dmg_mul = 1,
+				r = 700,
+				acc = {
+					0.4,
+					0.95
+				},
+				recoil = {
+					2,
+					4
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
+			},
+			{
+				dmg_mul = .95, -- slight falloff, frank indicates flat damage on DW.
+				r = 4500,
+				acc = {
+					0.1,
+					0.75
+				},
+				recoil = {
+					3,
+					4
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
+			},
+			{
+				dmg_mul = .83,
+				r = 12000,
+				acc = {
+					0,
+					0.5
+				},
+				recoil = {
+					3,
+					5
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
+			}
+		}
+	}
+	
 	presets.weapon.deathvox_sniper.is_assault_sniper = deep_clone(presets.weapon.deathvox_sniper.is_rifle)
 	presets.weapon.deathvox.is_assault_sniper = deep_clone(presets.weapon.deathvox_sniper.is_rifle) --defining the assault sniper preset.
 	presets.weapon.deathvox.is_assault_sniper.FALLOFF = { -- revising assault sniper falloff values.
@@ -2374,8 +2455,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = {
-					0.15,
-					0.25
+					0.4,
+					0.45
 				},
 				mode = {
 					0,
@@ -2392,8 +2473,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.95
 				},
 				recoil = {
-					0.15,
-					0.3
+					0.4,
+					0.45
 				},
 				mode = {
 					0,
@@ -2410,8 +2491,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.8
 				},
 				recoil = {
-					0.25,
-					0.3
+					0.5,
+					0.55
 				},
 				mode = {
 					0,
@@ -2428,8 +2509,8 @@ function CharacterTweakData:_presets(tweak_data)
 					0.7
 				},
 				recoil = {
-					0.4,
-					0.5
+					0.55,
+					0.6
 				},
 				mode = {
 					0,
@@ -2575,7 +2656,11 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_gman.die_sound_event = "x01a_any_3p" -- pain lines are death lines for these units.
 	self.deathvox_gman.chatter = presets.enemy_chatter.geeeeeman --stops them using clear whisper
 	table.insert(self._enemy_list, "deathvox_gman")
-	local is_classic
+	local is_murky
+	if self:get_ai_group_type() == "murky" then
+		is_murky = true
+	end
+	local is_classic	
 	if self:get_ai_group_type() == "classic" then
 		is_classic = true
 	end
@@ -2607,9 +2692,10 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_lightar")
 	
 	self.deathvox_lightshot = deep_clone(self.city_swat)
-	self.deathvox_lightshot.speech_prefix_p1 = "l1d"
+	self.deathvox_lightshot.speech_prefix_p1 = "l2d"
 	self.deathvox_lightshot.speech_prefix_p2 = nil
 	self.deathvox_lightshot.speech_prefix_count = nil
+	self.deathvox_lightshot.die_sound_event = "x01a_any_3p" --fucking l2d and having pain lines but not death lines
 	self.deathvox_lightshot.detection = presets.detection.deathvox
 	self.deathvox_lightshot.ignore_medic_revive_animation = true  -- no revive animation. may require curving on lower diffs.
 	self.deathvox_lightshot.suppression = presets.suppression.hard_agg -- should be hard_def on N through OVK.
@@ -3544,6 +3630,17 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
 	
 --	sniper - MAYHEM
+	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	self.sniper = deep_clone(self.deathvox_sniper)
+	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	--sniper weapon BS pls dont touch - Evilbobarino
+	--self.weap_unit_names[13] = Idstring("units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd")
+    --seriously please dont it will make me sad :<
+	--i am sorry little one - fuglore
+    self.deathvox_sniper.weapon.is_rifle.use_laser = false
+    self.sniper.weapon.is_rifle.use_laser = false
+    self.deathvox_sniper.disable_sniper_laser = true
+    self.sniper.weapon.disable_sniper_laser = true
 --	tank - MAYHEM
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.	
@@ -3635,6 +3732,17 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
 	
 --	sniper - DEATH WISH
+	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	self.sniper = deep_clone(self.deathvox_sniper)
+	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	--sniper weapon BS pls dont touch - Evilbobarino
+	--self.weap_unit_names[13] = Idstring("units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd")
+    --seriously please dont it will make me sad :<
+	--i am sorry little one - fuglore
+    self.deathvox_sniper.weapon.is_rifle.use_laser = false
+    self.sniper.weapon.is_rifle.use_laser = false
+    self.deathvox_sniper.disable_sniper_laser = true
+    self.sniper.weapon.disable_sniper_laser = true
 --	tank - DEATH WISH
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.	
@@ -3694,8 +3802,9 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.sniper = deep_clone(self.deathvox_sniper)
 	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	--sniper weapon BS pls dont touch - Evilbobarino
-	self.weap_unit_names[13] = Idstring("units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd")
+	--self.weap_unit_names[13] = Idstring("units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd")
     --seriously please dont it will make me sad :<
+	--i am sorry little one - fuglore
     self.deathvox_sniper.weapon.is_rifle.use_laser = false
     self.sniper.weapon.is_rifle.use_laser = false
     self.deathvox_sniper.disable_sniper_laser = true
@@ -4106,6 +4215,18 @@ function CharacterTweakData:_init_region_classic()
 		medic = "mdc"
 	}
 end
+function CharacterTweakData:_init_region_murky() --will use these lines for now.
+	self._default_chatter = "dispatch_generic_message"
+	self._unit_prefixes = {
+		cop = "l",
+		swat = "l",
+		heavy_swat = "l",
+		taser = "tsr",
+		cloaker = "clk",
+		bulldozer = "bdz",
+		medic = "mdc"
+	}	
+end
 
 
 function CharacterTweakData:character_map()
@@ -4130,40 +4251,12 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_grenadier",
 			"ene_deathvox_gman",
 			"ene_deathvox_gman_noflashlight",
-			"ene_deathvox_guarddozer",
-			"ene_deathvox_gensec_taser",
-			"ene_deathvox_gensec_swatshot",
-			"ene_deathvox_gensec_swat",
-			"ene_deathvox_gensec_shield",
-			"ene_deathvox_gensec_medic",
-			"ene_deathvox_gensec_lmgdozer",
-			"ene_deathvox_gensec_heavyswatshot",
-			"ene_deathvox_gensec_heavyswat",
-			"ene_deathvox_gensec_cloaker",
-			"ene_deathvox_fbi_veteran",
-			"ene_deathvox_fbi_taser",
-			"ene_deathvox_fbi_swatshot",
-			"ene_deathvox_fbi_swat",
-			"ene_deathvox_fbi_shield",
-			"ene_deathvox_fbi_rookie",
-			"ene_deathvox_fbi_medic",
-			"ene_deathvox_fbi_hrt",
-			"ene_deathvox_fbi_heavyswatshot",
-			"ene_deathvox_fbi_heavyswat",
-			"ene_deathvox_fbi_greendozer",
-			"ene_deathvox_fbi_cloaker",
-			"ene_deathvox_fbi_blackdozer",
-			"ene_deathvox_cop_taser",
-			"ene_deathvox_cop_swatshot",
-			"ene_deathvox_cop_swat",
-			"ene_deathvox_cop_smg",
-			"ene_deathvox_cop_shotgun",
-			"ene_deathvox_cop_shield",
-			"ene_deathvox_cop_revolver",
-			"ene_deathvox_cop_pistol",
-			"ene_deathvox_cop_medic",
-			"ene_deathvox_cop_heavyswatshot",
-			"ene_deathvox_cop_heavyswat",
+			"ene_deathvox_guarddozer"
+		}
+	}
+	char_map.classic = {
+		path = "units/pd2_mod_classic/characters/",
+		list = {
 			"ene_deathvox_classic_blackdozer",
 			"ene_deathvox_classic_cloaker",
 			"ene_deathvox_classic_cop_pistol",
@@ -4183,5 +4276,76 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_classic_veteran"
 		}
 	}
+	char_map.murky = {
+		path = "units/pd2_mod_gageammo/characters/",
+		list = {
+			"ene_deathvox_guard",
+			"ene_deathvox_heavyar",
+			"ene_deathvox_lightar",
+			"ene_deathvox_medic",
+			"ene_deathvox_shield",
+			"ene_deathvox_lightshot",
+			"ene_deathvox_heavyshot",
+			"ene_deathvox_taser",
+			"ene_deathvox_cloaker",
+			"ene_deathvox_sniper_assault",
+			"ene_deathvox_greendozer",
+			"ene_deathvox_blackdozer",
+			"ene_deathvox_lmgdozer",
+			"ene_deathvox_medicdozer",
+			"ene_deathvox_grenadier",
+			"ene_deathvox_gman",
+			"ene_deathvox_gman_noflashlight",
+			"ene_deathvox_guarddozer"
+		}
+	}		
+	char_map.fbi = {
+		path = "units/pd2_mod_fbi/characters/",
+		list = {
+			"ene_deathvox_fbi_veteran",
+			"ene_deathvox_fbi_taser",
+			"ene_deathvox_fbi_swatshot",
+			"ene_deathvox_fbi_swat",
+			"ene_deathvox_fbi_shield",
+			"ene_deathvox_fbi_rookie",
+			"ene_deathvox_fbi_medic",
+			"ene_deathvox_fbi_hrt",
+			"ene_deathvox_fbi_heavyswatshot",
+			"ene_deathvox_fbi_heavyswat",
+			"ene_deathvox_fbi_greendozer",
+			"ene_deathvox_fbi_cloaker",
+			"ene_deathvox_fbi_blackdozer"
+		}
+	}	
+	char_map.gensec = {
+		path = "units/pd2_mod_gensec/characters/",
+		list = {
+			"ene_deathvox_gensec_taser",
+			"ene_deathvox_gensec_swatshot",
+			"ene_deathvox_gensec_swat",
+			"ene_deathvox_gensec_shield",
+			"ene_deathvox_gensec_medic",
+			"ene_deathvox_gensec_lmgdozer",
+			"ene_deathvox_gensec_heavyswatshot",
+			"ene_deathvox_gensec_heavyswat",
+			"ene_deathvox_gensec_cloaker"
+		}
+	}		
+	char_map.cops = {
+		path = "units/pd2_mod_cops/characters/",
+		list = {
+			"ene_deathvox_cop_taser",
+			"ene_deathvox_cop_swatshot",
+			"ene_deathvox_cop_swat",
+			"ene_deathvox_cop_smg",
+			"ene_deathvox_cop_shotgun",
+			"ene_deathvox_cop_shield",
+			"ene_deathvox_cop_revolver",
+			"ene_deathvox_cop_pistol",
+			"ene_deathvox_cop_medic",
+			"ene_deathvox_cop_heavyswatshot",
+			"ene_deathvox_cop_heavyswat"
+		}
+	}				
 	return char_map
 end

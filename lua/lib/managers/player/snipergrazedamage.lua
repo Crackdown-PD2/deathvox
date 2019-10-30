@@ -1,4 +1,9 @@
-function SniperGrazeDamage:on_weapon_fired(weapon_unit, result)
+local orig_graze = SniperGrazeDamage.on_weapon_fired
+function SniperGrazeDamage:on_weapon_fired(weapon_unit, result,...)
+	if not deathvox:IsHoppipOverhaulEnabled() then 
+		return orig_graze(self,weapon_unit,result,...)
+	end
+	
 	if not weapon_unit:base():is_category("snp") then
 		return
 	end
@@ -21,15 +26,20 @@ function SniperGrazeDamage:on_weapon_fired(weapon_unit, result)
 	for _, hit in ipairs(result.rays) do
 		local is_turret = hit.unit:in_slot(sentry_mask)
 		local is_ally = hit.unit:in_slot(ally_mask)
+		local is_valid_hit = hit.damage_result and hit.damage_result.attack_data
 
-		if not is_turret and not is_ally and hit.damage_result then
+		if not is_turret and not is_ally and is_valid_hit then
 			local result = hit.damage_result
 			local attack_data = result.attack_data
-			if not attack_data then
-				
-				return
+			local headshot_kill = nil
+
+			--actually make sure it's a headshot for both death and healed
+			if attack_data.headshot then
+				if result.type == "death" or result.type == "healed" then
+					headshot_kill = true
+				end
 			end
-			local headshot_kill = attack_data.headshot and result.type == "death" or result.type == "healed"
+
 			local damage_mul = headshot_kill and upgrade_value.damage_factor_headshot or upgrade_value.damage_factor
 			local damage = attack_data.damage * damage_mul
 
@@ -57,7 +67,8 @@ function SniperGrazeDamage:on_weapon_fired(weapon_unit, result)
 
 	mvector3.add_scaled(to, furthest_hit.ray, distance)
 
-	local hits = World:raycast_all("ray", from, to, "sphere_cast_radius", radius, "disable_inner_ray", "slot_mask", managers.slot:get_mask("enemies", "civilians"))
+	--prevent from hitting civs because that's dumb and 99% of the time it happens outside the player's control
+	local hits = World:raycast_all("ray", from, to, "sphere_cast_radius", radius, "disable_inner_ray", "slot_mask", managers.slot:get_mask("enemies"))
 
 	for i, hit in ipairs(hits) do
 		local key = hit.unit:key()

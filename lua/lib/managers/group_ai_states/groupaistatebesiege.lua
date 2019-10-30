@@ -698,7 +698,32 @@ function GroupAIStateBesiege:_upd_assault_task()
 
 	self:_assign_recon_groups_to_retire()
 
-	local force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool) * self:_get_balancing_multiplier(self._tweak_data.assault.force_pool_balance_mul)
+	local force_pool = nil
+	--skirmish killcount per-wave stuff
+	if managers.skirmish:is_skirmish() then
+		if task_data.is_first or self._assault_number and self._assault_number == 1 or not self._assault_number then
+			force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool_skm1)
+		elseif self._assault_number == 2 then
+			force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool_skm2)
+			--log("is it working?")
+		elseif self._assault_number == 3 then
+			force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool_skm3)
+		elseif self._assault_number == 4 then
+			force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool_skm4)
+		elseif self._assault_number == 5 then
+			force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool_skm5)
+		elseif self._assault_number == 6 then
+			force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool_skm6)
+		elseif self._assault_number >= 7 then
+			force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool_skm7)
+		else
+			force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool_skm1)
+			--log("bruh moment")
+		end
+	else
+		force_pool = self:_get_difficulty_dependent_value(self._tweak_data.assault.force_pool) * self:_get_balancing_multiplier(self._tweak_data.assault.force_pool_balance_mul)
+	end
+	
 	local task_spawn_allowance = force_pool - (self._hunt_mode and 0 or task_data.force_spawned)
 
 	if task_data.phase == "anticipation" then
@@ -800,9 +825,16 @@ function GroupAIStateBesiege:_upd_assault_task()
 		local enemies_left = self:_count_police_force("assault")
 
 		if not self._hunt_mode then
-			local min_enemies_left = 50
+		
+			local min_enemies_left = nil
 
-			if enemies_left < min_enemies_left or task_data.phase_end_t + 350 < t then
+			if managers.skirmish:is_skirmish() then
+				min_enemies_left = 10
+			else
+				min_enemies_left = 50
+			end
+			
+			if enemies_left <= min_enemies_left or task_data.phase_end_t + 350 < t then
 				if task_data.phase_end_t - 8 < t and not task_data.said_retreat then
 					
 					task_data.said_retreat = true
@@ -890,7 +922,7 @@ function GroupAIStateBesiege:_upd_assault_task()
 			task_data.target_areas[1] = nearest_area
 		end
 	end
-
+	
 	local nr_wanted = task_data.force - self:_count_police_force("assault")
 
 	if task_data.phase == "anticipation" then
@@ -942,19 +974,6 @@ function GroupAIStateBesiege:_upd_assault_task()
 	end
 
 	self:_assign_enemy_groups_to_assault(task_data.phase)
-end
-
-function GroupAIStateBesiege:_upd_regroup_task()
-	local regroup_task = self._task_data.regroup
-
-	if regroup_task.active then
-		self:_assign_assault_groups_to_retire()
-
-		if regroup_task.end_t < self._t then
-			
-			self:_end_regroup_task()
-		end
-	end
 end
 
 function GroupAIStateBesiege:_check_phalanx_damage_reduction_increase()
@@ -1088,4 +1107,170 @@ function GroupAIStateBesiege:assign_enemy_to_group_ai(unit, team_id)
 
 	self:_add_group_member(group, unit:key())
 	self:set_enemy_assigned(area, unit:key())
+end
+
+
+function GroupAIStateBesiege:_assign_skirmish_groups_to_retire(group)
+	--this is horrible, but it works.
+	for group_id, group in pairs(self._groups) do --this acquires the groups currently existing in the level.
+		local group_leader_u_key, group_leader_u_data = self._determine_group_leader(group.units)
+		local tactics_map = nil
+
+		if group_leader_u_data and group_leader_u_data.tactics then
+			tactics_map = {}
+
+			for _, tactic_name in ipairs(group_leader_u_data.tactics) do
+				tactics_map[tactic_name] = true
+			end
+		end
+		
+		if managers.skirmish:is_skirmish() and tactics_map then
+			if tactics_map.skirmish and group.objective.type ~= "retire" and not  self._task_data.assault.active then
+				local function suitable_grp_func(group)
+					if tactics_map.skirmish and group.objective.type ~= "retire" and not  self._task_data.assault.active then
+						local grp_objective = {
+							stance = "hos",
+							attitude = "avoid",
+							pose = "stand",
+							type = "assault_area",
+							area = group.objective.area
+						}
+
+						self:_set_objective_to_enemy_group(group, grp_objective)
+					end
+				end
+				--log("retiring all enemies")
+				self:_assign_groups_to_retire(self._tweak_data.assault.groups, suitable_grp_func)
+			end			
+		end
+	end
+end
+
+function GroupAIStateBesiege:_upd_recon_tasks()
+	local task_data = self._task_data.recon.tasks[1]
+	
+	if managers.skirmish:is_skirmish() then --makes unfit units retire during control/recon, mostly used as a safety measure to prevent leftovers
+		self:_assign_skirmish_groups_to_retire(allowed_groups, suitable_grp_func, group)
+	end
+	
+	self:_assign_enemy_groups_to_recon()
+
+	if not task_data then
+		return
+	end
+
+	local t = self._t
+
+	self:_assign_assault_groups_to_retire()
+
+	local target_pos = task_data.target_area.pos
+	local nr_wanted = self:_get_difficulty_dependent_value(self._tweak_data.recon.force) - self:_count_police_force("recon")
+
+	if nr_wanted <= 0 then
+		return
+	end
+
+	local used_event, used_spawn_points, reassigned = nil
+
+	if task_data.use_spawn_event then
+		task_data.use_spawn_event = false
+
+		if self:_try_use_task_spawn_event(t, task_data.target_area, "recon") then
+			used_event = true
+		end
+	end
+
+	if not used_event then
+		local used_group = nil
+
+		if next(self._spawning_groups) then
+			used_group = true
+		else
+			local spawn_group, spawn_group_type = self:_find_spawn_group_near_area(task_data.target_area, self._tweak_data.recon.groups, nil, nil, callback(self, self, "_verify_anticipation_spawn_point"))
+
+			if spawn_group then
+				local grp_objective = {
+					attitude = "avoid",
+					scan = true,
+					stance = "hos",
+					type = "recon_area",
+					area = spawn_group.area,
+					target_area = task_data.target_area
+				}
+
+				self:_spawn_in_group(spawn_group, spawn_group_type, grp_objective)
+
+				used_group = true
+			end
+		end
+	end
+
+	if used_event or used_spawn_points or reassigned then
+		table.remove(self._task_data.recon.tasks, 1)
+
+		self._task_data.recon.next_dispatch_t = t + math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.recon.interval)) + math.random() * self._tweak_data.recon.interval_variation
+	end
+end
+
+
+function GroupAIStateBesiege:_begin_assault_task(assault_areas)
+	local assault_task = self._task_data.assault
+	assault_task.active = true
+	assault_task.next_dispatch_t = nil
+	assault_task.target_areas = assault_areas
+	assault_task.phase = "anticipation"
+	assault_task.start_t = self._t
+	local anticipation_duration = self:_get_anticipation_duration(self._tweak_data.assault.anticipation_duration, assault_task.is_first)
+	assault_task.is_first = nil
+	assault_task.phase_end_t = self._t + anticipation_duration
+	if managers.skirmish:is_skirmish() then
+		if assault_task.is_first or self._assault_number and self._assault_number == 1 or not self._assault_number then
+			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_1st))
+		elseif self._assault_number == 2 then
+			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_2nd))
+			--log("is it working?")
+		elseif self._assault_number == 3 then
+			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_3rd))
+		elseif self._assault_number == 4 then
+			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_4th))
+		elseif self._assault_number == 5 then
+			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_5th))
+		elseif self._assault_number == 6 then
+			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_6th))
+		elseif self._assault_number >= 7 then
+			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_7up))
+		else
+			assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_1st))
+			--log("bruh moment")
+		end
+	else
+		assault_task.force = math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.assault.force) * self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_mul))
+	end
+	assault_task.use_smoke = true
+	assault_task.use_smoke_timer = 0
+	assault_task.use_spawn_event = true
+	assault_task.force_spawned = 0
+
+	if self._hostage_headcount > 0 then
+		assault_task.phase_end_t = assault_task.phase_end_t + self:_get_difficulty_dependent_value(self._tweak_data.assault.hostage_hesitation_delay)
+		assault_task.is_hesitating = true
+		assault_task.voice_delay = self._t + (assault_task.phase_end_t - self._t) / 2
+	end
+
+	self._downs_during_assault = 0
+
+	if self._hunt_mode then
+		assault_task.phase_end_t = 0
+	else
+		managers.hud:setup_anticipation(anticipation_duration)
+		managers.hud:start_anticipation()
+	end
+
+	if self._draw_drama then
+		table.insert(self._draw_drama.assault_hist, {
+			self._t
+		})
+	end
+
+	self._task_data.recon.tasks = {}
 end

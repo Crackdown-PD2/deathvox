@@ -10,6 +10,30 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 	if not Global.game_settings then
 		return group_to_use
 	end
+	
+    -- draft implementation of asset swapping between waves for Holdout mode. Courtesy of iamgoofball.
+    if managers and managers.skirmish and managers.skirmish:is_skirmish() then
+        local current_wave = managers.skirmish:current_wave_number()
+        local wave_table = {
+        "cop", -- wave 1
+        "cop",
+        "fbi",
+        "fbi",
+	"fbi",
+        "gensec",
+        "gensec",
+        "classic",
+    	"zeal" --wave 9
+        }
+	   if current_wave == 0 or not current_wave then
+			return "cop"
+       elseif current_wave > 0 and current_wave <= #wave_table then
+            return wave_table[current_wave]
+       else
+            return "zeal"
+       end
+    end
+	
 	local difficulties = {
 		"easy",
 		"normal",
@@ -36,7 +60,10 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 	map_faction_override["apartment"] = "classic"
 	map_faction_override["street"] = "classic"
 	map_faction_override["bank"] = "classic"
-	-- todo: setup akan on BP, murky on all murky heists, and classics on classic heists
+	-- Murkywater Heists	
+	--map_faction_override["pbr"] = "murky"
+	--map_faction_override["vit"] = "murky"
+	--map_faction_override["des"] = "murky"
 	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
 	if diff_index <= 3 then
 		group_to_use = "cop"
@@ -56,9 +83,19 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 	return group_to_use
 end
 
--- fix for safehouse raid failing to spawn assault group enemies. Base heist uses "safehouse" data that clones beseige.
+
 local old_level_init = LevelsTweakData.init
 function LevelsTweakData:init()
     old_level_init(self)
+    -- fix for safehouse raid failing to spawn assault group enemies. Base heist uses "safehouse" data that clones beseige.
     self.chill_combat.group_ai_state = "besiege"
+    -- setting wave count for revised holdouts.
+    self.skm_mus.wave_count = 9
+    self.skm_red2.wave_count = 9
+    self.skm_run.wave_count = 9
+    self.skm_watchdogs_stage2.wave_count = 9
+    --this crashes the game so i commented it out
+    --self.skmc_fish.wave_count = 6
+    --self.skmc_mad.wave_count = 6
+    --self.skmc_ovengrill.wave_count = 6
 end

@@ -18,7 +18,7 @@ function DVGrenade:_detonate(tag, unit, body, other_unit, other_body, position, 
 	local range = self._range
 
 	managers.explosion:play_sound_and_effects(pos, normal, range, self._custom_params)
-	managers.groupai:state():detonate_cs_grenade(pos, nil, _G.deathvox.grenadier_gas_duration)
+	managers.groupai:state():detonate_cs_grenade(pos, nil, 15)
 	managers.network:session():send_to_peers_synched("sync_unit_event_id_16", self._unit, "base", GrenadeBase.EVENT_IDS.detonate)
 	self._unit:set_slot(0)
 end

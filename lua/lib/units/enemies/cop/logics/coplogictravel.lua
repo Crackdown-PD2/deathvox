@@ -164,7 +164,13 @@ function CopLogicTravel.enter(data, new_logic_name, enter_params)
     			not ( data.attention_obj and data.attention_obj.reaction >= AIAttentionObject.REACT_COMBAT and data.attention_obj.verified_t and data.attention_obj.verified_t < 10 )
     		then
 				if data.unit:movement():cool() then
-					managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, "clear_whisper" )
+		            local roll = math.rand(1, 100)
+			        local chance_report = 50
+			         	if roll <= chance_report then
+       				        managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, "clear_whisper" )
+						else	
+       				        managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, "clear_whisper_2" )
+					    end	
 				else
 					managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, "clear" )
 				end

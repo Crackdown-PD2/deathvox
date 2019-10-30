@@ -215,59 +215,21 @@ function CopMovement:damage_clbk(my_unit, damage_info)
 		hurt_type = managers.modifiers:modify_value("CopMovement:HurtType", hurt_type)
 	end
 
-	if hurt_type == "knock_down" and self._tweak_data.damage.shield_knocked and alive(self._ext_inventory and self._ext_inventory._shield_unit) then
-		hurt_type = "shield_knock"
-		block_type = "shield_knock"
-		damage_info.variant = "melee"
-		damage_info.result = {
-			variant = "melee",
-			type = "shield_knock"
-		}
-		damage_info.shield_knock = true
-	end
-
 	if hurt_type == "stagger" then
 		hurt_type = "heavy_hurt"
 	end
 
-	local block_type = hurt_type
-
-	if damage_info.variant == "taser_tased" then
-		if (self._tweak_data.can_be_tased or self._tweak_data.can_be_tased == nil) then
-			if damage_info.variant == "stun" and alive(self._ext_inventory and self._ext_inventory._shield_unit) then
-				hurt_type = "shield_knock"
-				block_type = "shield_knock"
-				damage_info.variant = "melee"
-				damage_info.result = {
-					variant = "melee",
-					type = "shield_knock"
-				}
-				damage_info.shield_knock = true
-			end
-		elseif not self._tweak_data.can_be_tased and hurt_type == "death" then
-			hurt_type = "death"
-		elseif not self._tweak_data.can_be_tased then
-			if damage_info.variant == "stun" and alive(self._ext_inventory and self._ext_inventory._shield_unit) then
-				hurt_type = "shield_knock"
-				block_type = "shield_knock"
-				damage_info.variant = "melee"
-				damage_info.result = {
-					variant = "melee",
-					type = "shield_knock"
-				}
-				damage_info.shield_knock = true
-			else
-				hurt_type = nil
-			end
+	--redirect shield knock_down/stagger through here rather than using copdamage or copactionhurt
+	if hurt_type == "hurt" or hurt_type == "heavy_hurt" or hurt_type == "knock_down" then
+		if self._anim_global and self._anim_global == "shield" then
+			hurt_type = "expl_hurt"
 		end
 	end
 
+	local block_type = hurt_type
+
 	if hurt_type == "knock_down" or hurt_type == "expl_hurt" or hurt_type == "fire_hurt" or hurt_type == "poison_hurt" or hurt_type == "taser_tased" then
 		block_type = "heavy_hurt"
-	end
-
-	if hurt_type == "expl_hurt" and self._unit:base():has_tag("tank") then
-		hurt_type = nil
 	end
 
 	if hurt_type == "death" and self._queued_actions then
@@ -290,17 +252,6 @@ function CopMovement:damage_clbk(my_unit, damage_info)
 	end
 
 	if damage_info.variant == "stun" and alive(self._ext_inventory and self._ext_inventory._shield_unit) then
-		hurt_type = "shield_knock"
-		block_type = "shield_knock"
-		damage_info.variant = "melee"
-		damage_info.result = {
-			variant = "melee",
-			type = "shield_knock"
-		}
-		damage_info.shield_knock = true
-	end
-
-	if hurt_type == ("heavy_hurt" or "stagger") and alive(self._ext_inventory and self._ext_inventory._shield_unit) then
 		hurt_type = "shield_knock"
 		block_type = "shield_knock"
 		damage_info.variant = "melee"
@@ -413,7 +364,8 @@ function CopMovement:damage_clbk(my_unit, damage_info)
 			ignite_character = damage_info.ignite_character,
 			start_dot_damage_roll = damage_info.start_dot_damage_roll,
 			is_fire_dot_damage = damage_info.is_fire_dot_damage,
-			fire_dot_data = damage_info.fire_dot_data
+			fire_dot_data = damage_info.fire_dot_data,
+			is_synced = damage_info.is_synced
 		}
 	end
 

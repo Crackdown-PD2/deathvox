@@ -41,7 +41,7 @@
 		</packages>
 		<script_data_mods directory="scriptdata"/>
 	</level>
-	<narrative briefing_event="pln_branchbank_cash_brf_speak" contact="bain" icon="guis/textures/crackdown" id="branchbank_cash" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_branchbank" region="street">
+	<narrative briefing_event="pln_branchbank_cash_brf_speak" contact="bain" icon="guis/textures/crackdown" id="branchbank_cash_cd" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_branchbank" region="street">
 		<chain>
 			<table briefing_dialog="Play_pln_branchbank_cash_stage1_brief" briefing_id="heist_branchbank_cash_briefing" level_id="branchbank_cash_CD" mission="standalone" type="d" type_id="heist_type_assault">
 				<mission_filter>
