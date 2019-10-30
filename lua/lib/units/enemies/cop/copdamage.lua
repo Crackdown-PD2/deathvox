@@ -1659,7 +1659,7 @@ function CopDamage:damage_melee(attack_data)
 		end
 	end
 
-	if tweak_data.blackmarket.melee_weapons[attack_data.name_id] then
+	if tweak_data.blackmarket.melee_weapons[attack_data.name_id] and attack_data.attacker_unit and attack_data.attacker_unit == managers.player:player_unit()then
 		local achievements = tweak_data.achievement.enemy_melee_hit_achievements or {}
 		local melee_type = tweak_data.blackmarket.melee_weapons[attack_data.name_id].type
 		local enemy_base = self._unit:base()
