@@ -239,9 +239,9 @@ function CopLogicAttack._upd_combat_movement(data)
 		my_data.stay_out_time = nil
 	elseif my_data.attitude == "engage" and not my_data.stay_out_time and not antipassivecheck and not enemy_visible_soft and my_data.at_cover_shoot_pos and not action_taken and not want_to_take_cover then
 		if data.tactics and data.tactics.ranged_fire or data.tactics and data.tactics.elite_ranged_fire then
-			my_data.stay_out_time = t + 3
+			my_data.stay_out_time = t + 5
 		else
-			my_data.stay_out_time = t + 1.5
+			my_data.stay_out_time = t + 2
 		end
 	end
 	
@@ -284,7 +284,7 @@ function CopLogicAttack._upd_combat_movement(data)
 		end
 	end
 	
-	if action_taken then
+	if action_taken or my_data.stay_out_time and my_data.stay_out_time > t then
 		-- Nothing
 	elseif want_to_take_cover then
 		if data.tactics and data.tactics.flank then
