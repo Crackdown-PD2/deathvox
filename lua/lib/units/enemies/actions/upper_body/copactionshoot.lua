@@ -156,11 +156,7 @@ function CopActionShoot:update(t)
 						self._weapon_base:stop_autofire()
 						self._ext_movement:play_redirect("up_idle")
 
-						if vis_state == 1 then
-							self._shoot_t = t + (self._common_data.is_suppressed and 1.5 or 1) * math.lerp(falloff.recoil[1], falloff.recoil[2], self:_pseudorandom())
-						else
-							self._shoot_t = t + falloff.recoil[2]
-						end
+						self._shoot_t = t + (self._common_data.is_suppressed and 1.5 or 1) * math.lerp(falloff.recoil[1], falloff.recoil[2], self:_pseudorandom())
 					else
 						self._autoshots_fired = self._autoshots_fired + 1
 					end
