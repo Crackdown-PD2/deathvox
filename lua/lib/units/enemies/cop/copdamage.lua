@@ -1666,7 +1666,7 @@ function CopDamage:damage_melee(attack_data)
 		local enemy_movement = self._unit:movement()
 		local enemy_type = enemy_base._tweak_table
 		local unit_weapon = enemy_base._default_weapon_id
-		local health_ratio = managers.player:player_unit():character_damage():health_ratio() * 100
+		local health_ratio = managers.player:player_unit() and managers.player:player_unit():character_damage():health_ratio() * 100 or nil
 		local melee_pass, melee_weapons_pass, type_pass, enemy_pass, enemy_weapon_pass, diff_pass, health_pass, level_pass, job_pass, jobs_pass, enemy_count_pass, tags_all_pass, tags_any_pass, all_pass, cop_pass, gangster_pass, civilian_pass, stealth_pass, on_fire_pass, behind_pass, result_pass, mutators_pass, critical_pass, action_pass, is_dropin_pass = nil
 
 		for achievement, achievement_data in pairs(achievements) do
@@ -1678,7 +1678,7 @@ function CopDamage:damage_melee(attack_data)
 			enemy_weapon_pass = not achievement_data.enemy_weapon or unit_weapon == achievement_data.enemy_weapon
 			behind_pass = not achievement_data.from_behind or from_behind
 			diff_pass = not achievement_data.difficulty or table.contains(achievement_data.difficulty, Global.game_settings.difficulty)
-			health_pass = not achievement_data.health or health_ratio <= achievement_data.health
+			health_pass = not achievement_data.health or health_ratio and health_ratio <= achievement_data.health
 			level_pass = not achievement_data.level_id or (managers.job:current_level_id() or "") == achievement_data.level_id
 			job_pass = not achievement_data.job or managers.job:current_real_job_id() == achievement_data.job
 			jobs_pass = not achievement_data.jobs or table.contains(achievement_data.jobs, managers.job:current_real_job_id())

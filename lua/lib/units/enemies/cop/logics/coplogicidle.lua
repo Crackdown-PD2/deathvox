@@ -452,6 +452,85 @@ function CopLogicIdle._update_haste(data, my_data)
 	end
 end 
 
+function CopLogicIdle._upd_stance_and_pose(data, my_data, objective)
+	if data.unit:movement():chk_action_forbidden("walk") then
+		return
+	end
+	
+	local diff_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)
+
+	local obj_has_stance, obj_has_pose, agg_pose = nil
+	
+	if not data.is_converted then
+		if data.is_suppressed then
+			if not data.unit:anim_data().crouch and (not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.crouch) then
+				CopLogicAttack._chk_request_action_crouch(data)
+				agg_pose = true
+			end
+		elseif data.attention_obj and data.attention_obj.verified and data.attention_obj.aimed_at and data.attention_obj.reaction >= AIAttentionObject.REACT_COMBAT and data.attention_obj.is_person then
+			if not data.unit:anim_data().crouch and (not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.crouch) then
+				CopLogicAttack._chk_request_action_crouch(data)
+				agg_pose = true
+			elseif data.unit:anim_data().crouch and (not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.stand) then
+				CopLogicAttack._chk_request_action_stand(data)
+				agg_pose = true
+			end
+		end
+	end
+
+	if objective  and not agg_pose then
+		if objective.stance and (not data.char_tweak.allowed_stances or data.char_tweak.allowed_stances[objective.stance]) then
+			obj_has_stance = true
+			local upper_body_action = data.unit:movement()._active_actions[3]
+
+			if not upper_body_action or upper_body_action:type() ~= "shoot" then
+				data.unit:movement():set_stance(objective.stance)
+			end
+		end
+
+		if objective.pose and not agg_pose and (not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses[objective.pose]) then
+			obj_has_pose = true
+
+			if objective.pose == "crouch" then
+				CopLogicAttack._chk_request_action_crouch(data)
+			elseif objective.pose == "stand" then
+				CopLogicAttack._chk_request_action_stand(data)
+			end
+		end
+	end
+
+	if not obj_has_stance and data.char_tweak.allowed_stances and not data.char_tweak.allowed_stances[data.unit:anim_data().stance] and not agg_pose then
+		for stance_name, state in pairs(data.char_tweak.allowed_stances) do
+			if state then
+				data.unit:movement():set_stance(stance_name)
+
+				break
+			end
+		end
+	end
+	
+	if not obj_has_pose and not agg_pose then
+		if data.char_tweak.allowed_poses and not data.char_tweak.allowed_poses[data.unit:anim_data().pose] then
+			for pose_name, state in pairs(data.char_tweak.allowed_poses) do
+				if state then
+					if pose_name == "crouch" then
+						CopLogicAttack._chk_request_action_crouch(data)
+
+						break
+					end
+
+					if pose_name == "stand" then
+						CopLogicAttack._chk_request_action_stand(data)
+					end
+
+					break
+				end
+			end
+		end
+	end
+end
+
+
 function CopLogicIdle.queued_update(data)
 	local my_data = data.internal_data
 	local delay = data.logic._upd_enemy_detection(data)

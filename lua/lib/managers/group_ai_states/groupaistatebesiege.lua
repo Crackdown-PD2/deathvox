@@ -384,7 +384,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 				end
 			end
 			
-			local oktopushchk = group.is_chasing and tactics_map and not tactics_map.ranged_fire and not tactics_map.elite_ranged_fire and self._t - group.in_place_t > 4 or not tactics_map
+			local oktopushchk = group.is_chasing and group.in_place_t and tactics_map and not tactics_map.ranged_fire and not tactics_map.elite_ranged_fire and self._t - group.in_place_t > 4 or not tactics_map
 			local has_obstacle = tactics_map and tactics_map.obstacle
 
 			if charge then
@@ -1110,7 +1110,7 @@ function GroupAIStateBesiege:_upd_assault_task()
 					local grp_objective = {
 						attitude = "avoid",
 						stance = "hos",
-						pose = "crouch",
+						pose = "stand",
 						type = "assault_area",
 						area = spawn_group.area,
 						coarse_path = {{
