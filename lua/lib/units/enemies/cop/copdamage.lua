@@ -105,8 +105,8 @@ function CopDamage:damage_explosion(attack_data)
 	if self._marked_dmg_mul then
 		damage = damage * self._marked_dmg_mul
 
-		--HVT ace now also grants its bonus for non-projectiles (grenades, etc)
-		if self._marked_dmg_dist_mul and valid_attacker then
+		--HVT ace now also grants its bonus
+		if self._marked_dmg_dist_mul then
 			local attacking_unit = attack_data.attacker_unit
 
 			if attacking_unit and attacking_unit:base() and attacking_unit:base().thrower_unit then
@@ -1659,14 +1659,15 @@ function CopDamage:damage_melee(attack_data)
 		end
 	end
 
-	if tweak_data.blackmarket.melee_weapons[attack_data.name_id] and attack_data.attacker_unit and attack_data.attacker_unit == managers.player:player_unit()then
+	--only check for achievements if the attacker is the local player and they're alive (to be more specific, if their unit still exists)
+	if attack_data.attacker_unit and attack_data.attacker_unit == managers.player:player_unit() and alive(attack_data.attacker_unit) and tweak_data.blackmarket.melee_weapons[attack_data.name_id] then
 		local achievements = tweak_data.achievement.enemy_melee_hit_achievements or {}
 		local melee_type = tweak_data.blackmarket.melee_weapons[attack_data.name_id].type
 		local enemy_base = self._unit:base()
 		local enemy_movement = self._unit:movement()
 		local enemy_type = enemy_base._tweak_table
 		local unit_weapon = enemy_base._default_weapon_id
-		local health_ratio = managers.player:player_unit() and managers.player:player_unit():character_damage():health_ratio() * 100 or nil
+		local health_ratio = managers.player:player_unit():character_damage():health_ratio() * 100
 		local melee_pass, melee_weapons_pass, type_pass, enemy_pass, enemy_weapon_pass, diff_pass, health_pass, level_pass, job_pass, jobs_pass, enemy_count_pass, tags_all_pass, tags_any_pass, all_pass, cop_pass, gangster_pass, civilian_pass, stealth_pass, on_fire_pass, behind_pass, result_pass, mutators_pass, critical_pass, action_pass, is_dropin_pass = nil
 
 		for achievement, achievement_data in pairs(achievements) do
@@ -2126,22 +2127,22 @@ function CopDamage:damage_fire(attack_data)
 
 	if self._marked_dmg_mul then
 		damage = damage * self._marked_dmg_mul
-	end
 
-	--HVT ace now also grants its bonus
-	if not attack_data.is_fire_dot_damage and self._marked_dmg_mul and self._marked_dmg_dist_mul then
-		local attacking_unit = attack_data.attacker_unit
+		--HVT ace now also grants its bonus, except for fire DoT
+		if not attack_data.is_fire_dot_damage and self._marked_dmg_dist_mul then
+			local attacking_unit = attack_data.attacker_unit
 
-		if attacking_unit and attacking_unit:base() and attacking_unit:base().thrower_unit then
-			attacking_unit = attacking_unit:base():thrower_unit()
-		end
+			if attacking_unit and attacking_unit:base() and attacking_unit:base().thrower_unit then
+				attacking_unit = attacking_unit:base():thrower_unit()
+			end
 
-		if alive(attacking_unit) then
-			local dst = mvector3.distance(attacking_unit:position(), self._unit:position())
-			local spott_dst = tweak_data.upgrades.values.player.marked_inc_dmg_distance[self._marked_dmg_dist_mul]
+			if alive(attacking_unit) then
+				local dst = mvector3.distance(attacking_unit:position(), self._unit:position())
+				local spott_dst = tweak_data.upgrades.values.player.marked_inc_dmg_distance[self._marked_dmg_dist_mul]
 
-			if spott_dst[1] < dst then
-				damage = damage * spott_dst[2]
+				if spott_dst[1] < dst then
+					damage = damage * spott_dst[2]
+				end
 			end
 		end
 	end
