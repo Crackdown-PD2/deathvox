@@ -1659,14 +1659,14 @@ function CopDamage:damage_melee(attack_data)
 		end
 	end
 
-	if tweak_data.blackmarket.melee_weapons[attack_data.name_id] then
+	if tweak_data.blackmarket.melee_weapons[attack_data.name_id] and attack_data.attacker_unit and attack_data.attacker_unit == managers.player:player_unit()then
 		local achievements = tweak_data.achievement.enemy_melee_hit_achievements or {}
 		local melee_type = tweak_data.blackmarket.melee_weapons[attack_data.name_id].type
 		local enemy_base = self._unit:base()
 		local enemy_movement = self._unit:movement()
 		local enemy_type = enemy_base._tweak_table
 		local unit_weapon = enemy_base._default_weapon_id
-		local health_ratio = managers.player:player_unit():character_damage():health_ratio() * 100
+		local health_ratio = managers.player:player_unit() and managers.player:player_unit():character_damage():health_ratio() * 100 or nil
 		local melee_pass, melee_weapons_pass, type_pass, enemy_pass, enemy_weapon_pass, diff_pass, health_pass, level_pass, job_pass, jobs_pass, enemy_count_pass, tags_all_pass, tags_any_pass, all_pass, cop_pass, gangster_pass, civilian_pass, stealth_pass, on_fire_pass, behind_pass, result_pass, mutators_pass, critical_pass, action_pass, is_dropin_pass = nil
 
 		for achievement, achievement_data in pairs(achievements) do
