@@ -205,12 +205,11 @@ function CopLogicAttack._upd_combat_movement(data)
 	local best_cover = my_data.best_cover
 	local enemy_visible = focus_enemy.verified
 	local enemy_visible_soft = focus_enemy and focus_enemy.verified
-	local antipassivecheck = nil
+	local antipassivecheck = focus_enemy and focus_enemy.verified and focus_enemy.verified_t > math.random(1.05, 1.4)
 	
 	if data.tactics and data.tactics.ranged_fire or data.tactics and data.tactics.elite_ranged_fire then
-		antipassivecheck = focus_enemy and focus_enemy.verified and focus_enemy.verified_t > math.random(3.1, 3.8)
-	else
-		antipassivecheck = focus_enemy and focus_enemy.verified and focus_enemy.verified_t > math.random(1.05, 1.4)
+		antipassivecheck = focus_enemy and focus_enemy.verified and focus_enemy.verified_t > math.random(2.1, 3.8)
+		enemy_visible_soft = focus_enemy and focus_enemy.verified and focus_enemy.verified_t > math.random(2.1, 3.8)
 	end
 	
 	local enemy_visible_softer = focus_enemy and focus_enemy.verified_t and t - focus_enemy.verified_t < 4
@@ -222,10 +221,10 @@ function CopLogicAttack._upd_combat_movement(data)
 	action_taken = action_taken or CopLogicAttack._upd_pose(data, my_data)
 	local cover_test_step_chk = action_taken or want_to_take_cover or not in_cover --optimizations, yay
 	
-	if data.tactics and (data.tactics.hitnrun or data.tactics.murder) or data.unit:base():has_tag("takedown") then
+	if data.tactics and (data.tactics.hitnrun or data.tactics.murder) or data.unit:base():has_tag("takedown") or focus_enemy.dis > 10000 then
 		if my_data.cover_test_step ~= 1 and cover_test_step_chk then
 			my_data.cover_test_step = 1
-			--not many tactics need to be this aggressive, but hitnrun and murder are specifically for units which will want to get up to enemies' faces, and as such, require these, we can also tag specific enemies with "takedown" in charactertweakdata to invoke this without the use of tactics
+			--not many tactics need to be this aggressive, but hitnrun and murder are specifically for units which will want to get up to enemies' faces, and as such, require these, we can also tag specific enemies with "takedown" in charactertweakdata to invoke this without the use of tactics, there is also a specific check here for situations where enemies arent even close enough to the players for their approach to matter
 		end
 	else
 		if my_data.cover_test_step ~= 1 and not enemy_visible_softer and cover_test_step_chk then
@@ -559,7 +558,7 @@ function CopLogicAttack._upd_aim(data, my_data)
 
 							if my_data.firing and time_since_verification and time_since_verification < 3 then
 								shoot = true
-								if not (data.tactics and data.tactics.obstacle) and focus_enemy.is_person then
+								if data.tactics and data.tactics.charge and focus_enemy.is_person then
 									data.brain:search_for_path_to_unit("hunt" .. tostring(my_data.key), focus_enemy.unit)
 								end
 							else
