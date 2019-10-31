@@ -305,11 +305,6 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 
 								if turret_shield and (col_ray.body:name() == turret_shield) or turret_weak_spot and (col_ray.body:name() == turret_weak_spot) then --prioritize the shield or weak spot of a turret over other parts of it's body
 									hit_enemies[col_ray.unit:key()] = col_ray
-								else
-									--[[local final_damage = damage / self._rays
-									final_damage = self:get_damage_falloff(final_damage, col_ray, user_unit)]]
-
-									self._bullet_class:on_collision_effects(col_ray, self._unit, user_unit, --[[final_]]damage) --no need to split damage equally among the pellets and calculate fall-off since the function doesn't even use it
 								end
 							end
 						end
