@@ -21,9 +21,20 @@ function ProjectileBase:update(unit, t, dt)
 		self._unit:m_position(self._sweep_data.current_pos)
 
 		local col_ray = nil
+		local ignore_units = {}
 
 		if self._thrower_unit then
-			col_ray = World:raycast("ray", self._sweep_data.last_pos, self._sweep_data.current_pos, "slot_mask", self._sweep_data.slot_mask, "ignore_unit", {self._thrower_unit}) --prevent husks from hitting themselves with RPGs/grenade launchers
+			--to avoid colliding with the thrower, this prevents NPCs from hitting themselves with the projectile when launching it, along with player husks when FF is enabled
+			table.insert(ignore_units, self._thrower_unit)
+
+			--if the thrower has a shield equipped, ignore it as well (pretty important, even if the shield throw animation is used and the throw is timed, a collision can still easily happen)
+			if alive(self._thrower_unit:inventory() and self._thrower_unit:inventory()._shield_unit) then
+				table.insert(ignore_units, self._thrower_unit:inventory()._shield_unit)
+			end
+		end
+
+		if #ignore_units > 0 then
+			col_ray = World:raycast("ray", self._sweep_data.last_pos, self._sweep_data.current_pos, "slot_mask", self._sweep_data.slot_mask, "ignore_unit", ignore_units) --prevent husks from hitting themselves with RPGs/grenade launchers
 		else
 			col_ray = World:raycast("ray", self._sweep_data.last_pos, self._sweep_data.current_pos, "slot_mask", self._sweep_data.slot_mask)
 		end
