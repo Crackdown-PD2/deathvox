@@ -667,10 +667,12 @@ function RaycastWeaponBase:_suppress_units(from, to, cylinder_radius, slotmask, 
 			if not table.contains(enemies_to_suppress, ene_unit) and ene_unit.character_damage and ene_unit:character_damage() and ene_unit:character_damage().build_suppression then --valid enemy + has suppression function
 				if not ene_unit:movement().cool or ene_unit:movement().cool and not ene_unit:movement():cool() then --is alerted or can't be alerted at all (player)
 					if user_unit:movement():team() ~= ene_unit:movement():team() and user_unit:movement():team().foes[ene_unit:movement():team().id] then --not in the same team as the shooter
-						local obstructed = World:raycast("ray", from, ene_unit:movement():m_head_pos(), "slot_mask", managers.slot:get_mask("AI_visibility"), "ray_type", "ai_vision") --imitating AI checking for visibility for things like shouting
+						if Network:is_server() or ene_unit == managers.player:player_unit() then --only suppress the local player for client sessions
+							local obstructed = World:raycast("ray", from, ene_unit:movement():m_head_pos(), "slot_mask", managers.slot:get_mask("AI_visibility"), "ray_type", "ai_vision") --imitating AI checking for visibility for things like shouting
 
-						if not obstructed then
-							table.insert(enemies_to_suppress, ene_unit)
+							if not obstructed then
+								table.insert(enemies_to_suppress, ene_unit)
+							end
 						end
 					end
 				end
