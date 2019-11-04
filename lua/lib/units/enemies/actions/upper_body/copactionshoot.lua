@@ -515,7 +515,11 @@ function CopActionShoot:anim_clbk_melee_strike()
 		return
 	end
 
-	local melee_slot_mask = managers.groupai:state():is_unit_team_AI(self._unit) and managers.slot:get_mask("bullet_impact_targets_no_criminals") or managers.slot:get_mask("bullet_impact_targets_no_police") --ignore teammates of the attacking unit
+	local melee_slot_mask = managers.slot:get_mask("bullet_impact_targets_no_police") --ignore teammates of the attacking unit
+
+	if managers.groupai:state():is_unit_team_AI(self._unit) or managers.groupai:state():is_enemy_converted_to_criminal(self._unit) then --switch for Jokers and team AI
+		melee_slot_mask = managers.slot:get_mask("bullet_impact_targets_no_criminals")
+	end
 
 	--similar to player melee attacks, use a sphere instead of just a ray
 	local col_ray = World:raycast("ray", shoot_from_pos, target_pos, "ignore_unit", {self._unit, managers.player:player_unit()}, "slot_mask", melee_slot_mask, "sphere_cast_radius", 20, "ray_type", "body melee")
@@ -555,7 +559,7 @@ function CopActionShoot:anim_clbk_melee_strike()
 		local character_unit, shield_knock = nil
 		local defense_data = nil
 
-		if hit_unit:in_slot(8) and alive(hit_unit:parent()) then
+		if hit_unit:in_slot(managers.slot:get_mask("enemy_shield_check")) and alive(hit_unit:parent()) then
 			local can_be_knocked = not hit_unit:parent():base().is_phalanx and hit_unit:parent():base():char_tweak().damage.shield_knocked and not hit_unit:parent():character_damage():is_immune_to_shield_knockback()
 
 			if can_be_knocked then
