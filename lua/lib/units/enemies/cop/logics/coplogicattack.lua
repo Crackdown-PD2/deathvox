@@ -548,6 +548,10 @@ function CopLogicAttack._upd_aim(data, my_data)
 						elseif focus_enemy.verified and focus_enemy.criminal_record and focus_enemy.criminal_record.assault_t and data.t - focus_enemy.criminal_record.assault_t < 2 then
 							shoot = true
 						end
+					else
+						if focus_enemy.verified and data.internal_data.weapon_range and focus_enemy.criminal_record.assault_t and data.t - focus_enemy.criminal_record.assault_t < 6 or focus_enemy.reaction == AIAttentionObject.REACT_SHOOT then
+							shoot = true
+						end
 					end
 
 					if not shoot and my_data.attitude == "engage" or not shoot and focus_enemy.dis <= 800 and not managers.groupai:state():whisper_mode() then
