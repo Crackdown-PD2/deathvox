@@ -63,7 +63,7 @@ local function deathvox_init_menus()
 	end)
 	
 	function deathvox:SyncOptionsFromHost(str)
-		local synced_options = LuaNetworking:StringToTable(str) or {}
+		local synced_options = str and LuaNetworking:StringToTable(str)
 		if not synced_options then 
 			log("CRACKDOWN: ERROR: Bad sync options")
 			self.Session_Settings = self.Session_Settings or {}
