@@ -297,9 +297,9 @@ function TeamAILogicIdle.on_long_dis_interacted(data, other_unit, secondary)
 	if data.unit:movement():carrying_bag() and objective.type == "revive" then --carrying a bag and called to revive a player
 		if not data.unit:movement():carry_tweak().can_run then --slowed down by the bag
 			local range_sq = 810000
-			local pos = data.unit:position()
-			local target = revive_unit:position()
-			local dist = mvector3.distance_sq(pos, target)
+			local my_pos = data.unit:position()
+			local revive_unit_pos = other_unit:position()
+			local dist = mvector3.distance_sq(my_pos, revive_unit_pos)
 			local inspire_available = managers.player:is_custom_cooldown_not_active("team", "crew_inspire")
 
 			if dist < range_sq then --within inspire range, taken from teamailogictravel as it's calculated with square distance
