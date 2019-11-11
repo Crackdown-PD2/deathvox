@@ -357,7 +357,7 @@ function CopDamage:sync_damage_explosion(attacker_unit, damage_percent, i_attack
 			elseif i_attack_variant == 5 then
 				result_type = "dmg_rcv"
 			else
-				self:get_damage_type(damage_percent, "explosion")
+				result_type = self:get_damage_type(damage_percent, "explosion")
 			end
 		end
 
