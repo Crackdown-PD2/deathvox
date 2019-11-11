@@ -619,34 +619,36 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 
 	local result = nil
 
-	if not blank then
-		if alive(weapon_unit) and hit_unit:character_damage() and hit_unit:character_damage().damage_bullet then
-			local is_alive = not hit_unit:character_damage():dead()
+	if alive(weapon_unit) and hit_unit:character_damage() and hit_unit:character_damage().damage_bullet then
+		local is_alive = not hit_unit:character_damage():dead()
+
+		if not blank then
 			local knock_down = weapon_unit:base()._knock_down and weapon_unit:base()._knock_down > 0 and math.random() < weapon_unit:base()._knock_down
 			result = self:give_impact_damage(col_ray, weapon_unit, user_unit, damage, weapon_unit:base()._use_armor_piercing, false, knock_down, weapon_unit:base()._stagger, weapon_unit:base()._variant)
-			local is_dead = hit_unit:character_damage():dead()
+		end
 
-			if not is_dead then
-				--if no damage is taken (blocked by grace period, script, mission stuff, etc). The less impact effects, the better
-				if not result or result == "friendly_fire" then
-					play_impact_flesh = false
-				end
+		local is_dead = hit_unit:character_damage():dead()
+
+		if not is_dead then
+			--if no damage is taken (blocked by grace period, script, mission stuff, etc). The less impact effects, the better
+			if not result or result == "friendly_fire" then
+				play_impact_flesh = false
 			end
-
-			local push_multiplier = self:_get_character_push_multiplier(weapon_unit, is_alive and is_dead)
-
-			managers.game_play_central:physics_push(col_ray, push_multiplier)
-		else
-			managers.game_play_central:physics_push(col_ray)
 		end
 
-		if play_impact_flesh then
-			managers.game_play_central:play_impact_flesh({
-				col_ray = col_ray,
-				no_sound = no_sound
-			})
-			self:play_impact_sound_and_effects(weapon_unit, col_ray, no_sound)
-		end
+		local push_multiplier = self:_get_character_push_multiplier(weapon_unit, is_alive and is_dead)
+
+		managers.game_play_central:physics_push(col_ray, push_multiplier)
+	else
+		managers.game_play_central:physics_push(col_ray)
+	end
+
+	if play_impact_flesh then
+		managers.game_play_central:play_impact_flesh({
+			col_ray = col_ray,
+			no_sound = no_sound
+		})
+		self:play_impact_sound_and_effects(weapon_unit, col_ray, no_sound)
 	end
 
 	return result
@@ -654,20 +656,19 @@ end
 
 function RaycastWeaponBase:_suppress_units(from, to, cylinder_radius, slotmask, user_unit, suppr_mul, max_distance)
 	local find_enemies = World:find_units("intersect", "cylinder", from, to, cylinder_radius, slotmask)
+	local enemies_to_suppress = {}
 
 	--draw the cylinder to see where it goes
 	--[[local draw_duration = 0.1 --SEIZURE WARNING, INCREASE IF NEEDED
 	local new_brush = Draw:brush(Color.white:with_alpha(0.5), draw_duration)
 	new_brush:cylinder(from, to, cylinder_radius)]]
 
-	local enemies_to_suppress = {}
-
 	if #find_enemies > 0 then
 		for _, ene_unit in ipairs(find_enemies) do
-			if not table.contains(enemies_to_suppress, ene_unit) and ene_unit.character_damage and ene_unit:character_damage() and ene_unit:character_damage().build_suppression then --valid enemy + has suppression function
-				if not ene_unit:movement().cool or ene_unit:movement().cool and not ene_unit:movement():cool() then --is alerted or can't be alerted at all (player)
-					if user_unit:movement():team() ~= ene_unit:movement():team() and user_unit:movement():team().foes[ene_unit:movement():team().id] then --not in the same team as the shooter
-						if Network:is_server() or ene_unit == managers.player:player_unit() then --only suppress the local player for client sessions
+			if Network:is_server() or user_unit == managers.player:player_unit() or ene_unit == managers.player:player_unit() then --clients only allow the local player to suppress or be suppressed (so that NPC husks don't suppress each other)
+				if not table.contains(enemies_to_suppress, ene_unit) and ene_unit.character_damage and ene_unit:character_damage() and ene_unit:character_damage().build_suppression then --valid enemy + has suppression function
+					if not ene_unit:movement().cool or ene_unit:movement().cool and not ene_unit:movement():cool() then --is alerted or can't be alerted at all (player)
+						if user_unit:movement():team() ~= ene_unit:movement():team() and user_unit:movement():team().foes[ene_unit:movement():team().id] then --not in the same team as the shooter
 							local obstructed = World:raycast("ray", from, ene_unit:movement():m_head_pos(), "slot_mask", managers.slot:get_mask("AI_visibility"), "ray_type", "ai_vision") --imitating AI checking for visibility for things like shouting
 
 							if not obstructed then
