@@ -275,7 +275,7 @@ function GroupAIStateBase:upd_team_AI_distance()
 						local player_unit = player.unit
 
 						if alive(player_unit) then --make sure the player's unit hasn't despawned (by leaving the game or being in custody)
-							local distance = mvector3.distance_sq(unit_pos, player.pos)
+							local distance = mvector3.distance_sq(unit_pos, player_unit:position()) --using player.pos is bad because it doesn't get updated in certain situations, like when driving a vehicle
 
 							if not closest_distance or distance < closest_distance then
 								closest_distance = distance
@@ -295,21 +295,24 @@ function GroupAIStateBase:upd_team_AI_distance()
 							local allow_teleport = true
 							local using_zipline = closest_unit:movement():zipline_unit()
 							local state = closest_unit:movement():current_state_name()
-							local in_air = closest_unit:base().is_husk_player and closest_unit:movement()._in_air or closest_unit:movement():in_air()
+							local in_air = nil
 
-							--prevent warp if the player is freefalling, parachuting, driving or is in the air
+							if closest_unit == managers.player:player_unit() then
+								in_air = closest_unit:movement():in_air()
+							else
+								in_air = closest_unit:movement()._in_air
+							end
+
 							if using_zipline or state == "jerry1" or state == "jerry2" or state == "driving" or in_air then
 								allow_teleport = false
 							end
 
 							if allow_teleport then
-								--use the player's nav_tracker to try to get a cover point near the player to warp the bot to, otherwise use the player's position
 								local player_tracker = closest_unit:movement():nav_tracker()
 								local warp_destination = managers.groupai:state():get_area_from_nav_seg_id(player_tracker:nav_segment())
 								local near_cover_point = managers.navigation:find_cover_in_nav_seg_3(warp_destination.nav_segs, 400, player_tracker:field_position())
 								local position = near_cover_point and near_cover_point[1] or closest_unit:position()
 
-								--rotation can also be easily added but it's not really necessary
 								local action_desc = {
 									body_part = 1,
 									type = "warp",
