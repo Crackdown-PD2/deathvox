@@ -179,7 +179,7 @@ end
 function GroupAIStateBase:unregister_special_unit(u_key, category_name)
 	local category = self._special_units[category_name]
 
-	if category_name == "phalanx_minion" and self._special_units["shield"][u_key] then
+	if category_name == "phalanx_minion" and self._special_units["shield"] and self._special_units["shield"][u_key] then
 		self._special_units["shield"][u_key] = nil
 
 		if not next(self._special_units["shield"]) then
