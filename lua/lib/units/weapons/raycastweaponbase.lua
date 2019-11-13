@@ -54,6 +54,7 @@ function RaycastWeaponBase:setup(setup_data, damage_multiplier)
 	end
 
 	self._bullet_slotmask = setup_data.hit_slotmask or self._bullet_slotmask
+	self._bullet_slotmask = managers.mutators:modify_value("RaycastWeaponBase:setup:weapon_slot_mask", self._bullet_slotmask)
 	self._panic_suppression_chance = setup_data.panic_suppression_skill and self:weapon_tweak_data().panic_suppression_chance
 
 	if self._panic_suppression_chance == 0 then
@@ -65,10 +66,6 @@ function RaycastWeaponBase:setup(setup_data, damage_multiplier)
 
 	if self._setup.timer then
 		self:set_timer(self._setup.timer)
-	end
-
-	if managers.mutators:is_mutator_active(MutatorFriendlyFire) then --add friendly fire against player husks only for players
-		self._bullet_slotmask = self._bullet_slotmask + World:make_slot_mask(3)
 	end
 end
 
@@ -520,11 +517,8 @@ function InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, 
 	end
 end
 
-local MIN_KNOCK_BACK = 200
-local KNOCK_BACK_CHANCE = 0.8
-
 function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage, blank, no_sound, already_ricocheted)
-	if not blank and Network:is_client() and user_unit ~= managers.player:player_unit() then
+	if Network:is_client() and not blank and user_unit ~= managers.player:player_unit() then
 		blank = true
 	end
 
@@ -550,32 +544,35 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 	end
 
 	local hit_unit = col_ray.unit
-	local shield_knock = false
 	local is_shield = hit_unit:in_slot(managers.slot:get_mask("enemy_shield_check")) and alive(hit_unit:parent())
 
-	--more proper checks if the shield can actually be knocked back
-	if weapon_unit and is_shield and not hit_unit:parent():base().is_phalanx and tweak_data.character[hit_unit:parent():base()._tweak_table].damage.shield_knocked and not hit_unit:parent():character_damage():is_immune_to_shield_knockback() then
-		shield_knock = weapon_unit:base()._shield_knock
-		local dmg_ratio = math.min(damage, MIN_KNOCK_BACK)
-		dmg_ratio = dmg_ratio / MIN_KNOCK_BACK + 1
-		local rand = math.random() * dmg_ratio
+	--more proper checks for knocking back a shield
+	if alive(weapon_unit) and is_shield and weapon_unit:base()._shield_knock then
+		local enemy_unit = hit_unit:parent()
 
-		if KNOCK_BACK_CHANCE < rand then
-			local enemy_unit = hit_unit:parent()
+		if enemy_unit:character_damage() and enemy_unit:character_damage().dead and not enemy_unit:character_damage():dead() then
+			if enemy_unit:base():char_tweak() and not enemy_unit:base().is_phalanx and enemy_unit:base():char_tweak().damage.shield_knocked and not enemy_unit:character_damage():is_immune_to_shield_knockback() then
+				local MIN_KNOCK_BACK = 200
+				local KNOCK_BACK_CHANCE = 0.8
+				local dmg_ratio = math.min(damage, MIN_KNOCK_BACK)
+				dmg_ratio = dmg_ratio / MIN_KNOCK_BACK + 1
 
-			if shield_knock and enemy_unit:character_damage() then
-				local damage_info = {
-					damage = 0,
-					type = "shield_knock",
-					variant = "melee",
-					col_ray = col_ray,
-					result = {
+				local rand = math.random() * dmg_ratio
+
+				if KNOCK_BACK_CHANCE < rand then
+					local damage_info = {
+						damage = 0,
+						type = "shield_knock",
 						variant = "melee",
-						type = "shield_knock"
+						col_ray = col_ray,
+						result = {
+							variant = "melee",
+							type = "shield_knock"
+						}
 					}
-				}
 
-				enemy_unit:character_damage():_call_listeners(damage_info)
+					enemy_unit:character_damage():_call_listeners(damage_info)
+				end
 			end
 		end
 	end
@@ -584,9 +581,16 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 
 	if hit_unit:damage() and managers.network:session() and col_ray.body:extension() and col_ray.body:extension().damage then
 		local damage_body_extension = true
+		local character_unit = nil
 
-		--prevents teammates of the hit_unit from damaging its body extensions, if it has any (e.g. Bulldozer armor parts/faceplate/visor)
-		if user_unit and hit_unit:character_damage() and hit_unit:character_damage().is_friendly_fire and hit_unit:character_damage():is_friendly_fire(user_unit) then
+		if hit_unit:character_damage() then
+			character_unit = hit_unit
+		elseif is_shield and hit_unit:parent():character_damage() then
+			character_unit = hit_unit:parent()
+		end
+
+		--if the unit hit is a character or a character's shield, do a friendly fire check before damaging the body extension that was hit
+		if character_unit and character_unit:character_damage().is_friendly_fire and character_unit:character_damage():is_friendly_fire(user_unit) then
 			damage_body_extension = false
 		end
 
