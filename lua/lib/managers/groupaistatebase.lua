@@ -248,7 +248,7 @@ end
 function GroupAIStateBase:unregister_special_unit(u_key, category_name)
 	local category = self._special_units[category_name]
 
-	if category_name == "phalanx_minion" and self._special_units["shield"][u_key] then
+	if category_name == "phalanx_minion" and self._special_units["shield"] and self._special_units["shield"][u_key] then
 		self._special_units["shield"][u_key] = nil
 
 		if not next(self._special_units["shield"]) then
@@ -320,6 +320,81 @@ function GroupAIStateBase:propagate_alert(alert_data)
 		if clbks then
 			for _, clbk in ipairs(clbks) do
 				clbk(alert_data)
+			end
+		end
+	end
+end
+
+function GroupAIStateBase:upd_team_AI_distance()
+	if Network:is_sever() then
+		if self:team_ai_enabled() then
+			local far_away_distance = tweak_data.team_ai.stop_action.distance * tweak_data.team_ai.stop_action.distance
+			local teleport_distance = tweak_data.team_ai.stop_action.teleport_distance * tweak_data.team_ai.stop_action.teleport_distance
+
+			for _, ai in pairs(self:all_AI_criminals()) do
+				local unit = ai.unit
+
+				--make sure the bot hasn't despawned first (I don't know if the table is safe against this so I'm just making sure here)
+				if alive(unit) and not unit:movement():cool() then
+					local unit_pos = unit:movement()._m_pos --position of the bot
+					local closest_distance = nil --distance to the closest player, to be used to compare with the distance limits
+					local closest_unit = nil
+
+					for _, player in pairs(self:all_player_criminals()) do
+						local player_unit = player.unit
+
+						if alive(player_unit) then --make sure the player's unit hasn't despawned (by leaving the game or being in custody)
+							local distance = mvector3.distance_sq(unit_pos, player_unit:position()) --using player.pos is bad because it doesn't get updated in certain situations, like when driving a vehicle
+
+							if not closest_distance or distance < closest_distance then
+								closest_distance = distance
+								closest_unit = player_unit
+							end
+						end
+					end
+
+					if closest_unit then
+						if unit:movement() and unit:movement()._should_stay and closest_distance > far_away_distance then
+							unit:movement():set_should_stay(false)
+
+							print("[GroupAIStateBase:update] team ai is too far away, started moving again")
+						end
+
+						if not unit:movement():chk_action_forbidden("warp") and not unit:movement():downed() and closest_distance > teleport_distance then
+							local allow_teleport = true
+							local using_zipline = closest_unit:movement():zipline_unit()
+							local state = closest_unit:movement():current_state_name()
+							local in_air = nil
+
+							if closest_unit == managers.player:player_unit() then
+								in_air = closest_unit:movement():in_air()
+							else
+								in_air = closest_unit:movement()._in_air
+							end
+
+							if using_zipline or state == "jerry1" or state == "jerry2" or state == "driving" or in_air then
+								allow_teleport = false
+							end
+
+							if allow_teleport then
+								local player_tracker = closest_unit:movement():nav_tracker()
+								local warp_destination = managers.groupai:state():get_area_from_nav_seg_id(player_tracker:nav_segment())
+								local near_cover_point = managers.navigation:find_cover_in_nav_seg_3(warp_destination.nav_segs, 400, player_tracker:field_position())
+								local position = near_cover_point and near_cover_point[1] or closest_unit:position()
+
+								local action_desc = {
+									body_part = 1,
+									type = "warp",
+									position = position
+								}
+
+								if unit:movement():action_request(action_desc) then
+									print("[GroupAIStateBase:update] team ai is too far away, teleported to player")
+								end
+							end
+						end
+					end
+				end
 			end
 		end
 	end

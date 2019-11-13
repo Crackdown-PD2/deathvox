@@ -15,6 +15,7 @@ function PlayerStandard:init(unit)
 	self._slotmask_gnd_ray = slot_manager:get_mask("player_ground_check")
 	self._slotmask_fwd_ray = slot_manager:get_mask("bullet_impact_targets")
 	self._slotmask_bullet_impact_targets = slot_manager:get_mask("bullet_impact_targets")
+	self._slotmask_bullet_impact_targets = managers.mutators:modify_value("PlayerStandard:init:melee_slot_mask", self._slotmask_bullet_impact_targets)
 	self._slotmask_pickups = slot_manager:get_mask("pickups")
 	self._slotmask_AI_visibility = slot_manager:get_mask("AI_visibility")
 	self._slotmask_long_distance_interaction = slot_manager:get_mask("long_distance_interaction")
@@ -64,11 +65,6 @@ function PlayerStandard:init(unit)
 	self._menu_closed_fire_cooldown = 0
 
 	managers.menu:add_active_changed_callback(callback(self, self, "_on_menu_active_changed"))
-
-	--manually adding the player husk slotmask here when the FF Mutator is enabled, otherwise players won't be able to hit other players' husks with melee
-	if managers.mutators:is_mutator_active(MutatorFriendlyFire) then
-		self._slotmask_bullet_impact_targets = self._slotmask_bullet_impact_targets + World:make_slot_mask(3)
-	end
 end
 
 function PlayerStandard:_update_fwd_ray()
