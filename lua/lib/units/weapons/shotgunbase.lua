@@ -78,7 +78,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 	local up = direction:cross(right):normalized()
 
 	mvector3.set(mvec_direction, direction)
-	
+
 	local ray_hits = nil
 	local hit_an_enemy = false
 
@@ -284,6 +284,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 
 	local units_to_ignore = {}
 	local hit_enemies = {}
+	local hit_shields = {}
 
 	for _, col_ray in pairs(col_rays) do
 		if col_ray and col_ray.unit then
@@ -310,11 +311,22 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 						end
 					end
 				else
-					local final_damage = damage / self._rays
-					final_damage = self:get_damage_falloff(final_damage, col_ray, user_unit)
+					if self._rays ~= 1 and col_ray.unit:in_slot(managers.slot:get_mask("enemy_shield_check")) then
+						if not hit_shields[col_ray.unit:key()] then --not already hit
+							hit_shields[col_ray.unit:key()] = col_ray
 
-					--still going to split damage here among the pellets and apply fall-off to avoid situations where a 155-damage shotgun deals 155 damage per pellet to things like solid objects or similar (or when used for shield_knock
-					self._bullet_class:on_collision(col_ray, self._unit, user_unit, final_damage)
+							--only hit the shield once to avoid almost guaranteed knockbacks
+							self._bullet_class:on_collision(col_ray, self._unit, user_unit, damage)
+						else
+							self._bullet_class:on_collision_effects(col_ray, self._unit, user_unit, damage)
+						end
+					else
+						local final_damage = damage / self._rays
+						final_damage = self:get_damage_falloff(final_damage, col_ray, user_unit)
+
+						--still going to split damage here among the pellets and apply fall-off to avoid situations where a 155-damage shotgun deals 155 damage per pellet to things like solid objects or similar
+						self._bullet_class:on_collision(col_ray, self._unit, user_unit, final_damage)
+					end
 				end
 			else
 				local final_damage = damage / self._rays
@@ -326,6 +338,18 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 
 					if col_ray.unit:character_damage() and col_ray.unit:character_damage().dead and col_ray.unit:character_damage():dead() then --additional check to avoid pushing dead enemies excessively
 						table.insert(units_to_ignore, col_ray.unit:key())
+					end
+				end
+
+				if self._rays ~= 1 and col_ray.unit:in_slot(managers.slot:get_mask("enemy_shield_check")) then
+					if not hit_shields[col_ray.unit:key()] then --not already hit
+						hit_shields[col_ray.unit:key()] = col_ray
+						table.insert(units_to_ignore, col_ray.unit:key())
+
+						--only hit the shield once to avoid almost guaranteed knockbacks
+						self._bullet_class:on_collision(col_ray, self._unit, user_unit, damage)
+					else
+						self._bullet_class:on_collision_effects(col_ray, self._unit, user_unit, damage)
 					end
 				end
 
@@ -372,7 +396,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 
 								kill_data.kills = kill_data.kills + 1
 
-								if not dragons_breath and col_ray.body and col_ray.body:name() == Idstring("head") then --remember this is only for headshot kills
+								if my_result.attack_data and my_result.attack_data.headshot then --remember this is only for headshot kills
 									kill_data.headshots = kill_data.headshots + 1
 								end
 
@@ -460,7 +484,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 
 						kill_data.kills = kill_data.kills + 1
 
-						if not dragons_breath and col_ray.body and col_ray.body:name() == Idstring("head") then --remember this is only for headshot kills
+						if my_result.attack_data and my_result.attack_data.headshot then --remember this is only for headshot kills
 							kill_data.headshots = kill_data.headshots + 1
 						end
 
