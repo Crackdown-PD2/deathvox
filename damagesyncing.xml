@@ -48,4 +48,15 @@
             <attr name="max" value="4"/>
         </target>
     </tweak>
+    <!--sync_shotgun_push-->
+      <tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="sync_shotgun_push"/>
+        </search>
+        <target mode="attributes">
+            <attr name="delivery" value="ordered"/>
+        </target>
+    </tweak>
 </tweaks>
