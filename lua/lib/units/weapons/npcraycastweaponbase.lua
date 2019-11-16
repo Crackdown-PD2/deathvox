@@ -131,6 +131,12 @@
 
 			if not player_hit and col_ray then
 				char_hit = InstantBulletBase:on_collision(col_ray, self._unit, user_unit, damage)
+
+				if char_hit and char_hit.type and char_hit.type == "death" then
+					if self:is_category("shotgun") then
+						managers.game_play_central:do_shotgun_push(col_ray.unit, col_ray.position, col_ray.ray, col_ray.distance, user_unit)
+					end
+				end
 			end
 		end
 
