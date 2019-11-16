@@ -79,6 +79,7 @@
 
 	<post :script_path="managers/groupaistatebase.lua" :hook_id="managers/group_ai_states/groupaistatebase"/>
 	<post :script_path="managers/achievmentmanager.lua" :hook_id="managers/achievmentmanager"/>
+	<post :script_path="managers/gameplaycentralmanager.lua" :hook_id="managers/gameplaycentralmanager"/>
 	<post :script_path="managers/menumanager.lua" :hook_id="managers/menumanager"/>
 	<post :script_path="managers/skirmishmanager.lua" :hook_id="managers/skirmishmanager"/>
 	<post :script_path="managers/firemanager.lua" :hook_id="managers/firemanager"/>
