@@ -238,23 +238,297 @@ function PlayerDamage:_calc_health_damage(attack_data, ...)
 	return _calc_health_damage_original(self, attack_data, ...)
 end
 
---would edit the whole function and do it properly + fix it while at it, but it hates me and I can't avoid 0 damage results or game crashes if I don't do it this way
-local damage_melee_original = PlayerDamage.damage_melee
 function PlayerDamage:damage_melee(attack_data)
-	local player_unit = managers.player:player_unit()
+	if not self:_chk_can_take_dmg() then
+		return
+	end
 
-	if alive(player_unit) and attack_data and attack_data.tase_player then
-		if player_unit:movement():current_state_name() == "standard" or player_unit:movement():current_state_name() == "carry" or player_unit:movement():current_state_name() == "bipod" then
-			if player_unit:movement():current_state_name() == "bipod" then
-				player_unit:movement()._current_state:exit(nil, "tased")
+	local pm = managers.player
+	local can_counter_strike = pm:has_category_upgrade("player", "counter_strike_melee")
+
+	if can_counter_strike and self._unit:movement():current_state().in_melee and self._unit:movement():current_state():in_melee() then
+		if attack_data.attacker_unit and alive(attack_data.attacker_unit) and attack_data.attacker_unit:base() then
+			local is_dozer = attack_data.attacker_unit:base().has_tag and attack_data.attacker_unit:base():has_tag("tank")
+
+			--prevent the player from countering Dozers or other players through FF, for obvious reasons
+			if not attack_data.attacker_unit:base().is_husk_player and not is_dozer then
+				self._unit:movement():current_state():discharge_melee()
+
+				return "countered"
 			end
-
-			player_unit:movement():on_non_lethal_electrocution()
-			managers.player:set_player_state("tased")
 		end
 	end
 
-	damage_melee_original(self, attack_data)
+	local damage_info = {
+		result = {
+			variant = "melee",
+			type = "hurt"
+		},
+		attacker_unit = attack_data.attacker_unit
+	}
+	local pm = managers.player
+	local dmg_mul = pm:damage_reduction_skill_multiplier("melee") --the vanilla function has this line, but it also uses bullet damage reduction skills due to it redirecting to damage_bullet to get results
+	attack_data.damage = attack_data.damage * dmg_mul
+	attack_data.damage = managers.player:modify_value("damage_taken", attack_data.damage, attack_data) --apply damage resistances before checking for bleedout and other things
+
+	local damage_absorption = pm:damage_absorption()
+
+	if damage_absorption > 0 then
+		attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
+	end
+
+	if self._god_mode then --same as damage_bullet, although not being suppressed won't negate damage for that one instance
+		if attack_data.damage > 0 then
+			self:_send_damage_drama(attack_data, attack_data.damage)
+		end
+
+		self:_call_listeners(damage_info)
+
+		return
+	elseif self._invulnerable or self._mission_damage_blockers.invulnerable then
+		self:_call_listeners(damage_info)
+
+		return
+	elseif self:incapacitated() then
+		return
+	elseif self:is_friendly_fire(attack_data.attacker_unit) then
+		return
+	elseif self:_chk_dmg_too_soon(attack_data.damage) then
+		return
+	elseif self._unit:movement():current_state().immortal then
+		return
+	elseif self._revive_miss and math.random() < self._revive_miss then
+		return
+	end
+
+	self._last_received_dmg = attack_data.damage
+	self._next_allowed_dmg_t = Application:digest_value(pm:player_timer():time() + self._dmg_interval, true)
+
+	local allow_melee_dodge = false --manual toggle, to be later replaced with a Rogue melee dodge perk check
+
+	if allow_melee_dodge and pm:current_state() ~= "bleed_out" and pm:current_state() ~= "bipod" and pm:current_state() ~= "tased" then --self._bleed_out and current_state() ~= "bleed_out" aren't the same thing
+		local dodge_roll = math.random()
+		local dodge_value = tweak_data.player.damage.DODGE_INIT or 0
+		local armor_dodge_chance = pm:body_armor_value("dodge")
+		local skill_dodge_chance = pm:skill_dodge_chance(self._unit:movement():running(), self._unit:movement():crouching(), self._unit:movement():zipline_unit())
+		dodge_value = dodge_value + armor_dodge_chance + skill_dodge_chance
+
+		if self._temporary_dodge_t and TimerManager:game():time() < self._temporary_dodge_t then
+			dodge_value = dodge_value + self._temporary_dodge
+		end
+
+		local smoke_dodge = 0
+
+		for _, smoke_screen in ipairs(managers.player._smoke_screen_effects or {}) do
+			if smoke_screen:is_in_smoke(self._unit) then
+				smoke_dodge = tweak_data.projectiles.smoke_screen_grenade.dodge_chance
+
+				break
+			end
+		end
+
+		dodge_value = 1 - (1 - dodge_value) * (1 - smoke_dodge)
+
+		if dodge_roll < dodge_value then
+			if attack_data.damage > 0 then
+				self:_send_damage_drama(attack_data, 0) -- ????
+			end
+
+			self:_call_listeners(damage_info)
+
+			--do a push to simulate the dodge + show an indicator (no hit sounds or a blood effect)
+			self:_hit_direction(attack_data.attacker_unit:position())
+			self._unit:movement():push(attack_data.push_vel)
+
+			self._next_allowed_dmg_t = Application:digest_value(pm:player_timer():time() + self._dmg_interval, true)
+			self._last_received_dmg = attack_data.damage
+
+			managers.player:send_message(Message.OnPlayerDodge)
+
+			return
+		end
+	end
+
+	if attack_data.tase_player then
+		if pm:current_state() == "standard" or pm:current_state() == "carry" or pm:current_state() == "bipod" then
+			if pm:current_state() == "bipod" then
+				self._unit:movement()._current_state:exit(nil, "tased")
+			end
+
+			self._unit:movement():on_non_lethal_electrocution()
+			pm:set_player_state("tased")
+
+			--no pushing and camera shaking for melee tase attacks
+		end
+	else
+		if pm:current_state() == "bipod" then
+			self._unit:movement()._current_state:exit(nil, "standard")
+			pm:set_player_state("standard")
+		end
+
+		local vars = {
+			"melee_hit",
+			"melee_hit_var2"
+		}
+
+		self._unit:camera():play_shaker(vars[math.random(#vars)], 1)
+
+		--no pushing when in bleedout, looks silly in third-person
+		if pm:current_state() ~= "bleed_out" then
+			self._unit:movement():push(attack_data.push_vel)
+		end
+	end
+
+	self:_hit_direction(attack_data.attacker_unit:position())
+
+	if self._bleed_out then
+		self:_bleed_out_damage(attack_data)
+		
+		--bleed_out = always taking health damage, so use the appropiate sound and cause a blood effect if the weapon isn't tase capable
+		self:play_melee_hit_sound_and_effects(attack_data, "hit_body", not attack_data.tase_player)
+
+		return
+	end
+
+	self:_check_chico_heal(attack_data)
+
+	local go_through_armor = false --manual toggle
+	local health_subtracted = nil
+	local armor_broken = false
+
+	if go_through_armor then
+		health_subtracted = self:_calc_armor_damage(attack_data)
+
+		attack_data.damage = attack_data.damage - health_subtracted
+
+		health_subtracted = health_subtracted + self:_calc_health_damage(attack_data)
+
+		armor_broken = self:_max_armor() == 0 or self:_max_armor() > 0 and self:get_real_armor() <= 0 --works when armor is broken and health damage is taken by the same hit
+	else
+		local armor_reduction_multiplier = 0
+
+		if self:get_real_armor() <= 0 then --if armor is already broken, don't negate health damage
+			armor_reduction_multiplier = 1
+			armor_broken = true --checked before actually taking damage
+		end
+
+		health_subtracted = self:_calc_armor_damage(attack_data)
+
+		if attack_data.melee_armor_piercing then --for specific cases, like say, making headless Dozers able to go through armor with melee when other enemies can't
+			attack_data.damage = attack_data.damage - health_subtracted
+		else
+			attack_data.damage = attack_data.damage * armor_reduction_multiplier
+		end
+
+		health_subtracted = health_subtracted + self:_calc_health_damage(attack_data)
+	end
+
+	local hit_sound_type = "hit_gen"
+	local blood_effect = false
+
+	if armor_broken then
+		hit_sound_type = "hit_body"
+		blood_effect = not attack_data.tase_player
+	end
+
+	self:play_melee_hit_sound_and_effects(attack_data, hit_sound_type, blood_effect)
+
+	if not self._bleed_out then
+		if health_subtracted > 0 then
+			self:_send_damage_drama(attack_data, health_subtracted)
+		end
+	else
+		local alive_attacker = valid_attacker and attack_data.attacker_unit:character_damage() and attack_data.attacker_unit:character_damage().dead and not attack_data.attacker_unit:character_damage():dead()
+
+		if alive_attacker then
+			if attack_data.attacker_unit:base().has_tag then
+				if attack_data.attacker_unit:base():has_tag("tank") then
+					self._kill_taunt_clbk_id = "kill_taunt" .. tostring(self._unit:key())
+					managers.enemy:add_delayed_clbk(self._kill_taunt_clbk_id, callback(self, self, "clbk_kill_taunt", attack_data), TimerManager:game():time() + tweak_data.timespeed.downed.fade_in + tweak_data.timespeed.downed.sustain + tweak_data.timespeed.downed.fade_out)
+				elseif attack_data.attacker_unit:base():has_tag("law") and not attack_data.attacker_unit:base():has_tag("special") then
+					self._kill_taunt_clbk_id = "i03" .. tostring(self._unit:key())
+					managers.enemy:add_delayed_clbk(self._kill_taunt_clbk_id, callback(self, self, "clbk_kill_taunt", attack_data), TimerManager:game():time() + tweak_data.timespeed.downed.fade_in + tweak_data.timespeed.downed.sustain + tweak_data.timespeed.downed.fade_out)
+				end
+			end
+		end
+	end
+
+	pm:send_message(Message.OnPlayerDamage, nil, attack_data)
+	self:_call_listeners(damage_info)
+
+	return
+end
+
+local mvec1 = Vector3()
+
+function PlayerDamage:play_melee_hit_sound_and_effects(attack_data, sound_type, play_blood_effect)
+	if play_blood_effect then
+		--make sure the weapon is supposed to cause a blood splatter
+		local blood_effect = attack_data.melee_weapon and attack_data.melee_weapon == "weapon"
+		blood_effect = blood_effect or attack_data.melee_weapon and tweak_data.weapon.npc_melee[attack_data.melee_weapon] and tweak_data.weapon.npc_melee[attack_data.melee_weapon].player_blood_effect or false
+
+		if blood_effect then --spawn a blood splatter in front of the player
+			local pos = mvec1
+
+			mvector3.set(pos, self._unit:camera():forward())
+			mvector3.multiply(pos, 20)
+			mvector3.add(pos, self._unit:camera():position())
+
+			local rot = self._unit:camera():rotation():z()
+
+			World:effect_manager():spawn({
+				effect = Idstring("effects/payday2/particles/impacts/blood/blood_impact_a"),
+				position = pos,
+				normal = rot
+			})
+		end
+	end
+
+	local melee_name_id = nil
+	local attacker_unit = attack_data.attacker_unit
+	local valid_attacker = attacker_unit and alive(attacker_unit) and attacker_unit:base()
+
+	if valid_attacker then
+		--get melee weapon id
+		if attacker_unit:base().is_husk_player then
+			local peer_id = managers.network:session():peer_by_unit(attacker_unit):id()
+			local peer = managers.network:session():peer(peer_id)
+
+			melee_name_id = peer:melee_id()
+		else
+			melee_name_id = attacker_unit:base().melee_weapon and attacker_unit:base():melee_weapon()
+		end
+
+		if melee_name_id then
+			if melee_name_id == "knife_1" then --knife used by NPCs
+				melee_name_id = "kabar"
+			elseif melee_name_id == "helloween" then --titan staff used by headless Dozers
+				melee_name_id = "brass_knuckles"
+			elseif not attacker_unit:base().is_husk_player and melee_name_id == "baton" then --cop baton (otherwise the ballistic baton's sounds are used)
+				melee_name_id = "weapon"
+			end
+
+			local tweak_data = tweak_data.blackmarket.melee_weapons[melee_name_id]
+
+			if tweak_data and tweak_data.sounds and tweak_data.sounds[sound_type] then
+				local post_event = tweak_data.sounds[sound_type]
+				local anim_attack_vars = tweak_data.anim_attack_vars
+				local variation = anim_attack_vars and math.random(#anim_attack_vars)
+
+				if type(post_event) == "table" then
+					if variation then
+						post_event = post_event[variation]
+					else
+						post_event = post_event[1]
+					end
+				end
+
+				--some sounds are too low to hear, playing them twice helps and or accentuates a hit even more)
+				self._unit:sound():play(post_event, nil, false)
+				self._unit:sound():play(post_event, nil, false)
+			end
+		end
+	end
 end
 
 function PlayerDamage:damage_fire(attack_data)

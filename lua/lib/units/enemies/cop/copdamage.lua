@@ -357,7 +357,7 @@ function CopDamage:sync_damage_explosion(attacker_unit, damage_percent, i_attack
 			elseif i_attack_variant == 5 then
 				result_type = "dmg_rcv"
 			else
-				self:get_damage_type(damage_percent, "explosion")
+				result_type = self:get_damage_type(damage_percent, "explosion")
 			end
 		end
 
@@ -712,9 +712,6 @@ function CopDamage:damage_bullet(attack_data)
 	attack_data.result = result
 	attack_data.pos = attack_data.col_ray.position
 
-	local shotgun_push = nil
-	local distance = nil
-
 	if result.type == "death" then
 		local data = {
 			name = self._unit:base()._tweak_table,
@@ -784,12 +781,6 @@ function CopDamage:damage_bullet(attack_data)
 
 				self:_AI_comment_death(attack_data.attacker_unit, self._unit, special_comment)
 			end
-
-			distance = mvector3.distance(attack_data.origin, attack_data.col_ray.position)
-
-			if not attack_data.weapon_unit:base().thrower_unit and attack_data.weapon_unit:base():is_category("shotgun") and distance and distance < ((attack_data.attacker_unit:base() and attack_data.attacker_unit:base().is_husk_player or managers.groupai:state():is_unit_team_AI(attack_data.attacker_unit)) and managers.game_play_central:get_shotgun_push_range() or 500) then
-				shotgun_push = true
-			end
 		end
 	end
 
@@ -831,10 +822,6 @@ function CopDamage:damage_bullet(attack_data)
 
 	self:_send_bullet_attack_result(attack_data, attacker, damage_percent, body_index, hit_offset_height, variant)
 	self:_on_damage_received(attack_data)
-
-	if shotgun_push then
-		managers.game_play_central:_do_shotgun_push(self._unit, attack_data.col_ray.position, attack_data.col_ray.ray, distance, attack_data.attacker_unit)
-	end
 
 	result.attack_data = attack_data
 	
@@ -1454,8 +1441,19 @@ function CopDamage:sync_damage_bullet(attacker_unit, damage_percent, i_body, hit
 			self:_check_special_death_conditions("bullet", body, attacker_unit, data.weapon_unit)
 			managers.statistics:killed_by_anyone(data)
 
-			if not data.weapon_unit:base().thrower_unit and data.weapon_unit:base():is_category("shotgun") and distance and distance < ((attacker_unit:base() and attacker_unit:base().is_husk_player or managers.groupai:state():is_unit_team_AI(attacker_unit)) and managers.game_play_central:get_shotgun_push_range() or 500) then
-				shotgun_push = true
+			--local cosmetic shotgun push for loud (stealth uses the now fixed shotgun push)
+			if not managers.groupai:state():whisper_mode() and not data.weapon_unit:base().thrower_unit and data.weapon_unit:base():is_category("shotgun") and distance then
+				local max_distance = 500
+
+				if attacker_unit:base() then
+					if attacker_unit:base().is_husk_player or managers.groupai:state():is_unit_team_AI(attacker_unit) then
+						max_distance = managers.game_play_central:get_shotgun_push_range()
+					end
+				end
+
+				if distance < max_distance then
+					shotgun_push = true
+				end
 			end
 		end
 	else
