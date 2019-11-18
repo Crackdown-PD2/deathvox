@@ -1,5 +1,3 @@
---Most values except the radiuses here aren't changed, however I felt the need to include comments on what they do because you guys may want to change them.
---I know I certainly fucking did for when I'm playing this game alone.
 
 local mvec3_set = mvector3.set
 local mvec3_set_z = mvector3.set_z
@@ -420,7 +418,7 @@ function CopLogicAttack.aim_allow_fire(shoot, aim, data, my_data)
 
 			my_data.firing = true
 
-			if not data.unit:in_slot(16) and data.char_tweak.chatter.aggressive then --yo shoutouts to syntax for randomly sending me vermintide 2 dlc while i was doing this lmao
+			if not data.unit:in_slot(16) and data.char_tweak.chatter.aggressive then
 				if not data.unit:base():has_tag("special") and data.unit:base():has_tag("law") and not data.unit:base()._tweak_table == "gensec" and not data.unit:base()._tweak_table == "security" then
 					if focus_enemy.verified and focus_enemy.verified_dis <= 500 then
 						if managers.groupai:state():chk_assault_active_atm() then
@@ -435,8 +433,8 @@ function CopLogicAttack.aim_allow_fire(shoot, aim, data, my_data)
 							end
 						else
 							local roll = math.random(1, 100)
-							
-							if roll <= 50 then
+						
+							if roll <= chance_heeeeelpp then
 								managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "aggressivecontrolsurprised1")
 							else --hopefully some variety here now
 								managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "aggressivecontrolsurprised2")
@@ -449,18 +447,16 @@ function CopLogicAttack.aim_allow_fire(shoot, aim, data, my_data)
 							managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "aggressivecontrol")
 						end
 					end
-				else
-					if not data.unit:base()._tweak_table == "gensec" and not data.unit:base()._tweak_table == "security" then
-						if data.unit:base():has_tag("medic") and not data.unit:base():has_tag("tank") then
-							managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "aggressive")
-						elseif data.unit:base():has_tag("shield") then
-							local shield_knock_cooldown = math.random(5, 8)
-							if not data.attack_sound_t or data.t - data.attack_sound_t > shield_knock_cooldown then
-								data.unit:sound():say("shield_identification", true)
-							end
-						else
-							managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "contact")
+				elseif data.unit:base():has_tag("special") then
+					if not data.unit:base():has_tag("tank") and data.unit:base():has_tag("medic") then
+						managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "aggressive")
+					elseif data.unit:base():has_tag("shield") then
+						local shield_knock_cooldown = math.random(3, 6)
+						if not data.attack_sound_t or data.t - data.attack_sound_t > shield_knock_cooldown then
+							data.unit:sound():say("shield_identification", true)
 						end
+					else
+						managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "contact")
 					end
 				end
 			end
@@ -739,7 +735,6 @@ function CopLogicAttack._upd_aim(data, my_data)
 	CopLogicAttack.aim_allow_fire(shoot, aim, data, my_data)
 end
 
-
 function CopLogicAttack.action_complete_clbk(data, action)
 	local my_data = data.internal_data
 	local action_type = action:type()
@@ -875,6 +870,8 @@ function CopLogicAttack._chk_request_action_walk_to_cover(data, my_data)
 	
 	local can_perform_walking_action = not my_data.turning and not data.unit:movement():chk_action_forbidden("walk") and not my_data.has_old_action and not my_data.moving_to_cover and not my_data.walking_to_cover_shoot_pos
 	
+	local pose = not data.char_tweak.crouch_move and "stand" or data.char_tweak.allowed_poses and not data.char_tweak.allowed_poses.stand and "crouch" or should_crouch and "crouch" or "stand"
+	
 	local mook_units = {
 		"security",
 		"security_undominatable",
@@ -962,15 +959,16 @@ function CopLogicAttack._chk_request_action_walk_to_cover(data, my_data)
 			end
 		end
 	
-		local pose = nil
-		pose = not data.char_tweak.crouch_move and "stand" or data.char_tweak.allowed_poses and not data.char_tweak.allowed_poses.stand and "crouch" or should_crouch and "crouch" or "stand"
+		if not data.unit:movement():cool() and not managers.groupai:state():whisper_mode() then
+			if crouch_roll > stand_chance and (not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.crouch) then
+				end_pose = "crouch"
+				pose = "crouch"
+				should_crouch = true
+			end
+		end
 
 		if not data.unit:anim_data()[pose] then
 			CopLogicAttack["_chk_request_action_" .. pose](data)
-		end
-		
-		if not pose then
-			pose = not data.char_tweak.crouch_move and "stand" or data.char_tweak.allowed_poses and not data.char_tweak.allowed_poses.stand and "crouch" or "stand"
 		end
 		
 		local new_action_data = {
@@ -996,6 +994,7 @@ end
 
 function CopLogicAttack._chk_request_action_walk_to_cover_shoot_pos(data, my_data, path, speed)
 	local can_perform_walking_action = not my_data.turning and not data.unit:movement():chk_action_forbidden("walk") and not my_data.has_old_action and not my_data.moving_to_cover and not my_data.walking_to_cover_shoot_pos
+	
 	local pose = not data.char_tweak.crouch_move and "stand" or data.char_tweak.allowed_poses and not data.char_tweak.allowed_poses.stand and "crouch" or should_crouch and "crouch" or "stand"
 	
 	local mook_units = {

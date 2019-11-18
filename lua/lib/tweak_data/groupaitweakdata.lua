@@ -1,6 +1,7 @@
 local old_unit_cat = GroupAITweakData._init_unit_categories
 local old_spawn_group = GroupAITweakData._init_enemy_spawn_groups
 local old_task_data = GroupAITweakData._init_task_data
+
 function GroupAITweakData:_init_chatter_data()
 	self.enemy_chatter = {}
 	--[[
@@ -17,6 +18,14 @@ function GroupAITweakData:_init_chatter_data()
 		max_nr = 40,
 		duration = {3, 4},
 		interval = {1.5, 2},
+		group_min = 0,
+		queue = "g90"
+	}
+	self.enemy_chatter.approachingspecial = {
+		radius = 4000,
+		max_nr = 4,
+		duration = {1, 1},
+		interval = {6.5, 10},
 		group_min = 0,
 		queue = "g90"
 	}
@@ -80,8 +89,8 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 2000,
 		max_nr = 20,
 		duration = {1, 3},
-		interval = {0.75, 1.5},
-		group_min = 2,
+		interval = {2, 5},
+		group_min = 0,
 		queue = "c01"
 	}
 	self.enemy_chatter.controlpanic = {
