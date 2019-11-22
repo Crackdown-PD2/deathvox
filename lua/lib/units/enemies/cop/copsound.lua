@@ -99,12 +99,32 @@ function CopSound:say(sound_name, sync, skip_prefix, important, callback)
 		end
 	end
 	
-	--if self._prefix == "l1d_" or self._prefix == "l2d_" or self._prefix == "l3d_" or self._prefix == "l4d_" or self._prefix == "l5d_" then
-		--if sound_name == "x02a_any_3p" then
-			--full_sound = "shd_x02a_any_3p_01"
-		--end
-	--end
+	if self._prefix == "z1n_" or self._prefix == "z2n_" or self._prefix == "z3n_" or self._prefix == "z4n_" then
+		if sound_name == "x02a_any_3p" then
+			full_sound = "shd_x02a_any_3p_01"
+		end
+		
+		if sound_name == "x01a_any_3p" then
+			full_sound = "bdz_x01a_any_3p"
+		end
+		
+		if sound_name ~= "x01a_any_3p" and sound_name ~= "x02a_any_3p" then
+			sound_name = "g90"
+		end
+	end
 	
+	if faction == "classic" then
+		if self._prefix == "l1d_" or self._prefix == "l2d_" or self._prefix == "l3d_" or self._prefix == "l4d_" or self._prefix == "l5d_" then
+			if sound_name == "x02a_any_3p" then
+				full_sound = "shd_x02a_any_3p_01"
+			end
+			
+			if sound_name == "x01a_any_3p" then
+				full_sound = "bdz_x01a_any_3p"
+			end
+		end
+	end
+		
 	if self._prefix == "fl1n_" then
         if sound_name == "x02a_any_3p" then
             full_sound = "fl1n_x01a_any_3p_01"

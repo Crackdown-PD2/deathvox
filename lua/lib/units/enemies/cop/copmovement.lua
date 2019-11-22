@@ -213,7 +213,7 @@ function CopMovement:on_suppressed(state)
 		if self._tweak_data.allowed_poses and (self._tweak_data.allowed_poses.crouch or self._tweak_data.allowed_poses.stand) or self:chk_action_forbidden("walk") then
 			--nothing
 		else
-			if state == "panic" and not self:chk_action_forbidden("act") then
+			if state == "panic" and not self:chk_action_forbidden("act") and not self._tweak_data.no_panic then
 				if self._ext_anim.run and self._ext_anim.move_fwd then
 					local action_desc = {
 						clamp_to_graph = true,

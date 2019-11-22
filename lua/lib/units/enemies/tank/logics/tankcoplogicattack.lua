@@ -33,7 +33,7 @@ function TankCopLogicAttack.update(data)
 
 	local enemy_visible = focus_enemy.verified
 	local engage = my_data.attitude == "engage"
-	local action_taken = my_data.turning or data.unit:movement():chk_action_forbidden("walk") or my_data.walking_to_chase_pos
+	local action_taken = my_data.turning or data.unit:movement():chk_action_forbidden("walk") or my_data.walking_to_chase_pos and (unit:anim_data().move or unit:anim_data().run)
 
 	if action_taken then
 		return
@@ -46,8 +46,14 @@ function TankCopLogicAttack.update(data)
 	if action_taken then
 		return
 	end
-
+	
+	local expected_pos = CopLogicAttack._get_expected_attention_position(data, my_data)
 	local enemy_pos = enemy_visible and focus_enemy.m_pos or focus_enemy.verified_pos
+	
+	if expected_pos and not focus_enemy.verified then
+		enemy_pos = expected_pos
+	end
+	
 	action_taken = CopLogicAttack._chk_request_action_turn_to_enemy(data, my_data, data.m_pos, enemy_pos)
 
 	if action_taken then
@@ -59,11 +65,11 @@ function TankCopLogicAttack.update(data)
 
 	if AIAttentionObject.REACT_COMBAT <= focus_enemy.reaction then
 		if enemy_visible then
-			if z_dist < 300 or focus_enemy.verified_dis > 2000 or engage and focus_enemy.verified_dis > 500 then
+			if z_dist < 300 or focus_enemy.verified_dis > 2000 or engage and focus_enemy.verified_dis > 900 then
 				chase = true
 			end
 
-			if focus_enemy.verified_dis < 800 and unit:anim_data().run then
+			if focus_enemy.verified_dis < 900 and unit:anim_data().run and math.abs(data.m_pos.z - data.attention_obj.m_pos.z) < 250 then
 				local new_action = {
 					body_part = 2,
 					type = "idle"
@@ -71,7 +77,7 @@ function TankCopLogicAttack.update(data)
 
 				data.unit:brain():action_request(new_action)
 			end
-		elseif z_dist < 300 or focus_enemy.verified_dis > 2000 or engage and (not focus_enemy.verified_t or t - focus_enemy.verified_t > 5 or focus_enemy.verified_dis > 700) then
+		elseif z_dist < 300 or focus_enemy.verified_dis > 2000 or engage and (not focus_enemy.verified_t or t - focus_enemy.verified_t > 5 or focus_enemy.verified_dis > 900) then
 			chase = true
 		end
 	end
@@ -82,9 +88,11 @@ function TankCopLogicAttack.update(data)
 		elseif my_data.pathing_to_chase_pos then
 			-- Nothing
 		elseif my_data.chase_path then
-			local run_dist = nil
+			local run_dist = 900
 			
-			run_dist = data.attention_obj.verified and 1200 or 900
+			if data.attention_obj and math.abs(data.m_pos.z - data.attention_obj.m_pos.z) < 250 and data.attention_obj.verified then
+				run_dist = 1200
+			end
 			
 			local walk = data.attention_obj.verified_dis < run_dist
 			
