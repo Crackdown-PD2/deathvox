@@ -283,6 +283,8 @@ function CopLogicAttack._upd_combat_movement(data)
 	
 	if action_taken or my_data.stay_out_time and my_data.stay_out_time > t then
 		-- Nothing
+	elseif my_data.walking_to_cover_shoot_pos then
+			-- Nothing
 	elseif want_to_take_cover then
 		if data.tactics and data.tactics.flank then
 			want_flank_cover = true
@@ -291,22 +293,29 @@ function CopLogicAttack._upd_combat_movement(data)
 	elseif not enemy_visible_soft or antipassivecheck then
 		if data.tactics and data.tactics.charge and data.objective and data.objective.grp_objective and data.objective.grp_objective.charge and (not my_data.charge_path_failed_t or data.t - my_data.charge_path_failed_t > 6) or data.tactics and data.tactics.flank and my_data.flank_cover and in_cover and focus_enemy and focus_enemy.dis <= 2500 and my_data.taken_flank_cover and (not my_data.charge_path_failed_t or data.t - my_data.charge_path_failed_t > 4) then
 			if my_data.charge_path then
-				local path = my_data.charge_path
-				my_data.charge_path = nil
-				action_taken = CopLogicAttack._chk_request_action_walk_to_cover_shoot_pos(data, my_data, path)
-			elseif not my_data.charge_path_search_id and data.attention_obj.nav_tracker then
-				my_data.charge_pos = CopLogicTravel._get_pos_on_wall(data.attention_obj.nav_tracker:field_position(), my_data.weapon_range.close, 45, nil)
+					if data.objective and not data.objective.type == "follow" then
+						local path = my_data.charge_path
+						action_taken = CopLogicAttack._chk_request_action_walk_to_cover_shoot_pos(data, my_data, path)
+						my_data.charge_path = nil
+						my_data.taken_flank_cover = nil
+					end
+				elseif not my_data.charge_path_search_id and data.attention_obj.nav_tracker then
+					if data.objective and not data.objective.type == "follow" then
+						my_data.charge_pos = CopLogicTravel._get_pos_on_wall(data.attention_obj.nav_tracker:field_position(), my_data.weapon_range.close, 45, nil)
 
-				if my_data.charge_pos then
-					my_data.charge_path_search_id = "charge" .. tostring(data.key)
+						if my_data.charge_pos then
+							my_data.charge_path_search_id = "charge" .. tostring(data.key)
 
-					unit:brain():search_for_path(my_data.charge_path_search_id, my_data.charge_pos, nil, nil, nil)
-				else
-					debug_pause_unit(data.unit, "failed to find charge_pos", data.unit)
+							unit:brain():search_for_path(my_data.charge_path_search_id, my_data.charge_pos, nil, nil, nil)
+							
+							--my_data.taken_flank_cover = nil
+						else
+							debug_pause_unit(data.unit, "failed to find charge_pos", data.unit)
 
-					my_data.charge_path_failed_t = TimerManager:game():time()
+							my_data.charge_path_failed_t = TimerManager:game():time()
+						end
+					end
 				end
-			end
 		elseif in_cover then
 			if my_data.cover_test_step <= 2 then
 				local height = nil
@@ -341,8 +350,6 @@ function CopLogicAttack._upd_combat_movement(data)
 				move_to_cover = true
 				want_flank_cover = true
 			end
-		elseif my_data.walking_to_cover_shoot_pos then
-			-- Nothing
 		elseif my_data.at_cover_shoot_pos then
 			--ranged fire cops also signal the END of their movement and positioning
 			if data.tactics and data.tactics.ranged_fire or data.tactics and data.tactics.elite_ranged_fire then

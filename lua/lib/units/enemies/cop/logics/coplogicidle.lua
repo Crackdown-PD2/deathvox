@@ -572,10 +572,6 @@ function CopLogicIdle.queued_update(data)
 	CopLogicIdle._upd_scan(data, my_data)
 	CopLogicIdle._update_haste(data, my_data)
 	
-	if data.unit:base()._tweak_table == "spooc" and data.attention_obj and AIAttentionObject.REACT_COMBAT >= data.attention_obj.reaction then
-		CopLogicIdle._upd_spooc_attack(data, my_data)
-	end
-
 	if data.cool then
 		CopLogicIdle.upd_suspicion_decay(data)
 	end
@@ -595,77 +591,53 @@ function CopLogicIdle.queued_update(data)
 	CopLogicBase.queue_task(my_data, my_data.detection_task_key, CopLogicIdle.queued_update, data, data.t + delay)
 end
 
---Ported to here for more frequent updates to activity, should result in more consistency.
-function CopLogicIdle._upd_spooc_attack(data, my_data) --TODO: Optimize it *further*.
+function CopLogicIdle.on_new_objective(data, old_objective)
+	local new_objective = data.objective
+
+	CopLogicBase.on_new_objective(data, old_objective)
+
+	local my_data = data.internal_data
 	local focus_enemy = data.attention_obj
-	
-	--Some changes included to make this a bit less weird, I don't know why it calls to the want_to_take_cover but it doesn't do anything good and delays the kick unescessarily.
-	if focus_enemy.is_person and focus_enemy.criminal_record and not focus_enemy.criminal_record.status and not my_data.spooc_attack and AIAttentionObject.REACT_SHOOT <= focus_enemy.reaction and not data.unit:movement():chk_action_forbidden("walk") and not SpoocLogicAttack._is_last_standing_criminal(focus_enemy) and not focus_enemy.unit:movement():zipline_unit() and focus_enemy.unit:movement():is_SPOOC_attack_allowed() then
-		
-		--If they're close, just do the kick, no raycast needed, I tested this, and it didn't have any negative effects, just made them kick more often.
-		if focus_enemy.verified and focus_enemy.dis <= 250 and math.abs(data.m_pos.z - focus_enemy.m_pos.z) < 100 then 
-			if my_data.attention_unit ~= focus_enemy.u_key then
-				CopLogicBase._set_attention(data, focus_enemy)
-					
-				my_data.attention_unit = focus_enemy.u_key
-			end
 
-			local action = SpoocLogicAttack._chk_request_action_spooc_attack(data, my_data)
+	if new_objective then
+		local objective_type = new_objective.type
 
-			if action then
-				my_data.spooc_attack = {
-					start_t = data.t,
-					target_u_data = focus_enemy,
-					action = action
-				}
-
-				return true
-			end
+		if objective_type == "free" and my_data.exiting then
+			--nothing
+		elseif data.unit:base():has_tag("taser") and data.attention_obj and data.attention_obj.verified and data.attention_obj.dis and data.attention_obj.dis <= 1500 then
+			CopLogicBase._exit(data.unit, "attack")
+		elseif data.unit:base():has_tag("spooc") and focus_enemy and focus_enemy.dis and focus_enemy.is_person and focus_enemy.criminal_record and not focus_enemy.criminal_record.status and not my_data.spooc_attack and AIAttentionObject.REACT_SHOOT <= focus_enemy.reaction and not data.unit:movement():chk_action_forbidden("walk") and not SpoocLogicAttack._is_last_standing_criminal(focus_enemy) and not focus_enemy.unit:movement():zipline_unit() and focus_enemy.unit:movement():is_SPOOC_attack_allowed() and focus_enemy.dis <= 1500 and focus_enemy.verified then
+			CopLogicBase._exit(data.unit, "attack")
+		elseif CopLogicIdle._chk_objective_needs_travel(data, new_objective) then
+			CopLogicBase._exit(data.unit, "travel")
+		elseif objective_type == "guard" then
+			CopLogicBase._exit(data.unit, "guard")
+		elseif objective_type == "security" then
+			CopLogicBase._exit(data.unit, "idle")
+		elseif objective_type == "sniper" then
+			CopLogicBase._exit(data.unit, "sniper")
+		elseif objective_type == "phalanx" then
+			CopLogicBase._exit(data.unit, "phalanx")
+		elseif objective_type == "surrender" then
+			CopLogicBase._exit(data.unit, "intimidated", new_objective.params)
+		elseif new_objective.action or not data.attention_obj or AIAttentionObject.REACT_AIM > data.attention_obj.reaction then
+			CopLogicBase._exit(data.unit, "idle")
+		else
+			CopLogicBase._exit(data.unit, "attack")
 		end
-		
-		--This works great, I'm not sure whether 15m is too little, the original was set to 15m if the cloaker was in cover, and 20m if he wasn't, but this was inconsistent.
-		if focus_enemy.verified and focus_enemy.nav_tracker and ActionSpooc.chk_can_start_spooc_sprint(data.unit, focus_enemy.unit) and not data.unit:raycast("ray", data.unit:movement():m_head_pos(), focus_enemy.m_head_pos, "slot_mask", managers.slot:get_mask("bullet_impact_targets_no_criminals"), "ignore_unit", focus_enemy.unit, "report") then
-			
-			if focus_enemy.dis <= 1500 then --15m or closer for MH and up.
-				if my_data.attention_unit ~= focus_enemy.u_key then
-					CopLogicBase._set_attention(data, focus_enemy)
+	elseif not my_data.exiting then
+		CopLogicBase._exit(data.unit, "idle")
+	end
 
-					my_data.attention_unit = focus_enemy.u_key
-				end
-
-				local action = SpoocLogicAttack._chk_request_action_spooc_attack(data, my_data)
-
-				if action then
-					my_data.spooc_attack = {
-						start_t = data.t,
-						target_u_data = focus_enemy,
-						action = action
-					}
-
-					return true
-				end
-			end
-
-			--No problems here, surprisingly.
-			if ActionSpooc.chk_can_start_flying_strike(data.unit, focus_enemy.unit) and focus_enemy.nav_tracker then
-				if my_data.attention_unit ~= focus_enemy.u_key then
-					CopLogicBase._set_attention(data, focus_enemy)
-
-					my_data.attention_unit = focus_enemy.u_key
-				end
-
-				local action = SpoocLogicAttack._chk_request_action_spooc_attack(data, my_data, true)
-
-				if action then
-					my_data.spooc_attack = {
-						start_t = data.t,
-						target_u_data = focus_enemy,
-						action = action
-					}
-
-					return true
-				end
-			end
+	if new_objective and new_objective.stance then
+		if new_objective.stance == "ntl" then
+			data.unit:movement():set_cool(true)
+		else
+			data.unit:movement():set_cool(false)
 		end
 	end
-end
+
+	if old_objective and old_objective.fail_clbk then
+		old_objective.fail_clbk(data.unit)
+	end
+end	
