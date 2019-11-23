@@ -186,6 +186,10 @@ function CopMovement:add_weapons()
 	end
 end
 
+function CopMovement:is_taser_attack_allowed() --lol
+	return
+end
+
 function CopMovement:on_suppressed(state)
 	local suppression = self._suppression
 	local end_value = state and 1 or 0
