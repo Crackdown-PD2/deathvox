@@ -894,8 +894,8 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.weapon.deathvox = deep_clone(presets.weapon.deathwish)
 	presets.weapon.deathvox.is_revolver = { -- used by medics.
 		aim_delay = { -- mark 3 values.
-		0,
-		0
+			0,
+			0
 		},
 		focus_delay = 10, -- validated, unchanged.
 		focus_dis = 200,
@@ -1006,15 +1006,15 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_pistol = { -- mark 6 values. Revises low recoil rates.
+	presets.weapon.deathvox.is_pistol = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish.
 		aim_delay = {
-			0,
-			0
+			0.1,
+			0.1
 		},
-		focus_delay = 0,
+		focus_delay = 2, --compare to vanilla expert preset's 1
 		focus_dis = 200,
 		spread = 20,
-		miss_dis = 50,
+		miss_dis = 30,
 		RELOAD_SPEED = 1.4, -- validated, unchanged.
 		melee_speed = presets.weapon.expert.is_pistol.melee_speed,
 		melee_dmg = 20,
@@ -1029,7 +1029,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = 1,
 				r = 100,
 				acc = {
-					0.9,
+					0.55,
 					0.95
 				},
 				recoil = {
@@ -1047,7 +1047,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = 1,
 				r = 500,
 				acc = {
-					0.9,
+					0.5,
 					0.95
 				},
 				recoil = {
@@ -1065,8 +1065,8 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .8,
 				r = 1000,
 				acc = {
-					0.7,
-					0.8
+					0.375,
+					0.6 --previous 0.8, vanilla expert is 0.55
 				},
 				recoil = {
 					0.5,
@@ -1083,8 +1083,8 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .65,
 				r = 2000,
 				acc = {
-					0.6,
-					0.7
+					0.1, --boosted from expert's 0.05
+					0.5
 				},
 				recoil = {
 					0.55,
@@ -1101,8 +1101,8 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .6,
 				r = 3000,
 				acc = {
-					0.6,
-					0.65
+					0,
+					0.3
 				},
 				recoil = {
 					0.6,
@@ -1119,8 +1119,8 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .5, -- no flat damage.
 				r = 4000,
 				acc = {
-					0.2,
-					0.60 -- no infinite range.
+					0,
+					0.1 -- no infinite range
 				},
 				recoil = {
 					1,
@@ -1135,7 +1135,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_shotgun_pump = { -- mark 5 values. Assumes CD base damage 500. Extremely dangerous close range, less so further out. Slower to fire.
+	presets.weapon.deathvox.is_shotgun_pump = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish. Assumes CD base damage 500. Extremely dangerous close range, less so further out. Slower to fire.
 		aim_delay = {
 			0,
 			0
@@ -1194,7 +1194,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .875,
 				r = 1000,
 				acc = {
-					0.5,
+					0.35, --compare to vanilla expert's 0.2
 					0.8
 				},
 				recoil = {
@@ -1212,8 +1212,8 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .400,
 				r = 2000,
 				acc = {
-					0.45,
-					0.65
+					0.1,
+					0.45
 				},
 				recoil = {
 					1.25,
@@ -1230,8 +1230,8 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .150,
 				r = 3000,
 				acc = {
-					0.3,
-					0.5
+					0.01,
+					0.25
 				},
 				recoil = { -- greater max recoil for conveyance purposes.
 					1.5,
@@ -1246,7 +1246,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_shotgun_mag = { -- mark 4 values. Assumes CD base damage 225. The danger isn't the damage, it's the low recoil! Extremely hazardous at close range.
+	presets.weapon.deathvox.is_shotgun_mag = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish. Assumes CD base damage 225. The danger isn't the damage, it's the low recoil! Extremely hazardous at close range.
 		aim_delay = {
 			0,
 			0
@@ -1323,8 +1323,8 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .7,
 				r = 2000,
 				acc = { -- reduced lower end, base game .35.
-					0.35,
-					0.65
+					0.2,
+					0.6
 				},
 				recoil = {
 					1.0,
@@ -1341,8 +1341,8 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .3,
 				r = 3000,
 				acc = {
-					0.3,
-					0.5
+					0.1,
+					0.4
 				},
 				recoil = {
 					1.5,
@@ -1358,7 +1358,7 @@ function CharacterTweakData:_presets(tweak_data)
 		}
 	}
 
-	presets.weapon.deathvox.is_light_rifle = { -- mark 6 values. Revises low recoil rates. Still higher fire rate (esp at close range), lower damage/acc.
+	presets.weapon.deathvox.is_light_rifle = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish.
 		aim_delay = {
 			0,
 			0
@@ -1378,9 +1378,9 @@ function CharacterTweakData:_presets(tweak_data)
 		tase_sphere_cast_radius = 30,
 		melee_retry_delay = presets.weapon.expert.is_rifle.melee_retry_delay,
 		range = { 
-			optimal = 3500,
-			far = 6000,  -- currently unchanged. Consider adjustment if needed to improve differentiation. Light should prefer closer range, if so.
-			close = 2000
+			optimal = 2500,
+			far = 4400,  -- results in slightly more aggressive movement and positioning, not actually that punishing
+			close = 1500
 		},
 		autofire_rounds = {
 			4,
@@ -1409,7 +1409,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = 1,
 				r = 500,
 				acc = {
-					0.875,
+					0.4,
 					0.95
 				},
 				recoil = {
@@ -1426,9 +1426,9 @@ function CharacterTweakData:_presets(tweak_data)
 			{
 				dmg_mul = 0.8, --falloff after 5 meters, no flat damage.
 				r = 1000,
-				acc = {
-					0.7,
-					0.9
+				acc = { --reduced accuracy from previous deathvox preset begins here
+					0.25, --exposure time leads into a higher chance of getting hit
+					0.85
 				},
 				recoil = { --reduced to increase attack rate at lower range. 
 					0.5,
@@ -1445,8 +1445,8 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = 0.7,
 				r = 2000,
 				acc = {
-					0.7,
-					0.85
+					0.2,
+					0.55
 				},
 				recoil = {
 					0.7,
@@ -1462,8 +1462,8 @@ function CharacterTweakData:_presets(tweak_data)
 			{
 				dmg_mul = 0.6,
 				r = 3000,
-				acc = { -- reduced accuracy begins here. vanilla values .65-.75.
-					0.45,
+				acc = { -- vanilla values .2-.5 in expert preset
+					0.1,
 					0.6
 				},
 				recoil = {
@@ -1480,9 +1480,9 @@ function CharacterTweakData:_presets(tweak_data)
 			{
 				dmg_mul = 0.5,
 				r = 4500, -- uses lower difficulty outer bound to begin falloff.
-				acc = { -- vanilla values .25-.7.
-					0.25,
-					0.6
+				acc = { 
+					0,
+					0.25
 				},
 				recoil = {
 					1,
@@ -1497,12 +1497,12 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_heavy_rifle = { -- mark 6 values. basis is presets.weapon.deathwish.is_rifle. General goal is still fewer shots, more damage, greater range.
-		aim_delay = {
-			0,
-			0
+	presets.weapon.deathvox.is_heavy_rifle = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish.
+		aim_delay = { --has slight aim delay compared to light rifles
+			0.1,
+			0.1
 		},
-		focus_delay = 3, -- Re-added from lower difficulties.
+		focus_delay = 5, -- Re-added from lower difficulties, increased for heavy rifle to give longer exposure times at distance, still more accurate and powerful than the light rifle
 		focus_dis = 200,
 		spread = 20,
 		miss_dis = 40,
@@ -1511,9 +1511,9 @@ function CharacterTweakData:_presets(tweak_data)
 		melee_dmg = 20,
 		melee_retry_delay = presets.weapon.expert.is_rifle.melee_retry_delay,
 		range = {
-			optimal = 3500, -- currently unchanged. Consider adjustment if needed to improve differentiation. Heavies should prefer more range, if so.
+			optimal = 4000, -- compare to light rifle, should result in LESS aggressive movement
 			far = 6000,
-			close = 2000
+			close = 3000
 		},
 		autofire_rounds = {
 			4,
@@ -1560,7 +1560,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = 0.9, -- damage falloff begins.
 				r = 1000,
 				acc = {
-					0.7,
+					0.6,
 					0.9
 				},
 				recoil = {
@@ -1578,8 +1578,8 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = 0.8,
 				r = 2000,
 				acc = {
-					0.75,
-					0.85
+					0.4,
+					0.8
 				},
 				recoil = {
 					0.4,
@@ -1596,8 +1596,8 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = 0.65,
 				r = 3000,
 				acc = {
-					0.65,
-					0.75
+					0.25,
+					0.8 --buffed from previous, prioritize focus delay instead
 				},
 				recoil = {
 					0.9,
@@ -1612,10 +1612,10 @@ function CharacterTweakData:_presets(tweak_data)
 			},
 			{
 				dmg_mul = 0.55,
-				r = 6000, -- uses longer range, per base game, to maintain long falloff tail.
+				r = 4000, -- uses longer range, per base game, to maintain long falloff tail.
 				acc = {
-					0.35, -- increased tail accuracy. Base game values .25-.7.
-					0.7
+					0, --requires focus delay build up at 40+
+					0.6
 				},
 				recoil = {
 					1.5, -- increased tail recoil to reduce attack rate. Base game values 1-2.
@@ -1627,15 +1627,33 @@ function CharacterTweakData:_presets(tweak_data)
 					0,
 					0
 				}
+			},
+			{
+				dmg_mul = 0.55, -- damage does not drop, accuracy drops instead
+				r = 6000,
+				acc = {
+					0, -- requires focus delay buildup
+					0.3
+				},
+				recoil = {
+					1.5, -- recoil values unchanged
+					2.5
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
 			}
 		}
 	}
-	presets.weapon.deathvox.is_light_shotgun = { -- mark 3 values complete. basis is presets.weapon.deathwish.is_shotgun_pump. Light shotgunner fires and gains focus faster than Heavy.
+	presets.weapon.deathvox.is_light_shotgun = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish.
 		aim_delay = {
 			0,
 			0
 		},
-		focus_delay = 4, -- re-added from lower difficulties, but reduced for light shotgunner.
+		focus_delay = 3.5, -- re-added from lower difficulties, but reduced for light shotgunner, altered from previous 4 value to further distinguish light shotgunners
 		focus_dis = 200,
 		spread = 15,
 		miss_dis = 20,
@@ -1643,10 +1661,10 @@ function CharacterTweakData:_presets(tweak_data)
 		melee_speed = 1,
 		melee_dmg = 20,
 		melee_retry_delay = presets.weapon.expert.is_shotgun_pump.melee_retry_delay,
-		range = { -- validated, unchanged. I believe same for all shotgun enemy types in base game.
-			optimal = 3000,
-			far = 5000,
-			close = 2000
+		range = { -- lowered, should result in slightly more aggressive movement 
+			optimal = 2000,
+			far = 3500,
+			close = 1500
 		},
 		FALLOFF = {
 			{
@@ -1671,7 +1689,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = 1,
 				r = 500,
 				acc = {
-					0.7,
+					0.45,
 					0.95
 				},
 				recoil = { -- slight recoil reduction. Vanilla stats 1-1.25.
@@ -1689,7 +1707,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .8,
 				r = 1000,
 				acc = {
-					0.5,
+					0.1,
 					0.8
 				},
 				recoil = { -- slight recoil reduction. Vanilla stats 1-1.5.
@@ -1707,7 +1725,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .6, -- lower falloff arc.
 				r = 2000,
 				acc = {
-					0.15,
+					0, --focus delay build up required at longer ranges
 					0.45
 				},
 				recoil = { -- return to vanilla recoil.
@@ -1725,7 +1743,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .2,
 				r = 3000,
 				acc = {
-					0.1,
+					0, --focus delay build up required at longer ranges
 					0.25
 				},
 				recoil = {
@@ -1741,10 +1759,10 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_heavy_shotgun = { -- mark 3 values complete. basis is presets.weapon.deathwish.is_shotgun_pump. Heavy Shotgunner has conventional focal stats.
-		aim_delay = {
-			0,
-			0
+	presets.weapon.deathvox.is_heavy_shotgun = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish. Heavy Shotgunner has higher focal stats.
+		aim_delay = { --has aim delay compared to the light
+			0.1,
+			0.1
 		},
 		focus_delay = 5, -- focus delay returned from lower difficulties.
 		focus_dis = 200,
@@ -1754,10 +1772,10 @@ function CharacterTweakData:_presets(tweak_data)
 		melee_speed = 1,
 		melee_dmg = 20,
 		melee_retry_delay = presets.weapon.expert.is_shotgun_pump.melee_retry_delay,
-		range = { -- using expert ranges. Should have effect of causing enemy to fire when closer.
+		range = { -- same as light, aggro should remain mostly the same for these as shotgunners are more oriented for close-range
 			optimal = 2000,
-			far = 5000,
-			close = 1000
+			far = 3500,
+			close = 1500
 		},
 		FALLOFF = {
 			{
@@ -1800,7 +1818,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .7, -- falloff rate increase versus vanilla.
 				r = 1000,
 				acc = {
-					0.5,
+					0.2,
 					0.8
 				},
 				recoil = {
@@ -1817,8 +1835,8 @@ function CharacterTweakData:_presets(tweak_data)
 			{
 				dmg_mul = .4,
 				r = 2000,
-				acc = { -- slight max accuracy increase, base game stats .45-.7.
-					0.45,
+				acc = { -- requires focus delay buildup past 2000 almirs
+					0,
 					0.75
 				},
 				recoil = {
@@ -1836,7 +1854,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .2,
 				r = 3000,
 				acc = {
-					0.3,
+					0,
 					0.5
 				},
 				recoil = {
@@ -1852,12 +1870,12 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_smg = { -- mark 3 values complete. Assumes base damage of 45. basis is presets.weapon.deathwish.is_smg. Currently copies medidozer values.
+	presets.weapon.deathvox.is_smg = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish. Currently copies medidozer values.
 		aim_delay = {
 			0,
 			0.1 --re-adding aim delay from lower difficulties.
 		},
-		focus_delay = 1, --re-adding slight focus delay from lower difficulties.
+		focus_delay = 2.5, --re-adding slight focus delay from lower difficulties, increased from previous 1 value
 		focus_dis = 200,
 		spread = 15,
 		miss_dis = 10,
@@ -1951,7 +1969,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .6,
 				r = 3000,
 				acc = {
-					0.55,
+					0.35, --previous value 0.55????
 					0.6
 				},
 				recoil = {
@@ -1968,9 +1986,9 @@ function CharacterTweakData:_presets(tweak_data)
 			{
 				dmg_mul = .4,
 				r = 4500,
-				acc = {
-					0.3,
-					0.6
+				acc = { --severely reduced from previous values
+					0,
+					0.25
 				},
 				recoil = {
 					1,
@@ -2103,12 +2121,12 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.is_lmg = { --mark 4 values complete. Assumes 100 base damage. Going to treat it as a bullethose, making it much more dangerous to approach directly.
+	presets.weapon.deathvox.is_lmg = { --mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish. Assumes 100 base damage. Going to treat it as a bullethose, making it much more dangerous to approach directly.
 		aim_delay = { 
 			0.1,
 			0.1
 		},
-		focus_delay = 3,
+		focus_delay = 5, --increased focus delay from 3 to 5
 		focus_dis = 200,
 		spread = 24,
 		miss_dis = 40,
@@ -2166,8 +2184,8 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .8,
 				r = 1000,
 				acc = {
-					0.5,
-					0.8
+					0.1, --focus delay smoothens out the curve at which they fire at players from, making sudden distant taps less annoying and more noticeable
+					0.75
 				},
 				recoil = {
 					0.35,
@@ -2184,7 +2202,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .6,
 				r = 2000,
 				acc = {
-					0.4,
+					0.05,
 					0.65
 				},
 				recoil = {
@@ -2202,8 +2220,8 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .3,
 				r = 3000,
 				acc = {
-					0.2,
-					0.35
+					0, -- warning shots
+					0.5 --buffed from previous
 				},
 				recoil = {
 					0.8,
@@ -2218,10 +2236,10 @@ function CharacterTweakData:_presets(tweak_data)
 			},
 			{
 				dmg_mul = .16,
-				r = 6000,
+				r = 5000,
 				acc = {
-					0.1, -- generally a warning shot at range.
-					0.3
+					0, -- no real threat, mostly just warning shots to alert players of their presence
+					0.1
 				},
 				recoil = {
 					1.5,
