@@ -443,7 +443,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 
 						for u_key, u_data in pairs(cop_units) do
 							if u_data.group and u_data.group.objective.type == "assault_area" then
-								assault_from_here = false
+								assault_from_here = nil
 
 								if not alternate_assault_area then
 									local search_params = {

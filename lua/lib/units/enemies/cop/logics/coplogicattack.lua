@@ -209,10 +209,10 @@ function CopLogicAttack._upd_combat_movement(data)
 		antipassivecheck = focus_enemy and focus_enemy.verified and focus_enemy.verified_t > math.random(2.1, 3.8)
 		enemy_visible_soft = focus_enemy and focus_enemy.verified and focus_enemy.verified_t > math.random(2.1, 3.8)
 	end
-	
+	local enemy_visible_softest = focus_enemy and focus_enemy.verified_t and t - focus_enemy.verified_t < 7
 	local enemy_visible_softer = focus_enemy and focus_enemy.verified_t and t - focus_enemy.verified_t < 4
 	local enemy_visible_mild_soft = focus_enemy and focus_enemy.verified_t and t - focus_enemy.verified_t < 2
-	local flank_cover_charge_time = focus_enemy and focus_enemy.verified_t and t - focus_enemy.verified_t < 4 or focus_enemy.verified
+	local flank_cover_charge_qualify = focus_enemy and focus_enemy.verified_t and t - focus_enemy.verified_t < 4 or focus_enemy.verified
 	local alert_soft = data.is_suppressed
 	local action_taken = data.logic.action_taken(data, my_data)
 	local want_to_take_cover = my_data.want_to_take_cover
@@ -291,7 +291,7 @@ function CopLogicAttack._upd_combat_movement(data)
 		end
 		move_to_cover = true
 	elseif not enemy_visible_soft or antipassivecheck then
-		if data.tactics and data.tactics.charge and data.objective and data.objective.grp_objective and data.objective.grp_objective.charge and (not my_data.charge_path_failed_t or data.t - my_data.charge_path_failed_t > 6) or data.tactics and data.tactics.flank and my_data.flank_cover and in_cover and focus_enemy and focus_enemy.dis <= 2500 and my_data.taken_flank_cover and (not my_data.charge_path_failed_t or data.t - my_data.charge_path_failed_t > 4) then
+		if data.tactics and data.tactics.charge and data.objective and data.objective.grp_objective and data.objective.grp_objective.charge and (not my_data.charge_path_failed_t or data.t - my_data.charge_path_failed_t > 6) or data.tactics and data.tactics.flank and my_data.flank_cover and in_cover and focus_enemy and focus_enemy.dis <= 4000 and my_data.taken_flank_cover and flank_cover_charge_qualify and (not my_data.next_allowed_flank_charge_t or my_data.next_allowed_flank_charge_t and my_data.next_allowed_flank_charge_t < data.t) and (not my_data.charge_path_failed_t or data.t - my_data.charge_path_failed_t > 6) or not enemy_visible_softest and in_cover and not alert_soft then
 			if my_data.charge_path then
 					if data.objective and not data.objective.type == "follow" then
 						local path = my_data.charge_path
@@ -397,6 +397,7 @@ function CopLogicAttack._upd_combat_movement(data)
 				sign = sign
 			}
 			my_data.taken_flank_cover = true --this helps them qualify for charging behavior after acquiring a flank, which is not vanilla behavior btw
+			my_data.next_allowed_flank_charge_t = data.t + 4
 			want_flank_cover = nil
 			if not data.unit:in_slot(16) then --flankers signal their presence whenever they move around
 				if data.group and data.group.leader_key == data.key and data.char_tweak.chatter.look_for_angle then
