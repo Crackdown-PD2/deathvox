@@ -257,7 +257,7 @@ function GroupAIStateBase:propagate_alert(alert_data)
 end
 
 function GroupAIStateBase:upd_team_AI_distance()
-	if Network:is_sever() then
+	if Network:is_server() then
 		if self:team_ai_enabled() then
 			local far_away_distance = tweak_data.team_ai.stop_action.distance * tweak_data.team_ai.stop_action.distance
 			local teleport_distance = tweak_data.team_ai.stop_action.teleport_distance * tweak_data.team_ai.stop_action.teleport_distance
