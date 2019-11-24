@@ -15,7 +15,10 @@ local function deathvox_init_menus()
 	function deathvox:IsHoppipOverhaulEnabled()
 		return self.Session_Settings.useHoppipOverhaul 
 	end
-
+	function deathvox:IsTotalCrackdownEnabled()
+		return self.Session_Settings.useTotalCDOverhaul
+	end
+	
 	--generic load/save functions; menu option savefiles are currently located at PAYDAY 2/mods/saves/crackdown.txt
 	function deathvox:Save(override_tbl)
 		local file = io.open(self.SavePathFull,"w+")
@@ -43,14 +46,17 @@ local function deathvox_init_menus()
 		return self.Settings
 	end
 	
-	function deathvox:ChangeSetting(key,state) --called when changing settings
-		self.Settings[key] = state
-		--The below code would allow settings changed mid-game to apply immediately if the game is offline/populated by only host. It's disabled but you can enable it if you want
-		--[[ 
-		if not managers.network:session() or table.size(managers.network:session():peers()) <= 0 then 
-			deathvox.Session_Settings[key] = state
+	function deathvox:ChangeSetting(key,value) --called when changing settings
+		self.Settings[key] = value
+			
+		if game_state_machine then 
+			local game_state = game_state_machine:current_state_name()
+			if game_state == "ingame_waiting_for_players" then
+--				if not managers.network:session() or table.size(managers.network:session():peers()) <= 0 then 
+				deathvox.Session_Settings[key] = value
+--				end
+			end
 		end
-		--]]
 	end
 
 	Hooks:Add("NetworkReceivedData", "NetworkReceivedData_deathvox", function(sender, message, data)
@@ -119,6 +125,11 @@ local function deathvox_init_menus()
 			deathvox:ChangeSetting("useHoppipOverhaul",enabled)
 			deathvox:Save()
 		end
+		MenuCallbackHandler.callback_deathvox_toggle_totalcd = function(self,item) --on keypress
+			local enabled = item:value() == "on"
+			deathvox:ChangeSetting("useTotalCDOverhaul",enabled)
+			deathvox:Save()
+		end
 	
 		MenuCallbackHandler.callback_deathvox_close_overhauls = function(self)
 --			deathvox:Save()
@@ -134,10 +145,12 @@ if not _G.deathvox then
 	_G.deathvox.SaveName = "crackdown.txt"
 	_G.deathvox.SavePathFull = deathvox.SavePath .. deathvox.SaveName
 	deathvox.Settings = { --options as saved to your BLT save file 
-		useHoppipOverhaul = true
+		useHoppipOverhaul = true,
+		useTotalCDOverhaul = true
 	}
 	deathvox.syncable_options = { --whitelist: options on this list will be accepted by other clients; if options are not on this list, clients will ignore them and not apply these synced options (from host) on the client's end
-		useHoppipOverhaul = true
+		useHoppipOverhaul = true,
+		useTotalCDOverhaul = true
 	}
 	deathvox.Session_Settings = {} --populated only on load, not on changed menu. keep this empty
 	deathvox.NetworkIDs = { --string ids for network syncing stuff
