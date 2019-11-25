@@ -4,11 +4,9 @@ function CopSound:chk_voice_prefix()
 	end
 end
 
-function CopSound:say(sound_name, sync, skip_prefix, important, callback)
-	if self._last_speech then
-		self._last_speech:stop()
-	end
-	
+
+Hooks:PostHook(CopSound, "say", "vox_say", function(self, sound_name, sync, skip_prefix, important, callback)
+
 	local full_sound = nil
 	
 	if self._prefix == "l5d_" then
@@ -37,6 +35,20 @@ function CopSound:say(sound_name, sync, skip_prefix, important, callback)
 	end
 	
 	local faction = tweak_data.levels:get_ai_group_type()
+	
+	if self._prefix == "z1n_" or self._prefix == "z2n_" or self._prefix == "z3n_" or self._prefix == "z4n_" then
+		if sound_name == "x02a_any_3p" then
+			full_sound = "shd_x02a_any_3p_01"
+		end
+		
+		if sound_name == "x01a_any_3p" then
+			full_sound = "bdz_x01a_any_3p"
+		end
+		
+		if sound_name ~= "x01a_any_3p" and sound_name ~= "x02a_any_3p" and not full_sound then
+			sound_name = "g90"
+		end
+	end
 	
 	if self._unit:base():has_tag("special") and not sound_name == "g90" and not sound_name == "c01" then
 	
@@ -99,32 +111,12 @@ function CopSound:say(sound_name, sync, skip_prefix, important, callback)
 		end
 	end
 	
-	if self._prefix == "z1n_" or self._prefix == "z2n_" or self._prefix == "z3n_" or self._prefix == "z4n_" then
-		if sound_name == "x02a_any_3p" then
-			full_sound = "shd_x02a_any_3p_01"
-		end
-		
-		if sound_name == "x01a_any_3p" then
-			full_sound = "bdz_x01a_any_3p"
-		end
-		
-		if sound_name ~= "x01a_any_3p" and sound_name ~= "x02a_any_3p" then
-			sound_name = "g90"
-		end
-	end
+	--if self._prefix == "l1d_" or self._prefix == "l2d_" or self._prefix == "l3d_" or self._prefix == "l4d_" or self._prefix == "l5d_" then
+		--if sound_name == "x02a_any_3p" then
+			--full_sound = "shd_x02a_any_3p_01"
+		--end
+	--end
 	
-	if faction == "classic" then
-		if self._prefix == "l1d_" or self._prefix == "l2d_" or self._prefix == "l3d_" or self._prefix == "l4d_" or self._prefix == "l5d_" then
-			if sound_name == "x02a_any_3p" then
-				full_sound = "shd_x02a_any_3p_01"
-			end
-			
-			if sound_name == "x01a_any_3p" then
-				full_sound = "bdz_x01a_any_3p"
-			end
-		end
-	end
-		
 	if self._prefix == "fl1n_" then
         if sound_name == "x02a_any_3p" then
             full_sound = "fl1n_x01a_any_3p_01"
@@ -146,25 +138,5 @@ function CopSound:say(sound_name, sync, skip_prefix, important, callback)
 			full_sound = self._prefix .. sound_name
 		end
 	end
-	
-	local event_id = nil
 
-	if type(full_sound) == "number" then
-		event_id = full_sound
-		full_sound = nil
-	end
-
-	if sync then
-		event_id = event_id or SoundDevice:string_to_id(full_sound)
-
-		self._unit:network():send("say", event_id)
-	end
-
-	self._last_speech = self:_play(full_sound or event_id)
-
-	if not self._last_speech then
-		return
-	end
-
-	self._speak_expire_t = TimerManager:game():time() + 2
-end
+end)
