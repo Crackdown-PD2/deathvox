@@ -2109,7 +2109,9 @@ function CopDamage:damage_fire(attack_data)
 
 	if attack_data.attacker_unit == managers.player:player_unit() then
 		if attack_data.weapon_unit and attack_data.variant ~= "stun" and not attack_data.is_fire_dot_damage then
-			if damage > 0 then
+			local is_ground_fire = attack_data.weapon_unit:base() and attack_data.weapon_unit:base().get_name_id and attack_data.weapon_unit:base():get_name_id() == "environment_fire"
+
+			if not is_ground_fire and damage > 0 then
 				managers.hud:on_hit_confirmed()
 			end
 		end
@@ -2938,4 +2940,43 @@ function CopDamage:sync_damage_dot(attacker_unit, damage_percent, death, variant
 	attack_data.is_synced = true
 
 	self:_on_damage_received(attack_data)
+end
+
+function CopDamage:get_visible_body_part(shoot_from_pos, aim_vec)
+	local dis = mvector3.distance(shoot_from_pos, self._unit:position())
+
+	if dis > 3500 then
+		self:shoot_pos_mid(aim_vec)
+	else
+		self._aim_bodies = {}
+
+		table.insert(self._aim_bodies, self._unit:body("b_head"))
+		table.insert(self._aim_bodies, self._unit:body("b_spine1"))
+		table.insert(self._aim_bodies, self._unit:body("b_spine2"))
+		table.insert(self._aim_bodies, self._unit:body("b_right_thigh"))
+		table.insert(self._aim_bodies, self._unit:body("b_left_thigh"))
+
+		local uncovered_body, best_angle = nil
+
+		for i, body in ipairs(self._aim_bodies) do
+			local body_pos = body:center_of_mass()
+			local body_vec = body_pos - shoot_from_pos
+			local body_angle = body_vec:angle(aim_vec)
+
+			if not best_angle or body_angle < best_angle then
+				local aim_ray = World:raycast("ray", shoot_from_pos, body_pos, "sphere_cast_radius", 5, "bundle", 4, "slot_mask", managers.slot:get_mask("enemy_shield_check"))
+
+				if not aim_ray then
+					uncovered_body = body
+					best_angle = body_angle
+				end
+			end
+		end
+
+		if uncovered_body then
+			mvector3.set(aim_vec, uncovered_body:center_of_mass())
+		else
+			self:shoot_pos_mid(aim_vec)
+		end
+	end
 end
