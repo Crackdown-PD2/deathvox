@@ -2,7 +2,8 @@ function ConcussionGrenade:_detonate(tag, unit, body, other_unit, other_body, po
 	local pos = self._unit:position()
 	local normal = math.UP
 	local range = self._range
-	local slot_mask = managers.slot:get_mask("explosion_targets")
+	local slot_mask = managers.slot:get_mask("raycastable_characters")
+	slot_mask = slot_mask - 3 - 17 + 21
 
 	managers.explosion:play_sound_and_effects(pos, normal, range, self._custom_params)
 
