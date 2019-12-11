@@ -72,23 +72,33 @@ function ExplosionManager:detect_and_stun(params)
 	local type = nil
 
 	for _, hit_body in ipairs(bodies) do
-		if alive(hit_body) then
+		if alive(hit_body) and ignore_unit ~= hit_body:unit() then
 			units_to_push[hit_body:unit():key()] = hit_body:unit()
 			local character = hit_body:unit():character_damage() and hit_body:unit():character_damage().stun_hit and not hit_body:unit():character_damage():dead()
 			local ray_hit = nil
 
 			if character and not units_to_hit[hit_body:unit():key()] then
-				if params.no_raycast_check_characters then
-					ray_hit = true
-					units_to_hit[hit_body:unit():key()] = true
-				else
-					for i_splinter, s_pos in ipairs(splinters) do
-						ray_hit = not World:raycast("ray", s_pos, hit_body:center_of_mass(), "slot_mask", managers.slot:get_mask("world_geometry"), "report")
+				local can_stun = not params.verify_callback
 
-						if ray_hit then
-							units_to_hit[hit_body:unit():key()] = true
+				if params.verify_callback then
+					local character_unit = hit_body:unit()
 
-							break
+					can_stun = params.verify_callback(character_unit)
+				end
+
+				if can_stun then
+					if params.no_raycast_check_characters then
+						ray_hit = true
+						units_to_hit[hit_body:unit():key()] = true
+					else
+						for i_splinter, s_pos in ipairs(splinters) do
+							ray_hit = not World:raycast("ray", s_pos, hit_body:center_of_mass(), "slot_mask", managers.slot:get_mask("world_geometry"), "report")
+
+							if ray_hit then
+								units_to_hit[hit_body:unit():key()] = true
+
+								break
+							end
 						end
 					end
 				end
@@ -96,6 +106,8 @@ function ExplosionManager:detect_and_stun(params)
 
 			if ray_hit then
 				local hit_unit = hit_body:unit()
+
+				hit_units[hit_unit:key()] = hit_unit
 
 				if owner and hit_unit:base() and hit_unit:base()._tweak_table and not hit_unit:character_damage():dead() then
 					type = hit_unit:base()._tweak_table
@@ -109,46 +121,32 @@ function ExplosionManager:detect_and_stun(params)
 					end
 				end
 
-				if ignore_unit ~= hit_unit then
-					local can_stun = not params.verify_callback
+				local dir = hit_body:center_of_mass()
+				mvector3.direction(dir, hit_pos, dir)
 
-					if params.verify_callback then
-						can_stun = params.verify_callback(hit_unit)
-					end
+				local dead_before = hit_unit:character_damage():dead()
+				local action_data = {
+					variant = "stun",
+					damage = damage,
+					attacker_unit = user_unit,
+					weapon_unit = owner,
+					col_ray = self._col_ray or {
+						position = hit_body:position(),
+						ray = dir
+					}
+				}
 
-					if can_stun then
-						hit_units[hit_unit:key()] = hit_unit
+				hit_unit:character_damage():stun_hit(action_data)
 
-						local dir = hit_body:center_of_mass()
-						mvector3.direction(dir, hit_pos, dir)
+				if owner and not dead_before and hit_unit:base() and hit_unit:base()._tweak_table and hit_unit:character_damage():dead() then
+					type = hit_unit:base()._tweak_table
 
-						local dead_before = hit_unit:character_damage():dead()
-						local action_data = {
-							variant = "stun",
-							damage = damage,
-							attacker_unit = user_unit,
-							weapon_unit = owner,
-							col_ray = self._col_ray or {
-								position = hit_body:position(),
-								ray = dir
-							}
-						}
-
-						hit_unit:character_damage():stun_hit(action_data)
-
-						if owner and not dead_before and hit_unit:base() and hit_unit:base()._tweak_table and hit_unit:character_damage():dead() then
-							type = hit_unit:base()._tweak_table
-
-							if CopDamage.is_civilian(type) then
-								count_civilian_kills = count_civilian_kills + 1
-							elseif CopDamage.is_gangster(type) then
-								count_gangster_kills = count_gangster_kills + 1
-							elseif not managers.groupai:state():is_unit_team_AI(hit_unit) then
-								count_cop_kills = count_cop_kills + 1
-							end
-						end
-					elseif character and hit_unit and hit_unit.character_damage and not hit_unit:character_damage().stun_hit then
-						debug_pause("unit: ", hit_body:unit(), " is missing stun_hit implementation")
+					if CopDamage.is_civilian(type) then
+						count_civilian_kills = count_civilian_kills + 1
+					elseif CopDamage.is_gangster(type) then
+						count_gangster_kills = count_gangster_kills + 1
+					elseif not managers.groupai:state():is_unit_team_AI(hit_unit) then
+						count_cop_kills = count_cop_kills + 1
 					end
 				end
 			end
@@ -269,7 +267,7 @@ function ExplosionManager:detect_and_give_dmg(params)
 	local type = nil
 
 	for _, hit_body in ipairs(bodies) do
-		if alive(hit_body) then
+		if alive(hit_body) and ignore_unit ~= hit_body:unit() then
 			units_to_push[hit_body:unit():key()] = hit_body:unit()
 			local character = hit_body:unit():character_damage() and hit_body:unit():character_damage().damage_explosion and not hit_body:unit():character_damage():dead()
 			local apply_dmg = hit_body:extension() and hit_body:extension().damage
@@ -307,7 +305,11 @@ function ExplosionManager:detect_and_give_dmg(params)
 												dmg_mul = 0.25
 											end
 										else
-											dmg_mul = 0.5
+											if p_unit:base():char_tweak().damage.shield_explosion_ally_damage_mul then
+												dmg_mul = p_unit:base():char_tweak().damage.shield_explosion_ally_damage_mul
+											else
+												dmg_mul = 0.5
+											end
 										end
 									end
 								end]]
@@ -340,7 +342,7 @@ function ExplosionManager:detect_and_give_dmg(params)
 				end
 			end
 
-			if not ray_hit and units_to_hit[hit_body:unit():key()] and apply_dmg and character then
+			if not ray_hit and units_to_hit[hit_body:unit():key()] and apply_dmg and hit_body:unit():character_damage() and hit_body:unit():character_damage().damage_explosion then
 				if params.no_raycast_check_characters then
 					ray_hit = true
 				else
@@ -357,55 +359,53 @@ function ExplosionManager:detect_and_give_dmg(params)
 			if ray_hit then
 				local hit_unit = hit_body:unit()
 
-				if ignore_unit ~= hit_unit then
-					hit_units[hit_unit:key()] = hit_unit
-					dir = hit_body:center_of_mass()
-					len = mvector3.direction(dir, hit_pos, dir)
-					damage = dmg * math.pow(math.clamp(1 - len / range, 0, 1), curve_pow)
-					--damage = damage * dmg_mul
+				hit_units[hit_unit:key()] = hit_unit
+				dir = hit_body:center_of_mass()
+				len = mvector3.direction(dir, hit_pos, dir)
+				damage = dmg * math.pow(math.clamp(1 - len / range, 0, 1), curve_pow)
+				--damage = damage * dmg_mul
 
-					if apply_dmg then
-						local prop_damage = damage
+				if apply_dmg then
+					local prop_damage = damage
 
-						if 1 - len / range < -5 then
-							prop_damage = math.max(damage, 1)
-						end
-
-						self:_apply_body_damage(true, hit_body, user_unit, dir, prop_damage)
+					if 1 - len / range < -5 then
+						prop_damage = math.max(damage, 1)
 					end
 
-					--[[if dmg_mul ~= 0 then
-						damage = math.max(damage, 1)
-					end]]
+					self:_apply_body_damage(true, hit_body, user_unit, dir, prop_damage)
+				end
 
+				--[[if dmg_mul ~= 0 then
 					damage = math.max(damage, 1)
+				end]]
 
-					if character and damage_character then
-						local dead_before = hit_unit:character_damage():dead()
-						local action_data = {
-							variant = "explosion",
-							damage = damage,
-							attacker_unit = user_unit,
-							weapon_unit = owner,
-							col_ray = self._col_ray or {
-								position = hit_body:position(),
-								ray = dir
-							},
-							ignite_character = params.ignite_character
-						}
+				damage = math.max(damage, 1)
 
-						hit_unit:character_damage():damage_explosion(action_data)
+				if character and damage_character then
+					local dead_before = hit_unit:character_damage():dead()
+					local action_data = {
+						variant = "explosion",
+						damage = damage,
+						attacker_unit = user_unit,
+						weapon_unit = owner,
+						col_ray = self._col_ray or {
+							position = hit_body:position(),
+							ray = dir
+						},
+						ignite_character = params.ignite_character
+					}
 
-						if owner and not dead_before and hit_unit:base() and hit_unit:base()._tweak_table and hit_unit:character_damage():dead() then
-							type = hit_unit:base()._tweak_table
+					hit_unit:character_damage():damage_explosion(action_data)
 
-							if CopDamage.is_civilian(type) then
-								count_civilian_kills = count_civilian_kills + 1
-							elseif CopDamage.is_gangster(type) then
-								count_gangster_kills = count_gangster_kills + 1
-							elseif not managers.groupai:state():is_unit_team_AI(hit_unit) then
-								count_cop_kills = count_cop_kills + 1
-							end
+					if owner and not dead_before and hit_unit:base() and hit_unit:base()._tweak_table and hit_unit:character_damage():dead() then
+						type = hit_unit:base()._tweak_table
+
+						if CopDamage.is_civilian(type) then
+							count_civilian_kills = count_civilian_kills + 1
+						elseif CopDamage.is_gangster(type) then
+							count_gangster_kills = count_gangster_kills + 1
+						elseif not managers.groupai:state():is_unit_team_AI(hit_unit) then
+							count_cop_kills = count_cop_kills + 1
 						end
 					end
 				end
