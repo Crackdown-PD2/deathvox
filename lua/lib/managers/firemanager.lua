@@ -252,7 +252,7 @@ function FireManager:detect_and_give_dmg(params)
 	local type = nil
 
 	for _, hit_body in ipairs(bodies) do
-		if alive(hit_body) then
+		if alive(hit_body) and ignore_unit ~= hit_body:unit() then
 			units_to_push[hit_body:unit():key()] = hit_body:unit()
 			local character = hit_body:unit():character_damage() and hit_body:unit():character_damage().damage_fire and not hit_body:unit():character_damage():dead()
 			local apply_dmg = hit_body:extension() and hit_body:extension().damage
@@ -303,7 +303,7 @@ function FireManager:detect_and_give_dmg(params)
 
 			--allow multiple damage extensions from the same unit to be damaged (like against Dozers)
 			--otherwise either one extension may be damaged at a time, or none at all
-			if not ray_hit and units_to_hit[hit_body:unit():key()] and apply_dmg and character then
+			if not ray_hit and units_to_hit[hit_body:unit():key()] and apply_dmg and hit_body:unit():character_damage() and hit_body:unit():character_damage().damage_fire then
 				if params.no_raycast_check_characters then
 					ray_hit = true
 				else
@@ -320,47 +320,45 @@ function FireManager:detect_and_give_dmg(params)
 			if ray_hit then
 				local hit_unit = hit_body:unit()
 
-				if ignore_unit ~= hit_unit then
-					hit_units[hit_unit:key()] = hit_unit
-					dir = hit_body:center_of_mass()
-					mvector3.direction(dir, hit_pos, dir)
-					damage = dmg
+				hit_units[hit_unit:key()] = hit_unit
+				dir = hit_body:center_of_mass()
+				mvector3.direction(dir, hit_pos, dir)
+				damage = dmg
 
-					if apply_dmg then
-						self:_apply_body_damage(true, hit_body, user_unit, dir, damage)
-					end
+				if apply_dmg then
+					self:_apply_body_damage(true, hit_body, user_unit, dir, damage)
+				end
 
-					damage = math.max(damage, 1)
+				damage = math.max(damage, 1)
 
-					if character and damage_character then
-						local dead_before = hit_unit:character_damage():dead()
-						local action_data = {
-							variant = "fire",
-							damage = damage,
-							attacker_unit = user_unit,
-							weapon_unit = owner,
-							ignite_character = params.ignite_character,
-							col_ray = self._col_ray or {
-								position = hit_body:position(),
-								ray = dir
-							},
-							is_fire_dot_damage = false,
-							fire_dot_data = fire_dot_data,
-							is_molotov = is_molotov
-						}
+				if character and damage_character then
+					local dead_before = hit_unit:character_damage():dead()
+					local action_data = {
+						variant = "fire",
+						damage = damage,
+						attacker_unit = user_unit,
+						weapon_unit = owner,
+						ignite_character = params.ignite_character,
+						col_ray = self._col_ray or {
+							position = hit_body:position(),
+							ray = dir
+						},
+						is_fire_dot_damage = false,
+						fire_dot_data = fire_dot_data,
+						is_molotov = is_molotov
+					}
 
-						hit_unit:character_damage():damage_fire(action_data)
+					hit_unit:character_damage():damage_fire(action_data)
 
-						if owner and not dead_before and hit_unit:base() and hit_unit:base()._tweak_table and hit_unit:character_damage():dead() then
-							type = hit_unit:base()._tweak_table
+					if owner and not dead_before and hit_unit:base() and hit_unit:base()._tweak_table and hit_unit:character_damage():dead() then
+						type = hit_unit:base()._tweak_table
 
-							if CopDamage.is_civilian(type) then
-								count_civilian_kills = count_civilian_kills + 1
-							elseif CopDamage.is_gangster(type) then
-								count_gangster_kills = count_gangster_kills + 1
-							elseif not managers.groupai:state():is_unit_team_AI(hit_unit) then --properly check against bots
-								count_cop_kills = count_cop_kills + 1
-							end
+						if CopDamage.is_civilian(type) then
+							count_civilian_kills = count_civilian_kills + 1
+						elseif CopDamage.is_gangster(type) then
+							count_gangster_kills = count_gangster_kills + 1
+						elseif not managers.groupai:state():is_unit_team_AI(hit_unit) then --properly check against bots
+							count_cop_kills = count_cop_kills + 1
 						end
 					end
 				end
