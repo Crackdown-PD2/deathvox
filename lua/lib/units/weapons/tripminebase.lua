@@ -61,7 +61,7 @@ function TripMineBase:_explode(col_ray)
 	local damage = tweak_data.weapon.trip_mines.damage * managers.player:upgrade_value("trip_mine", "damage_multiplier", 1)
 
 	for _, hit_body in ipairs(bodies) do
-		if alive(hit_body) then
+		if alive(hit_body) and hit_body:unit() ~= self._unit then
 			units_to_push[hit_body:unit():key()] = hit_body:unit()
 			local character = hit_body:unit():character_damage() and hit_body:unit():character_damage().damage_explosion and not hit_body:unit():character_damage():dead()
 			local apply_dmg = hit_body:extension() and hit_body:extension().damage
@@ -88,7 +88,7 @@ function TripMineBase:_explode(col_ray)
 				end
 			end
 
-			if not ray_hit and units_to_hit[hit_body:unit():key()] and apply_dmg and character then
+			if not ray_hit and units_to_hit[hit_body:unit():key()] and apply_dmg and hit_body:unit():character_damage() and hit_body:unit():character_damage().damage_explosion then
 				for i_splinter, s_pos in ipairs(splinters) do
 					ray_hit = not World:raycast("ray", s_pos, hit_body:center_of_mass(), "slot_mask", managers.slot:get_mask("world_geometry"), "report")
 
