@@ -370,6 +370,8 @@ function CopActionHurt:init(action_desc, common_data)
 		end
 
 		if not self._ext_movement:died_on_rope() then
+			self:_prepare_ragdoll()
+
 			redir_res = self._ext_movement:play_redirect("death_fire")
 
 			if not redir_res then
@@ -396,6 +398,8 @@ function CopActionHurt:init(action_desc, common_data)
 	elseif action_type == "death" and action_desc.variant == "poison" then
 		self:force_ragdoll()
 	elseif action_type == "death" and (self._ext_anim.run and self._ext_anim.move_fwd or self._ext_anim.sprint) and not common_data.char_tweak.no_run_death_anim then
+		self:_prepare_ragdoll()
+
 		redir_res = self._ext_movement:play_redirect("death_run")
 
 		if not redir_res then
@@ -506,6 +510,8 @@ function CopActionHurt:init(action_desc, common_data)
 					if variant > 1 then
 						variant = self:_pseudorandom(variant)
 					end
+
+					self:_prepare_ragdoll()
 				elseif action_type ~= "shield_knock" and action_type ~= "counter_tased" and action_type ~= "taser_tased" then
 					if old_variant and (old_info[dir_str] == 1 and old_info[height] == 1 and old_info.mod == 1 and action_type == "hurt" or old_info.hvy == 1 and action_type == "heavy_hurt") then
 						variant = old_variant
