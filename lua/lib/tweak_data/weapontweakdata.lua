@@ -1427,7 +1427,7 @@ end
 
 Hooks:PostHook(WeaponTweakData, "init", "vox_wep", function(self, tweak_data)
 
-	local dont = true
+	--local dont = true
 	
 	if dont then
 		--In-game name/Internal name.
