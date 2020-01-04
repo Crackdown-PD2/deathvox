@@ -1,7 +1,4 @@
 <?xml version="1.0"?>
-<hooks script_path="lua/lib/" hook_id="core/lib/">
-	<post :script_path="managers/coreenvironmentcontrollermanager.lua" :hook_id="managers/coreenvironmentcontrollermanager"/>
-</hooks>
 
 <hooks script_path="lua/lib/" hook_id="lib/">
 	<pre script_path="Corepre.lua" :hook_id="entry"/>

@@ -2,6 +2,7 @@
 <mod name="DeathVox" global_key="deathvox">
 	<:include src="assets.xml" />
 	<:include src="hooks.xml" />
+	<:include src="hooks2.xml" />
 	<:include src="cops.xml" />
 	<:include src="fbi.xml" />
 	<:include src="gensec.xml" />
