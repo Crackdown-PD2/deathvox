@@ -1451,6 +1451,1530 @@ Hooks:PostHook(WeaponTweakData, "init", "vox_wep", function(self, tweak_data)
 		
 		--First gun of every category will have notes on the stats some of the unexplained stats if they weren't explained already by a previous category or this sheet, after that, it's all listening to music, drinking coffee at 2 in the morning while typing all the stuff out.
 		
+		--Rifles begin here.
+		
+		--CAR-4 Rifle
+		self.new_m4.FIRE_MODE = "auto"
+		self.new_m4.fire_mode_data = {
+			fire_rate = 0.1
+		}
+		self.new_m4.CAN_TOGGLE_FIREMODE = true
+		self.new_m4.auto = {
+			fire_rate = 0.1
+		}
+		self.new_m4.timers = {
+			reload_not_empty = 2.665,
+			reload_empty = 3.43,
+			unequip = 0.6,
+			equip = 0.6
+		}
+		
+		self.new_m4.CLIP_AMMO_MAX = 30
+		self.new_m4.NR_CLIPS_MAX = 5
+		self.new_m4.AMMO_MAX = self.new_m4.CLIP_AMMO_MAX * self.new_m4.NR_CLIPS_MAX
+		self.new_m4.AMMO_PICKUP = {
+			4.5,
+			8.25
+		}
+		
+		self.new_m4.spread = {
+			standing = 3
+		}
+		self.new_m4.spread.crouching = self.new_m4.spread.standing * 0.4
+		self.new_m4.spread.steelsight = self.new_m4.spread.standing * 0.4
+		self.new_m4.spread.moving_standing = self.new_m4.spread.standing
+		self.new_m4.spread.moving_crouching = self.new_m4.spread.standing
+		self.new_m4.spread.moving_steelsight = self.new_m4.spread.steelsight
+		self.new_m4.kick = {
+			standing = {
+				0.6,
+				0.8,
+				-1,
+				1
+			}
+		}
+		self.new_m4.kick.crouching = self.new_m4.kick.standing
+		self.new_m4.kick.steelsight = self.new_m4.kick.standing
+		
+		self.new_m4.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 52,
+			alert_size = 7,
+			spread = 12,
+			spread_moving = 10,
+			recoil = 16,
+			value = 1,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 10,
+			concealment = 20
+		}
+		self.new_m4.stats_modifiers = {
+			damage = 1
+		}
+		
+		--AMCAR
+		self.amcar.FIRE_MODE = "auto"
+		self.amcar.fire_mode_data = {
+			fire_rate = 0.11
+		}
+		self.amcar.CAN_TOGGLE_FIREMODE = true
+		self.amcar.auto = {
+			fire_rate = 0.11
+		}
+		self.amcar.timers = {
+			reload_not_empty = 2.25,
+			reload_empty = 3,
+			unequip = 0.6,
+			equip = 0.55
+		}
+	
+		self.amcar.CLIP_AMMO_MAX = 20
+		self.amcar.NR_CLIPS_MAX = 11
+		self.amcar.AMMO_MAX = self.amcar.CLIP_AMMO_MAX * self.amcar.NR_CLIPS_MAX
+		self.amcar.AMMO_PICKUP = {
+			6.60,
+			12.10
+		}
+		
+		self.amcar.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.amcar.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.amcar.kick.crouching = self.amcar.kick.standing
+		self.amcar.kick.steelsight = self.amcar.kick.standing
+		
+		self.amcar.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 42,
+			alert_size = 7,
+			spread = 10,
+			spread_moving = 8,
+			recoil = 20,
+			value = 1,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 10,
+			concealment = 21
+		}
+		self.amcar.stats_modifiers = {
+			damage = 1
+		}
+	
+		--AK Rifle
+		self.ak74.FIRE_MODE = "auto"
+		self.ak74.fire_mode_data = {
+			fire_rate = 0.092
+		}
+		self.ak74.CAN_TOGGLE_FIREMODE = true
+		self.ak74.auto = {
+			fire_rate = 0.092
+		}
+		self.ak74.timers = {
+			reload_not_empty = 2.8,
+			reload_empty = 3.87,
+			unequip = 0.5,
+			equip = 0.5
+		}
+		
+		self.ak74.CLIP_AMMO_MAX = 30
+		self.ak74.NR_CLIPS_MAX = 5
+		self.ak74.AMMO_MAX = self.ak74.CLIP_AMMO_MAX * self.ak74.NR_CLIPS_MAX
+		self.ak74.AMMO_PICKUP = {
+			4.50,
+			8.25
+		}
+		
+		self.ak74.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.ak74.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.ak74.kick.crouching = self.ak74.kick.standing
+		self.ak74.kick.steelsight = self.ak74.kick.standing
+		
+		self.ak74.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 56,
+			alert_size = 7,
+			spread = 13,
+			spread_moving = 11,
+			recoil = 16,
+			value = 1,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 10,
+			concealment = 16
+		}
+		self.ak74.stats_modifiers = {
+			damage = 1
+		}
+		
+		--UAR Rifle
+		self.aug.FIRE_MODE = "auto"
+		self.aug.fire_mode_data = {
+			fire_rate = 0.08
+		}
+		self.aug.CAN_TOGGLE_FIREMODE = true
+		self.aug.auto = {
+			fire_rate = 0.08
+		}
+		self.aug.timers = {
+			reload_not_empty = 2.5,
+			reload_empty = 3.3,
+			unequip = 0.5,
+			equip = 0.5
+		}
+		
+		self.aug.CLIP_AMMO_MAX = 30
+		self.aug.NR_CLIPS_MAX = 5
+		self.aug.AMMO_MAX = self.aug.CLIP_AMMO_MAX * self.aug.NR_CLIPS_MAX
+		self.aug.AMMO_PICKUP = {
+			4.50,
+			8.25
+		}
+		
+		self.aug.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.aug.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.aug.kick.crouching = self.aug.kick.standing
+		self.aug.kick.steelsight = self.aug.kick.standing
+		
+		self.aug.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 55,
+			alert_size = 7,
+			spread = 17,
+			spread_moving = 15,
+			recoil = 11,
+			value = 1,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 10,
+			concealment = 20
+		}
+		self.aug.stats_modifiers = {
+			damage = 1
+		}
+		
+		--AK 7.62
+		self.akm.FIRE_MODE = "auto"
+		self.akm.fire_mode_data = {
+			fire_rate = 0.107
+		}
+		self.akm.CAN_TOGGLE_FIREMODE = true
+		self.akm.auto = {
+			fire_rate = 0.107
+		}
+		self.akm.timers = {
+			reload_not_empty = 2.8,
+			reload_empty = 3.87,
+			unequip = 0.5,
+			equip = 0.5
+		}
+		
+		self.akm.CLIP_AMMO_MAX = 30
+		self.akm.NR_CLIPS_MAX = 3
+		self.akm.AMMO_MAX = self.akm.CLIP_AMMO_MAX * self.akm.NR_CLIPS_MAX
+		self.akm.AMMO_PICKUP = {
+			0.90,
+			3.15
+		}
+		
+		self.akm.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.akm.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.akm.kick.crouching = self.akm.kick.standing
+		self.akm.kick.steelsight = self.akm.kick.standing
+		
+		self.akm.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 97,
+			alert_size = 7,
+			spread = 16,
+			spread_moving = 14,
+			recoil = 12,
+			value = 1,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 8,
+			concealment = 13
+		}
+		self.akm.stats_modifiers = {
+			damage = 1
+		}
+		
+		--JP36
+		self.g36.FIRE_MODE = "auto"
+		self.g36.fire_mode_data = {
+			fire_rate = 0.085
+		}
+		self.g36.CAN_TOGGLE_FIREMODE = true
+		self.g36.auto = {
+			fire_rate = 0.085
+		}
+		self.g36.timers = {
+			reload_not_empty = 2.85,
+			reload_empty = 3.85,
+			unequip = 0.6,
+			equip = 0.6
+		}
+		
+		self.g36.CLIP_AMMO_MAX = 30
+		self.g36.NR_CLIPS_MAX = 8
+		self.g36.AMMO_MAX = self.g36.CLIP_AMMO_MAX * self.g36.NR_CLIPS_MAX
+		self.g36.AMMO_PICKUP = {
+			7.2,
+			13.20
+		}
+		
+		self.g36.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.g36.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.g36.kick.crouching = self.g36.kick.standing
+		self.g36.kick.steelsight = self.g36.kick.standing
+		
+		self.g36.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 44,
+			alert_size = 7,
+			spread = 11,
+			spread_moving = 9,
+			recoil = 17,
+			value = 1,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 11,
+			concealment = 19
+		}
+		self.g36.stats_modifiers = {
+			damage = 1
+		}
+		
+		--Galant Rifle
+		self.ching.FIRE_MODE = "single"
+		self.ching.fire_mode_data = {
+			fire_rate = 0.1
+		}
+		self.ching.CAN_TOGGLE_FIREMODE = false
+		self.ching.single = {
+			fire_rate = 0.1
+		}
+		self.ching.timers = {
+			reload_not_empty = 2.56,
+			reload_empty = 1.52,
+			unequip = 0.6,
+			equip = 0.55
+		}
+		
+		self.ching.CLIP_AMMO_MAX = 8
+		self.ching.NR_CLIPS_MAX = 9
+		self.ching.AMMO_MAX = self.ching.CLIP_AMMO_MAX * self.ching.NR_CLIPS_MAX
+		self.ching.AMMO_PICKUP = {
+			0.36,
+			1.08
+		}
+		
+		self.ching.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.ching.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.ching.kick.crouching = self.ching.kick.standing
+		self.ching.kick.steelsight = self.ching.kick.standing
+		
+		self.ching.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 160,
+			alert_size = 7,
+			spread = 22,
+			spread_moving = 20,
+			recoil = 10,
+			value = 1,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 4,
+			concealment = 20
+		}
+		self.ching.stats_modifiers = {
+			damage = 1
+		}
+		
+		--M308 Rifle
+		self.new_m14.FIRE_MODE = "single"
+		self.new_m14.fire_mode_data = {
+			fire_rate = 0.085
+		}
+		self.new_m14.CAN_TOGGLE_FIREMODE = true
+		self.new_m14.single = {
+			fire_rate = 0.085
+		}
+		self.new_m14.timers = {
+			reload_not_empty = 2.65,
+			reload_empty = 3.15,
+			unequip = 0.6,
+			equip = 0.55
+		}
+		
+		self.new_m14.CLIP_AMMO_MAX = 10
+		self.new_m14.NR_CLIPS_MAX = 7
+		self.new_m14.AMMO_MAX = self.new_m14.CLIP_AMMO_MAX * self.new_m14.NR_CLIPS_MAX
+		self.new_m14.AMMO_PICKUP = {
+			0.35,
+			1.05
+		}
+		
+		self.new_m14.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.new_m14.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.new_m14.kick.crouching = self.new_m14.kick.standing
+		self.new_m14.kick.steelsight = self.new_m14.kick.standing
+		
+		self.new_m14.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 160,
+			alert_size = 7,
+			spread = 22,
+			spread_moving = 20,
+			recoil = 10,
+			value = 1,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 4,
+			concealment = 8
+		}
+		self.new_m14.stats_modifiers = {
+			damage = 1
+		}
+		
+		--AK5 Rifle
+		self.ak5.FIRE_MODE = "auto"
+		self.ak5.fire_mode_data = {
+			fire_rate = 0.085
+		}
+		self.ak5.CAN_TOGGLE_FIREMODE = true
+		self.ak5.auto = {
+			fire_rate = 0.085
+		}
+		self.ak5.timers = {
+			reload_not_empty = 2.05,
+			reload_empty = 3.08,
+			unequip = 0.6,
+			equip = 0.45
+		}
+		
+		self.ak5.CLIP_AMMO_MAX = 30
+		self.ak5.NR_CLIPS_MAX = 5
+		self.ak5.AMMO_MAX = self.ak5.CLIP_AMMO_MAX * self.ak5.NR_CLIPS_MAX
+		self.ak5.AMMO_PICKUP = {
+			4.50,
+			8.25
+		}
+		
+		self.ak5.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.ak5.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.ak5.kick.crouching = self.ak5.kick.standing
+		self.ak5.kick.steelsight = self.ak5.kick.standing
+		
+		self.ak5.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 56,
+			alert_size = 7,
+			spread = 16,
+			spread_moving = 14,
+			recoil = 16,
+			value = 1,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 10,
+			concealment = 18
+		}
+		self.ak5.stats_modifiers = {
+			damage = 1
+		}
+		
+		--AMR-16
+		self.m16.FIRE_MODE = "auto"
+		self.m16.fire_mode_data = {
+			fire_rate = 0.07
+		}
+		self.m16.CAN_TOGGLE_FIREMODE = true
+		self.m16.auto = {
+			fire_rate = 0.07
+		}
+		self.m16.timers = {
+			reload_not_empty = 2.75,
+			reload_empty = 3.73,
+			unequip = 0.6,
+			equip = 0.6
+		}
+		
+		self.m16.CLIP_AMMO_MAX = 30
+		self.m16.NR_CLIPS_MAX = 3
+		self.m16.AMMO_MAX = self.m16.CLIP_AMMO_MAX * self.m16.NR_CLIPS_MAX
+		self.m16.AMMO_PICKUP = {
+			0.897,
+			3.148
+		}
+		
+		self.m16.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.m16.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.m16.kick.crouching = self.m16.kick.standing
+		self.m16.kick.steelsight = self.m16.kick.standing
+		
+		self.m16.stats = {
+			zoom = 4,
+			total_ammo_mod = 21,
+			damage = 94,
+			alert_size = 7,
+			spread = 15,
+			spread_moving = 13,
+			recoil = 9,
+			value = 1,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 10,
+			concealment = 17
+		}
+		self.m16.stats_modifiers = {
+			damage = 1
+		}
+		
+		--Tempest-21
+		self.komodo.FIRE_MODE = "auto"
+		self.komodo.fire_mode_data = {
+			fire_rate = 0.075
+		}
+		self.komodo.CAN_TOGGLE_FIREMODE = true
+		self.komodo.auto = {
+			fire_rate = 0.075
+		}
+		self.komodo.timers = {
+			reload_not_empty = 2.35,
+			reload_empty = 3.35,
+			unequip = 0.65,
+			equip = 0.6
+		}
+		
+		self.komodo.CLIP_AMMO_MAX = 30
+		self.komodo.NR_CLIPS_MAX = 5
+		self.komodo.AMMO_MAX = self.komodo.CLIP_AMMO_MAX * self.komodo.NR_CLIPS_MAX
+		self.komodo.AMMO_PICKUP = {
+			4.5,
+			8.25
+		}
+		
+		self.komodo.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.komodo.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.komodo.kick.crouching = self.komodo.kick.standing
+		self.komodo.kick.steelsight = self.komodo.kick.standing
+		
+		self.komodo.stats = {
+			zoom = 1,
+			total_ammo_mod = 21,
+			damage = 58,
+			alert_size = 8,
+			spread = 16,
+			spread_moving = 15,
+			recoil = 14,
+			value = 9,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 12,
+			concealment = 26
+		}
+		self.komodo.stats_modifiers = {
+			damage = 1
+		}
+		
+		--Union 5.56 Rifle
+		self.corgi.FIRE_MODE = "auto"
+		self.corgi.fire_mode_data = {
+			fire_rate = 0.07
+		}
+		self.corgi.CAN_TOGGLE_FIREMODE = true
+		self.corgi.auto = {
+			fire_rate = 0.07
+		}
+		self.corgi.timers = {
+			reload_not_empty = 2.1,
+			reload_empty = 2.9,
+			unequip = 0.6,
+			equip = 0.6
+		}
+		
+		self.corgi.CLIP_AMMO_MAX = 30
+		self.corgi.NR_CLIPS_MAX = 5
+		self.corgi.AMMO_MAX = self.corgi.CLIP_AMMO_MAX * self.corgi.NR_CLIPS_MAX
+		self.corgi.AMMO_PICKUP = {
+			4.50,
+			8.25
+		}
+		
+		self.corgi.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.corgi.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.corgi.kick.crouching = self.corgi.kick.standing
+		self.corgi.kick.steelsight = self.corgi.kick.standing
+		
+		self.corgi.stats = {
+			zoom = 1,
+			total_ammo_mod = 21,
+			damage = 58,
+			alert_size = 8,
+			spread = 18,
+			spread_moving = 15,
+			recoil = 18,
+			value = 9,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 12,
+			concealment = 20
+		}
+		self.corgi.stats_modifiers = {
+			damage = 1
+		}
+		
+		--Commando 553
+		self.s552.FIRE_MODE = "auto"
+		self.s552.fire_mode_data = {
+			fire_rate = 0.084
+		}
+		self.s552.CAN_TOGGLE_FIREMODE = true
+		self.s552.auto = {
+			fire_rate = 0.084
+		}
+		self.s552.timers = {
+			reload_not_empty = 1.65,
+			reload_empty = 2.4,
+			unequip = 0.55,
+			equip = 0.7
+		}
+		
+		self.s552.CLIP_AMMO_MAX = 30
+		self.s552.NR_CLIPS_MAX = 8
+		self.s552.AMMO_MAX = self.s552.CLIP_AMMO_MAX * self.s552.NR_CLIPS_MAX
+		self.s552.AMMO_PICKUP = {
+			7.20,
+			13.20
+		}
+		
+		self.s552.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.s552.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.s552.kick.crouching = self.s552.kick.standing
+		self.s552.kick.steelsight = self.s552.kick.standing
+		
+		self.s552.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 42,
+			alert_size = 7,
+			spread = 10,
+			spread_moving = 8,
+			recoil = 15,
+			value = 1,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 12,
+			concealment = 22
+		}
+		self.s552.stats_modifiers = {
+			damage = 1
+		}
+		
+		--Eagle Heavy
+		self.scar.FIRE_MODE = "auto"
+		self.scar.fire_mode_data = {
+			fire_rate = 0.098
+		}
+		self.scar.CAN_TOGGLE_FIREMODE = true
+		self.scar.auto = {
+			fire_rate = 0.098
+		}
+		self.scar.timers = {
+			reload_not_empty = 2.2,
+			reload_empty = 3.15,
+			unequip = 0.6,
+			equip = 0.5
+		}
+		
+		self.scar.CLIP_AMMO_MAX = 20
+		self.scar.NR_CLIPS_MAX = 5
+		self.scar.AMMO_MAX = self.scar.CLIP_AMMO_MAX * self.scar.NR_CLIPS_MAX
+		self.scar.AMMO_PICKUP = {
+			1.0,
+			3.5
+		}
+		
+		self.scar.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.scar.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.scar.kick.crouching = self.scar.kick.standing
+		self.scar.kick.steelsight = self.scar.kick.standing
+		
+		self.scar.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 98,
+			alert_size = 7,
+			spread = 19,
+			spread_moving = 15,
+			recoil = 12,
+			value = 9,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 8,
+			concealment = 8
+		}
+		self.scar.stats_modifiers = {
+			damage = 1
+		}
+		
+		--Cavity 9mm
+		self.sub2000.FIRE_MODE = "single"
+		self.sub2000.fire_mode_data = {
+			fire_rate = 0.085
+		}
+		self.sub2000.CAN_TOGGLE_FIREMODE = false
+		self.sub2000.single = {
+			fire_rate = 0.085
+		}
+		self.sub2000.timers = {
+			reload_not_empty = 2.3,
+			reload_empty = 3.3,
+			unequip = 0.9,
+			equip = 0.9
+		}
+		
+		self.sub2000.CLIP_AMMO_MAX = 33
+		self.sub2000.NR_CLIPS_MAX = 2
+		self.sub2000.AMMO_MAX = self.sub2000.CLIP_AMMO_MAX * self.sub2000.NR_CLIPS_MAX
+		self.sub2000.AMMO_PICKUP = {
+			0.33,
+			0.99
+		}
+		
+		self.sub2000.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.sub2000.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.sub2000.kick.crouching = self.sub2000.kick.standing
+		self.sub2000.kick.steelsight = self.sub2000.kick.standing
+		
+		self.sub2000.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 160,
+			alert_size = 7,
+			spread = 19,
+			spread_moving = 16,
+			recoil = 9,
+			value = 1,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 4,
+			concealment = 27
+		}
+		self.sub2000.stats_modifiers = {
+			damage = 1
+		}
+		
+		--AK17 Rifle
+		self.flint.FIRE_MODE = "auto"
+		self.flint.fire_mode_data = {
+			fire_rate = 0.092
+		}
+		self.flint.CAN_TOGGLE_FIREMODE = true
+		self.flint.auto = {
+			fire_rate = 0.092
+		}
+		self.flint.timers = {
+			reload_not_empty = 2.26,
+			reload_empty = 3.37,
+			unequip = 0.5,
+			equip = 0.5
+		}
+		
+		self.flint.CLIP_AMMO_MAX = 35
+		self.flint.NR_CLIPS_MAX = 3
+		self.flint.AMMO_MAX = self.flint.CLIP_AMMO_MAX * self.flint.NR_CLIPS_MAX
+		self.flint.AMMO_PICKUP = {
+			1.05,
+			3.67
+		}
+		
+		self.flint.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.flint.kick = {
+			standing = self.new_m4.kick.standing,
+			crouching = self.ak74.kick.standing,
+			steelsight = self.ak74.kick.standing
+		}
+		
+		self.flint.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 99,
+			alert_size = 7,
+			spread = 16,
+			spread_moving = 11,
+			recoil = 16,
+			value = 1,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 10,
+			concealment = 16
+		}
+		self.flint.stats_modifiers = {
+			damage = 1
+		}
+		
+		--Bootleg Rifle
+		self.tecci.FIRE_MODE = "auto"
+		self.tecci.fire_mode_data = {
+			fire_rate = 0.09
+		}
+		self.tecci.CAN_TOGGLE_FIREMODE = true
+		self.tecci.auto = {
+			fire_rate = 0.1
+		}
+		self.tecci.timers = {
+			reload_not_empty = 3.8,
+			reload_empty = 4.7,
+			unequip = 0.6,
+			equip = 0.6
+		}
+		
+		self.tecci.CLIP_AMMO_MAX = 100
+		self.tecci.NR_CLIPS_MAX = 2
+		self.tecci.AMMO_MAX = self.tecci.CLIP_AMMO_MAX * self.tecci.NR_CLIPS_MAX
+		self.tecci.AMMO_PICKUP = {
+			6,
+			11
+		}
+		
+		self.tecci.spread = {
+			standing = 3
+		}
+		self.tecci.spread.crouching = self.tecci.spread.standing * 0.4
+		self.tecci.spread.steelsight = self.tecci.spread.standing * 0.4
+		self.tecci.spread.moving_standing = self.tecci.spread.standing
+		self.tecci.spread.moving_crouching = self.tecci.spread.standing
+		self.tecci.spread.moving_steelsight = self.tecci.spread.steelsight
+		self.tecci.kick = {
+			standing = {
+				0.6,
+				0.8,
+				-1,
+				1
+			}
+		}
+		self.tecci.kick.crouching = self.tecci.kick.standing
+		self.tecci.kick.steelsight = self.tecci.kick.standing
+		
+		self.tecci.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 40,
+			alert_size = 7,
+			spread = 7,
+			spread_moving = 10,
+			recoil = 14,
+			value = 1,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 10,
+			concealment = 20
+		}
+		self.tecci.stats_modifiers = {
+			damage = 1
+		}
+		
+		--Queen's Wrath
+		self.l85a2.FIRE_MODE = "auto"
+		self.l85a2.fire_mode_data = {
+			fire_rate = 0.083
+		}
+		self.l85a2.CAN_TOGGLE_FIREMODE = true
+		self.l85a2.auto = {
+			fire_rate = 0.083
+		}
+		self.l85a2.timers = {
+			reload_not_empty = 3.5,
+			reload_empty = 4.5,
+			unequip = 0.45,
+			equip = 0.75
+		}
+		
+		self.l85a2.CLIP_AMMO_MAX = 30
+		self.l85a2.NR_CLIPS_MAX = 5
+		self.l85a2.AMMO_MAX = self.l85a2.CLIP_AMMO_MAX * self.l85a2.NR_CLIPS_MAX
+		self.l85a2.AMMO_PICKUP = {
+			4.50,
+			8.25
+		}
+		
+		self.l85a2.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.l85a2.kick = {
+			standing = {
+				0.8,
+				1.1,
+				-1.2,
+				1.2
+			}
+		}
+		self.l85a2.kick.crouching = self.l85a2.kick.standing
+		self.l85a2.kick.steelsight = self.l85a2.kick.standing
+		
+		self.l85a2.stats = {
+			zoom = 1,
+			total_ammo_mod = 21,
+			damage = 58,
+			alert_size = 8,
+			spread = 17,
+			spread_moving = 15,
+			recoil = 16,
+			value = 9,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 12,
+			concealment = 16
+		}
+		self.l85a2.stats_modifiers = {
+			damage = 1
+		}
+		
+		--Clarion Rifle
+		self.famas.FIRE_MODE = "auto"
+		self.famas.fire_mode_data = {
+			fire_rate = 0.06
+		}
+		self.famas.CAN_TOGGLE_FIREMODE = true
+		self.famas.auto = {
+			fire_rate = 0.06
+		}
+		self.famas.timers = {
+			reload_not_empty = 2.72,
+			reload_empty = 3.78,
+			unequip = 0.55,
+			equip = 0.6
+		}
+		
+		self.famas.CLIP_AMMO_MAX = 30
+		self.famas.NR_CLIPS_MAX = 8
+		self.famas.AMMO_MAX = self.famas.CLIP_AMMO_MAX * self.famas.NR_CLIPS_MAX
+		self.famas.AMMO_PICKUP = {
+			7.2,
+			13.2
+		}
+		
+		self.famas.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.famas.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.famas.kick.crouching = self.famas.kick.standing
+		self.famas.kick.steelsight = self.famas.kick.standing
+		
+		self.famas.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 41,
+			alert_size = 7,
+			spread = 10,
+			spread_moving = 8,
+			recoil = 18,
+			value = 4,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 10,
+			concealment = 24
+		}
+		self.famas.stats_modifiers = {
+			damage = 1
+		}
+		
+		--Lion's Roar aka BEST GUN
+		self.vhs.FIRE_MODE = "auto"
+		self.vhs.fire_mode_data = {
+			fire_rate = 0.07
+		}
+		self.vhs.CAN_TOGGLE_FIREMODE = true
+		self.vhs.auto = {
+			fire_rate = 0.07
+		}
+		self.vhs.timers = {
+			reload_not_empty = 3.2,
+			reload_empty = 4.75,
+			unequip = 0.6,
+			equip = 0.6
+		}
+		
+		self.vhs.CLIP_AMMO_MAX = 30
+		self.vhs.NR_CLIPS_MAX = 5
+		self.vhs.AMMO_MAX = self.vhs.CLIP_AMMO_MAX * self.vhs.NR_CLIPS_MAX
+		self.vhs.AMMO_PICKUP = {
+			4.50,
+			8.25
+		}
+		
+		self.vhs.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.vhs.kick = {
+			standing = {
+				0.6,
+				0.8,
+				-1,
+				1
+			}
+		}
+		self.vhs.kick.crouching = self.vhs.kick.standing
+		self.vhs.kick.steelsight = self.vhs.kick.standing
+		
+		self.vhs.stats = {
+			zoom = 1,
+			total_ammo_mod = 21,
+			damage = 58,
+			alert_size = 8,
+			spread = 16,
+			spread_moving = 15,
+			recoil = 16,
+			value = 9,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 12,
+			concealment = 17
+		}
+		self.vhs.stats_modifiers = {
+			damage = 1
+		}
+		
+		--Valkyria Rifle
+		self.asval.FIRE_MODE = "auto"
+		self.asval.fire_mode_data = {
+			fire_rate = 0.067
+		}
+		self.asval.CAN_TOGGLE_FIREMODE = true
+		self.asval.auto = {
+			fire_rate = 0.067
+		}
+		self.asval.timers = {
+			reload_not_empty = 2.6,
+			reload_empty = 3.7,
+			unequip = 0.5,
+			equip = 0.5
+		}
+		
+		self.asval.CLIP_AMMO_MAX = 20
+		self.asval.NR_CLIPS_MAX = 11
+		self.asval.AMMO_MAX = self.asval.CLIP_AMMO_MAX * self.asval.NR_CLIPS_MAX
+		self.asval.AMMO_PICKUP = {
+			6.6,
+			12.1
+		}
+		
+		self.asval.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.asval.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.asval.kick.crouching = self.asval.kick.standing
+		self.asval.kick.steelsight = self.asval.kick.standing
+		
+		--Gecko 7.62
+		self.galil.FIRE_MODE = "auto"
+		self.galil.fire_mode_data = {
+			fire_rate = 0.071
+		}
+		self.galil.CAN_TOGGLE_FIREMODE = true
+		self.galil.auto = {
+			fire_rate = 0.071
+		}
+		self.galil.timers = {
+			reload_not_empty = 3,
+			reload_empty = 4.2,
+			unequip = 0.6,
+			equip = 0.6
+		}
+		
+		self.galil.CLIP_AMMO_MAX = 30
+		self.galil.NR_CLIPS_MAX = 5
+		self.galil.AMMO_MAX = self.galil.CLIP_AMMO_MAX * self.galil.NR_CLIPS_MAX
+		self.galil.AMMO_PICKUP = {
+			4.50,
+			8.25
+		}
+		
+		self.galil.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.galil.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.galil.kick.crouching = self.galil.kick.standing
+		self.galil.kick.steelsight = self.galil.kick.standing
+		
+		self.galil.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 57,
+			alert_size = 7,
+			spread = 13,
+			spread_moving = 10,
+			recoil = 18,
+			value = 4,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 7,
+			concealment = 15
+		}
+		self.galil.stats_modifiers = {
+			damage = 1
+		}
+		
+		--Little Friend RIFLE
+		self.contraband.FIRE_MODE = "single"
+		self.contraband.fire_mode_data = {
+			fire_rate = 0.098
+		}
+		self.contraband.CAN_TOGGLE_FIREMODE = true
+		self.contraband.auto = {
+			fire_rate = 0.098
+		}
+		self.contraband.timers = {
+			reload_not_empty = 2.55,
+			reload_empty = 3.2,
+			unequip = 0.6,
+			equip = 0.5
+		}
+		
+		self.contraband.CLIP_AMMO_MAX = 20
+		self.contraband.NR_CLIPS_MAX = 2
+		self.contraband.AMMO_MAX = self.contraband.CLIP_AMMO_MAX * self.contraband.NR_CLIPS_MAX
+		self.contraband.AMMO_PICKUP = {
+			0.20,
+			0.60
+		}
+		
+		self.contraband.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.contraband.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.contraband.kick.crouching = self.contraband.kick.standing
+		self.contraband.kick.steelsight = self.contraband.kick.standing
+		
+		self.contraband.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 160,
+			alert_size = 7,
+			spread = 19,
+			spread_moving = 15,
+			recoil = 12,
+			value = 9,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 8,
+			concealment = 8
+		}
+		self.contraband.stats_modifiers = {
+			damage = 1
+		}
+		
+		--Little Friend GRENADE LAUNCHER
+		self.contraband_m203.FIRE_MODE = "single"
+		self.contraband_m203.fire_mode_data = {
+			fire_rate = 0.75
+		}
+		self.contraband_m203.single = {
+			fire_rate = 0.75
+		}
+		self.contraband_m203.timers = {
+			reload_not_empty = 2.45,
+			reload_empty = 2.45,
+			unequip = 0.6,
+			equip = 0.6,
+			equip_underbarrel = 0.4,
+			unequip_underbarrel = 0.4
+		}
+		
+		self.contraband_m203.CLIP_AMMO_MAX = 1
+		self.contraband_m203.NR_CLIPS_MAX = 3
+		self.contraband_m203.AMMO_MAX = self.contraband_m203.CLIP_AMMO_MAX * self.contraband_m203.NR_CLIPS_MAX
+		self.contraband_m203.AMMO_PICKUP = {
+			0.1,
+			0.7
+		}
+		
+		self.contraband_m203.spread = {
+			standing = self.r870.spread.standing,
+			crouching = self.r870.spread.crouching,
+			steelsight = self.r870.spread.steelsight,
+			moving_standing = self.r870.spread.moving_standing,
+			moving_crouching = self.r870.spread.moving_crouching,
+			moving_steelsight = self.r870.spread.moving_steelsight
+		}
+		self.contraband_m203.kick = {
+			standing = {
+				2.9,
+				3,
+				-0.5,
+				0.5
+			}
+		}
+		self.contraband_m203.kick.crouching = self.contraband_m203.kick.standing
+		self.contraband_m203.kick.steelsight = self.contraband_m203.kick.standing
+		
+		self.contraband_m203.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 960, --does not actually matter, projectile damage is defined elsewhere
+			alert_size = 7,
+			spread = 25,
+			spread_moving = 6,
+			recoil = 25,
+			value = 1,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 2,
+			concealment = 18 --doesn't matter, not used
+		}
+		self.contraband_m203.stats_modifiers = {
+			damage = 10 --does not actually matter, projectile damage is defined elsewhere
+		}
+		
+		--Falcon Rifle
+		self.fal.FIRE_MODE = "auto"
+		self.fal.fire_mode_data = {
+			fire_rate = 0.086
+		}
+		self.fal.CAN_TOGGLE_FIREMODE = true
+		self.fal.auto = {
+			fire_rate = 0.086
+		}
+		self.fal.timers = {
+			reload_not_empty = 2.2,
+			reload_empty = 3.28,
+			unequip = 0.6,
+			equip = 0.6
+		}
+		
+		self.fal.CLIP_AMMO_MAX = 20
+		self.fal.NR_CLIPS_MAX = 5
+		self.fal.AMMO_MAX = self.fal.CLIP_AMMO_MAX * self.fal.NR_CLIPS_MAX
+		self.fal.AMMO_PICKUP = {
+			1.00,
+			3.50
+		}
+		
+		self.fal.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.fal.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.fal.kick.crouching = self.fal.kick.standing
+		self.fal.kick.steelsight = self.fal.kick.standing
+		
+		self.fal.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 98,
+			alert_size = 7,
+			spread = 18,
+			spread_moving = 16,
+			recoil = 12,
+			value = 4,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 8,
+			concealment = 10
+		}
+		self.fal.stats_modifiers = {
+			damage = 1
+		}
+		
+		--Gewehr 3
+		self.g3.FIRE_MODE = "auto"
+		self.g3.fire_mode_data = {
+			fire_rate = 0.092
+		}
+		self.g3.CAN_TOGGLE_FIREMODE = true
+		self.g3.auto = {
+			fire_rate = 0.092
+		}
+		self.g3.timers = {
+			reload_not_empty = 1.4,
+			reload_empty = 2,
+			unequip = 0.6,
+			equip = 0.65
+		}
+		
+		self.g3.CLIP_AMMO_MAX = 20
+		self.g3.NR_CLIPS_MAX = 5
+		self.g3.AMMO_MAX = self.g3.CLIP_AMMO_MAX * self.g3.NR_CLIPS_MAX
+		self.g3.AMMO_PICKUP = {
+			1.00,
+			3.50
+		}
+		
+		self.g3.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.g3.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.g3.kick.crouching = self.g3.kick.standing
+		self.g3.kick.steelsight = self.g3.kick.standing
+		
+		self.g3.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 99,
+			alert_size = 7,
+			spread = 18,
+			spread_moving = 16,
+			recoil = 13,
+			value = 4,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 6,
+			concealment = 12
+		}
+		self.g3.stats_modifiers = {
+			damage = 1
+		}
+		
+		--Golden AK 7.62
+		self.akm_gold.FIRE_MODE = "auto"
+		self.akm_gold.fire_mode_data = {
+			fire_rate = 0.107
+		}
+		self.akm_gold.CAN_TOGGLE_FIREMODE = true
+		self.akm_gold.auto = {
+			fire_rate = 0.107
+		}
+		self.akm_gold.timers = {
+			reload_not_empty = 2.8,
+			reload_empty = 3.87,
+			unequip = 0.5,
+			equip = 0.5
+		}
+		
+		self.akm_gold.CLIP_AMMO_MAX = 30
+		self.akm_gold.NR_CLIPS_MAX = 3
+		self.akm_gold.AMMO_MAX = self.akm_gold.CLIP_AMMO_MAX * self.akm_gold.NR_CLIPS_MAX
+		self.akm_gold.AMMO_PICKUP = {
+			0.90,
+			3.15
+		}
+		
+		self.akm_gold.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.akm_gold.kick = {
+			standing = self.new_m4.kick.standing
+		}
+		self.akm_gold.kick.crouching = self.akm_gold.kick.standing
+		self.akm_gold.kick.steelsight = self.akm_gold.kick.standing
+		
+		self.akm_gold.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 97,
+			alert_size = 7,
+			spread = 16,
+			spread_moving = 14,
+			recoil = 12,
+			value = 1,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 8,
+			concealment = 11
+		}
+		self.akm_gold.stats_modifiers = {
+			damage = 1
+		}
+	
+		--Rifles end here.
+		
 		--Pistols begin here.
 		
 		--Chimano 88
@@ -5038,5 +6562,326 @@ Hooks:PostHook(WeaponTweakData, "init", "vox_wep", function(self, tweak_data)
 		self.judge.damage_far = 3000
 		self.judge.rays = 12
 		
+		--Shotguns end here
+		
+		--LMGs start here.
+		
+		--KSP 58
+		self.par.FIRE_MODE = "auto"
+		self.par.fire_mode_data = {
+			fire_rate = 0.066
+		}
+		self.par.CAN_TOGGLE_FIREMODE = false
+		self.par.auto = {
+			fire_rate = 0.076
+		}
+		self.par.timers = {
+			reload_not_empty = 6.5,
+			reload_empty = 6.5,
+			unequip = 0.9,
+			equip = 0.9,
+			deploy_bipod = 0.85
+		}
+		
+		self.par.CLIP_AMMO_MAX = 200
+		self.par.NR_CLIPS_MAX = 2
+		self.par.AMMO_MAX = self.par.CLIP_AMMO_MAX * self.par.NR_CLIPS_MAX
+		self.par.AMMO_PICKUP = {
+			12,
+			22
+		}
+		
+		self.par.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight,
+			bipod = weapon_data.default_bipod_spread
+		}
+		self.par.kick = {
+			standing = {
+				-0.2,
+				0.8,
+				-1,
+				1.4
+			}
+		}
+		self.par.kick.crouching = self.par.kick.standing
+		self.par.kick.steelsight = self.par.kick.standing
+		
+		self.par.stats = {
+			zoom = 1,
+			total_ammo_mod = 21,
+			damage = 80,
+			alert_size = 8,
+			spread = 14,
+			spread_moving = 8,
+			recoil = 8,
+			value = 9,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 4,
+			concealment = 1
+		}
+		self.par.stats_modifiers = {
+			damage = 1
+		}
+		
+		--RPK
+		self.rpk.FIRE_MODE = "auto"
+		self.rpk.fire_mode_data = {
+			fire_rate = 0.08
+		}
+		self.rpk.CAN_TOGGLE_FIREMODE = false
+		self.rpk.auto = {
+			fire_rate = 0.08
+		}
+		self.rpk.timers = {
+			reload_not_empty = 3.4,
+			reload_empty = 4.56,
+			unequip = 0.9,
+			equip = 0.9,
+			deploy_bipod = 1
+		}
+		
+		self.rpk.CLIP_AMMO_MAX = 100
+		self.rpk.NR_CLIPS_MAX = 3
+		self.rpk.AMMO_MAX = self.rpk.CLIP_AMMO_MAX * self.rpk.NR_CLIPS_MAX
+		self.rpk.AMMO_PICKUP = {
+			3.00,
+			10.50
+		}
+		
+		self.rpk.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight,
+			bipod = weapon_data.default_bipod_spread
+		}
+		self.rpk.kick = {
+			standing = {
+				-0.2,
+				0.8,
+				-1,
+				1.4
+			}
+		}
+		self.rpk.kick.crouching = self.rpk.kick.standing
+		self.rpk.kick.steelsight = self.rpk.kick.standing
+		
+		self.rpk.stats = {
+			zoom = 2,
+			total_ammo_mod = 21,
+			damage = 120,
+			alert_size = 7,
+			spread = 8,
+			spread_moving = 6,
+			recoil = 3,
+			value = 9,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 8,
+			concealment = 1
+		}
+		self.rpk.stats_modifiers = {
+			damage = 1
+		}
+		
+		--KSP (Again!?)
+		self.m249.FIRE_MODE = "auto"
+		self.m249.fire_mode_data = {
+			fire_rate = 0.066
+		}
+		self.m249.CAN_TOGGLE_FIREMODE = false
+		self.m249.auto = {
+			fire_rate = 0.076
+		}
+		self.m249.timers = {
+			reload_not_empty = 5.62,
+			reload_empty = 5.62,
+			unequip = 0.9,
+			equip = 0.9,
+			deploy_bipod = 1
+		}
+		
+		self.m249.CLIP_AMMO_MAX = 200
+		self.m249.NR_CLIPS_MAX = 2
+		self.m249.AMMO_MAX = self.m249.CLIP_AMMO_MAX * self.m249.NR_CLIPS_MAX
+		self.m249.AMMO_PICKUP = {
+			12,
+			22
+		}
+		
+		self.m249.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight,
+			bipod = weapon_data.default_bipod_spread
+		}
+		self.m249.kick = {
+			standing = {
+				-0.2,
+				0.8,
+				-1,
+				1.4
+			}
+		}
+		self.m249.kick.crouching = self.m249.kick.standing
+		self.m249.kick.steelsight = self.m249.kick.standing
+		
+		self.m249.stats = {
+			zoom = 1,
+			total_ammo_mod = 21,
+			damage = 80,
+			alert_size = 8,
+			spread = 13,
+			spread_moving = 8,
+			recoil = 8,
+			value = 9,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 4,
+			concealment = 1
+		}
+		self.m249.stats_modifiers = {
+			damage = 1
+		}
+		
+		--Buzzsaw 42
+		self.mg42.FIRE_MODE = "auto"
+		self.mg42.fire_mode_data = {
+			fire_rate = 0.05
+		}
+		self.mg42.CAN_TOGGLE_FIREMODE = false
+		self.mg42.auto = {
+			fire_rate = 0.05
+		}
+		self.mg42.timers = {
+			reload_not_empty = 6.5,
+			reload_empty = 6.5,
+			unequip = 0.9,
+			equip = 0.9,
+			deploy_bipod = 1
+		}
+		
+		self.mg42.CLIP_AMMO_MAX = 150
+		self.mg42.NR_CLIPS_MAX = 3
+		self.mg42.AMMO_MAX = self.mg42.CLIP_AMMO_MAX * self.mg42.NR_CLIPS_MAX
+		self.mg42.AMMO_PICKUP = {
+			13.50,
+			24.75
+		}
+		
+		self.mg42.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight,
+			bipod = weapon_data.default_bipod_spread
+		}
+		self.mg42.kick = {
+			standing = {
+				-0.2,
+				0.8,
+				-1,
+				1.4
+			}
+		}
+		self.mg42.kick.crouching = self.mg42.kick.standing
+		self.mg42.kick.steelsight = self.mg42.kick.standing
+		
+		self.mg42.stats = {
+			zoom = 1,
+			total_ammo_mod = 21,
+			damage = 80,
+			alert_size = 8,
+			spread = 13,
+			spread_moving = 8,
+			recoil = 8,
+			value = 9,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 4,
+			concealment = 1
+		}
+		self.mg42.stats_modifiers = {
+			damage = 1
+		}
+		
+		--Brenner 21
+		self.hk21.FIRE_MODE = "auto"
+		self.hk21.fire_mode_data = {
+			fire_rate = 0.083
+		}
+		self.hk21.CAN_TOGGLE_FIREMODE = false
+		self.hk21.auto = {
+			fire_rate = 0.083
+		}
+		self.hk21.timers = {
+			reload_not_empty = 4.65,
+			reload_empty = 6.7,
+			unequip = 0.9,
+			equip = 0.9,
+			deploy_bipod = 1
+		}
+		
+		self.hk21.CLIP_AMMO_MAX = 150
+		self.hk21.NR_CLIPS_MAX = 2
+		self.hk21.AMMO_MAX = self.hk21.CLIP_AMMO_MAX * self.hk21.NR_CLIPS_MAX
+		self.hk21.AMMO_PICKUP = {
+			3.00,
+			10.50
+		}
+		
+		self.hk21.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight,
+			bipod = weapon_data.default_bipod_spread
+		}
+		self.hk21.kick = {
+			standing = {
+				-0.2,
+				0.8,
+				-0.8,
+				1
+			}
+		}
+		self.hk21.kick.crouching = self.hk21.kick.standing
+		self.hk21.kick.steelsight = self.hk21.kick.standing
+		
+		self.hk21.stats = {
+			zoom = 3,
+			total_ammo_mod = 21,
+			damage = 120,
+			alert_size = 8,
+			spread = 10,
+			spread_moving = 10,
+			recoil = 3,
+			value = 9,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 2,
+			concealment = 1
+		}
+		self.hk21.stats_modifiers = {
+			damage = 1
+		}
+		
+		--LMGs end here.
+	
 	end
 end)
