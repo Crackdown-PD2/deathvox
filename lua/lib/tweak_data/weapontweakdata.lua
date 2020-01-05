@@ -1427,7 +1427,7 @@ end
 
 Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function(self, tweak_data)
 	
-	local dont = true
+	--local dont = true
 	
 	if dont then
 		--Don't worry about all of this.
