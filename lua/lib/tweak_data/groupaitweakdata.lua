@@ -17,7 +17,7 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 2000,
 		max_nr = 40,
 		duration = {3, 4},
-		interval = {1.5, 2},
+		interval = {4, 6},
 		group_min = 0,
 		queue = "g90"
 	}
@@ -25,7 +25,7 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 4000,
 		max_nr = 4,
 		duration = {1, 1},
-		interval = {6.5, 10},
+		interval = {6, 10},
 		group_min = 0,
 		queue = "g90"
 	}
@@ -57,9 +57,25 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 2000,
 		max_nr = 40,
 		duration = {3, 4},
-		interval = {4, 8},
+		interval = {3, 6},
 		group_min = 0,
 		queue = "g90"
+	}
+	self.enemy_chatter.assaultpanicsuppressed1 = {
+		radius = 2000,
+		max_nr = 40,
+		duration = {3, 4},
+		interval = {3, 6},
+		group_min = 0,
+		queue = "hlp"
+	}
+	self.enemy_chatter.assaultpanicsuppressed2 = {
+		radius = 2000,
+	    max_nr = 40,
+	    duration = {3, 4},
+		interval = {3, 6},
+	    group_min = 0,
+	    queue = "lk3b"
 	}
 	self.enemy_chatter.open_fire = {
 		radius = 2000,
@@ -81,32 +97,96 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 2000,
 		max_nr = 5,
 		duration = {2, 4},
-		interval = {2, 3},
+		interval = {0.5, 3},
 		group_min = 0,
-		queue = "r01"
+		queue = "rdy"
 	}
 	self.enemy_chatter.contact = {
 		radius = 2000,
 		max_nr = 20,
 		duration = {1, 3},
-		interval = {2, 5},
+		interval = {4, 6},
 		group_min = 0,
 		queue = "c01"
 	}
+	self.enemy_chatter.cloakercontact = {
+		radius = 1500,
+		max_nr = 4,
+		duration = {1, 1},
+		interval = {2, 4},
+		group_min = 0,
+		queue = "c01x_plu"
+	}
+	self.enemy_chatter.cloakeravoidance = {
+		radius = 4000,
+		max_nr = 4,
+		duration = {1, 1},
+		interval = {2, 4},
+		group_min = 0,
+		queue = "m01x_plu"
+	}
 	self.enemy_chatter.controlpanic = {
 		radius = 2000,
-	    max_nr = 1,
-	    duration = {60, 60},
-	    interval = {2, 2.5},
-	    group_min = 3,
+	    max_nr = 40,
+	    duration = {1, 1},
+	    interval = {2, 4.5},
+	    group_min = 1,
 	    queue = "g90"
+	}
+	self.enemy_chatter.sabotagepower = {
+		radius = 2000,
+	    max_nr = 10,
+	    duration = {1, 1},
+	    interval = {10, 20},
+	    group_min = 1,
+	    queue = "e03"
+	}
+	self.enemy_chatter.sabotagedrill = {
+		radius = 2000,
+	    max_nr = 10,
+	    duration = {1, 1},
+	    interval = {10, 20},
+	    group_min = 1,
+	    queue = "e01"
+	}
+	self.enemy_chatter.sabotagegeneric = {
+		radius = 2000,
+	    max_nr = 10,
+	    duration = {1, 1},
+	    interval = {10, 20},
+	    group_min = 1,
+	    queue = "e04"
+	}
+	self.enemy_chatter.sabotagebags = {
+		radius = 2000,
+	    max_nr = 10,
+	    duration = {1, 1},
+	    interval = {10, 20},
+	    group_min = 1,
+	    queue = "l01"
+	}
+	self.enemy_chatter.hostagepanic1 = {
+		radius = 2000,
+	    max_nr = 40,
+	    duration = {1, 1},
+	    interval = {2, 4.5},
+	    group_min = 1,
+	    queue = "p01"
+	}
+	self.enemy_chatter.hostagepanic2 = {
+		radius = 2000,
+	    max_nr = 40,
+	    duration = {1, 1},
+	    interval = {2, 4.5},
+	    group_min = 1,
+	    queue = "p01"
 	}
 	self.enemy_chatter.clear = {
 		radius = 2000,
 	    max_nr = 1,
 	    duration = {60, 60},
-	    interval = {2, 2.5},
-	    group_min = 3,
+	    interval = {4, 5},
+	    group_min = 1,
 	    queue = "clr"
 	}
 	self.enemy_chatter.csalpha = {
@@ -193,7 +273,7 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 2000,
 		max_nr = 40,
 		duration = {2, 2},
-		interval = {0.75, 1},
+		interval = {3, 6},
 		group_min = 0,
 		queue = "mov"
 	}
@@ -201,7 +281,7 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 2000,
 		max_nr = 40,
 		duration = {2, 4},
-		interval = {0.75, 1.5},
+		interval = {3, 6},
 		group_min = 0,
 		queue = "pus"
 	}
@@ -217,7 +297,7 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 2000,
 		max_nr = 40,
 		duration = {2, 4},
-		interval = {2, 2.5},
+		interval = {2, 3},
 		group_min = 0,
 		queue = "t01"
 	}
@@ -225,7 +305,7 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 2000,
 		max_nr = 16,
 		duration = {2, 4},
-		interval = {0.75, 1.5},
+		interval = {1, 3.5},
 		group_min = 1,
 		queue = "rdy"
 	}
@@ -326,7 +406,7 @@ function GroupAITweakData:_init_chatter_data()
 		queue = "tsr"
 	}
 end
-	
+
 function GroupAITweakData:_init_unit_categories(difficulty_index)
 	old_unit_cat(self, difficulty_index)
 	local access_type_walk_only = {walk = true}

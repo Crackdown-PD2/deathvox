@@ -541,7 +541,6 @@ function CopLogicIdle._upd_stance_and_pose(data, my_data, objective)
 	end
 end
 
-
 function CopLogicIdle.queued_update(data)
 	local my_data = data.internal_data
 	local delay = data.logic._upd_enemy_detection(data)
@@ -652,3 +651,60 @@ function CopLogicIdle.on_new_objective(data, old_objective)
 		old_objective.fail_clbk(data.unit)
 	end
 end	
+
+function CopLogicIdle.on_alert(data, alert_data)
+	local alert_type = alert_data[1]
+	local alert_unit = alert_data[5]
+
+	if CopLogicBase._chk_alert_obstructed(data.unit:movement():m_head_pos(), alert_data) then
+		return
+	end
+
+	local was_cool = data.cool
+
+	if CopLogicBase.is_alert_aggressive(alert_type) then
+		data.unit:movement():set_cool(false, managers.groupai:state().analyse_giveaway(data.unit:base()._tweak_table, alert_data[5], alert_data))
+	end
+
+	if alert_unit and alive(alert_unit) and alert_unit:in_slot(data.enemy_slotmask) then
+		local att_obj_data, is_new = CopLogicBase.identify_attention_obj_instant(data, alert_unit:key())
+
+		if not att_obj_data then
+			return
+		end
+
+		if alert_type == "bullet" or alert_type == "aggression" or alert_type == "explosion" then
+			att_obj_data.alert_t = TimerManager:game():time()
+		end
+
+		local action_data = nil
+
+		--if is_new and (not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.stand) and AIAttentionObject.REACT_SURPRISED <= att_obj_data.reaction and data.unit:anim_data().idle and not data.unit:movement():chk_action_forbidden("walk") then
+		--	action_data = {
+		--		variant = "surprised",
+		--		body_part = 1,
+		--		type = "act"
+		--	}
+
+		--	data.unit:brain():action_request(action_data)
+		--end
+
+		if not action_data and alert_type == "bullet" and data.logic.should_duck_on_alert(data, alert_data) then
+			action_data = CopLogicAttack._chk_request_action_crouch(data)
+		end
+
+		if att_obj_data.criminal_record then
+			managers.groupai:state():criminal_spotted(alert_unit)
+
+			if alert_type == "bullet" or alert_type == "aggression" or alert_type == "explosion" then
+				managers.groupai:state():report_aggression(alert_unit)
+			end
+		end
+	elseif was_cool and (alert_type == "footstep" or alert_type == "bullet" or alert_type == "aggression" or alert_type == "explosion" or alert_type == "vo_cbt" or alert_type == "vo_intimidate" or alert_type == "vo_distress") then
+		local attention_obj = alert_unit and alert_unit:brain() and alert_unit:brain()._logic_data.attention_obj
+
+		if attention_obj then
+			slot6, slot7 = CopLogicBase.identify_attention_obj_instant(data, attention_obj.u_key)
+		end
+	end
+end

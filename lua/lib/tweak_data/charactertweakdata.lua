@@ -290,6 +290,11 @@ function CharacterTweakData:_presets(tweak_data)
 		medic = {
 			aggressive = true,
 			contact = true
+		},
+		spooc = {
+			cloakercontact = true,
+			go_go = true, --only used for russian cloaker
+			cloakeravoidance = true --only used for russian cloaker
 		}
 	}
 	presets.health_tables = {
@@ -2927,6 +2932,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker.is_special_unit = "spooc"
 	self.deathvox_cloaker.access = "any"
 	self.deathvox_cloaker.no_retreat = false
+	self.deathvox_cloaker.chatter = presets.enemy_chatter.spooc
 	self.deathvox_cloaker.spooc_attack_use_smoke_chance = 0
 
 	table.insert(self._enemy_list, "deathvox_cloaker") 

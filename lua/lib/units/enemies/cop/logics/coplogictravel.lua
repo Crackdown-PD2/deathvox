@@ -4,11 +4,14 @@ local tmp_vec2 = Vector3()
 function CopLogicTravel.enter(data, new_logic_name, enter_params)
 	CopLogicBase.enter(data, new_logic_name, enter_params)
 	data.unit:brain():cancel_all_pathing_searches()
-
+	
 	local old_internal_data = data.internal_data
-	local my_data = {unit = data.unit}
+	local my_data = {
+		unit = data.unit
+	}
+	data.internal_data = my_data
 	local is_cool = data.unit:movement():cool()
-
+	
 	if is_cool then
 		my_data.detection = data.char_tweak.detection.ntl
 	else
@@ -37,8 +40,14 @@ function CopLogicTravel.enter(data, new_logic_name, enter_params)
 	if data.char_tweak.announce_incomming then
 		my_data.announce_t = data.t + 2
 	end
-
-	data.internal_data = my_data
+	
+	local prefix = data.unit:sound():chk_voice_prefix() or "empty"
+	local is_radio_cop = prefix == "l1d_" or prefix == "l2d_" or prefix == "l3d_" or prefix == "l4d_" or prefix == "l5d_"
+	
+	if prefix ~= "empty" and is_radio_cop then
+		my_data.radio_voice = true
+	end
+	
 	local key_str = tostring(data.key)
 	my_data.upd_task_key = "CopLogicTravel.queued_update" .. key_str
 
@@ -89,8 +98,7 @@ function CopLogicTravel.enter(data, new_logic_name, enter_params)
 			my_data.path_is_precise = true
 			my_data.path_ahead = true
 		elseif path_style == "coarse" then
-			my_data.path_safely = true
-			my_data.path_ahead = nil
+			my_data.path_ahead = true
 			local nav_manager = managers.navigation
 			local f_get_nav_seg = nav_manager.get_nav_seg_from_pos
 			local start_seg = data.unit:movement():nav_tracker():nav_segment()
@@ -134,19 +142,25 @@ function CopLogicTravel.enter(data, new_logic_name, enter_params)
 	end
 
 	if is_cool then
-		data.unit:brain():set_attention_settings({peaceful = true})
+		data.unit:brain():set_attention_settings({
+			peaceful = true
+		})
 	else
-		data.unit:brain():set_attention_settings({cbt = true})
+		data.unit:brain():set_attention_settings({
+			cbt = true
+		})
 	end
 
 	my_data.attitude = data.objective.attitude or "avoid"
 	my_data.weapon_range = data.char_tweak.weapon[data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage].range
+	
 	if not data.team then
 		data.unit:movement():set_team(managers.groupai:state()._teams["law1"])
 		if data.team then
 			
 		end
 	end
+	
 	my_data.path_safely = nil
 	my_data.path_ahead = true
 
@@ -176,21 +190,60 @@ function CopLogicTravel.queued_update(data)
     	delay = 0.35
     end
 	
-	local cant_say_clear = data.attention_obj and data.attention_obj.reaction >= AIAttentionObject.REACT_COMBAT and data.attention_obj.verified_t and data.attention_obj.verified_t < 5
+	local level = Global.level_data and Global.level_data.level_id
+	local hostage_count = managers.groupai:state():get_hostage_count_for_chatter() --check current hostage count
+	local chosen_panic_chatter = "controlpanic" --set default generic assault break chatter
 	
-    if my_data.coarse_path and not data.unit:base():has_tag("special") and not data.is_converted then
-    	if data.char_tweak.chatter.clear and data.unit:anim_data().idle and not cant_say_clear then
+	if hostage_count > 0 and not managers.groupai:state():chk_assault_active_atm() then --make sure the hostage count is actually above zero before replacing any of the lines
+		if hostage_count > 3 then  -- hostage count needs to be above 3
+			if math.random() < 0.4 then --40% chance
+				chosen_panic_chatter = "controlpanic"
+			else
+				chosen_panic_chatter = "hostagepanic2" --more panicky "GET THOSE HOSTAGES OUT RIGHT NOW!!!" line for when theres too many hostages on the map
+			end
+		else
+			if math.random() < 0.4 then
+				chosen_panic_chatter = "controlpanic"
+			else
+				chosen_panic_chatter = "hostagepanic1" --less panicky "Delay the assault until those hostages are out." line
+			end
+		end
+	end
+	
+	local chosen_sabotage_chatter = "sabotagegeneric" --set default sabotage chatter for variety's sake
+	local skirmish_map = level == "skm_mus" or level == "skm_red2" or level == "skm_run" or level == "skm_watchdogs_stage2" --these shouldnt play on holdout
+	local ignore_radio_rules = nil
+	
+	if level == "branchbank" then --bank heist
+		chosen_sabotage_chatter = "sabotagedrill"
+	elseif level == "nmh" or level == "man" or level == "framing_frame_3" or level == "rat" or level == "election_day_1" then --various heists where turning off the power is a frequent occurence
+		chosen_sabotage_chatter = "sabotagepower"
+	elseif level == "chill_combat" or level == "watchdogs_1" or level == "watchdogs_1_night" or level == "watchdogs_2" or level == "watchdogs_2_day" or level == "cane" then
+		chosen_sabotage_chatter = "sabotagebags"
+		ignore_radio_rules = true
+	else
+		chosen_sabotage_chatter = "sabotagegeneric" --if none of these levels are the current one, use a generic "Break their gear!" line
+	end
+	
+	local cant_say_clear = data.attention_obj and data.attention_obj.reaction >= AIAttentionObject.REACT_COMBAT and data.attention_obj.verified_t and data.attention_obj.verified_t - data.t < 5
+	
+    if not data.unit:base():has_tag("special") then
+    	if data.char_tweak.chatter.clear and not cant_say_clear and not data.is_converted then
 			if data.unit:movement():cool() then
 				managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, "clear_whisper" )
 			else
-				local clearchk = math.random(1, 100)
-				local say_clear = 50
-				if clearchk <= say_clear then
+				local clearchk = math.random(0, 90)
+				local say_clear = 30
+				if clearchk > 60 then
 					managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, "clear" )
-				else
-					if not managers.groupai:state():chk_assault_active_atm() then
-						managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, "controlpanic" )
+				elseif clearchk > 30 then
+					if not skirmish_map and my_data.radio_voice or not skirmish_map and ignore_radio_rules then
+						managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, chosen_sabotage_chatter )
+					else
+						managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, chosen_panic_chatter )
 					end
+				else
+					managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, chosen_panic_chatter )
 				end
 			end
 		end
@@ -206,27 +259,30 @@ function CopLogicTravel.queued_update(data)
 	--mid-assault panic for cops based on alerts instead of opening fire, since its supposed to be generic action lines instead of for opening fire and such
 	--I'm adding some randomness to these since the delays in groupaitweakdata went a bit overboard but also arent able to really discern things proper
 	
-	if data.char_tweak and data.char_tweak.chatter and data.char_tweak.chatter.enemyidlepanic then
-		if managers.groupai:state():chk_assault_active_atm() and not data.is_converted then
+	if data.char_tweak and data.char_tweak.chatter and data.char_tweak.chatter.enemyidlepanic and not data.is_converted then
+		if managers.groupai:state():chk_assault_active_atm() or not data.unit:base():has_tag("law") then
 			if data.attention_obj and data.attention_obj.reaction >= AIAttentionObject.REACT_COMBAT and data.attention_obj.alert_t and data.t - data.attention_obj.alert_t < 1 and data.attention_obj.dis <= 3000 then
-				if data.attention_obj.verified and data.attention_obj.dis <= 500 or data.is_suppressed then
+				if data.attention_obj.verified and data.attention_obj.dis <= 500 or data.is_suppressed and data.attention_obj.verified then
 					local roll = math.random(1, 100)
 					local chance_suppanic = 30
 					
 					if roll <= chance_suppanic then
 						local nroll = math.random(1, 100)
 						local chance_help = 50
-						
-						if nroll <= chance_help then
-							data.unit:sound():say("hlp", true)
+						if roll <= chance_suppanic or not data.unit:base():has_tag("law") then
+							managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, "assaultpanicsuppressed1" )
 						else
-							data.unit:sound():say("lk3b	", true)
+							managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, "assaultpanicsuppressed2" )
 						end
 					else
 						managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, "assaultpanic" )
 					end
 				else
-					managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, "assaultpanic" )
+					if math.random() < 0.1 and data.unit:base():has_tag("law") then
+						managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, chosen_sabotage_chatter )
+					else
+						managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, "assaultpanic" )
+					end
 				end
 			end
 		end
@@ -682,7 +738,6 @@ function CopLogicTravel._chk_begin_advance(data, my_data)
 
 	local objective = data.objective
 	local haste = nil
-	
 	local pose = nil
 	
 	local mook_units = {
@@ -691,9 +746,7 @@ function CopLogicTravel._chk_begin_advance(data, my_data)
 		"cop",
 		"cop_scared",
 		"cop_female",
-		"heavy_swat_sniper",
 		"gensec",
-		"shield",
 		"fbi",
 		"swat",
 		"heavy_swat",
@@ -707,6 +760,7 @@ function CopLogicTravel._chk_begin_advance(data, my_data)
 		"bolivian_indoors",
 		"medic",
 		"taser",
+		"shield",
 		"deathvox_guard",
 		"deathvox_heavyar",
 		"deathvox_heavyshot",
@@ -717,7 +771,6 @@ function CopLogicTravel._chk_begin_advance(data, my_data)
 		"deathvox_taser",
 		"deathvox_cloaker",
 		"deathvox_sniper_assault",
-		"deathvox_medicdozer",
 		"deathvox_grenadier"
 	}
 	local is_mook = nil
@@ -729,22 +782,24 @@ function CopLogicTravel._chk_begin_advance(data, my_data)
 	
 	--this is a mess, but it should keep enemy movement tacticool overall, by having them prefer slower apporoaches at close ranges
 	
+	local pose_chk = not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.crouch
 	local enemyseeninlast4secs = data.attention_obj and data.attention_obj.verified_t and data.t - data.attention_obj.verified_t < 4
 	local enemy_seen_range_bonus = enemyseeninlast4secs and 500 or 0
+	local enemy_has_height_difference = data.attention_obj and AIAttentionObject.REACT_COMBAT >= data.attention_obj.reaction and data.attention_obj.dis >= 1200 and data.attention_obj.verified_t and data.t - data.attention_obj.verified_t < 4 and math.abs(data.m_pos.z - data.attention_obj.m_pos.z) > 250
+	local height_difference_penalty = data.attention_obj and math.abs(data.m_pos.z - data.attention_obj.m_pos.z) < 250 and 400 or 0
 	
 	if data.unit:movement():cool() then
-		haste = "walk"
+			haste = "walk"
 	elseif data.is_converted or data.unit:in_slot(16) or data.attention_obj and data.attention_obj.dis > 10000 then
 		haste = "run"
 	elseif data.attention_obj and AIAttentionObject.REACT_COMBAT >= data.attention_obj.reaction and data.attention_obj.dis > 1200 + enemy_seen_range_bonus and not data.unit:movement():cool() and not managers.groupai:state():whisper_mode() then
 		haste = "run"
-	elseif data.attention_obj and AIAttentionObject.REACT_COMBAT >= data.attention_obj.reaction and data.attention_obj.dis <= 1200 + enemy_seen_range_bonus - (math.abs(data.m_pos.z - data.attention_obj.m_pos.z) < 250 and 400 or 0) and is_mook and data.tactics and not data.tactics.hitnrun then
+	elseif data.attention_obj and AIAttentionObject.REACT_COMBAT >= data.attention_obj.reaction and data.attention_obj.dis <= 1200 + enemy_seen_range_bonus - height_difference_penalty and is_mook and data.tactics and not data.tactics.hitnrun then
 		haste = "walk"
 	else
 		haste = "run"
 	end
-	
-	local enemy_has_height_difference = data.attention_obj and AIAttentionObject.REACT_COMBAT >= data.attention_obj.reaction and data.attention_obj.dis >= 1200 and data.attention_obj.verified_t and data.t - data.attention_obj.verified_t < 4 and math.abs(data.m_pos.z - data.attention_obj.m_pos.z) > 250
+
 	local should_crouch = nil
 
 	local end_rot = nil
@@ -757,38 +812,36 @@ function CopLogicTravel._chk_begin_advance(data, my_data)
 	
 	local crouch_roll = math.random(0.01, 1)
 	local stand_chance = nil
+	local enemy_visible15m_or_10m_chk = data.attention_obj and data.attention_obj.verified and data.attention_obj.dis <= 1500 or data.attention_obj and data.attention_obj.dis <= 1000
 	
 	if data.attention_obj and data.attention_obj.dis > 10000 or data.unit:in_slot(16) or data.is_converted then
 		stand_chance = 1
-		pose = "stand"
-		end_pose = "stand"
 	elseif data.attention_obj and AIAttentionObject.REACT_COMBAT >= data.attention_obj.reaction and data.attention_obj.dis > 2000 and is_mook then
 		stand_chance = 0.75
-	elseif enemy_has_height_difference and (not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.crouch) and is_mook then
+	elseif enemy_has_height_difference and enemy_visible15m_or_10m_chk and is_mook then
 		stand_chance = 0.25
-	elseif data.attention_obj and AIAttentionObject.REACT_COMBAT >= data.attention_obj.reaction and (data.attention_obj.verified and data.attention_obj.dis <= 1500 or data.attention_obj.dis <= 1000) and CopLogicTravel._chk_close_to_criminal(data, my_data) and data.tactics and data.tactics.flank and haste == "walk" and is_mook then
+	elseif data.attention_obj and AIAttentionObject.REACT_COMBAT >= data.attention_obj.reaction and enemy_visible15m_or_10m_chk and CopLogicTravel._chk_close_to_criminal(data, my_data) and data.tactics and data.tactics.flank and haste == "walk" and is_mook then
 		stand_chance = 0.25
-	elseif my_data.moving_to_cover and (not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.crouch) then
+	elseif my_data.moving_to_cover and pose_chk then
 		stand_chance = 0.5
 	else
-		stand_chance = 1
-		pose = "stand"
-		end_pose = "stand"
+		stand_chance = 0.5
 	end
 	
 	--randomize enemy crouching to make enemies feel less easy to aim at, the fact they're always crouching all over the place always bugged me, plus, they shouldn't need to crouch so often when you're at long distances from them
 	
 	if not data.unit:movement():cool() and not managers.groupai:state():whisper_mode() then
-		if stand_chance ~= 1 and crouch_roll > stand_chance and (not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.crouch) then
+		if stand_chance ~= 1 and crouch_roll > stand_chance and (not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.crouch) or data.char_tweak.allowed_poses and data.char_tweak.allowed_poses.crouch then
 			end_pose = "crouch"
 			pose = "crouch"
-			should_crouch = true
+		else
+			end_pose = "stand"
+			pose = "stand"
 		end
 	end
 	
 	if not pose then
 		pose = not data.char_tweak.crouch_move and "stand" or data.char_tweak.allowed_poses and not data.char_tweak.allowed_poses.stand and "crouch" or "stand"
-		end_pose = pose
 	end
 	
 	if not data.unit:anim_data()[pose] then

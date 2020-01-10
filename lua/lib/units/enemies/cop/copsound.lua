@@ -4,7 +4,6 @@ function CopSound:chk_voice_prefix()
 	end
 end
 
-
 Hooks:PostHook(CopSound, "say", "vox_say", function(self, sound_name, sync, skip_prefix, important, callback)
 
 	local full_sound = nil

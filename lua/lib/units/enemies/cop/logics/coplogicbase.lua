@@ -7,6 +7,7 @@ local mvec3_dis = mvector3.distance
 local mvec3_dis_sq = mvector3.distance_sq
 local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
+
 function CopLogicBase._evaluate_reason_to_surrender(data, my_data, aggressor_unit)
 	local surrender_tweak = data.char_tweak.surrender
 
@@ -274,7 +275,7 @@ function CopLogicBase._chk_nearly_visible_chk_needed(data, attention_info, u_key
 end
 
 function CopLogicBase.is_obstructed(data, objective, strictness, attention)
-	--bots should no longer get interrupted by objectives on a whim, and now cops are simply given the option of receiving new objectives rather than being FORCED into another objective which should make them feel less dumb
+	--bots should no longer get interrupted by objectives on a whim, now cops are simply given the option of receiving new objectives rather than being FORCED into another objective which should make them feel less dumb
 	local my_data = data.internal_data
 	attention = attention or data.attention_obj
 	local t = data.t
@@ -285,7 +286,7 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 	end
 		
 	
-	if objective.interrupt_suppression and data.is_suppressed then
+	if objective.interrupt_suppression and data.is_suppressed and not data.unit:in_slot(16) and not data.is_converted then
 		if my_data and my_data.next_allowed_obs_t and my_data.next_allowed_obs_t < t or not my_data.next_allowed_obs_t then
 			my_data.next_allowed_obs_t = data.t + math.random(2.5, 5)
 					
@@ -297,7 +298,7 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 
 	strictness = strictness or 0
 
-	if objective.interrupt_health and not data.unit:in_slot(16) then
+	if objective.interrupt_health and not data.unit:in_slot(16) and not data.is_converted then
 			local health_ratio = data.unit:character_damage():health_ratio()
 			local too_much_damage = health_ratio < 1 and health_ratio * (1 - strictness) < objective.interrupt_health
 			local is_dead = data.unit:character_damage():dead()
@@ -316,7 +317,7 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 		end
 	end
 
-	if objective.interrupt_dis and not data.unit:in_slot(16) then
+	if objective.interrupt_dis and not data.unit:in_slot(16) and not data.is_converted then
 		if attention and (AIAttentionObject.REACT_COMBAT <= attention.reaction or data.cool and AIAttentionObject.REACT_SURPRISED <= attention.reaction) then
 			if objective.interrupt_dis == -1 then 
 				if my_data and my_data.next_allowed_obs_t and my_data.next_allowed_obs_t < t or not my_data.next_allowed_obs_t then
@@ -360,7 +361,7 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 					end
 				end
 			end
-		elseif objective.interrupt_dis == -1 and not data.unit:movement():cool() and not data.unit:in_slot(16) then
+		elseif objective.interrupt_dis == -1 and not data.unit:movement():cool() and not data.unit:in_slot(16) and not data.is_converted then
 			if my_data and my_data.next_allowed_obs_t and my_data.next_allowed_obs_t < t or not my_data.next_allowed_obs_t then
 				my_data.next_allowed_obs_t = data.t + math.random(2.5, 5)
 				
