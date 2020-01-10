@@ -192,23 +192,26 @@ function TaserLogicAttack._chk_reaction_to_attention_object(data, attention_data
 	local reaction = CopLogicIdle._chk_reaction_to_attention_object(data, attention_data, stationary)
 	local tase_length = data.internal_data.tase_distance or 1500 --fix for better bots crash
 	local my_data = data.internal_data
+	local human_chk = attention_data.is_human_player
 	local is_valid_target = nil
 	
-	if attention_data.is_person and attention_data.unit:movement() and attention_data.unit:movement():is_taser_attack_allowed() and not attention_data.unit:movement():chk_action_forbidden("hurt") then
+	if attention_data.is_person and attention_data.criminal_record and attention_data.unit:movement() and attention_data.unit:movement():is_taser_attack_allowed() then
 		is_valid_target = true
 		--log("helpme")
 	end
 
-	local vis_check_fail = data.unit:raycast("ray", data.unit:movement():m_head_pos(), attention_data.m_head_pos, "slot_mask", managers.slot:get_mask("bullet_impact_targets_no_criminals"), "ignore_unit", attention_data.unit, "report") 
+	local vis_check_fail = data.unit:raycast("ray", data.unit:movement():m_head_pos(), attention_data.m_head_pos, "slot_mask", managers.slot:get_mask("world_geometry"), "ignore_unit", attention_data.unit, "report") 
 	
 	if is_valid_target and attention_data.verified and attention_data.verified_dis <= tase_length then
 		--log("yeah.")
 		if (my_data.last_charge_snd_play_t and data.t - my_data.last_charge_snd_play_t < 0.5) then
+			managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "aggressive")
 			return AIAttentionObject.REACT_SPECIAL_ATTACK --christ this was surprisingly way simpler than i thought it was
 		else
 			if not vis_check_fail then
 				my_data.last_charge_snd_play_t = data.t --force tasers to play buzzing before beginning tase
 				data.unit:sound():play("taser_charge", nil, true)
+				managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "aggressive")
 				return AIAttentionObject.REACT_SPECIAL_ATTACK
 			end
 		end
@@ -218,7 +221,7 @@ function TaserLogicAttack._chk_reaction_to_attention_object(data, attention_data
 		return reaction
 	end
 
-	if attention_data.is_human_player and not attention_data.unit:movement():is_taser_attack_allowed() then
+	if not is_valid_target then
 		return AIAttentionObject.REACT_COMBAT
 	end
 	
