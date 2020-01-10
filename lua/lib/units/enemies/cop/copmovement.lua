@@ -1,3 +1,16 @@
+local mvec3_set = mvector3.set
+local mvec3_set_z = mvector3.set_z
+local mvec3_lerp = mvector3.lerp
+local mvec3_add = mvector3.add
+local mvec3_sub = mvector3.subtract
+local mvec3_mul = mvector3.multiply
+local mvec3_norm = mvector3.normalize
+local mvec3_len = mvector3.length
+local mrot_set = mrotation.set_yaw_pitch_roll
+local temp_vec1 = Vector3()
+local temp_vec2 = Vector3()
+local temp_vec3 = Vector3()
+
 local old_init = CopMovement.init
 local action_variants = {
 	security = {
