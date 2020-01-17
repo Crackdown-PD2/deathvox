@@ -501,10 +501,10 @@ end
 
 function CopActionShoot:anim_clbk_melee_strike()
 	local shoot_from_pos = self._shoot_from_pos
-	local my_fwd = self._common_data.fwd
+	local my_fwd = mvector3.copy(self._ext_movement:m_head_rot():z())
 	local target_pos = Vector3()
 
-	if self._attention then
+	--[[if self._attention then
 		local att_char_dmg = self._attention.unit and self._attention.unit:character_damage()
 
 		if att_char_dmg and att_char_dmg.shoot_pos_mid then
@@ -515,7 +515,7 @@ function CopActionShoot:anim_clbk_melee_strike()
 			mvector3.direction(fwd_vec, mvector3.copy(shoot_from_pos), att_shoot_pos)
 			my_fwd = fwd_vec
 		end
-	end
+	end]]
 
 	mvector3.set(target_pos, my_fwd)
 	mvector3.multiply(target_pos, 180)
