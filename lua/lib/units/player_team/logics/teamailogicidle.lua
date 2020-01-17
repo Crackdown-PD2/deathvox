@@ -320,7 +320,7 @@ function TeamAILogicIdle.on_long_dis_interacted(data, other_unit, secondary)
 end
 
 function TeamAILogicIdle._ignore_shield(unit, attention)
-	local weapon_base = unit:inventory():equipped_unit() and unit:inventory():equipped_unit().base and unit:inventory():equipped_unit():base()
+	local weapon_base = unit:inventory() and unit:inventory():equipped_unit() and unit:inventory():equipped_unit():base()
 	local has_ap_ammo = weapon_base and weapon_base._use_armor_piercing
 
 	if has_ap_ammo then --this way Jokers can also easily check if they have AP ammo
@@ -333,15 +333,23 @@ function TeamAILogicIdle._ignore_shield(unit, attention)
 
 	local head_pos = unit:movement():m_head_pos()
 	local u_char_dmg = attention and attention.unit and attention.unit:character_damage()
-	local u_shoot_pos = Vector3()
+	local u_shoot_pos = nil
 
-	if u_char_dmg and u_char_dmg.shoot_pos_mid then 
+	if u_char_dmg and u_char_dmg.shoot_pos_mid then
+		u_shoot_pos = Vector3()
+
 		u_char_dmg:shoot_pos_mid(u_shoot_pos)
 	else
 		return false
 	end
 
-	local hit_shield = World:raycast("ray", head_pos, u_shoot_pos, "slot_mask", TeamAILogicIdle._shield_check, "report")
+	local hit_shield = nil
+
+	if alive(unit:inventory() and unit:inventory()._shield_unit) then
+		hit_shield = World:raycast("ray", head_pos, u_shoot_pos, "slot_mask", TeamAILogicIdle._shield_check, "ignore_unit", unit:inventory()._shield_unit, "report")
+	else
+		hit_shield = World:raycast("ray", head_pos, u_shoot_pos, "slot_mask", TeamAILogicIdle._shield_check, "report")
+	end
 
 	return not not hit_shield
 end
@@ -387,9 +395,6 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 				end
 
 				if not reaction_too_mild then
-					local aimed_at = TeamAILogicIdle.chk_am_i_aimed_at(data, attention_data, attention_data.aimed_at and 0.95 or 0.985)
-					attention_data.aimed_at = aimed_at
-
 					local alert_dt = attention_data.alert_t and data.t - attention_data.alert_t or 10000
 					local dmg_dt = attention_data.dmg_t and data.t - attention_data.dmg_t or 10000
 					local too_close_threshold = 300
@@ -401,11 +406,11 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 						distance = distance * 0.8
 					end
 
-					local is_visible = attention_data.verified
+					local visible = attention_data.verified
 					local target_priority = distance
 					local target_priority_slot = 0
 
-					if is_visible then
+					if visible then
 						local is_shielded = TeamAILogicIdle._ignore_shield and TeamAILogicIdle._ignore_shield(data.unit, attention_data) or nil
 
 						if is_shielded then
@@ -415,12 +420,15 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 								if can_be_knocked then
 									target_priority_slot = 4
 								else
-									reaction = AIAttentionObject.REACT_AIM
+									reaction = math.min(AIAttentionObject.REACT_AIM, reaction)
 								end
 							else
-								reaction = AIAttentionObject.REACT_AIM
+								reaction = math.min(AIAttentionObject.REACT_AIM, reaction)
 							end
 						else
+							local aimed_at = TeamAILogicIdle.chk_am_i_aimed_at(data, attention_data, attention_data.aimed_at and 0.95 or 0.985)
+							attention_data.aimed_at = aimed_at
+
 							local too_close = distance <= too_close_threshold
 							local near = distance < near_threshold and distance > too_close_threshold
 							local has_alerted = alert_dt < 5
@@ -436,30 +444,22 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 							local is_marked = att_unit.contour and att_unit:contour() and att_unit:contour()._contour_list
 
 							if is_spooc then
-								target_priority_slot = too_close and 1 or near and 3 or is_marked and 6 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
+								local trying_to_kick_criminal = att_unit:brain()._logic_data and att_unit:brain()._logic_data.internal_data and att_unit:brain()._logic_data.internal_data.spooc_attack
 
-								local e_internal_data = att_unit:brain()._logic_data and att_unit:brain()._logic_data.internal_data
-
-								if e_internal_data then
-									local trying_to_kick_criminal = e_internal_data.spooc_attack
-
-									if trying_to_kick_criminal then
-										target_priority_slot = 1
-									end
+								if trying_to_kick_criminal then
+									target_priority_slot = 1
+								else
+									target_priority_slot = too_close and 1 or near and 3 or is_marked and 6 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
 								end
 							elseif is_medic then
 								target_priority_slot = too_close and 2 or near and 4 or is_marked and 6 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
 							elseif is_taser then
-								target_priority_slot = too_close and 3 or near and 5 or is_marked and 7 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
+								local trying_to_tase_criminal = att_unit:brain()._logic_data and att_unit:brain()._logic_data.internal_data and att_unit:brain()._logic_data.internal_data.tasing
 
-								local e_internal_data = att_unit:brain()._logic_data and att_unit:brain()._logic_data.internal_data
-
-								if e_internal_data then
-									local trying_to_tase_criminal = e_internal_data.tasing
-
-									if trying_to_tase_criminal then
-										target_priority_slot = 1
-									end
+								if trying_to_tase_criminal then
+									target_priority_slot = 1
+								else
+									target_priority_slot = too_close and 3 or near and 5 or is_marked and 7 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
 								end
 							elseif is_sniper then
 								target_priority_slot = too_close and 4 or near and 6 or is_marked and 7 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
@@ -483,8 +483,8 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 								if active_phalanx then
 									target_priority_slot = 4
 								else
-									target_priority_slot = 0
-									reaction = AIAttentionObject.REACT_AIM
+									target_priority_slot = 0 --to avoid calculating optimal distance with auto/semiauto shotguns and LMGs
+									reaction = math.min(AIAttentionObject.REACT_AIM, reaction)
 								end
 							else
 								if not is_medic and att_unit:character_damage().check_medic_heal and not table.contains(tweak_data.medic.disabled_units, att_unit:base()._tweak_table) then
@@ -524,11 +524,19 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 							end
 						end
 					else
-						reaction = AIAttentionObject.REACT_AIM
+						local has_alerted = alert_dt < 5
+
+						if has_alerted then
+							target_priority_slot = 14
+						else
+							target_priority_slot = 15
+						end
+
+						reaction = math.min(AIAttentionObject.REACT_AIM, reaction)
 					end
 
 					if reaction < AIAttentionObject.REACT_COMBAT then
-						target_priority_slot = 14 + math.max(0, AIAttentionObject.REACT_COMBAT - reaction)
+						target_priority_slot = 15 + target_priority_slot + math.max(0, AIAttentionObject.REACT_COMBAT - reaction)
 					end
 
 					if target_priority_slot ~= 0 then
