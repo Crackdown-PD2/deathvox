@@ -536,6 +536,7 @@
 	</group>
 	<file name="effects/particles/explosions/cs_grenade_smoke.effect" load="false" force="true"/>
 	<file name="effects/particles/weapons/trail_dv_sniper.effect" load="false" force="true"/>
+	<file name="effects/particles/weapons/money_muzzle_fps.effect" load="false" force="true"/>
 	<file name="effects/pd2_mod_gageammo/particles/character/flashlight_ss.effect" load="false" force="true"/>
 	<file name="effects/pd2_mod_gageammo/particles/explosions/hellfire_endless.effect" load="false" force="true"/>
 	<file name="effects/pd2_mod_gageammo/particles/explosions/hellfire_endless_cheap.effect" load="false" force="true"/>

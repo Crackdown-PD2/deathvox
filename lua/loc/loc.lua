@@ -28,6 +28,8 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 		LocalizationManager:add_localized_strings({
 			["menu_fast_fire_beta"] = "Close Enough",
 			["menu_fast_fire_beta_desc"] = "BASIC: ##$basic##\nYour SMGs, LMGs and Assault Rifles gain ##15## more bullets in their magazine.\n\nACE: ##$pro##\nYour SMGs and Assault Rifles' bullets that strike hard surfaces ##have a 25% chance to ricochet## towards enemies.",
+			["menu_heavy_impact_beta"] = "Money Shot",
+			["menu_heavy_impact_beta_desc"] = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles gain ##+100%## Damage on the last bullet fired from a fully loaded magazine.\n\nACE: ##$pro##\nYour SMGs and Assault Rifles' gain ##+50%## faster Reload Speed when their Magazine is empty.",
 		})
 	end
 end)
