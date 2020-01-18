@@ -10,9 +10,9 @@ function ShotgunBase:setup_default()
 		self._use_shotgun_reload = tweak_data.weapon[self._name_id].use_shotgun_reload
 	end
 
-	self._single_damage_instance = true  --basically a toggle option between vanilla (with proper priorization and rays) and the damage-per-pellet feature
+	self._single_damage_instance = true --basically a toggle option between vanilla (with proper priorization and rays) and the damage-per-pellet feature
 
-	--for final mix, if the shotgun has the free buckshot ammo type equipped, use damage-per-pellet
+	--if the shotgun has the free buckshot ammo type equipped, use damage-per-pellet
 	if alive(self._unit) and self._unit:base()._parts then
 		for part_id, part in pairs(self._unit:base()._parts) do
 			if part_id == "wpn_fps_upg_a_custom_free" then
@@ -254,16 +254,20 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 
 		local furthest_hit = unique_hits[#unique_hits]
 
-		if (furthest_hit and furthest_hit.distance > 600 or not furthest_hit) and alive(self._obj_fire) then --last collision made by the ray or no collision, both used to spawn the cosmetic tracers from the barrel of the gun
-			self._obj_fire:m_position(self._trail_effect_table.position)
-			mvector3.set(self._trail_effect_table.normal, mvec_spread_direction)
+		if alive(self._obj_fire) then
+			if furthest_hit and furthest_hit.distance > 600 or not furthest_hit then --last collision made by the ray or no collision, both used to spawn the cosmetic tracers from the barrel of the gun
+				local trail_direction = furthest_hit and furthest_hit.ray or mvec_spread_direction
 
-			local trail = World:effect_manager():spawn(self._trail_effect_table)
+				self._obj_fire:m_position(self._trail_effect_table.position)
+				mvector3.set(self._trail_effect_table.normal, trail_direction)
 
-			if furthest_hit then
-				World:effect_manager():set_remaining_lifetime(trail, math.clamp((furthest_hit.distance - 600) / 10000, 0, furthest_hit.distance))
-			else
-				World:effect_manager():set_remaining_lifetime(trail, math.clamp((self._range - 600) / 10000, 0, self._range)) --actually limit tracers using the shotgun's range limit if nothing is hit by a pellet
+				local trail = World:effect_manager():spawn(self._trail_effect_table)
+
+				if furthest_hit then
+					World:effect_manager():set_remaining_lifetime(trail, math.clamp((furthest_hit.distance - 600) / 10000, 0, furthest_hit.distance))
+				else
+					World:effect_manager():set_remaining_lifetime(trail, math.clamp((self._range - 600) / 10000, 0, self._range)) --actually limit tracers using the shotgun's range limit if nothing is hit by a pellet
+				end
 			end
 		end
 	end
@@ -535,18 +539,12 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 	end
 
 	if self._suppression then
-		local tmp_vec_to = Vector3()
-
-		mvector3.set(tmp_vec_to, mvector3.copy(direction))
-		mvector3.multiply(tmp_vec_to, self._range)
-		mvector3.add(tmp_vec_to, mvector3.copy(from_pos))
-
-		self:_suppress_units(mvector3.copy(from_pos), tmp_vec_to, 100, managers.slot:get_mask("enemies"), user_unit, suppr_mul, self._range)
+		self:_suppress_units(mvector3.copy(from_pos), mvector3.copy(direction), self._range, managers.slot:get_mask("enemies"), user_unit, suppr_mul)
 	end
 
 	if not result then
 		result = {
-			hit_enemy = ap_slug and hit_anyone or next(hit_enemies) and true or false
+			hit_enemy = ap_slug and hit_anyone or #hit_enemies > 0 and true or false
 		}
 
 		if self._alert_events then
@@ -559,7 +557,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 		weapon_unit = self._unit
 	})
 
-	for _, d in pairs(hit_enemies) do --enemies hit per fired shot pull increase accuracy accordingly (negating the one above)
+	for i = 1, #hit_enemies, 1 do --enemies hit per fired shot pull increase accuracy accordingly (negating the one above)
 		managers.statistics:shot_fired({
 			skip_bullet_count = true,
 			hit = true,
