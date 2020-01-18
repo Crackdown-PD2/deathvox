@@ -50,6 +50,27 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		self.definitions.player_point_blank_shotgun_basic = {
+			name_id = "menu_point_blank_shotgun_basic",
+			category = "feature",
+			upgrade = {
+			value = 1,
+			upgrade = "point_blank",
+				category = "player"
+			}
+		}
+					
+		self.definitions.player_point_blank_shotgun_aced = {
+			name_id = "menu_point_blank_shotgun_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "point_blank_aced",
+				category = "player"
+			}
+		}
+		
+		
 		self.values.player.money_shot = {
 			true
 		}
@@ -65,5 +86,14 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		self.values.player.ricochet_bullets_aced = {
 			true
 		}
+		
+		self.values.player.point_blank = {
+			true
+		}
+		
+		self.values.player.point_blank_aced = {
+			true
+		}
+		
 	end	
 end)

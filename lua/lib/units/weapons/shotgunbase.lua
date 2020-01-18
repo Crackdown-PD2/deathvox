@@ -111,7 +111,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 
 		local units_hit = {}
 		local unique_hits = {} --table for collected hits
-
+		
 		if he_round then
 			if hit_an_enemy then --once an enemy gets hit, this is always true until another shot is fired
 				hit_an_enemy = hit_an_enemy
@@ -134,6 +134,8 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 					hit.hit_position = hit.position
 					local weak_body = hit.body:has_ray_type(ai_vision_ids)
 					weak_body = weak_body or hit.body:has_ray_type(bulletproof_ids)
+					local checked_hit = unique_hits[#unique_hits]
+					local point_blank_pierce = user_unit == managers.player:player_unit() and managers.player:has_category_upgrade("player", "point_blank") and checked_hit and checked_hit.distance and checked_hit.distance <= 100
 
 					if hit_an_enemy then --once an enemy gets hit, this is always true until another shot is fired
 						hit_an_enemy = hit_an_enemy
@@ -141,7 +143,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 						hit_an_enemy = hit.unit:in_slot(enemy_mask) and true or false
 					end
 
-					if not self._can_shoot_through_enemy and hit.unit:in_slot(enemy_mask) then
+					if not self._can_shoot_through_enemy and not point_blank_pierce and hit.unit:in_slot(enemy_mask) then
 						break
 					elseif hit.unit:in_slot(wall_mask) then
 						if weak_body then --actually the other way around, this is a solid wall (just being consistent with vanilla)
@@ -155,7 +157,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 								break
 							end
 						end
-					elseif not self._can_shoot_through_shield and hit.unit:in_slot(shield_mask) then
+					elseif not self._can_shoot_through_shield and not point_blank_pierce and hit.unit:in_slot(shield_mask) then
 						break
 					end
 				end
@@ -207,8 +209,10 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 										hit.hit_position = hit.position
 										local weak_body = hit.body:has_ray_type(ai_vision_ids)
 										weak_body = weak_body or hit.body:has_ray_type(bulletproof_ids)
+										local checked_hit = unique_hits[#unique_hits]
+										local point_blank_pierce = user_unit == managers.player:player_unit() and managers.player:has_category_upgrade("player", "point_blank") and checked_hit and checked_hit.distance and checked_hit.distance <= 100
 
-										if not self._can_shoot_through_enemy and hit.unit:in_slot(enemy_mask) then
+										if not self._can_shoot_through_enemy and not point_blank_pierce and hit.unit:in_slot(enemy_mask) then
 											break
 										elseif hit.unit:in_slot(wall_mask) then
 											if weak_body then --actually the other way around, this is a solid wall (just being consistent with vanilla)
@@ -222,7 +226,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 													break
 												end
 											end
-										elseif not self._can_shoot_through_shield and hit.unit:in_slot(shield_mask) then
+										elseif not self._can_shoot_through_shield and not point_blank_pierce and hit.unit:in_slot(shield_mask) then
 											break
 										end
 									end

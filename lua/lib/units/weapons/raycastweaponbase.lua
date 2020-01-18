@@ -835,10 +835,16 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 
 	if alive(weapon_unit) and hit_unit:character_damage() and hit_unit:character_damage().damage_bullet then
 		local is_alive = not hit_unit:character_damage():dead()
-
+		
+		local pierce_armor = user_unit == managers.player:player_unit() and managers.player:has_category_upgrade("player", "point_blank") and has_category and weapon_unit:base():is_category("shotgun") and col_ray and col_ray.dis <= 100 or weapon_unit:base()._use_armor_piercing
+		
+		if user_unit == managers.player:player_unit() and has_category and weapon_unit:base():is_category("shotgun") and managers.player:has_category_upgrade("player", "point_blank_aced") and col_ray and col_ray.dis <= 100 then
+			damage = damage * 2
+		end
+		
 		if not blank then
 			local knock_down = weapon_unit:base()._knock_down and weapon_unit:base()._knock_down > 0 and math.random() < weapon_unit:base()._knock_down
-			result = self:give_impact_damage(col_ray, weapon_unit, user_unit, damage, weapon_unit:base()._use_armor_piercing, false, knock_down, weapon_unit:base()._stagger, weapon_unit:base()._variant)
+			result = self:give_impact_damage(col_ray, weapon_unit, user_unit, damage, pierce_armor, false, knock_down, weapon_unit:base()._stagger, weapon_unit:base()._variant)
 		end
 
 		local is_dead = hit_unit:character_damage():dead()
