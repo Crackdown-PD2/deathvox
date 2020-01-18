@@ -1,5 +1,3 @@
-local tmp_rot1 = Rotation()
-
 function SentryGunWeapon:init(unit)
 	self._unit = unit
 	self._current_damage_mul = 1
@@ -106,64 +104,100 @@ function SentryGunWeapon:_fire_raycast(from_pos, direction, shoot_player, target
 			local weak_body = hit.body:has_ray_type(ai_vision_ids)
 			weak_body = weak_body or hit.body:has_ray_type(bulletproof_ids)
 
-			if not self._use_armor_piercing and hit_enemy then
-				break
-			elseif hit.unit:in_slot(wall_mask) then
-				if weak_body then
-					if self._use_armor_piercing then
-						if went_through_wall then
-							break
-						else
-							went_through_wall = true
-						end
-					else
+			if not self._use_armor_piercing then
+				if hit_enemy or hit.unit:in_slot(wall_mask) and weak_body or hit.unit:in_slot(shield_mask) then
+					break
+				end
+			else
+				if hit.unit:in_slot(wall_mask) and weak_body then
+					if went_through_wall then
 						break
+					else
+						went_through_wall = true
 					end
 				end
-			elseif not self._use_armor_piercing and hit.unit:in_slot(shield_mask) then
-				break
 			end
 		end
 	end
-
-	for k, col_ray in ipairs(unique_hits) do
-		local player_hit, player_ray_data = nil
-
-		if shoot_player then
-			player_hit, player_ray_data = RaycastWeaponBase.damage_player(self, col_ray, from_pos, direction)
-
-			if player_hit then
-				local damage = self:_apply_dmg_mul(self._damage, col_ray or player_ray_data, from_pos)
-
-				InstantBulletBase:on_hit_player(col_ray or player_ray_data, self._unit, self._unit, damage)
-			end
-		end
-
-		if not player_hit and col_ray then
-			local damage = self:_apply_dmg_mul(self._damage, col_ray, from_pos)
-			hit_unit = InstantBulletBase:on_collision(col_ray, self._unit, self._unit, damage)
-		end
-	end
-
-	result.hit_enemy = hit_unit
 
 	local furthest_hit = unique_hits[#unique_hits]
 
-	if (furthest_hit and furthest_hit.distance > 600 or not furthest_hit) and alive(self._obj_fire) then
-		self:_spawn_trail_effect(direction, furthest_hit)
+	if #unique_hits > 0 then
+		local hit_player = false
+
+		for _, hit in ipairs(unique_hits) do
+			if not hit_player and shoot_player then
+				local player_hit_ray = deep_clone(hit)
+				local player_hit, player_ray_data  = RaycastWeaponBase.damage_player(self, player_hit_ray, from_pos, direction, result)
+
+				if player_hit then
+					hit_player = true
+					char_hit = true
+
+					local damage = self:_apply_dmg_mul(self._damage, player_ray_data, from_pos)
+					local damaged_player = InstantBulletBase:on_hit_player(player_hit_ray, self._unit, self._unit, damage)
+
+					if damaged_player then
+						if not self._use_armor_piercing then
+							hit.unit = managers.player:player_unit()
+							hit.body = hit.unit:body("inflict_reciever")
+							hit.position = mvector3.copy(hit.body:position())
+							hit.hit_position = hit.position
+							hit.distance = mvector3.direction(hit.ray, mvector3.copy(from_pos), mvector3.copy(hit.position))
+							hit.normal = -hit.ray
+							furthest_hit = hit
+
+							break
+						end
+					end	
+				end
+			end
+
+			local damage = self:_apply_dmg_mul(self._damage, hit, from_pos)
+
+			if InstantBulletBase:on_collision(hit, self._unit, self._unit, damage) then
+				char_hit = true
+			end
+		end
+	else
+		if shoot_player then
+			local player_hit, player_ray_data = RaycastWeaponBase.damage_player(self, nil, from_pos, direction, result)
+
+			if player_hit then
+				local damage = self:_apply_dmg_mul(self._damage, player_ray_data, from_pos)
+				local damaged_player = InstantBulletBase:on_hit_player(player_ray_data, self._unit, self._unit, damage)
+
+				if damaged_player then
+					char_hit = true
+
+					if not self._use_armor_piercing then
+						player_ray_data.unit = managers.player:player_unit()
+						player_ray_data.body = player_ray_data.unit:body("inflict_reciever")
+						player_ray_data.position = mvector3.copy(player_ray_data.body:position())
+						player_ray_data.hit_position = player_ray_data.position
+						player_ray_data.distance = mvector3.direction(player_ray_data.ray, mvector3.copy(from_pos), mvector3.copy(player_ray_data.position))
+						player_ray_data.normal = -player_ray_data.ray
+						furthest_hit = player_ray_data
+					end
+				end	
+			end
+		end
+	end
+
+	result.hit_enemy = char_hit
+
+	if alive(self._obj_fire) then
+		if furthest_hit and furthest_hit.distance > 600 or not furthest_hit then
+			local trail_direction = furthest_hit and furthest_hit.ray or direction
+
+			self:_spawn_trail_effect(trail_direction, furthest_hit)
+		end
 	end
 
 	if self._suppression then
-		local tmp_vec_to = Vector3()
-		local max_distance = ray_distance --ray_distance is usually 200m, modify accordingly
-
-		mvector3.set(tmp_vec_to, mvector3.copy(direction))
-		mvector3.multiply(tmp_vec_to, max_distance)
-		mvector3.add(tmp_vec_to, mvector3.copy(from_pos))
-
 		local suppression_slot_mask = self._unit:in_slot(25) and managers.slot:get_mask("enemies") or managers.slot:get_mask("players", "criminals")
 
-		RaycastWeaponBase._suppress_units(self, mvector3.copy(from_pos), tmp_vec_to, 100, suppression_slot_mask, self._unit, nil, max_distance)
+		RaycastWeaponBase._suppress_units(self, mvector3.copy(from_pos), mvector3.copy(direction), ray_distance, suppression_slot_mask, self._unit, nil)
 	end
 
 	if self._alert_events then
