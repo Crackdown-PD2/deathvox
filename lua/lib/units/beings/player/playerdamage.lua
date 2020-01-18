@@ -173,6 +173,8 @@ function PlayerDamage:damage_bullet(attack_data)
 
 	pm:send_message(Message.OnPlayerDamage, nil, attack_data)
 	self:_call_listeners(damage_info)
+
+	return true
 end
 
 function PlayerDamage:clbk_kill_taunt(attack_data)
