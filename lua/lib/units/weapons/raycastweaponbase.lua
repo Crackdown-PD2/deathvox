@@ -14,6 +14,80 @@ local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
 local tmp_rot1 = Rotation()
 
+function RaycastWeaponBase:check_autoaim(from_pos, direction, max_dist, use_aim_assist, autohit_override_data)
+	local autohit = use_aim_assist and self._aim_assist_data or self._autohit_data
+	autohit = autohit_override_data or autohit
+	local autohit_near_angle = autohit.near_angle
+	local autohit_far_angle = autohit.far_angle
+	local far_dis = autohit.far_dis
+	local closest_error, closest_ray = nil
+	local tar_vec = tmp_vec1
+	local ignore_units = self._setup.ignore_units
+	local obstruction_slotmask = self._bullet_slotmask
+
+	if self._can_shoot_through_shield then
+		obstruction_slotmask = obstruction_slotmask - 8
+	end
+
+	local cone_distance = max_dist or self:weapon_range() or 20000
+	local tmp_vec_to = Vector3()
+	mvector3.set(tmp_vec_to, mvector3.copy(direction))
+	mvector3.multiply(tmp_vec_to, cone_distance)
+	mvector3.add(tmp_vec_to, mvector3.copy(from_pos))
+
+	local cone_radius = mvector3.length(tmp_vec_to) / 4
+	local enemies_in_cone = World:find_units("cone", from_pos, tmp_vec_to, cone_radius, managers.slot:get_mask("player_autoaim"))
+
+	for _, enemy in pairs(enemies_in_cone) do
+		local com = enemy:movement():m_com()
+
+		mvector3.set(tar_vec, com)
+		mvector3.subtract(tar_vec, from_pos)
+
+		local tar_aim_dot = mvec3_dot(direction, tar_vec)
+
+		if tar_aim_dot > 0 and (not max_dist or tar_aim_dot < max_dist) then
+			local tar_vec_len = math_clamp(mvec3_norm(tar_vec), 1, far_dis)
+			local error_dot = mvec3_dot(direction, tar_vec)
+			local error_angle = math.acos(error_dot)
+			local dis_lerp = math.pow(tar_aim_dot / far_dis, 0.25)
+			local autohit_min_angle = math_lerp(autohit_near_angle, autohit_far_angle, dis_lerp)
+
+			if error_angle < autohit_min_angle then
+				local percent_error = error_angle / autohit_min_angle
+
+				if not closest_error or percent_error < closest_error then
+					tar_vec_len = tar_vec_len + 100
+
+					mvector3.multiply(tar_vec, tar_vec_len)
+					mvector3.add(tar_vec, from_pos)
+
+					local vis_ray = World:raycast("ray", from_pos, tar_vec, "slot_mask", obstruction_slotmask, "ignore_unit", ignore_units)
+
+					if vis_ray and vis_ray.unit:key() == enemy:key() and (not closest_error or error_angle < closest_error) then
+						closest_error = error_angle
+						closest_ray = vis_ray
+
+						mvector3.set(tmp_vec1, com)
+						mvector3.subtract(tmp_vec1, from_pos)
+
+						local d = mvec3_dot(direction, tmp_vec1)
+
+						mvector3.set(tmp_vec1, direction)
+						mvector3.multiply(tmp_vec1, d)
+						mvector3.add(tmp_vec1, from_pos)
+						mvector3.subtract(tmp_vec1, com)
+
+						closest_ray.distance_to_aim_line = mvec3_len(tmp_vec1)
+					end
+				end
+			end
+		end
+	end
+
+	return closest_ray
+end
+
 function RaycastWeaponBase:setup(setup_data, damage_multiplier)
 	self._autoaim = setup_data.autoaim
 	local stats = tweak_data.weapon[self._name_id].stats
@@ -99,9 +173,6 @@ function RaycastWeaponBase:set_laser_enabled(state)
 	end
 end
 
-local mvec1 = Vector3()
-local mvec2 = Vector3()
-
 function RaycastWeaponBase:_collect_hits(from, to)
 	local ray_hits = nil
 	local hit_enemy = false
@@ -155,7 +226,6 @@ end
 
 local mvec_to = Vector3()
 local mvec_spread_direction = Vector3()
-local mvec1 = Vector3()
 
 function RaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoot_player, spread_mul, autohit_mul, suppr_mul)
 	if self:gadget_overrides_weapon_functions() then
@@ -184,9 +254,9 @@ function RaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul
 
 	if self._autoaim then
 		local weight = 0.1
-		local auto_hit_candidate = self:check_autoaim(from_pos, direction)
+		local auto_hit_candidate = not hit_enemy and self:check_autoaim(from_pos, direction)
 
-		if auto_hit_candidate and not hit_enemy then
+		if auto_hit_candidate then
 			local autohit_chance = 1 - math.clamp((self._autohit_current - self._autohit_data.MIN_RATIO) / (self._autohit_data.MAX_RATIO - self._autohit_data.MIN_RATIO), 0, 1)
 
 			if autohit_mul then
@@ -315,32 +385,29 @@ function RaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul
 
 	local furthest_hit = ray_hits[#ray_hits]
 
-	if (furthest_hit and furthest_hit.distance > 600 or not furthest_hit) and alive(self._obj_fire) then
-		self._obj_fire:m_position(self._trail_effect_table.position)
-		mvector3.set(self._trail_effect_table.normal, mvec_spread_direction)
+	if alive(self._obj_fire) then
+		if furthest_hit and furthest_hit.distance > 600 or not furthest_hit then
+			local trail_direction = furthest_hit and furthest_hit.ray or mvec_spread_direction
 
-		local trail = World:effect_manager():spawn(self._trail_effect_table)
+			self._obj_fire:m_position(self._trail_effect_table.position)
+			mvector3.set(self._trail_effect_table.normal, trail_direction)
 
-		if furthest_hit then
-			World:effect_manager():set_remaining_lifetime(trail, math.clamp((furthest_hit.distance - 600) / 10000, 0, furthest_hit.distance))
-		else
-			World:effect_manager():set_remaining_lifetime(trail, math.clamp((ray_distance - 600) / 10000, 0, ray_distance)) --first small change
+			local trail = World:effect_manager():spawn(self._trail_effect_table)
+
+			if furthest_hit then
+				World:effect_manager():set_remaining_lifetime(trail, math.clamp((furthest_hit.distance - 600) / 10000, 0, furthest_hit.distance))
+			else
+				World:effect_manager():set_remaining_lifetime(trail, math.clamp((ray_distance - 600) / 10000, 0, ray_distance))
+			end
 		end
-	end
-
-	if self._suppression then --second change done here, for the suppression rework
-		local max_distance = ray_distance --ray_distance is 200m, modify accordingly
-		local tmp_vec_to = Vector3()
-
-		mvector3.set(tmp_vec_to, mvector3.copy(direction))
-		mvector3.multiply(tmp_vec_to, max_distance)
-		mvector3.add(tmp_vec_to, mvector3.copy(from_pos))
-
-		self:_suppress_units(mvector3.copy(from_pos), tmp_vec_to, 100, managers.slot:get_mask("enemies"), user_unit, suppr_mul, max_distance)
 	end
 
 	if self._alert_events then
 		result.rays = ray_hits
+	end
+
+	if self._suppression then
+		self:_suppress_units(mvector3.copy(from_pos), mvector3.copy(direction), ray_distance, managers.slot:get_mask("enemies"), user_unit, suppr_mul)
 	end
 
 	return result
@@ -658,25 +725,36 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 	return result
 end
 
-function RaycastWeaponBase:_suppress_units(from, to, cylinder_radius, slotmask, user_unit, suppr_mul, max_distance)
-	local find_enemies = World:find_units("intersect", "cylinder", from, to, cylinder_radius, slotmask)
+function RaycastWeaponBase:_suppress_units(from_pos, direction, distance, slotmask, user_unit, suppr_mul)
+	local tmp_to = Vector3()
+
+	mvector3.set(tmp_to, mvector3.copy(direction))
+	mvector3.multiply(tmp_to, distance)
+	mvector3.add(tmp_to, mvector3.copy(from_pos))
+
+	local cone_radius = distance / 4
+	local enemies_in_cone = World:find_units(user_unit, "cone", from_pos, tmp_to, cone_radius, slotmask)
 	local enemies_to_suppress = {}
 
-	--draw the cylinder to see where it goes
-	--[[local draw_duration = 0.1 --SEIZURE WARNING, INCREASE IF NEEDED
-	local new_brush = Draw:brush(Color.white:with_alpha(0.5), draw_duration)
-	new_brush:cylinder(from, to, cylinder_radius)]]
+	--draw the cone to see where it goes
+	local draw_suppression_cone = false
 
-	if #find_enemies > 0 then
-		for _, ene_unit in ipairs(find_enemies) do
-			if Network:is_server() or user_unit == managers.player:player_unit() or ene_unit == managers.player:player_unit() then --clients only allow the local player to suppress or be suppressed (so that NPC husks don't suppress each other)
-				if not table.contains(enemies_to_suppress, ene_unit) and ene_unit.character_damage and ene_unit:character_damage() and ene_unit:character_damage().build_suppression then --valid enemy + has suppression function
-					if not ene_unit:movement().cool or ene_unit:movement().cool and not ene_unit:movement():cool() then --is alerted or can't be alerted at all (player)
-						if user_unit:movement():team() ~= ene_unit:movement():team() and user_unit:movement():team().foes[ene_unit:movement():team().id] then --not in the same team as the shooter
-							local obstructed = World:raycast("ray", from, ene_unit:movement():m_head_pos(), "slot_mask", managers.slot:get_mask("AI_visibility"), "ray_type", "ai_vision") --imitating AI checking for visibility for things like shouting
+	if draw_suppression_cone and user_unit == managers.player:player_unit() then
+		local draw_duration = 0.1
+		local new_brush = Draw:brush(Color.white:with_alpha(0.5), draw_duration)
+		new_brush:cone(from_pos, tmp_to, cone_radius)
+	end
+
+	if #enemies_in_cone > 0 then
+		for _, enemy in ipairs(enemies_in_cone) do
+			if Network:is_server() or user_unit == managers.player:player_unit() or enemy == managers.player:player_unit() then --clients only allow the local player to suppress or be suppressed (so that NPC husks don't suppress each other)
+				if not table.contains(enemies_to_suppress, enemy) and enemy.character_damage and enemy:character_damage() and enemy:character_damage().build_suppression then --valid enemy + has suppression function
+					if not enemy:movement().cool or enemy:movement().cool and not enemy:movement():cool() then --is alerted or can't be alerted at all (player)
+						if enemy:character_damage().is_friendly_fire and not enemy:character_damage():is_friendly_fire(user_unit) then --not in the same team as the shooter
+							local obstructed = World:raycast("ray", from_pos, enemy:movement():m_head_pos(), "slot_mask", managers.slot:get_mask("AI_visibility"), "ray_type", "ai_vision", "report") --imitating AI checking for visibility for things like shouting
 
 							if not obstructed then
-								table.insert(enemies_to_suppress, ene_unit)
+								table.insert(enemies_to_suppress, enemy)
 							end
 						end
 					end
@@ -684,26 +762,35 @@ function RaycastWeaponBase:_suppress_units(from, to, cylinder_radius, slotmask, 
 			end
 		end
 
-		for _, ene_unit in ipairs(enemies_to_suppress) do
-			local total_suppression = (suppr_mul or 1) * self._suppression
-			local enemy_distance = mvector3.normalize(from, ene_unit:movement():m_head_pos())
-			local dis_lerp_value = math.clamp(enemy_distance, 0, max_distance) / max_distance
+		if #enemies_to_suppress > 0 then
+			for _, enemy in ipairs(enemies_to_suppress) do
+				local enemy_distance = mvector3.distance(from_pos, enemy:movement():m_head_pos())
+				local dis_lerp_value = math.clamp(enemy_distance, 0, distance) / distance
+				local total_suppression = self._suppression
 
-			total_suppression = math.lerp(total_suppression, 0, dis_lerp_value) --scale suppression downwards and linearly, becoming 0 at maximum allowed distance or past that
+				if suppr_mul then
+					total_suppression = total_suppression * suppr_mul
+				end
 
-			local total_panic_chance = false
+				total_suppression = math.lerp(total_suppression, 0, dis_lerp_value) --scale suppression downwards and linearly, becoming 0 at maximum allowed distance or past that
 
-			if self._panic_suppression_chance then
-				total_panic_chance = self._panic_suppression_chance
+				local total_panic_chance = false
 
-				--4.5 is the highest suppression value allowed for players, that point means maximum panic base chance, but it will still get decreased with distance
-				local suppr_lerp_value = math.clamp(total_suppression, 0, 4.5) / 4.5
+				if self._panic_suppression_chance then
+					total_panic_chance = self._panic_suppression_chance
 
-				total_panic_chance = math.lerp(0, total_panic_chance, suppr_lerp_value)
-			end
+					local suppr_lerp_value = math.clamp(total_suppression, 0, 4.5) / 4.5 --4.5 is the highest suppression value allowed for players, that point means maximum panic base chance
 
-			if total_suppression > 0 then
-				ene_unit:character_damage():build_suppression(total_suppression, total_panic_chance)
+					total_panic_chance = math.lerp(0, total_panic_chance, suppr_lerp_value)
+				end
+
+				if total_suppression > 0 then
+					if draw_suppression_cone and enemy:contour() then
+						enemy:contour():add("medic_heal")
+					end
+
+					enemy:character_damage():build_suppression(total_suppression, total_panic_chance)
+				end
 			end
 		end
 	end
