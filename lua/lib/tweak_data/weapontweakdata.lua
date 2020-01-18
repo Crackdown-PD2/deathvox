@@ -1674,59 +1674,27 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		--AMCAR
-		self.amcar.FIRE_MODE = "auto"
-		self.amcar.fire_mode_data = {
-			fire_rate = 0.11
+		self.amcar.cd_stability = 100
+		self.amcar.cd_spread = 100
+		self.amcar.cd_rpm = 545
+		self.amcar.cd_threat = 14
+		self.amcar.cd_ammosetup =
+		{
+			clip_size = 20,
+			total_ammo = 260
 		}
-		self.amcar.CAN_TOGGLE_FIREMODE = true
-		self.amcar.auto = {
-			fire_rate = 0.11
-		}
-		self.amcar.timers = {
-			reload_not_empty = 2.25,
-			reload_empty = 3,
-			unequip = 0.6,
+		self.amcar.stats.damage = 50
+		self.amcar.stats.concealment = 30
+		self.amcar.timers = 
+		{
+			reload_not_empty = 2,
+			reload_empty = 2.5,
+			unequip = 0.55,
 			equip = 0.55
 		}
-	
-		self.amcar.CLIP_AMMO_MAX = 20
-		self.amcar.NR_CLIPS_MAX = 11
-		self.amcar.AMMO_MAX = self.amcar.CLIP_AMMO_MAX * self.amcar.NR_CLIPS_MAX
 		self.amcar.AMMO_PICKUP = {
-			6.60,
-			12.10
-		}
-		
-		self.amcar.spread = {
-			standing = self.new_m4.spread.standing,
-			crouching = self.new_m4.spread.crouching,
-			steelsight = self.new_m4.spread.steelsight,
-			moving_standing = self.new_m4.spread.moving_standing,
-			moving_crouching = self.new_m4.spread.moving_crouching,
-			moving_steelsight = self.new_m4.spread.moving_steelsight
-		}
-		self.amcar.kick = {
-			standing = self.new_m4.kick.standing
-		}
-		self.amcar.kick.crouching = self.amcar.kick.standing
-		self.amcar.kick.steelsight = self.amcar.kick.standing
-		
-		self.amcar.stats = {
-			zoom = 3,
-			total_ammo_mod = 21,
-			damage = 42,
-			alert_size = 7,
-			spread = 10,
-			spread_moving = 8,
-			recoil = 20,
-			value = 1,
-			extra_ammo = 51,
-			reload = 11,
-			suppression = 10,
-			concealment = 21
-		}
-		self.amcar.stats_modifiers = {
-			damage = 1
+			9,
+			18
 		}
 	
 		--AK Rifle
@@ -1898,59 +1866,27 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		--JP36
-		self.g36.FIRE_MODE = "auto"
-		self.g36.fire_mode_data = {
-			fire_rate = 0.085
+		self.g36.cd_stability = 100
+		self.g36.cd_spread = 92
+		self.g36.cd_rpm = 706
+		self.g36.cd_threat = 14
+		self.g36.cd_ammosetup =
+		{
+			clip_size = 30,
+			total_ammo = 300
 		}
-		self.g36.CAN_TOGGLE_FIREMODE = true
-		self.g36.auto = {
-			fire_rate = 0.085
-		}
-		self.g36.timers = {
-			reload_not_empty = 2.85,
-			reload_empty = 3.85,
+		self.g36.stats.damage = 50
+		self.g36.stats.concealment = 25
+		self.g36.timers = 
+		{
+			reload_not_empty = 2,
+			reload_empty = 2.6,
 			unequip = 0.6,
 			equip = 0.6
 		}
-		
-		self.g36.CLIP_AMMO_MAX = 30
-		self.g36.NR_CLIPS_MAX = 8
-		self.g36.AMMO_MAX = self.g36.CLIP_AMMO_MAX * self.g36.NR_CLIPS_MAX
 		self.g36.AMMO_PICKUP = {
-			7.2,
-			13.20
-		}
-		
-		self.g36.spread = {
-			standing = self.new_m4.spread.standing,
-			crouching = self.new_m4.spread.crouching,
-			steelsight = self.new_m4.spread.steelsight,
-			moving_standing = self.new_m4.spread.moving_standing,
-			moving_crouching = self.new_m4.spread.moving_crouching,
-			moving_steelsight = self.new_m4.spread.moving_steelsight
-		}
-		self.g36.kick = {
-			standing = self.new_m4.kick.standing
-		}
-		self.g36.kick.crouching = self.g36.kick.standing
-		self.g36.kick.steelsight = self.g36.kick.standing
-		
-		self.g36.stats = {
-			zoom = 3,
-			total_ammo_mod = 21,
-			damage = 44,
-			alert_size = 7,
-			spread = 11,
-			spread_moving = 9,
-			recoil = 17,
-			value = 1,
-			extra_ammo = 51,
-			reload = 11,
-			suppression = 11,
-			concealment = 19
-		}
-		self.g36.stats_modifiers = {
-			damage = 1
+			9,
+			16
 		}
 		
 		--Galant Rifle
@@ -2290,59 +2226,27 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		--Commando 553
-		self.s552.FIRE_MODE = "auto"
-		self.s552.fire_mode_data = {
-			fire_rate = 0.084
+		self.s552.cd_stability = 100
+		self.s552.cd_spread = 60
+		self.s552.cd_rpm = 714
+		self.s552.cd_threat = 12
+		self.s552.cd_ammosetup =
+		{
+			clip_size = 30,
+			total_ammo = 300
 		}
-		self.s552.CAN_TOGGLE_FIREMODE = true
-		self.s552.auto = {
-			fire_rate = 0.084
-		}
-		self.s552.timers = {
-			reload_not_empty = 1.65,
-			reload_empty = 2.4,
-			unequip = 0.55,
+		self.s552.stats.damage = 50
+		self.s552.stats.concealment = 25
+		self.s552.timers = 
+		{
+			reload_not_empty = 1.5,
+			reload_empty = 2,
+			unequip = 0.7,
 			equip = 0.7
 		}
-		
-		self.s552.CLIP_AMMO_MAX = 30
-		self.s552.NR_CLIPS_MAX = 8
-		self.s552.AMMO_MAX = self.s552.CLIP_AMMO_MAX * self.s552.NR_CLIPS_MAX
 		self.s552.AMMO_PICKUP = {
-			7.20,
-			13.20
-		}
-		
-		self.s552.spread = {
-			standing = self.new_m4.spread.standing,
-			crouching = self.new_m4.spread.crouching,
-			steelsight = self.new_m4.spread.steelsight,
-			moving_standing = self.new_m4.spread.moving_standing,
-			moving_crouching = self.new_m4.spread.moving_crouching,
-			moving_steelsight = self.new_m4.spread.moving_steelsight
-		}
-		self.s552.kick = {
-			standing = self.new_m4.kick.standing
-		}
-		self.s552.kick.crouching = self.s552.kick.standing
-		self.s552.kick.steelsight = self.s552.kick.standing
-		
-		self.s552.stats = {
-			zoom = 3,
-			total_ammo_mod = 21,
-			damage = 42,
-			alert_size = 7,
-			spread = 10,
-			spread_moving = 8,
-			recoil = 15,
-			value = 1,
-			extra_ammo = 51,
-			reload = 11,
-			suppression = 12,
-			concealment = 22
-		}
-		self.s552.stats_modifiers = {
-			damage = 1
+			8,
+			16
 		}
 		
 		--Eagle Heavy
@@ -2514,64 +2418,27 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		--Bootleg Rifle
-		self.tecci.FIRE_MODE = "auto"
-		self.tecci.fire_mode_data = {
-			fire_rate = 0.09
+		self.tecci.cd_stability = 100
+		self.tecci.cd_spread = 52
+		self.tecci.cd_rpm = 667
+		self.tecci.cd_threat = 20
+		self.tecci.cd_ammosetup =
+		{
+			clip_size = 100,
+			total_ammo = 400
 		}
-		self.tecci.CAN_TOGGLE_FIREMODE = true
-		self.tecci.auto = {
-			fire_rate = 0.1
-		}
-		self.tecci.timers = {
-			reload_not_empty = 3.8,
-			reload_empty = 4.7,
+		self.tecci.stats.damage = 50
+		self.tecci.stats.concealment = 10
+		self.tecci.timers = 
+		{
+			reload_not_empty = 3,
+			reload_empty = 3.2,
 			unequip = 0.6,
 			equip = 0.6
 		}
-		
-		self.tecci.CLIP_AMMO_MAX = 100
-		self.tecci.NR_CLIPS_MAX = 2
-		self.tecci.AMMO_MAX = self.tecci.CLIP_AMMO_MAX * self.tecci.NR_CLIPS_MAX
 		self.tecci.AMMO_PICKUP = {
-			6,
-			11
-		}
-		
-		self.tecci.spread = {
-			standing = 3
-		}
-		self.tecci.spread.crouching = self.tecci.spread.standing * 0.4
-		self.tecci.spread.steelsight = self.tecci.spread.standing * 0.4
-		self.tecci.spread.moving_standing = self.tecci.spread.standing
-		self.tecci.spread.moving_crouching = self.tecci.spread.standing
-		self.tecci.spread.moving_steelsight = self.tecci.spread.steelsight
-		self.tecci.kick = {
-			standing = {
-				0.6,
-				0.8,
-				-1,
-				1
-			}
-		}
-		self.tecci.kick.crouching = self.tecci.kick.standing
-		self.tecci.kick.steelsight = self.tecci.kick.standing
-		
-		self.tecci.stats = {
-			zoom = 3,
-			total_ammo_mod = 21,
-			damage = 40,
-			alert_size = 7,
-			spread = 7,
-			spread_moving = 10,
-			recoil = 14,
-			value = 1,
-			extra_ammo = 51,
-			reload = 11,
-			suppression = 10,
-			concealment = 20
-		}
-		self.tecci.stats_modifiers = {
-			damage = 1
+			8,
+			16
 		}
 		
 		--Queen's Wrath
@@ -2636,59 +2503,27 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		--Clarion Rifle
-		self.famas.FIRE_MODE = "auto"
-		self.famas.fire_mode_data = {
-			fire_rate = 0.06
+		self.famas.cd_stability = 100
+		self.famas.cd_spread = 72
+		self.famas.cd_rpm = 1000
+		self.famas.cd_threat = 14
+		self.famas.cd_ammosetup =
+		{
+			clip_size = 30,
+			total_ammo = 300
 		}
-		self.famas.CAN_TOGGLE_FIREMODE = true
-		self.famas.auto = {
-			fire_rate = 0.06
-		}
-		self.famas.timers = {
-			reload_not_empty = 2.72,
-			reload_empty = 3.78,
-			unequip = 0.55,
+		self.famas.stats.damage = 50
+		self.famas.stats.concealment = 30
+		self.famas.timers = 
+		{
+			reload_not_empty = 2.2,
+			reload_empty = 2.9,
+			unequip = 0.6,
 			equip = 0.6
 		}
-		
-		self.famas.CLIP_AMMO_MAX = 30
-		self.famas.NR_CLIPS_MAX = 8
-		self.famas.AMMO_MAX = self.famas.CLIP_AMMO_MAX * self.famas.NR_CLIPS_MAX
 		self.famas.AMMO_PICKUP = {
-			7.2,
-			13.2
-		}
-		
-		self.famas.spread = {
-			standing = self.new_m4.spread.standing,
-			crouching = self.new_m4.spread.crouching,
-			steelsight = self.new_m4.spread.steelsight,
-			moving_standing = self.new_m4.spread.moving_standing,
-			moving_crouching = self.new_m4.spread.moving_crouching,
-			moving_steelsight = self.new_m4.spread.moving_steelsight
-		}
-		self.famas.kick = {
-			standing = self.new_m4.kick.standing
-		}
-		self.famas.kick.crouching = self.famas.kick.standing
-		self.famas.kick.steelsight = self.famas.kick.standing
-		
-		self.famas.stats = {
-			zoom = 3,
-			total_ammo_mod = 21,
-			damage = 41,
-			alert_size = 7,
-			spread = 10,
-			spread_moving = 8,
-			recoil = 18,
-			value = 4,
-			extra_ammo = 51,
-			reload = 11,
-			suppression = 10,
-			concealment = 24
-		}
-		self.famas.stats_modifiers = {
-			damage = 1
+			8,
+			16
 		}
 		
 		--Lion's Roar aka BEST GUN
@@ -7829,5 +7664,73 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		
 		--Miniguns end here.
 	
+		-- Automated processing of values.
+		-- i am not manually doin the goddamn math to figure out the proper fire rate for each damn gun lmao
+		-- fire rate: 1 /(rate / 60)
+		-- stability: recoil * (1/3)
+		-- spread: accuracy * (1/3)
+		-- suppression: (43 - threat) / 3
+		if deathvox and deathvox:IsTotalCrackdownEnabled() then
+			for k,v in pairs(self) do
+				log("processing weapon " .. k)
+				if self[k] and self[k]["cd_stability"] then
+					self[k]["stats"]["recoil"] = math.ceil((self[k]["cd_stability"] * (1/3)))
+					log("stability set to " .. self[k]["stats"]["recoil"])
+				end
+				if self[k] and self[k]["cd_spread"] then
+					self[k]["stats"]["spread"] = math.ceil((self[k]["cd_spread"] * (1/3)))
+					self[k]["stats"]["spread_moving"] = math.ceil((self[k]["cd_spread"] * (1/3)))
+					self[k]["spread"] = {
+						standing = math.ceil((self[k]["cd_spread"] * (1/3)))
+					}
+					self[k]["spread"]["crouching"] = self[k]["spread"]["standing"] * 0.4
+					self[k]["spread"]["steelsight"] = self[k]["spread"]["standing"] * 0.4
+					self[k]["spread"]["moving_standing"] = self[k]["spread"]["standing"]
+					self[k]["spread"]["moving_crouching"] = self[k]["spread"]["standing"]
+					self[k]["spread"]["moving_steelsight"] = self[k]["spread"]["steelsight"]
+					log("spread set to " .. self[k]["stats"]["spread"])
+				end
+				if self[k] and self[k]["cd_rpm"] then
+					self[k]["fire_mode_data"]["fire_rate"] = 1 / (self[k]["cd_rpm"] / 60)
+					self[k]["auto"]["fire_rate"] = 1 / (self[k]["cd_rpm"] / 60)
+					log("fire rate set to " .. self[k]["auto"]["fire_rate"])
+				end
+				if self[k] and self[k]["cd_threat"] then
+					self[k]["stats"]["suppression"] = math.ceil((43 - self[k]["cd_threat"]) / 3)
+					log("threat set to " .. self[k]["stats"]["suppression"])
+				end
+				if self[k] and self[k]["cd_ammosetup"] then
+					self[k]["CLIP_AMMO_MAX"] = self[k]["cd_ammosetup"]["clip_size"]
+					self[k]["NR_CLIPS_MAX"] = self[k]["cd_ammosetup"]["total_ammo"] / self[k]["cd_ammosetup"]["clip_size"]
+					self[k]["AMMO_MAX"] = self[k]["CLIP_AMMO_MAX"] * self[k]["NR_CLIPS_MAX"]
+					log("maximum ammo set to " .. self[k]["AMMO_MAX"])
+				end
+			end
+		end
+		--[[
+		WEAPON TEMPLATE:
+		self.weaponid.cd_stability =
+		self.weaponid.cd_spread =
+		self.weaponid.cd_rpm =
+		self.weaponid.cd_threat =
+		self.weaponid.cd_ammosetup =
+		{
+			clip_size =,
+			total_ammo =
+		}
+		self.weaponid.stats.damage =
+		self.weaponid.stats.concealment =
+		self.weaponid.timers = 
+		{
+			reload_not_empty = ,
+			reload_empty = ,
+			unequip = ,
+			equip = 
+		}
+		self.weaponid.AMMO_PICKUP = {
+			1,
+			1
+		}
+		]]--
 	end
 end)
