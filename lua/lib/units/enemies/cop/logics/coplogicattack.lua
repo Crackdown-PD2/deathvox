@@ -106,7 +106,7 @@ function CopLogicAttack._update_cover(data)
 			local threat_pos = enemy_tracker:field_position()
 			local heister_pos = data.attention_obj.m_pos --the threat
 			
-			if data.objective and data.objective.type == "follow" and data.tactics and data.tactics.shield_cover and not data.unit:base()._tweak_table == "shield" then
+			if data.objective and data.objective.type == "follow" and data.tactics and data.tactics.shield_cover and not alive(data.unit:inventory() and data.unit:inventory()._shield_unit) then
 				local shield_pos = data.objective.follow_unit:movement():m_pos() --the pillar
 				local shield_direction = mvector3.direction(temp_vec4, my_pos, shield_pos)
 				local heister_direction = mvector3.direction(temp_vec5, my_pos, heister_pos)
