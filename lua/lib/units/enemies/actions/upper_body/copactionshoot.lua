@@ -141,10 +141,6 @@ function CopActionShoot:update(t)
 				local fired = self._weapon_base:trigger_held(shoot_from_pos, target_vec, dmg_mul, self._shooting_player, nil, nil, nil, self._attention.unit)
 
 				if fired then
-					if fired.hit_enemy and fired.hit_enemy.type == "death" and self._unit:unit_data().mission_element then
-						self._unit:unit_data().mission_element:event("killshot", self._unit)
-					end
-
 					if not ext_anim.recoil and vis_state == 1 and not ext_anim.base_no_recoil and not ext_anim.move and not self._unit:base():has_tag("tank") then --prevent Dozers from using recoil animations, aka aiming their guns, they introduced this with Housewarming Party and never fixed it
 						self._ext_movement:play_redirect("recoil_auto")
 					end
@@ -294,10 +290,6 @@ function CopActionShoot:update(t)
 
 						target_dis = mvec3_dir(target_vec, shoot_from_pos, spread_pos)
 						local fired = self._weapon_base:singleshot(shoot_from_pos, target_vec, dmg_mul, self._shooting_player, nil, nil, nil, self._attention.unit)
-
-						if fired and fired.hit_enemy and fired.hit_enemy.type == "death" and self._unit:unit_data().mission_element then
-							self._unit:unit_data().mission_element:event("killshot", self._unit)
-						end
 
 						if vis_state == 1 then
 							if not ext_anim.base_no_recoil and not ext_anim.move then
