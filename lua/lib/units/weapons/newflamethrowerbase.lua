@@ -96,18 +96,13 @@ function NewFlamethrowerBase:_fire_raycast(user_unit, from_pos, direction, dmg_m
 		end
 	end
 
-	if self._suppression then --proper suppression, using a wider cylinder here due to the flamethrower's short range and wider area of effect
-		local tmp_vec_to = Vector3()
-		local max_suppression_range = self._flame_max_range
+	if self._suppression then --using a bigger cone here due to the flamethrower's short range and wider area of effect
+		local max_suppression_range = self._flame_max_range * 1.5
 
-		mvector3.set(tmp_vec_to, mvector3.copy(direction))
-		mvector3.multiply(tmp_vec_to, max_suppression_range)
-		mvector3.add(tmp_vec_to, mvector3.copy(from_pos))
-
-		self:_suppress_units(mvector3.copy(from_pos), tmp_vec_to, 200, managers.slot:get_mask("enemies"), user_unit, suppr_mul, max_suppression_range)
+		self:_suppress_units(mvector3.copy(from_pos), mvector3.copy(direction), max_suppression_range, managers.slot:get_mask("enemies"), user_unit, suppr_mul)
 	end
 
-	result.hit_enemy = next(hit_enemies) and true or false
+	result.hit_enemy = #hit_enemies > 0 and true or false
 
 	if self._alert_events then
 		result.rays = {
@@ -122,7 +117,7 @@ function NewFlamethrowerBase:_fire_raycast(user_unit, from_pos, direction, dmg_m
 		weapon_unit = self._unit
 	})
 
-	for _, d in pairs(hit_enemies) do --enemies hit per fired shot pull increase accuracy accordingly (negating the one above)
+	for i = 1, #hit_enemies, 1 do --enemies hit per fired shot pull increase accuracy accordingly (negating the one above)
 		managers.statistics:shot_fired({
 			skip_bullet_count = true,
 			hit = true,
