@@ -22,3 +22,12 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Localization", function(loc)
 		["hud_assault_gsg9_cover"]	= "IN DECKUNG BLEIBEN"
 	})
 end)
+
+Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
+	if deathvox and deathvox:IsTotalCrackdownEnabled() then
+		LocalizationManager:add_localized_strings({
+			["menu_fast_fire_beta"] = "Close Enough",
+			["menu_fast_fire_beta_desc"] = "BASIC: ##$basic##\nYour SMGs, LMGs and Assault Rifles gain ##15## more bullets in their magazine.\n\nACE: ##$pro##\nYour SMGs and Assault Rifles' bullets that strike hard surfaces ##have a 25% chance to ricochet## towards enemies.",
+		})
+	end
+end)

@@ -1425,11 +1425,13 @@ function WeaponTweakData:_set_sm_wish()
 	self.aa_turret_module.IDLE_WAIT_TIME = 10
 end
 
+
+
 Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function(self, tweak_data)
 	
 	--local dont = true
 	
-	if dont then
+	if deathvox:IsTotalCrackdownEnabled() then
 		--Don't worry about all of this.
 		local autohit_rifle_default, autohit_pistol_default, autohit_shotgun_default, autohit_lmg_default, autohit_snp_default, autohit_smg_default, autohit_minigun_default, aim_assist_rifle_default, aim_assist_pistol_default, aim_assist_shotgun_default, aim_assist_lmg_default, aim_assist_snp_default, aim_assist_smg_default, aim_assist_minigun_default = nil
 		
@@ -7829,5 +7831,3 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	
 	end
 end)
-
-
