@@ -2473,7 +2473,7 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		}
 	}
-	presets.weapon.deathvox.akimbo_pistol = { --mark 1 adjustment. Needs damage increase.
+	presets.weapon.deathvox.akimbo_pistol = { --mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish. Needs damage increase???
 		aim_delay = {
 			0,
 			0
@@ -2536,7 +2536,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .8,
 				r = 1000,
 				acc = {
-					0.7,
+					0.25,
 					0.8
 				},
 				recoil = {
@@ -2554,7 +2554,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .65,
 				r = 2000,
 				acc = {
-					0.6,
+					0.2,
 					0.7
 				},
 				recoil = {
@@ -2572,7 +2572,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .6,
 				r = 3000,
 				acc = {
-					0.6,
+					0.2,
 					0.65
 				},
 				recoil = {
@@ -2590,7 +2590,7 @@ function CharacterTweakData:_presets(tweak_data)
 				dmg_mul = .5, -- no flat damage.
 				r = 4000,
 				acc = {
-					0.2,
+					0,
 					0.60 -- no infinite range.
 				},
 				recoil = {

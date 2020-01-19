@@ -141,10 +141,6 @@ function CopActionShoot:update(t)
 				local fired = self._weapon_base:trigger_held(shoot_from_pos, target_vec, dmg_mul, self._shooting_player, nil, nil, nil, self._attention.unit)
 
 				if fired then
-					if fired.hit_enemy and fired.hit_enemy.type == "death" and self._unit:unit_data().mission_element then
-						self._unit:unit_data().mission_element:event("killshot", self._unit)
-					end
-
 					if not ext_anim.recoil and vis_state == 1 and not ext_anim.base_no_recoil and not ext_anim.move and not self._unit:base():has_tag("tank") then --prevent Dozers from using recoil animations, aka aiming their guns, they introduced this with Housewarming Party and never fixed it
 						self._ext_movement:play_redirect("recoil_auto")
 					end
@@ -291,10 +287,6 @@ function CopActionShoot:update(t)
 						target_dis = mvec3_dir(target_vec, shoot_from_pos, spread_pos)
 						local fired = self._weapon_base:singleshot(shoot_from_pos, target_vec, dmg_mul, self._shooting_player, nil, nil, nil, self._attention.unit)
 
-						if fired and fired.hit_enemy and fired.hit_enemy.type == "death" and self._unit:unit_data().mission_element then
-							self._unit:unit_data().mission_element:event("killshot", self._unit)
-						end
-
 						if vis_state == 1 then
 							if not ext_anim.base_no_recoil and not ext_anim.move then
 								self._ext_movement:play_redirect("recoil_single")
@@ -364,15 +356,15 @@ function CopActionShoot:check_melee_start(t, attention, target_dis, autotarget, 
 		local melee_range = autotarget and 130 or 180 --higher for NPC vs NPC so that they can hit each other more often and easily
 
 		if target_dis <= melee_range then
-			local obstructed_by_geometry = World:raycast("ray", shoot_from_pos, target_pos, "slot_mask", managers.slot:get_mask("world_geometry", "vehicles"))
+			local obstructed_by_geometry = World:raycast("ray", shoot_from_pos, target_pos, "sphere_cast_radius", 20, "slot_mask", managers.slot:get_mask("world_geometry", "vehicles"), "ray_type", "body melee", "report")
 
 			if not obstructed_by_geometry then
 				local melee_weapon = self._unit:base():melee_weapon()
 				local is_weapon = melee_weapon == "weapon"
-				local electrical_melee = not is_weapon and tweak_data.weapon.npc_melee[melee_weapon].electrical --in case you want to have Tasers use the Buzzer (or bots get melee customization, as that'd be possible), it's easy to implement
+				local electrical_melee = not is_weapon and tweak_data.weapon.npc_melee[melee_weapon] and tweak_data.weapon.npc_melee[melee_weapon].electrical --in case you want to have Tasers use the Buzzer (or bots get melee customization, as that'd be possible), it's easy to implement
 
 				local target_has_shield = alive(attention.unit:inventory() and attention.unit:inventory()._shield_unit)
-				local target_is_covered_by_shield = World:raycast("ray", shoot_from_pos, target_pos, "slot_mask", managers.slot:get_mask("enemy_shield_check")) --does not refer to a sentry's/turret's shield
+				local target_is_covered_by_shield = World:raycast("ray", shoot_from_pos, target_pos, "sphere_cast_radius", 20, "slot_mask", managers.slot:get_mask("enemy_shield_check"), "ray_type", "body melee", "report")
 
 				if autotarget then
 					if not target_is_covered_by_shield then
@@ -387,7 +379,7 @@ function CopActionShoot:check_melee_start(t, attention, target_dis, autotarget, 
 				else
 					if target_has_shield then
 						if target_is_covered_by_shield then
-							local can_be_knocked = not attention.unit:base().is_phalanx and attention.unit:base():char_tweak().damage.shield_knocked and not attention.unit:character_damage():is_immune_to_shield_knockback()
+							local can_be_knocked = attention.unit:base():char_tweak().damage.shield_knocked and not attention.unit:base().is_phalanx and not attention.unit:character_damage():is_immune_to_shield_knockback()
 
 							if can_be_knocked then
 								return true
@@ -397,6 +389,14 @@ function CopActionShoot:check_melee_start(t, attention, target_dis, autotarget, 
 								local can_be_tased = attention.unit:base():char_tweak().can_be_tased == nil or attention.unit:base():char_tweak().can_be_tased
 
 								if can_be_tased then
+									local anim_data = attention.unit:anim_data()
+
+									if anim_data then
+										if anim_data.act or anim_data.tase or anim_data.hurt or anim_data.bleedout then
+											return false
+										end
+									end
+
 									return true
 								end
 							else
@@ -409,6 +409,14 @@ function CopActionShoot:check_melee_start(t, attention, target_dis, autotarget, 
 								local can_be_tased = attention.unit:base():char_tweak().can_be_tased == nil or attention.unit:base():char_tweak().can_be_tased
 
 								if can_be_tased then
+									local anim_data = attention.unit:anim_data()
+
+									if anim_data then
+										if anim_data.act or anim_data.tase or anim_data.hurt or anim_data.bleedout then
+											return false
+										end
+									end
+
 									return true
 								end
 							else
@@ -480,71 +488,100 @@ function CopActionShoot:_chk_start_melee(target_vec, target_dis, autotarget, tar
 end
 
 function CopActionShoot:anim_clbk_melee_strike()
-	if not self._attention then --the unit can lose attention right when it's supposed to strike something and simply kill the game without this check
-		return
-	end
-
 	local shoot_from_pos = self._shoot_from_pos
-	local target_pos, target_vec, target_dis, autotarget = self:_get_target_pos(shoot_from_pos, self._attention, TimerManager:game():time())
+	local my_fwd = mvector3.copy(self._ext_movement:m_head_rot():z())
+	local target_pos = Vector3()
 
-	if not Network:is_server() and not autotarget then --no need to even try anything if the unit is a husk and it's not targeting the player (the animation syncing for the host will in turn make them hit something correctly)
-		return
-	end
+	--[[if self._attention then
+		local att_char_dmg = self._attention.unit and self._attention.unit:character_damage()
 
-	local max_dis = autotarget and 165 or 180 --slightly higher for NPC vs NPC so that they can hit each other more often and easily
+		if att_char_dmg and att_char_dmg.shoot_pos_mid then
+			local fwd_vec = Vector3()
+			local att_shoot_pos = Vector3()
+			att_char_dmg:shoot_pos_mid(att_shoot_pos)
 
-	if target_dis >= max_dis then
-		return
-	end
+			mvector3.direction(fwd_vec, mvector3.copy(shoot_from_pos), att_shoot_pos)
+			my_fwd = fwd_vec
+		end
+	end]]
 
-	local min_dot = math.lerp(0, 0.4, target_dis / max_dis)
-	local tar_vec_flat = temp_vec2
+	mvector3.set(target_pos, my_fwd)
+	mvector3.multiply(target_pos, 180)
+	mvector3.add(target_pos, shoot_from_pos)
 
-	mvec3_set(tar_vec_flat, target_vec)
-	mvec3_set_z(tar_vec_flat, 0)
-	mvec3_norm(tar_vec_flat)
-
-	local fwd = self._common_data.fwd
-	local fwd_dot = mvec3_dot(fwd, tar_vec_flat)
-
-	if fwd_dot < min_dot then
-		return
-	end
-
+	local hit_local_player = true
 	local melee_slot_mask = managers.slot:get_mask("bullet_impact_targets_no_police") --ignore teammates of the attacking unit
+	melee_slot_mask = melee_slot_mask + 3 --just consider player husks as obstructions for enemies, they won't take damage
 
-	if managers.groupai:state():is_unit_team_AI(self._unit) or managers.groupai:state():is_enemy_converted_to_criminal(self._unit) then --switch for Jokers and team AI
+	if managers.groupai:state():is_unit_team_AI(self._unit) or managers.groupai:state():is_enemy_converted_to_criminal(self._unit) then --override for Jokers and team AI
 		melee_slot_mask = managers.slot:get_mask("bullet_impact_targets_no_criminals")
+		hit_local_player = false
 	end
 
-	--similar to player melee attacks, use a sphere instead of just a ray
-	local col_ray = World:raycast("ray", shoot_from_pos, target_pos, "ignore_unit", {self._unit, managers.player:player_unit()}, "slot_mask", melee_slot_mask, "sphere_cast_radius", 20, "ray_type", "body melee")
+	--similar to player melee attacks, use a sphere ray instead of just a normal plain ray
+	local col_ray = World:raycast("ray", shoot_from_pos, target_pos, "sphere_cast_radius", 20, "slot_mask", melee_slot_mask, "ignore_unit", self._unit, "ray_type", "body melee")
+	local draw_debug_spheres = false
 
-	if autotarget then
-		if col_ray then --hit something else rather than the player
-			local obstructed = World:raycast("ray", shoot_from_pos, target_pos, "ignore_unit", {self._unit, managers.player:player_unit()}, "slot_mask", melee_slot_mask) --use a normal ray to check if the player is actually obstructed or not
+	if draw_debug_spheres then
+		local draw_duration = 3
+		local new_brush = col_ray and Draw:brush(Color.red:with_alpha(0.5), draw_duration) or Draw:brush(Color.white:with_alpha(0.5), draw_duration)
+		local sphere_draw_pos = col_ray and col_ray.position or target_pos
+		local sphere_draw_size = col_ray and 5 or 20
+		new_brush:sphere(sphere_draw_pos, sphere_draw_size)
+	end
 
-			if not obstructed then
-				col_ray = {
-					position = shoot_from_pos + fwd * 50,
-					ray = mvector3.copy(target_vec),
-					unit = managers.player:player_unit()
-				}
+	local local_player = managers.player:player_unit()
+
+	--a more clena method of determining if the local player should get hit or not, without cancelling the attack if the player can't get hit, like it did before
+	--sadly, no raycasts I tried so far (even with target_unit/target_body) seem to be able to hit the local player
+	if hit_local_player and alive(local_player) and not self._unit:character_damage():is_friendly_fire(local_player) then
+		local range_against_player = 165
+		local player_head_pos = local_player:movement():m_head_pos()
+		local player_vec = Vector3()
+		local player_distance = mvector3.direction(player_vec, mvector3.copy(shoot_from_pos), mvector3.copy(player_head_pos))
+
+		if player_distance <= range_against_player then
+			if not col_ray or col_ray.distance > player_distance or not World:raycast("ray", shoot_from_pos, player_head_pos, "sphere_cast_radius", 5, "slot_mask", melee_slot_mask, "ignore_unit", self._unit, "ray_type", "body melee", "report") then
+				local flat_vec = Vector3()
+
+				mvector3.set(flat_vec, player_vec)
+				mvector3.set_z(flat_vec, 0)
+				mvector3.normalize(flat_vec)
+
+				local min_dot = math.lerp(0, 0.4, player_distance / range_against_player)
+				local fwd_dot = mvector3.dot(my_fwd, flat_vec)
+
+				if fwd_dot >= min_dot then
+					col_ray = {
+						unit = local_player,
+						position = player_head_pos,
+						ray = mvector3.copy(player_vec:normalized())
+					}
+
+					if draw_debug_spheres then
+						local draw_duration = 3
+						local new_brush = Draw:brush(Color.yellow:with_alpha(0.5), draw_duration)
+						local sphere_draw_pos = player_head_pos
+						local sphere_draw_size = 5
+						new_brush:sphere(sphere_draw_pos, sphere_draw_size)
+					end
+				end
 			end
-		else
-			col_ray = {
-				position = shoot_from_pos + fwd * 50,
-				ray = mvector3.copy(target_vec),
-				unit = managers.player:player_unit()
-			}
 		end
 	end
 
 	if col_ray and alive(col_ray.unit) then
 		local melee_weapon = self._unit:base():melee_weapon()
 		local is_weapon = melee_weapon == "weapon"
-		local electrical_melee = not is_weapon and tweak_data.weapon.npc_melee[melee_weapon].electrical
-		local damage = (is_weapon or managers.groupai:state():is_unit_team_AI(self._unit)) and self._w_usage_tweak.melee_dmg or tweak_data.weapon.npc_melee[melee_weapon].damage --make bot melee weapons cosmetic (use charactertweakdata as usual for the base damage)
+		local electrical_melee = not is_weapon and tweak_data.weapon.npc_melee[melee_weapon] and tweak_data.weapon.npc_melee[melee_weapon].electrical
+		local damage = self._w_usage_tweak.melee_dmg
+
+		if is_weapon or managers.groupai:state():is_unit_team_AI(self._unit) then
+			--nothing
+		elseif tweak_data.weapon.npc_melee[melee_weapon] and tweak_data.weapon.npc_melee[melee_weapon].damage then
+			damage = tweak_data.weapon.npc_melee[melee_weapon].damage
+		end
+
 		local dmg_mul = is_weapon and 1 or self._common_data.char_tweak.melee_weapon_dmg_multiplier or 1
 		dmg_mul = dmg_mul * (1 + self._unit:base():get_total_buff("base_damage"))
 		damage = damage * dmg_mul
@@ -555,7 +592,7 @@ function CopActionShoot:anim_clbk_melee_strike()
 		local character_unit, shield_knock = nil
 		local defense_data = nil
 
-		if hit_unit:in_slot(managers.slot:get_mask("enemy_shield_check")) and alive(hit_unit:parent()) then
+		if Network:is_server() and hit_unit:in_slot(managers.slot:get_mask("enemy_shield_check")) and alive(hit_unit:parent()) then
 			local can_be_knocked = not hit_unit:parent():base().is_phalanx and hit_unit:parent():base():char_tweak().damage.shield_knocked and not hit_unit:parent():character_damage():is_immune_to_shield_knockback()
 
 			if can_be_knocked then
@@ -566,15 +603,14 @@ function CopActionShoot:anim_clbk_melee_strike()
 
 		character_unit = character_unit or hit_unit
 
-		if autotarget and character_unit == managers.player:player_unit() then
-			local push_vel = target_vec:with_z(0.1):normalized() * 600
+		if character_unit == local_player then
 			local action_data = {
 				variant = "melee",
 				damage = damage,
 				weapon_unit = self._weapon_unit,
 				attacker_unit = self._unit,
 				melee_weapon = melee_weapon,
-				push_vel = push_vel,
+				push_vel = mvector3.copy(col_ray.ray:with_z(0.1)) * 600,
 				tase_player = electrical_melee,
 				col_ray = col_ray
 			}
@@ -595,7 +631,7 @@ function CopActionShoot:anim_clbk_melee_strike()
 
 						defense_data = character_unit:character_damage():damage_bullet(action_data) --sentries/turrets lack a melee damage function
 					else
-						if character_unit:character_damage().damage_melee then
+						if character_unit:character_damage().damage_melee and not character_unit:base().is_husk_player then --ignore player husks as the damage CAN be synced and dealt to them
 							local variant = shield_knock and "melee" or electrical_melee and "taser_tased" or "melee"
 							local action_data = {
 								variant = variant,
@@ -605,8 +641,6 @@ function CopActionShoot:anim_clbk_melee_strike()
 								attacker_unit = self._unit,
 								name_id = melee_weapon,
 								shield_knock = shield_knock,
-								--is_melee_attack = true,
-								--origin = shoot_from_pos,
 								col_ray = col_ray
 							}
 
@@ -615,7 +649,7 @@ function CopActionShoot:anim_clbk_melee_strike()
 					end
 				end
 
-				if character_unit:damage() and col_ray.body:extension() and col_ray.body:extension().damage then --damage objects like glass just like players are able to
+				if character_unit:damage() and col_ray.body:extension() and col_ray.body:extension().damage then --damage objects with body extensions (like glass), just like players are able to
 					damage = math.clamp(damage, 0, 63)
 
 					col_ray.body:extension().damage:damage_melee(self._unit, col_ray.normal, col_ray.position, col_ray.ray, damage)
@@ -624,36 +658,33 @@ function CopActionShoot:anim_clbk_melee_strike()
 			end
 		end
 
-		if defense_data then
-			if defense_data == "friendly_fire" then
-				return
-			elseif defense_data == "countered" then
+		if defense_data and defense_data ~= "friendly_fire" then
+			if defense_data == "countered" then
 				self._common_data.melee_countered_t = TimerManager:game():time()
+
+				--use a sphere ray to properly attack the countered unit by getting a proper direction, position of the hit, etc
+				local counter_ray = World:raycast("ray", character_unit:movement():m_head_pos(), self._unit:movement():m_com(), "sphere_cast_radius", 20, "target_unit", self._unit)
 				local action_data = {
 					damage_effect = 1,
 					damage = 0,
 					variant = "counter_spooc",
 					attacker_unit = character_unit,
-					col_ray = {
-						body = self._unit:body("body"),
-						position = self._common_data.pos + math.UP * 100
-					},
-					attack_dir = -1 * target_vec:normalized(),
-					name_id = autotarget and managers.blackmarket:equipped_melee_weapon() or character_unit:base():melee_weapon()
+					col_ray = counter_ray,
+					attack_dir = counter_ray.ray,
+					name_id = character_unit == local_player and managers.blackmarket:equipped_melee_weapon() or character_unit:base():melee_weapon()
 				}
 
 				self._unit:character_damage():damage_melee(action_data)
 			else
-				if character_unit ~= managers.player:player_unit() and character_unit:character_damage() and not character_unit:character_damage()._no_blood then
-					managers.game_play_central:play_impact_flesh({
-						col_ray = col_ray
-					})
-
-					managers.game_play_central:play_impact_sound_and_effects({
-						no_decal = true,
-						effect = shield_knock and Idstring("effects/payday2/particles/impacts/fallback_impact_pd2"), --sadly, there's no "no_effect" check in this function and it's not worth editing it just for this
-						col_ray = col_ray
-					})
+				if not shield_knock and character_unit ~= local_player and character_unit:character_damage() and not character_unit:character_damage()._no_blood then
+					if character_unit:base().sentry_gun then
+						managers.game_play_central:play_impact_sound_and_effects({
+							no_decal = true,
+							col_ray = col_ray
+						})
+					else
+						managers.game_play_central:sync_play_impact_flesh(col_ray.position, col_ray.ray)
+					end
 				end
 			end
 		end

@@ -15,15 +15,15 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
     if managers and managers.skirmish and managers.skirmish:is_skirmish() then
         local current_wave = managers.skirmish:current_wave_number()
         local wave_table = {
-        "cop", -- wave 1
-        "cop",
-        "fbi",
-        "fbi",
-	"fbi",
-        "gensec",
-        "gensec",
-        "classic",
-    	"zeal" --wave 9
+			"cop", -- wave 1
+			"cop",
+			"fbi",
+			"fbi",
+			"fbi",
+			"gensec",
+			"gensec",
+			"classic",
+			"zeal" --wave 9
         }
 	   if current_wave == 0 or not current_wave then
 			return "cop"
@@ -94,6 +94,7 @@ function LevelsTweakData:init()
     self.skm_red2.wave_count = 9
     self.skm_run.wave_count = 9
     self.skm_watchdogs_stage2.wave_count = 9
+
     --this crashes the game so i commented it out
     --self.skmc_fish.wave_count = 6
     --self.skmc_mad.wave_count = 6

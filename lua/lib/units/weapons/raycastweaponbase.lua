@@ -13,6 +13,81 @@ local math_lerp = math.lerp
 local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
 local tmp_rot1 = Rotation()
+RaycastWeaponBase.TRAIL_EFFECT = Idstring("effects/particles/weapons/weapon_trail")
+
+function RaycastWeaponBase:check_autoaim(from_pos, direction, max_dist, use_aim_assist, autohit_override_data)
+	local autohit = use_aim_assist and self._aim_assist_data or self._autohit_data
+	autohit = autohit_override_data or autohit
+	local autohit_near_angle = autohit.near_angle
+	local autohit_far_angle = autohit.far_angle
+	local far_dis = autohit.far_dis
+	local closest_error, closest_ray = nil
+	local tar_vec = tmp_vec1
+	local ignore_units = self._setup.ignore_units
+	local obstruction_slotmask = self._bullet_slotmask
+
+	if self._can_shoot_through_shield then
+		obstruction_slotmask = obstruction_slotmask - 8
+	end
+
+	local cone_distance = max_dist or self:weapon_range() or 20000
+	local tmp_vec_to = Vector3()
+	mvector3.set(tmp_vec_to, mvector3.copy(direction))
+	mvector3.multiply(tmp_vec_to, cone_distance)
+	mvector3.add(tmp_vec_to, mvector3.copy(from_pos))
+
+	local cone_radius = mvector3.length(tmp_vec_to) / 4
+	local enemies_in_cone = World:find_units("cone", from_pos, tmp_vec_to, cone_radius, managers.slot:get_mask("player_autoaim"))
+
+	for _, enemy in pairs(enemies_in_cone) do
+		local com = enemy:movement():m_com()
+
+		mvector3.set(tar_vec, com)
+		mvector3.subtract(tar_vec, from_pos)
+
+		local tar_aim_dot = mvec3_dot(direction, tar_vec)
+
+		if tar_aim_dot > 0 and (not max_dist or tar_aim_dot < max_dist) then
+			local tar_vec_len = math_clamp(mvec3_norm(tar_vec), 1, far_dis)
+			local error_dot = mvec3_dot(direction, tar_vec)
+			local error_angle = math.acos(error_dot)
+			local dis_lerp = math.pow(tar_aim_dot / far_dis, 0.25)
+			local autohit_min_angle = math_lerp(autohit_near_angle, autohit_far_angle, dis_lerp)
+
+			if error_angle < autohit_min_angle then
+				local percent_error = error_angle / autohit_min_angle
+
+				if not closest_error or percent_error < closest_error then
+					tar_vec_len = tar_vec_len + 100
+
+					mvector3.multiply(tar_vec, tar_vec_len)
+					mvector3.add(tar_vec, from_pos)
+
+					local vis_ray = World:raycast("ray", from_pos, tar_vec, "slot_mask", obstruction_slotmask, "ignore_unit", ignore_units)
+
+					if vis_ray and vis_ray.unit:key() == enemy:key() and (not closest_error or error_angle < closest_error) then
+						closest_error = error_angle
+						closest_ray = vis_ray
+
+						mvector3.set(tmp_vec1, com)
+						mvector3.subtract(tmp_vec1, from_pos)
+
+						local d = mvec3_dot(direction, tmp_vec1)
+
+						mvector3.set(tmp_vec1, direction)
+						mvector3.multiply(tmp_vec1, d)
+						mvector3.add(tmp_vec1, from_pos)
+						mvector3.subtract(tmp_vec1, com)
+
+						closest_ray.distance_to_aim_line = mvec3_len(tmp_vec1)
+					end
+				end
+			end
+		end
+	end
+
+	return closest_ray
+end
 
 function RaycastWeaponBase:setup(setup_data, damage_multiplier)
 	self._autoaim = setup_data.autoaim
@@ -99,9 +174,6 @@ function RaycastWeaponBase:set_laser_enabled(state)
 	end
 end
 
-local mvec1 = Vector3()
-local mvec2 = Vector3()
-
 function RaycastWeaponBase:_collect_hits(from, to)
 	local ray_hits = nil
 	local hit_enemy = false
@@ -155,7 +227,149 @@ end
 
 local mvec_to = Vector3()
 local mvec_spread_direction = Vector3()
-local mvec1 = Vector3()
+
+function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spread_mul, autohit_mul, suppr_mul, target_unit)
+	if managers.player:has_activate_temporary_upgrade("temporary", "no_ammo_cost_buff") then
+		managers.player:deactivate_temporary_upgrade("temporary", "no_ammo_cost_buff")
+
+		if managers.player:has_category_upgrade("temporary", "no_ammo_cost") then
+			managers.player:activate_temporary_upgrade("temporary", "no_ammo_cost")
+		end
+	end
+
+	local is_player = self._setup.user_unit == managers.player:player_unit()
+	local consume_ammo = not managers.player:has_active_temporary_property("bullet_storm") and (not managers.player:has_activate_temporary_upgrade("temporary", "berserker_damage_multiplier") or not managers.player:has_category_upgrade("player", "berserker_no_ammo_cost")) or not is_player
+	local base = self:ammo_base()
+	local mag = base:get_ammo_remaining_in_clip()
+	
+
+	if consume_ammo and (is_player or Network:is_server()) then
+
+		if base:get_ammo_remaining_in_clip() == 0 then
+			return
+		end
+
+		local ammo_usage = 1
+		local remaining_ammo = mag - ammo_usage
+
+		if is_player then
+			for _, category in ipairs(self:weapon_tweak_data().categories) do
+				if managers.player:has_category_upgrade(category, "consume_no_ammo_chance") then
+					local roll = math.rand(1)
+					local chance = managers.player:upgrade_value(category, "consume_no_ammo_chance", 0)
+
+					if roll < chance then
+						ammo_usage = 0
+
+						print("NO AMMO COST")
+					end
+				end
+			end
+		end
+
+		if mag > 0 and remaining_ammo <= (self.AKIMBO and 1 or 0) then
+			local w_td = self:weapon_tweak_data()
+
+			if w_td.animations and w_td.animations.magazine_empty then
+				self:tweak_data_anim_play("magazine_empty")
+			end
+
+			if w_td.sounds and w_td.sounds.magazine_empty then
+				self:play_tweak_data_sound("magazine_empty")
+			end
+
+			if w_td.effects and w_td.effects.magazine_empty then
+				self:_spawn_tweak_data_effect("magazine_empty")
+			end
+
+			self:set_magazine_empty(true)
+		end
+
+		base:set_ammo_remaining_in_clip(base:get_ammo_remaining_in_clip() - ammo_usage)
+		self:use_ammo(base, ammo_usage)
+	end
+	if is_player then
+		if mag <= 1 and managers.player:has_category_upgrade("player", "money_shot") and self:is_category("assault_rifle", "smg") then
+			local money_trail = Idstring("effects/particles/weapons/trail_dv_sniper")
+			local money_muzzle = Idstring("effects/particles/weapons/money_muzzle_fps")
+			
+			self._trail_effect_table = {
+				effect = money_trail,
+				position = Vector3(),
+				normal = Vector3()
+			}
+			
+			self._muzzle_effect_table = {
+				force_synch = true,
+				effect = money_muzzle,
+				parent = self._obj_fire
+			}
+			
+			dmg_mul = dmg_mul + 1
+			self:play_sound("c4_explode_metal")
+		else
+			self._trail_effect_table = {
+				effect = self.TRAIL_EFFECT,
+				position = Vector3(),
+				normal = Vector3()
+			}
+			
+			self._muzzle_effect_table = {
+				force_synch = true,
+				effect = self._muzzle_effect,
+				parent = self._obj_fire
+			}
+			
+		end
+	end
+
+	local user_unit = self._setup.user_unit
+
+	self:_check_ammo_total(user_unit)
+
+	if alive(self._obj_fire) then
+		self:_spawn_muzzle_effect(from_pos, direction)
+	end
+
+	self:_spawn_shell_eject_effect()
+
+	local ray_res = self:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoot_player, spread_mul, autohit_mul, suppr_mul, target_unit)
+
+	if self._alert_events and ray_res.rays then
+		self:_check_alert(ray_res.rays, from_pos, direction, user_unit)
+	end
+
+	if ray_res.enemies_in_cone then
+		for enemy_data, dis_error in pairs(ray_res.enemies_in_cone) do
+			if not enemy_data.unit:movement():cool() then
+				enemy_data.unit:character_damage():build_suppression(suppr_mul * dis_error * self._suppression, self._panic_suppression_chance)
+			end
+		end
+	end
+
+	managers.player:send_message(Message.OnWeaponFired, nil, self._unit, ray_res)
+
+	return ray_res
+end
+
+function RaycastWeaponBase:reload_speed_multiplier()
+	local multiplier = 1
+	
+	for _, category in ipairs(self:weapon_tweak_data().categories) do
+		multiplier = multiplier * managers.player:upgrade_value(category, "reload_speed_multiplier", 1)
+	end
+
+	multiplier = multiplier * managers.player:upgrade_value("weapon", "passive_reload_speed_multiplier", 1)
+	multiplier = multiplier * managers.player:upgrade_value(self._name_id, "reload_speed_multiplier", 1)
+	
+	if self:is_category("assault_rifle", "smg") and self:ammo_base():get_ammo_remaining_in_clip() == 0 then
+		multiplier = multiplier * managers.player:upgrade_value("player", "money_shot_aced", 1)
+	end
+	
+	multiplier = managers.modifiers:modify_value("WeaponBase:GetReloadSpeedMultiplier", multiplier)
+
+	return multiplier
+end
 
 function RaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoot_player, spread_mul, autohit_mul, suppr_mul)
 	if self:gadget_overrides_weapon_functions() then
@@ -184,9 +398,9 @@ function RaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul
 
 	if self._autoaim then
 		local weight = 0.1
-		local auto_hit_candidate = self:check_autoaim(from_pos, direction)
+		local auto_hit_candidate = not hit_enemy and self:check_autoaim(from_pos, direction)
 
-		if auto_hit_candidate and not hit_enemy then
+		if auto_hit_candidate then
 			local autohit_chance = 1 - math.clamp((self._autohit_current - self._autohit_data.MIN_RATIO) / (self._autohit_data.MAX_RATIO - self._autohit_data.MIN_RATIO), 0, 1)
 
 			if autohit_mul then
@@ -315,32 +529,29 @@ function RaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul
 
 	local furthest_hit = ray_hits[#ray_hits]
 
-	if (furthest_hit and furthest_hit.distance > 600 or not furthest_hit) and alive(self._obj_fire) then
-		self._obj_fire:m_position(self._trail_effect_table.position)
-		mvector3.set(self._trail_effect_table.normal, mvec_spread_direction)
+	if alive(self._obj_fire) then
+		if furthest_hit and furthest_hit.distance > 600 or not furthest_hit then
+			local trail_direction = furthest_hit and furthest_hit.ray or mvec_spread_direction
 
-		local trail = World:effect_manager():spawn(self._trail_effect_table)
+			self._obj_fire:m_position(self._trail_effect_table.position)
+			mvector3.set(self._trail_effect_table.normal, trail_direction)
 
-		if furthest_hit then
-			World:effect_manager():set_remaining_lifetime(trail, math.clamp((furthest_hit.distance - 600) / 10000, 0, furthest_hit.distance))
-		else
-			World:effect_manager():set_remaining_lifetime(trail, math.clamp((ray_distance - 600) / 10000, 0, ray_distance)) --first small change
+			local trail = World:effect_manager():spawn(self._trail_effect_table)
+
+			if furthest_hit then
+				World:effect_manager():set_remaining_lifetime(trail, math.clamp((furthest_hit.distance - 600) / 10000, 0, furthest_hit.distance))
+			else
+				World:effect_manager():set_remaining_lifetime(trail, math.clamp((ray_distance - 600) / 10000, 0, ray_distance))
+			end
 		end
-	end
-
-	if self._suppression then --second change done here, for the suppression rework
-		local max_distance = ray_distance --ray_distance is 200m, modify accordingly
-		local tmp_vec_to = Vector3()
-
-		mvector3.set(tmp_vec_to, mvector3.copy(direction))
-		mvector3.multiply(tmp_vec_to, max_distance)
-		mvector3.add(tmp_vec_to, mvector3.copy(from_pos))
-
-		self:_suppress_units(mvector3.copy(from_pos), tmp_vec_to, 100, managers.slot:get_mask("enemies"), user_unit, suppr_mul, max_distance)
 	end
 
 	if self._alert_events then
 		result.rays = ray_hits
+	end
+
+	if self._suppression then
+		self:_suppress_units(mvector3.copy(from_pos), mvector3.copy(direction), ray_distance, managers.slot:get_mask("enemies"), user_unit, suppr_mul)
 	end
 
 	return result
@@ -522,9 +733,9 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 		blank = true
 	end
 
-	local enable_ricochets = false
+	local enable_ricochets = managers.player:has_category_upgrade("player", "ricochet_bullets")
 
-	if enable_ricochets and not already_ricocheted and user_unit and user_unit == managers.player:player_unit() and col_ray.unit then
+	if enable_ricochets and math.random() <= 0.25 and not already_ricocheted and user_unit and user_unit == managers.player:player_unit() and col_ray.unit then
 		local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
 
 		if has_category and weapon_unit:base():is_category("assault_rifle", "smg") then --to replace later with the proper skill and procing check (random chance/last bullet/etc)
@@ -625,10 +836,16 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 
 	if alive(weapon_unit) and hit_unit:character_damage() and hit_unit:character_damage().damage_bullet then
 		local is_alive = not hit_unit:character_damage():dead()
-
+		
+		local pierce_armor = user_unit == managers.player:player_unit() and managers.player:has_category_upgrade("player", "point_blank") and has_category and weapon_unit:base():is_category("shotgun") and col_ray and col_ray.dis <= 100 or weapon_unit:base()._use_armor_piercing
+		
+		if user_unit == managers.player:player_unit() and has_category and weapon_unit:base():is_category("shotgun") and managers.player:has_category_upgrade("player", "point_blank_aced") and col_ray and col_ray.dis <= 100 then
+			damage = damage * 2
+		end
+		
 		if not blank then
 			local knock_down = weapon_unit:base()._knock_down and weapon_unit:base()._knock_down > 0 and math.random() < weapon_unit:base()._knock_down
-			result = self:give_impact_damage(col_ray, weapon_unit, user_unit, damage, weapon_unit:base()._use_armor_piercing, false, knock_down, weapon_unit:base()._stagger, weapon_unit:base()._variant)
+			result = self:give_impact_damage(col_ray, weapon_unit, user_unit, damage, pierce_armor, false, knock_down, weapon_unit:base()._stagger, weapon_unit:base()._variant)
 		end
 
 		local is_dead = hit_unit:character_damage():dead()
@@ -658,25 +875,36 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 	return result
 end
 
-function RaycastWeaponBase:_suppress_units(from, to, cylinder_radius, slotmask, user_unit, suppr_mul, max_distance)
-	local find_enemies = World:find_units("intersect", "cylinder", from, to, cylinder_radius, slotmask)
+function RaycastWeaponBase:_suppress_units(from_pos, direction, distance, slotmask, user_unit, suppr_mul)
+	local tmp_to = Vector3()
+
+	mvector3.set(tmp_to, mvector3.copy(direction))
+	mvector3.multiply(tmp_to, distance)
+	mvector3.add(tmp_to, mvector3.copy(from_pos))
+
+	local cone_radius = distance / 4
+	local enemies_in_cone = World:find_units(user_unit, "cone", from_pos, tmp_to, cone_radius, slotmask)
 	local enemies_to_suppress = {}
 
-	--draw the cylinder to see where it goes
-	--[[local draw_duration = 0.1 --SEIZURE WARNING, INCREASE IF NEEDED
-	local new_brush = Draw:brush(Color.white:with_alpha(0.5), draw_duration)
-	new_brush:cylinder(from, to, cylinder_radius)]]
+	--draw the cone to see where it goes
+	local draw_suppression_cone = false
 
-	if #find_enemies > 0 then
-		for _, ene_unit in ipairs(find_enemies) do
-			if Network:is_server() or user_unit == managers.player:player_unit() or ene_unit == managers.player:player_unit() then --clients only allow the local player to suppress or be suppressed (so that NPC husks don't suppress each other)
-				if not table.contains(enemies_to_suppress, ene_unit) and ene_unit.character_damage and ene_unit:character_damage() and ene_unit:character_damage().build_suppression then --valid enemy + has suppression function
-					if not ene_unit:movement().cool or ene_unit:movement().cool and not ene_unit:movement():cool() then --is alerted or can't be alerted at all (player)
-						if user_unit:movement():team() ~= ene_unit:movement():team() and user_unit:movement():team().foes[ene_unit:movement():team().id] then --not in the same team as the shooter
-							local obstructed = World:raycast("ray", from, ene_unit:movement():m_head_pos(), "slot_mask", managers.slot:get_mask("AI_visibility"), "ray_type", "ai_vision") --imitating AI checking for visibility for things like shouting
+	if draw_suppression_cone and user_unit == managers.player:player_unit() then
+		local draw_duration = 0.1
+		local new_brush = Draw:brush(Color.white:with_alpha(0.5), draw_duration)
+		new_brush:cone(from_pos, tmp_to, cone_radius)
+	end
+
+	if #enemies_in_cone > 0 then
+		for _, enemy in ipairs(enemies_in_cone) do
+			if Network:is_server() or user_unit == managers.player:player_unit() or enemy == managers.player:player_unit() then --clients only allow the local player to suppress or be suppressed (so that NPC husks don't suppress each other)
+				if not table.contains(enemies_to_suppress, enemy) and enemy.character_damage and enemy:character_damage() and enemy:character_damage().build_suppression then --valid enemy + has suppression function
+					if not enemy:movement().cool or enemy:movement().cool and not enemy:movement():cool() then --is alerted or can't be alerted at all (player)
+						if enemy:character_damage().is_friendly_fire and not enemy:character_damage():is_friendly_fire(user_unit) then --not in the same team as the shooter
+							local obstructed = World:raycast("ray", from_pos, enemy:movement():m_head_pos(), "slot_mask", managers.slot:get_mask("AI_visibility"), "ray_type", "ai_vision", "report") --imitating AI checking for visibility for things like shouting
 
 							if not obstructed then
-								table.insert(enemies_to_suppress, ene_unit)
+								table.insert(enemies_to_suppress, enemy)
 							end
 						end
 					end
@@ -684,26 +912,35 @@ function RaycastWeaponBase:_suppress_units(from, to, cylinder_radius, slotmask, 
 			end
 		end
 
-		for _, ene_unit in ipairs(enemies_to_suppress) do
-			local total_suppression = (suppr_mul or 1) * self._suppression
-			local enemy_distance = mvector3.normalize(from, ene_unit:movement():m_head_pos())
-			local dis_lerp_value = math.clamp(enemy_distance, 0, max_distance) / max_distance
+		if #enemies_to_suppress > 0 then
+			for _, enemy in ipairs(enemies_to_suppress) do
+				local enemy_distance = mvector3.distance(from_pos, enemy:movement():m_head_pos())
+				local dis_lerp_value = math.clamp(enemy_distance, 0, distance) / distance
+				local total_suppression = self._suppression
 
-			total_suppression = math.lerp(total_suppression, 0, dis_lerp_value) --scale suppression downwards and linearly, becoming 0 at maximum allowed distance or past that
+				if suppr_mul then
+					total_suppression = total_suppression * suppr_mul
+				end
 
-			local total_panic_chance = false
+				total_suppression = math.lerp(total_suppression, 0, dis_lerp_value) --scale suppression downwards and linearly, becoming 0 at maximum allowed distance or past that
 
-			if self._panic_suppression_chance then
-				total_panic_chance = self._panic_suppression_chance
+				local total_panic_chance = false
 
-				--4.5 is the highest suppression value allowed for players, that point means maximum panic base chance, but it will still get decreased with distance
-				local suppr_lerp_value = math.clamp(total_suppression, 0, 4.5) / 4.5
+				if self._panic_suppression_chance then
+					total_panic_chance = self._panic_suppression_chance
 
-				total_panic_chance = math.lerp(0, total_panic_chance, suppr_lerp_value)
-			end
+					local suppr_lerp_value = math.clamp(total_suppression, 0, 4.5) / 4.5 --4.5 is the highest suppression value allowed for players, that point means maximum panic base chance
 
-			if total_suppression > 0 then
-				ene_unit:character_damage():build_suppression(total_suppression, total_panic_chance)
+					total_panic_chance = math.lerp(0, total_panic_chance, suppr_lerp_value)
+				end
+
+				if total_suppression > 0 then
+					if draw_suppression_cone and enemy:contour() then
+						enemy:contour():add("medic_heal")
+					end
+
+					enemy:character_damage():build_suppression(total_suppression, total_panic_chance)
+				end
 			end
 		end
 	end

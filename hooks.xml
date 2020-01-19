@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+
 <hooks script_path="lua/lib/" hook_id="lib/">
 	<pre script_path="Corepre.lua" :hook_id="entry"/>
 	<post script_path="Core.lua" :hook_id="entry"/>
@@ -21,6 +22,9 @@
 	<post :script_path="tweak_data/blackmarket/projectilestweakdata.lua" :hook_id="tweak_data/blackmarket/projectilestweakdata"/>
 	<post :script_path="tweak_data/weaponfactorytweakdata.lua" :hook_id="tweak_data/weaponfactorytweakdata"/>
 	<post :script_path="tweak_data/playertweakdata.lua" :hook_id="tweak_data/playertweakdata"/>
+	
+	<post :script_path="tweak_data/upgradestweakdata.lua" :hook_id="tweak_data/upgradestweakdata"/>
+	<post :script_path="tweak_data/skilltreetweakdata.lua" :hook_id="tweak_data/skilltreetweakdata"/>
 
 	<post :script_path="modifiers/modifiernohurtanims.lua" :hook_id="modifiers/modifiernohurtanims"/>
 	<post :script_path="modifiers/modifiershieldphalanx.lua" :hook_id="modifiers/modifiershieldphalanx"/>
@@ -68,6 +72,8 @@
 	<post :script_path="units/beings/player/playerdamage.lua" :hook_id="units/beings/player/playerdamage"/>
 	<post :script_path="units/beings/player/huskplayerdamage.lua" :hook_id="units/beings/player/huskplayerdamage"/>
 
+	<post :script_path="units/weapons/concussiongrenade.lua" :hook_id="units/weapons/grenades/concussiongrenade"/>
+	<post :script_path="units/weapons/incendiaryburstgrenade.lua" :hook_id="units/weapons/grenades/incendiaryburstgrenade"/>
 	<post :script_path="units/weapons/quickcsgrenade.lua" :hook_id="units/weapons/grenades/quickcsgrenade"/>
 	<post :script_path="units/weapons/quickflashgrenade.lua" :hook_id="units/weapons/grenades/quickflashgrenade"/>
 	<post :script_path="units/weapons/dvgrenade.lua" :hook_id="units/weapons/grenades/fraggrenade"/>
@@ -79,12 +85,15 @@
 	<post :script_path="units/weapons/newnpcraycastweaponbase.lua" :hook_id="units/weapons/newnpcraycastweaponbase"/>
 	<post :script_path="units/weapons/npcraycastweaponbase.lua" :hook_id="units/weapons/npcraycastweaponbase"/>
 	<post :script_path="units/weapons/shotgunbase.lua" :hook_id="units/weapons/shotgun/shotgunbase"/>
+	<post :script_path="units/weapons/tripminebase.lua" :hook_id="units/weapons/trip_mine/tripminebase"/>
 
 	<post :script_path="managers/groupaistatebase.lua" :hook_id="managers/group_ai_states/groupaistatebase"/>
 	<post :script_path="managers/achievmentmanager.lua" :hook_id="managers/achievmentmanager"/>
 	<post :script_path="managers/gameplaycentralmanager.lua" :hook_id="managers/gameplaycentralmanager"/>
 	<post :script_path="managers/menumanager.lua" :hook_id="managers/menumanager"/>
 	<post :script_path="managers/skirmishmanager.lua" :hook_id="managers/skirmishmanager"/>
+	<post :script_path="managers/dotmanager.lua" :hook_id="managers/dotmanager"/>
+	<post :script_path="managers/explosionmanager.lua" :hook_id="managers/explosionmanager"/>
 	<post :script_path="managers/firemanager.lua" :hook_id="managers/firemanager"/>
 	<post :script_path="managers/menu/skirmishcontractboxgui.lua" :hook_id="managers/menu/skirmishcontractboxgui"/>
 	<post :script_path="managers/menu/missionbriefinggui.lua" :hook_id="managers/menu/missionbriefinggui"/>

@@ -6,5 +6,7 @@
 	"deathvox_menu_overhauls_title" : "OVERHAULS",
 	"deathvox_menu_overhauls_desc" : "Enable or disable select Gameplay Overhauls",
 	"deathvox_toggle_hoppip_title" : "Hoppip's Light Overhaul",
-	"deathvox_toggle_hoppip_desc" : "Enable this Overhaul (Requires restart)"
+	"deathvox_toggle_hoppip_desc" : "Enable this Overhaul (Requires heist restart)",
+	"deathvox_toggle_totalcd_title" : "TOTAL CRACKDOWN Overhaul",
+	"deathvox_toggle_totalcd_desc" : "Enable this Overhaul (Requires heist restart)"
 }
