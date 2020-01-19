@@ -2588,43 +2588,28 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		--Valkyria Rifle
-		self.asval.FIRE_MODE = "auto"
-		self.asval.fire_mode_data = {
-			fire_rate = 0.067
+		self.asval.cd_stability = 100
+		self.asval.cd_spread = 92
+		self.asval.cd_rpm = 545
+		self.asval.cd_threat = 15
+		self.asval.cd_ammosetup =
+		{
+			clip_size = 20,
+			total_ammo = 180
 		}
-		self.asval.CAN_TOGGLE_FIREMODE = true
-		self.asval.auto = {
-			fire_rate = 0.067
-		}
-		self.asval.timers = {
-			reload_not_empty = 2.6,
-			reload_empty = 3.7,
+		self.asval.stats.damage = 80
+		self.asval.stats.concealment = 25
+		self.asval.timers = 
+		{
+			reload_not_empty = 1.2,
+			reload_empty = 2.2,
 			unequip = 0.5,
 			equip = 0.5
 		}
-		
-		self.asval.CLIP_AMMO_MAX = 20
-		self.asval.NR_CLIPS_MAX = 11
-		self.asval.AMMO_MAX = self.asval.CLIP_AMMO_MAX * self.asval.NR_CLIPS_MAX
 		self.asval.AMMO_PICKUP = {
-			6.6,
-			12.1
+			7,
+			12
 		}
-		
-		self.asval.spread = {
-			standing = self.new_m4.spread.standing,
-			crouching = self.new_m4.spread.crouching,
-			steelsight = self.new_m4.spread.steelsight,
-			moving_standing = self.new_m4.spread.moving_standing,
-			moving_crouching = self.new_m4.spread.moving_crouching,
-			moving_steelsight = self.new_m4.spread.moving_steelsight
-		}
-		self.asval.kick = {
-			standing = self.new_m4.kick.standing
-		}
-		self.asval.kick.crouching = self.asval.kick.standing
-		self.asval.kick.steelsight = self.asval.kick.standing
-		
 		--Gecko 7.62
 		self.galil.FIRE_MODE = "auto"
 		self.galil.fire_mode_data = {
@@ -5552,71 +5537,28 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		--Shotguns begin here.
 		
 		--Reinfeld 880
-		self.r870.FIRE_MODE = "single"
-		self.r870.fire_mode_data = {
-			fire_rate = 0.575
+		self.r870.cd_stability = 100
+		self.r870.cd_spread = 40
+		self.r870.cd_rpm = 104
+		self.r870.cd_threat = 34
+		self.r870.cd_ammosetup =
+		{
+			clip_size = 8,
+			total_ammo = 50
 		}
-		self.r870.single = {
-			fire_rate = 0.575
-		}
-		self.r870.timers = {
+		self.r870.stats.damage = 160
+		self.r870.stats.concealment = 20
+		self.r870.timers = 
+		{
+			reload_not_empty = 0.54,
+			reload_empty = 4.5,
 			unequip = 0.85,
 			equip = 0.85
 		}
-		
-		self.r870.CLIP_AMMO_MAX = 6
-		self.r870.NR_CLIPS_MAX = 7
-		self.r870.AMMO_MAX = self.r870.CLIP_AMMO_MAX * self.r870.NR_CLIPS_MAX
 		self.r870.AMMO_PICKUP = {
-			0.42,
-			1.47
-		}
-		
-		self.r870.spread = {
-			standing = self.new_m4.spread.standing,
-			crouching = self.new_m4.spread.crouching,
-			steelsight = self.new_m4.spread.steelsight,
-			moving_standing = self.new_m4.spread.moving_standing,
-			moving_crouching = self.new_m4.spread.moving_crouching,
-			moving_steelsight = self.new_m4.spread.moving_steelsight
-		}
-		self.r870.kick = {
-			standing = {
-				1.9,
-				2,
-				-0.2,
-				0.2
-			}
-		}
-		self.r870.kick.crouching = self.r870.kick.standing
-		self.r870.kick.steelsight = {
-			1.5,
-			1.7,
-			-0.2,
-			0.2
-		}
-		
-		self.r870.stats = {
-			zoom = 3,
-			total_ammo_mod = 21,
-			damage = 90,
-			alert_size = 7,
-			spread = 11,
-			spread_moving = 12,
-			recoil = 9,
-			value = 1,
-			extra_ammo = 51,
-			reload = 11,
-			suppression = 5,
-			concealment = 11
-		}
-		self.r870.stats_modifiers = {
-			damage = 1
-		}
-		self.r870.rays = 12 --Number of pellets/bullets shot out by the gun when firing, self-explanatory.
-		self.r870.damage_near = 2000 --Initial range at which damage falloff begins, from regular weapon damage to less than that.
-		self.r870.damage_far = 3000 --Range at which the gun's damage reaches the lowest possible point.
-		
+			2,
+			3
+		}		
 		--Izhma 12G
 		self.saiga.FIRE_MODE = "auto"
 		self.saiga.fire_mode_data = {
@@ -5677,68 +5619,28 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.saiga.damage_far = 3000
 		
 		--Mosconi 12G
-		self.huntsman.FIRE_MODE = "single"
-		self.huntsman.fire_mode_data = {
-			fire_rate = 0.12
+		self.huntsman.cd_stability = 4
+		self.huntsman.cd_spread = 40
+		self.huntsman.cd_rpm = 500
+		self.huntsman.cd_threat = 37
+		self.huntsman.cd_ammosetup =
+		{
+			clip_size = 2,
+			total_ammo = 34
 		}
-		self.huntsman.single = {
-			fire_rate = 0.12
+		self.huntsman.stats.damage = 200
+		self.huntsman.stats.concealment = 25
+		self.huntsman.timers = 
+		{
+			reload_not_empty = 2,
+			reload_empty = 2,
+			unequip = 0.55,
+			equip = 0.55
 		}
-		self.huntsman.timers = {
-			reload_not_empty = 2.5
-		}
-		self.huntsman.timers.reload_empty = self.huntsman.timers.reload_not_empty
-		self.huntsman.timers.unequip = 0.6
-		self.huntsman.timers.equip = 0.6
-		
-		self.huntsman.CLIP_AMMO_MAX = 2
-		self.huntsman.NR_CLIPS_MAX = 16
-		self.huntsman.AMMO_MAX = self.huntsman.CLIP_AMMO_MAX * self.huntsman.NR_CLIPS_MAX
 		self.huntsman.AMMO_PICKUP = {
-			0.32,
-			1.12
-		}
-		
-		self.huntsman.spread = {
-			standing = self.r870.spread.standing,
-			crouching = self.r870.spread.crouching,
-			steelsight = self.r870.spread.steelsight,
-			moving_standing = self.r870.spread.moving_standing,
-			moving_crouching = self.r870.spread.moving_crouching,
-			moving_steelsight = self.r870.spread.moving_steelsight
-		}
-		self.huntsman.kick = {
-			standing = {
-				2.9,
-				3,
-				-0.5,
-				0.5
-			}
-		}
-		self.huntsman.kick.crouching = self.huntsman.kick.standing
-		self.huntsman.kick.steelsight = self.huntsman.kick.standing
-		
-		self.huntsman.stats = {
-			zoom = 3,
-			total_ammo_mod = 21,
-			damage = 155,
-			alert_size = 7,
-			spread = 16,
-			spread_moving = 16,
-			recoil = 10,
-			value = 1,
-			extra_ammo = 51,
-			reload = 11,
-			suppression = 2,
-			concealment = 7
-		}
-		self.huntsman.stats_modifiers = {
-			damage = 1
-		}
-		self.huntsman.damage_near = 2000
-		self.huntsman.damage_far = 3000
-		self.huntsman.rays = 12
-		
+			1,
+			2
+		}		
 		--Breaker 12G
 		self.boot.FIRE_MODE = "single"
 		self.boot.fire_mode_data = {
