@@ -288,38 +288,39 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 		base:set_ammo_remaining_in_clip(base:get_ammo_remaining_in_clip() - ammo_usage)
 		self:use_ammo(base, ammo_usage)
 	end
-	
-	if is_player and mag <= 1 and managers.player:has_category_upgrade("player", "money_shot") and self:is_category("assault_rifle", "smg") then
-		local money_trail = Idstring("effects/particles/weapons/trail_dv_sniper")
-		local money_muzzle = Idstring("effects/particles/weapons/money_muzzle_fps")
-		
-		self._trail_effect_table = {
-			effect = money_trail,
-			position = Vector3(),
-			normal = Vector3()
-		}
-		
-		self._muzzle_effect_table = {
-			force_synch = true,
-			effect = money_muzzle,
-			parent = self._obj_fire
-		}
-		
-		dmg_mul = dmg_mul + 1
-		self:play_sound("c4_explode_metal")
-	else
-		self._trail_effect_table = {
-			effect = self.TRAIL_EFFECT,
-			position = Vector3(),
-			normal = Vector3()
-		}
-		
-		self._muzzle_effect_table = {
-			force_synch = true,
-			effect = self._muzzle_effect,
-			parent = self._obj_fire
-		}
-		
+	if is_player then
+		if mag <= 1 and managers.player:has_category_upgrade("player", "money_shot") and self:is_category("assault_rifle", "smg") then
+			local money_trail = Idstring("effects/particles/weapons/trail_dv_sniper")
+			local money_muzzle = Idstring("effects/particles/weapons/money_muzzle_fps")
+			
+			self._trail_effect_table = {
+				effect = money_trail,
+				position = Vector3(),
+				normal = Vector3()
+			}
+			
+			self._muzzle_effect_table = {
+				force_synch = true,
+				effect = money_muzzle,
+				parent = self._obj_fire
+			}
+			
+			dmg_mul = dmg_mul + 1
+			self:play_sound("c4_explode_metal")
+		else
+			self._trail_effect_table = {
+				effect = self.TRAIL_EFFECT,
+				position = Vector3(),
+				normal = Vector3()
+			}
+			
+			self._muzzle_effect_table = {
+				force_synch = true,
+				effect = self._muzzle_effect,
+				parent = self._obj_fire
+			}
+			
+		end
 	end
 
 	local user_unit = self._setup.user_unit

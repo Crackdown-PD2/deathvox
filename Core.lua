@@ -69,22 +69,23 @@ if not (_G.deathvox and deathvox.HAS_LOADED_ASSETS) then
 	end)
 
 	blt.xaudio.setup()
-	local deathvox_mod_instance = ModInstance
-	log("==============Loading Crackdown Assets==============")
-	log("Loading Crackdown Cops")
-	deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("cops")
-	log("Loading SWAT Cops")
-	deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("copcops")
-	log("Loading FBI Cops")
-	deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("fbicops")
-	log("Loading Gensec Cops")
-	deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("genseccops")
-	log("Loading Classic Cops")
-	deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("classiccops")
+	
+	--local deathvox_mod_instance = ModInstance
+	--log("==============Loading Crackdown Assets==============")
+	--log("Loading Crackdown Cops")
+	--deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("cops")
+	--log("Loading SWAT Cops")
+	--deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("copcops")
+	--log("Loading FBI Cops")
+	--deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("fbicops")
+	--log("Loading Gensec Cops")
+	--deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("genseccops")
+	--log("Loading Classic Cops")
+	--deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("classiccops")
 	--log("Loading Murkywater Units") uncomment to load murkywater assets. does nothing currently, as there's no assets yet.
 	--deathvox_mod_instance:GetSuperMod():GetAssetLoader():LoadAssetGroup("murkywater")	
 	
-	log("Finished loading!")
+	--log("Finished loading!")
 	
 	if _G.voiceline_framework then
 		_G.voiceline_framework:register_unit("grenadier")

@@ -1,0 +1,564 @@
+<table directory="assets">
+
+	<!-- VANILLA TEXTURE REPLACEMENTS/ADDITIONS -->
+	
+	<texture path="units/payday2/characters/shared_textures/dark_glass_df"  force="true"/>
+	<texture path="units/payday2/characters/shared_textures/dark_glass_op"  force="true"/>
+	<texture path="units/payday2/characters/shared_textures/tank_glass_df"  force="true"/>
+	<texture path="units/payday2/characters/shared_textures/tank_glass_op"  force="true"/>
+	<texture path="units/payday2/characters/shared_textures/ene_acc_deathvox_gensec_shield_df"  force="true"/>
+	<texture path="units/payday2/characters/shared_textures/ene_acc_deathvox_gensec_shield_nm"  force="true"/>
+	<texture path="units/payday2/characters/shared_textures/genshill_helm_df"  force="true"/>
+	<texture path="units/payday2/characters/shared_textures/genshill_helm_nm"  force="true"/>
+	<texture path="units/payday2/characters/shared_textures/helmets_atlas_2_df"  force="true"/>
+	<texture path="units/payday2/characters/shared_textures/heads_atlas_2_df"  force="true"/>
+	
+	<texture path="units/characters/enemies/textures/police_force_df" force="true"/>
+	<texture path="units/characters/enemies/textures/police_force_nm" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/helmets_atlas_df" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/helmets_atlas_nm" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/helmets_heavy_taser_atlas_df" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/helmets_heavy_taser_atlas_nm" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/spook_heavy_df" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/spook_heavy_nm" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/ene_city_heavy_df" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/ene_city_heavy_nm" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/swat_body_df" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/swat_body_nm" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/swat_fbi_body_df" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/swat_city_df" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/taser_body_df" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/taser_body_nm" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/ene_medic_df" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/ene_medic_nm" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/ene_medic_head_df" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/ene_medic_head_nm" force="true"/>
+	
+	<texture path="guis/textures/pd2/mission_briefing/assets/assets_risklevel_6" force="true"/>
+	
+	<!-- ALL WEAPONS -->
+	<unit_mat path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_r870_dozer/wpn_npc_r870_dozer" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_r870_dozer/wpn_npc_r870_dozer_contour"/>
+	<texture path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_r870_dozer/r870_df"/>
+	
+	<unit_mat path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_raging_bull_med/wpn_npc_raging_bull_med" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_raging_bull_med/wpn_npc_raging_bull_med_contour"/>
+	<texture path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_raging_bull_med/bull_df"/>
+	
+	<unit_mat path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_ump_meddozer/wpn_npc_ump_meddozer" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_ump_meddozer/wpn_npc_ump_meddozer_contour"/>
+	
+	<unit_mat path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_s553/wpn_npc_s553" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_s553/wpn_npc_s553_contour"/>
+	<texture path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_s553/sg_zeal_nm"/>
+	<texture path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_s553/sg_zeal_df"/>
+	
+	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_m4/wpn_npc_m4" load="true"/>
+	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_benelli/wpn_npc_benelli" load="true"/>
+	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_beretta92/wpn_npc_beretta92" load="true"/>
+	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_c45/wpn_npc_c45" load="true"/>
+	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_lmg_m249/wpn_npc_lmg_m249" load="true"/>
+	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_mp5/wpn_npc_mp5" load="true"/>
+	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_mp5_tactical/wpn_npc_mp5_tactical" load="true"/>
+	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_r870/wpn_npc_r870" load="true"/>
+	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_raging_bull/wpn_npc_raging_bull" load="true"/>
+	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_saiga/wpn_npc_saiga" load="true"/>
+	
+	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_grenadier" load="true"/>
+	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_grenadier_grenade" load="true"/>
+	
+	<material_config path="units/payday2/weapons/wpn_npc_m4_yellow/wpn_npc_m4_yellow" force="true"/>
+	<model path="units/payday2/weapons/wpn_npc_m4_yellow/wpn_npc_m4_yellow" force="true"/>
+	<texture path="units/payday2/weapons/wpn_npc_m4_yellow/m4_yellow_nm" force="true"/>
+	<texture path="units/payday2/weapons/wpn_npc_m4_yellow/m4_yellow_df" force="true"/>
+	
+	<unit_mat path="units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd" load="true"/>
+	<texture path="units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_p1_df" />
+	
+	<unit path="units/payday2/weapons/wpn_npc_sniper/wpn_npc_sniper" force="true"/>
+	<material_config path="units/payday2/weapons/wpn_npc_sniper/wpn_npc_sniper" force="true"/>
+	<object path="units/payday2/weapons/wpn_npc_sniper/wpn_npc_sniper" force="true"/>
+	<model path="units/payday2/weapons/wpn_npc_sniper/wpn_npc_sniper" force="true"/>
+	<material_config path="units/payday2/weapons/wpn_npc_sniper/wpn_npc_sniper_contour" force="true"/>
+	<texture path="units/payday2/weapons/wpn_npc_sniper/wpn_npc_sniper_p1_df" force="true"/>
+	<texture path="units/payday2/weapons/wpn_npc_sniper/material_flare_il" />
+	
+	<!-- EFFECTS -->
+	<effect path="effects/particles/explosions/cs_grenade_smoke" load="true"/>
+	<effect path="effects/particles/weapons/trail_dv_sniper" load="true"/>
+	<effect path="effects/particles/weapons/money_muzzle_fps" load="true"/>
+	<effect path="effects/pd2_mod_gageammo/particles/character/flashlight_ss" load="true"/>
+	<effect path="effects/pd2_mod_gageammo/particles/explosions/hellfire_endless" load="true"/>
+	<effect path="effects/pd2_mod_gageammo/particles/explosions/hellfire_endless_cheap" load="true"/>
+	<effect path="effects/pd2_mod_gageammo/particles/explosions/hellfire_endless_nolight" load="true"/>
+	
+	<!-- WASHINGTON P.D/SWAT TEAM -->
+	
+	<unit_mat path="units/pd2_mod_cops/characters/ene_deathvox_cop_swat/ene_deathvox_cop_swat" load="true"/>
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_swat/ene_deathvox_cop_swat_contour"/>
+	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_swat/ene_deathvox_cop_swat_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_cops/characters/ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot" load="true"/>
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot_contour"/>
+	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat" load="true"/>
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat_contour"/>
+	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot" load="true"/>
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot_contour"/>
+	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol" load="true"/>
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol_contour"/>
+	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver" load="true"/>
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver_contour"/>
+	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun" load="true"/>
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun_contour"/>
+	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg" load="true"/>
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg_contour"/>
+	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield" load="true"/>
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield_contour"/>
+	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_deathvox_cop_medic" load="true"/>
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_deathvox_cop_medic_contour"/>
+	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_deathvox_cop_medic_husk" load="true"/>
+	<texture path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_medic_df" />
+	<texture path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_medic_head_df" />
+	
+	<unit_mat path="units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser" load="true"/>
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser_contour"/>
+	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser_husk" load="true"/>
+	
+	<!-- FBI TEAM -->
+	
+	<unit_mat path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat" load="true"/>
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat_contour"/>
+	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot" load="true"/>
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot_contour"/>
+	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat" load="true"/>
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_contour"/>
+	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot" load="true"/>
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot_contour"/>
+	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_fbi/characters/ene_acc_fbi_swat_helmet_heavy/ene_acc_fbi_swat_helmet_heavy" load="true"/>
+	<sequence_manager path="units/pd2_mod_fbi/characters/ene_acc_fbi_swat_helmet_heavy/ene_acc_fbi_swat_helmet_heavy"/>
+	
+	<unit_mat path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt" load="true"/>
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt_contour"/>
+	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie" load="true"/>
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie_contour"/>
+	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran" load="true"/>
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran_contour"/>
+	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer" load="true"/>
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer_contour"/>
+	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer_husk" load="true"/>
+	<sequence_manager path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer"/>
+	
+	<unit_mat path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer" load="true"/>
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer_contour"/>
+	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer_husk" load="true"/>
+	<sequence_manager path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer"/>
+	
+	<unit_mat path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_deathvox_fbi_medic" load="true"/>
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_deathvox_fbi_medic_contour"/>
+	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_deathvox_fbi_medic_husk" load="true"/>
+	<texture path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_medic_df" />
+	<texture path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_medic_head_df" />
+	
+	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_shield/ene_deathvox_fbi_shield" load="true"/>
+	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_shield/ene_deathvox_fbi_shield_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker" load="true"/>
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker_contour"/>
+	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker_husk" load="true"/>
+	<sequence_manager path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker"/>
+	<texture path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/spook_heavy_df" />
+	
+	<unit_mat path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser" load="true"/>
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser_contour"/>
+	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser_husk" load="true"/>
+	<sequence_manager path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser"/>
+	<texture path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/taser_body_df" />
+	
+	<!-- GENSEC FAST TACTICAL SPECIAL FORCES -->
+	<unit_mat path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat" load="true"/>
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat_contour"/>
+	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot" load="true"/>
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot_contour"/>
+	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat" load="true"/>
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat_contour"/>
+	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot" load="true"/>
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot_contour"/>
+	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_gensec/characters/ene_acc_deathvox_gensec_heavyhelmet/ene_acc_deathvox_gensec_heavyhelmet" load="true"/>
+	
+	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_shield/ene_deathvox_gensec_shield" load="true"/>
+	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_shield/ene_deathvox_gensec_shield_husk" load="true"/>
+	<unit_mat path="units/pd2_mod_gensec/characters/ene_acc_deathvox_gensec_shield/ene_acc_deathvox_gensec_shield" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_deathvox_gensec_medic" load="true"/>
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_deathvox_gensec_medic_contour"/>
+	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_deathvox_gensec_medic_husk" load="true"/>
+	<texture path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_medic_df" />
+	<texture path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_medic_head_df" />
+	
+	<unit_mat path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser" load="true"/>
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser_contour"/>
+	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser_husk" load="true"/>
+	<texture path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/helmets_heavy_taser_atlas_df" />
+	<texture path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/taser_body_df" />
+	
+	<unit_mat path="units/pd2_mod_gensec/characters/ene_acc_gensec_deathvox_tazer_helmet/ene_acc_gensec_deathvox_tazer_helmet" load="true"/>
+	
+	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_cloaker/ene_deathvox_gensec_cloaker" load="true"/>
+	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_cloaker/ene_deathvox_gensec_cloaker_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer" load="true"/>
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer_contour"/>
+	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer_husk" load="true"/>
+	<sequence_manager path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer"/>
+	
+	<!--ZULU SQUADRON/ZEAL TEAM -->
+
+	<!--Z Light Rifleman-->
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar_contour"/>
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar_husk" load="true"/>
+	
+	<!--Z Light Shotgunner-->
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot_contour"/>
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot_husk" load="true"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_zeal_swat_df" />
+	
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet" load="true"/>
+	
+	<!--Z Heavy Rifleman-->
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar_contour"/>
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar_husk" load="true"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/swat_heavy_df" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/swat_heavy_head_df" />
+	
+	<!--Z Heavy Shotgunner-->
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot_contour"/>
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot_husk" load="true"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/swat_heavy_df" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/swat_heavy_head_df" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/swat_heavy_head_il" />
+	
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_zeal_swat_heavy_sg_helmet/ene_acc_zeal_swat_heavy_sg_helmet" load="true"/>
+	
+	<!--Z Medic-->
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic_contour"/>
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic_husk" load="true"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_medic_df" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_medic_head_df" />
+	
+	<!--Z Shield-->
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield_contour"/>
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_shield_new_swat/ene_acc_shield_new_swat" load="true"/>
+	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_acc_shield_new_swat/ene_acc_shield_new_swat"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_acc_shield_new_swat/shield_df" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_acc_shield_new_swat/shield_nm" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_acc_shield_new_swat/shield_il" />
+	
+	<!--Z Cloaker-->
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker_contour"/>
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker_husk" load="true"/>
+	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/zeal_cloaker_body_df" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/zeal_cloaker_body_nm" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/zeal_cloaker_head_df" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/zeal_cloaker_head_nm" />
+	
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/debris/ene_spook_head_debris" load="true"/>
+	
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/debris/ene_spook_upper_body_debris" load="true"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/debris/ene_spook_upper_body_debris" />
+	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/debris/ene_spook_upper_body_debris" />
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/debris/ene_spook_upper_body_debris" />
+	
+	<!--Z Greendozer-->
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer_contour"/>
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer_husk" load="true"/>
+	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/bulldozer_df" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/bulldozer_nm" />
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_back/ene_acc_deathvox_greendozer_back" load="true"/>
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_chest/ene_acc_deathvox_greendozer_chest" load="true"/>
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_helmet_plate/ene_acc_deathvox_greendozer_helmet_plate" load="true"/>
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_neck/ene_acc_deathvox_greendozer_neck" load="true"/>
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_stomache/ene_acc_deathvox_greendozer_stomache" load="true"/>
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_throat/ene_acc_deathvox_greendozer_throat" load="true"/>	
+	
+	<!--Z Blackdozer-->
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer_contour"/>
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer_husk" load="true"/>
+	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/bulldozer_df" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/bulldozer_nm" />
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_chest/ene_acc_deathvox_blackdozer_chest" load="true"/>
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_helmet_plate/ene_acc_deathvox_blackdozer_helmet_plate" load="true"/>
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_neck/ene_acc_deathvox_blackdozer_neck" load="true"/>
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_stomache/ene_acc_deathvox_blackdozer_stomache" load="true"/>
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_throat/ene_acc_deathvox_blackdozer_throat" load="true"/>
+	
+	<!--Z LMGDozer-->
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer_contour"/>
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer_husk" load="true"/>
+	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/bulldozer_df" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/bulldozer_nm" />
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_chest/ene_acc_deathvox_lmgdozer_chest" load="true"/>
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_helmet_plate/ene_acc_deathvox_lmgdozer_helmet_plate" load="true"/>
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_neck/ene_acc_deathvox_lmgdozer_neck" load="true"/>
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_stomache/ene_acc_deathvox_lmgdozer_stomache" load="true"/>
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_throat/ene_acc_deathvox_lmgdozer_throat" load="true"/>
+	
+	<!--Z Medicdozer-->
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer_contour"/>
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer_husk" load="true"/>
+	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/bulldozer_df" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/bulldozer_nm" />
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_medicdozer_chest/ene_acc_deathvox_medicdozer_chest" load="true"/>
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_medicdozer_helmet_plate/ene_acc_deathvox_medicdozer_helmet_plate" load="true"/>
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_medicdozer_neck/ene_acc_deathvox_medicdozer_neck" load="true"/>
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_medicdozer_stomache/ene_acc_deathvox_medicdozer_stomache" load="true"/>
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_medicdozer_throat/ene_acc_deathvox_medicdozer_throat" load="true"/>
+	
+	<!--Z Taser-->
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_contour"/>
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_husk" load="true"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_df" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_nm" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_head_df" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_head_nm" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_head_il" />
+	
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_taser_helmet/ene_acc_deathvox_taser_helmet" load="true"/>
+	
+	<!--Z HIIIIIIIIIIIVE-->
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier_contour"/>
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier_husk" load="true"/>
+	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier"/>
+	
+	<!--DV Guard-->
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard_contour"/>
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard_husk" load="true"/>
+	
+	<!--Z G-Man-->
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/ene_deathvox_gman" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/ene_deathvox_gman_contour"/>
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/ene_deathvox_gman_husk" load="true"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/gman_body_df" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/gman_body_nm" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/gman_head_df" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/gman_head_nm" />
+	
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight" load="true"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight_contour"/>
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight_husk" load="true"/>
+	
+	<!--Z-Textures-->
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/bulldozer_df" />
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/bulldozer_nm" />
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/bulldozer_visor_il" load="true"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/medicdozer_visor_il" load="true"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/ene_zeal_swat_df" />
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/ene_zeal_swat_nm" />
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/ene_zeal_swat_head_df" />
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/ene_zeal_swat_head_nm" />
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/swat_heavy_head_nm" />
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/swat_heavy_nm" />
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/glass_op" />
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_df" />
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_il" />
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_nm" />
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_body_df" />
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_body_nm" />
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/material_body_df" />
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/material_body_nm" />
+	
+	<!-- CLASSIC P.D -->
+	
+	<!-- CLASSIC SWAT RIFLE -->
+	<unit_mat path="units/pd2_mod_classic/characters/ene_deathvox_classic_swat/ene_deathvox_classic_swat" load="true"/>
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_swat/ene_deathvox_classic_swat_contour"/>
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_swat/ene_deathvox_classic_swat_husk" load="true"/>
+	
+	<!-- CLASSIC SWAT SHOTGUNNER -->
+	<unit_mat path="units/pd2_mod_classic/characters/ene_deathvox_classic_swatshot/ene_deathvox_classic_swatshot" load="true"/>
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_swatshot/ene_deathvox_classic_swatshot_contour"/>
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_swatshot/ene_deathvox_classic_swatshot_husk" load="true"/>
+	
+	<!-- CLASSIC HEAVY RIFLE -->
+	<unit_mat path="units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat" load="true"/>
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat_contour"/>
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat_husk" load="true"/>
+	
+	<!-- CLASSIC HEAVY SHOTGUNNER -->
+	<unit_mat path="units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot" load="true"/>
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot_contour"/>
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_classic/characters/ene_acc_classic_helmet/ene_acc_classic_helmet" load="true"/>
+	<sequence_manager path="units/pd2_mod_classic/characters/ene_acc_classic_helmet/ene_acc_classic_helmet" />
+	
+	<!-- CLASSIC HRT -->
+	<unit_mat path="units/pd2_mod_classic/characters/ene_deathvox_classic_hrt/ene_deathvox_classic_hrt" load="true"/>
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_hrt/ene_deathvox_classic_hrt_contour"/>
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_hrt/ene_deathvox_classic_hrt_husk" load="true"/>
+	
+	<!-- CLASSIC VETERAN FBI -->
+	<unit_mat path="units/pd2_mod_classic/characters/ene_deathvox_classic_veteran/ene_deathvox_classic_veteran" load="true"/>
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_veteran/ene_deathvox_classic_veteran_contour"/>
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_veteran/ene_deathvox_classic_veteran_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_classic/characters/ene_acc_fbi_cap/ene_acc_fbi_cap" load="true"/>
+	
+	<!-- CLASSIC COPS -->
+	<unit_mat path="units/pd2_mod_classic/characters/ene_deathvox_classic_cop_pistol/ene_deathvox_classic_cop_pistol" load="true"/>
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_cop_pistol/ene_deathvox_classic_cop_pistol_contour"/>
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_cop_pistol/ene_deathvox_classic_cop_pistol_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_classic/characters/ene_deathvox_classic_cop_revolver/ene_deathvox_classic_cop_revolver" load="true"/>
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_cop_revolver/ene_deathvox_classic_cop_revolver_contour"/>
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_cop_revolver/ene_deathvox_classic_cop_revolver_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_classic/characters/ene_deathvox_classic_cop_shotgun/ene_deathvox_classic_cop_shotgun" load="true"/>
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_cop_shotgun/ene_deathvox_classic_cop_shotgun_contour"/>
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_cop_shotgun/ene_deathvox_classic_cop_shotgun_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_classic/characters/ene_deathvox_classic_cop_smg/ene_deathvox_classic_cop_smg" load="true"/>
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_cop_smg/ene_deathvox_classic_cop_smg_contour"/>
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_cop_smg/ene_deathvox_classic_cop_smg_husk" load="true"/>
+	
+	<!-- CLASSIC MEDIC -->
+	<unit_mat path="units/pd2_mod_classic/characters/ene_deathvox_classic_medic/ene_deathvox_classic_medic" load="true"/>
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_medic/ene_deathvox_classic_medic_contour"/>
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_medic/ene_deathvox_classic_medic_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_classic/characters/ene_acc_classic_medic_helmet/ene_acc_classic_medic_helmet" load="true"/>
+	
+	<!-- CLASSIC SHIELD -->
+	<unit_mat path="units/pd2_mod_classic/characters/ene_deathvox_classic_shield/ene_deathvox_classic_shield" load="true"/>
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_shield/ene_deathvox_classic_shield_contour"/>
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_shield/ene_deathvox_classic_shield_husk" load="true"/>
+	<texture path="units/pd2_mod_classic/characters/ene_deathvox_classic_shield/shield_body_df"/>
+	
+	<unit_mat path="units/pd2_mod_classic/characters/ene_acc_classic_shield_lights/ene_acc_classic_shield_lights" load="true"/>
+	
+	<!-- CLASSIC TASER -->
+	<unit_mat path="units/pd2_mod_classic/characters/ene_deathvox_classic_taser/ene_deathvox_classic_taser" load="true"/>
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_taser/ene_deathvox_classic_taser_contour"/>
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_taser/ene_deathvox_classic_taser_husk" load="true"/>
+	<texture path="units/pd2_mod_classic/characters/ene_deathvox_classic_taser/taser_body_df"/>
+	<texture path="units/pd2_mod_classic/characters/ene_deathvox_classic_taser/mask_df"/>
+	
+	<!-- CLASSIC CLOAKER -->
+	<unit_mat path="units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_deathvox_classic_cloaker" load="true"/>
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_deathvox_classic_cloaker_contour"/>
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_deathvox_classic_cloaker_husk" load="true"/>
+	<sequence_manager path="units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_deathvox_classic_cloaker" />
+	<texture path="units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_spook_classic_body_df"/>
+	<texture path="units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_spook_classic_body_nm"/>
+	<texture path="units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_spook_classic_gasmask_df"/>
+	<texture path="units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_spook_classic_nvg_df"/>
+	<texture path="units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_spook_classic_nvg_il"/>
+	<effect path="units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/cloaker_goggle" load="true"/>
+	
+	<!-- CLASSIC DOZERS -->
+	<unit_mat path="units/pd2_mod_classic/characters/ene_deathvox_classic_greendozer/ene_deathvox_classic_greendozer" load="true"/>
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_greendozer/ene_deathvox_classic_greendozer_contour"/>
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_greendozer/ene_deathvox_classic_greendozer_husk" load="true"/>
+	<sequence_manager path="units/pd2_mod_classic/characters/ene_deathvox_classic_greendozer" />
+	
+	<unit_mat path="units/pd2_mod_classic/characters/ene_deathvox_classic_blackdozer/ene_deathvox_classic_blackdozer" load="true"/>
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_blackdozer/ene_deathvox_classic_blackdozer_contour"/>
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_blackdozer/ene_deathvox_classic_blackdozer_husk" load="true"/>
+	<sequence_manager path="units/pd2_mod_classic/characters/ene_deathvox_classic_blackdozer" />
+	
+	<unit_mat path="units/pd2_mod_classic/characters/ene_deathvox_classic_lmgdozer/ene_deathvox_classic_lmgdozer" load="true"/>
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_lmgdozer/ene_deathvox_classic_lmgdozer_contour"/>
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_lmgdozer/ene_deathvox_classic_lmgdozer_husk" load="true"/>
+	
+	<!-- CLASSIC SHARED TEXTURES -->
+	<texture path="units/pd2_mod_classic/characters/classic_tank_glass_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_tank_glass_op"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/classic_tank_glass_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/classic_tank_glass_op"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/bulldozer_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/bulldozer_saiga_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/bulldozer_city_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/classic1_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/classic2_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/classic2_nm"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/ene_acc_shield_lights_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/ene_medic_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/ene_medic_head_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/fbi_cap_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/fbi_classic_1_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/fbi_classic_2_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/fbi_head_clsc_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/heads_classic_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/helmets_atlas_nm"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/joker_heavy_akan_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/joker_mask_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/joker_light_swat_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/nypd2_nm"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/police_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/spook_classic_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/spook_classic_nm"/>
+
+	
+</table>
+	
+</table>
