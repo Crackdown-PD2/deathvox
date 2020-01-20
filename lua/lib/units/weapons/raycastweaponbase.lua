@@ -837,9 +837,9 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 	if alive(weapon_unit) and hit_unit:character_damage() and hit_unit:character_damage().damage_bullet then
 		local is_alive = not hit_unit:character_damage():dead()
 		
-		local pierce_armor = user_unit == managers.player:player_unit() and managers.player:has_category_upgrade("player", "point_blank") and has_category and weapon_unit:base():is_category("shotgun") and col_ray and col_ray.dis <= 100 or weapon_unit:base()._use_armor_piercing
+		local pierce_armor = user_unit == managers.player:player_unit() and managers.player:has_category_upgrade("player", "point_blank") and has_category and weapon_unit:base():is_category("shotgun") and col_ray and col_ray.dis <= 200 or weapon_unit:base()._use_armor_piercing
 		
-		if user_unit == managers.player:player_unit() and has_category and weapon_unit:base():is_category("shotgun") and managers.player:has_category_upgrade("player", "point_blank_aced") and col_ray and col_ray.dis <= 100 then
+		if user_unit == managers.player:player_unit() and has_category and weapon_unit:base():is_category("shotgun") and managers.player:has_category_upgrade("player", "point_blank_aced") and col_ray and col_ray.dis <= 200 then
 			damage = damage * 2
 		end
 		
