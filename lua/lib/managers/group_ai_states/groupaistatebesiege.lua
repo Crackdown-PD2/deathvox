@@ -539,12 +539,16 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 				end
 			end
 		until #to_search_areas == 0
-
+		
 		if not assault_path_uno or not assault_area_uno then
 			--log("dicks")
-			assault_area = alternate_assault_area
-			found_areas[assault_area] = alternate_assault_area_from
-			assault_path = alternate_assault_path
+			if alternate_assault_area and alternate_assault_path then
+				assault_area = alternate_assault_area
+				found_areas[assault_area] = alternate_assault_area_from
+				assault_path = alternate_assault_path
+			else
+				--log("couldn't find assault path for" .. group .. "in groupaistatebesiege!!!")
+			end
 		else
 			local path_and_area_to_choose = math.random(1, 4)
 			if not tactics_map or tactics_map and not tactics_map.flank then 
