@@ -1458,7 +1458,7 @@ function CopDamage:sync_damage_bullet(attacker_unit, damage_percent, i_body, hit
 				local negate_push = nil
 
 				if data.weapon_unit:base()._parts then
-					for part_id, part in pairs(attack_data.weapon_unit:base()._parts) do
+					for part_id, part in pairs(data.weapon_unit:base()._parts) do
 						if tweak_data.weapon.factory.parts[part_id].custom_stats and tweak_data.weapon.factory.parts[part_id].custom_stats.rays == 1 then
 							negate_push = true
 
