@@ -135,7 +135,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 					local weak_body = hit.body:has_ray_type(ai_vision_ids)
 					weak_body = weak_body or hit.body:has_ray_type(bulletproof_ids)
 					local checked_hit = unique_hits[#unique_hits]
-					local point_blank_pierce = user_unit == managers.player:player_unit() and managers.player:has_category_upgrade("player", "point_blank") and checked_hit and checked_hit.distance and checked_hit.distance <= 100
+					local point_blank_pierce = user_unit == managers.player:player_unit() and managers.player:has_category_upgrade("player", "point_blank") and checked_hit and checked_hit.distance and checked_hit.distance <= 200
 
 					if hit_an_enemy then --once an enemy gets hit, this is always true until another shot is fired
 						hit_an_enemy = hit_an_enemy
@@ -210,7 +210,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 										local weak_body = hit.body:has_ray_type(ai_vision_ids)
 										weak_body = weak_body or hit.body:has_ray_type(bulletproof_ids)
 										local checked_hit = unique_hits[#unique_hits]
-										local point_blank_pierce = user_unit == managers.player:player_unit() and managers.player:has_category_upgrade("player", "point_blank") and checked_hit and checked_hit.distance and checked_hit.distance <= 100
+										local point_blank_pierce = user_unit == managers.player:player_unit() and managers.player:has_category_upgrade("player", "point_blank") and checked_hit and checked_hit.distance and checked_hit.distance <= 200
 
 										if not self._can_shoot_through_enemy and not point_blank_pierce and hit.unit:in_slot(enemy_mask) then
 											break
