@@ -57,7 +57,7 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 2000,
 		max_nr = 40,
 		duration = {3, 4},
-		interval = {3, 6},
+		interval = {5, 8},
 		group_min = 0,
 		queue = "g90"
 	}
@@ -65,7 +65,7 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 2000,
 		max_nr = 40,
 		duration = {3, 4},
-		interval = {3, 6},
+		interval = {5, 8},
 		group_min = 0,
 		queue = "hlp"
 	}
@@ -73,7 +73,7 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 2000,
 	    max_nr = 40,
 	    duration = {3, 4},
-		interval = {3, 6},
+		interval = {5, 8},
 	    group_min = 0,
 	    queue = "lk3b"
 	}
@@ -89,7 +89,7 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 2000,
 		max_nr = 20,
 		duration = {2, 4},
-		interval = {0.25, 0.75},
+		interval = {2, 4},
 		group_min = 0,
 		queue = "m01"
 	}		
@@ -97,7 +97,7 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 2000,
 		max_nr = 5,
 		duration = {2, 4},
-		interval = {0.5, 3},
+		interval = {2, 3},
 		group_min = 0,
 		queue = "rdy"
 	}
@@ -129,7 +129,7 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 2000,
 	    max_nr = 40,
 	    duration = {1, 1},
-	    interval = {2, 4.5},
+	    interval = {6, 8},
 	    group_min = 1,
 	    queue = "g90"
 	}
@@ -169,7 +169,7 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 2000,
 	    max_nr = 40,
 	    duration = {1, 1},
-	    interval = {2, 4.5},
+	    interval = {6, 8},
 	    group_min = 1,
 	    queue = "p01"
 	}
@@ -177,7 +177,7 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 2000,
 	    max_nr = 40,
 	    duration = {1, 1},
-	    interval = {2, 4.5},
+	    interval = {6, 8},
 	    group_min = 1,
 	    queue = "p01"
 	}
