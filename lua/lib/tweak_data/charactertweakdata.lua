@@ -2886,6 +2886,7 @@ function CharacterTweakData:_init_deathvox(presets)
 
 	self.deathvox_taser = deep_clone(self.taser)
 	--self.deathvox_taser.tags = {"taser"} -- commented out as it was actually breaking the tags
+	table.insert(self.deathvox_taser.tags, "takedown")
 	self.deathvox_taser.detection = presets.detection.deathvox
 	self.deathvox_taser.ignore_medic_revive_animation = true  --no revive animation. may require curving on lower diffs.
 	self.deathvox_taser.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire -- may require curving on lower diffs.
@@ -2913,6 +2914,7 @@ function CharacterTweakData:_init_deathvox(presets)
 
 	self.deathvox_cloaker = deep_clone(self.spooc)
 	--self.deathvox_cloaker.tags = {"spooc"}-- commented out as it was actually breaking the tags
+	table.insert(self.deathvox_cloaker.tags, "takedown")
 	self.deathvox_cloaker.detection = presets.detection.deathvox
 	self.deathvox_cloaker.ignore_medic_revive_animation = true  --no revive animation. same on all diffs.
 	self.deathvox_cloaker.suppression = nil
@@ -3018,11 +3020,13 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 	self.deathvox_greendozer = deep_clone(self.deathvox_tank)
 	self.deathvox_greendozer.use_factory = false -- Use a factory weapon
+	table.insert(self.deathvox_greendozer.tags, "takedown")
 	--self.deathvox_greendozer.factory_weapon_id = {"wpn_deathvox_greendozer"} 
 	self.deathvox_greendozer.access = "tank"
 	table.insert(self._enemy_list, "deathvox_greendozer")
 
 	self.deathvox_blackdozer = deep_clone(self.deathvox_tank)
+	table.insert(self.deathvox_blackdozer.tags, "takedown")
 	self.deathvox_blackdozer.use_factory = false -- Use a factory weapon
 	--self.deathvox_blackdozer.factory_weapon_id = {"wpn_deathvox_blackdozer"} 
 	self.deathvox_blackdozer.access = "tank"

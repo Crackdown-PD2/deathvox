@@ -399,7 +399,7 @@ function CopLogicAttack._upd_combat_movement(data)
 		if data.tactics and data.tactics.ranged_fire or data.tactics and data.tactics.elite_ranged_fire then
 			my_data.stay_out_time = t + math.random(2, 4)
 		else
-			my_data.stay_out_time = t 
+			my_data.stay_out_time = t + math.random(0.5, 1)
 		end
 	end
 
@@ -479,7 +479,7 @@ function CopLogicAttack._upd_combat_movement(data)
 		end
 	elseif action_taken or my_data.move_t and my_data.move_t > t then
 		-- Nothing
-	elseif move_t_chk then 
+	elseif move_t_chk and not action_taken then 
 		if data.tactics and data.tactics.charge and charge_failed_t_chk or my_data.taken_flank_cover and charge_failed_t_chk or charge_failed_t_chk and ranged_fire_group and managers.groupai:state():chk_no_fighting_atm() then
 			if my_data.charge_path then
 				if data.objective and not data.objective.type == "follow" then
@@ -565,7 +565,7 @@ function CopLogicAttack._upd_combat_movement(data)
 		if ranged_fire_group then
 			my_data.move_t = data.t + math.random(2, 4)
 		else
-			my_data.move_t = data.t + math.random(0.35, 1.05)
+			my_data.move_t = data.t + math.random(0.5, 1)
 		end
 
 	elseif want_to_take_cover then
