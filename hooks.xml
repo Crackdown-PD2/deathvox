@@ -58,7 +58,7 @@
 	 <!-- Hoxi's Crew Bots Fixes  -->
 	<group :script_path="units/player_team/logics" :hook_id="units/player_team/logics">
 		<post :script_path="teamailogicassault.lua" :hook_id="teamailogicassault"/>
-		<post :script_path="teamailogicbase.lua" :hook_id="teamailogicbase"/>
+		<post :script_path="teamailogicdisabled.lua" :hook_id="teamailogicdisabled"/>
 		<post :script_path="teamailogicidle.lua" :hook_id="teamailogicidle"/>
 		<post :script_path="teamailogictravel.lua" :hook_id="teamailogictravel"/>
 	</group>
