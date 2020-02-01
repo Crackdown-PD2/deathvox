@@ -87,25 +87,12 @@ function CopActionShoot:update(t)
 			end
 
 			if managers.groupai:state():is_unit_team_AI(self._unit) or alive(managers.groupai:state():phalanx_vip()) or not self._ext_anim.base_no_reload then -- allows the team AI to reload while moving and only allows other NPCs to reload while moving if Winters is alive
-				if self._weap_tweak.reload == "looped" then
-					local anim_multiplier = self._weap_tweak.looped_reload_speed or 1
+				local reload_action = {
+					body_part = 3,
+					type = "reload"
+				}
 
-					anim_multiplier = anim_multiplier * (self._reload_speed or 1)
-
-					local res = CopActionReload._play_reload(self, t, anim_multiplier)
-
-					if res then
-						self._machine:set_speed(res, anim_multiplier)
-					end
-				else
-					local res = CopActionReload._play_reload(self)
-
-					if res then
-						self._machine:set_speed(res, self._reload_speed)
-					end
-				end
-
-				if Network:is_server() then
+				if self._ext_movement:action_request(reload_action) and Network:is_server() then
 					managers.network:session():send_to_peers("reload_weapon_cop", self._unit)
 				end
 			end
@@ -225,7 +212,7 @@ function CopActionShoot:update(t)
 				local melee = can_melee and self:check_melee_start(t, self._attention, target_dis, autotarget, shoot_from_pos, target_pos) and self:_chk_start_melee(target_vec, target_dis, autotarget, target_pos)
 
 				if melee then
-					self._shoot_t = self._shoot_t + 0.6 --prevent unit from firing immediately after doing a melee attack
+					self._shoot_t = self._shoot_t + 1 --prevent unit from firing immediately after doing a melee attack
 				else
 					local falloff, i_range = self:_get_shoot_falloff(target_dis, self._falloff)
 					local dmg_buff = self._unit:base():get_total_buff("base_damage")
@@ -303,10 +290,6 @@ function CopActionShoot:update(t)
 				end
 			end
 		end
-	end
-
-	if self._weap_tweak.reload == "looped" then
-		CopActionReload.update_looped(self, t)
 	end
 
 	if self._ext_anim.base_need_upd then
