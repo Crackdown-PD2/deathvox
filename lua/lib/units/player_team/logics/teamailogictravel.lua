@@ -88,7 +88,7 @@ function TeamAILogicTravel._upd_enemy_detection(data)
 
 	CopLogicAttack._upd_aim(data, my_data)
 
-	if (not my_data._intimidate_chk_t or my_data._intimidate_chk_t + 0.5 < data.t) and (not my_data._intimidate_t or my_data._intimidate_t + 2 < data.t) then
+	if (not my_data._intimidate_chk_t or my_data._intimidate_chk_t + 0.5 < data.t) and (not data.unit:brain()._intimidate_t or data.unit:brain()._intimidate_t + 2 < data.t) then
 		my_data._intimidate_chk_t = data.t
 
 		if data.unit:movement()._should_stay then
@@ -100,7 +100,7 @@ function TeamAILogicTravel._upd_enemy_detection(data)
 					my_data._turning_to_intimidate_t = data.t
 				else
 					if TeamAILogicIdle.intimidate_civilians(data, data.unit, true, true) then
-						my_data._intimidate_t = data.t
+						data.unit:brain()._intimidate_t = data.t
 					end
 				end
 			end
@@ -108,7 +108,7 @@ function TeamAILogicTravel._upd_enemy_detection(data)
 			local civ = TeamAILogicIdle.intimidate_civilians(data, data.unit, true, true)
 
 			if civ then
-				my_data._intimidate_t = data.t
+				data.unit:brain()._intimidate_t = data.t
 
 				if not data.attention_obj then
 					CopLogicBase._set_attention_on_unit(data, civ)
