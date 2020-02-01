@@ -437,6 +437,10 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 
 								if trying_to_kick_criminal then
 									target_priority_slot = 1
+
+									if trying_to_kick_criminal.target_u_key == data.key then
+										target_priority = target_priority * 0.1
+									end
 								else
 									target_priority_slot = too_close and 1 or near and 3 or is_marked and 6 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
 								end
@@ -447,6 +451,10 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 
 								if trying_to_tase_criminal then
 									target_priority_slot = 1
+
+									if trying_to_tase_criminal.target_u_key == data.key then
+										target_priority = target_priority * 0.1
+									end
 								else
 									target_priority_slot = too_close and 3 or near and 5 or is_marked and 7 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
 								end
@@ -570,14 +578,14 @@ function TeamAILogicIdle._upd_enemy_detection(data)
 	local delay = CopLogicBase._upd_attention_obj_detection(data, nil, max_reaction)
 	local new_attention, new_prio_slot, new_reaction = TeamAILogicIdle._get_priority_attention(data, data.detected_attention_objects, nil)
 
-	if not data.cool and not my_data.acting and not my_data._turning_to_intimidate and (not my_data._intimidate_chk_t or my_data._intimidate_chk_t + 0.5 < data.t) and (not my_data._intimidate_t or my_data._intimidate_t + 2 < data.t) then
+	if not data.cool and not my_data.acting and not my_data._turning_to_intimidate and (not my_data._intimidate_chk_t or my_data._intimidate_chk_t + 0.5 < data.t) and (not data.unit:brain()._intimidate_t or data.unit:brain()._intimidate_t + 2 < data.t) then
 		my_data._intimidate_chk_t = data.t
 
 		local can_turn = not data.unit:movement():chk_action_forbidden("turn") and (not new_prio_slot or new_prio_slot > 5)
 		local civ = TeamAILogicIdle.find_civilian_to_intimidate(data.unit, can_turn and 180 or 90, 1200)
 
 		if civ then
-			my_data._intimidate_t = data.t
+			data.unit:brain()._intimidate_t = data.t
 
 			if can_turn and CopLogicAttack._chk_request_action_turn_to_enemy(data, my_data, data.m_pos, civ:movement():m_pos()) then
 				my_data._turning_to_intimidate = true
@@ -640,17 +648,10 @@ function TeamAILogicIdle.check_idle_reload(data, reaction)
 		if data.unit:brain()._idle_reload_chk_t and data.unit:brain()._idle_reload_chk_t < data.t then
 			local criminal = data.unit
 			local weapon_unit = criminal:inventory():equipped_unit()
-			local weapon_tweak = weapon_unit and weapon_unit:base() and weapon_unit:base():weapon_tweak_data()
 
-			if weapon_tweak then
-				if weapon_tweak.reload == "looped" then
-					if criminal:anim_data().reload then
-						TeamAILogicIdle.idle_reload(data, criminal, weapon_unit, weapon_tweak, "stop")
-					elseif not criminal:movement():chk_action_forbidden("reload") then
-						TeamAILogicIdle.idle_reload(data, criminal, weapon_unit, weapon_tweak, true)
-					end
-				elseif not criminal:anim_data().reload and not criminal:movement():chk_action_forbidden("reload") then
-					TeamAILogicIdle.idle_reload(data, criminal, weapon_unit, weapon_tweak)
+			if weapon_unit and weapon_unit:base() then
+				if not criminal:anim_data().reload and not criminal:movement():chk_action_forbidden("reload") then
+					TeamAILogicIdle.idle_reload(data, criminal, weapon_unit)
 				end
 			end
 		end
@@ -659,56 +660,20 @@ function TeamAILogicIdle.check_idle_reload(data, reaction)
 	end
 end
 
-function TeamAILogicIdle.idle_reload(data, criminal, weapon_unit, weapon_tweak, loop_chk)
-	local verify_reload = nil
+function TeamAILogicIdle.idle_reload(data, criminal, weapon_unit)
+	local magazine_size, current_ammo_in_mag = weapon_unit:base():ammo_info()
 
-	if loop_chk ~= nil then
-		if loop_chk == "stop" then
-			if criminal:brain()._loop_t and criminal:brain()._loop_t < data.t then
-				local res = criminal:movement():play_redirect("reload_looped_exit")
+	if current_ammo_in_mag <= magazine_size * 0.5 then
+		local new_action = {
+			body_part = 3,
+			type = "reload",
+			idle_reload = true
+		}
 
-				if res then
-					managers.network:session():send_to_peers("play_distance_interact_redirect", criminal, "reload_looped_exit")
-				end
-			end
-		else
-			verify_reload = true
-		end
-	else
-		verify_reload = true
-	end
-
-	if verify_reload then
-		local magazine_size, current_ammo_in_mag = weapon_unit:base():ammo_info()
-
-		if current_ammo_in_mag <= magazine_size * 0.5 then
-			local reload_speed = data.char_tweak.weapon[weapon_tweak.usage].RELOAD_SPEED or 1
-			local redir_name = loop_chk and "reload_looped" or "reload"
-			local anim_multiplier = 1 * reload_speed
-
-			if loop_chk and weapon_tweak.looped_reload_speed then
-				anim_multiplier = anim_multiplier * weapon_tweak.looped_reload_speed
-			end
-
-			local res = criminal:movement():play_redirect(redir_name)
-
-			if res then
-				criminal:anim_state_machine():set_speed(res, anim_multiplier)
-				weapon_unit:base():on_reload()
-				criminal:brain()._idle_reload_chk_t = nil
-
-				if loop_chk then
-					local sound_prefix = weapon_tweak.sounds.prefix
-					local single_reload = sound_prefix == "nagant_npc" or sound_prefix == "ching_npc" or sound_prefix == "ecp_npc" --using sounds because it's vanilla weapontweakdata friendly
-					local loop_amount = single_reload and 1 or magazine_size - current_ammo_in_mag
-
-					criminal:brain()._loop_t = data.t + (1 * ((0.45 * loop_amount) / anim_multiplier))
-				end
-
-				--criminal:sound():say("g92", true) --used for testing, to differentiate them from normal reloads
-				managers.network:session():send_to_peers("reload_weapon_cop", criminal)
-				managers.network:session():send_to_peers("play_distance_interact_redirect", criminal, redir_name)
-			end
+		if data.unit:brain():action_request(new_action) then
+			--criminal:sound():say("g92", true) --used for testing, to differentiate them from normal reloads
+			criminal:brain()._idle_reload_chk_t = nil
+			managers.network:session():send_to_peers("reload_weapon_cop", criminal)
 		end
 	end
 end
@@ -730,8 +695,8 @@ function TeamAILogicIdle._find_intimidateable_civilians(criminal, use_default_sh
 		if attention_info.identified and (attention_info.verified or attention_info.nearly_visible) and attention_info.is_person and attention_info.char_tweak and not attention_info.unit:character_damage():dead() then
 			local att_unit = attention_info.unit
 			local att_char_tweak = attention_info.char_tweak
-			local is_enemy = enemy_domination ~= nil and (not TeamAILogicIdle._intimidate_enemy_t or TeamAILogicIdle._intimidate_enemy_t + 2 < t) and not att_char_tweak.priority_shout and att_char_tweak.surrender and not att_char_tweak.surrender.special and not att_char_tweak.surrender.never and not att_unit:anim_data().hands_tied
-			local is_escort = att_char_tweak.is_escort
+			local is_enemy = enemy_domination ~= nil and (not TeamAILogicIdle._intimidate_global_t or TeamAILogicIdle._intimidate_global_t + 2 < t) and not att_char_tweak.priority_shout and att_char_tweak.surrender and not att_char_tweak.surrender.special and not att_char_tweak.surrender.never and not att_unit:anim_data().hands_tied
+			local is_escort = (not TeamAILogicIdle._intimidate_global_t or TeamAILogicIdle._intimidate_global_t + 2 < t) and att_char_tweak.is_escort
 			local is_civilian = CopDamage.is_civilian(att_unit:base()._tweak_table) and not att_unit:brain():is_tied() and att_char_tweak.intimidateable
 
 			if is_enemy or is_escort or is_civilian then
@@ -763,7 +728,7 @@ function TeamAILogicIdle._find_intimidateable_civilians(criminal, use_default_sh
 							local inv_wgt = dis
 
 							if is_enemy then
-								local already_intimidated = att_unit:brain()._current_logic_name == "intimidated" or att_unit:anim_data().surrender or att_unit:anim_data().hands_back
+								local already_intimidated = att_unit:brain().surrendered and att_unit:brain():surrendered() or att_unit:anim_data().surrender or att_unit:anim_data().hands_back
 
 								if already_intimidated then
 									valid_target = true
@@ -1018,8 +983,8 @@ function TeamAILogicIdle.intimidate_civilians(data, criminal, play_sound, play_a
 		primary_target:brain():on_intimidated(1, criminal)
 	end
 
-	if intimidate_enemy then
-		TeamAILogicIdle._intimidate_enemy_t = data.t
+	if intimidate_enemy or intimidate_escort then
+		TeamAILogicIdle._intimidate_global_t = data.t
 	end
 
 	local skip_alert = managers.groupai:state():whisper_mode()
