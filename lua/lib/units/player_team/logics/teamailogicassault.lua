@@ -34,13 +34,13 @@ function TeamAILogicAssault._upd_enemy_detection(data, is_synchronous)
 
 	CopLogicAttack._upd_aim(data, my_data)
 
-	if not my_data._intimidate_t or my_data._intimidate_t + 2 < data.t and not my_data._turning_to_intimidate and data.unit:character_damage():health_ratio() > 0.5 then
+	if (not data.unit:brain()._intimidate_t or data.unit:brain()._intimidate_t + 2 < data.t) and not my_data._turning_to_intimidate and data.unit:character_damage():health_ratio() > 0.5 then
 		local can_turn = not data.unit:movement():chk_action_forbidden("turn") and (not new_prio_slot or new_prio_slot > 5)
 		local is_assault = managers.groupai:state():get_assault_mode()
 		local civ = TeamAILogicIdle.find_civilian_to_intimidate(data.unit, can_turn and 180 or 60, is_assault and 800 or 1200)
 
 		if civ then
-			my_data._intimidate_t = data.t
+			data.unit:brain()._intimidate_t = data.t
 
 			if can_turn and CopLogicAttack._chk_request_action_turn_to_enemy(data, my_data, data.unit:movement():m_pos(), civ:movement():m_pos()) then
 				my_data._turning_to_intimidate = true
