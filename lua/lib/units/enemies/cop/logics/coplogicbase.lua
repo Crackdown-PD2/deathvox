@@ -7,6 +7,33 @@ local mvec3_dis = mvector3.distance
 local mvec3_dis_sq = mvector3.distance_sq
 local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
+
+function CopLogicBase.chk_am_i_aimed_at(data, attention_obj, max_dot)
+	if not attention_obj.is_person then
+		return
+	end
+
+	if attention_obj.dis < 700 and max_dot > 0.3 then
+		max_dot = math.lerp(0.3, max_dot, (attention_obj.dis - 50) / 650)
+	end
+
+	local enemy_look_dir = nil
+
+	if attention_obj.is_husk_player then
+		enemy_look_dir = attention_obj.unit:movement():detect_look_dir()
+	else
+		enemy_look_dir = tmp_vec1
+
+		mrotation.y(attention_obj.unit:movement():m_head_rot(), enemy_look_dir)
+	end
+
+	local enemy_vec = tmp_vec2
+
+	mvec3_dir(enemy_vec, attention_obj.m_head_pos, data.unit:movement():m_com())
+
+	return max_dot < mvec3_dot(enemy_vec, enemy_look_dir)
+end
+
 function CopLogicBase._evaluate_reason_to_surrender(data, my_data, aggressor_unit)
 	local surrender_tweak = data.char_tweak.surrender
 
