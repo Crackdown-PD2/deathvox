@@ -439,7 +439,7 @@ function CopLogicTravel.action_complete_clbk(data, action)
 				
 				local cover_wait_time = nil
 				
-				local should_tacticool_wait = data.attention_obj and AIAttentionObject.REACT_COMBAT >= data.attention_obj.reaction and data.attention_obj.dis >= 1200 and data.attention_obj.verified_t and data.t - data.attention_obj.verified_t < math.random(2, 4) and math.abs(data.m_pos.z - data.attention_obj.m_pos.z) > 250 --if an enemy is not at semi equal height, and further than 12 meters, and we've seen him at least two to four seconds ago, do a slower, more tacticool approach
+				local should_tacticool_wait = data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis >= 1200 and data.attention_obj.verified_t and data.t - data.attention_obj.verified_t < math.random(2, 4) and math.abs(data.m_pos.z - data.attention_obj.m_pos.z) > 250 --if an enemy is not at semi equal height, and further than 12 meters, and we've seen him at least two to four seconds ago, do a slower, more tacticool approach
 				
 				if should_tacticool_wait then --If there is a height advantage/disadvantage, act tacticool and approach slower.
 					if data.tactics and data.tactics.ranged_fire or data.tactics and data.tactics.elite_ranged_fire then 
@@ -785,16 +785,16 @@ function CopLogicTravel._chk_begin_advance(data, my_data)
 	local pose_chk = not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.crouch
 	local enemyseeninlast4secs = data.attention_obj and data.attention_obj.verified_t and data.t - data.attention_obj.verified_t < 4
 	local enemy_seen_range_bonus = enemyseeninlast4secs and 500 or 0
-	local enemy_has_height_difference = data.attention_obj and AIAttentionObject.REACT_COMBAT >= data.attention_obj.reaction and data.attention_obj.dis >= 1200 and data.attention_obj.verified_t and data.t - data.attention_obj.verified_t < 4 and math.abs(data.m_pos.z - data.attention_obj.m_pos.z) > 250
+	local enemy_has_height_difference = data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis >= 1200 and data.attention_obj.verified_t and data.t - data.attention_obj.verified_t < 4 and math.abs(data.m_pos.z - data.attention_obj.m_pos.z) > 250
 	local height_difference_penalty = data.attention_obj and math.abs(data.m_pos.z - data.attention_obj.m_pos.z) < 250 and 400 or 0
 	
 	if data.unit:movement():cool() then
 			haste = "walk"
 	elseif data.is_converted or data.unit:in_slot(16) or data.attention_obj and data.attention_obj.dis > 10000 then
 		haste = "run"
-	elseif data.attention_obj and AIAttentionObject.REACT_COMBAT >= data.attention_obj.reaction and data.attention_obj.dis > 1200 + enemy_seen_range_bonus and not data.unit:movement():cool() and not managers.groupai:state():whisper_mode() then
+	elseif data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis > 1200 + enemy_seen_range_bonus and not data.unit:movement():cool() and not managers.groupai:state():whisper_mode() then
 		haste = "run"
-	elseif data.attention_obj and AIAttentionObject.REACT_COMBAT >= data.attention_obj.reaction and data.attention_obj.dis <= 1200 + enemy_seen_range_bonus - height_difference_penalty and is_mook and data.tactics and not data.tactics.hitnrun then
+	elseif data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis <= 1200 + enemy_seen_range_bonus - height_difference_penalty and is_mook and data.tactics and not data.tactics.hitnrun then
 		haste = "walk"
 	else
 		haste = "run"
@@ -816,11 +816,11 @@ function CopLogicTravel._chk_begin_advance(data, my_data)
 	
 	if data.attention_obj and data.attention_obj.dis > 10000 or data.unit:in_slot(16) or data.is_converted then
 		stand_chance = 1
-	elseif data.attention_obj and AIAttentionObject.REACT_COMBAT >= data.attention_obj.reaction and data.attention_obj.dis > 2000 and is_mook then
+	elseif data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis > 2000 and is_mook then
 		stand_chance = 0.75
 	elseif enemy_has_height_difference and enemy_visible15m_or_10m_chk and is_mook then
 		stand_chance = 0.25
-	elseif data.attention_obj and AIAttentionObject.REACT_COMBAT >= data.attention_obj.reaction and enemy_visible15m_or_10m_chk and CopLogicTravel._chk_close_to_criminal(data, my_data) and data.tactics and data.tactics.flank and haste == "walk" and is_mook then
+	elseif data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and enemy_visible15m_or_10m_chk and CopLogicTravel._chk_close_to_criminal(data, my_data) and data.tactics and data.tactics.flank and haste == "walk" and is_mook then
 		stand_chance = 0.25
 	elseif my_data.moving_to_cover and pose_chk then
 		stand_chance = 0.5
@@ -931,7 +931,7 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index)
 	local coarse_path = my_data.coarse_path
 	local total_nav_points = #coarse_path
 	local reservation, wants_reservation = nil
-	local should_wall_offset = data.attention_obj and AIAttentionObject.REACT_COMBAT >= data.attention_obj.reaction and not data.attention_obj.verified and data.attention_obj.dis <= 3000
+	local should_wall_offset = data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and not data.attention_obj.verified and data.attention_obj.dis <= 3000
 
 	if total_nav_points <= nav_index then
 		local new_occupation = data.logic._determine_destination_occupation(data, objective)
@@ -1035,7 +1035,7 @@ function CopLogicTravel.get_pathing_prio(data)
 		if (objective.follow_unit or objective.type == "phalanx") then
 			prio = prio + 1
 			
-			if focus_enemy and AIAttentionObject.REACT_COMBAT >= data.attention_obj.reaction and focus_enemy.dis < 4000 then
+			if focus_enemy and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and focus_enemy.dis < 4000 then
 				prio = prio + 2
 			end
 		end
