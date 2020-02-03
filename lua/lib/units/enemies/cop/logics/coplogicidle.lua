@@ -351,6 +351,7 @@ function CopLogicIdle._update_haste(data, my_data)
 	local enemyseeninlast4secs = data.attention_obj and data.attention_obj.verified_t and data.t - data.attention_obj.verified_t < 4
 	local enemy_seen_range_bonus = enemyseeninlast4secs and 500 or 0
 	local enemy_has_height_difference = data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis >= 1200 and data.attention_obj.verified_t and data.t - data.attention_obj.verified_t < 4 and math.abs(data.m_pos.z - data.attention_obj.m_pos.z) > 250
+	local height_difference_penalty = enemy_has_height_difference and 400 or 0
 	local should_crouch = nil
 	local pose = nil
 	local end_pose = nil
