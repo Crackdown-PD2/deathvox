@@ -1,3 +1,22 @@
+local ids_movement = Idstring("movement")
+local mvec3_set = mvector3.set
+local mvec3_set_z = mvector3.set_z
+local mvec3_lerp = mvector3.lerp
+local mvec3_add = mvector3.add
+local mvec3_sub = mvector3.subtract
+local mvec3_mul = mvector3.multiply
+local mvec3_norm = mvector3.normalize
+local mvec3_len = mvector3.length
+local mrot_set = mrotation.set_yaw_pitch_roll
+local temp_vec1 = Vector3()
+local temp_vec2 = Vector3()
+local temp_vec3 = Vector3()
+local stance_ctl_pts = {
+	0,
+	0,
+	1,
+	1
+}
 local old_init = CopMovement.init
 local action_variants = {
 	security = {
@@ -398,4 +417,258 @@ function CopMovement:damage_clbk(my_unit, damage_info)
 
 		return result ~= Idstring("") and result
 	end
+end
+
+function CopMovement:anim_clbk_enemy_spawn_melee_item()
+	if alive(self._melee_item_unit) then
+		return
+	end
+
+	local melee_weapon = self._unit:base().melee_weapon and self._unit:base():melee_weapon()
+	local unit_name = melee_weapon and melee_weapon ~= "weapon" and tweak_data.weapon.npc_melee[melee_weapon] and tweak_data.weapon.npc_melee[melee_weapon].unit_name or nil
+
+	if unit_name then
+		local align_obj_l_name = CopMovement._gadgets.aligns.hand_l
+		local align_obj_l = self._unit:get_object(align_obj_l_name)
+
+		self._melee_item_unit = World:spawn_unit(unit_name, align_obj_l:position(), align_obj_l:rotation())
+		self._unit:link(align_obj_l:name(), self._melee_item_unit, self._melee_item_unit:orientation_object():name())
+	end
+end
+
+function CopMovement:_upd_actions(t)
+	local a_actions = self._active_actions
+	local has_no_action = true
+
+	for i_action, action in ipairs(a_actions) do
+		if action then
+			if action.update then
+				action:update(t)
+			end
+
+			if not self._need_upd and action.need_upd then
+				self._need_upd = action:need_upd()
+			end
+
+			if action.expired and action:expired() then
+				a_actions[i_action] = false
+
+				if action.on_exit then
+					action:on_exit()
+				end
+
+				self._ext_brain:action_complete_clbk(action)
+				self._ext_base:chk_freeze_anims()
+
+				for _, action in ipairs(a_actions) do
+					if action then
+						has_no_action = nil
+
+						break
+					end
+				end
+			else
+				has_no_action = nil
+			end
+		end
+	end
+
+	if has_no_action and (not self._queued_actions or not next(self._queued_actions)) then
+		self:action_request({
+			body_part = 1,
+			type = "idle"
+		})
+	end
+
+	if not a_actions[1] and not a_actions[2] and (not self._queued_actions or not next(self._queued_actions)) and not self:chk_action_forbidden("action") then
+		if a_actions[3] then
+			self:action_request({
+				body_part = 2,
+				type = "idle"
+			})
+		else
+			self:action_request({
+				body_part = 1,
+				type = "idle"
+			})
+		end
+	end
+
+	self:_upd_stance(t)
+	self._need_upd = true
+end
+
+function CopMovement:on_suppressed(state)
+	local suppression = self._suppression
+	local end_value = state and 1 or 0
+	local vis_state = self._ext_base:lod_stage()
+
+	if vis_state and end_value ~= suppression.value then
+		local t = TimerManager:game():time()
+		local duration = 0.5 * math.abs(end_value - suppression.value)
+		suppression.transition = {
+			end_val = end_value,
+			start_val = suppression.value,
+			duration = duration,
+			start_t = t,
+			next_upd_t = t + 0.07
+		}
+	else
+		suppression.transition = nil
+		suppression.value = end_value
+
+		self._machine:set_global("sup", end_value)
+	end
+
+	self._action_common_data.is_suppressed = state and true or nil
+
+	if Network:is_server() then
+		if state then
+			if not self._tweak_data.allowed_poses or self._tweak_data.allowed_poses.crouch then
+				if not self._tweak_data.allowed_poses or self._tweak_data.allowed_poses.stand then
+					if not self:chk_action_forbidden("walk") then
+						local try_something_else = true
+
+						if state == "panic" and not self:chk_action_forbidden("act") then
+							if self._ext_anim.run and self._ext_anim.move_fwd then
+								local action_desc = {
+									clamp_to_graph = true,
+									type = "act",
+									body_part = 1,
+									variant = "e_so_sup_fumble_run_fwd",
+									blocks = {
+										action = -1,
+										walk = -1
+									}
+								}
+
+								if self:action_request(action_desc) then
+									try_something_else = false
+									self._unit:sound():say("lk3b", true)
+								end
+							else
+								local allow = nil
+								local vec_from = temp_vec1
+								local vec_to = temp_vec2
+								local ray_params = {
+									allow_entry = false,
+									trace = true,
+									tracker_from = self:nav_tracker(),
+									pos_from = vec_from,
+									pos_to = vec_to
+								}
+								local allowed_fumbles = {
+									"e_so_sup_fumble_inplace_3"
+								}
+
+								mvec3_set(ray_params.pos_from, self:m_pos())
+								mvec3_set(ray_params.pos_to, self:m_rot():y())
+								mvec3_mul(ray_params.pos_to, -100)
+								mvec3_add(ray_params.pos_to, self:m_pos())
+
+								allow = not managers.navigation:raycast(ray_params)
+
+								if allow then
+									table.insert(allowed_fumbles, "e_so_sup_fumble_inplace_1")
+								end
+
+								mvec3_set(ray_params.pos_from, self:m_pos())
+								mvec3_set(ray_params.pos_to, self:m_rot():x())
+								mvec3_mul(ray_params.pos_to, 200)
+								mvec3_add(ray_params.pos_to, self:m_pos())
+
+								allow = not managers.navigation:raycast(ray_params)
+
+								if allow then
+									table.insert(allowed_fumbles, "e_so_sup_fumble_inplace_2")
+								end
+
+								mvec3_set(ray_params.pos_from, self:m_pos())
+								mvec3_set(ray_params.pos_to, self:m_rot():x())
+								mvec3_mul(ray_params.pos_to, -200)
+								mvec3_add(ray_params.pos_to, self:m_pos())
+
+								allow = not managers.navigation:raycast(ray_params)
+
+								if allow then
+									table.insert(allowed_fumbles, "e_so_sup_fumble_inplace_4")
+								end
+
+								if #allowed_fumbles > 0 then
+									local action_desc = {
+										body_part = 1,
+										type = "act",
+										variant = allowed_fumbles[math.random(#allowed_fumbles)],
+										blocks = {
+											action = -1,
+											walk = -1
+										}
+									}
+
+									if self:action_request(action_desc) then
+										try_something_else = false
+										self._unit:sound():say("lk3b", true)
+									end
+								end
+							end
+						end
+
+						if try_something_else and not self._ext_anim.crouch and self._tweak_data.crouch_move then
+							if not self._tweak_data.allowed_poses or self._tweak_data.allowed_poses.crouch then
+								if self._ext_anim.idle then
+									if not self._active_actions[2] or self._active_actions[2]:type() == "idle" then
+										if not self:chk_action_forbidden("act") then
+											local action_desc = {
+												clamp_to_graph = true,
+												type = "act",
+												body_part = 2,
+												variant = "suppressed_reaction",
+												blocks = {
+													walk = -1
+												}
+											}
+
+											if self:action_request(action_desc) then
+												try_something_else = false
+											end
+										end
+									end
+								end
+
+								if try_something_else and not self:chk_action_forbidden("crouch") then
+									local action_desc = {
+										body_part = 4,
+										type = "crouch"
+									}
+
+									self:action_request(action_desc)
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+
+		managers.network:session():send_to_peers_synched("suppressed_state", self._unit, state and true or false)
+	end
+
+	self:enable_update()
+end
+
+--used by clients
+function CopMovement:sync_reload_weapon(empty_reload, reload_speed_multiplier)
+	local reload_action = {
+		body_part = 3,
+		type = "reload",
+		idle_reload = empty_reload ~= 0 and empty_reload or nil
+	}
+
+	self:action_request(reload_action)
+end
+
+--stealth corpse position syncing, used by clients
+function CopMovement:sync_fall_position(pos, rot)
+	self:set_position(pos)
+	self:set_rotation(rot)
 end
