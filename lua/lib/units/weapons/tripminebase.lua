@@ -1,3 +1,21 @@
+local mvec3_set = mvector3.set
+local mvec3_mul = mvector3.multiply
+local mvec3_dir = mvector3.direction
+local mvec3_dis_sq = mvector3.distance_sq
+local mvec3_add = mvector3.add
+local mvec3_copy = mvector3.copy
+local tmp_hit_pos = Vector3()
+local tmp_pos = Vector3()
+local math_min = math.min
+local math_ceil = math.ceil
+local table_insert = table.insert
+local draw_explosion_sphere = nil
+local draw_sync_explosion_sphere = nil
+local draw_vanilla_explosion_cylinder = nil
+local draw_splinters = nil
+local draw_obstructed_splinters = nil
+local draw_splinter_hits = nil
+
 function TripMineBase:_explode(col_ray)
 	if not managers.network:session() then
 		return
@@ -8,21 +26,31 @@ function TripMineBase:_explode(col_ray)
 	local my_pos = self._ray_from_pos
 	local my_fwd = self._forward
 
+	if draw_explosion_sphere then
+		local draw_duration = 3
+		local new_brush = Draw:brush(Color.red:with_alpha(0.5), draw_duration)
+		new_brush:sphere(my_pos, damage_size)
+	end
+
+	if draw_vanilla_explosion_cylinder then
+		local draw_duration = 3
+		local new_brush = Draw:brush(Color.blue:with_alpha(0.5), draw_duration)
+		new_brush:cylinder(my_pos, self._ray_to_pos, damage_size)
+	end
+
 	managers.explosion:give_local_player_dmg(my_pos, damage_size, tweak_data.weapon.trip_mines.player_damage)
 	self._unit:set_extension_update_enabled(Idstring("base"), false)
 	self._deactive_timer = 5
 	self:_play_sound_and_effects(damage_size)
 
-	local hit_pos = Vector3()
-
-	mvector3.set(hit_pos, my_fwd)
-	mvector3.multiply(hit_pos, 5)
-	mvector3.add(hit_pos, my_pos)
+	mvec3_set(tmp_hit_pos, my_fwd)
+	mvec3_mul(tmp_hit_pos, 5)
+	mvec3_add(tmp_hit_pos, my_pos)
 
 	local slotmask = managers.slot:get_mask("explosion_targets")
-	local bodies = World:find_bodies("intersect", "sphere", hit_pos, damage_size, slotmask)
+	local bodies = World:find_bodies("intersect", "sphere", tmp_hit_pos, damage_size, slotmask)
 	local splinters = {
-		mvector3.copy(hit_pos)
+		mvec3_copy(tmp_hit_pos)
 	}
 	local dirs = {
 		Vector3(damage_size, 0, 0),
@@ -32,19 +60,25 @@ function TripMineBase:_explode(col_ray)
 		Vector3(0, 0, damage_size),
 		Vector3(0, 0, -damage_size)
 	}
-	local pos = Vector3()
 
 	for _, dir in ipairs(dirs) do
-		mvector3.set(pos, dir)
-		mvector3.add(pos, hit_pos)
+		mvec3_set(tmp_pos, dir)
+		mvec3_add(tmp_pos, tmp_hit_pos)
 
-		local splinter_ray = World:raycast("ray", hit_pos, pos, "slot_mask", managers.slot:get_mask("world_geometry"))
+		local splinter_ray = World:raycast("ray", tmp_hit_pos, tmp_pos, "slot_mask", managers.slot:get_mask("world_geometry"))
 
-		pos = (splinter_ray and splinter_ray.position or pos) - dir:normalized() * math.min(splinter_ray and splinter_ray.distance or 0, 10)
+		tmp_pos = (splinter_ray and splinter_ray.position or tmp_pos) - dir:normalized() * math_min(splinter_ray and splinter_ray.distance or 0, 10)
+
+		if draw_splinters then
+			local draw_duration = 3
+			local new_brush = Draw:brush(Color.white:with_alpha(0.5), draw_duration)
+			new_brush:cylinder(tmp_hit_pos, tmp_pos, 0.5)
+		end
+
 		local near_splinter = false
 
 		for _, s_pos in ipairs(splinters) do
-			if mvector3.distance_sq(pos, s_pos) < 900 then
+			if mvec3_dis_sq(tmp_pos, s_pos) < 900 then
 				near_splinter = true
 
 				break
@@ -52,7 +86,7 @@ function TripMineBase:_explode(col_ray)
 		end
 
 		if not near_splinter then
-			table.insert(splinters, mvector3.copy(pos))
+			table_insert(splinters, mvec3_copy(tmp_pos))
 		end
 	end
 
@@ -77,7 +111,19 @@ function TripMineBase:_explode(col_ray)
 							units_to_hit[hit_body:unit():key()] = true
 							damage_character = true
 
+							if draw_splinter_hits then
+								local draw_duration = 3
+								local new_brush = Draw:brush(Color.green:with_alpha(0.5), draw_duration)
+								new_brush:cylinder(s_pos, hit_body:center_of_mass(), 0.5)
+							end
+
 							break
+						else
+							if draw_obstructed_splinters then
+								local draw_duration = 3
+								local new_brush = Draw:brush(Color.yellow:with_alpha(0.5), draw_duration)
+								new_brush:cylinder(s_pos, hit_body:center_of_mass(), 0.5)
+							end
 						end
 					end
 				end
@@ -100,12 +146,12 @@ function TripMineBase:_explode(col_ray)
 
 			if ray_hit then
 				dir = hit_body:center_of_mass()
-				mvector3.direction(dir, hit_pos, dir)
+				mvec3_dir(dir, tmp_hit_pos, dir)
 
 				if apply_dmg then
 					local normal = dir
-					local prop_damage = math.min(dmg, 200)
-					local network_damage = math.ceil(prop_damage * 163.84)
+					local prop_damage = math_min(dmg, 200)
+					local network_damage = math_ceil(prop_damage * 163.84)
 					prop_damage = network_damage / 163.84
 
 					hit_body:extension().damage:damage_explosion(player, normal, hit_body:position(), dir, prop_damage)
@@ -113,9 +159,9 @@ function TripMineBase:_explode(col_ray)
 
 					if hit_body:unit():id() ~= -1 then
 						if player then
-							managers.network:session():send_to_peers_synched("sync_body_damage_explosion", hit_body, player, normal, hit_body:position(), dir, math.min(32768, network_damage))
+							managers.network:session():send_to_peers_synched("sync_body_damage_explosion", hit_body, player, normal, hit_body:position(), dir, math_min(32768, network_damage))
 						else
-							managers.network:session():send_to_peers_synched("sync_body_damage_explosion_no_attacker", hit_body, normal, hit_body:position(), dir, math.min(32768, network_damage))
+							managers.network:session():send_to_peers_synched("sync_body_damage_explosion_no_attacker", hit_body, normal, hit_body:position(), dir, math_min(32768, network_damage))
 						end
 					end
 				end
@@ -181,14 +227,18 @@ function TripMineBase:sync_trip_mine_explode(user_unit, ray_from, ray_to, damage
 	managers.explosion:give_local_player_dmg(my_pos, range, tweak_data.weapon.trip_mines.player_damage)
 	self:_play_sound_and_effects(range)
 
-	local hit_pos = Vector3()
+	if draw_sync_explosion_sphere then
+		local draw_duration = 3
+		local new_brush = Draw:brush(Color.red:with_alpha(0.5), draw_duration)
+		new_brush:sphere(my_pos, range)
+	end
 
-	mvector3.set(hit_pos, my_fwd)
-	mvector3.multiply(hit_pos, 5)
-	mvector3.add(hit_pos, my_pos)
+	mvec3_set(tmp_hit_pos, my_fwd)
+	mvec3_mul(tmp_hit_pos, 5)
+	mvec3_add(tmp_hit_pos, my_pos)
 
 	local slotmask = managers.slot:get_mask("explosion_targets")
-	local bodies = World:find_bodies("intersect", "sphere", hit_pos, range, slotmask)
+	local bodies = World:find_bodies("intersect", "sphere", tmp_hit_pos, range, slotmask)
 	local units_to_push = {}
 
 	for _, hit_body in ipairs(bodies) do
@@ -198,10 +248,10 @@ function TripMineBase:sync_trip_mine_explode(user_unit, ray_from, ray_to, damage
 
 			if apply_dmg then
 				local dir = hit_body:center_of_mass()
-				mvector3.direction(dir, hit_pos, dir)
+				mvec3_dir(dir, tmp_hit_pos, dir)
 
 				local normal = dir
-				local prop_damage = math.min(damage, 200)
+				local prop_damage = math_min(damage, 200)
 
 				hit_body:extension().damage:damage_explosion(user_unit, normal, hit_body:position(), dir, prop_damage)
 				hit_body:extension().damage:damage_damage(user_unit, normal, hit_body:position(), dir, prop_damage)
@@ -215,7 +265,7 @@ function TripMineBase:sync_trip_mine_explode(user_unit, ray_from, ray_to, damage
 
 	if Network:is_server() then
 		managers.mission:call_global_event("tripmine_exploded")
-		Application:error("TRIPMINE EXPLODED")
+		--Application:error("TRIPMINE EXPLODED")
 	end
 
 	self._unit:set_slot(0)
@@ -239,19 +289,4 @@ function TripMineBase:_play_sound_and_effects(range)
 	managers.enemy:add_delayed_clbk("TrMiexpl", callback(TripMineBase, TripMineBase, "_dispose_of_sound", {
 		sound_source = sound_source
 	}), TimerManager:game():time() + 4)
-end
-
-function TripMineBase:_give_explosion_damage(col_ray, unit, damage)
-	local action_data = {
-		variant = "explosion",
-		damage = damage,
-		attacker_unit = managers.player:player_unit(),
-		weapon_unit = self._unit,
-		col_ray = col_ray,
-		owner = managers.player:player_unit(),
-		owner_peer_id = self._owner_peer_id
-	}
-	local defense_data = unit:character_damage():damage_explosion(action_data)
-
-	return defense_data
 end

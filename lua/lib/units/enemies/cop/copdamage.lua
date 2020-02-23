@@ -467,6 +467,14 @@ function CopDamage:damage_bullet(attack_data)
 		return "friendly_fire"
 	end
 
+	if alive(attack_data.attacker_unit) and attack_data.attacker_unit:in_slot(16) then
+		local has_surrendered = self._unit:brain().surrendered and self._unit:brain():surrendered() or self._unit:anim_data().surrender or self._unit:anim_data().hands_back or self._unit:anim_data().hands_tied
+
+		if has_surrendered then
+			return
+		end
+	end
+
 	local is_civilian = CopDamage.is_civilian(self._unit:base()._tweak_table)
 
 	if not is_civilian then
@@ -1180,18 +1188,39 @@ function CopDamage:sync_damage_tase(attacker_unit, damage_percent, variant, deat
 end
 
 function CopDamage:stun_hit(attack_data)
-	local anim_data = self._unit:anim_data()
-
-	if self._dead or self._invulnerable or (anim_data and (anim_data.act or anim_data.surrender or anim_data.hands_back or anim_data.hands_tied)) then --dead, invulnerable, is acting or is intimidated
+	if self._dead or self._invulnerable then
 		return
+	else
+		local anim_data = self._unit:anim_data()
+
+		if anim_data.act then
+			return
+		else
+			local has_surrendered = self._unit:brain().surrendered and self._unit:brain():surrendered() or anim_data.surrender or anim_data.hands_back or anim_data.hands_tied
+
+			if has_surrendered then
+				return
+			end
+		end
 	end
 
 	local is_civilian = CopDamage.is_civilian(self._unit:base()._tweak_table)
-	local attacker = attack_data.attacker_unit
-	local valid_attacker = attacker and alive(attacker) and attacker.base and attacker:base() and attacker.movement and attacker:movement() --with how user/owner assigning works with grenades, just gotta make sure
+	local attacker_unit = attack_data.attacker_unit
 
-	if not is_civilian and valid_attacker and self:is_friendly_fire(attacker) then --do not stun teammates and affect civilians regardless so that they drop the ground (even if that's clunky, I might rewrite it)
-		return "friendly_fire"
+	if attacker_unit and attacker_unit:base() and attacker_unit:base().thrower_unit then
+		attacker_unit = attacker_unit:base():thrower_unit()
+	end
+
+	if not is_civilian then --do not stun teammates and affect civilians regardless of the attacker
+		if self:is_friendly_fire(attacker_unit) then
+			return "friendly_fire"
+		end
+	end
+
+	local attacker = attacker_unit
+
+	if not attacker or attacker and alive(attacker) and attacker:id() == -1 then
+		attacker = self._unit
 	end
 
 	local result = {
@@ -1556,8 +1585,16 @@ function CopDamage:damage_melee(attack_data)
 		return
 	end
 
-	if PlayerDamage.is_friendly_fire(self, attack_data.attacker_unit) then
+	if self:is_friendly_fire(self, attack_data.attacker_unit) then
 		return "friendly_fire"
+	end
+
+	if alive(attack_data.attacker_unit) and attack_data.attacker_unit:in_slot(16) then
+		local has_surrendered = self._unit:brain().surrendered and self._unit:brain():surrendered() or self._unit:anim_data().surrender or self._unit:anim_data().hands_back or self._unit:anim_data().hands_tied
+
+		if has_surrendered then
+			return
+		end
 	end
 
 	local result = nil
@@ -2571,6 +2608,14 @@ end
 function CopDamage:damage_simple(attack_data)
 	if self._dead or self._invulnerable then
 		return
+	end
+
+	if attack_data.variant == "graze" then
+		local has_surrendered = self._unit:brain().surrendered and self._unit:brain():surrendered() or self._unit:anim_data().surrender or self._unit:anim_data().hands_back or self._unit:anim_data().hands_tied
+
+		if has_surrendered then
+			return
+		end
 	end
 
 	local is_civilian = CopDamage.is_civilian(self._unit:base()._tweak_table)

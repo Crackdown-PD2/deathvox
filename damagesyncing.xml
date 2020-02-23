@@ -48,4 +48,44 @@
             <attr name="max" value="4"/>
         </target>
     </tweak>
+	<tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="reload_weapon"/>
+        </search>
+        <target mode="attributes">
+            <attr name="delivery" value="ordered"/>
+        </target>
+    </tweak>
+	<tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="reload_weapon_interupt"/>
+        </search>
+        <target mode="attributes">
+            <attr name="delivery" value="ordered"/>
+        </target>
+    </tweak>
+	<tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="shot_blank"/>
+        </search>
+        <target mode="attributes">
+            <attr name="delivery" value="ordered"/>
+        </target>
+    </tweak>
+	<tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="sync_underbarrel_switch"/>
+        </search>
+        <target mode="attributes">
+            <attr name="delivery" value="ordered"/>
+        </target>
+    </tweak>
 </tweaks>

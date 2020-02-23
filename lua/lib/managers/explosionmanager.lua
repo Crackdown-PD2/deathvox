@@ -1,8 +1,29 @@
-local idstr_small_light_fire = Idstring("effects/particles/fire/small_light_fire")
-local idstr_explosion_std = Idstring("explosion_std")
-local empty_idstr = Idstring("")
-local molotov_effect = "effects/payday2/particles/explosions/molotov_grenade"
+local mvec3_set = mvector3.set
+local mvec3_set_z = mvector3.set_z
+local mvec3_mul = mvector3.multiply
+local mvec3_dir = mvector3.direction
+local mvec3_dis_sq = mvector3.distance_sq
+local mvec3_add = mvector3.add
+local mvec3_dot = mvector3.dot
+local mvec3_copy = mvector3.copy
+local tmp_pos = Vector3()
 local tmp_vec3 = Vector3()
+local push_vec = Vector3()
+local math_min = math.min
+local math_max = math.max
+local math_round = math.round
+local math_pow = math.pow
+local math_clamp = math.clamp
+local math_random = math.random
+local math_rand = math.rand
+local math_ceil = math.ceil
+local table_insert = table.insert
+local draw_explosion_sphere = nil
+local draw_sync_explosion_sphere = nil
+local draw_splinters = nil
+local draw_obstructed_splinters = nil
+local draw_splinter_hits = nil
+local draw_shield_obstructions = nil
 
 function ExplosionManager:detect_and_stun(params)
 	local hit_pos = params.hit_pos
@@ -24,9 +45,15 @@ function ExplosionManager:detect_and_stun(params)
 		push_units = params.push_units
 	end
 
+	if draw_explosion_sphere then
+		local draw_duration = 3
+		local new_brush = Draw:brush(Color.red:with_alpha(0.5), draw_duration)
+		new_brush:sphere(hit_pos, range)
+	end
+
 	local bodies = World:find_bodies("intersect", "sphere", hit_pos, range, slotmask)
 	local splinters = {
-		mvector3.copy(hit_pos)
+		mvec3_copy(hit_pos)
 	}
 	local dirs = {
 		Vector3(range, 0, 0),
@@ -36,19 +63,25 @@ function ExplosionManager:detect_and_stun(params)
 		Vector3(0, 0, range),
 		Vector3(0, 0, -range)
 	}
-	local pos = Vector3()
 
 	for _, dir in ipairs(dirs) do
-		mvector3.set(pos, dir)
-		mvector3.add(pos, hit_pos)
+		mvec3_set(tmp_pos, dir)
+		mvec3_add(tmp_pos, hit_pos)
 
-		local splinter_ray = World:raycast("ray", hit_pos, pos, "slot_mask", managers.slot:get_mask("world_geometry"))
+		local splinter_ray = World:raycast("ray", hit_pos, tmp_pos, "slot_mask", managers.slot:get_mask("world_geometry"))
 
-		pos = (splinter_ray and splinter_ray.position or pos) - dir:normalized() * math.min(splinter_ray and splinter_ray.distance or 0, 10)
+		tmp_pos = (splinter_ray and splinter_ray.position or tmp_pos) - dir:normalized() * math_min(splinter_ray and splinter_ray.distance or 0, 10)
+
+		if draw_splinters then
+			local draw_duration = 3
+			local new_brush = Draw:brush(Color.white:with_alpha(0.5), draw_duration)
+			new_brush:cylinder(hit_pos, tmp_pos, 0.5)
+		end
+
 		local near_splinter = false
 
 		for _, s_pos in ipairs(splinters) do
-			if mvector3.distance_sq(pos, s_pos) < 900 then
+			if mvec3_dis_sq(tmp_pos, s_pos) < 900 then
 				near_splinter = true
 
 				break
@@ -56,7 +89,7 @@ function ExplosionManager:detect_and_stun(params)
 		end
 
 		if not near_splinter then
-			table.insert(splinters, mvector3.copy(pos))
+			table_insert(splinters, mvec3_copy(tmp_pos))
 		end
 	end
 
@@ -97,7 +130,19 @@ function ExplosionManager:detect_and_stun(params)
 							if ray_hit then
 								units_to_hit[hit_body:unit():key()] = true
 
+								if draw_splinter_hits then
+									local draw_duration = 3
+									local new_brush = Draw:brush(Color.green:with_alpha(0.5), draw_duration)
+									new_brush:cylinder(s_pos, hit_body:center_of_mass(), 0.5)
+								end
+
 								break
+							else
+								if draw_obstructed_splinters then
+									local draw_duration = 3
+									local new_brush = Draw:brush(Color.yellow:with_alpha(0.5), draw_duration)
+									new_brush:cylinder(s_pos, hit_body:center_of_mass(), 0.5)
+								end
 							end
 						end
 					end
@@ -122,7 +167,7 @@ function ExplosionManager:detect_and_stun(params)
 				end
 
 				local dir = hit_body:center_of_mass()
-				mvector3.direction(dir, hit_pos, dir)
+				mvec3_dir(dir, hit_pos, dir)
 
 				local dead_before = hit_unit:character_damage():dead()
 				local action_data = {
@@ -219,9 +264,15 @@ function ExplosionManager:detect_and_give_dmg(params)
 		})
 	end
 
+	if draw_explosion_sphere then
+		local draw_duration = 3
+		local new_brush = Draw:brush(Color.red:with_alpha(0.5), draw_duration)
+		new_brush:sphere(hit_pos, range)
+	end
+
 	local bodies = World:find_bodies("intersect", "sphere", hit_pos, range, slotmask)
 	local splinters = {
-		mvector3.copy(hit_pos)
+		mvec3_copy(hit_pos)
 	}
 	local dirs = {
 		Vector3(range, 0, 0),
@@ -231,19 +282,25 @@ function ExplosionManager:detect_and_give_dmg(params)
 		Vector3(0, 0, range),
 		Vector3(0, 0, -range)
 	}
-	local pos = Vector3()
 
 	for _, dir in ipairs(dirs) do
-		mvector3.set(pos, dir)
-		mvector3.add(pos, hit_pos)
+		mvec3_set(tmp_pos, dir)
+		mvec3_add(tmp_pos, hit_pos)
 
-		local splinter_ray = World:raycast("ray", hit_pos, pos, "slot_mask", managers.slot:get_mask("world_geometry"))
+		local splinter_ray = World:raycast("ray", hit_pos, tmp_pos, "slot_mask", managers.slot:get_mask("world_geometry"))
 
-		pos = (splinter_ray and splinter_ray.position or pos) - dir:normalized() * math.min(splinter_ray and splinter_ray.distance or 0, 10)
+		tmp_pos = (splinter_ray and splinter_ray.position or tmp_pos) - dir:normalized() * math_min(splinter_ray and splinter_ray.distance or 0, 10)
+
+		if draw_splinters then
+			local draw_duration = 3
+			local new_brush = Draw:brush(Color.white:with_alpha(0.5), draw_duration)
+			new_brush:cylinder(hit_pos, tmp_pos, 0.5)
+		end
+
 		local near_splinter = false
 
 		for _, s_pos in ipairs(splinters) do
-			if mvector3.distance_sq(pos, s_pos) < 900 then
+			if mvec3_dis_sq(tmp_pos, s_pos) < 900 then
 				near_splinter = true
 
 				break
@@ -251,7 +308,7 @@ function ExplosionManager:detect_and_give_dmg(params)
 		end
 
 		if not near_splinter then
-			table.insert(splinters, mvector3.copy(pos))
+			table_insert(splinters, mvec3_copy(tmp_pos))
 		end
 	end
 
@@ -288,12 +345,17 @@ function ExplosionManager:detect_and_give_dmg(params)
 								units_to_hit[hit_body:unit():key()] = true
 								damage_character = true
 
-								--shield explosion damage mitigation
 								--[[local det_pos = params.hit_pos
-								local e_center_of_mass = hit_body:unit():body("body"):center_of_mass()
-								local shield_ray = World:raycast("ray", det_pos, e_center_of_mass, "slot_mask", managers.slot:get_mask("enemy_shield_check"))
+								local e_com = hit_body:unit():movement():m_com() --hit_body:unit():body("body"):center_of_mass()
+								local shield_ray = World:raycast("ray", det_pos, e_com, "slot_mask", managers.slot:get_mask("enemy_shield_check"))
 
 								if shield_ray and alive(shield_ray.unit:parent()) then
+									if draw_shield_obstructions then
+										local draw_duration = 3
+										local new_brush = Draw:brush(Color.blue:with_alpha(0.5), draw_duration)
+										new_brush:cylinder(det_pos, shield_ray.position, 1.5)
+									end
+
 									local p_unit = shield_ray.unit:parent()
 									local p_unit_dmg = p_unit:character_damage()
 
@@ -314,7 +376,19 @@ function ExplosionManager:detect_and_give_dmg(params)
 									end
 								end]]
 
+								if draw_splinter_hits then
+									local draw_duration = 3
+									local new_brush = Draw:brush(Color.green:with_alpha(0.5), draw_duration)
+									new_brush:cylinder(s_pos, hit_body:center_of_mass(), 0.5)
+								end
+
 								break
+							else
+								if draw_obstructed_splinters then
+									local draw_duration = 3
+									local new_brush = Draw:brush(Color.yellow:with_alpha(0.5), draw_duration)
+									new_brush:cylinder(s_pos, hit_body:center_of_mass(), 0.5)
+								end
 							end
 						end
 					end
@@ -361,25 +435,25 @@ function ExplosionManager:detect_and_give_dmg(params)
 
 				hit_units[hit_unit:key()] = hit_unit
 				dir = hit_body:center_of_mass()
-				len = mvector3.direction(dir, hit_pos, dir)
-				damage = dmg * math.pow(math.clamp(1 - len / range, 0, 1), curve_pow)
+				len = mvec3_dir(dir, hit_pos, dir)
+				damage = dmg * math_pow(math_clamp(1 - len / range, 0, 1), curve_pow)
 				--damage = damage * dmg_mul
 
 				if apply_dmg then
 					local prop_damage = damage
 
 					if 1 - len / range < -5 then
-						prop_damage = math.max(damage, 1)
+						prop_damage = math_max(damage, 1)
 					end
 
 					self:_apply_body_damage(true, hit_body, user_unit, dir, prop_damage)
 				end
 
 				--[[if dmg_mul ~= 0 then
-					damage = math.max(damage, 1)
+					damage = math_max(damage, 1)
 				end]]
 
-				damage = math.max(damage, 1)
+				damage = math_max(damage, 1)
 
 				if character and damage_character then
 					local dead_before = hit_unit:character_damage():dead()
@@ -448,7 +522,7 @@ function ExplosionManager:detect_and_give_dmg(params)
 end
 
 function ExplosionManager:units_to_push(units_to_push, hit_pos, range)
-	range = math.min(range, 500)
+	range = math_min(range, 500)
 
 	for u_key, unit in pairs(units_to_push) do
 		if alive(unit) then
@@ -460,7 +534,7 @@ function ExplosionManager:units_to_push(units_to_push, hit_pos, range)
 				end
 
 				local nr_u_bodies = unit:num_bodies()
-				local rot_acc = Vector3(1 - math.rand(2), 1 - math.rand(2), 1 - math.rand(2)) * 10
+				local rot_acc = Vector3(1 - math_rand(2), 1 - math_rand(2), 1 - math_rand(2)) * 10
 				local i_u_body = 0
 
 				while nr_u_bodies > i_u_body do
@@ -468,18 +542,18 @@ function ExplosionManager:units_to_push(units_to_push, hit_pos, range)
 
 					if u_body:enabled() and u_body:dynamic() then
 						local body_mass = u_body:mass()
-						local len = mvector3.direction(tmp_vec3, hit_pos, u_body:center_of_mass())
+						local len = mvec3_dir(tmp_vec3, hit_pos, u_body:center_of_mass())
 						local body_vel = u_body:velocity()
-						local vel_dot = mvector3.dot(body_vel, tmp_vec3)
+						local vel_dot = mvec3_dot(body_vel, tmp_vec3)
 						local max_vel = 800
 
 						if vel_dot < max_vel then
-							mvector3.set_z(tmp_vec3, mvector3.z(tmp_vec3) + 0.75)
+							mvec3_set_z(tmp_vec3, mvector3.z(tmp_vec3) + 0.75)
 
-							local push_vel = (1 - len / range) * (max_vel - math.max(vel_dot, 0))
+							local push_vel = (1 - len / range) * (max_vel - math_max(vel_dot, 0))
 
-							mvector3.multiply(tmp_vec3, push_vel)
-							World:play_physic_effect(Idstring("physic_effects/body_explosion"), u_body, tmp_vec3, body_mass / math.random(2), u_body:position(), rot_acc, 1)
+							mvec3_mul(tmp_vec3, push_vel)
+							World:play_physic_effect(Idstring("physic_effects/body_explosion"), u_body, tmp_vec3, body_mass / math_random(2), u_body:position(), rot_acc, 1)
 						end
 					end
 
@@ -488,8 +562,7 @@ function ExplosionManager:units_to_push(units_to_push, hit_pos, range)
 			end
 
 			if unit:body("body") then
-				local push_vec = Vector3()
-				mvector3.direction(push_vec, hit_pos, unit:body("body"):center_of_mass())
+				mvec3_dir(push_vec, hit_pos, unit:body("body"):center_of_mass())
 
 				unit:push(5, push_vec * range * 2)
 			end
@@ -509,14 +582,14 @@ function ExplosionManager:_apply_body_damage(is_server, hit_body, user_unit, dir
 	end
 
 	local normal = dir
-	local prop_damage = math.min(damage, 200)
+	local prop_damage = math_min(damage, 200)
 
 	if prop_damage < 0.25 then
-		prop_damage = math.round(prop_damage, 0.25)
+		prop_damage = math_round(prop_damage, 0.25)
 	end
 
 	if prop_damage > 0 then
-		local network_damage = math.ceil(prop_damage * 163.84)
+		local network_damage = math_ceil(prop_damage * 163.84)
 		prop_damage = network_damage / 163.84
 
 		if local_damage then
@@ -526,9 +599,9 @@ function ExplosionManager:_apply_body_damage(is_server, hit_body, user_unit, dir
 
 		if sync_damage and managers.network:session() then
 			if alive(user_unit) then
-				managers.network:session():send_to_peers_synched("sync_body_damage_explosion", hit_body, user_unit, normal, hit_body:position(), dir, math.min(32768, network_damage))
+				managers.network:session():send_to_peers_synched("sync_body_damage_explosion", hit_body, user_unit, normal, hit_body:position(), dir, math_min(32768, network_damage))
 			else
-				managers.network:session():send_to_peers_synched("sync_body_damage_explosion_no_attacker", hit_body, normal, hit_body:position(), dir, math.min(32768, network_damage))
+				managers.network:session():send_to_peers_synched("sync_body_damage_explosion_no_attacker", hit_body, normal, hit_body:position(), dir, math_min(32768, network_damage))
 			end
 		end
 	end
@@ -536,6 +609,13 @@ end
 
 function ExplosionManager:client_damage_and_push(position, normal, user_unit, dmg, range, curve_pow)
 	local hit_pos = position
+
+	if draw_sync_explosion_sphere then
+		local draw_duration = 3
+		local new_brush = Draw:brush(Color.red:with_alpha(0.5), draw_duration)
+		new_brush:sphere(hit_pos, range)
+	end
+
 	local bodies = World:find_bodies("intersect", "sphere", hit_pos, range, managers.slot:get_mask("explosion_targets"))
 	local units_to_push = {}
 
@@ -549,8 +629,8 @@ function ExplosionManager:client_damage_and_push(position, normal, user_unit, dm
 
 			if apply_dmg then
 				dir = hit_body:center_of_mass()
-				len = mvector3.direction(dir, hit_pos, dir)
-				damage = dmg * math.pow(math.clamp(1 - len / range, 0, 1), curve_pow)
+				len = mvec3_dir(dir, hit_pos, dir)
+				damage = dmg * math_pow(math_clamp(1 - len / range, 0, 1), curve_pow)
 
 				self:_apply_body_damage(false, hit_body, user_unit, dir, damage)
 			end
