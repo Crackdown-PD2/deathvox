@@ -56,6 +56,7 @@
 	</group>
 
 	 <!-- Hoxi's Crew Bots Fixes  -->
+	<post :script_path="units/player_team/teamaimovement.lua" :hook_id="units/player_team/teamaimovement"/>
 	<group :script_path="units/player_team/logics" :hook_id="units/player_team/logics">
 		<post :script_path="teamailogicassault.lua" :hook_id="teamailogicassault"/>
 		<post :script_path="teamailogicdisabled.lua" :hook_id="teamailogicdisabled"/>
@@ -88,6 +89,7 @@
 	<post :script_path="managers/groupaistatebase.lua" :hook_id="managers/group_ai_states/groupaistatebase"/>
 	<post :script_path="managers/achievmentmanager.lua" :hook_id="managers/achievmentmanager"/>
 	<post :script_path="managers/gameplaycentralmanager.lua" :hook_id="managers/gameplaycentralmanager"/>
+	<post :script_path="managers/enemymanager.lua" :hook_id="managers/enemymanager"/>
 	<post :script_path="managers/menumanager.lua" :hook_id="managers/menumanager"/>
 	<post :script_path="managers/skirmishmanager.lua" :hook_id="managers/skirmishmanager"/>
 	<post :script_path="managers/dotmanager.lua" :hook_id="managers/dotmanager"/>
