@@ -1,20 +1,15 @@
 local mvec3_set = mvector3.set
 local mvec3_set_z = mvector3.set_z
-local mvec3_sub = mvector3.subtract
 local mvec3_norm = mvector3.normalize
 local mvec3_dir = mvector3.direction
-local mvec3_set_l = mvector3.set_length
-local mvec3_add = mvector3.add
 local mvec3_dot = mvector3.dot
-local mvec3_cross = mvector3.cross
-local mvec3_rot = mvector3.rotate_with
-local mvec3_rand_orth = mvector3.random_orthogonal
 local mvec3_lerp = mvector3.lerp
-local mrot_axis_angle = mrotation.set_axis_angle
+local mvec3_copy = mvector3.copy
 local temp_vec1 = Vector3()
 local temp_vec2 = Vector3()
 local temp_vec3 = Vector3()
-local temp_rot1 = Rotation()
+local math_up = math.UP
+local math_bezier = math.bezier
 local bezier_curve = {
 	0,
 	0,
@@ -22,20 +17,17 @@ local bezier_curve = {
 	1
 }
 
-CopActionReload._ik_presets = {
-	spine = {
-		update = "_update_ik_spine",
-		start = "_begin_ik_spine",
-		get_blend = "_get_blend_ik_spine",
-		stop = "_stop_ik_spine"
-	},
-	r_arm = {
-		update = "_update_ik_r_arm",
-		start = "_begin_ik_r_arm",
-		get_blend = "_get_blend_ik_r_arm",
-		stop = "_stop_ik_r_arm"
-	}
-}
+CopActionReload._ik_presets = CopActionShoot._ik_presets
+CopActionReload._upd_ik_spine = CopActionShoot._upd_ik_spine
+CopActionReload._upd_ik_r_arm = CopActionShoot._upd_ik_r_arm
+CopActionReload.set_ik_preset = CopActionShoot.set_ik_preset
+CopActionReload._begin_ik_spine = CopActionShoot._begin_ik_spine
+CopActionReload._get_blend_ik_spine = CopActionShoot._get_blend_ik_spine
+CopActionReload._begin_ik_r_arm = CopActionShoot._begin_ik_r_arm
+CopActionReload._stop_ik_r_arm = CopActionShoot._stop_ik_r_arm
+CopActionReload._stop_ik_spine = CopActionShoot._stop_ik_spine
+CopActionReload._get_blend_ik_r_arm = CopActionShoot._get_blend_ik_r_arm
+CopActionReload._set_ik_updator = CopActionShoot._set_ik_updator
 
 function CopActionReload:init(action_desc, common_data)
 	self._common_data = common_data
@@ -46,9 +38,9 @@ function CopActionReload:init(action_desc, common_data)
 	self._body_part = action_desc.body_part
 	self._machine = common_data.machine
 	self._unit = common_data.unit
-	self._blocks = {
-		light_hurt = -1
-	}
+
+	self._blocks = action_desc.blocks or {}
+	self._blocks.light_hurt = -1
 
 	local weapon_unit = self._ext_inventory:equipped_unit()
 
@@ -64,10 +56,13 @@ function CopActionReload:init(action_desc, common_data)
 	self._weap_tweak = weap_tweak
 	self._w_usage_tweak = weapon_usage_tweak
 	self._is_looped = weap_tweak.reload == "looped" and true or nil
-	self._reload_speed = weapon_usage_tweak.RELOAD_SPEED
+	self._reload_speed = weapon_usage_tweak.RELOAD_SPEED or 1
+
+	self._is_server = Network:is_server()
 
 	local t = TimerManager:game():time()
 	local anim_multiplier = self._reload_speed
+	local reload_type = 0
 
 	if self._is_looped then
 		if self._weap_tweak.looped_reload_speed then
@@ -79,7 +74,12 @@ function CopActionReload:init(action_desc, common_data)
 		local magazine_size, current_ammo_in_mag = self._weapon_base:ammo_info()
 
 		if action_desc.idle_reload then
-			magazine_size = magazine_size - current_ammo_in_mag
+			if not self._is_server and action_desc.idle_reload ~= 0 then
+				magazine_size = action_desc.idle_reload
+			else
+				magazine_size = magazine_size - current_ammo_in_mag
+				reload_type = 1
+			end
 		end
 
 		local loop_amount = single_reload and 1 or magazine_size
@@ -91,46 +91,29 @@ function CopActionReload:init(action_desc, common_data)
 
 	local shoot_from_pos = self._ext_movement:m_head_pos()
 	self._shoot_from_pos = shoot_from_pos
-	self._turn_allowed = Network:is_client()
 
-	local reload_t = nil
-
-	for _, other_action in ipairs(common_data.active_actions) do
-		if other_action and other_action.reload_t then
-			reload_t = other_action.reload_t
-
-			break
-		end
+	if self._is_server then
+		common_data.ext_network:send("reload_weapon", reload_type, 1)
+	else
+		self._turn_allowed = true
 	end
 
-	if reload_t or self:_play_reload() then
+	if self._ext_anim.reload or self:_play_reload() then
 		local preset_name = self._ext_anim.base_aim_ik or "spine"
 		local preset_data = self._ik_presets[preset_name]
 		self._ik_preset = preset_data
-
 		self[preset_data.start](self)
-
-		self._skipped_frames = 1
-
-		if reload_t then
-			self._reload_t = reload_t
-		else
-			local reload_delay = 3
-			self._reload_t = t + reload_delay
-		end
 
 		self:on_attention(common_data.attention)
 
-		CopActionAct._create_blocks_table(self, action_desc.blocks)
+		CopActionAct._create_blocks_table(self, self._blocks)
+
+		self._skipped_frames = 1
 
 		return true
 	else
-		cat_print("george", "[CopActionReload:init] failed in", self._machine:segment_state(Idstring("base")))
+		--cat_print("george", "[CopActionReload:init] failed in", self._machine:segment_state(Idstring("base")))
 	end
-end
-
-function CopActionReload:type()
-	return "reload"
 end
 
 function CopActionReload:update(t)
@@ -141,7 +124,7 @@ function CopActionReload:update(t)
 			self._expired = true
 			self._ext_movement:play_redirect("reload_looped_exit")
 		end
-	elseif self._reload_t < t then
+	elseif not self._ext_anim.reload then
 		self._weapon_base:on_reload()
 
 		self._expired = true
@@ -150,17 +133,16 @@ function CopActionReload:update(t)
 	local vis_state = self._ext_base:lod_stage()
 	vis_state = vis_state or 4
 
-	if vis_state == 1 then
-		-- Nothing
-	elseif self._skipped_frames < vis_state * 3 then
-		self._skipped_frames = self._skipped_frames + 1
+	if vis_state ~= 1 then
+		if self._skipped_frames < vis_state * 3 then
+			self._skipped_frames = self._skipped_frames + 1
 
-		return
-	else
-		self._skipped_frames = 1
+			return
+		else
+			self._skipped_frames = 1
+		end
 	end
 
-	local ext_anim = self._ext_anim
 	local target_pos, target_vec = nil
 
 	if self._attention then
@@ -178,20 +160,25 @@ function CopActionReload:update(t)
 
 		if self._turn_allowed then
 			local active_actions = self._common_data.active_actions
-			local queued_actions = self._common_data.queued_actions
 
-			if (not active_actions[2] or active_actions[2]:type() == "idle") and (not queued_actions or not queued_actions[1] and not queued_actions[2]) and not self._ext_movement:chk_action_forbidden("walk") then
-				local fwd_dot_flat = mvec3_dot(tar_vec_flat, fwd)
+			if not active_actions[2] or active_actions[2]:type() == "idle" then
+				local queued_actions = self._common_data.queued_actions
 
-				if fwd_dot_flat < 0.96 then
-					local spin = tar_vec_flat:to_polar_with_reference(fwd, math.UP).spin
-					local new_action_data = {
-						body_part = 2,
-						type = "turn",
-						angle = spin
-					}
+				if not queued_actions or not queued_actions[1] and not queued_actions[2] then
+					if not self._ext_movement:chk_action_forbidden("turn") then
+						local fwd_dot_flat = mvec3_dot(tar_vec_flat, fwd)
 
-					self._ext_movement:action_request(new_action_data)
+						if fwd_dot_flat < 0.96 then
+							local spin = tar_vec_flat:to_polar_with_reference(fwd, math_up).spin
+							local new_action_data = {
+								body_part = 2,
+								type = "turn",
+								angle = spin
+							}
+
+							self._ext_movement:action_request(new_action_data)
+						end
+					end
 				end
 			end
 		end
@@ -213,7 +200,7 @@ function CopActionReload:_play_reload()
 			self._machine:set_speed(redir_res, self._speed_mul)
 		end
 	else
-		cat_print("george", "[CopActionReload:_play_reload] redirect failed in", self._machine:segment_state(Idstring("base")))
+		--cat_print("george", "[CopActionReload:_play_reload] redirect failed in", self._machine:segment_state(Idstring("base")))
 
 		return
 	end
@@ -221,22 +208,19 @@ function CopActionReload:_play_reload()
 	return redir_res
 end
 
-function CopActionReload:expired()
-	return self._expired
-end
-
 function CopActionReload:on_attention(attention)
 	if attention then
+		local t = TimerManager:game():time()
+
 		self[self._ik_preset.start](self)
 
 		local vis_state = self._ext_base:lod_stage()
 
 		if vis_state and vis_state < 3 and self[self._ik_preset.get_blend](self) > 0 then
-			local t = TimerManager:game():time()
 			self._aim_transition = {
 				duration = 0.333,
 				start_t = t,
-				start_vec = mvector3.copy(self._common_data.look_vec)
+				start_vec = mvec3_copy(self._common_data.look_vec)
 			}
 			self._get_target_pos = self._get_transition_target_pos
 		else
@@ -244,7 +228,7 @@ function CopActionReload:on_attention(attention)
 			self._get_target_pos = nil
 		end
 
-		self._mod_enable_t = TimerManager:game():time() + 0.5
+		self._mod_enable_t = t
 	else
 		self[self._ik_preset.stop](self)
 
@@ -262,152 +246,22 @@ function CopActionReload:on_exit()
 		self[self._ik_preset.stop](self)
 	end
 
-	if self._attention then
-		local shoot_action = {
-			body_part = 3,
-			type = "shoot"
-		}
-
-		self._ext_movement:action_request(shoot_action)
-	end
-end
-
-function CopActionReload:chk_block(action_type, t)
-	return CopActionAct.chk_block(self, action_type, t)
-end
-
-function CopActionReload:need_upd()
-	return true
-end
-
-function CopActionReload:set_ik_preset(preset_name)
-	self[self._ik_preset.stop](self)
-
-	local preset_data = self._ik_presets[preset_name]
-	self._ik_preset = preset_data
-
-	self[preset_data.start](self)
-end
-
-function CopActionReload:_begin_ik_spine()
-	if self._modifier then
-		return
-	end
-
-	self._modifier_name = Idstring("action_upper_body")
-	self._modifier = self._machine:get_modifier(self._modifier_name)
-
-	self:_set_ik_updator("_upd_ik_spine")
-
-	self._modifier_on = nil
-	self._mod_enable_t = nil
-end
-
-function CopActionReload:_stop_ik_spine()
-	if not self._modifier then
-		return
-	end
-
-	self._machine:allow_modifier(self._modifier_name)
-
-	self._modifier_name = nil
-	self._modifier = nil
-	self._modifier_on = nil
-end
-
-function CopActionReload:_upd_ik_spine(target_vec, fwd_dot, t)
-	if fwd_dot > 0.5 then
-		if not self._modifier_on then
-			self._modifier_on = true
-
-			self._machine:force_modifier(self._modifier_name)
-
-			self._mod_enable_t = t + 0.5
+	if self._expired then
+		if self._is_server then
+			if self._attention and self._attention.reaction and self._attention.reaction >= AIAttentionObject.REACT_AIM then
+				self._ext_movement:set_stance_by_code(3)
+			else
+				self._ext_movement:set_stance_by_code(2)
+			end
 		end
-
-		self._modifier:set_target_y(target_vec)
-		mvec3_set(self._common_data.look_vec, target_vec)
-
-		return target_vec
 	else
-		if self._modifier_on then
-			self._modifier_on = nil
+		self._expired = true
+		self._weapon_base:on_reload()
 
-			self._machine:allow_modifier(self._modifier_name)
+		if self._is_looped then
+			self._ext_movement:play_redirect("up_idle")
 		end
-
-		return nil
 	end
-end
-
-function CopActionReload:_get_blend_ik_spine()
-	return self._modifier:blend()
-end
-
-function CopActionReload:_begin_ik_r_arm()
-	if self._head_modifier then
-		return
-	end
-
-	self._head_modifier_name = Idstring("look_head")
-	self._head_modifier = self._machine:get_modifier(self._head_modifier_name)
-	self._r_arm_modifier_name = Idstring("aim_r_arm")
-	self._r_arm_modifier = self._machine:get_modifier(self._r_arm_modifier_name)
-	self._modifier_on = nil
-	self._mod_enable_t = false
-
-	self:_set_ik_updator("_upd_ik_r_arm")
-end
-
-function CopActionReload:_stop_ik_r_arm()
-	if not self._head_modifier then
-		return
-	end
-
-	self._machine:allow_modifier(self._head_modifier_name)
-	self._machine:allow_modifier(self._r_arm_modifier_name)
-
-	self._head_modifier_name = nil
-	self._head_modifier = nil
-	self._r_arm_modifier_name = nil
-	self._r_arm_modifier = nil
-	self._modifier_on = nil
-end
-
-function CopActionReload:_upd_ik_r_arm(target_vec, fwd_dot, t)
-	if fwd_dot > 0.5 then
-		if not self._modifier_on then
-			self._modifier_on = true
-
-			self._machine:force_modifier(self._head_modifier_name)
-			self._machine:force_modifier(self._r_arm_modifier_name)
-
-			self._mod_enable_t = t + 0.5
-		end
-
-		self._head_modifier:set_target_z(target_vec)
-		self._r_arm_modifier:set_target_y(target_vec)
-		mvec3_set(self._common_data.look_vec, target_vec)
-
-		return target_vec
-	else
-		if self._modifier_on then
-			self._modifier_on = nil
-
-			self._machine:allow_modifier(self._head_modifier_name)
-			self._machine:allow_modifier(self._r_arm_modifier_name)
-		end
-
-		return nil
-	end
-end
-
-function CopActionReload:_get_blend_ik_r_arm()
-	return self._r_arm_modifier:blend()
-end
-
-function CopActionReload:_set_ik_updator(name)
-	self._upd_ik = self[name]
 end
 
 function CopActionReload:_get_transition_target_pos(shoot_from_pos, attention, t)
@@ -421,13 +275,13 @@ function CopActionReload:_get_transition_target_pos(shoot_from_pos, attention, t
 		return self:_get_target_pos(shoot_from_pos, attention)
 	end
 
-	prog = math.bezier(bezier_curve, prog)
+	prog = math_bezier(bezier_curve, prog)
 	local target_pos, target_vec = nil
 
 	if attention.handler then
 		target_pos = temp_vec1
 
-		mvector3.set(target_pos, attention.handler:get_attention_m_pos())
+		mvec3_set(target_pos, attention.handler:get_attention_m_pos())
 	elseif attention.unit then
 		target_pos = temp_vec1
 
@@ -438,7 +292,6 @@ function CopActionReload:_get_transition_target_pos(shoot_from_pos, attention, t
 
 	target_vec = temp_vec3
 	mvec3_dir(target_vec, shoot_from_pos, target_pos)
-
 	mvec3_lerp(target_vec, transition.start_vec, target_vec, prog)
 
 	return target_pos, target_vec
@@ -450,7 +303,7 @@ function CopActionReload:_get_target_pos(shoot_from_pos, attention)
 	if attention.handler then
 		target_pos = temp_vec1
 
-		mvector3.set(target_pos, attention.handler:get_attention_m_pos())
+		mvec3_set(target_pos, attention.handler:get_attention_m_pos())
 	elseif attention.unit then
 		target_pos = temp_vec1
 
