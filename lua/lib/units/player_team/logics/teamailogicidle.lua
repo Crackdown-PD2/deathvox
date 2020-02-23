@@ -1,6 +1,11 @@
-local tmp_vec1 = Vector3()
+local mvec3_dot = mvector3.dot
+local mvec3_dist_sq = mvector3.distance_sq
+local mvec3_dist = mvector3.distance
+local mvec3_norm = mvector3.normalize
+local math_max = math.max
+local math_min = math.min
+local math_lerp = math.lerp
 local tmp_vec2 = Vector3()
-local tmp_vec3 = Vector3()
 
 function TeamAILogicIdle.enter(data, new_logic_name, enter_params)
 	TeamAILogicBase.enter(data, new_logic_name, enter_params)
@@ -207,7 +212,7 @@ function TeamAILogicIdle.on_long_dis_interacted(data, other_unit, secondary)
 		if data.unit:movement():carrying_bag() and not data.unit:movement()._should_stay then
 			local throw_distance = tweak_data.ai_carry.throw_distance * data.unit:movement():carry_tweak().throw_distance_multiplier
 			local dist = data.unit:position() - other_unit:position()
-			local throw_bag = mvector3.dot(dist, dist) < throw_distance * throw_distance
+			local throw_bag = mvec3_dot(dist, dist) < throw_distance * throw_distance
 
 			if throw_bag then
 				if other_unit == managers.player:player_unit() then
@@ -299,7 +304,7 @@ function TeamAILogicIdle.on_long_dis_interacted(data, other_unit, secondary)
 			local range_sq = 810000
 			local my_pos = data.unit:position()
 			local revive_unit_pos = other_unit:position()
-			local dist = mvector3.distance_sq(my_pos, revive_unit_pos)
+			local dist = mvec3_dist_sq(my_pos, revive_unit_pos)
 			local inspire_available = managers.player:is_custom_cooldown_not_active("team", "crew_inspire")
 
 			if dist < range_sq then --within inspire range, taken from teamailogictravel as it's calculated with square distance
@@ -327,34 +332,45 @@ function TeamAILogicIdle._ignore_shield(unit, attention)
 		return false
 	end
 
-	if not TeamAILogicIdle._shield_check then
-		TeamAILogicIdle._shield_check = managers.slot:get_mask("enemy_shield_check")
+	local shoot_from_pos = unit:movement():m_head_pos()
+	local target_pos = nil
+
+	if attention.handler then
+		target_pos = attention.handler:get_attention_m_pos()
+	elseif attention.unit then
+		if attention.unit:movement() and attention.unit:movement().m_head_pos then
+			target_pos = attention.unit:movement():m_head_pos()
+		elseif attention.unit:character_damage() and attention.unit:character_damage().shoot_pos_mid then
+			target_pos = tmp_vec2
+
+			attention.unit:character_damage():shoot_pos_mid(target_pos)
+		end
 	end
 
-	local head_pos = unit:movement():m_head_pos()
-	local u_char_dmg = attention and attention.unit and attention.unit:character_damage()
-	local u_shoot_pos = nil
-
-	if u_char_dmg and u_char_dmg.shoot_pos_mid then
-		u_shoot_pos = Vector3()
-
-		u_char_dmg:shoot_pos_mid(u_shoot_pos)
-	else
+	if not target_pos then
 		return false
+	end
+
+	if not TeamAILogicIdle._shield_check then
+		TeamAILogicIdle._shield_check = managers.slot:get_mask("enemy_shield_check")
 	end
 
 	local hit_shield = nil
 
 	if alive(unit:inventory() and unit:inventory()._shield_unit) then
-		hit_shield = World:raycast("ray", head_pos, u_shoot_pos, "slot_mask", TeamAILogicIdle._shield_check, "ignore_unit", unit:inventory()._shield_unit, "report")
+		hit_shield = World:raycast("ray", shoot_from_pos, target_pos, "slot_mask", TeamAILogicIdle._shield_check, "ignore_unit", unit:inventory()._shield_unit, "report")
 	else
-		hit_shield = World:raycast("ray", head_pos, u_shoot_pos, "slot_mask", TeamAILogicIdle._shield_check, "report")
+		hit_shield = World:raycast("ray", shoot_from_pos, target_pos, "slot_mask", TeamAILogicIdle._shield_check, "report")
 	end
 
 	return not not hit_shield
 end
 
 function TeamAILogicIdle._get_priority_attention(data, attention_objects, reaction_func)
+	if not TeamAILogicIdle._vis_check_slotmask then
+		TeamAILogicIdle._vis_check_slotmask = managers.slot:get_mask("AI_visibility")
+	end
+
 	reaction_func = reaction_func or TeamAILogicBase._chk_reaction_to_attention_object
 	local best_target, best_target_priority_slot, best_target_priority, best_target_reaction = nil
 
@@ -369,10 +385,10 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 			elseif attention_data.stare_expire_t and attention_data.stare_expire_t < data.t then
 				if attention_data.settings.pause then
 					attention_data.stare_expire_t = nil
-					attention_data.pause_expire_t = data.t + math.lerp(attention_data.settings.pause[1], attention_data.settings.pause[2], math.random())
+					attention_data.pause_expire_t = data.t + math_lerp(attention_data.settings.pause[1], attention_data.settings.pause[2], math.random())
 				end
 			else
-				local distance = mvector3.distance(data.m_pos, attention_data.m_pos)
+				local distance = mvec3_dist(data.m_pos, attention_data.m_pos)
 				local reaction = reaction_func(data, attention_data, not CopLogicAttack._can_move(data))
 				local reaction_too_mild = nil
 
@@ -399,19 +415,23 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 					local target_priority_slot = 0
 
 					if visible then
+						local att_base = att_unit:base()
 						local is_shielded = TeamAILogicIdle._ignore_shield and TeamAILogicIdle._ignore_shield(data.unit, attention_data) or nil
 
 						if is_shielded then
-							if distance <= 180 and att_unit:base().has_tag and att_unit:base():has_tag("shield") then
-								local can_be_knocked = att_unit:base():char_tweak().damage.shield_knocked and not att_unit:base().is_phalanx and not att_unit:character_damage():is_immune_to_shield_knockback()
+							local not_important = true
+
+							if distance <= 150 and att_base.has_tag and att_base:has_tag("shield") then
+								local can_be_knocked = att_base:char_tweak().damage.shield_knocked and not att_unit:character_damage():is_immune_to_shield_knockback()
 
 								if can_be_knocked then
 									target_priority_slot = 4
-								else
-									reaction = math.min(AIAttentionObject.REACT_AIM, reaction)
+									not_important = nil
 								end
-							else
-								reaction = math.min(AIAttentionObject.REACT_AIM, reaction)
+							end
+
+							if not_important then
+								target_priority_slot = 14
 							end
 						else
 							local aimed_at = TeamAILogicIdle.chk_am_i_aimed_at(data, attention_data, attention_data.aimed_at and 0.95 or 0.985)
@@ -421,96 +441,106 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 							local near = distance < near_threshold and distance > too_close_threshold
 							local has_alerted = alert_dt < 5
 							local has_damaged = dmg_dt < 2
-							local is_spooc = att_unit:base().has_tag and att_unit:base():has_tag("spooc")
-							local is_taser = att_unit:base().has_tag and att_unit:base():has_tag("taser")
-							local is_grenadier = att_unit:base()._tweak_table == "deathvox_grenadier"
-							local is_medic = att_unit:base().has_tag and att_unit:base():has_tag("medic")
-							local is_tank = att_unit:base().has_tag and att_unit:base():has_tag("tank") and not att_unit:base():has_tag("medic")
-							local is_sniper = att_unit:base().has_tag and att_unit:base():has_tag("sniper")
-							local is_shield = att_unit:base().has_tag and att_unit:base():has_tag("shield") and att_unit:base()._tweak_table ~= "phalanx_vip"
-							local is_phalanx_captain = att_unit:base()._tweak_table == "phalanx_vip"
-							local is_turret = att_unit:base().sentry_gun
-							local is_marked = att_unit.contour and att_unit:contour() and att_unit:contour()._contour_list
+							local is_marked = att_unit:contour() and att_unit:contour()._contour_list
 
-							if is_spooc then
-								local trying_to_kick_criminal = att_unit:brain()._logic_data and att_unit:brain()._logic_data.internal_data and att_unit:brain()._logic_data.internal_data.spooc_attack
-
-								if trying_to_kick_criminal then
-									target_priority_slot = 1
-
-									if trying_to_kick_criminal.target_u_key == data.key then
-										target_priority = target_priority * 0.1
-									end
-								else
-									target_priority_slot = too_close and 1 or near and 3 or is_marked and 6 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
-								end
-							elseif is_medic then
-								target_priority_slot = too_close and 2 or near and 4 or is_marked and 6 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
-							elseif is_taser then
-								local trying_to_tase_criminal = att_unit:brain()._logic_data and att_unit:brain()._logic_data.internal_data and att_unit:brain()._logic_data.internal_data.tasing
-
-								if trying_to_tase_criminal then
-									target_priority_slot = 1
-
-									if trying_to_tase_criminal.target_u_key == data.key then
-										target_priority = target_priority * 0.1
-									end
-								else
-									target_priority_slot = too_close and 3 or near and 5 or is_marked and 7 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
-								end
-							elseif is_grenadier then
-								target_priority_slot = too_close and 4 or near and 6 or is_marked and 7 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
-							elseif is_sniper then
-								target_priority_slot = too_close and 4 or near and 6 or is_marked and 7 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
-							elseif is_tank then
+							if att_base.sentry_gun then
 								target_priority_slot = too_close and 4 or near and 6 or is_marked and 8 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
-							elseif is_shield then
-								target_priority_slot = too_close and 4 or near and 6 or is_marked and 8 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
-							elseif is_turret then
-								target_priority_slot = too_close and 4 or near and 6 or is_marked and 8 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
-							elseif has_damaged and has_alerted then
-								target_priority_slot = too_close and 5 or near and 7 or 9
-							elseif has_alerted then
-								target_priority_slot = too_close and 6 or near and 8 or 10
 							else
-								target_priority_slot = too_close and 7 or near and 9 or 11
+								local keep_checking = true
+
+								if att_base.has_tag and att_base:has_tag("special") then
+									if att_base:has_tag("spooc") then
+										local trying_to_kick_criminal = att_unit:brain()._logic_data and att_unit:brain()._logic_data.internal_data and att_unit:brain()._logic_data.internal_data.spooc_attack
+
+										if trying_to_kick_criminal then
+											target_priority_slot = 1
+
+											if trying_to_kick_criminal.target_u_key == data.key then
+												target_priority = target_priority * 0.1
+											end
+										else
+											target_priority_slot = too_close and 1 or near and 3 or is_marked and 6 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
+										end
+
+										keep_checking = nil
+									elseif att_base:has_tag("taser") then
+										local trying_to_tase_criminal = att_unit:brain()._logic_data and att_unit:brain()._logic_data.internal_data and att_unit:brain()._logic_data.internal_data.tasing
+
+										if trying_to_tase_criminal then
+											target_priority_slot = 1
+
+											if trying_to_tase_criminal.target_u_key == data.key then
+												target_priority = target_priority * 0.1
+											end
+										else
+											target_priority_slot = too_close and 3 or near and 5 or is_marked and 7 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
+										end
+									elseif att_base:has_tag("medic") then
+										target_priority_slot = too_close and 2 or near and 4 or is_marked and 6 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
+										keep_checking = nil
+									elseif att_base:has_tag("tank") then
+										target_priority_slot = too_close and 4 or near and 6 or is_marked and 8 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
+										keep_checking = nil
+									elseif att_base:has_tag("sniper") then
+										target_priority_slot = too_close and 4 or near and 6 or is_marked and 7 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
+										keep_checking = nil
+									elseif att_base:has_tag("shield") then
+										if att_tweak_table == "phalanx_vip" then
+											local active_phalanx = alive(managers.groupai:state():phalanx_vip())
+
+											if active_phalanx then
+												target_priority_slot = 4
+											else
+												target_priority_slot = 14
+												reaction = math_min(AIAttentionObject.REACT_AIM, reaction) --to avoid calculating optimal distance with auto/semiauto shotguns and LMGs
+											end
+										else
+											target_priority_slot = too_close and 4 or near and 6 or is_marked and 8 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
+										end
+
+										keep_checking = nil
+									end
+								elseif att_base._tweak_table == "deathvox_grenadier" then
+									target_priority_slot = too_close and 4 or near and 6 or is_marked and 7 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
+
+									keep_checking = nil
+								end
+
+								if keep_checking then
+									if has_damaged and has_alerted then
+										target_priority_slot = too_close and 5 or near and 7 or 9
+									elseif has_alerted then
+										target_priority_slot = too_close and 6 or near and 8 or 10
+									else
+										target_priority_slot = too_close and 7 or near and 9 or 11
+									end
+								end
 							end
 
-							if is_phalanx_captain then
-								local active_phalanx = alive(managers.groupai:state():phalanx_vip())
-
-								if active_phalanx then
-									target_priority_slot = 4
-								else
-									target_priority_slot = 0 --to avoid calculating optimal distance with auto/semiauto shotguns and LMGs
-									reaction = math.min(AIAttentionObject.REACT_AIM, reaction)
-								end
-							else
-								if not is_medic and att_unit:character_damage().check_medic_heal and not table.contains(tweak_data.medic.disabled_units, att_unit:base()._tweak_table) then
+							if target_priority_slot ~= 0 and reaction >= AIAttentionObject.REACT_COMBAT then
+								if not is_medic and att_unit:character_damage().check_medic_heal and not table.contains(tweak_data.medic.disabled_units, att_base._tweak_table) then
 									if not att_unit:anim_data() or not att_unit:anim_data().act then
 										local team = att_unit:brain() and att_unit:brain()._logic_data and att_unit:brain()._logic_data.team
+										local proceed = true
 
-										if team and team.id ~= "law1" and (not team.friends or not team.friends.law1) then
-											--nothing
-										else
-											local medic = managers.enemy:get_nearby_medic(att_unit)
+										if team and team.id ~= "law1" then
+											if not team.friends or not team.friends.law1 then
+												proceed = nil
+											end
+										end
 
-											if medic then
-												if medic:character_damage().shoot_pos_mid then
-													local medic_shoot_pos = Vector3()
-													medic:character_damage():shoot_pos_mid(medic_shoot_pos)
+										if proceed then
+											local nearby_medic = managers.enemy:get_nearby_medic(att_unit)
 
-													if not World:raycast("ray", data.unit:movement():m_head_pos(), medic_shoot_pos, "slot_mask", managers.slot:get_mask("AI_visibility"), "ray_type", "ai_vision", "report") then
-														target_priority_slot = 0
-													end
+											if nearby_medic then
+												if not data.unit:raycast("ray", data.unit:movement():m_head_pos(), nearby_medic:movement():m_head_pos(), "slot_mask", TeamAILogicIdle._vis_check_slotmask, "ray_type", "ai_vision", "report") then
+													target_priority_slot = 0
 												end
 											end
 										end
 									end
 								end
-							end
 
-							if target_priority_slot ~= 0 then
 								local my_weapon_usage = data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage
 
 								if my_weapon_usage == "is_shotgun_mag" or my_weapon_usage == "is_lmg" then
@@ -523,19 +553,11 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 							end
 						end
 					else
-						local has_alerted = alert_dt < 5
-
-						if has_alerted then
-							target_priority_slot = 14
-						else
-							target_priority_slot = 15
-						end
-
-						reaction = math.min(AIAttentionObject.REACT_AIM, reaction)
+						target_priority_slot = 15
 					end
 
 					if reaction < AIAttentionObject.REACT_COMBAT then
-						target_priority_slot = 15 + target_priority_slot + math.max(0, AIAttentionObject.REACT_COMBAT - reaction)
+						target_priority_slot = 15 + target_priority_slot + math_max(0, AIAttentionObject.REACT_COMBAT - reaction)
 					end
 
 					if target_priority_slot ~= 0 then
@@ -578,20 +600,33 @@ function TeamAILogicIdle._upd_enemy_detection(data)
 	local delay = CopLogicBase._upd_attention_obj_detection(data, nil, max_reaction)
 	local new_attention, new_prio_slot, new_reaction = TeamAILogicIdle._get_priority_attention(data, data.detected_attention_objects, nil)
 
-	if not data.cool and not my_data.acting and not my_data._turning_to_intimidate and (not my_data._intimidate_chk_t or my_data._intimidate_chk_t + 0.5 < data.t) and (not data.unit:brain()._intimidate_t or data.unit:brain()._intimidate_t + 2 < data.t) then
-		my_data._intimidate_chk_t = data.t
+	if not data.cool and not my_data.acting and not my_data._turning_to_intimidate then
+		if not my_data._intimidate_chk_t or my_data._intimidate_chk_t + 0.5 < data.t then
+			if not data.unit:brain()._intimidate_t or data.unit:brain()._intimidate_t + 2 < data.t then
+				my_data._intimidate_chk_t = data.t
 
-		local can_turn = not data.unit:movement():chk_action_forbidden("turn") and (not new_prio_slot or new_prio_slot > 5)
-		local civ = TeamAILogicIdle.find_civilian_to_intimidate(data.unit, can_turn and 180 or 90, 1200)
+				local can_turn = nil
 
-		if civ then
-			data.unit:brain()._intimidate_t = data.t
+				if not new_prio_slot or new_prio_slot > 5 then
+					if not data.unit:movement():chk_action_forbidden("turn") then
+						can_turn = true
+					end
+				end
 
-			if can_turn and CopLogicAttack._chk_request_action_turn_to_enemy(data, my_data, data.m_pos, civ:movement():m_pos()) then
-				my_data._turning_to_intimidate = true
-				my_data._primary_intimidation_target = civ
-			else
-				TeamAILogicIdle.intimidate_civilians(data, data.unit, true, true)
+				local shout_angle = can_turn and 180 or 90
+				local shout_distance = 1200
+				local civ = TeamAILogicIdle.find_civilian_to_intimidate(data.unit, shout_angle, shout_distance)
+
+				if civ then
+					data.unit:brain()._intimidate_t = data.t
+
+					if can_turn and CopLogicAttack._chk_request_action_turn_to_enemy(data, my_data, data.m_pos, civ:movement():m_pos()) then
+						my_data._turning_to_intimidate = true
+						my_data._primary_intimidation_target = civ
+					else
+						TeamAILogicIdle.intimidate_civilians(data, data.unit, true, true)
+					end
+				end
 			end
 		end
 	end
@@ -642,45 +677,41 @@ function TeamAILogicIdle._upd_enemy_detection(data)
 end
 
 function TeamAILogicIdle.check_idle_reload(data, reaction)
-	if not reaction or reaction <= AIAttentionObject.REACT_AIM then
-		data.unit:brain()._idle_reload_chk_t = data.unit:brain()._idle_reload_chk_t or data.t + 2
+	local criminal_brain = data.unit:brain()
 
-		if data.unit:brain()._idle_reload_chk_t and data.unit:brain()._idle_reload_chk_t < data.t then
+	if not reaction or reaction <= AIAttentionObject.REACT_AIM then
+		criminal_brain._idle_reload_chk_t = criminal_brain._idle_reload_chk_t or data.t + 2
+
+		if criminal_brain._idle_reload_chk_t and criminal_brain._idle_reload_chk_t < data.t then
 			local criminal = data.unit
 			local weapon_unit = criminal:inventory():equipped_unit()
 
 			if weapon_unit and weapon_unit:base() then
-				if not criminal:anim_data().reload and not criminal:movement():chk_action_forbidden("reload") then
-					TeamAILogicIdle.idle_reload(data, criminal, weapon_unit)
+				if not criminal:anim_data().reload and not criminal:movement():chk_action_forbidden("action") then
+					local magazine_size, current_ammo_in_mag = weapon_unit:base():ammo_info()
+
+					if current_ammo_in_mag <= magazine_size * 0.5 then
+						local new_action = {
+							body_part = 3,
+							type = "reload",
+							idle_reload = true
+						}
+
+						if criminal_brain:action_request(new_action) then
+							criminal_brain._idle_reload_chk_t = nil
+						end
+					end
 				end
 			end
 		end
 	else
-		data.unit:brain()._idle_reload_chk_t = nil
-	end
-end
-
-function TeamAILogicIdle.idle_reload(data, criminal, weapon_unit)
-	local magazine_size, current_ammo_in_mag = weapon_unit:base():ammo_info()
-
-	if current_ammo_in_mag <= magazine_size * 0.5 then
-		local new_action = {
-			body_part = 3,
-			type = "reload",
-			idle_reload = true
-		}
-
-		if data.unit:brain():action_request(new_action) then
-			--criminal:sound():say("g92", true) --used for testing, to differentiate them from normal reloads
-			criminal:brain()._idle_reload_chk_t = nil
-			managers.network:session():send_to_peers("reload_weapon_cop", criminal)
-		end
+		criminal_brain._idle_reload_chk_t = nil
 	end
 end
 
 function TeamAILogicIdle._find_intimidateable_civilians(criminal, use_default_shout_shape, max_angle, max_dis)
 	local enemy_domination = "assist" --add toggle to use -"assist" or true or nil-
-	local draw_debug_lines = false
+	local draw_civ_detection_lines = false
 	local head_pos = criminal:movement():m_head_pos()
 	local look_vec = criminal:movement():m_rot():y()
 	local close_dis = 400
@@ -692,152 +723,173 @@ function TeamAILogicIdle._find_intimidateable_civilians(criminal, use_default_sh
 	local attention_objects = criminal:brain()._logic_data and criminal:brain()._logic_data.detected_attention_objects or {}
 
 	for key, attention_info in pairs(attention_objects) do
-		if attention_info.identified and (attention_info.verified or attention_info.nearly_visible) and attention_info.is_person and attention_info.char_tweak and not attention_info.unit:character_damage():dead() then
-			local att_unit = attention_info.unit
-			local att_char_tweak = attention_info.char_tweak
-			local is_enemy = enemy_domination ~= nil and (not TeamAILogicIdle._intimidate_global_t or TeamAILogicIdle._intimidate_global_t + 2 < t) and not att_char_tweak.priority_shout and att_char_tweak.surrender and not att_char_tweak.surrender.special and not att_char_tweak.surrender.never and not att_unit:anim_data().hands_tied
-			local is_escort = (not TeamAILogicIdle._intimidate_global_t or TeamAILogicIdle._intimidate_global_t + 2 < t) and att_char_tweak.is_escort
-			local is_civilian = CopDamage.is_civilian(att_unit:base()._tweak_table) and not att_unit:brain():is_tied() and att_char_tweak.intimidateable
+		if attention_info.identified then
+			if attention_info.verified or attention_info.nearly_visible then
+				if attention_info.is_person and attention_info.char_tweak and not attention_info.unit:character_damage():dead() then
+					local att_unit = attention_info.unit
+					local att_char_tweak = attention_info.char_tweak
+					local anim_data = att_unit:anim_data()
+					local is_enemy = nil
+					local is_escort = nil
+					local is_civilian = nil
 
-			if is_enemy or is_escort or is_civilian then
-				if not att_unit:movement():cool() and not att_unit:base().unintimidateable and not att_unit:anim_data().unintimidateable and not att_unit:anim_data().long_dis_interact_disabled and not att_unit:unit_data().disable_shout then
-					local being_moved = is_civilian and att_unit:movement():stance_name() == "cbt" and att_unit:anim_data().stand
-
-					if not being_moved then
-						local att_head_pos = attention_info.m_head_pos
-						local vec = att_head_pos - head_pos
-						local dis = mvector3.normalize(vec)
-						local angle = vec:angle(look_vec)
-
-						if use_default_shout_shape then
-							max_angle = math.max(8, math.lerp(90, 30, dis / 1200))
-
-							if is_escort then
-								max_dis = 600
-							else
-								max_dis = 1200
+					if enemy_domination ~= nil then
+						if not TeamAILogicIdle._intimidate_global_t or TeamAILogicIdle._intimidate_global_t + 2 < t then
+							if not att_char_tweak.priority_shout and att_char_tweak.surrender and not att_char_tweak.surrender.special and not att_char_tweak.surrender.never and not anim_data.hands_tied then
+								is_enemy = true
 							end
-						elseif is_escort then
-							max_dis = math.min(600, max_dis)
-						elseif is_enemy then
-							max_angle = 180
 						end
+					end
 
-						if dis < close_dis or dis < max_dis and angle < max_angle then
-							local valid_target = nil
-							local inv_wgt = dis
+					if not is_enemy and att_char_tweak.is_escort then
+						if not TeamAILogicIdle._intimidate_global_t or TeamAILogicIdle._intimidate_global_t + 2 < t then
+							is_escort = true
+						end
+					end
 
-							if is_enemy then
-								local already_intimidated = att_unit:brain().surrendered and att_unit:brain():surrendered() or att_unit:anim_data().surrender or att_unit:anim_data().hands_back
+					if not is_escort and managers.enemy:is_civilian(att_unit) and att_char_tweak.intimidateable and not att_unit:brain():is_tied() then
+						is_civilian = true
+					end
 
-								if already_intimidated then
-									valid_target = true
-									inv_wgt = inv_wgt * 0.01
-								elseif enemy_domination ~= "assist" then
-									if managers.groupai:state():has_room_for_police_hostage() then
-										if att_char_tweak.surrender.base_chance >= 1 then
+					if is_enemy or is_escort or is_civilian then
+						if not att_unit:movement():cool() and not att_unit:base().unintimidateable and not anim_data.unintimidateable and not anim_data.long_dis_interact_disabled and not att_unit:unit_data().disable_shout then
+							local being_moved = is_civilian and att_unit:movement():stance_name() == "cbt" and anim_data.stand
+
+							if not being_moved then
+								local att_head_pos = attention_info.m_head_pos
+								local vec = att_head_pos - head_pos
+								local dis = mvec3_norm(vec)
+								local angle = vec:angle(look_vec)
+
+								if use_default_shout_shape then
+									max_angle = math_max(8, math_lerp(90, 30, dis / 1200))
+
+									if is_escort then
+										max_dis = 600
+									else
+										max_dis = 1200
+									end
+								elseif is_escort then
+									max_dis = math_min(600, max_dis)
+								elseif is_enemy then
+									max_angle = 180
+								end
+
+								if dis < close_dis or dis < max_dis and angle < max_angle then
+									local valid_target = nil
+									local inv_wgt = dis
+
+									if is_enemy then
+										local already_intimidated = att_unit:brain().surrendered and att_unit:brain():surrendered() or anim_data.surrender or anim_data.hands_back
+
+										if already_intimidated then
 											valid_target = true
-										else
-											for reason, reason_data in pairs(att_char_tweak.surrender.reasons) do
-												if reason == "pants_down" then
-													if not managers.groupai:state():enemy_weapons_hot() then
-														local not_cool_t = att_unit:movement():not_cool_t()
+											inv_wgt = inv_wgt * 0.01
+										elseif enemy_domination ~= "assist" then
+											if managers.groupai:state():has_room_for_police_hostage() then
+												if att_char_tweak.surrender.base_chance >= 1 then
+													valid_target = true
+												else
+													for reason, reason_data in pairs(att_char_tweak.surrender.reasons) do
+														if reason == "pants_down" then
+															if not managers.groupai:state():enemy_weapons_hot() then
+																local not_cool_t = att_unit:movement():not_cool_t()
 
-														if not not_cool_t or t - not_cool_t < 1.5 then
-															valid_target = true
+																if not not_cool_t or t - not_cool_t < 1.5 then
+																	valid_target = true
 
-															break
-														end
-													end
-												elseif reason == "weapon_down" then
-													local anim_data = att_unit:anim_data()
-
-													if anim_data.reload or anim_data.hurt or anim_data.tase or att_unit:movement():stance_name() == "ntl" then
-														valid_target = true
-
-														break
-													else
-														local equipped_weapon = att_unit:inventory() and att_unit:inventory():equipped_unit()
-														local _, ammo = equipped_weapon and equipped_weapon:base() and equipped_weapon:base().ammo_info and equipped_weapon:base():ammo_info()
-
-														if ammo == 0 then
-															valid_target = true
-
-															break
-														end
-													end
-												elseif reason == "health" then
-													local health_ratio = att_unit:character_damage():health_ratio()
-
-													if health_ratio < 1 then
-														local max_setting = nil
-
-														for k, v in pairs(reason_data) do
-															if not max_setting or max_setting.k < k then
-																max_setting = {
-																	k = k,
-																	v = v
-																}
+																	break
+																end
 															end
-														end
+														elseif reason == "weapon_down" then
+															if anim_data.reload or anim_data.hurt or anim_data.tase or att_unit:movement():stance_name() == "ntl" then
+																valid_target = true
 
-														if health_ratio < max_setting.k then
-															valid_target = true
+																break
+															else
+																local equipped_weapon = att_unit:inventory() and att_unit:inventory():equipped_unit()
+																local _, ammo = equipped_weapon and equipped_weapon:base() and equipped_weapon:base().ammo_info and equipped_weapon:base():ammo_info()
 
-															break
+																if ammo == 0 then
+																	valid_target = true
+
+																	break
+																end
+															end
+														elseif reason == "health" then
+															local health_ratio = att_unit:character_damage():health_ratio()
+
+															if health_ratio < 1 then
+																local max_setting = nil
+
+																for k, v in pairs(reason_data) do
+																	if not max_setting or max_setting.k < k then
+																		max_setting = {
+																			k = k,
+																			v = v
+																		}
+																	end
+																end
+
+																if health_ratio < max_setting.k then
+																	valid_target = true
+
+																	break
+																end
+															end
 														end
 													end
 												end
 											end
 										end
-									end
-								end
-							elseif is_escort then
-								if not att_unit:anim_data().move then
-									valid_target = true
-									inv_wgt = -1
-								end
-							else
-								if not att_unit:anim_data().drop then
-									valid_target = true
-									inv_wgt = inv_wgt * 0.001
-								else
-									local civ_internal_data = att_unit:brain()._logic_data and att_unit:brain()._logic_data.internal_data
-									local will_get_up_soon = civ_internal_data and civ_internal_data.submission_meter and civ_internal_data.submission_meter < 10
-
-									if will_get_up_soon then
-										valid_target = true
-										inv_wgt = inv_wgt * 0.01
-									else
-										local recently_shouted_down = criminal:brain()._shouted_down_civ_t and att_unit:brain()._stopped_civ_t and t < criminal:brain()._shouted_down_civ_t + 3 and t < att_unit:brain()._stopped_civ_t + 3
-
-										if recently_shouted_down then
+									elseif is_escort then
+										if not anim_data.move then
 											valid_target = true
+											inv_wgt = -1
+										end
+									else
+										if not anim_data.drop then
+											valid_target = true
+											inv_wgt = inv_wgt * 0.001
+										else
+											local civ_internal_data = att_unit:brain()._logic_data and att_unit:brain()._logic_data.internal_data
+											local will_get_up_soon = civ_internal_data and civ_internal_data.submission_meter and civ_internal_data.submission_meter < 10
+
+											if will_get_up_soon then
+												valid_target = true
+												inv_wgt = inv_wgt * 0.01
+											else
+												local recently_shouted_down = criminal:brain()._shouted_down_civ_t and att_unit:brain()._stopped_civ_t and t < criminal:brain()._shouted_down_civ_t + 3 and t < att_unit:brain()._stopped_civ_t + 3
+
+												if recently_shouted_down then
+													valid_target = true
+												end
+											end
 										end
 									end
-								end
-							end
 
-							if valid_target then
-								if draw_debug_lines then
-									local draw_duration = 0.1
-									local new_brush = Draw:brush(Color.blue:with_alpha(0.5), draw_duration)
-									new_brush:cylinder(head_pos, att_head_pos, 0.5)
-								end
+									if valid_target then
+										if draw_civ_detection_lines then
+											local draw_duration = 0.1
+											local new_brush = Draw:brush(Color.blue:with_alpha(0.5), draw_duration)
+											new_brush:cylinder(head_pos, att_head_pos, 0.5)
+										end
 
-								table.insert(intimidateable_civilians, {
-									unit = att_unit,
-									key = key,
-									inv_wgt = inv_wgt
-								})
+										table.insert(intimidateable_civilians, {
+											unit = att_unit,
+											key = key,
+											inv_wgt = inv_wgt
+										})
 
-								if not best_civ_wgt or inv_wgt < best_civ_wgt then
-									best_civ_wgt = inv_wgt
-									best_civ = att_unit
-								end
+										if not best_civ_wgt or inv_wgt < best_civ_wgt then
+											best_civ_wgt = inv_wgt
+											best_civ = att_unit
+										end
 
-								if highest_wgt < inv_wgt then
-									highest_wgt = inv_wgt
+										if highest_wgt < inv_wgt then
+											highest_wgt = inv_wgt
+										end
+									end
 								end
 							end
 						end
@@ -847,7 +899,7 @@ function TeamAILogicIdle._find_intimidateable_civilians(criminal, use_default_sh
 		end
 	end
 
-	if draw_debug_lines and best_civ then
+	if draw_civ_detection_lines and best_civ then
 		local draw_duration = 0.1
 		local new_brush = Draw:brush(Color.yellow:with_alpha(0.5), draw_duration)
 		new_brush:cylinder(head_pos, best_civ:movement():m_head_pos(), 0.5)
@@ -873,6 +925,10 @@ function TeamAILogicIdle.intimidate_civilians(data, criminal, play_sound, play_a
 	elseif #intimidateable_civilians <= 0 then
 		return false
 	end
+	
+	local criminal_brain = criminal:brain()
+	local best_civ_brain = best_civ:brain()
+	local best_civ_anim_data = best_civ:anim_data()
 
 	local intimidate_enemy = best_civ:base():char_tweak().surrender
 	local intimidate_escort = best_civ:base():char_tweak().is_escort
@@ -880,10 +936,10 @@ function TeamAILogicIdle.intimidate_civilians(data, criminal, play_sound, play_a
 	local sound_suffix = plural and "plu" or "sin"
 
 	if intimidate_enemy then
-		if best_civ:anim_data().hands_back then --dropped weapon
+		if best_civ_anim_data.hands_back then --dropped weapon
 			act_name = "cmd_down"
 			sound_name = "l03x_sin" --put your cuffs on
-		elseif best_civ:anim_data().surrender then --has hands in the air
+		elseif best_civ_anim_data.surrender then --has hands in the air
 			act_name = "cmd_down"
 			sound_name = "l02x_sin" --on your knees
 		else
@@ -894,21 +950,21 @@ function TeamAILogicIdle.intimidate_civilians(data, criminal, play_sound, play_a
 		act_name = "cmd_gogo" --same as "cmd_point", but for the heck of consistency
 		sound_name = "f40_any" --not using "get up" lines since they're mostly unfitting inspire ones (the "gogo" inspire ones are not so bad in comparison), or they're played at wrong times
 	else
-		if best_civ:anim_data().move then --civ is moving
+		if best_civ_anim_data.move then --civ is moving
 			act_name = "cmd_stop"
 
-			if criminal:brain()._stopped_civ_t and data.t < criminal:brain()._stopped_civ_t + 3 then --bot told someone to get on the ground in the last 3 seconds
+			if criminal_brain._stopped_civ_t and data.t < criminal_brain._stopped_civ_t + 3 then --bot told someone to get on the ground in the last 3 seconds
 				sound_name = "f02b_sin" --I SAID GET DOWN
 			else
 				sound_name = "f02x_" .. sound_suffix --get down people/on the ground
 
-				best_civ:brain()._stopped_civ_t = data.t
-				criminal:brain()._stopped_civ_t = data.t
+				best_civ_brain._stopped_civ_t = data.t
+				criminal_brain._stopped_civ_t = data.t
 			end
-		elseif best_civ:anim_data().drop then --civ is on the ground
+		elseif best_civ_anim_data.drop then --civ is on the ground
 			act_name = "cmd_down"
 
-			if criminal:brain()._shouted_down_civ_t and data.t < criminal:brain()._shouted_down_civ_t + 3 then --bot made someone get on the ground in the last 3 seconds
+			if criminal_brain._shouted_down_civ_t and data.t < criminal_brain._shouted_down_civ_t + 3 then --bot made someone get on the ground in the last 3 seconds
 				sound_name = "f03b_any" --and stay put
 			else
 				sound_name = "f03a_" .. sound_suffix --stay down/nobody moves
@@ -916,15 +972,15 @@ function TeamAILogicIdle.intimidate_civilians(data, criminal, play_sound, play_a
 		else
 			act_name = "cmd_down"
 
-			if criminal:brain()._stopped_civ_t and data.t < criminal:brain()._stopped_civ_t + 3 then --bot told someone to get on the ground in the last 3 seconds
+			if criminal_brain._stopped_civ_t and data.t < criminal_brain._stopped_civ_t + 3 then --bot told someone to get on the ground in the last 3 seconds
 				sound_name = "f02b_sin" --I SAID GET DOWN
 			else
 				sound_name = "f02x_" .. sound_suffix --get down people/on the ground
 			end
 
-			best_civ:brain()._stopped_civ_t = data.t
-			criminal:brain()._stopped_civ_t = data.t
-			criminal:brain()._shouted_down_civ_t = data.t
+			best_civ_brain._stopped_civ_t = data.t
+			criminal_brain._stopped_civ_t = data.t
+			criminal_brain._shouted_down_civ_t = data.t
 		end
 	end
 
@@ -932,7 +988,7 @@ function TeamAILogicIdle.intimidate_civilians(data, criminal, play_sound, play_a
 		criminal:sound():say(sound_name, true)
 	end
 
-	if play_action and not criminal:movement():chk_action_forbidden("action") then
+	if play_action then
 		local can_do_action = nil
 
 		if not criminal:anim_data().reload then
@@ -945,7 +1001,7 @@ function TeamAILogicIdle.intimidate_civilians(data, criminal, play_sound, play_a
 			end
 		end
 
-		if can_do_action then
+		if can_do_action and not criminal:movement():chk_action_forbidden("action") then
 			local new_action = {
 				align_sync = true,
 				body_part = 3,
@@ -953,7 +1009,7 @@ function TeamAILogicIdle.intimidate_civilians(data, criminal, play_sound, play_a
 				variant = act_name
 			}
 
-			if criminal:brain():action_request(new_action) then
+			if criminal_brain:action_request(new_action) then
 				data.internal_data.gesture_arrest = true
 			end
 		end
@@ -1010,14 +1066,19 @@ function TeamAILogicIdle.intimidate_civilians(data, criminal, play_sound, play_a
 end
 
 function TeamAILogicIdle._upd_sneak_spotting(data, my_data)
-	if (not TeamAILogicAssault._mark_special_chk_t or TeamAILogicAssault._mark_special_chk_t + 0.75 < data.t) and (not TeamAILogicAssault._mark_special_t or TeamAILogicAssault._mark_special_t + 3 < data.t) and not my_data.acting and not data.unit:sound():speaking() then
-		local nmy = TeamAILogicAssault.find_enemy_to_mark(data.detected_attention_objects)
-		TeamAILogicAssault._mark_special_chk_t = data.t
+	if not my_data.acting then
+		if not TeamAILogicAssault._mark_special_chk_t or TeamAILogicAssault._mark_special_chk_t + 0.75 < data.t then
+			if not TeamAILogicAssault._mark_special_t or TeamAILogicAssault._mark_special_t + 3 < data.t then
+				if not data.unit:sound():speaking() then
+					TeamAILogicAssault._mark_special_chk_t = data.t
+					local nmy = TeamAILogicAssault.find_enemy_to_mark(data.detected_attention_objects)
 
-		if nmy then
-			TeamAILogicAssault._mark_special_t = data.t
-
-			TeamAILogicAssault.mark_enemy(data, data.unit, nmy, true, true)
+					if nmy then
+						TeamAILogicAssault._mark_special_t = data.t
+						TeamAILogicAssault.mark_enemy(data, data.unit, nmy, true, true)
+					end
+				end
+			end
 		end
 	end
 end
