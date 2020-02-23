@@ -69,3 +69,21 @@ function UnitNetworkHandler:sync_add_doted_enemy(enemy_unit, variant, weapon_uni
 		managers.dot:sync_add_dot_damage(enemy_unit, variant, weapon_unit, dot_length, dot_damage, user_unit, is_molotov_or_hurt_animation, variant, weapon_id)
 	end
 end
+
+function UnitNetworkHandler:action_aim_state(unit, state)
+	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_character(unit) then
+		return
+	end
+
+	if state then
+		local shoot_action = {
+			block_type = "action",
+			body_part = 3,
+			type = "shoot"
+		}
+
+		unit:movement():action_request(shoot_action)
+	else
+		unit:movement():sync_action_aim_end()
+	end
+end
