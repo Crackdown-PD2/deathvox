@@ -208,29 +208,23 @@ function CharacterTweakData:_presets(tweak_data)
             smoke = true
         },
         swat = {
-            entry = true,
-			aggressive = true,
-			enemyidlepanic = true,
-			retreat = true,
-			contact = true,
-			clear = true,
-			clear_whisper = true,
-			go_go = true,
-			push = true,
-			reload = true,
-			look_for_angle = true,
-			ecm = true,
-			saw = true,
-			trip_mines = true,
-			sentry = true,
-			ready = true,
-			smoke = true,
-			flash_grenade = true,
-			follow_me = true,
-			deathguard = true,
-			open_fire = true,
-			suppress = true,
-			dodge = true
+            follow_me = true,
+            clear = true,
+            ready = true,
+            contact = true,
+            suppress = true,
+            smoke = true,
+            push = true,
+            open_fire = true,
+            retreat = true,
+            deathguard = true,
+            go_go = true,
+            aggressive = true,
+            follow_me = true,
+            clear_whisper = true,
+            look_for_angle = true,
+            flash_grenade = true,
+            smoke = true
         },
         geeeeeman = {
             follow_me = true,
@@ -253,49 +247,24 @@ function CharacterTweakData:_presets(tweak_data)
             smoke = true
         },
         shield = {
-            entry = true,
-			aggressive = true,
-			enemyidlepanic = true,
-			retreat = true,
-			contact = true,
-			clear = true,
-			clear_whisper = true,
-			go_go = true,
-			push = true,
-			reload = true,
-			look_for_angle = true,
-			ecm = true,
-			saw = true,
-			trip_mines = true,
-			sentry = true,
-			ready = true,
-			follow_me = true,
-			deathguard = true,
-			open_fire = true,
-			suppress = true
-        },
-		bulldozer = {
-			contact = true,
-			aggressive = true,
-			retreat = true,
-			approachingspecial = true
-			
-		},
-		taser = {
-			contact = true,
-			aggressive = true,
-			retreat = true,
-			approachingspecial = true
-		},
-		medic = {
-			aggressive = true,
-			contact = true
-		},
-		spooc = {
-			cloakercontact = true,
-			go_go = true, --only used for russian cloaker
-			cloakeravoidance = true --only used for russian cloaker
-		}
+            follow_me = true,
+            clear = true,
+            ready = true,
+            contact = true,
+            suppress = true,
+            smoke = true,
+            push = true,
+            open_fire = true,
+            retreat = true,
+            deathguard = true,
+            go_go = true,
+            aggressive = true,
+            follow_me = true,
+            clear_whisper = true,
+            look_for_angle = true,
+            flash_grenade = true,
+            smoke = true
+        }
 	}
 	presets.health_tables = {
 		deathvox_guard = {  -- mk 1 values complete. Consistent below CD.
@@ -2690,7 +2659,6 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard.headshot_dmg_mul = 3
 	self.deathvox_guard.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_guard.access = "security" --fixes SO problem
-	self.deathvox_guard.chatter = presets.enemy_chatter.cop
 	self.deathvox_guard.die_sound_event = "x01a_any_3p" -- pain lines are death lines for these units.
 	table.insert(self._enemy_list, "deathvox_guard")
 
@@ -2745,6 +2713,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightshot.speech_prefix_p1 = "l2d"
 	self.deathvox_lightshot.speech_prefix_p2 = nil
 	self.deathvox_lightshot.speech_prefix_count = nil
+	self.deathvox_lightshot.die_sound_event = "x01a_any_3p" --fucking l2d and having pain lines but not death lines
 	self.deathvox_lightshot.detection = presets.detection.deathvox
 	self.deathvox_lightshot.ignore_medic_revive_animation = true  -- no revive animation. may require curving on lower diffs.
 	self.deathvox_lightshot.suppression = presets.suppression.hard_agg -- should be hard_def on N through OVK.
@@ -2830,7 +2799,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.speech_prefix_p1 = "l5d"
 	self.deathvox_shield.speech_prefix_p2 = nil
 	self.deathvox_shield.speech_prefix_count = nil
-	--self.deathvox_shield.tags = {"shield"} -- commented out as it was actually breaking the tags
+	self.deathvox_shield.tags = {"shield"} -- just to be sure it's being applied.
 	self.deathvox_shield.detection = presets.detection.deathvox
 	self.deathvox_shield.ignore_medic_revive_animation = true  --no revive animation. In base.
 	self.deathvox_shield.damage.hurt_severity = presets.hurt_severities.only_explosion_hurts
@@ -2855,7 +2824,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_shield")
 	
 	self.deathvox_medic = deep_clone(self.medic)
-	--self.deathvox_medic.tags = {"medic"} -- commented out as it was actually breaking the tags
+	self.deathvox_medic.tags = {"medic"} --just making sure tag applies.
 	self.deathvox_medic.detection = presets.detection.deathvox
 	self.deathvox_medic.ignore_medic_revive_animation = true  --no revive animation. may require curving on lower diffs.
 	self.deathvox_medic.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- added to make code consistent.
@@ -2881,12 +2850,10 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic.is_special_unit = "medic"
 	self.deathvox_medic.access = "any"
 	self.deathvox_medic.no_retreat = false
-	self.deathvox_medic.chatter = presets.enemy_chatter.medic
 	table.insert(self._enemy_list, "deathvox_medic") 
 
 	self.deathvox_taser = deep_clone(self.taser)
-	--self.deathvox_taser.tags = {"taser"} -- commented out as it was actually breaking the tags
-	table.insert(self.deathvox_taser.tags, "takedown")
+	self.deathvox_taser.tags = {"taser"} -- just making sure tag applies.
 	self.deathvox_taser.detection = presets.detection.deathvox
 	self.deathvox_taser.ignore_medic_revive_animation = true  --no revive animation. may require curving on lower diffs.
 	self.deathvox_taser.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire -- may require curving on lower diffs.
@@ -2899,7 +2866,6 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8} -- in base.
 	}
-	self.deathvox_taser.chatter = presets.enemy_chatter.taser
 	self.deathvox_taser.dodge = presets.dodge.deathvox -- should be athletic on MH/DW, average on VH/OVK, heavy on N/H. 
 	self.deathvox_taser.deathguard = true 
 	self.deathvox_taser.no_arrest = true
@@ -2913,8 +2879,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_taser") 
 
 	self.deathvox_cloaker = deep_clone(self.spooc)
-	--self.deathvox_cloaker.tags = {"spooc"}-- commented out as it was actually breaking the tags
-	table.insert(self.deathvox_cloaker.tags, "takedown")
+	self.deathvox_cloaker.tags = {"spooc"} -- just making sure tag applies.
 	self.deathvox_cloaker.detection = presets.detection.deathvox
 	self.deathvox_cloaker.ignore_medic_revive_animation = true  --no revive animation. same on all diffs.
 	self.deathvox_cloaker.suppression = nil
@@ -2934,13 +2899,12 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker.is_special_unit = "spooc"
 	self.deathvox_cloaker.access = "any"
 	self.deathvox_cloaker.no_retreat = false
-	self.deathvox_cloaker.chatter = presets.enemy_chatter.spooc
 	self.deathvox_cloaker.spooc_attack_use_smoke_chance = 0
 
 	table.insert(self._enemy_list, "deathvox_cloaker") 
 
 	self.deathvox_sniper = deep_clone(self.sniper)
-	--self.deathvox_sniper.tags = {"sniper"} -- commented out as it was actually breaking the tags
+	self.deathvox_sniper.tags = {"sniper"} -- just making sure tag applies.
 	self.deathvox_sniper.detection = presets.detection.deathvox
 	self.deathvox_sniper.ignore_medic_revive_animation = false  -- revive animation.
 	self.deathvox_sniper.suppression = nil -- same on all diffs.
@@ -2970,8 +2934,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_sniper_assault")
 
 	self.deathvox_tank = deep_clone(self.tank)
-	--self.deathvox_tank.tags = {"tank"} -- commented out as it was actually breaking the tags
-	self.deathvox_tank.chatter = presets.enemy_chatter.bulldozer
+	self.deathvox_tank.tags = {"tank"} -- just making sure tag applies.
 	self.deathvox_tank.detection = presets.detection.deathvox
 	self.deathvox_tank.ignore_medic_revive_animation = false  -- revive animation.
 	self.deathvox_tank.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase -- same on all diffs.
@@ -2994,7 +2957,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.no_retreat = false
 
 	self.deathvox_guarddozer = deep_clone(self.security)
-	--self.deathvox_guarddozer.tags = {"tank"} -- commented out as it was actually breaking the tags
+	self.deathvox_guarddozer.tags = {"tank"} -- just making sure tag applies.
 	self.deathvox_guarddozer.ignore_medic_revive_animation = false  -- revive animation.
 	self.deathvox_guarddozer.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase -- same on all diffs.
 	self.deathvox_guarddozer.suppression = nil
@@ -3020,13 +2983,11 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 	self.deathvox_greendozer = deep_clone(self.deathvox_tank)
 	self.deathvox_greendozer.use_factory = false -- Use a factory weapon
-	table.insert(self.deathvox_greendozer.tags, "takedown")
 	--self.deathvox_greendozer.factory_weapon_id = {"wpn_deathvox_greendozer"} 
 	self.deathvox_greendozer.access = "tank"
 	table.insert(self._enemy_list, "deathvox_greendozer")
 
 	self.deathvox_blackdozer = deep_clone(self.deathvox_tank)
-	table.insert(self.deathvox_blackdozer.tags, "takedown")
 	self.deathvox_blackdozer.use_factory = false -- Use a factory weapon
 	--self.deathvox_blackdozer.factory_weapon_id = {"wpn_deathvox_blackdozer"} 
 	self.deathvox_blackdozer.access = "tank"
@@ -3039,8 +3000,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_lmgdozer")
 	
 	self.deathvox_medicdozer = deep_clone(self.deathvox_tank)
-	--self.deathvox_medicdozer.tags = {"tank", "medic"} -- commented out as it was actually breaking the tags
-	table.insert(self.deathvox_medicdozer.tags, "medic")
+	self.deathvox_medicdozer.tags = {"tank", "medic"}
 	self.deathvox_medicdozer.use_factory = false -- Use a factory weapon
 	--self.deathvox_medicdozer.factory_weapon_id = {"wpn_deathvox_heavy_ar"} 
 	self.deathvox_medicdozer.dv_medic_heal = true -- don't touch, makes him use the death vox healing
@@ -3050,7 +3010,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_medicdozer")
 
 	self.deathvox_grenadier = deep_clone(presets.base)
-	self.deathvox_grenadier.tags = {"law", "custom", "special"}
+	self.deathvox_grenadier.tags = {"custom"}
 	self.deathvox_grenadier.experience = {}
 	self.deathvox_grenadier.weapon = deep_clone(presets.weapon.normal)
 	self.deathvox_grenadier.melee_weapon = "knife_1"
@@ -3116,22 +3076,26 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cop.deathguard = true
 	self.deathvox_cop.chatter = presets.enemy_chatter.cop
 	self.deathvox_cop.steal_loot = true
+	self.deathvox_cop.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
 	self.deathvox_cop.detection = presets.detection.deathvox
 
 	self.deathvox_cop_pistol = deep_clone(self.deathvox_cop)
 	self.deathvox_cop_pistol.use_factory = false
 	--self.deathvox_cop_pistol.factory_weapon_id = {"wpn_deathvox_cop_pistol"}
+	self.deathvox_cop_pistol.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_cop_pistol")
 	
 	self.deathvox_cop_revolver = deep_clone(self.deathvox_cop)
 	self.deathvox_cop_revolver.use_factory = false
 	--self.deathvox_cop_revolver.factory_weapon_id = {"wpn_deathvox_cop_revolver"}
+	self.deathvox_cop_revolver.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_cop_revolver")
 	
 	self.deathvox_cop_smg = deep_clone(self.deathvox_cop)
 	self.deathvox_cop_smg.HEALTH_INIT = 22 -- based on flak jacket model, revise if incorrect.
 	self.deathvox_cop_smg.use_factory = false
 	--self.deathvox_cop_smg.factory_weapon_id = {"wpn_deathvox_cop_smg"}
+	self.deathvox_cop_smg.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_cop_smg")
 	
 	self.deathvox_cop_shotgun = deep_clone(self.deathvox_cop)
@@ -3154,7 +3118,6 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_fbi_hrt.suppression = presets.suppression.hard_agg -- same on all diffs.
 	self.deathvox_fbi_hrt.surrender = presets.surrender.hard -- same on all diffs.
 	self.deathvox_fbi_hrt.use_factory = false
-	self.deathvox_fbi_hrt.chatter = presets.enemy_chatter.swat
 	--self.deathvox_fbi_hrt.factory_weapon_id = {"wpn_deathvox_cop_smg"}
 	self.deathvox_fbi_hrt.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_fbi_hrt")
@@ -3164,8 +3127,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_fbi_veteran.suppression = nil -- same on all diffs.
 	self.deathvox_fbi_veteran.surrender = nil -- same on all diffs.
 	self.deathvox_fbi_veteran.use_factory = false
-	self.deathvox_fbi_veteran.chatter = presets.enemy_chatter.swat
 	--self.deathvox_fbi_veteran.factory_weapon_id = {"wpn_deathvox_heavy_ar"}
+	self.deathvox_fbi_veteran.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_fbi_veteran")
 	
 end
@@ -3843,12 +3806,12 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	
 -- NOTE material below this point iamgoofball legacy code. Identify purposes, clean, annotate as able.
 	
-	-- Just noticed this now, it removes the focus and aim delay from literally every single preset that isn't deathvox, this means a variety of scripted enemies have insanely better presets for no reason, so I've commented it out.
-	--self:_multiply_weapon_delay(self.presets.weapon.normal, 0)
-	--self:_multiply_weapon_delay(self.presets.weapon.good, 0)
-	--self:_multiply_weapon_delay(self.presets.weapon.expert, 0)
-	--self:_multiply_weapon_delay(self.presets.weapon.sniper, 0)
-	--self:_multiply_weapon_delay(self.presets.weapon.gang_member, 0)
+
+	self:_multiply_weapon_delay(self.presets.weapon.normal, 0)
+	self:_multiply_weapon_delay(self.presets.weapon.good, 0)
+	self:_multiply_weapon_delay(self.presets.weapon.expert, 0)
+	self:_multiply_weapon_delay(self.presets.weapon.sniper, 0)
+	self:_multiply_weapon_delay(self.presets.weapon.gang_member, 0)
 	
 	self.security = deep_clone(self.deathvox_guard) --  Requires further testing. May be fix for heist-specific crash tied to initial custom unit spawn.
 	self.gensec = deep_clone(self.deathvox_guard)
@@ -3927,13 +3890,6 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 --	self.drug_lord_boss_stealth.weapon = deep_clone(presets.weapon.deathvox.is_revolver)
 	
 -- end CRACKDOWN scripted unit alterations.
-
--- Begin sliding enemies list
-	
-	--This can be added to every single law-marked enemy in the game and allows them to slide.
-	self.deathvox_fbi_veteran.can_slide = true
-	self.deathvox_lightshot.can_slide = true
-	self.deathvox_lightar.can_slide = true
 	
 end  -- end CRACKDOWN specific tweaks.
 
@@ -4289,6 +4245,7 @@ function CharacterTweakData:_init_region_murky() --will use these lines for now.
 		medic = "mdc"
 	}	
 end
+
 
 function CharacterTweakData:character_map()
 	local char_map = origin_charmap(self)

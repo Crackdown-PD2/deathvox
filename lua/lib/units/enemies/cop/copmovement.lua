@@ -1,4 +1,3 @@
-
 local ids_movement = Idstring("movement")
 local mvec3_set = mvector3.set
 local mvec3_set_z = mvector3.set_z
@@ -12,14 +11,12 @@ local mrot_set = mrotation.set_yaw_pitch_roll
 local temp_vec1 = Vector3()
 local temp_vec2 = Vector3()
 local temp_vec3 = Vector3()
-
 local stance_ctl_pts = {
 	0,
 	0,
 	1,
 	1
 }
-
 local old_init = CopMovement.init
 local action_variants = {
 	security = {
@@ -207,168 +204,6 @@ function CopMovement:add_weapons()
 		end
 	end
 end
-
-function CopMovement:is_taser_attack_allowed() --lol
-	return
-end
-
-function CopMovement:on_suppressed(state)
-	local suppression = self._suppression
-	local end_value = state and 1 or 0
-	
-	if end_value ~= suppression.value then
-		local t = TimerManager:game():time()
-		local duration = 0.5 * math.abs(end_value - suppression.value)
-		suppression.transition = {
-			end_val = end_value,
-			start_val = suppression.value,
-			duration = duration,
-			start_t = t,
-			next_upd_t = t + 0.033
-		}
-	else
-		suppression.transition = nil
-		suppression.value = end_value
-
-		self._machine:set_global("sup", end_value)
-	end
-
-	self._action_common_data.is_suppressed = state and true or nil
-
-	if Network:is_server() and state then
-		if self._tweak_data.allowed_poses and (self._tweak_data.allowed_poses.crouch or self._tweak_data.allowed_poses.stand) or self:chk_action_forbidden("walk") then
-			--nothing
-		else
-			if state == "panic" and not self:chk_action_forbidden("act") and not self._tweak_data.no_panic then
-				if self._ext_anim.run and self._ext_anim.move_fwd then
-					local action_desc = {
-						clamp_to_graph = true,
-						type = "act",
-						body_part = 1,
-						variant = "e_so_sup_fumble_run_fwd",
-						blocks = {
-							action = -1,
-							walk = -1
-						}
-					}
-						
-					self:action_request(action_desc)
-				else
-					local function debug_fumble(result, from, to)
-					end
-					
-					local vec_from = temp_vec1
-					local vec_to = temp_vec2
-					local ray_params = {
-						allow_entry = false,
-						trace = true,
-						tracker_from = self:nav_tracker(),
-						pos_from = vec_from,
-						pos_to = vec_to
-					}
-					local allowed_fumbles = {
-						"e_so_sup_fumble_inplace_3",
-					}
-					
-					local allow = nil
-					mvec3_set(vec_from, self:m_pos())
-					mvec3_set(vec_to, self:m_rot():y())
-					mvec3_mul(vec_to, -100)
-					mvec3_add(vec_to, self:m_pos())
-
-					allow = not managers.navigation:raycast(ray_params)
-
-					debug_fumble(allow, vec_from, vec_to)
-
-					if allow then
-						table.insert(allowed_fumbles, "e_so_sup_fumble_inplace_1")
-					end
-
-					mvec3_set(vec_from, self:m_pos())
-					mvec3_set(vec_to, self:m_rot():x())
-					mvec3_mul(vec_to, 200)
-					mvec3_add(vec_to, self:m_pos())
-
-					allow = not managers.navigation:raycast(ray_params)
-
-					debug_fumble(allow, vec_from, vec_to)
-
-					if allow then
-						table.insert(allowed_fumbles, "e_so_sup_fumble_inplace_2")
-					end
-
-					mvec3_set(vec_from, self:m_pos())
-					mvec3_set(vec_to, self:m_rot():x())
-					mvec3_mul(vec_to, -200)
-					mvec3_add(vec_to, self:m_pos())
-
-					allow = not managers.navigation:raycast(ray_params)
-
-					debug_fumble(allow, vec_from, vec_to)
-
-					if allow then
-						table.insert(allowed_fumbles, "e_so_sup_fumble_inplace_4")
-					end
-
-					if #allowed_fumbles > 0 then
-						local action_desc = {
-							body_part = 1,
-							type = "act",
-							variant = allowed_fumbles[math.random(#allowed_fumbles)],
-							blocks = {
-								action = -1,
-								walk = -1
-							}
-						}
-
-						self:action_request(action_desc)
-					end
-				end
-			elseif self._ext_anim.idle and (not self._active_actions[2] or self._active_actions[2]:type() == "idle") and not self:chk_action_forbidden("act") then
-				if not self._ext_anim.crouch then -- if they are not already crouching
-					local action_desc = {
-						clamp_to_graph = true,
-						type = "act",
-						body_part = 1,
-						variant = "suppressed_reaction",
-						blocks = {
-							walk = -1
-						}
-					}
-			
-					self:action_request(action_desc)
-				end
-			elseif self._ext_anim.run and not self:chk_action_forbidden("act") and self._tweak_data.can_slide then
-				local action_desc = {
-					clamp_to_graph = true,
-					type = "act",
-					body_part = 1,
-					variant = "e_nl_slide_fwd_4m",
-					blocks = {
-						action = -1,
-						act = -1,
-						tase = -1,
-						bleedout = -1,
-						dodge = -1,
-						walk = -1,
-						hurt = -1,
-						heavy_hurt = -1
-					}
-				}
-
-				self:action_request(action_desc)
-			end
-		end
-	end
-
-	self:enable_update()
-
-	if Network:is_server() then
-		managers.network:session():send_to_peers_synched("suppressed_state", self._unit, state and true or false)
-	end
-
-end
-
 
 function CopMovement:_chk_play_equip_weapon()
 	if self._stance.values[1] == 1 and not self._ext_anim.equip and not self._tweak_data.no_equip_anim and not self:chk_action_forbidden("action") then
@@ -568,7 +403,7 @@ function CopMovement:damage_clbk(my_unit, damage_info)
 	end
 	
 	
-	function CopMovement:play_redirect(redirect_name, at_time)
+		function CopMovement:play_redirect(redirect_name, at_time)
 		--Not pretty but groupai didn't like me checking unit slots
 		--stolen from SC stops hosatges using greande throw anims
 		if redirect_name == "throw_grenade" then 
