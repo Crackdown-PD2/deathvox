@@ -205,6 +205,10 @@ function CopMovement:add_weapons()
 	end
 end
 
+function CopMovement:is_taser_attack_allowed() --lol
+	return
+end
+
 function CopMovement:_chk_play_equip_weapon()
 	if self._stance.values[1] == 1 and not self._ext_anim.equip and not self._tweak_data.no_equip_anim and not self:chk_action_forbidden("action") then
 		local redir_res = self:play_redirect("equip")
@@ -403,7 +407,7 @@ function CopMovement:damage_clbk(my_unit, damage_info)
 	end
 	
 	
-		function CopMovement:play_redirect(redirect_name, at_time)
+	function CopMovement:play_redirect(redirect_name, at_time)
 		--Not pretty but groupai didn't like me checking unit slots
 		--stolen from SC stops hosatges using greande throw anims
 		if redirect_name == "throw_grenade" then 
@@ -544,7 +548,6 @@ function CopMovement:on_suppressed(state)
 
 								if self:action_request(action_desc) then
 									try_something_else = false
-									self._unit:sound():say("lk3b", true)
 								end
 							else
 								local allow = nil
@@ -607,7 +610,6 @@ function CopMovement:on_suppressed(state)
 
 									if self:action_request(action_desc) then
 										try_something_else = false
-										self._unit:sound():say("lk3b", true)
 									end
 								end
 							end
