@@ -37,6 +37,156 @@ function GroupAIStateBase:on_simulation_started()
 	}
 end
 
+function GroupAIStateBase:update(t, dt)
+	self._t = t
+
+	self:_upd_criminal_suspicion_progress()
+	self:_claculate_drama_value()
+	--self:_draw_current_logics()
+	
+	if self._draw_drama then
+		self:_debug_draw_drama(t)
+	end
+
+	self:_upd_debug_draw_attentions()
+	self:upd_team_AI_distance()
+end
+
+function GroupAIStateBase:_draw_current_logics()
+	for key, data in pairs(self._police) do
+		if data.unit:brain() and data.unit:brain().is_current_logic then
+			local brain = data.unit:brain()
+			
+			if brain:is_current_logic("attack") then
+				local draw_duration = 0.1
+				local new_brush = Draw:brush(Color.red:with_alpha(1), draw_duration)
+				new_brush:sphere(data.unit:movement():m_head_pos(), 20)
+			elseif brain:is_current_logic("base") then
+				local draw_duration = 0.1
+				local new_brush = Draw:brush(Color.white:with_alpha(0.5), draw_duration)
+				new_brush:sphere(data.unit:movement():m_head_pos(), 20)
+			elseif brain:is_current_logic("idle") then
+				local draw_duration = 0.1
+				local new_brush = Draw:brush(Color.green:with_alpha(0.5), draw_duration)
+				new_brush:sphere(data.unit:movement():m_head_pos(), 20)
+			elseif brain:is_current_logic("sniper") then
+				local draw_duration = 0.1
+				local new_brush = Draw:brush(Color.red:with_alpha(0.1), draw_duration)
+				new_brush:sphere(data.unit:movement():m_head_pos(), 20)
+			elseif brain:is_current_logic("travel") then
+				local draw_duration = 0.1
+				local new_brush = Draw:brush(Color.yellow:with_alpha(0.5), draw_duration)
+				new_brush:sphere(data.unit:movement():m_head_pos(), 20)
+			end
+		end
+	end
+end
+
+function GroupAIStateBase:set_importance_weight(u_key, wgt_report)
+	if #wgt_report == 0 then
+		return
+	end
+
+	local t_rem = table.remove
+	local t_ins = table.insert
+	local max_nr_imp = 8 --oh hey mod runs ok again
+	local imp_adj = 0
+	local criminals = self._player_criminals
+	local cops = self._police
+
+	for i_dis_rep = #wgt_report - 1, 1, -2 do
+		local c_key = wgt_report[i_dis_rep]
+		local c_dis = wgt_report[i_dis_rep + 1]
+		local c_record = criminals[c_key]
+		local imp_enemies = c_record.important_enemies
+		local imp_dis = c_record.important_dis
+		local was_imp = nil
+
+		for i_imp = #imp_enemies, 1, -1 do
+			if imp_enemies[i_imp] == u_key then
+				table.remove(imp_enemies, i_imp)
+				table.remove(imp_dis, i_imp)
+
+				was_imp = true
+
+				break
+			end
+		end
+
+		local i_imp = #imp_dis
+
+		while i_imp > 0 do
+			if imp_dis[i_imp] <= c_dis then
+				break
+			end
+
+			i_imp = i_imp - 1
+		end
+
+		if i_imp < max_nr_imp then
+			i_imp = i_imp + 1
+
+			while max_nr_imp <= #imp_enemies do
+				local dump_e_key = imp_enemies[#imp_enemies]
+
+				self:_adjust_cop_importance(dump_e_key, -1)
+				t_rem(imp_enemies)
+				t_rem(imp_dis)
+			end
+
+			t_ins(imp_enemies, i_imp, u_key)
+			t_ins(imp_dis, i_imp, c_dis)
+
+			if not was_imp then
+				imp_adj = imp_adj + 1
+			end
+		elseif was_imp then
+			imp_adj = imp_adj - 1
+		end
+	end
+
+	if imp_adj ~= 0 then
+		self:_adjust_cop_importance(u_key, imp_adj)
+	end
+end
+
+function GroupAIStateBase:chk_area_leads_to_enemy(start_nav_seg_id, test_nav_seg_id, enemy_is_criminal)
+	local enemy_areas = {}
+
+	for c_key, c_data in pairs(enemy_is_criminal and self._criminals or self._police) do
+		enemy_areas[c_data.tracker:nav_segment()] = true
+	end
+
+	local all_nav_segs = managers.navigation._nav_segments
+	local found_nav_segs = {
+		[start_nav_seg_id] = true,
+		[test_nav_seg_id] = true
+	}
+	local to_search_nav_segs = {
+		test_nav_seg_id
+	}
+
+	repeat
+		local chk_nav_seg_id = table.remove(to_search_nav_segs)
+		local chk_nav_seg = all_nav_segs[chk_nav_seg_id]
+
+		if enemy_areas[chk_nav_seg_id] then
+			--log("executing")
+			return true
+		end
+
+		local neighbours = chk_nav_seg.neighbours
+
+		for neighbour_seg_id, door_list in pairs(neighbours) do
+			if not all_nav_segs[neighbour_seg_id].disabled and not found_nav_segs[neighbour_seg_id] then
+				found_nav_segs[neighbour_seg_id] = true
+
+				table.insert(to_search_nav_segs, neighbour_seg_id)
+			end
+		end
+	until #to_search_nav_segs == 0
+end
+
 function GroupAIStateBase:on_enemy_unregistered(unit)
 	if self:is_unit_in_phalanx_minion_data(unit:key()) then
 		self:unregister_phalanx_minion(unit:key())
@@ -144,7 +294,6 @@ function GroupAIStateBase:on_enemy_unregistered(unit)
 		end
 	end
 end
-
 
 function GroupAIStateBase:on_enemy_registered(unit)
 	if self._anticipated_police_force > 0 then
@@ -329,4 +478,22 @@ function GroupAIStateBase:upd_team_AI_distance()
 			end
 		end
 	end
+end
+
+function GroupAIStateBase:_merge_coarse_path_by_area(coarse_path)
+	local i_nav_seg = #coarse_path
+	local last_area = nil
+
+	while i_nav_seg > 0 do
+		local nav_seg = coarse_path[i_nav_seg][1]
+		local area = self:get_area_from_nav_seg_id(nav_seg)
+
+		if last_area and last_area == area and #coarse_path > 2 then
+			table.remove(coarse_path, i_nav_seg)
+		end
+
+		i_nav_seg = i_nav_seg - 1
+	end
+	
+	return coarse_path
 end

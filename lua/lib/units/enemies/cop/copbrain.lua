@@ -34,8 +34,7 @@ local logic_variants = {
 }
 local security_variant = logic_variants.security
 function CopBrain:post_init()
-	CopBrain._logic_variants.deathvox_shield = clone(security_variant)
-	CopBrain._logic_variants.deathvox_shield.attack = ShieldLogicAttack
+	CopBrain._logic_variants.deathvox_shield = security_variant
 	CopBrain._logic_variants.deathvox_shield.intimidated = nil
 	CopBrain._logic_variants.deathvox_shield.flee = nil
 	
@@ -47,25 +46,22 @@ function CopBrain:post_init()
 	CopBrain._logic_variants.deathvox_lightshot = security_variant
 	CopBrain._logic_variants.deathvox_heavyshot = security_variant
 	
-	CopBrain._logic_variants.deathvox_guarddozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_guarddozer.attack = TankCopLogicAttack
+	CopBrain._logic_variants.deathvox_guarddozer = security_variant
 	
 	CopBrain._logic_variants.deathvox_taser = clone(security_variant)
 	CopBrain._logic_variants.deathvox_taser.attack = TaserLogicAttack
+	CopBrain._logic_variants.deathvox_taser.travel = TaserLogicTravel
 	CopBrain._logic_variants.deathvox_sniper_assault = security_variant
 	CopBrain._logic_variants.deathvox_cloaker = clone(security_variant)
 	CopBrain._logic_variants.deathvox_cloaker.idle = SpoocLogicIdle
 	CopBrain._logic_variants.deathvox_cloaker.attack = SpoocLogicAttack
+	CopBrain._logic_variants.deathvox_cloaker.travel = SpoocLogicTravel
 	CopBrain._logic_variants.deathvox_grenadier = security_variant
 	
-	CopBrain._logic_variants.deathvox_greendozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_greendozer.attack = TankCopLogicAttack
-	CopBrain._logic_variants.deathvox_blackdozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_blackdozer.attack = TankCopLogicAttack
-	CopBrain._logic_variants.deathvox_lmgdozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_lmgdozer.attack = TankCopLogicAttack
-	CopBrain._logic_variants.deathvox_medicdozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_medicdozer.attack = TankCopLogicAttack
+	CopBrain._logic_variants.deathvox_greendozer = security_variant
+	CopBrain._logic_variants.deathvox_blackdozer = security_variant
+	CopBrain._logic_variants.deathvox_lmgdozer = security_variant
+	CopBrain._logic_variants.deathvox_medicdozer = security_variant
 
 	CopBrain._logic_variants.deathvox_cop_pistol = security_variant
 	CopBrain._logic_variants.deathvox_cop_revolver = security_variant
