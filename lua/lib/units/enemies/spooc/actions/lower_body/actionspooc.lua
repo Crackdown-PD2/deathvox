@@ -157,11 +157,9 @@ function ActionSpooc:init(action_desc, common_data)
 
 	if self._was_interrupted then
 		if self._is_local then
-			if self:_chk_target_invalid() then
-				if not action_desc.flying_strike then
-					self._last_sent_pos = mvec3_copy(common_data.pos)
-				end
+			self._last_sent_pos = action_desc.last_sent_pos
 
+			if self:_chk_target_invalid() then
 				self._ext_network:send_to_host("action_spooc_stop", self._ext_movement:m_pos(), 1, self._action_id)
 				self:_wait()
 			else
@@ -173,8 +171,6 @@ function ActionSpooc:init(action_desc, common_data)
 						self:_wait()
 					end
 				else
-					self._last_sent_pos = action_desc.last_sent_pos
-
 					if self._nav_path[self._nav_index + 1] then
 						self:_start_sprint()
 					else
@@ -184,15 +180,15 @@ function ActionSpooc:init(action_desc, common_data)
 			end
 		else
 			if action_desc.flying_strike then
-				if #self._nav_path > 1 then
+				if action_desc.start_anim_time or #self._nav_path > 1 then
 					self:_set_updator("_upd_flying_strike_first_frame")
 				else
 					self:_wait()
 				end
 			else
-				self._last_sent_pos = action_desc.last_sent_pos
-
-				if self._nav_path[self._nav_index + 1] then
+				if action_desc.start_anim_time then
+					self:_strike()
+				elseif self._nav_path[self._nav_index + 1] then
 					self:_start_sprint()
 				else
 					self:_wait()
@@ -232,11 +228,7 @@ function ActionSpooc:init(action_desc, common_data)
 		if not self._is_server and action_desc.flying_strike and #self._nav_path > 1 then
 			self:_set_updator("_upd_flying_strike_first_frame")
 		else
-			if action_desc.start_anim_time then
-				self:_strike()
-			else
-				self:_wait()
-			end
+			self:_wait()
 		end
 	end
 
@@ -843,7 +835,7 @@ function ActionSpooc:save(save_data)
 	save_data.strike_nav_index = self._strike_nav_index
 	save_data.flying_strike = self._is_flying_strike
 	save_data.strike = self._strike_now
-	save_data.stroke_t = self._stroke_t and true or self._is_local
+	save_data.stroke_t = self._stroke_t and true
 	save_data.blocks = {
 		act = -1,
 		turn = -1,
