@@ -315,87 +315,50 @@ function CopLogicIdle.on_intimidated(data, amount, aggressor_unit)
 	return surrender
 end
 
-function CopLogicIdle._upd_stance_and_pose(data, my_data, objective)
-	if data.unit:movement():chk_action_forbidden("walk") then
-		return
-	end
-	
-	local diff_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)
+function CopLogicIdle._upd_enemy_detection(data)
+	managers.groupai:state():on_unit_detection_updated(data.unit)
 
-	local obj_has_stance, obj_has_pose, agg_pose = nil
-	
-	if not data.is_converted and not data.unit:in_slot(16) then
-		if data.is_suppressed then
-			if not data.unit:anim_data().crouch and (not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.crouch) then
-				CopLogicAttack._chk_request_action_crouch(data)
-				agg_pose = true
+	data.t = TimerManager:game():time()
+	local my_data = data.internal_data
+	local delay = CopLogicBase._upd_attention_obj_detection(data, nil, nil)
+	local new_attention, new_prio_slot, new_reaction = CopLogicIdle._get_priority_attention(data, data.detected_attention_objects)
+
+	CopLogicBase._set_attention_obj(data, new_attention, new_reaction)
+
+	if new_reaction and AIAttentionObject.REACT_SUSPICIOUS < new_reaction then
+		local objective = data.objective
+		local wanted_state = nil
+		local allow_trans, obj_failed = CopLogicBase.is_obstructed(data, objective, nil, new_attention)
+
+		if allow_trans then
+			wanted_state = CopLogicBase._get_logic_state_from_reaction(data)
+		end
+
+		if wanted_state and wanted_state ~= data.name then
+			if obj_failed then
+				data.objective_failed_clbk(data.unit, data.objective)
 			end
-		elseif data.attention_obj and data.attention_obj.verified and data.attention_obj.aimed_at and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.is_person then
-			if not data.unit:anim_data().crouch and (not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.crouch) then
-				CopLogicAttack._chk_request_action_crouch(data)
-				agg_pose = true
-			elseif data.unit:anim_data().crouch and (not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.stand) then
-				CopLogicAttack._chk_request_action_stand(data)
-				agg_pose = true
+
+			if my_data == data.internal_data then
+				CopLogicBase._exit(data.unit, wanted_state)
 			end
 		end
 	end
 
-	if objective and not agg_pose then
-		if objective.stance and (not data.char_tweak.allowed_stances or data.char_tweak.allowed_stances[objective.stance]) then
-			obj_has_stance = true
-			local upper_body_action = data.unit:movement()._active_actions[3]
+	if my_data == data.internal_data then
+		CopLogicBase._chk_call_the_police(data)
 
-			if not upper_body_action or upper_body_action:type() ~= "shoot" then
-				data.unit:movement():set_stance(objective.stance)
-			end
-		end
-
-		if objective.pose and not agg_pose and (not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses[objective.pose]) then
-			obj_has_pose = true
-
-			if objective.pose == "crouch" then
-				CopLogicAttack._chk_request_action_crouch(data)
-			elseif objective.pose == "stand" then
-				CopLogicAttack._chk_request_action_stand(data)
-			end
+		if my_data ~= data.internal_data then
+			return delay
 		end
 	end
 
-	if not obj_has_stance and data.char_tweak.allowed_stances and not data.char_tweak.allowed_stances[data.unit:anim_data().stance] and not agg_pose then
-		for stance_name, state in pairs(data.char_tweak.allowed_stances) do
-			if state then
-				data.unit:movement():set_stance(stance_name)
-
-				break
-			end
-		end
-	end
-	
-	if not obj_has_pose and not agg_pose then
-		if data.char_tweak.allowed_poses and not data.char_tweak.allowed_poses[data.unit:anim_data().pose] then
-			for pose_name, state in pairs(data.char_tweak.allowed_poses) do
-				if state then
-					if pose_name == "crouch" then
-						CopLogicAttack._chk_request_action_crouch(data)
-
-						break
-					end
-
-					if pose_name == "stand" then
-						CopLogicAttack._chk_request_action_stand(data)
-					end
-
-					break
-				end
-			end
-		end
-	end
+	return delay
 end
 
 function CopLogicIdle.queued_update(data)
 	local my_data = data.internal_data
-	local delay = data.logic._upd_enemy_detection(data)
+	local delay = CopLogicIdle._upd_enemy_detection(data)
 
 	if data.internal_data ~= my_data then
 		CopLogicBase._report_detections(data.detected_attention_objects)

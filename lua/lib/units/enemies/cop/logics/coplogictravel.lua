@@ -361,10 +361,10 @@ function CopLogicTravel._find_cover(data, search_nav_seg, near_pos)
 		local optimal_threat_dis, threat_pos = nil
 		
 		if data.unit:base()._tweak_table == "spooc" or data.unit:base()._tweak_table == "taser" then --make sure these two boys are getting appropriate ranges
-			optimal_threat_dis = 1499
+			optimal_threat_dis = 1400
 		elseif data.tactics and data.tactics.charge and data.objective.attitude == "engage" then --charge is an aggressive tactic, so i want it actually being aggressive as possible
 			optimal_threat_dis = data.internal_data.weapon_range.close * 0.5
-		elseif data.objective.attitude == "engage" and data.tactics and not data.tactics.charge then
+		elseif data.objective.attitude == "engage" and data.tactics and not data.tactics.charge then --everything else is not required to find it.
 			optimal_threat_dis = data.internal_data.weapon_range.optimal
 		else
 			optimal_threat_dis = data.internal_data.weapon_range.far
@@ -485,8 +485,28 @@ function CopLogicTravel.action_complete_clbk(data, action)
 			is_mook = true
 		end
 	end
-
-	if action_type == "walk" then
+	
+	
+	
+	if action_type == "healed" then
+		CopLogicAttack._cancel_cover_pathing(data, my_data)
+		CopLogicAttack._cancel_charge(data, my_data)
+	
+		if action:expired() then
+			CopLogicAttack._upd_aim(data, my_data)
+			data.logic._upd_stance_and_pose(data, data.internal_data)
+			CopLogicTravel.upd_advance(data)
+		end
+	elseif action_type == "heal" then
+		CopLogicAttack._cancel_cover_pathing(data, my_data)
+		CopLogicAttack._cancel_charge(data, my_data)
+	
+		if action:expired() then
+			CopLogicAttack._upd_aim(data, my_data)
+			data.logic._upd_stance_and_pose(data, data.internal_data)
+			CopLogicTravel.upd_advance(data)
+		end
+	elseif action_type == "walk" then
 		if action:expired() and not my_data.starting_advance_action and my_data.coarse_path_index and not my_data.has_old_action and my_data.advancing then
 			my_data.coarse_path_index = my_data.coarse_path_index + 1
 
@@ -595,7 +615,13 @@ function CopLogicTravel.action_complete_clbk(data, action)
 
 			data.unit:brain():abort_detailed_pathing(my_data.advance_path_search_id)
 		end
-	elseif action_type == "shoot" then
+		
+		if action:expired() then
+			CopLogicAttack._upd_aim(data, my_data)
+			data.logic._upd_stance_and_pose(data, data.internal_data)
+			CopLogicTravel.upd_advance(data)
+		end
+	elseif action_type == "shoot" then		
 		my_data.shooting = nil
 	elseif action_type == "tase" then
 		if action:expired() and my_data.tasing then
@@ -627,23 +653,19 @@ function CopLogicTravel.action_complete_clbk(data, action)
 
 		my_data.spooc_attack = nil
 	elseif action_type == "reload" then
-		--Removed the requirement for being important here.
-		if action:expired() then
-			CopLogicAttack._upd_aim(data, my_data)
-			data.logic._upd_stance_and_pose(data, data.internal_data)
-		end
-	elseif action_type == "turn" then
-		my_data.turning = nil
-	elseif action_type == "act" then
-		--CopLogicAttack._cancel_cover_pathing(data, my_data)
-		--CopLogicAttack._cancel_charge(data, my_data)
-		
-		--Fixed panic never waking up cops.
 		if action:expired() then
 			CopLogicAttack._upd_aim(data, my_data)
 			data.logic._upd_stance_and_pose(data, data.internal_data)
 			CopLogicTravel.upd_advance(data)
 		end
+	elseif action_type == "turn" then
+		if action:expired() then
+			CopLogicAttack._upd_aim(data, my_data)
+			data.logic._upd_stance_and_pose(data, data.internal_data)
+			CopLogicTravel.upd_advance(data)
+		end
+		
+		my_data.turning = nil
 	elseif action_type == "hurt" then
 		CopLogicAttack._cancel_cover_pathing(data, my_data)
 		CopLogicAttack._cancel_charge(data, my_data)
@@ -887,7 +909,7 @@ function CopLogicTravel._determine_destination_occupation(data, objective)
 					radius = objective.radius
 				}
 			else
-				near_pos = CopLogicTravel._get_pos_on_wall(managers.navigation._nav_segments[objective.nav_seg].pos, 1200)
+				near_pos = CopLogicTravel._get_pos_on_wall(managers.navigation._nav_segments[objective.nav_seg].pos, 700)
 				occupation = {
 					type = "defend",
 					seg = objective.nav_seg,

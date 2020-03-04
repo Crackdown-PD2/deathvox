@@ -267,6 +267,346 @@ function CopLogicBase._chk_nearly_visible_chk_needed(data, attention_info, u_key
 	return not attention_info.criminal_record or attention_info.is_human_player
 end
 
+function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_reaction)
+	local t = data.t
+	local detected_obj = data.detected_attention_objects
+	local my_data = data.internal_data
+	local my_key = data.key
+	local my_pos = data.unit:movement():m_head_pos()
+	local my_access = data.SO_access
+	local all_attention_objects = managers.groupai:state():get_AI_attention_objects_by_filter(data.SO_access_str, data.team)
+	local my_head_fwd = nil
+	local my_tracker = data.unit:movement():nav_tracker()
+	local chk_vis_func = my_tracker.check_visibility
+	local is_detection_persistent = managers.groupai:state():is_detection_persistent()
+	local delay = 0.35
+	local player_importance_wgt = data.unit:in_slot(managers.slot:get_mask("enemies")) and {}
+
+	local function _angle_chk(attention_pos, dis, strictness)
+		mvector3.direction(tmp_vec1, my_pos, attention_pos)
+
+		my_head_fwd = my_head_fwd or data.unit:movement():m_head_rot():z()
+		local angle = mvector3.angle(my_head_fwd, tmp_vec1)
+		local angle_max = math.lerp(180, my_data.detection.angle_max, math.clamp((dis - 150) / 700, 0, 1))
+
+		if angle_max > angle * strictness then
+			return true
+		end
+	end
+
+	local function _angle_and_dis_chk(handler, settings, attention_pos)
+		attention_pos = attention_pos or handler:get_detection_m_pos()
+		local dis = mvector3.direction(tmp_vec1, my_pos, attention_pos)
+		local dis_multiplier, angle_multiplier = nil
+		local max_dis = math.min(my_data.detection.dis_max, settings.max_range or my_data.detection.dis_max)
+
+		if settings.detection and settings.detection.range_mul then
+			max_dis = max_dis * settings.detection.range_mul
+		end
+
+		dis_multiplier = dis / max_dis
+
+		if settings.uncover_range and my_data.detection.use_uncover_range and dis < settings.uncover_range then
+			return -1, 0
+		end
+
+		if dis_multiplier < 1 then
+			if settings.notice_requires_FOV then
+				my_head_fwd = my_head_fwd or data.unit:movement():m_head_rot():z()
+				local angle = mvector3.angle(my_head_fwd, tmp_vec1)
+
+				if angle < 55 and not my_data.detection.use_uncover_range and settings.uncover_range and dis < settings.uncover_range then
+					return -1, 0
+				end
+
+				local angle_max = math.lerp(180, my_data.detection.angle_max, math.clamp((dis - 150) / 700, 0, 1))
+				angle_multiplier = angle / angle_max
+
+				if angle_multiplier < 1 then
+					return angle, dis_multiplier
+				end
+			else
+				return 0, dis_multiplier
+			end
+		end
+	end
+
+	local function _nearly_visible_chk(attention_info, detect_pos)
+		local near_pos = tmp_vec1
+
+		if attention_info.verified_dis < 2000 and math.abs(detect_pos.z - my_pos.z) < 300 then
+			mvec3_set(near_pos, detect_pos)
+			mvec3_set_z(near_pos, near_pos.z + 100)
+
+			local near_vis_ray = World:raycast("ray", my_pos, near_pos, "slot_mask", data.visibility_slotmask, "ray_type", "ai_vision", "report")
+
+			if near_vis_ray then
+				local side_vec = tmp_vec1
+
+				mvec3_set(side_vec, detect_pos)
+				mvec3_sub(side_vec, my_pos)
+				mvector3.cross(side_vec, side_vec, math.UP)
+				mvector3.set_length(side_vec, 150)
+				mvector3.set(near_pos, detect_pos)
+				mvector3.add(near_pos, side_vec)
+
+				local near_vis_ray = World:raycast("ray", my_pos, near_pos, "slot_mask", data.visibility_slotmask, "ray_type", "ai_vision", "report")
+
+				if near_vis_ray then
+					mvector3.multiply(side_vec, -2)
+					mvector3.add(near_pos, side_vec)
+
+					near_vis_ray = World:raycast("ray", my_pos, near_pos, "slot_mask", data.visibility_slotmask, "ray_type", "ai_vision", "report")
+				end
+			end
+
+			if not near_vis_ray then
+				attention_info.nearly_visible = true
+				attention_info.last_verified_pos = mvector3.copy(near_pos)
+			end
+		end
+	end
+
+	local function _chk_record_acquired_attention_importance_wgt(attention_info)
+		if not player_importance_wgt or not attention_info.is_human_player then
+			return
+		end
+
+		local weight = mvector3.direction(tmp_vec1, attention_info.m_head_pos, my_pos)
+		local e_fwd = nil
+
+		if attention_info.is_husk_player then
+			e_fwd = attention_info.unit:movement():detect_look_dir()
+		else
+			e_fwd = attention_info.unit:movement():m_head_rot():y()
+		end
+
+		local dot = mvector3.dot(e_fwd, tmp_vec1)
+		weight = weight * weight * (1 - dot)
+
+		table.insert(player_importance_wgt, attention_info.u_key)
+		table.insert(player_importance_wgt, weight)
+	end
+
+	local function _chk_record_attention_obj_importance_wgt(u_key, attention_info)
+		if not player_importance_wgt then
+			return
+		end
+
+		local is_human_player, is_local_player, is_husk_player = nil
+
+		if attention_info.unit:base() then
+			is_local_player = attention_info.unit:base().is_local_player
+			is_husk_player = not is_local_player and attention_info.unit:base().is_husk_player
+			is_human_player = is_local_player or is_husk_player
+		end
+
+		if not is_human_player then
+			return
+		end
+
+		local weight = mvector3.direction(tmp_vec1, attention_info.handler:get_detection_m_pos(), my_pos)
+		local e_fwd = nil
+
+		if is_husk_player then
+			e_fwd = attention_info.unit:movement():detect_look_dir()
+		else
+			e_fwd = attention_info.unit:movement():m_head_rot():y()
+		end
+
+		local dot = mvector3.dot(e_fwd, tmp_vec1)
+		weight = weight * weight * (1 - dot)
+
+		table.insert(player_importance_wgt, u_key)
+		table.insert(player_importance_wgt, weight)
+	end
+
+	for u_key, attention_info in pairs(all_attention_objects) do
+		if u_key ~= my_key and not detected_obj[u_key] and (not attention_info.nav_tracker or chk_vis_func(my_tracker, attention_info.nav_tracker)) then
+			local settings = attention_info.handler:get_attention(my_access, min_reaction, max_reaction, data.team)
+
+			if settings then
+				local acquired = nil
+				local attention_pos = attention_info.handler:get_detection_m_pos()
+
+				if _angle_and_dis_chk(attention_info.handler, settings, attention_pos) then
+					local vis_ray = World:raycast("ray", my_pos, attention_pos, "slot_mask", data.visibility_slotmask, "ray_type", "ai_vision")
+
+					if not vis_ray or vis_ray.unit:key() == u_key then
+						acquired = true
+						detected_obj[u_key] = CopLogicBase._create_detected_attention_object_data(data.t, data.unit, u_key, attention_info, settings)
+					end
+				end
+
+				if not acquired then
+					_chk_record_attention_obj_importance_wgt(u_key, attention_info)
+				end
+			end
+		end
+	end
+
+	for u_key, attention_info in pairs(detected_obj) do
+		if t < attention_info.next_verify_t then
+			if AIAttentionObject.REACT_SUSPICIOUS <= attention_info.reaction then
+				delay = math.min(attention_info.next_verify_t - t, delay)
+			end
+		else
+			attention_info.next_verify_t = t + (attention_info.identified and attention_info.verified and attention_info.settings.verification_interval or attention_info.settings.notice_interval or attention_info.settings.verification_interval)
+			delay = math.min(delay, attention_info.settings.verification_interval)
+
+			if not attention_info.identified then
+				local noticable = nil
+				local angle, dis_multiplier = _angle_and_dis_chk(attention_info.handler, attention_info.settings)
+
+				if angle then
+					local attention_pos = attention_info.handler:get_detection_m_pos()
+					local vis_ray = World:raycast("ray", my_pos, attention_pos, "slot_mask", data.visibility_slotmask, "ray_type", "ai_vision")
+
+					if not vis_ray or vis_ray.unit:key() == u_key then
+						noticable = true
+					end
+				end
+
+				local delta_prog = nil
+				local dt = t - attention_info.prev_notice_chk_t
+
+				if noticable then
+					if angle == -1 then
+						delta_prog = 1
+					else
+						local min_delay = my_data.detection.delay[1]
+						local max_delay = my_data.detection.delay[2]
+						local angle_mul_mod = 0.25 * math.min(angle / my_data.detection.angle_max, 1)
+						local dis_mul_mod = 0.75 * dis_multiplier
+						local notice_delay_mul = attention_info.settings.notice_delay_mul or 1
+
+						if attention_info.settings.detection and attention_info.settings.detection.delay_mul then
+							notice_delay_mul = notice_delay_mul * attention_info.settings.detection.delay_mul
+						end
+
+						local notice_delay_modified = math.lerp(min_delay * notice_delay_mul, max_delay, dis_mul_mod + angle_mul_mod)
+						delta_prog = notice_delay_modified > 0 and dt / notice_delay_modified or 1
+					end
+				else
+					delta_prog = dt * -0.125
+				end
+
+				attention_info.notice_progress = attention_info.notice_progress + delta_prog
+
+				if attention_info.notice_progress > 1 then
+					attention_info.notice_progress = nil
+					attention_info.prev_notice_chk_t = nil
+					attention_info.identified = true
+					attention_info.release_t = t + attention_info.settings.release_delay
+					attention_info.identified_t = t
+					noticable = true
+
+					data.logic.on_attention_obj_identified(data, u_key, attention_info)
+				elseif attention_info.notice_progress < 0 then
+					CopLogicBase._destroy_detected_attention_object_data(data, attention_info)
+
+					noticable = false
+				else
+					noticable = attention_info.notice_progress
+					attention_info.prev_notice_chk_t = t
+
+					if data.cool and AIAttentionObject.REACT_SCARED <= attention_info.settings.reaction then
+						managers.groupai:state():on_criminal_suspicion_progress(attention_info.unit, data.unit, noticable)
+					end
+				end
+
+				if noticable ~= false and attention_info.settings.notice_clbk then
+					attention_info.settings.notice_clbk(data.unit, noticable)
+				end
+			end
+
+			if attention_info.identified then
+				delay = math.min(delay, attention_info.settings.verification_interval)
+				attention_info.nearly_visible = nil
+				local verified, vis_ray = nil
+				local attention_pos = attention_info.handler:get_detection_m_pos()
+				local dis = mvector3.distance(data.m_pos, attention_info.m_pos)
+				local thingy_chk1 = attention_info.settings.detection and attention_info.settings.detection.range_mul or 1
+				local thingy_chk2 = not attention_info.settings.max_range or dis < attention_info.settings.max_range * thingy_chk1 * 1.2
+				
+				if dis < my_data.detection.dis_max * 1.2 and thingy_chk2 then
+					local detect_pos = nil
+
+					if attention_info.is_husk_player and attention_info.unit:anim_data().crouch then
+						detect_pos = tmp_vec1
+
+						mvector3.set(detect_pos, attention_info.m_pos)
+						mvector3.add(detect_pos, tweak_data.player.stances.default.crouched.head.translation)
+					else
+						detect_pos = attention_pos
+					end
+
+					local in_FOV = not attention_info.settings.notice_requires_FOV or data.enemy_slotmask and attention_info.unit:in_slot(data.enemy_slotmask) or _angle_chk(attention_pos, dis, 0.8)
+
+					if in_FOV then
+						vis_ray = World:raycast("ray", my_pos, detect_pos, "slot_mask", data.visibility_slotmask, "ray_type", "ai_vision")
+
+						if not vis_ray or vis_ray.unit:key() == u_key then
+							attention_info.verified = true
+						end
+					end
+				end
+
+				attention_info.dis = dis
+				attention_info.vis_ray = vis_ray or nil
+				local is_ignored = false
+
+				if attention_info.unit:movement() and attention_info.unit:movement().is_cuffed then
+					is_ignored = attention_info.unit:movement():is_cuffed()
+				end
+
+				if is_ignored then
+					CopLogicBase._destroy_detected_attention_object_data(data, attention_info)
+				elseif verified then
+					attention_info.release_t = nil
+					attention_info.verified_t = t
+
+					mvector3.set(attention_info.verified_pos, attention_pos)
+
+					attention_info.last_verified_pos = mvector3.copy(attention_pos)
+					attention_info.verified_dis = dis
+				elseif data.enemy_slotmask and attention_info.unit:in_slot(data.enemy_slotmask) then
+					if attention_info.criminal_record and AIAttentionObject.REACT_COMBAT <= attention_info.settings.reaction then
+						local seeninlast2seconds = attention_info.verified_t and attention_info.verified_t - t <= 2
+						if not is_detection_persistent and not seeninlast2seconds and mvector3.distance(attention_pos, attention_info.verified_pos) > 250 then
+							CopLogicBase._destroy_detected_attention_object_data(data, attention_info)
+						else
+							attention_info.verified_pos = mvector3.copy(attention_info.criminal_record.pos)
+							attention_info.verified_dis = dis
+
+							if attention_info.vis_ray and data.logic._chk_nearly_visible_chk_needed(data, attention_info, u_key) then
+								_nearly_visible_chk(attention_info, attention_pos)
+							end
+						end
+					elseif attention_info.release_t and attention_info.release_t < t then
+						CopLogicBase._destroy_detected_attention_object_data(data, attention_info)
+					else
+						attention_info.release_t = attention_info.release_t or t + attention_info.settings.release_delay
+					end
+				elseif attention_info.release_t and attention_info.release_t < t then
+					CopLogicBase._destroy_detected_attention_object_data(data, attention_info)
+				else
+					attention_info.release_t = attention_info.release_t or t + attention_info.settings.release_delay
+				end
+			end
+		end
+
+		_chk_record_acquired_attention_importance_wgt(attention_info)
+	end
+
+	if player_importance_wgt then
+		managers.groupai:state():set_importance_weight(data.key, player_importance_wgt)
+	end
+
+	return delay
+end
+
+
 function CopLogicBase._update_haste(data, my_data)
 	if my_data ~= data.internal_data then
 		log("how is this man")
@@ -443,108 +783,96 @@ end
 
 function CopLogicBase._upd_stance_and_pose(data, my_data, objective)
 	if my_data ~= data.internal_data then
-		log("how is this man")
+		--log("how is this man")
 		return
 	end
-	
-	if data.unit:movement():chk_action_forbidden("walk") or my_data.tasing or my_data.spooc_attack then
+
+	if data.char_tweak.allowed_poses or data.is_converted or my_data.tasing or my_data.spooc_attack or data.unit:in_slot(managers.slot:get_mask("criminals")) then
 		return
 	end
-	
-	
-	local diff_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)
+
+	if data.team and data.team.id == tweak_data.levels:get_default_team_ID("player") or data.unit:movement():chk_action_forbidden("walk") then
+		return
+	end
 
 	local obj_has_stance, obj_has_pose, agg_pose = nil
-	local should_crouch = not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.crouch
-	local should_stand = not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.stand
-	
-	if not data.is_converted then
+	local can_stand_or_crouch = nil
+
+	if not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.crouch then
+		if not data.char_tweak.allowed_poses or data.char_tweak.allowed_poses.stand then
+			if data.char_tweak.crouch_move then
+				can_stand_or_crouch = true
+			end
+		end
+	end
+
+	if can_stand_or_crouch then
+		local diff_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)
+
 		if data.is_suppressed then
 			if diff_index <= 5 and not Global.game_settings.use_intense_AI then
-				if not data.unit:anim_data().crouch and should_crouch then
-					if not my_data.next_allowed_crouch_t or my_data.next_allowed_crouch_t < data.t then
-						CopLogicAttack._chk_request_action_crouch(data)
-						my_data.next_allowed_crouch_t = data.t + math.random(2, 6)
+				if data.unit:anim_data().stand then
+					if not my_data.next_allowed_stance_t or my_data.next_allowed_stance_t < data.t then
+						if CopLogicAttack._chk_request_action_crouch(data) then
+							my_data.next_allowed_stance_t = data.t + math.random(1.5, 7)
+							agg_pose = true
+						end
 					end
 				end
 			else
-				if not data.unit:anim_data().crouch and should_crouch then
-					if not my_data.next_allowed_crouch_t or my_data.next_allowed_crouch_t < data.t then
-						CopLogicAttack._chk_request_action_crouch(data)
-						my_data.next_allowed_crouch_t = data.t + math.random(2, 6)
+				if data.unit:anim_data().stand then
+					if not my_data.next_allowed_stance_t or my_data.next_allowed_stance_t < data.t then
+						if CopLogicAttack._chk_request_action_crouch(data) then
+							my_data.next_allowed_stance_t = data.t + math.random(1.5, 7)
+							agg_pose = true
+						end
 					end
-				elseif data.unit:anim_data().crouch and should_stand then
-					if not my_data.next_allowed_stand_t or my_data.next_allowed_stand_t < data.t then
-						CopLogicAttack._chk_request_action_stand(data)
-						my_data.next_allowed_stand_t = data.t + math.random(2, 6)
+				elseif data.unit:anim_data().crouch then
+					if not my_data.next_allowed_stance_t or my_data.next_allowed_stance_t < data.t then
+						if CopLogicAttack._chk_request_action_stand(data) then
+							my_data.next_allowed_stance_t = data.t + math.random(1.5, 7)
+							agg_pose = true
+						end
 					end
 				end
 			end
-		elseif data.attention_obj and data.attention_obj.is_person and data.attention_obj.verified and data.attention_obj.aimed_at and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction then
-			if diff_index <= 5 and not Global.game_settings.use_intense_AI then
-				--nothing
-			else
-				if not data.unit:anim_data().crouch and should_crouch then
-					if not my_data.next_allowed_crouch_t or my_data.next_allowed_crouch_t < data.t then
-						CopLogicAttack._chk_request_action_crouch(data)
-						my_data.next_allowed_crouch_t = data.t + math.random(2, 6)
+		elseif data.attention_obj and data.attention_obj.aimed_at and data.attention_obj.reaction and data.attention_obj.reaction >= AIAttentionObject.REACT_COMBAT and data.attention_obj.verified then
+			if diff_index > 5 or Global.game_settings.use_intense_AI then
+				if data.unit:anim_data().stand then
+					if not my_data.next_allowed_stance_t or my_data.next_allowed_stance_t < data.t then
+						if CopLogicAttack._chk_request_action_crouch(data) then
+							my_data.next_allowed_stance_t = data.t + math.random(1.5, 7)
+							agg_pose = true
+						end
 					end
-				elseif data.unit:anim_data().crouch and should_stand then
-					if not my_data.next_allowed_stand_t or my_data.next_allowed_stand_t < data.t then
-						CopLogicAttack._chk_request_action_stand(data)
-						my_data.next_allowed_stand_t = data.t + math.random(2, 6)
+				elseif data.unit:anim_data().crouch then
+					if not my_data.next_allowed_stance_t or my_data.next_allowed_stance_t < data.t then
+						if CopLogicAttack._chk_request_action_stand(data) then
+							my_data.next_allowed_stance_t = data.t + math.random(1.5, 7)
+							agg_pose = true
+						end
 					end
 				end
 			end
 		end
 	end
 	
-	if objective and not agg_pose then
-		local objective_pose_shit = not data.char_tweak.allowed_stances or objective and objective.stance and data.char_tweak.allowed_stances[objective.stance]
-		
-		if objective.stance and objective_pose_shit then
-			obj_has_stance = true
-			local upper_body_action = data.unit:movement()._active_actions[3]
-
-			if not upper_body_action or upper_body_action:type() ~= "shoot" then
-				data.unit:movement():set_stance(objective.stance)
-			end
-		end
-
-		if objective.pose and not agg_pose and objective_pose_shit then
-			obj_has_pose = true
-
-			if objective.pose == "crouch" then
-				CopLogicAttack._chk_request_action_crouch(data)
-			elseif objective.pose == "stand" then
-				CopLogicAttack._chk_request_action_stand(data)
-			end
-		end
+	if agg_pose then
+		return
 	end
 
-	if not obj_has_stance and data.char_tweak.allowed_stances and not data.char_tweak.allowed_stances[data.unit:anim_data().stance] and not agg_pose then
-		for stance_name, state in pairs(data.char_tweak.allowed_stances) do
+	if data.char_tweak.allowed_poses and can_stand_or_crouch and not obj_has_pose and not agg_pose then
+		for pose_name, state in pairs(data.char_tweak.allowed_poses) do
 			if state then
-				data.unit:movement():set_stance(stance_name)
+			
+				if pose_name == "stand" then
+					CopLogicAttack._chk_request_action_stand(data)
 
-				break
-			end
-		end
-	end
-	
-	if not obj_has_pose and not agg_pose then
-		if data.char_tweak.allowed_poses and not data.char_tweak.allowed_poses[data.unit:anim_data().pose] then
-			for pose_name, state in pairs(data.char_tweak.allowed_poses) do
-				if state then
-					if pose_name == "crouch" then
-						CopLogicAttack._chk_request_action_crouch(data)
-
-						break
-					end
-
-					if pose_name == "stand" then
-						CopLogicAttack._chk_request_action_stand(data)
-					end
+					break
+				end
+				
+				if pose_name == "crouch" then
+					CopLogicAttack._chk_request_action_crouch(data)
 
 					break
 				end
