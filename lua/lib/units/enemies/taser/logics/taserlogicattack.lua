@@ -309,9 +309,7 @@ function TaserLogicAttack.action_complete_clbk(data, action)
 		CopLogicAttack._cancel_cover_pathing(data, my_data)
 		CopLogicAttack._cancel_charge(data, my_data)
 		TaserLogicAttack._cancel_tase_attempt(data, my_data)
-		if my_data.has_retreated and managers.groupai:state():chk_active_assault_break() then
-			my_data.in_retreat_pos = true
-		elseif my_data.surprised then
+		if my_data.surprised then
 			my_data.surprised = false
 		elseif my_data.moving_to_cover then
 			if action:expired() then
@@ -346,8 +344,9 @@ function TaserLogicAttack.action_complete_clbk(data, action)
 		end
 	elseif action_type == "reload" then
 		--Removed the requirement for being important here.
+		TaserLogicAttack._cancel_tase_attempt(data, my_data)
+		
 		if action:expired() then
-			TaserLogicAttack._cancel_tase_attempt(data, my_data)
 			TaserLogicAttack._upd_aim(data, my_data)
 			data.logic._upd_stance_and_pose(data, data.internal_data)
 			TaserLogicAttack._upd_combat_movement(data)
@@ -357,10 +356,10 @@ function TaserLogicAttack.action_complete_clbk(data, action)
 	elseif action_type == "act" then
 		--CopLogicAttack._cancel_cover_pathing(data, my_data)
 		--CopLogicAttack._cancel_charge(data, my_data)
+		TaserLogicAttack._cancel_tase_attempt(data, my_data)
 		
 		--Fixed panic never waking up cops.
 		if action:expired() then
-			TaserLogicAttack._cancel_tase_attempt(data, my_data)
 			TaserLogicAttack._upd_aim(data, my_data)
 			data.logic._upd_stance_and_pose(data, data.internal_data)
 			CopLogicAttack._upd_combat_movement(data)
@@ -368,10 +367,10 @@ function TaserLogicAttack.action_complete_clbk(data, action)
 	elseif action_type == "hurt" then
 		CopLogicAttack._cancel_cover_pathing(data, my_data)
 		CopLogicAttack._cancel_charge(data, my_data)
+		TaserLogicAttack._cancel_tase_attempt(data, my_data)
 		
 		--Removed the requirement for being important here.
 		if action:expired() and not CopLogicBase.chk_start_action_dodge(data, "hit") then
-			TaserLogicAttack._cancel_tase_attempt(data, my_data)
 			TaserLogicAttack._upd_aim(data, my_data)
 			data.logic._upd_stance_and_pose(data, data.internal_data)
 			TaserLogicAttack._upd_combat_movement(data)
@@ -384,9 +383,9 @@ function TaserLogicAttack.action_complete_clbk(data, action)
 		end
 
 		CopLogicAttack._cancel_cover_pathing(data, my_data)
+		TaserLogicAttack._cancel_tase_attempt(data, my_data)
 
 		if action:expired() then
-			TaserLogicAttack._cancel_tase_attempt(data, my_data)
 			TaserLogicAttack._upd_aim(data, my_data)
 			data.logic._upd_stance_and_pose(data, data.internal_data)
 			TaserLogicAttack._upd_combat_movement(data)
@@ -451,8 +450,25 @@ function TaserLogicTravel.action_complete_clbk(data, action)
 	--if is_mook then
 		--log("AHAHAHAHAH FUCK YEAH IS_MOOK")
 	--end
-
-	if action_type == "walk" then
+	if action_type == "healed" then
+		CopLogicAttack._cancel_cover_pathing(data, my_data)
+		CopLogicAttack._cancel_charge(data, my_data)
+	
+		if action:expired() then
+			TaserLogicAttack._upd_aim(data, my_data)
+			data.logic._upd_stance_and_pose(data, data.internal_data)
+			TaserLogicTravel.upd_advance(data)
+		end
+	elseif action_type == "heal" then
+		CopLogicAttack._cancel_cover_pathing(data, my_data)
+		CopLogicAttack._cancel_charge(data, my_data)
+	
+		if action:expired() then
+			TaserLogicAttack._upd_aim(data, my_data)
+			data.logic._upd_stance_and_pose(data, data.internal_data)
+			TaserLogicTravel.upd_advance(data)
+		end
+	elseif action_type == "walk" then
 		--if CopLogicTravel.chk_slide_conditions(data) then 
 			--data.unit:movement():play_redirect("e_nl_slide_fwd_4m")
 		--end
@@ -467,7 +483,6 @@ function TaserLogicTravel.action_complete_clbk(data, action)
 
 				my_data.coarse_path_index = my_data.coarse_path_index - 1
 			end
-			TaserLogicTravel.upd_advance(data)
 		end
 
 		my_data.advancing = nil
@@ -488,17 +503,24 @@ function TaserLogicTravel.action_complete_clbk(data, action)
 				
 				local cover_wait_time = nil
 				
-				local should_tacticool_wait = data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis >= 1200 and data.attention_obj.verified_t and data.t - data.attention_obj.verified_t < math.random(2, 4) and math.abs(data.m_pos.z - data.attention_obj.m_pos.z) > 250 or managers.groupai:state():chk_high_fed_density() --if an enemy is not at semi equal height, and further than 12 meters, and we've seen him at least two to four seconds ago, do a slower, more tacticool approach
+				local should_tacticool_wait = data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis >= 1200 and data.attention_obj.verified_t and data.t - data.attention_obj.verified_t < math.random(2, 4) and math.abs(data.m_pos.z - data.attention_obj.m_pos.z) > 250 --if an enemy is not at semi equal height, and further than 12 meters, and we've seen him at least two to four seconds ago, do a slower, more tacticool approach
 				
-				if should_tacticool_wait then
-					cover_wait_time = math.random(0.4, 0.64) --If there is a height advantage/disadvantage, act tacticool and approach slower.
-					--log("HH: cop waiting due to height difference")
+				if should_tacticool_wait then --If there is a height advantage/disadvantage, act tacticool and approach slower.
+					if data.tactics and data.tactics.ranged_fire or data.tactics and data.tactics.elite_ranged_fire then 
+						cover_wait_time = math.random(0.6, 1.2) 
+					else
+						cover_wait_time = math.random(0.4, 0.64)
+					end
 				else
-					cover_wait_time = math.random(0.35, 0.5) --Keep enemies aggressive and active while still preserving some semblance of what used to be the original pacing while not in Shin Shootout mode
+					if data.tactics and data.tactics.ranged_fire or data.tactics and data.tactics.elite_ranged_fire then 
+						cover_wait_time = math.random(0.5, 0.7) 
+					else
+						cover_wait_time = math.random(0.35, 0.5) --Keep enemies aggressive and active while still preserving some semblance of what used to be the original pacing
+					end					
 				end
 				
-				if not is_mook or Global.game_settings.one_down and not managers.groupai:state():chk_high_fed_density() or data.unit:base():has_tag("takedown") or data.is_converted or data.unit:in_slot(16) or data.unit:in_slot(managers.slot:get_mask("criminals")) then
-					my_data.cover_leave_t = data.t + 0
+				if not is_mook or data.tactics and data.tactics.hitnrun or data.tactics and data.tactics.murder or data.unit:base():has_tag("takedown") or Global.game_settings.aggroAI or data.is_converted or data.unit:in_slot(16) or data.unit:in_slot(managers.slot:get_mask("criminals")) then
+					my_data.cover_leave_t = data.t - 1
 				else
 					my_data.cover_leave_t = data.t + cover_wait_time
 				end
@@ -561,6 +583,12 @@ function TaserLogicTravel.action_complete_clbk(data, action)
 
 			data.unit:brain():abort_detailed_pathing(my_data.advance_path_search_id)
 		end
+		
+		if action:expired() then
+			TaserLogicAttack._upd_aim(data, my_data)
+			data.logic._upd_stance_and_pose(data, data.internal_data)
+			TaserLogicTravel.upd_advance(data)
+		end
 	elseif action_type == "shoot" then
 		my_data.shooting = nil
 	elseif action_type == "tase" then
@@ -594,8 +622,10 @@ function TaserLogicTravel.action_complete_clbk(data, action)
 		my_data.spooc_attack = nil
 	elseif action_type == "reload" then
 		--Removed the requirement for being important here.
+		
+		TaserLogicAttack._cancel_tase_attempt(data, my_data)
+		
 		if action:expired() then
-			TaserLogicAttack._cancel_tase_attempt(data, my_data)
 			TaserLogicAttack._upd_aim(data, my_data)
 			data.logic._upd_stance_and_pose(data, data.internal_data)
 		end
@@ -604,6 +634,8 @@ function TaserLogicTravel.action_complete_clbk(data, action)
 	elseif action_type == "act" then
 		--CopLogicAttack._cancel_cover_pathing(data, my_data)
 		--CopLogicAttack._cancel_charge(data, my_data)
+		
+		TaserLogicAttack._cancel_tase_attempt(data, my_data)
 		
 		--Fixed panic never waking up cops.
 		if action:expired() then
@@ -616,9 +648,10 @@ function TaserLogicTravel.action_complete_clbk(data, action)
 		CopLogicAttack._cancel_cover_pathing(data, my_data)
 		CopLogicAttack._cancel_charge(data, my_data)
 		
+		TaserLogicAttack._cancel_tase_attempt(data, my_data)
+		
 		--Removed the requirement for being important here.
 		if action:expired() and not CopLogicBase.chk_start_action_dodge(data, "hit") then
-			TaserLogicAttack._cancel_tase_attempt(data, my_data)
 			TaserLogicAttack._upd_aim(data, my_data)
 			data.logic._upd_stance_and_pose(data, data.internal_data)
 			TaserLogicTravel.upd_advance(data)
@@ -633,9 +666,9 @@ function TaserLogicTravel.action_complete_clbk(data, action)
 
 		CopLogicAttack._cancel_cover_pathing(data, my_data)
 		CopLogicAttack._cancel_charge(data, my_data)
+		TaserLogicAttack._cancel_tase_attempt(data, my_data)
 		
 		if action:expired() then
-			TaserLogicAttack._cancel_tase_attempt(data, my_data)
 			TaserLogicAttack._upd_aim(data, my_data)
 			data.logic._upd_stance_and_pose(data, data.internal_data)
 			TaserLogicTravel.upd_advance(data)
