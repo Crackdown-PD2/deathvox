@@ -530,7 +530,7 @@ function CopActionShoot:update(t)
 							shoot_delay = shoot_delay * 1.5
 						end
 
-						self._shoot_t = t + shoot_delaya
+						self._shoot_t = t + shoot_delay
 					else
 						self._autoshots_fired = self._autoshots_fired + 1
 					end
