@@ -1187,18 +1187,6 @@ function CopDamage:sync_damage_tase(attacker_unit, damage_percent, variant, deat
 	self:_on_damage_received(attack_data)
 end
 
-function CopDamage:is_friendly_fire(unit)
-	if not unit or unit:base().is_grenade and not unit:base().is_cop_grenade then
-		return false
-	end
-
-	if unit:movement() and unit:movement():team() and unit:movement():team() ~= self._unit:movement():team() and unit:movement():friendly_fire() then
-		return false
-	end
-
-	return not unit:movement():team().foes[self._unit:movement():team().id]
-end
-
 function CopDamage:stun_hit(attack_data)
 	if self._dead or self._invulnerable then
 		return
@@ -1597,7 +1585,7 @@ function CopDamage:damage_melee(attack_data)
 		return
 	end
 
-	if self:is_friendly_fire(self, attack_data.attacker_unit) then
+	if self:is_friendly_fire(attack_data.attacker_unit) then
 		return "friendly_fire"
 	end
 
