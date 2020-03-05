@@ -130,7 +130,7 @@ function ActionSpooc:init(action_desc, common_data)
 	end
 
 	if self._is_local and self._target_unit and self._target_unit:base().is_local_player then
-		self._target_unit:movement():on_targetted_for_attack(false, self._unit)
+		self._target_unit:movement():on_targetted_for_attack(true, self._unit)
 	end
 
 	if self._is_server then
@@ -1190,14 +1190,14 @@ function ActionSpooc:anim_act_clbk(anim_act)
 
 	if self._stroke_t then
 		if self._strike_unit then
-			self._unit:sound():say(sound_string, nil, true)
+			self._unit:sound():play(sound_string)
 		end
 
 		return
 	end
 
 	self._stroke_t = TimerManager:game():time()
-	self._unit:sound():say(sound_string, nil, true)
+	self._unit:sound():play(sound_string)
 
 	local detect_stop_sound = self:get_sound_event("detect_stop")
 
