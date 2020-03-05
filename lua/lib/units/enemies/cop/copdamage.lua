@@ -1554,7 +1554,7 @@ function CopDamage:damage_melee(attack_data)
 		return
 	end
 
-	if self:is_friendly_fire(self, attack_data.attacker_unit) then
+	if self:is_friendly_fire(attack_data.attacker_unit) then
 		return "friendly_fire"
 	end
 
