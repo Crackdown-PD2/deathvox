@@ -230,7 +230,7 @@ local _calc_armor_damage_original = PlayerDamage._calc_armor_damage
 function PlayerDamage:_calc_armor_damage(attack_data, ...)
 
 	if not deathvox:IsHoppipOverhaulEnabled() then
-		return _calc_armor_damage_original(self, attack_data, ...)
+		return _chk_dmg_too_soon_orig(self, attack_data, ...)
    	end
 	
 	attack_data.damage = attack_data.damage - (self._old_last_received_dmg or 0)
@@ -244,7 +244,7 @@ local _calc_health_damage_original = PlayerDamage._calc_health_damage
 function PlayerDamage:_calc_health_damage(attack_data, ...)
 
 	if not deathvox:IsHoppipOverhaulEnabled() then
-		return _calc_health_damage_original(self, attack_data, ...)
+		return _chk_dmg_too_soon_orig(self, attack_data, ...)
    	end
 	
 	attack_data.damage = attack_data.damage - (self._old_last_received_dmg or 0)
