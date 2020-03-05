@@ -59,10 +59,6 @@ function SpoocLogicAttack.queued_update(data)
 	local my_data = data.internal_data
 
 	if my_data.spooc_attack then
-		if my_data.spooc_attack.action:complete() and data.attention_obj and (not data.attention_obj.criminal_record or not data.attention_obj.criminal_record.status) and (data.attention_obj.verified or data.attention_obj.nearly_visible) and data.attention_obj.dis < my_data.weapon_range.close then
-			SpoocLogicAttack._cancel_spooc_attempt(data, my_data)
-		end
-
 		if data.internal_data == my_data then
 			CopLogicBase._report_detections(data.detected_attention_objects)
 			SpoocLogicAttack.queue_update(data, my_data)
@@ -125,86 +121,128 @@ function SpoocLogicAttack.queued_update(data)
 end
 
 function SpoocLogicAttack._upd_spooc_attack(data, my_data)
-	if not data then
-		--log("how did this happen!?")
+	if my_data.spooc_attack then
 		return
 	end
-	
+
+	if not data.is_converted and data.spooc_attack_timeout_t and data.spooc_attack_timeout_t >= data.t then
+		return
+	end
+
 	local focus_enemy = data.attention_obj
-	local diff_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)
-	local spooc_attack_timeout_chk = not data.spooc_attack_timeout_t or data.spooc_attack_timeout_t < data.t
-	if focus_enemy and not my_data.spooc_attack and spooc_attack_timeout_chk and focus_enemy.reaction == AIAttentionObject.REACT_SPECIAL_ATTACK and not data.unit:movement():chk_action_forbidden("walk") then
-		if math.abs(data.m_pos.z - focus_enemy.m_pos.z) < 200 then
-			
-			if focus_enemy.verified and focus_enemy.dis <= 1500 then
-				managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "cloakercontact")
+
+	if focus_enemy and focus_enemy.nav_tracker and focus_enemy.is_person and focus_enemy.reaction == AIAttentionObject.REACT_SPECIAL_ATTACK and not data.unit:movement():chk_action_forbidden("walk") then
+		if focus_enemy.criminal_record then
+			if focus_enemy.criminal_record.status then
+				return
+			else
+				if SpoocLogicAttack._is_last_standing_criminal(focus_enemy) then
+					return
+				end
 			end
-			
-			if math.abs(data.m_pos.z - focus_enemy.m_pos.z) < 100 and focus_enemy.dis > 600 or math.abs(data.m_pos.z - focus_enemy.m_pos.z) < 100 and math.random() < 0.5 then
-				if diff_index >= 6 and focus_enemy.verified_dis <= 250 or Global.game_settings.use_intense_AI and focus_enemy.verified_dis <= 250 then
-					if my_data.attention_unit ~= focus_enemy.u_key then
-						CopLogicBase._set_attention(data, focus_enemy)
-						
-						my_data.attention_unit = focus_enemy.u_key
-					end
+		end
 
-					local action = SpoocLogicAttack._chk_request_action_spooc_attack(data, my_data)
+		if focus_enemy.unit:movement().zipline_unit and focus_enemy.unit:movement():zipline_unit() then
+			return
+		end
 
-					if action then
-						my_data.spooc_attack = {
-							start_t = data.t,
-							target_u_data = focus_enemy,
-							action = action
-						}
+		if focus_enemy.unit:movement().is_SPOOC_attack_allowed and not focus_enemy.unit:movement():is_SPOOC_attack_allowed() then
+			return
+		end
 
-						return true
-					end
-				elseif focus_enemy.verified_dis <= 1500 and ActionSpooc.chk_can_start_spooc_sprint(data.unit, focus_enemy.unit) and not data.unit:raycast("ray", data.unit:movement():m_head_pos(), focus_enemy.m_head_pos, "slot_mask", managers.slot:get_mask("world_geometry", "vehicles", "enemy_shield_check"), "report") then
-					if my_data.attention_unit ~= focus_enemy.u_key then
-						CopLogicBase._set_attention(data, focus_enemy)
+		if focus_enemy.unit:movement().chk_action_forbidden and focus_enemy.unit:movement():chk_action_forbidden("hurt") then
+			return true
+		end
 
-						my_data.attention_unit = focus_enemy.u_key
-					end
+		if focus_enemy.verified and focus_enemy.verified_dis <= 2500 and ActionSpooc.chk_can_start_spooc_sprint(data.unit, focus_enemy.unit) and not data.unit:raycast("ray", data.unit:movement():m_head_pos(), focus_enemy.m_head_pos, "slot_mask", managers.slot:get_mask("bullet_impact_targets_no_criminals"), "ignore_unit", focus_enemy.unit, "report") then
+			if my_data.attention_unit ~= focus_enemy.u_key then
+				CopLogicBase._set_attention(data, focus_enemy)
 
-					local action = SpoocLogicAttack._chk_request_action_spooc_attack(data, my_data)
+				my_data.attention_unit = focus_enemy.u_key
+			end
 
-					if action then
-						my_data.spooc_attack = {
-							start_t = data.t,
-							target_u_data = focus_enemy,
-							action = action
-						}
+			local action = SpoocLogicAttack._chk_request_action_spooc_attack(data, my_data)
 
-						return true
-					end
-				end
-			elseif focus_enemy.verified_dis <= 600 and ActionSpooc.chk_can_start_flying_strike(data.unit, focus_enemy.unit) then
-				if my_data.attention_unit ~= focus_enemy.u_key then
-					CopLogicBase._set_attention(data, focus_enemy)
+			if action then
+				my_data.spooc_attack = {
+					start_t = data.t,
+					target_u_data = focus_enemy,
+					action = action
+				}
 
-					my_data.attention_unit = focus_enemy.u_key
-				end
+				return true
+			end
+		end
 
-				local action = SpoocLogicAttack._chk_request_action_spooc_attack(data, my_data, true)
+		if ActionSpooc.chk_can_start_flying_strike(data.unit, focus_enemy.unit) then
+			if my_data.attention_unit ~= focus_enemy.u_key then
+				CopLogicBase._set_attention(data, focus_enemy)
 
-				if action then
-					my_data.spooc_attack = {
-						start_t = data.t,
-						target_u_data = focus_enemy,
-						action = action
-					}
+				my_data.attention_unit = focus_enemy.u_key
+			end
 
-					return true
-				end
+			local action = SpoocLogicAttack._chk_request_action_spooc_attack(data, my_data, true)
+
+			if action then
+				my_data.spooc_attack = {
+					start_t = data.t,
+					target_u_data = focus_enemy,
+					action = action
+				}
+
+				return true
 			end
 		end
 	end
 end
 
+function SpoocLogicAttack._chk_request_action_spooc_attack(data, my_data, flying_strike)
+	if data.unit:anim_data().crouch then
+		CopLogicAttack._chk_request_action_stand(data)
+
+		return
+	end
+
+	data.unit:movement():set_stance_by_code(2)
+
+	local new_action = {
+		sync = true,
+		body_part = 3,
+		type = "idle"
+	}
+
+	data.unit:brain():action_request(new_action)
+
+	local new_action_data = {
+		body_part = 1,
+		type = "spooc",
+		flying_strike = flying_strike
+	}
+
+	if flying_strike then
+		new_action_data.blocks = {
+			light_hurt = -1,
+			heavy_hurt = -1,
+			idle = -1,
+			turn = -1,
+			fire_hurt = -1,
+			walk = -1,
+			act = -1,
+			hurt = -1,
+			expl_hurt = -1,
+			taser_tased = -1
+		}
+	end
+
+	local action = data.unit:brain():action_request(new_action_data)
+
+	return action
+end
+
 function SpoocLogicAttack.queue_update(data, my_data)
 	my_data.update_queued = true
 
-	CopLogicBase.queue_task(my_data, my_data.update_queue_id, SpoocLogicAttack.queued_update, data, data.t + 0)
+	CopLogicBase.queue_task(my_data, my_data.update_queue_id, SpoocLogicAttack.queued_update, data, data.t, true)
 end
 
 function SpoocLogicAttack._upd_enemy_detection(data, is_synchronous)
