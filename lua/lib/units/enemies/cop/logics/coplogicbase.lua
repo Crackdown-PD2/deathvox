@@ -613,6 +613,10 @@ function CopLogicBase._update_haste(data, my_data)
 		return
 	end
 	
+	if data.team and data.team.id == tweak_data.levels:get_default_team_ID("player") or data.is_converted or data.unit:in_slot(16) or data.unit:in_slot(managers.slot:get_mask("criminals")) then
+		return
+	end
+	
 	if data.unit:movement():chk_action_forbidden("walk") or my_data.tasing or my_data.spooc_attack then
 		return
 	end
@@ -1054,7 +1058,7 @@ function CopLogicBase.chk_am_i_aimed_at(data, attention_obj, max_dot)
 end
 
 function CopLogicBase.action_taken(data, my_data)
-	return my_data.turning or my_data.moving_to_cover or my_data.walking_to_cover_shoot_pos or my_data.surprised or my_data.has_old_action or data.unit:movement():chk_action_forbidden("walk") or my_data.charge_path or my_data.cover_path or my_data.firing
+	return my_data.turning or my_data.moving_to_cover or my_data.walking_to_cover_shoot_pos or my_data.surprised or my_data.has_old_action or data.unit:movement():chk_action_forbidden("walk")
 end
 	
 function CopLogicBase.chk_should_turn(data, my_data)
@@ -1130,11 +1134,32 @@ function CopLogicBase.should_enter_travel(data, objective)
 end	
 
 function CopLogicBase.should_enter_attack(data)
-	local reactions_chk = data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction or data.attention_obj and AIAttentionObject.REACT_SPECIAL_ATTACK <= data.attention_obj.reaction
+	local objective = data.objective
 	local my_data = data.internal_data
 	local t = data.t
 	
+	if data.team and data.team.id == tweak_data.levels:get_default_team_ID("player") or data.is_converted or data.unit:in_slot(16) or data.unit:in_slot(managers.slot:get_mask("criminals")) or not data.unit:base():has_tag("law") then
+		--log("fuck off1")
+		return
+	end
+	
+	if objective and objective.running then
+		--log("fuck off2")
+		return
+	end
+	
 	if data.unit:base()._tweak_table == "sniper" then
+		return
+	end
+	
+	local reactions_chk = data.attention_obj and AIAttentionObject.REACT_AIM <= data.attention_obj.reaction or data.attention_obj and AIAttentionObject.REACT_SPECIAL_ATTACK <= data.attention_obj.reaction
+	
+	if not reactions_chk then
+		return
+	end
+	
+	if not data.attention_obj.verified_t then
+		--log("valid but fuck off")
 		return
 	end
 	
@@ -1151,11 +1176,8 @@ function CopLogicBase.should_enter_attack(data)
 				my_data.anti_stuck_t = t + 5
 			elseif my_data.anti_stuck_t < t then
 				--log("attempting to fix looping unit")
-				local objective = data.objective
 				
-				if objective then
-					CopLogicBase.on_new_logic_needed(data, objective)
-				end
+				CopLogicBase.on_new_logic_needed(data, objective)
 				
 				my_data.anti_stuck_t = nil
 				return
@@ -1165,12 +1187,16 @@ function CopLogicBase.should_enter_attack(data)
 		end
 	end
 	
-	if not data.is_converted and not data.unit:in_slot(16) and not data.unit:in_slot(managers.slot:get_mask("criminals")) and data.unit:base():has_tag("law") and reactions_chk and data.internal_data.attitude and data.internal_data.attitude == "engage" or not data.is_converted and not data.unit:in_slot(16) and not data.unit:in_slot(managers.slot:get_mask("criminals")) and data.unit:base():has_tag("law") and reactions_chk and my_data.firing then
+	if data.unit:base():has_tag("law") then
 		local att_obj = data.attention_obj
 		local criminal_in_my_area = nil
 		local criminal_in_neighbour = nil
 		local ranged_fire_group = nil
 		local my_area = managers.groupai:state():get_area_from_nav_seg_id(data.unit:movement():nav_tracker():nav_segment())
+		
+		if att_obj and AIAttentionObject.REACT_SPECIAL_ATTACK <= att_obj.reaction then
+			return true
+		end
 
 		if next(my_area.criminal.units) then
 			criminal_in_my_area = true
@@ -1193,26 +1219,26 @@ function CopLogicBase.should_enter_attack(data)
 		
 		local criminal_near = criminal_in_my_area or criminal_in_neighbour
 		
-		local travel_data_chk = my_data.processing_advance_path or my_data.processing_coarse_path or my_data.advance_path or my_data.coarse_path
-		
-		if travel_data_chk and not criminal_near then
-			return
+		if not criminal_near and ranged_fire_group then
+			criminal_near = true
 		end
 		
 		local visibility_chk = att_obj.verified
 		
-		if my_data.processing_cover_path and my_data.want_to_take_cover and att_obj.dis <= 2000 or my_data.cover_path and my_data.want_to_take_cover and att_obj.dis <= 2000 or my_data.cover_test_step and my_data.cover_test_step <= 2 and visibility_chk and att_obj.dis <= 2000 then
-			return true
+		if data.attention_obj.dis <= 2000 and visibility_chk then
+		
+			if criminal_near or att_obj.dis <= attack_distance then
+				--log("yes2")
+				return true
+			end
 		end
 		
-		
-		
-		if my_data.charge_path or data.internal_data and data.internal_data.tasing or data.internal_data and data.internal_data.spooc_attack or AIAttentionObject.REACT_SPECIAL_ATTACK <= data.attention_obj.reaction or visibility_chk and att_obj.dis <= attack_distance and math.abs(data.m_pos.z - att_obj.m_pos.z) < 100 or visibility_chk and criminal_near and math.abs(data.m_pos.z - att_obj.m_pos.z) < 400 then
-			return true
-		end
+		--log("fuck off3")
 		
 		return
 	end
+	
+	log("fuck off WHAT WHAT IN THE SHIT")
 	
 	return
 end

@@ -182,11 +182,22 @@ function CopLogicAttack._update_cover(data)
 				local flank_cover = my_data.flank_cover
 				local min_dis, max_dis = nil
 
-				if want_to_take_cover or my_data.shooting then
-					if data.tactics and not data.tactics.ranged_fire and not data.tactics.elite_ranged_fire or not enemyseeninlast2secs then
-						min_dis = 250
+				if want_to_take_cover then
+					if not enemyseeninlast2secs then
+						min_dis = 30
+						max_dis = data.attention_obj.dis
 					else
-						min_dis = math.max(data.attention_obj.dis * 0.9, data.attention_obj.dis - 200)
+						min_dis = math.max(data.attention_obj.dis * 1.2, data.attention_obj.dis + 200)
+						
+						if min_dis > data.attention_obj.dis + 1000 then
+							min_dis = data.attention_obj.dis + 500
+						end
+						
+						max_dis = math.min(min_dis + 500, data.attention_obj.dis + 1000)
+						
+						if min_dis > max_dis then
+							min_dis = min_dis - max_dis
+						end
 					end
 				end
 				
@@ -200,10 +211,10 @@ function CopLogicAttack._update_cover(data)
 						mvector3.rotate_with(my_vec, Rotation(flank_cover.angle))
 					end
 
-					local optimal_dis = my_vec:length()
+					local optimal_dis = my_vec:length() or my_data.weapon_range.optimal
 					local max_dis = nil
 
-					if want_to_take_cover or my_data.shooting then
+					if want_to_take_cover then
 						if data.tactics and data.tactics.ranged_fire or data.tactics and data.tactics.elite_ranged_fire then
 							if not enemyseeninlast2secs then
 								optimal_dis = min_dis
@@ -231,7 +242,7 @@ function CopLogicAttack._update_cover(data)
 						end
 						
 						if data.tactics and not data.tactics.ranged_fire and not data.tactics.elite_ranged_fire then
-							max_dis = math.max(optimal_dis + 200, my_data.weapon_range.far * 0.5)
+							max_dis = math.min(my_data.weapon_range.far, my_data.weapon_range.optimal * 1.25)
 						else							
 							max_dis = math.max(optimal_dis + 200, my_data.weapon_range.far)
 						end
@@ -337,12 +348,16 @@ function CopLogicAttack._verify_cover(data, cover, threat_pos, min_dis, max_dis)
 end
 
 function CopLogicAttack._verify_follow_cover(data, cover, near_pos, threat_pos, min_dis, max_dis)
-	if data.tactics and data.tactics.shield_cover and not alive(data.unit:inventory() and data.unit:inventory()._shield_unit) and mvector3.distance(near_pos, cover[1]) < 120 then
-		return true
-	end
-	
-	if not data.tactics or not data.tactics.shield_cover and mvector3.distance(near_pos, cover[1]) < 240 then
-		return true
+	if data.tactics and data.tactics.shield_cover then
+		if not alive(data.unit:inventory() and data.unit:inventory()._shield_unit) and mvector3.distance(near_pos, cover[1]) < 120 then
+			return true
+		else
+			return
+		end
+	else
+		if mvector3.distance(near_pos, cover[1]) < 240 then
+			return true
+		end
 	end
 end
 
