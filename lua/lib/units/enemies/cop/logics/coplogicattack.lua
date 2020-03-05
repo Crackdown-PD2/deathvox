@@ -737,11 +737,7 @@ function CopLogicAttack._upd_aim(data, my_data)
 			end
 			
 			if not shoot and focus_enemy and visibility_chk and data.tactics and data.tactics.harass and pantsdownchk and not outoffov then 
-				if managers.groupai:state():chk_high_fed_density() then
-					--log("not firing due to FEDS")
-				else
-					shoot = true
-				end
+				shoot = true
 			end
 
 			if aim == nil and AIAttentionObject.REACT_AIM <= focus_enemy.reaction then
