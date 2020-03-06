@@ -422,9 +422,11 @@ function CopLogicIdle.on_new_objective(data, old_objective)
 
 	if new_objective then
 		local objective_type = new_objective.type
-
+		
 		if objective_type == "free" and my_data.exiting then
 			--nothing
+		elseif objective_type == "surrender" then
+			CopLogicBase._exit(data.unit, "intimidated", new_objective.params)
 		elseif CopLogicIdle._chk_objective_needs_travel(data, new_objective) then
 			if CopLogicBase.should_enter_attack(data) then
 				--log("entered attack")
@@ -440,8 +442,6 @@ function CopLogicIdle.on_new_objective(data, old_objective)
 			CopLogicBase._exit(data.unit, "sniper")
 		elseif objective_type == "phalanx" then
 			CopLogicBase._exit(data.unit, "phalanx")
-		elseif objective_type == "surrender" then
-			CopLogicBase._exit(data.unit, "intimidated", new_objective.params)
 		elseif new_objective.action or not data.attention_obj or not CopLogicBase.should_enter_attack(data) then
 			CopLogicBase._exit(data.unit, "idle")
 		else

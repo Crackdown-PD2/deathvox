@@ -609,7 +609,7 @@ end
 
 function CopLogicBase._update_haste(data, my_data)
 	if my_data ~= data.internal_data then
-		log("how is this man")
+		--log("how is this man")
 		return
 	end
 	
@@ -1223,7 +1223,7 @@ function CopLogicBase.should_enter_attack(data)
 			criminal_near = true
 		end
 		
-		local visibility_chk = att_obj.verified
+		local visibility_chk = att_obj.verified or att_obj.nearly_visible
 		
 		if data.attention_obj.dis <= 2000 and visibility_chk then
 		
@@ -1245,20 +1245,14 @@ end
 
 function CopLogicBase.queue_task(internal_data, id, func, data, exec_t, asap)
 	if internal_data.unit and internal_data ~= internal_data.unit:brain()._logic_data.internal_data then
-		log("how is this man")
-		--debug_pause("[CopLogicBase.queue_task] Task queued from the wrong logic", internal_data.unit, id, func, data, exec_t, asap)
-	end
-	
-	if asap then
-		asap = nil
+		debug_pause("[CopLogicBase.queue_task] Task queued from the wrong logic", internal_data.unit, id, func, data, exec_t, asap)
 	end
 
 	local qd_tasks = internal_data.queued_tasks
 
 	if qd_tasks then
 		if qd_tasks[id] then
-			log("queued something twice!!!")
-			--debug_pause("[CopLogicBase.queue_task] Task queued twice", internal_data.unit, id, func, data, exec_t, asap)
+			debug_pause("[CopLogicBase.queue_task] Task queued twice", internal_data.unit, id, func, data, exec_t, asap)
 		end
 
 		qd_tasks[id] = true
@@ -1268,24 +1262,19 @@ function CopLogicBase.queue_task(internal_data, id, func, data, exec_t, asap)
 		}
 	end
 	
-	if data.unit:base():has_tag("special") or data.unit:base():has_tag("takedown") or data.internal_data.shooting or data.attention_obj and data.t and data.attention_obj.is_human_player and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis <= 3000 and data.attention_obj.verified_t and data.attention_obj.verified_t - data.t <= 2 or data.attention_obj and data.attention_obj.is_human_player and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis <= 1500 or data.is_converted or data.unit:in_slot(16) or data.internal_data and data.internal_data.next_allowed_attack_logic_t then
+	if data.team and data.team.id == tweak_data.levels:get_default_team_ID("player") or data.is_converted or data.unit and data.unit:in_slot(16) or data.unit and data.unit:in_slot(managers.slot:get_mask("criminals")) or data.unit and data.unit:base():has_tag("special") then
+		exec_t = 0
 		asap = true
-		if data.is_converted or data.unit:in_slot(16) or data.internal_data.next_allowed_attack_logic_t then
-			exec_t = data.t
-		elseif data.attention_obj and data.attention_obj.dis <= 1500 and data.t and data.attention_obj.verified_t and data.attention_obj.verified_t - data.t <= 2 then
-			exec_t = data.t + 0.06444
-		else
-			exec_t = data.t + 0.16666
-		end
-	elseif data.t and data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction then
-		asap = nil
-		if data.attention_obj.dis <= 4000 then
-			exec_t = data.t + 0.5
-		else
-			exec_t = data.t + 1
-		end
 	end
 	
+	if data.t then
 	
+		exec_t = data.t + 0.35
+		
+		if not exec_t then
+			exec_t = data.t
+		end
+	end
+
 	managers.enemy:queue_task(id, func, data, exec_t, callback(CopLogicBase, CopLogicBase, "on_queued_task", internal_data), asap)
 end
