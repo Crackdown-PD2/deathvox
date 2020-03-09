@@ -1171,6 +1171,36 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 end
 
 function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
+
+-- The below summarizes the functions of new or revised tactics in Crackdown.
+--ranged_fire 
+--unit engages from longer range location with line of sight. Will eventually close with player.
+--elite_ranged_fire 
+--Ranged_fire but with a forced retreat if player closer than closer than 20m.
+--charge
+--unit moves to player position and engages per conventional rules. Primary driver for most units.
+--flank
+--basically works now. Unit takes alternate route to player location.
+--obstacle 
+--Unit attempts to position themselves in neighboring room near entrance closest to player. Intended for shields, ambush units.
+--reloadingretreat (i think its implemented, at least)
+--hitnrun
+-- Approach enemies and engage for a short time, then, back away from the fight. Uses 10m retreat range.
+--murder
+--Unit almost entirely targets one player until down, then moves on to next.
+--spoocavoidance
+--If enemy aimed at or seen within 20m, they retreat away from the fight.
+--harass
+--Player entering non-combat state (such as task interaction) become priority target.
+--hunter (intended for cloakers)
+--If a player is not within 15 meters of another player, becomes target. Cannot be used with deathguard.
+--deathguard
+--Camps downed player. Cannot be used with Hunter.
+--shield_cover
+--Unit attempts to place leader between self and player, stays close to leader. Can be employed for non-shield units.
+--skirmish
+--system function for retreating in holdout mode. MUST be last tactic for all units. Do not touch.
+	
 	old_spawn_group(self, difficulty_index)
 	self._tactics = {
 			deathvox_grenad_follow = {
