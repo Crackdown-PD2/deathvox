@@ -159,7 +159,8 @@ function CharacterTweakData:get_ai_group_type()
 	--map_faction_override["vit"] = "murky"
 	--map_faction_override["des"] = "murky"
 	
-	--Reaper faction overrides begin here.	
+	--Reaper faction overrides begin here.
+	--Federales faction overrides begin here.
 	--Halloween overrides begin here.
   
 	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
@@ -542,7 +543,7 @@ function CharacterTweakData:_presets(tweak_data)
 
 -- Begin new movespeed presets.
 
-	presets.move_speed.shield_vf = { --custom shield move speed preset, shields never use anything except crouching cbt stances so it shouldn't be a problem
+	presets.move_speed.shield_vf = { --custom shield move speed preset, note shields never use anything except crouching cbt stances.
 		stand = {
 			walk = {
 				ntl = {
@@ -894,13 +895,13 @@ function CharacterTweakData:_presets(tweak_data)
 		is_tank_smg = {}, -- used for medic dozer. Clones smg.
 		is_bullpup = {}, -- clones light rifle.
 		is_sniper = {}, -- initializing sniper.
-		is_assault_sniper = {} -- initializing assault sniper preset.
+		is_assault_sniper = {} -- initializing assault sniper preset. Not in use.
 	}]]--
 	presets.weapon.deathvox = deep_clone(presets.weapon.deathwish)
 	presets.weapon.deathvox.is_revolver = { -- used by medics.
 		aim_delay = { -- mark 3 values.
-			0,
-			0
+			1.2,
+			1.2
 		},
 		focus_delay = 10, -- validated, unchanged.
 		focus_dis = 200,
@@ -1014,7 +1015,7 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.weapon.deathvox.is_pistol = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish.
 		aim_delay = {
 			0.1,
-			0.1
+			0.3
 		},
 		focus_delay = 2, --compare to vanilla expert preset's 1
 		focus_dis = 200,
@@ -1142,8 +1143,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.deathvox.is_shotgun_pump = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish. Assumes CD base damage 500. Extremely dangerous close range, less so further out. Slower to fire.
 		aim_delay = {
-			0,
-			0
+			1.2,
+			1.5
 		},
 		focus_delay = 5, -- re-added from lower difficulties.
 		focus_dis = 200,
@@ -1253,8 +1254,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.deathvox.is_shotgun_mag = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish. Assumes CD base damage 225. The danger isn't the damage, it's the low recoil! Extremely hazardous at close range.
 		aim_delay = {
-			0,
-			0
+			1.2,
+			1.5
 		},
 		focus_delay = 5, -- re-added from lower difficulties.
 		focus_dis = 200,
@@ -1365,8 +1366,8 @@ function CharacterTweakData:_presets(tweak_data)
 
 	presets.weapon.deathvox.is_light_rifle = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish.
 		aim_delay = {
-			0,
-			0
+			0.3,
+			0.3
 		},
 		focus_delay = 3, -- Re-added from lower difficulties.
 		focus_dis = 200,
@@ -1504,8 +1505,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.deathvox.is_heavy_rifle = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish.
 		aim_delay = { --has slight aim delay compared to light rifles
-			0.1,
-			0.1
+			0.3,
+			0.4
 		},
 		focus_delay = 5, -- Re-added from lower difficulties, increased for heavy rifle to give longer exposure times at distance, still more accurate and powerful than the light rifle
 		focus_dis = 200,
@@ -1655,8 +1656,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.deathvox.is_light_shotgun = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish.
 		aim_delay = {
-			0,
-			0
+			0.6,
+			0.9
 		},
 		focus_delay = 3.5, -- re-added from lower difficulties, but reduced for light shotgunner, altered from previous 4 value to further distinguish light shotgunners
 		focus_dis = 200,
@@ -1766,8 +1767,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.deathvox.is_heavy_shotgun = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish. Heavy Shotgunner has higher focal stats.
 		aim_delay = { --has aim delay compared to the light
-			0.1,
-			0.1
+			0.6,
+			0.9
 		},
 		focus_delay = 5, -- focus delay returned from lower difficulties.
 		focus_dis = 200,
@@ -1877,8 +1878,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.deathvox.is_smg = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish. Currently copies medidozer values.
 		aim_delay = {
-			0,
-			0.1 --re-adding aim delay from lower difficulties.
+			0.2,
+			0.3 --re-adding aim delay from lower difficulties.
 		},
 		focus_delay = 2.5, --re-adding slight focus delay from lower difficulties, increased from previous 1 value
 		focus_dis = 200,
@@ -2010,8 +2011,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.deathvox.mini = { -- initial draft values for first pass. Values placeholder until detailed rof calc pass.
 		aim_delay = {
-			0.1,
-			0.2
+			1,
+			1.5
 		},
 		focus_delay = 4,
 		focus_dis = 800, -- reexamine
@@ -2128,8 +2129,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.deathvox.is_lmg = { --mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish. Assumes 100 base damage. Going to treat it as a bullethose, making it much more dangerous to approach directly.
 		aim_delay = { 
-			0.1,
-			0.1
+			1,
+			1.5
 		},
 		focus_delay = 5, --increased focus delay from 3 to 5
 		focus_dis = 200,
@@ -2262,8 +2263,8 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.weapon.deathvox_sniper = {is_rifle = {}, is_assault_sniper = {}}
 	presets.weapon.deathvox_sniper.is_rifle = { -- mark 3 values complete. basis is presets.weapon.sniper. For non-assault wave snipers. Headings revised to fit standard format.
 		aim_delay = {
-			0,
-			0.1
+			1,
+			1.5
 		},
 		focus_delay = 7,
 		focus_dis = 200,
@@ -2339,8 +2340,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.sniper.is_rifle = { -- directly replaces sniper weapon preset to match deathvox, for proper scaling purposes.
 		aim_delay = {
-			0,
-			0.1
+			1,
+			1.5
 		},
 		focus_delay = 7,
 		focus_dis = 200,
@@ -2475,8 +2476,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.deathvox.akimbo_pistol = { --mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish. Needs damage increase???
 		aim_delay = {
-			0,
-			0
+			0.2,
+			0.4
 		},
 		focus_delay = 0,
 		focus_dis = 200,
@@ -3137,7 +3138,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cop_shotgun = deep_clone(self.deathvox_cop)
 	self.deathvox_cop_shotgun.use_factory = false
 	--self.deathvox_cop_shotgun.factory_weapon_id = {"wpn_deathvox_cop_shotgun"}
-	self.deathvox_cop_shotgun.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
+	self.deathvox_cop_shotgun.die_sound_event = "x01a_any_3p" --pain lines are their death lines due to developer error
  	table.insert(self._enemy_list, "deathvox_cop_shotgun")
 	
 	self.deathvox_fbi_rookie = deep_clone(self.deathvox_cop_pistol) 
@@ -3146,7 +3147,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_fbi_rookie.surrender = presets.surrender.easy -- same on all diffs. cloned to all cop units.
 	self.deathvox_fbi_rookie.use_factory = false
 	--self.deathvox_fbi_rookie.factory_weapon_id = {"wpn_deathvox_cop_pistol"}
-	self.deathvox_fbi_rookie.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
+	self.deathvox_fbi_rookie.die_sound_event = "x01a_any_3p" --pain lines are their death lines due to developer error
  	table.insert(self._enemy_list, "deathvox_fbi_rookie")
 
 	self.deathvox_fbi_hrt = deep_clone(self.deathvox_cop_smg) -- note retains smg health.
@@ -3156,7 +3157,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_fbi_hrt.use_factory = false
 	self.deathvox_fbi_hrt.chatter = presets.enemy_chatter.swat
 	--self.deathvox_fbi_hrt.factory_weapon_id = {"wpn_deathvox_cop_smg"}
-	self.deathvox_fbi_hrt.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
+	self.deathvox_fbi_hrt.die_sound_event = "x01a_any_3p" --pain lines are their death lines due to developer error
  	table.insert(self._enemy_list, "deathvox_fbi_hrt")
 	
 	self.deathvox_fbi_veteran = deep_clone(self.deathvox_cop_smg) -- note retains smg health.
