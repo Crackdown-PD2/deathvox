@@ -1173,29 +1173,30 @@ end
 function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 
 -- The below summarizes the functions of new or revised tactics in Crackdown.
---ranged_fire 
---unit engages from longer range location with line of sight. Will eventually close with player.
---elite_ranged_fire 
---Ranged_fire but with a forced retreat if player closer than closer than 20m.
 --charge
 --unit moves to player position and engages per conventional rules. Primary driver for most units.
+--ranged_fire 
+--unit engages from longer range location with line of sight. Will eventually close with player. Limited use in swat groups.
+--elite_ranged_fire 
+--Ranged_fire but with a forced retreat if player closer than closer than 20m. Potentially aggravating, consider for grenadier groups.
 --flank
---basically works now. Unit takes alternate route to player location.
+--basically works now. Unit takes alternate route to player location. Used in swat and "pincer" groups.
 --obstacle 
 --Unit attempts to position themselves in neighboring room near entrance closest to player. Intended for shields, ambush units.
 --reloadingretreat (i think its implemented, at least)
+--if player is visible and unit is reloading, attempt to retreat into cover. Consider for Dozers. 
 --hitnrun
--- Approach enemies and engage for a short time, then, back away from the fight. Uses 10m retreat range.
+-- Approach enemies and engage for a short time, then, back away from the fight. Uses 10m retreat range. Consider for light units.
 --murder
---Unit almost entirely targets one player until down, then moves on to next.
+--Unit almost entirely targets one player until down, then moves on to next. Special-oriented.
 --spoocavoidance
 --If enemy aimed at or seen within 20m, they retreat away from the fight.
 --harass
---Player entering non-combat state (such as task interaction) become priority target.
+--Player entering non-combat state (such as task interaction) become priority target. Use sparingly due to limited feedback.
 --hunter (intended for cloakers)
---If a player is not within 15 meters of another player, becomes target. Cannot be used with deathguard.
+--If a player is not within 15 meters of another player, becomes target. MUST NOT be used with deathguard - will cause crashes.
 --deathguard
---Camps downed player. Cannot be used with Hunter.
+--Camps downed player. MUST NOT be used with Hunter - will cause crashes.
 --shield_cover
 --Unit attempts to place leader between self and player, stays close to leader. Can be employed for non-shield units.
 --skirmish
