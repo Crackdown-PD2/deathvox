@@ -2784,7 +2784,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_medic,
+				tactics = self._tactics.deathvox_swat_shieldcharge,
 				rank = 2
 			},
 			{
@@ -2894,7 +2894,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_tank_rush,
+				tactics = self._tactics.deathvox_tank_lead,
 				rank = 1
 			}
 		}
@@ -2908,7 +2908,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_tank_rush,
+				tactics = self._tactics.deathvox_tank_lead,
 				rank = 1
 			}
 		}
@@ -3036,7 +3036,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_supportflash,
+				tactics = self._tactics.deathvox_tazer_lead,
 				rank = 2
 			},			
 			{
@@ -3060,7 +3060,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 4,
 				amount_max = 4,
-				tactics = self._tactics.deathvox_swat_ranged,
+				tactics = self._tactics.deathvox_elite_ranged,
 				rank = 1
 			}
 		}
@@ -3074,7 +3074,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 2
 			},
 			{
@@ -3082,7 +3082,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 1
 			}
 		}
@@ -3095,7 +3095,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 3
 			},
 			{
@@ -3103,7 +3103,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 2
 			},
 			{
@@ -3124,7 +3124,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 2
 			},
 			{
@@ -3132,7 +3132,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 1
 			}
 		}
@@ -3145,7 +3145,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 3
 			},
 			{
@@ -3153,7 +3153,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 2
 			},
 			{
@@ -3174,7 +3174,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 3
 			},
 			{
@@ -3182,7 +3182,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 2
 			},
 			{
@@ -3190,7 +3190,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 1
 			}
 		}
@@ -3203,7 +3203,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 3
 			},
 			{
@@ -3211,7 +3211,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 2
 			},
 			{
@@ -3232,7 +3232,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 2
 			},
 			{
@@ -3240,7 +3240,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 1
 			}
 		}
@@ -3253,7 +3253,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 3
 			},
 			{
@@ -3261,7 +3261,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 2
 			},
 			{
@@ -3285,7 +3285,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_tank_lead,
+				tactics = self._tactics.deathvox_tank_elite_lead,
 				rank = 1
 			}
 		}
@@ -3431,7 +3431,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		}
 	}
 --Dozer duo.
-	self.enemy_spawn_groups.mh_partners = {
+	self.enemy_spawn_groups.mh_partners = { --deliberate pairing of cover on follwer.
 		amount = {2, 2},
 		spawn = {
 			{
@@ -3447,7 +3447,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox__tank_lead,
+				tactics = self._tactics.deathvox__tank_cover,
 				rank = 1
 			}
 		}
@@ -3500,7 +3500,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 	}
 -- repeat mh cloakerpair
 -- Taser, 2 HRT
-	self.enemy_spawn_groups.mh_hrttaser = {
+	self.enemy_spawn_groups.mh_hrttaser = { --deliberate simple charge on hrt.
 		amount = {3, 3},
 		spawn = {
 			{
@@ -3508,7 +3508,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_supportflash,
+				tactics = self._tactics.deathvox_tazer_lead,
 				rank = 2
 			},			
 			{
@@ -3532,7 +3532,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 4,
 				amount_max = 4,
-				tactics = self._tactics.deathvox_swat_ranged,
+				tactics = self._tactics.deathvox_elite_ranged,
 				rank = 1
 			}
 		}
@@ -3546,7 +3546,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 2
 			},
 			{
@@ -3554,7 +3554,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 1
 			}
 		}
@@ -3567,7 +3567,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 3
 			},
 			{
@@ -3575,7 +3575,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 2
 			},
 			{
@@ -3596,7 +3596,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 2
 			},
 			{
@@ -3604,7 +3604,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 1
 			}
 		}
@@ -3617,7 +3617,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 3
 			},
 			{
@@ -3625,7 +3625,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 2
 			},
 			{
@@ -3646,7 +3646,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 3
 			},
 			{
@@ -3654,7 +3654,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 2
 			},
 			{
@@ -3662,7 +3662,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 1
 			}
 		}
@@ -3675,7 +3675,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 3
 			},
 			{
@@ -3683,7 +3683,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 2
 			},
 			{
@@ -3704,7 +3704,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 2
 			},
 			{
@@ -3712,7 +3712,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 1
 			}
 		}
@@ -3725,7 +3725,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 3
 			},
 			{
@@ -3733,7 +3733,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 2
 			},
 			{
@@ -3981,7 +3981,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		}
 	}
 -- 2 Taser, 2 HRT
-	self.enemy_spawn_groups.dw_hrttaser = {
+	self.enemy_spawn_groups.dw_hrttaser = { -- deliberate simple charge on hrt.
 		amount = {3, 3},
 		spawn = {
 			{
@@ -3989,7 +3989,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_supportflash,
+				tactics = self._tactics.deathvox_tazer_lead,
 				rank = 2
 			},			
 			{
@@ -4012,7 +4012,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 4,
 				amount_max = 4,
-				tactics = self._tactics.deathvox_swat_ranged,
+				tactics = self._tactics.deathvox_elite_ranged,
 				rank = 1
 			}
 		}
@@ -4025,7 +4025,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 2
 			},
 			{
@@ -4033,7 +4033,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 1
 			}
 		}
@@ -4046,7 +4046,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 3
 			},
 			{
@@ -4054,7 +4054,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 2
 			},
 			{
@@ -4075,7 +4075,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 2
 			},
 			{
@@ -4083,7 +4083,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 1
 			}
 		}
@@ -4096,7 +4096,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 3
 			},
 			{
@@ -4104,7 +4104,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 2
 			},
 			{
@@ -4125,7 +4125,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 3
 			},
 			{
@@ -4133,7 +4133,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 2
 			},
 			{
@@ -4141,7 +4141,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 1
 			}
 		}
@@ -4154,7 +4154,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 3
 			},
 			{
@@ -4162,7 +4162,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_flank,
+				tactics = self._tactics.deathvox_elite_flank,
 				rank = 2
 			},
 			{
@@ -4183,7 +4183,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 2
 			},
 			{
@@ -4191,7 +4191,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 1
 			}
 		}
@@ -4204,7 +4204,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 3
 			},
 			{
@@ -4212,7 +4212,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_elite_charge,
 				rank = 2
 			},
 			{
@@ -4303,7 +4303,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_tank_lead,
+				tactics = self._tactics.deathvox_tank_elite_lead,
 				rank = 3
 			},
 			{
@@ -4333,7 +4333,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_tank_lead,
+				tactics = self._tactics.deathvox_tank_elite_lead,
 				rank = 3
 			},
 			{
@@ -4355,7 +4355,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		}
 	}
 
-	self.enemy_spawn_groups.janus = {
+	self.enemy_spawn_groups.janus = { -- currently testing applying shieldcover, may be too much.
 		amount = {2, 2},
 		spawn = {
 			{
@@ -4363,7 +4363,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_tank_lead,
+				tactics = self._tactics.deathvox_tank_elite_lead,
 				rank = 2
 			},
 			{
@@ -4371,7 +4371,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_medic,
+				tactics = self._tactics.deathvox_tank_cover,
 				rank = 1
 			}
 		}
@@ -4420,7 +4420,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			}
 		}
 	}
-	self.enemy_spawn_groups.caduceus = {
+	self.enemy_spawn_groups.caduceus = { -- testing medics with shieldcover on leader. May be too much.
 		amount = {4, 4},
 		spawn = {
 			{
@@ -4428,7 +4428,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_tank_lead,
+				tactics = self._tactics.deathvox_tank_elite_lead,
 				rank = 3
 			},
 			{
@@ -4436,7 +4436,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_medic,
+				tactics = self._tactics.deathvox_medic_shieldcover,
 				rank = 2
 			},
 			{
@@ -4570,7 +4570,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 		}
 	}
 
-	self.enemy_spawn_groups.hoplon = {
+	self.enemy_spawn_groups.hoplon = { -- deliberately no cover on grenadier to give more penetration opportunity.
 		amount = {3, 3},
 		spawn = {
 			{
@@ -4591,7 +4591,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			}
 		}
 	}
-	self.enemy_spawn_groups.recon = {
+	self.enemy_spawn_groups.recon = { -- deliberately not elite for better engagement opportunity during assault break.
 		amount = {4, 4},
 		spawn = {
 			{
