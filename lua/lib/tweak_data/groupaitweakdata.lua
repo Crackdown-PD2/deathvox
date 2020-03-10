@@ -1210,7 +1210,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"provide_coverfire",
 				"provide_support",
 				"deathguard",
-				"flash_grenade",
 				"skirmish"
 			},
 			deathvox_grenad_lead = {
@@ -1220,14 +1219,20 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"skirmish"
 			},
 			deathvox_grenad_pinch = {
-				"elite_ranged_fire",
+				"flank",
 				"flash_grenade",
 				"provide_coverfire",
 				"provide_support",
 				"deathguard",
 				"skirmish"
 			},
-			deathvox_medic = {
+			deathvox_medic_lead = {
+				"charge",
+				"provide_coverfire",
+				"provide_support",
+				"skirmish"
+			},
+			deathvox_medic_shieldcover = {
 				"shield_cover",
 				"charge",
 				"provide_coverfire",
@@ -1235,13 +1240,14 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"skirmish"
 			},
 			deathvox_shield_lead = {
-				"shield_cover",
+				"shield",
 				"charge",
 				"provide_coverfire",
 				"provide_support",
 				"skirmish"
 			},
 			deathvox_shield_support = {
+				"shield",
 				"shield_cover",
 				"provide_coverfire",
 				"provide_support",
@@ -1251,7 +1257,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			},
 			deathvox_spooc_lead = {
 				"hunter",
-				"deathguard",
 				"charge",
 				"flash_grenade",
 				"provide_coverfire",
@@ -1260,14 +1265,12 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"skirmish"
 			},
 			deathvox_spooc_pinch = {
-				"hunter",
 				"deathguard",
 				"flank",
 				"smoke_grenade",
 				"provide_coverfire",
 				"provide_support",
 				"flash_grenade",
-				"spoocavoidance",
 				"skirmish"
 			},
 			deathvox_spooc_shield = {
@@ -1279,10 +1282,79 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"deathguard",
 				"flash_grenade",
 				"skirmish"
-			},			
-			deathvox_simple_charge = {
+			},
+			deathvox_spooc_simple = {
+				"hunter",
+				"charge",
+				"smoke_grenade",
+				"spoocavoidance",
+				"skirmish"
+			},
+			deathvox_tank_lead = {
 				"charge",
 				"provide_coverfire",
+				"provide_support",
+				"murder",
+				"deathguard",
+				"skirmish"
+			},
+			deathvox_tank_elite_lead = {
+				"charge",
+				"reloadingretreat",
+				"provide_coverfire",
+				"provide_support",
+				"harass",
+				"murder",
+				"deathguard",
+				"skirmish"
+			},
+			deathvox_tank_pinch = {
+				"flank",
+				"provide_coverfire",
+				"provide_support",
+				"deathguard",
+				"murder",
+				"skirmish"
+			},
+			deathvox_tank_cover = {
+				"shield_cover",
+				"provide_coverfire",
+				"provide_support",
+				"charge",
+				"murder",
+				"deathguard",
+				"skirmish"
+			},
+			deathvox_tazer_lead = {
+				"flash_grenade",
+				"charge",
+				"provide_coverfire",
+				"provide_support",
+				"skirmish"
+			},
+			deathvox_tazer_follow = {
+				"shield_cover",
+				"charge",
+				"provide_coverfire",
+				"provide_support",
+				"flash_grenade",
+				"deathguard",
+				"skirmish"
+			},
+			deathvox_simple_charge = {
+				"charge",
+				"provide_support",
+				"skirmish"
+			},
+			deathvox_simple_ranged = {
+				"ranged_fire",
+				"provide_coverfire",
+				"provide_support",
+				"skirmish"
+			},
+			deathvox_simple_shieldcover = {
+				"shield_cover",
+				"charge",
 				"provide_support",
 				"skirmish"
 			},
@@ -1290,7 +1362,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"charge",
 				"provide_coverfire",
 				"provide_support",
-				"harass",
 				"skirmish"
 			},
 			deathvox_swat_flashcharge = {
@@ -1298,7 +1369,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"charge",
 				"provide_coverfire",
 				"provide_support",
-				"harass",
 				"skirmish"
 			},
 			deathvox_swat_smokecharge = {
@@ -1315,10 +1385,14 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"provide_support",
 				"skirmish"
 			},
+			deathvox_swat_ranged = {
+				"ranged_fire",
+				"provide_coverfire",
+				"provide_support",
+				"skirmish"
+			},
 			deathvox_swat_flank = {
 				"flank",
-				"harass",
-				"spooc_avoidance",
 				"provide_coverfire",
 				"provide_support",
 				"skirmish"
@@ -1328,7 +1402,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"flank",
 				"provide_coverfire",
 				"provide_support",
-				"hitnrun",
 				"skirmish"
 			},
 			deathvox_swat_smokeflank = {
@@ -1336,7 +1409,6 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"flank",
 				"provide_coverfire",
 				"provide_support",
-				"hitnrun",
 				"skirmish"
 			},
 			deathvox_swat_shieldflank = {
@@ -1346,61 +1418,33 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"provide_support",
 				"skirmish"
 			},
-			deathvox_swat_ranged = {
+			deathvox_elite_charge = {
+				"charge",
+				"harass",
+				"provide_coverfire",
+				"provide_support",
+				"skirmish"
+			},
+			deathvox_elite_shieldcharge = {
+				"shield_cover",
+				"harass",
+				"charge",
+				"provide_coverfire",
+				"provide_support",
+				"skirmish"
+			},
+			deathvox_elite_ranged = {
 				"elite_ranged_fire",
 				"harass",
 				"provide_coverfire",
 				"provide_support",
 				"skirmish"
 			},
-			deathvox_tank_cover = {
-				"shield_cover",
-				"provide_coverfire",
-				"provide_support",
-				"charge",
-				"murder",
-				"deathguard",
-				"skirmish"
-			},
-			deathvox_tank_lead = {
-				"charge",
-				"provide_coverfire",
-				"provide_support",
-				"murder",
-				"deathguard",
-				"skirmish"
-			},
-			deathvox_tank_pinch = {
+			deathvox_elite_flank = {
 				"flank",
+				"harass",
 				"provide_coverfire",
 				"provide_support",
-				"deathguard",
-				"murder",
-				"skirmish"
-			},
-			deathvox_tazer_follow = {
-				"shield_cover",
-				"charge",
-				"provide_coverfire",
-				"provide_support",
-				"flash_grenade",
-				"deathguard",
-				"skirmish"
-			},
-			deathvox_tazer_lead = {
-				"flash_grenade",
-				"charge",
-				"provide_coverfire",
-				"provide_support",
-				"skirmish"
-			},
-			deathvox_sniper = {
-				"shield_cover",
-				"ranged_fire",
-				"provide_coverfire",
-				"provide_support",
-				"murder",
-				"deathguard",
 				"skirmish"
 			},
 			deathvox_supportflash = {
@@ -1416,7 +1460,16 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				"provide_coverfire",
 				"provide_support",
 				"skirmish"
-			},	
+			},
+			deathvox_sniper = { --unused.
+				"shield_cover",
+				"ranged_fire",
+				"provide_coverfire",
+				"provide_support",
+				"murder",
+				"deathguard",
+				"skirmish"
+			},
 			swat_shotgun_rush = { -- Base game tactics begin here. Unused in Crackdown
 				"charge",
 				"provide_coverfire",
@@ -1506,7 +1559,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_ranged,
+				tactics = self._tactics.deathvox_simple_ranged,
 				rank = 1
 			}
 		}
@@ -1566,7 +1619,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_swat_ranged,
+				tactics = self._tactics.deathvox_simple_ranged,
 				rank = 1
 			}
 		}
@@ -1650,7 +1703,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 3,
 				amount_max = 3,
-				tactics = self._tactics.deathvox_simple_charge,
+				tactics = self._tactics.deathvox_swat_charge,
 				rank = 1
 			}
 		}
@@ -1663,7 +1716,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_simple_charge,
+				tactics = self._tactics.deathvox_swat_charge,
 				rank = 2
 			},		
 			{
@@ -1671,7 +1724,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_simple_charge,
+				tactics = self._tactics.deathvox_swat_charge,
 				rank = 1
 			}
 		}
@@ -1692,7 +1745,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_simple_charge,
+				tactics = self._tactics.deathvox_simple_shieldcover,
 				rank = 1
 			}
 		}
@@ -1713,7 +1766,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_simple_charge,
+				tactics = self._tactics.deathvox_simple_shieldcover,
 				rank = 1
 			}
 		}
@@ -1794,7 +1847,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			}
 		}
 	}
-	self.enemy_spawn_groups.hard_medicgroup = {
+	self.enemy_spawn_groups.hard_medicgroup = { -- deliberately "covering" medic.
 		amount = {4, 4},
 		spawn = {
 			{
@@ -1802,7 +1855,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_medic,
+				tactics = self._tactics.deathvox_medic_lead,
 				rank = 2
 			},
 			{
@@ -1810,7 +1863,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 3,
 				amount_max = 3,
-				tactics = self._tactics.deathvox_simple_charge,
+				tactics = self._tactics.deathvox_simple_shieldcover,
 				rank = 1
 			}
 		}
@@ -1907,7 +1960,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_simple_charge,
+				tactics = self._tactics.deathvox_swat_charge,
 				rank = 2
 			},
 			{
@@ -1915,7 +1968,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 3,
 				amount_max = 3,
-				tactics = self._tactics.deathvox_simple_charge,
+				tactics = self._tactics.deathvox_swat_charge,
 				rank = 1
 			}
 		}
@@ -1936,7 +1989,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_simple_charge,
+				tactics = self._tactics.deathvox_swat_shieldcharge,
 				rank = 1
 			}
 		}
@@ -1957,7 +2010,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_simple_charge,
+				tactics = self._tactics.deathvox_simple_shieldcover,
 				rank = 1
 			}
 		}
@@ -1978,7 +2031,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 2,
 				amount_max = 2,
-				tactics = self._tactics.deathvox_simple_charge,
+				tactics = self._tactics.deathvox_simple_shieldcharge,
 				rank = 1
 			}
 		}
@@ -1991,7 +2044,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_flashcharge,
+				tactics = self._tactics.deathvox_tazer_lead,
 				rank = 1
 			}
 		}
@@ -2034,7 +2087,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_simple_charge,
 				rank = 2
 			},
 			{
@@ -2042,7 +2095,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_simple_charge,
 				rank = 1
 			}
 		}
@@ -2063,7 +2116,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_swat_charge,
+				tactics = self._tactics.deathvox_simple_charge,
 				rank = 1
 			},
 		}
@@ -2210,7 +2263,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				rank = 3
 			},
 			{
-				unit = "deathvox_medic",
+				unit = "deathvox_medic", -- examine for follow issues, if so, create variant with shield_cover
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
@@ -2412,7 +2465,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 				freq = 1,
 				amount_min = 1,
 				amount_max = 1,
-				tactics = self._tactics.deathvox_tank_rush,
+				tactics = self._tactics.deathvox_tank_lead,
 				rank = 1
 			}
 		}
