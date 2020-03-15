@@ -3344,7 +3344,7 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 	self.drug_lord_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
 	self.drug_lord_boss.damage.can_be_tased = false
 	self.drug_lord_boss.ecm_vulnerability = 0
-	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavy_rifle)	
 	self.drug_lord_boss_stealth.HEALTH_INIT = 15
 	self.drug_lord_boss_stealth.weapon = deep_clone(self.presets.weapon.deathvox.is_revolver)
 	
@@ -3479,7 +3479,7 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	self.drug_lord_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
 	self.drug_lord_boss.damage.can_be_tased = false
 	self.drug_lord_boss.ecm_vulnerability = 0
-	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavy_rifle)	
 	self.drug_lord_boss_stealth.HEALTH_INIT = 15
 	self.drug_lord_boss_stealth.weapon = deep_clone(self.presets.weapon.deathvox.is_revolver)
 	
@@ -3612,7 +3612,7 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 	self.drug_lord_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
 	self.drug_lord_boss.damage.can_be_tased = false
 	self.drug_lord_boss.ecm_vulnerability = 0
-	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavy_rifle)	
 	self.drug_lord_boss_stealth.HEALTH_INIT = 15
 	self.drug_lord_boss_stealth.weapon = deep_clone(self.presets.weapon.deathvox.is_revolver)
 	
@@ -3746,7 +3746,7 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	self.drug_lord_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
 	self.drug_lord_boss.damage.can_be_tased = false
 	self.drug_lord_boss.ecm_vulnerability = 0
-	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavy_rifle)	
 	self.drug_lord_boss_stealth.HEALTH_INIT = 15
 	self.drug_lord_boss_stealth.weapon = deep_clone(self.presets.weapon.deathvox.is_revolver)
 	
@@ -3881,7 +3881,7 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self.drug_lord_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
 	self.drug_lord_boss.damage.can_be_tased = false
 	self.drug_lord_boss.ecm_vulnerability = 0
-	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavy_rifle)	
 	self.drug_lord_boss_stealth.HEALTH_INIT = 15
 	self.drug_lord_boss_stealth.weapon = deep_clone(self.presets.weapon.deathvox.is_revolver)
 	
@@ -4016,7 +4016,7 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	self.drug_lord_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
 	self.drug_lord_boss.damage.can_be_tased = false
 	self.drug_lord_boss.ecm_vulnerability = 0
-	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavy_rifle)	
 	self.drug_lord_boss_stealth.HEALTH_INIT = 15
 	self.drug_lord_boss_stealth.weapon = deep_clone(self.presets.weapon.deathvox.is_revolver)
 	
@@ -4132,7 +4132,7 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.drug_lord_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
 	self.drug_lord_boss.damage.can_be_tased = false
 	self.drug_lord_boss.ecm_vulnerability = 0
-	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavy_rifle)	
 	self.drug_lord_boss_stealth.HEALTH_INIT = 15
 	self.drug_lord_boss_stealth.weapon = deep_clone(self.presets.weapon.deathvox.is_revolver)
 	
