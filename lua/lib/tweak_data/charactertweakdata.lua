@@ -3313,7 +3313,41 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 	self.bolivian.HEALTH_INIT = 18
 	self.bolivian_indoors.HEALTH_INIT = 18
 	
--- bosses. To be populated.
+-- bosses.
+	self.mobster_boss.HEALTH_INIT = 200   --  Commissar boss.
+	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
+	self.mobster_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.mobster_boss.damage.can_be_tased = false
+	self.mobster_boss.ecm_vulnerability = 0
+	self.biker_boss.HEALTH_INIT = 200
+	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
+	self.biker_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
+	self.biker_boss.damage.can_be_tased = false
+	self.biker_boss.ecm_vulnerability = 0
+	self.hector_boss.HEALTH_INIT = 200
+	self.hector_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.hector_boss.damage.can_be_tased = false
+	self.hector_boss.dodge = presets.dodge.deathvoxninja
+	self.hector_boss.ecm_vulnerability = 0
+	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
+	self.hector_boss_no_armor.HEALTH_INIT = 15
+	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
+	self.hector_boss_no_armor.dodge = presets.dodge.deathvoxninja
+	self.chavez_boss.HEALTH_INIT = 200
+	self.chavez_boss.move_speed = presets.move_speed.deathvoxchavez
+	self.chavez_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
+	self.chavez_boss.damage.can_be_tased = false
+	self.chavez_boss.dodge = presets.dodge.deathvoxninja
+	self.chavez_boss.ecm_vulnerability = 0
+	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
+	self.drug_lord_boss.HEALTH_INIT = 200
+	self.drug_lord_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.drug_lord_boss.damage.can_be_tased = false
+	self.drug_lord_boss.ecm_vulnerability = 0
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
+	self.drug_lord_boss_stealth.HEALTH_INIT = 15
+	self.drug_lord_boss_stealth.weapon = deep_clone(presets.weapon.deathvox.is_revolver)
+	
 -- end NORMAL scripted unit alterations.
 	
 end -- end NORMAL specific tweaks.
@@ -3414,7 +3448,40 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	self.bolivian.HEALTH_INIT = 18
 	self.bolivian_indoors.HEALTH_INIT = 18
 	
--- bosses. To be populated.
+-- bosses.
+	self.mobster_boss.HEALTH_INIT = 200   --  Commissar boss.
+	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
+	self.mobster_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.mobster_boss.damage.can_be_tased = false
+	self.mobster_boss.ecm_vulnerability = 0
+	self.biker_boss.HEALTH_INIT = 200
+	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
+	self.biker_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
+	self.biker_boss.damage.can_be_tased = false
+	self.biker_boss.ecm_vulnerability = 0
+	self.hector_boss.HEALTH_INIT = 200
+	self.hector_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.hector_boss.damage.can_be_tased = false
+	self.hector_boss.dodge = presets.dodge.deathvoxninja
+	self.hector_boss.ecm_vulnerability = 0
+	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
+	self.hector_boss_no_armor.HEALTH_INIT = 15
+	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
+	self.hector_boss_no_armor.dodge = presets.dodge.deathvoxninja
+	self.chavez_boss.HEALTH_INIT = 200
+	self.chavez_boss.move_speed = presets.move_speed.deathvoxchavez
+	self.chavez_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
+	self.chavez_boss.damage.can_be_tased = false
+	self.chavez_boss.dodge = presets.dodge.deathvoxninja
+	self.chavez_boss.ecm_vulnerability = 0
+	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
+	self.drug_lord_boss.HEALTH_INIT = 200
+	self.drug_lord_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.drug_lord_boss.damage.can_be_tased = false
+	self.drug_lord_boss.ecm_vulnerability = 0
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
+	self.drug_lord_boss_stealth.HEALTH_INIT = 15
+	self.drug_lord_boss_stealth.weapon = deep_clone(presets.weapon.deathvox.is_revolver)
 	
 -- end HARD scripted unit alterations.	
 
@@ -3514,7 +3581,40 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 	self.bolivian.HEALTH_INIT = 24
 	self.bolivian_indoors.HEALTH_INIT = 24
 	
--- bosses. To be populated.	
+-- bosses.
+	self.mobster_boss.HEALTH_INIT = 500   --  Commissar boss.
+	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
+	self.mobster_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.mobster_boss.damage.can_be_tased = false
+	self.mobster_boss.ecm_vulnerability = 0
+	self.biker_boss.HEALTH_INIT = 500
+	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
+	self.biker_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
+	self.biker_boss.damage.can_be_tased = false
+	self.biker_boss.ecm_vulnerability = 0
+	self.hector_boss.HEALTH_INIT = 500
+	self.hector_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.hector_boss.damage.can_be_tased = false
+	self.hector_boss.dodge = presets.dodge.deathvoxninja
+	self.hector_boss.ecm_vulnerability = 0
+	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
+	self.hector_boss_no_armor.HEALTH_INIT = 15
+	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
+	self.hector_boss_no_armor.dodge = presets.dodge.deathvoxninja
+	self.chavez_boss.HEALTH_INIT = 500
+	self.chavez_boss.move_speed = presets.move_speed.deathvoxchavez
+	self.chavez_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
+	self.chavez_boss.damage.can_be_tased = false
+	self.chavez_boss.dodge = presets.dodge.deathvoxninja
+	self.chavez_boss.ecm_vulnerability = 0
+	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
+	self.drug_lord_boss.HEALTH_INIT = 500
+	self.drug_lord_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.drug_lord_boss.damage.can_be_tased = false
+	self.drug_lord_boss.ecm_vulnerability = 0
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
+	self.drug_lord_boss_stealth.HEALTH_INIT = 15
+	self.drug_lord_boss_stealth.weapon = deep_clone(presets.weapon.deathvox.is_revolver)
 	
 -- end VERY HARD scripted unit alterations.	
 	
@@ -3614,8 +3714,41 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	self.biker_escape.HEALTH_INIT = 24
 	self.bolivian.HEALTH_INIT = 24
 	self.bolivian_indoors.HEALTH_INIT = 24
-	
--- bosses. To be populated.
+
+-- bosses.
+	self.mobster_boss.HEALTH_INIT = 500   --  Commissar boss.
+	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
+	self.mobster_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.mobster_boss.damage.can_be_tased = false
+	self.mobster_boss.ecm_vulnerability = 0
+	self.biker_boss.HEALTH_INIT = 500
+	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
+	self.biker_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
+	self.biker_boss.damage.can_be_tased = false
+	self.biker_boss.ecm_vulnerability = 0
+	self.hector_boss.HEALTH_INIT = 500
+	self.hector_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.hector_boss.damage.can_be_tased = false
+	self.hector_boss.dodge = presets.dodge.deathvoxninja
+	self.hector_boss.ecm_vulnerability = 0
+	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
+	self.hector_boss_no_armor.HEALTH_INIT = 15
+	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
+	self.hector_boss_no_armor.dodge = presets.dodge.deathvoxninja
+	self.chavez_boss.HEALTH_INIT = 500
+	self.chavez_boss.move_speed = presets.move_speed.deathvoxchavez
+	self.chavez_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
+	self.chavez_boss.damage.can_be_tased = false
+	self.chavez_boss.dodge = presets.dodge.deathvoxninja
+	self.chavez_boss.ecm_vulnerability = 0
+	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
+	self.drug_lord_boss.HEALTH_INIT = 500
+	self.drug_lord_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.drug_lord_boss.damage.can_be_tased = false
+	self.drug_lord_boss.ecm_vulnerability = 0
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
+	self.drug_lord_boss_stealth.HEALTH_INIT = 15
+	self.drug_lord_boss_stealth.weapon = deep_clone(presets.weapon.deathvox.is_revolver)
 	
 -- end OVERKILL scripted unit alterations.	
 	
@@ -3716,8 +3849,41 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self.biker_escape.HEALTH_INIT = 32
 	self.bolivian.HEALTH_INIT = 32
 	self.bolivian_indoors.HEALTH_INIT = 32
-	
--- bosses. To be populated.	
+
+-- bosses.
+	self.mobster_boss.HEALTH_INIT = 600   --  Commissar boss.
+	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
+	self.mobster_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.mobster_boss.damage.can_be_tased = false
+	self.mobster_boss.ecm_vulnerability = 0
+	self.biker_boss.HEALTH_INIT = 600
+	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
+	self.biker_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
+	self.biker_boss.damage.can_be_tased = false
+	self.biker_boss.ecm_vulnerability = 0
+	self.hector_boss.HEALTH_INIT = 600
+	self.hector_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.hector_boss.damage.can_be_tased = false
+	self.hector_boss.dodge = presets.dodge.deathvoxninja
+	self.hector_boss.ecm_vulnerability = 0
+	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
+	self.hector_boss_no_armor.HEALTH_INIT = 15
+	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
+	self.hector_boss_no_armor.dodge = presets.dodge.deathvoxninja
+	self.chavez_boss.HEALTH_INIT = 600
+	self.chavez_boss.move_speed = presets.move_speed.deathvoxchavez
+	self.chavez_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
+	self.chavez_boss.damage.can_be_tased = false
+	self.chavez_boss.dodge = presets.dodge.deathvoxninja
+	self.chavez_boss.ecm_vulnerability = 0
+	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
+	self.drug_lord_boss.HEALTH_INIT = 600
+	self.drug_lord_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.drug_lord_boss.damage.can_be_tased = false
+	self.drug_lord_boss.ecm_vulnerability = 0
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
+	self.drug_lord_boss_stealth.HEALTH_INIT = 15
+	self.drug_lord_boss_stealth.weapon = deep_clone(presets.weapon.deathvox.is_revolver)	
 	
 -- end MAYHEM scripted unit alterations.	
 	
@@ -3819,7 +3985,40 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	self.bolivian.HEALTH_INIT = 32
 	self.bolivian_indoors.HEALTH_INIT = 32
 	
--- bosses. To be populated.
+-- bosses
+	self.mobster_boss.HEALTH_INIT = 600   --  Commissar boss.
+	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
+	self.mobster_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.mobster_boss.damage.can_be_tased = false
+	self.mobster_boss.ecm_vulnerability = 0
+	self.biker_boss.HEALTH_INIT = 600
+	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
+	self.biker_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
+	self.biker_boss.damage.can_be_tased = false
+	self.biker_boss.ecm_vulnerability = 0
+	self.hector_boss.HEALTH_INIT = 600
+	self.hector_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.hector_boss.damage.can_be_tased = false
+	self.hector_boss.dodge = presets.dodge.deathvoxninja
+	self.hector_boss.ecm_vulnerability = 0
+	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
+	self.hector_boss_no_armor.HEALTH_INIT = 15
+	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
+	self.hector_boss_no_armor.dodge = presets.dodge.deathvoxninja
+	self.chavez_boss.HEALTH_INIT = 600
+	self.chavez_boss.move_speed = presets.move_speed.deathvoxchavez
+	self.chavez_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
+	self.chavez_boss.damage.can_be_tased = false
+	self.chavez_boss.dodge = presets.dodge.deathvoxninja
+	self.chavez_boss.ecm_vulnerability = 0
+	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
+	self.drug_lord_boss.HEALTH_INIT = 600
+	self.drug_lord_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.drug_lord_boss.damage.can_be_tased = false
+	self.drug_lord_boss.ecm_vulnerability = 0
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
+	self.drug_lord_boss_stealth.HEALTH_INIT = 15
+	self.drug_lord_boss_stealth.weapon = deep_clone(presets.weapon.deathvox.is_revolver)
 	
 -- end DEATH WISH scripted unit alterations.
 	
@@ -3903,29 +4102,39 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.bolivian_indoors.HEALTH_INIT = 48
 	
 -- bosses
---	self.mobster_boss.HEALTH_INIT = 900   --  Commissar boss.
---	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
---	self.mobster_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
---	self.mobster_boss.ecm_vulnerability = 0
---	self.biker_boss.HEALTH_INIT = 900
---	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
---	self.hector_boss.HEALTH_INIT = 900
---	self.hector_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
---	self.hector_boss.ecm_vulnerability = 0
---	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
---	self.hector_boss_no_armor.HEALTH_INIT = 15
---	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
---	self.chavez_boss.HEALTH_INIT = 900
---	self.chavez_boss.move_speed = presets.move_speed.deathvoxchavez
---	self.chavez_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
---	self.chavez_boss.ecm_vulnerability = 0
---	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
---	self.drug_lord_boss.HEALTH_INIT = 900
---	self.drug_lord_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
---	self.drug_lord_boss.ecm_vulnerability = 0
---	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
---	self.drug_lord_boss_stealth.HEALTH_INIT = 15
---	self.drug_lord_boss_stealth.weapon = deep_clone(presets.weapon.deathvox.is_revolver)
+	self.mobster_boss.HEALTH_INIT = 900   --  Commissar boss.
+	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
+	self.mobster_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.mobster_boss.damage.can_be_tased = false
+	self.mobster_boss.ecm_vulnerability = 0
+	self.biker_boss.HEALTH_INIT = 900
+	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
+	self.biker_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
+	self.biker_boss.damage.can_be_tased = false
+	self.biker_boss.ecm_vulnerability = 0
+	self.hector_boss.HEALTH_INIT = 900
+	self.hector_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.hector_boss.damage.can_be_tased = false
+	self.hector_boss.dodge = presets.dodge.deathvoxninja
+	self.hector_boss.ecm_vulnerability = 0
+	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
+	self.hector_boss_no_armor.HEALTH_INIT = 15
+	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
+	self.hector_boss_no_armor.dodge = presets.dodge.deathvoxninja
+	self.chavez_boss.HEALTH_INIT = 900
+	self.chavez_boss.move_speed = presets.move_speed.deathvoxchavez
+	self.chavez_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
+	self.chavez_boss.damage.can_be_tased = false
+	self.chavez_boss.dodge = presets.dodge.deathvoxninja
+	self.chavez_boss.ecm_vulnerability = 0
+	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
+	self.drug_lord_boss.HEALTH_INIT = 900
+	self.drug_lord_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
+	self.drug_lord_boss.damage.can_be_tased = false
+	self.drug_lord_boss.ecm_vulnerability = 0
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
+	self.drug_lord_boss_stealth.HEALTH_INIT = 15
+	self.drug_lord_boss_stealth.weapon = deep_clone(presets.weapon.deathvox.is_revolver)
 	
 -- end CRACKDOWN scripted unit alterations.
 
@@ -4046,7 +4255,6 @@ function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
 	self.deathvox_lightshot.SPEED_RUN = self.deathvox_lightshot.SPEED_RUN * run_mul
 	self.deathvox_shield.SPEED_RUN = self.deathvox_shield.SPEED_RUN * run_mul
 	self.deathvox_medic.SPEED_RUN = self.deathvox_medic.SPEED_RUN * run_mul
-	
 	self.deathvox_taser.SPEED_RUN = self.deathvox_taser.SPEED_RUN * run_mul
 	self.deathvox_cloaker.SPEED_RUN = self.deathvox_cloaker.SPEED_RUN * run_mul
 	self.deathvox_sniper_assault.SPEED_RUN = self.deathvox_sniper_assault.SPEED_RUN * run_mul
@@ -4100,8 +4308,14 @@ function CharacterTweakData:_set_characters_dodge_preset(preset)
 		"fbi",
 		"medic",
 		"taser",
-		"hector_boss_no_armor",
+		"bolivian",
 		"bolivian_indoors",
+		"mobster_boss",
+		"biker_boss",
+		"hector_boss",
+		"hector_boss_no_armor",
+		"chavez_boss",
+		"drug_lord_boss",
 		"drug_lord_boss_stealth",
 		"swat",
 		"deathvox_heavyar",
