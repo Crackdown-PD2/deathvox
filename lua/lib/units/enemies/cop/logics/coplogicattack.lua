@@ -440,12 +440,14 @@ function CopLogicAttack._upd_combat_movement(data)
 	if not action_taken and not my_data.turning and not data.unit:movement():chk_action_forbidden("walk") and not my_data.has_old_action and CopLogicAttack._can_move(data) and data.attention_obj.verified and not spoocavoidancemovementqualify then
 		if data.is_suppressed and data.t - data.unit:character_damage():last_suppression_t() < 0.7 then
 			action_taken = CopLogicBase.chk_start_action_dodge(data, "scared")
-			if data.char_tweak.chatter.dodge then
-				managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "dodge")
-			end
-			
-			if data.char_tweak.chatter.cloakeravoidance then
-				managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "cloakeravoidance")
+			if data.char_tweak.chatter then
+				if data.char_tweak.chatter.dodge then
+					managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "dodge")
+				end
+				
+				if data.char_tweak.chatter.cloakeravoidance then
+					managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "cloakeravoidance")
+				end
 			end
 		end
 
@@ -468,11 +470,13 @@ function CopLogicAttack._upd_combat_movement(data)
 
 			if dodge and focus_enemy.aimed_at then
 				action_taken = CopLogicBase.chk_start_action_dodge(data, "preemptive")
-				if data.char_tweak.chatter.dodge then
-					managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "dodge")
-				end
-				if data.char_tweak.chatter.cloakeravoidance then
-					managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "cloakeravoidance")
+				if data.char_tweak.chatter then
+					if data.char_tweak.chatter.dodge then
+						managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "dodge")
+					end
+					if data.char_tweak.chatter.cloakeravoidance then
+						managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "cloakeravoidance")
+					end
 				end
 			end
 		end
@@ -480,7 +484,7 @@ function CopLogicAttack._upd_combat_movement(data)
 	
 	if not action_taken and hitnrunmovementqualify and not pantsdownchk or not action_taken and eliterangedfiremovementqualify and not pantsdownchk or not action_taken and spoocavoidancemovementqualify and not pantsdownchk or not action_taken and reloadingretreatmovementqualify then
 		action_taken = CopLogicAttack._chk_start_action_move_back(data, my_data, focus_enemy, nil, nil)
-		if data.char_tweak.chatter.cloakeravoidance then
+		if data.char_tweak.chatter and data.char_tweak.chatter.cloakeravoidance then
 			managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "cloakeravoidance")
 		end
 	end
@@ -531,7 +535,7 @@ function CopLogicAttack._upd_combat_movement(data)
 					action_taken = CopLogicAttack._chk_request_action_walk_to_cover_shoot_pos(data, my_data, path)
 					
 					if my_data.taken_flank_cover then
-						if data.char_tweak.chatter.look_for_angle and managers.groupai:state():chk_assault_active_atm() then
+						if data.char_tweak.chatter and data.char_tweak.chatter.look_for_angle and managers.groupai:state():chk_assault_active_atm() then
 							managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "look_for_angle")
 						end
 					end
@@ -578,7 +582,7 @@ function CopLogicAttack._upd_combat_movement(data)
 						--ranged fire cops signal the start of their movement and positioning
 						if data.tactics and data.tactics.ranged_fire or data.tactics and data.tactics.elite_ranged_fire then
 							if not data.unit:in_slot(16) and not data.is_converted then
-								if data.group and data.group.leader_key == data.key and data.char_tweak.chatter.ready then
+								if data.char_tweak.chatter and data.char_tweak.chatter.ready and data.group and data.group.leader_key == data.key then
 									managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "ready")
 								end
 							end
@@ -596,7 +600,7 @@ function CopLogicAttack._upd_combat_movement(data)
 			elseif my_data.at_cover_shoot_pos then
 				--ranged fire cops also signal the END of their movement and positioning
 				if data.tactics and data.tactics.ranged_fire or data.tactics and data.tactics.elite_ranged_fire then
-					if not data.unit:in_slot(16) and not data.is_converted and data.char_tweak.chatter.ready then
+					if not data.unit:in_slot(16) and not data.is_converted and data.char_tweak.chatter and data.char_tweak.chatter.ready then
 						managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "inpos")
 					end
 				end
@@ -628,7 +632,7 @@ function CopLogicAttack._upd_combat_movement(data)
 			my_data.next_allowed_flank_charge_t = data.t + 2
 			want_flank_cover = nil
 			if not data.unit:in_slot(16) and not data.is_converted then --flankers signal their presence whenever they move around
-				if data.char_tweak.chatter.look_for_angle and managers.groupai:state():chk_assault_active_atm() then
+				if data.char_tweak.chatter and data.char_tweak.chatter.look_for_angle and managers.groupai:state():chk_assault_active_atm() then
 					managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "look_for_angle")
 				end
 			end
@@ -668,7 +672,7 @@ function CopLogicAttack.aim_allow_fire(shoot, aim, data, my_data)
 
 			my_data.firing = true
 
-			if not data.unit:in_slot(16) and data.char_tweak.chatter.aggressive then
+			if not data.unit:in_slot(16) and data.char_tweak.chatter and data.char_tweak.chatter.aggressive then
 				if not data.unit:base():has_tag("special") and data.unit:base():has_tag("law") and not data.unit:base()._tweak_table == "gensec" and not data.unit:base()._tweak_table == "security" then
 					if focus_enemy.verified and focus_enemy.verified_dis <= 500 then
 						if managers.groupai:state():chk_assault_active_atm() then
@@ -883,7 +887,7 @@ function CopLogicAttack._upd_aim(data, my_data)
 			local e_movement_state = focus_enemy.unit:movement():current_state()
 			
 			if e_movement_state:_is_reloading() and time_since_verify and time_since_verify < 2 then
-				if not data.unit:in_slot(16) and data.char_tweak.chatter.reload then
+				if not data.unit:in_slot(16) and data.char_tweak.chatter and data.char_tweak.chatter.reload then
 					managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "reload")
 				end
 			end
@@ -892,7 +896,7 @@ function CopLogicAttack._upd_aim(data, my_data)
 			local time_since_verify = data.attention_obj.verified_t and data.t - data.attention_obj.verified_t
 
 			if e_anim_data.reload and time_since_verify and time_since_verify < 2 then
-				if not data.unit:in_slot(16) and data.char_tweak.chatter.reload then
+				if not data.unit:in_slot(16) and data.char_tweak.chatter and data.char_tweak.chatter.reload then
 					managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "reload")
 				end			
 			end
@@ -1173,7 +1177,7 @@ function CopLogicAttack._chk_start_action_move_back(data, my_data, focus_enemy, 
 				--end
 					
 				if data.tactics and data.tactics.elite_ranged_fire then
-					if not data.unit:in_slot(16) and data.char_tweak.chatter.dodge then
+					if not data.unit:in_slot(16) and data.char_tweak.chatter and data.char_tweak.chatter.dodge then
 						managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "dodge")
 					end
 				end
@@ -1510,11 +1514,11 @@ function CopLogicAttack.queue_update(data, my_data)
 	else
 		chosen_sabotage_chatter = "sabotagegeneric" --if none of these levels are the current one, use a generic "Break their gear!" line
 	end
-	
+
 	local cant_say_clear = data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.verified_t and data.attention_obj.verified_t - data.t < 5 and not data.is_converted
-	
-    if not data.unit:base():has_tag("special") then
-    	if data.char_tweak.chatter.clear and not cant_say_clear then
+
+	if not cant_say_clear and not data.unit:base():has_tag("special") then
+		if data.char_tweak.chatter and data.char_tweak.chatter.clear then
 			if data.unit:movement():cool() then
 				managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, "clear_whisper" )
 			else
@@ -1534,13 +1538,13 @@ function CopLogicAttack.queue_update(data, my_data)
 			end
 		end
     end
-	
-	if data.unit:base():has_tag("tank") or data.unit:base():has_tag("taser") then
-    	if not cant_say_clear then
+
+	if not cant_say_clear then
+		if data.unit:base():has_tag("tank") or data.unit:base():has_tag("taser") then
 			managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, "approachingspecial" )
 		end
-    end
-	
+	end
+
 	--mid-assault panic for cops based on alerts instead of opening fire, since its supposed to be generic action lines instead of for opening fire and such
 	--I'm adding some randomness to these since the delays in groupaitweakdata went a bit overboard but also arent able to really discern things proper
 	
