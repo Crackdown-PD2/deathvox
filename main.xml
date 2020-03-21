@@ -7,5 +7,5 @@
 		<event name="control" start_source="control_intro.ogg" source="control.ogg"/>
 	</HeistMusic>
 	<AddFiles file="crackdownmainassets.xml"/>
-	<!--<Package id="packages/dvclassics" file="crackdownclassics.xml" use_clbk="self:DebugLoadAssets"/>-->
+	<Package id="packages/deathvoxclassics" file="crackdownclassicassets.xml" use_clbk="self:DebugLoadAssets"/>		
 </table>

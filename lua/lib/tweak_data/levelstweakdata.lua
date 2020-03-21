@@ -47,14 +47,23 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 	local map_faction_override = {}
 	--map_faction_override["Enemy_Spawner"] = "classic"
 	map_faction_override["pal"] = "classic"
+	self.pal.package = {"packages/narr_pal", "packages/narr_rvd", "packages/deathvoxclassics"}	
 	map_faction_override["dah"] = "classic"
+	self.dah.package = {"packages/lvl_dah", "packages/deathvoxclassics"}
 	map_faction_override["red2"] = "classic"
+	self.red2.package = {"packages/narr_red2", "packages/deathvoxclassics"}
 	map_faction_override["glace"] = "classic"
+	self.glace.package = {"packages/narr_glace", "packages/deathvoxclassics"}	
 	map_faction_override["run"] = "classic"
+	self.run.package = {"packages/narr_run", "packages/deathvoxclassics"}	
 	map_faction_override["flat"] = "classic"
+	self.flat.package = {"packages/narr_flat", "packages/deathvoxclassics"}	
 	map_faction_override["dinner"] = "classic"
+	self.dinner.package = {"packages/narr_dinner", "packages/deathvoxclassics"}	
 	map_faction_override["man"] = "classic"
+	self.man.package = {"packages/narr_man", "packages/deathvoxclassics"}	
 	map_faction_override["nmh"] = "classic"
+	self.nmh.package = {"packages/dlcs/nmh/job_nmh", "packages/deathvoxclassics"}	
 	-- whurr's map edits
 	map_faction_override["bridge"] = "classic"
 	map_faction_override["apartment"] = "classic"
