@@ -2,16 +2,18 @@
 
 	<!-- VANILLA TEXTURE REPLACEMENTS/ADDITIONS -->
 	
-	<texture path="units/payday2/characters/shared_textures/dark_glass_df"  force="true"/>
-	<texture path="units/payday2/characters/shared_textures/dark_glass_op"  force="true"/>
-	<texture path="units/payday2/characters/shared_textures/tank_glass_df"  force="true"/>
-	<texture path="units/payday2/characters/shared_textures/tank_glass_op"  force="true"/>
-	<texture path="units/payday2/characters/shared_textures/ene_acc_deathvox_gensec_shield_df"  force="true"/>
-	<texture path="units/payday2/characters/shared_textures/ene_acc_deathvox_gensec_shield_nm"  force="true"/>
-	<texture path="units/payday2/characters/shared_textures/genshill_helm_df"  force="true"/>
-	<texture path="units/payday2/characters/shared_textures/genshill_helm_nm"  force="true"/>
-	<texture path="units/payday2/characters/shared_textures/helmets_atlas_2_df"  force="true"/>
-	<texture path="units/payday2/characters/shared_textures/heads_atlas_2_df"  force="true"/>
+	<texture path="units/payday2/characters/shared_textures/dark_glass_df" />
+	<texture path="units/payday2/characters/shared_textures/dark_glass_op"  />
+	<texture path="units/payday2/characters/shared_textures/tank_glass_df" />
+	<texture path="units/payday2/characters/shared_textures/tank_glass_op" />
+	<texture path="units/payday2/characters/shared_textures/ene_acc_deathvox_gensec_shield_df" />
+	<texture path="units/payday2/characters/shared_textures/ene_acc_deathvox_gensec_shield_nm" />
+	<texture path="units/payday2/characters/shared_textures/genshill_helm_df" />
+	<texture path="units/payday2/characters/shared_textures/genshill_helm_nm" />
+	<texture path="units/payday2/characters/shared_textures/helmets_atlas_2_df" />
+	<texture path="units/payday2/characters/shared_textures/heads_atlas_2_df" />
+	<texture path="units/payday2/characters/shared_textures/helmets_swat_r870_df" />	
+	<df_nm path="units/payday2/characters/shared_textures/helmet_shotgun" />
 	
 	<texture path="units/characters/enemies/textures/police_force_df" force="true"/>
 	<texture path="units/characters/enemies/textures/police_force_nm" force="true"/>
