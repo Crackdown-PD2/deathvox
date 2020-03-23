@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <unit type="being" slot="12">
 	<anim_state_machine name="anims/units/enemies/cop/cop_machine" />
-	<object file="units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot" />
+	<object file="units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor" />
 
 	<dependencies>
 		
