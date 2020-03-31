@@ -1427,7 +1427,7 @@ end
 
 
 
-Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function(self, tweak_data)
+Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function(self, tweak_data) --total crackdown overhaul weapons
 	
 	--local dont = true
 	
@@ -1629,11 +1629,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.new_m4.CLIP_AMMO_MAX = 30
-		self.new_m4.NR_CLIPS_MAX = 5
-		self.new_m4.AMMO_MAX = self.new_m4.CLIP_AMMO_MAX * self.new_m4.NR_CLIPS_MAX
+		self.new_m4.AMMO_MAX = 210
 		self.new_m4.AMMO_PICKUP = {
-			4.5,
-			8.25
+			6,
+			10
 		}
 		
 		self.new_m4.spread = {
@@ -1658,16 +1657,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.new_m4.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 52,
+			damage = 80,
 			alert_size = 7,
-			spread = 12,
+			spread = 26,
 			spread_moving = 10,
-			recoil = 16,
+			recoil = 26,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
 			suppression = 10,
-			concealment = 20
+			concealment = 15
 		}
 		self.new_m4.stats_modifiers = {
 			damage = 1
@@ -1690,13 +1689,11 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 	
 		self.amcar.CLIP_AMMO_MAX = 20
-		self.amcar.NR_CLIPS_MAX = 11
-		self.amcar.AMMO_MAX = self.amcar.CLIP_AMMO_MAX * self.amcar.NR_CLIPS_MAX
+		self.amcar.AMMO_MAX = 300
 		self.amcar.AMMO_PICKUP = {
-			6.60,
-			12.10
+			9,
+			18
 		}
-		
 		self.amcar.spread = {
 			standing = self.new_m4.spread.standing,
 			crouching = self.new_m4.spread.crouching,
@@ -1714,16 +1711,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.amcar.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 42,
+			damage = 50,
 			alert_size = 7,
-			spread = 10,
+			spread = 26,
 			spread_moving = 8,
-			recoil = 20,
+			recoil = 26,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 10,
-			concealment = 21
+			suppression = 14,
+			concealment = 30
 		}
 		self.amcar.stats_modifiers = {
 			damage = 1
@@ -1746,11 +1743,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.ak74.CLIP_AMMO_MAX = 30
-		self.ak74.NR_CLIPS_MAX = 5
-		self.ak74.AMMO_MAX = self.ak74.CLIP_AMMO_MAX * self.ak74.NR_CLIPS_MAX
+		self.ak74.AMMO_MAX = 210
 		self.ak74.AMMO_PICKUP = {
-			4.50,
-			8.25
+			6,
+			10
 		}
 		
 		self.ak74.spread = {
@@ -1770,16 +1766,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.ak74.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 56,
+			damage = 80,
 			alert_size = 7,
-			spread = 13,
+			spread = 24,
 			spread_moving = 11,
-			recoil = 16,
+			recoil = 26,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
 			suppression = 10,
-			concealment = 16
+			concealment = 15
 		}
 		self.ak74.stats_modifiers = {
 			damage = 1
@@ -1805,8 +1801,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.aug.NR_CLIPS_MAX = 5
 		self.aug.AMMO_MAX = self.aug.CLIP_AMMO_MAX * self.aug.NR_CLIPS_MAX
 		self.aug.AMMO_PICKUP = {
-			4.50,
-			8.25
+			6,
+			10
 		}
 		
 		self.aug.spread = {
@@ -1826,16 +1822,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.aug.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 55,
+			damage = 80,
 			alert_size = 7,
-			spread = 17,
+			spread = 21,
 			spread_moving = 15,
-			recoil = 11,
+			recoil = 26,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
 			suppression = 10,
-			concealment = 20
+			concealment = 15
 		}
 		self.aug.stats_modifiers = {
 			damage = 1
@@ -1858,11 +1854,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.akm.CLIP_AMMO_MAX = 30
-		self.akm.NR_CLIPS_MAX = 3
-		self.akm.AMMO_MAX = self.akm.CLIP_AMMO_MAX * self.akm.NR_CLIPS_MAX
+		self.akm.AMMO_MAX = 150
 		self.akm.AMMO_PICKUP = {
-			0.90,
-			3.15
+			4,
+			6
 		}
 		
 		self.akm.spread = {
@@ -1882,16 +1877,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.akm.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 97,
+			damage = 110,
 			alert_size = 7,
-			spread = 16,
+			spread = 24,
 			spread_moving = 14,
-			recoil = 12,
+			recoil = 26,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 8,
-			concealment = 13
+			suppression = 7,
+			concealment = 10
 		}
 		self.akm.stats_modifiers = {
 			damage = 1
@@ -1914,11 +1909,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.g36.CLIP_AMMO_MAX = 30
-		self.g36.NR_CLIPS_MAX = 8
-		self.g36.AMMO_MAX = self.g36.CLIP_AMMO_MAX * self.g36.NR_CLIPS_MAX
+		self.g36.AMMO_MAX = 300
 		self.g36.AMMO_PICKUP = {
-			7.2,
-			13.20
+			9,
+			18
 		}
 		
 		self.g36.spread = {
@@ -1938,16 +1932,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.g36.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 44,
+			damage = 50,
 			alert_size = 7,
-			spread = 11,
+			spread = 22,
 			spread_moving = 9,
-			recoil = 17,
+			recoil = 26,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 11,
-			concealment = 19
+			suppression = 14,
+			concealment = 25
 		}
 		self.g36.stats_modifiers = {
 			damage = 1
@@ -2082,11 +2076,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.ak5.CLIP_AMMO_MAX = 30
-		self.ak5.NR_CLIPS_MAX = 5
-		self.ak5.AMMO_MAX = self.ak5.CLIP_AMMO_MAX * self.ak5.NR_CLIPS_MAX
+		self.ak5.AMMO_MAX = 210
 		self.ak5.AMMO_PICKUP = {
-			4.50,
-			8.25
+			6,
+			10
 		}
 		
 		self.ak5.spread = {
@@ -2106,16 +2099,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.ak5.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 56,
+			damage = 80,
 			alert_size = 7,
-			spread = 16,
+			spread = 24,
 			spread_moving = 14,
-			recoil = 16,
+			recoil = 26,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
 			suppression = 10,
-			concealment = 18
+			concealment = 15
 		}
 		self.ak5.stats_modifiers = {
 			damage = 1
@@ -2137,12 +2130,11 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			equip = 0.6
 		}
 		
-		self.m16.CLIP_AMMO_MAX = 30
-		self.m16.NR_CLIPS_MAX = 3
-		self.m16.AMMO_MAX = self.m16.CLIP_AMMO_MAX * self.m16.NR_CLIPS_MAX
+		self.m16.CLIP_AMMO_MAX = 20
+		self.m16.AMMO_MAX = 140
 		self.m16.AMMO_PICKUP = {
-			0.897,
-			3.148
+			4,
+			6
 		}
 		
 		self.m16.spread = {
@@ -2162,16 +2154,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.m16.stats = {
 			zoom = 4,
 			total_ammo_mod = 21,
-			damage = 94,
+			damage = 110,
 			alert_size = 7,
-			spread = 15,
+			spread = 25,
 			spread_moving = 13,
-			recoil = 9,
+			recoil = 26,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
 			suppression = 10,
-			concealment = 17
+			concealment = 10
 		}
 		self.m16.stats_modifiers = {
 			damage = 1
@@ -2194,11 +2186,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.komodo.CLIP_AMMO_MAX = 30
-		self.komodo.NR_CLIPS_MAX = 5
-		self.komodo.AMMO_MAX = self.komodo.CLIP_AMMO_MAX * self.komodo.NR_CLIPS_MAX
+		self.komodo.AMMO_MAX = 210
 		self.komodo.AMMO_PICKUP = {
-			4.5,
-			8.25
+			6,
+			10
 		}
 		
 		self.komodo.spread = {
@@ -2218,16 +2209,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.komodo.stats = {
 			zoom = 1,
 			total_ammo_mod = 21,
-			damage = 58,
+			damage = 80,
 			alert_size = 8,
-			spread = 16,
+			spread = 22,
 			spread_moving = 15,
-			recoil = 14,
+			recoil = 26,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 12,
-			concealment = 26
+			suppression = 10,
+			concealment = 20
 		}
 		self.komodo.stats_modifiers = {
 			damage = 1
@@ -2250,11 +2241,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.corgi.CLIP_AMMO_MAX = 30
-		self.corgi.NR_CLIPS_MAX = 5
-		self.corgi.AMMO_MAX = self.corgi.CLIP_AMMO_MAX * self.corgi.NR_CLIPS_MAX
+		self.corgi.AMMO_MAX = 210
 		self.corgi.AMMO_PICKUP = {
-			4.50,
-			8.25
+			6,
+			10
 		}
 		
 		self.corgi.spread = {
@@ -2274,16 +2264,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.corgi.stats = {
 			zoom = 1,
 			total_ammo_mod = 21,
-			damage = 58,
+			damage = 80,
 			alert_size = 8,
-			spread = 18,
+			spread = 19,
 			spread_moving = 15,
-			recoil = 18,
+			recoil = 26,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 12,
-			concealment = 20
+			suppression = 10,
+			concealment = 15
 		}
 		self.corgi.stats_modifiers = {
 			damage = 1
@@ -2306,11 +2296,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.s552.CLIP_AMMO_MAX = 30
-		self.s552.NR_CLIPS_MAX = 8
-		self.s552.AMMO_MAX = self.s552.CLIP_AMMO_MAX * self.s552.NR_CLIPS_MAX
+		self.s552.AMMO_MAX = 300
 		self.s552.AMMO_PICKUP = {
-			7.20,
-			13.20
+			8,
+			16
 		}
 		
 		self.s552.spread = {
@@ -2330,16 +2319,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.s552.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 42,
+			damage = 50,
 			alert_size = 7,
-			spread = 10,
+			spread = 16,
 			spread_moving = 8,
-			recoil = 15,
+			recoil = 26,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 12,
-			concealment = 22
+			suppression = 14,
+			concealment = 30
 		}
 		self.s552.stats_modifiers = {
 			damage = 1
@@ -2362,11 +2351,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.scar.CLIP_AMMO_MAX = 20
-		self.scar.NR_CLIPS_MAX = 5
-		self.scar.AMMO_MAX = self.scar.CLIP_AMMO_MAX * self.scar.NR_CLIPS_MAX
+		self.scar.AMMO_MAX = 140
 		self.scar.AMMO_PICKUP = {
-			1.0,
-			3.5
+			4,
+			6
 		}
 		
 		self.scar.spread = {
@@ -2386,16 +2374,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.scar.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 98,
+			damage = 110,
 			alert_size = 7,
-			spread = 19,
+			spread = 26,
 			spread_moving = 15,
-			recoil = 12,
+			recoil = 22,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 8,
-			concealment = 8
+			suppression = 9,
+			concealment = 10
 		}
 		self.scar.stats_modifiers = {
 			damage = 1
@@ -2473,12 +2461,11 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			equip = 0.5
 		}
 		
-		self.flint.CLIP_AMMO_MAX = 35
-		self.flint.NR_CLIPS_MAX = 3
-		self.flint.AMMO_MAX = self.flint.CLIP_AMMO_MAX * self.flint.NR_CLIPS_MAX
+		self.flint.CLIP_AMMO_MAX = 30
+		self.flint.AMMO_MAX = 210
 		self.flint.AMMO_PICKUP = {
-			1.05,
-			3.67
+			6,
+			10
 		}
 		
 		self.flint.spread = {
@@ -2498,16 +2485,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.flint.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 99,
+			damage = 80,
 			alert_size = 7,
-			spread = 16,
+			spread = 24,
 			spread_moving = 11,
-			recoil = 16,
+			recoil = 26,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
 			suppression = 10,
-			concealment = 16
+			concealment = 10
 		}
 		self.flint.stats_modifiers = {
 			damage = 1
@@ -2520,7 +2507,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.tecci.CAN_TOGGLE_FIREMODE = true
 		self.tecci.auto = {
-			fire_rate = 0.1
+			fire_rate = 0.09
 		}
 		self.tecci.timers = {
 			reload_not_empty = 3.8,
@@ -2530,11 +2517,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.tecci.CLIP_AMMO_MAX = 100
-		self.tecci.NR_CLIPS_MAX = 2
-		self.tecci.AMMO_MAX = self.tecci.CLIP_AMMO_MAX * self.tecci.NR_CLIPS_MAX
+		self.tecci.AMMO_MAX = 400
 		self.tecci.AMMO_PICKUP = {
-			6,
-			11
+			8,
+			16
 		}
 		
 		self.tecci.spread = {
@@ -2559,16 +2545,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.tecci.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 40,
+			damage = 50,
 			alert_size = 7,
-			spread = 7,
+			spread = 14,
 			spread_moving = 10,
-			recoil = 14,
+			recoil = 25,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 10,
-			concealment = 20
+			suppression = 8,
+			concealment = 10
 		}
 		self.tecci.stats_modifiers = {
 			damage = 1
@@ -2591,11 +2577,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.l85a2.CLIP_AMMO_MAX = 30
-		self.l85a2.NR_CLIPS_MAX = 5
-		self.l85a2.AMMO_MAX = self.l85a2.CLIP_AMMO_MAX * self.l85a2.NR_CLIPS_MAX
+		self.l85a2.AMMO_MAX = 210
 		self.l85a2.AMMO_PICKUP = {
-			4.50,
-			8.25
+			6,
+			10
 		}
 		
 		self.l85a2.spread = {
@@ -2620,16 +2605,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.l85a2.stats = {
 			zoom = 1,
 			total_ammo_mod = 21,
-			damage = 58,
+			damage = 80,
 			alert_size = 8,
-			spread = 17,
+			spread = 22,
 			spread_moving = 15,
-			recoil = 16,
+			recoil = 26,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 12,
-			concealment = 16
+			suppression = 10,
+			concealment = 15
 		}
 		self.l85a2.stats_modifiers = {
 			damage = 1
@@ -2652,11 +2637,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.famas.CLIP_AMMO_MAX = 30
-		self.famas.NR_CLIPS_MAX = 8
-		self.famas.AMMO_MAX = self.famas.CLIP_AMMO_MAX * self.famas.NR_CLIPS_MAX
+		self.famas.AMMO_MAX = 300
 		self.famas.AMMO_PICKUP = {
-			7.2,
-			13.2
+			8,
+			16
 		}
 		
 		self.famas.spread = {
@@ -2676,16 +2660,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.famas.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 41,
+			damage = 50,
 			alert_size = 7,
-			spread = 10,
+			spread = 19,
 			spread_moving = 8,
-			recoil = 18,
+			recoil = 21,
 			value = 4,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 10,
-			concealment = 24
+			suppression = 14,
+			concealment = 25
 		}
 		self.famas.stats_modifiers = {
 			damage = 1
@@ -2708,11 +2692,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.vhs.CLIP_AMMO_MAX = 30
-		self.vhs.NR_CLIPS_MAX = 5
-		self.vhs.AMMO_MAX = self.vhs.CLIP_AMMO_MAX * self.vhs.NR_CLIPS_MAX
+		self.vhs.AMMO_MAX = 210
 		self.vhs.AMMO_PICKUP = {
-			4.50,
-			8.25
+			6,
+			10
 		}
 		
 		self.vhs.spread = {
@@ -2737,16 +2720,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.vhs.stats = {
 			zoom = 1,
 			total_ammo_mod = 21,
-			damage = 58,
+			damage = 80,
 			alert_size = 8,
-			spread = 16,
+			spread = 19,
 			spread_moving = 15,
-			recoil = 16,
+			recoil = 26,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 12,
-			concealment = 17
+			suppression = 10,
+			concealment = 15
 		}
 		self.vhs.stats_modifiers = {
 			damage = 1
@@ -2755,11 +2738,11 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		--Valkyria Rifle
 		self.asval.FIRE_MODE = "auto"
 		self.asval.fire_mode_data = {
-			fire_rate = 0.067
+			fire_rate = 0.11
 		}
 		self.asval.CAN_TOGGLE_FIREMODE = true
 		self.asval.auto = {
-			fire_rate = 0.067
+			fire_rate = 0.11
 		}
 		self.asval.timers = {
 			reload_not_empty = 2.6,
@@ -2768,12 +2751,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			equip = 0.5
 		}
 		
-		self.asval.CLIP_AMMO_MAX = 20
-		self.asval.NR_CLIPS_MAX = 11
-		self.asval.AMMO_MAX = self.asval.CLIP_AMMO_MAX * self.asval.NR_CLIPS_MAX
+		self.asval.AMMO_MAX = 180
 		self.asval.AMMO_PICKUP = {
-			6.6,
-			12.1
+			7,
+			12
 		}
 		
 		self.asval.spread = {
@@ -2789,6 +2770,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.asval.kick.crouching = self.asval.kick.standing
 		self.asval.kick.steelsight = self.asval.kick.standing
+		self.asval.stats = {
+			zoom = 1,
+			total_ammo_mod = 21,
+			damage = 80,
+			alert_size = 8,
+			spread = 24,
+			spread_moving = 15,
+			recoil = 26,
+			value = 9,
+			extra_ammo = 51,
+			reload = 11,
+			suppression = 12,
+			concealment = 17
+		}
+		
 		
 		--Gecko 7.62
 		self.galil.FIRE_MODE = "auto"
@@ -2807,11 +2803,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.galil.CLIP_AMMO_MAX = 30
-		self.galil.NR_CLIPS_MAX = 5
-		self.galil.AMMO_MAX = self.galil.CLIP_AMMO_MAX * self.galil.NR_CLIPS_MAX
+		self.galil.AMMO_MAX = 210
 		self.galil.AMMO_PICKUP = {
-			4.50,
-			8.25
+			6,
+			10
 		}
 		
 		self.galil.spread = {
@@ -2831,15 +2826,15 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.galil.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 57,
+			damage = 80,
 			alert_size = 7,
-			spread = 13,
+			spread = 26,
 			spread_moving = 10,
-			recoil = 18,
+			recoil = 20,
 			value = 4,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 7,
+			suppression = 10,
 			concealment = 15
 		}
 		self.galil.stats_modifiers = {
@@ -2981,11 +2976,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.fal.CLIP_AMMO_MAX = 20
-		self.fal.NR_CLIPS_MAX = 5
-		self.fal.AMMO_MAX = self.fal.CLIP_AMMO_MAX * self.fal.NR_CLIPS_MAX
+		self.fal.AMMO_MAX = 140
 		self.fal.AMMO_PICKUP = {
-			1.00,
-			3.50
+			4,
+			6
 		}
 		
 		self.fal.spread = {
@@ -3007,13 +3001,13 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			total_ammo_mod = 21,
 			damage = 98,
 			alert_size = 7,
-			spread = 18,
+			spread = 25,
 			spread_moving = 16,
-			recoil = 12,
+			recoil = 22,
 			value = 4,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 8,
+			suppression = 9,
 			concealment = 10
 		}
 		self.fal.stats_modifiers = {
@@ -3037,11 +3031,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.g3.CLIP_AMMO_MAX = 20
-		self.g3.NR_CLIPS_MAX = 5
-		self.g3.AMMO_MAX = self.g3.CLIP_AMMO_MAX * self.g3.NR_CLIPS_MAX
+		self.g3.AMMO_MAX = 140
 		self.g3.AMMO_PICKUP = {
-			1.00,
-			3.50
+			4,
+			6
 		}
 		
 		self.g3.spread = {
@@ -3061,16 +3054,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.g3.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 99,
+			damage = 110,
 			alert_size = 7,
-			spread = 18,
+			spread = 26,
 			spread_moving = 16,
-			recoil = 13,
+			recoil = 22,
 			value = 4,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 6,
-			concealment = 12
+			suppression = 9,
+			concealment = 10
 		}
 		self.g3.stats_modifiers = {
 			damage = 1
@@ -3093,11 +3086,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.akm_gold.CLIP_AMMO_MAX = 30
-		self.akm_gold.NR_CLIPS_MAX = 3
-		self.akm_gold.AMMO_MAX = self.akm_gold.CLIP_AMMO_MAX * self.akm_gold.NR_CLIPS_MAX
+		self.akm_gold.AMMO_MAX = 150
 		self.akm_gold.AMMO_PICKUP = {
-			0.90,
-			3.15
+			4,
+			6
 		}
 		
 		self.akm_gold.spread = {
@@ -3117,16 +3109,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.akm_gold.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 97,
+			damage = 110,
 			alert_size = 7,
-			spread = 16,
+			spread = 24,
 			spread_moving = 14,
-			recoil = 12,
+			recoil = 26,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 8,
-			concealment = 11
+			suppression = 9,
+			concealment = 10
 		}
 		self.akm_gold.stats_modifiers = {
 			damage = 1
@@ -5730,8 +5722,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.r870.CLIP_AMMO_MAX = 6
-		self.r870.NR_CLIPS_MAX = 7
-		self.r870.AMMO_MAX = self.r870.CLIP_AMMO_MAX * self.r870.NR_CLIPS_MAX
+		self.r870.AMMO_MAX = 50
 		self.r870.AMMO_PICKUP = {
 			0.42,
 			1.47
@@ -5764,16 +5755,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.r870.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 90,
+			damage = 160,
 			alert_size = 7,
 			spread = 11,
 			spread_moving = 12,
-			recoil = 9,
+			recoil = 26,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 5,
-			concealment = 11
+			suppression = 3,
+			concealment = 20
 		}
 		self.r870.stats_modifiers = {
 			damage = 1
@@ -5798,12 +5789,11 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			equip = 0.6
 		}
 		
-		self.saiga.CLIP_AMMO_MAX = 7
-		self.saiga.NR_CLIPS_MAX = 10
-		self.saiga.AMMO_MAX = self.saiga.CLIP_AMMO_MAX * self.saiga.NR_CLIPS_MAX
+		self.saiga.CLIP_AMMO_MAX = 8
+		self.saiga.AMMO_MAX = 60
 		self.saiga.AMMO_PICKUP = {
-			3.5,
-			5.25
+			5,
+			6
 		}
 		
 		self.saiga.spread = {
@@ -5823,16 +5813,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.saiga.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 42,
+			damage = 60,
 			alert_size = 7,
-			spread = 8,
+			spread = 11,
 			spread_moving = 8,
-			recoil = 12,
+			recoil = 16,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 5,
-			concealment = 13
+			suppression = 3,
+			concealment = 25
 		}
 		self.saiga.stats_modifiers = {
 			damage = 1
@@ -5860,8 +5850,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.huntsman.NR_CLIPS_MAX = 16
 		self.huntsman.AMMO_MAX = self.huntsman.CLIP_AMMO_MAX * self.huntsman.NR_CLIPS_MAX
 		self.huntsman.AMMO_PICKUP = {
-			0.32,
-			1.12
+			1,
+			2
 		}
 		
 		self.huntsman.spread = {
@@ -5881,21 +5871,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			}
 		}
 		self.huntsman.kick.crouching = self.huntsman.kick.standing
-		self.huntsman.kick.steelsight = self.huntsman.kick.standing
-		
+		self.huntsman.kick.steelsight = self.huntsman.kick.standing		
 		self.huntsman.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 155,
+			damage = 200,
 			alert_size = 7,
-			spread = 16,
+			spread = 11,
 			spread_moving = 16,
-			recoil = 10,
+			recoil = 2,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 2,
-			concealment = 7
+			suppression = 3,
+			concealment = 25
 		}
 		self.huntsman.stats_modifiers = {
 			damage = 1
@@ -5923,8 +5912,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.boot.CLIP_AMMO_MAX = 7
-		self.boot.NR_CLIPS_MAX = 3
-		self.boot.AMMO_MAX = self.boot.CLIP_AMMO_MAX * self.boot.NR_CLIPS_MAX
+		self.boot.AMMO_MAX = 28
 		self.boot.AMMO_PICKUP = {
 			0.2,
 			0.735
@@ -5957,11 +5945,11 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.boot.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 155,
+			damage = 200,
 			alert_size = 7,
-			spread = 13,
+			spread = 11,
 			spread_moving = 12,
-			recoil = 8,
+			recoil = 2,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
@@ -5978,11 +5966,11 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		--M1014
 		self.benelli.FIRE_MODE = "single"
 		self.benelli.fire_mode_data = {
-			fire_rate = 0.14
+			fire_rate = 0.139
 		}
 		self.benelli.CAN_TOGGLE_FIREMODE = false
 		self.benelli.single = {
-			fire_rate = 0.14
+			fire_rate = 0.139
 		}
 		self.benelli.timers = {
 			unequip = 0.85,
@@ -5990,11 +5978,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.benelli.CLIP_AMMO_MAX = 8
-		self.benelli.NR_CLIPS_MAX = 8
-		self.benelli.AMMO_MAX = self.benelli.CLIP_AMMO_MAX * self.benelli.NR_CLIPS_MAX
+		self.benelli.AMMO_MAX = 70
 		self.benelli.AMMO_PICKUP = {
-			3.2,
-			4.8
+			4,
+			5
 		}
 		
 		self.benelli.spread = {
@@ -6014,7 +6001,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.benelli.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 55,
+			damage = 110,
 			alert_size = 7,
 			spread = 8,
 			spread_moving = 7,
@@ -6022,8 +6009,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 6,
-			concealment = 12
+			suppression = 3,
+			concealment = 20
 		}
 		self.benelli.stats_modifiers = {
 			damage = 1
@@ -6045,12 +6032,11 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			equip = 0.55
 		}
 		
-		self.ksg.CLIP_AMMO_MAX = 14
-		self.ksg.NR_CLIPS_MAX = 3
-		self.ksg.AMMO_MAX = self.ksg.CLIP_AMMO_MAX * self.ksg.NR_CLIPS_MAX
+		self.ksg.CLIP_AMMO_MAX = 10
+		self.ksg.AMMO_MAX = 50
 		self.ksg.AMMO_PICKUP = {
-			0.42,
-			1.47
+			2,
+			3
 		}
 		
 		self.ksg.spread = {
@@ -6080,16 +6066,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.ksg.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 90,
+			damage = 160,
 			alert_size = 7,
-			spread = 12,
+			spread = 11,
 			spread_moving = 12,
-			recoil = 12,
+			recoil = 26,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 5,
-			concealment = 22
+			suppression = 3,
+			concealment = 20
 		}
 		self.ksg.stats_modifiers = {
 			damage = 1
@@ -6115,11 +6101,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.aa12.CLIP_AMMO_MAX = 8
-		self.aa12.NR_CLIPS_MAX = 9
-		self.aa12.AMMO_MAX = self.aa12.CLIP_AMMO_MAX * self.aa12.NR_CLIPS_MAX
+		self.aa12.AMMO_MAX = 80
 		self.aa12.AMMO_PICKUP = {
-			3.6,
-			5.4
+			5,
+			6
 		}
 		
 		self.aa12.spread = {
@@ -6139,16 +6124,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.aa12.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 42,
+			damage = 60,
 			alert_size = 7,
-			spread = 8,
+			spread = 11,
 			spread_moving = 8,
-			recoil = 12,
+			recoil = 16,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 5,
-			concealment = 9
+			suppression = 3,
+			concealment = 20
 		}
 		self.aa12.stats_modifiers = {
 			damage = 1
@@ -6171,12 +6156,11 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			equip = 0.85
 		}
 		
-		self.spas12.CLIP_AMMO_MAX = 6
-		self.spas12.NR_CLIPS_MAX = 11
-		self.spas12.AMMO_MAX = self.spas12.CLIP_AMMO_MAX * self.spas12.NR_CLIPS_MAX
+		self.spas12.CLIP_AMMO_MAX = 8
+		self.spas12.AMMO_MAX = 70
 		self.spas12.AMMO_PICKUP = {
-			3.3,
-			4.95
+			4,
+			5
 		}
 		
 		self.spas12.spread = {
@@ -6201,16 +6185,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.spas12.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 55,
+			damage = 110,
 			alert_size = 7,
-			spread = 8,
+			spread = 11,
 			spread_moving = 8,
-			recoil = 12,
+			recoil = 26,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 5,
-			concealment = 14
+			suppression = 3,
+			concealment = 20
 		}
 		self.spas12.stats_modifiers = {
 			damage = 1
@@ -6235,11 +6219,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.b682.CLIP_AMMO_MAX = 2
-		self.b682.NR_CLIPS_MAX = 14
-		self.b682.AMMO_MAX = self.b682.CLIP_AMMO_MAX * self.b682.NR_CLIPS_MAX
+		self.b682.AMMO_MAX = 34
 		self.b682.AMMO_PICKUP = {
-			0.28,
-			0.98
+			1,
+			2
 		}
 		
 		self.b682.spread = {
@@ -6264,16 +6247,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.b682.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 155,
+			damage = 200,
 			alert_size = 7,
-			spread = 16,
+			spread = 11,
 			spread_moving = 16,
-			recoil = 8,
+			recoil = 2,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 2,
-			concealment = 5
+			suppression = 3,
+			concealment = 25
 		}
 		self.b682.stats_modifiers = {
 			damage = 1

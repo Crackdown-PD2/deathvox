@@ -35,48 +35,95 @@ local logic_variants = {
 local security_variant = logic_variants.security
 function CopBrain:post_init()
 	CopBrain._logic_variants.deathvox_shield = clone(security_variant)
-	CopBrain._logic_variants.deathvox_shield.attack = ShieldLogicAttack
 	CopBrain._logic_variants.deathvox_shield.intimidated = nil
 	CopBrain._logic_variants.deathvox_shield.flee = nil
 	
-	CopBrain._logic_variants.deathvox_heavyar = security_variant
-	CopBrain._logic_variants.deathvox_lightar = security_variant
-	CopBrain._logic_variants.deathvox_medic = security_variant
-	CopBrain._logic_variants.deathvox_guard = security_variant
-	CopBrain._logic_variants.deathvox_gman = security_variant
-	CopBrain._logic_variants.deathvox_lightshot = security_variant
-	CopBrain._logic_variants.deathvox_heavyshot = security_variant
+	CopBrain._logic_variants.deathvox_heavyar = clone(security_variant)
+	CopBrain._logic_variants.deathvox_lightar = clone(security_variant)
+	CopBrain._logic_variants.deathvox_medic = clone(security_variant)
+	CopBrain._logic_variants.deathvox_guard = clone(security_variant)
+	CopBrain._logic_variants.deathvox_gman = clone(security_variant)
+	CopBrain._logic_variants.deathvox_lightshot = clone(security_variant)
+	CopBrain._logic_variants.deathvox_heavyshot = clone(security_variant)
 	
 	CopBrain._logic_variants.deathvox_guarddozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_guarddozer.attack = TankCopLogicAttack
 	
 	CopBrain._logic_variants.deathvox_taser = clone(security_variant)
 	CopBrain._logic_variants.deathvox_taser.attack = TaserLogicAttack
-	CopBrain._logic_variants.deathvox_sniper_assault = security_variant
+	CopBrain._logic_variants.deathvox_taser.travel = TaserLogicTravel
+	CopBrain._logic_variants.deathvox_sniper_assault = clone(security_variant)
 	CopBrain._logic_variants.deathvox_cloaker = clone(security_variant)
 	CopBrain._logic_variants.deathvox_cloaker.idle = SpoocLogicIdle
 	CopBrain._logic_variants.deathvox_cloaker.attack = SpoocLogicAttack
-	CopBrain._logic_variants.deathvox_grenadier = security_variant
+	CopBrain._logic_variants.deathvox_cloaker.travel = SpoocLogicTravel
+	CopBrain._logic_variants.deathvox_grenadier = clone(security_variant)
 	
 	CopBrain._logic_variants.deathvox_greendozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_greendozer.attack = TankCopLogicAttack
 	CopBrain._logic_variants.deathvox_blackdozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_blackdozer.attack = TankCopLogicAttack
 	CopBrain._logic_variants.deathvox_lmgdozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_lmgdozer.attack = TankCopLogicAttack
 	CopBrain._logic_variants.deathvox_medicdozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_medicdozer.attack = TankCopLogicAttack
 
-	CopBrain._logic_variants.deathvox_cop_pistol = security_variant
-	CopBrain._logic_variants.deathvox_cop_revolver = security_variant
-	CopBrain._logic_variants.deathvox_cop_shotgun = security_variant
-	CopBrain._logic_variants.deathvox_cop_smg = security_variant
+	CopBrain._logic_variants.deathvox_cop_pistol = clone(security_variant)
+	CopBrain._logic_variants.deathvox_cop_revolver = clone(security_variant)
+	CopBrain._logic_variants.deathvox_cop_shotgun = clone(security_variant)
+	CopBrain._logic_variants.deathvox_cop_smg = clone(security_variant)
 	
-	CopBrain._logic_variants.deathvox_fbi_hrt = security_variant
-	CopBrain._logic_variants.deathvox_fbi_veteran = security_variant
-	CopBrain._logic_variants.deathvox_fbi_rookie = security_variant
+	CopBrain._logic_variants.deathvox_fbi_hrt = clone(security_variant)
+	CopBrain._logic_variants.deathvox_fbi_veteran = clone(security_variant)
+	CopBrain._logic_variants.deathvox_fbi_rookie = clone(security_variant)
 
 	old_init(self)
+end
+
+function CopBrain:on_nav_link_unregistered(element_id)
+	if self._logic_data.pathing_results then
+		local failed_search_ids = nil
+
+		for path_name, path in pairs(self._logic_data.pathing_results) do
+			if type(path) == "table" and path[1] and type(path[1]) ~= "table" then
+				for i, nav_point in ipairs(path) do
+					if not nav_point.x and nav_point.script_data and nav_point:script_data().element._id == element_id then
+						failed_search_ids = failed_search_ids or {}
+						failed_search_ids[path_name] = true
+
+						break
+					end
+				end
+			end
+		end
+
+		if failed_search_ids then
+			for search_id, _ in pairs(failed_search_ids) do
+				self._logic_data.pathing_results[search_id] = "failed"
+			end
+		end
+	end
+
+	local paths = self._current_logic._get_all_paths and self._current_logic._get_all_paths(self._logic_data)
+
+	if not paths then
+		return
+	end
+
+	local verified_paths = {}
+
+	for path_name, path in pairs(paths) do
+		local path_is_ok = true
+
+		for i, nav_point in ipairs(path) do
+			if not nav_point.x and nav_point.script_data and nav_point:script_data().element._id == element_id then
+				path_is_ok = false
+
+				break
+			end
+		end
+
+		if path_is_ok then
+			verified_paths[path_name] = path
+		end
+	end
+
+	self._current_logic._set_verified_paths(self._logic_data, verified_paths)
 end
 
 function CopBrain:convert_to_criminal(mastermind_criminal)

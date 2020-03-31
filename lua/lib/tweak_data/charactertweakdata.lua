@@ -159,7 +159,8 @@ function CharacterTweakData:get_ai_group_type()
 	--map_faction_override["vit"] = "murky"
 	--map_faction_override["des"] = "murky"
 	
-	--Reaper faction overrides begin here.	
+	--Reaper faction overrides begin here.
+	--Federales faction overrides begin here.
 	--Halloween overrides begin here.
   
 	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
@@ -208,23 +209,29 @@ function CharacterTweakData:_presets(tweak_data)
             smoke = true
         },
         swat = {
-            follow_me = true,
-            clear = true,
-            ready = true,
-            contact = true,
-            suppress = true,
-            smoke = true,
-            push = true,
-            open_fire = true,
-            retreat = true,
-            deathguard = true,
-            go_go = true,
-            aggressive = true,
-            follow_me = true,
-            clear_whisper = true,
-            look_for_angle = true,
-            flash_grenade = true,
-            smoke = true
+            entry = true,
+			aggressive = true,
+			enemyidlepanic = true,
+			retreat = true,
+			contact = true,
+			clear = true,
+			clear_whisper = true,
+			go_go = true,
+			push = true,
+			reload = true,
+			look_for_angle = true,
+			ecm = true,
+			saw = true,
+			trip_mines = true,
+			sentry = true,
+			ready = true,
+			smoke = true,
+			flash_grenade = true,
+			follow_me = true,
+			deathguard = true,
+			open_fire = true,
+			suppress = true,
+			dodge = true
         },
         geeeeeman = {
             follow_me = true,
@@ -247,24 +254,49 @@ function CharacterTweakData:_presets(tweak_data)
             smoke = true
         },
         shield = {
-            follow_me = true,
-            clear = true,
-            ready = true,
-            contact = true,
-            suppress = true,
-            smoke = true,
-            push = true,
-            open_fire = true,
-            retreat = true,
-            deathguard = true,
-            go_go = true,
-            aggressive = true,
-            follow_me = true,
-            clear_whisper = true,
-            look_for_angle = true,
-            flash_grenade = true,
-            smoke = true
-        }
+            entry = true,
+			aggressive = true,
+			enemyidlepanic = true,
+			retreat = true,
+			contact = true,
+			clear = true,
+			clear_whisper = true,
+			go_go = true,
+			push = true,
+			reload = true,
+			look_for_angle = true,
+			ecm = true,
+			saw = true,
+			trip_mines = true,
+			sentry = true,
+			ready = true,
+			follow_me = true,
+			deathguard = true,
+			open_fire = true,
+			suppress = true
+        },
+		bulldozer = {
+			contact = true,
+			aggressive = true,
+			retreat = true,
+			approachingspecial = true
+			
+		},
+		taser = {
+			contact = true,
+			aggressive = true,
+			retreat = true,
+			approachingspecial = true
+		},
+		medic = {
+			aggressive = true,
+			contact = true
+		},
+		spooc = {
+			cloakercontact = true,
+			go_go = true, --only used for russian cloaker
+			cloakeravoidance = true --only used for russian cloaker
+		}
 	}
 	presets.health_tables = {
 		deathvox_guard = {  -- mk 1 values complete. Consistent below CD.
@@ -511,7 +543,7 @@ function CharacterTweakData:_presets(tweak_data)
 
 -- Begin new movespeed presets.
 
-	presets.move_speed.shield_vf = { --custom shield move speed preset, shields never use anything except crouching cbt stances so it shouldn't be a problem
+	presets.move_speed.shield_vf = { --custom shield move speed preset, note shields never use anything except crouching cbt stances.
 		stand = {
 			walk = {
 				ntl = {
@@ -863,13 +895,13 @@ function CharacterTweakData:_presets(tweak_data)
 		is_tank_smg = {}, -- used for medic dozer. Clones smg.
 		is_bullpup = {}, -- clones light rifle.
 		is_sniper = {}, -- initializing sniper.
-		is_assault_sniper = {} -- initializing assault sniper preset.
+		is_assault_sniper = {} -- initializing assault sniper preset. Not in use.
 	}]]--
 	presets.weapon.deathvox = deep_clone(presets.weapon.deathwish)
 	presets.weapon.deathvox.is_revolver = { -- used by medics.
 		aim_delay = { -- mark 3 values.
-			0,
-			0
+			1.2,
+			1.2
 		},
 		focus_delay = 10, -- validated, unchanged.
 		focus_dis = 200,
@@ -983,7 +1015,7 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.weapon.deathvox.is_pistol = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish.
 		aim_delay = {
 			0.1,
-			0.1
+			0.3
 		},
 		focus_delay = 2, --compare to vanilla expert preset's 1
 		focus_dis = 200,
@@ -1111,8 +1143,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.deathvox.is_shotgun_pump = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish. Assumes CD base damage 500. Extremely dangerous close range, less so further out. Slower to fire.
 		aim_delay = {
-			0,
-			0
+			1.2,
+			1.5
 		},
 		focus_delay = 5, -- re-added from lower difficulties.
 		focus_dis = 200,
@@ -1222,8 +1254,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.deathvox.is_shotgun_mag = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish. Assumes CD base damage 225. The danger isn't the damage, it's the low recoil! Extremely hazardous at close range.
 		aim_delay = {
-			0,
-			0
+			1.2,
+			1.5
 		},
 		focus_delay = 5, -- re-added from lower difficulties.
 		focus_dis = 200,
@@ -1334,8 +1366,8 @@ function CharacterTweakData:_presets(tweak_data)
 
 	presets.weapon.deathvox.is_light_rifle = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish.
 		aim_delay = {
-			0,
-			0
+			0.3,
+			0.3
 		},
 		focus_delay = 3, -- Re-added from lower difficulties.
 		focus_dis = 200,
@@ -1473,8 +1505,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.deathvox.is_heavy_rifle = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish.
 		aim_delay = { --has slight aim delay compared to light rifles
-			0.1,
-			0.1
+			0.3,
+			0.4
 		},
 		focus_delay = 5, -- Re-added from lower difficulties, increased for heavy rifle to give longer exposure times at distance, still more accurate and powerful than the light rifle
 		focus_dis = 200,
@@ -1624,8 +1656,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.deathvox.is_light_shotgun = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish.
 		aim_delay = {
-			0,
-			0
+			0.6,
+			0.9
 		},
 		focus_delay = 3.5, -- re-added from lower difficulties, but reduced for light shotgunner, altered from previous 4 value to further distinguish light shotgunners
 		focus_dis = 200,
@@ -1735,8 +1767,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.deathvox.is_heavy_shotgun = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish. Heavy Shotgunner has higher focal stats.
 		aim_delay = { --has aim delay compared to the light
-			0.1,
-			0.1
+			0.6,
+			0.9
 		},
 		focus_delay = 5, -- focus delay returned from lower difficulties.
 		focus_dis = 200,
@@ -1846,8 +1878,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.deathvox.is_smg = { -- mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish. Currently copies medidozer values.
 		aim_delay = {
-			0,
-			0.1 --re-adding aim delay from lower difficulties.
+			0.2,
+			0.3 --re-adding aim delay from lower difficulties.
 		},
 		focus_delay = 2.5, --re-adding slight focus delay from lower difficulties, increased from previous 1 value
 		focus_dis = 200,
@@ -1979,8 +2011,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.deathvox.mini = { -- initial draft values for first pass. Values placeholder until detailed rof calc pass.
 		aim_delay = {
-			0.1,
-			0.2
+			1,
+			1.5
 		},
 		focus_delay = 4,
 		focus_dis = 800, -- reexamine
@@ -2097,8 +2129,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.deathvox.is_lmg = { --mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish. Assumes 100 base damage. Going to treat it as a bullethose, making it much more dangerous to approach directly.
 		aim_delay = { 
-			0.1,
-			0.1
+			1,
+			1.5
 		},
 		focus_delay = 5, --increased focus delay from 3 to 5
 		focus_dis = 200,
@@ -2231,8 +2263,8 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.weapon.deathvox_sniper = {is_rifle = {}, is_assault_sniper = {}}
 	presets.weapon.deathvox_sniper.is_rifle = { -- mark 3 values complete. basis is presets.weapon.sniper. For non-assault wave snipers. Headings revised to fit standard format.
 		aim_delay = {
-			0,
-			0.1
+			1,
+			1.5
 		},
 		focus_delay = 7,
 		focus_dis = 200,
@@ -2308,8 +2340,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.sniper.is_rifle = { -- directly replaces sniper weapon preset to match deathvox, for proper scaling purposes.
 		aim_delay = {
-			0,
-			0.1
+			1,
+			1.5
 		},
 		focus_delay = 7,
 		focus_dis = 200,
@@ -2444,8 +2476,8 @@ function CharacterTweakData:_presets(tweak_data)
 	}
 	presets.weapon.deathvox.akimbo_pistol = { --mark 7 values. Reworks stat bases to be closer to actually functional presets, and not deathwish. Needs damage increase???
 		aim_delay = {
-			0,
-			0
+			0.2,
+			0.4
 		},
 		focus_delay = 0,
 		focus_dis = 200,
@@ -2659,6 +2691,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard.headshot_dmg_mul = 3
 	self.deathvox_guard.weapon = deep_clone(presets.weapon.deathvox)
 	self.deathvox_guard.access = "security" --fixes SO problem
+	self.deathvox_guard.chatter = presets.enemy_chatter.cop
 	self.deathvox_guard.die_sound_event = "x01a_any_3p" -- pain lines are death lines for these units.
 	table.insert(self._enemy_list, "deathvox_guard")
 
@@ -2713,7 +2746,6 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightshot.speech_prefix_p1 = "l2d"
 	self.deathvox_lightshot.speech_prefix_p2 = nil
 	self.deathvox_lightshot.speech_prefix_count = nil
-	self.deathvox_lightshot.die_sound_event = "x01a_any_3p" --fucking l2d and having pain lines but not death lines
 	self.deathvox_lightshot.detection = presets.detection.deathvox
 	self.deathvox_lightshot.ignore_medic_revive_animation = true  -- no revive animation. may require curving on lower diffs.
 	self.deathvox_lightshot.suppression = presets.suppression.hard_agg -- should be hard_def on N through OVK.
@@ -2799,7 +2831,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.speech_prefix_p1 = "l5d"
 	self.deathvox_shield.speech_prefix_p2 = nil
 	self.deathvox_shield.speech_prefix_count = nil
-	self.deathvox_shield.tags = {"shield"} -- just to be sure it's being applied.
+	--self.deathvox_shield.tags = {"shield"} -- commented out as it was actually breaking the tags
 	self.deathvox_shield.detection = presets.detection.deathvox
 	self.deathvox_shield.ignore_medic_revive_animation = true  --no revive animation. In base.
 	self.deathvox_shield.damage.hurt_severity = presets.hurt_severities.only_explosion_hurts
@@ -2824,7 +2856,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_shield")
 	
 	self.deathvox_medic = deep_clone(self.medic)
-	self.deathvox_medic.tags = {"medic"} --just making sure tag applies.
+	--self.deathvox_medic.tags = {"medic"} -- commented out as it was actually breaking the tags
 	self.deathvox_medic.detection = presets.detection.deathvox
 	self.deathvox_medic.ignore_medic_revive_animation = true  --no revive animation. may require curving on lower diffs.
 	self.deathvox_medic.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- added to make code consistent.
@@ -2850,10 +2882,12 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic.is_special_unit = "medic"
 	self.deathvox_medic.access = "any"
 	self.deathvox_medic.no_retreat = false
+	self.deathvox_medic.chatter = presets.enemy_chatter.medic
 	table.insert(self._enemy_list, "deathvox_medic") 
 
 	self.deathvox_taser = deep_clone(self.taser)
-	self.deathvox_taser.tags = {"taser"} -- just making sure tag applies.
+	--self.deathvox_taser.tags = {"taser"} -- commented out as it was actually breaking the tags
+	table.insert(self.deathvox_taser.tags, "takedown")
 	self.deathvox_taser.detection = presets.detection.deathvox
 	self.deathvox_taser.ignore_medic_revive_animation = true  --no revive animation. may require curving on lower diffs.
 	self.deathvox_taser.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire -- may require curving on lower diffs.
@@ -2866,6 +2900,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.ecm_hurts = {
 		ears = {min_duration = 6, max_duration = 8} -- in base.
 	}
+	self.deathvox_taser.chatter = presets.enemy_chatter.taser
 	self.deathvox_taser.dodge = presets.dodge.deathvox -- should be athletic on MH/DW, average on VH/OVK, heavy on N/H. 
 	self.deathvox_taser.deathguard = true 
 	self.deathvox_taser.no_arrest = true
@@ -2879,7 +2914,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_taser") 
 
 	self.deathvox_cloaker = deep_clone(self.spooc)
-	self.deathvox_cloaker.tags = {"spooc"} -- just making sure tag applies.
+	--self.deathvox_cloaker.tags = {"spooc"}-- commented out as it was actually breaking the tags
+	table.insert(self.deathvox_cloaker.tags, "takedown")
 	self.deathvox_cloaker.detection = presets.detection.deathvox
 	self.deathvox_cloaker.ignore_medic_revive_animation = true  --no revive animation. same on all diffs.
 	self.deathvox_cloaker.suppression = nil
@@ -2899,12 +2935,13 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker.is_special_unit = "spooc"
 	self.deathvox_cloaker.access = "any"
 	self.deathvox_cloaker.no_retreat = false
+	self.deathvox_cloaker.chatter = presets.enemy_chatter.spooc
 	self.deathvox_cloaker.spooc_attack_use_smoke_chance = 0
 
 	table.insert(self._enemy_list, "deathvox_cloaker") 
 
 	self.deathvox_sniper = deep_clone(self.sniper)
-	self.deathvox_sniper.tags = {"sniper"} -- just making sure tag applies.
+	--self.deathvox_sniper.tags = {"sniper"} -- commented out as it was actually breaking the tags
 	self.deathvox_sniper.detection = presets.detection.deathvox
 	self.deathvox_sniper.ignore_medic_revive_animation = false  -- revive animation.
 	self.deathvox_sniper.suppression = nil -- same on all diffs.
@@ -2934,7 +2971,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_sniper_assault")
 
 	self.deathvox_tank = deep_clone(self.tank)
-	self.deathvox_tank.tags = {"tank"} -- just making sure tag applies.
+	--self.deathvox_tank.tags = {"tank"} -- commented out as it was actually breaking the tags
+	self.deathvox_tank.chatter = presets.enemy_chatter.bulldozer
 	self.deathvox_tank.detection = presets.detection.deathvox
 	self.deathvox_tank.ignore_medic_revive_animation = false  -- revive animation.
 	self.deathvox_tank.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase -- same on all diffs.
@@ -2957,7 +2995,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_tank.no_retreat = false
 
 	self.deathvox_guarddozer = deep_clone(self.security)
-	self.deathvox_guarddozer.tags = {"tank"} -- just making sure tag applies.
+	--self.deathvox_guarddozer.tags = {"tank"} -- commented out as it was actually breaking the tags
 	self.deathvox_guarddozer.ignore_medic_revive_animation = false  -- revive animation.
 	self.deathvox_guarddozer.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase -- same on all diffs.
 	self.deathvox_guarddozer.suppression = nil
@@ -2983,11 +3021,13 @@ function CharacterTweakData:_init_deathvox(presets)
 	
 	self.deathvox_greendozer = deep_clone(self.deathvox_tank)
 	self.deathvox_greendozer.use_factory = false -- Use a factory weapon
+	table.insert(self.deathvox_greendozer.tags, "takedown")
 	--self.deathvox_greendozer.factory_weapon_id = {"wpn_deathvox_greendozer"} 
 	self.deathvox_greendozer.access = "tank"
 	table.insert(self._enemy_list, "deathvox_greendozer")
 
 	self.deathvox_blackdozer = deep_clone(self.deathvox_tank)
+	table.insert(self.deathvox_blackdozer.tags, "takedown")
 	self.deathvox_blackdozer.use_factory = false -- Use a factory weapon
 	--self.deathvox_blackdozer.factory_weapon_id = {"wpn_deathvox_blackdozer"} 
 	self.deathvox_blackdozer.access = "tank"
@@ -3000,7 +3040,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_lmgdozer")
 	
 	self.deathvox_medicdozer = deep_clone(self.deathvox_tank)
-	self.deathvox_medicdozer.tags = {"tank", "medic"}
+	--self.deathvox_medicdozer.tags = {"tank", "medic"} -- commented out as it was actually breaking the tags
+	table.insert(self.deathvox_medicdozer.tags, "medic")
 	self.deathvox_medicdozer.use_factory = false -- Use a factory weapon
 	--self.deathvox_medicdozer.factory_weapon_id = {"wpn_deathvox_heavy_ar"} 
 	self.deathvox_medicdozer.dv_medic_heal = true -- don't touch, makes him use the death vox healing
@@ -3010,7 +3051,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_medicdozer")
 
 	self.deathvox_grenadier = deep_clone(presets.base)
-	self.deathvox_grenadier.tags = {"custom"}
+	self.deathvox_grenadier.tags = {"law", "custom", "special"}
 	self.deathvox_grenadier.experience = {}
 	self.deathvox_grenadier.weapon = deep_clone(presets.weapon.normal)
 	self.deathvox_grenadier.melee_weapon = "knife_1"
@@ -3076,32 +3117,28 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cop.deathguard = true
 	self.deathvox_cop.chatter = presets.enemy_chatter.cop
 	self.deathvox_cop.steal_loot = true
-	self.deathvox_cop.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
 	self.deathvox_cop.detection = presets.detection.deathvox
 
 	self.deathvox_cop_pistol = deep_clone(self.deathvox_cop)
 	self.deathvox_cop_pistol.use_factory = false
 	--self.deathvox_cop_pistol.factory_weapon_id = {"wpn_deathvox_cop_pistol"}
-	self.deathvox_cop_pistol.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_cop_pistol")
 	
 	self.deathvox_cop_revolver = deep_clone(self.deathvox_cop)
 	self.deathvox_cop_revolver.use_factory = false
 	--self.deathvox_cop_revolver.factory_weapon_id = {"wpn_deathvox_cop_revolver"}
-	self.deathvox_cop_revolver.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_cop_revolver")
 	
 	self.deathvox_cop_smg = deep_clone(self.deathvox_cop)
 	self.deathvox_cop_smg.HEALTH_INIT = 22 -- based on flak jacket model, revise if incorrect.
 	self.deathvox_cop_smg.use_factory = false
 	--self.deathvox_cop_smg.factory_weapon_id = {"wpn_deathvox_cop_smg"}
-	self.deathvox_cop_smg.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_cop_smg")
 	
 	self.deathvox_cop_shotgun = deep_clone(self.deathvox_cop)
 	self.deathvox_cop_shotgun.use_factory = false
 	--self.deathvox_cop_shotgun.factory_weapon_id = {"wpn_deathvox_cop_shotgun"}
-	self.deathvox_cop_shotgun.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
+	self.deathvox_cop_shotgun.die_sound_event = "x01a_any_3p" --pain lines are their death lines due to developer error
  	table.insert(self._enemy_list, "deathvox_cop_shotgun")
 	
 	self.deathvox_fbi_rookie = deep_clone(self.deathvox_cop_pistol) 
@@ -3110,7 +3147,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_fbi_rookie.surrender = presets.surrender.easy -- same on all diffs. cloned to all cop units.
 	self.deathvox_fbi_rookie.use_factory = false
 	--self.deathvox_fbi_rookie.factory_weapon_id = {"wpn_deathvox_cop_pistol"}
-	self.deathvox_fbi_rookie.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
+	self.deathvox_fbi_rookie.die_sound_event = "x01a_any_3p" --pain lines are their death lines due to developer error
  	table.insert(self._enemy_list, "deathvox_fbi_rookie")
 
 	self.deathvox_fbi_hrt = deep_clone(self.deathvox_cop_smg) -- note retains smg health.
@@ -3118,8 +3155,9 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_fbi_hrt.suppression = presets.suppression.hard_agg -- same on all diffs.
 	self.deathvox_fbi_hrt.surrender = presets.surrender.hard -- same on all diffs.
 	self.deathvox_fbi_hrt.use_factory = false
+	self.deathvox_fbi_hrt.chatter = presets.enemy_chatter.swat
 	--self.deathvox_fbi_hrt.factory_weapon_id = {"wpn_deathvox_cop_smg"}
-	self.deathvox_fbi_hrt.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
+	self.deathvox_fbi_hrt.die_sound_event = "x01a_any_3p" --pain lines are their death lines due to developer error
  	table.insert(self._enemy_list, "deathvox_fbi_hrt")
 	
 	self.deathvox_fbi_veteran = deep_clone(self.deathvox_cop_smg) -- note retains smg health.
@@ -3127,8 +3165,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_fbi_veteran.suppression = nil -- same on all diffs.
 	self.deathvox_fbi_veteran.surrender = nil -- same on all diffs.
 	self.deathvox_fbi_veteran.use_factory = false
+	self.deathvox_fbi_veteran.chatter = presets.enemy_chatter.swat
 	--self.deathvox_fbi_veteran.factory_weapon_id = {"wpn_deathvox_heavy_ar"}
-	self.deathvox_fbi_veteran.die_sound_event = "x01a_any_3p" --pain lines are their death lines because overkill are dumb dumbs
  	table.insert(self._enemy_list, "deathvox_fbi_veteran")
 	
 end
@@ -3275,7 +3313,41 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 	self.bolivian.HEALTH_INIT = 18
 	self.bolivian_indoors.HEALTH_INIT = 18
 	
--- bosses. To be populated.
+-- bosses.
+	self.mobster_boss.HEALTH_INIT = 200   --  Commissar boss.
+	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
+	self.mobster_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.mobster_boss.damage.can_be_tased = false
+	self.mobster_boss.ecm_vulnerability = 0
+	self.biker_boss.HEALTH_INIT = 200
+	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
+	self.biker_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
+	self.biker_boss.damage.can_be_tased = false
+	self.biker_boss.ecm_vulnerability = 0
+	self.hector_boss.HEALTH_INIT = 200
+	self.hector_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.hector_boss.damage.can_be_tased = false
+	self.hector_boss.dodge = self.presets.dodge.deathvoxninja
+	self.hector_boss.ecm_vulnerability = 0
+	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
+	self.hector_boss_no_armor.HEALTH_INIT = 15
+	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
+	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.HEALTH_INIT = 200
+	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
+	self.chavez_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
+	self.chavez_boss.damage.can_be_tased = false
+	self.chavez_boss.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.ecm_vulnerability = 0
+	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
+	self.drug_lord_boss.HEALTH_INIT = 200
+	self.drug_lord_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.drug_lord_boss.damage.can_be_tased = false
+	self.drug_lord_boss.ecm_vulnerability = 0
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavy_rifle)	
+	self.drug_lord_boss_stealth.HEALTH_INIT = 15
+	self.drug_lord_boss_stealth.weapon = deep_clone(self.presets.weapon.deathvox.is_revolver)
+	
 -- end NORMAL scripted unit alterations.
 	
 end -- end NORMAL specific tweaks.
@@ -3376,7 +3448,40 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	self.bolivian.HEALTH_INIT = 18
 	self.bolivian_indoors.HEALTH_INIT = 18
 	
--- bosses. To be populated.
+-- bosses.
+	self.mobster_boss.HEALTH_INIT = 200   --  Commissar boss.
+	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
+	self.mobster_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.mobster_boss.damage.can_be_tased = false
+	self.mobster_boss.ecm_vulnerability = 0
+	self.biker_boss.HEALTH_INIT = 200
+	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
+	self.biker_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
+	self.biker_boss.damage.can_be_tased = false
+	self.biker_boss.ecm_vulnerability = 0
+	self.hector_boss.HEALTH_INIT = 200
+	self.hector_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.hector_boss.damage.can_be_tased = false
+	self.hector_boss.dodge = self.presets.dodge.deathvoxninja
+	self.hector_boss.ecm_vulnerability = 0
+	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
+	self.hector_boss_no_armor.HEALTH_INIT = 15
+	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
+	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.HEALTH_INIT = 200
+	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
+	self.chavez_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
+	self.chavez_boss.damage.can_be_tased = false
+	self.chavez_boss.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.ecm_vulnerability = 0
+	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
+	self.drug_lord_boss.HEALTH_INIT = 200
+	self.drug_lord_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.drug_lord_boss.damage.can_be_tased = false
+	self.drug_lord_boss.ecm_vulnerability = 0
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavy_rifle)	
+	self.drug_lord_boss_stealth.HEALTH_INIT = 15
+	self.drug_lord_boss_stealth.weapon = deep_clone(self.presets.weapon.deathvox.is_revolver)
 	
 -- end HARD scripted unit alterations.	
 
@@ -3476,7 +3581,40 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 	self.bolivian.HEALTH_INIT = 24
 	self.bolivian_indoors.HEALTH_INIT = 24
 	
--- bosses. To be populated.	
+-- bosses.
+	self.mobster_boss.HEALTH_INIT = 500   --  Commissar boss.
+	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
+	self.mobster_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.mobster_boss.damage.can_be_tased = false
+	self.mobster_boss.ecm_vulnerability = 0
+	self.biker_boss.HEALTH_INIT = 500
+	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
+	self.biker_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
+	self.biker_boss.damage.can_be_tased = false
+	self.biker_boss.ecm_vulnerability = 0
+	self.hector_boss.HEALTH_INIT = 500
+	self.hector_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.hector_boss.damage.can_be_tased = false
+	self.hector_boss.dodge = self.presets.dodge.deathvoxninja
+	self.hector_boss.ecm_vulnerability = 0
+	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
+	self.hector_boss_no_armor.HEALTH_INIT = 15
+	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
+	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.HEALTH_INIT = 500
+	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
+	self.chavez_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
+	self.chavez_boss.damage.can_be_tased = false
+	self.chavez_boss.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.ecm_vulnerability = 0
+	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
+	self.drug_lord_boss.HEALTH_INIT = 500
+	self.drug_lord_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.drug_lord_boss.damage.can_be_tased = false
+	self.drug_lord_boss.ecm_vulnerability = 0
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavy_rifle)	
+	self.drug_lord_boss_stealth.HEALTH_INIT = 15
+	self.drug_lord_boss_stealth.weapon = deep_clone(self.presets.weapon.deathvox.is_revolver)
 	
 -- end VERY HARD scripted unit alterations.	
 	
@@ -3576,8 +3714,41 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	self.biker_escape.HEALTH_INIT = 24
 	self.bolivian.HEALTH_INIT = 24
 	self.bolivian_indoors.HEALTH_INIT = 24
-	
--- bosses. To be populated.
+
+-- bosses.
+	self.mobster_boss.HEALTH_INIT = 500   --  Commissar boss.
+	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
+	self.mobster_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.mobster_boss.damage.can_be_tased = false
+	self.mobster_boss.ecm_vulnerability = 0
+	self.biker_boss.HEALTH_INIT = 500
+	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
+	self.biker_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
+	self.biker_boss.damage.can_be_tased = false
+	self.biker_boss.ecm_vulnerability = 0
+	self.hector_boss.HEALTH_INIT = 500
+	self.hector_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.hector_boss.damage.can_be_tased = false
+	self.hector_boss.dodge = self.presets.dodge.deathvoxninja
+	self.hector_boss.ecm_vulnerability = 0
+	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
+	self.hector_boss_no_armor.HEALTH_INIT = 15
+	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
+	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.HEALTH_INIT = 500
+	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
+	self.chavez_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
+	self.chavez_boss.damage.can_be_tased = false
+	self.chavez_boss.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.ecm_vulnerability = 0
+	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
+	self.drug_lord_boss.HEALTH_INIT = 500
+	self.drug_lord_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.drug_lord_boss.damage.can_be_tased = false
+	self.drug_lord_boss.ecm_vulnerability = 0
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavy_rifle)	
+	self.drug_lord_boss_stealth.HEALTH_INIT = 15
+	self.drug_lord_boss_stealth.weapon = deep_clone(self.presets.weapon.deathvox.is_revolver)
 	
 -- end OVERKILL scripted unit alterations.	
 	
@@ -3678,8 +3849,41 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self.biker_escape.HEALTH_INIT = 32
 	self.bolivian.HEALTH_INIT = 32
 	self.bolivian_indoors.HEALTH_INIT = 32
-	
--- bosses. To be populated.	
+
+-- bosses.
+	self.mobster_boss.HEALTH_INIT = 600   --  Commissar boss.
+	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
+	self.mobster_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.mobster_boss.damage.can_be_tased = false
+	self.mobster_boss.ecm_vulnerability = 0
+	self.biker_boss.HEALTH_INIT = 600
+	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
+	self.biker_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
+	self.biker_boss.damage.can_be_tased = false
+	self.biker_boss.ecm_vulnerability = 0
+	self.hector_boss.HEALTH_INIT = 600
+	self.hector_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.hector_boss.damage.can_be_tased = false
+	self.hector_boss.dodge = self.presets.dodge.deathvoxninja
+	self.hector_boss.ecm_vulnerability = 0
+	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
+	self.hector_boss_no_armor.HEALTH_INIT = 15
+	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
+	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.HEALTH_INIT = 600
+	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
+	self.chavez_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
+	self.chavez_boss.damage.can_be_tased = false
+	self.chavez_boss.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.ecm_vulnerability = 0
+	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
+	self.drug_lord_boss.HEALTH_INIT = 600
+	self.drug_lord_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.drug_lord_boss.damage.can_be_tased = false
+	self.drug_lord_boss.ecm_vulnerability = 0
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavy_rifle)	
+	self.drug_lord_boss_stealth.HEALTH_INIT = 15
+	self.drug_lord_boss_stealth.weapon = deep_clone(self.presets.weapon.deathvox.is_revolver)
 	
 -- end MAYHEM scripted unit alterations.	
 	
@@ -3781,7 +3985,40 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	self.bolivian.HEALTH_INIT = 32
 	self.bolivian_indoors.HEALTH_INIT = 32
 	
--- bosses. To be populated.
+-- bosses
+	self.mobster_boss.HEALTH_INIT = 600   --  Commissar boss.
+	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
+	self.mobster_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.mobster_boss.damage.can_be_tased = false
+	self.mobster_boss.ecm_vulnerability = 0
+	self.biker_boss.HEALTH_INIT = 600
+	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
+	self.biker_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
+	self.biker_boss.damage.can_be_tased = false
+	self.biker_boss.ecm_vulnerability = 0
+	self.hector_boss.HEALTH_INIT = 600
+	self.hector_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.hector_boss.damage.can_be_tased = false
+	self.hector_boss.dodge = self.presets.dodge.deathvoxninja
+	self.hector_boss.ecm_vulnerability = 0
+	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
+	self.hector_boss_no_armor.HEALTH_INIT = 15
+	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
+	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.HEALTH_INIT = 600
+	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
+	self.chavez_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
+	self.chavez_boss.damage.can_be_tased = false
+	self.chavez_boss.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.ecm_vulnerability = 0
+	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
+	self.drug_lord_boss.HEALTH_INIT = 600
+	self.drug_lord_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.drug_lord_boss.damage.can_be_tased = false
+	self.drug_lord_boss.ecm_vulnerability = 0
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavy_rifle)	
+	self.drug_lord_boss_stealth.HEALTH_INIT = 15
+	self.drug_lord_boss_stealth.weapon = deep_clone(self.presets.weapon.deathvox.is_revolver)
 	
 -- end DEATH WISH scripted unit alterations.
 	
@@ -3806,12 +4043,12 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	
 -- NOTE material below this point iamgoofball legacy code. Identify purposes, clean, annotate as able.
 	
-
-	self:_multiply_weapon_delay(self.presets.weapon.normal, 0)
-	self:_multiply_weapon_delay(self.presets.weapon.good, 0)
-	self:_multiply_weapon_delay(self.presets.weapon.expert, 0)
-	self:_multiply_weapon_delay(self.presets.weapon.sniper, 0)
-	self:_multiply_weapon_delay(self.presets.weapon.gang_member, 0)
+	-- Just noticed this now, it removes the focus and aim delay from literally every single preset that isn't deathvox, this means a variety of scripted enemies have insanely better presets for no reason, so I've commented it out.
+	--self:_multiply_weapon_delay(self.presets.weapon.normal, 0)
+	--self:_multiply_weapon_delay(self.presets.weapon.good, 0)
+	--self:_multiply_weapon_delay(self.presets.weapon.expert, 0)
+	--self:_multiply_weapon_delay(self.presets.weapon.sniper, 0)
+	--self:_multiply_weapon_delay(self.presets.weapon.gang_member, 0)
 	
 	self.security = deep_clone(self.deathvox_guard) --  Requires further testing. May be fix for heist-specific crash tied to initial custom unit spawn.
 	self.gensec = deep_clone(self.deathvox_guard)
@@ -3865,31 +4102,48 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.bolivian_indoors.HEALTH_INIT = 48
 	
 -- bosses
---	self.mobster_boss.HEALTH_INIT = 900   --  Commissar boss.
---	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
---	self.mobster_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
---	self.mobster_boss.ecm_vulnerability = 0
---	self.biker_boss.HEALTH_INIT = 900
---	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
---	self.hector_boss.HEALTH_INIT = 900
---	self.hector_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
---	self.hector_boss.ecm_vulnerability = 0
---	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
---	self.hector_boss_no_armor.HEALTH_INIT = 15
---	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
---	self.chavez_boss.HEALTH_INIT = 900
---	self.chavez_boss.move_speed = presets.move_speed.deathvoxchavez
---	self.chavez_boss.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase
---	self.chavez_boss.ecm_vulnerability = 0
---	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
---	self.drug_lord_boss.HEALTH_INIT = 900
---	self.drug_lord_boss.hurt_severity = presets.hurt_severities.only_light_hurt_no_stuns
---	self.drug_lord_boss.ecm_vulnerability = 0
---	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavyar)	
---	self.drug_lord_boss_stealth.HEALTH_INIT = 15
---	self.drug_lord_boss_stealth.weapon = deep_clone(presets.weapon.deathvox.is_revolver)
+	self.mobster_boss.HEALTH_INIT = 900   --  Commissar boss.
+	self.mobster_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_lmg)
+	self.mobster_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.mobster_boss.damage.can_be_tased = false
+	self.mobster_boss.ecm_vulnerability = 0
+	self.biker_boss.HEALTH_INIT = 900
+	self.biker_boss.weapon = deep_clone(self.presets.weapon.deathvox.mini)	
+	self.biker_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
+	self.biker_boss.damage.can_be_tased = false
+	self.biker_boss.ecm_vulnerability = 0
+	self.hector_boss.HEALTH_INIT = 900
+	self.hector_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.hector_boss.damage.can_be_tased = false
+	self.hector_boss.dodge = self.presets.dodge.deathvoxninja
+	self.hector_boss.ecm_vulnerability = 0
+	self.hector_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_shotgun_mag)	
+	self.hector_boss_no_armor.HEALTH_INIT = 15
+	self.hector_boss_no_armor.weapon = deep_clone(self.presets.weapon.deathvox.is_pistol)
+	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.HEALTH_INIT = 900
+	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
+	self.chavez_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
+	self.chavez_boss.damage.can_be_tased = false
+	self.chavez_boss.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.ecm_vulnerability = 0
+	self.chavez_boss.weapon = deep_clone(self.presets.weapon.deathvox.akimbo_pistol)
+	self.drug_lord_boss.HEALTH_INIT = 900
+	self.drug_lord_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
+	self.drug_lord_boss.damage.can_be_tased = false
+	self.drug_lord_boss.ecm_vulnerability = 0
+	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox.is_heavy_rifle)	
+	self.drug_lord_boss_stealth.HEALTH_INIT = 15
+	self.drug_lord_boss_stealth.weapon = deep_clone(self.presets.weapon.deathvox.is_revolver)
 	
 -- end CRACKDOWN scripted unit alterations.
+
+-- Begin sliding enemies list
+	
+	--This can be added to every single law-marked enemy in the game and allows them to slide.
+	self.deathvox_fbi_veteran.can_slide = true
+	self.deathvox_lightshot.can_slide = true
+	self.deathvox_lightar.can_slide = true
 	
 end  -- end CRACKDOWN specific tweaks.
 
@@ -4001,7 +4255,6 @@ function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
 	self.deathvox_lightshot.SPEED_RUN = self.deathvox_lightshot.SPEED_RUN * run_mul
 	self.deathvox_shield.SPEED_RUN = self.deathvox_shield.SPEED_RUN * run_mul
 	self.deathvox_medic.SPEED_RUN = self.deathvox_medic.SPEED_RUN * run_mul
-	
 	self.deathvox_taser.SPEED_RUN = self.deathvox_taser.SPEED_RUN * run_mul
 	self.deathvox_cloaker.SPEED_RUN = self.deathvox_cloaker.SPEED_RUN * run_mul
 	self.deathvox_sniper_assault.SPEED_RUN = self.deathvox_sniper_assault.SPEED_RUN * run_mul
@@ -4055,8 +4308,14 @@ function CharacterTweakData:_set_characters_dodge_preset(preset)
 		"fbi",
 		"medic",
 		"taser",
-		"hector_boss_no_armor",
+		"bolivian",
 		"bolivian_indoors",
+		"mobster_boss",
+		"biker_boss",
+		"hector_boss",
+		"hector_boss_no_armor",
+		"chavez_boss",
+		"drug_lord_boss",
 		"drug_lord_boss_stealth",
 		"swat",
 		"deathvox_heavyar",
@@ -4245,7 +4504,6 @@ function CharacterTweakData:_init_region_murky() --will use these lines for now.
 		medic = "mdc"
 	}	
 end
-
 
 function CharacterTweakData:character_map()
 	local char_map = origin_charmap(self)

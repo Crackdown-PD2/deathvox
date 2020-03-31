@@ -835,6 +835,7 @@ function CopDamage:damage_bullet(attack_data)
 	
 	return result
 end
+
 function CopDamage:die(attack_data)
 	if self._immortal then
 		debug_pause("Immortal character died!")
@@ -1381,6 +1382,36 @@ function CopDamage:_on_damage_received(damage_info)
 	if attacker_unit == managers.player:player_unit() and damage_info then
 		managers.player:on_damage_dealt(self._unit, damage_info)
 	end
+	
+	local dmg_chk = not self._dead and self._health > 0
+	
+	local t = TimerManager:game():time()
+	
+	local speech_allowed = not self._next_allowed_hurt_t or self._next_allowed_hurt_t and self._next_allowed_hurt_t < t	
+	
+	if damage_info.damage and damage_info.damage > 0.01 and self._health > damage_info.damage and dmg_chk and speech_allowed then
+		if not damage_info.result_type or damage_info.result_type ~= "healed" and damage_info.result_type ~= "death" then
+			if self._unit:base():has_tag("special") then
+				if damage_info.is_fire_dot_damage or damage_info.variant == "fire" then
+					if self._next_allowed_burnhurt_t and self._next_allowed_burnhurt_t < t or not self._next_allowed_burnhurt_t then
+						self._unit:sound():say("burnhurt", nil, nil, nil, nil)
+						self._next_allowed_burnhurt_t = t + 6
+						self._next_allowed_hurt_t = t + math.random(3, 6)
+					end
+				end
+			else
+				if damage_info.is_fire_dot_damage or damage_info.variant == "fire" then
+					if self._next_allowed_burnhurt_t and self._next_allowed_burnhurt_t < t or not self._next_allowed_burnhurt_t then
+						self._unit:sound():say("burnhurt", nil, nil, nil, nil)
+						self._next_allowed_burnhurt_t = t + 4
+						self._next_allowed_hurt_t = t + math.random(1, 4)
+					end
+				else
+					self._unit:sound():say("x01a_any_3p", nil, nil, nil, nil)
+				end
+			end
+		end
+	end
 
 	if damage_info.variant == "melee" then
 		managers.statistics:register_melee_hit()
@@ -1745,7 +1776,7 @@ function CopDamage:damage_melee(attack_data)
 			enemy_weapon_pass = not achievement_data.enemy_weapon or unit_weapon == achievement_data.enemy_weapon
 			behind_pass = not achievement_data.from_behind or from_behind
 			diff_pass = not achievement_data.difficulty or table.contains(achievement_data.difficulty, Global.game_settings.difficulty)
-			health_pass = not achievement_data.health or health_ratio <= achievement_data.health
+			health_pass = not achievement_data.health or health_ratio and health_ratio <= achievement_data.health
 			level_pass = not achievement_data.level_id or (managers.job:current_level_id() or "") == achievement_data.level_id
 			job_pass = not achievement_data.job or managers.job:current_real_job_id() == achievement_data.job
 			jobs_pass = not achievement_data.jobs or table.contains(achievement_data.jobs, managers.job:current_real_job_id())
