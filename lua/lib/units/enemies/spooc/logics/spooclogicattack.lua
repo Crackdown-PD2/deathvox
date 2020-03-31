@@ -103,6 +103,8 @@ function SpoocLogicAttack.queued_update(data)
 		end
 	end
 
+	SpoocLogicAttack._upd_spooc_attack(data, my_data)
+
 	if my_data.spooc_attack then
 		SpoocLogicAttack.queue_update(data, my_data)
 
