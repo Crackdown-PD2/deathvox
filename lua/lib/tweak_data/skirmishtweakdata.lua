@@ -3,7 +3,7 @@ function SkirmishTweakData:_init_special_unit_spawn_limits()
 		tank = 1,
 		taser = 3,
 		boom = 0,
-		spooc = 3,
+		spooc = 2,
 		shield = 4,
 		medic = 4,
 	}
@@ -74,7 +74,7 @@ end
 
 function SkirmishTweakData:_init_spawn_group_weights(tweak_data)  -- Everything about this setup is really nice and I like it a lot. I need to integrate some of this into the core CD groupAI stuff.
 	local nice_human_readable_table = {
-		{ -- wave 1 beat police
+		{ -- wave 1 Beat police
 		-- Effectively brief warm-up. beat, shield, medic, rookies.
 		-- Beat intro. beat, shield, medic, rookies. NORMAL.
 		1, -- #1A two rookie
@@ -146,7 +146,7 @@ function SkirmishTweakData:_init_spawn_group_weights(tweak_data)  -- Everything 
 		0, -- #7K two veterans/2 Taser
 		},
 		
-		{ -- wave 2 swat
+		{ -- wave 2 SWAT
 		-- SWAT sig raise term. Swat, shield, medic, taser. Add HRT. HARD.
 		0, -- #1A two rookie
 		0, -- #1B revolver/two pistol
@@ -288,7 +288,7 @@ function SkirmishTweakData:_init_spawn_group_weights(tweak_data)  -- Everything 
 		0, -- #7K two veterans/2 Taser
 		},
 		
-		{ -- wave 4 FBI.
+		{ -- wave 4 FBI
 		 -- FBI warmup over. FBI, medics, shields, dozers, HRT. Add cloaker. OVERKILL.
 		0, -- #1A two rookie
 		0, -- #1B revolver/two pistol
@@ -359,7 +359,8 @@ function SkirmishTweakData:_init_spawn_group_weights(tweak_data)  -- Everything 
 		0, -- #7K two veterans/2 Taser
 		},
 		
-		{ -- wave 5 FBI.
+		{ -- wave 5 FBI
+		-- FBI Intensify mixed teams. Transition to Gensec.
 		0, -- #1A two rookie
 		0, -- #1B revolver/two pistol
 		0, -- #1C smg/two pistol
@@ -429,7 +430,7 @@ function SkirmishTweakData:_init_spawn_group_weights(tweak_data)  -- Everything 
 		0, -- #7K two veterans/2 Taser
 		},
 		
-		{ -- wave 6 Gensec.
+		{ -- wave 6 Gensec
 		  -- Gensec. Gensecs, dozers, cloakers, medics, shields. Add Veterans. MAYHEM.
 		0, -- #1A two rookie
 		0, -- #1B revolver/two pistol
@@ -500,7 +501,7 @@ function SkirmishTweakData:_init_spawn_group_weights(tweak_data)  -- Everything 
 		0, -- #7K two veterans/2 Taser
 		},
 		
-		{ -- wave 7 Gensec.
+		{ -- wave 7 Gensec
 		  -- Gensec. Full range of units, intensified distro of normals. DEATH WISH.
 		0, -- #1A two rookie
 		0, -- #1B revolver/two pistol
