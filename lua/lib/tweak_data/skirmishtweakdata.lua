@@ -26,6 +26,11 @@ function SkirmishTweakData:_init_wave_phase_durations(tweak_data)
 		15,
 		1
 	}}
+	skirmish_data.assault.hostage_hesitation_delay = {
+		0,
+		0,
+		0
+	}
 	skirmish_data.assault.build_duration = 30
 	-- functionally, designed to be infinite and make players deplete assault pool
 	skirmish_data.assault.sustain_duration_min = {
