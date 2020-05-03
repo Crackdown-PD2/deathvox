@@ -6,10 +6,11 @@ function GroupAITweakData:_init_chatter_data()
 	self.enemy_chatter = {}
 	--[[
 		notes:
-		radius seems to do nothing no discernable difference between 10 and 90000000000000000000000000000000, game theory how many cops in a radius can say a certain chatter
+		radius seems to do nothing no discernable difference between 10 and 90000000000000000000000000000000
+		game theory how many cops in a radius can say a certain chatter
 		max_nr probably how many chatters can go off at once
 		duration ??? longer ones i grabbed from v009/pdth
-		inerval is cooldown
+		interval is cooldown
 		group_min seems to be how many cops need to be in a group for the line to play
 		queue what call is used in chatter
 	]]--
@@ -5064,10 +5065,10 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 		self.besiege.assault.force_pool_skm1 = {90, 90, 90} -- add +10 to compensate for some of the nuances in groupaistatebesiege
 		self.besiege.assault.force_pool_skm2 = {110, 110, 110}
 		self.besiege.assault.force_pool_skm3 = {130, 130, 130}
-		self.besiege.assault.force_pool_skm4 = {160, 160, 160}
-		self.besiege.assault.force_pool_skm5 = {190, 190, 190}
-		self.besiege.assault.force_pool_skm6 = {190, 190, 190}
-		self.besiege.assault.force_pool_skm7 = {190, 190, 190}
+		self.besiege.assault.force_pool_skm4 = {140, 140, 140}
+		self.besiege.assault.force_pool_skm5 = {160, 160, 160}
+		self.besiege.assault.force_pool_skm6 = {180, 180, 180}
+		self.besiege.assault.force_pool_skm7 = {180, 180, 180}
 	else
 		--ignore these, they're a fallback
 		self.besiege.assault.force_balance_1st = {20, 20, 20, 20}
