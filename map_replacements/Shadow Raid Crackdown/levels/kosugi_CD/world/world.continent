@@ -13460,9 +13460,6 @@
 			<unit_data continent="world" name="units/pd2_dlc_eng/props/eng_prop_computer/eng_prop_computer" name_id="eng_prop_computer_003" position="-1473.84 -1944.09 1775.86" rotation="0 0 -0.382683 -0.92388" unit_id="104960"/>
 		</table>
 		<table>
-			<unit_data continent="world" mesh_variation="state_interaction_enabled" name="units/pd2_dlc_icc/props/icc_prop_loot_confidential_folder_2" name_id="icc_prop_loot_confidential_folder_2_001" position="-2829.95 -5620.05 1158.79" rotation="0 0 0.92388 0.382683" unit_id="104967"/>
-		</table>
-		<table>
 			<unit_data continent="world" name="units/payday2/architecture/com_int_basement/com_int_basement_wall_2x3m" name_id="com_int_basement_wall_2x3m_057" position="-1150 -5450 575" rotation="0 0 0.707107 -0.707107" unit_id="103265"/>
 		</table>
 		<table>
