@@ -1,4 +1,5 @@
-Hooks:PreHook(SkirmishManager, "on_start_assault", "SkirmishMod_IncreaseDifficulty", function(self)
+local on_start_assault_original = SkirmishManager.on_start_assault
+function SkirmishManager:on_start_assault()
 	if not self._set_first_assault then
 		local diff = "normal"
 		local job_id_index = tweak_data.narrative:get_index_from_job_id(managers.job:current_job_id())
@@ -14,7 +15,9 @@ Hooks:PreHook(SkirmishManager, "on_start_assault", "SkirmishMod_IncreaseDifficul
 
 		self._set_first_assault = true
 	end
-end)
+
+	on_start_assault_original(self)
+end
 
 Hooks:PreHook(SkirmishManager, "on_end_assault", "SkirmishMod_IncreaseDifficulty", function(self)
 	local wave_number = self:current_wave_number() + 1
