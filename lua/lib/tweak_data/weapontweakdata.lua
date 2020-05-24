@@ -551,7 +551,7 @@ function WeaponTweakData:_set_normal()
 -- end goofball legacy code block.
 
 -- Begin NORMAL Turret values.
-	if managers.skirmish and managers.skirmish.is_skirmish() then
+	if managers.skirmish and managers.skirmish:is_skirmish() then
 
 --turret stats for holdout
 	self.swat_van_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
@@ -766,7 +766,7 @@ function WeaponTweakData:_set_hard()
 -- end goofball legacy code block.
 	
 -- Begin HARD Turret values.
-if managers.skirmish and managers.skirmish.is_skirmish() then
+if managers.skirmish and managers.skirmish:is_skirmish() then
 		
 	self.swat_van_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
 	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
@@ -982,7 +982,7 @@ function WeaponTweakData:_set_overkill()
 	
 -- Begin VERY HARD Turret values.
 
-if managers.skirmish and managers.skirmish.is_skirmish() then
+if managers.skirmish and managers.skirmish:is_skirmish() then
 		
 	self.swat_van_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
 	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
@@ -1195,7 +1195,7 @@ function WeaponTweakData:_set_overkill_145()
 -- end goofball legacy code block.
 	
 -- Begin OVERKILL Turret values.
-if managers.skirmish and managers.skirmish.is_skirmish() then
+if managers.skirmish and managers.skirmish:is_skirmish() then
 		
 	self.swat_van_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
 	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
@@ -1411,7 +1411,7 @@ function WeaponTweakData:_set_easy_wish()
 -- end goofball legacy code block.
 	
 -- Begin MAYHEM Turret values.
-if managers.skirmish and managers.skirmish.is_skirmish() then
+if managers.skirmish and managers.skirmish:is_skirmish() then
 		
 	self.swat_van_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
 	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
@@ -1627,7 +1627,7 @@ function WeaponTweakData:_set_overkill_290()
 -- end goofball legacy code block.
 
 -- Begin DEATHWISH Turret values.
-if managers.skirmish and managers.skirmish.is_skirmish() then
+if managers.skirmish and managers.skirmish:is_skirmish() then
 		
 	self.swat_van_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
 	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
@@ -1844,7 +1844,7 @@ function WeaponTweakData:_set_sm_wish()
 	self.npc_melee.fists.damage = 4
 -- end goofball legacy code block.
 -- Begin CRACKDOWN Turret values.
-if managers.skirmish and managers.skirmish.is_skirmish() then
+if managers.skirmish and managers.skirmish:is_skirmish() then
 		
 	self.swat_van_turret_module.HEALTH_INIT = 20000 -- compare 250k base game.
 	self.swat_van_turret_module.SHIELD_HEALTH_INIT = 300 -- Same as CD.
