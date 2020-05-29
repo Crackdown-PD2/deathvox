@@ -451,7 +451,6 @@
 	
 	<unit_mat_seq path="units/pd2_mod_gageammo/characters/ene_acc_shield_new_swat/ene_acc_shield_new_swat" load="true"/> <!--p. sure this is alright here-->
 	<texture path="units/pd2_mod_gageammo/characters/ene_acc_shield_new_swat/shield_df" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_acc_shield_new_swat/shield_nm" />
 	<texture path="units/pd2_mod_gageammo/characters/ene_acc_shield_new_swat/shield_il" />
 	
 	<!--Z Cloaker-->
@@ -506,14 +505,12 @@
 	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer"/>
 	
 	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/bulldozer_df" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/bulldozer_nm" />
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_chest/ene_acc_deathvox_blackdozer_chest" load="true"/>
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_helmet_plate/ene_acc_deathvox_blackdozer_helmet_plate" load="true"/>
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_neck/ene_acc_deathvox_blackdozer_neck" load="true"/>
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_stomache/ene_acc_deathvox_blackdozer_stomache" load="true"/>
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_throat/ene_acc_deathvox_blackdozer_throat" load="true"/>
-	
-	<!--Z LMGDozer-->
+		
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer" load="true"/>
 	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer"/>
 	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer"/>	
@@ -522,15 +519,48 @@
 	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer_contour"/>
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer_husk" load="true"/>
 	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer"/>
-
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/bulldozer_df" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/bulldozer_nm" />
-	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_chest/ene_acc_deathvox_lmgdozer_chest" load="true"/>
-	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_helmet_plate/ene_acc_deathvox_lmgdozer_helmet_plate" load="true"/>
-	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_neck/ene_acc_deathvox_lmgdozer_neck" load="true"/>
-	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_stomache/ene_acc_deathvox_lmgdozer_stomache" load="true"/>
-	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_throat/ene_acc_deathvox_lmgdozer_throat" load="true"/>
 	
+	<!--Z LMGDozer-->
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_back/ene_acc_deathvox_lmgdozer_back" />
+	
+	<unit path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_back/ene_acc_deathvox_lmgdozer_back" load="true"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_back/ene_acc_deathvox_lmgdozer_back" force="false"/>
+	<object path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_back/ene_acc_deathvox_lmgdozer_back" force="false"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_back/ene_acc_deathvox_lmgdozer_back" load="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_back/ene_acc_deathvox_lmgdozer_back" force="false"/>
+	
+	<unit path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_chest/ene_acc_deathvox_lmgdozer_chest" load="true"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_chest/ene_acc_deathvox_lmgdozer_chest" force="false"/>
+	<object path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_chest/ene_acc_deathvox_lmgdozer_chest" force="false"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_chest/ene_acc_deathvox_lmgdozer_chest" load="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_chest/ene_acc_deathvox_lmgdozer_chest" force="false"/>
+	
+	<unit path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_helmet_plate/ene_acc_deathvox_lmgdozer_helmet_plate" load="true"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_helmet_plate/ene_acc_deathvox_lmgdozer_helmet_plate" force="false"/>
+	<object path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_helmet_plate/ene_acc_deathvox_lmgdozer_helmet_plate" force="false"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_helmet_plate/ene_acc_deathvox_lmgdozer_helmet_plate" load="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_helmet_plate/ene_acc_deathvox_lmgdozer_helmet_plate" force="false"/>
+	
+	<unit path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_neck/ene_acc_deathvox_lmgdozer_neck" load="true"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_neck/ene_acc_deathvox_lmgdozer_neck" force="false"/>
+	<object path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_neck/ene_acc_deathvox_lmgdozer_neck" force="false"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_neck/ene_acc_deathvox_lmgdozer_neck" load="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_neck/ene_acc_deathvox_lmgdozer_neck" force="false"/>
+	
+	<unit path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_stomache/ene_acc_deathvox_lmgdozer_stomache" load="true"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_stomache/ene_acc_deathvox_lmgdozer_stomache" force="false"/>
+	<object path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_stomache/ene_acc_deathvox_lmgdozer_stomache" force="false"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_stomache/ene_acc_deathvox_lmgdozer_stomache" load="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_stomache/ene_acc_deathvox_lmgdozer_stomache" force="false"/>
+		
+	<unit path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_throat/ene_acc_deathvox_lmgdozer_throat" load="true"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_throat/ene_acc_deathvox_lmgdozer_throat" force="false"/>
+	<object path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_throat/ene_acc_deathvox_lmgdozer_throat" force="false"/>
+	<material_config path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_throat/ene_acc_deathvox_lmgdozer_throat" load="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_throat/ene_acc_deathvox_lmgdozer_throat" force="false"/>
+	
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/bulldozer_df" />
+			
 	<!--Z Medicdozer-->
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer" load="true"/>
 	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer"/>
@@ -542,7 +572,6 @@
 	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer"/>
 	
 	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/bulldozer_df" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/bulldozer_nm" />
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_medicdozer_chest/ene_acc_deathvox_medicdozer_chest" load="true"/>
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_medicdozer_helmet_plate/ene_acc_deathvox_medicdozer_helmet_plate" load="true"/>
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_medicdozer_neck/ene_acc_deathvox_medicdozer_neck" load="true"/>
@@ -559,9 +588,7 @@
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_husk" load="true"/>
 	
 	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_df" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_nm" />
 	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_head_df" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_head_nm" />
 	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_head_il" />
 	
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_taser_helmet/ene_acc_deathvox_taser_helmet" load="true"/>
@@ -609,7 +636,6 @@
 	
 	<!--Z-Textures-->
 	<texture path="units/pd2_mod_gageammo/characters/shared_textures/bulldozer_df" />
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/bulldozer_nm" />
 	<texture path="units/pd2_mod_gageammo/characters/shared_textures/bulldozer_visor_il" load="true"/>
 	<texture path="units/pd2_mod_gageammo/characters/shared_textures/medicdozer_visor_il" load="true"/>
 	<texture path="units/pd2_mod_gageammo/characters/shared_textures/ene_zeal_swat_df" />
