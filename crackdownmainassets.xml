@@ -44,10 +44,9 @@
 	<material_config path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_r870_dozer/wpn_npc_r870_dozer_contour"/>
 	<texture path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_r870_dozer/r870_df"/>
 	
-	<unit_mat path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_raging_bull_med/wpn_npc_raging_bull_med" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_raging_bull_med/wpn_npc_raging_bull_med" />	
-	<material_config path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_raging_bull_med/wpn_npc_raging_bull_med_contour"/>
-	<texture path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_raging_bull_med/bull_df"/>
+	<unit_mat path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_matever/wpn_npc_matever" load="true"/>
+	<cooked_physics path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_matever/wpn_npc_matever" />	
+	<material_config path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_matever/wpn_npc_matever_contour"/>
 	
 	<unit_mat path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_ump_meddozer/wpn_npc_ump_meddozer" load="true"/>
 	<cooked_physics path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_ump_meddozer/wpn_npc_ump_meddozer" />		

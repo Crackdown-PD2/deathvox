@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <unit type="wpn" slot="13">
-  <object file="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_raging_bull_med/wpn_npc_raging_bull_med" />
+  <object file="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_matever/wpn_npc_matever" />
    <dependencies>
 	<depends_on effect="effects/particles/weapons/raging/muzzleflash_3dp" />
-		<depends_on bnk="soundbanks/weapon_rbull" />
+		<depends_on bnk="soundbanks/weapon_mateba" />
   </dependencies>
   <extensions>
   	<extension name="unit_data" class="ScriptUnitData" />
@@ -13,7 +13,7 @@
 	<extension name="damage" class="UnitDamage" />
   </extensions>
   <sounds>
-    <soundsource name="root" source="rp_ragingbull" />
-    <default_soundsource source="rp_ragingbull" />
+    <soundsource name="root" source="rp_matever" />
+    <default_soundsource source="rp_matever" />
   </sounds>
 </unit>

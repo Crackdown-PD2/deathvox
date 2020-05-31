@@ -94,7 +94,7 @@ function CharacterTweakData:_create_table_structure()
 		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_m4/wpn_npc_m4"),
 		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_r870/wpn_npc_r870"),
 		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_benelli/wpn_npc_benelli"),
-		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_raging_bull_med/wpn_npc_raging_bull_med"),
+		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_matever/wpn_npc_matever"),
 		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_mp5_tactical/wpn_npc_mp5_tactical"),
 		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_r870_dozer/wpn_npc_r870_dozer"),
 		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_saiga/wpn_npc_saiga"),
