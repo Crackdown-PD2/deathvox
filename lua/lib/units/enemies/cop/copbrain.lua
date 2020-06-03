@@ -52,6 +52,7 @@ function CopBrain:post_init()
 	CopBrain._logic_variants.deathvox_taser.attack = TaserLogicAttack
 	-- CopBrain._logic_variants.deathvox_taser.travel = TaserLogicTravel
 	CopBrain._logic_variants.deathvox_sniper_assault = clone(security_variant)
+	CopBrain._logic_variants.deathvox_sniper = clone(security_variant)
 	CopBrain._logic_variants.deathvox_cloaker = clone(security_variant)
 	CopBrain._logic_variants.deathvox_cloaker.idle = SpoocLogicIdle
 	CopBrain._logic_variants.deathvox_cloaker.attack = SpoocLogicAttack

@@ -53,6 +53,7 @@ function CopMovement:init(unit)
 
 	CopMovement._action_variants.deathvox_taser = security_variant
 	CopMovement._action_variants.deathvox_sniper_assault = security_variant
+	CopMovement._action_variants.deathvox_sniper = security_variant
 	CopMovement._action_variants.deathvox_cloaker = security_variant
 	CopMovement._action_variants.deathvox_grenadier = security_variant
 	

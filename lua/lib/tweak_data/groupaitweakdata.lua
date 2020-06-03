@@ -582,6 +582,37 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		},
 		access = access_type_all
 	}
+	self.unit_categories.deathvox_sniper = {
+		unit_types = {
+			cop = {
+				Idstring("units/payday2/characters/ene_sniper_1/ene_sniper_1")
+			},
+			fbi = {
+				Idstring("units/payday2/characters/ene_sniper_2/ene_sniper_2")
+			},
+			gensec = {
+				Idstring("units/payday2/characters/ene_sniper_2/ene_sniper_2")
+			},
+			zeal = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_sniper/ene_deathvox_sniper")
+			},
+			murky = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_sniper/ene_deathvox_sniper")
+			},			
+			classic = {
+				Idstring("units/payday2/characters/ene_sniper_1/ene_sniper_1")
+			}
+		},
+		unit_type_spawner = {
+			cop = "units/payday2/characters/ene_sniper_1/ene_sniper_1",
+			fbi = "units/payday2/characters/ene_sniper_2/ene_sniper_2",
+			gensec = "units/payday2/characters/ene_sniper_2/ene_sniper_2",
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_sniper/ene_deathvox_sniper",
+			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_sniper/ene_deathvox_sniper",	
+			classic = "units/payday2/characters/ene_sniper_1/ene_sniper_1"
+		},
+		access = access_type_all
+	}	
 	self.unit_categories.deathvox_fbi_rookie = {
 		unit_types = {
 			cop = {

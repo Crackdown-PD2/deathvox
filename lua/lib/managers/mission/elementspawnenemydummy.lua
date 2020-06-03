@@ -22,6 +22,10 @@ local enemy_replacements = {
 		["units/payday2/characters/ene_fbi_swat_2/ene_fbi_swat_2"] = "deathvox_lightshot",
 		["units/payday2/characters/ene_fbi_heavy_1/ene_fbi_heavy_1"] = "deathvox_heavyar",
 		["units/payday2/characters/ene_fbi_heavy_r870/ene_fbi_heavy_r870"] = "deathvox_heavyshot",
+		
+-- snipers 
+		 ["units/payday2/characters/ene_sniper_2/ene_sniper_2"] = "deathvox_sniper",
+		 ["units/payday2/characters/ene_sniper_1/ene_sniper_1"] = "deathvox_sniper",		
 
 --blue and "white" swats.
 		["units/payday2/characters/ene_swat_1/ene_swat_1"] = "deathvox_lightar",

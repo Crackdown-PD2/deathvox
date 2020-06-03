@@ -2,18 +2,26 @@
 
 	<!-- VANILLA TEXTURE REPLACEMENTS/ADDITIONS -->
 	
-	<texture path="units/payday2/characters/shared_textures/dark_glass_df" />
-	<texture path="units/payday2/characters/shared_textures/dark_glass_op"  />
-	<texture path="units/payday2/characters/shared_textures/tank_glass_df" />
-	<texture path="units/payday2/characters/shared_textures/tank_glass_op" />
-	<texture path="units/payday2/characters/shared_textures/ene_acc_deathvox_gensec_shield_df" />
-	<texture path="units/payday2/characters/shared_textures/ene_acc_deathvox_gensec_shield_nm" />
-	<texture path="units/payday2/characters/shared_textures/genshill_helm_df" />
-	<texture path="units/payday2/characters/shared_textures/genshill_helm_nm" />
-	<texture path="units/payday2/characters/shared_textures/helmets_atlas_2_df" />
-	<texture path="units/payday2/characters/shared_textures/heads_atlas_2_df" />
-	<texture path="units/payday2/characters/shared_textures/helmets_swat_r870_df" />	
-	<df_nm path="units/payday2/characters/shared_textures/helmet_shotgun" />
+	<unit_mat path="units/payday2/characters/ene_acc_sniper_cap/ene_acc_sniper_cap" load="true"/>
+	
+	<unit path="units/payday2/characters/ene_sniper_1/ene_sniper_1" load="true" force="true"/>
+	<unit path="units/payday2/characters/ene_sniper_1/ene_sniper_1_husk" load="true" force="true"/>
+
+	<unit path="units/payday2/characters/ene_sniper_2/ene_sniper_2" load="true" force="true"/>
+	<unit path="units/payday2/characters/ene_sniper_2/ene_sniper_2_husk" load="true" force="true"/>		
+	
+	<texture path="units/payday2/characters/shared_textures/dark_glass_df" force="false"/>
+	<texture path="units/payday2/characters/shared_textures/dark_glass_op"  force="false"/>
+	<texture path="units/payday2/characters/shared_textures/tank_glass_df" force="false"/>
+	<texture path="units/payday2/characters/shared_textures/tank_glass_op" force="false"/>
+	<texture path="units/payday2/characters/shared_textures/ene_acc_deathvox_gensec_shield_df" force="false"/>
+	<texture path="units/payday2/characters/shared_textures/ene_acc_deathvox_gensec_shield_nm" force="false"/>
+	<texture path="units/payday2/characters/shared_textures/genshill_helm_df" force="false"/>
+	<texture path="units/payday2/characters/shared_textures/genshill_helm_nm" force="false"/>
+	<texture path="units/payday2/characters/shared_textures/helmets_atlas_2_df" force="false"/>
+	<texture path="units/payday2/characters/shared_textures/heads_atlas_2_df" force="false"/>
+	<texture path="units/payday2/characters/shared_textures/helmets_swat_r870_df" force="false"/>	
+	<df_nm path="units/payday2/characters/shared_textures/helmet_shotgun" force="false"/>
 	
 	<texture path="units/characters/enemies/textures/police_force_df" force="true"/>
 	<texture path="units/characters/enemies/textures/police_force_nm" force="true"/>
@@ -40,23 +48,26 @@
 	
 	<!-- ALL WEAPONS -->
 	<unit_mat path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_r870_dozer/wpn_npc_r870_dozer" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_r870_dozer/wpn_npc_r870_dozer" />
-	<material_config path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_r870_dozer/wpn_npc_r870_dozer_contour"/>
-	<texture path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_r870_dozer/r870_df"/>
+	<cooked_physics path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_r870_dozer/wpn_npc_r870_dozer"  force="false"/>
+	<material_config path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_r870_dozer/wpn_npc_r870_dozer_contour" force="false"/>
+	<texture path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_r870_dozer/r870_df" force="false"/>
 	
 	<unit_mat path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_matever/wpn_npc_matever" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_matever/wpn_npc_matever" />	
-	<material_config path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_matever/wpn_npc_matever_contour"/>
+	<cooked_physics path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_matever/wpn_npc_matever"  force="false"/>	
+	<material_config path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_matever/wpn_npc_matever_contour" force="false"/>
+	<texture path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_matever/wpn_npc_matever_df"  force="false"/>	
+	<texture path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_matever/wpn_npc_matever_nm"  force="false"/>	
+	
 	
 	<unit_mat path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_ump_meddozer/wpn_npc_ump_meddozer" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_ump_meddozer/wpn_npc_ump_meddozer" />		
-	<material_config path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_ump_meddozer/wpn_npc_ump_meddozer_contour"/>
+	<cooked_physics path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_ump_meddozer/wpn_npc_ump_meddozer"  force="false"/>		
+	<material_config path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_ump_meddozer/wpn_npc_ump_meddozer_contour" force="false"/>
 	
 	<unit_mat path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_s553/wpn_npc_s553" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_s553/wpn_npc_s553" />			
-	<material_config path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_s553/wpn_npc_s553_contour"/>
-	<texture path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_s553/sg_zeal_nm"/>
-	<texture path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_s553/sg_zeal_df"/>
+	<cooked_physics path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_s553/wpn_npc_s553"  force="false"/>			
+	<material_config path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_s553/wpn_npc_s553_contour" force="false"/>
+	<texture path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_s553/sg_zeal_nm" force="false"/>
+	<texture path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_s553/sg_zeal_df" force="false"/>
 	
 	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_m4/wpn_npc_m4" load="true"/>
 	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_benelli/wpn_npc_benelli" load="true"/>
@@ -78,8 +89,8 @@
 	<texture path="units/payday2/weapons/wpn_npc_m4_yellow/m4_yellow_df" force="true"/>
 	
 	<unit_mat path="units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd" load="true"/>
-	<cooked_physics path="units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd" />					
-	<texture path="units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_p1_df" />
+	<cooked_physics path="units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd"  force="false"/>					
+	<texture path="units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_p1_df"  force="false"/>
 	
 	<unit path="units/payday2/weapons/wpn_npc_sniper/wpn_npc_sniper" force="true"/>
 	<material_config path="units/payday2/weapons/wpn_npc_sniper/wpn_npc_sniper" force="true"/>
@@ -88,7 +99,7 @@
 	<material_config path="units/payday2/weapons/wpn_npc_sniper/wpn_npc_sniper_contour" force="true"/>
 	
 	<texture path="units/payday2/weapons/wpn_npc_sniper/wpn_npc_sniper_p1_df" force="true"/>
-	<texture path="units/payday2/weapons/wpn_npc_sniper/material_flare_il" />
+	<texture path="units/payday2/weapons/wpn_npc_sniper/material_flare_il"  force="false"/>
 	
 	<!-- EFFECTS -->
 	<effect path="effects/particles/explosions/cs_grenade_smoke" load="true"/>
@@ -102,272 +113,272 @@
 	<!-- WASHINGTON P.D/SWAT TEAM -->
 
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_swat/ene_deathvox_cop_swat" load="true"/>
-	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_swat/ene_deathvox_cop_swat"/>
-	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_swat/ene_deathvox_cop_swat"/>	
-	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_swat/ene_deathvox_cop_swat"/>			
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_swat/ene_deathvox_cop_swat"/>	
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_swat/ene_deathvox_cop_swat_contour"/>
+	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_swat/ene_deathvox_cop_swat" force="false"/>
+	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_swat/ene_deathvox_cop_swat" force="false"/>	
+	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_swat/ene_deathvox_cop_swat" force="false"/>			
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_swat/ene_deathvox_cop_swat" force="false"/>	
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_swat/ene_deathvox_cop_swat_contour" force="false"/>
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_swat/ene_deathvox_cop_swat_husk" load="true"/>
 	
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot" load="true"/>
-	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot"/>
-	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot"/>	
-	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot"/>			
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot"/>	
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot_contour"/>
+	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot" force="false"/>
+	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot" force="false"/>	
+	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot" force="false"/>			
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot" force="false"/>	
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot_contour" force="false"/>
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot_husk" load="true"/>
 	
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat" load="true"/>
-	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat"/>
-	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat"/>	
-	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat"/>			
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat"/>	
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat_contour"/>
+	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat" force="false"/>
+	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat" force="false"/>	
+	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat" force="false"/>			
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat" force="false"/>	
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat_contour" force="false"/>
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat_husk" load="true"/>
 	
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot" load="true"/>
-	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot"/>
-	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot"/>	
-	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot"/>			
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot"/>	
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot_contour"/>
+	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot" force="false"/>
+	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot" force="false"/>	
+	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot" force="false"/>			
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot" force="false"/>	
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot_contour" force="false"/>
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot_husk" load="true"/>
 	
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol" load="true"/>
-	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol"/>
-	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol"/>	
-	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol"/>			
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol"/>	
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol_contour"/>
+	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol" force="false"/>
+	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol" force="false"/>	
+	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol" force="false"/>			
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol" force="false"/>	
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol_contour" force="false"/>
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol_husk" load="true"/>
 	
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver" load="true"/>
-	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver"/>
-	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver"/>	
-	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver"/>			
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver"/>	
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver_contour"/>
+	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver" force="false"/>
+	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver" force="false"/>	
+	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver" force="false"/>			
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver" force="false"/>	
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver_contour" force="false"/>
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver_husk" load="true"/>
 	
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun" load="true"/>
-	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun"/>
-	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun"/>	
-	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun"/>			
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun"/>	
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun_contour"/>
+	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun" force="false"/>
+	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun" force="false"/>	
+	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun" force="false"/>			
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun" force="false"/>	
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun_contour" force="false"/>
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun_husk" load="true"/>
 	
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg" load="true"/>
-	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg"/>
-	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg"/>	
-	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg"/>			
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg"/>	
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg_contour"/>
+	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg" force="false"/>
+	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg" force="false"/>	
+	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg" force="false"/>			
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg" force="false"/>	
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg_contour" force="false"/>
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg_husk" load="true"/>
 	
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield" load="true"/>
-	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield"/>
-	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield"/>	
-	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield"/>			
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield"/>	
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield_contour"/>
+	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield" force="false"/>
+	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield" force="false"/>	
+	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield" force="false"/>			
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield" force="false"/>	
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield_contour" force="false"/>
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield_husk" load="true"/>
 
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_deathvox_cop_medic" load="true"/>
-	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_deathvox_cop_medic"/>
-	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_deathvox_cop_medic"/>	
-	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_deathvox_cop_medic"/>			
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_deathvox_cop_medic"/>	
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_deathvox_cop_medic_contour"/>
+	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_deathvox_cop_medic" force="false"/>
+	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_deathvox_cop_medic" force="false"/>	
+	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_deathvox_cop_medic" force="false"/>			
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_deathvox_cop_medic" force="false"/>	
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_deathvox_cop_medic_contour" force="false"/>
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_deathvox_cop_medic_husk" load="true"/>
 	
-	<texture path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_medic_df" />
-	<texture path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_medic_head_df" />
+	<texture path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_medic_df"  force="false"/>
+	<texture path="units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_medic_head_df"  force="false"/>
 	
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser" load="true"/>
-	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser"/>
-	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser"/>	
-	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser"/>			
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser"/>	
-	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser_contour"/>
+	<model path="units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser" force="false"/>
+	<cooked_physics path="units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser" force="false"/>	
+	<object path="units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser" force="false"/>			
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser" force="false"/>	
+	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser_contour" force="false"/>
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser_husk" load="true"/>
 	
 	<!-- FBI TEAM -->
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat" load="true"/>
-	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat"/>
-	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat"/>	
-	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat"/>			
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat"/>	
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat_contour"/>
+	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat" force="false"/>
+	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat" force="false"/>	
+	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat" force="false"/>			
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat" force="false"/>	
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat_contour" force="false"/>
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat_husk" load="true"/>
 
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot" load="true"/>
-	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot"/>
-	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot"/>	
-	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot"/>			
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot"/>	
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot_contour"/>
+	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot" force="false"/>
+	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot" force="false"/>	
+	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot" force="false"/>			
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot" force="false"/>	
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot_contour" force="false"/>
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot_husk" load="true"/>
 
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat" load="true"/>
-	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat"/>
-	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat"/>	
-	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat"/>			
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat"/>	
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_contour"/>
+	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat" force="false"/>
+	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat" force="false"/>	
+	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat" force="false"/>			
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat" force="false"/>	
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_contour" force="false"/>
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_husk" load="true"/>	
 
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot" load="true"/>
-	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot"/>
-	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot"/>	
-	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot"/>			
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot"/>	
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot_contour"/>
+	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot" force="false"/>
+	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot" force="false"/>	
+	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot" force="false"/>			
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot" force="false"/>	
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot_contour" force="false"/>
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot_husk" load="true"/>	
 	
 	<unit_mat_seq path="units/pd2_mod_fbi/characters/ene_acc_fbi_swat_helmet_heavy/ene_acc_fbi_swat_helmet_heavy" load="true"/>
 	<cooked_physics path="units/pd2_mod_fbi/characters/ene_acc_fbi_swat_helmet_heavy/ene_acc_fbi_swat_helmet_heavy" />		
 	
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt" load="true"/>
-	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt"/>
-	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt"/>	
-	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt"/>			
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt"/>	
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt_contour"/>
+	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt" force="false"/>
+	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt" force="false"/>	
+	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt" force="false"/>			
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt" force="false"/>	
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt_contour" force="false"/>
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt_husk" load="true"/>	
 
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie" load="true"/>
-	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie"/>
-	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie"/>	
-	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie"/>			
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie"/>	
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie_contour"/>
+	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie" force="false"/>
+	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie" force="false"/>	
+	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie" force="false"/>			
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie" force="false"/>	
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie_contour" force="false"/>
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie_husk" load="true"/>	
 	
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran" load="true"/>
-	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran"/>
-	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran"/>	
-	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran"/>			
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran"/>	
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran_contour"/>
+	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran" force="false"/>
+	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran" force="false"/>	
+	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran" force="false"/>			
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran" force="false"/>	
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran_contour" force="false"/>
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran_husk" load="true"/>	
 	
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer" load="true"/>
-	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer"/>
-	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer"/>	
-	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer"/>			
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer"/>	
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer_contour"/>
+	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer" force="false"/>
+	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer" force="false"/>	
+	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer" force="false"/>			
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer" force="false"/>	
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer_contour" force="false"/>
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer_husk" load="true"/>	
-	<sequence_manager path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer"/>
+	<sequence_manager path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer" force="false"/>
 	
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer" load="true"/>
-	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer"/>
-	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer"/>	
-	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer"/>			
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer"/>	
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer_contour"/>
+	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer" force="false"/>
+	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer" force="false"/>	
+	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer" force="false"/>			
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer" force="false"/>	
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer_contour" force="false"/>
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer_husk" load="true"/>	
-	<sequence_manager path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer"/>
+	<sequence_manager path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer" force="false"/>
 	
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_deathvox_fbi_medic" load="true"/>
-	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_deathvox_fbi_medic"/>
-	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_deathvox_fbi_medic"/>	
-	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_deathvox_fbi_medic"/>			
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_deathvox_fbi_medic"/>	
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_deathvox_fbi_medic_contour"/>
+	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_deathvox_fbi_medic" force="false"/>
+	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_deathvox_fbi_medic" force="false"/>	
+	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_deathvox_fbi_medic" force="false"/>			
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_deathvox_fbi_medic" force="false"/>	
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_deathvox_fbi_medic_contour" force="false"/>
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_deathvox_fbi_medic_husk" load="true"/>	
 	
-	<texture path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_medic_df" />
-	<texture path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_medic_head_df" />
+	<texture path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_medic_df"  force="false"/>
+	<texture path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_medic/ene_medic_head_df"  force="false"/>
 	
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_shield/ene_deathvox_fbi_shield" load="true"/>
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_shield/ene_deathvox_fbi_shield_husk" load="true"/>
 	
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker" load="true"/>
-	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker"/>
-	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker"/>	
-	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker"/>			
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker"/>	
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker_contour"/>
+	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker" force="false"/>
+	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker" force="false"/>	
+	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker" force="false"/>			
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker" force="false"/>	
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker_contour" force="false"/>
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker_husk" load="true"/>	
-	<sequence_manager path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker"/>
+	<sequence_manager path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker" force="false"/>
 	
 	<texture path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/spook_heavy_df" />
 
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser" load="true"/>
-	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser"/>
-	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser"/>	
-	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser"/>			
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser"/>	
-	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser_contour"/>
+	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser" force="false"/>
+	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser" force="false"/>	
+	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser" force="false"/>			
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser" force="false"/>	
+	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser_contour" force="false"/>
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser_husk" load="true"/>	
 	
-	<texture path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/taser_body_df" />
+	<texture path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/taser_body_df"  force="false"/>
 	
 	<!-- GENSEC FAST TACTICAL SPECIAL FORCES -->
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat" load="true"/>
-	<model path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat"/>
-	<cooked_physics path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat"/>	
-	<object path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat"/>			
-	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat"/>	
-	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat_contour"/>
+	<model path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat" force="false"/>
+	<cooked_physics path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat" force="false"/>	
+	<object path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat" force="false"/>			
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat" force="false"/>	
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat_contour" force="false"/>
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat_husk" load="true"/>
 
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot" load="true"/>
-	<model path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot"/>
-	<cooked_physics path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot"/>	
-	<object path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot"/>			
-	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot"/>	
-	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot_contour"/>
+	<model path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot" force="false"/>
+	<cooked_physics path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot" force="false"/>	
+	<object path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot" force="false"/>			
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot" force="false"/>	
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot_contour" force="false"/>
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot_husk" load="true"/>
 
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat" load="true"/>
-	<model path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat"/>
-	<cooked_physics path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat"/>	
-	<object path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat"/>			
-	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat"/>	
-	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat_contour"/>
+	<model path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat" force="false"/>
+	<cooked_physics path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat" force="false"/>	
+	<object path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat" force="false"/>			
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat" force="false"/>	
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat_contour" force="false"/>
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat_husk" load="true"/>
 
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot" load="true"/>
-	<model path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot"/>
-	<cooked_physics path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot"/>	
-	<object path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot"/>			
-	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot"/>	
-	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot_contour"/>
+	<model path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot" force="false"/>
+	<cooked_physics path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot" force="false"/>	
+	<object path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot" force="false"/>			
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot" force="false"/>	
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot_contour" force="false"/>
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot_husk" load="true"/>
 		
 	<unit_mat path="units/pd2_mod_gensec/characters/ene_acc_deathvox_gensec_heavyhelmet/ene_acc_deathvox_gensec_heavyhelmet" load="true"/>
-	<cooked_physics path="units/pd2_mod_gensec/characters/ene_acc_deathvox_gensec_heavyhelmet/ene_acc_deathvox_gensec_heavyhelmet"/>	
+	<cooked_physics path="units/pd2_mod_gensec/characters/ene_acc_deathvox_gensec_heavyhelmet/ene_acc_deathvox_gensec_heavyhelmet" force="false"/>	
 
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_shield/ene_deathvox_gensec_shield" load="true"/>
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_shield/ene_deathvox_gensec_shield_husk" load="true"/>
 
 	<unit_mat path="units/pd2_mod_gensec/characters/ene_acc_deathvox_gensec_shield/ene_acc_deathvox_gensec_shield" load="true"/>
-	<cooked_physics path="units/pd2_mod_gensec/characters/ene_acc_deathvox_gensec_shield/ene_acc_deathvox_gensec_shield"/>	
+	<cooked_physics path="units/pd2_mod_gensec/characters/ene_acc_deathvox_gensec_shield/ene_acc_deathvox_gensec_shield" force="false"/>	
 
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_deathvox_gensec_medic" load="true"/>
-	<model path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_deathvox_gensec_medic"/>
-	<cooked_physics path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_deathvox_gensec_medic"/>	
-	<object path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_deathvox_gensec_medic"/>			
-	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_deathvox_gensec_medic"/>	
-	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_deathvox_gensec_medic_contour"/>
+	<model path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_deathvox_gensec_medic" force="false"/>
+	<cooked_physics path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_deathvox_gensec_medic" force="false"/>	
+	<object path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_deathvox_gensec_medic" force="false"/>			
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_deathvox_gensec_medic" force="false"/>	
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_deathvox_gensec_medic_contour" force="false"/>
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_deathvox_gensec_medic_husk" load="true"/>
 	
-	<texture path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_medic_df" />
-	<texture path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_medic_head_df" />
+	<texture path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_medic_df"  force="false"/>
+	<texture path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_medic_head_df"  force="false"/>
 
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser" load="true"/>
-	<model path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser"/>
-	<cooked_physics path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser"/>	
-	<object path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser"/>			
-	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser"/>	
-	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser_contour"/>
+	<model path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser" force="false"/>
+	<cooked_physics path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser" force="false"/>	
+	<object path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser" force="false"/>			
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser" force="false"/>	
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser_contour" force="false"/>
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser_husk" load="true"/>
 		
-	<texture path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/helmets_heavy_taser_atlas_df" />
-	<texture path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/taser_body_df" />
+	<texture path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/helmets_heavy_taser_atlas_df"  force="false"/>
+	<texture path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/taser_body_df"  force="false"/>
 	
 	<unit_mat path="units/pd2_mod_gensec/characters/ene_acc_gensec_deathvox_tazer_helmet/ene_acc_gensec_deathvox_tazer_helmet" load="true"/>
 	<cooked_physics path="units/pd2_mod_gensec/characters/ene_acc_gensec_deathvox_tazer_helmet/ene_acc_gensec_deathvox_tazer_helmet"/>	
@@ -376,180 +387,192 @@
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_cloaker/ene_deathvox_gensec_cloaker_husk" load="true"/>
 
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer" load="true"/>
-	<model path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer"/>
-	<cooked_physics path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer"/>	
-	<object path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer"/>			
-	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer"/>	
-	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer_contour"/>
+	<model path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer" force="false"/>
+	<cooked_physics path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer" force="false"/>	
+	<object path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer" force="false"/>			
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer" force="false"/>	
+	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer_contour" force="false"/>
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer_husk" load="true"/>
 	<sequence_manager path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer"/>
 	
 
 	<!--ZULU SQUADRON/ZEAL TEAM -->
+	
+	<!--Z Sniper-->
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_sniper/ene_deathvox_sniper" load="true"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_sniper/ene_deathvox_sniper" force="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_sniper/ene_deathvox_sniper" force="false"/>	
+	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_sniper/ene_deathvox_sniper" force="false"/>			
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_sniper/ene_deathvox_sniper" force="false"/>	
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_sniper/ene_deathvox_sniper_contour" force="false"/>
+	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_sniper/ene_deathvox_sniper_husk" load="true"/>	
+	
+	<df_nm path="units/pd2_mod_gageammo/characters/ene_deathvox_sniper/sniper_joe_head_atlas" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_sniper/sniper_joe_body_df" />
 
 	<!--Z Light Rifleman-->
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar" load="true"/>
-	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar"/>	
-	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar"/>			
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar"/>	
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar_contour"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar" force="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar" force="false"/>	
+	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar" force="false"/>			
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar" force="false"/>	
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar_contour" force="false"/>
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar_husk" load="true"/>
 	
 	<!--Z Light Shotgunner-->
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot" load="true"/>
-	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot"/>	
-	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot"/>			
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot"/>	
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot_contour"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot" force="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot" force="false"/>	
+	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot" force="false"/>			
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot" force="false"/>	
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot_contour" force="false"/>
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot_husk" load="true"/>
 		
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet"/>	
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_zeal_swat_helmet/ene_acc_zeal_swat_helmet" force="false"/>	
 	
 	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_zeal_swat_df" />
 	
 	<!--Z Heavy Rifleman-->
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar" load="true"/>
-	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar"/>	
-	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar"/>			
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar"/>	
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar_contour"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar" force="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar" force="false"/>	
+	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar" force="false"/>			
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar" force="false"/>	
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar_contour" force="false"/>
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar_husk" load="true"/>
 	
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/swat_heavy_df" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/swat_heavy_head_df" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/swat_heavy_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/swat_heavy_head_df"  force="false"/>
 	
 	<!--Z Heavy Shotgunner-->
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot" load="true"/>
-	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot"/>	
-	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot"/>			
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot"/>	
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot_contour"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot" force="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot" force="false"/>	
+	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot" force="false"/>			
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot" force="false"/>	
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot_contour" force="false"/>
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot_husk" load="true"/>
 	
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/swat_heavy_df" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/swat_heavy_head_df" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/swat_heavy_head_il" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/swat_heavy_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/swat_heavy_head_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/swat_heavy_head_il"  force="false"/>
 	
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet"/>	
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet" force="false"/>	
 	
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_zeal_swat_heavy_sg_helmet/ene_acc_zeal_swat_heavy_sg_helmet" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_zeal_swat_heavy_sg_helmet/ene_acc_zeal_swat_heavy_sg_helmet"/>	
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_zeal_swat_heavy_sg_helmet/ene_acc_zeal_swat_heavy_sg_helmet" force="false"/>	
 
 	<!--Z Medic-->
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic" load="true"/>
-	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic"/>	
-	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic"/>			
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic"/>	
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic_contour"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic" force="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic" force="false"/>	
+	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic" force="false"/>			
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic" force="false"/>	
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic_contour" force="false"/>
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic_husk" load="true"/>
 	
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_medic_df" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_medic_head_df" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_medic_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_medic_head_df"  force="false"/>
 	
 	<!--Z Shield-->
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield" load="true"/>
-	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield"/>	
-	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield"/>			
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield"/>	
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield_contour"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield" force="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield" force="false"/>	
+	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield" force="false"/>			
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield" force="false"/>	
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield_contour" force="false"/>
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield_husk" load="true"/>
 	
 	<unit_mat_seq path="units/pd2_mod_gageammo/characters/ene_acc_shield_new_swat/ene_acc_shield_new_swat" load="true"/> <!--p. sure this is alright here-->
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_shield_new_swat/ene_acc_shield_new_swat"/>	
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_shield_new_swat/ene_acc_shield_new_swat" force="false"/>	
 	
-	<texture path="units/pd2_mod_gageammo/characters/ene_acc_shield_new_swat/shield_df" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_acc_shield_new_swat/shield_il" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_acc_shield_new_swat/shield_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_acc_shield_new_swat/shield_il"  force="false"/>
 	
 	<!--Z Cloaker-->
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker" load="true"/>
-	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker"/>	
-	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker"/>			
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker"/>	
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker_contour"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker" force="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker" force="false"/>	
+	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker" force="false"/>			
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker" force="false"/>	
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker_contour" force="false"/>
 	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker" load="true"/>
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker_husk" load="true"/>
 	
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/zeal_cloaker_body_df" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/zeal_cloaker_body_nm" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/zeal_cloaker_head_df" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/zeal_cloaker_head_nm" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/zeal_cloaker_body_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/zeal_cloaker_body_nm"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/zeal_cloaker_head_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/zeal_cloaker_head_nm"  force="false"/>
 	
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/debris/ene_spook_head_debris" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/debris/ene_spook_head_debris" />
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/debris/ene_spook_head_debris"  force="false"/>
 
 	<unit_obj path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/debris/ene_spook_upper_body_debris" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/debris/ene_spook_upper_body_debris" />
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/debris/ene_spook_upper_body_debris"  force="false"/>
 	
 	<!--Z Greendozer-->
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer" load="true"/>
-	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer"/>	
-	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer"/>			
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer"/>	
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer_contour"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer" force="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer" force="false"/>	
+	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer" force="false"/>			
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer" force="false"/>	
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer_contour" force="false"/>
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer_husk" load="true"/>
 	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer"/>
 	
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/bulldozer_df" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/bulldozer_nm" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/bulldozer_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/bulldozer_nm"  force="false"/>
 	
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_back/ene_acc_deathvox_greendozer_back" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_back/ene_acc_deathvox_greendozer_back" />		
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_back/ene_acc_deathvox_greendozer_back"  force="false"/>		
 	
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_chest/ene_acc_deathvox_greendozer_chest" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_chest/ene_acc_deathvox_greendozer_chest" />		
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_chest/ene_acc_deathvox_greendozer_chest"  force="false"/>		
 	
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_helmet_plate/ene_acc_deathvox_greendozer_helmet_plate" load="true"/>
 	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_helmet_plate/ene_acc_deathvox_greendozer_helmet_plate" />		
 	
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_neck/ene_acc_deathvox_greendozer_neck" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_neck/ene_acc_deathvox_greendozer_neck" />		
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_neck/ene_acc_deathvox_greendozer_neck"  force="false"/>		
 	
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_stomache/ene_acc_deathvox_greendozer_stomache" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_stomache/ene_acc_deathvox_greendozer_stomache" />		
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_stomache/ene_acc_deathvox_greendozer_stomache"  force="false"/>		
 	
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_throat/ene_acc_deathvox_greendozer_throat" load="true"/>	
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_throat/ene_acc_deathvox_greendozer_throat" />		
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_greendozer_throat/ene_acc_deathvox_greendozer_throat"  force="false"/>		
 	
 	<!--Z Blackdozer-->
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer" load="true"/>
-	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer"/>	
-	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer"/>			
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer"/>	
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer_contour"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer" force="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer" force="false"/>	
+	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer" force="false"/>			
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer" force="false"/>	
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer_contour" force="false"/>
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer_husk" load="true"/>
-	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer"/>
+	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer" force="false"/>
 	
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/bulldozer_df" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/bulldozer_df"  force="false"/>
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_chest/ene_acc_deathvox_blackdozer_chest" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_chest/ene_acc_deathvox_blackdozer_chest" />			
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_chest/ene_acc_deathvox_blackdozer_chest"  force="false"/>			
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_helmet_plate/ene_acc_deathvox_blackdozer_helmet_plate" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_helmet_plate/ene_acc_deathvox_blackdozer_helmet_plate" />				
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_helmet_plate/ene_acc_deathvox_blackdozer_helmet_plate"  force="false"/>				
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_neck/ene_acc_deathvox_blackdozer_neck" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_neck/ene_acc_deathvox_blackdozer_neck" />					
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_neck/ene_acc_deathvox_blackdozer_neck"  force="false"/>					
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_stomache/ene_acc_deathvox_blackdozer_stomache" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_stomache/ene_acc_deathvox_blackdozer_stomache" />					
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_stomache/ene_acc_deathvox_blackdozer_stomache"  force="false"/>					
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_throat/ene_acc_deathvox_blackdozer_throat" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_throat/ene_acc_deathvox_blackdozer_throat" />					
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_blackdozer_throat/ene_acc_deathvox_blackdozer_throat"  force="false"/>					
 		
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer" load="true"/>
-	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer"/>	
-	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer"/>			
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer"/>	
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer_contour"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer" force="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer" force="false"/>	
+	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer" force="false"/>			
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer" force="false"/>	
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer_contour" force="false"/>
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer_husk" load="true"/>
-	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer"/>
+	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer" force="false"/>
 	
 	<!--Z LMGDozer-->	
 	<unit path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_lmgdozer_back/ene_acc_deathvox_lmgdozer_back" load="true"/>
@@ -592,13 +615,13 @@
 			
 	<!--Z Medicdozer-->
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer" load="true"/>
-	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer"/>	
-	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer"/>			
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer"/>	
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer_contour"/>
+	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer" force="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer" force="false"/>	
+	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer" force="false"/>			
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer" force="false"/>	
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer_contour" force="false"/>
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer_husk" load="true"/>
-	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer"/>
+	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer" force="false"/>
 	
 	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/bulldozer_df" />
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_medicdozer_chest/ene_acc_deathvox_medicdozer_chest" load="true"/>
@@ -614,79 +637,79 @@
 	
 	<!--Z Taser-->
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser" load="true"/>
-	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser"/>	
-	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser"/>			
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser"/>	
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_contour"/>	
+	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser" force="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser" force="false"/>	
+	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser" force="false"/>			
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser" force="false"/>	
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_contour" force="false"/>	
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_husk" load="true"/>
 	
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_df" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_head_df" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_head_il" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_head_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_head_il"  force="false"/>
 	
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_taser_helmet/ene_acc_deathvox_taser_helmet" load="true"/>
 	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_deathvox_taser_helmet/ene_acc_deathvox_taser_helmet" force="false"/>					
 	
 	<!--Z HIIIIIIIIIIIVE-->
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier" load="true"/>
-	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier"/>	
-	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier"/>			
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier"/>	
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier_contour"/>	
+	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier" force="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier" force="false"/>	
+	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier" force="false"/>			
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier" force="false"/>	
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier_contour" force="false"/>	
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier_husk" load="true"/>
-	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier"/>
+	<sequence_manager path="units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier" force="false"/>
 	
 	<!--DV Guard-->
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard" load="true"/>
-	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard"/>	
-	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard"/>			
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard"/>	
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard_contour"/>	
+	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard" force="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard" force="false"/>	
+	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard" force="false"/>			
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard" force="false"/>	
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard_contour" force="false"/>	
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard_husk" load="true"/>
 	
 	<!--Z G-Man-->
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/ene_deathvox_gman" load="true"/>
-	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/ene_deathvox_gman"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/ene_deathvox_gman"/>	
-	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/ene_deathvox_gman"/>			
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/ene_deathvox_gman"/>	
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/ene_deathvox_gman_contour"/>	
+	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/ene_deathvox_gman" force="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/ene_deathvox_gman" force="false"/>	
+	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/ene_deathvox_gman" force="false"/>			
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/ene_deathvox_gman" force="false"/>	
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/ene_deathvox_gman_contour" force="false"/>	
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/ene_deathvox_gman_husk" load="true"/>
 	
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/gman_body_df" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/gman_body_nm" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/gman_head_df" />
-	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/gman_head_nm" />
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/gman_body_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/gman_body_nm"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/gman_head_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/gman_head_nm"  force="false"/>
 
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight" load="true"/>
-	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight"/>	
-	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight"/>			
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight"/>	
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight_contour"/>	
+	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight" force="false"/>
+	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight" force="false"/>	
+	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight" force="false"/>			
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight" force="false"/>	
+	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight_contour" force="false"/>	
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight_husk" load="true"/>
 	
 	<!--Z-Textures-->
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/bulldozer_df" />
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/bulldozer_df"  force="false"/>
 	<texture path="units/pd2_mod_gageammo/characters/shared_textures/bulldozer_visor_il" load="true"/>
 	<texture path="units/pd2_mod_gageammo/characters/shared_textures/medicdozer_visor_il" load="true"/>
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/ene_zeal_swat_df" />
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/ene_zeal_swat_nm" />
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/ene_zeal_swat_head_df" />
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/ene_zeal_swat_head_nm" />
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/swat_heavy_head_nm" />
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/swat_heavy_nm" />
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/glass_op" />
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_df" />
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_il" />
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_nm" />
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_body_df" />
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_body_nm" />
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/material_body_df" />
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/material_body_nm" />
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/ene_zeal_swat_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/ene_zeal_swat_nm"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/ene_zeal_swat_head_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/ene_zeal_swat_head_nm"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/swat_heavy_head_nm"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/swat_heavy_nm"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/glass_op"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_il"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_nm"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_body_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_body_nm"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/material_body_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/material_body_nm"  force="false"/>
 
 	<unit_mat_seq path="units/pd2_mod_classic/characters/ene_acc_classic_helmet/ene_acc_classic_helmet" load="true"/>
 	<cooked_physics path="units/pd2_mod_classic/characters/ene_acc_classic_helmet/ene_acc_classic_helmet" force="false"/>					

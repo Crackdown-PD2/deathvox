@@ -11,7 +11,7 @@
   "ene_deathvox_sniper_assault" : "Sniper",  
   "ene_deathvox_greendozer" : "Bulldozer",
   "ene_deathvox_blackdozer" : "Blackdozer",
-  "ene_deathvox_blackdozer" : "Skulldozer",
+  "ene_deathvox_lmgdozer" : "Skulldozer",
   "ene_deathvox_medicdozer" : "Medicdozer",
   "ene_deathvox_grenadier" : "Grenadier",
   "ene_deathvox_gman_noflashlight" : "GenSec™ Sentinel",  
