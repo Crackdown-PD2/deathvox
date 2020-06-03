@@ -4519,6 +4519,7 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_heavyshot",
 			"ene_deathvox_taser",
 			"ene_deathvox_cloaker",
+			"ene_deathvox_sniper",
 			"ene_deathvox_sniper_assault",
 			"ene_deathvox_greendozer",
 			"ene_deathvox_blackdozer",
