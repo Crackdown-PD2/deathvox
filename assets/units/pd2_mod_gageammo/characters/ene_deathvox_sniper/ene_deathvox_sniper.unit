@@ -6,7 +6,7 @@
 	<dependencies>
 		
 		<depends_on bnk="soundbanks/regular_vox" />
-		<depends_on unit="units/payday2/characters/ene_acc_sniper_cap/ene_acc_sniper_cap" />				
+		<depends_on unit="units/pd2_mod_gageammo/characters/ene_acc_snipercap/ene_acc_snipercap" />				
 		<depends_on unit="units/payday2/weapons/wpn_npc_sniper/wpn_npc_sniper" />
 	</dependencies>
 
@@ -23,7 +23,7 @@
 		<extension name="character_damage" class="CopDamage">
 			<var name="_head_body_name" value="head" />
 			<var name="_head_gear_object" value="g_helmet_lod1" />
-			<var name="_head_gear" value="units/payday2/characters/ene_acc_sniper_cap/ene_acc_sniper_cap" />
+			<var name="_head_gear" value="units/pd2_mod_gageammo/characters/ene_acc_snipercap/ene_acc_snipercap" />
 			<var name="_head_gear_decal_mesh" value="dm_helmet" />			
 		</extension>
 		<extension name="movement" class="CopMovement" >
