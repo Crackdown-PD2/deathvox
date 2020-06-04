@@ -631,7 +631,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie")
 			},			
 			classic = {
-				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie")
+				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_rookie/ene_deathvox_classic_rookie")
 			}			
 		},
 		unit_type_spawner = {
@@ -639,7 +639,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie",
 			gensec = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie",
 			murky = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie",			
-			zeal = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie"
+			zeal = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie",
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_rookie/ene_deathvox_classic_rookie"			
 		},
 		access = access_type_all
 	}
@@ -890,7 +891,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		},
 		access = access_type_all
 	}
- if difficulty_index < 3 then
+ if difficulty_index < 4 then
  	self.unit_categories.deathvox_heavyar = {
 		unit_types = {
 			cop = {
@@ -909,7 +910,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
 			},			
 			classic = {
-				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat_noarmor")
+				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat_noarmor/ene_deathvox_classic_heavyswat_noarmor")
 			}			
 		},
 		unit_type_spawner = {
@@ -918,7 +919,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat_noarmor"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat_noarmor/ene_deathvox_classic_heavyswat_noarmor"
 		},
 		access = access_type_all
 	}
@@ -986,7 +987,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		},
 		access = access_type_all
 	}
- if difficulty_index < 3 then
+ if difficulty_index < 4 then
 	self.unit_categories.deathvox_heavyshot = {
 		unit_types = {
 			cop = {
@@ -1005,7 +1006,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
 			},			
 			classic = {
-				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat_noarmor/ene_deathvox_classic_heavyswat_noarmor")
+				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor")
 			}				
 		},
 		unit_type_spawner = {
@@ -1014,7 +1015,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat_noarmor/ene_deathvox_classic_heavyswat_noarmor"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor"
 		},
 		access = access_type_all
 	}

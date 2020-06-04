@@ -10,6 +10,15 @@
 	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_swat/ene_deathvox_classic_swat_contour"/>
 	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_swat/ene_deathvox_classic_swat_husk" load="true"/>
 	
+	<!-- CLASSIC ROOKIE -->
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_rookie/ene_deathvox_classic_rookie" load="true"/>
+	<model path="units/pd2_mod_classic/characters/ene_deathvox_classic_rookie/ene_deathvox_classic_rookie"/>
+	<cooked_physics path="units/pd2_mod_classic/characters/ene_deathvox_classic_rookie/ene_deathvox_classic_rookie"/>	
+	<object path="units/pd2_mod_classic/characters/ene_deathvox_classic_rookie/ene_deathvox_classic_rookie"/>				
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_rookie/ene_deathvox_classic_rookie"/>	
+	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_rookie/ene_deathvox_classic_rookie_contour"/>
+	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_rookie/ene_deathvox_classic_rookie_husk" load="true"/>
+	
 	<!-- CLASSIC SWAT SHOTGUNNER -->
 	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_swatshot/ene_deathvox_classic_swatshot" load="true"/>
 	<model path="units/pd2_mod_classic/characters/ene_deathvox_classic_swatshot/ene_deathvox_classic_swatshot"/>
@@ -152,7 +161,6 @@
 	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_deathvox_classic_cloaker"/>	
 	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_deathvox_classic_cloaker_contour"/>
 	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_deathvox_classic_cloaker_husk" load="true"/>
-	<sequence_manager path="units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_deathvox_classic_cloaker" />
 	
 	<texture path="units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_spook_classic_body_df"/>
 	<texture path="units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_spook_classic_body_nm"/>
@@ -195,10 +203,17 @@
 	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/classic_tank_glass_op"/>
 	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/bulldozer_df"/>
 	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/bulldozer_saiga_df"/>
-	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/bulldozer_city_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/bulldozer_city_df"/>	
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/head_01_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/heads_cop_la_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/heads_cop_la_nm"/>	
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/heads_cop_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/heads_cop_nm"/>
 	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/classic1_df"/>
-	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/classic2_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/classic2_df"/>	
 	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/classic2_nm"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/deathvox_classic_rookie_df"/>
+	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/deathvox_classic_rookie_head_df"/>	
 	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/ene_acc_shield_lights_df"/>
 	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/ene_medic_df"/>
 	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/ene_medic_head_df"/>
@@ -207,11 +222,6 @@
 	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/fbi_classic_2_df"/>
 	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/fbi_head_clsc_df"/>
 	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/heads_classic_df"/>
-	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/helmets_atlas_nm"/>
-	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/joker_heavy_akan_df"/>
-	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/joker_mask_df"/>
-	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/joker_light_swat_df"/>
-	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/nypd2_nm"/>
 	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/police_df"/>
 	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/spook_classic_df"/>
 	<texture path="units/pd2_mod_classic/characters/classic_shared_textures/spook_classic_nm"/>

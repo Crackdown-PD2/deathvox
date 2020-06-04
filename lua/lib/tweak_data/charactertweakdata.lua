@@ -2666,6 +2666,59 @@ function CharacterTweakData:_presets(tweak_data)
 	
 	return presets
 end
+
+Hooks:PostHook(CharacterTweakData, "_init_biker", "dv_bikerchatter", function(self, presets)
+	self.biker.chatter = {
+		aggressive = true,
+		retreat = true,
+		contact = true,
+		go_go = true,
+		suppress = true,
+		enemyidlepanic = true
+	}
+	local job = Global.level_data and Global.level_data.level_id
+	if job == "mex" or job == "mex_cooking" then
+		self.biker.access = "security"
+	else
+		self.biker.access = "gangster"
+	end
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_gangster", "dv_gangsterchatter", function(self, presets)
+	local job = Global.level_data and Global.level_data.level_id
+	if job == "nightclub" or job == "short2_stage1" or job == "jolly" or job == "spa" then
+		self.gangster.speech_prefix_p1 = "rt"
+		self.gangster.speech_prefix_p2 = nil
+		self.gangster.speech_prefix_count = 2
+	elseif job == "alex_2" then
+		self.gangster.speech_prefix_p1 = "ict"
+		self.gangster.speech_prefix_p2 = nil
+		self.gangster.speech_prefix_count = 2
+	elseif job == "man" then	
+		self.gangster.speech_prefix_p1 = self._prefix_data_p1.cop()
+		self.gangster.speech_prefix_p2 = "n"
+		self.gangster.speech_prefix_count = 4	
+		self.gangster.no_arrest = false
+		self.gangster.rescue_hostages = true
+		self.gangster.use_radio = self._default_chatter
+	elseif job == "welcome_to_the_jungle_1" then
+		self.gangster.speech_prefix_p1 = "bik"
+		self.gangster.speech_prefix_p2 = nil
+		self.gangster.speech_prefix_count = 2		
+	else
+		self.gangster.speech_prefix_p1 = "lt"
+		self.gangster.speech_prefix_p2 = nil
+		self.gangster.speech_prefix_count = 2
+	end
+	self.gangster.chatter = {
+		aggressive = true,
+		retreat = true,
+		contact = true,
+		go_go = true,
+		suppress = true,
+		enemyidlepanic = true
+	}
+end)
 	
 function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard = deep_clone(self.security)
@@ -3209,11 +3262,12 @@ function CharacterTweakData:crackdown_health_setup()
 end
 
 function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
-
 	self:crackdown_health_setup() -- applies health scaling structure.
 	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
+	
+	local level_id = Global.level_data and Global.level_data.level_id
 	
 	if level_id == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
@@ -3359,6 +3413,8 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 	
+	local level_id = Global.level_data and Global.level_data.level_id
+	
 	if level_id == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
@@ -3493,6 +3549,8 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
+
+	local level_id = Global.level_data and Global.level_data.level_id
 	
 	if level_id == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
@@ -3626,6 +3684,8 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
+
+	local level_id = Global.level_data and Global.level_data.level_id
 	
 	if level_id == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
@@ -3761,6 +3821,8 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
+
+	local level_id = Global.level_data and Global.level_data.level_id
 	
 	if level_id == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
@@ -3896,6 +3958,8 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
 
+	local level_id = Global.level_data and Global.level_data.level_id
+
 	if level_id == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
 		self.cop_female.calls_in = nil
@@ -4030,6 +4094,8 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self:_set_characters_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_specials_weapon_preset("deathvox") -- applies weapon scaling structure.
 	self:_set_characters_melee_preset("2") -- applies enemy melee scaling structure.
+	
+	local level_id = Global.level_data and Global.level_data.level_id
 	
 	if level_id == "man" then -- fixes base game alert bug on Undercover. Must be separately invoked on each diff in current setup.
 		self.fbi.calls_in = nil
@@ -4519,7 +4585,6 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_heavyshot",
 			"ene_deathvox_taser",
 			"ene_deathvox_cloaker",
-			"ene_deathvox_sniper",
 			"ene_deathvox_sniper_assault",
 			"ene_deathvox_greendozer",
 			"ene_deathvox_blackdozer",
@@ -4536,6 +4601,7 @@ function CharacterTweakData:character_map()
 		list = {
 			"ene_deathvox_classic_blackdozer",
 			"ene_deathvox_classic_cloaker",
+			"ene_deathvox_classic_rookie",
 			"ene_deathvox_classic_cop_pistol",
 			"ene_deathvox_classic_cop_revolver",
 			"ene_deathvox_classic_cop_shotgun",
@@ -4543,6 +4609,8 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_classic_greendozer",
 			"ene_deathvox_classic_heavyswat",
 			"ene_deathvox_classic_heavyswatshot",
+			"ene_deathvox_classic_heavyswat_noarmor",
+			"ene_deathvox_classic_heavyswatshot_noarmor",
 			"ene_deathvox_classic_hrt",
 			"ene_deathvox_classic_lmgdozer",
 			"ene_deathvox_classic_medic",

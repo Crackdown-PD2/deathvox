@@ -646,7 +646,6 @@ function CopLogicAttack._chk_request_action_walk_to_cover_shoot_pos(data, my_dat
 		"cop_female",
 		"gensec",
 		"fbi",
-		"fbi_xc45",
 		"swat",
 		"heavy_swat",
 		"fbi_swat",
@@ -659,15 +658,21 @@ function CopLogicAttack._chk_request_action_walk_to_cover_shoot_pos(data, my_dat
 		"bolivian_indoors",
 		"medic",
 		"taser",
-		"spooc",
-		"trolliam_epicson",
-		"gangster_ninja",						
-		"shadow_spooc",
-		"spooc_heavy",
-		"tank_ftsu",
-		"tank_mini",
-		"tank",
-		"tank_medic"
+		"deathvox_guard",
+		"deathvox_heavyar",
+		"deathvox_heavyshot",
+		"deathvox_lightar",
+		"deathvox_lightshot",
+		"deathvox_medic",
+		"deathvox_shield",
+		"deathvox_taser",
+		"deathvox_cloaker",
+		"deathvox_sniper_assault",
+		"deathvox_greendozer",
+		"deathvox_blackdozer",
+		"deathvox_lmgdozer",
+		"deathvox_medicdozer",
+		"deathvox_grenadier"
 	}
 	local is_mook = nil
 	for _, name in ipairs(mook_units) do

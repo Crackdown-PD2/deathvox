@@ -207,6 +207,11 @@
 				</object>
 			</lod_object>
 
+			<lod_object name="lod_helmet" cpy_material_vars="contour_color, contour_opacity">
+				<object name="g_hat_lod1" 	enabled="true"  max_distance="2000"  max_draw_lod="0" />
+				<object name="g_hat_lod2" 	enabled="true" lod="1" />
+			</lod_object>			
+
 			<lod_object name="lod_head">
 				<object name="g_head" 		enabled="true"  max_distance="2000"  max_draw_lod="0" cpy_material_vars="contour_color, contour_opacity">
 					<material materials="mtr_police_head" max_distance="1000" />

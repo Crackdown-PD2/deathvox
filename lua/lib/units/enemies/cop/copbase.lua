@@ -38,3 +38,25 @@ function CopBase:_chk_spawn_gear()
 		self._unit:damage():run_sequence_simple("turn_on_spook_lights")
 	end
 end
+
+function CopBase:default_weapon_name()
+	local default_weapon_id = self._default_weapon_id
+	local weap_ids = tweak_data.character.weap_ids
+	local diff_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)
+	
+	local deathvox_pistol = Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_c45/wpn_npc_c45")
+
+	local unit_name = self._unit:name()
+	
+	local classic_shield = unit_name == Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_shield/ene_deathvox_classic_shield") or unit_name == Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_shield/ene_deathvox_classic_shield_husk") 
+	
+	if classic_shield and diff_index < 4 then 
+		return deathvox_pistol
+	else
+		for i_weap_id, weap_id in ipairs(weap_ids) do
+			if default_weapon_id == weap_id then
+				return tweak_data.character.weap_unit_names[i_weap_id]
+			end
+		end
+	end
+end

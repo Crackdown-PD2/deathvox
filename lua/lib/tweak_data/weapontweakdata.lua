@@ -353,7 +353,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_sniper.armor_piercing = true
 	self.deathvox_sniper.usage = "is_assault_sniper"
 	self.deathvox_sniper.anim_usage = "is_rifle"
-    self.deathvox_sniper.use_laser = false
+    self.deathvox_sniper.use_laser = true
     self.deathvox_sniper.disable_sniper_laser = true	
 	table.insert(self._gun_list_cd, "deathvox_sniper")
 	
