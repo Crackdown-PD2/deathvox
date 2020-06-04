@@ -67,6 +67,11 @@
 		<debrief_event>
 			<value_node value=""/>
 		</debrief_event>
+        <date_added>
+            <value_node value="2018"/>
+            <value_node value="4"/>
+            <value_node value="23"/>
+        </date_added>
 		<experience_mul>
 			<value_node value="1"/>
 			<value_node value="1"/>
@@ -76,28 +81,6 @@
 			<value_node value="3"/>
 			<value_node value="3"/>
 		</experience_mul>
-		<max_mission_xp>
-			<value_node value="8000"/>
-			<value_node value="8800"/>
-			<value_node value="9600"/>
-			<value_node value="10400"/>
-			<value_node value="11200"/>
-			<value_node value="12000"/>
-			<value_node value="12800"/>
-			<value_node value="13600"/>
-			<value_node value="14400"/>
-		</max_mission_xp>
-		<min_mission_xp>
-			<value_node value="8000"/>
-			<value_node value="8800"/>
-			<value_node value="9600"/>
-			<value_node value="10400"/>
-			<value_node value="11200"/>
-			<value_node value="12000"/>
-			<value_node value="12800"/>
-			<value_node value="13600"/>
-			<value_node value="14400"/>
-		</min_mission_xp>
 		<payout>
 			<value_node value="0"/>
 			<value_node value="0"/>
