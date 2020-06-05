@@ -2766,7 +2766,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	end
 	local is_russia
 	if self:get_ai_group_type() == "russia" then
-		is_murky = true
+		is_russia = true
 	end
 	local is_classic	
 	if self:get_ai_group_type() == "classic" then
