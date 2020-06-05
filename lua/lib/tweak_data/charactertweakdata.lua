@@ -2764,6 +2764,10 @@ function CharacterTweakData:_init_deathvox(presets)
 	if self:get_ai_group_type() == "murky" then
 		is_murky = true
 	end
+	local is_russia
+	if self:get_ai_group_type() == "russia" then
+		is_murky = true
+	end
 	local is_classic	
 	if self:get_ai_group_type() == "classic" then
 		is_classic = true
@@ -3012,6 +3016,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper.headshot_dmg_mul = 3
 	self.deathvox_sniper.is_special_unit = "sniper"
 	self.deathvox_sniper.access = "any"
+	self.deathvox_sniper.die_sound_event = "mga_death_scream"
+	self.deathvox_sniper.spawn_sound_event = "mga_deploy_snipers"		
 	table.insert(self._enemy_list, "deathvox_sniper")
 	
 	self.deathvox_sniper_assault = deep_clone(self.deathvox_sniper) -- note unit not in use due to poor feedback.
@@ -4558,6 +4564,20 @@ function CharacterTweakData:_init_region_classic()
 		medic = "mdc"
 	}
 end
+
+function CharacterTweakData:_init_region_russia()
+	self._default_chatter = "dsp_radio_russian"
+	self._unit_prefixes = {
+		cop = "r",
+		swat = "r",
+		heavy_swat = "r",
+		taser = "rtsr",
+		cloaker = "rclk",
+		bulldozer = "rbdz",
+		medic = "rmdc"
+	}
+end
+
 function CharacterTweakData:_init_region_murky() --will use these lines for now.
 	self._default_chatter = "dispatch_generic_message"
 	self._unit_prefixes = {
@@ -4643,7 +4663,30 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_gman_noflashlight",
 			"ene_deathvox_guarddozer"
 		}
-	}		
+	}
+	char_map.russia = {
+		path = "units/pd2_mod_gageammo/characters/",
+		list = {
+			"ene_deathvox_guard",
+			"ene_deathvox_heavyar",
+			"ene_deathvox_lightar",
+			"ene_deathvox_medic",
+			"ene_deathvox_shield",
+			"ene_deathvox_lightshot",
+			"ene_deathvox_heavyshot",
+			"ene_deathvox_taser",
+			"ene_deathvox_cloaker",
+			"ene_deathvox_sniper_assault",
+			"ene_deathvox_greendozer",
+			"ene_deathvox_blackdozer",
+			"ene_deathvox_lmgdozer",
+			"ene_deathvox_medicdozer",
+			"ene_deathvox_grenadier",
+			"ene_deathvox_gman",
+			"ene_deathvox_gman_noflashlight",
+			"ene_deathvox_guarddozer"
+		}
+	}			
 	char_map.fbi = {
 		path = "units/pd2_mod_fbi/characters/",
 		list = {

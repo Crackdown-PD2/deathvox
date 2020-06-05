@@ -549,7 +549,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		category.unit_types["gensec"] = category.unit_types["america"]
 		category.unit_types["zeal"] = category.unit_types["america"]
 		category.unit_types["classic"] = category.unit_types["america"]
-		category.unit_types["murky"] = category.unit_types["america"]		
+		category.unit_types["murky"] = category.unit_types["america"]
+		category.unit_types["russia"] = category.unit_types["russia"]				
 	end
 	self.unit_categories.deathvox_fbi_veteran = {
 		unit_types = {
@@ -570,6 +571,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_veteran/ene_deathvox_classic_veteran")
+			},
+			russia = {
+				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")
 			}
 		},
 		unit_type_spawner = {
@@ -578,7 +582,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran",
 			zeal = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran",
 			murky = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_veteran/ene_deathvox_classic_veteran"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_veteran/ene_deathvox_classic_veteran",
+			russia = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran"
 		},
 		access = access_type_all
 	}
@@ -601,6 +606,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/payday2/characters/ene_sniper_1/ene_sniper_1")
+			},
+			russia = {
+				Idstring("units/payday2/characters/ene_sniper_1/ene_sniper_1")
 			}
 		},
 		unit_type_spawner = {
@@ -609,7 +617,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/payday2/characters/ene_sniper_2/ene_sniper_2",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_sniper/ene_deathvox_sniper",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_sniper/ene_deathvox_sniper",	
-			classic = "units/payday2/characters/ene_sniper_1/ene_sniper_1"
+			classic = "units/payday2/characters/ene_sniper_1/ene_sniper_1",
+			russia = "units/payday2/characters/ene_sniper_1/ene_sniper_1"
 		},
 		access = access_type_all
 	}	
@@ -632,7 +641,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_rookie/ene_deathvox_classic_rookie")
-			}			
+			},
+			russia = {
+				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie")
+			}
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie",
@@ -640,7 +652,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie",
 			murky = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie",			
 			zeal = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie",
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_rookie/ene_deathvox_classic_rookie"			
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_rookie/ene_deathvox_classic_rookie",			
+			russia = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie"		
 		},
 		access = access_type_all
 	}
@@ -663,7 +676,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_hrt/ene_deathvox_classic_hrt")
-			}			
+			},
+			russia = {
+				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt")
+			}
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt",
@@ -671,7 +687,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			murky = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt",
 			gensec = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt",			
 			zeal = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt",
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_hrt/ene_deathvox_classic_hrt"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_hrt/ene_deathvox_classic_hrt",
+			russia = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt"
 		},
 		access = access_type_all
 	}
@@ -694,7 +711,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_cop_pistol/ene_deathvox_classic_cop_pistol")
-			}		
+			},
+			russia = {
+				Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol")
+			}
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol",
@@ -702,7 +722,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol",
 			zeal = "units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol",
 			murky = "units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_pistol/ene_deathvox_classic_cop_pistol"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_pistol/ene_deathvox_classic_cop_pistol",
+			russia = "units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol"
 		},
 		access = access_type_all
 	}
@@ -725,7 +746,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_cop_revolver/ene_deathvox_classic_cop_revolver")
-			}		
+			},
+			russia = {
+				Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver")
+			},			
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver",
@@ -733,7 +757,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver",
 			zeal = "units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver",
 			murky = "units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_revolver/ene_deathvox_classic_cop_revolver"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_revolver/ene_deathvox_classic_cop_revolver",
+			russia = "units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver",
 		},
 		access = access_type_all
 	}
@@ -756,7 +781,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_cop_shotgun/ene_deathvox_classic_cop_shotgun")
-			}		
+			},
+			russia = {
+				Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun")
+			}
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun",
@@ -764,7 +792,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun",
 			zeal = "units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun",
 			murky = "units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_shotgun/ene_deathvox_classic_cop_shotgun"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_shotgun/ene_deathvox_classic_cop_shotgun",
+			russia = "units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun"
 		},
 		access = access_type_all
 	}
@@ -787,7 +816,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_cop_smg/ene_deathvox_classic_cop_smg")
-			}		
+			},
+			russia = {
+				Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg")
+			}			
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg",
@@ -795,7 +827,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg",
 			zeal = "units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg",
 			murky = "units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_smg/ene_deathvox_classic_cop_smg"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_smg/ene_deathvox_classic_cop_smg",
+			russia = "units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg"			
 		},
 		access = access_type_all
 	}
@@ -818,14 +851,18 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard")
-			}		
+			},		
+			russia = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard")
+			}
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard",
 			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard",
 			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard",			
-			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard"
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard",
+			russia = "units/pd2_mod_gageammo/characters/ene_deathvox_guard/ene_deathvox_guard"
 		},
 		access = access_type_all
 	}
@@ -848,14 +885,18 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier")
-			}		
+			},
+			russia = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier")
+			}			
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier",
 			fbi = "units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier",
 			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier",			
-			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier"
+			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier",
+			russia = "units/pd2_mod_gageammo/characters/ene_deathvox_grenadier/ene_deathvox_grenadier"
 		},
 		access = access_type_all,
 		special_type = "boom"
@@ -879,7 +920,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_swat/ene_deathvox_classic_swat")
-			}
+			},
+			russia = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar")
+			}			
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_swat/ene_deathvox_cop_swat",
@@ -887,7 +931,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_swat/ene_deathvox_classic_swat"
+			classic = "units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar"
 		},
 		access = access_type_all
 	}
@@ -911,7 +955,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat_noarmor/ene_deathvox_classic_heavyswat_noarmor")
-			}			
+			},
+			russia = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
+			}
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat",
@@ -919,7 +966,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat_noarmor/ene_deathvox_classic_heavyswat_noarmor"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat_noarmor/ene_deathvox_classic_heavyswat_noarmor",
+			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar"			
 		},
 		access = access_type_all
 	}
@@ -943,7 +991,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat")
-			}			
+			},
+			russia = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
+			}
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat",
@@ -951,7 +1002,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat",
+			russia = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar"
 		},
 		access = access_type_all
 	}
@@ -975,7 +1027,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_swatshot/ene_deathvox_classic_swatshot")
-			}						
+			},
+			russia = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot")
+			}
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot",
@@ -983,7 +1038,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_swatshot/ene_deathvox_classic_swatshot"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_swatshot/ene_deathvox_classic_swatshot",
+			russia = "units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot"
 		},
 		access = access_type_all
 	}
@@ -1007,7 +1063,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor")
-			}				
+			},
+			russia = {
+				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor")
+			}
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot",
@@ -1015,7 +1074,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor",
+			russia = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot"			
 		},
 		access = access_type_all
 	}
@@ -1039,7 +1099,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot")
-			}				
+			},
+			russia = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
+			}
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot",
@@ -1047,7 +1110,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot",
+			russia = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot"			
 		},
 		access = access_type_all
 	}
@@ -1071,7 +1135,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_shield/ene_deathvox_classic_shield")
-			}					
+			},	
+			russia = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield")
+			}
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield",
@@ -1079,7 +1146,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_shield/ene_deathvox_gensec_shield",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_shield/ene_deathvox_classic_shield"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_shield/ene_deathvox_classic_shield",
+			russia = "units/pd2_mod_gageammo/characters/ene_deathvox_shield/ene_deathvox_shield"
 		},
 		access = access_type_all,
 		special_type = "shield"
@@ -1103,7 +1171,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_medic/ene_deathvox_classic_medic")
-			}	
+			},
+			russia = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic")
+			}
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_medic/ene_deathvox_cop_medic",
@@ -1111,7 +1182,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_medic/ene_deathvox_gensec_medic",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_medic/ene_deathvox_classic_medic"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_medic/ene_deathvox_classic_medic",
+			russia = "units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic"
 		},
 		access = access_type_all,
 		special_type = "medic"
@@ -1135,7 +1207,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_taser/ene_deathvox_classic_taser")
-			}			
+			},
+			russia = {
+				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_taser/ene_deathvox_classic_taser")
+			}
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser",
@@ -1143,7 +1218,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_taser/ene_deathvox_classic_taser"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_taser/ene_deathvox_classic_taser",
+			russia = "units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser"
 		},
 		access = access_type_all,
 		special_type = "taser"
@@ -1167,7 +1243,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_greendozer/ene_deathvox_classic_greendozer")
-			}			
+			},			
+			russia = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer")
+			}	
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer",
@@ -1175,7 +1254,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_greendozer/ene_deathvox_classic_greendozer"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_greendozer/ene_deathvox_classic_greendozer",
+			russia = "units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer"
 		},
 		access = access_type_all,
 		special_type = "tank"
@@ -1199,7 +1279,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer")
-			}						
+			},			
+			russia = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer")
+			}		
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer",
@@ -1207,7 +1290,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer",			
-			classic = "units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer"
+			classic = "units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer",
+			russia = "units/pd2_mod_gageammo/characters/ene_deathvox_medicdozer/ene_deathvox_medicdozer"
 		},
 		access = access_type_all,
 		special_type = "tank"
@@ -1228,9 +1312,12 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},
 			murky = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer")
-			},			
+			},
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_blackdozer/ene_deathvox_classic_blackdozer")
+			},			
+			russia = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer")
 			}						
 		},
 		unit_type_spawner = {
@@ -1239,7 +1326,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_blackdozer/ene_deathvox_classic_blackdozer"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_blackdozer/ene_deathvox_classic_blackdozer",
+			russia = "units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer"			
 		},
 		access = access_type_all,
 		special_type = "tank"
@@ -1263,7 +1351,10 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_lmgdozer/ene_deathvox_classic_lmgdozer")
-			}				
+			},	
+			russia = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer")
+			}
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer",
@@ -1271,7 +1362,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_lmgdozer/ene_deathvox_classic_lmgdozer"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_lmgdozer/ene_deathvox_classic_lmgdozer",
+			russia = "units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer"
 		},
 		access = access_type_all,
 		special_type = "tank"
@@ -1295,6 +1387,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_deathvox_classic_cloaker")
+			},
+			russia = {
+				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker")
 			}
 		},
 		unit_type_spawner = {
@@ -1303,7 +1398,8 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_cloaker/ene_deathvox_gensec_cloaker",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_deathvox_classic_cloaker"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_deathvox_classic_cloaker",
+			russia = "units/pd2_mod_gageammo/characters/ene_deathvox_cloaker/ene_deathvox_cloaker"
 		},
 		access = access_type_all,
 		special_type = "spooc"
