@@ -707,11 +707,12 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 						vis_ray = World:raycast("ray", my_pos, detect_pos, "slot_mask", data.visibility_slotmask, "ray_type", "ai_vision")
 
 						if not vis_ray or vis_ray.unit:key() == u_key then
-							attention_info.verified = true
+							verified = true
 						end
 					end
 				end
 
+				attention_info.verified = verified
 				attention_info.dis = dis
 				attention_info.vis_ray = vis_ray or nil
 				local is_ignored = false
@@ -722,7 +723,7 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 
 				if is_ignored then
 					CopLogicBase._destroy_detected_attention_object_data(data, attention_info)
-				elseif attention_info.verified then
+				elseif verified then
 					attention_info.release_t = nil
 					attention_info.verified_t = t
 
