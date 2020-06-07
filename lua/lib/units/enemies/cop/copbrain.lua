@@ -209,6 +209,10 @@ function CopBrain:convert_to_criminal(mastermind_criminal)
 	self._unit:sound():say("cn1", true, nil)
 end
 
+function CopBrain:clbk_pathing_results(search_id, path)
+    self:_add_pathing_result(search_id, path)
+end
+
 function CopBrain:clbk_alarm_pager(ignore_this, data)
 	local pager_data = self._alarm_pager_data
 	local clbk_id = pager_data.pager_clbk_id

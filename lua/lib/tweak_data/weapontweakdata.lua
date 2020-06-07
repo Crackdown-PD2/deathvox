@@ -404,6 +404,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_lmgdozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_556_lmg"
 	self.deathvox_lmgdozer.CLIP_AMMO_MAX = 200
 	self.deathvox_lmgdozer.NR_CLIPS_MAX = 2
+	self.deathvox_lmgdozer.spread = 8
 	self.deathvox_lmgdozer.auto.fire_rate = 0.08
 	self.deathvox_lmgdozer.hold = "rifle"
 	self.deathvox_lmgdozer.alert_size = 5000
@@ -438,6 +439,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_blackdozer.CLIP_AMMO_MAX = 11
 	self.deathvox_blackdozer.NR_CLIPS_MAX = 10
 	self.deathvox_blackdozer.hold = "rifle"
+	self.deathvox_blackdozer.spread = 3
 	self.deathvox_blackdozer.alert_size = 4500
 	self.deathvox_blackdozer.suppression = 1.8
 	self.deathvox_blackdozer.is_shotgun = true
@@ -460,6 +462,37 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_greendozer.reload = "looped"
 	self.deathvox_greendozer.looped_reload_speed = 0.8 -- time it takes to reload each shell.
 	table.insert(self._gun_list_cd, "deathvox_greendozer")
+	
+	local all_rifles = {
+		"m4_npc",
+		"m4_yellow_npc",
+		"ak47_npc",
+		"ak47_ass_npc",		
+		"g36_npc",
+		"scar_npc",
+		"deathvox_light_ar",
+		"deathvox_heavy_ar"
+	}
+	
+	local all_smgs = {
+		"mp5_npc",
+		"mac11_npc",
+		"mp9_npc",
+		"akmsu_smg_npc",
+		"ump_npc",
+		"asval_smg_npc",
+		"deathvox_cloaker",
+		"deathvox_cop_smg",
+		"deathvox_medicdozer_smg"
+	}
+
+	for _, rname in ipairs(all_rifles) do
+		self[rname].spread = 5
+	end
+	
+	for _, sname in ipairs(all_smgs) do
+		self[sname].spread = 8
+	end
 
 	local difficulties = {
 		"easy",

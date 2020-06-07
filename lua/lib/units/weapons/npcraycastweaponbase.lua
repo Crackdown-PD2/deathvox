@@ -46,6 +46,20 @@ function NPCRaycastWeaponBase:setup(setup_data, ...)
 	end		
 end
 
+function NPCRaycastWeaponBase:_get_spread(user_unit)
+	local weapon_tweak = tweak_data.weapon[self._name_id]
+	
+	if not weapon_tweak then
+		return 3
+	end
+	
+	if weapon_tweak.spread then
+		return weapon_tweak.spread
+	else
+		return 1
+	end
+end
+
 local mvec_to = Vector3()
 local mvec_spread = Vector3()
 
@@ -59,6 +73,12 @@ function NPCRaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_
 		result.guaranteed_miss = miss
 
 		mvector3.spread(direction, math.rand(unpack(extra_spread)))
+	else
+		local true_spread = self:_get_spread(user_unit)
+
+		if true_spread > 1 then
+			mvector3.spread(direction, true_spread)
+		end
 	end
 
 	mvector3.set(mvec_to, direction)
