@@ -67,13 +67,24 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 	--gangster voice stuff from fuglore that was originally from rino that was originally from resmod
 	self.short2_stage1.package = {"packages/job_short2_stage1", "levels/narratives/dentist/mia/stage2/world_sounds"}
 	self.nightclub.package = {"packages/vlad_nightclub", "levels/narratives/dentist/mia/stage2/world_sounds"}
-	self.spa.package = {"packages/job_spa", "levels/narratives/dentist/mia/stage2/world_sounds", "packages/thabeatpricks"}
+	self.spa.package = {"packages/job_spa", "levels/narratives/dentist/mia/stage2/world_sounds", "packages/deathvoxclassics"}
 	self.friend.package = {"levels/narratives/h_alex_must_die/stage_1/world_sounds", "packages/lvl_friend"}
 	self.cane.package = {"packages/cane", "levels/narratives/e_welcome_to_the_jungle/stage_1/world_sounds"}	
 	-- whurr's map edits
 	map_faction_override["bridge"] = "classic"
 	map_faction_override["apartment"] = "classic"
 	map_faction_override["street"] = "classic"
+	-- HOLDOUT STUFF
+	self.skm_run.package = {"packages/dlcs/skm/job_skm", "packages/deathvoxclassics"}
+	self.skm_watchdogs_stage2.package = {"packages/dlcs/skm/job_skm", "packages/deathvoxclassics"}
+	self.skm_cas.package = {"packages/dlcs/skm/job_skm", "packages/deathvoxclassics"}
+	self.skm_big2.package = {"packages/dlcs/skm/job_skm", "packages/deathvoxclassics"}
+	self.skm_mallcrasher.package = {"packages/dlcs/skm/job_skm", "packages/deathvoxclassics"}
+	self.skm_arena.package = {"packages/dlcs/skm/job_skm", "packages/deathvoxclassics"}
+	self.skm_bex.package = {"packages/dlcs/skm/job_skm", "packages/deathvoxclassics"} --fuck
+	self.skm_mus.package = {"packages/dlcs/skm/job_skm", "packages/deathvoxclassics"}
+	self.skm_red2.package = {"packages/dlcs/skm/job_skm", "packages/deathvoxclassics"}
+	
 	map_faction_override["bank"] = "classic"
 	-- Murkywater Heists	
 	--map_faction_override["pbr"] = "murky"
