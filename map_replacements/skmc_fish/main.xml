@@ -24,6 +24,7 @@
 			<value_node value="packages/dlcs/skm/job_skm"/>
 			<value_node value="levels/narratives/skm/skm_mus/world_sounds"/>
 			<value_node value="packages/lvl_fish"/>
+			<value_node value="packages/deathvoxclassics"/>			
 			<value_node value="levels/narratives/continental/fish/world"/>
 			<value_node value="levels/narratives/continental/fish/world_sounds"/>
 			<value_node value="levels/narratives/continental/fish/collision/collision"/>
