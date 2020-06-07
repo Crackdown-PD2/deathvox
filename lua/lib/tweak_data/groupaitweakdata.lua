@@ -935,78 +935,114 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		},
 		access = access_type_all
 	}
- if difficulty_index < 4 and not managers.skirmish and not managers.skirmish:is_skirmish() then
- 	self.unit_categories.deathvox_heavyar = {
-		unit_types = {
-			cop = {
-				Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat")
+	if managers.skirmish and managers.skirmish:is_skirmish() then
+		self.unit_categories.deathvox_heavyar = {
+			unit_types = {
+				cop = {
+					Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat")
+				},
+				fbi = {
+					Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat")
+				},
+				gensec = {
+					Idstring("units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat")
+				},
+				zeal = {
+					Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
+				},
+				murky = {
+					Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
+				},			
+				classic = {
+					Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat")
+				},
+				russia = {
+					Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
+				}
 			},
-			fbi = {
-				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat")
+			unit_type_spawner = {
+				cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat",
+				fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat",
+				gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat",
+				zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",
+				murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",			
+				classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat",
+				russia = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar"
 			},
-			gensec = {
-				Idstring("units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat")
+			access = access_type_all
+		}
+	elseif difficulty_index < 4 then
+		self.unit_categories.deathvox_heavyar = {
+			unit_types = {
+				cop = {
+					Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat")
+				},
+				fbi = {
+					Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat")
+				},
+				gensec = {
+					Idstring("units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat")
+				},
+				zeal = {
+					Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
+				},
+				murky = {
+					Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
+				},			
+				classic = {
+					Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat_noarmor/ene_deathvox_classic_heavyswat_noarmor")
+				},
+				russia = {
+					Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
+				}
 			},
-			zeal = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
+			unit_type_spawner = {
+				cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat",
+				fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat",
+				gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat",
+				zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",
+				murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",			
+				classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat_noarmor/ene_deathvox_classic_heavyswat_noarmor",
+				murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar"			
 			},
-			murky = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
-			},			
-			classic = {
-				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat_noarmor/ene_deathvox_classic_heavyswat_noarmor")
+			access = access_type_all
+		}
+	else 
+		self.unit_categories.deathvox_heavyar = {
+			unit_types = {
+				cop = {
+					Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat")
+				},
+				fbi = {
+					Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat")
+				},
+				gensec = {
+					Idstring("units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat")
+				},
+				zeal = {
+					Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
+				},
+				murky = {
+					Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
+				},			
+				classic = {
+					Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat")
+				},
+				russia = {
+					Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
+				}
 			},
-			russia = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
-			}
-		},
-		unit_type_spawner = {
-			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat",
-			fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat",
-			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat",
-			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",
-			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat_noarmor/ene_deathvox_classic_heavyswat_noarmor",
-			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar"			
-		},
-		access = access_type_all
-	}
-	else
- 	self.unit_categories.deathvox_heavyar = {
-		unit_types = {
-			cop = {
-				Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat")
+			unit_type_spawner = {
+				cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat",
+				fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat",
+				gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat",
+				zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",
+				murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",			
+				classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat",
+				russia = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar"
 			},
-			fbi = {
-				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat")
-			},
-			gensec = {
-				Idstring("units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat")
-			},
-			zeal = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
-			},
-			murky = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
-			},			
-			classic = {
-				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat")
-			},
-			russia = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar")
-			}
-		},
-		unit_type_spawner = {
-			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat",
-			fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat",
-			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat",
-			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",
-			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat",
-			russia = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar"
-		},
-		access = access_type_all
-	}
+			access = access_type_all
+		}
 	end		
 	self.unit_categories.deathvox_lightshot = {
 		unit_types = {
@@ -1043,78 +1079,114 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		},
 		access = access_type_all
 	}
- if difficulty_index < 4 and not managers.skirmish and not managers.skirmish:is_skirmish() then
-	self.unit_categories.deathvox_heavyshot = {
-		unit_types = {
-			cop = {
-				Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot")
+	if managers.skirmish and managers.skirmish:is_skirmish() then
+		self.unit_categories.deathvox_heavyshot = {
+			unit_types = {
+				cop = {
+					Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot")
+				},
+				fbi = {
+					Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot")
+				},
+				gensec = {
+					Idstring("units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot")
+				},
+				zeal = {
+					Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
+				},
+				murky = {
+					Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
+				},			
+				classic = {
+					Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot")
+				},
+				russia = {
+					Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
+				}
 			},
-			fbi = {
-				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot")
+			unit_type_spawner = {
+				cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot",
+				fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot",
+				gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot",
+				zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",
+				murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",			
+				classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot",
+				russia = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot"			
 			},
-			gensec = {
-				Idstring("units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot")
+			access = access_type_all
+		}
+	elseif difficulty_index < 4 then
+		self.unit_categories.deathvox_heavyshot = {
+			unit_types = {
+				cop = {
+					Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot")
+				},
+				fbi = {
+					Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot")
+				},
+				gensec = {
+					Idstring("units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot")
+				},
+				zeal = {
+					Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
+				},
+				murky = {
+					Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
+				},			
+				classic = {
+					Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor")
+				},
+				russia = {
+					Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor")
+				}
 			},
-			zeal = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
+			unit_type_spawner = {
+				cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot",
+				fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot",
+				gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot",
+				zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",
+				murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",			
+				classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor",
+				russia = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot"			
 			},
-			murky = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
-			},			
-			classic = {
-				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor")
-			},
-			russia = {
-				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor")
-			}
-		},
-		unit_type_spawner = {
-			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot",
-			fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot",
-			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot",
-			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",
-			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor",
-			russia = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot"			
-		},
-		access = access_type_all
-	}
+			access = access_type_all
+		}
 	else
-	self.unit_categories.deathvox_heavyshot = {
-		unit_types = {
-			cop = {
-				Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot")
+		self.unit_categories.deathvox_heavyshot = {
+			unit_types = {
+				cop = {
+					Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot")
+				},
+				fbi = {
+					Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot")
+				},
+				gensec = {
+					Idstring("units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot")
+				},
+				zeal = {
+					Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
+				},
+				murky = {
+					Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
+				},			
+				classic = {
+					Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot")
+				},
+				russia = {
+					Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
+				}
 			},
-			fbi = {
-				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot")
+			unit_type_spawner = {
+				cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot",
+				fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot",
+				gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot",
+				zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",
+				murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",			
+				classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot",
+				russia = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot"			
 			},
-			gensec = {
-				Idstring("units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot")
-			},
-			zeal = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
-			},
-			murky = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
-			},			
-			classic = {
-				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot")
-			},
-			russia = {
-				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot")
-			}
-		},
-		unit_type_spawner = {
-			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot",
-			fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot",
-			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot",
-			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",
-			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot",
-			russia = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot"			
-		},
-		access = access_type_all
-	}
+			access = access_type_all
+		}
 	end	
 	self.unit_categories.deathvox_shield = {
 		unit_types = {
