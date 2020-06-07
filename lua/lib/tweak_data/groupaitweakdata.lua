@@ -935,7 +935,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		},
 		access = access_type_all
 	}
- if difficulty_index < 4 then
+ if difficulty_index < 4 and not managers.skirmish and not managers.skirmish:is_skirmish() then
  	self.unit_categories.deathvox_heavyar = {
 		unit_types = {
 			cop = {
@@ -1043,7 +1043,7 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		},
 		access = access_type_all
 	}
- if difficulty_index < 4 then
+ if difficulty_index < 4 and not managers.skirmish and not managers.skirmish:is_skirmish() then
 	self.unit_categories.deathvox_heavyshot = {
 		unit_types = {
 			cop = {
