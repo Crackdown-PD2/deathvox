@@ -2994,6 +2994,22 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker.no_retreat = false
 	self.deathvox_cloaker.chatter = presets.enemy_chatter.spooc
 	self.deathvox_cloaker.spooc_attack_use_smoke_chance = 0
+	self.deathvox_cloaker.special_deaths = {
+		melee = {
+			[("head"):id():key()] = {
+				sequence = "dismember_head",
+				melee_weapon_id = "sandsteel",
+				character_name = "dragon",
+				sound_effect = "split_gen_head"
+			},
+			[("body"):id():key()] = {
+				sequence = "dismember_body_top",
+				melee_weapon_id = "sandsteel",
+				character_name = "dragon",
+				sound_effect = "split_gen_body"
+			}
+		}
+	}		
 
 	table.insert(self._enemy_list, "deathvox_cloaker") 
 
