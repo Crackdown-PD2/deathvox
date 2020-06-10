@@ -286,7 +286,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 			value = 6,		
 			spread = -3,
 			concealment = 3,
-			suppression = 12
+			suppression = 72
 		}
 		-- DMR Kit				
 		self.parts.wpn_fps_upg_ass_m4_b_beowulf.stats = {
@@ -339,22 +339,22 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_upg_ass_ns_surefire.stats = {value = 5}
 		self.parts.wpn_fps_upg_ass_ns_linear.stats = {value = 5}
 		self.parts.wpn_fps_upg_ass_ns_jprifles.stats = {value = 5}
-		self.parts.wpn_fps_upg_ns_ass_smg_medium.stats = {suppression = 12,	value = 2}
-		self.parts.wpn_fps_upg_ns_ass_smg_large.stats = {suppression = 12,	value = 5}
+		self.parts.wpn_fps_upg_ns_ass_smg_medium.stats = {suppression = 72,	alert_size = 12, value = 2}
+		self.parts.wpn_fps_upg_ns_ass_smg_large.stats = {suppression = 72, alert_size = 12, value = 5}
 		self.parts.wpn_fps_upg_ns_pis_typhoon.stats = {value = 4}
 		self.parts.wpn_fps_upg_ns_ass_smg_v6.stats = {value = 3}
-		self.parts.wpn_fps_upg_ns_pis_jungle.stats = {suppression = 12,	value = 5}
-		self.parts.wpn_fps_upg_ns_ass_filter.stats = {suppression = 12,	value = 0}
-		self.parts.wpn_fps_upg_ns_pis_medium_slim.stats = {suppression = 12, value = 1}
-		self.parts.wpn_fps_upg_ns_pis_large.stats = {suppression = 12, value = 5}
-		self.parts.wpn_fps_upg_ns_pis_large_kac.stats = {suppression = 12, value = 6}
-		self.parts.wpn_fps_upg_ns_pis_small.stats = {suppression = 12, value = 3}
-		self.parts.wpn_fps_upg_pis_ns_flash.stats = {suppression = 12, value = 4}
-		self.parts.wpn_fps_upg_ns_pis_meatgrinder.stats = {suppression = 12, value = 7}
-		self.parts.wpn_fps_upg_ns_pis_ipsccomp.stats = {suppression = 12, value = 4}
-		self.parts.wpn_fps_upg_ns_pis_medium.stats = {suppression = 12, value = 1}
-		self.parts.wpn_fps_upg_ns_pis_medium_gem.stats = {suppression = 12, value = 4}
-		self.parts.wpn_fps_upg_ns_pis_medium_slim.stats = {suppression = 12, value = 1}
+		self.parts.wpn_fps_upg_ns_pis_jungle.stats = {suppression = 72,	value = 5}
+		self.parts.wpn_fps_upg_ns_ass_filter.stats = {suppression = 72,	value = 0}
+		self.parts.wpn_fps_upg_ns_pis_medium_slim.stats = {suppression = 72, alert_size = 12, value = 1}
+		self.parts.wpn_fps_upg_ns_pis_large.stats = {suppression = 72, alert_size = 12, value = 5}
+		self.parts.wpn_fps_upg_ns_pis_large_kac.stats = {suppression = 72, alert_size = 12, value = 6}
+		self.parts.wpn_fps_upg_ns_pis_small.stats = {suppression = 72, alert_size = 12, value = 3}
+		self.parts.wpn_fps_upg_pis_ns_flash.stats = {suppression = 72, alert_size = 12, value = 4}
+		self.parts.wpn_fps_upg_ns_pis_meatgrinder.stats = {suppression = 72, alert_size = 12, value = 7}
+		self.parts.wpn_fps_upg_ns_pis_ipsccomp.stats = {suppression = 72, alert_size = 12, value = 4}
+		self.parts.wpn_fps_upg_ns_pis_medium.stats = {suppression = 72, alert_size = 12, value = 1}
+		self.parts.wpn_fps_upg_ns_pis_medium_gem.stats = {suppression = 72, alert_size = 12, value = 4}
+		self.parts.wpn_fps_upg_ns_pis_medium_slim.stats = {suppression = 72, alert_size = 12, value = 1}
 	
 	--Sight stat changes begin here. (don't feel like commenting these! nerds!)
 		self.parts.wpn_fps_upg_o_specter.stats = {zoom = 4, value = 8} -- i should probably write it like this for the rest of the attachments but NO, DIE
