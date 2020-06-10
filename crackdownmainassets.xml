@@ -687,14 +687,15 @@
 	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/gman_body_nm"  force="false"/>
 	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/gman_head_df"  force="false"/>
 	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/gman_head_nm"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_gman/fedora_df"  force="false"/>
 
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight" load="true"/>
 	<model path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight" force="false"/>
 	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight" force="false"/>	
 	<object path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight" force="false"/>			
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight" force="false"/>	
-	<material_config path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight_contour" force="false"/>	
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_gman_noflashlight/ene_deathvox_gman_noflashlight_husk" load="true"/>
+	
+	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_mlady/ene_acc_mlady"/>
 	
 	<!--Z-Textures-->
 	<texture path="units/pd2_mod_gageammo/characters/shared_textures/bulldozer_df"  force="false"/>
