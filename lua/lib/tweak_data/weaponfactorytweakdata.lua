@@ -286,7 +286,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 			value = 6,		
 			spread = -3,
 			concealment = 3,
-			suppression = 72
+			suppression = -72,
+			alert_size = 12
 		}
 		-- DMR Kit				
 		self.parts.wpn_fps_upg_ass_m4_b_beowulf.stats = {
@@ -319,6 +320,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		value = 1,
 		spread = -3, 
 		recoil = -5, 
+		suppression = -72,
+		alert_size = 12,
 		concealment = 10
 	}
 	-- Solid Stock
