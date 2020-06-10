@@ -103,6 +103,7 @@
 	
 	<!-- EFFECTS -->
 	<effect path="effects/particles/explosions/cs_grenade_smoke" load="true"/>
+	<effect path="effects/particles/explosions/smoke_grenade_smoke" force="true"/>
 	<effect path="effects/particles/weapons/trail_dv_sniper" load="true"/>
 	<effect path="effects/particles/weapons/money_muzzle_fps" load="true"/>
 	<effect path="effects/pd2_mod_gageammo/particles/character/flashlight_ss" load="true"/>
