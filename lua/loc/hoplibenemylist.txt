@@ -41,6 +41,7 @@
   "ene_deathvox_fbi_taser" : "Taser",
   "ene_deathvox_fbi_swatshot" : "FBI SWAT",
   "ene_deathvox_fbi_swat" : "FBI SWAT",
+  "ene_deathvox_fbi_medic" : "Medic",
   "ene_deathvox_fbi_shield" : "Shield",
   "ene_deathvox_fbi_rookie" : "FBI Rookie",
   "ene_deathvox_fbi_hrt" : "FBI HRT",
