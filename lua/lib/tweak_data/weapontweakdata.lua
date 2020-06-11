@@ -3389,14 +3389,14 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			zoom = 1,
 			total_ammo_mod = 21,
 			damage = 80,
-			alert_size = 8,
+			alert_size = 24,
 			spread = 24,
 			spread_moving = 15,
 			recoil = 26,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 12,
+			suppression = 24,
 			concealment = 17
 		}
 		

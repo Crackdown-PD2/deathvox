@@ -320,8 +320,6 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		value = 1,
 		spread = -3, 
 		recoil = -5, 
-		suppression = -72,
-		alert_size = 12,
 		concealment = 10
 	}
 	-- Solid Stock
