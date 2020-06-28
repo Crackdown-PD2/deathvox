@@ -4,6 +4,10 @@ local mvec3_sub = mvector3.subtract
 local mvec3_dis_sq = mvector3.distance_sq
 local mvec3_dir = mvector3.direction
 local mvec3_l_sq = mvector3.length_sq
+local mvec3_set_l = mvector3.set_length
+local mvec3_add = mvector3.add
+local mvec3_rand_orth = mvector3.random_orthogonal
+
 local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
 
@@ -87,74 +91,6 @@ function GroupAIStateBase:_draw_current_logics()
 				new_brush:sphere(data.unit:movement():m_head_pos(), 20)
 			end
 		end
-	end
-end
-
-function GroupAIStateBase:set_importance_weight(u_key, wgt_report)
-	if #wgt_report == 0 then
-		return
-	end
-
-	local t_rem = table.remove
-	local t_ins = table.insert
-	local max_nr_imp = 8 --oh hey mod runs ok again
-	local imp_adj = 0
-	local criminals = self._player_criminals
-	local cops = self._police
-
-	for i_dis_rep = #wgt_report - 1, 1, -2 do
-		local c_key = wgt_report[i_dis_rep]
-		local c_dis = wgt_report[i_dis_rep + 1]
-		local c_record = criminals[c_key]
-		local imp_enemies = c_record.important_enemies
-		local imp_dis = c_record.important_dis
-		local was_imp = nil
-
-		for i_imp = #imp_enemies, 1, -1 do
-			if imp_enemies[i_imp] == u_key then
-				table.remove(imp_enemies, i_imp)
-				table.remove(imp_dis, i_imp)
-
-				was_imp = true
-
-				break
-			end
-		end
-
-		local i_imp = #imp_dis
-
-		while i_imp > 0 do
-			if imp_dis[i_imp] <= c_dis then
-				break
-			end
-
-			i_imp = i_imp - 1
-		end
-
-		if i_imp < max_nr_imp then
-			i_imp = i_imp + 1
-
-			while max_nr_imp <= #imp_enemies do
-				local dump_e_key = imp_enemies[#imp_enemies]
-
-				self:_adjust_cop_importance(dump_e_key, -1)
-				t_rem(imp_enemies)
-				t_rem(imp_dis)
-			end
-
-			t_ins(imp_enemies, i_imp, u_key)
-			t_ins(imp_dis, i_imp, c_dis)
-
-			if not was_imp then
-				imp_adj = imp_adj + 1
-			end
-		elseif was_imp then
-			imp_adj = imp_adj - 1
-		end
-	end
-
-	if imp_adj ~= 0 then
-		self:_adjust_cop_importance(u_key, imp_adj)
 	end
 end
 
@@ -497,15 +433,511 @@ function GroupAIStateBase:_merge_coarse_path_by_area(coarse_path)
 	local last_area = nil
 
 	while i_nav_seg > 0 do
-		local nav_seg = coarse_path[i_nav_seg][1]
-		local area = self:get_area_from_nav_seg_id(nav_seg)
+		if #coarse_path > 2 then
+			local nav_seg = coarse_path[i_nav_seg][1]
+			local area = self:get_area_from_nav_seg_id(nav_seg)
 
-		if last_area and last_area == area and #coarse_path > 2 then
-			table.remove(coarse_path, i_nav_seg)
+			if last_area and last_area == area then
+				table.remove(coarse_path, i_nav_seg)
+			else
+				last_area = area
+			end
 		end
 
 		i_nav_seg = i_nav_seg - 1
 	end
-	
+
+	--fug pls
 	return coarse_path
+end
+
+function GroupAIStateBase:queue_smoke_grenade(id, detonate_pos, shooter_pos, duration, ignore_control, flashbang)
+	self._smoke_grenades = self._smoke_grenades or {}
+	local data = {
+		id = id,
+		detonate_pos = detonate_pos,
+		shooter_pos = shooter_pos,
+		duration = duration,
+		ignore_control = ignore_control,
+		flashbang = flashbang
+	}
+	self._smoke_grenades[id] = data
+end
+
+function GroupAIStateBase:detonate_world_smoke_grenade(id)
+	self._smoke_grenades = self._smoke_grenades or {}
+
+	if not self._smoke_grenades[id] then
+		--Application:error("Could not detonate smoke grenade as it was not queued!", id)
+
+		return
+	end
+
+	local data = self._smoke_grenades[id]
+
+	if data.flashbang then
+		if Network:is_client() then
+			return
+		end
+
+		local det_pos = data.detonate_pos
+		local ray_to = mvector3.copy(det_pos) + math.UP * 5
+
+		mvector3.set_z(ray_to, ray_to.z - 50)
+
+		local ground_ray = World:raycast("ray", det_pos, ray_to, "slot_mask", managers.slot:get_mask("world_geometry"))
+
+		if ground_ray then
+			det_pos = ground_ray.hit_position
+			mvector3.set_z(det_pos, det_pos.z + 3)
+			data.detonate_pos = det_pos
+		end
+
+		local rotation = Rotation(math.random() * 360, 0, 0)
+		local flash_grenade = World:spawn_unit(Idstring("units/payday2/weapons/wpn_frag_flashbang/wpn_frag_flashbang"), det_pos, rotation)
+		local shoot_from_pos = data.shooter_pos or det_pos
+		flash_grenade:base():activate(shoot_from_pos, data.duration)
+
+		self._smoke_grenades[id] = nil
+	else
+		data.duration = data.duration == 0 and 15 or data.duration
+		local det_pos = data.detonate_pos
+		local ray_to = mvector3.copy(det_pos) + math.UP * 5
+
+		mvector3.set_z(ray_to, ray_to.z - 50)
+
+		local ground_ray = World:raycast("ray", det_pos, ray_to, "slot_mask", managers.slot:get_mask("world_geometry"))
+
+		if ground_ray then
+			det_pos = ground_ray.hit_position
+			mvector3.set_z(det_pos, det_pos.z + 3)
+			data.detonate_pos = det_pos
+		end
+
+		local rotation = Rotation(math.random() * 360, 0, 0)
+		local smoke_grenade = World:spawn_unit(Idstring("units/weapons/smoke_grenade_quick/smoke_grenade_quick"), det_pos, rotation)
+		local shoot_from_pos = data.shooter_pos or det_pos
+		smoke_grenade:base():activate(shoot_from_pos, data.duration)
+
+		managers.groupai:state():teammate_comment(nil, "g40x_any", det_pos, true, 2000, false)
+
+		data.grenade = smoke_grenade
+		self._smoke_end_t = Application:time() + data.duration
+	end
+end
+
+function GroupAIStateBase:sync_smoke_grenade(detonate_pos, shooter_pos, duration, flashbang)
+	self._smoke_grenades = self._smoke_grenades or {}
+	local id = #self._smoke_grenades
+
+	self:queue_smoke_grenade(id, detonate_pos, shooter_pos, duration, true, flashbang)
+	self:detonate_world_smoke_grenade(id)
+end
+
+function GroupAIStateBase:sync_smoke_grenade_kill()
+	if self._smoke_grenades then
+		for id, data in pairs(self._smoke_grenades) do
+			if alive(data.grenade) and data.grenade:base() and data.grenade:base().preemptive_kill then
+				data.grenade:base():preemptive_kill()
+			end
+		end
+
+		self._smoke_grenades = {}
+		self._smoke_end_t = nil
+	end
+end
+
+function GroupAIStateBase:smoke_and_flash_grenades()
+	return self._smoke_grenades
+end
+
+function GroupAIStateBase:criminal_spotted(unit)
+	local u_key = unit:key()
+	local u_sighting = self._criminals[u_key]
+
+	u_sighting.undetected = nil
+	u_sighting.det_t = self._t
+
+	u_sighting.tracker:m_position(u_sighting.pos)
+
+	local seg = u_sighting.tracker:nav_segment()
+	u_sighting.seg = seg
+
+	local prev_area = u_sighting.area
+	local area = nil
+
+	if prev_area and prev_area.nav_segs[seg] then
+		area = prev_area
+	else
+		area = self:get_area_from_nav_seg_id(seg)
+	end
+
+	if prev_area ~= area then
+		u_sighting.area = area
+
+		if prev_area then
+			prev_area.criminal.units[u_key] = nil
+		end
+
+		area.criminal.units[u_key] = u_sighting
+	end
+
+	if area.is_safe then
+		area.is_safe = nil
+
+		self:_on_area_safety_status(area, {
+			reason = "criminal",
+			record = u_sighting
+		})
+	end
+end
+
+function GroupAIStateBase:on_criminal_nav_seg_change(unit, nav_seg_id)
+	local u_key = unit:key()
+	local u_sighting = self._criminals[u_key]
+
+	if not u_sighting then
+		return
+	end
+
+	local seg = nav_seg_id
+	local prev_area = u_sighting.area
+	local area = nil
+
+	if prev_area and prev_area.nav_segs[seg] then
+		area = prev_area
+	else
+		area = self:get_area_from_nav_seg_id(seg)
+	end
+
+	if prev_area ~= area then
+		u_sighting.area = area
+
+		if prev_area then
+			prev_area.criminal.units[u_key] = nil
+		end
+
+		area.criminal.units[u_key] = u_sighting
+	end
+end
+
+function GroupAIStateBase:on_criminal_suspicion_progress(u_suspect, u_observer, status, client_id)
+	if not self._ai_enabled or not self._whisper_mode or self._stealth_hud_disabled then
+		return
+	end
+
+	local ignore_suspicion = u_observer:brain() and u_observer:brain()._ignore_suspicion
+	local observer_is_dead = u_observer:character_damage() and u_observer:character_damage():dead()
+
+	if ignore_suspicion or observer_is_dead then
+		return
+	end
+
+	local obs_key = u_observer:key()
+
+	if managers.groupai:state():all_AI_criminals()[obs_key] then
+		return
+	end
+
+	local susp_data = self._suspicion_hud_data
+	local susp_key = u_suspect and u_suspect:key()
+
+	local function _sync_status(sync_status_code)
+		if Network:is_server() and managers.network:session() then
+			if client_id then
+				managers.network:session():send_to_peers_synched_except(client_id, "suspicion_hud", u_observer, sync_status_code)
+			else
+				managers.network:session():send_to_peers_synched("suspicion_hud", u_observer, sync_status_code)
+			end
+		end
+	end
+
+	local obs_susp_data = susp_data[obs_key]
+
+	if status == "called" then
+		if obs_susp_data then
+			if status == obs_susp_data.status then
+				return
+			else
+				obs_susp_data.suspects = nil
+			end
+		else
+			local icon_id = "susp1" .. tostring(obs_key)
+			local icon_pos = self._create_hud_suspicion_icon(obs_key, u_observer, "wp_calling_in", tweak_data.hud.suspicion_color, icon_id)
+			obs_susp_data = {
+				u_observer = u_observer,
+				icon_id = icon_id,
+				icon_pos = icon_pos
+			}
+			susp_data[obs_key] = obs_susp_data
+		end
+
+		managers.hud:change_waypoint_icon(obs_susp_data.icon_id, "wp_calling_in")
+		managers.hud:change_waypoint_arrow_color(obs_susp_data.icon_id, tweak_data.hud.detected_color)
+
+		if obs_susp_data.icon_id2 then
+			managers.hud:remove_waypoint(obs_susp_data.icon_id2)
+
+			obs_susp_data.icon_id2 = nil
+			obs_susp_data.icon_pos2 = nil
+		end
+
+		obs_susp_data.status = "called"
+		obs_susp_data.alerted = true
+		obs_susp_data.expire_t = self._t + 8
+		obs_susp_data.persistent = true
+
+		_sync_status(4)
+	elseif status == "calling" then
+		if obs_susp_data then
+			if status == obs_susp_data.status then
+				return
+			else
+				obs_susp_data.suspects = nil
+			end
+		else
+			local icon_id = "susp1" .. tostring(obs_key)
+			local icon_pos = self._create_hud_suspicion_icon(obs_key, u_observer, "wp_calling_in", tweak_data.hud.detected_color, icon_id)
+			obs_susp_data = {
+				u_observer = u_observer,
+				icon_id = icon_id,
+				icon_pos = icon_pos
+			}
+			susp_data[obs_key] = obs_susp_data
+		end
+
+		if not obs_susp_data.icon_id2 then
+			local hazard_icon_id = "susp2" .. tostring(obs_key)
+			local hazard_icon_pos = self._create_hud_suspicion_icon(obs_key, u_observer, "wp_calling_in_hazard", tweak_data.hud.detected_color, hazard_icon_id)
+			obs_susp_data.icon_id2 = hazard_icon_id
+			obs_susp_data.icon_pos2 = hazard_icon_pos
+		end
+
+		managers.hud:change_waypoint_icon(obs_susp_data.icon_id, "wp_calling_in")
+		managers.hud:change_waypoint_arrow_color(obs_susp_data.icon_id, tweak_data.hud.detected_color)
+		managers.hud:change_waypoint_icon(obs_susp_data.icon_id2, "wp_calling_in_hazard")
+		managers.hud:change_waypoint_arrow_color(obs_susp_data.icon_id2, tweak_data.hud.detected_color)
+
+		obs_susp_data.status = "calling"
+		obs_susp_data.alerted = true
+
+		_sync_status(3)
+	elseif status == true or status == "call_interrupted" then
+		if obs_susp_data then
+			if obs_susp_data.status == status then
+				return
+			else
+				obs_susp_data.suspects = nil
+			end
+		else
+			local icon_id = "susp1" .. tostring(obs_key)
+			local icon_pos = self._create_hud_suspicion_icon(obs_key, u_observer, "wp_detected", tweak_data.hud.detected_color, icon_id)
+			obs_susp_data = {
+				u_observer = u_observer,
+				icon_id = icon_id,
+				icon_pos = icon_pos
+			}
+			susp_data[obs_key] = obs_susp_data
+		end
+
+		managers.hud:change_waypoint_icon(obs_susp_data.icon_id, "wp_detected")
+		managers.hud:change_waypoint_arrow_color(obs_susp_data.icon_id, tweak_data.hud.detected_color)
+
+		if obs_susp_data.icon_id2 then
+			managers.hud:remove_waypoint(obs_susp_data.icon_id2)
+
+			obs_susp_data.icon_id2 = nil
+			obs_susp_data.icon_pos2 = nil
+		end
+
+		obs_susp_data.status = status
+		obs_susp_data.alerted = true
+
+		_sync_status(2)
+	elseif not status then
+		if obs_susp_data then
+			if obs_susp_data.suspects and susp_key then
+				obs_susp_data.suspects[susp_key] = nil
+
+				if not next(obs_susp_data.suspects) then
+					obs_susp_data.suspects = nil
+				end
+			end
+
+			if not susp_key or not obs_susp_data.alerted and (not obs_susp_data.suspects or not next(obs_susp_data.suspects)) then
+				managers.hud:remove_waypoint(obs_susp_data.icon_id)
+
+				if obs_susp_data.icon_id2 then
+					managers.hud:remove_waypoint(obs_susp_data.icon_id2)
+				end
+
+				susp_data[obs_key] = nil
+
+				_sync_status(0)
+			end
+		end
+	else
+		if obs_susp_data then
+			if obs_susp_data.alerted then
+				return
+			end
+
+			_sync_status(1)
+		elseif not obs_susp_data then
+			local icon_id = "susp1" .. tostring(obs_key)
+			local icon_pos = self._create_hud_suspicion_icon(obs_key, u_observer, "wp_suspicious", tweak_data.hud.suspicion_color, icon_id)
+			obs_susp_data = {
+				u_observer = u_observer,
+				icon_id = icon_id,
+				icon_pos = icon_pos
+			}
+			susp_data[obs_key] = obs_susp_data
+
+			managers.hud:change_waypoint_icon(obs_susp_data.icon_id, "wp_suspicious")
+			managers.hud:change_waypoint_arrow_color(obs_susp_data.icon_id, tweak_data.hud.suspicion_color)
+
+			if obs_susp_data.icon_id2 then
+				managers.hud:remove_waypoint(obs_susp_data.icon_id2)
+
+				obs_susp_data.icon_id2 = nil
+				obs_susp_data.icon_pos2 = nil
+			end
+
+			_sync_status(1)
+		end
+
+		if susp_key then
+			obs_susp_data.suspects = obs_susp_data.suspects or {}
+
+			if obs_susp_data.suspects[susp_key] then
+				obs_susp_data.suspects[susp_key].status = status
+			else
+				obs_susp_data.suspects[susp_key] = {
+					status = status,
+					u_suspect = u_suspect
+				}
+			end
+		end
+	end
+end
+
+function GroupAIStateBase:set_whisper_mode(state)
+	state = state and true or false
+
+	if state == self._whisper_mode then
+		return
+	end
+
+	self._whisper_mode = state
+	self._whisper_mode_change_t = TimerManager:game():time()
+
+	self:set_ambience_flag()
+
+	if Network:is_server() then
+		if state then
+			self:chk_register_removed_attention_objects()
+		else
+			self:chk_unregister_irrelevant_attention_objects()
+
+			if not self._switch_to_not_cool_clbk_id then
+				self._switch_to_not_cool_clbk_id = "GroupAI_delayed_not_cool"
+
+				managers.enemy:add_delayed_clbk(self._switch_to_not_cool_clbk_id, callback(self, self, "_clbk_switch_enemies_to_not_cool"), self._t + 1)
+			end
+		end
+	end
+
+	self:_call_listeners("whisper_mode", state)
+
+	if not state then
+		self:_clear_criminal_suspicion_data()
+	end
+end
+
+function GroupAIStateBase:register_AI_attention_object(unit, handler, nav_tracker, team, SO_access)
+	local store_instead = nil
+
+	if Network:is_server() and not self:whisper_mode() then
+		if not nav_tracker and not unit:vehicle_driving() or unit:in_slot(1) --[[or unit:in_slot(17) and unit:character_damage()]] then
+			store_instead = true
+		end
+	end
+
+	if store_instead then
+		local attention_info = {
+			unit = unit,
+			handler = handler,
+			nav_tracker = nav_tracker,
+			team = team,
+			SO_access = SO_access
+		}
+
+		self:store_removed_attention_object(unit:key(), attention_info)
+
+		return
+	end
+
+	self._attention_objects.all[unit:key()] = {
+		unit = unit,
+		handler = handler,
+		nav_tracker = nav_tracker,
+		team = team,
+		SO_access = SO_access
+	}
+
+	self:on_AI_attention_changed(unit:key())
+end
+
+function GroupAIStateBase:chk_register_removed_attention_objects()
+	if not self._removed_attention_objects then
+		return
+	end
+
+	local all_attention_objects = self:get_all_AI_attention_objects()
+
+	for u_key, att_info in pairs (self._removed_attention_objects) do
+		if all_attention_objects[u_key] then
+			self._removed_attention_objects[u_key] = nil
+		elseif alive(att_info.unit) then
+			self:register_AI_attention_object(att_info.unit, att_info.handler, att_info.nav_tracker, att_info.team, att_info.SO_access)
+			self._removed_attention_objects[u_key] = nil
+		end
+	end
+
+	self._removed_attention_objects = nil
+end
+
+function GroupAIStateBase:store_removed_attention_object(u_key, attention_info)
+	self._removed_attention_objects = self._removed_attention_objects or {}
+
+	self._removed_attention_objects[u_key] = attention_info
+end
+
+function GroupAIStateBase:chk_unregister_irrelevant_attention_objects()
+	local all_attention_objects = self:get_all_AI_attention_objects()
+
+	for u_key, att_info in pairs (all_attention_objects) do
+		if not att_info.nav_tracker and not att_info.unit:vehicle_driving() or att_info.unit:in_slot(1) --[[or att_info.unit:in_slot(17) and att_info.unit:character_damage()]] then
+			self:store_removed_attention_object(u_key, att_info)
+			att_info.handler:set_attention(nil)
+		end
+	end
+end
+
+local on_enemy_unregistered_original = GroupAIStateBase.on_enemy_unregistered
+function GroupAIStateBase:on_enemy_unregistered(unit)
+	on_enemy_unregistered_original(self, unit)
+
+	if not Network:is_server() then
+		return
+	end
+
+	local objective = unit:brain():objective()
+
+	if objective and objective.fail_clbk then
+		local fail_clbk = objective.fail_clbk
+		objective.fail_clbk = nil
+
+		fail_clbk(unit)
+	end
 end
