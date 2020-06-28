@@ -1,3 +1,6 @@
+local table_insert = table.insert
+local table_remove = table.remove
+
 function DOTManager:update(t, dt)
 	for index = #self._doted_enemies, 1, -1 do
 		local dot_info = self._doted_enemies[index]
@@ -9,7 +12,7 @@ function DOTManager:update(t, dt)
 		end
 
 		if t > dot_info.dot_damage_received_time + dot_info.dot_length then
-			table.remove(self._doted_enemies, index)
+			table_remove(self._doted_enemies, index)
 		else
 			dot_info.dot_counter = dot_info.dot_counter + dt
 		end
@@ -36,7 +39,7 @@ function DOTManager:check_achievemnts(unit, t)
 			dotted_enemies_by_variant[dot_info.variant] = dotted_enemies_by_variant[dot_info.variant] or {}
 
 			if dot_info.user_unit and dot_info.user_unit == managers.player:player_unit() then
-				table.insert(dotted_enemies_by_variant[dot_info.variant], dot_info)
+				table_insert(dotted_enemies_by_variant[dot_info.variant], dot_info)
 			end
 		end
 
@@ -122,7 +125,7 @@ function DOTManager:_add_doted_enemy(enemy_unit, dot_damage_received_time, weapo
 				user_unit = user_unit
 			}
 
-			table.insert(self._doted_enemies, dot_info)
+			table_insert(self._doted_enemies, dot_info)
 			self:check_achievemnts(enemy_unit, dot_damage_received_time)
 		end
 	end
