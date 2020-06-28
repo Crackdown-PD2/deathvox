@@ -4,6 +4,62 @@ local mvec3_dis = mvector3.distance
 local t_rem = table.remove
 local t_ins = table.insert
 local tmp_vec1 = Vector3()
+local world_g = World
+
+function EnemyManager:_update_queued_tasks(t, dt)
+	local i_asap_task, asap_task_t = nil
+
+	if managers.groupai:state():whisper_mode() then
+		for i_task, task_data in ipairs(self._queued_tasks) do
+			if not task_data.t or task_data.t < t then
+				self:_execute_queued_task(i_task)
+			elseif task_data.asap then
+				if not asap_task_t or task_data.t < asap_task_t then
+					i_asap_task = i_task
+					asap_task_t = task_data.t
+				end
+			end
+		end
+	else
+		self._queue_buffer = self._queue_buffer + dt
+		local tick_rate = tweak_data.group_ai.ai_tick_rate
+
+		if tick_rate <= self._queue_buffer then
+			for i_task, task_data in ipairs(self._queued_tasks) do
+				if not task_data.t or task_data.t < t then
+					self:_execute_queued_task(i_task)
+
+					self._queue_buffer = self._queue_buffer - tick_rate
+
+					if self._queue_buffer <= 0 then
+						break
+					end
+				elseif task_data.asap then
+					if not asap_task_t or task_data.t < asap_task_t then
+						i_asap_task = i_task
+						asap_task_t = task_data.t
+					end
+				end
+			end
+		end
+
+		if #self._queued_tasks == 0 then
+			self._queue_buffer = 0
+		end
+	end
+
+	if i_asap_task and not self._queued_task_executed then
+		self:_execute_queued_task(i_asap_task)
+	end
+
+	local all_clbks = self._delayed_clbks
+
+	if all_clbks[1] and all_clbks[1][2] < t then
+		local clbk = t_rem(all_clbks, 1)[3]
+
+		clbk()
+	end
+end
 
 function EnemyManager:_update_gfx_lod()
 	if self._gfx_lod_data.enabled and managers.navigation:is_data_ready() then
@@ -29,21 +85,21 @@ function EnemyManager:_update_gfx_lod()
 			local chk_vis_func = pl_tracker and pl_tracker.check_visibility
 			local unit_occluded = Unit.occluded
 			local occ_skip_units = managers.occlusion._skip_occlusion
-			local world_in_view_with_options = World.in_view_with_options
+			local world_in_view_with_options = world_g.in_view_with_options
 
 			for i, state in ipairs(states) do
 				if not state and alive(units[i]) then
-					local proceed = nil
+					local visible = nil
 
 					if occ_skip_units[units[i]:key()] then
-						proceed = true
+						visible = true
 					elseif not unit_occluded(units[i]) then
 						if not pl_tracker or chk_vis_func(pl_tracker, trackers[i]) then
-							proceed = true
+							visible = true
 						end
 					end
 
-					if proceed and world_in_view_with_options(World, com[i], 0, 110, 18000) then
+					if visible and world_in_view_with_options(world_g, com[i], 0, 110, 18000) then
 						states[i] = 1
 
 						units[i]:base():set_visibility_state(1)
@@ -69,15 +125,15 @@ function EnemyManager:_update_gfx_lod()
 
 				repeat
 					if states[i] and alive(units[i]) then
-						local occluded_or_not_visible = nil
+						local not_visible = nil
 
 						if not occ_skip_units[units[i]:key()] then
 							if unit_occluded(units[i]) or pl_tracker and not chk_vis_func(pl_tracker, trackers[i]) then
-								occluded_or_not_visible = true
+								not_visible = true
 							end
 						end
 
-						if occluded_or_not_visible then
+						if not_visible then
 							states[i] = false
 
 							units[i]:base():set_visibility_state(false)
@@ -86,7 +142,7 @@ function EnemyManager:_update_gfx_lod()
 							self._gfx_lod_data.next_chk_prio_i = i + 1
 
 							break
-						elseif not world_in_view_with_options(World, com[i], 0, 120, 18000) then
+						elseif not world_in_view_with_options(world_g, com[i], 0, 120, 18000) then
 							states[i] = false
 
 							units[i]:base():set_visibility_state(false)
@@ -189,6 +245,144 @@ function EnemyManager:_update_gfx_lod()
 	end
 end
 
+function EnemyManager:register_shield(shield_unit)
+	local enemy_data = self._enemy_data
+
+	if enemy_data.nr_shields >= 0 and self:is_corpse_disposal_enabled() and not self:has_task("EnemyManager._upd_shield_disposal") then
+		self:queue_task("EnemyManager._upd_shield_disposal", EnemyManager._upd_shield_disposal, self, self._t + self._shield_disposal_upd_interval)
+	end
+
+	enemy_data.nr_shields = enemy_data.nr_shields + 1
+	enemy_data.shields[shield_unit:key()] = {
+		unit = shield_unit,
+		death_t = self._t
+	}
+end
+
+function EnemyManager:on_enemy_died(dead_unit, damage_info)
+	--[[if self._destroyed then
+		debug_pause("[EnemyManager:on_enemy_died] enemy manager is destroyed", dead_unit)
+	end]]
+
+	local u_key = dead_unit:key()
+	local enemy_data = self._enemy_data
+	local u_data = enemy_data.unit_data[u_key]
+
+	if not u_data then
+		u_data = {
+			unit = dead_unit
+		}
+	end
+
+	self:on_enemy_unregistered(dead_unit)
+
+	enemy_data.unit_data[u_key] = nil
+
+	managers.mission:call_global_event("enemy_killed")
+
+	if enemy_data.nr_corpses >= 0 and self:is_corpse_disposal_enabled() and not self:has_task("EnemyManager._upd_corpse_disposal") then
+		self:queue_task("EnemyManager._upd_corpse_disposal", EnemyManager._upd_corpse_disposal, self, self._t + self._corpse_disposal_upd_interval)
+	end
+
+	enemy_data.nr_corpses = enemy_data.nr_corpses + 1
+	enemy_data.corpses[u_key] = u_data
+	u_data.death_t = self._t
+
+	self:_destroy_unit_gfx_lod_data(u_key)
+
+	u_data.u_id = dead_unit:id()
+
+	if self:is_corpse_disposal_enabled() then
+		Network:detach_unit(dead_unit)
+	end
+
+	managers.hud:remove_waypoint("wp_hostage_trade" .. tostring(dead_unit:key()))
+	managers.modifiers:run_func("OnEnemyDied", dead_unit, damage_info)
+end
+
+function EnemyManager:on_civilian_died(dead_unit, damage_info)
+	if Network:is_server() and damage_info.attacker_unit and not dead_unit:base().enemy then
+		managers.groupai:state():hostage_killed(damage_info.attacker_unit)
+	end
+
+	local u_key = dead_unit:key()
+	local u_data = self._civilian_data.unit_data[u_key]
+
+	if not u_data then
+		u_data = {
+			unit = dead_unit
+		}
+	end
+
+	managers.groupai:state():on_civilian_unregistered(dead_unit)
+
+	self._civilian_data.unit_data[u_key] = nil
+
+	managers.mission:call_global_event("civilian_killed")
+
+	local enemy_data = self._enemy_data
+
+	if enemy_data.nr_corpses >= 0 and self:is_corpse_disposal_enabled() and not self:has_task("EnemyManager._upd_corpse_disposal") then
+		self:queue_task("EnemyManager._upd_corpse_disposal", EnemyManager._upd_corpse_disposal, self, self._t + self._corpse_disposal_upd_interval)
+	end
+
+	enemy_data.nr_corpses = enemy_data.nr_corpses + 1
+	enemy_data.corpses[u_key] = u_data
+	u_data.death_t = self._t
+
+	self:_destroy_unit_gfx_lod_data(u_key)
+
+	u_data.u_id = dead_unit:id()
+
+	if self:is_corpse_disposal_enabled() then
+		Network:detach_unit(dead_unit)
+	end
+
+	managers.hud:remove_waypoint("wp_hostage_trade" .. tostring(dead_unit:key()))
+end
+
+function EnemyManager:on_civilian_destroyed(enemy)
+	local u_key = enemy:key()
+	local enemy_data = self._enemy_data
+
+	if self._civilian_data.unit_data[u_key] then
+		managers.groupai:state():on_civilian_unregistered(enemy)
+
+		self._civilian_data.unit_data[u_key] = nil
+
+		self:_destroy_unit_gfx_lod_data(u_key)
+	elseif enemy_data.corpses[u_key] then
+		enemy_data.nr_corpses = enemy_data.nr_corpses - 1
+		enemy_data.corpses[u_key] = nil
+
+		if enemy_data.nr_corpses == 0 and self:is_corpse_disposal_enabled() then
+			self:unqueue_task("EnemyManager._upd_corpse_disposal")
+		end
+	end
+end
+
+function EnemyManager:get_nearby_medic(unit)
+	if self:is_civilian(unit) then
+		return nil
+	end
+
+	local t = Application:time()
+	local enemies = world_g:find_units_quick(unit, "sphere", unit:position(), tweak_data.medic.radius, managers.slot:get_mask("enemies"))
+
+	for _, enemy in ipairs(enemies) do
+		if enemy:base():has_tag("medic") and enemy:character_damage()._heal_cooldown_t then
+			local cooldown = tweak_data.medic.cooldown
+			cooldown = managers.modifiers:modify_value("MedicDamage:CooldownTime", cooldown)
+
+			if t >= enemy:character_damage()._heal_cooldown_t + cooldown then
+				return enemy
+			end
+		end
+	end
+
+	return nil
+end
+
 function EnemyManager:set_gfx_lod_enabled(state)
 	if state then
 		self._gfx_lod_data.enabled = state
@@ -245,12 +439,12 @@ function EnemyManager:chk_any_unit_in_slotmask_visible(slotmask, cam_pos, cam_na
 							return true
 						elseif distance < 2000 then
 							local u_m_head_pos = move_exts[i]:m_head_pos()
-							local ray = World:raycast("ray", cam_pos, u_m_head_pos, "slot_mask", vis_slotmask, "report")
+							local ray = world_g:raycast("ray", cam_pos, u_m_head_pos, "slot_mask", vis_slotmask, "report")
 
 							if not ray then
 								return true
 							else
-								ray = World:raycast("ray", cam_pos, com[i], "slot_mask", vis_slotmask, "report")
+								ray = world_g:raycast("ray", cam_pos, com[i], "slot_mask", vis_slotmask, "report")
 
 								if not ray then
 									return true
@@ -265,7 +459,7 @@ function EnemyManager:chk_any_unit_in_slotmask_visible(slotmask, cam_pos, cam_na
 end
 
 function EnemyManager:_upd_corpse_disposal()
-	local t = TimerManager:game():time()
+	local t = self._t
 	local enemy_data = self._enemy_data
 	local nr_corpses = enemy_data.nr_corpses
 	local disposals_needed = nr_corpses - self:corpse_limit()
@@ -351,7 +545,7 @@ function EnemyManager:_upd_corpse_disposal()
 end
 
 function EnemyManager:_upd_shield_disposal()
-	local t = TimerManager:game():time()
+	local t = self._t
 	local enemy_data = self._enemy_data
 	local nr_shields = enemy_data.nr_shields
 	local disposals_needed = nr_shields - self:shield_limit()
