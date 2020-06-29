@@ -463,7 +463,7 @@ function GroupAIStateBase:queue_smoke_grenade(id, detonate_pos, shooter_pos, dur
 	self._smoke_grenades[id] = data
 end
 
---[[function GroupAIStateBase:detonate_world_smoke_grenade(id)
+function GroupAIStateBase:detonate_world_smoke_grenade(id)
 	self._smoke_grenades = self._smoke_grenades or {}
 
 	if not self._smoke_grenades[id] then
@@ -523,7 +523,7 @@ end
 		data.grenade = smoke_grenade
 		self._smoke_end_t = Application:time() + data.duration
 	end
-end--]]
+end
 
 function GroupAIStateBase:sync_smoke_grenade(detonate_pos, shooter_pos, duration, flashbang)
 	self._smoke_grenades = self._smoke_grenades or {}
