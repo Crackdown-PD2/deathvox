@@ -36,12 +36,14 @@
 	
 	<group :script_path="units/enemies/" :hook_id="units/enemies/">
 		<post :script_path="cop/copbrain.lua" :hook_id="cop/copbrain"/>
+		<post :script_path="cop/huskcopbrain.lua" :hook_id="cop/huskcopbrain"/>
 		<post :script_path="cop/copmovement.lua" :hook_id="cop/copmovement"/>
 		<post :script_path="cop/copinventory.lua" :hook_id="cop/copinventory"/>
 		<post :script_path="cop/copdamage.lua" :hook_id="cop/copdamage"/>
 		<post :script_path="cop/copbase.lua" :hook_id="cop/copbase"/>
 		<post :script_path="cop/copsound.lua" :hook_id="cop/copsound"/>
 		<post :script_path="medic/medicdamage.lua" :hook_id="medic/medicdamage"/>
+		<post :script_path="medic/actions/upper_body/medicactionheal.lua" :hook_id="medic/actions/upper_body/medicactionheal"/>
 		<post :script_path="cop/huskcopdamage.lua" :hook_id="cop/huskcopdamage"/>
 		<post :script_path="cop/logics/coplogicattack.lua" :hook_id="cop/logics/coplogicattack"/>
 		<post :script_path="cop/logics/coplogictravel.lua" :hook_id="cop/logics/coplogictravel"/>
@@ -56,6 +58,8 @@
 		<post :script_path="actions/upper_body/copactionhealed.lua" :hook_id="cop/actions/upper_body/copactionhealed"/>
 		<post :script_path="actions/upper_body/copactionreload.lua" :hook_id="cop/actions/upper_body/copactionreload"/>
 		<post :script_path="actions/full_body/copactionhurt.lua" :hook_id="cop/actions/full_body/copactionhurt"/>
+		<post :script_path="actions/full_body/copactionact.lua" :hook_id="cop/actions/full_body/copactionact"/>
+		<post :script_path="actions/lower_body/copactionwalk.lua" :hook_id="cop/actions/lower_body/copactionwalk"/>
 		<post :script_path="taser/logics/taserlogicattack.lua" :hook_id="taser/logics/taserlogicattack"/>
 	</group>
 
@@ -68,21 +72,28 @@
 		<post :script_path="teamailogictravel.lua" :hook_id="teamailogictravel"/>
 	</group>
 	
-	<post :script_path="tweak_data/interactiontweakdata.lua" :hook_id="tweak_data/interactiontweakdata"/>	
+	<post :script_path="tweak_data/interactiontweakdata.lua" :hook_id="tweak_data/interactiontweakdata"/>
 	<post :script_path="units/beings/player/states/playerstandard.lua" :hook_id="units/beings/player/states/playerstandard"/>
+	<post :script_path="units/beings/player/states/playercarry.lua" :hook_id="units/beings/player/states/playercarry"/>
 	<post :script_path="units/beings/player/states/playerbleedout.lua" :hook_id="units/beings/player/states/playerbleedout"/>
 	<post :script_path="units/beings/player/states/playertased.lua" :hook_id="units/beings/player/states/playertased"/>
 	<post :script_path="units/beings/player/playerdamage.lua" :hook_id="units/beings/player/playerdamage"/>
 	<post :script_path="units/beings/player/huskplayerdamage.lua" :hook_id="units/beings/player/huskplayerdamage"/>
+	<post :script_path="units/beings/player/playermovement.lua" :hook_id="units/beings/player/playermovement"/>
+	<post :script_path="units/beings/player/huskplayermovement.lua" :hook_id="units/beings/player/huskplayermovement"/>
 
 	<post :script_path="units/weapons/concussiongrenade.lua" :hook_id="units/weapons/grenades/concussiongrenade"/>
 	<post :script_path="units/weapons/incendiaryburstgrenade.lua" :hook_id="units/weapons/grenades/incendiaryburstgrenade"/>
 	<post :script_path="units/weapons/quickcsgrenade.lua" :hook_id="units/weapons/grenades/quickcsgrenade"/>
-	<!-- <post :script_path="units/weapons/quickflashgrenade.lua" :hook_id="units/weapons/grenades/quickflashgrenade"/> -->
+	<post :script_path="units/weapons/quickflashgrenade.lua" :hook_id="units/weapons/grenades/quickflashgrenade"/>
 	<post :script_path="units/weapons/dvgrenade.lua" :hook_id="units/weapons/grenades/fraggrenade"/>
 	<post :script_path="units/weapons/projectiles/projectilebase.lua" :hook_id="units/weapons/projectiles/projectilebase"/>
 	<post :script_path="units/weapons/sentrygunweapon.lua" :hook_id="units/weapons/sentrygunweapon"/>
+	<post :script_path="units/equipment/sentry_gun/sentrygunbase.lua" :hook_id="units/equipment/sentry_gun/sentrygunbase"/>
 	<post :script_path="units/equipment/sentry_gun/sentrygunbrain.lua" :hook_id="units/equipment/sentry_gun/sentrygunbrain"/>
+	<post :script_path="units/equipment/sentry_gun/sentrygundamage.lua" :hook_id="units/equipment/sentry_gun/sentrygundamage"/>
+	<post :script_path="units/equipment/sentry_gun/sentrygunequipment.lua" :hook_id="units/equipment/sentry_gun/sentrygunequipment"/>
+	<post :script_path="units/equipment/sentry_gun/sentrygunmovement.lua" :hook_id="units/equipment/sentry_gun/sentrygunmovement"/>
 	<post :script_path="units/equipment/ecm_jammer/ecmjammerbase.lua" :hook_id="units/equipment/ecm_jammer/ecmjammerbase"/>
 	<post :script_path="units/weapons/newflamethrowerbase.lua" :hook_id="units/weapons/newflamethrowerbase"/>
 	<post :script_path="units/weapons/raycastweaponbase.lua" :hook_id="units/weapons/raycastweaponbase"/>
