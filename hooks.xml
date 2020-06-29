@@ -32,6 +32,7 @@
 
 	<post :script_path="mutators/mutatorfriendlyfire.lua" :hook_id="mutators/mutatorfriendlyfire"/>
 	
+	<post :script_path="units/player_team/huskteamaidamage.lua" :hook_id="units/player_team/huskteamaidamage"/>
 	<post :script_path="units/player_team/teamaimovement.lua" :hook_id="units/player_team/teamaimovement"/>
 	
 	<group :script_path="units/enemies/" :hook_id="units/enemies/">
