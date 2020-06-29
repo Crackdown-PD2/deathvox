@@ -35,8 +35,6 @@ function CopActionTase:init(action_desc, common_data)
 
 	if not attention or not attention.unit then
 		if self._is_server then
-			--debug_pause("[CopActionTase:init] no attention", inspect(action_desc))
-
 			return
 		end
 	end
@@ -77,9 +75,10 @@ function CopActionTase:init(action_desc, common_data)
 	self._tase_distance = weapon_usage_tweak.tase_distance or 1500
 	self._aim_delay_minmax = weapon_usage_tweak.aim_delay_tase or {1, 1}
 	self._sphere_radius = weapon_usage_tweak.tase_sphere_cast_radius or 30
-	self._line_of_fire_slotmask = managers.slot:get_mask("world_geometry", "vehicles", "enemy_shield_check")
+	self._line_of_fire_slotmask = managers.slot:get_mask("bullet_impact_targets")
 	self._weapon_obj_fire = weapon_unit:get_object(Idstring("fire"))
 	self._shield = alive(self._ext_inventory._shield_unit) and self._ext_inventory._shield_unit or nil
+	self._firing_at_husk = action_desc.firing_at_husk or nil
 
 	local shoot_from_pos = self._ext_movement:m_head_pos()
 	self._shoot_from_pos = shoot_from_pos
@@ -100,6 +99,7 @@ function CopActionTase:init(action_desc, common_data)
 	CopActionAct._create_blocks_table(self, action_desc.block_desc)
 
 	self._skipped_frames = 1
+	common_data.unit:sound():play("taser_charge", nil)
 
 	return true
 end
@@ -107,52 +107,54 @@ end
 function CopActionTase:on_attention(attention)
 	if self._expired then
 		self._attention = attention
-	else
-		local has_expired = nil
+
+		return
+	end
+
+	local needs_to_expire = nil
+
+	if self._is_server then
+		if self._attention then
+			needs_to_expire = true
+		end
+	elseif self._client_attention_set or not attention or not attention.unit then
+		needs_to_expire = true
+	end
+
+	if needs_to_expire then
+		self[self._ik_preset.stop](self)
+
+		if self._aim_transition then
+			self._aim_transition = nil
+			self._get_target_pos = nil
+		end
+
+		if self._discharging then
+			self._tasing_local_unit:movement():on_tase_ended()
+
+			self._discharging = nil
+		end
+
+		if self._tasing_local_unit and self._tasing_player then
+			self._tasing_local_unit:movement():on_targetted_for_attack(false, self._unit)
+		end
+
+		self._tasing_player = nil
+		self._tasing_local_unit = nil
+		self._discharging_on_husk = nil
+		self._firing_at_husk = nil
+		self.update = self._upd_empty
+		self._attention = attention
 
 		if self._is_server then
-			if self._attention then
-				has_expired = true
-			end
-		elseif self._client_attention_set or not attention or not attention.unit then
-			has_expired = true
+			self._expired = true
 		end
 
-		if has_expired then
-			self[self._ik_preset.stop](self)
+		return
+	end
 
-			if self._aim_transition then
-				self._aim_transition = nil
-				self._get_target_pos = nil
-			end
-
-			if self._discharging then
-				self._tasing_local_unit:movement():on_tase_ended()
-
-				self._discharging = nil
-			end
-
-			if self._tasing_local_unit and self._tasing_player then
-				self._tasing_local_unit:movement():on_targetted_for_attack(false, self._unit)
-			end
-
-			self._tasing_player = nil
-			self._tasing_local_unit = nil
-			self._discharging_on_husk = nil
-			self._firing_at_husk = nil
-			self.update = self._upd_empty
-			self._attention = attention
-
-			if self._is_server then
-				self._expired = true
-			end
-
-			return
-		end
-
-		if not self._is_server then
-			self._client_attention_set = true
-		end
+	if not self._is_server then
+		self._client_attention_set = true
 	end
 
 	local t = TimerManager:game():time()
@@ -228,6 +230,9 @@ function CopActionTase:on_exit()
 	if self._discharging then
 		self._tasing_local_unit:movement():on_tase_ended()
 	end
+
+	self._discharging_on_husk = nil
+	self._firing_at_husk = nil
 
 	if self._is_server then
 		local exit_to_hos_stance = nil
@@ -383,12 +388,7 @@ function CopActionTase:update(t)
 					self.update = self._upd_empty
 				end
 			end
-		elseif self._common_data.allow_fire and target_vec then
-			if not self._played_sound_this_once then
-				self._played_sound_this_once = true
-				self._unit:sound():play("taser_charge", nil)
-			end
-
+		elseif target_vec and self._common_data.allow_fire then
 			if self._shoot_t and self._mod_enable_t < t and self._shoot_t < t then
 				if self._tasing_local_unit and target_dis < self._tase_distance then
 					local record = managers.groupai:state():criminal_record(self._tasing_local_unit:key())
@@ -407,6 +407,8 @@ function CopActionTase:update(t)
 						end
 
 						if not is_obstructed then
+							self._line_of_fire_slotmask = managers.slot:get_mask("world_geometry", "vehicles", "enemy_shield_check")
+
 							if self._tase_effect then
 								World:effect_manager():fade_kill(self._tase_effect)
 							end
@@ -453,31 +455,21 @@ function CopActionTase:fire_taser()
 	self._firing_at_husk = true
 end
 
-function CopActionTase:clbk_malfunction()
-	self._malfunction_clbk_id = nil
-
-	if self._expired then
-		return
-	end
-
-	World:effect_manager():spawn({
-		effect = Idstring("effects/payday2/particles/character/taser_stop"),
-		position = self._ext_movement:m_com(),
-		normal = math_up
-	})
-
-	local attacker_pos = managers.player:player_unit() and managers.player:player_unit():movement():m_head_pos() or self._ext_movement:m_com() + self._ext_movement:m_rot():y() * 100
-	local counter_ray = World:raycast("ray", attacker_pos, self._ext_movement:m_com(), "sphere_cast_radius", 20, "target_unit", self._unit)
-	local action_data = {
-		damage_effect = 1,
-		damage = 0,
-		variant = "counter_spooc",
-		attacker_unit = managers.player:player_unit() or self._unit,
-		col_ray = counter_ray,
-		attack_dir = counter_ray.ray,
+function CopActionTase:get_husk_interrupt_desc()
+	local action_desc = {
+		block_type = "action",
+		body_part = 3,
+		type = "tase",
+		firing_at_husk = self._firing_at_husk or self._discharging_on_husk
 	}
 
-	self._unit:character_damage():damage_melee(action_data)
+	return action_desc
+end
+
+function CopActionTase:save(save_data)
+	save_data.type = "tase"
+	save_data.body_part = self._body_part
+	save_data.firing_at_husk = self._discharging or self._firing_at_husk or self._discharging_on_husk
 end
 
 function CopActionTase:_upd_ik_spine(target_vec, fwd_dot, t)
