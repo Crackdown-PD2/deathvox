@@ -543,10 +543,8 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 		if u_key ~= my_key and not detected_obj[u_key] then
 			local can_acquire = true
 
-			if attention_info.unit:base() then
-				if is_cool and attention_info.unit:base().is_husk_player then
-					can_acquire = false
-				end
+			if is_cool and attention_info.unit:base() and attention_info.unit:base().is_husk_player then
+				can_acquire = false
 			end
 
 			if can_acquire then
@@ -1215,7 +1213,7 @@ function CopLogicBase.chk_start_action_dodge(data, reason)
 	local dodge_dir = Vector3()
 	local face_attention = nil
 	
-	if data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction then
+	if data.attention_obj and REACT_COMBAT <= data.attention_obj.reaction then
 		mvec3_set(dodge_dir, data.attention_obj.m_pos)
 		mvec3_sub(dodge_dir, data.m_pos)
 		mvector3.set_z(dodge_dir, 0)
