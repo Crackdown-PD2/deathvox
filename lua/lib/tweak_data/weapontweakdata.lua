@@ -530,6 +530,49 @@ function WeaponTweakData:init(tweak_data)
 			end
 		end
 	end	
+	
+	if deathvox:IsTotalCrackdownEnabled() then
+		--Sentry stats here
+			local function rpm(n) --converts rounds per minute to seconds per round
+				local rounds_per_second = n / 60
+				return 1 / rounds_per_second
+			end
+			
+			--BASIC
+		--	self.sentry_gun.KEEP_FIRE_ANGLE = 0.1
+			self.sentry_gun.auto.fire_rate = rpm(400)
+			self.sentry_gun.DAMAGE = 5
+			self.sentry_gun.FIRE_RANGE = 2000
+			self.sentry_gun.SPREAD = 10
+			self.sentry_gun.DETECTION_RANGE = 2000
+			
+			
+			--AP
+			self.sentry_ap = table.deep_map_copy(self.sentry_gun)
+			self.sentry_ap.DAMAGE = 10
+			self.sentry_ap.auto.fire_rate = rpm(100)
+			self.sentry_ap.can_shoot_through_enemy = true
+			self.sentry_ap.can_shoot_through_shield = true
+			self.sentry_ap.can_shoot_through_wall = false
+			self.sentry_ap.muzzleflash = "effects/particles/weapons/mp5/scene_m_muzzle"
+			
+			--HE
+			self.sentry_he = table.deep_map_copy(self.sentry_gun)
+			self.sentry_he.DAMAGE = 5
+			self.sentry_he.auto.fire_rate = rpm(100)
+			self.sentry_he.muzzleflash = "effects/particles/weapons/shotgun/muzzleflash"
+			
+			--TASER
+			self.sentry_taser = table.deep_map_copy(self.sentry_gun)
+			self.sentry_taser.DAMAGE = 1.5
+			self.sentry_taser.auto.fire_rate = rpm(400)
+			self.sentry_taser.SUPPRESSION = 0
+			self.sentry_taser.muzzleflash = "effects/particles/weapons/silenced/muzzleflash"
+		--	self.sentry_gun.SPREAD = 5
+		--	self.sentry_gun.FIRE_RANGE = 5000
+	end
+	
+	
 end
 
 -- Begin difficulty scripted weapon damage value population.
@@ -8426,6 +8469,6 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		--Miniguns end here.
-	
+
 	end
 end)

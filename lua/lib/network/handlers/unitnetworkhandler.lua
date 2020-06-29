@@ -1,3 +1,24 @@
+--spoofed to sync sentry ammo type and firemode (and resultant laser color) in sentry control menu
+local orig_sync_movement_state = UnitNetworkHandler.sync_player_movement_state
+function UnitNetworkHandler:sync_player_movement_state(unit, state, down_time,unit_id_str,...)
+--note: unit_id_str is also a string value that can be spoofed
+--however, since firemode and ammotype are usually set separately, i did not choose to sync both at the same time
+	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+		return
+	end
+	if (type(unit.weapon) == "function") and unit:weapon() then 
+		if down_time == 1 then 
+			unit:weapon():_set_sentry_firemode(state)
+			return
+		elseif down_time == 2 then 
+			unit:weapon():_set_ammo_type(state)
+			return
+		end
+		return
+	end
+	return orig_sync_movement_state(self,unit,state,down_time,unit_id_str,...)
+end
+
 function UnitNetworkHandler:sync_friendly_fire_damage(peer_id, unit, damage, variant, sender)
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_sender(sender) then
 		return
