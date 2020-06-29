@@ -112,17 +112,154 @@ end
 
 local old_level_init = LevelsTweakData.init
 function LevelsTweakData:init()
-    old_level_init(self)
-    -- fix for safehouse raid failing to spawn assault group enemies. Base heist uses "safehouse" data that clones beseige.
-    self.chill_combat.group_ai_state = "besiege"
-    -- setting wave count for revised holdouts.
-    self.skm_mus.wave_count = 9
-    self.skm_red2.wave_count = 9
-    self.skm_run.wave_count = 9
-    self.skm_watchdogs_stage2.wave_count = 9
+	old_level_init(self)
 
-    --this crashes the game so i commented it out
-    --self.skmc_fish.wave_count = 6
-    --self.skmc_mad.wave_count = 6
-    --self.skmc_ovengrill.wave_count = 6
+	--fix for safehouse raid failing to spawn assault group enemies. Base heist uses "safehouse" data that clones beseige.
+	self.chill_combat.group_ai_state = "besiege"
+
+	--setting wave count for revised holdouts.
+	self.skm_mus.wave_count = 9
+	self.skm_red2.wave_count = 9
+	self.skm_run.wave_count = 9
+	self.skm_watchdogs_stage2.wave_count = 9
+
+	--this crashes the game so i commented it out
+	--self.skmc_fish.wave_count = 6
+	--self.skmc_mad.wave_count = 6
+	--self.skmc_ovengrill.wave_count = 6
+
+	self.mia_2.teams = {
+		criminal1 = {
+			foes = {
+				mobster_boss = true,
+				law1 = true,
+				mobster1 = true
+			},
+			friends = {
+				converted_enemy = true
+			}
+		},
+		law1 = {
+			foes = {
+				converted_enemy = true,
+				criminal1 = true,
+				mobster1 = true,
+				hacked_turret = true
+			},
+			friends = {}
+		},
+		mobster1 = {
+			foes = {
+				converted_enemy = true,
+				law1 = true,
+				criminal1 = true,
+				hacked_turret = true
+			},
+			friends = {}
+		},
+		mobster_boss = {
+			foes = {
+				converted_enemy = true,
+				criminal1 = true,
+				hacked_turret = true
+			},
+			friends = {}
+		},
+		converted_enemy = {
+			foes = {
+				mobster_boss = true,
+				law1 = true,
+				mobster1 = true
+			},
+			friends = {
+				criminal1 = true
+			}
+		},
+		neutral1 = {
+			foes = {},
+			friends = {}
+		},
+		hacked_turret = {
+			foes = {
+				law1 = true,
+				mobster1 = true,
+				mobster_boss = true
+			},
+			friends = {}
+		}
+	}
+
+	self.mia2_new.teams = self.mia_2.teams
+end
+
+function LevelsTweakData:get_team_setup()
+	local lvl_tweak = nil
+
+	if not Application:editor() or not managers.editor or self[managers.editor:layer("Level Settings"):get_setting("simulation_level_id")] then
+		if Global.level_data and Global.level_data.level_id then
+			lvl_tweak = self[Global.level_data.level_id]
+		end
+	end
+
+	local teams = lvl_tweak and lvl_tweak.teams
+
+	if teams then
+		teams = deep_clone(teams)
+	else
+		teams = {
+			criminal1 = {
+				foes = {
+					law1 = true,
+					mobster1 = true
+				},
+				friends = {
+					converted_enemy = true
+				}
+			},
+			law1 = {
+				foes = {
+					converted_enemy = true,
+					criminal1 = true,
+					mobster1 = true,
+					hacked_turret = true
+				},
+				friends = {}
+			},
+			mobster1 = {
+				foes = {
+					converted_enemy = true,
+					law1 = true,
+					criminal1 = true,
+					hacked_turret = true
+				},
+				friends = {}
+			},
+			converted_enemy = {
+				foes = {
+					law1 = true,
+					mobster1 = true
+				},
+				friends = {
+					criminal1 = true
+				}
+			},
+			neutral1 = {
+				foes = {},
+				friends = {}
+			},
+			hacked_turret = {
+				foes = {
+					law1 = true,
+					mobster1 = true
+				},
+				friends = {}
+			}
+		}
+
+		for id, team in pairs(teams) do
+			team.id = id
+		end
+	end
+
+	return teams
 end
