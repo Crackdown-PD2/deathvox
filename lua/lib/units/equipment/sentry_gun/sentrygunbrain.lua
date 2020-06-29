@@ -21,6 +21,11 @@ local mvec3_set_length = mvector3.set_length
 local mvec3_angle = mvector3.angle
 local mvec3_step = mvector3.step
 local mvec3_lerp = mvector3.lerp
+
+local tmp_vec1 = Vector3()
+local tmp_vec2 = Vector3()
+local tmp_vec3 = Vector3()
+
 local math_lerp = math.lerp
 local math_random = math.random
 local math_up = math.UP
@@ -29,18 +34,20 @@ local math_clamp = math.clamp
 local math_min = math.min
 local math_max = math.max
 local math_sqrt = math.sqrt
+
 local m_rot_x = mrotation.x
 local m_rot_y = mrotation.y
 local m_rot_z = mrotation.z
+
 local table_insert = table.insert
 local table_contains = table.contains
-local tmp_vec1 = Vector3()
-local tmp_vec2 = Vector3()
-local tmp_vec3 = Vector3()
+
 local REACT_COMBAT = AIAttentionObject.REACT_COMBAT
 local REACT_SCARED = AIAttentionObject.REACT_SCARED
 local REACT_SHOOT = AIAttentionObject.REACT_SHOOT
 local REACT_SUSPICIOUS = AIAttentionObject.REACT_SUSPICIOUS
+
+local is_local_vr = _G.IS_VR
 
 function SentryGunBrain:_upd_detection(t)
 	if self._ext_movement:is_activating() or self._ext_movement:is_inactivating() then
@@ -83,9 +90,13 @@ function SentryGunBrain:_upd_detection(t)
 			if not skip then
 				local att_dmg_ext = att_unit:character_damage()
 
-				if att_dmg_ext and att_dmg_ext.health_ratio and att_dmg_ext:health_ratio() <= 0 then
-					skip = true
-				else
+				if att_dmg_ext then
+					if att_dmg_ext.dead and att_dmg_ext:dead() or att_dmg_ext.health_ratio and att_dmg_ext:health_ratio() <= 0 then
+						skip = true
+					end
+				end
+
+				if not skip then
 					local att_brain_ext = att_unit:brain()
 
 					if att_brain_ext then
@@ -150,25 +161,29 @@ function SentryGunBrain:_upd_detection(t)
 		if not attention_info.visible_in_this_instance and t < attention_info.next_verify_t then
 			update_delay = math_min(attention_info.next_verify_t - t, update_delay)
 		else
-			local skip = nil
 			local att_mov_ext = attention_info.unit:movement()
+			local skip = nil
 
-			if att_mov_ext then
-				if att_mov_ext.downed and att_mov_ext:downed() then
-					skip = true
-				elseif att_mov_ext.is_cuffed and att_mov_ext:is_cuffed() then
-					skip = true
-				end
-			end
-
-			if not skip then
-				if health_ratio_chk_func(self, attention_info) <= 0 or objective_chk_func(self, attention_info) == "surrender" then
-					skip = true
-				else
-					local att_brain_ext = attention_info.unit:brain()
-
-					if att_brain_ext and att_brain_ext.surrendered and att_brain_ext:surrendered() then
+			if not attention_info.is_alive then
+				skip = true
+			else
+				if att_mov_ext then
+					if att_mov_ext.downed and att_mov_ext:downed() then
 						skip = true
+					elseif att_mov_ext.is_cuffed and att_mov_ext:is_cuffed() then
+						skip = true
+					end
+				end
+
+				if not skip then
+					if health_ratio_chk_func(self, attention_info) <= 0 or objective_chk_func(self, attention_info) == "surrender" then
+						skip = true
+					else
+						local att_brain_ext = attention_info.unit:brain()
+
+						if att_brain_ext and att_brain_ext.surrendered and att_brain_ext:surrendered() then
+							skip = true
+						end
 					end
 				end
 			end
@@ -436,25 +451,29 @@ function SentryGunBrain:_select_focus_attention(t)
 
 	for u_key, attention_info in pairs(self._detected_attention_objects) do
 		if best_focus_reaction < attention_info.reaction or best_focus_reaction == attention_info.reaction then
-			local att_mov_ext = attention_info.unit:movement()
 			local remove_obj = nil
+			local att_mov_ext = attention_info.unit:movement()
 
-			if att_mov_ext then
-				if att_mov_ext.downed and att_mov_ext:downed() then
-					remove_obj = true
-				elseif att_mov_ext.is_cuffed and att_mov_ext:is_cuffed() then
-					remove_obj = true
-				end
-			end
-
-			if not remove_obj then
-				if health_ratio_chk_func(self, attention_info) <= 0 or objective_chk_func(self, attention_info) == "surrender" then
-					remove_obj = true
-				else
-					local att_brain_ext = attention_info.unit:brain()
-
-					if att_brain_ext and att_brain_ext.surrendered and att_brain_ext:surrendered() then
+			if not attention_info.is_alive then
+				remove_obj = true
+			else
+				if att_mov_ext then
+					if att_mov_ext.downed and att_mov_ext:downed() then
 						remove_obj = true
+					elseif att_mov_ext.is_cuffed and att_mov_ext:is_cuffed() then
+						remove_obj = true
+					end
+				end
+
+				if not remove_obj then
+					if health_ratio_chk_func(self, attention_info) <= 0 or objective_chk_func(self, attention_info) == "surrender" then
+						remove_obj = true
+					else
+						local att_brain_ext = attention_info.unit:brain()
+
+						if att_brain_ext and att_brain_ext.surrendered and att_brain_ext:surrendered() then
+							remove_obj = true
+						end
 					end
 				end
 			end
@@ -485,10 +504,6 @@ function SentryGunBrain:_select_focus_attention(t)
 						weight = weight * math_lerp(1.2, 1, elapsed_t / max_duration)
 					end
 
-					if attention_info.settings.weight_mul then
-						weight = weight * attention_info.settings.weight_mul
-					end
-
 					local max_dis = self._tweak_data.DETECTION_RANGE
 					local dis = mvec3_dir(tmp_vec1, current_pos, attention_info.m_head_pos)
 					local dis_weight = math_max(0, (max_dis - dis) / max_dis)
@@ -504,6 +519,58 @@ function SentryGunBrain:_select_focus_attention(t)
 						elseif attention_info.verified or attention_info.nearly_visible then
 							if not self:_ignore_shield(current_pos, attention_info.m_head_pos) then
 								weight = weight * 0.01
+							elseif attention_info.verified then
+								if attention_info.settings.weight_mul then
+									weight = weight * attention_info.settings.weight_mul
+								end
+
+								if attention_info.is_local_player then
+									local att_cur_state = att_mov_ext:current_state()
+
+									if not att_cur_state._moving and att_cur_state:ducking() then
+										weight = weight * managers.player:upgrade_value("player", "stand_still_crouch_camouflage_bonus", 1)
+									end
+
+									if managers.player:has_activate_temporary_upgrade("temporary", "chico_injector") and managers.player:upgrade_value("player", "chico_preferred_target", false) then
+										weight = weight * 1000
+									end
+
+									if is_local_vr then
+										local distance = attention_info.dis
+										local vr_long_range_dmg_reduction = tweak_data.vr.long_range_damage_reduction_distance
+
+										if vr_long_range_dmg_reduction[1] < distance then
+											local mul = math_clamp(distance / vr_long_range_dmg_reduction[2] / 2, 0, 1) + 1
+											weight = weight * mul
+										end
+									end
+								elseif attention_info.is_husk_player then
+									local att_base_ext = attention_info.unit:base()
+
+									if att_base_ext.upgrade_value then
+										if att_mov_ext and not att_mov_ext._move_data and att_mov_ext._pose_code and att_mov_ext._pose_code == 2 then
+											local crouch_and_still_weight_mul = att_base_ext:upgrade_value("player", "stand_still_crouch_camouflage_bonus")
+
+											if crouch_and_still_weight_mul then
+												weight = weight * crouch_and_still_weight_mul
+											end
+										end
+
+										if att_base_ext.has_activate_temporary_upgrade and att_base_ext:has_activate_temporary_upgrade("temporary", "chico_injector") and att_base_ext:upgrade_value("player", "chico_preferred_target") then
+											weight = weight * 1000
+										end
+
+										if att_mov_ext.is_vr and att_mov_ext:is_vr() then
+											local distance = attention_info.dis
+											local vr_long_range_dmg_reduction = tweak_data.vr.long_range_damage_reduction_distance
+
+											if vr_long_range_dmg_reduction[1] < distance then
+												local mul = math_clamp(distance / vr_long_range_dmg_reduction[2] / 2, 0, 1) + 1
+												weight = weight * mul
+											end
+										end
+									end
+								end
 							end
 						end
 					end
@@ -533,6 +600,45 @@ function SentryGunBrain:_select_focus_attention(t)
 		end
 
 		self._attention_obj = best_focus_attention
+	end
+end
+
+function SentryGunBrain:on_detected_attention_obj_modified(modified_u_key)
+	local attention_info = self._detected_attention_objects[modified_u_key]
+
+	if not attention_info then
+		return
+	end
+
+	local new_settings = attention_info.handler:get_attention(self._SO_access, REACT_SUSPICIOUS, nil, self._unit:movement():team())
+	local old_settings = attention_info.settings
+
+	if new_settings == old_settings then
+		return
+	end
+
+	local old_notice_clbk = not attention_info.identified and old_settings.notice_clbk and old_settings.notice_clbk ~= "clbk_notice_sneak"
+
+	if new_settings then
+		attention_info.settings = new_settings
+		attention_info.stare_expire_t = nil
+		attention_info.pause_expire_t = nil
+
+		if attention_info.unit:character_damage() and attention_info.unit:character_damage().dead then
+			attention_info.is_alive = not attention_info.unit:character_damage():dead()
+		end
+	else
+		self:_destroy_detected_attention_object_data(attention_info)
+
+		if self._attention_obj and self._attention_obj.u_key == modified_u_key then
+			self._ext_movement:set_attention()
+		end
+	end
+
+	if old_notice_clbk then
+		if not new_settings or not new_settings.notice_clbk then
+			old_notice_clbk(self._unit, false)
+		end
 	end
 end
 
