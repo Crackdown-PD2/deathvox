@@ -586,34 +586,37 @@ function CopActionShoot:update(t)
 					else
 						local shield_in_the_way = nil
 
-						if self._shield then
-							shield_in_the_way = self._unit:raycast("ray", shoot_from_pos, target_pos, "slot_mask", self._shield_slotmask, "ignore_unit", self._shield, "report")
-						else
-							shield_in_the_way = self._unit:raycast("ray", shoot_from_pos, target_pos, "slot_mask", self._shield_slotmask, "report")
+						if not self._weapon_base._use_armor_piercing or self._shooting_player then
+							if self._shield then
+								shield_in_the_way = self._unit:raycast("ray", shoot_from_pos, target_pos, "slot_mask", self._shield_slotmask, "ignore_unit", self._shield, "report")
+							else
+								shield_in_the_way = self._unit:raycast("ray", shoot_from_pos, target_pos, "slot_mask", self._shield_slotmask, "report")
+							end
 						end
 
 						if not shield_in_the_way then
-							if not self._last_vis_check_status and t - self._line_of_sight_t > 1 then
-								if self._draw_focus_delay_vis_reset then
-									local draw_duration = self._shooting_husk_unit and 4 or 2
-
-									local line_1 = Draw:brush(Color.green:with_alpha(0.5), draw_duration)
-									line_1:cylinder(shoot_from_pos, self._shoot_history.m_last_pos, 0.5)
-
-									local line_2 = Draw:brush(Color.green:with_alpha(0.5), draw_duration)
-									line_2:cylinder(shoot_from_pos, target_pos, 0.5)
-
-									local line_3 = Draw:brush(Color.green:with_alpha(0.5), draw_duration)
-									line_3:cylinder(target_pos, self._shoot_history.m_last_pos, 0.5)
-								end
-
-								self._shoot_history.focus_start_t = t
-							end
-
-							self._shoot_history.m_last_pos = mvec3_copy(target_pos)
-							self._line_of_sight_t = t
 							shoot = true
 						end
+
+						if not self._last_vis_check_status and t - self._line_of_sight_t > 1 then
+							if self._draw_focus_delay_vis_reset then
+								local draw_duration = self._shooting_husk_unit and 4 or 2
+
+								local line_1 = Draw:brush(Color.green:with_alpha(0.5), draw_duration)
+								line_1:cylinder(shoot_from_pos, self._shoot_history.m_last_pos, 0.5)
+
+								local line_2 = Draw:brush(Color.green:with_alpha(0.5), draw_duration)
+								line_2:cylinder(shoot_from_pos, target_pos, 0.5)
+
+								local line_3 = Draw:brush(Color.green:with_alpha(0.5), draw_duration)
+								line_3:cylinder(target_pos, self._shoot_history.m_last_pos, 0.5)
+							end
+
+							self._shoot_history.focus_start_t = t
+						end
+
+						self._shoot_history.m_last_pos = mvec3_copy(target_pos)
+						self._line_of_sight_t = t
 					end
 
 					if self._draw_fire_line_ray then
@@ -966,7 +969,7 @@ function CopActionShoot:anim_clbk_melee_strike()
 
 	--similar to player melee attacks, use a sphere ray instead of just a normal plain ray
 	local col_ray = self._unit:raycast("ray", shoot_from_pos, melee_vec2, "sphere_cast_radius", 20, "slot_mask", self._melee_weapon_data.slotmask, "ray_type", "body melee")
-	
+
 	if self._draw_melee_sphere_rays then
 		local draw_duration = 3
 		local new_brush = col_ray and Draw:brush(Color.red:with_alpha(0.5), draw_duration) or Draw:brush(Color.white:with_alpha(0.5), draw_duration)
@@ -1094,19 +1097,24 @@ function CopActionShoot:anim_clbk_melee_strike()
 			if defense_data == "countered" then
 				self._common_data.melee_countered_t = TimerManager:game():time()
 
-				--use a sphere ray to properly attack the countered unit by getting a proper direction, position of the hit, etc
-				local counter_ray = World:raycast("ray", character_unit:movement():m_head_pos(), self._unit:movement():m_com(), "sphere_cast_radius", 20, "target_unit", self._unit)
-				local action_data = {
-					damage_effect = 1,
+				local attack_dir = self._unit:movement():m_com() - character_unit:movement():m_head_pos()
+				mvec3_norm(attack_dir)
+
+				local counter_data = {
 					damage = 0,
+					damage_effect = 1,
 					variant = "counter_spooc",
 					attacker_unit = character_unit,
-					col_ray = counter_ray,
-					attack_dir = counter_ray.ray,
+					attack_dir = attack_dir,
+					col_ray = {
+						position = mvector3.copy(self._unit:movement():m_com()),
+						body = self._unit:body("body"),
+						ray = attack_dir
+					},
 					name_id = character_unit == local_player and managers.blackmarket:equipped_melee_weapon() or character_unit:base():melee_weapon()
 				}
 
-				self._unit:character_damage():damage_melee(action_data)
+				self._unit:character_damage():damage_melee(counter_data)
 			else
 				if not shield_knock and character_unit ~= local_player and character_unit:character_damage() and not character_unit:character_damage()._no_blood then
 					if character_unit:base().sentry_gun then
