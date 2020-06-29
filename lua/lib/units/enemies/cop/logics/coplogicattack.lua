@@ -357,6 +357,7 @@ function CopLogicAttack._upd_aim(data, my_data)
 
 						if watch_pos_dis < 500 or watch_pos_dis < 1000 and watch_walk_dot > 0.85 then
 							aim = true
+							-- log("piss")
 							
 							if focus_enemy and aim and focus_enemy.alert_t and data.t - focus_enemy.alert_t < 1 and focus_enemy.verified_t and data.t - focus_enemy.verified_t < 5 and data.tactics and data.tactics.harass then
 								shoot = true						
@@ -369,8 +370,9 @@ function CopLogicAttack._upd_aim(data, my_data)
 			end
 		else
 			expected_pos = CopLogicAttack._get_expected_attention_position(data, my_data)
-
+			
 			if expected_pos then
+				-- log("nutsack")
 				aim = true
 				
 				--cops will open fire on expected player positions if they hear player alerts and the player has been seen in the last 5 seconds, and they're harassers, for large bursts of suppressive fire.
@@ -496,6 +498,118 @@ function CopLogicAttack._upd_aim(data, my_data)
 	CopLogicAttack.aim_allow_fire(shoot, aim, data, my_data)
 end
 
+function CopLogicAttack._get_expected_attention_position(data, my_data)
+	local main_enemy = data.attention_obj
+	local e_nav_tracker = main_enemy.nav_tracker
+
+	if not e_nav_tracker then
+		return
+	end
+
+	local my_nav_seg = data.unit:movement():nav_tracker():nav_segment()
+	local e_pos = main_enemy.m_pos
+	local e_nav_seg = e_nav_tracker:nav_segment()
+
+	if e_nav_seg == my_nav_seg then
+		mvec3_set(temp_vec1, e_pos)
+		mvec3_set_z(temp_vec1, temp_vec1.z + 140)
+
+		return temp_vec1
+	end
+
+	local expected_path = my_data.expected_pos_path
+	local from_nav_seg, to_nav_seg = nil
+
+	if expected_path then
+		local i_from_seg = nil
+
+		for i, k in ipairs(expected_path) do
+			if k[1] == my_nav_seg then
+				i_from_seg = i
+
+				break
+			end
+		end
+
+		if i_from_seg then
+			local function _find_aim_pos(from_nav_seg, to_nav_seg)
+				local closest_dis = 1000000000
+				local closest_door = nil
+				local min_point_dis_sq = 10000
+				local found_doors = managers.navigation:find_segment_doors(from_nav_seg, callback(CopLogicAttack, CopLogicAttack, "_chk_is_right_segment", to_nav_seg))
+
+				for _, door in pairs(found_doors) do
+					mvec3_set(temp_vec1, door.center)
+
+					local dis = mvec3_dis_sq(e_pos, temp_vec1)
+
+					if dis < closest_dis then
+						closest_dis = dis
+						closest_door = door
+					end
+				end
+
+				if closest_door then
+					mvec3_set(temp_vec1, closest_door.center)
+					mvec3_sub(temp_vec1, data.m_pos)
+					mvec3_set_z(temp_vec1, 0)
+
+					if min_point_dis_sq < mvector3.length_sq(temp_vec1) then
+						mvec3_set(temp_vec1, closest_door.center)
+						mvec3_set_z(temp_vec1, temp_vec1.z + 140)
+
+						return temp_vec1
+					else
+						return false, true
+					end
+				end
+			end
+
+			local i = #expected_path
+
+			while i > 0 do
+				if expected_path[i][1] == e_nav_seg then
+					to_nav_seg = expected_path[math.clamp(i, i_from_seg - 1, i_from_seg + 1)][1]
+					local aim_pos, too_close = _find_aim_pos(my_nav_seg, to_nav_seg)
+
+					if aim_pos then
+						return aim_pos
+
+						-- break
+					end
+
+					if too_close then
+						local next_nav_seg = expected_path[math.clamp(i, i_from_seg - 2, i_from_seg + 2)][1]
+
+						if next_nav_seg ~= to_nav_seg then
+							local from_nav_seg = to_nav_seg
+							to_nav_seg = next_nav_seg
+							aim_pos = _find_aim_pos(from_nav_seg, to_nav_seg)
+						end
+
+						return aim_pos
+					end
+
+					break
+				end
+
+				i = i - 1
+			end
+		end
+
+		if not i_from_seg or not to_nav_seg then
+			expected_path = nil
+			my_data.expected_pos_path = nil
+		end
+	end
+
+	if not expected_path and not my_data.expected_pos_path_search_id then
+		my_data.expected_pos_path_search_id = "ExpectedPos" .. tostring(data.key)
+
+		data.unit:brain():search_for_coarse_path(my_data.expected_pos_path_search_id, e_nav_seg)
+	end
+end
+
 function CopLogicAttack._chk_request_action_walk_to_cover(data, my_data)
 	CopLogicAttack._correct_path_start_pos(data, my_data.cover_path)
 	
@@ -560,9 +674,9 @@ function CopLogicAttack._chk_request_action_walk_to_cover(data, my_data)
 			haste = "walk"
 		elseif data.attention_obj and data.attention_obj.dis > 10000 or data.team and data.team.id == tweak_data.levels:get_default_team_ID("player") or data.is_converted or data.unit:in_slot(16) or data.unit:in_slot(managers.slot:get_mask("criminals")) then
 			haste = "run"
-		elseif data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis > 1200 + enemy_seen_range_bonus and not data.unit:movement():cool() and not managers.groupai:state():whisper_mode() then
+		elseif data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis > 800 + enemy_seen_range_bonus and not data.unit:movement():cool() and not managers.groupai:state():whisper_mode() then
 			haste = "run"
-		elseif data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis <= 1200 + enemy_seen_range_bonus - height_difference_penalty and is_mook and data.tactics and not data.tactics.hitnrun then
+		elseif data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis <= 800 + enemy_seen_range_bonus - height_difference_penalty and is_mook and data.tactics and not data.tactics.hitnrun then
 			haste = "walk"
 		else
 			haste = "run"
@@ -699,9 +813,9 @@ function CopLogicAttack._chk_request_action_walk_to_cover_shoot_pos(data, my_dat
 			haste = "walk"
 		elseif data.team and data.team.id == tweak_data.levels:get_default_team_ID("player") or data.is_converted or data.unit:in_slot(16) or data.unit:in_slot(managers.slot:get_mask("criminals")) or data.attention_obj and data.attention_obj.dis > 10000 then 
 			haste = "run"
-		elseif data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis > 1200 + enemy_seen_range_bonus and not data.unit:movement():cool() and not managers.groupai:state():whisper_mode() then
+		elseif data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis > 800 + enemy_seen_range_bonus and not data.unit:movement():cool() and not managers.groupai:state():whisper_mode() then
 			haste = "run"
-		elseif data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis <= 1200 + enemy_seen_range_bonus - height_difference_penalty and is_mook and data.tactics and not data.tactics.hitnrun then
+		elseif data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis <= 800 + enemy_seen_range_bonus - height_difference_penalty and is_mook and data.tactics and not data.tactics.hitnrun then
 			haste = "walk"
 		else
 			haste = "run"
@@ -1104,6 +1218,76 @@ function CopLogicAttack._chk_start_action_move_back(data, my_data, focus_enemy, 
 		end
 	end
 end
+
+function CopLogicAttack.action_complete_clbk(data, action)
+	local my_data = data.internal_data
+	local action_type = action:type()
+	
+	if action_type == "healed" then
+		CopLogicAttack._cancel_cover_pathing(data, my_data)
+		CopLogicAttack._cancel_charge(data, my_data)
+	
+		if not data.unit:character_damage():dead() and action:expired() and not CopLogicBase.chk_start_action_dodge(data, "hit") then
+			CopLogicAttack._upd_aim(data, my_data)
+			data.logic._upd_stance_and_pose(data, data.internal_data)
+			CopLogicAttack._upd_combat_movement(data)
+		end
+	elseif action_type == "heal" then
+		CopLogicAttack._cancel_cover_pathing(data, my_data)
+		CopLogicAttack._cancel_charge(data, my_data)
+	
+		if not data.unit:character_damage():dead() and action:expired() then
+			--log("hey this actually works!")
+			CopLogicAttack._upd_aim(data, my_data)
+			data.logic._upd_stance_and_pose(data, data.internal_data)
+			CopLogicAttack._upd_combat_movement(data)
+		end
+	elseif action_type == "walk" then
+		my_data.advancing = nil
+
+		CopLogicAttack._cancel_cover_pathing(data, my_data)
+		CopLogicAttack._cancel_charge(data, my_data)
+
+		if my_data.surprised then
+			my_data.surprised = false
+		elseif my_data.moving_to_cover then
+			if action:expired() then
+				my_data.in_cover = my_data.moving_to_cover
+				my_data.cover_enter_t = data.t
+			end
+
+			my_data.moving_to_cover = nil
+		elseif my_data.walking_to_cover_shoot_pos then
+			my_data.walking_to_cover_shoot_pos = nil
+			my_data.at_cover_shoot_pos = true
+		end
+	elseif action_type == "shoot" then
+		my_data.shooting = nil
+	elseif action_type == "turn" then
+		my_data.turning = nil
+	elseif action_type == "hurt" then
+		CopLogicAttack._cancel_cover_pathing(data, my_data)
+
+		if data.important and action:expired() and not CopLogicBase.chk_start_action_dodge(data, "hit") then
+			data.logic._upd_aim(data, my_data)
+		end
+	elseif action_type == "dodge" then
+		local timeout = action:timeout()
+
+		if timeout then
+			data.dodge_timeout_t = TimerManager:game():time() + math.lerp(timeout[1], timeout[2], math.random())
+		end
+
+		CopLogicAttack._cancel_cover_pathing(data, my_data)
+
+		if action:expired() then
+			CopLogicAttack._upd_aim(data, my_data)
+			data.logic._upd_stance_and_pose(data, data.internal_data)
+			CopLogicAttack._upd_combat_movement(data)
+		end
+	end
+end
+
 
 --[[function CopLogicAttack.action_complete_clbk(data, action)
 	local my_data = data.internal_data
@@ -1700,7 +1884,6 @@ function CopLogicAttack._chk_request_action_turn_to_enemy(data, my_data, my_pos,
 		"cop_female",
 		"gensec",
 		"fbi",
-		"fbi_xc45",
 		"swat",
 		"heavy_swat",
 		"fbi_swat",
@@ -1713,10 +1896,21 @@ function CopLogicAttack._chk_request_action_turn_to_enemy(data, my_data, my_pos,
 		"bolivian_indoors",
 		"medic",
 		"taser",
-		"shield",
-		"spooc",
-		"spooc_heavy",
-		"shadow_spooc"
+		"deathvox_guard",
+		"deathvox_heavyar",
+		"deathvox_heavyshot",
+		"deathvox_lightar",
+		"deathvox_lightshot",
+		"deathvox_medic",
+		"deathvox_shield",
+		"deathvox_taser",
+		"deathvox_cloaker",
+		"deathvox_sniper_assault",
+		"deathvox_greendozer",
+		"deathvox_blackdozer",
+		"deathvox_lmgdozer",
+		"deathvox_medicdozer",
+		"deathvox_grenadier"
 	}
 	local is_mook = nil
 	for _, name in ipairs(mook_units) do

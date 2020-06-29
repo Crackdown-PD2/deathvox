@@ -317,8 +317,6 @@ local mook_units = {
 	"cop_female",
 	"gensec",
 	"fbi",
-	"fbi_xc45",
-	"fbi_pager",
 	"swat",
 	"heavy_swat",
 	"fbi_swat",
@@ -331,13 +329,21 @@ local mook_units = {
 	"bolivian_indoors",
 	"medic",
 	"taser",
-	"spooc",
-	"shadow_spooc",
-	"spooc_heavy",
-	"tank_ftsu",
-	"tank_mini",
-	"tank",
-	"tank_medic"
+	"deathvox_guard",
+	"deathvox_heavyar",
+	"deathvox_heavyshot",
+	"deathvox_lightar",
+	"deathvox_lightshot",
+	"deathvox_medic",
+	"deathvox_shield",
+	"deathvox_taser",
+	"deathvox_cloaker",
+	"deathvox_sniper_assault",
+	"deathvox_greendozer",
+	"deathvox_blackdozer",
+	"deathvox_lmgdozer",
+	"deathvox_medicdozer",
+	"deathvox_grenadier"
 }
 
 function CopLogicBase._update_haste(data, my_data)

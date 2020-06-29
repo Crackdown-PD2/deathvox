@@ -300,8 +300,8 @@ function UnitNetworkHandler:m79grenade_explode_on_client(position, normal, user,
 	end
 
 	if not self._verify_character_and_sender(user, sender) then
-		if alive(user) and user:movement() and user:movement._active_actions then --this instance was actually a shotgun push ragdoll pos sync
-			local death_action = user:movement._active_actions[1]
+		if alive(user) and user:movement() and user:movement()._active_actions then --this instance was actually a shotgun push ragdoll pos sync
+			local death_action = user:movement()._active_actions[1]
 
 			if death_action and death_action:type() == "hurt" and death_action._hips_obj then
 				local u_body = user:body(damage)
