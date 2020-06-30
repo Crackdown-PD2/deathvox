@@ -161,13 +161,14 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 
 	function SentryGunBase:remove()
-		SentryControlMenu:_remove_ws(self._ws)
-		self._ws = nil
-		
 		self._removed = true
 		self._unit:set_slot(0)
 	end
-
+	
+	Hooks:PostHook(SentryGunBase,"pre_destroy","tcdso_sentry_predestroy",function(self)
+		SentryControlMenu:_remove_ws(self._ws)
+		self._ws = nil	
+	end)
 
 	function SentryGunBase:_create_ws() 
 		self._ws = SentryControlMenu:_create_panel(self._unit)
