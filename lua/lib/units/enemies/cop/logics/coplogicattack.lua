@@ -2042,44 +2042,6 @@ function CopLogicAttack._set_verified_paths(data, verified_paths)
 	data.internal_data.charge_path = verified_paths.charge_path
 end
 
-function CopLogicAttack.is_available_for_assignment(data, new_objective)
-	local my_data = data.internal_data
-	
-	if my_data.exiting then
-		return
-	end
-	
-	if new_objective and new_objective.forced then
-		return true
-	end
-
-	if data.unit:movement():chk_action_forbidden("walk") then
-		return
-	end
-
-	if data.path_fail_t and data.t < data.path_fail_t + 6 then
-		return
-	end
-
-	if data.is_suppressed and not Global.game_settings.one_down and not managers.skirmish:is_skirmish() then
-		return
-	end
-
-	if not new_objective or new_objective.type == "free" then
-		return true
-	end
-
-	if new_objective then
-		local allow_trans, obj_fail = CopLogicBase.is_obstructed(data, new_objective, 0.2)
-
-		if obj_fail then
-			return
-		end
-	end
-
-	return true
-end
-
 function CopLogicAttack._upd_enemy_detection(data, is_synchronous)
 	managers.groupai:state():on_unit_detection_updated(data.unit)
 

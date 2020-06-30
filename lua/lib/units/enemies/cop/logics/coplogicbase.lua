@@ -89,6 +89,20 @@ function CopLogicBase.on_importance(data)
 	end
 end
 
+function CopLogicBase.queue_task(internal_data, id, func, data, exec_t, asap)
+	local qd_tasks = internal_data.queued_tasks
+
+	if qd_tasks then
+		qd_tasks[id] = true
+	else
+		internal_data.queued_tasks = {
+			[id] = true
+		}
+	end
+
+	managers.enemy:queue_task(id, func, data, exec_t, callback(CopLogicBase, CopLogicBase, "on_queued_task", internal_data), asap)
+end
+
 function CopLogicBase._set_attention_obj(data, new_att_obj, new_reaction)
 	local old_att_obj = data.attention_obj
 	data.attention_obj = new_att_obj
@@ -644,7 +658,7 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 		end
 	end
 
-	local delay = is_cool and 0 or 2
+	local delay = is_cool and 0 or 0.5
 
 	for u_key, attention_info in pairs(detected_obj) do
 		local can_detect = true

@@ -212,6 +212,7 @@ function CharacterTweakData:_presets(tweak_data)
             entry = true,
 			aggressive = true,
 			enemyidlepanic = true,
+			controlpanic = true,
 			retreat = true,
 			contact = true,
 			clear = true,
@@ -231,7 +232,8 @@ function CharacterTweakData:_presets(tweak_data)
 			deathguard = true,
 			open_fire = true,
 			suppress = true,
-			dodge = true
+			dodge = true,
+			cuffed = true
         },
         geeeeeman = {
             follow_me = true,

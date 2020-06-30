@@ -10,7 +10,7 @@ local mvec3_rand_orth = mvector3.random_orthogonal
 
 local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
-
+GroupAIStateBase._nr_important_cops = 6969
 local old_group_misc_data = GroupAIStateBase._init_misc_data
 function GroupAIStateBase:_init_misc_data()
 	old_group_misc_data(self)
