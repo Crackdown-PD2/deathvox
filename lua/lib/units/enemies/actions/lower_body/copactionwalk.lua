@@ -1419,8 +1419,8 @@ function CopActionWalk:_nav_chk_walk(t, dt, vis_state)
 			if self._next_is_nav_link then
 				self._end_of_path = true
 
-				if self._sync and alive(self._next_is_nav_link.c_class) and self._next_is_nav_link.element:nav_link_delay() then
-					self._next_is_nav_link.c_class:set_delay_time(t + self._next_is_nav_link.element:nav_link_delay())
+				if self._sync and alive(self._next_is_nav_link.c_class) then
+					self._next_is_nav_link.c_class:set_delay_time(t + 0)
 				end
 			elseif #s_path == 2 then
 				self._end_of_path = true

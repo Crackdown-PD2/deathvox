@@ -1316,7 +1316,7 @@ function CopDamage:_on_damage_received(damage_info)
 		if not self._next_allowed_hurt_t or self._next_allowed_hurt_t and self._next_allowed_hurt_t < t then
 			if damage_info.result_type ~= "healed" and damage_info.result_type ~= "death" then
 				if damage_info.is_fire_dot_damage or damage_info.variant == "fire" then
-					if not self._next_allowed_burnhurt_t and self._next_allowed_burnhurt_t < t or not self._next_allowed_burnhurt_t then
+					if self._next_allowed_burnhurt_t and self._next_allowed_burnhurt_t < t or not self._next_allowed_burnhurt_t then
 						self._unit:sound():say("burnhurt")
 
 						if self._unit:base():has_tag("special") then
