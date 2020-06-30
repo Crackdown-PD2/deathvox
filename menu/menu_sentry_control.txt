@@ -1,6 +1,6 @@
 {
 	"menu_id" : "tcdso_options",
-	"parent_menu_id" : "deathvox_menu_main",
+	"parent_menu_id" : "blt_options",
 	"title" : "tcdso_menu_title",
 	"description" : "tcdso_menu_desc",
 	"callback" : "callback_tcdso_close",

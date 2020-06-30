@@ -28,15 +28,19 @@ Hooks:Add("LocalizationManagerPostInit", "DV_HopLibKillfeedStuff", function(loc)
 end)
 
 Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
-	if deathvox and deathvox:IsTotalCrackdownEnabled() then
-		LocalizationManager:add_localized_strings({
-			["debug_interact_gage_assignment_take"] = "PRESS $BTN_INTERACT TO PICK UP THE PACKAGE",		
-			["menu_fast_fire_beta"] = "Close Enough",
-			["menu_fast_fire_beta_desc"] = "BASIC: ##$basic##\nYour SMGs, LMGs and Assault Rifles gain ##15## more bullets in their magazine.\n\nACE: ##$pro##\nYour SMGs and Assault Rifles' bullets that strike hard surfaces ##have a 25% chance to ricochet## towards enemies.",
-			["menu_heavy_impact_beta"] = "Money Shot",
-			["menu_heavy_impact_beta_desc"] = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles gain ##+100%## Damage on the last bullet fired from a fully loaded magazine.\n\nACE: ##$pro##\nYour SMGs and Assault Rifles' gain ##+50%## faster Reload Speed when their Magazine is empty.",
-			["menu_far_away_beta"] = "Point Blank",
-			["menu_far_away_beta_desc"] = "BASIC: ##$basic##\nFor the first 100cm, your Shotguns will now gain ##Armor Piercing, Shield Piercing, and Body Piercing.##\n\nACE: ##$pro##\nPoint Blank also grants ##+100%## Damage for the first meter.",
+	if deathvox then
+		if deathvox:IsTotalCrackdownEnabled() then
+			loc:add_localized_strings({
+				["debug_interact_gage_assignment_take"] = "PRESS $BTN_INTERACT TO PICK UP THE PACKAGE",		
+				["menu_fast_fire_beta"] = "Close Enough",
+				["menu_fast_fire_beta_desc"] = "BASIC: ##$basic##\nYour SMGs, LMGs and Assault Rifles gain ##15## more bullets in their magazine.\n\nACE: ##$pro##\nYour SMGs and Assault Rifles' bullets that strike hard surfaces ##have a 25% chance to ricochet## towards enemies.",
+				["menu_heavy_impact_beta"] = "Money Shot",
+				["menu_heavy_impact_beta_desc"] = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles gain ##+100%## Damage on the last bullet fired from a fully loaded magazine.\n\nACE: ##$pro##\nYour SMGs and Assault Rifles' gain ##+50%## faster Reload Speed when their Magazine is empty.",
+				["menu_far_away_beta"] = "Point Blank",
+				["menu_far_away_beta_desc"] = "BASIC: ##$basic##\nFor the first 100cm, your Shotguns will now gain ##Armor Piercing, Shield Piercing, and Body Piercing.##\n\nACE: ##$pro##\nPoint Blank also grants ##+100%## Damage for the first meter."
+			})
+		end
+		loc:add_localized_strings({
 			["bm_equipment_sentry_gun_desc"] = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Enemies will ignore Sentry Guns, making them excellent for fire support.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.",
 			["bm_equipment_sentry_gun_silent_desc"] = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Enemies will ignore Sentry Guns, making them excellent for fire support.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.",
 			["bm_equipment_sentry_gun_silent_desc_UNUSED"] = "oopsie whoopsie!\nuwu\nwe made a fucky wucky!!1 a wittle fucko boingo! the code monkies at our headquarters are working VEWY HAWD to fix this!",
