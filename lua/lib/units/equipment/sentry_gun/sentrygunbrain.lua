@@ -192,7 +192,7 @@ function SentryGunBrain:on_detected_attention_obj_modified(modified_u_key)
 		return
 	end
 
-	local old_notice_clbk = not attention_info.identified and old_settings.notice_clbk and old_settings.notice_clbk ~= "clbk_notice_sneak"
+	local old_notice_clbk = not attention_info.identified and (old_settings.notice_clbk ~= "clbk_notice_sneak") and old_settings.notice_clbk
 
 	if new_settings then
 		attention_info.settings = new_settings
@@ -210,7 +210,7 @@ function SentryGunBrain:on_detected_attention_obj_modified(modified_u_key)
 		end
 	end
 
-	if old_notice_clbk then
+	if type(old_notice_clbk) == "function" then
 		if not new_settings or not new_settings.notice_clbk then
 			old_notice_clbk(self._unit, false)
 		end
