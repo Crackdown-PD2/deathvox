@@ -949,12 +949,6 @@ function CopMovement:synch_attention(attention)
 	end
 end
 
-local drop_held_items_original = CopMovement.drop_held_items
-function CopMovement:drop_held_items()
-	self._spawneditems = {}
-	drop_held_items_original(self)
-end
-
 local _equip_item_original = CopMovement._equip_item
 function CopMovement:_equip_item(item_type, align_place, droppable)
 	if item_type == "needle" then
