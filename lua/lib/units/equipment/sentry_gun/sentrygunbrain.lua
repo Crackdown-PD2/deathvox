@@ -228,6 +228,30 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	end
 
+	function SentryGunBrain:switch_off()
+		local is_server = Network:is_server()
+
+		if is_server then
+			self._ext_movement:set_attention()
+		end
+
+		self:set_active(false)
+		self._ext_movement:switch_off()
+		self._unit:set_slot(26)
+
+		if managers.groupai:state():all_criminals()[self._unit:key()] then
+			managers.groupai:state():on_criminal_neutralized(self._unit)
+		end
+
+		if is_server and self._attention_handler then
+			PlayerMovement.set_attention_settings(self, nil)
+		end
+
+		self._unit:base():unregister()
+
+		self._attention_obj = nil
+	end
+
 	function SentryGunBrain:_get_tweak_data() --custom method
 		if self._unit:weapon() then 
 			return self._unit:weapon():_get_tweak_data()
