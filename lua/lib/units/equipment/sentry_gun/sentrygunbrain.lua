@@ -192,7 +192,7 @@ function SentryGunBrain:on_detected_attention_obj_modified(modified_u_key)
 		return
 	end
 
-	local old_notice_clbk = not attention_info.identified and (old_settings.notice_clbk ~= "clbk_notice_sneak") and old_settings.notice_clbk
+	local old_notice_clbk = not attention_info.identified and old_settings.notice_clbk ~= "clbk_notice_sneak" and old_settings.notice_clbk
 
 	if new_settings then
 		attention_info.settings = new_settings
@@ -210,7 +210,7 @@ function SentryGunBrain:on_detected_attention_obj_modified(modified_u_key)
 		end
 	end
 
-	if type(old_notice_clbk) == "function" then
+	if old_notice_clbk then
 		if not new_settings or not new_settings.notice_clbk then
 			old_notice_clbk(self._unit, false)
 		end
@@ -224,7 +224,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if self._unit:weapon() then 
 			return self._unit:weapon():_get_tweak_data()
 		end
-		return (self._name_id and tweak_data.weapon[self._name_id]) or tweak_data.weapon.sentry_gun
+
+		return self._name_id and tweak_data.weapon[self._name_id] or tweak_data.weapon.sentry_gun
 	end
 
 	function SentryGunBrain:update(unit, t, dt)
@@ -266,9 +267,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 			return
 		end
 
-		local td = self:_get_tweak_data()
-		local firemode = self._unit:weapon():_get_sentry_firemode()
-		
 		local my_SO_access_str = self._SO_access_str
 		local my_SO_access = self._SO_access
 		local detected_objects = self._detected_attention_objects
@@ -277,16 +275,20 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local my_pos = self._ext_movement:m_head_pos()
 		local my_tracker = self._ext_movement:nav_tracker()
 		local chk_vis_func = my_tracker.check_visibility
+		local vis_mask = self._visibility_slotmask
+		local all_attention_objects = managers.groupai:state():get_AI_attention_objects_by_filter(my_SO_access_str, my_team)
+		local parent_unit = alive(self._unit:parent()) and self._unit:parent()
+
+		local td = self:_get_tweak_data()
+		local detection_preset = td.DETECTION_DELAY
 		local firing_range = td.FIRE_RANGE
 		local max_detection_range = td.DETECTION_RANGE
+		local firemode = self._unit:weapon():_get_sentry_firemode()
+
 		if firemode == "overwatch" then
 			firing_range = SentryControlMenu.tweakdata.OVERWATCH_DETECTION_RANGE
 			max_detection_range = SentryControlMenu.tweakdata.OVERWATCH_DETECTION_RANGE
 		end
-		local detection_preset = td.DETECTION_DELAY
-		local vis_mask = self._visibility_slotmask
-		local all_attention_objects = managers.groupai:state():get_AI_attention_objects_by_filter(my_SO_access_str, my_team)
-		local parent_unit = alive(self._unit:parent()) and self._unit:parent()
 
 		for u_key, attention_info in pairs(all_attention_objects) do
 			if u_key ~= my_key and not detected_objects[u_key] then
@@ -294,7 +296,16 @@ if deathvox:IsTotalCrackdownEnabled() then
 				local att_unit = attention_info.unit
 				local att_mov_ext = att_unit:movement()
 
-				if att_mov_ext then
+				if firemode == "overwatch" then
+					local att_base_ext = attention_info.unit:base()
+
+					--if overwatch firemode, targeted enemy must be a sniper in order to notice them
+					if not att_base_ext or att_base_ext._tweak_table ~= "sniper" and att_base_ext._tweak_table ~= "deathvox_sniper" then
+						skip = true
+					end
+				end
+
+				if not skip and att_mov_ext then
 					if att_mov_ext.downed and att_mov_ext:downed() then
 						skip = true
 					elseif att_mov_ext.is_cuffed and att_mov_ext:is_cuffed() then
@@ -382,11 +393,16 @@ if deathvox:IsTotalCrackdownEnabled() then
 				if not attention_info.is_alive then
 					skip = true
 				else
-					if (firemode == "overwatch") and (attention_info.unit and attention_info.unit:base() and (attention_info.unit:base()._tweak_table ~= "sniper" and attention_info.unit:base()._tweak_table ~= "deathvox_sniper")) then
+					if firemode == "overwatch" then
+						local att_base_ext = attention_info.unit:base()
+
 						--if overwatch firemode, targeted enemy must be a sniper in order to notice them
-						skip = true
+						if not att_base_ext or att_base_ext._tweak_table ~= "sniper" and att_base_ext._tweak_table ~= "deathvox_sniper" then
+							skip = true
+						end
 					end
-					if att_mov_ext then
+
+					if not skip and att_mov_ext then
 						if att_mov_ext.downed and att_mov_ext:downed() then
 							skip = true
 						elseif att_mov_ext.is_cuffed and att_mov_ext:is_cuffed() then
@@ -653,11 +669,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 	function SentryGunBrain:_select_focus_attention(t)
 		local td = self:_get_tweak_data()
 		local DETECTION_RANGE = td.DETECTION_RANGE
-		
+		local firemode = self._unit:weapon():_get_sentry_firemode()
+
 		if firemode == "overwatch" then 
 			DETECTION_RANGE = SentryControlMenu.tweakdata.OVERWATCH_DETECTION_RANGE
 		end
-		
+
 		local current_focus = self._attention_obj
 		local current_pos = self._ext_movement:m_head_pos()
 		local current_fwd = nil
@@ -683,7 +700,16 @@ if deathvox:IsTotalCrackdownEnabled() then
 				if not attention_info.is_alive then
 					remove_obj = true
 				else
-					if att_mov_ext then
+					if firemode == "overwatch" then
+						local att_base_ext = attention_info.unit:base()
+
+						--if overwatch firemode, targeted enemy must be a sniper in order to notice them
+						if not att_base_ext or att_base_ext._tweak_table ~= "sniper" and att_base_ext._tweak_table ~= "deathvox_sniper" then
+							skip = true
+						end
+					end
+
+					if not remove_obj and att_mov_ext then
 						if att_mov_ext.downed and att_mov_ext:downed() then
 							remove_obj = true
 						elseif att_mov_ext.is_cuffed and att_mov_ext:is_cuffed() then
@@ -824,6 +850,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			else
 				self._ext_movement:set_attention()
 			end
+
 			self._attention_obj = best_focus_attention
 		end
 	end
@@ -834,16 +861,18 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 
 		local td = self:_get_tweak_data()
-		local firemode = self._unit:weapon():_get_sentry_firemode()
-		
 		local fire_range_sq = td.FIRE_RANGE * td.FIRE_RANGE
-		if firemode == "manual" then 
-			fire_range_sq = fire_range_sq * 4
-		end
-		
 
-		if (firemode ~= "overwatch") and (fire_range_sq < mvec3_dist_sq(my_pos, target_base_pos)) then
-			return false
+		local firemode = self._unit:weapon():_get_sentry_firemode()
+
+		if firemode ~= "overwatch" then
+			if firemode == "manual" then
+				fire_range_sq = fire_range_sq * 4
+			end
+
+			if fire_range_sq < mvec3_dist_sq(my_pos, target_base_pos) then
+				return false
+			end
 		end
 
 		local target_pos_same_height = mvec3_cpy(target_base_pos)
@@ -900,7 +929,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 	function SentryGunBrain:_ignore_shield(my_pos, target_pos)
 		local ammo_type = self._unit:weapon():_get_ammo_type()
-		if (ammo_type == "ap") or (ammo_type == "he") then
+
+		if ammo_type == "ap" or ammo_type == "he" then
 			return true
 		end
 
@@ -912,8 +942,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		return true
 	end
-	
-	
+
+
 else	
 
 	function SentryGunBrain:_upd_detection(t)
