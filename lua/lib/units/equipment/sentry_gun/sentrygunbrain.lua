@@ -219,7 +219,15 @@ end
 
 
 
-if deathvox:IsTotalCrackdownEnabled() then 
+if deathvox:IsTotalCrackdownEnabled() then
+
+	local _setup_attention_handler_original = SentryGunBrain._setup_attention_handler
+	function SentryGunBrain:_setup_attention_handler()
+		if not self._unit:character_damage()._ignore_client_damage then
+			_setup_attention_handler_original(self)
+		end
+	end
+
 	function SentryGunBrain:_get_tweak_data() --custom method
 		if self._unit:weapon() then 
 			return self._unit:weapon():_get_tweak_data()
