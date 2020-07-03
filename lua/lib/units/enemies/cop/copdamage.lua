@@ -1226,10 +1226,6 @@ function CopDamage:sync_damage_stun(attacker_unit, damage_percent, i_attack_vari
 		attack_dir = -self._unit:rotation():y()
 	end
 
-	if damage > 0 and attacker_unit == managers.player:player_unit() then
-		managers.hud:on_hit_confirmed()
-	end
-
 	attack_data.attack_dir = attack_dir
 	hit_pos = hit_pos - attack_dir * 5
 	attack_data.pos = hit_pos
