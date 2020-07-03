@@ -10,7 +10,6 @@ local mvec3_rand_orth = mvector3.random_orthogonal
 
 local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
-GroupAIStateBase._nr_important_cops = 6969
 local old_group_misc_data = GroupAIStateBase._init_misc_data
 function GroupAIStateBase:_init_misc_data()
 	old_group_misc_data(self)
@@ -55,6 +54,12 @@ function GroupAIStateBase:update(t, dt)
 	self:_upd_criminal_suspicion_progress()
 	self:_claculate_drama_value()
 	--self:_draw_current_logics()
+	
+	if managers.skirmish:is_skirmish() then
+		self._nr_important_cops = self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_7up) * 0.25
+	else
+		self._nr_important_cops = self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_mul) * 0.25
+	end
 	
 	if self._draw_drama then
 		self:_debug_draw_drama(t)

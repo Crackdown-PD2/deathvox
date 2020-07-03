@@ -190,6 +190,12 @@ function CopLogicTravel.enter(data, new_logic_name, enter_params)
 
 	my_data.attitude = data.objective.attitude or "avoid"
 	my_data.weapon_range = data.char_tweak.weapon[data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage].range
+	if not data.team then
+		data.unit:movement():set_team(managers.groupai:state()._teams["law1"])
+		if data.team then
+			
+		end
+	end
 	my_data.path_safely = my_data.attitude == "avoid" or nil
 	my_data.path_ahead = data.objective.path_ahead or data.team.id == tweak_data.levels:get_default_team_ID("player")
 
