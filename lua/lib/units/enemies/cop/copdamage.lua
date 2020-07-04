@@ -2330,28 +2330,30 @@ function CopDamage:damage_fire(attack_data)
 				local fire_dot_trigger_chance = fire_dot_data.dot_trigger_chance and tonumber(fire_dot_data.dot_trigger_chance) or 30
 
 				if start_dot_damage_roll <= fire_dot_trigger_chance then
-					local dot_damage = fire_dot_data.dot_damage or 25
+					local dot_damage = fire_dot_data.dot_damage and tonumber(fire_dot_data.dot_damage) or 25
 					local t = TimerManager:game():time()
 
 					managers.fire:add_doted_enemy(self._unit, t, weap_unit, fire_dot_data.dot_length, dot_damage, attacker_unit, attack_data.is_molotov)
 
-					local use_animation_on_fire_damage = nil
+					if result.type ~= "healed" then
+						local use_animation_on_fire_damage = nil
 
-					if self._char_tweak.use_animation_on_fire_damage == nil then
-						use_animation_on_fire_damage = true
-					else
-						use_animation_on_fire_damage = self._char_tweak.use_animation_on_fire_damage
-					end
+						if self._char_tweak.use_animation_on_fire_damage == nil then
+							use_animation_on_fire_damage = true
+						else
+							use_animation_on_fire_damage = self._char_tweak.use_animation_on_fire_damage
+						end
 
-					if use_animation_on_fire_damage then
-						if self.get_last_time_unit_got_fire_damage then
-							local last_time_received = self:get_last_time_unit_got_fire_damage()
+						if use_animation_on_fire_damage then
+							if self.get_last_time_unit_got_fire_damage then
+								local last_time_received = self:get_last_time_unit_got_fire_damage()
 
-							if last_time_received == nil or t - last_time_received > 1 then
+								if last_time_received == nil or t - last_time_received > 1 then
+									start_dot_dance_antimation = true
+								end
+							else
 								start_dot_dance_antimation = true
 							end
-						else
-							start_dot_dance_antimation = true
 						end
 					end
 				end
@@ -2361,12 +2363,14 @@ function CopDamage:damage_fire(attack_data)
 			attack_data.fire_dot_data = fire_dot_data
 		end
 
-		if not start_dot_dance_antimation then --prevent fire_hurt from micro-stunning enemies when the dance animation isn't proced
-			result.type = "dmg_rcv"
-			attack_data.result.type = "dmg_rcv"
-		else
-			result.type = "fire_hurt"
-			attack_data.result.type = "fire_hurt"
+		if result.type ~= "healed" then
+			if not start_dot_dance_antimation then --prevent fire_hurt from micro-stunning enemies when the dance animation isn't proced
+				result.type = "dmg_rcv"
+				attack_data.result.type = "dmg_rcv"
+			else
+				result.type = "fire_hurt"
+				attack_data.result.type = "fire_hurt"
+			end
 		end
 	end
 
