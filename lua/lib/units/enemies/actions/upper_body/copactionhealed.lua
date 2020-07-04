@@ -11,6 +11,7 @@ function CopActionHealed:init(action_desc, common_data)
 	self._healed = false
 
 	if self._ext_movement:play_redirect("use_syringe") then
+		common_data.ext_movement:enable_update(true)
 		self._ext_movement:spawn_wanted_items()
 		self._unit:sound():say("hr01")
 
@@ -42,7 +43,13 @@ function CopActionHealed:update(t)
 		self._expired = true
 	end
 
-	if self._ext_anim.base_need_upd then
-		self._ext_movement:upd_m_head_pos()
+	self._ext_movement:upd_m_head_pos()
+end
+
+function CopActionHealed:chk_block(action_type, t)
+	if action_type == "death" then
+		return false
 	end
+
+	return not self._healed
 end
