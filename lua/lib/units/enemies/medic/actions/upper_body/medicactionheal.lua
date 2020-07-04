@@ -11,6 +11,7 @@ function MedicActionHeal:init(action_desc, common_data)
 	self._done = false
 
 	if self._ext_movement:play_redirect("heal") then
+		common_data.ext_movement:enable_update(true)
 		self._unit:sound():say("heal")
 
 		return true
@@ -23,9 +24,7 @@ function MedicActionHeal:update(t)
 		self._expired = true
 	end
 
-	if self._ext_anim.base_need_upd then
-		self._ext_movement:upd_m_head_pos()
-	end
+	self._ext_movement:upd_m_head_pos()
 end
 
 function MedicActionHeal:on_exit()
