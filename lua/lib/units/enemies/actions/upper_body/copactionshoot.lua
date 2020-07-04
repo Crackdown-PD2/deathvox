@@ -837,11 +837,11 @@ function CopActionShoot:check_melee_start(t, attention, target_dis, autotarget, 
 			mvec3_mul(melee_vec1, target_dis)
 			mvec3_add(melee_vec1, shoot_from_pos)
 
-			local obstructed_by_geometry = self._unit:raycast("ray", shoot_from_pos, melee_vec1, "sphere_cast_radius", 20, "slot_mask", managers.slot:get_mask("world_geometry", "vehicles"), "ray_type", "body melee", "report")
+			local obstructed_by_geometry = self._unit:raycast("ray", shoot_from_pos, melee_vec1, "sphere_cast_radius", 10, "slot_mask", managers.slot:get_mask("world_geometry", "vehicles"), "ray_type", "body melee", "report")
 
 			if not obstructed_by_geometry then
 				local target_has_shield = alive(attention.unit:inventory() and attention.unit:inventory()._shield_unit) and true or nil
-				local target_is_covered_by_shield = self._unit:raycast("ray", shoot_from_pos, melee_vec1, "sphere_cast_radius", 20, "slot_mask", self._shield_slotmask, "ray_type", "body melee", "report")
+				local target_is_covered_by_shield = self._unit:raycast("ray", shoot_from_pos, melee_vec1, "sphere_cast_radius", 25, "slot_mask", self._shield_slotmask, "ray_type", "body melee", "report")
 
 				if autotarget then
 					if not target_is_covered_by_shield then
@@ -858,7 +858,7 @@ function CopActionShoot:check_melee_start(t, attention, target_dis, autotarget, 
 				else
 					if target_has_shield then
 						if target_is_covered_by_shield then
-							local can_be_knocked = self._melee_weapon_data.shield_knock and attention.unit:base():char_tweak().damage.shield_knocked and not attention.unit:base().is_phalanx and not attention.unit:character_damage():is_immune_to_shield_knockback()
+							local can_be_knocked = self._melee_weapon_data.shield_knock and attention.unit:base():char_tweak().damage.shield_knocked and not attention.unit:character_damage():is_immune_to_shield_knockback()
 
 							if can_be_knocked then
 								if not attention.unit:movement():chk_action_forbidden("hurt") then
@@ -967,8 +967,18 @@ function CopActionShoot:anim_clbk_melee_strike()
 	mvec3_mul(melee_vec2, self._melee_weapon_data.range)
 	mvec3_add(melee_vec2, shoot_from_pos)
 
+	local melee_slotmask = self._melee_weapon_data.slotmask
+
+	if self._attention and self._attention.unit then
+		local enemies_slot_mask = managers.slot:get_mask("enemies")
+
+		if self._attention.unit:in_slot(enemies_slot_mask) and self._unit:in_slot(enemies_slot_mask) then
+			melee_slotmask = managers.slot:get_mask("bullet_impact_targets")
+		end
+	end
+
 	--similar to player melee attacks, use a sphere ray instead of just a normal plain ray
-	local col_ray = self._unit:raycast("ray", shoot_from_pos, melee_vec2, "sphere_cast_radius", 20, "slot_mask", self._melee_weapon_data.slotmask, "ray_type", "body melee")
+	local col_ray = self._unit:raycast("ray", shoot_from_pos, melee_vec2, "sphere_cast_radius", 20, "slot_mask", melee_slotmask, "ray_type", "body melee")
 
 	if self._draw_melee_sphere_rays then
 		local draw_duration = 3
@@ -987,7 +997,7 @@ function CopActionShoot:anim_clbk_melee_strike()
 		local player_distance = mvec3_dir(melee_vec3, shoot_from_pos, player_head_pos)
 
 		if player_distance <= self._melee_weapon_data.range then
-			if not col_ray or col_ray.distance > player_distance or not self._unit:raycast("ray", shoot_from_pos, player_head_pos, "sphere_cast_radius", 5, "slot_mask", self._melee_weapon_data.slotmask, "ray_type", "body melee", "report") then
+			if not col_ray or col_ray.distance > player_distance or not self._unit:raycast("ray", shoot_from_pos, player_head_pos, "sphere_cast_radius", 5, "slot_mask", melee_slotmask, "ray_type", "body melee", "report") then
 				mvec3_set(melee_vec4, melee_vec3)
 				mvec3_set_z(melee_vec4, 0)
 				mvec3_norm(melee_vec4)
@@ -1028,7 +1038,7 @@ function CopActionShoot:anim_clbk_melee_strike()
 		local defense_data = nil
 
 		if self._is_server and hit_unit:in_slot(self._shield_slotmask) and alive(hit_unit:parent()) then
-			local can_be_knocked = self._melee_weapon_data.shield_knock and not hit_unit:parent():base().is_phalanx and hit_unit:parent():base():char_tweak().damage.shield_knocked and not hit_unit:parent():character_damage():is_immune_to_shield_knockback()
+			local can_be_knocked = self._melee_weapon_data.shield_knock and hit_unit:parent():base() and hit_unit:parent():base():char_tweak().damage.shield_knocked and not hit_unit:parent():character_damage():is_immune_to_shield_knockback()
 
 			if can_be_knocked then
 				shield_knock = true
@@ -1054,7 +1064,7 @@ function CopActionShoot:anim_clbk_melee_strike()
 		else
 			if self._is_server then --only allow melee damage against NPCs for the host (used in case an enemy targets a client locally but hits something else instead)
 				if character_unit:character_damage() then
-					if character_unit:base().sentry_gun then
+					if character_unit:base() and character_unit:base().sentry_gun then
 						local action_data = {
 							variant = "bullet",
 							damage = damage,
@@ -1065,8 +1075,8 @@ function CopActionShoot:anim_clbk_melee_strike()
 						}
 
 						defense_data = character_unit:character_damage():damage_bullet(action_data) --sentries/turrets lack a melee damage function
-					else
-						if character_unit:character_damage().damage_melee and not character_unit:base().is_husk_player then --ignore player husks as the damage CAN be synced and dealt to them
+					elseif character_unit:character_damage().damage_melee then
+						if not character_unit:base() or not character_unit:base().is_husk_player then --ignore player husks as the damage CAN be synced and dealt to them
 							local variant = shield_knock and "melee" or self._melee_weapon_data.electrical and "taser_tased" or "melee"
 							local action_data = {
 								variant = variant,
@@ -1117,7 +1127,7 @@ function CopActionShoot:anim_clbk_melee_strike()
 				self._unit:character_damage():damage_melee(counter_data)
 			else
 				if not shield_knock and character_unit ~= local_player and character_unit:character_damage() and not character_unit:character_damage()._no_blood then
-					if character_unit:base().sentry_gun then
+					if not character_unit:base() or character_unit:base().sentry_gun then
 						managers.game_play_central:play_impact_sound_and_effects({
 							no_decal = true,
 							col_ray = col_ray
