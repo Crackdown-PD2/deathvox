@@ -52,11 +52,7 @@ function ActionSpooc:init(action_desc, common_data)
 		end
 	end
 
-	local stand = common_data.ext_movement:play_redirect("stand")
-
-	if not stand then
-		return
-	end
+	common_data.ext_movement:play_redirect("stand")
 
 	self._action_desc = action_desc
 	self._nav_path = action_desc.nav_path or {
