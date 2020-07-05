@@ -233,8 +233,8 @@ function CopLogicIdle._get_priority_attention(data, attention_objects, reaction_
 					distance = distance * weight_mul
 				end
 				
-				local near_threshold = data.internal_data.weapon_range.optimal
-				local too_close_threshold = data.internal_data.weapon_range.close
+				local near_threshold = data.internal_data.weapon_range.optimal or 2000
+				local too_close_threshold = data.internal_data.weapon_range.close or 1000
 				local assault_reaction = reaction == AIAttentionObject.REACT_SPECIAL_ATTACK
 				local visible = attention_data.verified or attention_data.nearly_visible
 				local near = distance < near_threshold
