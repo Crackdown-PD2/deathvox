@@ -375,7 +375,7 @@ function CopLogicBase._update_haste(data, my_data)
 		return
 	end
 
-	local path = my_data.chase_path or my_data.charge_path or my_data.advance_path or my_data.cover_path or my_data.expected_pos_path or my_data.hunt_path or my_data.flank_path
+	local path = my_data.optimal_path or my_data.advance_path or my_data.cover_path
 
 	if not path then
 		return
@@ -477,10 +477,22 @@ function CopLogicBase._update_haste(data, my_data)
 	--randomize enemy crouching to make enemies feel less easy to aim at, the fact they're always crouching all over the place always bugged me, plus, they shouldn't need to crouch so often when you're at long distances from them
 
 	if not data.unit:movement():cool() and not managers.groupai:state():whisper_mode() then
-		if stand_chance ~= 1 and crouch_roll > stand_chance and can_crouch then
-			end_pose = "crouch"
-			pose = "crouch"
-			should_crouch = true
+		if not data.unit:movement():cool() and not managers.groupai:state():whisper_mode() then
+			if data.char_tweak.allowed_poses and data.char_tweak.allowed_poses.crouch then
+				end_pose = "crouch"
+				pose = "crouch"
+				should_crouch = true
+			elseif data.char_tweak.allowed_poses and data.char_tweak.allowed_poses.stand then
+				end_pose = "stand"
+				pose = "stand"
+			elseif stand_chance ~= 1 and crouch_roll > stand_chance and can_crouch then
+				end_pose = "crouch"
+				pose = "crouch"
+				should_crouch = true
+			else
+				end_pose = "stand"
+				pose = "stand"
+			end
 		end
 	end
 
@@ -1357,12 +1369,17 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 	if objective.interrupt_suppression and data.is_suppressed then
 		return true, true
 	end
+	
+	local health_ratio = data.unit:character_damage():health_ratio()
+	local is_dead = data.unit:character_damage():dead() or health_ratio <= 0
+
+	if is_dead then
+		return true, true
+	end
 
 	local strictness_mul = strictness and 1 - strictness
 
 	if objective.interrupt_health then
-		local health_ratio = data.unit:character_damage():health_ratio()
-
 		if health_ratio < 1 then
 			local too_much_damage = nil
 
@@ -1374,12 +1391,6 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 
 			if too_much_damage then
 				return true, true
-			else
-				local is_dead = data.unit:character_damage():dead() or health_ratio <= 0
-
-				if is_dead then
-					return true, true
-				end
 			end
 		end
 	end

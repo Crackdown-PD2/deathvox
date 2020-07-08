@@ -1,15 +1,16 @@
 function GroupAIStateBesiege:_check_spawn_phalanx()
 end
-
 function GroupAIStateBesiege:_queue_police_upd_task()
 	if not self._police_upd_task_queued then
-		local next_upd_t = 0.4
+		local next_upd_t = 0.028888888888888888
+		local asap = nil
 		if next(self._spawning_groups) then
-			next_upd_t = 0.1
+			next_upd_t = 0.014444444444444444
+			asap = true
 		end
 		self._police_upd_task_queued = true
 
-		managers.enemy:queue_task("GroupAIStateBesiege._upd_police_activity", self._upd_police_activity, self, self._t + next_upd_t) --please dont let your own algorithms implode like that, ovk, thanks
+		managers.enemy:queue_task("GroupAIStateBesiege._upd_police_activity", self._upd_police_activity, self, self._t + next_upd_t, nil, asap) --please dont let your own algorithms implode like that, ovk, thanks
 	end
 end
 
@@ -340,12 +341,16 @@ function GroupAIStateBesiege:_upd_assault_areas(current_area)
 		local force_factor = area.factors.force
 		local demand = force_factor and force_factor.force
 		local nr_police = table.size(area.police.units)
-		local nr_criminals = table.size(area.criminal.units)
-
-		if assault_candidates and self._criminals then
+		local nr_criminals = nil
+		
+		if area and area.criminal and area.criminal.units then
+			nr_criminals = table.size(area.criminal.units)
+		end
+		
+		if assault_candidates and self._player_criminals then
 			for criminal_key, _ in pairs(area.criminal.units) do
-				if criminal_key and self._criminals[criminal_key] then
-					if not self._criminals[criminal_key].is_deployable then
+				if criminal_key and self._player_criminals[criminal_key] then
+					if not self._player_criminals[criminal_key].is_deployable then
 						table.insert(assault_candidates, area)
 
 						break
@@ -354,7 +359,7 @@ function GroupAIStateBesiege:_upd_assault_areas(current_area)
 			end
 		end
 
-		if nr_criminals == 0 then
+		if nr_criminals and nr_criminals == 0 then
 			for neighbour_area_id, neighbour_area in pairs(area.neighbours) do
 				if not found_areas[neighbour_area_id] then
 					table.insert(to_search_areas, neighbour_area)
@@ -1718,9 +1723,9 @@ end
 function GroupAIStateBesiege:_upd_recon_tasks()
 	local task_data = self._task_data.recon.tasks[1]
 	
-	if managers.skirmish:is_skirmish() then --makes unfit units retire during control/recon, mostly used as a safety measure to prevent leftovers
-		self:_assign_skirmish_groups_to_retire(allowed_groups, suitable_grp_func, group)
-	end
+	--if managers.skirmish:is_skirmish() then --makes unfit units retire during control/recon, mostly used as a safety measure to prevent leftovers
+	--	self:_assign_skirmish_groups_to_retire(allowed_groups, suitable_grp_func, group)
+	--end
 	
 	self:_assign_enemy_groups_to_recon()
 
@@ -1778,6 +1783,185 @@ function GroupAIStateBesiege:_upd_recon_tasks()
 		table.remove(self._task_data.recon.tasks, 1)
 
 		self._task_data.recon.next_dispatch_t = t + math.ceil(self:_get_difficulty_dependent_value(self._tweak_data.recon.interval)) + math.random() * self._tweak_data.recon.interval_variation
+	end
+end
+
+function GroupAIStateBesiege:_begin_new_tasks()
+	local all_areas = self._area_data
+	local nav_manager = managers.navigation
+	local all_nav_segs = nav_manager._nav_segments
+	local task_data = self._task_data
+	local t = self._t
+	local reenforce_candidates = nil
+	local reenforce_data = task_data.reenforce
+
+	if reenforce_data.next_dispatch_t and reenforce_data.next_dispatch_t < t then
+		reenforce_candidates = {}
+	end
+
+	local recon_candidates, are_recon_candidates_safe = nil
+	local recon_data = task_data.recon
+
+	if recon_data.next_dispatch_t and recon_data.next_dispatch_t < t and not task_data.assault.active and not task_data.regroup.active then
+		recon_candidates = {}
+	end
+
+	local assault_candidates = nil
+	local assault_data = task_data.assault
+
+	if self._difficulty_value > 0 and assault_data.next_dispatch_t and assault_data.next_dispatch_t < t and not task_data.regroup.active then
+		assault_candidates = {}
+	end
+
+	if not reenforce_candidates and not recon_candidates and not assault_candidates then
+		return
+	end
+
+	local found_areas = {}
+	local to_search_areas = {}
+
+	for area_id, area in pairs(all_areas) do
+		if area.spawn_points then
+			for _, sp_data in pairs(area.spawn_points) do
+				if sp_data.delay_t <= t and not all_nav_segs[sp_data.nav_seg].disabled then
+					table.insert(to_search_areas, area)
+
+					found_areas[area_id] = true
+
+					break
+				end
+			end
+		end
+
+		if not found_areas[area_id] and area.spawn_groups then
+			for _, sp_data in pairs(area.spawn_groups) do
+				if sp_data.delay_t <= t and not all_nav_segs[sp_data.nav_seg].disabled then
+					table.insert(to_search_areas, area)
+
+					found_areas[area_id] = true
+
+					break
+				end
+			end
+		end
+	end
+
+	if #to_search_areas == 0 then
+		return
+	end
+
+	if assault_candidates and self._hunt_mode and self._char_criminals then
+		for criminal_key, criminal_data in pairs(self._char_criminals) do
+			if not criminal_data.status then
+				local nav_seg = criminal_data.tracker:nav_segment()
+				local area = self:get_area_from_nav_seg_id(nav_seg)
+				found_areas[area] = true
+
+				table.insert(assault_candidates, area)
+			end
+		end
+	end
+
+	local i = 1
+
+	repeat
+		local area = to_search_areas[i]
+		local force_factor = area.factors.force
+		local demand = force_factor and force_factor.force
+		local nr_police = table.size(area.police.units)
+		local nr_criminals = nil
+		
+		if area.criminal and area.criminal.units then
+			nr_criminals = table.size(area.criminal.units)
+		end
+
+		if reenforce_candidates and demand and demand > 0 and nr_criminals and nr_criminals == 0 then
+			local area_free = true
+
+			for i_task, reenforce_task_data in ipairs(reenforce_data.tasks) do
+				if reenforce_task_data.target_area == area then
+					area_free = false
+
+					break
+				end
+			end
+
+			if area_free then
+				table.insert(reenforce_candidates, area)
+			end
+		end
+
+		if recon_candidates and area.loot or recon_candidates and area.hostages then
+			local occupied = nil
+
+			for group_id, group in pairs(self._groups) do
+				if group.objective.target_area == area or group.objective.area == area then
+					occupied = true
+
+					break
+				end
+			end
+
+			if not occupied then
+				local is_area_safe = nr_criminals and nr_criminals == 0
+
+				if is_area_safe then
+					if are_recon_candidates_safe then
+						table.insert(recon_candidates, area)
+					else
+						are_recon_candidates_safe = true
+						recon_candidates = {
+							area
+						}
+					end
+				elseif not are_recon_candidates_safe then
+					table.insert(recon_candidates, area)
+				end
+			end
+		end
+
+		if assault_candidates and area.criminal and area.criminal.units and self._criminals then
+			for criminal_key, _ in pairs(area.criminal.units) do
+				if not self._criminals[criminal_key].status and not self._criminals[criminal_key].is_deployable then
+					table.insert(assault_candidates, area)
+
+					break
+				end
+			end
+		end
+
+		if not nr_criminals or nr_criminals == 0 then
+			for neighbour_area_id, neighbour_area in pairs(area.neighbours) do
+				if not found_areas[neighbour_area_id] then
+					table.insert(to_search_areas, neighbour_area)
+
+					found_areas[neighbour_area_id] = true
+				end
+			end
+		end
+
+		i = i + 1
+	until i > #to_search_areas
+
+	if assault_candidates and #assault_candidates > 0 then
+		self:_begin_assault_task(assault_candidates)
+
+		recon_candidates = nil
+	end
+
+	if recon_candidates and #recon_candidates > 0 then
+		local recon_area = recon_candidates[math.random(#recon_candidates)]
+
+		self:_begin_recon_task(recon_area)
+	end
+
+	if reenforce_candidates and #reenforce_candidates > 0 then
+		local lucky_i_candidate = math.random(#reenforce_candidates)
+		local reenforce_area = reenforce_candidates[lucky_i_candidate]
+
+		self:_begin_reenforce_task(reenforce_area)
+
+		recon_candidates = nil
 	end
 end
 
