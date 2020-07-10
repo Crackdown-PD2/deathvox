@@ -29,3 +29,12 @@ CopActionAct._act_redirects.script = {
 	"cmd_gogo",
 	"cmd_point"
 }
+
+local init_original = CopActionAct.init
+function CopActionAct:init(action_desc, common_data)
+	if action_desc.align_sync and action_desc.body_part ~= 1 then --no need to sync alignments for non-full body actions, causes teleporting for a frame anyway
+		action_desc.align_sync = nil
+	end
+
+	init_original(self, action_desc, common_data)
+end
