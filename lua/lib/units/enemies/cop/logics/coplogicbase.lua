@@ -160,15 +160,6 @@ function CopLogicBase._set_attention_obj(data, new_att_obj, new_reaction)
 				end
 			end
 		end
-
-		if data.char_tweak.weapon[data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage].use_laser and not data.weapon_laser_on then
-			data.unit:inventory():equipped_unit():base():set_laser_enabled(true)
-
-			data.weapon_laser_on = true
-
-			managers.enemy:_destroy_unit_gfx_lod_data(data.key)
-			managers.network:session():send_to_peers_synched("sync_unit_event_id_16", data.unit, "brain", HuskCopBrain._NET_EVENTS.weapon_laser_on)
-		end
 	elseif old_att_obj and old_att_obj.criminal_record then
 		managers.groupai:state():on_enemy_disengaging(data.unit, old_att_obj.u_key)
 	end
@@ -1183,6 +1174,8 @@ function CopLogicBase.on_detected_attention_obj_modified(data, modified_u_key)
 				attention_info.identified = false
 				attention_info.notice_progress = attention_info.uncover_progress or 0
 				attention_info.verified = nil
+			else
+				attention_info.notice_progress = 0
 			end
 		end
 
@@ -1210,7 +1203,7 @@ function CopLogicBase.on_detected_attention_obj_modified(data, modified_u_key)
 			end
 		end
 
-		if my_data.arrest_targets then
+		if my_data and my_data.arrest_targets then
 			my_data.arrest_targets[modified_u_key] = nil
 		end
 	end
@@ -1229,9 +1222,6 @@ function CopLogicBase.on_detected_attention_obj_modified(data, modified_u_key)
 end
 
 function CopLogicBase.is_obstructed(data, objective, strictness, attention)
-	local my_data = data.internal_data
-	attention = attention or data.attention_obj
-
 	if not objective or objective.is_default then
 		return true, false
 	elseif objective.in_place or not objective.nav_seg then
@@ -1240,14 +1230,17 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 		end
 	end
 
-	if objective.interrupt_suppression and data.is_suppressed then
+	if data.unit:character_damage():dead() then
 		return true, true
 	end
-	
-	local health_ratio = data.unit:character_damage():health_ratio()
-	local is_dead = data.unit:character_damage():dead() or health_ratio <= 0
 
-	if is_dead then
+	local health_ratio = data.unit:character_damage():health_ratio()
+
+	if health_ratio <= 0 then
+		return true, true
+	end
+
+	if objective.interrupt_suppression and data.is_suppressed then
 		return true, true
 	end
 
@@ -1270,6 +1263,8 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 	end
 
 	if objective.interrupt_dis then
+		attention = attention or data.attention_obj
+
 		if attention and attention.reaction then
 			local reaction_to_check = nil
 
@@ -1837,15 +1832,6 @@ function CopLogicBase.queue_task(internal_data, id, func, data, exec_t, asap)
 end
 
 function CopLogicBase.death_clbk(data, damage_info)
-	if data.weapon_laser_on then
-		if data.unit:inventory():equipped_unit() then
-			data.unit:inventory():equipped_unit():base():set_laser_enabled(false)
-		end
-
-		data.weapon_laser_on = nil
-		managers.network:session():send_to_peers_synched("sync_unit_event_id_16", data.unit, "brain", HuskCopBrain._NET_EVENTS.weapon_laser_off)
-	end
-	
 	if data.objective and data.objective_failed_clbk then
 		data.objective_failed_clbk(data.unit, data.objective)
 	end
