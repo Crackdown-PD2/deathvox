@@ -79,10 +79,21 @@ function CopLogicIdle._turn_by_spin(data, my_data, spin)
 		"bolivian_indoors",
 		"medic",
 		"taser",
-		"shield",
-		"spooc",
-		"spooc_heavy",
-		"shadow_spooc"
+		"deathvox_guard",
+		"deathvox_heavyar",
+		"deathvox_heavyshot",
+		"deathvox_lightar",
+		"deathvox_lightshot",
+		"deathvox_medic",
+		"deathvox_shield",
+		"deathvox_taser",
+		"deathvox_cloaker",
+		"deathvox_sniper_assault",
+		"deathvox_greendozer",
+		"deathvox_blackdozer",
+		"deathvox_lmgdozer",
+		"deathvox_medicdozer",
+		"deathvox_grenadier"
 	}
 	local is_mook = nil
 	for _, name in ipairs(mook_units) do

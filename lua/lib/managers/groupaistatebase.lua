@@ -556,73 +556,76 @@ function GroupAIStateBase:smoke_and_flash_grenades()
 end
 
 function GroupAIStateBase:criminal_spotted(unit)
-	local u_key = unit:key()
-	local u_sighting = self._criminals[u_key]
+    local u_key = unit:key()
+    local u_sighting = self._criminals[u_key]
 
-	u_sighting.undetected = nil
-	u_sighting.det_t = self._t
+    u_sighting.undetected = nil
+    u_sighting.det_t = self._t
 
-	u_sighting.tracker:m_position(u_sighting.pos)
+    u_sighting.tracker:m_position(u_sighting.pos)
 
-	local seg = u_sighting.tracker:nav_segment()
-	u_sighting.seg = seg
+    local seg = u_sighting.tracker:nav_segment()
+    u_sighting.seg = seg
 
-	local prev_area = u_sighting.area
-	local area = nil
+    local prev_area = u_sighting.area
+    local area = nil
 
-	if prev_area and prev_area.nav_segs[seg] then
-		area = prev_area
-	else
-		area = self:get_area_from_nav_seg_id(seg)
-	end
+    if prev_area and prev_area.nav_segs[seg] then
+        area = prev_area
+    else
+        area = self:get_area_from_nav_seg_id(seg)
+    end
 
-	if prev_area ~= area then
-		u_sighting.area = area
+    if prev_area ~= area then
+        u_sighting.area = area
 
-		if prev_area then
-			prev_area.criminal.units[u_key] = nil
-		end
+        if prev_area then
+            prev_area.criminal.units[u_key] = nil
+        end
 
-		area.criminal.units[u_key] = u_sighting
-	end
+        area.criminal.units[u_key] = u_sighting
+    end
 
-	if area.is_safe then
-		area.is_safe = nil
+    if area.is_safe then
+        area.is_safe = nil
 
-		self:_on_area_safety_status(area, {
-			reason = "criminal",
-			record = u_sighting
-		})
-	end
+        self:_on_area_safety_status(area, {
+            reason = "criminal",
+            record = u_sighting
+        })
+    end
 end
 
 function GroupAIStateBase:on_criminal_nav_seg_change(unit, nav_seg_id)
-	local u_key = unit:key()
-	local u_sighting = self._criminals[u_key]
+    local u_key = unit:key()
+    local u_sighting = self._criminals[u_key]
 
-	if not u_sighting then
-		return
-	end
+    if not u_sighting then
+        return
+    end
 
-	local seg = nav_seg_id
-	local prev_area = u_sighting.area
-	local area = nil
+    local seg = nav_seg_id
 
-	if prev_area and prev_area.nav_segs[seg] then
-		area = prev_area
-	else
-		area = self:get_area_from_nav_seg_id(seg)
-	end
+    u_sighting.seg = seg
 
-	if prev_area ~= area then
-		u_sighting.area = area
+    local prev_area = u_sighting.area
+    local area = nil
 
-		if prev_area then
-			prev_area.criminal.units[u_key] = nil
-		end
+    if prev_area and prev_area.nav_segs[seg] then
+        area = prev_area
+    else
+        area = self:get_area_from_nav_seg_id(seg)
+    end
 
-		area.criminal.units[u_key] = u_sighting
-	end
+    if prev_area ~= area then
+        u_sighting.area = area
+
+        if prev_area then
+            prev_area.criminal.units[u_key] = nil
+        end
+
+        area.criminal.units[u_key] = u_sighting
+    end
 end
 
 function GroupAIStateBase:on_criminal_suspicion_progress(u_suspect, u_observer, status, client_id)
