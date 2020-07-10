@@ -555,20 +555,36 @@ function CopMovement:_upd_actions(t)
 		end
 	end
 
-	if not a_actions[1] and not a_actions[2] then
+	if not a_actions[1] then
 		if not self._queued_actions or not next(self._queued_actions) then
-			if not self:chk_action_forbidden("action") then
-				if a_actions[3] then
+			if not a_actions[2] then
+				if not a_actions[3] or a_actions[3]:type() == "idle" then
+					if not self:chk_action_forbidden("action") then
+						self:action_request({
+							body_part = 1,
+							type = "idle"
+						})
+					end
+				elseif not self:chk_action_forbidden("action") then
 					self:action_request({
 						body_part = 2,
 						type = "idle"
 					})
-				else
-					self:action_request({
-						body_part = 1,
-						type = "idle"
-					})
 				end
+			elseif a_actions[2]:type() == "idle" then
+				if not a_actions[3] or a_actions[3]:type() == "idle" then
+					if not self:chk_action_forbidden("action") then
+						self:action_request({
+							body_part = 1,
+							type = "idle"
+						})
+					end
+				end
+			elseif not a_actions[3] and not self:chk_action_forbidden("action") then --or a_actions[3]:type() == "shoot" and self:stance_name() ~= "cbt" then
+				self:action_request({
+					body_part = 3,
+					type = "idle"
+				})
 			end
 		end
 	end
@@ -850,6 +866,8 @@ function CopMovement:sync_action_spooc_stop(pos, nav_index, action_id)
 	local spooc_action, is_queued = self:_get_latest_spooc_action(action_id)
 
 	if is_queued then
+		spooc_action.host_expired = true
+
 		if spooc_action.host_stop_pos_inserted then
 			nav_index = nav_index + spooc_action.host_stop_pos_inserted
 		end
@@ -866,27 +884,11 @@ function CopMovement:sync_action_spooc_stop(pos, nav_index, action_id)
 			spooc_action.nr_expected_nav_points = nav_index - #nav_path + 1
 		else
 			table_insert(nav_path, pos)
-		end
 
-		spooc_action.path_index = math_max(1, math_min(spooc_action.path_index, #nav_path - 1))
-
-		if not spooc_action.flying_strike and spooc_action.blocks then
-			spooc_action.blocks.idle = nil
+			spooc_action.path_index = math_max(1, math_min(spooc_action.path_index, #nav_path - 1))
 		end
 	elseif spooc_action then
-		if not spooc_action:is_flying_strike() and spooc_action._blocks then
-			spooc_action._blocks.idle = nil
-		end
-
-		if Network:is_server() then
-			self:action_request({
-				sync = true,
-				body_part = 1,
-				type = "idle"
-			})
-		else
-			spooc_action:sync_stop(pos, nav_index)
-		end
+		spooc_action:sync_stop(pos, nav_index)
 	end
 end
 
@@ -904,6 +906,39 @@ function CopMovement:sync_action_spooc_strike(pos, action_id)
 		spooc_action.strike = true
 	elseif spooc_action then
 		spooc_action:sync_strike(pos)
+	end
+end
+
+function CopMovement:_get_latest_act_action()
+	if self._queued_actions then
+		for i = #self._queued_actions, 1, -1 do
+			if self._queued_actions[i].type == "act" and not self._queued_actions[i].host_expired then
+				return i, self._queued_actions[i], true
+			end
+		end
+	end
+
+	for body_part, action in ipairs(self._active_actions) do
+		if action and action:type() == "act" then
+			return body_part, self._active_actions[body_part]
+		end
+	end
+end
+
+function CopMovement:sync_action_act_end()
+	local body_part, act_action, queued = self:_get_latest_act_action()
+
+	if queued then
+		act_action.host_expired = true
+	elseif act_action then
+		self._active_actions[body_part] = false
+
+		if act_action.on_exit then
+			act_action:on_exit()
+		end
+
+		self:_chk_start_queued_action()
+		self._ext_brain:action_complete_clbk(act_action)
 	end
 end
 
