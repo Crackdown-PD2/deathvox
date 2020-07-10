@@ -172,6 +172,21 @@ function HuskPlayerMovement:_update_real_pos(new_pos, new_pose_code)
 	local m_com = self._m_com
 	mvec3_lerp(m_com, newest_pos, detect_pos, 0.5)
 
+	if self._nav_tracker then
+		self._nav_tracker:move(new_pos)
+
+		local nav_seg_id = self._nav_tracker:nav_segment()
+
+		if self._standing_nav_seg_id ~= nav_seg_id then
+			self._standing_nav_seg_id = nav_seg_id
+			local metadata = managers.navigation:get_nav_seg_metadata(nav_seg_id)
+
+			self._unit:base():set_suspicion_multiplier("area", metadata.suspicion_mul)
+			self._unit:base():set_detection_multiplier("area", metadata.detection_mul and 1 / metadata.detection_mul or nil)
+			managers.groupai:state():on_criminal_nav_seg_change(self._unit, nav_seg_id)
+		end
+	end
+
 	if draw_sync_player_newest_pos then
 		local m_brush = Draw:brush(Color.blue:with_alpha(0.5), 0.1)
 		m_brush:sphere(newest_pos, 15)
@@ -181,6 +196,11 @@ function HuskPlayerMovement:_update_real_pos(new_pos, new_pose_code)
 		local head_brush = Draw:brush(Color.yellow:with_alpha(0.5), 0.1)
 		head_brush:sphere(detect_pos, 15)
 	end
+end
+
+function HuskPlayerMovement:set_position(pos)
+	mvec3_set(self._m_pos, pos)
+	self._unit:set_position(pos)
 end
 
 function HuskPlayerMovement:sync_action_change_pose(pose_code, pos)
