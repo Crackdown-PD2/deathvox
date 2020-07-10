@@ -309,7 +309,7 @@ function CopActionTase:update(t)
 				local queued_actions = self._common_data.queued_actions
 
 				if not queued_actions or not queued_actions[1] and not queued_actions[2] then
-					if not self._ext_movement:chk_action_forbidden("turn") then
+					if not self._ext_movement:chk_action_forbidden("walk") then
 						local fwd_dot_flat = mvec3_dot(tar_vec_flat, fwd)
 
 						if fwd_dot_flat < 0.96 then
