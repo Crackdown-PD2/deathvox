@@ -320,19 +320,13 @@ end
 
 function ActionSpooc:on_exit()
 	if self._unit:character_damage():dead() then
-		if self._enabled_detect_sound_and_lights then
-			local detect_stop_sound = self:get_sound_event("detect_stop")
-
-			if detect_stop_sound then
-				self._unit:sound():play(detect_stop_sound)
-			end
-		end
+		self:_check_sounds_and_lights_state(false, true)
 	else
-		if self._enabled_detect_sound_and_lights and self._common_data.char_tweak.spawn_sound_event then
-			self._unit:sound():play(self._common_data.char_tweak.spawn_sound_event)
-		end
+		self:_check_sounds_and_lights_state(false)
 
-		if self._is_local and self._taunt_at_beating_played and not self._unit:sound():speaking(TimerManager:game():time()) then
+		--no need to check for self._is_local as self._taunt_at_beating_played is defined locally in the first place
+		--also making sure the action expired properly to avoid syncing audio that gets instantly interrupted anyway
+		if self._expired and self._taunt_at_beating_played and not self._unit:sound():speaking(TimerManager:game():time()) then
 			self._unit:sound():say(self._taunt_after_assault, true, true)
 		end
 
@@ -344,10 +338,6 @@ function ActionSpooc:on_exit()
 
 			self._ext_movement:set_position(new_pos)
 		end
-	end
-
-	if self._enabled_detect_sound_and_lights and self._unit:damage() and self._unit:damage():has_sequence("kill_spook_lights") then
-		self._unit:damage():run_sequence_simple("kill_spook_lights")
 	end
 
 	if self._root_blend_disabled then
@@ -463,19 +453,7 @@ function ActionSpooc:_chk_target_invalid()
 end
 
 function ActionSpooc:_start_sprint()
-	if not self._enabled_detect_sound_and_lights then
-		local detect_sound = self:get_sound_event("detect")
-
-		if detect_sound then
-			self._unit:sound():play(detect_sound)
-		end
-
-		if self._unit:damage() and self._unit:damage():has_sequence("turn_on_spook_lights") then
-			self._unit:damage():run_sequence_simple("turn_on_spook_lights")
-		end
-
-		self._enabled_detect_sound_and_lights = true
-	end
+	self:_check_sounds_and_lights_state(true)
 
 	CopActionWalk._chk_start_anim(self, self._nav_path[self._nav_index + 1])
 
@@ -1711,20 +1689,7 @@ function ActionSpooc:_upd_flying_strike_first_frame(t)
 		return
 	end
 
-	if not self._enabled_detect_sound_and_lights then
-		local detect_sound = self:get_sound_event("detect")
-
-		if detect_sound then
-			self._unit:sound():play(detect_sound)
-		end
-
-		if self._unit:damage() and self._unit:damage():has_sequence("turn_on_spook_lights") then
-			self._unit:damage():run_sequence_simple("turn_on_spook_lights")
-		end
-
-		self._enabled_detect_sound_and_lights = true
-	end
-
+	self:_check_sounds_and_lights_state(true)
 	self._ext_movement:spawn_wanted_items()
 
 	local anim_travel_dis_xy = 470
@@ -1892,6 +1857,40 @@ function ActionSpooc:get_sound_event(sound)
 	end
 
 	return event
+end
+
+function ActionSpooc:_check_sounds_and_lights_state(state, is_dead)
+	if state then
+		if not self._chk_detect_sound_and_lights then
+			local detect_stop_sound = self:get_sound_event("detect")
+
+			if detect_stop_sound then
+				self._unit:sound():play(detect_stop_sound)
+			end
+
+			--lights are permanent here, leaving this in case that gets changed later
+			--[[if self._unit:damage() and self._unit:damage():has_sequence("turn_on_spook_lights") then
+				self._unit:damage():run_sequence_simple("turn_on_spook_lights")
+			end]]
+
+			self._chk_detect_sound_and_lights = true
+		end
+	elseif self._chk_detect_sound_and_lights then
+		if is_dead then
+			local detect_stop_sound = self:get_sound_event("detect_stop")
+
+			if detect_stop_sound then
+				self._unit:sound():play(detect_stop_sound)
+			end
+		elseif self._common_data.char_tweak.spawn_sound_event then
+			self._unit:sound():play(self._common_data.char_tweak.spawn_sound_event)
+		end
+
+		--lights are permanent here, leaving this in case that gets changed later
+		--[[if self._unit:damage() and self._unit:damage():has_sequence("kill_spook_lights") then
+			self._unit:damage():run_sequence_simple("kill_spook_lights")
+		end]]
+	end
 end
 
 function ActionSpooc:_get_current_max_walk_speed(move_dir)
