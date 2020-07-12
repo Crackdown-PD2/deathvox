@@ -36,5 +36,5 @@ function CopActionAct:init(action_desc, common_data)
 		action_desc.align_sync = nil
 	end
 
-	init_original(self, action_desc, common_data)
+	return init_original(self, action_desc, common_data)
 end
