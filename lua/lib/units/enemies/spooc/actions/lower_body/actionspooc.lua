@@ -326,7 +326,7 @@ function ActionSpooc:on_exit()
 
 		--no need to check for self._is_local as self._taunt_at_beating_played is defined locally in the first place
 		--also making sure the action expired properly to avoid syncing audio that gets instantly interrupted anyway
-		if self._expired and self._taunt_at_beating_played and not self._unit:sound():speaking(TimerManager:game():time()) then
+		if self._expired and self._taunt_at_beating_played and not self._unit:sound():speaking(TimerManager:game():time()) and not self:_chk_invalid_beating_unit_status() then
 			self._unit:sound():say(self._taunt_after_assault, true, true)
 		end
 
@@ -1099,29 +1099,10 @@ function ActionSpooc:_upd_striking(t)
 		self._beating_end_t = t + self._beating_time
 	end
 
-	local needs_to_expire = nil
+	local needs_to_expire = not target_unit or self:_chk_invalid_beating_unit_status(target_unit)
 
-	if not target_unit then
+	if not needs_to_expire and self._beating_end_t < t then
 		needs_to_expire = true
-	else
-		local downed = true
-		local arrested = true
-
-		if not target_unit:character_damage().is_downed or not target_unit:character_damage():is_downed() then
-			downed = false
-		end
-
-		if not target_unit:character_damage().arrested or not target_unit:character_damage():arrested() then
-			arrested = false
-		end
-
-		if not downed and not arrested then
-			needs_to_expire = true
-		end
-
-		if self._beating_end_t and self._beating_end_t < t then
-			needs_to_expire = true
-		end
 	end
 
 	if needs_to_expire then
@@ -1136,6 +1117,29 @@ function ActionSpooc:_upd_striking(t)
 		if self._taunt_during_assault then
 			self._unit:sound():say(self._taunt_during_assault, true, true)
 		end
+	end
+end
+
+function ActionSpooc:_chk_invalid_beating_unit_status(unit)
+	local target_unit = unit or alive(self._strike_unit) and self._strike_unit or alive(self._target_unit) and self._target_unit
+
+	if not target_unit then
+		return true
+	end
+
+	local downed = true
+	local arrested = true
+
+	if not target_unit:character_damage().is_downed or not target_unit:character_damage():is_downed() then
+		downed = false
+	end
+
+	if not target_unit:character_damage().arrested or not target_unit:character_damage():arrested() then
+		arrested = false
+	end
+
+	if not downed and not arrested then
+		return true
 	end
 end
 
@@ -1690,7 +1694,9 @@ function ActionSpooc:_upd_flying_strike_first_frame(t)
 	end
 
 	self:_check_sounds_and_lights_state(true)
-	self._ext_movement:spawn_wanted_items()
+
+	--disabling as the baton looks bad most of the time for flying kicks (especially if they're sped up when at close range)
+	--self._ext_movement:spawn_wanted_items()
 
 	local anim_travel_dis_xy = 470
 	self._flying_strike_data = {
