@@ -803,8 +803,6 @@ function CopDamage:damage_bullet(attack_data)
 end
 
 function CopDamage:die(attack_data)
-	local variant = attack_data.variant
-
 	self:_check_friend_4(attack_data)
 	CopDamage.MAD_3_ACHIEVEMENT(attack_data)
 	self:_remove_debug_gui()
@@ -831,33 +829,35 @@ function CopDamage:die(attack_data)
 		self._unit:movement():remove_giveaway()
 	end
 
-	variant = variant or "bullet"
+	attack_data.variant = attack_data.variant or "bullet"
 	self._health = 0
 	self._health_ratio = 0
 	self._dead = true
 
 	self:set_mover_collision_state(false)
 
-	if self._death_sequence then
-		if self._unit:damage() and self._unit:damage():has_sequence(self._death_sequence) then
-			self._unit:damage():run_sequence_simple(self._death_sequence)
-		end
+	if self._death_sequence and self._unit:damage() and self._unit:damage():has_sequence(self._death_sequence) then
+		self._unit:damage():run_sequence_simple(self._death_sequence)
 	end
 
 	if self._unit:base():has_tag("spooc") then
 		if self._char_tweak.die_sound_event then
-			self._unit:sound():play(self._char_tweak.die_sound_event, nil, nil) --ensure that spoocs stop their looping presence sound
+			self._unit:sound():play(self._char_tweak.die_sound_event) --ensure that spoocs stop their looping presence sound
 		end
 
 		--if not self._unit:movement():cool() then --optional, to reinforce the idea of silent kills if desired
-			self._unit:sound():say("x02a_any_3p", nil, nil) --death voiceline, can't use char_tweak().die_sound_event since spoocs have the presence loop stop there (this ensures both are played, unlike in vanilla)
+			self._unit:sound():say("x02a_any_3p") --death voiceline, can't use char_tweak().die_sound_event since spoocs have the presence loop stop there (this ensures both are played, unlike in vanilla)
 		--end
+
+		if self._unit:damage() and self._unit:damage():has_sequence("kill_spook_lights") then
+			self._unit:damage():run_sequence_simple("kill_spook_lights")
+		end
 	else
 		--if not self._unit:movement():cool() then
 		if self._char_tweak.die_sound_event then --death voiceline determined through char_tweak().die_sound_event, otherwise use default
-			self._unit:sound():say(self._char_tweak.die_sound_event, nil, nil)
+			self._unit:sound():say(self._char_tweak.die_sound_event)
 		else
-			self._unit:sound():say("x02a_any_3p", nil, nil)
+			self._unit:sound():say("x02a_any_3p")
 		end
 		--end
 	end
@@ -896,14 +896,15 @@ function CopDamage:die(attack_data)
 	self:_on_death()
 	managers.mutators:notify(Message.OnCopDamageDeath, self, attack_data)
 
+	--will add back again properly in coplogic files
 	--report enemy deaths when not in stealth and when instantly killing enemies without alerting them
-	if not managers.groupai:state():whisper_mode() and not CopDamage.is_civilian(self._unit:base()._tweak_table) then
+	--[[if not managers.groupai:state():whisper_mode() and not CopDamage.is_civilian(self._unit:base()._tweak_table) then
 		if attack_data.attacker_unit and alive(attack_data.attacker_unit) then
 			if managers.groupai:state():all_criminals()[attack_data.attacker_unit:key()] then
 				managers.groupai:state():report_aggression(attack_data.attacker_unit)
 			end
 		end
-	end
+	end]]
 end
 
 function CopDamage:damage_tase(attack_data)
