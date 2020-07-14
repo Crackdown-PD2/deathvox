@@ -294,10 +294,37 @@ function EnemyManager:on_enemy_died(dead_unit, damage_info)
 
 	if self:is_corpse_disposal_enabled() then
 		Network:detach_unit(dead_unit)
+	else
+		self:_store_for_disposal_detach(u_key, dead_unit)
 	end
 
 	managers.hud:remove_waypoint("wp_hostage_trade" .. tostring(dead_unit:key()))
 	managers.modifiers:run_func("OnEnemyDied", dead_unit, damage_info)
+end
+
+function EnemyManager:on_enemy_destroyed(enemy)
+	local u_key = enemy:key()
+
+	if self._units_to_detach then
+		self._units_to_detach[u_key] = nil
+	end
+
+	local enemy_data = self._enemy_data
+
+	if enemy_data.unit_data[u_key] then
+		self:on_enemy_unregistered(enemy)
+
+		enemy_data.unit_data[u_key] = nil
+
+		self:_destroy_unit_gfx_lod_data(u_key)
+	elseif enemy_data.corpses[u_key] then
+		enemy_data.nr_corpses = enemy_data.nr_corpses - 1
+		enemy_data.corpses[u_key] = nil
+
+		if enemy_data.nr_corpses == 0 and self:is_corpse_disposal_enabled() then
+			self:unqueue_task("EnemyManager._upd_corpse_disposal")
+		end
+	end
 end
 
 function EnemyManager:on_civilian_died(dead_unit, damage_info)
@@ -336,28 +363,74 @@ function EnemyManager:on_civilian_died(dead_unit, damage_info)
 
 	if self:is_corpse_disposal_enabled() then
 		Network:detach_unit(dead_unit)
+	else
+		self:_store_for_disposal_detach(u_key, dead_unit)
 	end
 
 	managers.hud:remove_waypoint("wp_hostage_trade" .. tostring(dead_unit:key()))
 end
 
-function EnemyManager:on_civilian_destroyed(enemy)
-	local u_key = enemy:key()
-	local enemy_data = self._enemy_data
+function EnemyManager:on_civilian_destroyed(civilian)
+	local u_key = civilian:key()
+
+	if self._units_to_detach then
+		self._units_to_detach[u_key] = nil
+	end
 
 	if self._civilian_data.unit_data[u_key] then
-		managers.groupai:state():on_civilian_unregistered(enemy)
+		managers.groupai:state():on_civilian_unregistered(civilian)
 
 		self._civilian_data.unit_data[u_key] = nil
 
 		self:_destroy_unit_gfx_lod_data(u_key)
-	elseif enemy_data.corpses[u_key] then
-		enemy_data.nr_corpses = enemy_data.nr_corpses - 1
-		enemy_data.corpses[u_key] = nil
+	else
+		local enemy_data = self._enemy_data
 
-		if enemy_data.nr_corpses == 0 and self:is_corpse_disposal_enabled() then
-			self:unqueue_task("EnemyManager._upd_corpse_disposal")
+		if enemy_data.corpses[u_key] then
+			enemy_data.nr_corpses = enemy_data.nr_corpses - 1
+			enemy_data.corpses[u_key] = nil
+
+			if enemy_data.nr_corpses == 0 and self:is_corpse_disposal_enabled() then
+				self:unqueue_task("EnemyManager._upd_corpse_disposal")
+			end
 		end
+	end
+end
+
+function EnemyManager:_store_for_disposal_detach(u_key, unit)
+	self._units_to_detach = self._units_to_detach or {}
+
+	self._units_to_detach[u_key] = unit
+end
+
+function EnemyManager:_chk_detach_stored_units()
+	if self._units_to_detach then
+		for u_key, unit in pairs(self._units_to_detach) do
+			if alive(unit) then
+				Network:detach_unit(unit)
+			end
+
+			self._units_to_detach[u_key] = nil
+		end
+
+		self._units_to_detach = nil
+	end
+end
+
+function EnemyManager:set_corpse_disposal_enabled(state)
+	local was_enabled = self:is_corpse_disposal_enabled()
+	local state_modifier = state and 1 or 0
+	self._corpse_disposal_enabled = self._corpse_disposal_enabled + state_modifier
+	local is_now_enabled = self:is_corpse_disposal_enabled()
+
+	if was_enabled and not is_now_enabled then
+		self:unqueue_task("EnemyManager._upd_corpse_disposal")
+		self:unqueue_task("EnemyManager._upd_shield_disposal")
+	elseif not was_enabled and is_now_enabled and self._enemy_data.nr_corpses > 0 then
+		self:_chk_detach_stored_units()
+
+		self:queue_task("EnemyManager._upd_corpse_disposal", EnemyManager._upd_corpse_disposal, self, self._t + self._corpse_disposal_upd_interval)
+		self:queue_task("EnemyManager._upd_shield_disposal", EnemyManager._upd_shield_disposal, self, self._t + self._shield_disposal_upd_interval)
 	end
 end
 
