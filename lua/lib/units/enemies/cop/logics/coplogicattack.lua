@@ -676,8 +676,6 @@ function CopLogicAttack._chk_request_action_walk_to_cover(data, my_data)
 		
 		if data.unit:movement():cool() then
 			haste = "walk"
-		elseif Global.game_settings.one_down then
-			haste = "run"
 		elseif data.attention_obj and data.attention_obj.dis > 10000 or data.team and data.team.id == tweak_data.levels:get_default_team_ID("player") or data.is_converted or data.unit:in_slot(16) or data.unit:in_slot(managers.slot:get_mask("criminals")) then
 			haste = "run"
 		elseif data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis > 800 + enemy_seen_range_bonus and not data.unit:movement():cool() and not managers.groupai:state():whisper_mode() then
@@ -818,8 +816,6 @@ function CopLogicAttack._chk_request_action_walk_to_cover_shoot_pos(data, my_dat
 		
 		if data.unit:movement():cool() then
 			haste = "walk"
-		elseif Global.game_settings.one_down then
-			haste = "run"
 		elseif data.team and data.team.id == tweak_data.levels:get_default_team_ID("player") or data.is_converted or data.unit:in_slot(16) or data.unit:in_slot(managers.slot:get_mask("criminals")) or data.attention_obj and data.attention_obj.dis > 10000 then 
 			haste = "run"
 		elseif data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.dis > 800 + enemy_seen_range_bonus and not data.unit:movement():cool() and not managers.groupai:state():whisper_mode() then
@@ -1267,26 +1263,10 @@ function CopLogicAttack._upd_combat_movement(data, ignore_walks)
 	local enemy_visible = focus_enemy and focus_enemy.verified
 	local enemy_visible_soft = nil
 	
-	if Global.game_settings.one_down then
-		if data.tactics and data.tactics.ranged_fire or data.tactics and data.tactics.elite_ranged_fire then
-			enemy_visible_soft = focus_enemy.verified_t and t - focus_enemy.verified_t < math_random(0.3, 1.05)
-		else
-			enemy_visible_soft = focus_enemy and focus_enemy.verified
-		end
+	if data.tactics and data.tactics.ranged_fire or data.tactics and data.tactics.elite_ranged_fire then
+		enemy_visible_soft = focus_enemy.verified_t and t - focus_enemy.verified_t < math_random(0.3, 1.05)
 	else
-		if diff_index <= 5 then
-			if data.tactics and data.tactics.ranged_fire or data.tactics and data.tactics.elite_ranged_fire then
-				enemy_visible_soft = focus_enemy.verified_t and t - focus_enemy.verified_t < math_random(3.1, 3.8)
-			else
-				enemy_visible_soft = focus_enemy.verified_t and t - focus_enemy.verified_t < math_random(1.05, 1.4)
-			end
-		else
-			if data.tactics and data.tactics.ranged_fire or data.tactics and data.tactics.elite_ranged_fire then
-				enemy_visible_soft = focus_enemy.verified_t and t - focus_enemy.verified_t < math_random(2, 3)
-			else
-				enemy_visible_soft = focus_enemy.verified_t and t - focus_enemy.verified_t < math_random(0.35, 1.05)
-			end
-		end
+		enemy_visible_soft = focus_enemy and focus_enemy.verified
 	end
 	
 	local enemy_visible_mild_soft = focus_enemy and focus_enemy.verified_t and t - focus_enemy.verified_t < 2
@@ -1329,30 +1309,8 @@ function CopLogicAttack._upd_combat_movement(data, ignore_walks)
 	if my_data.stay_out_time and not my_data.at_cover_shoot_pos or my_data.stay_out_time and action_taken then
 		my_data.stay_out_time = nil
 	elseif my_data.attitude == "engage" and not my_data.stay_out_time and my_data.at_cover_shoot_pos and not action_taken and not want_to_take_cover then
-		if Global.game_settings.one_down or managers.skirmish.is_skirmish() or data.tactics and data.tactics.hitnrun or data.tactics and data.tactics.murder or data.unit:base():has_tag("takedown") or Global.game_settings.aggroAI then
-			my_data.stay_out_time = t - 1
-			--log("interesting")
-		else
-			if diff_index <= 5 then
-				if data.tactics and data.tactics.ranged_fire or data.tactics and data.tactics.elite_ranged_fire then
-					my_data.stay_out_time = t + 1 + ranged_fire_sot_bonus
-				else
-					my_data.stay_out_time = t + 1
-				end
-			elseif diff_index == 6 then
-				if data.tactics and data.tactics.ranged_fire or data.tactics and data.tactics.elite_ranged_fire then
-					my_data.stay_out_time = t + 0.5 + ranged_fire_sot_bonus
-				else
-					my_data.stay_out_time = t + 0.5
-				end
-			else
-				if data.tactics and data.tactics.ranged_fire or data.tactics and data.tactics.elite_ranged_fire then
-					my_data.stay_out_time = t + 0.5
-				else
-					my_data.stay_out_time = t - 1
-				end
-			end
-		end
+		my_data.stay_out_time = t - 1
+		--log("interesting")
 	end
 	
 	if not ignore_walks then
@@ -2051,7 +2009,7 @@ function CopLogicAttack.is_available_for_assignment(data, new_objective)
 		return
 	end
 
-	if data.is_suppressed and not Global.game_settings.one_down and not managers.skirmish:is_skirmish() then
+	if data.is_suppressed then
 		return
 	end
 

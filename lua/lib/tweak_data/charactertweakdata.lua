@@ -820,7 +820,7 @@ function CharacterTweakData:_presets(tweak_data)
 		}
 	}
 	
---Begin new hurt presets.
+	--Begin new hurt presets.
 	presets.hurt_severities.only_light_hurt_no_stuns = {
         	tase = false,
         	bullet = {
@@ -1384,7 +1384,7 @@ function CharacterTweakData:_presets(tweak_data)
 		melee_dmg = 20,
 		tase_distance = 1500,
 		aim_delay_tase = {
-			1,
+			0.7,
 			1
 		},
 		tase_sphere_cast_radius = 10,
@@ -3252,6 +3252,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_fbi_veteran.chatter = presets.enemy_chatter.swat
 	--self.deathvox_fbi_veteran.factory_weapon_id = {"wpn_deathvox_heavy_ar"}
  	table.insert(self._enemy_list, "deathvox_fbi_veteran")
+	
+	self.fbi = deep_clone(self.deathvox_fbi_veteran)
 	
 end
 

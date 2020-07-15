@@ -69,5 +69,5 @@
   "ene_deathvox_cop_pistol" : "Cop",
   "ene_deathvox_cop_medic" : "Medic",
   "ene_deathvox_cop_heavyswatshot" : "Heavy SWAT",
-  "ene_deathvox_cop_heavyswat" : "Heavy SWAT",  
+  "ene_deathvox_cop_heavyswat" : "Heavy SWAT"
 }
