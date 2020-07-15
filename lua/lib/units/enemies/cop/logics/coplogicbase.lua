@@ -464,35 +464,35 @@ function CopLogicBase._update_haste(data, my_data)
 
 			if data.tactics and data.tactics.flank and haste == "walk" and verified_chk and REACT_COMBAT <= data.attention_obj.reaction and CopLogicTravel._chk_close_to_criminal(data, my_data) then
 				stand_chance = 0.25
-			elseif my_data.moving_to_cover and can_crouch then
-				stand_chance = 0.5
+			elseif data.is_suppressed then
+				stand_chance = 0.25
 			else
-				stand_chance = 1
-				pose = "stand"
-				end_pose = "stand"
+				stand_chance = 0.75
 			end
 		end
+	else
+		stand_chance = 1
+		pose = "stand"
+		end_pose = "stand"
 	end
 
 	--randomize enemy crouching to make enemies feel less easy to aim at, the fact they're always crouching all over the place always bugged me, plus, they shouldn't need to crouch so often when you're at long distances from them
 
 	if not data.unit:movement():cool() and not managers.groupai:state():whisper_mode() then
-		if not data.unit:movement():cool() and not managers.groupai:state():whisper_mode() then
-			if data.char_tweak.allowed_poses and data.char_tweak.allowed_poses.crouch then
-				end_pose = "crouch"
-				pose = "crouch"
-				should_crouch = true
-			elseif data.char_tweak.allowed_poses and data.char_tweak.allowed_poses.stand then
-				end_pose = "stand"
-				pose = "stand"
-			elseif stand_chance ~= 1 and crouch_roll > stand_chance and can_crouch then
-				end_pose = "crouch"
-				pose = "crouch"
-				should_crouch = true
-			else
-				end_pose = "stand"
-				pose = "stand"
-			end
+		if data.char_tweak.allowed_poses and data.char_tweak.allowed_poses.crouch then
+			end_pose = "crouch"
+			pose = "crouch"
+			should_crouch = true
+		elseif data.char_tweak.allowed_poses and data.char_tweak.allowed_poses.stand then
+			end_pose = "stand"
+			pose = "stand"
+		elseif stand_chance ~= 1 and crouch_roll > stand_chance and can_crouch then
+			end_pose = "crouch"
+			pose = "crouch"
+			should_crouch = true
+		else
+			end_pose = "stand"
+			pose = "stand"
 		end
 	end
 

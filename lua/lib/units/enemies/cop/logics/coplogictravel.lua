@@ -479,29 +479,58 @@ function CopLogicTravel._upd_enemy_detection(data)
 		
 		CopLogicBase._set_attention_obj(data, new_attention, new_reaction)
 		
+		if new_attention then
+			if old_att_obj and old_att_obj.u_key ~= new_attention.u_key then
+				CopLogicAttack._cancel_charge(data, my_data)
+
+				if not data.unit:movement():chk_action_forbidden("walk") then
+					ShieldLogicAttack._cancel_optimal_attempt(data, my_data)
+				end
+			end
+		elseif old_att_obj and not data.unit:movement():chk_action_forbidden("walk") then
+			ShieldLogicAttack._cancel_optimal_attempt(data, my_data)
+		end
+		
 		if new_attention and new_reaction then 
-			if AIAttentionObject.REACT_COMBAT <= new_reaction and new_attention.nav_tracker then
+			if data.important and AIAttentionObject.REACT_COMBAT <= new_reaction and new_attention.nav_tracker and not my_data.walking_to_optimal_pos then
 				if alive(data.unit:inventory() and data.unit:inventory()._shield_unit) then
 					my_data.optimal_pos = CopLogicAttack._find_flank_pos(data, my_data, new_attention.nav_tracker)
+				elseif data.is_suppressed and new_attention.verified then
+					local retreat_pos = CopLogicAttack._find_retreat_position(data.m_pos, new_attention.m_pos, new_attention.m_head_pos, new_attention.nav_tracker, 2000, nil)
+					if retreat_pos then
+						my_data.optimal_pos = retreat_pos
+						--log("woo!")
+					end
+				elseif data.is_suppressed and not new_attention.verified then
+					local threat_pos = nil
+						
+					if not my_data.cover_test_step then
+						my_data.cover_test_step = 1
+					end
+						
+					if new_attention.last_verified_pos then
+						threat_pos = new_attention.last_verified_pos
+					elseif new_attention.is_person then
+						threat_pos = new_attention.m_head_pos
+					else
+						threat_pos = new_attention.m_pos
+					end
+						
+					local my_tracker = data.unit:movement():nav_tracker()
+					local shoot_from_pos = CopLogicTravel._peek_for_pos_sideways(data, my_data, my_tracker, threat_pos, nil)
+						
+					if shoot_from_pos then
+						my_data.optimal_pos = shoot_from_pos
+						--log("beeftime")
+					elseif not data.unit:movement():chk_action_forbidden("walk") then
+						ShieldLogicAttack._cancel_optimal_attempt(data, my_data)
+						my_data.cover_test_step = my_data.cover_test_step + 1
+					end
 				elseif data.tactics and data.tactics.flank then
 					my_data.optimal_pos = CopLogicAttack._find_flank_pos(data, my_data, new_attention.nav_tracker)
 				elseif data.tactics and data.tactics.charge then
 					my_data.optimal_pos = CopLogicTravel._get_pos_on_wall(new_attention.nav_tracker:field_position(), my_data.weapon_range.close, 45, nil)
 				end
-			end
-		end
-		
-		if alive(data.unit:inventory() and data.unit:inventory()._shield_unit) then
-			if new_attention then
-				if old_att_obj and old_att_obj.u_key ~= new_attention.u_key then
-					CopLogicAttack._cancel_charge(data, my_data)
-
-					if not data.unit:movement():chk_action_forbidden("walk") then
-						ShieldLogicAttack._cancel_optimal_attempt(data, my_data)
-					end
-				end
-			elseif old_att_obj and not data.unit:movement():chk_action_forbidden("walk") then
-				ShieldLogicAttack._cancel_optimal_attempt(data, my_data)
 			end
 		end
 	end
@@ -593,23 +622,90 @@ function CopLogicTravel:_reserve_pos_step_clbk(data, test_pos)
 	return true
 end
 
+function CopLogicTravel._peek_for_pos_sideways(data, my_data, from_tracker, peek_to_pos, height)
+	local unit = data.unit
+	local my_tracker = from_tracker
+	local enemy_pos = peek_to_pos
+	local my_pos = unit:movement():m_pos()
+	local back_vec = my_pos - enemy_pos
+	local height = nil
+	
+	if not height then
+		local low_ray, high_ray = CopLogicAttack._chk_covered(data, data.m_pos, enemy_pos, data.visibility_slotmask)
+					
+		if low_ray then
+			height = 80
+		else
+			height = 150
+		end
+	end
+
+	mvector3.set_z(back_vec, 0)
+	mvector3.set_length(back_vec, 75)
+
+	local back_pos = my_pos + back_vec
+	local ray_params = {
+		allow_entry = true,
+		trace = true,
+		tracker_from = my_tracker,
+		pos_to = back_pos
+	}
+	local ray_res = managers.navigation:raycast(ray_params)
+	back_pos = ray_params.trace[1]
+	local back_polar = (back_pos - my_pos):to_polar()
+	local right_polar = back_polar:with_spin(back_polar.spin + 90):with_r(100 + 80 * my_data.cover_test_step)
+	local right_vec = right_polar:to_vector()
+	local right_pos = back_pos + right_vec
+	ray_params.pos_to = right_pos
+	local ray_res = managers.navigation:raycast(ray_params)
+	local shoot_from_pos, found_shoot_from_pos = nil
+	local ray_softness = 150
+	local stand_ray = World:raycast("ray", ray_params.trace[1] + math.UP * height, enemy_pos, "slot_mask", data.visibility_slotmask, "ray_type", "ai_vision")
+
+	if not stand_ray or mvector3.distance(stand_ray.position, enemy_pos) < ray_softness then
+		shoot_from_pos = ray_params.trace[1]
+		found_shoot_from_pos = true
+	end
+
+	if not found_shoot_from_pos then
+		local left_pos = back_pos - right_vec
+		ray_params.pos_to = left_pos
+		local ray_res = managers.navigation:raycast(ray_params)
+		local stand_ray = World:raycast("ray", ray_params.trace[1] + math.UP * height, enemy_pos, "slot_mask", data.visibility_slotmask, "ray_type", "ai_vision")
+
+		if not stand_ray or mvector3.distance(stand_ray.position, enemy_pos) < ray_softness then
+			shoot_from_pos = ray_params.trace[1]
+			found_shoot_from_pos = true
+		end
+	end
+
+	return shoot_from_pos
+end
+
 function CopLogicTravel._upd_combat_movement(data, ignore_walks)
 	local my_data = data.internal_data
 	local t = data.t
 	local unit = data.unit
 	local diff_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)
 	
-	--log("dicks")
+	if not data.unit:base():has_tag("law") then
+		return
+	end
 	
-	if not data.attention_obj then
-		--log("got it
-		-- CopLogicTravel.upd_advance(data)
+	if not data.attention_obj or not data.important then
+		--if not data.cool and not my_data.advancing then
+		--	CopLogicTravel.upd_advance(data)
+		--end
+		
 		return
 	else
 		local definitely_not_reactions_chk = AIAttentionObject.REACT_COMBAT > data.attention_obj.reaction
 
 		if definitely_not_reactions_chk then
-			-- CopLogicTravel.upd_advance(data)		
+			--if not data.cool and not my_data.advancing then
+			--	CopLogicTravel.upd_advance(data)
+			--end
+			
 			return
 		end
 	end
@@ -806,21 +902,19 @@ function CopLogicTravel._upd_combat_movement(data, ignore_walks)
 					data.brain:search_for_path_to_unit(my_data.optimal_path_search_id, focus_enemy.unit)
 				end
 			elseif data.tactics then
-				if data.tactics.charge or data.tactics.flank then 
-					if my_data.pathing_to_optimal_pos then
-						-- Nothing
-						--log("im fucking")
-					elseif my_data.walking_to_optimal_pos then
-						-- nothing
-					elseif my_data.optimal_path then
-						--my_data.aggro_move_t = t + math.random(0, 1.25)
-						action_taken = CopLogicTravel._chk_request_action_walk_to_optimal_pos(data, my_data)
-					elseif my_data.optimal_pos and focus_enemy.nav_tracker then
-						local to_pos = my_data.optimal_pos
-						my_data.pathing_to_optimal_pos = true
-						my_data.optimal_path_search_id = tostring(unit:key()) .. "optimal"
-						data.brain:search_for_path(my_data.optimal_path_search_id, to_pos)
-					end
+				if my_data.pathing_to_optimal_pos then
+					-- Nothing
+					--log("im fucking")
+				elseif my_data.walking_to_optimal_pos then
+					-- nothing
+				elseif my_data.optimal_path then
+					--my_data.aggro_move_t = t + math.random(0, 1.25)
+					action_taken = CopLogicTravel._chk_request_action_walk_to_optimal_pos(data, my_data)
+				elseif my_data.optimal_pos and focus_enemy.nav_tracker then
+					local to_pos = my_data.optimal_pos
+					my_data.pathing_to_optimal_pos = true
+					my_data.optimal_path_search_id = tostring(unit:key()) .. "optimal"
+					data.brain:search_for_path(my_data.optimal_path_search_id, to_pos)
 				end
 			end
 		end
@@ -901,7 +995,15 @@ function CopLogicTravel._upd_combat_movement(data, ignore_walks)
 					local height = nil
 					
 					local low_ray, high_ray = nil
-					local threat_pos = data.attention_obj.verified_pos or data.attention_obj.m_pos
+					local threat_pos = nil
+					
+					if data.attention_obj.verified_pos then
+						threat_pos = data.attention_obj.verified_pos
+					elseif data.attention_obj.is_person then
+						threat_pos = data.attention_obj.m_head_pos
+					else
+						threat_pos = data.attention_obj.m_pos
+					end
 					
 					low_ray, high_ray = CopLogicAttack._chk_covered(data, data.m_pos, threat_pos, data.visibility_slotmask)
 					
@@ -912,7 +1014,7 @@ function CopLogicTravel._upd_combat_movement(data, ignore_walks)
 					end
 
 					local my_tracker = unit:movement():nav_tracker()
-					local shoot_from_pos = CopLogicAttack._peek_for_pos_sideways(data, my_data, my_tracker, focus_enemy.m_pos, height)
+					local shoot_from_pos = CopLogicTravel._peek_for_pos_sideways(data, my_data, my_tracker, focus_enemy.m_pos, height)
 
 					if shoot_from_pos then
 						local path = {
@@ -1134,7 +1236,7 @@ function CopLogicTravel.queued_update(data)
 		return
 	end
 	
-	if data.unit:base():has_tag("law") and my_data.has_advanced_once then
+	if data.unit:base():has_tag("law") and my_data.has_advanced_once and data.important then
 		if data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction then
 			CopLogicTravel._upd_combat_movement(data)
 		end
