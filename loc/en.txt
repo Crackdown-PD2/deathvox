@@ -2,11 +2,11 @@
     "menu_jukebox_rb_dead_end" : "Dead End",
     "menu_jukebox_screen_rb_dead_end" : "Dead End",
 	"deathvox_menu_main_title" : "///CRACKDOWN MOD OPTIONS///",
-	"deathvox_menu_main_desc" : "hi finale!",
+	"deathvox_menu_main_desc" : "Access the Crackdown Mod Options.",
 	"deathvox_menu_overhauls_title" : "OVERHAULS",
-	"deathvox_menu_overhauls_desc" : "Enable or disable select Gameplay Overhauls",
-	"deathvox_toggle_hoppip_title" : "Hoppip's Light Overhaul",
-	"deathvox_toggle_hoppip_desc" : "Enable this Overhaul (Requires heist restart)",
+	"deathvox_menu_overhauls_desc" : "Enable or disable optional Overhauls for Crackdown.",
+	"deathvox_toggle_hoppip_title" : "Hoppip's I-Frame Rework",
+	"deathvox_toggle_hoppip_desc" : "Adjusts invincibility frames on the player to work in a less frustrating way.",
 	"deathvox_toggle_totalcd_title" : "TOTAL CRACKDOWN Overhaul",
-	"deathvox_toggle_totalcd_desc" : "Enable this Overhaul (Requires heist restart)"
+	"deathvox_toggle_totalcd_desc" : "The Total Crackdown Overhaul is WIP and features entirely reworked primary weapon stats and new skills."
 }
