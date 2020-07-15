@@ -185,6 +185,9 @@ end
 
 function CharacterTweakData:_presets(tweak_data)
 	local presets = origin_presets(self, tweak_data)
+	
+	-- Fug's Notes: Consider creating custom hurt presets to compensate for the incredibly high survivability these enemies have, these guys don't stumble around enough, and heavies esp. have Terminator 2 syndrome, which actually technically makes it EASIER to hit them!
+	
 	presets.base.stealth_instant_kill = true
 	presets.enemy_chatter = {
         no_chatter = {},
@@ -341,7 +344,7 @@ function CharacterTweakData:_presets(tweak_data)
 			death_wish = {health = 32, headshot_mult = 3},
 			crackdown = {health = 48, headshot_mult = 3}
 		},
-        	deathvox_heavyar = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
+        deathvox_heavyar = { -- mk 2 values complete. Shift upward via lower bound, tiering established.
 			not_a_real_difficulty = {health = 16, headshot_mult = 3},
 			normal = {health = 25, headshot_mult = 3},
 			hard = {health = 25, headshot_mult = 3},
@@ -402,14 +405,14 @@ function CharacterTweakData:_presets(tweak_data)
 			crackdown = {health = 48, headshot_mult = 3}
 		},
 		deathvox_sniper = { -- mk 1 values complete. lower difficulty curve structure.
-			not_a_real_difficulty = {health = 8, headshot_mult = 3},
-			normal = {health = 8, headshot_mult = 3},
-			hard = {health = 8, headshot_mult = 3},
-			very_hard = {health = 8, headshot_mult = 3},
-			overkill = {health = 12, headshot_mult = 3},
-			mayhem = {health = 12, headshot_mult = 3},
-			death_wish = {health = 12, headshot_mult = 3},
-			crackdown = {health = 15, headshot_mult = 3}
+			not_a_real_difficulty = {health = 1, headshot_mult = 3},
+			normal = {health = 1, headshot_mult = 3},
+			hard = {health = 1, headshot_mult = 3},
+			very_hard = {health = 1, headshot_mult = 3},
+			overkill = {health = 1, headshot_mult = 3},
+			mayhem = {health = 1, headshot_mult = 3},
+			death_wish = {health = 1, headshot_mult = 3},
+			crackdown = {health = 1, headshot_mult = 3}
 		},
 		deathvox_greendozer = { -- mk 2 values complete. Tiering implemented.
 			not_a_real_difficulty = {health = 500, headshot_mult = 5},
@@ -481,7 +484,7 @@ function CharacterTweakData:_presets(tweak_data)
 			death_wish = {health = 15, headshot_mult = 3},
 			crackdown = {health = 15, headshot_mult = 3}
 		},
-		deathvox_cop_smg = {  -- mk 2 values complete. Consistent on all diffs. Higher health corresponds to armor.
+		deathvox_cop_smg = {  -- mk 2 values complete. Consistent on all diffs. Higher health corresponds to armor. Fug's Notes: He has shotgun shells on his model, but isn't a shotgunner. 
 			not_a_real_difficulty = {health = 10, headshot_mult = 1},
 			normal = {health = 22, headshot_mult = 3},
 			hard = {health = 22, headshot_mult = 3},
@@ -521,7 +524,7 @@ function CharacterTweakData:_presets(tweak_data)
 			death_wish = {health = 15, headshot_mult = 3},
 			crackdown = {health = 15, headshot_mult = 3}
 		},
-		deathvox_fbi_hrt = {  -- mk 1 values complete. Consistent on all diffs. Higher health corresponds to armor.
+		deathvox_fbi_hrt = {  -- mk 1 values complete. Consistent on all diffs. Higher health corresponds to armor. Fug's Notes: He has shotgun shells on his model, but isn't a shotgunner. 
 			not_a_real_difficulty = {health = 10, headshot_mult = 1},
 			normal = {health = 22, headshot_mult = 3},
 			hard = {health = 22, headshot_mult = 3},
@@ -531,7 +534,8 @@ function CharacterTweakData:_presets(tweak_data)
 			death_wish = {health = 22, headshot_mult = 3},
 			crackdown = {health = 22, headshot_mult = 3}
 		},
-		deathvox_fbi_veteran = {  -- mk 1 values complete. Consistent on all diffs.
+		deathvox_fbi_veteran = {  -- mk 1 values complete. Consistent on all diffs. Fug's Notes: Consider revising for less health in order to be properly indicative of his lack of armor.
+		
 			not_a_real_difficulty = {health = 10, headshot_mult = 1},
 			normal = {health = 22, headshot_mult = 3},
 			hard = {health = 22, headshot_mult = 3},
@@ -3022,6 +3026,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper.suppression = nil -- same on all diffs.
 	self.deathvox_sniper.surrender = nil 
 	self.deathvox_sniper.move_speed = presets.move_speed.normal -- same as base. Same on all diffs.
+	self.deathvox_sniper.damage.hurt_severity = presets.hurt_severities.no_hurts_no_tase -- avoid player frustration and snipers being able to cover themselves again post-hurts
 	self.deathvox_sniper.surrender_break_time = {4, 6} 
 	self.deathvox_sniper.ecm_vulnerability = 0
 	self.deathvox_sniper.no_arrest = true
@@ -3037,7 +3042,9 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_sniper.die_sound_event = "mga_death_scream"
 	self.deathvox_sniper.spawn_sound_event = "mga_deploy_snipers"		
 	table.insert(self._enemy_list, "deathvox_sniper")
-	
+
+	self.sniper = deep_clone(self.deathvox_sniper)
+
 	self.deathvox_sniper_assault = deep_clone(self.deathvox_sniper) -- note unit not in use due to poor feedback.
 	self.deathvox_sniper_assault.move_speed = presets.move_speed.very_fast
 	self.deathvox_sniper_assault.deathguard = true
