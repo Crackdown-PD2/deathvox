@@ -36,7 +36,7 @@
 		</packages>
 		<script_data_mods directory="scriptdata"/>
 	</level>
-	<narrative briefing_event="" contact="skirmish" dlc="spa" id="skmc_fish" jc="50" region="street" max_mission_xp="135900" min_mission_xp="8000">
+	<narrative briefing_event="" contact="skirmish" dlc="spa" id="skmc_fish" jc="50" region="street" max_mission_xp="135900" min_mission_xp="8000" icon="guis/dlcs/bro/textures/pd2/crimenet/yacht" load_screen="guis/dlcs/pic/textures/loading/job_yachtheist">
 		<chain>
 			<table dlc="spa" level_id="skmc_fish" type="d" type_id="heist_type_assault"/>
 		</chain>
