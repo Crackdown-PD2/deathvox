@@ -1,7 +1,3 @@
-local old_unit_cat = GroupAITweakData._init_unit_categories
-local old_spawn_group = GroupAITweakData._init_enemy_spawn_groups
-local old_task_data = GroupAITweakData._init_task_data
-
 function GroupAITweakData:_init_chatter_data()
 	self.enemy_chatter = {}
 	--[[
@@ -447,8 +443,8 @@ function GroupAITweakData:_init_chatter_data()
 	}
 end
 
-function GroupAITweakData:_init_unit_categories(difficulty_index)
-	old_unit_cat(self, difficulty_index)
+Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categories", function(self, difficulty_index)
+	--old_unit_cat(self, difficulty_index)
 	local access_type_walk_only = {walk = true}
 	local access_type_all = {
 		acrobatic = true,
@@ -1476,9 +1472,9 @@ function GroupAITweakData:_init_unit_categories(difficulty_index)
 		access = access_type_all,
 		special_type = "spooc"
 	}
-end
+end)
 
-function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
+Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cd_init_enemy_spawn_groups", function(self, difficulty_index)
 
 	-- The below summarizes the functions of new or revised tactics in Crackdown.
 	--charge
@@ -1512,7 +1508,7 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 	--skirmish
 	--system function for retreating in holdout mode. MUST be last tactic for all units. Do not touch.
 	
-	old_spawn_group(self, difficulty_index)
+	--old_spawn_group(self, difficulty_index)
 	self._tactics = {
 			deathvox_grenad_follow = {
 				"shield_cover",
@@ -4925,7 +4921,8 @@ function GroupAITweakData:_init_enemy_spawn_groups(difficulty_index)
 			}
 		}
 	}
-end
+end)
+
 DIFF_NORMAL = 2
 DIFF_HARD = 3
 DIFF_VERY_HARD = 4
@@ -4933,8 +4930,8 @@ DIFF_OVERKILL = 5
 DIFF_MAYHEM = 6
 DIFF_DEATHWISH = 7
 DIFF_CRACKDOWN = 8
-function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
-	old_task_data(self, difficulty_index, difficulty)
+Hooks:PostHook(GroupAITweakData, "_init_task_data", "cd_init_task_data", function(self, difficulty_index, difficulty)
+	--old_task_data(self, difficulty_index, difficulty)
 	self.besiege.assault.force_pool_balance_mul = {1,1,1,1}
 	self.besiege.recon.force_balance_mul = {1,1,1,1}
 	if difficulty_index == DIFF_NORMAL then
@@ -5306,12 +5303,12 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 		self.besiege.assault.force_balance_5th = {24, 28, 28, 32}
 		self.besiege.assault.force_balance_6th = {24, 28, 28, 32}
 		self.besiege.assault.force_balance_7up = {28, 32, 32, 36}
-		self.besiege.assault.force_pool_skm1 = {90, 90, 90} -- add +10 to compensate for some of the nuances in groupaistatebesiege
-		self.besiege.assault.force_pool_skm2 = {110, 110, 110}
-		self.besiege.assault.force_pool_skm3 = {130, 130, 130}
-		self.besiege.assault.force_pool_skm4 = {140, 140, 140}
-		self.besiege.assault.force_pool_skm5 = {160, 160, 160}
-		self.besiege.assault.force_pool_skm6 = {180, 180, 180}
+		self.besiege.assault.force_pool_skm1 = {40, 40, 40} -- add +10 to compensate for some of the nuances in groupaistatebesiege
+		self.besiege.assault.force_pool_skm2 = {60, 60, 60}
+		self.besiege.assault.force_pool_skm3 = {80, 80, 80}
+		self.besiege.assault.force_pool_skm4 = {100, 100, 100}
+		self.besiege.assault.force_pool_skm5 = {120, 120, 120}
+		self.besiege.assault.force_pool_skm6 = {120, 120, 120}
 		self.besiege.assault.force_pool_skm7 = {180, 180, 180}
 	else
 		--ignore these, they're a fallback
@@ -5322,12 +5319,12 @@ function GroupAITweakData:_init_task_data(difficulty_index, difficulty)
 		self.besiege.assault.force_balance_5th = {24, 28, 28, 32}
 		self.besiege.assault.force_balance_6th = {24, 28, 28, 32}
 		self.besiege.assault.force_balance_7up = {28, 32, 32, 36}
-		self.besiege.assault.force_pool_skm1 = {90, 90, 90} -- add +10 to compensate for some of the nuances in groupaistatebesiege
-		self.besiege.assault.force_pool_skm2 = {110, 110, 110}
-		self.besiege.assault.force_pool_skm3 = {130, 130, 130}
-		self.besiege.assault.force_pool_skm4 = {160, 160, 160}
-		self.besiege.assault.force_pool_skm5 = {190, 190, 190}
-		self.besiege.assault.force_pool_skm6 = {190, 190, 190}
-		self.besiege.assault.force_pool_skm7 = {190, 190, 190}
+		self.besiege.assault.force_pool_skm1 = {40, 40, 40} -- add +10 to compensate for some of the nuances in groupaistatebesiege
+		self.besiege.assault.force_pool_skm2 = {60, 60, 60}
+		self.besiege.assault.force_pool_skm3 = {80, 80, 80}
+		self.besiege.assault.force_pool_skm4 = {100, 100, 100}
+		self.besiege.assault.force_pool_skm5 = {120, 120, 120}
+		self.besiege.assault.force_pool_skm6 = {120, 120, 120}
+		self.besiege.assault.force_pool_skm7 = {180, 180, 180}
 	end
-end
+end)

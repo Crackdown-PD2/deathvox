@@ -680,7 +680,7 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 		end
 	end
 
-	local delay = is_cool and 0 or 2
+	local delay = is_cool and 0 or 1
 
 	for u_key, attention_info in pairs(detected_obj) do
 		local can_detect = true

@@ -1646,22 +1646,36 @@ function GroupAIStateBesiege:_chk_group_use_flash_grenade(group, task_data, deto
 end
 
 function GroupAIStateBesiege:assign_enemy_to_group_ai(unit, team_id)
+	if not unit then
+		--log("???")
+		return
+	end
+	
+	if not team_id then
+		--log("!!!")
+		return
+	end
+	
 	local u_tracker = unit:movement():nav_tracker()
 	local seg = u_tracker:nav_segment()
 	local area = self:get_area_from_nav_seg_id(seg)
 	local current_unit_type = tweak_data.levels:get_ai_group_type()
 	local u_name = unit:name()
 	local u_category = nil
-
+	
 	for cat_name, category in pairs(tweak_data.group_ai.unit_categories) do
 		local units = category.unit_types[current_unit_type]
-		if units then
-			for _, test_u_name in ipairs(units) do
-				if u_name == test_u_name then
+		
+		if not units then
+			--log("why is this happen")
+			return
+		end
+		
+		for _, test_u_name in ipairs(units) do
+			if u_name == test_u_name then
 					u_category = cat_name
 
-					break
-				end
+				break
 			end
 		end
 	end
@@ -1697,48 +1711,8 @@ function GroupAIStateBesiege:assign_enemy_to_group_ai(unit, team_id)
 	self:set_enemy_assigned(area, unit:key())
 end
 
-function GroupAIStateBesiege:_assign_skirmish_groups_to_retire(group)
-	--this is horrible, but it works.
-	for group_id, group in pairs(self._groups) do --this acquires the groups currently existing in the level.
-		local group_leader_u_key, group_leader_u_data = self._determine_group_leader(group.units)
-		local tactics_map = nil
-
-		if group_leader_u_data and group_leader_u_data.tactics then
-			tactics_map = {}
-
-			for _, tactic_name in ipairs(group_leader_u_data.tactics) do
-				tactics_map[tactic_name] = true
-			end
-		end
-		
-		if managers.skirmish:is_skirmish() and tactics_map then
-			if tactics_map.skirmish and group.objective.type ~= "retire" and not  self._task_data.assault.active then
-				local function suitable_grp_func(group)
-					if tactics_map.skirmish and group.objective.type ~= "retire" and not  self._task_data.assault.active then
-						local grp_objective = {
-							stance = "hos",
-							attitude = "avoid",
-							pose = "stand",
-							type = "assault_area",
-							area = group.objective.area
-						}
-
-						self:_set_objective_to_enemy_group(group, grp_objective)
-					end
-				end
-				--log("retiring all enemies")
-				self:_assign_groups_to_retire(self._tweak_data.assault.groups, suitable_grp_func)
-			end			
-		end
-	end
-end
-
 function GroupAIStateBesiege:_upd_recon_tasks()
 	local task_data = self._task_data.recon.tasks[1]
-	
-	--if managers.skirmish:is_skirmish() then --makes unfit units retire during control/recon, mostly used as a safety measure to prevent leftovers
-	--	self:_assign_skirmish_groups_to_retire(allowed_groups, suitable_grp_func, group)
-	--end
 	
 	self:_assign_enemy_groups_to_recon()
 
