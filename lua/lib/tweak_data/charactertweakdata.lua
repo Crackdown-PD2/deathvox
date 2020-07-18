@@ -406,10 +406,10 @@ function CharacterTweakData:_presets(tweak_data)
 		},
 		deathvox_sniper = { -- mk 1 values complete. lower difficulty curve structure.
 			not_a_real_difficulty = {health = 1, headshot_mult = 3},
-			normal = {health = 40, headshot_mult = 3},
-			hard = {health = 40, headshot_mult = 3},
-			very_hard = {health = 80, headshot_mult = 3},
-			overkill = {health = 80, headshot_mult = 3},
+			normal = {health = 4, headshot_mult = 3},
+			hard = {health = 4, headshot_mult = 3},
+			very_hard = {health = 8, headshot_mult = 3},
+			overkill = {health = 8, headshot_mult = 3},
 			mayhem = {health = 12, headshot_mult = 3},
 			death_wish = {health = 12, headshot_mult = 3},
 			crackdown = {health = 15, headshot_mult = 3}
