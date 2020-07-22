@@ -190,6 +190,65 @@ function LevelsTweakData:init()
 	}
 
 	self.mia2_new.teams = self.mia_2.teams
+
+	self.pex.teams = {
+		criminal1 = {
+			foes = {
+				law1 = true,
+				mobster1 = true
+			},
+			friends = {
+				converted_enemy = true,
+				escort = true
+			}
+		},
+		law1 = {
+			foes = {
+				converted_enemy = true,
+				criminal1 = true,
+				mobster1 = true,
+				hacked_turret = true
+			},
+			friends = {}
+		},
+		mobster1 = {
+			foes = {
+				converted_enemy = true,
+				law1 = true,
+				criminal1 = true,
+				hacked_turret = true
+			},
+			friends = {}
+		},
+		converted_enemy = {
+			foes = {
+				law1 = true,
+				mobster1 = true
+			},
+			friends = {
+				criminal1 = true,
+				escort = true
+			}
+		},
+		neutral1 = {
+			foes = {},
+			friends = {}
+		},
+		hacked_turret = {
+			foes = {
+				law1 = true,
+				mobster1 = true
+			},
+			friends = {}
+		},
+		escort = {
+			foes = {},
+			friends = {
+				converted_enemy = true,
+				criminal1 = true
+			}
+		}
+	}
 end
 
 function LevelsTweakData:get_team_setup()
