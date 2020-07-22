@@ -12,6 +12,7 @@
 	
 	<texture path="units/payday2/characters/shared_textures/dark_glass_df" force="false"/>
 	<texture path="units/payday2/characters/shared_textures/dark_glass_op"  force="false"/>
+	<texture path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/helmets_heavy_taser_atlas_df" force="false"/>
 	<texture path="units/payday2/characters/shared_textures/tank_glass_df" force="false"/>
 	<texture path="units/payday2/characters/shared_textures/tank_glass_op" force="false"/>
 	<texture path="units/payday2/characters/shared_textures/ene_acc_deathvox_gensec_shield_df" force="false"/>
@@ -202,6 +203,9 @@
 	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser" force="false"/>	
 	<material_config path="units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser_contour" force="false"/>
 	<unit path="units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser_husk" load="true"/>
+
+	<unit_mat path="units/pd2_mod_cops/characters/ene_acc_tazer_helmet/ene_acc_tazer_helmet" load="true"/>
+	<cooked_physics path="units/pd2_mod_cops/characters/ene_acc_tazer_helmet/ene_acc_tazer_helmet"/>	
 	
 	<!-- FBI TEAM -->
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat" load="true"/>
@@ -316,6 +320,9 @@
 	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser" force="false"/>	
 	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser_contour" force="false"/>
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser_husk" load="true"/>	
+
+	<unit_mat path="units/pd2_mod_fbi/characters/ene_acc_fbi_deathvox_tazer_helmet/ene_acc_fbi_deathvox_tazer_helmet" load="true"/>
+	<cooked_physics path="units/pd2_mod_fbi/characters/ene_acc_fbi_deathvox_tazer_helmet/ene_acc_fbi_deathvox_tazer_helmet"/>	
 	
 	<texture path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/taser_body_df"  force="false"/>
 	
