@@ -152,6 +152,15 @@ function GroupAIStateBase:on_enemy_unregistered(unit)
 		return
 	end
 
+	local objective = unit:brain() and unit:brain():objective()
+
+	if objective and objective.fail_clbk then
+		local fail_clbk = objective.fail_clbk
+		objective.fail_clbk = nil
+
+		fail_clbk(unit)
+	end
+
 	local e_data = self._police[u_key]
 
 	if e_data.importance > 0 then
@@ -175,11 +184,7 @@ function GroupAIStateBase:on_enemy_unregistered(unit)
 
 	local unit_type = unit:base()._tweak_table
 	local is_special = unit:movement()._tweak_data.is_special_unit
-	
-	if is_special then
-		
-	end
-	
+
 	if self._special_unit_types[unit_type] or is_special then
 		if is_special then
 			self:unregister_special_unit(u_key, is_special)
@@ -925,23 +930,5 @@ function GroupAIStateBase:chk_unregister_irrelevant_attention_objects()
 			self:store_removed_attention_object(u_key, att_info)
 			att_info.handler:set_attention(nil)
 		end
-	end
-end
-
-local on_enemy_unregistered_original = GroupAIStateBase.on_enemy_unregistered
-function GroupAIStateBase:on_enemy_unregistered(unit)
-	on_enemy_unregistered_original(self, unit)
-
-	if not Network:is_server() then
-		return
-	end
-
-	local objective = unit:brain():objective()
-
-	if objective and objective.fail_clbk then
-		local fail_clbk = objective.fail_clbk
-		objective.fail_clbk = nil
-
-		fail_clbk(unit)
 	end
 end
