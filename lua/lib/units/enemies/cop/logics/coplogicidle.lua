@@ -244,7 +244,7 @@ function CopLogicIdle._get_priority_attention(data, attention_objects, reaction_
 					distance = distance * weight_mul
 				end
 				
-				if not data.internal_data.weapon_range or not data.data.internal_data.weapon_range.close or not data.internal_data.weapon_range.optimal then
+				if not data.internal_data.weapon_range or not data.internal_data.weapon_range.close or not data.internal_data.weapon_range.optimal then
 					log("this tiny being called " .. data.char_tweak .. "doesn't have a proper gosh darn diddly dang weapon range")
 				end
 				
