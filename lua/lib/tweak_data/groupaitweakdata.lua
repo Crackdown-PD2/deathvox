@@ -446,6 +446,7 @@ end
 Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categories", function(self, difficulty_index)
 	--old_unit_cat(self, difficulty_index)
 	local access_type_walk_only = {walk = true}
+	local level = Global.level_data and Global.level_data.level_id		
 	local access_type_all = {
 		acrobatic = true,
 		walk = true
@@ -548,41 +549,6 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 		category.unit_types["murky"] = category.unit_types["america"]
 		category.unit_types["russia"] = category.unit_types["russia"]				
 	end
-	self.unit_categories.deathvox_fbi_veteran = {
-		unit_types = {
-			cop = {
-				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")
-			},
-			fbi = {
-				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")
-			},
-			gensec = {
-				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")
-			},
-			zeal = {
-				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")
-			},
-			murky = {
-				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")
-			},			
-			classic = {
-				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_veteran/ene_deathvox_classic_veteran")
-			},
-			russia = {
-				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")
-			}
-		},
-		unit_type_spawner = {
-			cop = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran",
-			fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran",
-			gensec = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran",
-			zeal = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran",
-			murky = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran",			
-			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_veteran/ene_deathvox_classic_veteran",
-			russia = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran"
-		},
-		access = access_type_all
-	}
 	self.unit_categories.deathvox_sniper = {
 		unit_types = {
 			cop = {
@@ -618,6 +584,41 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 		},
 		access = access_type_all
 	}	
+	self.unit_categories.deathvox_fbi_veteran = {
+		unit_types = {
+			cop = {
+				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")
+			},
+			fbi = {
+				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")
+			},
+			gensec = {
+				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")
+			},
+			zeal = {
+				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")
+			},
+			murky = {
+				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")
+			},			
+			classic = {
+				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_veteran/ene_deathvox_classic_veteran")
+			},
+			russia = {
+				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")
+			}
+		},		
+		unit_type_spawner = {
+			cop = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran",
+			fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran",
+			gensec = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran",
+			zeal = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran",
+			murky = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran",			
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_veteran/ene_deathvox_classic_veteran",
+			russia = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran"
+		},
+		access = access_type_all
+	}
 	self.unit_categories.deathvox_fbi_rookie = {
 		unit_types = {
 			cop = {
@@ -828,6 +829,28 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 		},
 		access = access_type_all
 	}
+	
+	if level == "pal" or level == "dah" or level == "red2" or level == "glace" or level == "run" or level == "flat" or level == "dinner" or level == "man" or level == "nmh" then	
+		-- log("excellent! overwrite scripted spawns based on level!")
+		-- Beat Cop Spawn Overrides for Classic Heists		
+		self.unit_categories.deathvox_cop_smg.unit_type_spawner.zeal = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_smg/ene_deathvox_classic_cop_smg"
+		
+		self.unit_categories.deathvox_cop_shotgun.unit_type_spawner.zeal = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_shotgun/ene_deathvox_classic_cop_shotgun"
+		
+		self.unit_categories.deathvox_cop_revolver.unit_type_spawner.zeal = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_revolver/ene_deathvox_classic_cop_revolver"
+		
+		self.unit_categories.deathvox_cop_pistol.unit_type_spawner.zeal = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_pistol/ene_deathvox_classic_cop_pistol"
+		
+		-- Rookie Spawn Overrides for Classic Heists		
+		self.unit_categories.deathvox_fbi_rookie.unit_type_spawner.zeal = "units/pd2_mod_classic/characters/ene_deathvox_classic_rookie/ene_deathvox_classic_rookie"
+		-- HRT Spawn Overrides for Classic Heists		
+		self.unit_categories.deathvox_fbi_hrt.unit_type_spawner.zeal = "units/pd2_mod_classic/characters/ene_deathvox_classic_hrt/ene_deathvox_classic_hrt"
+		self.unit_categories.deathvox_fbi_hrt.unit_types.zeal = {Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_cop_smg/ene_deathvox_classic_cop_smg")}
+		-- FBI Veteran Scripted Spawn Overrides for Classic Heists
+		self.unit_categories.deathvox_fbi_veteran.unit_type_spawner.zeal = "units/pd2_mod_classic/characters/ene_deathvox_classic_veteran/ene_deathvox_classic_veteran"	
+		self.unit_categories.deathvox_fbi_veteran.unit_types.zeal = {Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_veteran/ene_deathvox_classic_veteran")}				
+	end
+	
 	self.unit_categories.deathvox_guard = {
 		unit_types = {
 			cop = {
