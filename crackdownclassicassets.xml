@@ -195,6 +195,9 @@
 	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_lmgdozer/ene_deathvox_classic_lmgdozer"/>	
 	<material_config path="units/pd2_mod_classic/characters/ene_deathvox_classic_lmgdozer/ene_deathvox_classic_lmgdozer_contour"/>
 	<unit path="units/pd2_mod_classic/characters/ene_deathvox_classic_lmgdozer/ene_deathvox_classic_lmgdozer_husk" load="true"/>
+
+	<unit_mat path="units/pd2_mod_classic/characters/ene_acc_bulldozer_faceplate/ene_acc_bulldozer_faceplate" />
+	<cooked_physics path="units/pd2_mod_classic/characters/ene_acc_bulldozer_faceplate/ene_acc_bulldozer_faceplate"/>	
 	
 	<!-- CLASSIC SHARED TEXTURES -->
 	<texture path="units/pd2_mod_classic/characters/classic_tank_glass_df"/>
