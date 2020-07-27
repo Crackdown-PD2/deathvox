@@ -75,6 +75,10 @@ function CopActionWalk:init(action_desc, common_data)
 	self._sync = Network:is_server()
 	self._skipped_frames = 1
 
+	if common_data.machine:get_global("shield") == 1 then
+		self._shield_turning = true
+	end
+
 	if common_data.ext_anim.needs_idle then
 		self._waiting_full_blend = true
 
@@ -748,6 +752,7 @@ function CopActionWalk:update(t)
 		local face_fwd = tmp_vec1
 		local wanted_walk_dir = nil
 		local move_dir_norm = move_dir:normalized()
+		local turning_to_face_attention = nil
 
 		if self._no_strafe or self._walk_turn then
 			wanted_walk_dir = "fwd"
@@ -757,6 +762,8 @@ function CopActionWalk:update(t)
 			elseif self._attention_pos then
 				mvec3_set(face_fwd, self._attention_pos)
 				mvec3_sub(face_fwd, self._common_data.pos)
+
+				turning_to_face_attention = true
 			elseif self._footstep_pos then
 				mvec3_set(face_fwd, self._footstep_pos)
 				mvec3_sub(face_fwd, self._common_data.pos)
@@ -814,7 +821,8 @@ function CopActionWalk:update(t)
 
 			rot_new = temp_rot1
 
-			mrot_slerp(rot_new, self._common_data.rot, rot_new, math_min(1, dt * 5))
+			local lerp_modifier = not turning_to_face_attention and 1 or self._shield_turning and 0.15 or 0.3
+			mrot_slerp(rot_new, self._common_data.rot, rot_new, math_min(1, dt * 5 * lerp_modifier))
 		end
 
 		self._ext_movement:set_rotation(rot_new)
