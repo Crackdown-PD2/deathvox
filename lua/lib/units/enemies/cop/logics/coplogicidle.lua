@@ -522,10 +522,6 @@ function CopLogicIdle._chk_relocate(data)
 	local my_nav_seg = data.unit:movement():nav_tracker():nav_segment()
 	local my_area = managers.groupai:state():get_area_from_nav_seg_id(data.unit:movement():nav_tracker():nav_segment())
 	
-	if not CopLogicAttack.is_available_for_assignment(data, data.objective) then
-		return
-	end
-	
 	if data.objective and data.objective.type == "follow" then
 		if data.is_converted then
 			if TeamAILogicIdle._check_should_relocate(data, data.internal_data, data.objective) then
@@ -579,29 +575,38 @@ function CopLogicIdle._chk_relocate(data)
 
 			return true
 		end
-	elseif data.objective and data.objective.type == "defend_area" then
-		local recon_group = data.objective and data.objective.grp_objective and data.objective.grp_objective == "recon_area" or data.tactics and data.tactics.flank
+	elseif data.objective and data.objective.type == "defend_area" or data.objective and data.objective.type == "hunt" then
+		if not CopLogicAttack.is_available_for_assignment(data, data.objective) then
+			return
+		end
+		
+		local recon_group = data.objective and data.objective.grp_objective and data.objective.grp_objective.type == "recon_area"
+		
+		local current_assault_target_area = managers.groupai:state()._current_target_area or nil
 		
 		local current_assault_target_area_navsegs = managers.groupai:state()._current_target_area and managers.groupai:state()._current_target_area.nav_segs or nil
 		
 		if managers.groupai:state():chk_assault_active_atm() and not recon_group then
-			if current_assault_target_area_navsegs then -- this code is so awful i am fully convinced it is self-aware
-				--log("pog")
-				data.objective.in_place = nil
-				data.objective.nav_seg = next(current_assault_target_area_navsegs)
-				data.objective.path_data = {
-					{
-						data.objective.nav_seg
-					}
-				}
-				data.logic._exit(data.unit, "travel")
-							
-				return true
-			end
-					
 			local area = data.objective.area
 
 			if area and not next(area.criminal.units) then
+				if current_assault_target_area and area ~= current_assault_target_area and next(current_assault_target_area.criminal.units) then
+					--log("pog")
+					data.objective.in_place = nil
+					data.objective.area = current_assault_target_area
+					data.objective.nav_seg = next(current_assault_target_area_navsegs)
+					data.objective.path_data = {
+						{
+							data.objective.nav_seg
+						}
+					}
+					data.logic._exit(data.unit, "travel")
+					
+					--log("im going")
+						
+					return true
+				end
+			
 				local found_areas = {
 					[area] = true
 				}
@@ -630,13 +635,14 @@ function CopLogicIdle._chk_relocate(data)
 
 				if target_area then
 					data.objective.in_place = nil
+					data.objective.area = target_area
 					data.objective.nav_seg = next(target_area.nav_segs)
 					data.objective.path_data = {
 						{
 							data.objective.nav_seg
 						}
 					}
-
+					
 					data.logic._exit(data.unit, "travel")
 
 					return true
@@ -646,7 +652,7 @@ function CopLogicIdle._chk_relocate(data)
 			local area = data.objective.area
 			
 			if area then
-				if area.loot and next(area.loot) or area.hostages and next(area.hostages) then
+				if area.loot and next(area.loot) or area.hostages and next(area.hostages) or current_assault_target_area and area == current_assault_target_area then
 					return
 				else
 					local found_areas = {
@@ -679,6 +685,7 @@ function CopLogicIdle._chk_relocate(data)
 						data.objective.bagjob = target_area.loot or nil
 						data.objective.hostagejob = target_area.hostages or nil
 						data.objective.in_place = nil
+						data.objective.area = target_area
 						data.objective.nav_seg = next(target_area.nav_segs)
 						data.objective.path_data = {
 							{
@@ -690,23 +697,29 @@ function CopLogicIdle._chk_relocate(data)
 
 						return true
 					else
-						if current_assault_target_area_navsegs then
-							data.objective.bagjob = managers.groupai:state()._current_target_area.loot or nil
-							data.objective.hostagejob = managers.groupai:state()._current_target_area.hostages or nil
-							data.objective.in_place = nil
-							data.objective.nav_seg = next(current_assault_target_area_navsegs)
-							data.objective.path_data = {
-								{
-									data.objective.nav_seg
+						if current_assault_target_area then
+							if current_assault_target_area.criminal and current_assault_target_area.criminal.units and next(current_assault_target_area.criminal.units) or current_assault_target_area.loot and next(current_assault_target_area.loot) or current_assault_target_area.hostages and next(current_assault_target_area.hostages) then
+								data.objective.bagjob = current_assault_target_area.loot or nil
+								data.objective.hostagejob = current_assault_target_area.hostages or nil
+								data.objective.in_place = nil
+								data.objective.area = target_area
+								data.objective.nav_seg = next(current_assault_target_area_navsegs)
+								data.objective.path_data = {
+									{
+										data.objective.nav_seg
+									}
 								}
-							}
-							data.logic._exit(data.unit, "travel")
-										
-							return true
+								
+								data.logic._exit(data.unit, "travel")
+											
+								return true
+							end
 						end
 					end
 				end
 			end
 		end
 	end
+	
+	return
 end

@@ -119,7 +119,27 @@ function SpoocLogicAttack._upd_spooc_attack(data, my_data)
 			if focus_enemy.verified_dis > 200 then
 				managers.groupai:state():chk_say_enemy_chatter( data.unit, data.m_pos, "cloakercontact" )
 			end
-
+			
+			if data.tactics then
+				local flash = nil
+				
+				if data.tactics.smoke_grenade or data.tactics.flash_grenade then
+					if data.tactics.smoke_grenade and data.tactics.flash_grenade then
+						local flashchance = math.random()
+												
+						if flashchance < 0.5 then
+							flash = true
+						end
+					else
+						if data.tactics.flash_grenade then
+							flash = true
+						end
+					end
+					
+					CopLogicBase.do_grenade(data, focus_enemy.m_pos + math.UP * 5, flash)
+				end
+			end
+			
 			local action = SpoocLogicAttack._chk_request_action_spooc_attack(data, my_data)
 
 			if action then

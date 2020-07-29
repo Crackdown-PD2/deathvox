@@ -37,7 +37,7 @@ function GroupAIStateBase:on_simulation_started()
 		medic = true,
 		ass_sniper = true,
 		phalanx_minion = true
-	}
+	}	
 end
 
 function GroupAIStateBase:_check_assault_panic_chatter()
@@ -55,10 +55,10 @@ function GroupAIStateBase:update(t, dt)
 	self:_claculate_drama_value()
 	--self:_draw_current_logics()
 	
-	if managers.skirmish:is_skirmish() then
-		self._nr_important_cops = self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_7up) * 0.25
-	else
-		self._nr_important_cops = self:_get_balancing_multiplier(self._tweak_data.assault.force_balance_mul) * 0.25
+	if Network:is_server() then
+		local new_value = self._police_force * 0.15 * table.size(self:all_player_criminals())
+
+		self._nr_important_cops = new_value
 	end
 	
 	if self._draw_drama then
