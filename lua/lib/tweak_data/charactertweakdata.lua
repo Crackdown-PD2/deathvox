@@ -866,7 +866,37 @@ function CharacterTweakData:_presets(tweak_data)
     }
 	
 -- Begin revised surrender presets.
-	presets.surrender.normal = {
+	presets.surrender = {
+		always = {
+			base_chance = 1
+		},
+		never = {
+			base_chance = 0
+		},
+		easy = {
+			base_chance = 0.3,
+			significant_chance = 0.35,
+			reasons = {
+				pants_down = 1,
+				isolated = 0.08,
+				weapon_down = 0.5,
+				health = {
+					[1.0] = 0.1,
+					[0.5] = 0.5,
+					[0.1] = 0.9
+				}
+			},
+			factors = {
+				unaware_of_aggressor = 0.1,
+				enemy_weap_cold = 0.11,
+				flanked = 0.05,
+				aggressor_dis = {
+					[300.0] = 0.2,
+					[1000.0] = 0
+				}
+			}
+		},
+		normal =  {
 		base_chance = 0.3,
 		significant_chance = 0.35,
 			reasons = {
@@ -876,8 +906,49 @@ function CharacterTweakData:_presets(tweak_data)
 					[0.1] = 0.9
 				}
 			},
-			factors = {}
+			factors = {},
+		hard = {
+			base_chance = 0.35,
+			significant_chance = 0.25,
+			reasons = {
+				pants_down = 0.8,
+				weapon_down = 0.2,
+				health = {
+					[1.0] = 0,
+					[0.35] = 0.5
+				}
+			},
+			factors = {
+				enemy_weap_cold = 0.05,
+				unaware_of_aggressor = 0.1,
+				flanked = 0.04,
+				isolated = 0.1,
+				aggressor_dis = {
+					[300.0] = 0.1,
+					[1000.0] = 0
+				}
+			}
+		},
+		special = {
+			base_chance = 0.25,
+			significant_chance = 0.25,
+			reasons = {
+				pants_down = 0.6,
+				weapon_down = 0.02,
+				health = {
+					[0.5] = 0,
+					[0.2] = 0.25
+				}
+			},
+			factors = {
+				enemy_weap_cold = 0.05,
+				unaware_of_aggressor = 0.02,
+				isolated = 0.05,
+				flanked = 0.015
+			}
+		}
 	}
+
 	
 	--[[presets.weapon.deathvox = { -- these notes are mostly out of date. Need further revision to ensure clear usage tracing.
 		is_pistol = {},-- used for guards and numerous scripted enemies, as well as beat police.
