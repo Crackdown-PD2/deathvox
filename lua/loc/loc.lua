@@ -27,10 +27,6 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Localization", function(loc)
 	})
 end)
 
-Hooks:Add("LocalizationManagerPostInit", "DV_HopLibKillfeedStuff", function(loc)
-	loc:load_localization_file(ModPath .. "lua/loc/hoplibenemylist.txt")
-end)
-
 Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 	if deathvox then
 		if deathvox:IsTotalCrackdownEnabled() then
