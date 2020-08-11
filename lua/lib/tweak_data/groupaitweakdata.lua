@@ -5326,13 +5326,13 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cd_init_task_data", functio
 		self.besiege.assault.force_balance_5th = {24, 28, 28, 32}
 		self.besiege.assault.force_balance_6th = {24, 28, 28, 32}
 		self.besiege.assault.force_balance_7up = {28, 32, 32, 36}
-		self.besiege.assault.force_pool_skm1 = {40, 40, 40} -- add +10 to compensate for some of the nuances in groupaistatebesiege
+		self.besiege.assault.force_pool_skm1 = {50, 50, 50} -- add +10 to compensate for some of the nuances in groupaistatebesiege
 		self.besiege.assault.force_pool_skm2 = {60, 60, 60}
 		self.besiege.assault.force_pool_skm3 = {80, 80, 80}
 		self.besiege.assault.force_pool_skm4 = {100, 100, 100}
-		self.besiege.assault.force_pool_skm5 = {120, 120, 120}
+		self.besiege.assault.force_pool_skm5 = {100, 100, 100}
 		self.besiege.assault.force_pool_skm6 = {120, 120, 120}
-		self.besiege.assault.force_pool_skm7 = {180, 180, 180}
+		self.besiege.assault.force_pool_skm7 = {120, 120, 120}
 	else
 		--ignore these, they're a fallback
 		self.besiege.assault.force_balance_1st = {20, 20, 20, 20}
@@ -5342,12 +5342,12 @@ Hooks:PostHook(GroupAITweakData, "_init_task_data", "cd_init_task_data", functio
 		self.besiege.assault.force_balance_5th = {24, 28, 28, 32}
 		self.besiege.assault.force_balance_6th = {24, 28, 28, 32}
 		self.besiege.assault.force_balance_7up = {28, 32, 32, 36}
-		self.besiege.assault.force_pool_skm1 = {40, 40, 40} -- add +10 to compensate for some of the nuances in groupaistatebesiege
+		self.besiege.assault.force_pool_skm1 = {50, 50, 50} -- add +10 to compensate for some of the nuances in groupaistatebesiege
 		self.besiege.assault.force_pool_skm2 = {60, 60, 60}
 		self.besiege.assault.force_pool_skm3 = {80, 80, 80}
 		self.besiege.assault.force_pool_skm4 = {100, 100, 100}
-		self.besiege.assault.force_pool_skm5 = {120, 120, 120}
+		self.besiege.assault.force_pool_skm5 = {100, 100, 100}
 		self.besiege.assault.force_pool_skm6 = {120, 120, 120}
-		self.besiege.assault.force_pool_skm7 = {180, 180, 180}
+		self.besiege.assault.force_pool_skm7 = {120, 120, 120}
 	end
 end)
