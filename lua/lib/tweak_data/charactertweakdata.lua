@@ -897,8 +897,8 @@ function CharacterTweakData:_presets(tweak_data)
 			}
 		},
 		normal =  {
-		base_chance = 0.3,
-		significant_chance = 0.35,
+			base_chance = 0.3,
+			significant_chance = 0.35,
 			reasons = {
 				health = {
 					[1.0] = 0.1,
@@ -906,7 +906,8 @@ function CharacterTweakData:_presets(tweak_data)
 					[0.1] = 0.9
 				}
 			},
-			factors = {},
+			factors = {}
+		},
 		hard = {
 			base_chance = 0.35,
 			significant_chance = 0.25,
