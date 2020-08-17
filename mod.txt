@@ -1,7 +1,7 @@
 {
  "name" : "Crackdown"
  "description" : "Reimagining of PAYDAY 2. THE PAYDAY OF TOMORROW, BUILT FOR FORTUNE AND GLORY BY THE HEISTERS OF YESTERDAY.",
- "author" : "Rhynne, Iamgoofball, Finale, and the Crackdown team",
+ "author" : "Rhynne, Iamgoofball, Finale, and the Crackdown team. See credits.txt for full details",
  "contact" : "https://discord.gg/BdN4as7",
  "version" : "E2",
  "priority" : 48,
