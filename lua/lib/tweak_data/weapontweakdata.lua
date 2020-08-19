@@ -1,8 +1,8 @@
 local old_init = WeaponTweakData.init
 function WeaponTweakData:init(tweak_data)
 	--[[i dunno where to put this but heres a list of what weapons enemies use
-	      heavy ar wpn_npc_m4
-          light ar wpn_npc_s553
+	      heavy ar wpn_npc_s553
+          light ar wpn_npc_m4
           heavy shot wpn_npc_benelli
           light shot wpn_npc_r870
           gman wpn_npc_r870
