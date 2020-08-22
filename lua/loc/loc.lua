@@ -31,7 +31,9 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 	if deathvox then
 		if deathvox:IsTotalCrackdownEnabled() then
 			loc:add_localized_strings({
-				["debug_interact_gage_assignment_take"] = "PRESS $BTN_INTERACT TO PICK UP THE PACKAGE",		
+				["debug_interact_gage_assignment_take"] = "PRESS $BTN_INTERACT TO PICK UP THE PACKAGE",
+				["menu_steady_grip_beta"] = "Spray & Pray",
+				["menu_steady_grip_beta_desc"] = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles gain ##+10%## Critical Hit chance.\n\nACE: ##$pro##\nYour ranged weapons can now pierce Body Armor.",
 				["menu_fast_fire_beta"] = "Close Enough",
 				["menu_fast_fire_beta_desc"] = "BASIC: ##$basic##\nYour SMGs, LMGs and Assault Rifles gain ##15## more bullets in their magazine.\n\nACE: ##$pro##\nYour SMGs and Assault Rifles' bullets that strike hard surfaces ##have a 25% chance to ricochet## towards enemies.",
 				["menu_heavy_impact_beta"] = "Money Shot",

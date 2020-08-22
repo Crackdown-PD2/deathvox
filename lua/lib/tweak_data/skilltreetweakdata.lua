@@ -2,49 +2,17 @@
 
 Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
-		self.skills.fast_fire = {
-			{
-				upgrades = {
-					"player_automatic_mag_increase_1"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"player_ricochet_rapid_fire_basic"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_fast_fire_beta",
-			desc_id = "menu_fast_fire_beta_desc",
-			icon_xy = {
-				10,
-				2
-			}
-		}
+		--Boss
 		
-		self.skills.heavy_impact = {
-			{
-				upgrades = {
-					"player_moneyshot_rapid_fire_basic"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"player_moneyshot_rapid_fire_aced"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_heavy_impact_beta",
-			desc_id = "menu_heavy_impact_beta_desc",
-			icon_xy = {
-				10,
-				1
-			}
-		}
+		--Marksman
 		
-		self.skills.far_away = {
+		--Medic
+		
+		--Chief
+		
+		--Enforcer
+		
+		self.skills.far_away = { --Point Blank
 			{
 				upgrades = {
 					"player_point_blank_shotgun_basic"
@@ -65,10 +33,93 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			}
 		}
 		
+		--Heavy
+		
+		--Runner
+		
+		--Gunner
+		
+		self.skills.steady_grip = { --Spray and Pray
+			{
+				upgrades = {
+					"player_spray_and_pray_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_ap_bullets_1"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_steady_grip_beta",
+			desc_id = "menu_steady_grip_beta_desc",
+			icon_xy = {
+				9,
+				11
+			}
+		}
+		
+		self.skills.heavy_impact = { --Money Shot
+			{
+				upgrades = {
+					"player_moneyshot_rapid_fire_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_moneyshot_rapid_fire_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_heavy_impact_beta",
+			desc_id = "menu_heavy_impact_beta_desc",
+			icon_xy = {
+				10,
+				1
+			}
+		}
+		
+		self.skills.fast_fire = { --Close Enough
+			{
+				upgrades = {
+					"player_ricochet_rapid_fire_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_ricochet_rapid_fire_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_fast_fire_beta",
+			desc_id = "menu_fast_fire_beta_desc",
+			icon_xy = {
+				10,
+				2
+			}
+		}
+		
+		--Engineer
+		
 		--add sentry targeting basic/aced to default upgrades
 		table.insert(self.default_upgrades,"sentry_gun_spread_multiplier")
 		table.insert(self.default_upgrades,"sentry_gun_extra_ammo_multiplier_1")
 		table.insert(self.default_upgrades,"sentry_gun_rot_speed_multiplier")
+		
+		--Thief
+		
+		--Assassin
+		
+		--Sapper
+		
+		--Dealer
+		
+		--Fixer
+		
+		--Demolitions
 		
 	end
 end)

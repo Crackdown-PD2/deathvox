@@ -362,7 +362,8 @@ function RaycastWeaponBase:reload_speed_multiplier()
 	multiplier = multiplier * managers.player:upgrade_value("weapon", "passive_reload_speed_multiplier", 1)
 	multiplier = multiplier * managers.player:upgrade_value(self._name_id, "reload_speed_multiplier", 1)
 	
-	if self:is_category("assault_rifle", "smg") and self:ammo_base():get_ammo_remaining_in_clip() == 0 then
+	--clean this up once all weapons are tagged appropriately
+	if self:is_category("assault_rifle", "smg", "rapidfire") and self:ammo_base():get_ammo_remaining_in_clip() == 0 then
 		multiplier = multiplier * managers.player:upgrade_value("player", "money_shot_aced", 1)
 	end
 	
@@ -875,6 +876,33 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 	return result
 end
 
+function InstantBulletBase:give_impact_damage(col_ray, weapon_unit, user_unit, damage, armor_piercing, shield_knock, knock_down, stagger, variant)
+	local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
+	local crit_chance = 0
+	
+	if user_unit == managers.player:player_unit() and has_category and weapon_unit:base():is_category("assault_rifle", "smg", "rapidfire") then
+		crit_chance = crit_chance + managers.player:upgrade_value("player", "spray_and_pray_basic", 0)
+		--log("crit_chance is " .. crit_chance .. "!")
+	end
+	
+	local action_data = {
+		variant = variant or "bullet",
+		damage = damage,
+		weapon_unit = weapon_unit,
+		attacker_unit = user_unit,
+		col_ray = col_ray,
+		armor_piercing = armor_piercing,
+		shield_knock = shield_knock,
+		origin = user_unit:position(),
+		knock_down = knock_down,
+		crit_chance = crit_chance,
+		stagger = stagger
+	}
+	local defense_data = col_ray.unit:character_damage():damage_bullet(action_data)
+
+	return defense_data
+end
+
 function RaycastWeaponBase:_suppress_units(from_pos, direction, distance, slotmask, user_unit, suppr_mul)
 	local tmp_to = Vector3()
 
@@ -945,7 +973,6 @@ function RaycastWeaponBase:_suppress_units(from_pos, direction, distance, slotma
 		end
 	end
 end
-
 
 
 --taser bullets for taser sentries (total cd only) 

@@ -243,6 +243,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_light_ar.CLIP_AMMO_MAX = 30 -- How many shots before reload
 	self.deathvox_light_ar.NR_CLIPS_MAX = 5 -- Unused
 	--self.deathvox_light_ar.pull_magazine_during_reload = "rifle" -- magazine used during reload.
+	self.deathvox_light_ar.hold = "rifle"
 	self.deathvox_light_ar.auto.fire_rate = 0.08 -- Firing delay in seconds
 	--[[self.deathvox_light_ar.hold = { -- dont worry about this
 		"bullpup",
@@ -410,6 +411,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_lmgdozer.alert_size = 5000
 	self.deathvox_lmgdozer.suppression = 1
 	self.deathvox_lmgdozer.usage = "is_dozer_lmg"
+	self.deathvox_lmgdozer.anim_usage = "is_rifle"
    	table.insert(self._gun_list_cd, "deathvox_lmgdozer")
 
 	self.deathvox_cloaker.sounds.prefix = "schakal_npc"
@@ -2251,6 +2253,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		
 		--Fire Rate/Fire Rate: In-game number is rounds per minute, in code, it's a division of that value in order to achieve proper firerates.
 		--480 rounds per minute = 8 rounds per second, divide a second by 8 and you get the Chimano 88's firerate, beware of decimal hell.
+		
+		--Category: Not shown in-game, category is more of a "tag" kind of thing, this is important for allowing weapon skills to work appropriately, refer to the Total Crackdown weapon rebalance document for easy data-entry: https://docs.google.com/document/d/1UvE_RL1hncNjAvg6pZsvIfT__appMF8N58eOoAEtYFg/edit
+		
+		--I have provided an example with the new_m4/CAR-4, asval/Valkyria Rifle, and the contraband/Little Friend, refer to the original game's weapontweakdata, and do as I did, preserve the original tags just in case.
+		
+		--rapidfire
+		--quiet
+		--precision
+		--shotgun (already set on most shotguns, keep that in mind.)
+		--heavy
+		--specialist
+		--saw
+		
+		--tagging grenades and throwing weapons isnt done here, but in blackmarkettweakdata instead
 
 		--------/Ammo Pickup: Acquire two values, the first value is the ammo pickup minimum, the second value is the pickup max, don't forget to calculate for walk-in closet if that's going to be in the overhaul.
 		
@@ -2278,6 +2294,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.new_m4.CAN_TOGGLE_FIREMODE = true
 		self.new_m4.auto = {
 			fire_rate = 0.1
+		}
+		self.new_m4.categories = {
+			"assault_rifle",
+			"rapidfire"
 		}
 		self.new_m4.timers = {
 			reload_not_empty = 2.665,
@@ -3395,6 +3415,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		
 		--Valkyria Rifle
 		self.asval.FIRE_MODE = "auto"
+		self.asval.categories = {
+			"assault_rifle",
+			"quiet"
+		}
 		self.asval.fire_mode_data = {
 			fire_rate = 0.11
 		}
@@ -3501,6 +3525,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		
 		--Little Friend RIFLE
 		self.contraband.FIRE_MODE = "single"
+		self.contraband.categories = {
+			"assault_rifle",
+			"precision"
+		}
 		self.contraband.fire_mode_data = {
 			fire_rate = 0.098
 		}
