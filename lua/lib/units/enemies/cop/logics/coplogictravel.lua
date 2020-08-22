@@ -2188,8 +2188,14 @@ function CopLogicTravel.action_complete_clbk(data, action)
 				else
 					cover_wait_time = 0.6 + 0.4 * math.random()
   			    end
+				
+				if data.tactics then
+					if data.tactics.ranged_fire or data.tactics.elite_ranged_fire then
+						cover_wait_time = cover_wait_time * 2
+					end
+				end
 
-				my_data.cover_leave_t = data.t
+				my_data.cover_leave_t = data.t + cover_wait_time
 				
 				if data.unit:base():has_tag("spooc") or data.unit:base()._tweak_table == "shadow_spooc" then
 					SpoocLogicAttack._upd_spooc_attack(data, my_data)
