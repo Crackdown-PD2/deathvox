@@ -1658,7 +1658,6 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cd_init_enemy_spaw
 				--"skirmish"
 			},
 			deathvox_tazer_lead = {
-				"flash_grenade",
 				"charge",
 				"provide_coverfire",
 				"provide_support",
@@ -1669,7 +1668,6 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cd_init_enemy_spaw
 				"charge",
 				"provide_coverfire",
 				"provide_support",
-				"flash_grenade",
 				"deathguard",
 				--"skirmish"
 			},
