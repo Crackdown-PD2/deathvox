@@ -1,254 +1,53 @@
-local mvec3_dir = mvector3.direction
-local mvec3_dist_sq = mvector3.distance_sq
-local mvec3_dot = mvector3.dot
-local mvec3_cross = mvector3.cross
-local mvec3_sub = mvector3.subtract
+local mvec3_x = mvector3.x
+local mvec3_y = mvector3.y
+local mvec3_z = mvector3.z
+local mvec3_set = mvector3.set
+local mvec3_set_z = mvector3.set_z
 local mvec3_add = mvector3.add
 local mvec3_mul = mvector3.multiply
-local math_max = math.max
+local mvec3_sub = mvector3.subtract
+local mvec3_dot = mvector3.dot
+local mvec3_dis = mvector3.distance
+local mvec3_dist_sq = mvector3.distance_sq
+local mvec3_dir = mvector3.direction
+local mvec3_norm = mvector3.normalize
+local mvec3_cross = mvector3.cross
+local mvec3_rand_ortho = mvector3.random_orthogonal
+local mvec3_negate = mvector3.negate
+local mvec3_len = mvector3.length
+local mvec3_cpy = mvector3.copy
+local mvec3_set_stat = mvector3.set_static
+local mvec3_set_length = mvector3.set_length
+local mvec3_angle = mvector3.angle
+local mvec3_step = mvector3.step
+local mvec3_lerp = mvector3.lerp
+
 local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
+local tmp_vec3 = Vector3()
 
-function SentryGunBrain:_upd_detection(t)
-	if self._ext_movement:is_activating() or self._ext_movement:is_inactivating() then
-		return
-	end
+local math_lerp = math.lerp
+local math_random = math.random
+local math_up = math.UP
+local math_abs = math.abs
+local math_clamp = math.clamp
+local math_min = math.min
+local math_max = math.max
+local math_sqrt = math.sqrt
 
-	if t < self._next_detection_upd_t then
-		return
-	end
+local m_rot_x = mrotation.x
+local m_rot_y = mrotation.y
+local m_rot_z = mrotation.z
 
-	local delay = 1
-	local my_SO_access_str = self._SO_access_str
-	local my_SO_access = self._SO_access
-	local my_tracker = self._unit:movement():nav_tracker()
-	local chk_vis_func = my_tracker.check_visibility
-	local detected_objects = self._detected_attention_objects
-	local my_key = self._unit:key()
-	local my_team = self._ext_movement:team()
-	local my_pos = self._ext_movement:m_head_pos()
-	local my_tracker = self._ext_movement:nav_tracker()
-	local chk_vis_func = my_tracker.check_visibility
-	local max_detection_range = self._tweak_data.DETECTION_RANGE
-	local all_attention_objects = managers.groupai:state():get_AI_attention_objects_by_filter(my_SO_access_str, my_team)
+local table_insert = table.insert
+local table_contains = table.contains
 
-	local function _distance_chk(handler, settings, attention_pos)
-		attention_pos = attention_pos or handler:get_detection_m_pos()
-		local dis_sq = mvec3_dist_sq(my_pos, attention_pos)
-		local max_dis = math.min(max_detection_range, settings.max_range or max_detection_range)
+local REACT_COMBAT = AIAttentionObject.REACT_COMBAT
+local REACT_SCARED = AIAttentionObject.REACT_SCARED
+local REACT_SHOOT = AIAttentionObject.REACT_SHOOT
+local REACT_SUSPICIOUS = AIAttentionObject.REACT_SUSPICIOUS
 
-		if settings.detection and settings.detection.range_mul then
-			max_dis = max_dis * settings.detection.range_mul
-		end
-
-		if dis_sq < max_dis * max_dis then
-			return math.sqrt(dis_sq)
-		end
-	end
-
-	local ignore_units = {self._unit}
-
-	local function _nearly_visible_chk(attention_info, detect_pos)
-		local near_pos = tmp_vec1
-
-		if attention_info.verified_dis < 2000 and math.abs(detect_pos.z - my_pos.z) < 300 then
-			mvector3.set(near_pos, detect_pos)
-			mvector3.set_z(near_pos, near_pos.z + 100)
-
-			local near_vis_ray = World:raycast("ray", my_pos, near_pos, "ignore_unit", ignore_units, "slot_mask", self._visibility_slotmask, "ray_type", "ai_vision", "report")
-
-			if near_vis_ray then
-				local side_vec = tmp_vec1
-
-				mvector3.set(side_vec, detect_pos)
-				mvec3_sub(side_vec, my_pos)
-				mvec3_cross(side_vec, side_vec, math.UP)
-				mvector3.set_length(side_vec, 150)
-				mvector3.set(near_pos, detect_pos)
-				mvec3_add(near_pos, side_vec)
-
-				local near_vis_ray = World:raycast("ray", my_pos, near_pos, "ignore_unit", ignore_units, "slot_mask", self._visibility_slotmask, "ray_type", "ai_vision", "report")
-
-				if near_vis_ray then
-					mvec3_mul(side_vec, -2)
-					mvec3_add(near_pos, side_vec)
-
-					near_vis_ray = World:raycast("ray", my_pos, near_pos, "ignore_unit", ignore_units, "slot_mask", self._visibility_slotmask, "ray_type", "ai_vision", "report")
-				end
-			end
-
-			if not near_vis_ray then
-				attention_info.nearly_visible = true
-				attention_info.last_verified_pos = mvector3.copy(near_pos)
-			end
-		end
-	end
-
-	for u_key, attention_info in pairs(all_attention_objects) do
-		if u_key ~= my_key and not detected_objects[u_key] and (not attention_info.nav_tracker or chk_vis_func(my_tracker, attention_info.nav_tracker)) then
-			local settings = attention_info.handler:get_attention(my_SO_access, AIAttentionObject.REACT_SUSPICIOUS, nil, my_team)
-
-			if settings then
-				local attention_pos = attention_info.handler:get_detection_m_pos()
-
-				if _distance_chk(attention_info.handler, settings, attention_pos) then
-					ignore_units[2] = attention_info.unit or nil
-					local vis_ray = World:raycast("ray", my_pos, attention_pos, "ignore_unit", ignore_units, "slot_mask", self._visibility_slotmask, "ray_type", "ai_vision")
-
-					if not vis_ray or vis_ray.unit:key() == u_key then
-						detected_objects[u_key] = CopLogicBase._create_detected_attention_object_data(t, self._unit, u_key, attention_info, settings)
-					end
-				end
-			end
-		end
-	end
-
-	local update_delay = 2
-
-	for u_key, attention_info in pairs(detected_objects) do
-		if t < attention_info.next_verify_t then
-			update_delay = math.min(attention_info.next_verify_t - t, update_delay)
-		else
-			ignore_units[2] = attention_info.unit or nil
-			attention_info.next_verify_t = t + (attention_info.identified and attention_info.verified and attention_info.settings.verification_interval or attention_info.settings.notice_interval or attention_info.settings.verification_interval)
-			update_delay = math.min(update_delay, attention_info.settings.verification_interval)
-
-			if not attention_info.identified then
-				local health_ratio = self:_attention_health_ratio(attention_info)
-				local objective = self:_attention_objective(attention_info)
-				local noticable = nil
-				local distance = _distance_chk(attention_info.handler, attention_info.settings, nil)
-				local skip = objective == "surrender" or health_ratio <= 0
-
-				if distance then
-					local attention_pos = attention_info.handler:get_detection_m_pos()
-					local vis_ray = World:raycast("ray", my_pos, attention_pos, "ignore_unit", ignore_units, "slot_mask", self._visibility_slotmask, "ray_type", "ai_vision", "report")
-
-					if not vis_ray then
-						noticable = true
-					end
-				end
-
-				local delta_prog = nil
-				local dt = t - attention_info.prev_notice_chk_t
-
-				if noticable and not skip then
-					local min_delay = self._tweak_data.DETECTION_DELAY[1][2]
-					local max_delay = self._tweak_data.DETECTION_DELAY[2][2]
-					local dis_ratio = (distance - self._tweak_data.DETECTION_DELAY[1][1]) / (self._tweak_data.DETECTION_DELAY[2][1] - self._tweak_data.DETECTION_DELAY[1][1])
-					local dis_mul_mod = math.lerp(min_delay, max_delay, dis_ratio)
-					local notice_delay_mul = attention_info.settings.notice_delay_mul or 1
-
-					if attention_info.settings.detection and attention_info.settings.detection.delay_mul then
-						notice_delay_mul = notice_delay_mul * attention_info.settings.detection.delay_mul
-					end
-
-					local notice_delay_modified = math.lerp(min_delay * notice_delay_mul, max_delay, dis_mul_mod)
-					delta_prog = notice_delay_modified > 0 and dt / notice_delay_modified or 1
-				else
-					delta_prog = dt * -0.125
-				end
-
-				attention_info.notice_progress = attention_info.notice_progress + delta_prog
-
-				if attention_info.notice_progress > 1 and not skip then
-					attention_info.notice_progress = nil
-					attention_info.prev_notice_chk_t = nil
-					attention_info.identified = true
-					attention_info.release_t = t + attention_info.settings.release_delay
-					attention_info.identified_t = t
-					noticable = true
-				elseif attention_info.notice_progress < 0 or skip then
-					self:_destroy_detected_attention_object_data(attention_info)
-
-					noticable = false
-				else
-					noticable = attention_info.notice_progress
-					attention_info.prev_notice_chk_t = t
-				end
-
-				if noticable ~= false and attention_info.settings.notice_clbk then
-					attention_info.settings.notice_clbk(self._unit, noticable)
-				end
-			end
-
-			if attention_info.identified then
-				update_delay = math.min(update_delay, attention_info.settings.verification_interval)
-				attention_info.nearly_visible = nil
-				local verified, vis_ray = nil
-				local attention_pos = attention_info.handler:get_detection_m_pos()
-				local dis = mvector3.distance(my_pos, attention_info.m_head_pos)
-
-				if dis < max_detection_range * 1.2 and (not attention_info.settings.max_range or dis < attention_info.settings.max_range * (attention_info.settings.detection and attention_info.settings.detection.range_mul or 1) * 1.2) then
-					local detect_pos = nil
-
-					if attention_info.is_husk_player and attention_info.unit:anim_data().crouch then
-						detect_pos = tmp_vec1
-
-						mvector3.set(detect_pos, attention_info.m_pos)
-						mvec3_add(detect_pos, tweak_data.player.stances.default.crouched.head.translation)
-					else
-						detect_pos = attention_pos
-					end
-
-					vis_ray = World:raycast("ray", my_pos, detect_pos, "ignore_unit", ignore_units, "slot_mask", self._visibility_slotmask, "ray_type", "ai_vision")
-
-					if not vis_ray then
-						verified = true
-					end
-
-					attention_info.verified = verified
-				end
-
-				attention_info.dis = dis
-				attention_info.vis_ray = vis_ray and vis_ray.dis or nil
-				local is_downed = false
-
-				if attention_info.unit:movement() and attention_info.unit:movement().downed then
-					is_downed = attention_info.unit:movement():downed()
-				end
-
-				local is_ignored_target = self:_attention_health_ratio(attention_info) <= 0 or self:_attention_objective(attention_info) == "surrender" or is_downed
-
-				if is_ignored_target then
-					self:_destroy_detected_attention_object_data(attention_info)
-				elseif verified and dis < self._tweak_data.FIRE_RANGE then
-					attention_info.release_t = nil
-					attention_info.verified_t = t
-
-					mvector3.set(attention_info.verified_pos, attention_pos)
-
-					attention_info.last_verified_pos = mvector3.copy(attention_pos)
-					attention_info.verified_dis = dis
-				elseif attention_info.has_team and my_team.foes[attention_info.unit:movement():team().id] then
-					if attention_info.criminal_record and AIAttentionObject.REACT_COMBAT <= attention_info.settings.reaction then
-						if dis > 1000 and (mvector3.distance(attention_pos, attention_info.last_verified_pos or attention_info.criminal_record.pos) > 700 or attention_info.last_verified_pos and attention_info.verified_t < t - 5) or max_detection_range < dis then
-							self:_destroy_detected_attention_object_data(attention_info)
-						else
-							update_delay = math.min(0.2, update_delay)
-							attention_info.verified_pos = mvector3.copy(attention_info.criminal_record.pos)
-							attention_info.verified_dis = dis
-
-							if vis_ray then
-								_nearly_visible_chk(attention_info, attention_pos)
-							end
-						end
-					elseif attention_info.release_t and attention_info.release_t < t then
-						self:_destroy_detected_attention_object_data(attention_info)
-					else
-						attention_info.release_t = attention_info.release_t or t + attention_info.settings.release_delay
-					end
-				elseif attention_info.release_t and attention_info.release_t < t then
-					self:_destroy_detected_attention_object_data(attention_info)
-				else
-					attention_info.release_t = attention_info.release_t or t + attention_info.settings.release_delay
-				end
-			end
-		end
-	end
-
-	self._next_detection_upd_t = t + update_delay
-end
+local is_local_vr = _G.IS_VR
 
 function SentryGunBrain:_upd_flash_grenade(t)
 	if not self._tweak_data.FLASH_GRENADE then
@@ -259,39 +58,1554 @@ function SentryGunBrain:_upd_flash_grenade(t)
 		return
 	end
 
+	if managers.groupai:state():is_cs_grenade_active() then
+		return
+	end
+
 	if self._next_flash_grenade_chk_t and t < self._next_flash_grenade_chk_t then
 		return
 	end
 
 	local grenade_tweak = self._tweak_data.FLASH_GRENADE
 	local check_t = self._next_flash_grenade_chk_t or t
-	self._next_flash_grenade_chk_t = check_t + math.lerp(grenade_tweak.check_interval[1], grenade_tweak.check_interval[2], math.random())
+	self._next_flash_grenade_chk_t = check_t + math_lerp(grenade_tweak.check_interval[1], grenade_tweak.check_interval[2], math_random())
 
-	if grenade_tweak.chance < math.random() then
+	if grenade_tweak.chance < math_random() then
 		return
 	end
 
-	local max_range = grenade_tweak.range
-	local m_pos = self._ext_movement:m_head_pos()
-	local ray_to = mvector3.copy(m_pos)
+	local my_pos = self._ext_movement:m_head_pos()
+	local ray_to = mvec3_cpy(my_pos)
 
-	mvector3.set_z(ray_to, ray_to.z - 500)
+	mvec3_set_z(ray_to, ray_to.z - 500)
 
-	local ground_ray = World:raycast("ray", m_pos, ray_to, "slot_mask", managers.slot:get_mask("statics"))
+	local ground_ray = self._unit:raycast("ray", my_pos, ray_to, "slot_mask", managers.slot:get_mask("statics"))
 
 	if ground_ray then
-		self._grenade_m_pos = mvector3.copy(ground_ray.hit_position)
+		self._grenade_m_pos = mvec3_cpy(ground_ray.hit_position)
 
-		mvector3.set_z(self._grenade_m_pos, self._grenade_m_pos.z + 3)
+		mvec3_set_z(self._grenade_m_pos, self._grenade_m_pos.z + 3)
+		
+		local max_range_sq = grenade_tweak.range * grenade_tweak.range
 
 		for u_key, attention_info in pairs(self._detected_attention_objects) do
-			if attention_info.criminal_record and attention_info.identified and attention_info.last_verified_pos and mvec3_dist_sq(self._grenade_m_pos, attention_info.last_verified_pos) < max_range * max_range then
-				managers.groupai:state():detonate_cs_grenade(self._grenade_m_pos, m_pos, grenade_tweak.effect_duration)
+			if attention_info.identified and attention_info.criminal_record and attention_info.is_person and mvec3_dist_sq(self._grenade_m_pos, attention_info.m_pos) < max_range_sq then
+				managers.groupai:state():detonate_cs_grenade(self._grenade_m_pos, my_pos, grenade_tweak.effect_duration)
 
-				self._next_flash_grenade_chk_t = check_t + math.lerp(grenade_tweak.quiet_time[1], grenade_tweak.quiet_time[2], math.random())
+				self._next_flash_grenade_chk_t = check_t + math_lerp(grenade_tweak.quiet_time[1], grenade_tweak.quiet_time[2], math_random())
 
 				break
 			end
 		end
+	end
+end
+
+function SentryGunBrain:_upd_fire(t)
+	if self._ext_movement:is_activating() or self._ext_movement:is_inactivating() or self._idle then
+		if self._firing then
+			self:stop_autofire()
+		end
+
+		return
+	end
+
+	local attention = self._ext_movement:attention()
+
+	if self._unit:weapon():out_of_ammo() then
+		if self._unit:weapon():can_auto_reload() then
+			if self._firing then
+				self:stop_autofire()
+			end
+
+			if not self._ext_movement:rearming() then
+				self._ext_movement:rearm()
+			end
+		elseif not self._unit:base():waiting_for_refill() then
+			self:switch_off()
+		end
+	elseif self._ext_movement:rearming() then
+		self._ext_movement:complete_rearming()
+	elseif attention and attention.reaction and REACT_SHOOT <= attention.reaction and not self._ext_movement:warming_up(t) then
+		local target_pos = self:get_target_base_pos(attention)
+
+		if not target_pos then
+			if self._firing then
+				self:stop_autofire()
+			end
+
+			return
+		end
+
+		local my_pos = self._ext_movement:m_head_pos()
+
+		if attention.unit and not self:_ignore_shield(my_pos, target_pos) then
+			if self._firing then
+				self:stop_autofire()
+			end
+
+			return
+		end
+
+		if not self:is_target_on_sight(my_pos, target_pos, attention.unit) then
+			if self._firing then
+				self:stop_autofire()
+			end
+
+			return
+		end
+
+		local expend_ammo = Network:is_server()
+		local damage_player = attention.unit:base() and attention.unit:base().is_local_player
+
+		if self._firing then
+			self._unit:weapon():trigger_held(false, expend_ammo, damage_player, attention.unit)
+		else
+			mvec3_dir(tmp_vec1, my_pos, target_pos)
+
+			local max_dot = self._tweak_data.KEEP_FIRE_ANGLE
+			local sharpness_mul = self._shaprness_mul or 1
+			max_dot = math_min(0.99, 1 - (1 - max_dot) * sharpness_mul)
+
+			if max_dot < mvec3_dot(tmp_vec1, self._ext_movement:m_head_fwd()) then
+				self._unit:weapon():start_autofire()
+				self._unit:weapon():trigger_held(false, expend_ammo, damage_player, attention.unit)
+
+				self._firing = true
+			end
+		end
+	elseif self._firing then
+		self:stop_autofire()
+	end
+end
+
+function SentryGunBrain:on_detected_attention_obj_modified(modified_u_key)
+	local attention_info = self._detected_attention_objects[modified_u_key]
+
+	if not attention_info then
+		return
+	end
+
+	local new_settings = attention_info.handler:get_attention(self._SO_access, REACT_SUSPICIOUS, nil, self._unit:movement():team())
+	local old_settings = attention_info.settings
+
+	if new_settings == old_settings then
+		return
+	end
+
+	local old_notice_clbk = not attention_info.identified and old_settings.notice_clbk ~= "clbk_notice_sneak" and old_settings.notice_clbk
+
+	if new_settings then
+		attention_info.settings = new_settings
+		attention_info.stare_expire_t = nil
+		attention_info.pause_expire_t = nil
+
+		if attention_info.unit:character_damage() and attention_info.unit:character_damage().dead then
+			attention_info.is_alive = not attention_info.unit:character_damage():dead()
+		end
+	else
+		self:_destroy_detected_attention_object_data(attention_info)
+
+		if self._attention_obj and self._attention_obj.u_key == modified_u_key then
+			self._ext_movement:set_attention()
+		end
+	end
+
+	if old_notice_clbk then
+		if not new_settings or not new_settings.notice_clbk then
+			old_notice_clbk(self._unit, false)
+		end
+	end
+end
+
+
+
+if deathvox:IsTotalCrackdownEnabled() then
+
+	local _setup_attention_handler_original = SentryGunBrain._setup_attention_handler
+	function SentryGunBrain:_setup_attention_handler()
+		if not self._unit:character_damage()._ignore_client_damage then
+			_setup_attention_handler_original(self)
+		end
+	end
+
+	function SentryGunBrain:switch_off()
+		local is_server = Network:is_server()
+
+		if is_server then
+			self._ext_movement:set_attention()
+		end
+
+		self:set_active(false)
+		self._ext_movement:switch_off()
+		self._unit:set_slot(26)
+
+		if managers.groupai:state():all_criminals()[self._unit:key()] then
+			managers.groupai:state():on_criminal_neutralized(self._unit)
+		end
+
+		if is_server and self._attention_handler then
+			PlayerMovement.set_attention_settings(self, nil)
+		end
+
+		self._unit:base():unregister()
+
+		self._attention_obj = nil
+	end
+
+	function SentryGunBrain:_get_tweak_data() --custom method
+		if self._unit:weapon() then 
+			return self._unit:weapon():_get_tweak_data()
+		end
+
+		return self._name_id and tweak_data.weapon[self._name_id] or tweak_data.weapon.sentry_gun
+	end
+
+	function SentryGunBrain:update(unit, t, dt)
+		if self._unit:base():is_owner() or Network:is_server() then
+			self:_upd_detection(t)
+			self:_select_focus_attention(t)
+		end
+		if Network:is_server() then
+			self:_upd_flash_grenade(t)
+			self:_upd_go_idle(t)
+		end
+
+		self:_upd_fire(t)
+	end
+
+--[[
+	function SentryGunBrain:switch_on()
+		if self._active or self._unit:character_damage():dead() then
+			return
+		end
+
+		if self._unit:damage():has_sequence("laser_activate") then
+			self._unit:damage():run_sequence_simple("laser_activate")
+		end
+		
+		self:set_active(true)
+		self._ext_movement:switch_on()
+		self._unit:set_slot(25)
+		self._unit:base():register()
+	end
+--]]
+
+	function SentryGunBrain:_upd_detection(t)
+		if self._ext_movement:is_activating() or self._ext_movement:is_inactivating() then
+			return
+		end
+
+		if t < self._next_detection_upd_t then
+			return
+		end
+
+		local my_SO_access_str = self._SO_access_str
+		local my_SO_access = self._SO_access
+		local detected_objects = self._detected_attention_objects
+		local my_key = self._unit:key()
+		local my_team = self._ext_movement:team()
+		local my_pos = self._ext_movement:m_head_pos()
+		local my_tracker = self._ext_movement:nav_tracker()
+		local chk_vis_func = my_tracker.check_visibility
+		local vis_mask = self._visibility_slotmask
+		local all_attention_objects = managers.groupai:state():get_AI_attention_objects_by_filter(my_SO_access_str, my_team)
+		local parent_unit = alive(self._unit:parent()) and self._unit:parent()
+
+		local td = self:_get_tweak_data()
+		local detection_preset = td.DETECTION_DELAY
+		local firing_range = td.FIRE_RANGE
+		local max_detection_range = td.DETECTION_RANGE
+		local firemode = self._unit:weapon():_get_sentry_firemode()
+
+		if firemode == "overwatch" then
+			firing_range = SentryControlMenu.tweakdata.OVERWATCH_DETECTION_RANGE
+			max_detection_range = SentryControlMenu.tweakdata.OVERWATCH_DETECTION_RANGE
+		end
+
+		for u_key, attention_info in pairs(all_attention_objects) do
+			if u_key ~= my_key and not detected_objects[u_key] then
+				local skip = nil
+				local att_unit = attention_info.unit
+				local att_mov_ext = att_unit:movement()
+
+				if firemode == "overwatch" then
+					local att_base_ext = attention_info.unit:base()
+
+					--if overwatch firemode, targeted enemy must be a sniper in order to notice them
+					if not att_base_ext or att_base_ext._tweak_table ~= "sniper" and att_base_ext._tweak_table ~= "deathvox_sniper" then
+						skip = true
+					end
+				end
+
+				if not skip and att_mov_ext then
+					if att_mov_ext.downed and att_mov_ext:downed() then
+						skip = true
+					elseif att_mov_ext.is_cuffed and att_mov_ext:is_cuffed() then
+						skip = true
+					end
+				end
+
+				if not skip then
+					local att_dmg_ext = att_unit:character_damage()
+
+					if att_dmg_ext then
+						if att_dmg_ext.dead and att_dmg_ext:dead() or att_dmg_ext.health_ratio and att_dmg_ext:health_ratio() <= 0 then
+							skip = true
+						end
+					end
+
+					if not skip then
+						local att_brain_ext = att_unit:brain()
+
+						if att_brain_ext then
+							if att_brain_ext.objective and att_brain_ext:objective() == "surrender" or att_brain_ext.surrendered and att_brain_ext:surrendered() then
+								skip = true
+							end
+						end
+					end
+				end
+
+				if not skip then
+					if not attention_info.nav_tracker or chk_vis_func(my_tracker, attention_info.nav_tracker) then
+						local settings = attention_info.handler:get_attention(my_SO_access, REACT_SUSPICIOUS, nil, my_team)
+
+						if settings then
+							local distance = nil
+							local attention_pos = attention_info.handler:get_detection_m_pos()
+							local dis_sq = mvec3_dist_sq(my_pos, attention_pos)
+							local max_dis = max_detection_range
+
+							if settings.max_range then
+								max_dis = math_min(max_dis, settings.max_range)
+							end
+
+							if settings.detection and settings.detection.range_mul then
+								max_dis = max_dis * settings.detection.range_mul
+							end
+
+							local max_dis_sq = max_dis * max_dis
+
+							if dis_sq < max_dis_sq then
+								distance = math_sqrt(dis_sq)
+
+								local vis_ray = nil
+
+								if parent_unit then
+									vis_ray = self._unit:raycast("ray", my_pos, attention_pos, "slot_mask", vis_mask, "ignore_unit", parent_unit, "ray_type", "ai_vision")
+								else
+									vis_ray = self._unit:raycast("ray", my_pos, attention_pos, "slot_mask", vis_mask, "ray_type", "ai_vision")
+								end
+
+								if not vis_ray or vis_ray.unit:key() == u_key then
+									local visible_data = {
+										visible_dis_multiplier = distance,
+										visible_ray = vis_ray
+									}
+
+									detected_objects[u_key] = CopLogicBase._create_detected_attention_object_data(t, self._unit, u_key, attention_info, settings, nil, visible_data)
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+
+		local update_delay = 2
+		local health_ratio_chk_func = self._attention_health_ratio
+		local objective_chk_func = self._attention_objective
+
+		for u_key, attention_info in pairs(detected_objects) do
+			if not attention_info.visible_in_this_instance and t < attention_info.next_verify_t then
+				update_delay = math_min(attention_info.next_verify_t - t, update_delay)
+			else
+				local att_mov_ext = attention_info.unit:movement()
+				local skip = nil
+
+				if not attention_info.is_alive then
+					skip = true
+				else
+					if firemode == "overwatch" then
+						local att_base_ext = attention_info.unit:base()
+
+						--if overwatch firemode, targeted enemy must be a sniper in order to notice them
+						if not att_base_ext or att_base_ext._tweak_table ~= "sniper" and att_base_ext._tweak_table ~= "deathvox_sniper" then
+							skip = true
+						end
+					end
+
+					if not skip and att_mov_ext then
+						if att_mov_ext.downed and att_mov_ext:downed() then
+							skip = true
+						elseif att_mov_ext.is_cuffed and att_mov_ext:is_cuffed() then
+							skip = true
+						end
+					end
+
+					if not skip then
+						if health_ratio_chk_func(self, attention_info) <= 0 or objective_chk_func(self, attention_info) == "surrender" then
+							skip = true
+						else
+							local att_brain_ext = attention_info.unit:brain()
+
+							if att_brain_ext and att_brain_ext.surrendered and att_brain_ext:surrendered() then
+								skip = true
+							end
+						end
+					end
+				end
+
+				if skip then
+					self:_destroy_detected_attention_object_data(attention_info)
+				else
+					local settings = attention_info.settings
+					local verify_interval = nil
+
+					if attention_info.identified and attention_info.verified then
+						verify_interval = settings.verification_interval
+					else
+						verify_interval = settings.notice_interval or settings.verification_interval
+					end
+
+					attention_info.next_verify_t = t + verify_interval
+					update_delay = math_min(update_delay, verify_interval)
+
+					if not attention_info.identified then
+						local noticable, distance = nil
+
+						if attention_info.visible_in_this_instance then
+							noticable = true
+							distance = attention_info.visible_dis_multiplier
+						else
+							local attention_pos = attention_info.m_head_pos
+							local dis_sq = mvec3_dist_sq(my_pos, attention_pos)
+							local max_dis = max_detection_range
+
+							if settings.max_range then
+								max_dis = math_min(max_dis, settings.max_range)
+							end
+
+							if settings.detection and settings.detection.range_mul then
+								max_dis = max_dis * settings.detection.range_mul
+							end
+
+							local max_dis_sq = max_dis * max_dis
+
+							if dis_sq < max_dis_sq then
+								distance = math_sqrt(dis_sq)
+
+								local vis_ray = attention_info.visible_ray
+
+								if not vis_ray then
+									if parent_unit then
+										vis_ray = self._unit:raycast("ray", my_pos, attention_pos, "slot_mask", vis_mask, "ignore_unit", parent_unit, "ray_type", "ai_vision")
+									else
+										vis_ray = self._unit:raycast("ray", my_pos, attention_pos, "slot_mask", vis_mask, "ray_type", "ai_vision")
+									end
+								end
+
+								if not vis_ray or vis_ray.unit:key() == u_key then
+									noticable = true
+									attention_info.visible_in_this_instance = true
+								end
+
+								if not attention_info.visible_ray then
+									attention_info.visible_ray = vis_ray
+								end
+							end
+						end
+
+						local delta_prog = nil
+						local dt = t - attention_info.prev_notice_chk_t
+
+						if noticable then
+							local min_delay = detection_preset[1][2]
+							local max_delay = detection_preset[2][2]
+							local dis_mul_mod = math_clamp((distance - detection_preset[1][1]) / (detection_preset[2][1] - detection_preset[1][1]), 0, 1)
+							local notice_delay_mul = settings.notice_delay_mul or 1
+
+							if settings.detection and settings.detection.delay_mul then
+								notice_delay_mul = notice_delay_mul * settings.detection.delay_mul
+							end
+
+							local notice_delay_modified = math_lerp(min_delay * notice_delay_mul, max_delay, dis_mul_mod)
+							delta_prog = notice_delay_modified > 0 and dt / notice_delay_modified or 1
+						else
+							delta_prog = dt * -0.125
+						end
+
+						attention_info.notice_progress = attention_info.notice_progress + delta_prog
+
+						if attention_info.notice_progress > 1 then
+							attention_info.notice_progress = nil
+							attention_info.prev_notice_chk_t = nil
+							attention_info.identified = true
+							attention_info.release_t = t + settings.release_delay
+							attention_info.identified_t = t
+							noticable = true
+
+						elseif attention_info.notice_progress < 0 then
+							self:_destroy_detected_attention_object_data(attention_info)
+
+							noticable = false
+						else
+							noticable = attention_info.notice_progress
+							attention_info.prev_notice_chk_t = t
+						end
+
+						if noticable ~= false and settings.notice_clbk and settings.notice_clbk ~= "clbk_notice_sneak" then
+							settings.notice_clbk(self._unit, noticable)
+						end
+					end
+
+					if attention_info.identified then
+						attention_info.next_verify_t = t + settings.verification_interval
+						update_delay = math_min(update_delay, settings.verification_interval)
+						attention_info.nearly_visible = nil
+
+						local verified, vis_ray = nil
+						local attention_pos = attention_info.m_head_pos
+						local dis = mvec3_dis(my_pos, attention_pos)
+						local max_dis = max_detection_range
+
+						if dis < max_dis * 1.2 then
+							if settings.max_range then
+								max_dis = math_min(max_dis, settings.max_range)
+							end
+
+							if settings.detection and settings.detection.range_mul then
+								max_dis = max_dis * settings.detection.range_mul
+							end
+
+							if dis < max_dis * 1.2 then
+								if attention_info.visible_in_this_instance then
+									verified = true
+									vis_ray = attention_info.visible_ray
+								else
+									vis_ray = attention_info.visible_ray
+
+									if not vis_ray then
+										if parent_unit then
+											vis_ray = self._unit:raycast("ray", my_pos, attention_pos, "slot_mask", vis_mask, "ignore_unit", parent_unit, "ray_type", "ai_vision")
+										else
+											vis_ray = self._unit:raycast("ray", my_pos, attention_pos, "slot_mask", vis_mask, "ray_type", "ai_vision")
+										end
+									end
+
+									if not vis_ray or vis_ray.unit:key() == u_key then
+										verified = true
+									end
+								end
+							end
+						end
+
+						attention_info.verified = verified
+						attention_info.dis = dis
+						attention_info.vis_ray = vis_ray
+
+						if verified and dis < firing_range then
+							attention_info.release_t = nil
+							attention_info.verified_t = t
+							attention_info.verified_dis = dis
+
+							mvec3_set(attention_info.verified_pos, attention_pos)
+
+							if attention_info.last_verified_pos then
+								mvec3_set(attention_info.last_verified_pos, attention_pos)
+							else
+								attention_info.last_verified_pos = mvec3_cpy(attention_pos)
+							end
+						elseif attention_info.has_team and my_team.foes[att_mov_ext:team().id] and REACT_COMBAT <= settings.reaction then
+							local destroyed_att_data = nil
+
+							if attention_info.criminal_record then
+								if dis > 1000 and attention_info.release_t and attention_info.release_t < t then
+									self:_destroy_detected_attention_object_data(attention_info)
+
+									destroyed_att_data = true
+								else
+									update_delay = math_min(0.2, update_delay)
+									attention_info.next_verify_t = math_min(0.2, attention_info.next_verify_t)
+
+									mvec3_set(attention_info.verified_pos, attention_pos)
+									attention_info.verified_dis = dis
+								end
+							elseif attention_info.release_t and attention_info.release_t < t then
+								self:_destroy_detected_attention_object_data(attention_info)
+
+								destroyed_att_data = true
+							else
+								attention_info.release_t = attention_info.release_t or t + settings.release_delay
+							end
+
+							if not destroyed_att_data then
+								if vis_ray and attention_info.is_person and attention_info.verified_t and dis < 2000 then
+									local required_last_seen_t = attention_info.criminal_record and 3 or settings.release_delay
+
+									if t - attention_info.verified_t < required_last_seen_t or attention_info.nearly_visible_t and t - attention_info.nearly_visible_t < required_last_seen_t then
+										local ignore_units = nil
+
+										if parent_unit then
+											ignore_units = {
+												attention_info.unit,
+												parent_unit
+											}
+										else
+											ignore_units = attention_info.unit
+										end
+
+										local pos_chk = tmp_vec3
+
+										if attention_info.unit:movement() and attention_info.unit:movement().m_com then
+											mvec3_set(pos_chk, attention_info.unit:movement():m_com())
+										else
+											mvec3_set(pos_chk, attention_pos)
+										end
+
+										if self:is_target_on_sight(my_pos, pos_chk, ignore_units) then
+											attention_info.nearly_visible = true
+											attention_info.nearly_visible_t = t
+											attention_info.release_t = nil
+
+											if attention_info.last_verified_pos then
+												mvec3_set(attention_info.last_verified_pos, attention_pos)
+											else
+												attention_info.last_verified_pos = mvec3_cpy(attention_pos)
+											end
+										end
+									end
+								end
+
+								if attention_info.criminal_record and not attention_info.nearly_visible then
+									attention_info.release_t = attention_info.release_t or t + 3
+								end
+							end
+						elseif attention_info.release_t and attention_info.release_t < t then
+							self:_destroy_detected_attention_object_data(attention_info)
+						else
+							attention_info.release_t = attention_info.release_t or t + settings.release_delay
+						end
+					end
+				end
+			end
+
+			attention_info.visible_in_this_instance = nil
+			attention_info.visible_angle = nil
+			attention_info.visible_dis_multiplier = nil
+			attention_info.visible_ray = nil
+		end
+
+		self._next_detection_upd_t = t + update_delay
+	end
+
+	function SentryGunBrain:_select_focus_attention(t)
+		local td = self:_get_tweak_data()
+		local DETECTION_RANGE = td.DETECTION_RANGE
+		local firemode = self._unit:weapon():_get_sentry_firemode()
+
+		if firemode == "overwatch" then 
+			DETECTION_RANGE = SentryControlMenu.tweakdata.OVERWATCH_DETECTION_RANGE
+		end
+
+		local current_focus = self._attention_obj
+		local current_pos = self._ext_movement:m_head_pos()
+		local current_fwd = nil
+
+		if current_focus then
+			current_fwd = tmp_vec2
+
+			mvec3_dir(current_fwd, current_pos, current_focus.m_head_pos)
+		else
+			current_fwd = self._ext_movement:m_head_fwd()
+		end
+
+		local best_focus_attention, best_focus_weight = nil
+		local best_focus_reaction = 0
+		local health_ratio_chk_func = self._attention_health_ratio
+		local objective_chk_func = self._attention_objective
+
+		for u_key, attention_info in pairs(self._detected_attention_objects) do
+			if best_focus_reaction < attention_info.reaction or best_focus_reaction == attention_info.reaction then
+				local remove_obj = nil
+				local att_mov_ext = attention_info.unit:movement()
+
+				if not attention_info.is_alive then
+					remove_obj = true
+				else
+					if firemode == "overwatch" then
+						local att_base_ext = attention_info.unit:base()
+
+						--if overwatch firemode, targeted enemy must be a sniper in order to notice them
+						if not att_base_ext or att_base_ext._tweak_table ~= "sniper" and att_base_ext._tweak_table ~= "deathvox_sniper" then
+							skip = true
+						end
+					end
+
+					if not remove_obj and att_mov_ext then
+						if att_mov_ext.downed and att_mov_ext:downed() then
+							remove_obj = true
+						elseif att_mov_ext.is_cuffed and att_mov_ext:is_cuffed() then
+							remove_obj = true
+						end
+					end
+
+					if not remove_obj then
+						if health_ratio_chk_func(self, attention_info) <= 0 or objective_chk_func(self, attention_info) == "surrender" then
+							remove_obj = true
+						else
+							local att_brain_ext = attention_info.unit:brain()
+
+							if att_brain_ext and att_brain_ext.surrendered and att_brain_ext:surrendered() then
+								remove_obj = true
+							end
+						end
+					end
+				end
+
+				if remove_obj then
+					self:_destroy_detected_attention_object_data(attention_info)
+				elseif attention_info.identified then
+					local weight = 1
+
+					if not attention_info.verified then
+						if attention_info.verified_t and t - attention_info.verified_t < 3 then
+							if not attention_info.nearly_visible then
+								weight = weight * 0.01
+							end
+
+							local max_duration = 3
+							local elapsed_t = t - attention_info.verified_t
+							weight = weight * math_lerp(1, 0.6, elapsed_t / max_duration)
+						else
+							weight = 0
+						end
+					end
+
+					if weight > 0 then
+						if attention_info.dmg_t and t - attention_info.dmg_t < 5 then
+							local max_duration = 5
+							local elapsed_t = t - attention_info.dmg_t
+							weight = weight * math_lerp(1.2, 1, elapsed_t / max_duration)
+						end
+
+						local max_dis = DETECTION_RANGE
+						local dis = mvec3_dir(tmp_vec1, current_pos, attention_info.m_head_pos)
+						local dis_weight = math_max(0, (max_dis - dis) / max_dis)
+						weight = weight * dis_weight
+
+						if weight > 0 then
+							local dot_weight = 1 + mvec3_dot(tmp_vec1, current_fwd)
+							dot_weight = dot_weight * dot_weight * dot_weight
+							weight = weight * dot_weight
+
+							if REACT_SHOOT > attention_info.reaction then
+								weight = weight * 0.001
+							elseif attention_info.verified or attention_info.nearly_visible then
+								if not self:_ignore_shield(current_pos, attention_info.m_head_pos) then
+									weight = weight * 0.01
+								elseif attention_info.verified then
+									if attention_info.settings.weight_mul then
+										weight = weight * attention_info.settings.weight_mul
+									end
+
+									if attention_info.is_local_player then
+										local att_cur_state = att_mov_ext:current_state()
+
+										if not att_cur_state._moving and att_cur_state:ducking() then
+											weight = weight * managers.player:upgrade_value("player", "stand_still_crouch_camouflage_bonus", 1)
+										end
+
+										if managers.player:has_activate_temporary_upgrade("temporary", "chico_injector") and managers.player:upgrade_value("player", "chico_preferred_target", false) then
+											weight = weight * 1000
+										end
+
+										if is_local_vr then
+											local distance = attention_info.dis
+											local vr_long_range_dmg_reduction = tweak_data.vr.long_range_damage_reduction_distance
+
+											if vr_long_range_dmg_reduction[1] < distance then
+												local mul = math_clamp(distance / vr_long_range_dmg_reduction[2] / 2, 0, 1) + 1
+												weight = weight * mul
+											end
+										end
+									elseif attention_info.is_husk_player then
+										local att_base_ext = attention_info.unit:base()
+
+										if att_base_ext.upgrade_value then
+											if att_mov_ext and not att_mov_ext._move_data and att_mov_ext._pose_code and att_mov_ext._pose_code == 2 then
+												local crouch_and_still_weight_mul = att_base_ext:upgrade_value("player", "stand_still_crouch_camouflage_bonus")
+
+												if crouch_and_still_weight_mul then
+													weight = weight * crouch_and_still_weight_mul
+												end
+											end
+
+											if att_base_ext.has_activate_temporary_upgrade and att_base_ext:has_activate_temporary_upgrade("temporary", "chico_injector") and att_base_ext:upgrade_value("player", "chico_preferred_target") then
+												weight = weight * 1000
+											end
+
+											if att_mov_ext.is_vr and att_mov_ext:is_vr() then
+												local distance = attention_info.dis
+												local vr_long_range_dmg_reduction = tweak_data.vr.long_range_damage_reduction_distance
+
+												if vr_long_range_dmg_reduction[1] < distance then
+													local mul = math_clamp(distance / vr_long_range_dmg_reduction[2] / 2, 0, 1) + 1
+													weight = weight * mul
+												end
+											end
+										end
+									end
+								end
+							end
+						end
+					end
+
+					if not best_focus_weight or best_focus_weight < weight then
+						best_focus_weight = weight
+						best_focus_attention = attention_info
+						best_focus_reaction = attention_info.reaction
+					end
+				end
+			end
+		end
+
+		if current_focus ~= best_focus_attention then
+			if best_focus_attention then
+				local attention_data = {
+					unit = best_focus_attention.unit,
+					u_key = best_focus_attention.u_key,
+					handler = best_focus_attention.handler,
+					reaction = best_focus_attention.reaction
+				}
+
+				self._ext_movement:set_attention(attention_data)
+			else
+				self._ext_movement:set_attention()
+			end
+
+			self._attention_obj = best_focus_attention
+		end
+	end
+
+	function SentryGunBrain:is_target_on_sight(my_pos, target_base_pos, units_to_ignore)
+		if not target_base_pos then
+			return false
+		end
+
+		local td = self:_get_tweak_data()
+		local fire_range_sq = td.FIRE_RANGE * td.FIRE_RANGE
+
+		local firemode = self._unit:weapon():_get_sentry_firemode()
+
+		if firemode ~= "overwatch" then
+			if firemode == "manual" then
+				fire_range_sq = fire_range_sq * 4
+			end
+
+			if fire_range_sq < mvec3_dist_sq(my_pos, target_base_pos) then
+				return false
+			end
+		end
+
+		local target_pos_same_height = mvec3_cpy(target_base_pos)
+
+		mvec3_set_z(target_pos_same_height, mvec3_z(my_pos))
+
+		local dir_to_target = mvec3_cpy(my_pos)
+
+		mvec3_sub(dir_to_target, target_pos_same_height)
+		mvec3_norm(dir_to_target)
+
+		local right_offset = Vector3()
+
+		mvec3_cross(right_offset, dir_to_target, math_up)
+
+		local left_offset = mvec3_cpy(right_offset)
+
+		mvec3_mul(right_offset, self.attention_target_offset_hor)
+		mvec3_mul(left_offset, -self.attention_target_offset_hor)
+		mvec3_set_z(right_offset, mvec3_z(right_offset) + self.attention_target_offset_ver)
+		mvec3_set_z(left_offset, mvec3_z(left_offset) + self.attention_target_offset_ver)
+
+		local offsets = {
+			Vector3(0, 0, 0),
+			right_offset,
+			left_offset
+		}
+		local target_pos = Vector3()
+		local attention, ignore_units = nil
+
+		if units_to_ignore then
+			ignore_units = units_to_ignore
+		end
+
+		for i, offset in ipairs(offsets) do
+			mvec3_set(target_pos, target_base_pos)
+			mvec3_add(target_pos, offset)
+
+			local vis_ray = nil
+
+			if ignore_units then
+				vis_ray = self._unit:raycast("ray", my_pos, target_pos, "slot_mask", self._visibility_slotmask, "ignore_unit", ignore_units, "ray_type", "ai_vision", "report")
+			else
+				vis_ray = self._unit:raycast("ray", my_pos, target_pos, "slot_mask", self._visibility_slotmask, "ray_type", "ai_vision", "report")
+			end
+
+			if not vis_ray then
+				return true
+			end
+		end
+
+		return false
+	end
+
+	function SentryGunBrain:_ignore_shield(my_pos, target_pos)
+		local ammo_type = self._unit:weapon():_get_ammo_type()
+
+		if ammo_type == "ap" or ammo_type == "he" then
+			return true
+		end
+
+		local hit_shield = self._unit:raycast("ray", my_pos, target_pos, "slot_mask", self._shield_check, "report")
+
+		if hit_shield then
+			return false
+		end
+
+		return true
+	end
+
+
+else	
+
+	function SentryGunBrain:_upd_detection(t)
+		if self._ext_movement:is_activating() or self._ext_movement:is_inactivating() then
+			return
+		end
+
+		if t < self._next_detection_upd_t then
+			return
+		end
+
+		local my_SO_access_str = self._SO_access_str
+		local my_SO_access = self._SO_access
+		local detected_objects = self._detected_attention_objects
+		local my_key = self._unit:key()
+		local my_team = self._ext_movement:team()
+		local my_pos = self._ext_movement:m_head_pos()
+		local my_tracker = self._ext_movement:nav_tracker()
+		local chk_vis_func = my_tracker.check_visibility
+		local firing_range = self._tweak_data.FIRE_RANGE
+		local max_detection_range = self._tweak_data.DETECTION_RANGE
+		local detection_preset = self._tweak_data.DETECTION_DELAY
+		local vis_mask = self._visibility_slotmask
+		local all_attention_objects = managers.groupai:state():get_AI_attention_objects_by_filter(my_SO_access_str, my_team)
+		local parent_unit = alive(self._unit:parent()) and self._unit:parent()
+
+		for u_key, attention_info in pairs(all_attention_objects) do
+			if u_key ~= my_key and not detected_objects[u_key] then
+				local skip = nil
+				local att_unit = attention_info.unit
+				local att_mov_ext = att_unit:movement()
+
+				if att_mov_ext then
+					if att_mov_ext.downed and att_mov_ext:downed() then
+						skip = true
+					elseif att_mov_ext.is_cuffed and att_mov_ext:is_cuffed() then
+						skip = true
+					end
+				end
+
+				if not skip then
+					local att_dmg_ext = att_unit:character_damage()
+
+					if att_dmg_ext then
+						if att_dmg_ext.dead and att_dmg_ext:dead() or att_dmg_ext.health_ratio and att_dmg_ext:health_ratio() <= 0 then
+							skip = true
+						end
+					end
+
+					if not skip then
+						local att_brain_ext = att_unit:brain()
+
+						if att_brain_ext then
+							if att_brain_ext.objective and att_brain_ext:objective() == "surrender" or att_brain_ext.surrendered and att_brain_ext:surrendered() then
+								skip = true
+							end
+						end
+					end
+				end
+
+				if not skip then
+					if not attention_info.nav_tracker or chk_vis_func(my_tracker, attention_info.nav_tracker) then
+						local settings = attention_info.handler:get_attention(my_SO_access, REACT_SUSPICIOUS, nil, my_team)
+
+						if settings then
+							local distance = nil
+							local attention_pos = attention_info.handler:get_detection_m_pos()
+							local dis_sq = mvec3_dist_sq(my_pos, attention_pos)
+							local max_dis = max_detection_range
+
+							if settings.max_range then
+								max_dis = math_min(max_dis, settings.max_range)
+							end
+
+							if settings.detection and settings.detection.range_mul then
+								max_dis = max_dis * settings.detection.range_mul
+							end
+
+							local max_dis_sq = max_dis * max_dis
+
+							if dis_sq < max_dis_sq then
+								distance = math_sqrt(dis_sq)
+
+								local vis_ray = nil
+
+								if parent_unit then
+									vis_ray = self._unit:raycast("ray", my_pos, attention_pos, "slot_mask", vis_mask, "ignore_unit", parent_unit, "ray_type", "ai_vision")
+								else
+									vis_ray = self._unit:raycast("ray", my_pos, attention_pos, "slot_mask", vis_mask, "ray_type", "ai_vision")
+								end
+
+								if not vis_ray or vis_ray.unit:key() == u_key then
+									local visible_data = {
+										visible_dis_multiplier = distance,
+										visible_ray = vis_ray
+									}
+
+									detected_objects[u_key] = CopLogicBase._create_detected_attention_object_data(t, self._unit, u_key, attention_info, settings, nil, visible_data)
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+
+		local update_delay = 2
+		local health_ratio_chk_func = self._attention_health_ratio
+		local objective_chk_func = self._attention_objective
+
+		for u_key, attention_info in pairs(detected_objects) do
+			if not attention_info.visible_in_this_instance and t < attention_info.next_verify_t then
+				update_delay = math_min(attention_info.next_verify_t - t, update_delay)
+			else
+				local att_mov_ext = attention_info.unit:movement()
+				local skip = nil
+
+				if not attention_info.is_alive then
+					skip = true
+				else
+					if att_mov_ext then
+						if att_mov_ext.downed and att_mov_ext:downed() then
+							skip = true
+						elseif att_mov_ext.is_cuffed and att_mov_ext:is_cuffed() then
+							skip = true
+						end
+					end
+
+					if not skip then
+						if health_ratio_chk_func(self, attention_info) <= 0 or objective_chk_func(self, attention_info) == "surrender" then
+							skip = true
+						else
+							local att_brain_ext = attention_info.unit:brain()
+
+							if att_brain_ext and att_brain_ext.surrendered and att_brain_ext:surrendered() then
+								skip = true
+							end
+						end
+					end
+				end
+
+				if skip then
+					self:_destroy_detected_attention_object_data(attention_info)
+				else
+					local settings = attention_info.settings
+					local verify_interval = nil
+
+					if attention_info.identified and attention_info.verified then
+						verify_interval = settings.verification_interval
+					else
+						verify_interval = settings.notice_interval or settings.verification_interval
+					end
+
+					attention_info.next_verify_t = t + verify_interval
+					update_delay = math_min(update_delay, verify_interval)
+
+					if not attention_info.identified then
+						local noticable, distance = nil
+
+						if attention_info.visible_in_this_instance then
+							noticable = true
+							distance = attention_info.visible_dis_multiplier
+						else
+							local attention_pos = attention_info.m_head_pos
+							local dis_sq = mvec3_dist_sq(my_pos, attention_pos)
+							local max_dis = max_detection_range
+
+							if settings.max_range then
+								max_dis = math_min(max_dis, settings.max_range)
+							end
+
+							if settings.detection and settings.detection.range_mul then
+								max_dis = max_dis * settings.detection.range_mul
+							end
+
+							local max_dis_sq = max_dis * max_dis
+
+							if dis_sq < max_dis_sq then
+								distance = math_sqrt(dis_sq)
+
+								local vis_ray = attention_info.visible_ray
+
+								if not vis_ray then
+									if parent_unit then
+										vis_ray = self._unit:raycast("ray", my_pos, attention_pos, "slot_mask", vis_mask, "ignore_unit", parent_unit, "ray_type", "ai_vision")
+									else
+										vis_ray = self._unit:raycast("ray", my_pos, attention_pos, "slot_mask", vis_mask, "ray_type", "ai_vision")
+									end
+								end
+
+								if not vis_ray or vis_ray.unit:key() == u_key then
+									noticable = true
+									attention_info.visible_in_this_instance = true
+								end
+
+								if not attention_info.visible_ray then
+									attention_info.visible_ray = vis_ray
+								end
+							end
+						end
+
+						local delta_prog = nil
+						local dt = t - attention_info.prev_notice_chk_t
+
+						if noticable then
+							local min_delay = detection_preset[1][2]
+							local max_delay = detection_preset[2][2]
+							local dis_mul_mod = math_clamp((distance - detection_preset[1][1]) / (detection_preset[2][1] - detection_preset[1][1]), 0, 1)
+							local notice_delay_mul = settings.notice_delay_mul or 1
+
+							if settings.detection and settings.detection.delay_mul then
+								notice_delay_mul = notice_delay_mul * settings.detection.delay_mul
+							end
+
+							local notice_delay_modified = math_lerp(min_delay * notice_delay_mul, max_delay, dis_mul_mod)
+							delta_prog = notice_delay_modified > 0 and dt / notice_delay_modified or 1
+						else
+							delta_prog = dt * -0.125
+						end
+
+						attention_info.notice_progress = attention_info.notice_progress + delta_prog
+
+						if attention_info.notice_progress > 1 then
+							attention_info.notice_progress = nil
+							attention_info.prev_notice_chk_t = nil
+							attention_info.identified = true
+							attention_info.release_t = t + settings.release_delay
+							attention_info.identified_t = t
+							noticable = true
+
+						elseif attention_info.notice_progress < 0 then
+							self:_destroy_detected_attention_object_data(attention_info)
+
+							noticable = false
+						else
+							noticable = attention_info.notice_progress
+							attention_info.prev_notice_chk_t = t
+						end
+
+						if noticable ~= false and settings.notice_clbk and settings.notice_clbk ~= "clbk_notice_sneak" then
+							settings.notice_clbk(self._unit, noticable)
+						end
+					end
+
+					if attention_info.identified then
+						attention_info.next_verify_t = t + settings.verification_interval
+						update_delay = math_min(update_delay, settings.verification_interval)
+						attention_info.nearly_visible = nil
+
+						local verified, vis_ray = nil
+						local attention_pos = attention_info.m_head_pos
+						local dis = mvec3_dis(my_pos, attention_pos)
+						local max_dis = max_detection_range
+
+						if dis < max_dis * 1.2 then
+							if settings.max_range then
+								max_dis = math_min(max_dis, settings.max_range)
+							end
+
+							if settings.detection and settings.detection.range_mul then
+								max_dis = max_dis * settings.detection.range_mul
+							end
+
+							if dis < max_dis * 1.2 then
+								if attention_info.visible_in_this_instance then
+									verified = true
+									vis_ray = attention_info.visible_ray
+								else
+									vis_ray = attention_info.visible_ray
+
+									if not vis_ray then
+										if parent_unit then
+											vis_ray = self._unit:raycast("ray", my_pos, attention_pos, "slot_mask", vis_mask, "ignore_unit", parent_unit, "ray_type", "ai_vision")
+										else
+											vis_ray = self._unit:raycast("ray", my_pos, attention_pos, "slot_mask", vis_mask, "ray_type", "ai_vision")
+										end
+									end
+
+									if not vis_ray or vis_ray.unit:key() == u_key then
+										verified = true
+									end
+								end
+							end
+						end
+
+						attention_info.verified = verified
+						attention_info.dis = dis
+						attention_info.vis_ray = vis_ray
+
+						if verified and dis < firing_range then
+							attention_info.release_t = nil
+							attention_info.verified_t = t
+							attention_info.verified_dis = dis
+
+							mvec3_set(attention_info.verified_pos, attention_pos)
+
+							if attention_info.last_verified_pos then
+								mvec3_set(attention_info.last_verified_pos, attention_pos)
+							else
+								attention_info.last_verified_pos = mvec3_cpy(attention_pos)
+							end
+						elseif attention_info.has_team and my_team.foes[att_mov_ext:team().id] and REACT_COMBAT <= settings.reaction then
+							local destroyed_att_data = nil
+
+							if attention_info.criminal_record then
+								if dis > 1000 and attention_info.release_t and attention_info.release_t < t then
+									self:_destroy_detected_attention_object_data(attention_info)
+
+									destroyed_att_data = true
+								else
+									update_delay = math_min(0.2, update_delay)
+									attention_info.next_verify_t = math_min(0.2, attention_info.next_verify_t)
+
+									mvec3_set(attention_info.verified_pos, attention_pos)
+									attention_info.verified_dis = dis
+								end
+							elseif attention_info.release_t and attention_info.release_t < t then
+								self:_destroy_detected_attention_object_data(attention_info)
+
+								destroyed_att_data = true
+							else
+								attention_info.release_t = attention_info.release_t or t + settings.release_delay
+							end
+
+							if not destroyed_att_data then
+								if vis_ray and attention_info.is_person and attention_info.verified_t and dis < 2000 then
+									local required_last_seen_t = attention_info.criminal_record and 3 or settings.release_delay
+
+									if t - attention_info.verified_t < required_last_seen_t or attention_info.nearly_visible_t and t - attention_info.nearly_visible_t < required_last_seen_t then
+										local ignore_units = nil
+
+										if parent_unit then
+											ignore_units = {
+												attention_info.unit,
+												parent_unit
+											}
+										else
+											ignore_units = attention_info.unit
+										end
+
+										local pos_chk = tmp_vec3
+
+										if attention_info.unit:movement() and attention_info.unit:movement().m_com then
+											mvec3_set(pos_chk, attention_info.unit:movement():m_com())
+										else
+											mvec3_set(pos_chk, attention_pos)
+										end
+
+										if self:is_target_on_sight(my_pos, pos_chk, ignore_units) then
+											attention_info.nearly_visible = true
+											attention_info.nearly_visible_t = t
+											attention_info.release_t = nil
+
+											if attention_info.last_verified_pos then
+												mvec3_set(attention_info.last_verified_pos, attention_pos)
+											else
+												attention_info.last_verified_pos = mvec3_cpy(attention_pos)
+											end
+										end
+									end
+								end
+
+								if attention_info.criminal_record and not attention_info.nearly_visible then
+									attention_info.release_t = attention_info.release_t or t + 3
+								end
+							end
+						elseif attention_info.release_t and attention_info.release_t < t then
+							self:_destroy_detected_attention_object_data(attention_info)
+						else
+							attention_info.release_t = attention_info.release_t or t + settings.release_delay
+						end
+					end
+				end
+			end
+
+			attention_info.visible_in_this_instance = nil
+			attention_info.visible_angle = nil
+			attention_info.visible_dis_multiplier = nil
+			attention_info.visible_ray = nil
+		end
+
+		self._next_detection_upd_t = t + update_delay
+	end
+
+	function SentryGunBrain:_select_focus_attention(t)
+		local current_focus = self._attention_obj
+		local current_pos = self._ext_movement:m_head_pos()
+		local current_fwd = nil
+
+		if current_focus then
+			current_fwd = tmp_vec2
+
+			mvec3_dir(current_fwd, current_pos, current_focus.m_head_pos)
+		else
+			current_fwd = self._ext_movement:m_head_fwd()
+		end
+
+		local best_focus_attention, best_focus_weight = nil
+		local best_focus_reaction = 0
+		local health_ratio_chk_func = self._attention_health_ratio
+		local objective_chk_func = self._attention_objective
+
+		for u_key, attention_info in pairs(self._detected_attention_objects) do
+			if best_focus_reaction < attention_info.reaction or best_focus_reaction == attention_info.reaction then
+				local remove_obj = nil
+				local att_mov_ext = attention_info.unit:movement()
+
+				if not attention_info.is_alive then
+					remove_obj = true
+				else
+					if att_mov_ext then
+						if att_mov_ext.downed and att_mov_ext:downed() then
+							remove_obj = true
+						elseif att_mov_ext.is_cuffed and att_mov_ext:is_cuffed() then
+							remove_obj = true
+						end
+					end
+
+					if not remove_obj then
+						if health_ratio_chk_func(self, attention_info) <= 0 or objective_chk_func(self, attention_info) == "surrender" then
+							remove_obj = true
+						else
+							local att_brain_ext = attention_info.unit:brain()
+
+							if att_brain_ext and att_brain_ext.surrendered and att_brain_ext:surrendered() then
+								remove_obj = true
+							end
+						end
+					end
+				end
+
+				if remove_obj then
+					self:_destroy_detected_attention_object_data(attention_info)
+				elseif attention_info.identified then
+					local weight = 1
+
+					if not attention_info.verified then
+						if attention_info.verified_t and t - attention_info.verified_t < 3 then
+							if not attention_info.nearly_visible then
+								weight = weight * 0.01
+							end
+
+							local max_duration = 3
+							local elapsed_t = t - attention_info.verified_t
+							weight = weight * math_lerp(1, 0.6, elapsed_t / max_duration)
+						else
+							weight = 0
+						end
+					end
+
+					if weight > 0 then
+						if attention_info.dmg_t and t - attention_info.dmg_t < 5 then
+							local max_duration = 5
+							local elapsed_t = t - attention_info.dmg_t
+							weight = weight * math_lerp(1.2, 1, elapsed_t / max_duration)
+						end
+
+						local max_dis = self._tweak_data.DETECTION_RANGE
+						local dis = mvec3_dir(tmp_vec1, current_pos, attention_info.m_head_pos)
+						local dis_weight = math_max(0, (max_dis - dis) / max_dis)
+						weight = weight * dis_weight
+
+						if weight > 0 then
+							local dot_weight = 1 + mvec3_dot(tmp_vec1, current_fwd)
+							dot_weight = dot_weight * dot_weight * dot_weight
+							weight = weight * dot_weight
+
+							if REACT_SHOOT > attention_info.reaction then
+								weight = weight * 0.001
+							elseif attention_info.verified or attention_info.nearly_visible then
+								if not self:_ignore_shield(current_pos, attention_info.m_head_pos) then
+									weight = weight * 0.01
+								elseif attention_info.verified then
+									if attention_info.settings.weight_mul then
+										weight = weight * attention_info.settings.weight_mul
+									end
+
+									if attention_info.is_local_player then
+										local att_cur_state = att_mov_ext:current_state()
+
+										if not att_cur_state._moving and att_cur_state:ducking() then
+											weight = weight * managers.player:upgrade_value("player", "stand_still_crouch_camouflage_bonus", 1)
+										end
+
+										if managers.player:has_activate_temporary_upgrade("temporary", "chico_injector") and managers.player:upgrade_value("player", "chico_preferred_target", false) then
+											weight = weight * 1000
+										end
+
+										if is_local_vr then
+											local distance = attention_info.dis
+											local vr_long_range_dmg_reduction = tweak_data.vr.long_range_damage_reduction_distance
+
+											if vr_long_range_dmg_reduction[1] < distance then
+												local mul = math_clamp(distance / vr_long_range_dmg_reduction[2] / 2, 0, 1) + 1
+												weight = weight * mul
+											end
+										end
+									elseif attention_info.is_husk_player then
+										local att_base_ext = attention_info.unit:base()
+
+										if att_base_ext.upgrade_value then
+											if att_mov_ext and not att_mov_ext._move_data and att_mov_ext._pose_code and att_mov_ext._pose_code == 2 then
+												local crouch_and_still_weight_mul = att_base_ext:upgrade_value("player", "stand_still_crouch_camouflage_bonus")
+
+												if crouch_and_still_weight_mul then
+													weight = weight * crouch_and_still_weight_mul
+												end
+											end
+
+											if att_base_ext.has_activate_temporary_upgrade and att_base_ext:has_activate_temporary_upgrade("temporary", "chico_injector") and att_base_ext:upgrade_value("player", "chico_preferred_target") then
+												weight = weight * 1000
+											end
+
+											if att_mov_ext.is_vr and att_mov_ext:is_vr() then
+												local distance = attention_info.dis
+												local vr_long_range_dmg_reduction = tweak_data.vr.long_range_damage_reduction_distance
+
+												if vr_long_range_dmg_reduction[1] < distance then
+													local mul = math_clamp(distance / vr_long_range_dmg_reduction[2] / 2, 0, 1) + 1
+													weight = weight * mul
+												end
+											end
+										end
+									end
+								end
+							end
+						end
+					end
+
+					if not best_focus_weight or best_focus_weight < weight then
+						best_focus_weight = weight
+						best_focus_attention = attention_info
+						best_focus_reaction = attention_info.reaction
+					end
+				end
+			end
+		end
+
+		if current_focus ~= best_focus_attention then
+			if best_focus_attention then
+				local attention_data = {
+					unit = best_focus_attention.unit,
+					u_key = best_focus_attention.u_key,
+					handler = best_focus_attention.handler,
+					reaction = best_focus_attention.reaction
+				}
+
+				self._ext_movement:set_attention(attention_data)
+			else
+				self._ext_movement:set_attention()
+			end
+
+			self._attention_obj = best_focus_attention
+		end
+	end
+
+	function SentryGunBrain:is_target_on_sight(my_pos, target_base_pos, units_to_ignore)
+		if not target_base_pos then
+			return false
+		end
+
+		local fire_range_sq = self._tweak_data.FIRE_RANGE * self._tweak_data.FIRE_RANGE
+
+		if fire_range_sq < mvec3_dist_sq(my_pos, target_base_pos) then
+			return false
+		end
+
+		local target_pos_same_height = mvec3_cpy(target_base_pos)
+
+		mvec3_set_z(target_pos_same_height, mvec3_z(my_pos))
+
+		local dir_to_target = mvec3_cpy(my_pos)
+
+		mvec3_sub(dir_to_target, target_pos_same_height)
+		mvec3_norm(dir_to_target)
+
+		local right_offset = Vector3()
+
+		mvec3_cross(right_offset, dir_to_target, math_up)
+
+		local left_offset = mvec3_cpy(right_offset)
+
+		mvec3_mul(right_offset, self.attention_target_offset_hor)
+		mvec3_mul(left_offset, -self.attention_target_offset_hor)
+		mvec3_set_z(right_offset, mvec3_z(right_offset) + self.attention_target_offset_ver)
+		mvec3_set_z(left_offset, mvec3_z(left_offset) + self.attention_target_offset_ver)
+
+		local offsets = {
+			Vector3(0, 0, 0),
+			right_offset,
+			left_offset
+		}
+		local target_pos = Vector3()
+		local attention, ignore_units = nil
+
+		if units_to_ignore then
+			ignore_units = units_to_ignore
+		end
+
+		for i, offset in ipairs(offsets) do
+			mvec3_set(target_pos, target_base_pos)
+			mvec3_add(target_pos, offset)
+
+			local vis_ray = nil
+
+			if ignore_units then
+				vis_ray = self._unit:raycast("ray", my_pos, target_pos, "slot_mask", self._visibility_slotmask, "ignore_unit", ignore_units, "ray_type", "ai_vision", "report")
+			else
+				vis_ray = self._unit:raycast("ray", my_pos, target_pos, "slot_mask", self._visibility_slotmask, "ray_type", "ai_vision", "report")
+			end
+
+			if not vis_ray then
+				return true
+			end
+		end
+
+		return false
+	end
+
+	function SentryGunBrain:_ignore_shield(my_pos, target_pos)
+		if self._ap_bullets then
+			return true
+		end
+
+		local hit_shield = self._unit:raycast("ray", my_pos, target_pos, "slot_mask", self._shield_check, "report")
+
+		if hit_shield then
+			return false
+		end
+
+		return true
 	end
 end

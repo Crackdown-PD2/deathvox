@@ -1,42 +1,5 @@
 <?xml version="1.0"?>
 <tweaks>
-    <!--damage_bullet-->
-    <tweak name="settings/network" extension="network_settings">
-        <search>
-            <network/>
-            <rpc/>
-            <message name="damage_bullet"/>
-            <param type="int" min="0" max="3" />
-        </search>
-        <target mode="attributes">
-            <attr name="max" value="8"/>
-        </target>
-    </tweak>
-    <!--damage_melee-->
-    <tweak name="settings/network" extension="network_settings">
-        <search>
-            <network/>
-            <rpc/>
-            <message name="damage_melee"/>
-            <param type="int" min="0" max="7" />
-        </search>
-        <target mode="attributes">
-            <attr name="max" value="12"/>
-        </target>
-    </tweak>
-    <!--damage_simple-->
-    <tweak name="settings/network" extension="network_settings">
-        <search>
-            <network/>
-            <rpc/>
-            <message name="damage_simple"/>
-            <param type="int" min="0" max="3" />
-        </search>
-        <target mode="attributes">
-            <attr name="max" value="8"/>
-        </target>
-    </tweak>
-    <!--damage_tase-->
     <tweak name="settings/network" extension="network_settings">
         <search>
             <network/>
@@ -46,6 +9,106 @@
         </search>
         <target mode="attributes">
             <attr name="max" value="4"/>
+        </target>
+    </tweak>
+	<tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="reload_weapon"/>
+        </search>
+        <target mode="attributes">
+            <attr name="delivery" value="ordered"/>
+        </target>
+    </tweak>
+	<tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="reload_weapon_interupt"/>
+        </search>
+        <target mode="attributes">
+            <attr name="delivery" value="ordered"/>
+        </target>
+    </tweak>
+	<tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="shot_blank"/>
+        </search>
+        <target mode="attributes">
+            <attr name="delivery" value="ordered"/>
+        </target>
+    </tweak>
+	<tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="sync_underbarrel_switch"/>
+        </search>
+        <target mode="attributes">
+            <attr name="delivery" value="ordered"/>
+        </target>
+    </tweak>
+	<tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="sync_smoke_grenade"/>
+        </search>
+        <target mode="attributes">
+            <attr name="delivery" value="ordered"/>
+        </target>
+    </tweak>
+	<tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="sync_smoke_grenade_kill"/>
+        </search>
+        <target mode="attributes">
+            <attr name="delivery" value="ordered"/>
+        </target>
+    </tweak>
+	<tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="sync_cs_grenade"/>
+        </search>
+        <target mode="attributes">
+            <attr name="delivery" value="ordered"/>
+        </target>
+    </tweak>
+	<tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="sync_cs_grenade_kill"/>
+        </search>
+        <target mode="attributes">
+            <attr name="delivery" value="ordered"/>
+        </target>
+    </tweak>
+	<tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="sync_medic_heal"/>
+        </search>
+        <target mode="attributes">
+            <attr name="delivery" value="ordered"/>
+        </target>
+    </tweak>
+	<tweak name="settings/network" extension="network_settings">
+        <search>
+            <network/>
+            <rpc/>
+            <message name="set_look_dir"/>
+        </search>
+        <target mode="attributes">
+            <attr name="delivery" value="ordered"/>
         </target>
     </tweak>
 </tweaks>

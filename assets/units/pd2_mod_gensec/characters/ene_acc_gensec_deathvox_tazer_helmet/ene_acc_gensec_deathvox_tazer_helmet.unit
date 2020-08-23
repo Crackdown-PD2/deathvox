@@ -1,7 +1,14 @@
 <?xml version="1.0"?>
 <unit type="debris" slot="18">
 	<object file="units/pd2_mod_gensec/characters/ene_acc_gensec_deathvox_tazer_helmet/ene_acc_gensec_deathvox_tazer_helmet" />
-	<extensions>
+	  <dependencies>
+		<depends_on bnk="soundbanks/regular_sfx" />
+	  </dependencies>
+	  <extensions>
 		<extension name="unit_data" class="ScriptUnitData" />
-	</extensions>
+		<extension name="damage" class="UnitDamage" />
+	  </extensions>
+	  <sounds>
+		<soundsource name="glass" source="e_glass" />
+	  </sounds>
 </unit>

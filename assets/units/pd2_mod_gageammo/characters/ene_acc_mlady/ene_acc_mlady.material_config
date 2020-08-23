@@ -1,0 +1,12 @@
+<materials version="3">
+	<material name="mtr_ene_acc_swat_medic_helmet" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:RL_COPS" version="2">
+		<diffuse_texture file="units/pd2_mod_gageammo/characters/ene_deathvox_gman/fedora_df" />
+		<bump_normal_texture file="units/pd2_dlc_fdm/masks/material_fedora_nm" />
+	</material>
+
+	<material name="mtr_ene_acc_swat_medic_helmet_lod1" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:RL_COPS" version="2">
+		<diffuse_texture file="units/pd2_mod_gageammo/characters/ene_deathvox_gman/fedora_df" />
+		<bump_normal_texture file="units/pd2_dlc_fdm/masks/material_fedora_nm" />
+	</material>
+	
+</materials>

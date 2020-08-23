@@ -19,6 +19,9 @@
 		<extension name="anim_data" class="PlayerAnimationData" />
 		<extension name="character_damage" class="HuskCopDamage" >
 			<var name="_head_body_name" value="head" />
+			<var name="_head_gear_object" value="g_fedora" />
+			<var name="_head_gear" value="units/pd2_mod_gageammo/characters/ene_acc_mlady/ene_acc_mlady" />
+			<var name="_head_gear_decal_mesh" value="dm_helmet" />
 		</extension>
 		<extension name="movement" class="HuskCopMovement" >
 			<var name="_footwear" value="hardsole" />

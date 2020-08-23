@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<unit type="wpn" slot="13">
+  <object file="units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_matever/wpn_npc_matever" />
+   <dependencies>
+	<depends_on effect="effects/particles/weapons/raging/muzzleflash_3dp" />
+		<depends_on bnk="soundbanks/weapon_mateba" />
+  </dependencies>
+  <extensions>
+  	<extension name="unit_data" class="ScriptUnitData" />
+    <extension name="base" class="NPCRaycastWeaponBase" >
+		<var name="name_id" value="deathvox_medic_pistol" />
+    </extension>
+	<extension name="damage" class="UnitDamage" />
+  </extensions>
+  <sounds>
+    <soundsource name="root" source="rp_matever" />
+    <default_soundsource source="rp_matever" />
+  </sounds>
+</unit>

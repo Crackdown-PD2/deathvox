@@ -24,6 +24,7 @@
 			<value_node value="packages/dlcs/skm/job_skm"/>
 			<value_node value="levels/narratives/skm/skm_mus/world_sounds"/>
 			<value_node value="packages/lvl_fish"/>
+			<value_node value="packages/deathvoxclassics"/>			
 			<value_node value="levels/narratives/continental/fish/world"/>
 			<value_node value="levels/narratives/continental/fish/world_sounds"/>
 			<value_node value="levels/narratives/continental/fish/collision/collision"/>
@@ -35,7 +36,7 @@
 		</packages>
 		<script_data_mods directory="scriptdata"/>
 	</level>
-	<narrative briefing_event="" contact="skirmish" dlc="spa" id="skmc_fish" jc="50" region="street">
+	<narrative briefing_event="" contact="skirmish" dlc="spa" id="skmc_fish" jc="50" region="street" max_mission_xp="135900" min_mission_xp="8000" icon="guis/dlcs/bro/textures/pd2/crimenet/yacht" load_screen="guis/dlcs/pic/textures/loading/job_yachtheist">
 		<chain>
 			<table dlc="spa" level_id="skmc_fish" type="d" type_id="heist_type_assault"/>
 		</chain>
@@ -57,6 +58,11 @@
 		<debrief_event>
 			<value_node value=""/>
 		</debrief_event>
+        <date_added>
+            <value_node value="2018"/>
+            <value_node value="4"/>
+            <value_node value="23"/>
+        </date_added>
 		<experience_mul>
 			<value_node value="1"/>
 			<value_node value="1"/>
@@ -66,36 +72,14 @@
 			<value_node value="3"/>
 			<value_node value="3"/>
 		</experience_mul>
-		<max_mission_xp>
-			<value_node value="8000"/>
-			<value_node value="8800"/>
-			<value_node value="9600"/>
-			<value_node value="10400"/>
-			<value_node value="11200"/>
-			<value_node value="12000"/>
-			<value_node value="12800"/>
-			<value_node value="13600"/>
-			<value_node value="14400"/>
-		</max_mission_xp>
-		<min_mission_xp>
-			<value_node value="8000"/>
-			<value_node value="8800"/>
-			<value_node value="9600"/>
-			<value_node value="10400"/>
-			<value_node value="11200"/>
-			<value_node value="12000"/>
-			<value_node value="12800"/>
-			<value_node value="13600"/>
-			<value_node value="14400"/>
-		</min_mission_xp>
 		<payout>
-			<value_node value="30500"/>
-			<value_node value="34000"/>
-			<value_node value="50000"/>
-			<value_node value="62000"/>
-			<value_node value="74000"/>
-			<value_node value="74000"/>
-			<value_node value="74000"/>
+			<value_node value="0"/>
+			<value_node value="0"/>
+			<value_node value="0"/>
+			<value_node value="0"/>
+			<value_node value="0"/>
+			<value_node value="0"/>
+			<value_node value="0"/>
 		</payout>
 	</narrative>
 </table>

@@ -10,9 +10,9 @@ function ShotgunBase:setup_default()
 		self._use_shotgun_reload = tweak_data.weapon[self._name_id].use_shotgun_reload
 	end
 
-	self._single_damage_instance = true  --basically a toggle option between vanilla (with proper priorization and rays) and the damage-per-pellet feature
+	self._single_damage_instance = true --basically a toggle option between vanilla (with proper priorization and rays) and the damage-per-pellet feature
 
-	--for final mix, if the shotgun has the free buckshot ammo type equipped, use damage-per-pellet
+	--if the shotgun has the free buckshot ammo type equipped, use damage-per-pellet
 	if alive(self._unit) and self._unit:base()._parts then
 		for part_id, part in pairs(self._unit:base()._parts) do
 			if part_id == "wpn_fps_upg_a_custom_free" then
@@ -78,7 +78,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 	local up = direction:cross(right):normalized()
 
 	mvector3.set(mvec_direction, direction)
-	
+
 	local ray_hits = nil
 	local hit_an_enemy = false
 
@@ -111,7 +111,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 
 		local units_hit = {}
 		local unique_hits = {} --table for collected hits
-
+		
 		if he_round then
 			if hit_an_enemy then --once an enemy gets hit, this is always true until another shot is fired
 				hit_an_enemy = hit_an_enemy
@@ -134,6 +134,8 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 					hit.hit_position = hit.position
 					local weak_body = hit.body:has_ray_type(ai_vision_ids)
 					weak_body = weak_body or hit.body:has_ray_type(bulletproof_ids)
+					local checked_hit = unique_hits[#unique_hits]
+					local point_blank_pierce = user_unit == managers.player:player_unit() and managers.player:has_category_upgrade("player", "point_blank") and checked_hit and checked_hit.distance and checked_hit.distance <= 200
 
 					if hit_an_enemy then --once an enemy gets hit, this is always true until another shot is fired
 						hit_an_enemy = hit_an_enemy
@@ -141,7 +143,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 						hit_an_enemy = hit.unit:in_slot(enemy_mask) and true or false
 					end
 
-					if not self._can_shoot_through_enemy and hit.unit:in_slot(enemy_mask) then
+					if not self._can_shoot_through_enemy and not point_blank_pierce and hit.unit:in_slot(enemy_mask) then
 						break
 					elseif hit.unit:in_slot(wall_mask) then
 						if weak_body then --actually the other way around, this is a solid wall (just being consistent with vanilla)
@@ -155,7 +157,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 								break
 							end
 						end
-					elseif not self._can_shoot_through_shield and hit.unit:in_slot(shield_mask) then
+					elseif not self._can_shoot_through_shield and not point_blank_pierce and hit.unit:in_slot(shield_mask) then
 						break
 					end
 				end
@@ -207,8 +209,10 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 										hit.hit_position = hit.position
 										local weak_body = hit.body:has_ray_type(ai_vision_ids)
 										weak_body = weak_body or hit.body:has_ray_type(bulletproof_ids)
+										local checked_hit = unique_hits[#unique_hits]
+										local point_blank_pierce = user_unit == managers.player:player_unit() and managers.player:has_category_upgrade("player", "point_blank") and checked_hit and checked_hit.distance and checked_hit.distance <= 200
 
-										if not self._can_shoot_through_enemy and hit.unit:in_slot(enemy_mask) then
+										if not self._can_shoot_through_enemy and not point_blank_pierce and hit.unit:in_slot(enemy_mask) then
 											break
 										elseif hit.unit:in_slot(wall_mask) then
 											if weak_body then --actually the other way around, this is a solid wall (just being consistent with vanilla)
@@ -222,7 +226,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 													break
 												end
 											end
-										elseif not self._can_shoot_through_shield and hit.unit:in_slot(shield_mask) then
+										elseif not self._can_shoot_through_shield and not point_blank_pierce and hit.unit:in_slot(shield_mask) then
 											break
 										end
 									end
@@ -254,16 +258,20 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 
 		local furthest_hit = unique_hits[#unique_hits]
 
-		if (furthest_hit and furthest_hit.distance > 600 or not furthest_hit) and alive(self._obj_fire) then --last collision made by the ray or no collision, both used to spawn the cosmetic tracers from the barrel of the gun
-			self._obj_fire:m_position(self._trail_effect_table.position)
-			mvector3.set(self._trail_effect_table.normal, mvec_spread_direction)
+		if alive(self._obj_fire) then
+			if furthest_hit and furthest_hit.distance > 600 or not furthest_hit then --last collision made by the ray or no collision, both used to spawn the cosmetic tracers from the barrel of the gun
+				local trail_direction = furthest_hit and furthest_hit.ray or mvec_spread_direction
 
-			local trail = World:effect_manager():spawn(self._trail_effect_table)
+				self._obj_fire:m_position(self._trail_effect_table.position)
+				mvector3.set(self._trail_effect_table.normal, trail_direction)
 
-			if furthest_hit then
-				World:effect_manager():set_remaining_lifetime(trail, math.clamp((furthest_hit.distance - 600) / 10000, 0, furthest_hit.distance))
-			else
-				World:effect_manager():set_remaining_lifetime(trail, math.clamp((self._range - 600) / 10000, 0, self._range)) --actually limit tracers using the shotgun's range limit if nothing is hit by a pellet
+				local trail = World:effect_manager():spawn(self._trail_effect_table)
+
+				if furthest_hit then
+					World:effect_manager():set_remaining_lifetime(trail, math.clamp((furthest_hit.distance - 600) / 10000, 0, furthest_hit.distance))
+				else
+					World:effect_manager():set_remaining_lifetime(trail, math.clamp((self._range - 600) / 10000, 0, self._range)) --actually limit tracers using the shotgun's range limit if nothing is hit by a pellet
+				end
 			end
 		end
 	end
@@ -284,6 +292,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 
 	local units_to_ignore = {}
 	local hit_enemies = {}
+	local hit_shields = {}
 
 	for _, col_ray in pairs(col_rays) do
 		if col_ray and col_ray.unit then
@@ -305,21 +314,27 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 
 								if turret_shield and (col_ray.body:name() == turret_shield) or turret_weak_spot and (col_ray.body:name() == turret_weak_spot) then --prioritize the shield or weak spot of a turret over other parts of it's body
 									hit_enemies[col_ray.unit:key()] = col_ray
-								else
-									--[[local final_damage = damage / self._rays
-									final_damage = self:get_damage_falloff(final_damage, col_ray, user_unit)]]
-
-									self._bullet_class:on_collision_effects(col_ray, self._unit, user_unit, --[[final_]]damage) --no need to split damage equally among the pellets and calculate fall-off since the function doesn't even use it
 								end
 							end
 						end
 					end
 				else
-					local final_damage = damage / self._rays
-					final_damage = self:get_damage_falloff(final_damage, col_ray, user_unit)
+					if self._rays ~= 1 and col_ray.unit:in_slot(managers.slot:get_mask("enemy_shield_check")) then
+						if not hit_shields[col_ray.unit:key()] then --not already hit
+							hit_shields[col_ray.unit:key()] = col_ray
 
-					--still going to split damage here among the pellets and apply fall-off to avoid situations where a 155-damage shotgun deals 155 damage per pellet to things like solid objects or similar (or when used for shield_knock
-					self._bullet_class:on_collision(col_ray, self._unit, user_unit, final_damage)
+							--only hit the shield once to avoid almost guaranteed knockbacks
+							self._bullet_class:on_collision(col_ray, self._unit, user_unit, damage)
+						else
+							self._bullet_class:on_collision_effects(col_ray, self._unit, user_unit, damage)
+						end
+					else
+						local final_damage = damage / self._rays
+						final_damage = self:get_damage_falloff(final_damage, col_ray, user_unit)
+
+						--still going to split damage here among the pellets and apply fall-off to avoid situations where a 155-damage shotgun deals 155 damage per pellet to things like solid objects or similar
+						self._bullet_class:on_collision(col_ray, self._unit, user_unit, final_damage)
+					end
 				end
 			else
 				local final_damage = damage / self._rays
@@ -331,6 +346,18 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 
 					if col_ray.unit:character_damage() and col_ray.unit:character_damage().dead and col_ray.unit:character_damage():dead() then --additional check to avoid pushing dead enemies excessively
 						table.insert(units_to_ignore, col_ray.unit:key())
+					end
+				end
+
+				if self._rays ~= 1 and col_ray.unit:in_slot(managers.slot:get_mask("enemy_shield_check")) then
+					if not hit_shields[col_ray.unit:key()] then --not already hit
+						hit_shields[col_ray.unit:key()] = col_ray
+						table.insert(units_to_ignore, col_ray.unit:key())
+
+						--only hit the shield once to avoid almost guaranteed knockbacks
+						self._bullet_class:on_collision(col_ray, self._unit, user_unit, damage)
+					else
+						self._bullet_class:on_collision_effects(col_ray, self._unit, user_unit, damage)
 					end
 				end
 
@@ -377,7 +404,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 
 								kill_data.kills = kill_data.kills + 1
 
-								if not dragons_breath and col_ray.body and col_ray.body:name() == Idstring("head") then --remember this is only for headshot kills
+								if my_result.attack_data and my_result.attack_data.headshot then --remember this is only for headshot kills
 									kill_data.headshots = kill_data.headshots + 1
 								end
 
@@ -465,7 +492,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 
 						kill_data.kills = kill_data.kills + 1
 
-						if not dragons_breath and col_ray.body and col_ray.body:name() == Idstring("head") then --remember this is only for headshot kills
+						if my_result.attack_data and my_result.attack_data.headshot then --remember this is only for headshot kills
 							kill_data.headshots = kill_data.headshots + 1
 						end
 
@@ -516,18 +543,12 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 	end
 
 	if self._suppression then
-		local tmp_vec_to = Vector3()
-
-		mvector3.set(tmp_vec_to, mvector3.copy(direction))
-		mvector3.multiply(tmp_vec_to, self._range)
-		mvector3.add(tmp_vec_to, mvector3.copy(from_pos))
-
-		self:_suppress_units(mvector3.copy(from_pos), tmp_vec_to, 100, managers.slot:get_mask("enemies"), user_unit, suppr_mul, self._range)
+		self:_suppress_units(mvector3.copy(from_pos), mvector3.copy(direction), self._range, managers.slot:get_mask("enemies"), user_unit, suppr_mul)
 	end
 
 	if not result then
 		result = {
-			hit_enemy = ap_slug and hit_anyone or next(hit_enemies) and true or false
+			hit_enemy = ap_slug and hit_anyone or #hit_enemies > 0 and true or false
 		}
 
 		if self._alert_events then
@@ -540,7 +561,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 		weapon_unit = self._unit
 	})
 
-	for _, d in pairs(hit_enemies) do --enemies hit per fired shot pull increase accuracy accordingly (negating the one above)
+	for i = 1, #hit_enemies, 1 do --enemies hit per fired shot pull increase accuracy accordingly (negating the one above)
 		managers.statistics:shot_fired({
 			skip_bullet_count = true,
 			hit = true,

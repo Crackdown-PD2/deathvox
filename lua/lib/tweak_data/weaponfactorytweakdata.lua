@@ -174,3 +174,299 @@ function WeaponFactoryTweakData:init(...)
 	self.wpn_deathvox_blackdozer.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_blackdozer"
 	self.wpn_deathvox_lmgdozer.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_lmgdozer"]]--
 end
+
+
+
+
+-- Total Crackdown Weapon Attachment Stuff
+Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
+	--BEGIN THE NEW INSANITY! (OR SOMETHING LIKE THAT!)
+	if deathvox:IsTotalCrackdownEnabled() then
+	--------------------------------------
+				--AMR16--
+	--------------------------------------
+		-- Long Ergo Foregrip
+		self.parts.wpn_fps_upg_ass_m16_fg_stag.stats = {value = 1}
+		-- Blast From the Past Handguard
+		self.parts.wpn_fps_m16_fg_vietnam.stats = {value = 10}
+		-- Tactical Handguard
+		self.parts.wpn_fps_m16_fg_railed.stats = {value = 7}
+		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_l5 = {	
+			 stats = {
+				value = 1,			 			 
+				extra_ammo = 5, 
+				concealment = -2
+			}	
+		}			
+		self.wpn_fps_ass_m16.override.wpn_fps_m4_uupg_m_std = {	
+			 stats = {
+				value = 3,			 
+				extra_ammo = 5, 
+				concealment = -2
+			}	
+		}			
+		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_pmag = {	
+			 stats = {
+				extra_ammo = 5, 
+				concealment = -2
+			}	
+		}			
+		self.wpn_fps_ass_m16.override.wpn_fps_ass_l85a2_m_emag = {	
+			 stats = {
+				value = 1,			 
+				extra_ammo = 5, 
+				concealment = -2
+			}	
+		}			
+		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_quad = {	
+			 stats = {
+				value = 3,
+				extra_ammo = 20, 
+				concealment = -10
+			}	
+		}			
+	
+	--------------------------------------
+				--AMCAR--
+	--------------------------------------
+		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_l5 = {	
+			 stats = {
+				value = 1,			 			 
+				extra_ammo = 5, 
+				concealment = -2
+			}	
+		}			
+		self.wpn_fps_ass_amcar.override.wpn_fps_m4_uupg_m_std = {	
+			 stats = {
+				value = 3,			 
+				extra_ammo = 5, 
+				concealment = -2
+			}	
+		}			
+		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_pmag = {	
+			 stats = {
+				extra_ammo = 5, 
+				concealment = -2
+			}	
+		}			
+		self.wpn_fps_ass_amcar.override.wpn_fps_ass_l85a2_m_emag = {	
+			 stats = {
+				value = 1,			 
+				extra_ammo = 5, 
+				concealment = -2
+			}	
+		}			
+		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_quad = {	
+			 stats = {
+				value = 3,
+				extra_ammo = 20, 
+				concealment = -10
+			}	
+		}			
+
+	--------------------------------------
+				--CAR 4--
+	--------------------------------------
+		-- Aftermarket Special Handguard	
+		self.parts.wpn_fps_m4_uupg_fg_lr300.stats = {value = 5}
+		-- Competition Foregrip		
+		self.parts.wpn_fps_upg_fg_jp.stats = {value = 5}
+		-- Gazelle Rail
+		self.parts.wpn_fps_upg_fg_smr.stats = {value = 5}
+		-- OVAL Foregrip		
+		self.parts.wpn_fps_upg_ass_m4_fg_lvoa.stats = {value = 1}
+		-- E.M.O. Foregrip		
+		self.parts.wpn_fps_upg_ass_m4_fg_moe.stats = {value = 5}
+		-- Long Barrel
+		self.parts.wpn_fps_m4_uupg_b_long.stats = {value = 5}
+		-- Short Barrel		
+		self.parts.wpn_fps_m4_uupg_b_short.stats = {value = 4}
+		-- Stelth? Barrel		
+		self.parts.wpn_fps_m4_uupg_b_sd.stats = {
+			value = 6,		
+			spread = -3,
+			concealment = 3,
+			suppression = -72,
+			alert_size = 12
+		}
+		-- DMR Kit				
+		self.parts.wpn_fps_upg_ass_m4_b_beowulf.stats = {
+			value = 1,
+			total_ammo_mod = -13, --christ i hate the way this stat works. curse overkill and this weird ass stat
+			damage = 80,
+			recoil = -10,
+			concealment = -5
+		}
+		self.parts.wpn_fps_upg_ass_m4_b_beowulf.adds = {"car_dmr_kit_ammo_type"}
+		self.parts.car_dmr_kit_ammo_type = { --Dummy ammo type for DMR kit, needed for armor piercing and pickup multipliers to work properly.
+			a_obj = "a_m",
+			type = "ammo",
+			unit = "units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy",
+			stats = {
+				value = 1
+			},
+			custom_stats = {
+				armor_piercing_add = 1,			
+				ammo_pickup_max_mul = 4,
+				ammo_pickup_min_mul = 2.5
+			}
+		}		
+	--------------------------------------
+				--Valkyria--
+	--------------------------------------
+	self.parts.wpn_fps_ass_asval_b_standard.stats = nil --why overkill
+	-- Prototype Barrel
+	self.parts.wpn_fps_ass_asval_b_proto.stats = {
+		value = 1,
+		spread = -3, 
+		recoil = -5, 
+		concealment = 10
+	}
+	-- Solid Stock
+	self.parts.wpn_fps_ass_asval_s_solid.stats = {value = 1}
+
+	--------------------------------------
+			--Shared Attachments--
+	--------------------------------------
+	--auto and singlefire mods
+	self.parts.wpn_fps_upg_i_singlefire.stats = {value = 5}
+	self.parts.wpn_fps_upg_i_autofire.stats = {value = 8}
+
+	--Barrel extension stat changes begin here. (don't feel like commenting these either noobs)
+		self.parts.wpn_fps_upg_ass_ns_battle.stats = {value = 1}
+		self.parts.wpn_fps_upg_ns_ass_smg_stubby.stats = {value = 3}
+		self.parts.wpn_fps_upg_ns_ass_smg_tank.stats = {value = 4}
+		self.parts.wpn_fps_upg_ns_ass_smg_firepig.stats = {value = 5}
+		self.parts.wpn_fps_upg_ass_ns_surefire.stats = {value = 5}
+		self.parts.wpn_fps_upg_ass_ns_linear.stats = {value = 5}
+		self.parts.wpn_fps_upg_ass_ns_jprifles.stats = {value = 5}
+		self.parts.wpn_fps_upg_ns_ass_smg_medium.stats = {suppression = 72,	alert_size = 12, value = 2}
+		self.parts.wpn_fps_upg_ns_ass_smg_large.stats = {suppression = 72, alert_size = 12, value = 5}
+		self.parts.wpn_fps_upg_ns_pis_typhoon.stats = {value = 4}
+		self.parts.wpn_fps_upg_ns_ass_smg_v6.stats = {value = 3}
+		self.parts.wpn_fps_upg_ns_pis_jungle.stats = {suppression = 72,	value = 5}
+		self.parts.wpn_fps_upg_ns_ass_filter.stats = {suppression = 72,	value = 0}
+		self.parts.wpn_fps_upg_ns_pis_medium_slim.stats = {suppression = 72, alert_size = 12, value = 1}
+		self.parts.wpn_fps_upg_ns_pis_large.stats = {suppression = 72, alert_size = 12, value = 5}
+		self.parts.wpn_fps_upg_ns_pis_large_kac.stats = {suppression = 72, alert_size = 12, value = 6}
+		self.parts.wpn_fps_upg_ns_pis_small.stats = {suppression = 72, alert_size = 12, value = 3}
+		self.parts.wpn_fps_upg_pis_ns_flash.stats = {suppression = 72, alert_size = 12, value = 4}
+		self.parts.wpn_fps_upg_ns_pis_meatgrinder.stats = {suppression = 72, alert_size = 12, value = 7}
+		self.parts.wpn_fps_upg_ns_pis_ipsccomp.stats = {suppression = 72, alert_size = 12, value = 4}
+		self.parts.wpn_fps_upg_ns_pis_medium.stats = {suppression = 72, alert_size = 12, value = 1}
+		self.parts.wpn_fps_upg_ns_pis_medium_gem.stats = {suppression = 72, alert_size = 12, value = 4}
+		self.parts.wpn_fps_upg_ns_pis_medium_slim.stats = {suppression = 72, alert_size = 12, value = 1}
+	
+	--Sight stat changes begin here. (don't feel like commenting these! nerds!)
+		self.parts.wpn_fps_upg_o_specter.stats = {zoom = 4, value = 8} -- i should probably write it like this for the rest of the attachments but NO, DIE
+		self.parts.wpn_fps_upg_o_aimpoint.stats = {zoom = 4, value = 8}
+		self.parts.wpn_fps_upg_o_aimpoint_2.stats = {zoom = 4, value = 1}
+		self.parts.wpn_fps_upg_o_docter.stats = {zoom = 2, value = 5}
+		self.parts.wpn_fps_upg_o_eotech.stats = {zoom = 3, value = 3}
+		self.parts.wpn_fps_upg_o_t1micro.stats = {zoom = 3, value = 3}
+		self.parts.wpn_upg_o_marksmansight_rear.stats = {zoom = 2, value = 5}
+		self.parts.wpn_fps_upg_o_leupold.stats = {zoom = 10, value = 8}
+		self.parts.wpn_fps_upg_o_cmore.stats = {zoom = 3, value = 5}
+		self.parts.wpn_fps_upg_o_acog.stats = {zoom = 6, value = 6}
+		self.parts.wpn_fps_upg_o_cs.stats = {zoom = 4, value = 3}
+		self.parts.wpn_fps_upg_o_reflex.stats = {zoom = 3, value = 5}
+		self.parts.wpn_fps_upg_o_rx01.stats = {zoom = 3, value = 5}
+		self.parts.wpn_fps_upg_o_eotech_xps.stats = {zoom = 3, value = 5}
+		self.parts.wpn_fps_upg_o_bmg.stats = {zoom = 6, value = 8}
+		self.parts.wpn_fps_upg_o_rms.stats = {zoom = 3, value = 6}
+		self.parts.wpn_fps_upg_o_rikt.stats = {zoom = 3, value = 6}
+		self.parts.wpn_fps_upg_o_uh.stats = {zoom = 3, value = 5}
+		self.parts.wpn_fps_upg_o_fc1.stats = {zoom = 3, value = 5}
+	--Magazine stat changes begin here.
+		--Milspec Magazine
+		self.parts.wpn_fps_m4_uupg_m_std.stats = {value = 1}
+		--L5 Magazine
+		self.parts.wpn_fps_upg_m4_m_l5.stats = {value = 1}
+		--Tactical Magazine
+		self.parts.wpn_fps_upg_m4_m_pmag.stats = {value = 3}
+		--Expert Magazine
+		self.parts.wpn_fps_ass_l85a2_m_emag.stats = {value = 1}
+		--Quadstack Magazine
+		self.parts.wpn_fps_upg_m4_m_quad.stats = {
+			value = 3,		
+			extra_ammo = 15, 
+			concealment = -10
+		}
+		self.parts.wpn_fps_upg_m4_m_straight.stats = {	
+			value = 2,		
+			extra_ammo = -5, 
+			concealment = 5
+		}		
+		--Speedpull Magazine
+		self.parts.wpn_fps_m4_upg_m_quick.stats = {	
+			value = 2,		
+			reload = 10,
+			concealment = -4
+		}
+	--Gadget stat changes begin here.
+		-- Flashlight
+		self.parts.wpn_fps_upg_fl_ass_smg_sho_surefire.stats = {value = 3}
+		-- Tactical Laser										
+		self.parts.wpn_fps_upg_fl_ass_smg_sho_peqbox.stats = {value = 5}
+		-- Compact Laser								
+		self.parts.wpn_fps_upg_fl_ass_laser.stats = {value = 2}	
+		-- Military Laser						
+		self.parts.wpn_fps_upg_fl_ass_peq15.stats = {value = 5}	
+		-- LED Combo						
+		self.parts.wpn_fps_upg_fl_ass_utg.stats = {value = 5}	
+		-- Tactical Pistol Light						
+		self.parts.wpn_fps_upg_fl_pis_tlr1.stats = {value = 2}	
+		-- Pocket Laser						
+		self.parts.wpn_fps_upg_fl_pis_laser.stats = {value = 5}	
+		-- Combined Module
+		self.parts.wpn_fps_upg_fl_pis_x400v.stats = {value = 5}	
+		-- Polymer Flashlight
+		self.parts.wpn_fps_upg_fl_pis_m3x.stats = {value = 1}	
+		-- Micro Laser						
+		self.parts.wpn_fps_upg_fl_pis_crimson.stats = {value = 5}	
+		-- 45 Degree Sight				
+		self.parts.wpn_fps_upg_o_45rds.stats = {value = 1, gadget_zoom = 1}	
+		-- Riktpunkt 45 Degree Sight		
+		self.parts.wpn_fps_upg_o_45rds_v2.stats = {value = 1, gadget_zoom = 1}	
+		-- Riktpunkt Magnifier
+		self.parts.wpn_fps_upg_o_xpsg33_magnifier.stats = {value = 1, gadget_zoom = 9}
+		--border crossing 45 degree sights i forgot the names of
+		self.parts.wpn_fps_upg_o_sig.stats = {zoom = 9, value = 2}		
+		self.parts.wpn_fps_upg_o_45steel.stats = {value = 1, gadget_zoom = 1}		
+	--Grip stat changes begin here.
+		-- Pro Grip
+		self.parts.wpn_fps_upg_m4_g_sniper.stats = {value = 2}	
+		-- Ergo Grip
+		self.parts.wpn_fps_upg_m4_g_ergo.stats = {value = 2}	
+		-- Rubber Grip (the only good looking grip attachment)
+		self.parts.wpn_fps_upg_m4_g_hgrip.stats = {value = 1}	
+		-- Contractor Grip
+		self.parts.wpn_fps_snp_tti_g_grippy.stats = {value = 1}
+		-- Short Grip (ugly as sin)
+		self.parts.wpn_fps_upg_m4_g_mgrip.stats = {value = 1}	
+		-- Titanium Skeleton Grip (the ugliest)
+		self.parts.wpn_fps_upg_g_m4_surgeon.stats = {value = 1}		
+	--Stock stat changes begin here.
+		--Tactical Stock
+		self.parts.wpn_fps_upg_m4_s_pts.stats = {value = 3}
+		--Folding stock
+		self.parts.wpn_fps_m4_uupg_s_fold.stats = {value = 5}
+		-- Crane Stock
+		self.parts.wpn_fps_upg_m4_s_crane.stats = {value = 2}
+		-- 2 Piece Stock
+		self.parts.wpn_fps_upg_m4_s_ubr.stats = {value = 1}		
+		-- Contractor stock
+		self.parts.wpn_fps_snp_tti_s_vltor.stats = {value = 1}		
+		-- War Torn stock
+		self.parts.wpn_fps_upg_m4_s_mk46.stats = {value = 6}		
+	--Upper/Lower Receiver stat changes begin here.
+		-- exotique receiver
+		self.parts.wpn_fps_m4_upper_reciever_edge.stats = {value = 3}	
+		-- lw upper receiver
+		self.parts.wpn_fps_upg_ass_m4_upper_reciever_ballos.stats = {value = 1}		
+		-- thrust upper receiver
+		self.parts.wpn_fps_upg_ass_m4_upper_reciever_core.stats = {value = 1}
+		-- thrust lower receiver
+		self.parts.wpn_fps_upg_ass_m4_lower_reciever_core.stats = {value = 1}	
+	end
+end)

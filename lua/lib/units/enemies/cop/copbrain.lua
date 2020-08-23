@@ -35,51 +35,300 @@ local logic_variants = {
 local security_variant = logic_variants.security
 function CopBrain:post_init()
 	CopBrain._logic_variants.deathvox_shield = clone(security_variant)
-	CopBrain._logic_variants.deathvox_shield.attack = ShieldLogicAttack
 	CopBrain._logic_variants.deathvox_shield.intimidated = nil
 	CopBrain._logic_variants.deathvox_shield.flee = nil
 	
-	CopBrain._logic_variants.deathvox_heavyar = security_variant
-	CopBrain._logic_variants.deathvox_lightar = security_variant
-	CopBrain._logic_variants.deathvox_medic = security_variant
-	CopBrain._logic_variants.deathvox_guard = security_variant
-	CopBrain._logic_variants.deathvox_gman = security_variant
-	CopBrain._logic_variants.deathvox_lightshot = security_variant
-	CopBrain._logic_variants.deathvox_heavyshot = security_variant
+	CopBrain._logic_variants.deathvox_heavyar = clone(security_variant)
+	CopBrain._logic_variants.deathvox_lightar = clone(security_variant)
+	CopBrain._logic_variants.deathvox_medic = clone(security_variant)
+	CopBrain._logic_variants.deathvox_guard = clone(security_variant)
+	CopBrain._logic_variants.deathvox_gman = clone(security_variant)
+	CopBrain._logic_variants.deathvox_lightshot = clone(security_variant)
+	CopBrain._logic_variants.deathvox_heavyshot = clone(security_variant)
 	
 	CopBrain._logic_variants.deathvox_guarddozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_guarddozer.attack = TankCopLogicAttack
 	
 	CopBrain._logic_variants.deathvox_taser = clone(security_variant)
 	CopBrain._logic_variants.deathvox_taser.attack = TaserLogicAttack
-	CopBrain._logic_variants.deathvox_sniper_assault = security_variant
+	-- CopBrain._logic_variants.deathvox_taser.travel = TaserLogicTravel
+	CopBrain._logic_variants.deathvox_sniper_assault = clone(security_variant)
+	CopBrain._logic_variants.deathvox_sniper = clone(security_variant)
 	CopBrain._logic_variants.deathvox_cloaker = clone(security_variant)
 	CopBrain._logic_variants.deathvox_cloaker.idle = SpoocLogicIdle
 	CopBrain._logic_variants.deathvox_cloaker.attack = SpoocLogicAttack
-	CopBrain._logic_variants.deathvox_grenadier = security_variant
+	-- CopBrain._logic_variants.deathvox_cloaker.travel = SpoocLogicTravel
+	CopBrain._logic_variants.deathvox_grenadier = clone(security_variant)
 	
 	CopBrain._logic_variants.deathvox_greendozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_greendozer.attack = TankCopLogicAttack
 	CopBrain._logic_variants.deathvox_blackdozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_blackdozer.attack = TankCopLogicAttack
 	CopBrain._logic_variants.deathvox_lmgdozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_lmgdozer.attack = TankCopLogicAttack
 	CopBrain._logic_variants.deathvox_medicdozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_medicdozer.attack = TankCopLogicAttack
 
-	CopBrain._logic_variants.deathvox_cop_pistol = security_variant
-	CopBrain._logic_variants.deathvox_cop_revolver = security_variant
-	CopBrain._logic_variants.deathvox_cop_shotgun = security_variant
-	CopBrain._logic_variants.deathvox_cop_smg = security_variant
+	CopBrain._logic_variants.deathvox_cop_pistol = clone(security_variant)
+	CopBrain._logic_variants.deathvox_cop_revolver = clone(security_variant)
+	CopBrain._logic_variants.deathvox_cop_shotgun = clone(security_variant)
+	CopBrain._logic_variants.deathvox_cop_smg = clone(security_variant)
 	
-	CopBrain._logic_variants.deathvox_fbi_hrt = security_variant
-	CopBrain._logic_variants.deathvox_fbi_veteran = security_variant
-	CopBrain._logic_variants.deathvox_fbi_rookie = security_variant
+	CopBrain._logic_variants.deathvox_fbi_hrt = clone(security_variant)
+	CopBrain._logic_variants.deathvox_fbi_veteran = clone(security_variant)
+	CopBrain._logic_variants.deathvox_fbi_rookie = clone(security_variant)
 
 	old_init(self)
 end
 
+CopBrain._NET_EVENTS = {
+	stopped_seeing_client_peaceful = 11,
+	detected_client_peaceful_verified = 10,
+	detected_client_peaceful = 9,
+	client_no_longer_verified = 8,
+	detected_suspected_client = 7,
+	stopped_suspecting_client = 6,
+	suspecting_client_verified = 5,
+	suspecting_client = 4,
+	detected_client = 3,
+	stopped_seeing_client = 2,
+	seeing_client = 1
+}
+
+function CopBrain:sync_net_event(event_id, peer)
+	local peer_id = peer:id()
+	local peer_unit = managers.criminals:character_unit_by_peer_id(peer_id)
+
+	if not peer_unit then
+		return
+	end
+
+	if event_id == self._NET_EVENTS.seeing_client then
+		managers.groupai:state():on_criminal_suspicion_progress(peer_unit, self._unit, 1, peer_id)
+	elseif event_id == self._NET_EVENTS.stopped_seeing_client then
+		managers.groupai:state():on_criminal_suspicion_progress(peer_unit, self._unit, false, peer_id)
+	elseif event_id == self._NET_EVENTS.detected_client then
+		managers.groupai:state():on_criminal_suspicion_progress(peer_unit, self._unit, true, peer_id)
+
+		self._unit:movement():set_cool(false, managers.groupai:state().analyse_giveaway(self._unit:base()._tweak_table, peer_unit))
+
+		local att_obj_data = CopLogicBase.identify_attention_obj_instant(self._logic_data, peer_unit:key())
+
+		if att_obj_data and att_obj_data.criminal_record then
+			managers.groupai:state():criminal_spotted(peer_unit)
+		end
+	elseif event_id == self._NET_EVENTS.detected_client_peaceful or event_id == self._NET_EVENTS.detected_client_peaceful_verified then
+		local t = self._logic_data.t
+		local att_u_key = peer_unit:key()
+		local att_obj_data = self._logic_data.detected_attention_objects[att_u_key]
+
+		if att_obj_data then
+			if not att_obj_data.client_peaceful_detection then
+				mvector3.set(att_obj_data.verified_pos, att_obj_data.m_head_pos)
+
+				att_obj_data.verified_dis = mvector3.distance(self._unit:movement():m_head_pos(), att_obj_data.m_head_pos)
+
+				if not att_obj_data.identified then
+					att_obj_data.identified = true
+					att_obj_data.identified_t = t
+					att_obj_data.notice_progress = nil
+					att_obj_data.prev_notice_chk_t = nil
+				elseif att_obj_data.uncover_progress then
+					att_obj_data.uncover_progress = nil
+				end
+			end
+		else
+			local attention_info = managers.groupai:state():get_AI_attention_objects_by_filter(self._logic_data.SO_access_str)[att_u_key]
+
+			if attention_info then
+				local settings = attention_info.handler:get_attention(self._logic_data.SO_access, nil, nil, self._logic_data.team)
+
+				if settings then
+					att_obj_data = CopLogicBase._create_detected_attention_object_data(t, self._unit, att_u_key, attention_info, settings)
+					att_obj_data.identified = true
+					att_obj_data.identified_t = t
+					att_obj_data.notice_progress = nil
+					att_obj_data.prev_notice_chk_t = nil
+
+					self._logic_data.detected_attention_objects[att_u_key] = att_obj_data
+				end
+			end
+		end
+
+		if att_obj_data then
+			att_obj_data.client_peaceful_detection = true
+
+			if event_id == self._NET_EVENTS.detected_client_peaceful_verified then
+				att_obj_data.verified = true
+			end
+		end
+	elseif event_id == self._NET_EVENTS.suspecting_client or event_id == self._NET_EVENTS.suspecting_client_verified then
+		local t = self._logic_data.t
+		local att_u_key = peer_unit:key()
+		local att_obj_data = self._logic_data.detected_attention_objects[att_u_key]
+
+		if att_obj_data then
+			if not att_obj_data.client_casing_suspicion then
+				mvector3.set(att_obj_data.verified_pos, att_obj_data.m_head_pos)
+
+				att_obj_data.verified_dis = mvector3.distance(self._unit:movement():m_head_pos(), att_obj_data.m_head_pos)
+
+				if not att_obj_data.identified then
+					att_obj_data.identified = true
+					att_obj_data.identified_t = t
+					att_obj_data.notice_progress = nil
+					att_obj_data.prev_notice_chk_t = nil
+				elseif att_obj_data.uncover_progress then
+					att_obj_data.uncover_progress = nil
+				end
+			end
+		else
+			local attention_info = managers.groupai:state():get_AI_attention_objects_by_filter(self._logic_data.SO_access_str)[att_u_key]
+
+			if attention_info then
+				local settings = attention_info.handler:get_attention(self._logic_data.SO_access, nil, nil, self._logic_data.team)
+
+				if settings then
+					att_obj_data = CopLogicBase._create_detected_attention_object_data(t, self._unit, att_u_key, attention_info, settings)
+					att_obj_data.identified = true
+					att_obj_data.identified_t = t
+					att_obj_data.notice_progress = nil
+					att_obj_data.prev_notice_chk_t = nil
+
+					self._logic_data.detected_attention_objects[att_u_key] = att_obj_data
+				end
+			end
+		end
+
+		if att_obj_data then
+			if not att_obj_data.client_casing_suspicion then
+				att_obj_data.client_casing_suspicion = true
+
+				managers.groupai:state():on_criminal_suspicion_progress(peer_unit, self._unit, 1, peer_id)
+			end
+
+			if event_id == self._NET_EVENTS.suspecting_client_verified then
+				att_obj_data.verified = true
+			end
+		end
+	elseif event_id == self._NET_EVENTS.client_no_longer_verified then
+		local att_obj_data = self._logic_data.detected_attention_objects[peer_unit:key()]
+
+		if att_obj_data then
+			att_obj_data.verified = nil
+		end
+	elseif event_id == self._NET_EVENTS.stopped_suspecting_client or event_id == self._NET_EVENTS.stopped_seeing_client_peaceful then
+		if event_id == self._NET_EVENTS.stopped_suspecting_client then
+			managers.groupai:state():on_criminal_suspicion_progress(peer_unit, self._unit, false, peer_id)
+		end
+
+		local att_obj_data = self._logic_data.detected_attention_objects[peer_unit:key()]
+
+		if att_obj_data then
+			att_obj_data.handler:remove_listener("detect_" .. tostring(self._logic_data.key))
+
+			self._logic_data.detected_attention_objects[peer_unit:key()] = nil
+
+			local my_data = self._logic_data.internal_data
+
+			if self._logic_data.attention_obj and self._logic_data.attention_obj.u_key == peer_unit:key() then
+				CopLogicBase._set_attention_obj(self._logic_data, nil, nil)
+
+				if my_data then
+					if my_data.firing or my_data.firing_on_client then
+						self._unit:movement():set_allow_fire(false)
+
+						my_data.firing = nil
+						my_data.firing_on_client = nil
+					end
+				end
+			end
+
+			if my_data and my_data.arrest_targets then
+				my_data.arrest_targets[peer_unit:key()] = nil
+			end
+
+			local set_attention = self._unit:movement():attention()
+
+			if set_attention and set_attention.u_key == peer_unit:key() then
+				self._unit:movement():set_attention()
+			end
+		end
+	elseif event_id == self._NET_EVENTS.detected_suspected_client then
+		managers.groupai:state():on_criminal_suspicion_progress(peer_unit, self._unit, true, peer_id)
+
+		local att_obj_data = self._logic_data.detected_attention_objects[peer_unit:key()]
+
+		if att_obj_data then
+			att_obj_data.client_casing_suspicion = nil
+			att_obj_data.client_casing_detected = true
+		end
+	end
+end
+
+function CopBrain:on_nav_link_unregistered(element_id)
+	if self._logic_data.pathing_results then
+		local failed_search_ids = nil
+
+		for path_name, path in pairs(self._logic_data.pathing_results) do
+			if type(path) == "table" and path[1] and type(path[1]) ~= "table" then
+				for i, nav_point in ipairs(path) do
+					if not nav_point.x and nav_point.script_data and nav_point:script_data().element._id == element_id then
+						failed_search_ids = failed_search_ids or {}
+						failed_search_ids[path_name] = true
+
+						break
+					end
+				end
+			end
+		end
+
+		if failed_search_ids then
+			for search_id, _ in pairs(failed_search_ids) do
+				self._logic_data.pathing_results[search_id] = "failed"
+			end
+		end
+	end
+
+	local paths = self._current_logic._get_all_paths and self._current_logic._get_all_paths(self._logic_data)
+
+	if not paths then
+		return
+	end
+
+	local verified_paths = {}
+
+	for path_name, path in pairs(paths) do
+		local path_is_ok = true
+
+		for i, nav_point in ipairs(path) do
+			if not nav_point.x and nav_point.script_data and nav_point:script_data().element._id == element_id then
+				path_is_ok = false
+
+				break
+			end
+		end
+
+		if path_is_ok then
+			verified_paths[path_name] = path
+		end
+	end
+
+	self._current_logic._set_verified_paths(self._logic_data, verified_paths)
+end
+
 function CopBrain:convert_to_criminal(mastermind_criminal)
+	if self._alert_listen_key then
+		managers.groupai:state():remove_alert_listener(self._alert_listen_key)
+	else
+		self._alert_listen_key = "CopBrain" .. tostring(self._unit:key())
+	end
+
+	local alert_listen_filter = managers.groupai:state():get_unit_type_filter("combatant")
+	local alert_types = {
+		explosion = true,
+		fire = true,
+		aggression = true,
+		bullet = true
+	}
+
+	managers.groupai:state():add_alert_listener(self._alert_listen_key, callback(self, self, "on_alert"), alert_listen_filter, alert_types, self._unit:movement():m_head_pos())
+
 	self._logic_data.is_converted = true
 	self._logic_data.group = nil
 	local mover_col_body = self._unit:body("mover_blocker")
@@ -144,21 +393,18 @@ function CopBrain:convert_to_criminal(mastermind_criminal)
 	self._unit:movement():set_stance("hos")
 
 	local action_data = {
-		clamp_to_graph = true,
-		type = "act",
+		variant = "stand",
 		body_part = 1,
-		variant = "attached_collar_enter",
-		blocks = {
-			heavy_hurt = -1,
-			hurt = -1,
-			action = -1,
-			light_hurt = -1,
-			walk = -1
-		}
+		type = "act"
 	}
 
 	self._unit:brain():action_request(action_data)
 	self._unit:sound():say("cn1", true, nil)
+	managers.network:session():send_to_peers_synched("sync_unit_converted", self._unit)
+end
+
+function CopBrain:clbk_pathing_results(search_id, path)
+    self:_add_pathing_result(search_id, path)
 end
 
 function CopBrain:clbk_alarm_pager(ignore_this, data)
@@ -225,6 +471,7 @@ function CopBrain:clbk_alarm_pager(ignore_this, data)
 
 		managers.enemy:add_delayed_clbk(self._alarm_pager_data.pager_clbk_id, callback(self, self, "clbk_alarm_pager"), TimerManager:game():time() + call_delay)
 	end
+end
 	
 	
 function CopBrain:on_suppressed(state)
@@ -243,5 +490,4 @@ function CopBrain:on_suppressed(state)
 			end
         end
 	end
-end
 end

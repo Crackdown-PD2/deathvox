@@ -9,6 +9,7 @@
 			<object enabled="true" name="'g_helmet_glass'"/>
 			<object enabled="true" name="'g_helmet_glass_lod1'"/>
 			<decal_mesh enabled="true" name="'dm_helmet_glass'"/>
+			<spawn_unit name="'units/pd2_mod_classic/characters/ene_acc_bulldozer_faceplate/ene_acc_bulldozer_faceplate'" position="object_pos('Head')" rotation="object_rot('Head')"/>			
 			<sound action="'play'" event="'bulldozer_metal_plate_shatter'" object="'Head'"/>
 		</sequence>
 		<sequence name="'int_seq_helmet_glass_01'" once="true">
@@ -27,6 +28,7 @@
 			<object enabled="false" name="'g_helmet_glass_crk'"/>
 			<object enabled="false" name="'g_helmet_glass_crk_lod1'"/>
 			<decal_mesh enabled="false" name="'dm_helmet_glass'"/>
+			<decal_mesh enabled="true" name="'dm_head'"/>			
 			<effect damp_time="4" name="'effects/particles/bullet_hit/glass_breakable/bullet_hit_glass_breakable'" parent="object( 'e_glass' )" position="v()"/>
 			<effect damp_time="5" name="'effects/particles/bullet_hit/glass_breakable/bullet_hit_glass_breakable'" parent="object( 'e_glass' )" position="v()"/>
 			<function extension="'character_damage'" function="'seq_clbk_vizor_shatter'" start_time="1"/>

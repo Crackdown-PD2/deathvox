@@ -10933,9 +10933,6 @@
 		<table>
 			<unit_data continent="world" name="units/pd2_dlc_eng/props/eng_prop_bullet/eng_prop_bullet" name_id="eng_prop_bullet_006" position="-560 1675 89" rotation="0 0 0.707107 -0.707107" unit_id="105761"/>
 		</table>
-		<table>
-			<unit_data continent="world" mesh_variation="state_vis_hidden" name="units/pd2_dlc_icc/props/icc_prop_loot_confidential_folder_3" name_id="icc_prop_loot_confidential_folder_3_001" position="-339 863 190.5" rotation="-0.48674 -0.48674 -0.512917 -0.512917" unit_id="105773"/>
-		</table>
 	</statics>
 	<values>
 		<workviews/>

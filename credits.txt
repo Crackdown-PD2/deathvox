@@ -1,0 +1,218 @@
+Crackdown mod credits
+
+--- Crackdown Core Team ---
+
+Rino is the Crackdown team leader. They won't be satisfied until they control every rebalance mod.
+
+Lead programming on Crackdown is handled by ZNix. His code encompasses all things under the sun.
+
+The design of Crackdown's Player Balance Overhaul is the work of Kith. Skull krew unite!
+
+Lead enemy balance design on Crackdown is covered by Finale. He invented the triple medic spawngroup.
+
+Design feedback, proofreading and map editing information on Crackdown is provided by Rex. He kept Finale from requiring 48 safes on Aftershock.
+
+Overall enemy, site, and asset design for Crackdown was provided by splish. He refused to add skull masks to all of the ZEAL units.
+
+A variety of programming support and fixes came from Offyerrocker.
+
+Fuglore handled Main AI Design. Enemies moved smarter, faster, and cleaner thanks to their revisions.
+
+Hoxi was Main AI Programmer and Code Sanitizer. A tremendous number of landmines were defused on their watch.
+
+Lead programming on Crackdown was originally handled by Iamgoofball. He fixed Finale’s game-crashing code.
+
+The Crackdown team was originally led by Rhynne. They nixed the plan to add 20 bots to the Crackdown discord.
+
+Zdann crafted artisan memes.
+
+
+
+--- Major Contributions ---
+New Assets ---
+Bandana Dee: https://modworkshop.net/member.php?action=profile&uid=3919
+
+Jarey_: https://modworkshop.net/member.php?action=profile&uid=1664
+
+rino: https://modworkshop.net/member.php?action=profile&uid=536
+
+Rex: https://modworkshop.net/member.php?action=profile&uid=3057
+
+splish
+
+CVIII: https://modworkshop.net/member.php?action=profile&uid=2041
+
+Badatnames: https://steamcommunity.com/id/badatnames85/
+
+Rafa Knight
+
+Custom Heist Track (Dead End) ---
+
+Neppu Tennouboshi
+
+Grenadier VA ---
+
+Scruffy
+
+Heist Edits ---
+
+Rant-man
+
+Badatnames
+
+Asset Conversion ---
+
+splish
+
+CVIII
+
+Visor and attach point asset fixes ---
+
+Nelson01023
+
+Launch Site design and Mapping Documentation ---
+
+Rex
+
+Meme, Enemy Asset, Contour and Illuminate effect Documentation ---
+
+Zdann
+
+Original Sniper Tracer Mod ---
+
+Souzooka
+
+Original Zeal Taser Asset, Original Zeal Dozer Asset Fix ---
+
+Jarey_
+
+Additional custom heist and modding information ---
+
+ViciousWalrus
+
+Turret Targeting Fix ---
+
+Hoxi
+
+Player Balance Design ---
+
+Kith
+
+Omen267901
+
+Rejected PR Guy ---
+
+Zdann
+
+
+
+
+---Crackdown Testers---
+
+Ajax(Jiro)The Tank
+
+Alan Smithee
+
+Allocer
+
+AntuMarin
+
+Aory
+
+Arduin
+
+ArkinBlack
+
+Avengerstar
+
+Bandana Dee
+
+Belial
+
+chairface
+
+cloverraptor
+
+Dante
+
+Davey
+
+Dickle "read altgenstuck" Picken
+
+Draza
+
+DR01D_Qs
+
+Gabe
+
+Heca
+
+IAmRyanHearMeRoar
+
+Jal
+
+Kins0
+
+Kuziz
+
+Leon S.
+
+LGL_Ilija
+
+Local Squishyboi
+
+Malidictus
+
+Marshmallow
+
+Meredith K. Pseudonym
+
+Morax
+
+Omen267901
+
+RandomKenny
+
+Ranzer
+
+[♖] Rook
+
+Salem
+
+Scruffy Pubstover
+
+TheOnlyRobert
+
+UnknownMercenary
+
+vexatiousIdler
+
+VxWolf
+
+Whurrhurr
+
+--- Closed Teams ---
+Closed Team 1 (meta focus) - "Pig BBQ"
+
+Closed Team 2 (non-meta focus) - "Cop Carpet"
+
+Closed Team 3 (map testing focus) - "The Failures"
+
+Closed Team 4 (second wave non-meta focus) - "Finale forgot to ask us for a team name"
+
+and all other members of the Crackdown testing discord, as well as the other streamers, redditors, goons, and steam forums users who helped test the mod and give feedback. We apologize if we missed any of you!
+
+
+
+
+--- Special Thanks ---
+
+All lead developers would like to thank the entire Restoration Mod team, especially SC, for providing much of the framework, tools and support necessary to make Crackdown possible, and for the use of the Grenadier enemy.
+
+Our thanks to ZNix for developing the SuperBLT. This hook presents a new, stable, unified platform, and promises a bright future for Payday 2 modding.
+
+Our thanks to Luffy for developing Beardlib, the first step forward on a variety of modding fronts, and Beardlib Editor, the foundation of custom mapping and clean asset arrangement.
+
+Our thanks to JamesWilko and SirWaddles for developing the BLT Hook and the general Payday 2 modding environment. Ultimately, all of this is your fault.
+
+Our thanks to the members of the Facepunch, Reddit, Something Awful, ModWorkShop and official Steam forums for their input, feedback, and support.

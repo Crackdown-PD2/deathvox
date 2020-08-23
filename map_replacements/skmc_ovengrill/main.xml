@@ -1,4 +1,8 @@
 <table name="skmc_ovengrill">
+	<AddFiles directory="assets">
+		<texture load="true" path="guis/textures/hotfix_icon"/>
+		<texture load="true" path="guis/textures/hotfix_loading"/>
+	</AddFiles>
 	<Localization default="english.txt" directory="loc"/>
 	<level ai_group_type="america" briefing_dialog="Play_loc_skm_brf" cube="cube_apply_heist_bank" group_ai_state="skirmish" id="skmc_ovengrill" intro_event="Play_loc_skm_intro" music_ext_start="heist" narrator="locke" wave_count="9">
 		<Hooks/>
@@ -28,6 +32,7 @@
 			<value_node value="levels/narratives/skm/skm_mus/world_sounds"/>
 			<value_node value="levels/narratives/elephant/chew/collision/collision"/>
 			<value_node value="levels/narratives/e_framing_frame/stage_3/world/world"/>
+			<value_node value="packages/deathvoxclassics"/>
 			<value_node value="levels/narratives/e_election_day/stage_3/world/world"/>
 			<value_node value="levels/narratives/short2/stage1/nightclub_interior/nightclub_interior"/>
 			<value_node value="levels/narratives/bain/shadow_raid/editor_only/editor_only"/>
@@ -45,7 +50,7 @@
 			</mod>
 		</script_data_mods>
 	</level>
-	<narrative briefing_event="" contact="skirmish" id="skmc_ovengrill" jc="50" max_mission_xp="135900" min_mission_xp="8000" region="street">
+	<narrative briefing_event="" contact="skirmish" id="skmc_ovengrill" jc="50" max_mission_xp="135900" min_mission_xp="8000" region="street" icon="guis/textures/hotfix_icon" load_screen="guis/textures/hotfix_loading">
 		<chain>
 			<table level_id="skmc_ovengrill" type="d" type_id="heist_type_assault"/>
 		</chain>
@@ -67,6 +72,11 @@
 		<debrief_event>
 			<value_node value=""/>
 		</debrief_event>
+        <date_added>
+            <value_node value="2018"/>
+            <value_node value="4"/>
+            <value_node value="23"/>
+        </date_added>
 		<experience_mul>
 			<value_node value="1"/>
 			<value_node value="1"/>
@@ -76,28 +86,6 @@
 			<value_node value="3"/>
 			<value_node value="3"/>
 		</experience_mul>
-		<max_mission_xp>
-			<value_node value="8000"/>
-			<value_node value="8800"/>
-			<value_node value="9600"/>
-			<value_node value="10400"/>
-			<value_node value="11200"/>
-			<value_node value="12000"/>
-			<value_node value="12800"/>
-			<value_node value="13600"/>
-			<value_node value="14400"/>
-		</max_mission_xp>
-		<min_mission_xp>
-			<value_node value="8000"/>
-			<value_node value="8800"/>
-			<value_node value="9600"/>
-			<value_node value="10400"/>
-			<value_node value="11200"/>
-			<value_node value="12000"/>
-			<value_node value="12800"/>
-			<value_node value="13600"/>
-			<value_node value="14400"/>
-		</min_mission_xp>
 		<payout>
 			<value_node value="0"/>
 			<value_node value="0"/>

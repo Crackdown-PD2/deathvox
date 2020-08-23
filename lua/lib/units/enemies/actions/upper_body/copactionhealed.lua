@@ -8,20 +8,48 @@ function CopActionHealed:init(action_desc, common_data)
 	self._machine = common_data.machine
 	self._attention = common_data.attention
 	self._action_desc = action_desc
-
-	if not self._unit:base():char_tweak().ignore_medic_revive_animation then
-		self._ext_movement:play_redirect("use_syringe")
-	end
-	if not self._unit:base():char_tweak().disable_medic_heal_voice then
-		self._unit:sound():say("hr01")
-	end
-
 	self._healed = false
 
-	if self._unit:contour() then
-		self._unit:contour():add("medic_heal", true)
-		self._unit:contour():flash("medic_heal", 0.2)
+	if self._ext_movement:play_redirect("use_syringe") then
+		common_data.ext_movement:enable_update(true)
+		self._ext_movement:spawn_wanted_items()
+		self._unit:sound():say("hr01")
+
+		if action_desc.allow_network then
+			local params = {
+				CopActionHurt.hurt_type_to_idx(action_desc.type),
+				action_desc.body_part,
+				CopActionHurt.death_type_to_idx("normal"),
+				CopActionHurt.type_to_idx(action_desc.type),
+				CopActionHurt.variant_to_idx("healed"),
+				Vector3(),
+				Vector3()
+			}
+
+			common_data.ext_network:send("action_hurt_start", unpack(params))
+		end
+
+		return true
+	end
+end
+
+function CopActionHealed:on_exit()
+	self._ext_movement:drop_held_items()
+end
+
+function CopActionHealed:update(t)
+	if not self._unit:anim_data().heal then
+		self._healed = true
+		self._expired = true
 	end
 
-	return true
+	self._ext_movement:upd_m_head_pos()
+end
+
+function CopActionHealed:chk_block(action_type, t)
+	if action_type == "death" then
+		return false
+	end
+
+	return not self._healed
 end
