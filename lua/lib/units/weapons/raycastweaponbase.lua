@@ -736,9 +736,13 @@ function InstantBulletBase:calculate_crit(weapon_unit, user_unit)
 
 	local crit_value = managers.player:critical_hit_chance()
 	
+	local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
+	
 	if has_category and weapon_unit:base():is_category("assault_rifle", "smg", "rapidfire") then
 		crit_value = crit_value + managers.player:upgrade_value("player", "spray_and_pray_basic", 0)
 	end
+	
+	--log("crit value is " .. crit_value .. "!")
 	
 	local critical_roll = math.rand(1)
 	critical_hit = critical_roll < crit_value
@@ -923,6 +927,7 @@ function FlameBulletBase:calculate_crit(weapon_unit, user_unit)
 	end
 
 	local crit_value = managers.player:critical_hit_chance()
+	local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
 	
 	if has_category and weapon_unit:base():is_category("assault_rifle", "smg", "rapidfire") then
 		crit_value = crit_value + managers.player:upgrade_value("player", "spray_and_pray_basic", 0)
