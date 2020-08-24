@@ -4,7 +4,7 @@ local warned_mods = {
     ["BB"] = "Better Bots",
     ["FullSpeedSwarm"] = "Full Speed Swarm",
     ["Iter"] = "Iter",
-    ["HoxHUD"] = "HoxH- wait, HoxHUD? Seriously? Why, and also how, and then looping back around again to the \"why?\"",
+    ["HoxHUD"] = "HoxHUD? At this day and age? Okey-dokey then.",
     ["SC"] = "Restoration Mod"
 }
 
@@ -20,13 +20,13 @@ Hooks:PostHook(MenuNodeGui,"_setup_item_rows","crackdown_mod_incompatibility_war
     end
     
     if has_any then 
-       desc = desc .. "\n" .. "KITH SAYS YOU'RE A HUGE FUCKING IDIOT FOR TRYING TO USE AN AI MOD WITH ANOTHER AI MOD, HOPE THAT HELPS"
+       desc = desc .. "\n" .. "Fug says: Using AI mods with Crackdown can, and probably WILL crash your game!"
        QuickMenu:new(
            title,
            desc,
            {
                 {
-                    title = "ok FINE MOM GOD",
+                    title = "What could possibly go wrong?",
                     is_cancel_button = true
                 }
             }

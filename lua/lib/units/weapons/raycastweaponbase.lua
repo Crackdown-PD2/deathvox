@@ -585,7 +585,7 @@ function InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, 
 	local ricochet_range = guaranteed_hit and 1000 or 2000 --modify as you wish
 	local impact_pos = col_ray.hit_position or col_ray.position
 
-	if guaranteed_hit then
+	if guaranteed_hit and managers.player:has_category_upgrade("player", "ricochet_bullets_aced") then
 		local bodies = World:find_bodies("intersect", "sphere", impact_pos, ricochet_range, managers.slot:get_mask("enemies")) --use a sphere to find nearby enemies
 		local can_hit_enemy = false
 
@@ -729,17 +729,39 @@ function InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, 
 	end
 end
 
-function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage, blank, no_sound, already_ricocheted)
+function InstantBulletBase:calculate_crit(weapon_unit, user_unit)
+	if not user_unit or user_unit ~= managers.player:player_unit() then
+		return nil
+	end
+
+	local crit_value = managers.player:critical_hit_chance()
+	
+	if has_category and weapon_unit:base():is_category("assault_rifle", "smg", "rapidfire") then
+		crit_value = crit_value + managers.player:upgrade_value("player", "spray_and_pray_basic", 0)
+	end
+	
+	local critical_roll = math.rand(1)
+	critical_hit = critical_roll < crit_value
+	
+	--if critical_hit then
+	--	log("BOOM")
+	--end
+	
+	return critical_hit
+end
+
+function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage, blank, no_sound, already_ricocheted, critical_hit)
 	if Network:is_client() and not blank and user_unit ~= managers.player:player_unit() then
 		blank = true
 	end
 
 	local enable_ricochets = managers.player:has_category_upgrade("player", "ricochet_bullets")
-
-	if enable_ricochets and math.random() <= 0.25 and not already_ricocheted and user_unit and user_unit == managers.player:player_unit() and col_ray.unit then
+	critical_hit = critical_hit or self:calculate_crit(weapon_unit, user_unit)
+	
+	if enable_ricochets and not already_ricocheted and user_unit and user_unit == managers.player:player_unit() and col_ray.unit then
 		local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
 
-		if has_category and weapon_unit:base():is_category("assault_rifle", "smg") then --to replace later with the proper skill and procing check (random chance/last bullet/etc)
+		if has_category and weapon_unit:base():is_category("assault_rifle", "smg", "rapidfire") then
 			local can_bounce_off = false
 
 			--easier to understand and to add more conditions if desired
@@ -750,7 +772,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 			end
 
 			if can_bounce_off then
-				InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, blank, no_sound, true)
+				InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, blank, no_sound, critical_hit)
 			end
 		end
 	end
@@ -846,7 +868,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 		
 		if not blank then
 			local knock_down = weapon_unit:base()._knock_down and weapon_unit:base()._knock_down > 0 and math.random() < weapon_unit:base()._knock_down
-			result = self:give_impact_damage(col_ray, weapon_unit, user_unit, damage, pierce_armor, false, knock_down, weapon_unit:base()._stagger, weapon_unit:base()._variant)
+			result = self:give_impact_damage(col_ray, weapon_unit, user_unit, damage, pierce_armor, false, knock_down, weapon_unit:base()._stagger, weapon_unit:base()._variant, critical_hit)
 		end
 
 		local is_dead = hit_unit:character_damage():dead()
@@ -876,15 +898,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 	return result
 end
 
-function InstantBulletBase:give_impact_damage(col_ray, weapon_unit, user_unit, damage, armor_piercing, shield_knock, knock_down, stagger, variant)
-	local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
-	local crit_chance = 0
-	
-	if user_unit == managers.player:player_unit() and has_category and weapon_unit:base():is_category("assault_rifle", "smg", "rapidfire") then
-		crit_chance = crit_chance + managers.player:upgrade_value("player", "spray_and_pray_basic", 0)
-		--log("crit_chance is " .. crit_chance .. "!")
-	end
-	
+function InstantBulletBase:give_impact_damage(col_ray, weapon_unit, user_unit, damage, armor_piercing, shield_knock, knock_down, stagger, variant, critical_hit)
 	local action_data = {
 		variant = variant or "bullet",
 		damage = damage,
@@ -895,14 +909,192 @@ function InstantBulletBase:give_impact_damage(col_ray, weapon_unit, user_unit, d
 		shield_knock = shield_knock,
 		origin = user_unit:position(),
 		knock_down = knock_down,
-		crit_chance = crit_chance,
-		stagger = stagger
+		stagger = stagger,
+		critical_hit = critical_hit
 	}
 	local defense_data = col_ray.unit:character_damage():damage_bullet(action_data)
 
 	return defense_data
 end
 
+function FlameBulletBase:calculate_crit(weapon_unit, user_unit)
+	if not user_unit or user_unit ~= managers.player:player_unit() then
+		return nil
+	end
+
+	local crit_value = managers.player:critical_hit_chance()
+	
+	if has_category and weapon_unit:base():is_category("assault_rifle", "smg", "rapidfire") then
+		crit_value = crit_value + managers.player:upgrade_value("player", "spray_and_pray_basic", 0)
+	end
+	
+	local critical_roll = math.rand(1)
+	critical_hit = critical_roll < crit_value
+	
+	--if critical_hit then
+		--log("BOOM")
+	--end
+	
+	return critical_hit
+end
+
+function FlameBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage, blank)
+	local hit_unit = col_ray.unit
+	local play_impact_flesh = false
+	local critical_hit = self:calculate_crit(weapon_unit, user_unit)
+
+	if hit_unit:damage() and col_ray.body:extension() and col_ray.body:extension().damage then
+		local sync_damage = not blank and hit_unit:id() ~= -1
+		local network_damage = math.ceil(damage * 163.84)
+		damage = network_damage / 163.84
+
+		if sync_damage then
+			local normal_vec_yaw, normal_vec_pitch = self._get_vector_sync_yaw_pitch(col_ray.normal, 128, 64)
+			local dir_vec_yaw, dir_vec_pitch = self._get_vector_sync_yaw_pitch(col_ray.ray, 128, 64)
+
+			managers.network:session():send_to_peers_synched("sync_body_damage_bullet", col_ray.unit:id() ~= -1 and col_ray.body or nil, user_unit:id() ~= -1 and user_unit or nil, normal_vec_yaw, normal_vec_pitch, col_ray.position, dir_vec_yaw, dir_vec_pitch, math.min(16384, network_damage))
+		end
+
+		local local_damage = not blank or hit_unit:id() == -1
+
+		if local_damage then
+			col_ray.body:extension().damage:damage_bullet(user_unit, col_ray.normal, col_ray.position, col_ray.ray, 1)
+			col_ray.body:extension().damage:damage_damage(user_unit, col_ray.normal, col_ray.position, col_ray.ray, damage)
+
+			if alive(weapon_unit) and weapon_unit:base().categories and weapon_unit:base():categories() then
+				for _, category in ipairs(weapon_unit:base():categories()) do
+					col_ray.body:extension().damage:damage_bullet_type(category, user_unit, col_ray.normal, col_ray.position, col_ray.ray, 1)
+				end
+			end
+		end
+	end
+
+	local result = nil
+
+	if hit_unit:character_damage() and hit_unit:character_damage().damage_fire then
+		local is_alive = not hit_unit:character_damage():dead()
+		result = self:give_fire_damage(col_ray, weapon_unit, user_unit, damage, nil, critical_hit)
+
+		if result ~= "friendly_fire" then
+			local is_dead = hit_unit:character_damage():dead()
+
+			if weapon_unit:base()._ammo_data and weapon_unit:base()._ammo_data.push_units then
+				local push_multiplier = self:_get_character_push_multiplier(weapon_unit, is_alive and is_dead)
+
+				managers.game_play_central:physics_push(col_ray, push_multiplier)
+			end
+		else
+			play_impact_flesh = false
+		end
+	elseif weapon_unit:base()._ammo_data and weapon_unit:base()._ammo_data.push_units then
+		managers.game_play_central:physics_push(col_ray)
+	end
+
+	if play_impact_flesh then
+		managers.game_play_central:play_impact_flesh({
+			no_sound = true,
+			col_ray = col_ray
+		})
+	end
+
+	self:play_impact_sound_and_effects(weapon_unit, col_ray)
+
+	return result
+end
+
+function FlameBulletBase:give_fire_damage(col_ray, weapon_unit, user_unit, damage, armor_piercing, critical_hit)
+	local fire_dot_data = nil
+
+	if weapon_unit.base and weapon_unit:base()._ammo_data and weapon_unit:base()._ammo_data.bullet_class == "FlameBulletBase" then
+		fire_dot_data = weapon_unit:base()._ammo_data.fire_dot_data
+	elseif weapon_unit.base and weapon_unit:base()._name_id then
+		local weapon_name_id = weapon_unit:base()._name_id
+
+		if tweak_data.weapon[weapon_name_id] and tweak_data.weapon[weapon_name_id].fire_dot_data then
+			fire_dot_data = tweak_data.weapon[weapon_name_id].fire_dot_data
+		end
+	end
+
+	local action_data = {
+		variant = "fire",
+		damage = damage,
+		weapon_unit = weapon_unit,
+		attacker_unit = user_unit,
+		col_ray = col_ray,
+		critical_hit = critical_hit,
+		armor_piercing = armor_piercing,
+		fire_dot_data = fire_dot_data
+	}
+	local defense_data = col_ray.unit:character_damage():damage_fire(action_data)
+
+	return defense_data
+end
+
+function InstantExplosiveBulletBase:on_collision_server(position, normal, damage, user_unit, weapon_unit, owner_peer_id, owner_selection_index)
+	local slot_mask = managers.slot:get_mask("explosion_targets")
+	--local critical_hit = self:calculate_crit(weapon_unit, user_unit) i have this fully implemented, but commented out, if we ever want explosive bullet crits.
+	managers.explosion:play_sound_and_effects(position, normal, self.RANGE, self.EFFECT_PARAMS)
+	local params = {
+		hit_pos = position,
+		range = self.RANGE,
+		collision_slotmask = slot_mask,
+		curve_pow = self.CURVE_POW,
+		damage = damage,
+		player_damage = damage * self.PLAYER_DMG_MUL,
+		ignore_unit = weapon_unit,
+		user = user_unit,
+		owner = weapon_unit
+		--critical_hit = critical_hit
+	}
+
+	local hit_units, splinters, results = managers.explosion:detect_and_give_dmg(params)
+	local network_damage = math.ceil(damage * 163.84)
+
+	managers.network:session():send_to_peers_synched("sync_explode_bullet", position, normal, math.min(16384, network_damage), owner_peer_id)
+
+	if managers.network:session():local_peer():id() == owner_peer_id then
+		local enemies_hit = (results.count_gangsters or 0) + (results.count_cops or 0)
+		local enemies_killed = (results.count_gangster_kills or 0) + (results.count_cop_kills or 0)
+
+		managers.statistics:shot_fired({
+			hit = false,
+			weapon_unit = weapon_unit
+		})
+
+		for i = 1, enemies_hit do
+			managers.statistics:shot_fired({
+				skip_bullet_count = true,
+				hit = true,
+				weapon_unit = weapon_unit
+			})
+		end
+
+		local weapon_pass, weapon_type_pass, count_pass, all_pass = nil
+
+		for achievement, achievement_data in pairs(tweak_data.achievement.explosion_achievements) do
+			weapon_pass = not achievement_data.weapon or true
+			weapon_type_pass = not achievement_data.weapon_type or weapon_unit:base() and weapon_unit:base().weapon_tweak_data and weapon_unit:base():is_category(achievement_data.weapon_type)
+			count_pass = not achievement_data.count or achievement_data.count <= (achievement_data.kill and enemies_killed or enemies_hit)
+			all_pass = weapon_pass and weapon_type_pass and count_pass
+
+			if all_pass and achievement_data.award then
+				managers.achievment:award(achievement_data.award)
+			end
+		end
+	else
+		local peer = managers.network:session():peer(owner_peer_id)
+		local SYNCH_MIN = 0
+		local SYNCH_MAX = 31
+		local count_cops = math.clamp(results.count_cops, SYNCH_MIN, SYNCH_MAX)
+		local count_gangsters = math.clamp(results.count_gangsters, SYNCH_MIN, SYNCH_MAX)
+		local count_civilians = math.clamp(results.count_civilians, SYNCH_MIN, SYNCH_MAX)
+		local count_cop_kills = math.clamp(results.count_cop_kills, SYNCH_MIN, SYNCH_MAX)
+		local count_gangster_kills = math.clamp(results.count_gangster_kills, SYNCH_MIN, SYNCH_MAX)
+		local count_civilian_kills = math.clamp(results.count_civilian_kills, SYNCH_MIN, SYNCH_MAX)
+
+		managers.network:session():send_to_peer_synched(peer, "sync_explosion_results", count_cops, count_gangsters, count_civilians, count_cop_kills, count_gangster_kills, count_civilian_kills, owner_selection_index)
+	end
+end
 function RaycastWeaponBase:_suppress_units(from_pos, direction, distance, slotmask, user_unit, suppr_mul)
 	local tmp_to = Vector3()
 
@@ -973,7 +1165,6 @@ function RaycastWeaponBase:_suppress_units(from_pos, direction, distance, slotma
 		end
 	end
 end
-
 
 --taser bullets for taser sentries (total cd only) 
 local MIN_KNOCK_BACK = 200 --WHY ARE THESE LOCAL VARIABLES

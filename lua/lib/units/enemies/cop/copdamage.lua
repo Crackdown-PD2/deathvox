@@ -82,23 +82,16 @@ end
 
 function CopDamage:roll_critical_hit(attack_data)
 	local damage = attack_data.damage
-	local crit_chance_weapon = attack_data.crit_chance or 0
+	if attack_data.critical_hit then
+		--log("well, yes")
+	end
 	if not self:can_be_critical(attack_data) then
+		--log("but actually, no")
 		return false, damage
 	end
 
 	local critical_hits = self._char_tweak.critical_hits or {}
-	local critical_hit = false
-	local critical_value = (critical_hits.base_chance or 0) + managers.player:critical_hit_chance() * (critical_hits.player_chance_multiplier or 1)
-	
-	critical_value = critical_value + crit_chance_weapon
-	
-	--log("crit in copdamage is " .. critical_value .. "!")
-	
-	if critical_value > 0 then
-		local critical_roll = math.rand(1)
-		critical_hit = critical_roll < critical_value
-	end
+	local critical_hit = attack_data.critical_hit or nil
 
 	if critical_hit then
 		local critical_damage_mul = critical_hits.damage_mul or self._char_tweak.headshot_dmg_mul
@@ -175,6 +168,13 @@ function CopDamage:damage_explosion(attack_data)
 
 	local is_civilian = CopDamage.is_civilian(self._unit:base()._tweak_table)
 	local damage = attack_data.damage
+	
+	--local critical_hit, crit_damage = self:roll_critical_hit(attack_data)
+
+	--if critical_hit then
+		--damage = crit_damage
+		--attack_data.critical_hit = true
+	--end	
 
 	if self._char_tweak.damage.explosion_damage_mul then
 		damage = damage * self._char_tweak.damage.explosion_damage_mul
@@ -198,6 +198,11 @@ function CopDamage:damage_explosion(attack_data)
 
 	if attacker_unit == managers.player:player_unit() and damage > 0 and attack_data.variant ~= "stun" then
 		managers.hud:on_hit_confirmed()
+		--if critical_hit then
+		--	managers.hud:on_crit_confirmed()
+		--else
+		--	managers.hud:on_hit_confirmed()
+		--end
 	end
 
 	if self._char_tweak.DAMAGE_CLAMP_EXPLOSION then
