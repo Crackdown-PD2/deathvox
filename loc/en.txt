@@ -9,7 +9,7 @@
 	"deathvox_toggle_hoppip_desc" : "Adjusts invincibility frames on the player to work in a less frustrating way.",
 	"deathvox_toggle_totalcd_title" : "TOTAL CRACKDOWN Overhaul",
 	"deathvox_toggle_totalcd_desc" : "The Total Crackdown Overhaul is WIP and features entirely reworked primary weapon stats and new skills.",
-	
+
 	"ene_deathvox_guard" : "Secret Service", 
 	"ene_deathvox_heavyar" : "Heavy Zulu",
 	"ene_deathvox_heavyshot" : "Heavy Zulu", 

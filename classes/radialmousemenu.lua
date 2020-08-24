@@ -1,5 +1,4 @@
---v1.0
-
+--v1.02
 
 RadialMouseMenu = RadialMouseMenu or class()
 
@@ -223,18 +222,22 @@ function RadialMouseMenu:mouse_clicked(o,button,x,y)
 	end
 	local item = self._selected and self._items[self._selected]
 	if item then 
-	
---		item._body:set_visible(not item._body:visible())
-		local success,result
-		if item.callback then 
-			success,result = pcall(item.callback)
-		end
-		Hooks:Call("radialmenu_selected_" .. self._name,self._selected,result)
-		if not item.stay_open then 
-			self:Hide()
-		end
+		self:on_item_clicked(item)
 	end
 end
+
+function RadialMouseMenu:on_item_clicked(item,skip_hide)
+--	item._body:set_visible(not item._body:visible())
+	local success,result
+	if item.callback then 
+		success,result = pcall(item.callback)
+	end
+	Hooks:Call("radialmenu_selected_" .. self._name,self._selected,result)
+	if not (item.stay_open or skip_hide) then 
+		self:Hide(nil,false)
+	end
+end
+
 
 function RadialMouseMenu:on_mouseover_item(index) --you can choose to clone the class and change the mousover event animation if you want
 	local item = self:get_item(index)
@@ -270,15 +273,15 @@ function RadialMouseMenu:on_mouseover_item(index) --you can choose to clone the 
 
 end
 
-function RadialMouseMenu:Toggle(state)
+function RadialMouseMenu:Toggle(state,...)
 	if state == nil then 
 		state = not self:active()
 	end	
 	
 	if state then 
-		self:Show()
+		self:Show(...)
 	else
-		self:Hide()
+		self:Hide(...)
 	end
 end
 
@@ -317,7 +320,7 @@ function RadialMouseMenu:active() --whether or not this menu instance is visible
 	return self._active
 end
 
-function RadialMouseMenu:Hide(skip_reset)
+function RadialMouseMenu:Hide(skip_reset,do_success_cb)
 	if not skip_reset then 
 		RadialMouseMenu.current_menu = nil
 	end
@@ -326,6 +329,12 @@ function RadialMouseMenu:Hide(skip_reset)
 	if self._active then 
 		self._selector:set_visible(false)
 		self:on_closed()
+		if do_success_cb then 
+			local item = self._selected and self._items[self._selected]
+			if item then 
+				self:on_item_clicked(item,true) --already hiding here so skip_hide 
+			end
+		end
 		managers.mouse_pointer:remove_mouse("radial_menu_mouse")
 		game_state_machine:_set_controller_enabled(true)
 	end

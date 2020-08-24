@@ -6,10 +6,11 @@ SentryControlMenu._save_path = SavePath .. "SentryControlMenuSettings.txt"
 SentryControlMenu.settings = {
 	menu_behavior = 1,
 	teammate_laser_alpha = 0.05,
-	keybind_select = "j",
-	keybind_deselect = "k",
-	keybind_menu = "l",
-	menu_click_on_release = true
+	button_hold_threshold = 0.25,
+	keybind_select = "j", --deprecated
+	keybind_deselect = "k", --deprecated
+	keybind_menu = "l", --deprecated
+	menu_click_on_release = true --deprecated
 }
 
 SentryControlMenu.tweakdata = {
@@ -29,95 +30,8 @@ SentryControlMenu.tweakdata = {
 }
 
 SentryControlMenu._selections = {}
-
+SentryControlMenu.button_held_state = nil
 SentryControlMenu._targeted_sentry = nil
-
-function SentryControlMenu:MenuShouldClickOnRelease()
-	return self.settings.menu_click_on_release
-end
-
-function SentryControlMenu:SetMouseClickOnMenuClose(value)
-	self.settings.menu_click_on_release = value
-end
-
-function SentryControlMenu:SetMenuBehavior(value)
-	self.settings.menu_behavior = tonumber(value)
-end
-
-function SentryControlMenu:GetMenuBehavior()
-	return self.settings.menu_behavior
-end
-
-function SentryControlMenu:SetTeammateSentryLaserAlpha(value)
-	self.settings.teammate_laser_alpha = tonumber(value)
-end
-
-function SentryControlMenu:GetTeammateSentryLaserAlpha()
-	return self.settings.teammate_laser_alpha
-end
-
-function SentryControlMenu:GetSelectSentryKeybind()
-	return self.settings.keybind_select
-end
-
-function SentryControlMenu:GetDeselectSentryKeybind()
-	return self.settings.keybind_deselect
-end
-
-function SentryControlMenu:GetOpenMenuKeybind()
-	return self.settings.keybind_menu
-end
-
-function SentryControlMenu:SetSelectSentryKeybind(key)
-	self.settings.keybind_select = key
-end
-
-function SentryControlMenu:SetDeselectSentryKeybind(key)
-	self.settings.keybind_deselect = key
-end
-
-function SentryControlMenu:SetOpenMenuKeybind(key)
-	self.settings.keybind_menu = key
-end
-
-function SentryControlMenu:RefreshKeybinds()
-	self:SetSelectSentryKeybind(self:GetBLTKeybind("tcdso_select_sentry") or "")
-	self:SetDeselectSentryKeybind(self:GetBLTKeybind("tcdso_deselect_sentry") or "")
-	self:SetOpenMenuKeybind(self:GetBLTKeybind("tcdso_open_menu") or "")
-end
-
-function SentryControlMenu:GetBLTKeybind(id,...)
-	--method copied from holdthekey v1.35; if htk is present, use this newer-or-same version's method. else, use the version i copied
-	if HoldTheKey and HoldTheKey.Get_BLT_Keybind then 
-		return HoldTheKey:Get_BLT_Keybind(id,...)
-	else
-		for k,v in pairs(BLT.Keybinds._keybinds) do
-			if type(v) == "table" then
-				if v["_id"] == id then
-					if v["_key"] and v["_key"]["pc"] then
-						return tostring(v["_key"]["pc"])
-					else
-						return
-					end
-				end
-			end
-		end
-		
-		if BLT.Keybinds._potential_keybinds then
-			for k,v in pairs(BLT.Keybinds._potential_keybinds) do
-				if type(v) == "table" then
-					if v["id"] == id then
-						if v["pc"] then 
-							return tostring(v["pc"])
-						else
-							return
-						end
-					end
-				end
-			end
-		end
-	end
-end
 
 function SentryControlMenu.angle_from(a,b,c,d) -- converts to angle with ranges (-180 , 180); for result range 0-360, do +180 to result
 --mvector3.angle() is a big fat meanie zucchini;
@@ -161,11 +75,131 @@ function SentryControlMenu.angle_from(a,b,c,d) -- converts to angle with ranges 
 	end
 end
 
-function SentryControlMenu:GetMaxPickDistance()
+function SentryControlMenu._button_held(key)
+	if HoldTheKey then
+		return HoldTheKey:Key_Held(key)
+	end
+
+	if not (managers and managers.hud) or managers.hud._chat_focus then
+		return false
+	end
+	
+	key = tostring(key)
+	if key:find("mouse ") then 
+		if not key:find("wheel") then 
+			key = key:sub(7)
+		end
+		return Input:mouse():down(Idstring(key))
+	else
+		return Input:keyboard():down(Idstring(key))
+	end
+end
+
+--most of this is deprecated because of the change to interaction behavior precluding the need for the multiselection capability
+--but not all of it!
+
+function SentryControlMenu:MenuShouldClickOnRelease() --deprecated
+	return self.settings.menu_click_on_release
+end
+
+function SentryControlMenu:SetMouseClickOnMenuClose(value) --deprecated
+	self.settings.menu_click_on_release = value
+end
+
+function SentryControlMenu:SetMenuBehavior(value) --deprecated
+	self.settings.menu_behavior = tonumber(value)
+end
+
+function SentryControlMenu:GetMenuBehavior() --deprecated
+	return self.settings.menu_behavior
+end
+
+function SentryControlMenu:SetTeammateSentryLaserAlpha(value)
+	self.settings.teammate_laser_alpha = tonumber(value)
+end
+
+
+function SentryControlMenu:GetTeammateSentryLaserAlpha()
+	return self.settings.teammate_laser_alpha
+end
+
+function SentryControlMenu:GetSelectSentryKeybind() --deprecated
+	return self.settings.keybind_select
+end
+
+function SentryControlMenu:GetDeselectSentryKeybind() --deprecated
+	return self.settings.keybind_deselect
+end
+
+function SentryControlMenu:GetOpenMenuKeybind() --deprecated
+	return self.settings.keybind_menu
+end
+
+function SentryControlMenu:GetMenuButtonHoldThreshold()
+ --if the button is held for longer than this amount of seconds, next button release will hide the menu 
+	return self.settings.button_hold_threshold
+end
+
+function SentryControlMenu:SetMenuButtonHoldThreshold(value)
+	self.settings.button_hold_threshold = tonumber(value)
+end
+
+function SentryControlMenu:SetSelectSentryKeybind(key) --deprecated
+	self.settings.keybind_select = key
+end
+
+function SentryControlMenu:SetDeselectSentryKeybind(key) --deprecated
+	self.settings.keybind_deselect = key
+end
+
+function SentryControlMenu:SetOpenMenuKeybind(key) --deprecated
+	self.settings.keybind_menu = key
+end
+
+function SentryControlMenu:RefreshKeybinds() --deprecated
+	self:SetSelectSentryKeybind(self:GetBLTKeybind("tcdso_select_sentry") or "")
+	self:SetDeselectSentryKeybind(self:GetBLTKeybind("tcdso_deselect_sentry") or "")
+	self:SetOpenMenuKeybind(self:GetBLTKeybind("tcdso_open_menu") or "")
+end
+
+function SentryControlMenu:GetBLTKeybind(id,...) --deprecated
+	--method copied from holdthekey v1.35; if htk is present, use this newer-or-same version's method. else, use the version i copied
+	if HoldTheKey and HoldTheKey.Get_BLT_Keybind then 
+		return HoldTheKey:Get_BLT_Keybind(id,...)
+	else
+		for k,v in pairs(BLT.Keybinds._keybinds) do
+			if type(v) == "table" then
+				if v["_id"] == id then
+					if v["_key"] and v["_key"]["pc"] then
+						return tostring(v["_key"]["pc"])
+					else
+						return
+					end
+				end
+			end
+		end
+		
+		if BLT.Keybinds._potential_keybinds then
+			for k,v in pairs(BLT.Keybinds._potential_keybinds) do
+				if type(v) == "table" then
+					if v["id"] == id then
+						if v["pc"] then 
+							return tostring(v["pc"])
+						else
+							return
+						end
+					end
+				end
+			end
+		end
+	end
+end
+
+function SentryControlMenu:GetMaxPickDistance() --deprecated
 	return self.tweakdata.MAX_PICK_SENTRY_DISTANCE
 end
 
-function SentryControlMenu:GetMaxPickAngle()
+function SentryControlMenu:GetMaxPickAngle() --deprecated
 	return self.tweakdata.MAX_PICK_SENTRY_ANGLE
 end
 
@@ -189,27 +223,7 @@ function SentryControlMenu:_remove_ws(ws)
 	end
 end
 
-function SentryControlMenu:_button_held(key)
-	if HoldTheKey then
-		return HoldTheKey:Key_Held(key)
-	end
-
-	if not (managers and managers.hud) or managers.hud._chat_focus then
-		return false
-	end
-	
-	key = tostring(key)
-	if key:find("mouse ") then 
-		if not key:find("wheel") then 
-			key = key:sub(7)
-		end
-		return Input:mouse():down(Idstring(key))
-	else
-		return Input:keyboard():down(Idstring(key))
-	end
-end
-
-function SentryControlMenu:Update(t,dt)
+function SentryControlMenu:Update(t,dt) --deprecated
 	if managers.player then
 		local player = managers.player:local_player()
 		if player then 
@@ -218,7 +232,7 @@ function SentryControlMenu:Update(t,dt)
 		
 			local action_radial = self.action_radial
 			if action_radial then 
-				if self:_button_held(self:GetOpenMenuKeybind()) then 
+				if self._button_held(self:GetOpenMenuKeybind()) then 
 					if not action_radial:active() then 
 						action_radial:Show()
 					end
@@ -241,8 +255,8 @@ function SentryControlMenu:Update(t,dt)
 				distance = nil,
 				angle = 360
 			}
-			local deselect_held = self:_button_held(self:GetDeselectSentryKeybind())
-			local select_held = self:_button_held(self:GetSelectSentryKeybind())
+			local deselect_held = self._button_held(self:GetDeselectSentryKeybind())
+			local select_held = self._button_held(self:GetSelectSentryKeybind())
 			local MAX_PICK_ANGLE = self:GetMaxPickAngle()
 
 			local all_sentries = World:find_units_quick("sphere",head_pos,self:GetMaxPickDistance(),managers.slot:get_mask("sentry_gun"))
@@ -308,7 +322,7 @@ end
 	end
 end
 
-function SentryControlMenu:GetCastSelection()
+function SentryControlMenu:GetCastSelection() --deprecated
 	local player = managers.player:local_player()
 	if player then 
 		local head_pos = player:movement():m_head_pos()
@@ -416,33 +430,22 @@ function SentryControlMenu:SetActionMenu(menu)
 		return
 	end
 	self.action_radial = menu or self.action_radial
-	managers.hud:add_updator("SentryControlMenu_Update",callback(self,self,"Update"))
-	--[[
-	local toggle_orig = self.radial.Toggle
-	self.radial.Toggle = function(...)
-		toggle_orig(...)
-		if SentryControlMenu.SelectedSentry and alive(SentryControlMenu.SelectedSentry) then
-			SentryControlMenu.SelectedSentry:base()._bitmap:hide()
-		end
-		local unit = SentryControlMenu:GetCastSelection()
-		if unit then 
-			unit:base()._bitmap:show()
-		end
-	end
-	--]]
+
+	Hooks:Add("radialmenu_released_" .. self.action_radial:get_name(),"tcdso_menu_closed",function(num)
+		
+	end)
+	
+	
+--	managers.hud:add_updator("SentryControlMenu_Update",callback(self,self,"Update")) --no longer needed
 	self._gui = World:newgui()
 end
---[[
-Hooks:Add("LocalizationManagerPostInit", "LocalizationManagerPostInit_tcdso_sentry", function( loc )
-	local langFile = "english.txt"
-	loc:load_localization_file( SentryControlMenu._path .. "loc/" .. langFile)
-end)
---]]
+	
+
 Hooks:Add("BaseNetworkSessionOnLoadComplete","tcdso_sentry_onbaseloadcomplete",function()
 	if not deathvox:IsTotalCrackdownEnabled() then return end
 	
-	SentryControlMenu:RefreshKeybinds()
-	
+--	managers.localization:add_localized_strings({hud_interact_sentry_gun_switch_fire_mode = string.gsub(managers.localization:text("deathvox_total_hud_interact_sentry_gun_switch_fire_mode"),"BTN_INTERACT","$BTN_INTERACT")})
+--	"deathvox_total_hud_interact_sentry_gun_switch_fire_mode" : "Press BTN_INTERACT to change Sentry Mode.",	
 	RadialMouseMenu:new({
 		name = managers.localization:text("tcdso_menu_title"),
 		radius = 200,
@@ -591,6 +594,10 @@ Hooks:Add( "MenuManagerInitialize", "MenuManagerInitialize_tcdso", function(menu
 	end
 	MenuCallbackHandler.callback_tcdso_set_teammate_alpha = function(self,item)
 		SentryControlMenu:SetTeammateSentryLaserAlpha(item:value())
+		SentryControlMenu:Save()
+	end
+	MenuCallbackHandler.callback_tcdso_set_hold_threshold = function(self,item)
+		SentryControlMenu:SetMenuButtonHoldThreshold(item:value())
 		SentryControlMenu:Save()
 	end
 	MenuCallbackHandler.callback_tcdso_close = function(this)

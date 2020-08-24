@@ -6,19 +6,21 @@
 	"callback" : "callback_tcdso_close",
 	"items" : [
 		{
-			"type" : "multiple_choice",
+			"DISABLED_type" : "multiple_choice",
 			"id" : "tcdso_option_open_menu_behavior",
 			"title" : "tcdso_option_open_menu_behavior_title",
 			"description" : "tcdso_option_open_menu_behavior_desc",
 			"callback" : "callback_tcdso_set_open_menu_behavior",
 			"items" : [
 				"tcdso_option_hold_behavior",
-				"tcdso_option_toggle_behavior"
+				"tcdso_option_toggle_behavior",
+				"tcdso_option_any_behavior",
+				"tcdso_option_click_behavior"
 			],
 			"value" : "menu_behavior"
 		},
 		{
-			"type" : "keybind",
+			"DISABLED_type" : "keybind",
 			"id" : "tcdso_option_keybind_select_sentry",
 			"title" : "tcdso_option_keybind_select_sentry_title",
 			"description" : "tcdso_option_keybind_select_sentry_desc",
@@ -28,7 +30,7 @@
 			"func" : "callback_tcdso_select_sentry"
 		},
 		{
-			"type" : "keybind",
+			"DISABLED_type" : "keybind",
 			"id" : "tcdso_option_keybind_deselect_sentry",
 			"title" : "tcdso_option_keybind_deselect_sentry_title",
 			"description" : "tcdso_option_keybind_deselect_sentry_desc",
@@ -38,7 +40,7 @@
 			"func" : "callback_tcdso_deselect_sentry"
 		},
 		{
-			"type" : "keybind",
+			"DISABLED_type" : "keybind",
 			"id" : "tcdso_option_keybind_open_menu",
 			"title" : "tcdso_option_keybind_open_menu_title",
 			"description" : "tcdso_option_keybind_open_menu_desc",
@@ -60,14 +62,26 @@
 			"step" : 0.05
 		},
 		{
-			"type" : "button",
+			"type" : "slider",
+			"id" : "tcdso_option_hold_threshold",
+			"title" : "tcdso_option_hold_threshold_title",
+			"description" : "tcdso_option_hold_threshold_desc",
+			"callback" : "callback_tcdso_set_hold_threshold",
+			"value" : "button_hold_threshold",
+			"default_value" : 0.25,
+			"min" : 0,
+			"max" : 2,
+			"step" : 0.5
+		},
+		{
+			"DISABLED_type" : "button",
 			"id" : "tcdso_option_refresh_keybinds",
 			"title" : "tdso_option_refresh_keybinds_title",
 			"description" : "tdso_option_refresh_keybinds_desc",
 			"callback" : "callback_tdso_option_refresh_keybinds"
 		},
 		{
-			"type" : "toggle",
+			"DISABLED_type" : "toggle",
 			"id" : "tcdso_mouseclick_on_menu_close",
 			"title" : "tcdso_mouseclick_on_menu_close_title",
 			"description" : "tcdso_mouseclick_on_menu_close_desc",

@@ -63,15 +63,21 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 			["tcdso_option_keybind_open_menu_title"] = "Keybind: Sentry Control Menu",
 			["tcdso_option_keybind_open_menu_desc"] = "Opens the Sentry Control Menu.",
 			["tcdso_option_open_menu_behavior_title"] = "Hold/Toggle Menu Behavior",
-			["tcdso_option_open_menu_behavior_desc"] = "Choose whether to hold or toggle the Sentry Control Menu keybind",
+			["tcdso_option_open_menu_behavior_desc"] = "Choose whether hold/release will select Sentry Modes with the Radial Menu",
 			["tdso_option_refresh_keybinds_title"] = "Apply Keybind Changes",
 			["tdso_option_refresh_keybinds_desc"] = "Click to refresh your keybinds if you have rebound them after the heist starts.",
-			["tcdso_option_hold_behavior"] = "Hold",
-			["tcdso_option_toggle_behavior"] = "Toggle",
+			["tcdso_option_hold_behavior"] = "On Button Hold+Release",
+			["tcdso_option_toggle_behavior"] = "On Second Button Press",
+			["tcdso_option_any_behavior"] = "On Hold+Release, Press, or Click",
+			["tcdso_option_click_behavior"] = "On Mouse-Click Only",
+			
 			["tcdso_mouseclick_on_menu_close_title"] = "Select Current Option on Menu Close",
 			["tcdso_mouseclick_on_menu_close_desc"] = "(Hold Behavior only)",
 			["tcdso_option_teammate_alpha_title"] = "Teammate Laser Alpha",
-			["tcdso_option_teammate_alpha_desc"] = "Set the opacity of teammate sentries' lasers"
+			["tcdso_option_teammate_alpha_desc"] = "Set the opacity of teammate sentries' lasers",
+			["tcdso_option_hold_threshold_title"] = "Set button hold threshold",
+			["tcdso_option_hold_threshold_desc"] = "Holding 'Interact' for longer than this many seconds will hide the menu upon button release."
+
 		})
 	end
 end)

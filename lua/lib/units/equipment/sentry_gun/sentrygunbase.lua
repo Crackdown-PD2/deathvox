@@ -64,14 +64,15 @@ if deathvox:IsTotalCrackdownEnabled() then
 		unit:base():setup(owner, ammo_multiplier, armor_multiplier, spread_multiplier, rot_speed_multiplier, has_shield, attached_data)
 
 		local owner_id = unit:base():get_owner_id()
-	--[[
-		if ap_bullets and owner_id then
+
+		if owner_id then --don't check for ap bullets; just create firemode unit for firemode toggle interaction
+		--(dirty firemode toggle interaction is now recycled for opening sentry control menu)
 			local fire_mode_unit = World:spawn_unit(Idstring("units/payday2/equipment/gen_equipment_sentry/gen_equipment_sentry_fire_mode"), unit:position(), unit:rotation())
 
 			unit:weapon():interaction_setup(fire_mode_unit, owner_id)
 			managers.network:session():send_to_peers_synched("sync_fire_mode_interaction", unit, fire_mode_unit, owner_id)
 		end
-	--]]
+		
 		local team = nil
 
 		if owner then
