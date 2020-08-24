@@ -281,7 +281,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_m4_uupg_b_long.stats = {value = 5}
 		-- Short Barrel		
 		self.parts.wpn_fps_m4_uupg_b_short.stats = {value = 4}
-		-- Stelth? Barrel		
+		-- Stealth Barrel		
 		self.parts.wpn_fps_m4_uupg_b_sd.stats = {
 			value = 6,		
 			spread = -3,
@@ -292,7 +292,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		-- DMR Kit				
 		self.parts.wpn_fps_upg_ass_m4_b_beowulf.stats = {
 			value = 1,
-			total_ammo_mod = -13, --christ i hate the way this stat works. curse overkill and this weird ass stat
+			total_ammo_mod = -13, -- the way this stat works...curse overkill and this weird stat
 			damage = 80,
 			recoil = -10,
 			concealment = -5
@@ -332,72 +332,114 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	self.parts.wpn_fps_upg_i_singlefire.stats = {value = 5}
 	self.parts.wpn_fps_upg_i_autofire.stats = {value = 8}
 
-	--Barrel extension stat changes begin here. (don't feel like commenting these either noobs)
+	--Barrel extension stat changes begin here.
+	-- Ported Compensator
 		self.parts.wpn_fps_upg_ass_ns_battle.stats = {value = 1}
+	-- Stubby Compensator
 		self.parts.wpn_fps_upg_ns_ass_smg_stubby.stats = {value = 3}
+	-- The Tank Compensator
 		self.parts.wpn_fps_upg_ns_ass_smg_tank.stats = {value = 4}
+	-- Fire Breather Nozzle
 		self.parts.wpn_fps_upg_ns_ass_smg_firepig.stats = {value = 5}
+	-- Tactical Compensator
 		self.parts.wpn_fps_upg_ass_ns_surefire.stats = {value = 5}
+	-- Funnel of Fun Nozzle
 		self.parts.wpn_fps_upg_ass_ns_linear.stats = {value = 5}
+	-- Competitor's Compensator
 		self.parts.wpn_fps_upg_ass_ns_jprifles.stats = {value = 5}
+	-- Medium Suppressor
 		self.parts.wpn_fps_upg_ns_ass_smg_medium.stats = {suppression = 72,	alert_size = 12, value = 2}
+	-- The Bigger the Better Suppressor
 		self.parts.wpn_fps_upg_ns_ass_smg_large.stats = {suppression = 72, alert_size = 12, value = 5}
+	-- [NOTE unable to find name in documentation]
 		self.parts.wpn_fps_upg_ns_pis_typhoon.stats = {value = 4}
+	-- [NOTE unable to find name in documentation]
 		self.parts.wpn_fps_upg_ns_ass_smg_v6.stats = {value = 3}
+	-- Jungle Ninja Suppressor
 		self.parts.wpn_fps_upg_ns_pis_jungle.stats = {suppression = 72,	value = 5}
+	-- Budget Suppressor
 		self.parts.wpn_fps_upg_ns_ass_filter.stats = {suppression = 72,	value = 0}
+	-- Asepsis Suppressor
 		self.parts.wpn_fps_upg_ns_pis_medium_slim.stats = {suppression = 72, alert_size = 12, value = 1}
+	-- Monolith Suppressor
 		self.parts.wpn_fps_upg_ns_pis_large.stats = {suppression = 72, alert_size = 12, value = 5}
+	-- Champion's Suppressor
 		self.parts.wpn_fps_upg_ns_pis_large_kac.stats = {suppression = 72, alert_size = 12, value = 6}
+	-- Size Doesn't Matter Suppressor
 		self.parts.wpn_fps_upg_ns_pis_small.stats = {suppression = 72, alert_size = 12, value = 3}
+	-- Flash Hider
 		self.parts.wpn_fps_upg_pis_ns_flash.stats = {suppression = 72, alert_size = 12, value = 4}
+	-- Facepunch Compensator -- NOTE consider name change for Knockout
 		self.parts.wpn_fps_upg_ns_pis_meatgrinder.stats = {suppression = 72, alert_size = 12, value = 7}
+	-- IPSC Compensator
 		self.parts.wpn_fps_upg_ns_pis_ipsccomp.stats = {suppression = 72, alert_size = 12, value = 4}
+	-- Standard Issue Suppressor
 		self.parts.wpn_fps_upg_ns_pis_medium.stats = {suppression = 72, alert_size = 12, value = 1}
+	-- Roctec Suppressor
 		self.parts.wpn_fps_upg_ns_pis_medium_gem.stats = {suppression = 72, alert_size = 12, value = 4}
-		self.parts.wpn_fps_upg_ns_pis_medium_slim.stats = {suppression = 72, alert_size = 12, value = 1}
 	
-	--Sight stat changes begin here. (don't feel like commenting these! nerds!)
-		self.parts.wpn_fps_upg_o_specter.stats = {zoom = 4, value = 8} -- i should probably write it like this for the rest of the attachments but NO, DIE
+	
+	--Sight stat changes begin here.
+	-- Milspec Scope
+		self.parts.wpn_fps_upg_o_specter.stats = {zoom = 4, value = 8} -- i should probably write it like this for the rest of the attachments
+	-- Military Red Dot Sight -- NOTE one of these is the preorder bonus, believed _2.
 		self.parts.wpn_fps_upg_o_aimpoint.stats = {zoom = 4, value = 8}
+	-- Military Red Dot Sight
 		self.parts.wpn_fps_upg_o_aimpoint_2.stats = {zoom = 4, value = 1}
+	-- Surgeon Sight
 		self.parts.wpn_fps_upg_o_docter.stats = {zoom = 2, value = 5}
+	-- Holographic Sight
 		self.parts.wpn_fps_upg_o_eotech.stats = {zoom = 3, value = 3}
+	-- The Professional's Choice Sight
 		self.parts.wpn_fps_upg_o_t1micro.stats = {zoom = 3, value = 3}
+	-- Marksman Sight
 		self.parts.wpn_upg_o_marksmansight_rear.stats = {zoom = 2, value = 5}
+	-- Theia Magnified Scope
 		self.parts.wpn_fps_upg_o_leupold.stats = {zoom = 10, value = 8}
+	-- See More Sight
 		self.parts.wpn_fps_upg_o_cmore.stats = {zoom = 3, value = 5}
+	-- Acough Optic Scope
 		self.parts.wpn_fps_upg_o_acog.stats = {zoom = 6, value = 6}
+	-- Combat Sight
 		self.parts.wpn_fps_upg_o_cs.stats = {zoom = 4, value = 3}
+	-- Speculator Sight
 		self.parts.wpn_fps_upg_o_reflex.stats = {zoom = 3, value = 5}
+	-- Trigonom Sight
 		self.parts.wpn_fps_upg_o_rx01.stats = {zoom = 3, value = 5}
+	-- Compact Holosight
 		self.parts.wpn_fps_upg_o_eotech_xps.stats = {zoom = 3, value = 5}
+	-- [NOTE unable to find name in documentation]
 		self.parts.wpn_fps_upg_o_bmg.stats = {zoom = 6, value = 8}
+	-- [NOTE unable to find name in documentation, should be rmr for Pistol Red Dot?]
 		self.parts.wpn_fps_upg_o_rms.stats = {zoom = 3, value = 6}
+	-- [NOTE unable to find name in documentation]
 		self.parts.wpn_fps_upg_o_rikt.stats = {zoom = 3, value = 6}
+	-- [NOTE unable to find name in documentation]
 		self.parts.wpn_fps_upg_o_uh.stats = {zoom = 3, value = 5}
+	-- [NOTE unable to find name in documentation]
 		self.parts.wpn_fps_upg_o_fc1.stats = {zoom = 3, value = 5}
-	--Magazine stat changes begin here.
-		--Milspec Magazine
+	-- Magazine stat changes begin here.
+		-- Milspec Magazine
 		self.parts.wpn_fps_m4_uupg_m_std.stats = {value = 1}
-		--L5 Magazine
+		-- L5 Magazine
 		self.parts.wpn_fps_upg_m4_m_l5.stats = {value = 1}
-		--Tactical Magazine
+		-- Tactical Magazine
 		self.parts.wpn_fps_upg_m4_m_pmag.stats = {value = 3}
-		--Expert Magazine
+		-- Expert Magazine
 		self.parts.wpn_fps_ass_l85a2_m_emag.stats = {value = 1}
-		--Quadstack Magazine
+		-- Quadstack Magazine
 		self.parts.wpn_fps_upg_m4_m_quad.stats = {
 			value = 3,		
 			extra_ammo = 15, 
 			concealment = -10
 		}
+		-- Vintage Mag
 		self.parts.wpn_fps_upg_m4_m_straight.stats = {	
 			value = 2,		
 			extra_ammo = -5, 
 			concealment = 5
 		}		
-		--Speedpull Magazine
+		-- Speedpull Magazine
 		self.parts.wpn_fps_m4_upg_m_quick.stats = {	
 			value = 2,		
 			reload = 10,
@@ -430,7 +472,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_upg_o_45rds_v2.stats = {value = 1, gadget_zoom = 1}	
 		-- Riktpunkt Magnifier
 		self.parts.wpn_fps_upg_o_xpsg33_magnifier.stats = {value = 1, gadget_zoom = 9}
-		--border crossing 45 degree sights i forgot the names of
+		-- border crossing 45 degree sights i forgot the names of
 		self.parts.wpn_fps_upg_o_sig.stats = {zoom = 9, value = 2}		
 		self.parts.wpn_fps_upg_o_45steel.stats = {value = 1, gadget_zoom = 1}		
 	--Grip stat changes begin here.
