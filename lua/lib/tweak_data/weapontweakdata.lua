@@ -8497,6 +8497,78 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		--Miniguns end here.
+		-- Automated processing of values.
+		-- i am not manually doin the goddamn math to figure out the proper fire rate for each damn gun lmao
+		-- fire rate: 1 /(rate / 60)
+		-- stability: recoil * (1/3)
+		-- spread: accuracy * (1/3)
+		-- suppression: (43 - threat) / 3
+		if deathvox and deathvox:IsTotalCrackdownEnabled() then
+			for k,v in pairs(self) do
+				log("processing weapon " .. k)
+				if self[k] and self[k]["cd_stability"] then
+					self[k]["stats"]["recoil"] = math.ceil((self[k]["cd_stability"] * (1/3)))
+					log("stability set to " .. self[k]["stats"]["recoil"])
+				end
+				if self[k] and self[k]["cd_spread"] then
+					self[k]["stats"]["spread"] = math.ceil((self[k]["cd_spread"] * (1/3)))
+					self[k]["stats"]["spread_moving"] = math.ceil((self[k]["cd_spread"] * (1/3)))
+					self[k]["spread"] = {
+						standing = math.ceil((self[k]["cd_spread"] * (1/3)))
+					}
+					self[k]["spread"]["crouching"] = self[k]["spread"]["standing"] * 0.4
+					self[k]["spread"]["steelsight"] = self[k]["spread"]["standing"] * 0.4
+					self[k]["spread"]["moving_standing"] = self[k]["spread"]["standing"]
+					self[k]["spread"]["moving_crouching"] = self[k]["spread"]["standing"]
+					self[k]["spread"]["moving_steelsight"] = self[k]["spread"]["steelsight"]
+					log("spread set to " .. self[k]["stats"]["spread"])
+				end
+				if self[k] and self[k]["cd_rpm"] then
+					self[k]["fire_mode_data"]["fire_rate"] = 1 / (self[k]["cd_rpm"] / 60)
+					self[k]["auto"]["fire_rate"] = 1 / (self[k]["cd_rpm"] / 60)
+					log("fire rate set to " .. self[k]["auto"]["fire_rate"])
+				end
+				if self[k] and self[k]["cd_threat"] then
+					self[k]["stats"]["suppression"] = math.ceil((43 - self[k]["cd_threat"]) / 3)
+					log("threat set to " .. self[k]["stats"]["suppression"])
+				end
+				if self[k] and self[k]["cd_ammosetup"] then
+					self[k]["CLIP_AMMO_MAX"] = self[k]["cd_ammosetup"]["clip_size"]
+					self[k]["NR_CLIPS_MAX"] = self[k]["cd_ammosetup"]["total_ammo"] / self[k]["cd_ammosetup"]["clip_size"]
+					self[k]["AMMO_MAX"] = self[k]["CLIP_AMMO_MAX"] * self[k]["NR_CLIPS_MAX"]
+					log("maximum ammo set to " .. self[k]["AMMO_MAX"])
+				end
+			end
+		end
+		--[[
+		WEAPON TEMPLATE:
+		self.weaponid.cd_stability =
+		self.weaponid.cd_spread =
+		self.weaponid.cd_rpm =
+		self.weaponid.cd_threat =
+		self.weaponid.cd_ammosetup =
+		{
+			clip_size =,
+			total_ammo =
+		}
+		self.weaponid.stats.damage =
+		self.weaponid.stats.concealment =
+		self.weaponid.timers = 
+		{
+			reload_not_empty = ,
+			reload_empty = ,
+			unequip = ,
+			equip = 
+		}
+		self.weaponid.AMMO_PICKUP = {
+			1,
+			1
+		}
+		self.weaponid.categories = {
+			"assault_rifle",
+			"rapidfire"
+		}
+		]]--
 
 	end
 end)
