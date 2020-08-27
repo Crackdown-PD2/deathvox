@@ -73,60 +73,60 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				["muscle_deck"] = "Muscle: CRACKDOWN",
 				["muscle_deck_desc"] = "Massive Health and Health Regeneration. Flex eternal!",
 				["muscle_t1_name"] = "Dynamic Tension",
-				["muscle_t1_desc"] = "You gain +25% Maximum Health and you become 25% more likely to be targeted over your teammates.",
+				["muscle_t1_desc"] = "You gain ##+25%## Maximum Health and you become ##25%## more likely to be targeted over your teammates.",
 
 				["muscle_t2_name"] = "Endurance Training",
-				["muscle_t2_desc"] = "You regenerate 0.5% of your Maximum Health per second.",
+				["muscle_t2_desc"] = "You regenerate ##0.5%## of your Maximum Health per second.",
 
 				["muscle_t3_name"] = "Chump into Champ",
-				["muscle_t3_desc"] = "Increases your Maximum Health bonus to +50%.",
+				["muscle_t3_desc"] = "Increases your Maximum Health bonus to ##+50%##.",
 
 				["muscle_t4_name"] = "Dauntless Improvement",
-				["muscle_t4_desc"] = "Your Health Regeneration increases to 1% of your Maximum Health per second.",
+				["muscle_t4_desc"] = "Your Health Regeneration increases to ##1%## of your Maximum Health per second.",
 
 				["muscle_t5_name"] = "15 Minutes A Day",
-				["muscle_t5_desc"] = "Increases your Maximum Health bonus to +75%.",
+				["muscle_t5_desc"] = "Increases your Maximum Health bonus to ##+75%##.",
 
 				["muscle_t6_name"] = "Tireless Physique",
-				["muscle_t6_desc"] = "Your Health Regeneration increases to 1.5% of your Maximum Health per second.",
+				["muscle_t6_desc"] = "Your Health Regeneration increases to ##1.5%## of your Maximum Health per second.",
 
 				["muscle_t7_name"] = "Muscle Mystery",
-				["muscle_t7_desc"] = "Increases your Maximum Health bonus to +100%.",
+				["muscle_t7_desc"] = "Increases your Maximum Health bonus to ##+100%##.",
 
 				["muscle_t8_name"] = "Flex Eternal",
-				["muscle_t8_desc"] = "Your Health Regeneration increases to 2% of your Maximum Health per second.",
+				["muscle_t8_desc"] = "Your Health Regeneration increases to ##2%## of your Maximum Health per second.",
 
 				["muscle_t9_name"] = "Hero Of The Beach",
-				["muscle_t9_desc"] = "Increases your Maximum Health bonus to +125%.",
+				["muscle_t9_desc"] = "Increases your Maximum Health bonus to ##+125%##.",
 				-- Armorer
 				["armorer_deck"] = "Armorer: CRACKDOWN",
 				["armorer_deck_desc"] = "Heavy Armor all day, every day.",
-				["armorer_t1_name"] = "",
-				["armorer_t1_desc"] = "",
+				["armorer_t1_name"] = "MK1 Plating",
+				["armorer_t1_desc"] = "You gain ##+20%## Maximum Armor and ##+5%## Armor Recovery Rate.",
 
-				["armorer_t2_name"] = "",
-				["armorer_t2_desc"] = "",
+				["armorer_t2_name"] = "Steadfast",
+				["armorer_t2_desc"] = "##Doubles## the Steadiness of your equipped Armor, reducing how much you Flinch from taking Damage.",
 
-				["armorer_t3_name"] = "",
-				["armorer_t3_desc"] = "",
+				["armorer_t3_name"] = "MK2 Plating",
+				["armorer_t3_desc"] = "Increases your Maximum Armor bonus to ##+40%## and Armor Recovery Rate bonus to ##+10%##.",
 
-				["armorer_t4_name"] = "",
-				["armorer_t4_desc"] = "",
+				["armorer_t4_name"] = "Armored Grace",
+				["armorer_t4_desc"] = "Your Speed penalty for wearing Armor is reduced by ##50%##.",
 
-				["armorer_t5_name"] = "",
-				["armorer_t5_desc"] = "",
+				["armorer_t5_name"] = "MK3 Plating",
+				["armorer_t5_desc"] = "Increases your Maximum Armor bonus to ##+60%## and Armor Recovery Rate bonus to ##+15%##.",
 
-				["armorer_t6_name"] = "",
-				["armorer_t6_desc"] = "",
+				["armorer_t6_name"] = "Reactive Armor",
+				["armorer_t6_desc"] = "You are rendered ##Invulnerable## to damage for ##2 seconds## after your Armor breaks. This effect has a ##10 second cooldown##.",
 
-				["armorer_t7_name"] = "",
-				["armorer_t7_desc"] = "",
+				["armorer_t7_name"] = "MK4 Plating",
+				["armorer_t7_desc"] = "Increases your Maximum Armor bonus to ##+80%## and Armor Recovery Rate bonus to ##+20%##.",
 
-				["armorer_t8_name"] = "",
-				["armorer_t8_desc"] = "",
+				["armorer_t8_name"] = "Ironclad",
+				["armorer_t8_desc"] = "You gain ##+10%## Damage Resistance when you ##have any amount of Armor##.",
 
-				["armorer_t9_name"] = "",
-				["armorer_t9_desc"] = "",
+				["armorer_t9_name"] = "MK5 Plating",
+				["armorer_t9_desc"] = "Increases your Maximum Armor bonus to ##+100%## and Armor Recovery Rate bonus to ##+25%##.",
 				-- Rogue
 				["rogue_deck"] = "Rogue: CRACKDOWN",
 				["rogue_deck_desc"] = "Provides Dodge Chance and comes with Special Dodges that are guaranteed to avoid certain attacks. Features a rebranded Sneaky Bastard.",

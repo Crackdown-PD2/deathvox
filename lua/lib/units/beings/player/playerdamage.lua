@@ -228,7 +228,7 @@ end
 
 local _calc_armor_damage_original = PlayerDamage._calc_armor_damage
 function PlayerDamage:_calc_armor_damage(attack_data, ...)
-
+	local armor_at_start = self:get_real_armor()
 	if not deathvox:IsHoppipOverhaulEnabled() then
 		return _calc_armor_damage_original(self, attack_data, ...)
    	end
@@ -237,7 +237,24 @@ function PlayerDamage:_calc_armor_damage(attack_data, ...)
 	self._next_allowed_dmg_t = self._old_next_allowed_dmg_t and Application:digest_value(self._old_next_allowed_dmg_t, true) or self._next_allowed_dmg_t
 	self._old_last_received_dmg = nil
 	self._old_next_allowed_dmg_t = nil
-	return _calc_armor_damage_original(self, attack_data, ...)
+	local damage_calc_shit = _calc_armor_damage_original(self, attack_data, ...)
+	if deathvox and deathvox:IsTotalCrackdownEnabled() then
+		if self._armor_damage_null_cooldown == nil then
+			self._armor_damage_null_cooldown = TimerManager:game():time()
+		end
+		if self:get_real_armor() <= 0 and armor_at_start > 0 then
+			log("Invincibility triggered!")
+			if self._armor_damage_null_cooldown > TimerManager:game():time() then
+				log("Still on cooldown.")
+			else
+				if managers.player:upgrade_value("player", "armorer_t6") == true then
+					self._can_take_dmg_timer = 2
+					self._armor_damage_null_cooldown = TimerManager:game():time() + 10
+				end
+			end
+		end
+	end
+	return damage_calc_shit
 end
 
 local _calc_health_damage_original = PlayerDamage._calc_health_damage

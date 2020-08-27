@@ -76,7 +76,7 @@ function PlayerManager:stamina_multiplier()
 	multiplier = managers.modifiers:modify_value("PlayerManager:GetStaminaMultiplier", multiplier)
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		if self:has_team_category_upgrade("player", "crew_chief_t3") == true then
-			multiplier = multiplier * 2 -- 100% more stamina
+			multiplier = multiplier + 2 -- 100% more stamina
 		end
 	end
 	return multiplier
@@ -95,21 +95,21 @@ function PlayerManager:health_skill_multiplier()
 	end
 	
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
-		if self:has_team_category_upgrade("player", "crew_chief_t6") == true then
-			multiplier = multiplier * 1.3
-		elseif self:has_team_category_upgrade("player", "crew_chief_t2") == true then
-			multiplier = multiplier * 1.15
-		end
 		if self:upgrade_value("player", "muscle_t9") == true then
-			multiplier = multiplier * 2.25
+			multiplier = multiplier + 2.25
 		elseif self:upgrade_value("player", "muscle_t7") == true then
-			multiplier = multiplier * 2
+			multiplier = multiplier + 2
 		elseif self:upgrade_value("player", "muscle_t5") == true then
-			multiplier = multiplier * 1.75
+			multiplier = multiplier + 1.75
 		elseif self:upgrade_value("player", "muscle_t3") == true then
-			multiplier = multiplier * 1.5
+			multiplier = multiplier + 1.5
 		elseif self:upgrade_value("player", "muscle_t1") == true then
-			multiplier = multiplier * 1.25
+			multiplier = multiplier + 1.25
+		end
+		if self:has_team_category_upgrade("player", "crew_chief_t6") == true then
+			multiplier = multiplier + 1.3
+		elseif self:has_team_category_upgrade("player", "crew_chief_t2") == true then
+			multiplier = multiplier + 1.15
 		end
 	end
 	return multiplier
@@ -126,10 +126,21 @@ function PlayerManager:body_armor_skill_multiplier(override_armor)
 	multiplier = multiplier + self:upgrade_value("player", tostring(override_armor or managers.blackmarket:equipped_armor(true, true)) .. "_armor_multiplier", 1) - 1
 	multiplier = multiplier + self:upgrade_value("player", "chico_armor_multiplier", 1) - 1
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
+		if self:upgrade_value("player", "armorer_t9") == true then
+			multiplier = multiplier + 2
+		elseif self:upgrade_value("player", "armorer_t7") == true then
+			multiplier = multiplier + 1.8
+		elseif self:upgrade_value("player", "armorer_t5") == true then
+			multiplier = multiplier + 1.6
+		elseif self:upgrade_value("player", "armorer_t3") == true then
+			multiplier = multiplier + 1.4
+		elseif self:upgrade_value("player", "armorer_t1") == true then
+			multiplier = multiplier + 1.2
+		end
 		if self:has_team_category_upgrade("player", "crew_chief_t8") == true then
-			multiplier = multiplier * 1.2
+			multiplier = multiplier + 1.2
 		elseif self:has_team_category_upgrade("player", "crew_chief_t4") == true then
-			multiplier = multiplier * 1.1
+			multiplier = multiplier + 1.1
 		end
 	end
 	return multiplier
@@ -153,9 +164,85 @@ function PlayerManager:body_armor_regen_multiplier(moving, health_ratio)
 		multiplier = multiplier * (1 - managers.player:upgrade_value("player", "armor_regen_damage_health_ratio_multiplier", 0) * damage_health_ratio)
 	end
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
+		if self:upgrade_value("player", "armorer_t9") == true then
+			multiplier = multiplier + 1.25
+		elseif self:upgrade_value("player", "armorer_t7") == true then
+			multiplier = multiplier + 1.2
+		elseif self:upgrade_value("player", "armorer_t5") == true then
+			multiplier = multiplier + 1.15
+		elseif self:upgrade_value("player", "armorer_t3") == true then
+			multiplier = multiplier + 1.1
+		elseif self:upgrade_value("player", "armorer_t1") == true then
+			multiplier = multiplier + 1.05
+		end
 		if self:has_team_category_upgrade("player", "crew_chief_t7") == true then
-			multiplier = multiplier * 0.9
+			multiplier = multiplier - 0.1
 		end
 	end
+	return multiplier
+end
+
+function PlayerManager:body_armor_value(category, override_value, default)
+	local armor_data = tweak_data.blackmarket.armors[managers.blackmarket:equipped_armor(true, true)]
+	if category == "damage_shake" then
+		local shake_it = self:upgrade_value_by_level("player", "body_armor", category, {})[override_value or armor_data.upgrade_level] or default or 0
+		if deathvox and deathvox:IsTotalCrackdownEnabled() then
+			if self:upgrade_value("player", "armorer_t2") == true then 
+				return shake_it * 0.5
+			else
+				return shake_it
+			end
+		else
+			return shake_it
+		end
+	else
+		return self:upgrade_value_by_level("player", "body_armor", category, {})[override_value or armor_data.upgrade_level] or default or 0
+	end
+end
+
+function PlayerManager:movement_speed_multiplier(speed_state, bonus_multiplier, upgrade_level, health_ratio)
+	local multiplier = 1
+	local armor_penalty = self:mod_movement_penalty(self:body_armor_value("movement", upgrade_level, 1))
+	if deathvox and deathvox:IsTotalCrackdownEnabled() then
+		if self:upgrade_value("player", "armorer_t4") == true then
+			armor_penalty = armor_penalty * 1.5 -- this actually increases the speed, the var name is not very good
+		end
+	end
+	multiplier = multiplier + armor_penalty - 1
+
+	if bonus_multiplier then
+		multiplier = multiplier + bonus_multiplier - 1
+	end
+
+	if speed_state then
+		multiplier = multiplier + self:upgrade_value("player", speed_state .. "_speed_multiplier", 1) - 1
+	end
+
+	multiplier = multiplier + self:get_hostage_bonus_multiplier("speed") - 1
+	multiplier = multiplier + self:upgrade_value("player", "movement_speed_multiplier", 1) - 1
+
+	if self:num_local_minions() > 0 then
+		multiplier = multiplier + self:upgrade_value("player", "minion_master_speed_multiplier", 1) - 1
+	end
+
+	if self:has_category_upgrade("player", "secured_bags_speed_multiplier") then
+		local bags = 0
+		bags = bags + (managers.loot:get_secured_mandatory_bags_amount() or 0)
+		bags = bags + (managers.loot:get_secured_bonus_bags_amount() or 0)
+		multiplier = multiplier + bags * (self:upgrade_value("player", "secured_bags_speed_multiplier", 1) - 1)
+	end
+
+	if managers.player:has_activate_temporary_upgrade("temporary", "berserker_damage_multiplier") then
+		multiplier = multiplier * (tweak_data.upgrades.berserker_movement_speed_multiplier or 1)
+	end
+
+	if health_ratio then
+		local damage_health_ratio = self:get_damage_health_ratio(health_ratio, "movement_speed")
+		multiplier = multiplier * (1 + managers.player:upgrade_value("player", "movement_speed_damage_health_ratio_multiplier", 0) * damage_health_ratio)
+	end
+
+	local damage_speed_multiplier = managers.player:temporary_upgrade_value("temporary", "damage_speed_multiplier", managers.player:temporary_upgrade_value("temporary", "team_damage_speed_multiplier_received", 1))
+	multiplier = multiplier * damage_speed_multiplier
+
 	return multiplier
 end

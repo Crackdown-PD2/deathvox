@@ -387,5 +387,133 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
+		-- Armorer
+		self.values.player.armorer_t1 = {
+			true
+		}
+		
+		self.definitions.armorer_t1 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_t1",
+				category = "player"
+			}
+		}
+		
+		self.values.player.armorer_t2 = {
+			true
+		}
+		
+		self.definitions.armorer_t2 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_t2",
+				category = "player"
+			}
+		}
+
+		self.values.player.armorer_t3 = {
+			true
+		}
+		
+		self.definitions.armorer_t3 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_t3",
+				category = "player"
+			}
+		}
+		
+		self.values.player.armorer_t4 = {
+			true
+		}
+		
+		self.definitions.armorer_t4 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_t4",
+				category = "player"
+			}
+		}
+		
+		self.values.player.armorer_t5 = {
+			true
+		}
+		
+		self.definitions.armorer_t5 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_t5",
+				category = "player"
+			}
+		}
+
+		self.values.player.armorer_t6 = {
+			true
+		}
+		
+		self.definitions.armorer_t6 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_t6",
+				category = "player"
+			}
+		}
+
+
+		self.values.player.armorer_t7 = {
+			true
+		}
+		
+		self.definitions.armorer_t7 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_t7",
+				category = "player"
+			}
+		}
+
+		self.values.player.armorer_t8 = {
+			true
+		}
+		
+		self.definitions.armorer_t8 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_t8",
+				category = "player"
+			}
+		}
+
+
+		self.values.player.armorer_t9 = {
+			true
+		}
+		
+		self.definitions.armorer_t9 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_t9",
+				category = "player"
+			}
+		}
 	end	
 end)
