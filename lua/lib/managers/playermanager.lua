@@ -203,9 +203,10 @@ end
 function PlayerManager:movement_speed_multiplier(speed_state, bonus_multiplier, upgrade_level, health_ratio)
 	local multiplier = 1
 	local armor_penalty = self:mod_movement_penalty(self:body_armor_value("movement", upgrade_level, 1))
+	local fuckshit = (1 - armor_penalty) * 0.5
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		if self:upgrade_value("player", "armorer_t4") == true then
-			armor_penalty = armor_penalty * 1.5 -- this actually increases the speed, the var name is not very good
+			armor_penalty = 1 - fuckshit
 		end
 	end
 	multiplier = multiplier + armor_penalty - 1
