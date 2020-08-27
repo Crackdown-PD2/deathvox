@@ -121,6 +121,121 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		
 		--Demolitions
 		
+		-- Perk Decks
+		-- DON'T TAMPER WITH THE COSTS! This can cause save file problems.
+		self.specializations[1] = {
+			{
+				cost = 200,
+				desc_id = "crew_chief_t1_desc",
+				name_id = "crew_chief_t1_name",
+				upgrades = {
+					"crew_chief_t1",
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				cost = 300,
+				desc_id = "crew_chief_t2_desc",
+				name_id = "crew_chief_t2_name",
+				upgrades = {
+					"crew_chief_t2",
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				cost = 400,
+				desc_id = "crew_chief_t3_desc",
+				name_id = "crew_chief_t3_name",
+				upgrades = {
+					"crew_chief_t3"
+				},
+				icon_xy = {
+					2,
+					0
+				}
+			},
+			{
+				cost = 600,
+				desc_id = "crew_chief_t4_desc",
+				name_id = "crew_chief_t4_name",
+				upgrades = {
+					"crew_chief_t4"
+				},
+				icon_xy = {
+					2,
+					0
+				}
+			},
+			{
+				cost = 1000,
+				desc_id = "crew_chief_t5_desc",
+				name_id = "crew_chief_t5_name",
+				upgrades = {
+					"crew_chief_t5"
+				},
+				icon_xy = {
+					4,
+					0
+				}
+			},
+			{
+				cost = 1600,
+				desc_id = "crew_chief_t6_desc",
+				name_id = "crew_chief_t6_name",
+				upgrades = {
+					"crew_chief_t6"
+				},
+				icon_xy = {
+					2,
+					0
+				}
+			},
+			{
+				cost = 2400,
+				desc_id = "crew_chief_t7_desc",
+				name_id = "crew_chief_t7_name",
+				upgrades = {
+					"crew_chief_t7"
+				},
+				icon_xy = {
+					6,
+					0
+				}
+			},
+			{
+				cost = 3200,
+				desc_id = "crew_chief_t8_desc",
+				name_id = "crew_chief_t8_name",
+				upgrades = {
+					"crew_chief_t8"
+				},
+				icon_xy = {
+					4,
+					0
+				}
+			},
+			{
+				cost = 4000,
+				desc_id = "crew_chief_t9_desc",
+				name_id = "crew_chief_t9_name",
+				upgrades = {
+					"crew_chief_t9"
+				},
+				icon_xy = {
+					0,
+					1
+				}
+			},
+			desc_id = "crew_chief_deck_desc",
+			name_id = "crew_chief_deck"
+		}
+		
 	end
 end)
 

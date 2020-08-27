@@ -131,5 +131,134 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		--Demolitions
 		
+		-- Perk Decks
+		
+		-- Crew Chief
+		self.values.player.crew_chief_t1 = {
+			true
+		}
+		
+		self.definitions.crew_chief_t1 = {
+			name_id = "unused",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "crew_chief_t1",
+				category = "crew_chief"
+			}
+		}
+		
+		self.values.player.crew_chief_t2 = {
+			true
+		}
+		
+		self.definitions.crew_chief_t2 = {
+			name_id = "unused",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "crew_chief_t2",
+				category = "crew_chief"
+			}
+		}
+
+		self.values.player.crew_chief_t3 = {
+			true
+		}
+		
+		self.definitions.crew_chief_t3 = {
+			name_id = "unused",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "crew_chief_t3",
+				category = "crew_chief"
+			}
+		}
+		
+		self.values.player.crew_chief_t4 = {
+			true
+		}
+		
+		self.definitions.crew_chief_t4 = {
+			name_id = "unused",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "crew_chief_t4",
+				category = "crew_chief"
+			}
+		}
+		
+		self.values.player.crew_chief_t5 = {
+			true
+		}
+		
+		self.definitions.crew_chief_t5 = {
+			name_id = "unused",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "crew_chief_t5",
+				category = "crew_chief"
+			}
+		}
+
+		self.values.player.crew_chief_t6 = {
+			true
+		}
+		
+		self.definitions.crew_chief_t6 = {
+			name_id = "unused",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "crew_chief_t6",
+				category = "crew_chief"
+			}
+		}
+
+		self.values.player.crew_chief_t7 = {
+			true
+		}
+		
+		self.definitions.crew_chief_t7 = {
+			name_id = "unused",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "crew_chief_t7",
+				category = "crew_chief"
+			}
+		}
+
+		self.values.player.crew_chief_t8 = {
+			true
+		}
+		
+		self.definitions.crew_chief_t8 = {
+			name_id = "unused",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "crew_chief_t8",
+				category = "crew_chief"
+			}
+		}
+
+
+		self.values.player.crew_chief_t9 = {
+			true
+		}
+		
+		self.definitions.crew_chief_t9 = {
+			name_id = "unused",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "crew_chief_t9",
+				category = "crew_chief"
+			}
+		}
 	end	
 end)

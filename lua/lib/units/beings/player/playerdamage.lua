@@ -733,3 +733,70 @@ function PlayerDamage:damage_explosion(attack_data)
 	pm:send_message(Message.OnPlayerDamage, nil, attack_data)
 	self:_call_listeners(damage_info)
 end
+
+function PlayerDamage:_upd_health_regen(t, dt)
+	if self._health_regen_update_timer then
+		self._health_regen_update_timer = self._health_regen_update_timer - dt
+
+		if self._health_regen_update_timer <= 0 then
+			self._health_regen_update_timer = nil
+		end
+	end
+
+	if not self._health_regen_update_timer then
+		local max_health = self:_max_health()
+
+		if self:get_real_health() < max_health then
+			self:restore_health(managers.player:health_regen(), false)
+			self:restore_health(managers.player:fixed_health_regen(self:health_ratio()), true)
+
+			self._health_regen_update_timer = 5
+		end
+	end
+	if deathvox and deathvox:IsTotalCrackdownEnabled() then
+		local pm = managers.player
+		if self._crew_chief_regen_timer then
+			self._crew_chief_regen_timer = self._crew_chief_regen_timer - dt
+
+			if self._crew_chief_regen_timer <= 0 then
+				self._crew_chief_regen_timer = nil
+			end
+		end
+
+		if not self._crew_chief_regen_timer then
+			local max_health = self:_max_health()
+			local missing_health = max_health - self:get_real_health()
+			if self:get_real_health() < max_health then
+				if pm:team_upgrade_value("player", "crew_chief_t5", false) then
+					self:restore_health(missing_health * 0.01, true)
+				end
+				self._crew_chief_regen_timer = 1
+			end
+		end
+	end
+
+	if #self._damage_to_hot_stack > 0 then
+		repeat
+			local next_doh = self._damage_to_hot_stack[1]
+			local done = not next_doh or TimerManager:game():time() < next_doh.next_tick
+
+			if not done then
+				local regen_rate = managers.player:upgrade_value("player", "damage_to_hot", 0)
+
+				self:restore_health(regen_rate, true)
+
+				next_doh.ticks_left = next_doh.ticks_left - 1
+
+				if next_doh.ticks_left == 0 then
+					table.remove(self._damage_to_hot_stack, 1)
+				else
+					next_doh.next_tick = next_doh.next_tick + (self._doh_data.tick_time or 1)
+				end
+
+				table.sort(self._damage_to_hot_stack, function (x, y)
+					return x.next_tick < y.next_tick
+				end)
+			end
+		until done
+	end
+end

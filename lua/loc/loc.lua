@@ -39,7 +39,124 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				["menu_heavy_impact_beta"] = "Money Shot",
 				["menu_heavy_impact_beta_desc"] = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles gain ##+100%## Damage on the last bullet fired from a fully loaded magazine.\n\nACE: ##$pro##\nYour SMGs and Assault Rifles' gain ##+50%## faster Reload Speed when their Magazine is empty.",
 				["menu_far_away_beta"] = "Point Blank",
-				["menu_far_away_beta_desc"] = "BASIC: ##$basic##\nFor the first 100cm, your Shotguns will now gain ##Armor Piercing, Shield Piercing, and Body Piercing.##\n\nACE: ##$pro##\nPoint Blank also grants ##+100%## Damage for the first meter."
+				["menu_far_away_beta_desc"] = "BASIC: ##$basic##\nFor the first 100cm, your Shotguns will now gain ##Armor Piercing, Shield Piercing, and Body Piercing.##\n\nACE: ##$pro##\nPoint Blank also grants ##+100%## Damage for the first meter.",
+				-- Crew Chief
+				["crew_chief_deck"] = "Crew Chief: CRACKDOWN",
+				["crew_chief_deck_desc"] = "A Jack of all trades Team Deck that gives a variety of moderate defensive bonuses. Very referential.",
+				["crew_chief_t1_name"] = "The Usual Suspects",
+				["crew_chief_t1_desc"] = "Your team gains ##+10%## Damage Resistance.",
+
+				["crew_chief_t2_name"] = "Reservoir Dogs",
+				["crew_chief_t2_desc"] = "Your team gains ##+15%## Maximum Health.",
+
+				["crew_chief_t3_name"] = "One Hundred Steps",
+				["crew_chief_t3_desc"] = "Your team gains ##+100%## Maximum Stamina.",
+
+				["crew_chief_t4_name"] = "State of Grace",
+				["crew_chief_t4_desc"] = "Your team gains ##+10%## Maximum Armor.",
+
+				["crew_chief_t5_name"] = "Mean Streets",
+				["crew_chief_t5_desc"] = "Each member of your team regenerates ##1%## of their Missing Health per second.",
+
+				["crew_chief_t6_name"] = "Goodfellas",
+				["crew_chief_t6_desc"] = "Increases your team’s Maximum Health bonus to ##+30%##.",
+
+				["crew_chief_t7_name"] = "Heat",
+				["crew_chief_t7_desc"] = "Your team gains ##+10%## Armor Recovery Rate.",
+
+				["crew_chief_t8_name"] = "Layer Cake",
+				["crew_chief_t8_desc"] = "Increases your team’s Maximum Armor bonus to ##+20%##.",
+
+				["crew_chief_t9_name"] = "Angels with Dirty Faces",
+				["crew_chief_t9_desc"] = "Your team gains an additional ##10%## Damage Resistance, for a maximum of ##+20%##.",
+				-- Muscle
+				["muscle_deck"] = "Muscle: CRACKDOWN",
+				["muscle_deck_desc"] = "Massive Health and Health Regeneration. Flex eternal!",
+				["muscle_t1_name"] = "",
+				["muscle_t1_desc"] = "",
+
+				["muscle_t2_name"] = "",
+				["muscle_t2_desc"] = "",
+
+				["muscle_t3_name"] = "",
+				["muscle_t3_desc"] = "",
+
+				["muscle_t4_name"] = "",
+				["muscle_t4_desc"] = "",
+
+				["muscle_t5_name"] = "",
+				["muscle_t5_desc"] = "",
+
+				["muscle_t6_name"] = "",
+				["muscle_t6_desc"] = "",
+
+				["muscle_t7_name"] = "",
+				["muscle_t7_desc"] = "",
+
+				["muscle_t8_name"] = "",
+				["muscle_t8_desc"] = "",
+
+				["muscle_t9_name"] = "",
+				["muscle_t9_desc"] = "",
+				-- Armorer
+				["armorer_deck"] = "Armorer: CRACKDOWN",
+				["armorer_deck_desc"] = "Heavy Armor all day, every day.",
+				["armorer_t1_name"] = "",
+				["armorer_t1_desc"] = "",
+
+				["armorer_t2_name"] = "",
+				["armorer_t2_desc"] = "",
+
+				["armorer_t3_name"] = "",
+				["armorer_t3_desc"] = "",
+
+				["armorer_t4_name"] = "",
+				["armorer_t4_desc"] = "",
+
+				["armorer_t5_name"] = "",
+				["armorer_t5_desc"] = "",
+
+				["armorer_t6_name"] = "",
+				["armorer_t6_desc"] = "",
+
+				["armorer_t7_name"] = "",
+				["armorer_t7_desc"] = "",
+
+				["armorer_t8_name"] = "",
+				["armorer_t8_desc"] = "",
+
+				["armorer_t9_name"] = "",
+				["armorer_t9_desc"] = "",
+				-- Rogue
+				["rogue_deck"] = "Rogue: CRACKDOWN",
+				["rogue_deck_desc"] = "Provides Dodge Chance and comes with Special Dodges that are guaranteed to avoid certain attacks. Features a rebranded Sneaky Bastard.",
+				["rogue_t1_name"] = "",
+				["rogue_t1_desc"] = "",
+
+				["rogue_t2_name"] = "",
+				["rogue_t2_desc"] = "",
+
+				["rogue_t3_name"] = "",
+				["rogue_t3_desc"] = "",
+
+				["rogue_t4_name"] = "",
+				["rogue_t4_desc"] = "",
+
+				["rogue_t5_name"] = "",
+				["rogue_t5_desc"] = "",
+
+				["rogue_t6_name"] = "",
+				["rogue_t6_desc"] = "",
+
+				["rogue_t7_name"] = "",
+				["rogue_t7_desc"] = "",
+
+				["rogue_t8_name"] = "",
+				["rogue_t8_desc"] = "",
+
+				["rogue_t9_name"] = "",
+				["rogue_t9_desc"] = ""
+
 			})
 		end
 		loc:add_localized_strings({
