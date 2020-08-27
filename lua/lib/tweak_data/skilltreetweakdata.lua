@@ -235,6 +235,119 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			desc_id = "crew_chief_deck_desc",
 			name_id = "crew_chief_deck"
 		}
+		-- Muscle
+		self.specializations[2] = {
+			{
+				cost = 200,
+				desc_id = "muscle_t1_desc",
+				name_id = "muscle_t1_name",
+				upgrades = {
+					"muscle_t1",
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				cost = 300,
+				desc_id = "muscle_t2_desc",
+				name_id = "muscle_t2_name",
+				upgrades = {
+					"muscle_t2",
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				cost = 400,
+				desc_id = "muscle_t3_desc",
+				name_id = "muscle_t3_name",
+				upgrades = {
+					"muscle_t3"
+				},
+				icon_xy = {
+					2,
+					0
+				}
+			},
+			{
+				cost = 600,
+				desc_id = "muscle_t4_desc",
+				name_id = "muscle_t4_name",
+				upgrades = {
+					"muscle_t4"
+				},
+				icon_xy = {
+					2,
+					0
+				}
+			},
+			{
+				cost = 1000,
+				desc_id = "muscle_t5_desc",
+				name_id = "muscle_t5_name",
+				upgrades = {
+					"muscle_t5"
+				},
+				icon_xy = {
+					4,
+					0
+				}
+			},
+			{
+				cost = 1600,
+				desc_id = "muscle_t6_desc",
+				name_id = "muscle_t6_name",
+				upgrades = {
+					"muscle_t6"
+				},
+				icon_xy = {
+					2,
+					0
+				}
+			},
+			{
+				cost = 2400,
+				desc_id = "muscle_t7_desc",
+				name_id = "muscle_t7_name",
+				upgrades = {
+					"muscle_t7"
+				},
+				icon_xy = {
+					6,
+					0
+				}
+			},
+			{
+				cost = 3200,
+				desc_id = "muscle_t8_desc",
+				name_id = "muscle_t8_name",
+				upgrades = {
+					"muscle_t8"
+				},
+				icon_xy = {
+					4,
+					0
+				}
+			},
+			{
+				cost = 4000,
+				desc_id = "muscle_t9_desc",
+				name_id = "muscle_t9_name",
+				upgrades = {
+					"muscle_t9"
+				},
+				icon_xy = {
+					0,
+					1
+				}
+			},
+			desc_id = "muscle_deck_desc",
+			name_id = "muscle_deck"
+		}
 		
 	end
 end)

@@ -767,8 +767,17 @@ function PlayerDamage:_upd_health_regen(t, dt)
 			local max_health = self:_max_health()
 			local missing_health = max_health - self:get_real_health()
 			if self:get_real_health() < max_health then
-				if pm:team_upgrade_value("player", "crew_chief_t5", false) then
+				if pm:has_team_category_upgrade("player", "crew_chief_t5") == true then
 					self:restore_health(missing_health * 0.01, true)
+				end
+				if pm:upgrade_value("player", "muscle_t8") == true then
+					self:restore_health(max_health * 0.02, true)
+				elseif pm:upgrade_value("player", "muscle_t6") == true then
+					self:restore_health(max_health * 0.015, true)
+				elseif pm:upgrade_value("player", "muscle_t4") == true then
+					self:restore_health(max_health * 0.01, true)
+				elseif pm:upgrade_value("player", "muscle_t2") == true then
+					self:restore_health(max_health * 0.005, true)
 				end
 				self._crew_chief_regen_timer = 1
 			end

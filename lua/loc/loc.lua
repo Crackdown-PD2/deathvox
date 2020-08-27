@@ -72,32 +72,32 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				-- Muscle
 				["muscle_deck"] = "Muscle: CRACKDOWN",
 				["muscle_deck_desc"] = "Massive Health and Health Regeneration. Flex eternal!",
-				["muscle_t1_name"] = "",
-				["muscle_t1_desc"] = "",
+				["muscle_t1_name"] = "Dynamic Tension",
+				["muscle_t1_desc"] = "You gain +25% Maximum Health and you become 25% more likely to be targeted over your teammates.",
 
-				["muscle_t2_name"] = "",
-				["muscle_t2_desc"] = "",
+				["muscle_t2_name"] = "Endurance Training",
+				["muscle_t2_desc"] = "You regenerate 0.5% of your Maximum Health per second.",
 
-				["muscle_t3_name"] = "",
-				["muscle_t3_desc"] = "",
+				["muscle_t3_name"] = "Chump into Champ",
+				["muscle_t3_desc"] = "Increases your Maximum Health bonus to +50%.",
 
-				["muscle_t4_name"] = "",
-				["muscle_t4_desc"] = "",
+				["muscle_t4_name"] = "Dauntless Improvement",
+				["muscle_t4_desc"] = "Your Health Regeneration increases to 1% of your Maximum Health per second.",
 
-				["muscle_t5_name"] = "",
-				["muscle_t5_desc"] = "",
+				["muscle_t5_name"] = "15 Minutes A Day",
+				["muscle_t5_desc"] = "Increases your Maximum Health bonus to +75%.",
 
-				["muscle_t6_name"] = "",
-				["muscle_t6_desc"] = "",
+				["muscle_t6_name"] = "Tireless Physique",
+				["muscle_t6_desc"] = "Your Health Regeneration increases to 1.5% of your Maximum Health per second.",
 
-				["muscle_t7_name"] = "",
-				["muscle_t7_desc"] = "",
+				["muscle_t7_name"] = "Muscle Mystery",
+				["muscle_t7_desc"] = "Increases your Maximum Health bonus to +100%.",
 
-				["muscle_t8_name"] = "",
-				["muscle_t8_desc"] = "",
+				["muscle_t8_name"] = "Flex Eternal",
+				["muscle_t8_desc"] = "Your Health Regeneration increases to 2% of your Maximum Health per second.",
 
-				["muscle_t9_name"] = "",
-				["muscle_t9_desc"] = "",
+				["muscle_t9_name"] = "Hero Of The Beach",
+				["muscle_t9_desc"] = "Increases your Maximum Health bonus to +125%.",
 				-- Armorer
 				["armorer_deck"] = "Armorer: CRACKDOWN",
 				["armorer_deck_desc"] = "Heavy Armor all day, every day.",

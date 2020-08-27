@@ -144,7 +144,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "crew_chief_t1",
-				category = "crew_chief"
+				category = "player"
 			}
 		}
 		
@@ -158,7 +158,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "crew_chief_t2",
-				category = "crew_chief"
+				category = "player"
 			}
 		}
 
@@ -172,7 +172,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "crew_chief_t3",
-				category = "crew_chief"
+				category = "player"
 			}
 		}
 		
@@ -186,7 +186,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "crew_chief_t4",
-				category = "crew_chief"
+				category = "player"
 			}
 		}
 		
@@ -200,7 +200,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "crew_chief_t5",
-				category = "crew_chief"
+				category = "player"
 			}
 		}
 
@@ -214,7 +214,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "crew_chief_t6",
-				category = "crew_chief"
+				category = "player"
 			}
 		}
 
@@ -228,7 +228,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "crew_chief_t7",
-				category = "crew_chief"
+				category = "player"
 			}
 		}
 
@@ -242,7 +242,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "crew_chief_t8",
-				category = "crew_chief"
+				category = "player"
 			}
 		}
 
@@ -257,7 +257,134 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "crew_chief_t9",
-				category = "crew_chief"
+				category = "player"
+			}
+		}
+		-- Muscle
+		self.values.player.muscle_t1 = {
+			true
+		}
+		
+		self.definitions.muscle_t1 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "muscle_t1",
+				category = "player"
+			}
+		}
+		
+		self.values.player.muscle_t2 = {
+			true
+		}
+		
+		self.definitions.muscle_t2 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "muscle_t2",
+				category = "player"
+			}
+		}
+
+		self.values.player.muscle_t3 = {
+			true
+		}
+		
+		self.definitions.muscle_t3 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "muscle_t3",
+				category = "player"
+			}
+		}
+		
+		self.values.player.muscle_t4 = {
+			true
+		}
+		
+		self.definitions.muscle_t4 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "muscle_t4",
+				category = "player"
+			}
+		}
+		
+		self.values.player.muscle_t5 = {
+			true
+		}
+		
+		self.definitions.muscle_t5 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "muscle_t5",
+				category = "player"
+			}
+		}
+
+		self.values.player.muscle_t6 = {
+			true
+		}
+		
+		self.definitions.muscle_t6 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "muscle_t6",
+				category = "player"
+			}
+		}
+
+		self.values.player.muscle_t7 = {
+			true
+		}
+		
+		self.definitions.muscle_t7 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "muscle_t7",
+				category = "player"
+			}
+		}
+
+		self.values.player.muscle_t8 = {
+			true
+		}
+		
+		self.definitions.muscle_t8 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "muscle_t8",
+				category = "player"
+			}
+		}
+
+
+		self.values.player.muscle_t9 = {
+			true
+		}
+		
+		self.definitions.muscle_t9 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "muscle_t9",
+				category = "player"
 			}
 		}
 	end	

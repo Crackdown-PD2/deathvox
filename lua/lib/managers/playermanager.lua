@@ -58,9 +58,9 @@ function PlayerManager:damage_reduction_skill_multiplier(damage_type)
 		multiplier = multiplier * managers.player:upgrade_value("player", "interacting_damage_multiplier", 1)
 	end
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
-		if self:team_upgrade_value("player", "crew_chief_t9", false) then
+		if self:has_team_category_upgrade("player", "crew_chief_t9") then
 			multiplier = multiplier * 0.8 -- 20% damage reduction at t9
-		elseif self:team_upgrade_value("player", "crew_chief_t1", false) then
+		elseif self:has_team_category_upgrade("player", "crew_chief_t1") then
 			multiplier = multiplier * 0.9 -- but 10% at t1
 		end
 	end
@@ -75,7 +75,7 @@ function PlayerManager:stamina_multiplier()
 	multiplier = multiplier + self:get_hostage_bonus_multiplier("stamina") - 1
 	multiplier = managers.modifiers:modify_value("PlayerManager:GetStaminaMultiplier", multiplier)
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
-		if self:team_upgrade_value("player", "crew_chief_t3", false) then
+		if self:has_team_category_upgrade("player", "crew_chief_t3") == true then
 			multiplier = multiplier * 2 -- 100% more stamina
 		end
 	end
@@ -95,10 +95,21 @@ function PlayerManager:health_skill_multiplier()
 	end
 	
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
-		if self:team_upgrade_value("player", "crew_chief_t6", false) then
+		if self:has_team_category_upgrade("player", "crew_chief_t6") == true then
 			multiplier = multiplier * 1.3
-		elseif self:team_upgrade_value("player", "crew_chief_t2", false) then
+		elseif self:has_team_category_upgrade("player", "crew_chief_t2") == true then
 			multiplier = multiplier * 1.15
+		end
+		if self:upgrade_value("player", "muscle_t9") == true then
+			multiplier = multiplier * 2.25
+		elseif self:upgrade_value("player", "muscle_t7") == true then
+			multiplier = multiplier * 2
+		elseif self:upgrade_value("player", "muscle_t5") == true then
+			multiplier = multiplier * 1.75
+		elseif self:upgrade_value("player", "muscle_t3") == true then
+			multiplier = multiplier * 1.5
+		elseif self:upgrade_value("player", "muscle_t1") == true then
+			multiplier = multiplier * 1.25
 		end
 	end
 	return multiplier
@@ -115,9 +126,9 @@ function PlayerManager:body_armor_skill_multiplier(override_armor)
 	multiplier = multiplier + self:upgrade_value("player", tostring(override_armor or managers.blackmarket:equipped_armor(true, true)) .. "_armor_multiplier", 1) - 1
 	multiplier = multiplier + self:upgrade_value("player", "chico_armor_multiplier", 1) - 1
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
-		if self:team_upgrade_value("player", "crew_chief_t8", false) then
+		if self:has_team_category_upgrade("player", "crew_chief_t8") == true then
 			multiplier = multiplier * 1.2
-		elseif self:team_upgrade_value("player", "crew_chief_t4", false) then
+		elseif self:has_team_category_upgrade("player", "crew_chief_t4") == true then
 			multiplier = multiplier * 1.1
 		end
 	end
@@ -142,7 +153,7 @@ function PlayerManager:body_armor_regen_multiplier(moving, health_ratio)
 		multiplier = multiplier * (1 - managers.player:upgrade_value("player", "armor_regen_damage_health_ratio_multiplier", 0) * damage_health_ratio)
 	end
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
-		if self:team_upgrade_value("player", "crew_chief_t7", false) then
+		if self:has_team_category_upgrade("player", "crew_chief_t7") == true then
 			multiplier = multiplier * 0.9
 		end
 	end
