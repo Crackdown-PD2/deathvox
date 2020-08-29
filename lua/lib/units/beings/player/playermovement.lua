@@ -109,17 +109,14 @@ function PlayerMovement:on_SPOOCed(enemy_unit)
 	
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		local pm = managers.player
-		if self._rogue_dodge_cloaker_cooldown then
-			self._rogue_dodge_cloaker_cooldown = self._rogue_dodge_cloaker_cooldown - dt
-
-			if self._rogue_dodge_cloaker_cooldown <= 0 then
-				self._rogue_dodge_cloaker_cooldown = nil
-			end
-		end
 		if not self._rogue_dodge_cloaker_cooldown then
-			if managers.player:upgrade_value("player", "rogue_t6") == true then
-				self._rogue_dodge_cloaker_cooldown = 10
-				return false
+			self._rogue_dodge_cloaker_cooldown = managers.player:player_timer():time()
+		end
+		local attacker = attack_data.attacker_unit
+		if self._rogue_dodge_cloaker_cooldown <= managers.player:player_timer():time() then
+			if managers.player:upgrade_value("player", "rogue_t8") == true then
+				self._rogue_dodge_cloaker_cooldown = managers.player:player_timer():time() + 10
+				return
 			end
 		end
 	end

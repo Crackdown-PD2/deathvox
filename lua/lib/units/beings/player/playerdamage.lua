@@ -44,20 +44,18 @@ function PlayerDamage:damage_bullet(attack_data)
 
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		local pm = managers.player
-		if self._rogue_dodge_sniper_bullet_cooldown then
-			self._rogue_dodge_sniper_bullet_cooldown = self._rogue_dodge_sniper_bullet_cooldown - dt
-
-			if self._rogue_dodge_sniper_bullet_cooldown <= 0 then
-				self._rogue_dodge_sniper_bullet_cooldown = nil
-			end
+		if not self._rogue_dodge_sniper_bullet_cooldown then
+			self._rogue_dodge_sniper_bullet_cooldown = managers.player:player_timer():time()
 		end
 		local attacker = attack_data.attacker_unit
-		local is_sniper = attacker:base():has_tag("sniper")
-		if not self._rogue_dodge_sniper_bullet_cooldown and is_sniper then
-			if managers.player:upgrade_value("player", "rogue_t4") == true then
-				self:play_whizby(attack_data.col_ray.position)
-				self._rogue_dodge_sniper_bullet_cooldown = 10
-				return
+		if attacker:base().has_tag then
+			local is_sniper = attacker:base():has_tag("sniper")
+			if is_sniper and self._rogue_dodge_sniper_bullet_cooldown <= managers.player:player_timer():time() then
+				if managers.player:upgrade_value("player", "rogue_t4") == true then
+					self:play_whizby(attack_data.col_ray.position)
+					self._rogue_dodge_sniper_bullet_cooldown = managers.player:player_timer():time() + 10
+					return
+				end
 			end
 		end
 	end
@@ -316,18 +314,14 @@ function PlayerDamage:damage_melee(attack_data)
 	
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		local pm = managers.player
-		if self._rogue_dodge_melee_cooldown then
-			self._rogue_dodge_melee_cooldown = self._rogue_dodge_melee_cooldown - dt
-
-			if self._rogue_dodge_melee_cooldown <= 0 then
-				self._rogue_dodge_melee_cooldown = nil
-			end
+		if not self._rogue_dodge_melee_cooldown then
+			self._rogue_dodge_melee_cooldown = managers.player:player_timer():time()
 		end
 		local attacker = attack_data.attacker_unit
-		if not self._rogue_dodge_melee_cooldown then
+		if self._rogue_dodge_melee_cooldown <= managers.player:player_timer():time() then
 			if managers.player:upgrade_value("player", "rogue_t2") == true then
 				self:play_whizby(attack_data.col_ray.position)
-				self._rogue_dodge_melee_cooldown = 10
+				self._rogue_dodge_melee_cooldown = managers.player:player_timer():time() + 10
 				return
 			end
 		end
@@ -875,17 +869,14 @@ function PlayerDamage:damage_tase(attack_data)
 
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		local pm = managers.player
-		if self._rogue_dodge_tase_cooldown then
-			self._rogue_dodge_tase_cooldown = self._rogue_dodge_tase_cooldown - dt
-
-			if self._rogue_dodge_tase_cooldown <= 0 then
-				self._rogue_dodge_tase_cooldown = nil
-			end
-		end
 		if not self._rogue_dodge_tase_cooldown then
-			if managers.player:upgrade_value("player", "rogue_t8") == true then
+			self._rogue_dodge_tase_cooldown = managers.player:player_timer():time()
+		end
+		local attacker = attack_data.attacker_unit
+		if self._rogue_dodge_tase_cooldown <= managers.player:player_timer():time() then
+			if managers.player:upgrade_value("player", "rogue_t6") == true then
 				self:play_whizby(attack_data.col_ray.position)
-				self._rogue_dodge_tase_cooldown = 10
+				self._rogue_dodge_tase_cooldown = managers.player:player_timer():time() + 10
 				return
 			end
 		end
