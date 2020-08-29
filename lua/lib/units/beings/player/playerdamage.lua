@@ -875,7 +875,6 @@ function PlayerDamage:damage_tase(attack_data)
 		local attacker = attack_data.attacker_unit
 		if self._rogue_dodge_tase_cooldown <= managers.player:player_timer():time() then
 			if managers.player:upgrade_value("player", "rogue_t6") == true then
-				self:play_whizby(attack_data.col_ray.position)
 				self._rogue_dodge_tase_cooldown = managers.player:player_timer():time() + 10
 				return
 			end
