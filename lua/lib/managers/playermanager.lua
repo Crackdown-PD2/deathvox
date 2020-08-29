@@ -76,7 +76,7 @@ function PlayerManager:stamina_multiplier()
 	multiplier = managers.modifiers:modify_value("PlayerManager:GetStaminaMultiplier", multiplier)
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		if self:has_team_category_upgrade("player", "crew_chief_t3") == true then
-			multiplier = multiplier + 2 -- 100% more stamina
+			multiplier = multiplier + 1 -- 100% more stamina
 		end
 	end
 	return multiplier
@@ -96,20 +96,20 @@ function PlayerManager:health_skill_multiplier()
 	
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		if self:upgrade_value("player", "muscle_t9") == true then
-			multiplier = multiplier + 2.25
-		elseif self:upgrade_value("player", "muscle_t7") == true then
-			multiplier = multiplier + 2
-		elseif self:upgrade_value("player", "muscle_t5") == true then
-			multiplier = multiplier + 1.75
-		elseif self:upgrade_value("player", "muscle_t3") == true then
-			multiplier = multiplier + 1.5
-		elseif self:upgrade_value("player", "muscle_t1") == true then
 			multiplier = multiplier + 1.25
+		elseif self:upgrade_value("player", "muscle_t7") == true then
+			multiplier = multiplier + 1
+		elseif self:upgrade_value("player", "muscle_t5") == true then
+			multiplier = multiplier + 0.75
+		elseif self:upgrade_value("player", "muscle_t3") == true then
+			multiplier = multiplier + 0.5
+		elseif self:upgrade_value("player", "muscle_t1") == true then
+			multiplier = multiplier + 0.25
 		end
 		if self:has_team_category_upgrade("player", "crew_chief_t6") == true then
-			multiplier = multiplier + 1.3
+			multiplier = multiplier + 0.3
 		elseif self:has_team_category_upgrade("player", "crew_chief_t2") == true then
-			multiplier = multiplier + 1.15
+			multiplier = multiplier + 0.15
 		end
 	end
 	return multiplier
@@ -127,20 +127,20 @@ function PlayerManager:body_armor_skill_multiplier(override_armor)
 	multiplier = multiplier + self:upgrade_value("player", "chico_armor_multiplier", 1) - 1
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		if self:upgrade_value("player", "armorer_t9") == true then
-			multiplier = multiplier + 2
+			multiplier = multiplier + 1
 		elseif self:upgrade_value("player", "armorer_t7") == true then
-			multiplier = multiplier + 1.8
+			multiplier = multiplier + 0.8
 		elseif self:upgrade_value("player", "armorer_t5") == true then
-			multiplier = multiplier + 1.6
+			multiplier = multiplier + 0.6
 		elseif self:upgrade_value("player", "armorer_t3") == true then
-			multiplier = multiplier + 1.4
+			multiplier = multiplier + 0.4
 		elseif self:upgrade_value("player", "armorer_t1") == true then
-			multiplier = multiplier + 1.2
+			multiplier = multiplier + 0.2
 		end
 		if self:has_team_category_upgrade("player", "crew_chief_t8") == true then
-			multiplier = multiplier + 1.2
+			multiplier = multiplier + 0.2
 		elseif self:has_team_category_upgrade("player", "crew_chief_t4") == true then
-			multiplier = multiplier + 1.1
+			multiplier = multiplier + 0.1
 		end
 	end
 	return multiplier
@@ -165,15 +165,15 @@ function PlayerManager:body_armor_regen_multiplier(moving, health_ratio)
 	end
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		if self:upgrade_value("player", "armorer_t9") == true then
-			multiplier = multiplier + 1.25
+			multiplier = multiplier - 0.25
 		elseif self:upgrade_value("player", "armorer_t7") == true then
-			multiplier = multiplier + 1.2
+			multiplier = multiplier - 0.2
 		elseif self:upgrade_value("player", "armorer_t5") == true then
-			multiplier = multiplier + 1.15
+			multiplier = multiplier - 0.15
 		elseif self:upgrade_value("player", "armorer_t3") == true then
-			multiplier = multiplier + 1.1
+			multiplier = multiplier - 0.1
 		elseif self:upgrade_value("player", "armorer_t1") == true then
-			multiplier = multiplier + 1.05
+			multiplier = multiplier - 0.05
 		end
 		if self:has_team_category_upgrade("player", "crew_chief_t7") == true then
 			multiplier = multiplier - 0.1
@@ -296,7 +296,11 @@ function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, overri
 		end
 		if self:upgrade_value("player", "rogue_t9") == true then
 			if detection_risk <= 35 then
-				local bonus_chance = 0.02 * (detection_risk / 2)
+				local detection_to_use = detection_risk
+				if detection_to_use < 3 then
+					detection_to_use = 3
+				end
+				local bonus_chance = 0.02 * (detection_to_use / 2)
 				if bonus_chance > 0.2 then
 					bonus_chance = 0.2
 				end
