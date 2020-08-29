@@ -130,32 +130,32 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				-- Rogue
 				["rogue_deck"] = "Rogue: CRACKDOWN",
 				["rogue_deck_desc"] = "Provides Dodge Chance and comes with Special Dodges that are guaranteed to avoid certain attacks. Features a rebranded Sneaky Bastard.",
-				["rogue_t1_name"] = "",
-				["rogue_t1_desc"] = "",
+				["rogue_t1_name"] = "Fat Chance",
+				["rogue_t1_desc"] = "You gain ##+10%## Dodge Chance.",
 
-				["rogue_t2_name"] = "",
-				["rogue_t2_desc"] = "",
+				["rogue_t2_name"] = "Hands Off",
+				["rogue_t2_desc"] = "You are ##guaranteed## to Dodge an enemy Melee attack. This effect has a ##10 second cooldown##.",
 
-				["rogue_t3_name"] = "",
-				["rogue_t3_desc"] = "",
+				["rogue_t3_name"] = "Playing the Odds",
+				["rogue_t3_desc"] = "Increases your Dodge Chance bonus to ##+20%##.",
 
-				["rogue_t4_name"] = "",
-				["rogue_t4_desc"] = "",
+				["rogue_t4_name"] = "Elusive Target",
+				["rogue_t4_desc"] = "You are ##guaranteed## to Dodge a Sniper’s shot. This effect has a ##10 second cooldown##.",
 
-				["rogue_t5_name"] = "",
-				["rogue_t5_desc"] = "",
+				["rogue_t5_name"] = "Tricky Business",
+				["rogue_t5_desc"] = "Increases your Dodge Chance bonus to ##+30%##.",
 
-				["rogue_t6_name"] = "",
-				["rogue_t6_desc"] = "",
+				["rogue_t6_name"] = "Kansas City Shuffle",
+				["rogue_t6_desc"] = "You are ##guaranteed## to Dodge a Cloaker’s kick. This effect has a ##10 second cooldown##.",
 
-				["rogue_t7_name"] = "",
-				["rogue_t7_desc"] = "",
+				["rogue_t7_name"] = "Isai’s Wisdom",
+				["rogue_t7_desc"] = "Increases your Dodge Chance bonus to ##+40%##.",
 
-				["rogue_t8_name"] = "",
-				["rogue_t8_desc"] = "",
+				["rogue_t8_name"] = "The Electric Slide",
+				["rogue_t8_desc"] = "You are ##guaranteed## to Dodge a Taser’s shock attack. This effect has a ##10 second cooldown##.",
 
-				["rogue_t9_name"] = "",
-				["rogue_t9_desc"] = ""
+				["rogue_t9_name"] = "Smooth Criminal",
+				["rogue_t9_desc"] = "You gain a bonus ##+2%## Dodge Chance for every ##2 points of Detection Risk## under ##35##, up to ##+20%##."
 
 			})
 		end

@@ -1,5 +1,6 @@
 function PlayerDamage:damage_bullet(attack_data)
 	if not self:_chk_can_take_dmg() then
+		self:play_whizby(attack_data.col_ray.position)
 		return
 	end
 
@@ -40,6 +41,27 @@ function PlayerDamage:damage_bullet(attack_data)
 	elseif self:_chk_dmg_too_soon(attack_data.damage) then
 		return
 	end
+
+	if deathvox and deathvox:IsTotalCrackdownEnabled() then
+		local pm = managers.player
+		if self._rogue_dodge_sniper_bullet_cooldown then
+			self._rogue_dodge_sniper_bullet_cooldown = self._rogue_dodge_sniper_bullet_cooldown - dt
+
+			if self._rogue_dodge_sniper_bullet_cooldown <= 0 then
+				self._rogue_dodge_sniper_bullet_cooldown = nil
+			end
+		end
+		local attacker = attack_data.attacker_unit
+		local is_sniper = attacker:base():has_tag("sniper")
+		if not self._rogue_dodge_sniper_bullet_cooldown and is_sniper then
+			if managers.player:upgrade_value("player", "rogue_t4") == true then
+				self:play_whizby(attack_data.col_ray.position)
+				self._rogue_dodge_sniper_bullet_cooldown = 10
+				return
+			end
+		end
+	end
+				
 
 	self:_hit_direction(attack_data.attacker_unit:position())
 
@@ -288,6 +310,25 @@ function PlayerDamage:damage_melee(attack_data)
 				self._unit:movement():current_state():discharge_melee()
 
 				return "countered"
+			end
+		end
+	end
+	
+	if deathvox and deathvox:IsTotalCrackdownEnabled() then
+		local pm = managers.player
+		if self._rogue_dodge_melee_cooldown then
+			self._rogue_dodge_melee_cooldown = self._rogue_dodge_melee_cooldown - dt
+
+			if self._rogue_dodge_melee_cooldown <= 0 then
+				self._rogue_dodge_melee_cooldown = nil
+			end
+		end
+		local attacker = attack_data.attacker_unit
+		if not self._rogue_dodge_melee_cooldown then
+			if managers.player:upgrade_value("player", "rogue_t2") == true then
+				self:play_whizby(attack_data.col_ray.position)
+				self._rogue_dodge_melee_cooldown = 10
+				return
 			end
 		end
 	end
@@ -824,5 +865,56 @@ function PlayerDamage:_upd_health_regen(t, dt)
 				end)
 			end
 		until done
+	end
+end
+
+function PlayerDamage:damage_tase(attack_data)
+	if self._god_mode then
+		return
+	end
+
+	if deathvox and deathvox:IsTotalCrackdownEnabled() then
+		local pm = managers.player
+		if self._rogue_dodge_tase_cooldown then
+			self._rogue_dodge_tase_cooldown = self._rogue_dodge_tase_cooldown - dt
+
+			if self._rogue_dodge_tase_cooldown <= 0 then
+				self._rogue_dodge_tase_cooldown = nil
+			end
+		end
+		if not self._rogue_dodge_tase_cooldown then
+			if managers.player:upgrade_value("player", "rogue_t8") == true then
+				self:play_whizby(attack_data.col_ray.position)
+				self._rogue_dodge_tase_cooldown = 10
+				return
+			end
+		end
+	end
+
+	local cur_state = self._unit:movement():current_state_name()
+
+	if cur_state ~= "tased" and cur_state ~= "fatal" then
+		self:on_tased(false)
+
+		self._tase_data = attack_data
+
+		managers.player:set_player_state("tased")
+
+		local damage_info = {
+			result = {
+				variant = "tase",
+				type = "hurt"
+			}
+		}
+
+		self:_call_listeners(damage_info)
+
+		if attack_data.attacker_unit and attack_data.attacker_unit:alive() and attack_data.attacker_unit:base()._tweak_table == "taser" then
+			attack_data.attacker_unit:sound():say("post_tasing_taunt")
+
+			if managers.blackmarket:equipped_mask().mask_id == tweak_data.achievement.its_alive_its_alive.mask then
+				managers.achievment:award_progress(tweak_data.achievement.its_alive_its_alive.stat)
+			end
+		end
 	end
 end

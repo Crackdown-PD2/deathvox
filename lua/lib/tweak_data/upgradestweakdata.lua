@@ -515,5 +515,133 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
+		-- rogue
+		self.values.player.rogue_t1 = {
+			true
+		}
+		
+		self.definitions.rogue_t1 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_t1",
+				category = "player"
+			}
+		}
+		
+		self.values.player.rogue_t2 = {
+			true
+		}
+		
+		self.definitions.rogue_t2 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_t2",
+				category = "player"
+			}
+		}
+
+		self.values.player.rogue_t3 = {
+			true
+		}
+		
+		self.definitions.rogue_t3 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_t3",
+				category = "player"
+			}
+		}
+		
+		self.values.player.rogue_t4 = {
+			true
+		}
+		
+		self.definitions.rogue_t4 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_t4",
+				category = "player"
+			}
+		}
+		
+		self.values.player.rogue_t5 = {
+			true
+		}
+		
+		self.definitions.rogue_t5 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_t5",
+				category = "player"
+			}
+		}
+
+		self.values.player.rogue_t6 = {
+			true
+		}
+		
+		self.definitions.rogue_t6 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_t6",
+				category = "player"
+			}
+		}
+
+
+		self.values.player.rogue_t7 = {
+			true
+		}
+		
+		self.definitions.rogue_t7 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_t7",
+				category = "player"
+			}
+		}
+
+		self.values.player.rogue_t8 = {
+			true
+		}
+		
+		self.definitions.rogue_t8 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_t8",
+				category = "player"
+			}
+		}
+
+
+		self.values.player.rogue_t9 = {
+			true
+		}	
+		
+		self.definitions.rogue_t9 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_t9",
+				category = "player"
+			}
+		}
 	end	
 end)

@@ -247,3 +247,64 @@ function PlayerManager:movement_speed_multiplier(speed_state, bonus_multiplier, 
 
 	return multiplier
 end
+
+function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, override_armor, detection_risk)
+	local chance = self:upgrade_value("player", "passive_dodge_chance", 0)
+	local dodge_shot_gain = self:_dodge_shot_gain()
+
+	for _, smoke_screen in ipairs(self._smoke_screen_effects or {}) do
+		if smoke_screen:is_in_smoke(self:player_unit()) then
+			if smoke_screen:mine() then
+				chance = chance * self:upgrade_value("player", "sicario_multiplier", 1)
+				dodge_shot_gain = dodge_shot_gain * self:upgrade_value("player", "sicario_multiplier", 1)
+			else
+				chance = chance + smoke_screen:dodge_bonus()
+			end
+		end
+	end
+
+	chance = chance + dodge_shot_gain
+	chance = chance + self:upgrade_value("player", "tier_dodge_chance", 0)
+
+	if running then
+		chance = chance + self:upgrade_value("player", "run_dodge_chance", 0)
+	end
+
+	if crouching then
+		chance = chance + self:upgrade_value("player", "crouch_dodge_chance", 0)
+	end
+
+	if on_zipline then
+		chance = chance + self:upgrade_value("player", "on_zipline_dodge_chance", 0)
+	end
+
+	local detection_risk_add_dodge_chance = managers.player:upgrade_value("player", "detection_risk_add_dodge_chance")
+	chance = chance + self:get_value_from_risk_upgrade(detection_risk_add_dodge_chance, detection_risk)
+	chance = chance + self:upgrade_value("player", tostring(override_armor or managers.blackmarket:equipped_armor(true, true)) .. "_dodge_addend", 0)
+	chance = chance + self:upgrade_value("team", "crew_add_dodge", 0)
+	chance = chance + self:temporary_upgrade_value("temporary", "pocket_ecm_kill_dodge", 0)
+	log("detection risk: " .. detection_risk)
+	if deathvox and deathvox:IsTotalCrackdownEnabled() then
+		if self:upgrade_value("player", "rogue_t7") == true then
+			chance = chance + 0.4
+		elseif self:upgrade_value("player", "rogue_t5") == true then
+			chance = chance + 0.3
+		elseif self:upgrade_value("player", "rogue_t3") == true then
+			chance = chance + 0.2
+		elseif self:upgrade_value("player", "rogue_t1") == true then
+			chance = chance + 0.1
+		end
+		if self:upgrade_value("player", "rogue_t9") == true then
+			if detection_risk <= 35 then
+				local bonus_chance = 0.02 * (detection_risk / 2)
+				if bonus_chance > 0.2 then
+					bonus_chance = 0.2
+				end
+				chance = chance + bonus_chance
+			end
+		end
+	end
+		
+
+	return chance
+end
