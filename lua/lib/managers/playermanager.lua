@@ -283,7 +283,6 @@ function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, overri
 	chance = chance + self:upgrade_value("player", tostring(override_armor or managers.blackmarket:equipped_armor(true, true)) .. "_dodge_addend", 0)
 	chance = chance + self:upgrade_value("team", "crew_add_dodge", 0)
 	chance = chance + self:temporary_upgrade_value("temporary", "pocket_ecm_kill_dodge", 0)
-	log("detection risk: " .. detection_risk)
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		if self:upgrade_value("player", "rogue_t7") == true then
 			chance = chance + 0.4
@@ -295,12 +294,13 @@ function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, overri
 			chance = chance + 0.1
 		end
 		if self:upgrade_value("player", "rogue_t9") == true then
-			if detection_risk <= 35 then
+			if not detection_risk == nil and detection_risk <= 35 then
 				local detection_to_use = detection_risk
 				if detection_to_use < 3 then
 					detection_to_use = 3
 				end
-				local bonus_chance = 0.02 * (detection_to_use / 2)
+				local points_for_math = 35 - detection_to_use
+				local bonus_chance = 0.02 * (points_for_math / 2)
 				if bonus_chance > 0.2 then
 					bonus_chance = 0.2
 				end
@@ -308,6 +308,7 @@ function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, overri
 			end
 		end
 	end
+	log("dodge chance " .. chance)
 		
 
 	return chance
