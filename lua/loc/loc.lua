@@ -155,7 +155,94 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				["rogue_t8_desc"] = "You are ##guaranteed## to Dodge a Taser’s shock attack. This effect has a ##10 second cooldown##.",
 
 				["rogue_t9_name"] = "Smooth Criminal",
-				["rogue_t9_desc"] = "You gain a bonus ##+2%## Dodge Chance for every ##2 points of Detection Risk## under ##35##, up to ##+20%##."
+				["rogue_t9_desc"] = "You gain a bonus ##+2%## Dodge Chance for every ##2 points of Detection Risk## under ##35##, up to ##+20%##.",
+				-- Crook
+				["crook_deck"] = "Crook: CRACKDOWN",
+				["crook_deck_desc"] = "Ballistic Vests and Dodge Chance. Features a rebranded Swan Song.",
+				["crook_t1_name"] = "Extra Padding",
+				["crook_t1_desc"] = "Ballistic Vests gain ##+15## Maximum Armor.",
+
+				["crook_t2_name"] = "Bounce Back",
+				["crook_t2_desc"] = "Ballistic Vests gain ##+20%## Armor Recovery Rate.",
+
+				["crook_t3_name"] = "Vital Protection",
+				["crook_t3_desc"] = "Increases the Maximum Armor bonus for Ballistic Vests to ##+30##.",
+
+				["crook_t4_name"] = "Basic Tailoring",
+				["crook_t4_desc"] = "When wearing a Ballistic Vest, you gain ##+15%## Dodge Chance.",
+
+				["crook_t5_name"] = "Custom Weave",
+				["crook_t5_desc"] = "Increases the Maximum Armor bonus for Ballistic Vests to ##+45##.",
+
+				["crook_t6_name"] = "Keeping Cool",
+				["crook_t6_desc"] = "Increases the Ballistic Vest Armor Recovery Rate bonus to ##+40%##.",
+
+				["crook_t7_name"] = "Prototype Material",
+				["crook_t7_desc"] = "Increases the Maximum Armor bonus for Ballistic Vests to ##+60##.",
+
+				["crook_t8_name"] = "Perfect Fit",
+				["crook_t8_desc"] = "Your Dodge Chance bonus for Ballistic Vests increases to ##+30%##.",
+
+				["crook_t9_name"] = "Borrowed Time",
+				["crook_t9_desc"] = "Instead of being incapacitated when you lose all of your health, you will enter a grace period where you can continue to act for ##4 seconds## before falling. Borrowed Time cannot be triggered by fall damage or fire damage.",
+				-- Hitman
+				["hitman_deck"] = "Hitman: CRACKDOWN",
+				["hitman_deck_desc"] = "Armor Recovery and nothing else. Features a rebranded Messiah.",
+				["hitman_t1_name"] = "Aerodynamic",
+				["hitman_t1_desc"] = "You gain ##+10%## Armor Recovery Rate.",
+
+				["hitman_t2_name"] = "Revolution 909",
+				["hitman_t2_desc"] = "Your Armor will Recover ##2 seconds## after being broken, no matter the situation.",
+
+				["hitman_t3_name"] = "High Fidelity",
+				["hitman_t3_desc"] = "Your Armor Recovery Rate bonus increases to ##+25%##.",
+
+				["hitman_t4_name"] = "Rollin' & Scratchin'",
+				["hitman_t4_desc"] = "Revolution 909’s activation timer is reduced to ##1.75 seconds##.",
+
+				["hitman_t5_name"] = "Fresh",
+				["hitman_t5_desc"] = "Your Armor Recovery Rate bonus increases to ##+45%##.",
+
+				["hitman_t6_name"] = "Steam Machine",
+				["hitman_t6_desc"] = "Revolution 909’s activation timer is reduced to ##1.5 seconds##.",
+
+				["hitman_t7_name"] = "Face to Face",
+				["hitman_t7_desc"] = "Your Armor Recovery Rate bonus increases to ##+70%##.",
+
+				["hitman_t8_name"] = "Human After All",
+				["hitman_t8_desc"] = "Revolution 909’s activation timer is reduced to ##1.25 seconds##.",
+
+				["hitman_t9_name"] = "One More Time",
+				["hitman_t9_desc"] = "You become ##Invulnerable## while in bleedout. While in bleedout, you can Revive yourself by ##killing an enemy and then pressing Jump##. Reviving yourself with One More Time ##consumes an additional Down##."
+				-- Burglar
+				["burglar_deck"] = "Burglar: CRACKDOWN",
+				["burglar_deck_desc"] = "Armor Recovery and nothing else. Features a rebranded Messiah.",
+				["burglar_t1_name"] = "Hands In The Dark",
+				["burglar_t1_desc"] = "You gain ##+5%## Interact Speed while in ##Stealth##.",
+
+				["burglar_t2_name"] = "The Toothpick",
+				["burglar_t2_desc"] = "You gain ##+232## Concealment. No, it's not a typo.",
+
+				["burglar_t3_name"] = "Soft Touch",
+				["burglar_t3_desc"] = "Your Interact Speed bonus increases to ##+10%##.",
+
+				["burglar_t4_name"] = "Ranzer’s Edge",
+				["burglar_t4_desc"] = "You ##no longer take Fall Damage## when falling from Non-Fatal heights. Additionally, the distance you must fall before a fall is considered Fatal is ##doubled##.",
+
+				["burglar_t5_name"] = "Silent Work",
+				["burglar_t5_desc"] = "Your Interact Speed bonus increases to ##+15%##.",
+
+				["burglar_t6_name"] = "Long Haul",
+				["burglar_t6_desc"] = "You bag corpses ##20%## faster and can Sprint while ##carrying heavy Bags##.",
+
+				["burglar_t7_name"] = "Quiet Mind",
+				["burglar_t7_desc"] = "Your Interact Speed bonus increases to ##+20%##.",
+
+				["burglar_t8_name"] = "Fast Talker",
+				["burglar_t8_desc"] = "You answer Pagers ##10%## faster.",
+
+				["burglar_t9_name"] = "Criminal Discretion",
+				["burglar_t9_desc"] = "Your Interact Speed bonus increases to ##+25%##.",
 
 			})
 		end

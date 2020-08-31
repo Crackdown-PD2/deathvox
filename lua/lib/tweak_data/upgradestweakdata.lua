@@ -629,17 +629,408 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 
-
-		self.values.player.rogue_t9 = {
-			true
-		}	
-		
 		self.definitions.rogue_t9 = {
 			name_id = "unused",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "rogue_t9",
+				category = "player"
+			}
+		}
+		
+		self.values.player.rogue_t9 = { -- The values for the Sneaky Bastard knockoff skill
+			{
+				0.02,
+				2,
+				"below",
+				35,
+				0.2
+			}
+		}
+		-- Crook
+		self.values.player.crook_t1 = {
+			true
+		}
+		
+		self.definitions.crook_t1 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "crook_t1",
+				category = "player"
+			}
+		}
+		
+		self.values.player.crook_t2 = {
+			true
+		}
+		
+		self.definitions.crook_t2 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "crook_t2",
+				category = "player"
+			}
+		}
+
+		self.values.player.crook_t3 = {
+			true
+		}
+		
+		self.definitions.crook_t3 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "crook_t3",
+				category = "player"
+			}
+		}
+		
+		self.values.player.crook_t4 = {
+			true
+		}
+		
+		self.definitions.crook_t4 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "crook_t4",
+				category = "player"
+			}
+		}
+		
+		self.values.player.crook_t5 = {
+			true
+		}
+		
+		self.definitions.crook_t5 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "crook_t5",
+				category = "player"
+			}
+		}
+
+		self.values.player.crook_t6 = {
+			true
+		}
+		
+		self.definitions.crook_t6 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "crook_t6",
+				category = "player"
+			}
+		}
+
+
+		self.values.player.crook_t7 = {
+			true
+		}
+		
+		self.definitions.crook_t7 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "crook_t7",
+				category = "player"
+			}
+		}
+
+		self.values.player.crook_t8 = {
+			true
+		}
+		
+		self.definitions.crook_t8 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "crook_t8",
+				category = "player"
+			}
+		}
+
+
+		self.values.player.crook_t9 = {
+			true
+		}
+
+		self.values.temporary.berserker_damage_multiplier = {
+			{
+				1,
+				4
+			},
+			{
+				1,
+				4
+			}
+		}
+		-- Hitman
+		self.values.player.passive_always_regen_armor = {
+			2,
+			1.75,
+			1.5,
+			1.25
+		}
+		self.values.player.hitman_t1 = {
+			true
+		}
+		
+		self.definitions.hitman_t1 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "hitman_t1",
+				category = "player"
+			}
+		}
+		
+		self.values.player.hitman_t2 = {
+			true
+		}
+		
+		self.definitions.hitman_t2 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "passive_always_regen_armor",
+				category = "player"
+			}
+		}
+
+		self.values.player.hitman_t3 = {
+			true
+		}
+		
+		self.definitions.hitman_t3 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "hitman_t3",
+				category = "player"
+			}
+		}
+		
+		self.values.player.hitman_t4 = {
+			true
+		}
+		
+		self.definitions.hitman_t4 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "passive_always_regen_armor",
+				category = "player"
+			}
+		}
+		
+		self.values.player.hitman_t5 = {
+			true
+		}
+		
+		self.definitions.hitman_t5 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "hitman_t5",
+				category = "player"
+			}
+		}
+
+		self.values.player.hitman_t6 = {
+			true
+		}
+		
+		self.definitions.hitman_t6 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "passive_always_regen_armor",
+				category = "player"
+			}
+		}
+
+
+		self.values.player.hitman_t7 = {
+			true
+		}
+		
+		self.definitions.hitman_t7 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "hitman_t7",
+				category = "player"
+			}
+		}
+
+		self.values.player.hitman_t8 = {
+			true
+		}
+		
+		self.definitions.hitman_t8 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "passive_always_regen_armor",
+				category = "player"
+			}
+		}
+
+		self.definitions.hitman_t9 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "messiah_revive_from_bleed_out",
+				category = "player"
+			}
+		}
+		-- Burglar
+		self.values.player.burglar_t1 = {
+			true
+		}
+		
+		self.definitions.burglar_t1 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_t1",
+				category = "player"
+			}
+		}
+		
+		self.values.player.burglar_t2 = {
+			true
+		}
+		
+		self.definitions.burglar_t2 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_t2",
+				category = "player"
+			}
+		}
+
+		self.values.player.burglar_t3 = {
+			true
+		}
+		
+		self.definitions.burglar_t3 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_t3",
+				category = "player"
+			}
+		}
+		
+		self.values.player.burglar_t4 = {
+			true
+		}
+		
+		self.definitions.burglar_t4 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_t4",
+				category = "player"
+			}
+		}
+		
+		self.values.player.burglar_t5 = {
+			true
+		}
+		
+		self.definitions.burglar_t5 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_t5",
+				category = "player"
+			}
+		}
+
+		self.values.player.burglar_t6 = {
+			true
+		}
+		
+		self.definitions.burglar_t6 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_t6",
+				category = "player"
+			}
+		}
+
+
+		self.values.player.burglar_t7 = {
+			true
+		}
+		
+		self.definitions.burglar_t7 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_t7",
+				category = "player"
+			}
+		}
+
+		self.values.player.burglar_t8 = {
+			true
+		}
+		
+		self.definitions.burglar_t8 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_t8",
+				category = "player"
+			}
+		}
+
+
+		self.values.player.burglar_t9 = {
+			true
+		}
+		
+		self.definitions.burglar_t9 = {
+			name_id = "unused",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_t9",
 				category = "player"
 			}
 		}

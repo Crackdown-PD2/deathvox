@@ -112,7 +112,6 @@ function PlayerMovement:on_SPOOCed(enemy_unit)
 		if not self._rogue_dodge_cloaker_cooldown then
 			self._rogue_dodge_cloaker_cooldown = managers.player:player_timer():time()
 		end
-		local attacker = attack_data.attacker_unit
 		if self._rogue_dodge_cloaker_cooldown <= managers.player:player_timer():time() then
 			if managers.player:upgrade_value("player", "rogue_t8") == true then
 				self._rogue_dodge_cloaker_cooldown = managers.player:player_timer():time() + 10

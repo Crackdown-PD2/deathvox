@@ -59,9 +59,9 @@ function PlayerManager:damage_reduction_skill_multiplier(damage_type)
 	end
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		if self:has_team_category_upgrade("player", "crew_chief_t9") then
-			multiplier = multiplier * 0.8 -- 20% damage reduction at t9
+			multiplier = multiplier - 0.2 -- 20% damage reduction at t9
 		elseif self:has_team_category_upgrade("player", "crew_chief_t1") then
-			multiplier = multiplier * 0.9 -- but 10% at t1
+			multiplier = multiplier - 0.1 -- but 10% at t1
 		end
 	end
 	return multiplier
@@ -146,6 +146,48 @@ function PlayerManager:body_armor_skill_multiplier(override_armor)
 	return multiplier
 end
 
+function PlayerManager:wearing_crook_armor()
+	local equipped_armor = managers.blackmarket:equipped_armor(true, true)
+	if equipped_armor == "level_2" then
+		return true
+	elseif equipped_armor == "level_3" then
+		return true
+	elseif equipped_armor == "level_4" then
+		return true
+	end
+	return false
+end
+
+function PlayerManager:body_armor_skill_addend(override_armor)
+	local addend = 0
+	addend = addend + self:upgrade_value("player", tostring(override_armor or managers.blackmarket:equipped_armor(true, true)) .. "_armor_addend", 0)
+
+	if self:has_category_upgrade("player", "armor_increase") then
+		local health_multiplier = self:health_skill_multiplier()
+		local max_health = (PlayerDamage._HEALTH_INIT + self:health_skill_addend()) * health_multiplier
+		addend = addend + max_health * self:upgrade_value("player", "armor_increase", 1)
+	end
+
+	addend = addend + self:upgrade_value("team", "crew_add_armor", 0)
+
+	if deathvox and deathvox:IsTotalCrackdownEnabled() then
+		if self:wearing_crook_armor() then
+			if self:upgrade_value("player", "crook_t7") == true then
+				addend = addend + 6
+			elseif self:upgrade_value("player", "crook_t5") == true then
+				addend = addend + 4.5
+			elseif self:upgrade_value("player", "crook_t3") == true then
+				addend = addend + 3
+			elseif self:upgrade_value("player", "crook_t1") == true then
+				addend = addend + 1.5
+			end
+		end
+	end
+
+	return addend
+end
+
+
 function PlayerManager:body_armor_regen_multiplier(moving, health_ratio)
 	local multiplier = 1
 	multiplier = multiplier * self:upgrade_value("player", "armor_regen_timer_multiplier_tier", 1)
@@ -165,18 +207,34 @@ function PlayerManager:body_armor_regen_multiplier(moving, health_ratio)
 	end
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		if self:upgrade_value("player", "armorer_t9") == true then
-			multiplier = multiplier - 0.25
+			multiplier = multiplier + 0.25
 		elseif self:upgrade_value("player", "armorer_t7") == true then
-			multiplier = multiplier - 0.2
+			multiplier = multiplier + 0.2
 		elseif self:upgrade_value("player", "armorer_t5") == true then
-			multiplier = multiplier - 0.15
+			multiplier = multiplier + 0.15
 		elseif self:upgrade_value("player", "armorer_t3") == true then
-			multiplier = multiplier - 0.1
+			multiplier = multiplier + 0.1
 		elseif self:upgrade_value("player", "armorer_t1") == true then
-			multiplier = multiplier - 0.05
+			multiplier = multiplier + 0.05
+		end
+		if self:upgrade_value("player", "hitman_t7") == true then
+			multiplier = multiplier + 0.7
+		elseif self:upgrade_value("player", "hitman_t5") == true then
+			multiplier = multiplier + 0.45
+		elseif self:upgrade_value("player", "hitman_t3") == true then
+			multiplier = multiplier + 0.25
+		elseif self:upgrade_value("player", "hitman_t1") == true then
+			multiplier = multiplier + 0.1
+		end
+		if self:wearing_crook_armor() then
+			if self:upgrade_value("player", "crook_t6") == true then
+				multiplier = multiplier + 0.4
+			elseif self:upgrade_value("player", "crook_t2") == true then
+				multiplier = multiplier + 0.2
+			end
 		end
 		if self:has_team_category_upgrade("player", "crew_chief_t7") == true then
-			multiplier = multiplier - 0.1
+			multiplier = multiplier + 0.1
 		end
 	end
 	return multiplier
@@ -293,20 +351,15 @@ function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, overri
 		elseif self:upgrade_value("player", "rogue_t1") == true then
 			chance = chance + 0.1
 		end
-		if self:upgrade_value("player", "rogue_t9") == true then
-			if not detection_risk == nil and detection_risk <= 35 then
-				local detection_to_use = detection_risk
-				if detection_to_use < 3 then
-					detection_to_use = 3
-				end
-				local points_for_math = 35 - detection_to_use
-				local bonus_chance = 0.02 * (points_for_math / 2)
-				if bonus_chance > 0.2 then
-					bonus_chance = 0.2
-				end
-				chance = chance + bonus_chance
+		if self:wearing_crook_armor() then
+			if self:upgrade_value("player", "crook_t8") == true then
+				chance = chance + 0.3
+			elseif self:upgrade_value("player", "crook_t4") == true then
+				chance = chance + 0.15
 			end
 		end
+		local rogue_t9_dodge_boost = managers.player:upgrade_value("player", "rogue_t9")
+		chance = chance + self:get_value_from_risk_upgrade(rogue_t9_dodge_boost, detection_risk)
 	end
 	log("dodge chance " .. chance)
 		
