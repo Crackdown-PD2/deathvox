@@ -183,6 +183,25 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--BEGIN THE NEW INSANITY! (OR SOMETHING LIKE THAT!)
 	if deathvox:IsTotalCrackdownEnabled() then
 
+--Mod stats info:
+--      damage - Damage increased/decreased by attachment. (Note. If weapon use stats_modifiers for damage this value will be multiplied by it)
+--      spread - Accuracy increased/decreased by attachment. 1/ -1 value = 4 / -4 accuracy in-game.
+--      recoil - Stability increased/decreased by attachment. 1/ -1 value = 4 / -4 accuracy in-game.
+--      concealment - Concealment increased/decreased by attachment.
+--      extra_ammo - Adds additional rounds added to weapon magazine. 1 value = 2 rounds in-game.
+--      total_ammo_mod - Increased/decreased weapon ammo pool. Values varies depending on total ammo pool.
+--      reload - Increased/decreased weapon reload timers. 1 / -1 value = 10% / -10% reload time.
+--      value - from table. Inconsistently reported/documented. Copy from decompile.
+
+--Weapon stats:
+--      damage - Base damage of weapon. Max value should be no more than 180 (Damage can be increased further by using "stats_modifiers")
+--      spread - Base accuracy of weapon. 1 value = 4 accuracy - Game calculate it using: Value*4-4 = accuracy in-game. Example - 17 value = 17*4-4=64 accuracy.
+--      spread_moving - NOT USED BY GAME (But just in case use same value as for "spread")
+--      recoil - Base stability of weapon 1 value = 4 stability - Game calculate it using: Value*4-4 = stability in-game. Example - 16 value = 16*4-4=60 stability.
+--      zoom - Base zoom value used when aiming down sights.
+--      concealment - Base concealment of weapon.
+--      suppression - Base suppression value.
+--      value - from table. Inconsistently reported/documented. Copy from decompile.
 			
 	--------------------------------------
 			--Primary Weapons--
@@ -193,39 +212,35 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--------------------------------------
 				--AMCAR--
 	--------------------------------------
-		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_l5 = {	
-			 stats = {
+		-- L5 Magazine
+		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_l5.stats = {	
 				value = 1,			 			 
 				extra_ammo = 5, 
 				concealment = -2
-			}	
 		}			
-		self.wpn_fps_ass_amcar.override.wpn_fps_m4_uupg_m_std = {	
-			 stats = {
-				value = 3,			 
-				extra_ammo = 5, 
-				concealment = -2
-			}	
-		}			
-		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_pmag = {	
-			 stats = {
-				extra_ammo = 5, 
-				concealment = -2
-			}	
-		}			
-		self.wpn_fps_ass_amcar.override.wpn_fps_ass_l85a2_m_emag = {	
-			 stats = {
+		-- Milspec Mag
+		self.wpn_fps_ass_amcar.override.wpn_fps_m4_uupg_m_std.stats = {	
 				value = 1,			 
 				extra_ammo = 5, 
 				concealment = -2
-			}	
-		}			
-		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_quad = {	
-			 stats = {
+		}
+		-- Tactical Mag		
+		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_pmag.stats = {	
+				value = 1,
+				extra_ammo = 5, 
+				concealment = -2	
+		}
+		-- Expert Mag			
+		self.wpn_fps_ass_amcar.override.wpn_fps_ass_l85a2_m_emag.stats = {	
+				value = 1,			 
+				extra_ammo = 5, 
+				concealment = -2
+		}
+		-- Quadstacked mag
+		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_quad.stats = {	
 				value = 3,
 				extra_ammo = 20, 
-				concealment = -10
-			}	
+				concealment = -10	
 		}			
 
 	--------------------------------------
@@ -284,39 +299,35 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_m16_fg_vietnam.stats = {value = 10}
 		-- Tactical Handguard
 		self.parts.wpn_fps_m16_fg_railed.stats = {value = 7}
-		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_l5 = {	
-			 stats = {
+		-- L5 Magazine
+		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_l5.stats = {	
 				value = 1,			 			 
 				extra_ammo = 5, 
-				concealment = -2
-			}	
-		}			
-		self.wpn_fps_ass_m16.override.wpn_fps_m4_uupg_m_std = {	
-			 stats = {
-				value = 3,			 
+				concealment = -2	
+		}
+		-- Milspec Mag
+		self.wpn_fps_ass_m16.override.wpn_fps_m4_uupg_m_std.stats = {	
+				value = 1,			 
+				extra_ammo = 5, 
+				concealment = -2	
+		}
+		-- Tactical Mag
+		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_pmag.stats = {	
+				value = 3,
 				extra_ammo = 5, 
 				concealment = -2
-			}	
-		}			
-		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_pmag = {	
-			 stats = {
-				extra_ammo = 5, 
-				concealment = -2
-			}	
-		}			
-		self.wpn_fps_ass_m16.override.wpn_fps_ass_l85a2_m_emag = {	
-			 stats = {
+		}
+		-- Expert Mag
+		self.wpn_fps_ass_m16.override.wpn_fps_ass_l85a2_m_emag.stats = {	
 				value = 1,			 
 				extra_ammo = 5, 
 				concealment = -2
-			}	
-		}			
-		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_quad = {	
-			 stats = {
+		}
+		-- CAR Quadstacked Mag
+		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_quad.stats = {	
 				value = 3,
 				extra_ammo = 20, 
 				concealment = -10
-			}	
 		}		
 	--------------------------------------
 				--Valkyria--
