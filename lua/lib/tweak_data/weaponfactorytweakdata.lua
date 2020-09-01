@@ -178,54 +178,18 @@ end
 
 
 
--- Total Crackdown Weapon Attachment Stuff
+-- Begin Total Crackdown Weapon Attachment materials
 Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--BEGIN THE NEW INSANITY! (OR SOMETHING LIKE THAT!)
 	if deathvox:IsTotalCrackdownEnabled() then
+
+			
 	--------------------------------------
-				--AMR16--
+			--Primary Weapons--
+	--------------------------------------	
 	--------------------------------------
-		-- Long Ergo Foregrip
-		self.parts.wpn_fps_upg_ass_m16_fg_stag.stats = {value = 1}
-		-- Blast From the Past Handguard
-		self.parts.wpn_fps_m16_fg_vietnam.stats = {value = 10}
-		-- Tactical Handguard
-		self.parts.wpn_fps_m16_fg_railed.stats = {value = 7}
-		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_l5 = {	
-			 stats = {
-				value = 1,			 			 
-				extra_ammo = 5, 
-				concealment = -2
-			}	
-		}			
-		self.wpn_fps_ass_m16.override.wpn_fps_m4_uupg_m_std = {	
-			 stats = {
-				value = 3,			 
-				extra_ammo = 5, 
-				concealment = -2
-			}	
-		}			
-		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_pmag = {	
-			 stats = {
-				extra_ammo = 5, 
-				concealment = -2
-			}	
-		}			
-		self.wpn_fps_ass_m16.override.wpn_fps_ass_l85a2_m_emag = {	
-			 stats = {
-				value = 1,			 
-				extra_ammo = 5, 
-				concealment = -2
-			}	
-		}			
-		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_quad = {	
-			 stats = {
-				value = 3,
-				extra_ammo = 20, 
-				concealment = -10
-			}	
-		}			
-	
+			--Assault Rifles--
+	--------------------------------------				
 	--------------------------------------
 				--AMCAR--
 	--------------------------------------
@@ -265,7 +229,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		}			
 
 	--------------------------------------
-				--CAR 4--
+				--CAR-4--
 	--------------------------------------
 		-- Aftermarket Special Handguard	
 		self.parts.wpn_fps_m4_uupg_fg_lr300.stats = {value = 5}
@@ -312,6 +276,49 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 			}
 		}		
 	--------------------------------------
+				--AMR-16--
+	--------------------------------------
+		-- Long Ergo Foregrip
+		self.parts.wpn_fps_upg_ass_m16_fg_stag.stats = {value = 1}
+		-- Blast From the Past Handguard
+		self.parts.wpn_fps_m16_fg_vietnam.stats = {value = 10}
+		-- Tactical Handguard
+		self.parts.wpn_fps_m16_fg_railed.stats = {value = 7}
+		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_l5 = {	
+			 stats = {
+				value = 1,			 			 
+				extra_ammo = 5, 
+				concealment = -2
+			}	
+		}			
+		self.wpn_fps_ass_m16.override.wpn_fps_m4_uupg_m_std = {	
+			 stats = {
+				value = 3,			 
+				extra_ammo = 5, 
+				concealment = -2
+			}	
+		}			
+		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_pmag = {	
+			 stats = {
+				extra_ammo = 5, 
+				concealment = -2
+			}	
+		}			
+		self.wpn_fps_ass_m16.override.wpn_fps_ass_l85a2_m_emag = {	
+			 stats = {
+				value = 1,			 
+				extra_ammo = 5, 
+				concealment = -2
+			}	
+		}			
+		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_quad = {	
+			 stats = {
+				value = 3,
+				extra_ammo = 20, 
+				concealment = -10
+			}	
+		}		
+	--------------------------------------
 				--Valkyria--
 	--------------------------------------
 	self.parts.wpn_fps_ass_asval_b_standard.stats = nil --why overkill
@@ -325,6 +332,45 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	-- Solid Stock
 	self.parts.wpn_fps_ass_asval_s_solid.stats = {value = 1}
 
+	--------------------------------------
+			--LMGs--
+	--------------------------------------			
+	--------------------------------------
+			--Primary Shotguns--
+	--------------------------------------	
+	--------------------------------------
+			--Sniper Rifles--
+	--------------------------------------	
+	--------------------------------------
+			--Akimbo Pistols--
+	--------------------------------------	
+	--------------------------------------
+			--Akimbo Shotguns--
+	--------------------------------------	
+	--------------------------------------
+			--Akimbo SMGs--
+	--------------------------------------	
+	--------------------------------------
+			--Primary Specials--
+	--------------------------------------	
+	
+	
+	--------------------------------------
+			--Secondary Weapons--
+	--------------------------------------	
+	--------------------------------------
+			--Single Pistols--
+	--------------------------------------	
+	
+	--------------------------------------
+			--Single SMGs--
+	--------------------------------------
+	--------------------------------------
+			--Secondary Shotguns--
+	--------------------------------------
+	--------------------------------------
+			--Secondary Specials--
+	--------------------------------------
 	--------------------------------------
 			--Shared Attachments--
 	--------------------------------------
@@ -351,9 +397,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_upg_ns_ass_smg_medium.stats = {suppression = 72,	alert_size = 12, value = 2}
 	-- The Bigger the Better Suppressor
 		self.parts.wpn_fps_upg_ns_ass_smg_large.stats = {suppression = 72, alert_size = 12, value = 5}
-	-- [NOTE unable to find name in documentation]
+	-- Hurricane Compensator -- name is tentative due to limited documentation of cartel optics pack files
 		self.parts.wpn_fps_upg_ns_pis_typhoon.stats = {value = 4}
-	-- [NOTE unable to find name in documentation]
+	-- Marmon Compensator -- name is tentative due to limited documentation of cartel optics pack files
 		self.parts.wpn_fps_upg_ns_ass_smg_v6.stats = {value = 3}
 	-- Jungle Ninja Suppressor
 		self.parts.wpn_fps_upg_ns_pis_jungle.stats = {suppression = 72,	value = 5}
@@ -382,9 +428,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Sight stat changes begin here.
 	-- Milspec Scope
 		self.parts.wpn_fps_upg_o_specter.stats = {zoom = 4, value = 8} -- i should probably write it like this for the rest of the attachments
-	-- Military Red Dot Sight -- NOTE one of these is the preorder bonus, believed _2.
+	-- Military Red Dot Sight 
 		self.parts.wpn_fps_upg_o_aimpoint.stats = {zoom = 4, value = 8}
-	-- Military Red Dot Sight
+	-- Military Red Dot Sight -- NOTE this is the preorder edition.
 		self.parts.wpn_fps_upg_o_aimpoint_2.stats = {zoom = 4, value = 1}
 	-- Surgeon Sight
 		self.parts.wpn_fps_upg_o_docter.stats = {zoom = 2, value = 5}
@@ -410,14 +456,14 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_upg_o_eotech_xps.stats = {zoom = 3, value = 5}
 	-- [NOTE unable to find name in documentation]
 		self.parts.wpn_fps_upg_o_bmg.stats = {zoom = 6, value = 8}
-	-- [NOTE unable to find name in documentation, should be rmr for Pistol Red Dot?]
-		self.parts.wpn_fps_upg_o_rms.stats = {zoom = 3, value = 6}
-	-- [NOTE unable to find name in documentation]
-		self.parts.wpn_fps_upg_o_rikt.stats = {zoom = 3, value = 6}
 	-- [NOTE unable to find name in documentation]
 		self.parts.wpn_fps_upg_o_uh.stats = {zoom = 3, value = 5}
 	-- [NOTE unable to find name in documentation]
 		self.parts.wpn_fps_upg_o_fc1.stats = {zoom = 3, value = 5}
+	-- SKOLD Reflex Micro Sight -- name is tentative due to limited documentation of cartel optics pack files (what of rmr?)
+		self.parts.wpn_fps_upg_o_rms.stats = {zoom = 3, value = 6}
+	-- Riktpunkt Holosight -- name is tentative due to limited documentation of cartel optics pack files
+		self.parts.wpn_fps_upg_o_rikt.stats = {zoom = 3, value = 6}
 	-- Magazine stat changes begin here.
 		-- Milspec Magazine
 		self.parts.wpn_fps_m4_uupg_m_std.stats = {value = 1}
@@ -466,27 +512,28 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_upg_fl_pis_m3x.stats = {value = 1}	
 		-- Micro Laser						
 		self.parts.wpn_fps_upg_fl_pis_crimson.stats = {value = 5}	
-		-- 45 Degree Sight				
+		-- 45 Degree Red Dot Sight				
 		self.parts.wpn_fps_upg_o_45rds.stats = {value = 1, gadget_zoom = 1}	
-		-- Riktpunkt 45 Degree Sight		
+		-- Riktpunkt 45 Degree Sight
 		self.parts.wpn_fps_upg_o_45rds_v2.stats = {value = 1, gadget_zoom = 1}	
 		-- Riktpunkt Magnifier
 		self.parts.wpn_fps_upg_o_xpsg33_magnifier.stats = {value = 1, gadget_zoom = 9}
-		-- border crossing 45 degree sights i forgot the names of
-		self.parts.wpn_fps_upg_o_sig.stats = {zoom = 9, value = 2}		
+		-- Signature Magnifier
+		self.parts.wpn_fps_upg_o_sig.stats = {zoom = 9, value = 2}
+		-- 45 Degree Ironsights
 		self.parts.wpn_fps_upg_o_45steel.stats = {value = 1, gadget_zoom = 1}		
 	--Grip stat changes begin here.
 		-- Pro Grip
 		self.parts.wpn_fps_upg_m4_g_sniper.stats = {value = 2}	
 		-- Ergo Grip
 		self.parts.wpn_fps_upg_m4_g_ergo.stats = {value = 2}	
-		-- Rubber Grip (the only good looking grip attachment)
+		-- Rubber Grip
 		self.parts.wpn_fps_upg_m4_g_hgrip.stats = {value = 1}	
 		-- Contractor Grip
 		self.parts.wpn_fps_snp_tti_g_grippy.stats = {value = 1}
-		-- Short Grip (ugly as sin)
+		-- Short Grip
 		self.parts.wpn_fps_upg_m4_g_mgrip.stats = {value = 1}	
-		-- Titanium Skeleton Grip (the ugliest)
+		-- Titanium Skeleton Grip
 		self.parts.wpn_fps_upg_g_m4_surgeon.stats = {value = 1}		
 	--Stock stat changes begin here.
 		--Tactical Stock
