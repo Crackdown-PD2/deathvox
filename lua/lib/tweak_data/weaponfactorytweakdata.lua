@@ -53,35 +53,45 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 				--AMCAR--
 	--------------------------------------
 		-- L5 Magazine
-		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_l5.stats = {	
+		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_l5 = { -- gotta be like this or else the game shits the bed
+			stats = {	
 				value = 1,			 			 
 				extra_ammo = 5, 
 				concealment = -2
+			}
 		}			
 		-- Milspec Mag
-		self.wpn_fps_ass_amcar.override.wpn_fps_m4_uupg_m_std.stats = {	
+		self.wpn_fps_ass_amcar.override.wpn_fps_m4_uupg_m_std = {	
+			stats = {			
 				value = 1,			 
 				extra_ammo = 5, 
 				concealment = -2
+			}
 		}
 		-- Tactical Mag		
-		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_pmag.stats = {	
+		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_pmag = {	
+			stats = {			
 				value = 1,
 				extra_ammo = 5, 
-				concealment = -2	
+				concealment = -2
+			}
 		}
 		-- Expert Mag			
-		self.wpn_fps_ass_amcar.override.wpn_fps_ass_l85a2_m_emag.stats = {	
+		self.wpn_fps_ass_amcar.override.wpn_fps_ass_l85a2_m_emag = {	
+			stats = {
 				value = 1,			 
 				extra_ammo = 5, 
 				concealment = -2
+			}
 		}
 		-- Quadstacked mag
-		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_quad.stats = {	
+		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_quad = {
+			stats = {
 				value = 3,
 				extra_ammo = 20, 
 				concealment = -10	
-		}			
+			}	
+		}
 
 	--------------------------------------
 				--CAR-4--
@@ -140,35 +150,45 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		-- Tactical Handguard
 		self.parts.wpn_fps_m16_fg_railed.stats = {value = 7}
 		-- L5 Magazine
-		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_l5.stats = {	
+		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_l5 = {
+			stats = {
 				value = 1,			 			 
 				extra_ammo = 5, 
 				concealment = -2	
+			}
 		}
 		-- Milspec Mag
-		self.wpn_fps_ass_m16.override.wpn_fps_m4_uupg_m_std.stats = {	
+		self.wpn_fps_ass_m16.override.wpn_fps_m4_uupg_m_std = {	
+			stats = {
 				value = 1,			 
 				extra_ammo = 5, 
 				concealment = -2	
+			}
 		}
 		-- Tactical Mag
-		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_pmag.stats = {	
+		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_pmag = {	
+		stats = {
 				value = 3,
 				extra_ammo = 5, 
 				concealment = -2
+			}
 		}
 		-- Expert Mag
-		self.wpn_fps_ass_m16.override.wpn_fps_ass_l85a2_m_emag.stats = {	
+		self.wpn_fps_ass_m16.override.wpn_fps_ass_l85a2_m_emag = {	
+			stats = {
 				value = 1,			 
 				extra_ammo = 5, 
 				concealment = -2
+			}
 		}
 		-- CAR Quadstacked Mag
-		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_quad.stats = {	
+		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_quad = {	
+			stats = {
 				value = 3,
 				extra_ammo = 20, 
 				concealment = -10
-		}		
+			}		
+		}
 	--------------------------------------
 				--Valkyria--
 	--------------------------------------
