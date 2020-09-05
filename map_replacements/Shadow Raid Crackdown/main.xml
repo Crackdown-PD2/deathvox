@@ -3,7 +3,7 @@
 		<texture load="true" path="guis/textures/crackdown"/>
 	</AddFiles>
 	<Localization default="english.txt" directory="loc"/>
-	<level ai_group_type="america" briefing_dialog="Play_pln_ko1_brf_01" cube="cube_apply_heist_bank" ghost_bonus="0.05" ghost_required="true" id="kosugi_CD" intro_event="Play_pln_ko1_intro_01" max_bags="30" music="no_music" music_ext="kosugi_music" music_ext_start="suspense_1">
+	<level ai_group_type="america" briefing_dialog="Play_pln_ko1_brf_01" cube="cube_apply_heist_bank" ghost_bonus="0.05" ghost_required="true" id="kosugi_CD" intro_event="Play_pln_ko1_intro_01" max_bags="30" music="ghost" music_ext_start="suspense_1">
 		<add file="levels/kosugi_CD/add.xml"/>
 		<assets/>
 		<include directory="levels/kosugi_CD">
