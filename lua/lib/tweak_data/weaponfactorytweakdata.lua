@@ -42,6 +42,30 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 --      concealment - Base concealment of weapon.
 --      suppression - Base suppression value.
 --      value - from table. Inconsistently reported/documented. Copy from decompile.
+
+--Template entry material:
+--Weapon
+	--ID: [whatever]
+	--Value: 
+	--Magazine: 20
+	--Ammo: 300
+	--Fire Rate: 545
+	--Damage:50
+	--Acc: 100
+	--Stab: 100
+	--Conc: 30
+	--Threat: 10
+	--Pickup: 9, 18
+	--Notes: many shared mods
+--Mod
+	--Mod name
+	--WeaponFactory ID: [whatever]
+	--Value: 
+	--Magazine: 
+	--Conc: 
+	--+100% Reload speed
+	--Notes: 
+			
 			
 	--------------------------------------
 	--Primary Weapons--
@@ -56,6 +80,20 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--------------------------------------
 				--AMCAR--
 	--------------------------------------
+	--ID: amcar
+	--Value: 1
+	--Magazine: 20
+	--Ammo: 300
+	--Fire Rate: 545
+	--Damage:50
+	--Acc: 100
+	--Stab: 100
+	--Conc: 30
+	--Threat: 10
+	--Pickup: 9, 18
+	--Notes: many shared mods
+			
+	
 		-- L5 Magazine
 		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_l5 = { -- gotta be like this or else the game shits the bed
 			stats = {	
