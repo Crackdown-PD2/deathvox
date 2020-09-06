@@ -75,7 +75,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		-- Tactical Mag		
 		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_pmag = {	
 			stats = {			
-				value = 1,
+				value = 3,
 				extra_ammo = 5, 
 				concealment = -2
 			}
@@ -137,11 +137,11 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		-- OVAL Foregrip		
 		self.parts.wpn_fps_upg_ass_m4_fg_lvoa.stats = {value = 1}
 		-- E.M.O. Foregrip		
-		self.parts.wpn_fps_upg_ass_m4_fg_moe.stats = {value = 5}
+		self.parts.wpn_fps_upg_ass_m4_fg_moe.stats = {value = 1}
 		-- Long Barrel
-		self.parts.wpn_fps_m4_uupg_b_long.stats = {value = 5}
+		self.parts.wpn_fps_m4_uupg_b_long.stats = {value = 4}
 		-- Short Barrel		
-		self.parts.wpn_fps_m4_uupg_b_short.stats = {value = 4}
+		self.parts.wpn_fps_m4_uupg_b_short.stats = {value = 5}
 		-- Stealth Barrel		
 		self.parts.wpn_fps_m4_uupg_b_sd.stats = {
 			value = 6,		
@@ -843,7 +843,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	-- Competitor's Compensator
 		self.parts.wpn_fps_upg_ass_ns_jprifles.stats = {value = 5}
 	-- Medium Suppressor
-		self.parts.wpn_fps_upg_ns_ass_smg_medium.stats = {suppression = 72,	alert_size = 12, value = 2}
+		self.parts.wpn_fps_upg_ns_ass_smg_medium.stats = {suppression = 72, alert_size = 12, value = 2}
 	-- The Bigger the Better Suppressor
 		self.parts.wpn_fps_upg_ns_ass_smg_large.stats = {suppression = 72, alert_size = 12, value = 5}
 	-- Hurricane Compensator -- name is tentative due to limited documentation of cartel optics pack files
@@ -853,7 +853,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	-- Jungle Ninja Suppressor
 		self.parts.wpn_fps_upg_ns_pis_jungle.stats = {suppression = 72,	value = 5}
 	-- Budget Suppressor
-		self.parts.wpn_fps_upg_ns_ass_filter.stats = {suppression = 72,	value = 0}
+		self.parts.wpn_fps_upg_ns_ass_filter.stats = {suppression = 72,	value = 0} -- yes, value correct
 	-- Asepsis Suppressor
 		self.parts.wpn_fps_upg_ns_pis_medium_slim.stats = {suppression = 72, alert_size = 12, value = 1}
 	-- Monolith Suppressor
@@ -913,6 +913,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_upg_o_rms.stats = {zoom = 3, value = 6}
 	-- Riktpunkt Holosight -- name is tentative due to limited documentation of cartel optics pack files
 		self.parts.wpn_fps_upg_o_rikt.stats = {zoom = 3, value = 6}
+			
+	
 	-- Magazine stat changes begin here.
 		-- Milspec Magazine
 		self.parts.wpn_fps_m4_uupg_m_std.stats = {value = 1}
@@ -922,9 +924,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_upg_m4_m_pmag.stats = {value = 3}
 		-- Expert Magazine
 		self.parts.wpn_fps_ass_l85a2_m_emag.stats = {value = 1}
-		-- Quadstack Magazine
+		-- CAR Quadstacked Magazine
 		self.parts.wpn_fps_upg_m4_m_quad.stats = {
-			value = 3,		
+			value = 3,		-- note wiki value incorrect
 			extra_ammo = 15, 
 			concealment = -10
 		}
@@ -948,7 +950,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		-- Compact Laser								
 		self.parts.wpn_fps_upg_fl_ass_laser.stats = {value = 2}	
 		-- Military Laser						
-		self.parts.wpn_fps_upg_fl_ass_peq15.stats = {value = 5}	
+		self.parts.wpn_fps_upg_fl_ass_peq15.stats = {value = 5}	-- check vs wpn_fps_upg_fl_ass_peq15_flashlight
 		-- LED Combo						
 		self.parts.wpn_fps_upg_fl_ass_utg.stats = {value = 5}	
 		-- Tactical Pistol Light						
@@ -968,22 +970,24 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		-- Riktpunkt Magnifier
 		self.parts.wpn_fps_upg_o_xpsg33_magnifier.stats = {value = 1, gadget_zoom = 9}
 		-- Signature Magnifier
-		self.parts.wpn_fps_upg_o_sig.stats = {zoom = 9, value = 2}
+		self.parts.wpn_fps_upg_o_sig.stats = {value = 2, gadget_zoom = 9}
 		-- 45 Degree Ironsights
-		self.parts.wpn_fps_upg_o_45steel.stats = {value = 1, gadget_zoom = 1}		
+		self.parts.wpn_fps_upg_o_45steel.stats = {value = 1, gadget_zoom = 1}	
+	
 	--Grip stat changes begin here.
 		-- Pro Grip
-		self.parts.wpn_fps_upg_m4_g_sniper.stats = {value = 2}	
+		self.parts.wpn_fps_upg_m4_g_sniper.stats = {value = 6}	
 		-- Ergo Grip
 		self.parts.wpn_fps_upg_m4_g_ergo.stats = {value = 2}	
 		-- Rubber Grip
-		self.parts.wpn_fps_upg_m4_g_hgrip.stats = {value = 1}	
+		self.parts.wpn_fps_upg_m4_g_hgrip.stats = {value = 2}	
 		-- Contractor Grip
 		self.parts.wpn_fps_snp_tti_g_grippy.stats = {value = 1}
 		-- Short Grip
-		self.parts.wpn_fps_upg_m4_g_mgrip.stats = {value = 1}	
+		self.parts.wpn_fps_upg_m4_g_mgrip.stats = {value = 2}	
 		-- Titanium Skeleton Grip
-		self.parts.wpn_fps_upg_g_m4_surgeon.stats = {value = 1}		
+		self.parts.wpn_fps_upg_g_m4_surgeon.stats = {value = 1}	
+
 	--Stock stat changes begin here.
 		--Tactical Stock
 		self.parts.wpn_fps_upg_m4_s_pts.stats = {value = 3}
@@ -996,7 +1000,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		-- Contractor stock
 		self.parts.wpn_fps_snp_tti_s_vltor.stats = {value = 1}		
 		-- War Torn stock
-		self.parts.wpn_fps_upg_m4_s_mk46.stats = {value = 6}		
+		self.parts.wpn_fps_upg_m4_s_mk46.stats = {value = 6}	
+			
 	--Upper/Lower Receiver stat changes begin here.
 		-- exotique receiver
 		self.parts.wpn_fps_m4_upper_reciever_edge.stats = {value = 3}	
