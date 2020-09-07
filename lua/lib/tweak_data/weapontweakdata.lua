@@ -1,6 +1,6 @@
 local old_init = WeaponTweakData.init
 function WeaponTweakData:init(tweak_data)
-	--[[here's a list of what weapons enemies use --NOTE check for accuracies against recent model swap.
+	--[[here's a list of what weapons enemies use --NOTE revalidate.
 	heavy ar wpn_npc_s553
         light ar wpn_npc_m4
         heavy shot wpn_npc_benelli
@@ -28,7 +28,8 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 2},
 			crackdown = {damage = 6}
 		},
--- note light and heavy baselines are not used for beat cop type enemies. These will be implemented separately. They correspond to swat unit types (blue, yellow) instead.
+-- NOTE light and heavy baselines are not used for beat cop type enemies. These are implemented separately. 
+-- They correspond to swat unit types (blue, yellow, armored or no) instead.
 	deathvox_light_ar = {
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 2}, -- blue swat.
@@ -69,7 +70,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 10},
 			crackdown = {damage = 11} -- zeal.
 		},
-        deathvox_medic_pistol = { -- note uses light ar on difficulties below CD.
+        deathvox_medic_pistol = { -- NOTE uses light ar on difficulties below CD.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 2}, -- blue.
 			hard = {damage = 2}, --start.
@@ -82,15 +83,15 @@ function WeaponTweakData:init(tweak_data)
 	deathvox_cloaker = {
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 4.5},
-			hard = {damage = 6}, -- start. Match to higher layer light AR to preserve unit coherence.
+			hard = {damage = 6}, -- start spawning with asault waves. Matches to higher layer light AR to preserve unit coherence.
 			very_hard = {damage = 6},
 			overkill = {damage = 6},
 			mayhem = {damage = 6}, 
 			death_wish = {damage = 6},
-			crackdown = {damage = 7.5} -- zeal. Increase from prior values, matched to light AR.
+			crackdown = {damage = 7.5} -- ZEAL. Increase from prior values, matched to light AR.
 		},
-	deathvox_sniper = { -- focus much more on aim/focus delay than damage shift.
--- no need for asset coherence on this unit only, as at a distance. Discuss typing with group.
+	deathvox_sniper = { -- NOTE focuses much more on aim/focus delay than damage shift.
+-- no need for full tier coherence on this unit only, as at a distance. Discuss typing with group.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 16}, -- blue.
 			hard = {damage = 16},
@@ -98,7 +99,7 @@ function WeaponTweakData:init(tweak_data)
 			overkill = {damage = 20}, -- green.
 			mayhem = {damage = 20},
 			death_wish = {damage = 20},
-			crackdown = {damage = 24}
+			crackdown = {damage = 24} -- new black unit.
 		},
 	deathvox_greendozer = {
 			not_a_real_difficulty = {damage = 10},
@@ -245,7 +246,7 @@ function WeaponTweakData:init(tweak_data)
 	--self.deathvox_light_ar.pull_magazine_during_reload = "rifle" -- magazine used during reload.
 	self.deathvox_light_ar.hold = "rifle"
 	self.deathvox_light_ar.auto.fire_rate = 0.08 -- Firing delay in seconds
-	--[[self.deathvox_light_ar.hold = { -- dont worry about this
+	--[[self.deathvox_light_ar.hold = { -- NOTE discuss removal
 		"bullpup",
 		"rifle"
 	}]]--
@@ -279,7 +280,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_guard_pistol.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
 	self.deathvox_guard_pistol.CLIP_AMMO_MAX = 15
 	self.deathvox_guard_pistol.NR_CLIPS_MAX = 5
-	--self.deathvox_guard_pistol.pull_magazine_during_reload = "pistol"
+	--self.deathvox_guard_pistol.pull_magazine_during_reload = "pistol" -- NOTE discuss removal
 	self.deathvox_guard_pistol.hold = "pistol"
 	self.deathvox_guard_pistol.alert_size = 2500
 	self.deathvox_guard_pistol.suppression = 1
@@ -347,7 +348,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_sniper.shell_ejection = "effects/payday2/particles/weapons/shells/shell_9mm"
 	self.deathvox_sniper.CLIP_AMMO_MAX = 10
 	self.deathvox_sniper.NR_CLIPS_MAX = 5
-	--self.deathvox_sniper.pull_magazine_during_reload = "rifle"
+	--self.deathvox_sniper.pull_magazine_during_reload = "rifle" -- NOTE discuss removal
 	--self.deathvox_sniper.auto.fire_rate = 0.5
 	self.deathvox_sniper.alert_size = 5000
 	self.deathvox_sniper.suppression = 1	
@@ -570,14 +571,15 @@ function WeaponTweakData:init(tweak_data)
 			self.sentry_taser.auto.fire_rate = rpm(400)
 			self.sentry_taser.SUPPRESSION = 0
 			self.sentry_taser.muzzleflash = "effects/particles/weapons/silenced/muzzleflash"
-		--	self.sentry_gun.SPREAD = 5
+		--	self.sentry_gun.SPREAD = 5 -- NOTE discuss removal
 		--	self.sentry_gun.FIRE_RANGE = 5000
 	end
 	
 	
 end
 
--- Begin difficulty scripted weapon damage value population.
+-- Begin difficulty scripted weapon damage value population. 
+-- NOTE comments not fully universalized due to upkeep difficulty. Check with developers if editing.
 
 -- Begin NORMAL difficulty damage values. 
 
@@ -602,10 +604,10 @@ function WeaponTweakData:_set_normal()
 	
 	self.m4_yellow_npc.DAMAGE = 2	-- populates taser damage after other fixes applied. Map to light AR.
 	
-	self.mossberg_npc.DAMAGE = 24 --temporary Greendozer Shotgun, not enough shotguns to map to all units, consider Bulldozer-specific weapon presets?
+	self.mossberg_npc.DAMAGE = 24 -- temporary Greendozer Shotgun, not enough shotguns to map to all units, consider Bulldozer-specific weapon presets?
 	self.saiga_npc.DAMAGE = 18 --Blackdozer Saiga, mapped to Deathvox Blackdozer.
-	self.m249_npc.DAMAGE = 10 --LMGDozer M249, has is_rifle behavior, needs to have it's usage changed. consider Bulldozer-specific weapon presets?
-	self.rpk_lmg_npc.DAMAGE = 10 --LMGDozer M249, AKAN faction, has is_rifle behavior, normal M249.
+	self.m249_npc.DAMAGE = 10 -- LMGDozer M249, has is_rifle behavior, needs to have it's usage changed. consider Bulldozer-specific weapon presets?
+	self.rpk_lmg_npc.DAMAGE = 10 -- LMGDozer M249, AKAN faction, has is_rifle behavior, normal M249.
 	self.s552_npc.DAMAGE = 7.5 --No info on what or who uses it, so it might be better used as the MedicDozer weapon, damage mapped as such, unsure whether it actually exists as a weapon in the game's files, however.
 	
 	self.mp5_tactical_npc.DAMAGE = 4.5 --Used by Cloaker, mapped to Deathvox Cloaker SMG.
@@ -4427,7 +4429,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Joceline O/U--
 	--------------------------------------
-		--Joceline O/U 12G
+	--ID: self.b682
+	--Class: Shotgun
+	--Value: 1
+	--Magazine: 2
+	--Ammo: 34
+	--Fire Rate: 500
+	--Damage: 200
+	--Acc: 40
+	--Stab: 4
+	--Conc: 25
+	--Threat: 34
+	--Pickup: 1, 2
+	--Notes:
+	--Active Mods: Sawed-Off Barrel
+
 		self.b682.FIRE_MODE = "single"
 		self.b682.fire_mode_data = {
 			fire_rate = 0.12
@@ -4491,7 +4507,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Mosconi 12G--
 	--------------------------------------
-		--Mosconi 12G
+	--ID: self.huntsman
+	--Class: Shotgun
+	--Value: 1
+	--Magazine: 2
+	--Ammo: 34
+	--Fire Rate: 500
+	--Damage: 200
+	--Acc: 40
+	--Stab: 4
+	--Conc: 25
+	--Threat: 34
+	--Pickup: 1, 2
+	--Notes:
+	--Active Mods: Road Warrior Barrel
+
 		self.huntsman.FIRE_MODE = "single"
 		self.huntsman.fire_mode_data = {
 			fire_rate = 0.12
@@ -4555,7 +4585,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Breaker 12G--
 	--------------------------------------
-		--Breaker 12G
+	--ID: self.boot
+	--Class: Shotgun
+	--Value: 1
+	--Magazine: 7
+	--Ammo: 28
+	--Fire Rate: 80
+	--Damage: 200
+	--Acc: 40
+	--Stab: 4
+	--Conc: 20
+	--Threat: 34
+	--Pickup: 1, 2
+	--Notes:
+	--Active Mods:
+
 		self.boot.FIRE_MODE = "single"
 		self.boot.fire_mode_data = {
 			fire_rate = 0.75
@@ -4627,10 +4671,39 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Akimbo Judge--
 	--------------------------------------
+	--ID: self.x_judge
+	--Class: Shotgun
+	--Value: 1
+	--Magazine: 10
+	--Ammo: 60
+	--Fire Rate: 500
+	--Damage: 180
+	--Acc: 40
+	--Stab: 0
+	--Conc: 30
+	--Threat: 10
+	--Pickup: 0.5, 1 --NOTE does this work per Kith's intention?
+	--Notes:
+	--Active Mods:
+
 	--------------------------------------
 				--Reinfeld 880--
 	--------------------------------------
-		--Reinfeld 880
+	--ID: self.r870
+	--Class: Shotgun
+	--Value: 1
+	--Magazine: 8
+	--Ammo: 50
+	--Fire Rate: 104
+	--Damage: 160
+	--Acc: 40
+	--Stab: 100
+	--Conc: 20
+	--Threat: 34
+	--Pickup: 2, 3
+	--Notes:
+	--Active Mods:
+
 		self.r870.FIRE_MODE = "single"
 		self.r870.fire_mode_data = {
 			fire_rate = 0.575
@@ -4697,7 +4770,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Raven--
 	--------------------------------------
-		--Raven Shotgun
+	--ID: self.ksg
+	--Class: Shotgun
+	--Value: 1
+	--Magazine: 10
+	--Ammo: 50
+	--Fire Rate: 104
+	--Damage: 160
+	--Acc: 40
+	--Stab: 100
+	--Conc: 20
+	--Threat: 34
+	--Pickup: 2, 3
+	--Notes:
+	--Active Mods: Short Barrel, Long Barrel
+
 		self.ksg.FIRE_MODE = "single"
 		self.ksg.fire_mode_data = {
 			fire_rate = 0.575
@@ -4764,7 +4851,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Predator 12G--
 	--------------------------------------
-		--Predator 12G
+	--ID: self.spas12
+	--Class: Shotgun
+	--Value: 1
+	--Magazine: 8
+	--Ammo: 70
+	--Fire Rate: 300
+	--Damage: 110
+	--Acc: 40
+	--Stab: 100
+	--Conc: 25
+	--Threat: 34
+	--Pickup: 4, 5
+	--Notes:
+	--Active Mods: Extended Mag
+
 		self.spas12.FIRE_MODE = "single"
 		self.spas12.fire_mode_data = {
 			fire_rate = 0.2
@@ -4827,7 +4928,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--M1014--
 	--------------------------------------
-		--M1014
+	--ID: self.benelli
+	--Class: Shotgun
+	--Value: 1
+	--Magazine: 8
+	--Ammo: 70
+	--Fire Rate: 429
+	--Damage: 110
+	--Acc: 40
+	--Stab: 100
+	--Conc: 25
+	--Threat: 34
+	--Pickup: 4, 5
+	--Notes:
+	--Active Mods: 
+
 		self.benelli.FIRE_MODE = "single"
 		self.benelli.fire_mode_data = {
 			fire_rate = 0.139
@@ -4885,10 +5000,39 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Akimbo Goliath 12G--
 	--------------------------------------
+	--ID: self.x_rota
+	--Class: Shotgun
+	--Value: 1
+	--Magazine: 12
+	--Ammo: 72
+	--Fire Rate: 333
+	--Damage: 80
+	--Acc: 40
+	--Stab: 40
+	--Conc: 25
+	--Threat: 14
+	--Pickup: 4, 5
+	--Notes:
+	--Active Mods: Silenced Barrel
+
 	--------------------------------------
 				--Steakout 12G--
 	--------------------------------------
-		--Steakout 12G Shotgun
+	--ID: self.aa12
+	--Class: Shotgun
+	--Value: 1
+	--Magazine: 8
+	--Ammo: 80
+	--Fire Rate: 300
+	--Damage: 60
+	--Acc: 40
+	--Stab: 60
+	--Conc: 20
+	--Threat: 34
+	--Pickup: 5, 6
+	--Notes:
+	--Active Mods: Suppressed Barrel, Drum Magazine
+
 		self.aa12.FIRE_MODE = "auto"
 		self.aa12.fire_mode_data = {
 			fire_rate = 0.2
@@ -4948,7 +5092,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--IZHMA 12G--
 	--------------------------------------
-		--Izhma 12G
+	--ID: self.saiga
+	--Class: Shotgun
+	--Value: 1
+	--Magazine: 7
+	--Ammo: 60
+	--Fire Rate: 333
+	--Damage: 60
+	--Acc: 40
+	--Stab: 60
+	--Conc: 25
+	--Threat: 34
+	--Pickup: 5, 6
+	--Notes:
+	--Active Mods: Big Brother Magazine
+			
 		self.saiga.FIRE_MODE = "auto"
 		self.saiga.fire_mode_data = {
 			fire_rate = 0.18
@@ -5008,13 +5166,42 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Brothers Grimm 12G--
 	--------------------------------------
+	--ID: self.x_basset
+	--Class: Shotgun
+	--Value: 1
+	--Magazine: 14
+	--Ammo: 96
+	--Fire Rate: 333
+	--Damage: 40
+	--Acc: 40
+	--Stab: 20
+	--Conc: 25
+	--Threat: 22
+	--Pickup: 6, 7
+	--Notes:
+	--Active Mods: Big Brother Magazine
+
 	--------------------------------------
 		--Marksman Rifles--
 	--------------------------------------
 	--------------------------------------
 				--Little Friend 7.62--
 	--------------------------------------
-		--Little Friend RIFLE
+	--ID: self.contraband
+	--Class: Precision
+	--Value: 1
+	--Magazine: 20
+	--Ammo: 40
+	--Fire Rate: 612
+	--Damage: 160
+	--Acc: 100
+	--Stab: 40
+	--Conc: 5
+	--Threat: 31
+	--Pickup: 2, 3
+	--Notes: Armor Piercing
+	--Active Mods: 
+
 		self.contraband.FIRE_MODE = "single"
 		self.contraband.categories = {
 			"assault_rifle",
@@ -5076,7 +5263,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Little Friend 7.62 (Grenade Launcher)--
 	--------------------------------------
-		--Little Friend GRENADE LAUNCHER
+	--ID: self.contraband_m203
+	--Class: Specialist
+	--Value: 1
+	--Magazine: 1
+	--Ammo: 3
+	--Fire Rate: 30
+	--Damage: 1100
+	--Acc: 100
+	--Stab: 100
+	--Conc: n/1
+	--Threat: 43
+	--Pickup: 0.1, 0.1
+	--Notes: Area Damage
+	--Active Mods:
+
 		self.contraband_m203.FIRE_MODE = "single"
 		self.contraband_m203.fire_mode_data = {
 			fire_rate = 0.75
@@ -5141,7 +5342,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Cavity 9mm--
 	--------------------------------------
-		--Cavity 9mm
+	--ID: self.sub2000
+	--Class: Precision
+	--Value: 1
+	--Magazine: 33
+	--Ammo: 66
+	--Fire Rate: 706
+	--Damage: 160
+	--Acc: 100
+	--Stab: 12
+	--Conc: 30
+	--Threat: 10
+	--Pickup: 3, 4
+	--Notes: Armor Piercing
+	--Active Mods: Tooth Fairy Suppressor
+
 		self.sub2000.FIRE_MODE = "single"
 		self.sub2000.fire_mode_data = {
 			fire_rate = 0.085
@@ -5199,7 +5414,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--M308--
 	--------------------------------------
-		--M308 Rifle
+	--ID: self.new_m14
+	--Class: Precision
+	--Value: 1
+	--Magazine: 10
+	--Ammo: 80
+	--Fire Rate: 706
+	--Damage: 160
+	--Acc: 100
+	--Stab: 84
+	--Conc: 10
+	--Threat: 14
+	--Pickup: 3, 4
+	--Notes: Armor Piercing
+	--Active Mods:
+
 		self.new_m14.FIRE_MODE = "single"
 		self.new_m14.fire_mode_data = {
 			fire_rate = 0.085
@@ -5258,7 +5487,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Galant--
 	--------------------------------------
-		--Galant Rifle
+	--ID: self.ching
+	--Class: Precision
+	--Value: 1
+	--Magazine: 8
+	--Ammo: 72
+	--Fire Rate: 600
+	--Damage: 160
+	--Acc: 100
+	--Stab: 52
+	--Conc: 20
+	--Threat: 22
+	--Pickup: 3, 4
+	--Notes: Armor Piercing
+	--Active Mods: Magpouch Stock
+
 		self.ching.FIRE_MODE = "single"
 		self.ching.fire_mode_data = {
 			fire_rate = 0.1
@@ -5322,7 +5565,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Contractor .308--
 	--------------------------------------
-		--Contractor .308
+	--ID: self.tti
+	--Class: Precision
+	--Value: 9
+	--Magazine: 20
+	--Ammo: 60
+	--Fire Rate: 150
+	--Damage: 190
+	--Acc: 100
+	--Stab: 28
+	--Conc: 20
+	--Threat: 43
+	--Pickup: 2.5, 3
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: Contractor Silencer
+
 		self.tti.FIRE_MODE = "single"
 		self.tti.fire_mode_data = {
 			fire_rate = 0.4
@@ -5389,7 +5646,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Lebensauger .308--
 	--------------------------------------
-		--Lebensauger .308
+	--ID: self.wa2000
+	--Class: Precision
+	--Value: 9
+	--Magazine: 10
+	--Ammo: 60
+	--Fire Rate: 150
+	--Damage: 190
+	--Acc: 100
+	--Stab: 28
+	--Conc: 15
+	--Threat: 43
+	--Pickup: 2.5, 3
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: Gedämpfter Barrel --NOTE does this special character work?
+
 		self.wa2000.FIRE_MODE = "single"
 		self.wa2000.fire_mode_data = {
 			fire_rate = 0.4
@@ -5456,7 +5727,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Grom--
 	--------------------------------------
-		--Grom Sniper Rifle
+	--ID: self.siltstone
+	--Class: Precision
+	--Value: 9
+	--Magazine: 10
+	--Ammo: 60
+	--Fire Rate: 150
+	--Damage: 190
+	--Acc: 100
+	--Stab: 20
+	--Conc: 15
+	--Threat: 43
+	--Pickup: 2.5, 3
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: Tikho Barrel, Iron Sights
+
 		self.siltstone.FIRE_MODE = "single"
 		self.siltstone.fire_mode_data = {
 			fire_rate = 0.4
@@ -5526,7 +5811,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Rattlesnake--
 	--------------------------------------
-		--Rattlesnake
+	--ID: self.msr
+	--Class: Precision
+	--Value: 9
+	--Magazine: 10
+	--Ammo: 60
+	--Fire Rate: 60
+	--Damage: 250
+	--Acc: 100
+	--Stab: 20
+	--Conc: 10
+	--Threat: 43
+	--Pickup: 2, 2.5
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: Sniper Suppressor
+
 		self.msr.FIRE_MODE = "single"
 		self.msr.fire_mode_data = {
 			fire_rate = 1
@@ -5595,7 +5894,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Repeater 1874--
 	--------------------------------------
-		--Repeater 1874
+	--ID: self.winchester1874
+	--Class: Precision
+	--Value: 9
+	--Magazine: --INCOMPLETE field in document is blank, wiki sez 15
+	--Ammo: 75
+	--Fire Rate: 86
+	--Damage: 250
+	--Acc: 100
+	--Stab: 60
+	--Conc: 20
+	--Threat: 14
+	--Pickup: 3, 4
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: Outlaw’s Silenced Barrel
+
 		self.winchester1874.FIRE_MODE = "single"
 		self.winchester1874.fire_mode_data = {
 			fire_rate = 0.7
@@ -5669,7 +5982,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Platypus 70--
 	--------------------------------------
-		--Platypus 70
+	--ID: self.model70
+	--Class: Precision
+	--Value: 9
+	--Magazine: 5
+	--Ammo: 30
+	--Fire Rate: 60
+	--Damage: 480
+	--Acc: 100
+	--Stab: 48
+	--Conc: 10
+	--Threat: 43
+	--Pickup: 1.5, 2.5
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: Beak Suppressor
+
 		self.model70.FIRE_MODE = "single"
 		self.model70.fire_mode_data = {
 			fire_rate = 1
@@ -5737,7 +6064,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--R93--
 	--------------------------------------
-		--R93 Sniper Rifle
+	--ID: self.r93
+	--Class: Precision
+	--Value: 9
+	--Magazine: 6
+	--Ammo: 30
+	--Fire Rate: 50
+	--Damage: 480
+	--Acc: 100
+	--Stab: 48
+	--Conc: 10
+	--Threat: 43
+	--Pickup: 1.5, 2.5
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: Compensated Suppressor
+
 		self.r93.FIRE_MODE = "single"
 		self.r93.fire_mode_data = {
 			fire_rate = 1.2
@@ -5804,7 +6145,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Nagant--
 	--------------------------------------
-		--Nagant
+	--ID: self.mosin
+	--Class: Precision
+	--Value: 9
+	--Magazine: 5
+	--Ammo: 30
+	--Fire Rate: 60
+	--Damage: 480
+	--Acc: 100
+	--Stab: 20
+	--Conc: 15
+	--Threat: 43
+	--Pickup: 1.5, 2.5
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: Silenced Barrel, Nagant Bayonet
+
 		self.mosin.FIRE_MODE = "single"
 		self.mosin.fire_mode_data = {
 			fire_rate = 1
@@ -5871,7 +6226,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Desertfox--
 	--------------------------------------
-		--Desertfox
+	--ID: self.desertfox
+	--Class: Precision
+	--Value: 10
+	--Magazine: 5
+	--Ammo: 30
+	--Fire Rate: 60
+	--Damage: 480
+	--Acc: 100
+	--Stab: 12
+	--Conc: 25
+	--Threat: 43
+	--Pickup: 1.5, 2.5
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: Silenced Barrel
+
 		self.desertfox.FIRE_MODE = "single"
 		self.desertfox.fire_mode_data = {
 			fire_rate = 1
@@ -5938,7 +6307,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Thanatos .50 cal--
 	--------------------------------------
-		--Thanatos .50 cal
+	--ID: self.m95
+	--Class: Heavy
+	--Value: 9
+	--Magazine: 5
+	--Ammo: 20
+	--Fire Rate: 40
+	--Damage: 3500
+	--Acc: 100
+	--Stab: 0
+	--Conc: 0
+	--Threat: 43
+	--Pickup: 0.25, 0.5
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: Suppressed Barrel
+
 		self.m95.FIRE_MODE = "single"
 		self.m95.fire_mode_data = {
 			fire_rate = 1.5
@@ -6011,60 +6394,313 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Akimbo Gruber Kurz--
 	--------------------------------------
+	--ID: self.x_ppk
+	--Class: Precision
+	--Value: 1
+	--Magazine: 28
+	--Ammo: 168
+	--Fire Rate: 480
+	--Damage: 20
+	--Acc: 100
+	--Stab: 100
+	--Conc: 35
+	--Threat: 0
+	--Pickup: 4, 8
+	--Notes: 
+	--Active Mods: 
+
 	--------------------------------------
 				--Akimbo Chimano 88--
 	--------------------------------------
+	--ID: self.x_g17
+	--Class: Precision
+	--Value: 1
+	--Magazine: 34
+	--Ammo: 300
+	--Fire Rate: 480
+	--Damage: 50
+	--Acc: 84
+	--Stab: 48
+	--Conc: 30
+	--Threat: 8
+	--Pickup: 3, 6
+	--Notes: 
+	--Active Mods: Extended Magazine
+
 	--------------------------------------
 				--Akimbo M13 9mm--
 	--------------------------------------
+	--ID: self.x_legacy
+	--Class: Precision
+	--Value: 4
+	--Magazine: 26
+	--Ammo: 300
+	--Fire Rate: 545
+	--Damage: 50
+	--Acc: 84
+	--Stab: 48
+	--Conc: 30
+	--Threat: 8
+	--Pickup: 3, 6
+	--Notes: 
+	--Active Mods: 
+
 	--------------------------------------
 				--Akimbo Chimano Compact--
 	--------------------------------------
+	--ID: self.jowi
+	--Class: Precision
+	--Value: 1
+	--Magazine: 20
+	--Ammo: 300
+	--Fire Rate: 667
+	--Damage: 50
+	--Acc: 84
+	--Stab: 48
+	--Conc: 30
+	--Threat: 8
+	--Pickup: 3, 6
+	--Notes: 
+	--Active Mods: Extended Mag.
 	--------------------------------------
 				--Akimbo Crosskill Guard--
 	--------------------------------------
+	--ID: self.x_shrew
+	--Class: Precision
+	--Value: 1
+	--Magazine: 34
+	--Ammo: 300
+	--Fire Rate: 667
+	--Damage: 50
+	--Acc: 84
+	--Stab: 48
+	--Conc: 30
+	--Threat: 8
+	--Pickup: 3, 6
+	--Notes: 
+	--Active Mods: Extended Mag
+
 	--------------------------------------
 				--Akimbo Bernetti 9--
 	--------------------------------------
+	--ID: self.x_b92fs
+	--Class: Precision
+	--Value: 1
+	--Magazine: 28
+	--Ammo: 300
+	--Fire Rate: 667
+	--Damage: 50
+	--Acc: 84
+	--Stab: 48
+	--Conc: 30
+	--Threat: 8
+	--Pickup: 3, 6
+	--Notes: 
+	--Active Mods: Extended Mag.
+
 	--------------------------------------
 			--Akimbo Medium Pistols--
 	--------------------------------------
 	--------------------------------------
 				--Akimbo Crosskill--
 	--------------------------------------
+	--ID: self.x_1911
+	--Class: Precision
+	--Value: 1
+	--Magazine: 20
+	--Ammo: 180
+	--Fire Rate: 361
+	--Damage: 80
+	--Acc: 92
+	--Stab: 48
+	--Conc: 30
+	--Threat: 11
+	--Pickup: 2, 5
+	--Notes: 
+	--Active Mods: 12rnd Mag., Magazine with Ameritude!
+
 	--------------------------------------
 				--Akimbo Contractor--
 	--------------------------------------
+	--ID: self.x_packrat
+	--Class: Precision
+	--Value: 4
+	--Magazine: 30
+	--Ammo: 180
+	--Fire Rate: 361
+	--Damage: 80
+	--Acc: 92
+	--Stab: 48
+	--Conc: 30
+	--Threat: 11
+	--Pickup: 2, 5
+	--Notes: 
+	--Active Mods: Extended Magazine
 	--------------------------------------
 				--Akimbo Signature .40--
 	--------------------------------------
+	--ID: self.x_p226
+	--Class: Precision
+	--Value: 4
+	--Magazine: 24
+	--Ammo: 180
+	--Fire Rate: 361
+	--Damage: 80
+	--Acc: 92
+	--Stab: 48
+	--Conc: 30
+	--Threat: 11
+	--Pickup: 2, 5
+	--Notes: 
+	--Active Mods: Extended Mag.
+
 	--------------------------------------
 				--Akimbo Broomstick--
 	--------------------------------------
+	--ID: self.x_c96
+	--Class: Precision
+	--Value: 1
+	--Magazine: 20
+	--Ammo: 180
+	--Fire Rate: 361
+	--Damage: 80
+	--Acc: 92
+	--Stab: 48
+	--Conc: 30
+	--Threat: 11
+	--Pickup: 2, 5
+	--Notes: 
+	--Active Mods: High Capacity Mag., Precision Barrel
+
 	--------------------------------------
 				--Akimbo Interceptor 45--
 	--------------------------------------
+	--ID: self.x_usp
+	--Class: Precision
+	--Value: 1
+	--Magazine: 26
+	--Ammo: 180
+	--Fire Rate: 361
+	--Damage: 80
+	--Acc: 92
+	--Stab: 48
+	--Conc: 30
+	--Threat: 11
+	--Pickup: 2, 5
+	--Notes: 
+	--Active Mods: Extended Mag., I want more Magazine!
+
 	--------------------------------------
 				--Akimbo LEO--
 	--------------------------------------
+	--ID: self.x_hs2000
+	--Class: Precision
+	--Value: 4
+	--Magazine: 38
+	--Ammo: 180
+	--Fire Rate: 361
+	--Damage: 80
+	--Acc: 92
+	--Stab: 48
+	--Conc: 30
+	--Threat: 11
+	--Pickup: 2, 5
+	--Notes: 
+	--Active Mods: Extended Mag
+
 	--------------------------------------
 				--Akimbo Chimano Custom--
 	--------------------------------------
+	--ID: self.x_g22c
+	--Class: Precision
+	--Value: 1
+	--Magazine: 32
+	--Ammo: 180
+	--Fire Rate: 361
+	--Damage: 80
+	--Acc: 92
+	--Stab: 48
+	--Conc: 30
+	--Threat: 11
+	--Pickup: 2, 5
+	--Notes: 
+	--Active Mods: Extended Mag.
+
 	--------------------------------------
 			--Akimbo Heavy Pistols--
 	--------------------------------------
 	--------------------------------------
 				--Akimbo Deagle--
 	--------------------------------------
+	--ID: self.x_deagle
+	--Class: Precision
+	--Value: 1
+	--Magazine: 20
+	--Ammo: 90
+	--Fire Rate: 240
+	--Damage: 110
+	--Acc: 96
+	--Stab: 20
+	--Conc: 30
+	--Threat: 9
+	--Pickup: 1.5, 3
+	--Notes: Armor Piercing
+	--Active Mods: Extended Magazine
+
 	--------------------------------------
 				--Akimbo Parabellum--
 	--------------------------------------
+	--ID: self.x_breech
+	--Class: Precision
+	--Value: 4
+	--Magazine: 16
+	--Ammo: 90
+	--Fire Rate: 361
+	--Damage: 110
+	--Acc: 96
+	--Stab: 20
+	--Conc: 30
+	--Threat: 9
+	--Pickup: 1.5, 3
+	--Notes: Armor Piercing
+	--Active Mods: 
+
 	--------------------------------------
 				--Akimbo Baby Deagle--
 	--------------------------------------
+	--ID: self.x_sparrow
+	--Class: Precision
+	--Value: 4
+	--Magazine: 24
+	--Ammo: 90
+	--Fire Rate: 361
+	--Damage: 110
+	--Acc: 96
+	--Stab: 20
+	--Conc: 30
+	--Threat: 9
+	--Pickup: 1.5, 3
+	--Notes: Armor Piercing
+	--Active Mods: 
+
 	--------------------------------------
 				--Akimbo White Streak--
 	--------------------------------------
+	--ID: self.x_pl14
+	--Class: Precision
+	--Value: 4
+	--Magazine: 24
+	--Ammo: 90
+	--Fire Rate: 361
+	--Damage: 110
+	--Acc: 96
+	--Stab: 20
+	--Conc: 30
+	--Threat: 9
+	--Pickup: 1.5, 3
+	--Notes: Armor Piercing
+	--Active Mods: Extended Magazine
+
 	--------------------------------------
 			--Akimbo Revolvers--
 	--------------------------------------
@@ -6571,6 +7207,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 		--Pistols--
 	--------------------------------------
+--IND
 	--------------------------------------
 			--Light Pistols--
 	--------------------------------------
