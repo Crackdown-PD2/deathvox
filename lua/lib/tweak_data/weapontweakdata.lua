@@ -5,7 +5,7 @@ function WeaponTweakData:init(tweak_data)
         light ar wpn_npc_m4
         heavy shot wpn_npc_benelli
         light shot wpn_npc_r870
-        gman wpn_npc_r870
+        gman wpn_npc_r870 ---NOTE no, this is wrong
         other pistol enemies wpn_npc_c45
         revolver enemies wpn_npc_raging_bull
         dozer wpn_npc_r870_dozer
@@ -2288,17 +2288,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 --Comment info template:			
 --Weapon
 	--ID: self.NAME
+	--Class:
 	--Value: 
-	--Magazine: 20
-	--Ammo: 300
-	--Fire Rate: 545
-	--Damage:50
-	--Acc: 100
-	--Stab: 100
-	--Conc: 30
-	--Threat: 10
-	--Pickup: 9, 18
-	--Notes: many shared mods
+	--Magazine: 
+	--Ammo: 
+	--Fire Rate: 
+	--Damage:
+	--Acc: 
+	--Stab: 
+	--Conc: 
+	--Threat: 
+	--Pickup: X, Y
+	--Notes:
+	--Active Mods: Reflects mods affecting the gun. 
+	--Other mods related to the gun (that are not shared/common mods, eg suppressors) should be cosmetic only, retaining only their value.)
 
 --BE AWARE all info in template above, other than value, reflects OUTPUT ingame, not code stats. See guidance above for conversion, entry.
 --------------------------------------
@@ -2314,7 +2317,22 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--AMCAR--
 	--------------------------------------
-		--AMCAR
+	--ID: self.amcar
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 20
+	--Ammo: 300
+	--Fire Rate: 545
+	--Damage: 50
+	--Acc: 100
+	--Stab: 100
+	--Conc: 30
+	--Threat: 10
+	--Pickup: 9, 18
+	--Notes: Being the "training wheels" gun and having notably lower DPS than every other AR, 
+	--it received additional buffs in multiple areas to make it a viable comfort pick. 
+	--Active Mods: Milspec Mag, Tactical Mag, Expert Mag, L5 Magazine, CAR Quadstacked Mag, Speedpull Mag
+
 		self.amcar.FIRE_MODE = "auto"
 		self.amcar.fire_mode_data = {
 			fire_rate = 0.11
@@ -2370,7 +2388,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Bootleg--
 	--------------------------------------
-		--Bootleg Rifle
+	--ID: self.tecci
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 100
+	--Ammo: 400
+	--Fire Rate: 667
+	--Damage: 50
+	--Acc: 52
+	--Stab: 92
+	--Conc: 10
+	--Threat: 22
+	--Pickup: 8, 16
+	--Notes:
+	--Active Mods:
+
 		self.tecci.FIRE_MODE = "auto"
 		self.tecci.fire_mode_data = {
 			fire_rate = 0.09
@@ -2432,7 +2464,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--JP36--
 	--------------------------------------
-		--JP36
+	--ID: self.g36
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 30
+	--Ammo: 300
+	--Fire Rate: 706
+	--Damage: 50
+	--Acc: 84
+	--Stab: 100
+	--Conc: 25
+	--Threat: 10
+	--Pickup: 9, 18
+	--Notes:
+	--Active Mods: Speedpull Mag
+
 		self.g36.FIRE_MODE = "auto"
 		self.g36.fire_mode_data = {
 			fire_rate = 0.085
@@ -2489,7 +2535,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Commando 553--
 	--------------------------------------
-		--Commando 553
+	--ID: self.s552
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 30
+	--Ammo: 300
+	--Fire Rate: 714
+	--Damage: 50
+	--Acc: 60
+	--Stab: 100
+	--Conc: 30
+	--Threat: 10
+	--Pickup: 8, 16
+	--Notes:
+	--Active Mods:
+
 		self.s552.FIRE_MODE = "auto"
 		self.s552.fire_mode_data = {
 			fire_rate = 0.084
@@ -2546,7 +2606,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Clarion--
 	--------------------------------------	
-		--Clarion Rifle
+	--ID: self.famas
+	--Class: Rapid Fire
+	--Value: 4
+	--Magazine: 30
+	--Ammo: 300
+	--Fire Rate: 1000
+	--Damage: 50
+	--Acc: 72
+	--Stab: 80
+	--Conc: 25
+	--Threat: 10
+	--Pickup: 8, 16
+	--Notes:
+	--Active Mods: Suppressed Barrel
+
 		self.famas.FIRE_MODE = "auto"
 		self.famas.fire_mode_data = {
 			fire_rate = 0.06
@@ -2606,7 +2680,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Valkyria--
 	--------------------------------------
-		--Valkyria Rifle
+	--ID: self.asval
+	--Class: Rapid Fire, Quiet
+	--Value: 1
+	--Magazine: 20
+	--Ammo: 180
+	--Fire Rate: 545 (Old: 896)
+	--Damage: 80
+	--Acc: 92
+	--Stab: 100
+	--Conc: 20
+	--Threat: 0
+	--Pickup: 7, 12
+	--Notes: Moved to a slower-firing, harder-hitting category upon community request.
+	--Active Mods: Prototype Barrel
+
 		self.asval.FIRE_MODE = "auto"
 		self.asval.categories = {
 			"assault_rifle",
@@ -2662,7 +2750,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--CAR-4--
 	--------------------------------------
-		--CAR-4 Rifle
+	--ID: self.new_m4
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 30
+	--Ammo: 210
+	--Fire Rate: 600
+	--Damage: 80
+	--Acc: 100
+	--Stab: 100
+	--Conc: 15
+	--Threat: 14
+	--Pickup: 6, 10
+	--Notes: 
+	--Active Mods: DMR Kit, Stealth Barrel, Vintage Mag, CAR Quadstacked Mag, Speedpull Mag
+
 		self.new_m4.FIRE_MODE = "auto"
 		self.new_m4.fire_mode_data = {
 			fire_rate = 0.1
@@ -2728,10 +2830,26 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--CAR-4 (DMR Kit)--
 	--------------------------------------
+	--Note: Conversion kit entries are not actual weapons and are only listed for referential purposes.
+	--INCOMPLETE
 	--------------------------------------
 				--AK--
 	--------------------------------------
-		--AK Rifle
+	--ID: self.ak74
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 30
+	--Ammo: 210
+	--Fire Rate: 652
+	--Damage: 80
+	--Acc: 92
+	--Stab: 100
+	--Conc: 15
+	--Threat: 14
+	--Pickup: 6, 10
+	--Notes: 
+	--Active Mods: DMR Kit, AK Quadstacked Mag, Speedpull Mag
+
 		self.ak74.FIRE_MODE = "auto"
 		self.ak74.fire_mode_data = {
 			fire_rate = 0.092
@@ -2784,15 +2902,30 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.ak74.stats_modifiers = {
 			damage = 1
-		}			
+		}
 	--------------------------------------
 				--AK (DMR Kit)--
 	--------------------------------------
 	--Note: Conversion kit entries are not actual weapons and are only listed for referential purposes.
+	--INCOMPLETE
 	--------------------------------------
 				--AK17--
 	--------------------------------------
-		--AK17 Rifle
+	--ID: self.flint
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 30
+	--Ammo: 210
+	--Fire Rate: 652
+	--Damage: 80
+	--Acc: 92
+	--Stab: 100
+	--Conc: 10
+	--Threat: 14
+	--Pickup: 6, 10
+	--Notes: Was previously a Heavy AR.
+	--Active Mods: AK Quadstacked Mag, Speedpull Mag
+
 		self.flint.FIRE_MODE = "auto"
 		self.flint.fire_mode_data = {
 			fire_rate = 0.092
@@ -2849,7 +2982,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--AK5--
 	--------------------------------------
-		--AK5 Rifle
+	--ID: self.ak5
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 30
+	--Ammo: 210
+	--Fire Rate: 706
+	--Damage: 80
+	--Acc: 92
+	--Stab: 100
+	--Conc: 15
+	--Threat: 14
+	--Pickup: 6, 10
+	--Notes:
+	--Active Mods: Vintage Mag, CAR Quadstacked Mag, Speedpull Mag
+			
 		self.ak5.FIRE_MODE = "auto"
 		self.ak5.fire_mode_data = {
 			fire_rate = 0.085
@@ -2907,7 +3054,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Queen's Wrath--
 	--------------------------------------
-		--Queen's Wrath
+	--ID: self.l85a2
+	--Class: Rapid Fire
+	--Value: 9
+	--Magazine: 30
+	--Ammo: 210
+	--Fire Rate: 723
+	--Damage: 80
+	--Acc: 84
+	--Stab: 100
+	--Conc: 15
+	--Threat: 14
+	--Pickup: 6, 10
+	--Notes:
+	--Active Mods: Vintage Mag, CAR Quadstacked Mag, Speedpull Mag
+			
 		self.l85a2.FIRE_MODE = "auto"
 		self.l85a2.fire_mode_data = {
 			fire_rate = 0.083
@@ -2969,7 +3130,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--UAR--
 	--------------------------------------
-		--UAR Rifle
+	--ID: self.aug
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 30
+	--Ammo: 210
+	--Fire Rate: 750
+	--Damage: 80
+	--Acc: 80
+	--Stab: 100
+	--Conc: 15
+	--Threat: 14
+	--Pickup: 6, 10
+	--Notes:
+	--Active Mods: Speedpull Mag
+			
 		self.aug.FIRE_MODE = "auto"
 		self.aug.fire_mode_data = {
 			fire_rate = 0.08
@@ -3028,7 +3203,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Tempest-21--
 	--------------------------------------
-		--Tempest-21
+	--ID: self.komodo
+	--Class: Rapid Fire
+	--Value: 9
+	--Magazine: 30
+	--Ammo: 210
+	--Fire Rate: 800
+	--Damage: 80
+	--Acc: 84
+	--Stab: 100
+	--Conc: 20
+	--Threat: 14
+	--Pickup: 6, 10
+	--Notes:
+	--Active Mods: Vintage Mag, CAR Quadstacked Mag, Speedpull Mag
+			
 		self.komodo.FIRE_MODE = "auto"
 		self.komodo.fire_mode_data = {
 			fire_rate = 0.075
@@ -3085,7 +3274,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Gecko 7.62--
 	--------------------------------------
-		--Gecko 7.62
+	--ID: self.galil
+	--Class: Rapid Fire
+	--Value: 4
+	--Magazine: 30
+	--Ammo: 210
+	--Fire Rate: 845
+	--Damage: 80
+	--Acc: 100
+	--Stab: 76
+	--Conc: 15
+	--Threat: 14
+	--Pickup: 6, 10
+	--Notes:
+	--Active Mods:
+			
 		self.galil.FIRE_MODE = "auto"
 		self.galil.fire_mode_data = {
 			fire_rate = 0.071
@@ -3142,8 +3345,23 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Lion's Roar--
 	--------------------------------------
-		--Lion's Roar aka BEST GUN
-		--That's debatable - Finale
+	--BEST GUN
+	--That's debatable - Finale
+	--ID: self.vhs
+	--Class: Rapid Fire
+	--Value: 9
+	--Magazine: 30
+	--Ammo: 210
+	--Fire Rate: 857
+	--Damage: 80
+	--Acc: 72
+	--Stab: 100
+	--Conc: 15
+	--Threat: 14
+	--Pickup: 6, 10
+	--Notes:
+	--Active Mods: Silenced Barrel
+
 		self.vhs.FIRE_MODE = "auto"
 		self.vhs.fire_mode_data = {
 			fire_rate = 0.07
@@ -3205,7 +3423,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Union 5.56--
 	--------------------------------------
-		--Union 5.56 Rifle
+	--ID: self.corgi
+	--Class: Rapid Fire
+	--Value: 9
+	--Magazine: 30
+	--Ammo: 210
+	--Fire Rate: 857
+	--Damage: 80
+	--Acc: 72
+	--Stab: 100
+	--Conc: 15
+	--Threat: 14
+	--Pickup: 6, 10
+	--Notes:
+	--Active Mods: Vintage Mag, CAR Quadstacked Mag, Speedpull Mag
 		self.corgi.FIRE_MODE = "auto"
 		self.corgi.fire_mode_data = {
 			fire_rate = 0.07
@@ -3265,7 +3496,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--AK.762--
 	--------------------------------------
-		--AK 7.62
+	--ID: self.akm
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 30
+	--Ammo: 150
+	--Fire Rate: 561
+	--Damage: 110
+	--Acc: 92
+	--Stab: 100
+	--Conc: 10
+	--Threat: 20
+	--Pickup: 4, 6
+	--Notes:
+	--Active Mods: AK Quadstacked Mag, Speedpull Mag
+
 		self.akm.FIRE_MODE = "auto"
 		self.akm.fire_mode_data = {
 			fire_rate = 0.107
@@ -3323,10 +3568,25 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 				--AK.762 (DMR Kit)--
 	--------------------------------------
 	--Note: Conversion kit entries are not actual weapons and are only listed for referential purposes.
+	--INCOMPLETE
 	--------------------------------------
 				--AK.762 Golden--
 	--------------------------------------
-		--Golden AK 7.62
+	--ID: self.akm_gold
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 30
+	--Ammo: 150
+	--Fire Rate: 561
+	--Damage: 110
+	--Acc: 92
+	--Stab: 100
+	--Conc: 10
+	--Threat: 20
+	--Pickup: 4, 6
+	--Notes:
+	--Active Mods: AK Quadstacked Mag, Speedpull Mag
+
 		self.akm_gold.FIRE_MODE = "auto"
 		self.akm_gold.fire_mode_data = {
 			fire_rate = 0.107
@@ -3383,7 +3643,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Eagle Heavy--
 	--------------------------------------
-		--Eagle Heavy
+	--ID: self.scar
+	--Class: Rapid Fire
+	--Value: 9
+	--Magazine: 20
+	--Ammo: 140
+	--Fire Rate: 612
+	--Damage: 110
+	--Acc: 100
+	--Stab: 84
+	--Conc: 10
+	--Threat: 20
+	--Pickup: 4, 6
+	--Notes:
+	--Active Mods: 
+
 		self.scar.FIRE_MODE = "auto"
 		self.scar.fire_mode_data = {
 			fire_rate = 0.098
@@ -3440,7 +3714,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Gewehr 3--
 	--------------------------------------
-		--Gewehr 3
+	--ID: self.g3
+	--Class: Rapid Fire
+	--Value: 4
+	--Magazine: 20
+	--Ammo: 140
+	--Fire Rate: 652
+	--Damage: 110
+	--Acc: 100
+	--Stab: 84
+	--Conc: 10
+	--Threat: 20
+	--Pickup: 4, 6
+	--Notes:
+	--Active Mods: Assault Kit, DMR Kit
+
 		self.g3.FIRE_MODE = "auto"
 		self.g3.fire_mode_data = {
 			fire_rate = 0.092
@@ -3498,14 +3786,30 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 				--Gewehr 3 (DMR Kit)--
 	--------------------------------------
 	--Note: Conversion kit entries are not actual weapons and are only listed for referential purposes.
+	--INCOMPLETE
 	--------------------------------------
 				--Gewehr 3 (assault kit)--
 	--------------------------------------
 	--Note: Conversion kit entries are not actual weapons and are only listed for referential purposes.
+	--INCOMPLETE
 	--------------------------------------
 				--Falcon--
 	--------------------------------------
-		--Falcon Rifle
+	--ID: self.fal
+	--Class: Rapid Fire
+	--Value: 4
+	--Magazine: 20
+	--Ammo: 140
+	--Fire Rate: 698
+	--Damage: 110
+	--Acc: 100
+	--Stab: 86
+	--Conc: 10
+	--Threat: 20
+	--Pickup: 4, 6
+	--Notes:
+	--Active Mods: Extended Magazine
+
 		self.fal.FIRE_MODE = "auto"
 		self.fal.fire_mode_data = {
 			fire_rate = 0.086
@@ -3562,8 +3866,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--AMR-16--
 	--------------------------------------
-
-		--AMR-16
+	--ID: self.m16
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 20
+	--Ammo: 140
+	--Fire Rate: 857
+	--Damage: 110
+	--Acc: 96
+	--Stab: 100
+	--Conc: 10
+	--Threat: 20
+	--Pickup: 4, 6
+	--Notes:
+	--Active Mods: DMR Kit. Milspec Mag, Tactical Mag, Expert Mag, L5 Magazine, CAR Quadstacked Mag, Speedpull Mag
 		self.m16.FIRE_MODE = "auto"
 		self.m16.fire_mode_data = {
 			fire_rate = 0.07
@@ -3621,21 +3937,81 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 				--AMR-16 (DMR Kit)--
 	--------------------------------------
 	--Note: Conversion kit entries are not actual weapons and are only listed for referential purposes.
+	--INCOMPLETE
 	--------------------------------------
 		--Akimbo Machine Pistols--
 	--------------------------------------
 	--------------------------------------
 				--Akimbo Igor Automatik Pistols--
 	--------------------------------------
+	--ID: self.x_stech
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 40
+	--Ammo: 400
+	--Fire Rate: 750
+	--Damage: 60
+	--Acc: 80
+	--Stab: 44
+	--Conc: 32
+	--Threat: 8
+	--Pickup: 7, 11
+	--Notes:
+	--Active Mods: Extended Mag
+
 	--------------------------------------
 				--Akimbo STRYK 18c--
 	--------------------------------------
+	--ID: self.x_g18c
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 40
+	--Ammo: 560
+	--Fire Rate: 909
+	--Damage: 40
+	--Acc: 68
+	--Stab: 88
+	--Conc: 32
+	--Threat: 8
+	--Pickup: 9, 18
+	--Notes:
+	--Active Mods: Extended Mag
+
 	--------------------------------------
 				--Akimbo Czech 92 Pistols--
 	--------------------------------------
+	--ID: self.x_czech
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 30
+	--Ammo: 600
+	--Fire Rate: 1000
+	--Damage: 40
+	--Acc: 80
+	--Stab: 80
+	--Conc: 32
+	--Threat: 8
+	--Pickup: 9, 18
+	--Notes:
+	--Active Mods: Extended Mag
+		
 	--------------------------------------
 				--Akimbo Bernetti Auto Pistols--
 	--------------------------------------
+	--ID: self.x_beer
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 30
+	--Ammo: 600
+	--Fire Rate: 1101
+	--Damage: 40
+	--Acc: 84
+	--Stab: 80
+	--Conc: 32
+	--Threat: 8
+	--Pickup: 9, 18
+	--Notes:
+	--Active Mods: Extended Mag
 	--------------------------------------
 		--Akimbo SMGs--
 	--------------------------------------
@@ -3645,78 +4021,409 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Akimbo Tatonka--
 	--------------------------------------
+	--ID: self.x_coal
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 128
+	--Ammo: 320
+	--Fire Rate: 652
+	--Damage: 50
+	--Acc: 80
+	--Stab: 84
+	--Conc: 25
+	--Threat: 10
+	--Pickup: 8, 16
+	--Notes: Formerly a Heavy SMG.
+	--Active Mods: 
+
 	--------------------------------------
 				--Akimbo Uzi--
 	--------------------------------------
+	--ID: self.x_uzi
+	--Class: Rapid Fire
+	--Value: 7
+	--Magazine: 64
+	--Ammo: 320
+	--Fire Rate: 698
+	--Damage: 50
+	--Acc: 80
+	--Stab: 84
+	--Conc: 25
+	--Threat: 10
+	--Pickup: 8, 16
+	--Notes: 
+	--Active Mods: 
+
 	--------------------------------------
-				--Akimbo Signature--
+				--Akimbo Signature SMG--
 	--------------------------------------
+	--ID: self.x_shepheard
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 40
+	--Ammo: 320
+	--Fire Rate: 750
+	--Damage: 50
+	--Acc: 60
+	--Stab: 100
+	--Conc: 25
+	--Threat: 10
+	--Pickup: 8, 16
+	--Notes: 
+	--Active Mods: Extended Magazine
+
 	--------------------------------------
 				--Akimbo Compact-5--
 	--------------------------------------
+	--ID: self.x_mp5
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 60
+	--Ammo: 320
+	--Fire Rate: 750
+	--Damage: 50
+	--Acc: 72
+	--Stab: 100
+	--Conc: 25
+	--Threat: 10
+	--Pickup: 8, 16
+	--Notes: 
+	--Active Mods: 
+
 	--------------------------------------
 				--Akimbo Blaster 9mm--
 	--------------------------------------
+	--ID: self.x_tec9
+	--Class: Rapid Fire
+	--Value: 7
+	--Magazine: 40
+	--Ammo: 320
+	--Fire Rate: 896
+	--Damage: 50
+	--Acc: 52
+	--Stab: 100
+	--Conc: 30
+	--Threat: 10
+	--Pickup: 8, 16
+	--Notes: 
+	--Active Mods: Extended Mag
+
 	--------------------------------------
 				--Akimbo CMP--
 	--------------------------------------
+	--ID: self.x_mp9
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 30
+	--Ammo: 320
+	--Fire Rate: 952
+	--Damage: 50
+	--Acc: 52
+	--Stab: 100
+	--Conc: 30
+	--Threat: 10
+	--Pickup: 8, 16
+	--Notes: 
+	--Active Mods: Extended Mag
+
 	--------------------------------------
 				--Akimbo Cobra--
 	--------------------------------------
+	--ID: self.x_scorpion
+	--Class: Rapid Fire
+	--Value: 7
+	--Magazine: 40
+	--Ammo: 320
+	--Fire Rate: 1000
+	--Damage: 50
+	--Acc: 52
+	--Stab: 100
+	--Conc: 30
+	--Threat: 10
+	--Pickup: 8, 16
+	--Notes: 
+	--Active Mods: Extended Mag
+
 	--------------------------------------
 				--Akimbo Micro Uzi--
 	--------------------------------------
+	--ID: self.x_baka
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 64
+	--Ammo: 320
+	--Fire Rate: 1200
+	--Damage: 50
+	--Acc: 44
+	--Stab: 100
+	--Conc: 25
+	--Threat: 10
+	--Pickup: 8, 16
+	--Notes: 
+	--Active Mods: Futomaki Suppressor, Maki Suppressor, Spring Suppressor
+
 	--------------------------------------
 			--Akimbo Medium SMGs--
 	--------------------------------------
 	--------------------------------------
 				--Akimbo Para--
 	--------------------------------------
+	--ID: self.x_olympic
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 40
+	--Ammo: 240
+	--Fire Rate: 682
+	--Damage: 70
+	--Acc: 92
+	--Stab: 100
+	--Conc: 25
+	--Threat: 13
+	--Pickup: 6, 10
+	--Notes: 
+	--Active Mods: Milspec Mag, Tactical Mag, Expert Mag, L5 Magazine, CAR Quadstacked Mag, Speedpull Mag
+
 	--------------------------------------
 				--Akimbo Chicago Typewriter--
 	--------------------------------------
+	--ID: self.x_m1928
+	--Class: Rapid Fire
+	--Value: 9
+	--Magazine: 100
+	--Ammo: 240
+	--Fire Rate: 723
+	--Damage: 70
+	--Acc: 84
+	--Stab: 100
+	--Conc: 15
+	--Threat: 20
+	--Pickup: 6, 10
+	--Notes: 
+	--Active Mods: 
+
 	--------------------------------------
 				--Akimbo Heather--
 	--------------------------------------
+	--ID: self.x_sr2
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 60
+	--Ammo: 240
+	--Fire Rate: 750
+	--Damage: 70
+	--Acc: 84
+	--Stab: 100
+	--Conc: 25
+	--Threat: 13
+	--Pickup: 6, 10
+	--Notes: 
+	--Active Mods: Speed Pull Mag
+
 	--------------------------------------
 				--Akimbo Kobus 90--
 	--------------------------------------
+	--ID: self.x_p90
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 100
+	--Ammo: 240
+	--Fire Rate: 909
+	--Damage: 70
+	--Acc: 80
+	--Stab: 100
+	--Conc: 20
+	--Threat: 13
+	--Pickup: 6, 10
+	--Notes: 
+	--Active Mods: Speed Pull Mag
+
 	--------------------------------------
 				--Akimbo SpecOps--
 	--------------------------------------
+	--ID: self.x_mp7
+	--Class: Rapid Fire
+	--Value: 7
+	--Magazine: 40
+	--Ammo: 240
+	--Fire Rate: 952
+	--Damage: 70
+	--Acc: 84
+	--Stab: 100
+	--Conc: 25
+	--Threat: 13
+	--Pickup: 6, 10
+	--Notes: 
+	--Active Mods: Extended Mag
+
 	--------------------------------------
 				--Akimbo Mark 10--
 	--------------------------------------
+	--ID: self.x_mac10
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 40
+	--Ammo: 240
+	--Fire Rate: 1000
+	--Damage: 70
+	--Acc: 84
+	--Stab: 100
+	--Conc: 30
+	--Threat: 13
+	--Pickup: 6, 10
+	--Notes: 
+	--Active Mods: Extended Mag, Speedpull Mag
+
 	--------------------------------------
 				--Akimbo Kross Vertex--
 	--------------------------------------
+	--ID: self.x_polymer
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 60
+	--Ammo: 240
+	--Fire Rate: 1200
+	--Damage: 70
+	--Acc: 84
+	--Stab: 100
+	--Conc: 15
+	--Threat: 13
+	--Pickup: 6, 10
+	--Notes: 
+	--Active Mods:
+
 	--------------------------------------
 				--Akimbo Jacket's Piece--
 	--------------------------------------
+	--ID: self.x_cobray
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 64
+	--Ammo: 240
+	--Fire Rate: 1200
+	--Damage: 70
+	--Acc: 72
+	--Stab: 100
+	--Conc: 20
+	--Threat: 13
+	--Pickup: 6, 10
+	--Notes: 
+	--Active Mods:
+
 	--------------------------------------
 			--Akimbo Heavy SMGs--
 	--------------------------------------
 	--------------------------------------
 				--Akimbo Patchett L2A1--
 	--------------------------------------
+	--ID: self.x_sterling
+	--Class: Rapid Fire
+	--Value: 7
+	--Magazine: 40
+	--Ammo: 160
+	--Fire Rate: 545
+	--Damage: 100
+	--Acc: 60
+	--Stab: 100
+	--Conc: 20
+	--Threat: 20
+	--Pickup: 4, 6
+	--Notes: Formerly a Light SMG.
+	--Active Mods: Extended Mag, Short Mag, Heatsinked Suppressed Barrel, Suppressed Barrel
+
 	--------------------------------------
 				--Akimbo MP40--
 	--------------------------------------
+	--ID: self.x_erma
+	--Class: Rapid Fire
+	--Value: 5
+	--Magazine: 64
+	--Ammo: 160
+	--Fire Rate: 600
+	--Damage: 100
+	--Acc: 68
+	--Stab: 100
+	--Conc: 20
+	--Threat: 20
+	--Pickup: 4, 6
+	--Notes:
+	--Active Mods: 
+
 	--------------------------------------
 				--Akimbo Swedish K--
 	--------------------------------------
+	--ID: self.x_m45
+	--Class: Rapid Fire
+	--Value: 5
+	--Magazine: 72
+	--Ammo: 160
+	--Fire Rate: 600
+	--Damage: 100
+	--Acc: 60
+	--Stab: 100
+	--Conc: 20
+	--Threat: 20
+	--Pickup: 4, 6
+	--Notes:
+	--Active Mods: Extended Mag
+
 	--------------------------------------
 				--Akimbo Jackal--
 	--------------------------------------
+	--ID: self.x_schakal
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 60
+	--Ammo: 160
+	--Fire Rate: 652
+	--Damage: 100
+	--Acc: 64
+	--Stab: 100
+	--Conc: 20
+	--Threat: 20
+	--Pickup: 4, 6
+	--Notes:
+	--Active Mods: Extended Magazine, Short Magazine
+
 	--------------------------------------
 				--Akimbo CR 805B--
 	--------------------------------------
+	--ID: self.x_hajk
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 60
+	--Ammo: 160
+	--Fire Rate: 750
+	--Damage: 100
+	--Acc: 64
+	--Stab: 100
+	--Conc: 20
+	--Threat: 20
+	--Pickup: 4, 6
+	--Notes:
+	--Active Mods: Vintage Mag, CAR Quadstacked Mag, Speedpull Mag
+
 	--------------------------------------
 				--Akimbo Krinkov--
 	--------------------------------------
+	--ID: self.x_akmsu
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 60
+	--Ammo: 160
+	--Fire Rate: 822
+	--Damage: 100
+	--Acc: 64
+	--Stab: 100
+	--Conc: 20
+	--Threat: 20
+	--Pickup: 4, 6
+	--Notes:
+	--Active Mods: AK Quadstacked Mag, Speedpull Mag
+
 	--------------------------------------
 		--Primary/Akimbo Shotguns--
 	--------------------------------------
+--INDEXED TO THIS POINT.
 	--------------------------------------
 				--Joceline O/U--
 	--------------------------------------
