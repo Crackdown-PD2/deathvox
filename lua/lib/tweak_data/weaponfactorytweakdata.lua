@@ -80,20 +80,6 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--------------------------------------
 				--AMCAR--
 	--------------------------------------
-	--ID: amcar
-	--Value: 1
-	--Magazine: 20
-	--Ammo: 300
-	--Fire Rate: 545
-	--Damage:50
-	--Acc: 100
-	--Stab: 100
-	--Conc: 30
-	--Threat: 10
-	--Pickup: 9, 18
-	--Notes: many shared mods
-			
-	
 		-- L5 Magazine
 		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_l5 = { -- gotta be like this or else the game shits the bed
 			stats = {	
@@ -731,6 +717,21 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--------------------------------------
 	--------------------------------------
 				--Peacemaker .45--
+	--------------------------------------
+	--------------------------------------
+		--Machine Pistols--
+	--------------------------------------
+	--------------------------------------
+				--Igor Automatik--
+	--------------------------------------
+	--------------------------------------
+				--STRYK 18c--
+	--------------------------------------
+	--------------------------------------
+				--Czech 92--
+	--------------------------------------
+	--------------------------------------
+				--Bernetti Auto--
 	--------------------------------------
 	--------------------------------------
 		--SMGs--
