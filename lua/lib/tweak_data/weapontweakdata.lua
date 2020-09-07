@@ -1,20 +1,20 @@
 local old_init = WeaponTweakData.init
 function WeaponTweakData:init(tweak_data)
-	--[[i dunno where to put this but heres a list of what weapons enemies use
-	      heavy ar wpn_npc_s553
-          light ar wpn_npc_m4
-          heavy shot wpn_npc_benelli
-          light shot wpn_npc_r870
-          gman wpn_npc_r870
-          other pistol nerds wpn_npc_c45
-          revolver bois wpn_npc_raging_bull
-          dozer wpn_npc_r870_dozer
-          cd med wpn_npc_raging_bull_med
-          cop smg wpn_npc_mp5
-          meddozer wpn_npc_ump_meddozer
-          dozer lmg wpn_npc_lmg_m249
-          dozer black wpn_npc_saiga
-		  cloaker wpn_npc_mp5_tactical
+	--[[here's a list of what weapons enemies use --NOTE check for accuracies against recent model swap.
+	heavy ar wpn_npc_s553
+        light ar wpn_npc_m4
+        heavy shot wpn_npc_benelli
+        light shot wpn_npc_r870
+        gman wpn_npc_r870
+        other pistol enemies wpn_npc_c45
+        revolver enemies wpn_npc_raging_bull
+        dozer wpn_npc_r870_dozer
+        cd med wpn_npc_raging_bull_med
+        cop smg wpn_npc_mp5
+        meddozer wpn_npc_ump_meddozer
+        dozer lmg wpn_npc_lmg_m249
+        dozer black wpn_npc_saiga
+	cloaker wpn_npc_mp5_tactical
 	]]--	  
 	old_init(self, tweak_data)
 	self.damage_tables = {
@@ -151,7 +151,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 0},
 			crackdown = {damage = 0} -- start.
 		},
-	deathvox_cop_pistol = {  -- mk 3 values. Previously 4 lock, now mapped to guard pistol.
+	deathvox_cop_pistol = {  -- mk 3 values. Previously 40 lock, now mapped to guard pistol.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 2},
 			hard = {damage = 2},
@@ -161,7 +161,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 2},
 			crackdown = {damage = 6}
 		},
-	deathvox_cop_revolver = { -- mk 3 values. Previously 4 lock, now start at four and follow medic pistol.
+	deathvox_cop_revolver = { -- mk 3 values. Previously 40 lock, now start at forty and follow medic pistol.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 4},
 			hard = {damage = 4},
@@ -171,7 +171,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 6},
 			crackdown = {damage = 8}
 		},
-	deathvox_cop_shotgun = {  -- mk 3 values. Previously 6 lock, now mapped to light shot.
+	deathvox_cop_shotgun = {  -- mk 3 values. Previously 60 lock, now mapped to light shot.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 6},
 			hard = {damage = 6},
@@ -181,7 +181,7 @@ function WeaponTweakData:init(tweak_data)
 			death_wish = {damage = 7.5},
 			crackdown = {damage = 9}
 		},
-	deathvox_cop_smg = {  -- mk 3 values. previously 2.5 lock, now begin at 2.5 then mapped to light AR.
+	deathvox_cop_smg = {  -- mk 3 values. previously 25 lock, now begin at 25 then mapped to light AR.
 			not_a_real_difficulty = {damage = 10},
 			normal = {damage = 2.5},
 			hard = {damage = 2.5},
@@ -379,7 +379,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_grenadier.use_data.selection_index = 2
 	self.deathvox_grenadier.DAMAGE = 0 -- irrelevant, as does not fire bullets. DEPRECATED due to use of damage table.
 	self.deathvox_grenadier.muzzleflash = "effects/payday2/particles/weapons/big_762_auto" -- increased visibility on fire.
-	self.deathvox_grenadier.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty" -- appears to produce no effect.
+	self.deathvox_grenadier.shell_ejection = "effects/payday2/particles/weapons/shells/shell_empty" -- appears to produce no effect. No need to adjust.
 	self.deathvox_grenadier.CLIP_AMMO_MAX = 9999999
 	self.deathvox_grenadier.NR_CLIPS_MAX = 9999999
 	self.deathvox_grenadier.looped_reload_speed = 10
@@ -2267,9 +2267,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 --saw		
 --tagging grenades and throwing weapons isnt done here, but in blackmarkettweakdata instead
 
--------/Ammo Pickup: Acquire two values, the first value is the ammo pickup minimum, the second value is the pickup max, don't forget to calculate for walk-in closet if that's going to be in the overhaul.
+--Ammo Pickup: Acquire two values, the first value is the ammo pickup minimum, the second value is the pickup max, don't forget to calculate for walk-in closet if that's going to be in the overhaul.
 		
---Piercing of all kinds can be defined with armor_piercing_chance being set to 1, can_shoot_through_enemy being set to true, can_shoot_through_shield being set to true and can_shoot_through_wall being set to true, I'm not sure what the effects of having some of the more extreme ones being set to true, while smaller ones being set to nil would be, be careful.
+--Piercing: All kinds can be defined with armor_piercing_chance being set to 1, can_shoot_through_enemy being set to true, can_shoot_through_shield being set to true and can_shoot_through_wall being set to true, I'm not sure what the effects of having some of the more extreme ones being set to true, while smaller ones being set to nil would be, be careful.
 		
 --Stability/Recoil: 1 point = 3, to get a weapon with 44 stability, the number you'd enter would end up being 12, the decimal is rounded down to 3, which results in the weapon having "44" stability in the weapon stat screen.
 
@@ -2285,6 +2285,22 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		
 --First gun of every category will have notes on the stats some of the unexplained stats if they weren't explained already by a previous category or this sheet, after that, it's all listening to music, drinking coffee at 2 in the morning while typing all the stuff out.
 
+--Comment info template:			
+--Weapon
+	--ID: self.NAME
+	--Value: 
+	--Magazine: 20
+	--Ammo: 300
+	--Fire Rate: 545
+	--Damage:50
+	--Acc: 100
+	--Stab: 100
+	--Conc: 30
+	--Threat: 10
+	--Pickup: 9, 18
+	--Notes: many shared mods
+
+--BE AWARE all info in template above, other than value, reflects OUTPUT ingame, not code stats. See guidance above for conversion, entry.
 --------------------------------------
 	--Primary Weapons--
 	--------------------------------------	
