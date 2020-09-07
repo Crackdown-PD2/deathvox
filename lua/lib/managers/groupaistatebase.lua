@@ -610,6 +610,9 @@ function GroupAIStateBase:on_criminal_nav_seg_change(unit, nav_seg_id)
 	end
 
 	local seg = nav_seg_id
+
+	u_sighting.seg = seg
+
 	local prev_area = u_sighting.area
 	local area = nil
 

@@ -107,6 +107,10 @@
 	<post :script_path="units/weapons/tripminebase.lua" :hook_id="units/weapons/trip_mine/tripminebase"/>
 
 	<post :script_path="managers/groupaistatebase.lua" :hook_id="managers/group_ai_states/groupaistatebase"/>
+	
+	<!--sadly have to include this here due to some fucky bullshit with cancelling update callback ids not wanting to work right for me, i cant figure it out, either, so until hoxi's code is around, this will HAVE to do...there are thankfully no side-effects -->
+	<post :script_path="managers/navigationmanager.lua" :hook_id="managers/navigationmanager"/> 
+	
 	<post :script_path="managers/achievmentmanager.lua" :hook_id="managers/achievmentmanager"/>
 	<post :script_path="managers/gameplaycentralmanager.lua" :hook_id="managers/gameplaycentralmanager"/>
 	<post :script_path="managers/enemymanager.lua" :hook_id="managers/enemymanager"/>

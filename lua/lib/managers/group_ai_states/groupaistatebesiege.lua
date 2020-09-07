@@ -527,7 +527,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 	local objective_area = nil
 
 	if obstructed_area then
-		if phase_is_anticipation then
+		if phase_is_anticipation or self._activeassaultbreak then
 			pull_back = true
 		elseif current_objective.moving_out then
 			if not current_objective.open_fire and not self._feddensityhigh and not self._activeassaultbreak then
@@ -556,8 +556,9 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 					break
 				end
 			end
-			
-			if not self._feddensityhigh and not self._activeassaultbreak and phase_is_anticipation and not has_criminals_close then
+			if self._activeassaultbreak then
+				pull_back = true
+			elseif not self._feddensityhigh and not self._activeassaultbreak and phase_is_anticipation and not has_criminals_close then
 				approach = true
 			elseif not phase_is_anticipation and not current_objective.open_fire and not self._feddensityhigh and not self._activeassaultbreak then
 				--open_fire = true
@@ -571,7 +572,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		end
 	end
 
-	objective_area = objective_area or current_objective.area
+	objective_area = current_objective.area or objective_area
 
 	if open_fire then
 		local grp_objective = {
@@ -703,17 +704,16 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 				--log("couldn't find assault path for" .. group .. "in groupaistatebesiege!!!")
 			end
 		else
-			local path_and_area_to_choose = math.random(1, 4)
-			if 	path_and_area_to_choose == 1 then 
+			if math.random() < 0.25 then 
 				assault_area = assault_area_uno
 				assault_path = assault_path_uno
-			elseif path_and_area_to_choose == 2 then
+			elseif math.random() < 0.25 then
 				assault_area = assault_area_dos
 				assault_path = assault_path_dos
-			elseif path_and_area_to_choose == 3 then
+			elseif math.random() < 0.25 then
 				assault_area = assault_area_tres
 				assault_path = assault_path_tres
-			elseif path_and_area_to_choose == 4 then
+			else
 				assault_area = assault_area_quatro
 				assault_path = assault_path_quatro
 			end
@@ -1224,6 +1224,33 @@ function GroupAIStateBesiege:_upd_group_spawning()
 	end
 end
 
+function GroupAIStateBesiege:_upd_groups()
+	for group_id, group in pairs(self._groups) do
+		self:_verify_group_objective(group)
+
+		for u_key, u_data in pairs(group.units) do
+			local brain = u_data.unit:brain()
+			local current_objective = brain:objective()
+			local noobjordefaultorgrpobjchkandnoretry = not current_objective or current_objective.is_default or current_objective.grp_objective and current_objective.grp_objective ~= group.objective and not current_objective.grp_objective.no_retry
+			local notfollowingorfollowingaliveunit = not group.objective.follow_unit or alive(group.objective.follow_unit)
+
+			if noobjordefaultorgrpobjchkandnoretry and notfollowingorfollowingaliveunit then
+				local objective = self._create_objective_from_group_objective(group.objective, u_data.unit)
+
+				if objective and brain:is_available_for_assignment(objective) then
+					self:set_enemy_assigned(objective.area or group.objective.area, u_key)
+
+					if objective.element then
+						objective.element:clbk_objective_administered(u_data.unit)
+					end
+
+					u_data.unit:brain():set_objective(objective)
+				end
+			end
+		end
+	end
+end
+
 function GroupAIStateBesiege:_upd_assault_task()
 	local task_data = self._task_data.assault
 
@@ -1425,18 +1452,16 @@ function GroupAIStateBesiege:_upd_assault_task()
 
 	local primary_target_area = nil
 	
-	if self._current_target_area then
-		primary_target_area = self._current_target_area
-	elseif self._task_data.assault.target_areas then
-		self._current_target_area = self._task_data.assault.target_areas[1]
+	if self._task_data.assault.target_areas then
+		self._current_target_area = self._task_data.assault.target_areas[math.random(#self._task_data.assault.target_areas)]
 		primary_target_area = self._current_target_area
 	end
 
-	if not primary_target_area or not self._current_target_area or self:is_area_safe_assault(primary_target_area) or self._force_assault_end_t then
+	if not primary_target_area or not self._current_target_area or self:is_area_safe_assault(primary_target_area) then
 		self._task_data.assault.target_areas = self:_upd_assault_areas()
 		
 		if self._task_data.assault.target_areas then
-			self._current_target_area = self._task_data.assault.target_areas[1]
+			self._current_target_area = self._task_data.assault.target_areas[math.random(#self._task_data.assault.target_areas)]
 			primary_target_area = self._current_target_area
 		end
 	end
@@ -1449,16 +1474,13 @@ function GroupAIStateBesiege:_upd_assault_task()
 
 	self:detonate_queued_smoke_grenades()
 	
+	local enemy_count = self:_count_police_force("assault")
 	local nr_wanted = task_data.force - self:_count_police_force("assault")
 
-	if task_data.phase == "anticipation" then
-		nr_wanted = nr_wanted - 5
-	end
-
-	if nr_wanted > 0 and task_data.phase ~= "fade" then
+	if self._task_data.assault.target_areas and primary_target_area and nr_wanted > 0 and task_data.phase ~= "fade" and not self._activeassaultbreak and not self._feddensityhigh or self._task_data.assault.target_areas and primary_target_area and self._hunt_mode and nr_wanted > 0 and not self._activeassaultbreak and not self._feddensityhigh then
 		local used_event = nil
 
-		if task_data.use_spawn_event and task_data.phase ~= "anticipation" then
+		if task_data.use_spawn_event and task_data.phase ~= "anticipation" or task_data.use_spawn_event and self._hunt_mode then
 			task_data.use_spawn_event = false
 
 			if self:_try_use_task_spawn_event(t, primary_target_area, "assault") then
@@ -1470,7 +1492,7 @@ function GroupAIStateBesiege:_upd_assault_task()
 			if next(self._spawning_groups) then
 				-- Nothing
 			else
-				local spawn_group, spawn_group_type = self:_find_spawn_group_near_area(primary_target_area, self._tweak_data.assault.groups, nil, nil, nil)
+				local spawn_group, spawn_group_type = self:_find_spawn_group_near_area(primary_target_area, self._tweak_data.assault.groups, primary_target_area.pos, nil, nil)
 
 				if spawn_group then
 					local grp_objective = {
@@ -1479,10 +1501,12 @@ function GroupAIStateBesiege:_upd_assault_task()
 						pose = "stand",
 						type = "assault_area",
 						area = spawn_group.area,
-						coarse_path = {{
-							spawn_group.area.pos_nav_seg,
-							spawn_group.area.pos
-						}}
+						coarse_path = {
+							{
+								spawn_group.area.pos_nav_seg,
+								spawn_group.area.pos
+							}
+						}
 					}
 
 					self:_spawn_in_group(spawn_group, spawn_group_type, grp_objective, task_data)
@@ -1491,8 +1515,9 @@ function GroupAIStateBesiege:_upd_assault_task()
 		end
 	end
 	
-
-	self:_assign_enemy_groups_to_assault(task_data.phase)
+	if self._task_data.assault.target_areas then
+		self:_assign_enemy_groups_to_assault(task_data.phase)
+	end
 end
 
 function GroupAIStateBesiege:_check_phalanx_damage_reduction_increase()
@@ -2028,6 +2053,8 @@ function GroupAIStateBesiege._create_objective_from_group_objective(grp_objectiv
 
 	return objective
 end
+
+
 
 function GroupAIStateBesiege:is_smoke_grenade_active() --this functions differently, check for if use_smoke IS a thing instead
 	if not self._task_data.assault.use_smoke then
