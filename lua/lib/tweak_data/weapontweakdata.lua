@@ -6707,19 +6707,78 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Akimbo Matever .357--
 	--------------------------------------
+	--ID: self.x_2006m
+	--Class: Precision
+	--Value: 1
+	--Magazine: 12
+	--Ammo: 90
+	--Fire Rate: 361
+	--Damage: 160
+	--Acc: 100
+	--Stab: 0
+	--Conc: 30
+	--Threat: 9
+	--Pickup: 1, 2
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: 
+
 	--------------------------------------
 				--Akimbo Bronco .44--
 	--------------------------------------
+	--ID: self.x_rage
+	--Class: Precision
+	--Value: 1
+	--Magazine: 12
+	--Ammo: 90
+	--Fire Rate: 361
+	--Damage: 160
+	--Acc: 100
+	--Stab: 0
+	--Conc: 30
+	--Threat: 9
+	--Pickup: 1, 2
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: 
+
 	--------------------------------------
 				--Akimbo Castigo .44--
 	--------------------------------------
+	--ID: self.x_chinchilla
+	--Class: Precision
+	--Value: 1
+	--Magazine: 12
+	--Ammo: 90
+	--Fire Rate: 361
+	--Damage: 160
+	--Acc: 100
+	--Stab: 0
+	--Conc: 30
+	--Threat: 9
+	--Pickup: 1, 2
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: 
+
 	--------------------------------------
 		--Machine Guns--
 	--------------------------------------
 	--------------------------------------
 				--RPK--
 	--------------------------------------
-		--RPK
+	--ID: self.rpk
+	--Class: Heavy
+	--Value: 9
+	--Magazine: 75
+	--Ammo: 160
+	--Fire Rate: 750
+	--Damage: 120
+	--Acc: 76
+	--Stab: 88
+	--Conc: 0
+	--Threat: 43
+	--Pickup: 0.5, 0.6
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: 
+
 		self.rpk.FIRE_MODE = "auto"
 		self.rpk.fire_mode_data = {
 			fire_rate = 0.08
@@ -6784,7 +6843,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Brenner-21--
 	--------------------------------------
-		--Brenner 21
+	--ID: self.hk21
+	--Class: Heavy
+	--Value: 9
+	--Magazine: 80
+	--Ammo: 120
+	--Fire Rate: 732
+	--Damage: 150
+	--Acc: 60
+	--Stab: 68
+	--Conc: 0
+	--Threat: 43
+	--Pickup: 0.4, 0.5
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: 
+
 		self.hk21.FIRE_MODE = "auto"
 		self.hk21.fire_mode_data = {
 			fire_rate = 0.083
@@ -6849,8 +6922,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--KSP 58--
 	--------------------------------------
-		
-		--KSP 58
+	--ID: self.par
+	--Class: Heavy
+	--Value: 9
+	--Magazine: 50
+	--Ammo: 120
+	--Fire Rate: 909
+	--Damage: 150
+	--Acc: 68
+	--Stab: 76
+	--Conc: 0
+	--Threat: 43
+	--Pickup: 0.4, 0.5
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: 
+
 		self.par.FIRE_MODE = "auto"
 		self.par.fire_mode_data = {
 			fire_rate = 0.066
@@ -6916,7 +7002,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--KSP unnumbered--
 	--------------------------------------
-		--KSP (not numbered)
+	--ID: self.m249
+	--Class: Heavy
+	--Value: 9
+	--Magazine: 100
+	--Ammo: 160
+	--Fire Rate: 909
+	--Damage: 120
+	--Acc: 88
+	--Stab: 92
+	--Conc: 0
+	--Threat: 43
+	--Pickup: 0.5, 0.6
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: 
+
 		self.m249.FIRE_MODE = "auto"
 		self.m249.fire_mode_data = {
 			fire_rate = 0.066
@@ -6981,7 +7081,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Buzzsaw 42--
 	--------------------------------------
-		--Buzzsaw 42
+	--ID: self.mg42
+	--Class: Heavy
+	--Value: 9
+	--Magazine: 50
+	--Ammo: 120
+	--Fire Rate: 1200
+	--Damage: 150
+	--Acc: 72
+	--Stab: 88
+	--Conc: 0
+	--Threat: 43
+	--Pickup: 0.4, 0.5
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: 
+
 		self.mg42.FIRE_MODE = "auto"
 		self.mg42.fire_mode_data = {
 			fire_rate = 0.05
@@ -7049,7 +7163,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--XL 5.56 Microgun--
 	--------------------------------------
-		--Microgun
+	--ID: self.shuno
+	--Class: Heavy
+	--Value: 9
+	--Magazine: 600
+	--Ammo: 200
+	--Fire Rate: 2000
+	--Damage: 100
+	--Acc: 36
+	--Stab: 88
+	--Conc: 0
+	--Threat: 43
+	--Pickup: 0, 0
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: 
 		
 		self.shuno.FIRE_MODE = "auto"
 		self.shuno.fire_mode_data = {
@@ -7113,8 +7240,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Vulcan Minigun--
 	--------------------------------------
-		
-		--Vulcan Minigun
+	--ID: self.m134
+	--Class: Heavy
+	--Value: 9
+	--Magazine: 600
+	--Ammo: 200
+	--Fire Rate: 3000
+	--Damage: 100
+	--Acc: 48
+	--Stab: 68
+	--Conc: 0
+	--Threat: 43
+	--Pickup: 0, 0
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: I’ll Take Half That Kit
+
 		self.m134.FIRE_MODE = "auto"
 		self.m134.fire_mode_data = {
 			fire_rate = 0.02
@@ -7177,30 +7317,165 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Airbow--
 	--------------------------------------
+	--ID: self.ecp
+	--Class: Precision, Quiet
+	--Value: 1
+	--Magazine: 6
+	--Ammo: 30
+	--Fire Rate: 120
+	--Damage: 700
+	--Acc: 100
+	--Stab: 100
+	--Conc: 20
+	--Threat: 0
+	--Pickup: 0, 0
+	--Notes: Armor Piercing
+	--Active Mods: Explosive Arrow, Poison Arrow
+
 	--------------------------------------
 				--Light Crossbow--
 	--------------------------------------
+	--ID: self.frankish
+	--Class: Precision, Quiet
+	--Value: 1
+	--Magazine: 1
+	--Ammo: 50
+	--Fire Rate: 40
+	--Damage: 750
+	--Acc: 100
+	--Stab: 100
+	--Conc: 30
+	--Threat: 0
+	--Pickup: 0, 0
+	--Notes: Armor Piercing
+	--Active Mods: Explosive Bolt, Poison Bolt
+
 	--------------------------------------
 				--Plainsrider Bow--
 	--------------------------------------
+	--ID: self.plainsrider
+	--Class: Precision, Quiet
+	--Value: 1
+	--Magazine: 1
+	--Ammo: 60
+	--Fire Rate: 300
+	--Damage: 1000
+	--Acc: 100
+	--Stab: 100
+	--Conc: 30
+	--Threat: 0
+	--Pickup: 0, 0
+	--Notes: Armor Piercing
+	--Active Mods: Explosive Arrows, Poison Arrows
+
 	--------------------------------------
 				--DECA Technologies Compound Bow--
 	--------------------------------------
+	--ID: self.elastic
+	--Class: Precision, Quiet
+	--Value: 1
+	--Magazine: 1
+	--Ammo: 40
+	--Fire Rate: 300
+	--Damage: 2000
+	--Acc: 100
+	--Stab: 100
+	--Conc: 30
+	--Threat: 0
+	--Pickup: 0, 0
+	--Notes: Armor Piercing
+	--Active Mods: Explosive Arrow, Poison Arrow
+
 	--------------------------------------
 				--English Longbow--
 	--------------------------------------
+	--ID: self.long
+	--Class: Precision, Quiet
+	--Value: 1
+	--Magazine: 1
+	--Ammo: 40
+	--Fire Rate: 300
+	--Damage: 2000
+	--Acc: 100
+	--Stab: 100
+	--Conc: 30
+	--Threat: 0
+	--Pickup: 0, 0
+	--Notes: Armor Piercing
+	--Active Mods: Explosive Arrows, Poison Arrows
+
 	--------------------------------------
 				--Heavy Crossbow--
 	--------------------------------------
+	--ID: self.arblast
+	--Class: Precision, Quiet
+	--Value: 1
+	--Magazine: 1
+	--Ammo: 40
+	--Fire Rate: 21
+	--Damage: 2000
+	--Acc: 100
+	--Stab: 100
+	--Conc: 30
+	--Threat: 0
+	--Pickup: 0, 0
+	--Notes: Armor Piercing
+	--Active Mods: Explosive Bolt, Poisoned Bolt
 	--------------------------------------
 				--GL 40 Grenade Launcher--
 	--------------------------------------
+	--ID: self.gre_m79
+	--Class: Specialist
+	--Value: 1
+	--Magazine: 1
+	--Ammo: 6
+	--Fire Rate: 30
+	--Damage: 1100
+	--Acc: 100
+	--Stab: 100
+	--Conc: 25
+	--Threat: 43
+	--Pickup: 0.1, 0.2
+	--Notes: Area Damage
+	--Active Mods: Incendiary Round
+
 	--------------------------------------
 				--Piglet Grenade Launcher--
 	--------------------------------------
+	--ID: self.m32
+	--Class: Specialist
+	--Value: 1
+	--Magazine: 6
+	--Ammo: 12
+	--Fire Rate: 60
+	--Damage: 1100
+	--Acc: 100
+	--Stab: 100
+	--Conc: 0
+	--Threat: 43
+	--Pickup: 0.1, 0.2
+	--Notes: Area Damage
+	--Active Mods: Incendiary Round
+
 	--------------------------------------
 				--Flamethrower Mk.1--
 	--------------------------------------
+	--ID: self.flamethrower_mk2
+	--Class: Specialist
+	--Value: 1
+	--Magazine: 900
+	--Ammo: 900
+	--Fire Rate: 2000
+	--Damage: 100
+	--Acc: 0
+	--Stab: 100
+	--Conc: 10
+	--Threat: 43
+	--Pickup: 1, 1
+	--Notes:  Igniting, Armor Piercing, Body Piercing, Shield Piercing, Improv Expert Aced
+	--NOTE: The Flamethrower Mk.1 does not have an active Ammo Pickup without Improv Expert Aced.
+	--Active Mods: Incendiary Round
+
 	--------------------------------------
 	--Secondary Weapons--
 	--------------------------------------
@@ -10390,7 +10665,24 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 	--OVE9000 Saw--
 	--------------------------------------			
-			
+	--ID: self.saw
+	--Class: Saw
+	--Value: 1
+	--Magazine: 150
+	--Ammo: 300
+	--Fire Rate: 400
+	--Damage: 80
+	--Acc: 100
+	--Stab: 100
+	--Conc: 20
+	--Threat: 43
+	--Pickup: 0, 0
+	--Notes:The hitbox is being moved to the middle of the screen. Rejoice!
+	--No longer has a hidden damage bonus to Dozers.
+	--Active Mods: Silent Motor, Fast Motor, Durable Blade, Sharp Blade
+
+
+-- END weapon data.
 
 
 	end
