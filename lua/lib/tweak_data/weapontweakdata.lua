@@ -4425,7 +4425,6 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 		--Primary/Akimbo Shotguns--
 	--------------------------------------
---INDEXED TO THIS POINT.
 	--------------------------------------
 				--Joceline O/U--
 	--------------------------------------
@@ -7482,14 +7481,27 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 		--Pistols--
 	--------------------------------------
---IND
 	--------------------------------------
 			--Light Pistols--
 	--------------------------------------
 	--------------------------------------
 				--Gruber Kurz--
 	--------------------------------------
-		--Gruber Kurz
+	--ID: self.ppk
+	--Class: Precision
+	--Value: 1
+	--Magazine: 14
+	--Ammo: 168
+	--Fire Rate: 480
+	--Damage: 20
+	--Acc: 100
+	--Stab: 100
+	--Conc: 35
+	--Threat: 0
+	--Pickup: 4, 5
+	--Notes: 
+	--Active Mods:
+
 		self.ppk.FIRE_MODE = "single"
 		self.ppk.fire_mode_data = {
 			fire_rate = 0.125
@@ -7546,7 +7558,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Chimano 88--
 	--------------------------------------
-		--Chimano 88
+	--ID: self.glock_17
+	--Class: Precision
+	--Value: 1
+	--Magazine: 17
+	--Ammo: 180
+	--Fire Rate: 480
+	--Damage: 50
+	--Acc: 100
+	--Stab: 56
+	--Conc: 30
+	--Threat: 4
+	--Pickup: 3, 6
+	--Notes: 
+	--Active Mods: Extended Magazine
+
 		self.glock_17.fire_mode_data = {
 			fire_rate = 0.125
 		}
@@ -7607,7 +7633,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--M13 9mm--
 	--------------------------------------
-		--M13 9mm Pistol
+	--ID: self.legacy
+	--Class: Precision
+	--Value: 4
+	--Magazine: 13
+	--Ammo: 180
+	--Fire Rate: 545
+	--Damage: 50
+	--Acc: 100
+	--Stab: 48
+	--Conc: 30
+	--Threat: 8
+	--Pickup: 3, 6
+	--Notes: 
+	--Active Mods: 
+
 		self.legacy.FIRE_MODE = "single"
 		self.legacy.fire_mode_data = {
 			fire_rate = 0.11
@@ -7664,7 +7704,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Chimano Compact--
 	--------------------------------------
-		--Chimano Compact
+	--ID: self.g26
+	--Class: Precision
+	--Value: 1
+	--Magazine: 10
+	--Ammo: 180
+	--Fire Rate: 480
+	--Damage: 50
+	--Acc: 100
+	--Stab: 48
+	--Conc: 30
+	--Threat: 8
+	--Pickup: 3, 6
+	--Notes: 
+	--Active Mods: Extended Mag.
+
 		self.g26.FIRE_MODE = "single"
 		self.g26.fire_mode_data = {
 			fire_rate = 0.125
@@ -7721,7 +7775,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Crosskill Guard--
 	--------------------------------------
---Crosskill Guard
+	--ID: self.shrew
+	--Class: Precision
+	--Value: 1
+	--Magazine: 17
+	--Ammo: 180
+	--Fire Rate: 480
+	--Damage: 50
+	--Acc: 100
+	--Stab: 48
+	--Conc: 30
+	--Threat: 8
+	--Pickup: 3, 6
+	--Notes: 
+	--Active Mods: Extended Mag
+
 		self.shrew.FIRE_MODE = "single"
 		self.shrew.fire_mode_data = {
 			fire_rate = 0.125
@@ -7783,7 +7851,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Bernetti 9--
 	--------------------------------------
-		--Bernetti 9
+	--ID: self.b92fs
+	--Class: Precision
+	--Value: 1
+	--Magazine: 28
+	--Ammo: 180
+	--Fire Rate: 480
+	--Damage: 50
+	--Acc: 100
+	--Stab: 48
+	--Conc: 30
+	--Threat: 8
+	--Pickup: 3, 6
+	--Notes: 
+	--Active Mods: Extended Mag.
+
 		self.b92fs.FIRE_MODE = "single"
 		self.b92fs.fire_mode_data = {
 			fire_rate = 0.125
@@ -7843,7 +7925,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Crosskill--
 	--------------------------------------
-		--Crosskill Pistol
+	--ID: self.colt_1911
+	--Class: Precision
+	--Value: 1
+	--Magazine: 10
+	--Ammo: 90
+	--Fire Rate: 361
+	--Damage: 80
+	--Acc: 100
+	--Stab: 56
+	--Conc: 30
+	--Threat: 11
+	--Pickup: 2, 5
+	--Notes: 
+	--Active Mods: 12rnd Mag., Magazine with Ameritude!
+
 		self.colt_1911.FIRE_MODE = "single"
 		self.colt_1911.fire_mode_data = {
 			fire_rate = 0.166
@@ -7900,7 +7996,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Contractor--
 	--------------------------------------
-		--Contractor
+	--ID: self.packrat
+	--Class: Precision
+	--Value: 4
+	--Magazine: 15
+	--Ammo: 90
+	--Fire Rate: 361
+	--Damage: 80
+	--Acc: 100
+	--Stab: 48
+	--Conc: 30
+	--Threat: 11
+	--Pickup: 2, 5
+	--Notes: 
+	--Active Mods: Extended Magazine
+
 		self.packrat.FIRE_MODE = "single"
 		self.packrat.fire_mode_data = {
 			fire_rate = 0.166
@@ -7957,7 +8067,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Signature .40--
 	--------------------------------------
-		--Signature .40
+	--ID: self.p226
+	--Class: Precision
+	--Value: 4
+	--Magazine: 12
+	--Ammo: 90
+	--Fire Rate: 361
+	--Damage: 80
+	--Acc: 100
+	--Stab: 48
+	--Conc: 30
+	--Threat: 11
+	--Pickup: 2, 5
+	--Notes: 
+	--Active Mods: Extended Mag.
+
 		self.p226.FIRE_MODE = "single"
 		self.p226.fire_mode_data = {
 			fire_rate = 0.166
@@ -8014,7 +8138,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Broomstick--
 	--------------------------------------
---Broomstick		
+	--ID: self.c96
+	--Class: Precision
+	--Value: 1
+	--Magazine: 20
+	--Ammo: 90
+	--Fire Rate: 361
+	--Damage: 80
+	--Acc: 100
+	--Stab: 60
+	--Conc: 30
+	--Threat: 11
+	--Pickup: 2, 5
+	--Notes: 
+	--Active Mods: High Capacity Mag, Precision Barrel
+	
 		self.c96.FIRE_MODE = "single"
 		self.c96.fire_mode_data = {
 			fire_rate = 0.166
@@ -8071,7 +8209,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Interceptor 45--
 	--------------------------------------
---Interceptor .45
+	--ID: self.usp
+	--Class: Precision
+	--Value: 1
+	--Magazine: 13
+	--Ammo: 90
+	--Fire Rate: 361
+	--Damage: 80
+	--Acc: 100
+	--Stab: 48
+	--Conc: 30
+	--Threat: 11
+	--Pickup: 2, 5
+	--Notes: 
+	--Active Mods: Extended Mag., I want more Magazine!
+
 		self.usp.FIRE_MODE = "single"
 		self.usp.fire_mode_data = {
 			fire_rate = 0.166
@@ -8133,7 +8285,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--LEO--
 	--------------------------------------
-		--LEO Pistol
+	--ID: self.hs2000
+	--Class: Precision
+	--Value: 4
+	--Magazine: 38
+	--Ammo: 90
+	--Fire Rate: 361
+	--Damage: 80
+	--Acc: 100
+	--Stab: 48
+	--Conc: 30
+	--Threat: 11
+	--Pickup: 2, 5
+	--Notes: 
+	--Active Mods: Extended Mag
+			
 		self.hs2000.FIRE_MODE = "single"
 		self.hs2000.fire_mode_data = {
 			fire_rate = 0.166
@@ -8187,11 +8353,24 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.hs2000.stats_modifiers = {
 			damage = 1
 		}
-
 	--------------------------------------
 				--Chimano Custom--
 	--------------------------------------
-		--Chimano Custom
+	--ID: self.g22c
+	--Class: Precision
+	--Value: 1
+	--Magazine: 16
+	--Ammo: 90
+	--Fire Rate: 361
+	--Damage: 80
+	--Acc: 100
+	--Stab: 48
+	--Conc: 30
+	--Threat: 11
+	--Pickup: 2, 5
+	--Notes: 
+	--Active Mods: Extended Mag.
+
 		self.g22c.FIRE_MODE = "single"
 		self.g22c.fire_mode_data = {
 			fire_rate = 0.166
@@ -8256,7 +8435,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--5/7 AP--
 	--------------------------------------
-		--5/7 AP Pistol
+	--ID: self.lemming
+	--Class: Precision
+	--Value: 4
+	--Magazine: 20
+	--Ammo: 45
+	--Fire Rate: 600
+	--Damage: 110
+	--Acc: 100
+	--Stab: 36
+	--Conc: 25
+	--Threat: 9
+	--Pickup: 0.5, 0.75
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: Extended Magazine
+
 		self.lemming.FIRE_MODE = "single"
 		self.lemming.fire_mode_data = {
 			fire_rate = 0.1
@@ -8317,8 +8510,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Deagle--
 	--------------------------------------
-		
-		--Deagle
+	--ID: self.deagle
+	--Class: Precision
+	--Value: 1
+	--Magazine: 10
+	--Ammo: 60
+	--Fire Rate: 240
+	--Damage: 110
+	--Acc: 100
+	--Stab: 20
+	--Conc: 25
+	--Threat: 9
+	--Pickup: 1.5, 3
+	--Notes: Armor Piercing
+	--Active Mods: Extended Magazine
+
 		self.deagle.FIRE_MODE = "single"
 		self.deagle.fire_mode_data = {
 			fire_rate = 0.25
@@ -8375,7 +8581,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Parabellum--
 	--------------------------------------
-		--Parabellum
+	--ID: self.breech
+	--Class: Precision
+	--Value: 4
+	--Magazine: 8
+	--Ammo: 60
+	--Fire Rate: 361
+	--Damage: 110
+	--Acc: 100
+	--Stab: 24
+	--Conc: 25
+	--Threat: 9
+	--Pickup: 1.5, 3
+	--Notes: Armor Piercing
+	--Active Mods:
+
 		self.breech.FIRE_MODE = "single"
 		self.breech.fire_mode_data = {
 			fire_rate = 0.166
@@ -8432,7 +8652,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Baby Deagle--
 	--------------------------------------
---Baby Deagle
+	--ID: self.sparrow
+	--Class: Precision
+	--Value: 4
+	--Magazine: 12
+	--Ammo: 60
+	--Fire Rate: 240
+	--Damage: 110
+	--Acc: 100
+	--Stab: 24
+	--Conc: 25
+	--Threat: 9
+	--Pickup: 1.5, 3
+	--Notes: Armor Piercing
+	--Active Mods:
+
 		self.sparrow.FIRE_MODE = "single"
 		self.sparrow.fire_mode_data = {
 			fire_rate = 0.25
@@ -8489,7 +8723,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--White Streak--
 	--------------------------------------
-		--White Streak Pistol
+	--ID: self.pl14
+	--Class: Precision
+	--Value: 4
+	--Magazine: 12
+	--Ammo: 60
+	--Fire Rate: 240
+	--Damage: 110
+	--Acc: 100
+	--Stab: 28
+	--Conc: 25
+	--Threat: 9
+	--Pickup: 1.5, 3
+	--Notes: Armor Piercing
+	--Active Mods: Extended Magazine
+
 		self.pl14.FIRE_MODE = "single"
 		self.pl14.fire_mode_data = {
 			fire_rate = 0.25
@@ -8549,7 +8797,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Matever .357--
 	--------------------------------------
-		--Matever .357
+	--ID: self.mateba
+	--Class: Precision
+	--Value: 1
+	--Magazine: 6
+	--Ammo: 60
+	--Fire Rate: 361
+	--Damage: 160
+	--Acc: 100
+	--Stab: 12
+	--Conc: 25
+	--Threat: 24
+	--Pickup: 1, 2
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: 
+			
 		self.mateba.FIRE_MODE = "single"
 		self.mateba.fire_mode_data = {
 			fire_rate = 0.166
@@ -8606,7 +8868,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Bronco .44--
 	--------------------------------------
-		--Bronco
+	--ID: self.new_raging_bull
+	--Class: Precision
+	--Value: 1
+	--Magazine: 6
+	--Ammo: 60
+	--Fire Rate: 361
+	--Damage: 160
+	--Acc: 100
+	--Stab: 24
+	--Conc: 25
+	--Threat: 24
+	--Pickup: 1, 2
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: 
+
 		self.new_raging_bull.FIRE_MODE = "single"
 		self.new_raging_bull.fire_mode_data = {
 			fire_rate = 0.166
@@ -8663,6 +8939,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Castigo .44--
 	--------------------------------------
+	--ID: self.chinchilla
+	--Class: Precision
+	--Value: 1
+	--Magazine: 6
+	--Ammo: 60
+	--Fire Rate: 361
+	--Damage: 160
+	--Acc: 100
+	--Stab: 12
+	--Conc: 25
+	--Threat: 24
+	--Pickup: 1, 2
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: 
+
 		self.chinchilla.FIRE_MODE = "single"
 		self.chinchilla.fire_mode_data = {
 			fire_rate = 0.166
@@ -8719,7 +9010,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Peacemaker .45--
 	--------------------------------------
-		--Peacemaker
+	--ID: self.peacemaker
+	--Class: Heavy --NOTE not error, no akimbo peacemaker
+	--Value: 1
+	--Magazine: 6
+	--Ammo: 30
+	--Fire Rate: 240
+	--Damage: 360
+	--Acc: 100
+	--Stab: 0
+	--Conc: 15
+	--Threat: 43
+	--Pickup: 1, 2
+	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	--Active Mods: 
+
 		self.peacemaker.FIRE_MODE = "single"
 		self.peacemaker.fire_mode_data = {
 			fire_rate = 0.25
@@ -8791,10 +9096,38 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Igor Automatik--
 	--------------------------------------
+	--ID: self.stech
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 20
+	--Ammo: 160
+	--Fire Rate: 750
+	--Damage: 60
+	--Acc: 80
+	--Stab: 44
+	--Conc: 32
+	--Threat: 8
+	--Pickup: 7, 11
+	--Notes: 
+	--Active Mods: Extended Mag.
 	--------------------------------------
 				--STRYK 18c--
 	--------------------------------------
-		--STRYK 18c
+	--ID: self.glock_18c
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 20
+	--Ammo: 240
+	--Fire Rate: 909
+	--Damage: 40
+	--Acc: 68
+	--Stab: 88
+	--Conc: 32
+	--Threat: 8
+	--Pickup: 9, 18
+	--Notes: 
+	--Active Mods: Extended Mag.
+
 		self.glock_18c.FIRE_MODE = "auto"
 		self.glock_18c.fire_mode_data = {
 			fire_rate = 0.066
@@ -8856,16 +9189,46 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 	--------------------------------------
 				--Czech 92--
-	--------------------------------------
+	--------------------------------------	
+	--ID: self.czech
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 15
+	--Ammo: 300
+	--Fire Rate: 1000
+	--Damage: 40
+	--Acc: 80
+	--Stab: 40
+	--Conc: 32
+	--Threat: 8
+	--Pickup: 9, 18
+	--Notes: 
+	--Active Mods: Extended Magazine
+
 	--------------------------------------
 				--Bernetti Auto--
 	--------------------------------------
+	--ID: self.beer
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 15
+	--Ammo: 300
+	--Fire Rate: 1101
+	--Damage: 40
+	--Acc: 84
+	--Stab: 80
+	--Conc: 32
+	--Threat: 8
+	--Pickup: 9, 18
+	--Notes: 
+	--Active Mods: Extended Magazine
 	--------------------------------------
 		--SMGs--
 	--------------------------------------
 	--------------------------------------
 			--Light SMGs--
 	--------------------------------------
+--IND
 	--------------------------------------
 				--Tatonka--
 	--------------------------------------
