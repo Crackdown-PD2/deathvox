@@ -81,6 +81,27 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			}
 		}
 		
+		self.skills.shock_and_awe = { --Making Miracles
+			{
+				upgrades = {
+					"player_making_miracles_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_making_miracles_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_shock_and_awe_beta",
+			desc_id = "menu_shock_and_awe_beta_desc",
+			icon_xy = {
+				10,
+				0
+			}
+		}
+			
 		self.skills.fast_fire = { --Close Enough
 			{
 				upgrades = {

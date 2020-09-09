@@ -117,6 +117,36 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		self.values.player.making_miracles_basic = {
+			true
+		}
+		
+		self.values.player.making_miracles_aced = {
+			true
+		}
+		
+		self.definitions.player_making_miracles_basic = {
+			name_id = "menu_making_miracles_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "making_miracles_basic",
+				category = "player"
+			}
+		}
+		
+		self.definitions.player_making_miracles_aced = {
+			name_id = "menu_making_miracles_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "making_miracles_aced",
+				category = "player"
+			}
+		}
+		
+		
+		
 		--Engineer
 		
 		--Thief

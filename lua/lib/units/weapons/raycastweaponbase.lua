@@ -740,6 +740,10 @@ function InstantBulletBase:calculate_crit(weapon_unit, user_unit)
 	
 	if has_category and weapon_unit:base():is_category("assault_rifle", "smg", "rapidfire") then
 		crit_value = crit_value + managers.player:upgrade_value("player", "spray_and_pray_basic", 0)
+		if managers.player._miracle_crit_chance_boost then
+			--log("new do? dead you.")
+			crit_value = crit_value + managers.player._miracle_crit_chance_boost
+		end
 	end
 	
 	--log("crit value is " .. crit_value .. "!")
