@@ -2333,7 +2333,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 9, 18
 	--Notes: Being the "training wheels" gun and having notably lower DPS than every other AR, 
 	--it received additional buffs in multiple areas to make it a viable comfort pick. 
-	--Active Mods: Milspec Mag, Tactical Mag, Expert Mag, L5 Magazine, CAR Quadstacked Mag, Speedpull Mag
+	--Active Mods: Milspec Mag, Tactical Mag, Expert Mag, L5 Magazine [+10 Magazine, -2 Concealment]
+	--CAR Quadstacked Mag [+40 Magazine, -10 Concealment]
+	--Speedpull Mag [+100% Reload Speed, +10 Magazine -4 Concealment]
 
 		self.amcar.FIRE_MODE = "auto"
 		self.amcar.fire_mode_data = {
@@ -2479,7 +2481,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 10
 	--Pickup: 9, 18
 	--Notes:
-	--Active Mods: Speedpull Mag
+	--Active Mods: Speedpull Mag [+100% Reload Speed, -5 Concealment]
 
 		self.g36.FIRE_MODE = "auto"
 		self.g36.fire_mode_data = {
@@ -2621,7 +2623,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 10
 	--Pickup: 8, 16
 	--Notes:
-	--Active Mods: Suppressed Barrel
+	--Active Mods: Suppressed Barrel [Suppresses Weapon, + Quiet, -100 Threat]
 
 		self.famas.FIRE_MODE = "auto"
 		self.famas.fire_mode_data = {
@@ -2695,7 +2697,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 0
 	--Pickup: 7, 12
 	--Notes: Moved to a slower-firing, harder-hitting category upon community request.
-	--Active Mods: Prototype Barrel
+	--NOTE: Suppressed.
+	--Active Mods: Prototype Barrel [+10 Concealment, -12 Accuracy, -20 Concealment]
 
 		self.asval.FIRE_MODE = "auto"
 		self.asval.categories = {
@@ -2765,7 +2768,13 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 14
 	--Pickup: 6, 10
 	--Notes: 
-	--Active Mods: DMR Kit, Stealth Barrel, Vintage Mag, CAR Quadstacked Mag, Speedpull Mag
+	--Active Mods: 
+	--DMR Kit [- Rapid Fire, + Precision, +Armor Piercing, -135 Ammo Stock,
+		--+80 Damage, -40 Stability, -5 Concealment, -3, 6 Pickup]
+	--Stealth Barrel [Suppresses Weapon, + Quiet, -12 Accuracy, +3 Concealment, -100 Threat]
+	--Vintage Mag [-10 Magazine, +5 Concealment]
+	--CAR Quadstacked Mag [+30 Magazine, -10 Concealment]
+	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
 
 		self.new_m4.FIRE_MODE = "auto"
 		self.new_m4.fire_mode_data = {
@@ -2833,7 +2842,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 				--CAR-4 (DMR Kit)--
 	--------------------------------------
 	--Note: Conversion kit entries are not actual weapons and are only listed for referential purposes.
-	--INCOMPLETE
+	--INCOMPLETE - see active mod description under CAR-4 instead.
 	--------------------------------------
 				--AK--
 	--------------------------------------
@@ -2851,7 +2860,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 6, 10
 	--Notes: 
 	--Active Mods: DMR Kit, AK Quadstacked Mag, Speedpull Mag
-
+	--DMR Kit [- Rapid Fire, + Precision, +Armor Piercing, -135 Ammo Stock,
+		--+80 Damage, +8 Accuracy, -44 Stability, -5 Concealment, -3, 6 Pickup]
+	--AK Quadstacked Mag [+30 Magazine, -10 Concealment]
+	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
 		self.ak74.FIRE_MODE = "auto"
 		self.ak74.fire_mode_data = {
 			fire_rate = 0.092
@@ -2909,7 +2921,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 				--AK (DMR Kit)--
 	--------------------------------------
 	--Note: Conversion kit entries are not actual weapons and are only listed for referential purposes.
-	--INCOMPLETE
+	--INCOMPLETE - consult mod information for AK instead.
 	--------------------------------------
 				--AK17--
 	--------------------------------------
@@ -2926,8 +2938,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 14
 	--Pickup: 6, 10
 	--Notes: Was previously a Heavy AR.
-	--Active Mods: AK Quadstacked Mag, Speedpull Mag
-
+	--Active Mods:
+	--AK Quadstacked Mag [+30 Magazine, -10 Concealment]
+	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
 		self.flint.FIRE_MODE = "auto"
 		self.flint.fire_mode_data = {
 			fire_rate = 0.092
@@ -2997,7 +3010,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 14
 	--Pickup: 6, 10
 	--Notes:
-	--Active Mods: Vintage Mag, CAR Quadstacked Mag, Speedpull Mag
+	--Active Mods: 
+	--Vintage Mag [-10 Magazine, +5 Concealment]	
+	--CAR Quadstacked Mag [+30 Magazine, -10 Concealment]
+	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
 			
 		self.ak5.FIRE_MODE = "auto"
 		self.ak5.fire_mode_data = {
@@ -3069,7 +3085,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 14
 	--Pickup: 6, 10
 	--Notes:
-	--Active Mods: Vintage Mag, CAR Quadstacked Mag, Speedpull Mag
+	--Active Mods: Vintage Mag [-10 Magazine, +5 Concealment
+	--CAR Quadstacked Mag [+30 Magazine, -10 Concealment]
+	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
 			
 		self.l85a2.FIRE_MODE = "auto"
 		self.l85a2.fire_mode_data = {
@@ -3145,8 +3163,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 14
 	--Pickup: 6, 10
 	--Notes:
-	--Active Mods: Speedpull Mag
-			
+	--Active Mods: 	
+	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
+
 		self.aug.FIRE_MODE = "auto"
 		self.aug.fire_mode_data = {
 			fire_rate = 0.08
@@ -3218,7 +3237,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 14
 	--Pickup: 6, 10
 	--Notes:
-	--Active Mods: Vintage Mag, CAR Quadstacked Mag, Speedpull Mag
+	--Active Mods: Vintage Mag [-10 Magazine, +5 Concealment]
+	--CAR Quadstacked Mag [+30 Magazine, -10 Concealment]
+	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
 			
 		self.komodo.FIRE_MODE = "auto"
 		self.komodo.fire_mode_data = {
@@ -3362,7 +3383,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 14
 	--Pickup: 6, 10
 	--Notes:
-	--Active Mods: Silenced Barrel
+	--Active Mods: Silenced Barrel [Suppresses Weapon, + Quiet, -100 Threat]
 
 		self.vhs.FIRE_MODE = "auto"
 		self.vhs.fire_mode_data = {
@@ -3438,7 +3459,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 14
 	--Pickup: 6, 10
 	--Notes:
-	--Active Mods: Vintage Mag, CAR Quadstacked Mag, Speedpull Mag
+	--Active Mods: Vintage Mag [-10 Magazine, +5 Concealment]
+	--CAR Quadstacked Mag [+30 Magazine, -10 Concealment]
+	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
+
 		self.corgi.FIRE_MODE = "auto"
 		self.corgi.fire_mode_data = {
 			fire_rate = 0.07
@@ -3511,7 +3535,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes:
-	--Active Mods: AK Quadstacked Mag, Speedpull Mag
+	--Active Mods: AK Quadstacked Mag [+30 Magazine, -10 Concealment]
+	--Speel Pull Mag [+100% Reload Speed, -4 Concealment]
+	--INCOMPLETE DMR KIT INFO HERE
 
 		self.akm.FIRE_MODE = "auto"
 		self.akm.fire_mode_data = {
@@ -3570,7 +3596,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 				--AK.762 (DMR Kit)--
 	--------------------------------------
 	--Note: Conversion kit entries are not actual weapons and are only listed for referential purposes.
-	--INCOMPLETE
+	--INCOMPLETE -consult AK.762 mods
 	--------------------------------------
 				--AK.762 Golden--
 	--------------------------------------
@@ -3587,7 +3613,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes:
-	--Active Mods: AK Quadstacked Mag, Speedpull Mag
+	--Active Mods: 
+	--Active Mods: AK Quadstacked Mag [+30 Magazine, -10 Concealment]
+	--Speel Pull Mag [+100% Reload Speed, -4 Concealment]
+	--INCOMPLETE DMR KIT INFO HERE
 
 		self.akm_gold.FIRE_MODE = "auto"
 		self.akm_gold.fire_mode_data = {
@@ -3729,7 +3758,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes:
-	--Active Mods: Assault Kit, DMR Kit
+	--Active Mods: 
+	--Assault Kit [+85 Ammo Stock, -30 Damage, -16 Accuracy, +16 Stability, +5 Concealment, +2, +4 Pickup]
+	--DMR Kit [- Rapid Fire, + Precision, + Armor Piercing, -10 Magazine, -65 Ammo Stock, +50 Damage, -1, -2 Pickup]
 
 		self.g3.FIRE_MODE = "auto"
 		self.g3.fire_mode_data = {
@@ -3788,12 +3819,12 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 				--Gewehr 3 (DMR Kit)--
 	--------------------------------------
 	--Note: Conversion kit entries are not actual weapons and are only listed for referential purposes.
-	--INCOMPLETE
+	--INCOMPLETE --See main Gewehr mod entries for information.
 	--------------------------------------
 				--Gewehr 3 (assault kit)--
 	--------------------------------------
 	--Note: Conversion kit entries are not actual weapons and are only listed for referential purposes.
-	--INCOMPLETE
+	--INCOMPLETE --See main Gewehr mod entries for information.
 	--------------------------------------
 				--Falcon--
 	--------------------------------------
@@ -3810,7 +3841,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes:
-	--Active Mods: Extended Magazine
+	--Active Mods: Extended Magazine [+20 Magazine, -10 Concealment]
 
 		self.fal.FIRE_MODE = "auto"
 		self.fal.fire_mode_data = {
@@ -3881,7 +3912,14 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes:
-	--Active Mods: DMR Kit. Milspec Mag, Tactical Mag, Expert Mag, L5 Magazine, CAR Quadstacked Mag, Speedpull Mag
+	--Active Mods: 
+	--DMR Kit [- Rapid Fire, + Precision, + Armor Piercing, -65 Ammo Stock,
+	-- +50 Damage, +4 Accuracy, -40 Stability, -1, -2 Pickup
+	--Milspec Mag, Tactical Mag, Expert Mag, L5 Magazin [+10 Magazine, -2 Concealment]
+	--CAR Quadstacked Mag [+40 Magazine, -10 Concealment
+	--Speedpull Mag [+100% Reload Speed, +10 Magazine, -4 Concealment]
+
+
 		self.m16.FIRE_MODE = "auto"
 		self.m16.fire_mode_data = {
 			fire_rate = 0.07
@@ -3959,7 +3997,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 7, 11
 	--Notes:
-	--Active Mods: Extended Mag
+	--Active Mods: Extended Mag. [+28 Magazine, -4 Concealment]
 
 	--------------------------------------
 				--Akimbo STRYK 18c--
@@ -3977,7 +4015,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes:
-	--Active Mods: Extended Mag
+	--Active Mods: Extended Mag. [+24 Magazine, -4 Concealment]
 
 	--------------------------------------
 				--Akimbo Czech 92 Pistols--
@@ -3995,7 +4033,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes:
-	--Active Mods: Extended Mag
+	--Active Mods: Extended Magazine [+20 Magazine, -4 Concealment]
 		
 	--------------------------------------
 				--Akimbo Bernetti Auto Pistols--
@@ -4013,7 +4051,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes:
-	--Active Mods: Extended Mag
+	--Active Mods: Extended Magazine [+12 Magazine, -2 Concealment]
+
 	--------------------------------------
 		--Akimbo SMGs--
 	--------------------------------------
@@ -4072,7 +4111,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 10
 	--Pickup: 8, 16
 	--Notes: 
-	--Active Mods: Extended Magazine
+	--Active Mods: Extended Magazine [+20 Magazine, -5 Concealment]
 
 	--------------------------------------
 				--Akimbo Compact-5--
@@ -4108,7 +4147,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 10
 	--Pickup: 8, 16
 	--Notes: 
-	--Active Mods: Extended Mag
+	--Active Mods: Extended Mag [+24 Magazine, -10 Concealment]
 
 	--------------------------------------
 				--Akimbo CMP--
@@ -4126,7 +4165,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 10
 	--Pickup: 8, 16
 	--Notes: 
-	--Active Mods: Extended Mag
+	--Active Mods: Extended Mag. [+30 Magazine, -5 Concealment]
 
 	--------------------------------------
 				--Akimbo Cobra--
@@ -4144,7 +4183,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 10
 	--Pickup: 8, 16
 	--Notes: 
-	--Active Mods: Extended Mag
+	--Active Mods: Extended Mag [+40 Magazine, -10 Concealment]
 
 	--------------------------------------
 				--Akimbo Micro Uzi--
@@ -4162,7 +4201,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 10
 	--Pickup: 8, 16
 	--Notes: 
-	--Active Mods: Futomaki Suppressor, Maki Suppressor, Spring Suppressor
+	--Active Mods: 
+	--Futomaki Suppressor, Maki Suppressor, Spring Suppressor [Suppresses Weapon, +Quiet, -100 Threat]
 
 	--------------------------------------
 			--Akimbo Medium SMGs--
@@ -4183,7 +4223,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 13
 	--Pickup: 6, 10
 	--Notes: 
-	--Active Mods: Milspec Mag, Tactical Mag, Expert Mag, L5 Magazine, CAR Quadstacked Mag, Speedpull Mag
+	--Active Mods: Milspec Mag, Tactical Mag, Expert Mag, L5 Magazine [+20 Magazine, -10 Concealment]
+	--CAR Quadstacked Mag [+80 Magazine, -20 Concealment]
+	--Speedpull Mag [+100% Reload Speed, +20 Magazine, -8 Concealment]
 
 	--------------------------------------
 				--Akimbo Chicago Typewriter--
@@ -4219,7 +4261,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 13
 	--Pickup: 6, 10
 	--Notes: 
-	--Active Mods: Speed Pull Mag
+	--Active Mods: Speed Pull Mag [+100% Reload Speed, +20 Magazine, -8 Concealment]
 
 	--------------------------------------
 				--Akimbo Kobus 90--
@@ -4237,7 +4279,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 13
 	--Pickup: 6, 10
 	--Notes: 
-	--Active Mods: Speed Pull Mag
+	--Active Mods: Speed Pull Mag [+100% Reload Speed, +20 Magazine, -8 Concealment]
 
 	--------------------------------------
 				--Akimbo SpecOps--
@@ -4255,7 +4297,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 13
 	--Pickup: 6, 10
 	--Notes: 
-	--Active Mods: Extended Mag
+	--Active Mods: Extended Mag. [+20 Magazine, -5 Concealment]
 
 	--------------------------------------
 				--Akimbo Mark 10--
@@ -4273,7 +4315,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 13
 	--Pickup: 6, 10
 	--Notes: 
-	--Active Mods: Extended Mag, Speedpull Mag
+	--Active Mods: Extended Mag. [+40 Magazine, -10 Concealment]
+	--Speedpull Mag [+100% Reload Speed, +40 Magazine, -8 Concealment]
 
 	--------------------------------------
 				--Akimbo Kross Vertex--
@@ -4330,7 +4373,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes: Formerly a Light SMG.
-	--Active Mods: Extended Mag, Short Mag, Heatsinked Suppressed Barrel, Suppressed Barrel
+	--Active Mods: Extended Mag [+20 Magazine, -10 Concealment]
+	--Short Mag [-20 Magazine, +10 Concealment]
+	--Heatsinked Suppressed Barrel, Suppressed Barrel [Suppresses Weapon, + Quiet, -100 Threat]
 
 	--------------------------------------
 				--Akimbo MP40--
@@ -4366,7 +4411,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes:
-	--Active Mods: Extended Mag
+	--Active Mods: Extended Mag. [+28 Magazine, -15 Concealment]
 
 	--------------------------------------
 				--Akimbo Jackal--
@@ -4384,7 +4429,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes:
-	--Active Mods: Extended Magazine, Short Magazine
+	--Active Mods: Extended Magazine [+20 Magazine, -15 Concealment]
+	--Short Magazine [+20 Magazine, +5 Concealment]
 
 	--------------------------------------
 				--Akimbo CR 805B--
@@ -4402,7 +4448,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes:
-	--Active Mods: Vintage Mag, CAR Quadstacked Mag, Speedpull Mag
+	--Active Mods: Vintage Mag [-20 Magazine, +5 Concealment]
+	--CAR Quadstacked Mag [+60 Magazine, -20 Concealment]
+	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
 
 	--------------------------------------
 				--Akimbo Krinkov--
@@ -4420,7 +4468,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes:
-	--Active Mods: AK Quadstacked Mag, Speedpull Mag
+	--Active Mods: AK Quadstacked Mag [+60 Magazine, -15 Concealment]
+	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
 
 	--------------------------------------
 		--Primary/Akimbo Shotguns--
@@ -4441,7 +4490,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 34
 	--Pickup: 1, 2
 	--Notes:
-	--Active Mods: Sawed-Off Barrel
+	--Active Mods: Sawed-Off Barrel [-20 Accuracy]
 
 		self.b682.FIRE_MODE = "single"
 		self.b682.fire_mode_data = {
@@ -4519,7 +4568,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 34
 	--Pickup: 1, 2
 	--Notes:
-	--Active Mods: Road Warrior Barrel
+	--Active Mods: Road Warrior Barrel [-20 Accuracy]
 
 		self.huntsman.FIRE_MODE = "single"
 		self.huntsman.fire_mode_data = {
@@ -4681,7 +4730,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Stab: 0
 	--Conc: 30
 	--Threat: 10
-	--Pickup: 0.5, 1 --NOTE does this work per Kith's intention?
+	--Pickup: 0.5, 1
 	--Notes:
 	--Active Mods:
 
@@ -4782,7 +4831,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 34
 	--Pickup: 2, 3
 	--Notes:
-	--Active Mods: Short Barrel, Long Barrel
+	--Active Mods: Short Barrel [-4 Magazine, +5 Concealment]
+	--Long Barrel [+4 Magazine, -5 Concealment]
 
 		self.ksg.FIRE_MODE = "single"
 		self.ksg.fire_mode_data = {
@@ -4863,7 +4913,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 34
 	--Pickup: 4, 5
 	--Notes:
-	--Active Mods: Extended Mag
+	--Active Mods: Extended Mag [+4 Magazine, -5 Concealment]
 
 		self.spas12.FIRE_MODE = "single"
 		self.spas12.fire_mode_data = {
@@ -5012,7 +5062,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 14
 	--Pickup: 4, 5
 	--Notes:
-	--Active Mods: Silenced Barrel
+	--Active Mods: Silenced Barrel [Suppresses Weapon, +Quiet, -100 Threat]
 
 	--------------------------------------
 				--Steakout 12G--
@@ -5030,7 +5080,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 34
 	--Pickup: 5, 6
 	--Notes:
-	--Active Mods: Suppressed Barrel, Drum Magazine
+	--Active Mods: Suppressed Barrel [Suppresses Weapon, +Quiet, -100 Threat]
+	--Drum Magazine [+12 Magazine, -20 Concealment]
 
 		self.aa12.FIRE_MODE = "auto"
 		self.aa12.fire_mode_data = {
@@ -5104,7 +5155,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 34
 	--Pickup: 5, 6
 	--Notes:
-	--Active Mods: Big Brother Magazine
+	--Active Mods: Big Brother Magazine [+3 Magazine, -5 Concealment]
 			
 		self.saiga.FIRE_MODE = "auto"
 		self.saiga.fire_mode_data = {
@@ -5178,7 +5229,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 22
 	--Pickup: 6, 7
 	--Notes:
-	--Active Mods: Big Brother Magazine
+	--Active Mods: Big Brother Magazine [+6 Magazine, -10 Concealment]
 
 	--------------------------------------
 		--Marksman Rifles--
@@ -5354,7 +5405,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 10
 	--Pickup: 3, 4
 	--Notes: Armor Piercing
-	--Active Mods: Tooth Fairy Suppressor
+	--Active Mods: Tooth Fairy Suppressor [Suppresses Weapon, +Quiet, -100 Threat]
 
 		self.sub2000.FIRE_MODE = "single"
 		self.sub2000.fire_mode_data = {
@@ -5499,7 +5550,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 22
 	--Pickup: 3, 4
 	--Notes: Armor Piercing
-	--Active Mods: Magpouch Stock
+	--Active Mods: Magpouch Stock [+16 Ammo Stock, -5 Concealment]
 
 		self.ching.FIRE_MODE = "single"
 		self.ching.fire_mode_data = {
@@ -5577,7 +5628,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 43
 	--Pickup: 2.5, 3
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Contractor Silencer
+	--Active Mods: Contractor Silencer [Suppresses Weapon, +Quiet, -100 Threat]
 
 		self.tti.FIRE_MODE = "single"
 		self.tti.fire_mode_data = {
@@ -5658,7 +5709,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 43
 	--Pickup: 2.5, 3
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Gedämpfter Barrel --NOTE does this special character work?
+	--Active Mods: Gedämpfter Barrel [Suppresses Weapon, +Quiet, -100 Threat]
+	--NOTE does this special character work?
 
 		self.wa2000.FIRE_MODE = "single"
 		self.wa2000.fire_mode_data = {
@@ -5739,7 +5791,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 43
 	--Pickup: 2.5, 3
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Tikho Barrel, Iron Sights
+	--Active Mods: Tikho Barrel [Suppresses Weapon, +Quiet, -100 Threat]
+	--Iron Sights [+15 Concealment, -20 Stability]
 
 		self.siltstone.FIRE_MODE = "single"
 		self.siltstone.fire_mode_data = {
@@ -5823,7 +5876,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 43
 	--Pickup: 2, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Sniper Suppressor
+	--Active Mods: Sniper Suppressor [Suppresses Weapon, +Quiet, -100 Threat]
 
 		self.msr.FIRE_MODE = "single"
 		self.msr.fire_mode_data = {
@@ -5906,7 +5959,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 14
 	--Pickup: 3, 4
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Outlaw’s Silenced Barrel
+	--Active Mods: Outlaw’s Silenced Barrel [Suppresses Weapon, +Quiet, -100 Threat]
 
 		self.winchester1874.FIRE_MODE = "single"
 		self.winchester1874.fire_mode_data = {
@@ -5994,7 +6047,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 43
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Beak Suppressor
+	--Active Mods: Beak Suppressor [Suppresses Weapon, +Quiet, -100 Threat]
 
 		self.model70.FIRE_MODE = "single"
 		self.model70.fire_mode_data = {
@@ -6076,7 +6129,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 43
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Compensated Suppressor
+	--Active Mods: Compensated Suppressor [Suppresses Weapon, +Quiet, -100 Threat]
 
 		self.r93.FIRE_MODE = "single"
 		self.r93.fire_mode_data = {
@@ -6157,7 +6210,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 43
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Silenced Barrel, Nagant Bayonet
+	--Active Mods: Silenced Barrel [Suppresses Weapon, +Quiet, -100 Threat]
+	--Nagant Bayonet [Replaces Weapon Butt melee weapon with Nagant Bayonet melee weapon]
 
 		self.mosin.FIRE_MODE = "single"
 		self.mosin.fire_mode_data = {
@@ -6238,7 +6292,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 43
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Silenced Barrel
+	--Active Mods: Silenced Barrel [Suppresses Weapon, +Quiet, -100 Threat]
 
 		self.desertfox.FIRE_MODE = "single"
 		self.desertfox.fire_mode_data = {
@@ -6319,7 +6373,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 43
 	--Pickup: 0.25, 0.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Suppressed Barrel
+	--Active Mods: Suppressed Barrel [Suppresses Weapon, +Quiet, -100 Threat]
 
 		self.m95.FIRE_MODE = "single"
 		self.m95.fire_mode_data = {
@@ -6424,7 +6478,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Magazine
+	--Active Mods: Extended Magazine [+24 Magazine, -5 Concealment]
 
 	--------------------------------------
 				--Akimbo M13 9mm--
@@ -6460,7 +6514,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Mag.
+	--Active Mods: Extended Mag.[+24 Magazine, -5 Concealment]
 	--------------------------------------
 				--Akimbo Crosskill Guard--
 	--------------------------------------
@@ -6477,7 +6531,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Mag
+	--Active Mods: Extended Mag [+8 Magazine, -2 Concealment]
 
 	--------------------------------------
 				--Akimbo Bernetti 9--
@@ -6495,7 +6549,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Mag.
+	--Active Mods: Extended Mag. [+24 Magazine, -5 Concealment]
 
 	--------------------------------------
 			--Akimbo Medium Pistols--
@@ -6516,7 +6570,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: 12rnd Mag., Magazine with Ameritude!
+	--Active Mods: 12rnd Mag. [+4 Magazine, -2 Concealment]
+	--Magazine with Ameritude! [+24 Magazine, -5 Concealment]
 
 	--------------------------------------
 				--Akimbo Contractor--
@@ -6534,7 +6589,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Magazine
+	--Active Mods: Extended Magazine[+20 Magazine, -5 Concealment]
 	--------------------------------------
 				--Akimbo Signature .40--
 	--------------------------------------
@@ -6551,7 +6606,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag.
+	--Active Mods: Extended Mag. [+16 Magazine, -5 Concealment]
 
 	--------------------------------------
 				--Akimbo Broomstick--
@@ -6569,7 +6624,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: High Capacity Mag., Precision Barrel
+	--Active Mods: High Capacity Mag [+20 Magazine, -5 Concealment]
+	--Precision Barrel [+Armor Piercing, -45 Ammo Stock, +30 Damage, -12 Stability,
+	---5 Concealment, -0.5, -2 Pickup]
 
 	--------------------------------------
 				--Akimbo Interceptor 45--
@@ -6587,7 +6644,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag., I want more Magazine!
+	--Active Mods: Extended Mag.[+16 Magazine, -4 Concealment]
+	--I want more Magazine! [+24 Magazine, -8 Concealment]
 
 	--------------------------------------
 				--Akimbo LEO--
@@ -6605,7 +6663,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag
+	--Active Mods: Extended Mag [+16 Magazine, -5 Concealment]
 
 	--------------------------------------
 				--Akimbo Chimano Custom--
@@ -6623,7 +6681,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag.
+	--Active Mods: Extended Mag. [+24 Magazine, -5 Concealment]
 
 	--------------------------------------
 			--Akimbo Heavy Pistols--
@@ -6644,7 +6702,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 9
 	--Pickup: 1.5, 3
 	--Notes: Armor Piercing
-	--Active Mods: Extended Magazine
+	--Active Mods: Extended Magazine [+12 Magazine, -5 Concealment]
 
 	--------------------------------------
 				--Akimbo Parabellum--
@@ -6698,7 +6756,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 9
 	--Pickup: 1.5, 3
 	--Notes: Armor Piercing
-	--Active Mods: Extended Magazine
+	--Active Mods: Extended Magazine [+4 Magazine, -1 Concealment]
 
 	--------------------------------------
 			--Akimbo Revolvers--
@@ -7252,7 +7310,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 43
 	--Pickup: 0, 0
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: I’ll Take Half That Kit
+	--Active Mods: I’ll Take Half That Kit [-1500 Fire Rate] --NOTE may be pure benefit? ask
 
 		self.m134.FIRE_MODE = "auto"
 		self.m134.fire_mode_data = {
@@ -7329,7 +7387,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
-	--Active Mods: Explosive Arrow, Poison Arrow
+	--Active Mods: Explosive Arrow [-Armor Piercing, 2x Headshot Damage]
+	--Poison Arrow [-560 Damage, + Poison]
 
 	--------------------------------------
 				--Light Crossbow--
@@ -7347,7 +7406,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
-	--Active Mods: Explosive Bolt, Poison Bolt
+	--Active Mods: Explosive Bolt [-Armor Piercing, 2x Headshot Damage]
+	--Poison Bolt [-600 Damage, + Poison]
 
 	--------------------------------------
 				--Plainsrider Bow--
@@ -7365,7 +7425,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
-	--Active Mods: Explosive Arrows, Poison Arrows
+	--Active Mods: Explosive Arrows [-Armor Piercing, 2x Headshot Damage]
+	--Poison Arrows [-200 Damage, + Poison]
 
 	--------------------------------------
 				--DECA Technologies Compound Bow--
@@ -7383,7 +7444,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
-	--Active Mods: Explosive Arrow, Poison Arrow
+	--Active Mods: Explosive Arrow [-Armor Piercing, 2x Headshot Damage]
+	--Poison Arrow [-1600 Damage, + Poison]
 
 	--------------------------------------
 				--English Longbow--
@@ -7401,7 +7463,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
-	--Active Mods: Explosive Arrows, Poison Arrows
+	--Active Mods: Explosive Arrows [-Armor Piercing, 2x Headshot Damage]
+	--Poison Arrows [-1600 Damage, + Poison]
 
 	--------------------------------------
 				--Heavy Crossbow--
@@ -7419,7 +7482,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
-	--Active Mods: Explosive Bolt, Poisoned Bolt
+	--Active Mods: Explosive Bolt [-Armor Piercing, 2x Headshot Damage]
+	--Poisoned Bolt [-1600 Damage, + Poison]
+
 	--------------------------------------
 				--GL 40 Grenade Launcher--
 	--------------------------------------
@@ -7436,7 +7501,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 43
 	--Pickup: 0.1, 0.2
 	--Notes: Area Damage
-	--Active Mods: Incendiary Round
+	--Active Mods: Incendiary Round [-1000 Damage, + Area Denial in a large area for 15 seconds.]
 
 	--------------------------------------
 				--Piglet Grenade Launcher--
@@ -7454,7 +7519,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 43
 	--Pickup: 0.1, 0.2
 	--Notes: Area Damage
-	--Active Mods: Incendiary Round
+	--Active Mods: Incendiary Round [-1000 Damage, + Area Denial in a large area for 15 seconds.]
 
 	--------------------------------------
 				--Flamethrower Mk.1--
