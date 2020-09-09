@@ -7636,7 +7636,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 4
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Magazine
+	--Active Mods: Extended Magazine [+12 Magazine, -3 Concealment]
 
 		self.glock_17.fire_mode_data = {
 			fire_rate = 0.125
@@ -7782,7 +7782,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Mag.
+	--Active Mods: Extended Mag. [+12 Magazine, -3 Concealment]
 
 		self.g26.FIRE_MODE = "single"
 		self.g26.fire_mode_data = {
@@ -7853,7 +7853,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Mag
+	--Active Mods: Extended Mag [+4 Magazine, -1 Concealment]
 
 		self.shrew.FIRE_MODE = "single"
 		self.shrew.fire_mode_data = {
@@ -7929,7 +7929,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Mag.
+	--Active Mods: Extended Mag. [+12 Magazine, -3 Concealment]
 
 		self.b92fs.FIRE_MODE = "single"
 		self.b92fs.fire_mode_data = {
@@ -8003,7 +8003,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: 12rnd Mag., Magazine with Ameritude!
+	--Active Mods: 12rnd Mag. [+2 Magazine, -1 Concealment]
+	--Magazine with Ameritude! [+12 Magazine, -3 Concealment]
 
 		self.colt_1911.FIRE_MODE = "single"
 		self.colt_1911.fire_mode_data = {
@@ -8074,7 +8075,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Magazine
+	--Active Mods: Extended Magazine [+10 Magazine, -1 Concealment]
 
 		self.packrat.FIRE_MODE = "single"
 		self.packrat.fire_mode_data = {
@@ -8145,7 +8146,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag.
+	--Active Mods: Extended Mag. [+8 Magazine, -2 Concealment]
 
 		self.p226.FIRE_MODE = "single"
 		self.p226.fire_mode_data = {
@@ -8216,7 +8217,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: High Capacity Mag, Precision Barrel
+	--Active Mods: High Capacity Mag [+10 Magazine, -2 Concealment]
+	--Precision Barrel [+Armor Piercing, -30 Ammo Stock. +30 Damage,
+	--+32 Stability, 5 Concealment, -0.5, -2 Pickup]
 	
 		self.c96.FIRE_MODE = "single"
 		self.c96.fire_mode_data = {
@@ -8287,7 +8290,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag., I want more Magazine!
+	--Active Mods: Extended Mag. [+18 Magazine, -2 Concealment]
+	--I want more Magazine! [+12 Magazine, -4 Concealment]
 
 		self.usp.FIRE_MODE = "single"
 		self.usp.fire_mode_data = {
@@ -8363,7 +8367,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag
+	--Active Mods: Extended Mag [+16 Magazine, -5 Concealment]
 			
 		self.hs2000.FIRE_MODE = "single"
 		self.hs2000.fire_mode_data = {
@@ -8434,7 +8438,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag.
+	--Active Mods: Extended Mag. [+12 Magazine, -2 Concealment]
 
 		self.g22c.FIRE_MODE = "single"
 		self.g22c.fire_mode_data = {
@@ -8513,7 +8517,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 9
 	--Pickup: 0.5, 0.75
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Extended Magazine
+	--Active Mods: Extended Magazine [+10 Magazine, -5 Concealment]
 
 		self.lemming.FIRE_MODE = "single"
 		self.lemming.fire_mode_data = {
@@ -8588,7 +8592,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 9
 	--Pickup: 1.5, 3
 	--Notes: Armor Piercing
-	--Active Mods: Extended Magazine
+	--Active Mods: Extended Magazine [+6 Magazine, -2 Concealment]
 
 		self.deagle.FIRE_MODE = "single"
 		self.deagle.fire_mode_data = {
@@ -8801,7 +8805,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 9
 	--Pickup: 1.5, 3
 	--Notes: Armor Piercing
-	--Active Mods: Extended Magazine
+	--Active Mods: Extended Magazine [+2 Magazine, -1 Concealment]
 
 		self.pl14.FIRE_MODE = "single"
 		self.pl14.fire_mode_data = {
@@ -9174,7 +9178,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 7, 11
 	--Notes: 
-	--Active Mods: Extended Mag.
+	--Active Mods: Extended Mag. [+14 Magazine, -2 Concealment]
+
 	--------------------------------------
 				--STRYK 18c--
 	--------------------------------------
@@ -9191,7 +9196,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes: 
-	--Active Mods: Extended Mag.
+	--Active Mods: Extended Mag. [+12 Magazine, -2 Concealment]
 
 		self.glock_18c.FIRE_MODE = "auto"
 		self.glock_18c.fire_mode_data = {
@@ -9268,7 +9273,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes: 
-	--Active Mods: Extended Magazine
+	--Active Mods: Extended Magazine [+10 Magazine, -2 Concealment]
 
 	--------------------------------------
 				--Bernetti Auto--
@@ -9286,14 +9291,14 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes: 
-	--Active Mods: Extended Magazine
+	--Active Mods: Extended Magazine [+6 Magazine, -2 Concealment]
+
 	--------------------------------------
 		--SMGs--
 	--------------------------------------
 	--------------------------------------
 			--Light SMGs--
 	--------------------------------------
---IND
 	--------------------------------------
 				--Tatonka--
 	--------------------------------------
