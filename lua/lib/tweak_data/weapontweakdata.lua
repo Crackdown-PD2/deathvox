@@ -9232,7 +9232,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Tatonka--
 	--------------------------------------
-		--Tatonka
+	--ID: self.coal
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 64
+	--Ammo: 200
+	--Fire Rate: 652
+	--Damage: 50
+	--Acc: 80
+	--Stab: 100
+	--Conc: 28
+	--Threat: 10
+	--Pickup: 8, 16
+	--Notes: Formerly a Heavy SMG
+	--Active Mods: 
+
 		self.coal.FIRE_MODE = "auto"
 		self.coal.fire_mode_data = {
 			fire_rate = 0.092
@@ -9295,7 +9309,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Uzi SMG--
 	--------------------------------------
-		--Uzi SMG
+	--ID: self.uzi
+	--Class: Rapid Fire
+	--Value: 7
+	--Magazine: 32
+	--Ammo: 200
+	--Fire Rate: 698
+	--Damage: 50
+	--Acc: 68
+	--Stab: 100
+	--Conc: 20
+	--Threat: 13
+	--Pickup: 8, 16
+	--Notes: 
+	--Active Mods: 
+
 		self.uzi.FIRE_MODE = "auto"
 		self.uzi.fire_mode_data = {
 			fire_rate = 0.086
@@ -9354,7 +9382,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Signature SMG--
 	--------------------------------------
-		--Signature SMG
+	--ID: self.shepheard
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 20
+	--Ammo: 200
+	--Fire Rate: 750
+	--Damage: 50
+	--Acc: 64
+	--Stab: 100
+	--Conc: 25
+	--Threat: 13
+	--Pickup: 8, 16
+	--Notes: 
+	--Active Mods: Extended Magazine [+10 Magazine, -2 Concealment]
+
 		self.shepheard.FIRE_MODE = "auto"
 		self.shepheard.fire_mode_data = {
 			fire_rate = 0.08
@@ -9417,7 +9459,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Compact-5--
 	--------------------------------------
-		--Compact 5
+	--ID: self.new_mp5
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 30
+	--Ammo: 210
+	--Fire Rate: 750
+	--Damage: 50
+	--Acc: 64
+	--Stab: 100
+	--Conc: 25
+	--Threat: 10
+	--Pickup: 8, 16
+	--Notes: 
+	--Active Mods:
+
 		self.new_mp5.FIRE_MODE = "auto"
 		self.new_mp5.fire_mode_data = {
 			fire_rate = 0.08
@@ -9475,7 +9531,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Blaster 9mm--
 	--------------------------------------
-		--Blaster 9mm
+	--ID: self.tec9
+	--Class: Rapid Fire
+	--Value: 7
+	--Magazine: 20
+	--Ammo: 220
+	--Fire Rate: 896
+	--Damage: 50
+	--Acc: 52
+	--Stab: 100
+	--Conc: 30
+	--Threat: 10
+	--Pickup: 8, 16
+	--Notes: 
+	--Active Mods: Extended Mag [+12 Magazine, -2 Concealment]
+
 		self.tec9.FIRE_MODE = "auto"
 		self.tec9.fire_mode_data = {
 			fire_rate = 0.067
@@ -9533,7 +9603,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--CMP--
 	--------------------------------------
-		--CMP
+	--ID: self.mp9
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 15
+	--Ammo: 240
+	--Fire Rate: 952
+	--Damage: 50
+	--Acc: 68
+	--Stab: 100
+	--Conc: 30
+	--Threat: 10
+	--Pickup: 8, 16
+	--Notes: 
+	--Active Mods: Extended Mag. [+15 Magazine, -2 Concealment]
+
 		self.mp9.FIRE_MODE = "auto"
 		self.mp9.fire_mode_data = {
 			fire_rate = 0.063
@@ -9596,7 +9680,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Cobra--
 	--------------------------------------
-		--Cobra SMG
+	--ID: self.scorpion
+	--Class: Rapid Fire
+	--Value: 7
+	--Magazine: 20
+	--Ammo: 220
+	--Fire Rate: 1000
+	--Damage: 50
+	--Acc: 52
+	--Stab: 100
+	--Conc: 30
+	--Threat: 10
+	--Pickup: 8, 16
+	--Notes: 
+	--Active Mods: Extended Mag [+20 Magazine, -10 Concealment]
+
 		self.scorpion.FIRE_MODE = "auto"
 		self.scorpion.fire_mode_data = {
 			fire_rate = 0.06
@@ -9654,7 +9752,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Micro Uzi--
 	--------------------------------------
-		--Micro Uzi
+	--ID: self.baka
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 32
+	--Ammo: 240
+	--Fire Rate: 1200
+	--Damage: 50
+	--Acc: 44
+	--Stab: 100
+	--Conc: 25
+	--Threat: 10
+	--Pickup: 8, 16
+	--Notes: 
+	--Active Mods: Futomaki Suppressor, Maki Suppressor, Spring Suppressor [Suppresses Weapon, +Quiet, -100 Threat]
+
 		self.baka.FIRE_MODE = "auto"
 		self.baka.fire_mode_data = {
 			fire_rate = 0.05
@@ -9720,7 +9832,23 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Para--
 	--------------------------------------
-		--PARA
+	--ID: self.olympic
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 20
+	--Ammo: 160
+	--Fire Rate: 682
+	--Damage: 70
+	--Acc: 72
+	--Stab: 100
+	--Conc: 25
+	--Threat: 13
+	--Pickup: 6, 10
+	--Notes: 
+	--Active Mods: Milspec Mag, Tactical Mag, Expert Mag, L5 Magazine [+10 Magazine, -2 Concealment]
+	--CAR Quadstacked Mag [+40 Magazine, -10 Concealment]
+	--Speed Pull Mag [+100% Reload Speed, +10 Magazine, -4 Concealment]
+
 		self.olympic.FIRE_MODE = "auto"
 		self.olympic.fire_mode_data = {
 			fire_rate = 0.088
@@ -9764,7 +9892,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Chicago Typewriter--
 	--------------------------------------
-		--Chicago Typewriter
+	--ID: self.m1928
+	--Class: Rapid Fire
+	--Value: 9
+	--Magazine: 50
+	--Ammo: 160
+	--Fire Rate: 723
+	--Damage: 70
+	--Acc: 88
+	--Stab: 100
+	--Conc: 15
+	--Threat: 20
+	--Pickup: 6, 10
+	--Notes: 
+	--Active Mods: 
+
 		self.m1928.FIRE_MODE = "auto"
 		self.m1928.fire_mode_data = {
 			fire_rate = 0.083
@@ -9827,7 +9969,22 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Heather--
 	--------------------------------------
-		--Heather SMG
+	--ID: self.sr2
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 30
+	--Ammo: 160
+	--Fire Rate: 750
+	--Damage: 70
+	--Acc: 84
+	--Stab: 100
+	--Conc: 25
+	--Threat: 13
+	--Pickup: 6, 10
+	--Notes: 
+	--Active Mods: 
+	--Speed Pull Mag [+100% Reload Speed, +20 Magazine, -3 Concealment]
+
 		self.sr2.FIRE_MODE = "auto"
 		self.sr2.fire_mode_data = {
 			fire_rate = 0.08
@@ -9890,7 +10047,22 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Kobus 90--
 	--------------------------------------
-		--Kobus 90
+	--ID: self.p90
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 50
+	--Ammo: 160
+	--Fire Rate: 909
+	--Damage: 70
+	--Acc: 76
+	--Stab: 100
+	--Conc: 20
+	--Threat: 13
+	--Pickup: 6, 10
+	--Notes: 
+	--Active Mods: 
+	--Speed Pull Mag [+100% Reload Speed, +20 Magazine, -3 Concealment]
+
 		self.p90.FIRE_MODE = "auto"
 		self.p90.fire_mode_data = {
 			fire_rate = 0.066
@@ -9948,7 +10120,22 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--SpecOps--
 	--------------------------------------
-		--SpecOps
+	--ID: self.mp7
+	--Class: Rapid Fire
+	--Value: 7
+	--Magazine: 20
+	--Ammo: 160
+	--Fire Rate: 952
+	--Damage: 70
+	--Acc: 84
+	--Stab: 100
+	--Conc: 25
+	--Threat: 13
+	--Pickup: 6, 10
+	--Notes: 
+	--Active Mods: 
+	--Extended Mag. [+10 Magazine, -2 Concealment]
+
 		self.mp7.FIRE_MODE = "auto"
 		self.mp7.fire_mode_data = {
 			fire_rate = 0.063
@@ -10006,7 +10193,23 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Mark 10--
 	--------------------------------------
-		--Mark 10
+	--ID: self.mac10
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 20
+	--Ammo: 160
+	--Fire Rate: 1000
+	--Damage: 70
+	--Acc: 84
+	--Stab: 100
+	--Conc: 30
+	--Threat: 13
+	--Pickup: 6, 10
+	--Notes: 
+	--Active Mods: 
+	--Extended Mag. [+20 Magazine, -5 Concealment]
+	--Speed Pull Mag [+100% Reload Speed, +20 Magazine, -10 Concealment]
+
 		self.mac10.FIRE_MODE = "auto"
 		self.mac10.fire_mode_data = {
 			fire_rate = 0.06
@@ -10064,7 +10267,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Kross Vertex--
 	--------------------------------------
-		--Kross Vertex
+	--ID: self.polymer
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 30
+	--Ammo: 160
+	--Fire Rate: 1200
+	--Damage: 70
+	--Acc: 84
+	--Stab: 100
+	--Conc: 15
+	--Threat: 13
+	--Pickup: 6, 10
+	--Notes: 
+	--Active Mods: 
+
 		self.polymer.FIRE_MODE = "auto"
 		self.polymer.fire_mode_data = {
 			fire_rate = 0.05
@@ -10127,7 +10344,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Jacket's Piece--
 	--------------------------------------
-		--Jacket's Piece
+	--ID: self.cobray
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 32
+	--Ammo: 160
+	--Fire Rate: 1200
+	--Damage: 70
+	--Acc: 72
+	--Stab: 100
+	--Conc: 20
+	--Threat: 13
+	--Pickup: 6, 10
+	--Notes: 
+	--Active Mods: 
+
 		self.cobray.FIRE_MODE = "auto"
 		self.cobray.fire_mode_data = {
 			fire_rate = 0.05
@@ -10193,7 +10424,24 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Patchett L2A1--
 	--------------------------------------
-		--Patchett L2A1
+	--ID: self.sterling
+	--Class: Rapid Fire
+	--Value: 7
+	--Magazine: 20
+	--Ammo: 80
+	--Fire Rate: 545
+	--Damage: 100
+	--Acc: 56
+	--Stab: 100
+	--Conc: 20
+	--Threat: 12
+	--Pickup: 4, 6
+	--Notes: Formerly a Light SMG.
+	--Active Mods: 
+	-- Extended Mag [+10 Magazine, -5 Concealment]
+	--Short Mag [-10 Magazine, +5 Concealment]
+	--Heatsinked Suppressed Barrel, Suppressed Barrel [Suppresses Weapon, +Quiet, -100 Threat]
+
 		self.sterling.FIRE_MODE = "auto"
 		self.sterling.fire_mode_data = {
 			fire_rate = 0.11
@@ -10251,7 +10499,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--MP40--
 	--------------------------------------
-		--MP40
+	--ID: self.erma
+	--Class: Rapid Fire
+	--Value: 5
+	--Magazine: 32
+	--Ammo: 80
+	--Fire Rate: 600
+	--Damage: 100
+	--Acc: 100
+	--Stab: 80
+	--Conc: 25
+	--Threat: 20
+	--Pickup: 4, 6
+	--Notes: 
+	--Active Mods: 
+
 		self.erma.FIRE_MODE = "auto"
 		self.erma.fire_mode_data = {
 			fire_rate = 0.1
@@ -10308,7 +10570,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Swedish K--
 	--------------------------------------
-		--Swedish K
+	--ID: self.m45
+	--Class: Rapid Fire
+	--Value: 5
+	--Magazine: 36
+	--Ammo: 80
+	--Fire Rate: 600
+	--Damage: 100
+	--Acc: 100
+	--Stab: 80
+	--Conc: 20
+	--Threat: 20
+	--Pickup: 4, 6
+	--Notes: 
+	--Active Mods: Extended Mag. [+14 Magazine, -5 Concealment]
+
 		self.m45.FIRE_MODE = "auto"
 		self.m45.fire_mode_data = {
 			fire_rate = 0.1
@@ -10365,7 +10641,22 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Jackal--
 	--------------------------------------
-		--Jackal SMGs
+	--ID: self.schakal
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 30
+	--Ammo: 80
+	--Fire Rate: 652
+	--Damage: 100
+	--Acc: 100
+	--Stab: 76
+	--Conc: 20
+	--Threat: 20
+	--Pickup: 4, 6
+	--Notes: 
+	--Active Mods: Extended Magazine [+10 Magazine, -10 Concealment]
+	--Extended Magazine [-10 Magazine, +5 Concealment]
+
 		self.schakal.FIRE_MODE = "auto"
 		self.schakal.fire_mode_data = {
 			fire_rate = 0.092
@@ -10428,7 +10719,23 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--CR 805B--
 	--------------------------------------
-		--CR 805B
+	--ID: self.hajk
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 30
+	--Ammo: 80
+	--Fire Rate: 750
+	--Damage: 100
+	--Acc: 100
+	--Stab: 100
+	--Conc: 10
+	--Threat: 20
+	--Pickup: 4, 6
+	--Notes: 
+	--Active Mods: CAR Quadstacked Mag [+30 Magazine, -10 Concealment]
+	--Vintage Mag [-10 Magazine, +5 Concealment]
+	--Speed Pull Mag [+100% Reload Speed, -4 Concealment]
+
 		self.hajk.FIRE_MODE = "auto"
 		self.hajk.fire_mode_data = {
 			fire_rate = 0.08
@@ -10491,7 +10798,22 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Krinkov--
 	--------------------------------------
-		--Krinkov SMG
+	--ID: self.akmsu
+	--Class: Rapid Fire
+	--Value: 1
+	--Magazine: 30
+	--Ammo: 80
+	--Fire Rate: 822
+	--Damage: 100
+	--Acc: 92
+	--Stab: 100
+	--Conc: 20
+	--Threat: 20
+	--Pickup: 4, 6
+	--Notes: 
+	--Active Mods: AK Quadstacked Mag [+30 Magazine, -15 Concealment]
+	--Speed Pull Mag [+100% Reload Speed, -4 Concealment]
+
 		self.akmsu.FIRE_MODE = "auto"
 		self.akmsu.fire_mode_data = {
 			fire_rate = 0.073
@@ -10552,7 +10874,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Claire 12G--
 	--------------------------------------
-		--Claire 12G
+	--ID: self.coach
+	--Class: Shotgun
+	--Value: 3
+	--Magazine: 2
+	--Ammo: 22
+	--Fire Rate: 170
+	--Damage: 170
+	--Acc: 40
+	--Stab: 12
+	--Conc: 30
+	--Threat: 34
+	--Pickup: 1, 2
+	--Notes: 
+	--Active Mods: Sawed-Off Barrel [-20 Accuracy]
+
 		self.coach.FIRE_MODE = "single"
 		self.coach.fire_mode_data = {
 			fire_rate = 0.12
@@ -10622,7 +10958,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--GSPS 12G--
 	--------------------------------------
-		--GSPS 12G
+	--ID: self.m37
+	--Class: Shotgun
+	--Value: 1
+	--Magazine: 7
+	--Ammo: 46
+	--Fire Rate: 104
+	--Damage: 130
+	--Acc: 40
+	--Stab: 52
+	--Conc: 25
+	--Threat: 34
+	--Pickup: 2, 3
+	--Notes: 
+	--Active Mods: 
+
 		self.m37.FIRE_MODE = "single"
 		self.m37.fire_mode_data = {
 			fire_rate = 0.575
@@ -10695,7 +11045,22 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Locomotive 12G--
 	--------------------------------------
-		--Locomotive 12G
+	--ID: self.serbu
+	--Class: Shotgun
+	--Value: 1
+	--Magazine: 8
+	--Ammo: 42
+	--Fire Rate: 160
+	--Damage: 130
+	--Acc: 40
+	--Stab: 36
+	--Conc: 30
+	--Threat: 34
+	--Pickup: 2, 3
+	--Notes: 
+	--Active Mods: Extended Magazine [+2 Magazine, -3 Concealment]
+	--Shell Rack: [+5 Ammo Stock, -3 Concealment]
+
 		self.serbu.FIRE_MODE = "single"
 		self.serbu.fire_mode_data = {
 			fire_rate = 0.375
@@ -10753,7 +11118,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Goliath 12G--
 	--------------------------------------
-		--Goliath 12G.
+	--ID: self.rota
+	--Class: Shotgun
+	--Value: 1
+	--Magazine: 6
+	--Ammo: 54
+	--Fire Rate: 333
+	--Damage: 80
+	--Acc: 40
+	--Stab: 52
+	--Conc: 20
+	--Threat: 34
+	--Pickup: 4, 5
+	--Notes: 
+	--Active Mods: Silenced Barrel [Suppresses Weapon, + “Quiet” Class, -100 Threat]
+
 		self.rota.FIRE_MODE = "single"
 		self.rota.fire_mode_data = {
 			fire_rate = 0.18
@@ -10814,7 +11193,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Judge--
 	--------------------------------------
-		--The Judge
+	--ID: self.judge
+	--Class: Shotgun
+	--Value: 1
+	--Magazine: 5
+	--Ammo: 35
+	--Fire Rate: 500
+	--Damage: 180
+	--Acc: 40
+	--Stab: 20
+	--Conc: 30
+	--Threat: 11
+	--Pickup: 0.5, 1
+	--Notes: 
+	--Active Mods: 
+
 		self.judge.FIRE_MODE = "single"
 		self.judge.fire_mode_data = {
 			fire_rate = 0.12
@@ -10879,7 +11272,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Grimm 12G--
 	--------------------------------------
-		--Grimm 12G
+	--ID: self.basset
+	--Class: Shotgun
+	--Value: 1
+	--Magazine: 7
+	--Ammo: 96
+	--Fire Rate: 300
+	--Damage: 30
+	--Acc: 40
+	--Stab: 60
+	--Conc: 30
+	--Threat: 11
+	--Pickup: 5, 6
+	--Notes: 
+	--Active Mods: Big Brother Magazine [+3 Magazine, -5 Concealment]
+
 		self.basset.FIRE_MODE = "auto"
 		self.basset.fire_mode_data = {
 			fire_rate = 0.2
@@ -10940,7 +11347,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Street Sweeper--
 	--------------------------------------
-		--Street Sweeper
+	--ID: self.striker
+	--Class: Shotgun
+	--Value: 1
+	--Magazine: 12
+	--Ammo: 72
+	--Fire Rate: 429
+	--Damage: 60
+	--Acc: 40
+	--Stab: 60
+	--Conc: 20
+	--Threat: 43
+	--Pickup: 4, 5
+	--Notes: 
+	--Active Mods: Suppressed Barrel [Suppresses Weapon, + “Quiet” Class, -100 Threat]
+
 		self.striker.FIRE_MODE = "single"
 		self.striker.fire_mode_data = {
 			fire_rate = 0.14
@@ -11007,24 +11428,134 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--------------------------------------
 				--Pistol Crossbow--
 	--------------------------------------
+	--ID: self.hunter
+	--Class: Precision, Quiet
+	--Value: 1
+	--Magazine: 1
+	--Ammo: 30
+	--Fire Rate: 50
+	--Damage: 350
+	--Acc: 100
+	--Stab: 100
+	--Conc: 30
+	--Threat: 0
+	--Pickup: 0, 0
+	--Notes: Armor Piercing
+	--Active Mods: Explosive Bolt [- Armor Piercing, 2x Headshot Damage]
+	--Poison Bolt [-250 Damage, +Poison]
+
 	--------------------------------------
 				--MA-17 Flamethrower--
 	--------------------------------------
+	--ID: self.system
+	--Class: Specialist
+	--Value: 1
+	--Magazine: 600
+	--Ammo: 600
+	--Fire Rate: 2000
+	--Damage: 100
+	--Acc: 0
+	--Stab: 100
+	--Conc: 20
+	--Threat: 43
+	--Pickup: 1, 1
+	--Notes: Igniting, Armor Piercing, Body Piercing, Shield Piercing, Improv Expert Aced
+	--NOTE: Note: The MA-17 Flamethrower does not have an active Ammo Pickup without Improv Expert Aced.
+	--Active Mods:
+
 	--------------------------------------
 				--Compact 40mm--
 	--------------------------------------
+	--ID: self.slap
+	--Class: Specialist
+	--Value: 1
+	--Magazine: 1
+	--Ammo: 6
+	--Fire Rate: 30
+	--Damage: 1100
+	--Acc: 84
+	--Stab: 84
+	--Conc: 30
+	--Threat: 43
+	--Pickup: 0.05, 0.1
+	--Notes: Area Damage
+	--Active Mods: Incendiary Round [-1000 Damage, +Area Denial in a large area for 15 seconds.]
+
 	--------------------------------------
 				--China Puff 40mm--
 	--------------------------------------
+	--ID: self.china
+	--Class: Specialist
+	--Value: 1
+	--Magazine: 3
+	--Ammo: 6
+	--Fire Rate: 50
+	--Damage: 1100
+	--Acc: 100
+	--Stab: 100
+	--Conc: 20
+	--Threat: 43
+	--Pickup: 0.05, 0.1
+	--Notes: Area Damage
+	--Active Mods: Incendiary Round [-1000 Damage, +Area Denial in a large area for 15 seconds.]
+
 	--------------------------------------
 				--Arbiter--
 	--------------------------------------
+	--ID: self.arbiter
+	--Class: Specialist
+	--Value: 1
+	--Magazine: 5
+	--Ammo: 15
+	--Fire Rate: 80
+	--Damage: 520
+	--Acc: 100
+	--Stab: 100
+	--Conc: 20
+	--Threat: 43
+	--Pickup: 0.05, 0.1
+	--Notes: Area Damage
+	--NOTE: Unlike other Area Denial effects that mimic the Molotov Cocktail’s full-sized pool of flame, 
+	-- the Arbiter’s Area Denial is based on the Incendiary Grenade’s reduced radius that only uses
+	-- the central flame of the Molotov Cocktail effect.
+	--Active Mods: Incendiary Round [-470 Damage, +Area Denial in a small area for 10 seconds.]
 	--------------------------------------
 				--HRL-7--
 	--------------------------------------
+	--ID: self.rpg7
+	--Class: Specialist
+	--Value: 1
+	--Magazine: 1
+	--Ammo: 4
+	--Fire Rate: 30
+	--Damage: 12500
+	--Acc: 100
+	--Stab: 100
+	--Conc: 15
+	--Threat: 43
+	--Pickup: 0.001, 0.001
+	--Notes: Area Damage, Improv Expert Aced
+	--NOTE: The HRL-7 does not have an active Ammo Pickup without Improv Expert Aced.
+	--Active Mods:
 	--------------------------------------
 				--Commando 101--
 	--------------------------------------
+	--ID: self.ray
+	--Class: Specialist
+	--Value: 1
+	--Magazine: 4
+	--Ammo: 4
+	--Fire Rate: 60
+	--Damage: 12500
+	--Acc: 100
+	--Stab: 100
+	--Conc: 0
+	--Threat: 43
+	--Pickup: 0.001, 0.001
+	--Notes: Area Damage, Improv Expert Aced
+	--NOTE: The Commando 101 does not have an active Ammo Pickup without Improv Expert Aced.
+	--Active Mods:
+
 	--------------------------------------
 	--OVE9000 Saw--
 	--------------------------------------			
@@ -11040,10 +11571,14 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Conc: 20
 	--Threat: 43
 	--Pickup: 0, 0
-	--Notes:The hitbox is being moved to the middle of the screen. Rejoice!
-	--No longer has a hidden damage bonus to Dozers.
-	--Active Mods: Silent Motor, Fast Motor, Durable Blade, Sharp Blade
-
+	--Notes: Armor Piercing, Handyman Aced
+	--NOTE: The hitbox is being moved to the middle of the screen. Rejoice!
+	-- No longer has a hidden damage bonus to Dozers.
+	-- The OVE9000 Saw is not available as a Secondary weapon without Handyman Aced.
+	--Active Mods: Silent Motor [-200 Fire Rate, +10 Concealment, Reduced noise radius (base game mechanic)]
+	--Fast Motor [-20 Concealment, +400 Fire Rate]
+	--Durable Blade [-40 Damage, +50 Magazine Size, +100 Ammo Stock]
+	--Sharp Blade [+20 Damage, +100 Magazine Size, -200 Ammo Stock]
 
 -- END weapon data.
 
