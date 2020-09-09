@@ -3537,7 +3537,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Notes:
 	--Active Mods: AK Quadstacked Mag [+30 Magazine, -10 Concealment]
 	--Speel Pull Mag [+100% Reload Speed, -4 Concealment]
-	--INCOMPLETE DMR KIT INFO HERE
+	--DMR Kit [-Rapid Fire, -Precision, +Armor Piercing, -75 Ammo Stock, -50 Damage, +8 Accuracy,
+	-- -20 Stability, +2 Threat, -1, -2 Pickup]
+	-- NOTE This DMR Kit manually calculated from diff values. may require further scrutiny.
 
 		self.akm.FIRE_MODE = "auto"
 		self.akm.fire_mode_data = {
@@ -3616,7 +3618,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Active Mods: 
 	--Active Mods: AK Quadstacked Mag [+30 Magazine, -10 Concealment]
 	--Speel Pull Mag [+100% Reload Speed, -4 Concealment]
-	--INCOMPLETE DMR KIT INFO HERE
+	--DMR Kit [-Rapid Fire, -Precision, +Armor Piercing, -75 Ammo Stock, -50 Damage, +8 Accuracy,
+	-- -20 Stability, +2 Threat, -1, -2 Pickup]
+	-- NOTE This DMR Kit manually calculated from diff values. may require further scrutiny.
 
 		self.akm_gold.FIRE_MODE = "auto"
 		self.akm_gold.fire_mode_data = {
