@@ -60,6 +60,27 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			}
 		}
 		
+		self.skills.fire_control = { --Shot Grouping
+			{
+				upgrades = {
+					"player_shotgrouping_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_shotgrouping_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_fire_control_beta",
+			desc_id = "menu_fire_control_beta_desc",
+			icon_xy = {
+				9,
+				10
+			}
+		}
+		
 		self.skills.heavy_impact = { --Money Shot
 			{
 				upgrades = {
@@ -120,6 +141,27 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			icon_xy = {
 				10,
 				2
+			}
+		}
+		
+		self.skills.body_expertise = { --Prayers Answered
+			{
+				upgrades = {
+					"player_prayers_answered_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_prayers_answered_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_body_expertise_beta",
+			desc_id = "menu_body_expertise_beta_desc",
+			icon_xy = {
+				10,
+				3
 			}
 		}
 		

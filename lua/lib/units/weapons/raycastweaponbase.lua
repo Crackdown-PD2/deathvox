@@ -739,7 +739,8 @@ function InstantBulletBase:calculate_crit(weapon_unit, user_unit)
 	local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
 	
 	if has_category and weapon_unit:base():is_category("assault_rifle", "smg", "rapidfire") then
-		crit_value = crit_value + managers.player:upgrade_value("player", "spray_and_pray_basic", 0)
+		crit_value = crit_value + managers.player:upgrade_value("player", "prayers_answered_basic", 0)
+		crit_value = crit_value + managers.player:upgrade_value("player", "prayers_answered_aced", 0)
 		if managers.player._miracle_crit_chance_boost then
 			--log("new do? dead you.")
 			crit_value = crit_value + managers.player._miracle_crit_chance_boost
@@ -756,6 +757,27 @@ function InstantBulletBase:calculate_crit(weapon_unit, user_unit)
 	--end
 	
 	return critical_hit
+end
+
+function RaycastWeaponBase:enter_steelsight_speed_multiplier()
+	local multiplier = 1
+
+	for _, category in ipairs(self:weapon_tweak_data().categories) do
+		multiplier = multiplier * managers.player:upgrade_value(category, "enter_steelsight_speed_multiplier", 1)
+	end
+
+	multiplier = multiplier * managers.player:temporary_upgrade_value("temporary", "combat_medic_enter_steelsight_speed_multiplier", 1)
+	multiplier = multiplier * managers.player:upgrade_value(self._name_id, "enter_steelsight_speed_multiplier", 1)
+	
+	local has_category = self._unit and alive(self._unit) and not self._unit:base().thrower_unit and self._unit:base().is_category
+	
+	if has_category and self:is_category("assault_rifle", "smg", "rapidfire") then
+		multiplier = multiplier * managers.player:upgrade_value("player", "prayers_answered_basic", 0)
+	end
+	
+	--log("multiplier is:" .. multiplier .. "!")
+
+	return multiplier
 end
 
 function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage, blank, no_sound, already_ricocheted, critical_hit)

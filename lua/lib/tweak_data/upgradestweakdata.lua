@@ -88,6 +88,34 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
+		
+		self.values.player.shotgrouping_aced = { 
+			true
+		}
+		
+		self.values.player.shotgrouping_basic = { 
+			1.9
+		}
+		
+		self.definitions.player_shotgrouping_basic = {
+			name_id = "menu_shotgrouping_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "shotgrouping_basic",
+				category = "player"
+			}
+		}
+					
+		self.definitions.player_shotgrouping_aced = {
+			name_id = "menu_shotgrouping_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "shotgrouping_aced",
+				category = "player"
+			}
+		}
 	
 		self.values.player.ricochet_bullets = {
 			true
@@ -141,6 +169,34 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "making_miracles_aced",
+				category = "player"
+			}
+		}
+		
+		self.values.player.prayers_answered_basic = {
+			0.1
+		}
+		
+		self.definitions.player_prayers_answered_basic = {
+			name_id = "menu_prayers_answered_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "prayers_answered_basic",
+				category = "player"
+			}
+		}
+		
+		self.values.player.prayers_answered_aced = {
+			0.1
+		}
+		
+		self.definitions.player_prayers_answered_aced = {
+			name_id = "menu_prayers_answered_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "prayers_answered_aced",
 				category = "player"
 			}
 		}
