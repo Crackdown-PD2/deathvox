@@ -15,15 +15,17 @@ function BlackMarketManager:recoil_addend(name, categories, recoil_index, silenc
 		end
 		
 		local pm = managers.player
-		local state = pm:player_unit():movement():current_state().in_steelsight
+		local player_unit = pm:player_unit()
 		
-		if managers.player:has_category_upgrade("player", "shotgrouping_aced") and state and pm:player_unit():movement():current_state():in_steelsight() then
-			for _, category in ipairs(categories) do
-				if category == "assault_rifle" or category == "smg" or category == "rapidfire" then 
-					index = index + 14
-					--log("index:" .. index .. "") 
-					--log("aw yeah")
-					break
+		if player_unit and alive(player_unit) then
+			if managers.player:has_category_upgrade("player", "shotgrouping_aced") and player_unit:movement():current_state():in_steelsight() then
+				for _, category in ipairs(categories) do
+					if category == "assault_rifle" or category == "smg" or category == "rapidfire" then 
+						index = index + 14
+						--log("index:" .. index .. "") 
+						--log("aw yeah")
+						break
+					end
 				end
 			end
 		end
