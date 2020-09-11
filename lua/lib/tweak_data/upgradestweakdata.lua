@@ -209,6 +209,42 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		--Assassin
 		
+		self.values.player.professionalschoice = {
+			{
+				0.02,
+				3,
+				"below",
+				35,
+				0.1
+			},
+			{
+				0.04,
+				3,
+				"below",
+				35,
+				0.2
+			}
+		}
+		
+		self.definitions.player_professionalschoice_basic = {
+			name_id = "menu_player_professionalschoice_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "professionalschoice",
+				category = "player"
+			}
+		}
+		self.definitions.player_professionalschoice_aced = {
+			name_id = "menu_player_professionalschoice_aced",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "professionalschoice",
+				category = "player"
+			}
+		}
+		
 		--Sapper
 		
 		--Dealer

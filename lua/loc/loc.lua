@@ -47,7 +47,11 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				["menu_body_expertise_beta"] = "Prayers Answered",
 				["menu_body_expertise_beta_desc"] = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles have their Critical Hit chance increased by ##+10%##, for a total of ##+20%##.\n\nACE: ##$pro##\nYour SMGs, and Assault Rifles have their Critical Hit chance ##further## increased by ##+10%##, for a total of ##+30%##.",
 				
-				--dsfdsfdsfsd
+				--ghost
+				["menu_backstab_beta"] = "Professional's Choice",
+				["menu_backstab_beta_desc"] = "BASIC: ##$basic##\nSilenced Weapons gain a ##+2% Fire Rate bonus## for every ##3## points of Detection Risk under ##35##, up to ##+10%##.\n\nACE: ##$pro##\nThe Fire Rate bonus is increased to ##+4%## and the maximum bonus is increased to ##+20%##.",
+				
+				--enforcer
 				["menu_far_away_beta"] = "Point Blank",
 				["menu_far_away_beta_desc"] = "BASIC: ##$basic##\nFor the first 100cm, your Shotguns will now gain ##Armor Piercing, Shield Piercing, and Body Piercing.##\n\nACE: ##$pro##\nPoint Blank also grants ##+100%## Damage for the first meter."
 			})

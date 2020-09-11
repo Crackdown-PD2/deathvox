@@ -176,6 +176,27 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		
 		--Assassin
 		
+		self.skills.backstab = { --professional's choice
+			{
+				upgrades = {
+					"player_professionalschoice_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_professionalschoice_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_backstab_beta",
+			desc_id = "menu_backstab_beta_desc",
+			icon_xy = {
+				0,
+				12
+			}
+		}
+		
 		--Sapper
 		
 		--Dealer

@@ -74,3 +74,25 @@ function BlackMarketManager:recoil_addend(name, categories, recoil_index, silenc
 
 	return addend
 end
+
+function BlackMarketManager:fire_rate_multiplier(name, categories, silencer, detection_risk, current_state, blueprint)
+	local multiplier = 1
+	multiplier = multiplier + 1 - managers.player:upgrade_value(name, "fire_rate_multiplier", 1)
+	multiplier = multiplier + 1 - managers.player:upgrade_value("weapon", "fire_rate_multiplier", 1)
+
+	for _, category in ipairs(categories) do
+		multiplier = multiplier + 1 - managers.player:upgrade_value(category, "fire_rate_multiplier", 1)
+	end
+	
+	for _, category in ipairs(categories) do
+		if category == "quiet" or silencer then
+			local detection_risk_add_firerate = managers.player:upgrade_value("player", "professionalschoice")
+			multiplier = multiplier - managers.player:get_value_from_risk_upgrade(detection_risk_add_firerate, detection_risk)
+			--log("multiplier is: " .. multiplier .. "")
+			
+			break
+		end
+	end
+
+	return self:_convert_add_to_mul(multiplier)
+end
