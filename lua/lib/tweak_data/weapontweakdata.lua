@@ -2407,6 +2407,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Notes:
 	--Active Mods:
 
+		
 		self.tecci.FIRE_MODE = "auto"
 		self.tecci.fire_mode_data = {
 			fire_rate = 0.09
@@ -2455,7 +2456,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			alert_size = 7,
 			spread = 14,
 			spread_moving = 10,
-			recoil = 25,
+			recoil = 24,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
@@ -2750,7 +2751,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			extra_ammo = 51,
 			reload = 11,
 			suppression = 24,
-			concealment = 17
+			concealment = 20
 		}
 	--------------------------------------
 				--CAR-4--
@@ -3587,7 +3588,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 7,
+			suppression = 9,
 			concealment = 10
 		}
 		self.akm.stats_modifiers = {
@@ -3887,7 +3888,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			total_ammo_mod = 21,
 			damage = 98,
 			alert_size = 7,
-			spread = 25,
+			spread = 26,
 			spread_moving = 16,
 			recoil = 22,
 			value = 4,
@@ -3970,7 +3971,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 10,
+			suppression = 9,
 			concealment = 10
 		}
 		self.m16.stats_modifiers = {
@@ -4710,7 +4711,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 5,
+			suppression = 3,
 			concealment = 20
 		}
 		self.boot.stats_modifiers = {
@@ -4969,7 +4970,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			extra_ammo = 51,
 			reload = 11,
 			suppression = 3,
-			concealment = 20
+			concealment = 25
 		}
 		self.spas12.stats_modifiers = {
 			damage = 1
@@ -4997,11 +4998,11 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 
 		self.benelli.FIRE_MODE = "single"
 		self.benelli.fire_mode_data = {
-			fire_rate = 0.139
+			fire_rate = 0.13986013986
 		}
 		self.benelli.CAN_TOGGLE_FIREMODE = false
 		self.benelli.single = {
-			fire_rate = 0.139
+			fire_rate = 0.13986013986
 		}
 		self.benelli.timers = {
 			unequip = 0.85,
@@ -5034,14 +5035,14 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			total_ammo_mod = 21,
 			damage = 110,
 			alert_size = 7,
-			spread = 8,
-			spread_moving = 7,
-			recoil = 12,
+			spread = 11,
+			spread_moving = 11,
+			recoil = 26,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
 			suppression = 3,
-			concealment = 20
+			concealment = 25
 		}
 		self.benelli.stats_modifiers = {
 			damage = 1
@@ -5175,7 +5176,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			equip = 0.6
 		}
 		
-		self.saiga.CLIP_AMMO_MAX = 8
+		self.saiga.CLIP_AMMO_MAX = 7
 		self.saiga.AMMO_MAX = 60
 		self.saiga.AMMO_PICKUP = {
 			5,
@@ -5255,7 +5256,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Notes: Armor Piercing
 	--Active Mods: 
 
-		self.contraband.FIRE_MODE = "single"
+			self.contraband.FIRE_MODE = "single"
 		self.contraband.categories = {
 			"assault_rifle",
 			"precision"
@@ -5278,8 +5279,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.contraband.NR_CLIPS_MAX = 2
 		self.contraband.AMMO_MAX = self.contraband.CLIP_AMMO_MAX * self.contraband.NR_CLIPS_MAX
 		self.contraband.AMMO_PICKUP = {
-			0.20,
-			0.60
+			2,
+			3
 		}
 		
 		self.contraband.spread = {
@@ -5301,14 +5302,14 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			total_ammo_mod = 21,
 			damage = 160,
 			alert_size = 7,
-			spread = 19,
-			spread_moving = 15,
-			recoil = 12,
+			spread = 26,
+			spread_moving = 26,
+			recoil = 11,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 8,
-			concealment = 8
+			suppression = 4,
+			concealment = 5
 		}
 		self.contraband.stats_modifiers = {
 			damage = 1
@@ -5352,7 +5353,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.contraband_m203.AMMO_MAX = self.contraband_m203.CLIP_AMMO_MAX * self.contraband_m203.NR_CLIPS_MAX
 		self.contraband_m203.AMMO_PICKUP = {
 			0.1,
-			0.7
+			0.1
 		}
 		
 		self.contraband_m203.spread = {
@@ -5429,8 +5430,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.sub2000.NR_CLIPS_MAX = 2
 		self.sub2000.AMMO_MAX = self.sub2000.CLIP_AMMO_MAX * self.sub2000.NR_CLIPS_MAX
 		self.sub2000.AMMO_PICKUP = {
-			0.33,
-			0.99
+			3,
+			4
 		}
 		
 		self.sub2000.spread = {
@@ -5446,20 +5447,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.sub2000.kick.crouching = self.sub2000.kick.standing
 		self.sub2000.kick.steelsight = self.sub2000.kick.standing
+		self.sub2000.can_shoot_through_enemy = true
 		
 		self.sub2000.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
 			damage = 160,
 			alert_size = 7,
-			spread = 19,
+			spread = 26,
 			spread_moving = 16,
-			recoil = 9,
+			recoil = 4,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 4,
-			concealment = 27
+			suppression = 14,
+			concealment = 30
 		}
 		self.sub2000.stats_modifiers = {
 			damage = 1
@@ -5498,12 +5500,13 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.new_m14.CLIP_AMMO_MAX = 10
-		self.new_m14.NR_CLIPS_MAX = 7
-		self.new_m14.AMMO_MAX = self.new_m14.CLIP_AMMO_MAX * self.new_m14.NR_CLIPS_MAX
+		self.new_m14.AMMO_MAX = 80
 		self.new_m14.AMMO_PICKUP = {
-			0.35,
-			1.05
+			3,
+			4
 		}
+		
+		self.new_m14.can_shoot_through_enemy = true
 		
 		self.new_m14.spread = {
 			standing = self.new_m4.spread.standing,
@@ -5524,14 +5527,14 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			total_ammo_mod = 21,
 			damage = 160,
 			alert_size = 7,
-			spread = 22,
-			spread_moving = 20,
-			recoil = 10,
+			spread = 26,
+			spread_moving = 26,
+			recoil = 22,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 4,
-			concealment = 8
+			suppression = 8,
+			concealment = 10
 		}
 		self.new_m14.stats_modifiers = {
 			damage = 1
@@ -5554,7 +5557,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 3, 4
 	--Notes: Armor Piercing
 	--Active Mods: Magpouch Stock [+16 Ammo Stock, -5 Concealment]
-
+	
 		self.ching.FIRE_MODE = "single"
 		self.ching.fire_mode_data = {
 			fire_rate = 0.1
@@ -5574,8 +5577,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.ching.NR_CLIPS_MAX = 9
 		self.ching.AMMO_MAX = self.ching.CLIP_AMMO_MAX * self.ching.NR_CLIPS_MAX
 		self.ching.AMMO_PICKUP = {
-			0.36,
-			1.08
+			3,
+			4
 		}
 		
 		self.ching.spread = {
@@ -5592,23 +5595,26 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.ching.kick.crouching = self.ching.kick.standing
 		self.ching.kick.steelsight = self.ching.kick.standing
 		
+		self.ching.can_shoot_through_enemy = true
+		
 		self.ching.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
 			damage = 160,
 			alert_size = 7,
-			spread = 22,
-			spread_moving = 20,
-			recoil = 10,
+			spread = 26,
+			spread_moving = 26,
+			recoil = 14,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 4,
+			suppression = 8,
 			concealment = 20
 		}
 		self.ching.stats_modifiers = {
 			damage = 1
 		}
+		
 	--------------------------------------
 		--Primary Sniper Rifles--
 	--------------------------------------
@@ -5649,10 +5655,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.tti.CLIP_AMMO_MAX = 20
-		self.tti.NR_CLIPS_MAX = 2
-		self.tti.AMMO_MAX = self.tti.CLIP_AMMO_MAX * self.tti.NR_CLIPS_MAX
+		self.tti.AMMO_MAX = 60
 		self.tti.AMMO_PICKUP = {
-			2,
+			2.5,
 			3
 		}
 		
@@ -5681,16 +5686,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.tti.stats = {
 			zoom = 1,
 			total_ammo_mod = 21,
-			damage = 160,
+			damage = 190,
 			alert_size = 8,
-			spread = 16,
-			spread_moving = 24,
-			recoil = 2,
+			spread = 26,
+			spread_moving = 26,
+			recoil = 8,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 12,
-			concealment = 16
+			suppression = 0,
+			concealment = 20
 		}
 		self.tti.armor_piercing_chance = 1
 		self.tti.stats_modifiers = {
@@ -5731,10 +5736,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.wa2000.CLIP_AMMO_MAX = 10
-		self.wa2000.NR_CLIPS_MAX = 4
-		self.wa2000.AMMO_MAX = self.wa2000.CLIP_AMMO_MAX * self.wa2000.NR_CLIPS_MAX
+		self.wa2000.AMMO_MAX = 60
 		self.wa2000.AMMO_PICKUP = {
-			2,
+			2.5,
 			3
 		}
 		
@@ -5763,16 +5767,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.wa2000.stats = {
 			zoom = 1,
 			total_ammo_mod = 21,
-			damage = 160,
+			damage = 190,
 			alert_size = 8,
-			spread = 24,
-			spread_moving = 24,
-			recoil = 6,
+			spread = 26,
+			spread_moving = 26,
+			recoil = 8,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 12,
-			concealment = 16
+			suppression = 0,
+			concealment = 15
 		}
 		self.wa2000.armor_piercing_chance = 1
 		self.wa2000.stats_modifiers = {
@@ -5813,10 +5817,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.siltstone.CLIP_AMMO_MAX = 10
-		self.siltstone.NR_CLIPS_MAX = 4
-		self.siltstone.AMMO_MAX = self.siltstone.CLIP_AMMO_MAX * self.siltstone.NR_CLIPS_MAX
+		self.siltstone.AMMO_MAX = 60
 		self.siltstone.AMMO_PICKUP = {
-			2,
+			2.5,
 			3
 		}
 		
@@ -5845,16 +5848,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.siltstone.stats = {
 			zoom = 1,
 			total_ammo_mod = 21,
-			damage = 160,
+			damage = 190,
 			alert_size = 8,
-			spread = 19,
-			spread_moving = 24,
-			recoil = 2,
+			spread = 26,
+			spread_moving = 26,
+			recoil = 6,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 12,
-			concealment = 16
+			suppression = 0,
+			concealment = 15
 		}
 		self.siltstone.armor_piercing_chance = 1
 		self.siltstone.stats_modifiers = {
@@ -5897,11 +5900,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.msr.CLIP_AMMO_MAX = 10
-		self.msr.NR_CLIPS_MAX = 4
-		self.msr.AMMO_MAX = self.msr.CLIP_AMMO_MAX * self.msr.NR_CLIPS_MAX
+		self.msr.AMMO_MAX = 60
 		self.msr.AMMO_PICKUP = {
 			2,
-			3
+			2.5
 		}
 		
 		self.msr.spread = {
@@ -5932,14 +5934,14 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			total_ammo_mod = 21,
 			damage = 123,
 			alert_size = 7,
-			spread = 23,
-			spread_moving = 22,
-			recoil = 8,
+			spread = 26,
+			spread_moving = 26,
+			recoil = 6,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 6,
-			concealment = 5
+			suppression = 0,
+			concealment = 10
 		}
 		self.msr.armor_piercing_chance = 1
 		self.msr.stats_modifiers = {
@@ -5983,11 +5985,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.winchester1874.CLIP_AMMO_MAX = 15
-		self.winchester1874.NR_CLIPS_MAX = 3
-		self.winchester1874.AMMO_MAX = self.winchester1874.CLIP_AMMO_MAX * self.winchester1874.NR_CLIPS_MAX
+		self.winchester1874.AMMO_MAX = 75
 		self.winchester1874.AMMO_PICKUP = {
-			2.25,
-			3.377
+			3,
+			4
 		}
 		
 		self.winchester1874.spread = {
@@ -6018,14 +6019,14 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			total_ammo_mod = 21,
 			damage = 123,
 			alert_size = 7,
-			spread = 24,
-			spread_moving = 24,
-			recoil = 6,
+			spread = 26,
+			spread_moving = 26,
+			recoil = 16,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 5,
-			concealment = 12
+			suppression = 11,
+			concealment = 20
 		}
 		self.winchester1874.armor_piercing_chance = 1
 		self.winchester1874.stats_modifiers = {
@@ -6071,8 +6072,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.model70.NR_CLIPS_MAX = 6
 		self.model70.AMMO_MAX = self.model70.CLIP_AMMO_MAX * self.model70.NR_CLIPS_MAX
 		self.model70.AMMO_PICKUP = {
-			0.7,
-			1
+			1.5,
+			2.5
 		}
 		
 		self.model70.spread = {
@@ -6103,14 +6104,14 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			total_ammo_mod = 21,
 			damage = 120,
 			alert_size = 7,
-			spread = 24,
-			spread_moving = 24,
-			recoil = 4,
+			spread = 26,
+			spread_moving = 26,
+			recoil = 13,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 5,
-			concealment = 6
+			suppression = 0,
+			concealment = 10
 		}
 		self.model70.armor_piercing_chance = 1
 		self.model70.stats_modifiers = {
@@ -6153,8 +6154,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.r93.NR_CLIPS_MAX = 5
 		self.r93.AMMO_MAX = self.r93.CLIP_AMMO_MAX * self.r93.NR_CLIPS_MAX
 		self.r93.AMMO_PICKUP = {
-			0.7,
-			1
+			1.5,
+			2.5
 		}
 		
 		self.r93.spread = {
@@ -6184,14 +6185,14 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			total_ammo_mod = 21,
 			damage = 120,
 			alert_size = 8,
-			spread = 24,
-			spread_moving = 24,
-			recoil = 4,
+			spread = 26,
+			spread_moving = 26,
+			recoil = 13,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 4,
-			concealment = 5
+			suppression = 0,
+			concealment = 10
 		}
 		self.r93.armor_piercing_chance = 1
 		self.r93.stats_modifiers = {
@@ -6216,7 +6217,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Active Mods: Silenced Barrel [Suppresses Weapon, +Quiet, -100 Threat]
 	--Nagant Bayonet [Replaces Weapon Butt melee weapon with Nagant Bayonet melee weapon]
 
-		self.mosin.FIRE_MODE = "single"
+				self.mosin.FIRE_MODE = "single"
 		self.mosin.fire_mode_data = {
 			fire_rate = 1
 		}
@@ -6232,11 +6233,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.mosin.CLIP_AMMO_MAX = 5
-		self.mosin.NR_CLIPS_MAX = 5
-		self.mosin.AMMO_MAX = self.mosin.CLIP_AMMO_MAX * self.mosin.NR_CLIPS_MAX
+		self.mosin.AMMO_MAX = 30
 		self.mosin.AMMO_PICKUP = {
-			0.7,
-			1
+			1.5,
+			2.5
 		}
 		
 		self.mosin.spread = {
@@ -6266,14 +6266,14 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			total_ammo_mod = 21,
 			damage = 120,
 			alert_size = 7,
-			spread = 24,
-			spread_moving = 24,
-			recoil = 4,
+			spread = 26,
+			spread_moving = 26,
+			recoil = 6,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 5,
-			concealment = 6
+			suppression = 0,
+			concealment = 15
 		}
 		self.mosin.armor_piercing_chance = 1
 		self.mosin.stats_modifiers = {
@@ -6313,11 +6313,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.desertfox.CLIP_AMMO_MAX = 5
-		self.desertfox.NR_CLIPS_MAX = 6
-		self.desertfox.AMMO_MAX = self.desertfox.CLIP_AMMO_MAX * self.desertfox.NR_CLIPS_MAX
+		self.desertfox.AMMO_MAX = 30
 		self.desertfox.AMMO_PICKUP = {
-			0.7,
-			1
+			1.5,
+			2.5
 		}
 		
 		self.desertfox.spread = {
@@ -6347,14 +6346,14 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			total_ammo_mod = 21,
 			damage = 120,
 			alert_size = 7,
-			spread = 20,
-			spread_moving = 24,
+			spread = 26,
+			spread_moving = 26,
 			recoil = 4,
 			value = 10,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 5,
-			concealment = 19
+			suppression = 0,
+			concealment = 25
 		}
 		self.desertfox.armor_piercing_chance = 1
 		self.desertfox.stats_modifiers = {
@@ -6378,7 +6377,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Suppressed Barrel [Suppresses Weapon, +Quiet, -100 Threat]
 
-		self.m95.FIRE_MODE = "single"
+	self.m95.FIRE_MODE = "single"
 		self.m95.fire_mode_data = {
 			fire_rate = 1.5
 		}
@@ -6394,11 +6393,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.m95.CLIP_AMMO_MAX = 5
-		self.m95.NR_CLIPS_MAX = 3
-		self.m95.AMMO_MAX = self.m95.CLIP_AMMO_MAX * self.m95.NR_CLIPS_MAX
+		self.m95.AMMO_MAX = 20
 		self.m95.AMMO_PICKUP = {
-			0.05,
-			0.65
+			0.25,
+			0.5
 		}
 		
 		self.m95.spread = {
@@ -6428,14 +6426,14 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			total_ammo_mod = 21,
 			damage = 100,
 			alert_size = 9,
-			spread = 24,
-			spread_moving = 24,
-			recoil = 2,
+			spread = 26,
+			spread_moving = 26,
+			recoil = 0,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 2,
-			concealment = 1
+			suppression = 0,
+			concealment = 0
 		}
 		self.m95.armor_piercing_chance = 1
 		self.m95.stats_modifiers = {
