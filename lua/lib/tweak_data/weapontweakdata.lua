@@ -3182,8 +3182,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.aug.CLIP_AMMO_MAX = 30
-		self.aug.NR_CLIPS_MAX = 5
-		self.aug.AMMO_MAX = self.aug.CLIP_AMMO_MAX * self.aug.NR_CLIPS_MAX
+		self.aug.AMMO_MAX = 210
 		self.aug.AMMO_PICKUP = {
 			6,
 			10
