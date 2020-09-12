@@ -10934,10 +10934,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 
 		self.coach.FIRE_MODE = "single"
 		self.coach.fire_mode_data = {
-			fire_rate = 0.12
+			fire_rate = 0.35294117647 
 		}
 		self.coach.single = {
-			fire_rate = 0.12
+			fire_rate = 0.35294117647 
 		}
 		self.coach.timers = {
 			reload_not_empty = 2.2
@@ -10947,11 +10947,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.coach.timers.equip = 0.4
 		
 		self.coach.CLIP_AMMO_MAX = 2
-		self.coach.NR_CLIPS_MAX = 22
-		self.coach.AMMO_MAX = self.coach.CLIP_AMMO_MAX * self.coach.NR_CLIPS_MAX
+		self.coach.AMMO_MAX = 22
 		self.coach.AMMO_PICKUP = {
-			0.22,
-			0.66
+			1,
+			2
 		}
 		
 		self.coach.spread = {
@@ -10981,16 +10980,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.coach.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 155,
+			damage = 170,
 			alert_size = 7,
-			spread = 15,
-			spread_moving = 12,
-			recoil = 12,
-			value = 3,
+			spread = 11,
+			spread_moving = 11,
+			recoil = 4,
+			value = 4,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 5,
-			concealment = 10
+			suppression = 3,
+			concealment = 30
 		}
 		self.coach.stats_modifiers = {
 			damage = 1
@@ -11018,10 +11017,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 
 		self.m37.FIRE_MODE = "single"
 		self.m37.fire_mode_data = {
-			fire_rate = 0.575
+			fire_rate = 0.57692307692 
 		}
 		self.m37.single = {
-			fire_rate = 0.575
+			fire_rate = 0.57692307692 
 		}
 		self.m37.timers = {
 			shotgun_reload_enter = 0.5,
@@ -11034,11 +11033,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		
 		self.m37.CLIP_AMMO_MAX = 7
-		self.m37.NR_CLIPS_MAX = 4
-		self.m37.AMMO_MAX = self.m37.CLIP_AMMO_MAX * self.m37.NR_CLIPS_MAX
+		self.m37.AMMO_MAX = 46
 		self.m37.AMMO_PICKUP = {
-			0.28,
-			0.98
+			2,
+			3
 		}
 		
 		self.m37.spread = {
@@ -11068,16 +11066,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.m37.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 155,
+			damage = 130,
 			alert_size = 7,
-			spread = 12,
-			spread_moving = 12,
+			spread = 11,
+			spread_moving = 11,
 			recoil = 14,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 5,
-			concealment = 22
+			suppression = 3,
+			concealment = 25
 		}
 		self.m37.stats_modifiers = {
 			damage = 1
@@ -11116,12 +11114,11 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			equip = 0.6
 		}
 		
-		self.serbu.CLIP_AMMO_MAX = 6
-		self.serbu.NR_CLIPS_MAX = 7
-		self.serbu.AMMO_MAX = self.serbu.CLIP_AMMO_MAX * self.serbu.NR_CLIPS_MAX
+		self.serbu.CLIP_AMMO_MAX = 8
+		self.serbu.AMMO_MAX = 42
 		self.serbu.AMMO_PICKUP = {
-			0.42,
-			1.47
+			2,
+			3
 		}
 		
 		self.serbu.spread = {
@@ -11141,16 +11138,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.serbu.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 90,
+			damage = 130,
 			alert_size = 7,
-			spread = 13,
-			spread_moving = 10,
+			spread = 11,
+			spread_moving = 11,
 			recoil = 10,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 5,
-			concealment = 23
+			suppression = 3,
+			concealment = 30
 		}
 		self.serbu.stats_modifiers = {
 			damage = 1
@@ -11195,8 +11192,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.rota.NR_CLIPS_MAX = 9
 		self.rota.AMMO_MAX = self.rota.CLIP_AMMO_MAX * self.rota.NR_CLIPS_MAX
 		self.rota.AMMO_PICKUP = {
-			2.7,
-			4.05
+			4,
+			5
 		}
 		
 		self.rota.spread = {
@@ -11216,16 +11213,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.rota.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 42,
+			damage = 80,
 			alert_size = 7,
-			spread = 15,
-			spread_moving = 8,
-			recoil = 12,
+			spread = 11,
+			spread_moving = 11,
+			recoil = 14,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 5,
-			concealment = 13
+			suppression = 3,
+			concealment = 20
 		}
 		self.rota.stats_modifiers = {
 			damage = 1
@@ -11269,8 +11266,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.judge.NR_CLIPS_MAX = 7
 		self.judge.AMMO_MAX = self.judge.CLIP_AMMO_MAX * self.judge.NR_CLIPS_MAX
 		self.judge.AMMO_PICKUP = {
-			0.18,
-			0.53
+			0.5,
+			1
 		}
 		
 		self.judge.spread = {
@@ -11295,16 +11292,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.judge.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 155,
+			damage = 180,
 			alert_size = 7,
-			spread = 14,
-			spread_moving = 14,
-			recoil = 8,
+			spread = 12,
+			spread_moving = 12,
+			recoil = 5,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 5,
-			concealment = 29
+			suppression = 12,
+			concealment = 30
 		}
 		self.judge.stats_modifiers = {
 			damage = 1
@@ -11345,12 +11342,11 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			equip = 0.55
 		}
 		
-		self.basset.CLIP_AMMO_MAX = 8
-		self.basset.NR_CLIPS_MAX = 13
-		self.basset.AMMO_MAX = self.basset.CLIP_AMMO_MAX * self.basset.NR_CLIPS_MAX
+		self.basset.CLIP_AMMO_MAX = 7
+		self.basset.AMMO_MAX = 96
 		self.basset.AMMO_PICKUP = {
-			5.2,
-			7.8
+			5,
+			6
 		}
 		
 		self.basset.spread = {
@@ -11370,16 +11366,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.basset.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 18,
+			damage = 30,
 			alert_size = 7,
-			spread = 4,
-			spread_moving = 8,
-			recoil = 13,
+			spread = 11,
+			spread_moving = 11,
+			recoil = 16,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 5,
-			concealment = 21
+			suppression = 12,
+			concealment = 30
 		}
 		self.basset.stats_modifiers = {
 			damage = 1
@@ -11427,8 +11423,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.striker.NR_CLIPS_MAX = 6
 		self.striker.AMMO_MAX = self.striker.CLIP_AMMO_MAX * self.striker.NR_CLIPS_MAX
 		self.striker.AMMO_PICKUP = {
-			3.6,
-			5.4
+			4,
+			5
 		}
 		
 		self.striker.spread = {
@@ -11448,16 +11444,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.striker.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 42,
+			damage = 60,
 			alert_size = 7,
-			spread = 8,
-			spread_moving = 8,
-			recoil = 12,
+			spread = 11,
+			spread_moving = 11,
+			recoil = 16,
 			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 5,
-			concealment = 21
+			suppression = 0,
+			concealment = 20
 		}
 		self.striker.stats_modifiers = {
 			damage = 1
