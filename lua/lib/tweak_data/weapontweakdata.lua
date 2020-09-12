@@ -6853,23 +6853,18 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			deploy_bipod = 1
 		}
 		
-		self.rpk.CLIP_AMMO_MAX = 100
-		self.rpk.NR_CLIPS_MAX = 3
-		self.rpk.AMMO_MAX = self.rpk.CLIP_AMMO_MAX * self.rpk.NR_CLIPS_MAX
+		self.rpk.CLIP_AMMO_MAX = 75
+		self.rpk.AMMO_MAX = 160
 		self.rpk.AMMO_PICKUP = {
-			3.00,
-			10.50
+			0.5,
+			0.6
 		}
 		
-		self.rpk.spread = {
-			standing = self.new_m4.spread.standing,
-			crouching = self.new_m4.spread.crouching,
-			steelsight = self.new_m4.spread.steelsight,
-			moving_standing = self.new_m4.spread.moving_standing,
-			moving_crouching = self.new_m4.spread.moving_crouching,
-			moving_steelsight = self.new_m4.spread.moving_steelsight,
-			bipod = weapon_data.default_bipod_spread
-		}
+		self.rpk.can_shoot_through_enemy = true
+		self.rpk.can_shoot_through_shield = true
+		self.rpk.can_shoot_through_wall = true
+		self.rpk.armor_piercing_chance = 1
+		
 		self.rpk.kick = {
 			standing = {
 				-0.2,
@@ -6886,13 +6881,13 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			total_ammo_mod = 21,
 			damage = 120,
 			alert_size = 7,
-			spread = 8,
-			spread_moving = 6,
-			recoil = 3,
+			spread = 20,
+			spread_moving = 20,
+			recoil = 23,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 8,
+			suppression = 0,
 			concealment = 1
 		}
 		self.rpk.stats_modifiers = {
@@ -6932,23 +6927,18 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			deploy_bipod = 1
 		}
 		
-		self.hk21.CLIP_AMMO_MAX = 150
-		self.hk21.NR_CLIPS_MAX = 2
-		self.hk21.AMMO_MAX = self.hk21.CLIP_AMMO_MAX * self.hk21.NR_CLIPS_MAX
+		self.hk21.can_shoot_through_enemy = true
+		self.hk21.can_shoot_through_shield = true
+		self.hk21.can_shoot_through_wall = true
+		self.hk21.armor_piercing_chance = 1
+		
+		self.hk21.CLIP_AMMO_MAX = 80
+		self.hk21.AMMO_MAX = 120
 		self.hk21.AMMO_PICKUP = {
-			3.00,
-			10.50
+			0.4,
+			0.5
 		}
 		
-		self.hk21.spread = {
-			standing = self.new_m4.spread.standing,
-			crouching = self.new_m4.spread.crouching,
-			steelsight = self.new_m4.spread.steelsight,
-			moving_standing = self.new_m4.spread.moving_standing,
-			moving_crouching = self.new_m4.spread.moving_crouching,
-			moving_steelsight = self.new_m4.spread.moving_steelsight,
-			bipod = weapon_data.default_bipod_spread
-		}
 		self.hk21.kick = {
 			standing = {
 				-0.2,
@@ -6963,15 +6953,15 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.hk21.stats = {
 			zoom = 3,
 			total_ammo_mod = 21,
-			damage = 120,
+			damage = 150,
 			alert_size = 8,
-			spread = 10,
-			spread_moving = 10,
-			recoil = 3,
+			spread = 16,
+			spread_moving = 16,
+			recoil = 18,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 2,
+			suppression = 0,
 			concealment = 1
 		}
 		self.hk21.stats_modifiers = {
@@ -7011,23 +7001,18 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			deploy_bipod = 0.85
 		}
 		
-		self.par.CLIP_AMMO_MAX = 200
-		self.par.NR_CLIPS_MAX = 2
-		self.par.AMMO_MAX = self.par.CLIP_AMMO_MAX * self.par.NR_CLIPS_MAX
+		self.par.CLIP_AMMO_MAX = 50
+		self.par.AMMO_MAX = 120
 		self.par.AMMO_PICKUP = {
-			12,
-			22
+			0.4,
+			0.5
 		}
 		
-		self.par.spread = {
-			standing = self.new_m4.spread.standing,
-			crouching = self.new_m4.spread.crouching,
-			steelsight = self.new_m4.spread.steelsight,
-			moving_standing = self.new_m4.spread.moving_standing,
-			moving_crouching = self.new_m4.spread.moving_crouching,
-			moving_steelsight = self.new_m4.spread.moving_steelsight,
-			bipod = weapon_data.default_bipod_spread
-		}
+		self.par.can_shoot_through_enemy = true
+		self.par.can_shoot_through_shield = true
+		self.par.can_shoot_through_wall = true
+		self.par.armor_piercing_chance = 1
+		
 		self.par.kick = {
 			standing = {
 				-0.2,
@@ -7042,15 +7027,15 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.par.stats = {
 			zoom = 1,
 			total_ammo_mod = 21,
-			damage = 80,
+			damage = 150,
 			alert_size = 8,
-			spread = 14,
-			spread_moving = 8,
-			recoil = 8,
+			spread = 18,
+			spread_moving = 18,
+			recoil = 20,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 4,
+			suppression = 0,
 			concealment = 1
 		}
 		self.par.stats_modifiers = {
@@ -7091,23 +7076,18 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			deploy_bipod = 1
 		}
 		
-		self.m249.CLIP_AMMO_MAX = 200
-		self.m249.NR_CLIPS_MAX = 2
-		self.m249.AMMO_MAX = self.m249.CLIP_AMMO_MAX * self.m249.NR_CLIPS_MAX
+		self.m249.CLIP_AMMO_MAX = 100
+		self.m249.AMMO_MAX = 160
 		self.m249.AMMO_PICKUP = {
-			12,
-			22
+			0.5,
+			0.6
 		}
 		
-		self.m249.spread = {
-			standing = self.new_m4.spread.standing,
-			crouching = self.new_m4.spread.crouching,
-			steelsight = self.new_m4.spread.steelsight,
-			moving_standing = self.new_m4.spread.moving_standing,
-			moving_crouching = self.new_m4.spread.moving_crouching,
-			moving_steelsight = self.new_m4.spread.moving_steelsight,
-			bipod = weapon_data.default_bipod_spread
-		}
+		self.m249.can_shoot_through_enemy = true
+		self.m249.can_shoot_through_shield = true
+		self.m249.can_shoot_through_wall = true
+		self.m249.armor_piercing_chance = 1
+		
 		self.m249.kick = {
 			standing = {
 				-0.2,
@@ -7122,15 +7102,15 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.m249.stats = {
 			zoom = 1,
 			total_ammo_mod = 21,
-			damage = 80,
+			damage = 120,
 			alert_size = 8,
-			spread = 13,
-			spread_moving = 8,
-			recoil = 8,
+			spread = 23,
+			spread_moving = 23,
+			recoil = 24,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 4,
+			suppression = 0,
 			concealment = 1
 		}
 		self.m249.stats_modifiers = {
@@ -7170,23 +7150,18 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			deploy_bipod = 1
 		}
 		
-		self.mg42.CLIP_AMMO_MAX = 150
-		self.mg42.NR_CLIPS_MAX = 3
-		self.mg42.AMMO_MAX = self.mg42.CLIP_AMMO_MAX * self.mg42.NR_CLIPS_MAX
+		self.mg42.CLIP_AMMO_MAX = 50
+		self.mg42.AMMO_MAX = 120
 		self.mg42.AMMO_PICKUP = {
-			13.50,
-			24.75
+			0.4,
+			0.5
 		}
 		
-		self.mg42.spread = {
-			standing = self.new_m4.spread.standing,
-			crouching = self.new_m4.spread.crouching,
-			steelsight = self.new_m4.spread.steelsight,
-			moving_standing = self.new_m4.spread.moving_standing,
-			moving_crouching = self.new_m4.spread.moving_crouching,
-			moving_steelsight = self.new_m4.spread.moving_steelsight,
-			bipod = weapon_data.default_bipod_spread
-		}
+		self.mg42.can_shoot_through_enemy = true
+		self.mg42.can_shoot_through_shield = true
+		self.mg42.can_shoot_through_wall = true
+		self.mg42.armor_piercing_chance = 1
+		
 		self.mg42.kick = {
 			standing = {
 				-0.2,
@@ -7201,16 +7176,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.mg42.stats = {
 			zoom = 1,
 			total_ammo_mod = 21,
-			damage = 80,
+			damage = 150,
 			alert_size = 8,
-			spread = 13,
-			spread_moving = 8,
-			recoil = 8,
+			spread = 19,
+			spread_moving = 19,
+			recoil = 23,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 4,
-			concealment = 1
+			suppression = 0,
+			concealment = 0
 		}
 		self.mg42.stats_modifiers = {
 			damage = 1
@@ -7251,22 +7226,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			equip = 0.9
 		}
 		
-		self.shuno.CLIP_AMMO_MAX = 750
-		self.shuno.NR_CLIPS_MAX = 1
-		self.shuno.AMMO_MAX = self.shuno.CLIP_AMMO_MAX * self.shuno.NR_CLIPS_MAX
+		self.shuno.can_shoot_through_enemy = true
+		self.shuno.can_shoot_through_shield = true
+		self.shuno.can_shoot_through_wall = true
+		self.shuno.armor_piercing_chance = 1
+		
+		self.shuno.CLIP_AMMO_MAX = 600
+		self.shuno.AMMO_MAX = 600
+		--self.shuno.starting_ammo = 200
+		--self.shuno.starts_empty = true
 		self.shuno.AMMO_PICKUP = {
-			7.50,
-			26.25
+			0,
+			0
 		}
 		
-		self.shuno.spread = {
-			standing = self.new_m4.spread.standing,
-			crouching = self.new_m4.spread.crouching,
-			steelsight = self.new_m4.spread.steelsight,
-			moving_standing = self.new_m4.spread.moving_standing,
-			moving_crouching = self.new_m4.spread.moving_crouching,
-			moving_steelsight = self.new_m4.spread.moving_steelsight
-		}
 		self.shuno.kick = {
 			standing = {
 				-0.05,
@@ -7281,16 +7254,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.shuno.stats = {
 			zoom = 1,
 			total_ammo_mod = 21,
-			damage = 35,
+			damage = 100,
 			alert_size = 8,
-			spread = 9,
-			spread_moving = 9,
-			recoil = 7,
+			spread = 10,
+			spread_moving = 5,
+			recoil = 23,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 4,
-			concealment = 5
+			suppression = 0,
+			concealment = 0
 		}
 		self.shuno.stats_modifiers = {
 			damage = 1
@@ -7328,22 +7301,21 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			equip = 0.9
 		}
 		
+		self.m134.can_shoot_through_enemy = true
+		self.m134.can_shoot_through_shield = true
+		self.m134.can_shoot_through_wall = true
+		self.m134.armor_piercing_chance = 1
+		
 		self.m134.CLIP_AMMO_MAX = 750
 		self.m134.NR_CLIPS_MAX = 1
+		--self.m134.starting_ammo = 200
+		--self.m134.starts_empty = true
 		self.m134.AMMO_MAX = self.m134.CLIP_AMMO_MAX * self.m134.NR_CLIPS_MAX
 		self.m134.AMMO_PICKUP = {
-			7.50,
-			26.25
+			0,
+			0
 		}
 		
-		self.m134.spread = {
-			standing = self.new_m4.spread.standing,
-			crouching = self.new_m4.spread.crouching,
-			steelsight = self.new_m4.spread.steelsight,
-			moving_standing = self.new_m4.spread.moving_standing,
-			moving_crouching = self.new_m4.spread.moving_crouching,
-			moving_steelsight = self.new_m4.spread.moving_steelsight
-		}
 		self.m134.kick = {
 			standing = {
 				-0.05,
@@ -7358,16 +7330,16 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.m134.stats = {
 			zoom = 1,
 			total_ammo_mod = 21,
-			damage = 25,
+			damage = 100,
 			alert_size = 8,
-			spread = 9,
-			spread_moving = 9,
-			recoil = 7,
+			spread = 13,
+			spread_moving = 13,
+			recoil = 18,
 			value = 9,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 4,
-			concealment = 5
+			suppression = 0,
+			concealment = 0
 		}
 		self.m134.stats_modifiers = {
 			damage = 1
