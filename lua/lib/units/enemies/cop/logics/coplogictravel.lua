@@ -2122,7 +2122,7 @@ function CopLogicTravel._chk_start_action_move_back(data, my_data, focus_enemy, 
 			max_walk_dis = 400
 		end
 				
-		local retreat_to = CopLogicAttack._find_retreat_position(from_pos, focus_enemy.m_pos, threat_head_pos, threat_tracker, max_walk_dis, vis_required)
+		local retreat_to = CopLogicAttack._find_retreat_position(data, from_pos, focus_enemy.m_pos, threat_head_pos, threat_tracker, max_walk_dis, vis_required)
 
 		if retreat_to then
 			CopLogicAttack._cancel_cover_pathing(data, my_data)
