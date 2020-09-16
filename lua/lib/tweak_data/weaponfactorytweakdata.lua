@@ -94,11 +94,11 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 9, 18
 	--Notes: Being the "training wheels" gun and having notably lower DPS than every other AR, 
 	--it received additional buffs in multiple areas to make it a viable comfort pick. 
-	--Active Mods: Milspec Mag, Tactical Mag, Expert Mag, L5 Magazine [+10 Magazine, -2 Concealment]
-	--CAR Quadstacked Mag [+40 Magazine, -10 Concealment]
-	--Speedpull Mag [+100% Reload Speed, +10 Magazine -4 Concealment]
+	--Active Mods:
+			
+	--Speed pull Mag [wpn_fps_m4_upg_m_quick] [+100% Reload Speed, +10 Magazine -4 Concealment] Value: 2
 
-		-- L5 Magazine
+		-- L5 Magazine [+10 Magazine, -2 Concealment] [wpn_fps_upg_m4_m_l5] Value: 1
 		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_l5 = { -- gotta be like this or else the game shits the bed
 			stats = {	
 				value = 1,			 			 
@@ -106,7 +106,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 				concealment = -2
 			}
 		}			
-		-- Milspec Mag
+		-- Milspec Mag [+10 Magazine, -2 Concealment] [wpn_fps_m4_uupg_m_std] Value: 1
 		self.wpn_fps_ass_amcar.override.wpn_fps_m4_uupg_m_std = {	
 			stats = {			
 				value = 1,			 
@@ -114,7 +114,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 				concealment = -2
 			}
 		}
-		-- Tactical Mag		
+		-- Tactical Mag	[+10 Magazine, -2 Concealment] [wpn_fps_upg_m4_m_pmag] Value: 3
 		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_pmag = {	
 			stats = {			
 				value = 3,
@@ -122,7 +122,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 				concealment = -2
 			}
 		}
-		-- Expert Mag			
+		-- Expert Mag [+10 Magazine, -2 Concealment] [wpn_fps_ass_l85a2_m_emag] [Value: 1]	
 		self.wpn_fps_ass_amcar.override.wpn_fps_ass_l85a2_m_emag = {	
 			stats = {
 				value = 1,			 
@@ -130,7 +130,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 				concealment = -2
 			}
 		}
-		-- Quadstacked mag
+		--CAR Quadstacked Mag [wpn_fps_upg_m4_m_quad] [+40 Magazine, -10 Concealment] [Value: 3]
 		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_quad = {
 			stats = {
 				value = 3,
@@ -172,7 +172,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 10
 	--Pickup: 9, 18
 	--Notes:
-	--Active Mods: Speedpull Mag [+100% Reload Speed, -5 Concealment]
+	--Active Mods: Speedpull Mag [wpn_fps_ass_g36_m_quick] [+100% Reload Speed, -5 Concealment] Value: 2
 
 	--------------------------------------
 				--Commando 553--
@@ -208,7 +208,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 10
 	--Pickup: 8, 16
 	--Notes:
-	--Active Mods: Suppressed Barrel [Suppresses Weapon, + Quiet, -100 Threat]
+	--Active Mods: Suppressed Barrel [wpn_fps_ass_famas_b_suppressed] [Suppresses Weapon, + Quiet, -100 Threat] Value: 4
 
 	--------------------------------------
 			--Medium ARs--
@@ -243,6 +243,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	-- Solid Stock
 	self.parts.wpn_fps_ass_asval_s_solid.stats = {value = 1}
 
+	--IND
 	--------------------------------------
 				--CAR-4--
 	--------------------------------------
