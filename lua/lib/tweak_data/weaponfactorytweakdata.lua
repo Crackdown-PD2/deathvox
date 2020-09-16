@@ -243,7 +243,6 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	-- Solid Stock
 	self.parts.wpn_fps_ass_asval_s_solid.stats = {value = 1}
 
-	--IND
 	--------------------------------------
 				--CAR-4--
 	--------------------------------------
@@ -261,12 +260,14 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 6, 10
 	--Notes: 
 	--Active Mods: 
-	--DMR Kit [- Rapid Fire, + Precision, +Armor Piercing, -135 Ammo Stock,
-		--+80 Damage, -40 Stability, -5 Concealment, -3, 6 Pickup]
-	--Stealth Barrel [Suppresses Weapon, + Quiet, -12 Accuracy, +3 Concealment, -100 Threat]
-	--Vintage Mag [-10 Magazine, +5 Concealment]
-	--CAR Quadstacked Mag [+30 Magazine, -10 Concealment]
-	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
+	--DMR Kit [wpn_fps_upg_ass_m4_b_beowulf] [- Rapid Fire, + Precision, +Armor Piercing, -135 Ammo Stock,
+		--+80 Damage, -40 Stability, -5 Concealment, -3, 6 Pickup] Value: 1
+
+	--Vintage Mag [wpn_fps_upg_m4_m_straight] [-10 Magazine, +5 Concealment] Value: 2
+			
+	--CAR Quadstacked Mag [wpn_fps_upg_m4_m_quad] [+30 Magazine, -10 Concealment] Value: 3
+
+	--Speedpull Mag [wpn_fps_m4_upg_m_quick] [+100% Reload Speed, -4 Concealment] Value: 2
 
 		-- Aftermarket Special Handguard	
 		self.parts.wpn_fps_m4_uupg_fg_lr300.stats = {value = 5}
@@ -282,7 +283,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_m4_uupg_b_long.stats = {value = 4}
 		-- Short Barrel		
 		self.parts.wpn_fps_m4_uupg_b_short.stats = {value = 5}
-		-- Stealth Barrel		
+
+	--Stealth Barrel [wpn_fps_m4_uupg_b_sd] [Suppresses Weapon, + Quiet, -12 Accuracy, +3 Concealment, -100 Threat] Value: 6		
 		self.parts.wpn_fps_m4_uupg_b_sd.stats = {
 			value = 6,		
 			spread = -3,
@@ -317,6 +319,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 				ammo_pickup_min_mul = 2.5
 			}
 		}
+
 	--------------------------------------
 				--AK--
 	--------------------------------------
@@ -334,10 +337,12 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 6, 10
 	--Notes: 
 	--Active Mods: DMR Kit, AK Quadstacked Mag, Speedpull Mag
-	--DMR Kit [- Rapid Fire, + Precision, +Armor Piercing, -135 Ammo Stock,
-		--+80 Damage, +8 Accuracy, -44 Stability, -5 Concealment, -3, 6 Pickup]
-	--AK Quadstacked Mag [+30 Magazine, -10 Concealment]
-	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
+	--DMR Kit [wpn_fps_upg_ass_ak_b_zastava] [- Rapid Fire, + Precision, +Armor Piercing, -135 Ammo Stock,
+		--+80 Damage, +8 Accuracy, -44 Stability, -5 Concealment, -3, 6 Pickup] Value: 1
+			
+	--AK Quadstacked Mag [wpn_fps_upg_ak_m_quad] [+30 Magazine, -10 Concealment] Value: 3
+			
+	--Speedpull Mag [wpn_fps_upg_ak_m_quick] [+100% Reload Speed, -4 Concealment] Value: 2
 
 	--------------------------------------
 				--AK (DMR Kit)--
@@ -362,8 +367,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 6, 10
 	--Notes: Was previously a Heavy AR.
 	--Active Mods:
-	--AK Quadstacked Mag [+30 Magazine, -10 Concealment]
-	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
+	--AK Quadstacked Mag [wpn_fps_upg_ak_m_quad] [+30 Magazine, -10 Concealment] Value: 3
+			
+	--Speedpull Mag [wpn_fps_upg_ak_m_quick] [+100% Reload Speed, -4 Concealment] Value: 2
 
 	--------------------------------------
 				--AK5--
@@ -382,9 +388,12 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 6, 10
 	--Notes:
 	--Active Mods: 
-	--Vintage Mag [-10 Magazine, +5 Concealment]	
-	--CAR Quadstacked Mag [+30 Magazine, -10 Concealment]
-	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
+	--Vintage Mag [wpn_fps_upg_m4_m_straight] [-10 Magazine, +5 Concealment] Value: 2	
+
+	--CAR Quadstacked Mag [wpn_fps_upg_m4_m_quad][+30 Magazine, -10 Concealment] Value: 3
+
+	--Speedpull Mag [wpn_fps_m4_upg_m_quick] [+100% Reload Speed, -4 Concealment] Value: 2 
+	--note doublecheck using car4 speedpull id here.
 
 	--------------------------------------
 				--Queen's Wrath--
@@ -402,9 +411,11 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 14
 	--Pickup: 6, 10
 	--Notes:
-	--Active Mods: Vintage Mag [-10 Magazine, +5 Concealment]
-	--CAR Quadstacked Mag [+30 Magazine, -10 Concealment]
-	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
+	--Active Mods: Vintage Mag [wpn_fps_upg_m4_m_straight] [-10 Magazine, +5 Concealment] Value: 2
+			
+	--CAR Quadstacked Mag [wpn_fps_upg_m4_m_quad] [+30 Magazine, -10 Concealment] Value: 3
+			
+	--Speedpull Mag [wpn_fps_m4_upg_m_quick] [+100% Reload Speed, -4 Concealment] Value: 2
 
 	--------------------------------------
 				--UAR--
@@ -423,7 +434,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 6, 10
 	--Notes:
 	--Active Mods: 	
-	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
+	--Speedpull Mag [wpn_fps_ass_aug_m_quick] [+100% Reload Speed, -4 Concealment] Value: 2
 
 	--------------------------------------
 				--Tempest-21--
@@ -441,9 +452,11 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 14
 	--Pickup: 6, 10
 	--Notes:
-	--Active Mods: Vintage Mag [-10 Magazine, +5 Concealment]
-	--CAR Quadstacked Mag [+30 Magazine, -10 Concealment]
-	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
+	--Active Mods: Vintage Mag [wpn_fps_upg_m4_m_straight] [-10 Magazine, +5 Concealment] Value: 2
+			
+	--CAR Quadstacked Mag [wpn_fps_upg_m4_m_quad] [+30 Magazine, -10 Concealment] Value: 3
+			
+	--Speedpull Mag [wpn_fps_m4_upg_m_quick] [+100% Reload Speed, -4 Concealment] Value: 2
 
 	--------------------------------------
 				--Gecko 7.62--
@@ -481,7 +494,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 14
 	--Pickup: 6, 10
 	--Notes:
-	--Active Mods: Silenced Barrel [Suppresses Weapon, + Quiet, -100 Threat]
+	--Active Mods: Silenced Barrel [wpn_fps_ass_vhs_b_silenced] [Suppresses Weapon, + Quiet, -100 Threat] Value: 2
 
 	--------------------------------------
 				--Union 5.56--
@@ -499,9 +512,11 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 14
 	--Pickup: 6, 10
 	--Notes:
-	--Active Mods: Vintage Mag [-10 Magazine, +5 Concealment]
-	--CAR Quadstacked Mag [+30 Magazine, -10 Concealment]
-	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
+	--Active Mods: Vintage Mag [wpn_fps_upg_m4_m_straight] [-10 Magazine, +5 Concealment] Value: 2
+			
+	--CAR Quadstacked Mag [wpn_fps_upg_m4_m_quad] [+30 Magazine, -10 Concealment] Value: 3
+			
+	--Speedpull Mag [wpn_fps_m4_upg_m_quick] [+100% Reload Speed, -4 Concealment] Value: 2
 
 	--------------------------------------
 			--Heavy ARs--
@@ -522,10 +537,12 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes:
-	--Active Mods: AK Quadstacked Mag [+30 Magazine, -10 Concealment]
-	--Speel Pull Mag [+100% Reload Speed, -4 Concealment]
-	--DMR Kit [-Rapid Fire, -Precision, +Armor Piercing, -75 Ammo Stock, -50 Damage, +8 Accuracy,
-	-- -20 Stability, +2 Threat, -1, -2 Pickup]
+	--Active Mods: AK Quadstacked Mag [wpn_fps_upg_ak_m_quad] [+30 Magazine, -10 Concealment] Value: 3
+			
+	--Speed Pull Mag [wpn_fps_upg_ak_m_quick] [+100% Reload Speed, -4 Concealment] Value: 2
+			
+	--DMR Kit [wpn_fps_upg_ass_ak_b_zastava] [-Rapid Fire, -Precision, +Armor Piercing, -75 Ammo Stock, -50 Damage, +8 Accuracy,
+	-- -20 Stability, +2 Threat, -1, -2 Pickup] Value: 1
 	-- NOTE This DMR Kit manually calculated from diff values. may require further scrutiny.
 
 	--------------------------------------
@@ -550,10 +567,12 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 4, 6
 	--Notes:
 	--Active Mods: 
-	--Active Mods: AK Quadstacked Mag [+30 Magazine, -10 Concealment]
-	--Speel Pull Mag [+100% Reload Speed, -4 Concealment]
-	--DMR Kit [-Rapid Fire, -Precision, +Armor Piercing, -75 Ammo Stock, -50 Damage, +8 Accuracy,
-	-- -20 Stability, +2 Threat, -1, -2 Pickup]
+	--Active Mods: AK Quadstacked Mag  [wpn_fps_upg_ak_m_quad] [+30 Magazine, -10 Concealment] Value: 3
+			
+	--Speed Pull Mag [wpn_fps_upg_ak_m_quick] [+100% Reload Speed, -4 Concealment] Value: 2
+			
+	--DMR Kit [wpn_fps_upg_ass_ak_b_zastava] [-Rapid Fire, -Precision, +Armor Piercing, -75 Ammo Stock, -50 Damage, +8 Accuracy,
+	-- -20 Stability, +2 Threat, -1, -2 Pickup] Value: 1
 	-- NOTE This DMR Kit manually calculated from diff values. may require further scrutiny.
 	
 	--------------------------------------
@@ -591,8 +610,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 4, 6
 	--Notes:
 	--Active Mods: 
-	--Assault Kit [+85 Ammo Stock, -30 Damage, -16 Accuracy, +16 Stability, +5 Concealment, +2, +4 Pickup]
-	--DMR Kit [- Rapid Fire, + Precision, + Armor Piercing, -10 Magazine, -65 Ammo Stock, +50 Damage, -1, -2 Pickup]
+	--Assault Kit [wpn_fps_ass_g3_b_short] [+85 Ammo Stock, -30 Damage, -16 Accuracy, +16 Stability, +5 Concealment, +2, +4 Pickup] Value: 2
+	--DMR Kit [wpn_fps_ass_g3_b_sniper] [- Rapid Fire, + Precision, + Armor Piercing, -10 Magazine, -65 Ammo Stock, +50 Damage, -1, -2 Pickup] Value: 2
 
 	--------------------------------------
 				--Gewehr 3 (DMR Kit)--
@@ -620,7 +639,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes:
-	--Active Mods: Extended Magazine [+20 Magazine, -10 Concealment]
+	--Active Mods: Extended Magazine [wpn_fps_ass_fal_m_01] [+20 Magazine, -10 Concealment] Value: 2
 
 	--------------------------------------
 				--AMR-16--
@@ -639,11 +658,10 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 4, 6
 	--Notes:
 	--Active Mods: 
-	--DMR Kit [- Rapid Fire, + Precision, + Armor Piercing, -65 Ammo Stock,
-	-- +50 Damage, +4 Accuracy, -40 Stability, -1, -2 Pickup]
-	--Milspec Mag, Tactical Mag, Expert Mag, L5 Magazin [+10 Magazine, -2 Concealment]
-	--CAR Quadstacked Mag [+40 Magazine, -10 Concealment
-	--Speedpull Mag [+100% Reload Speed, +10 Magazine, -4 Concealment]
+	--DMR Kit [wpn_fps_upg_ass_m4_b_beowulf] [- Rapid Fire, + Precision, + Armor Piercing, -65 Ammo Stock,
+	-- +50 Damage, +4 Accuracy, -40 Stability, -1, -2 Pickup] Value: 1
+
+	--Speedpull Mag [wpn_fps_m4_upg_m_quick] [+100% Reload Speed, +10 Magazine, -4 Concealment] Value: 2
 
 		-- Long Ergo Foregrip
 		self.parts.wpn_fps_upg_ass_m16_fg_stag.stats = {value = 1}
@@ -651,7 +669,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_m16_fg_vietnam.stats = {value = 10}
 		-- Tactical Handguard
 		self.parts.wpn_fps_m16_fg_railed.stats = {value = 7}
-		-- L5 Magazine
+			
+		-- L5 Magazine [wpn_fps_upg_m4_m_l5] [+10 Magazine, -2 Concealment] Value: 1
 		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_l5 = {
 			stats = {
 				value = 1,			 			 
@@ -659,7 +678,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 				concealment = -2	
 			}
 		}
-		-- Milspec Mag
+		--Milspec Mag [wpn_fps_m4_uupg_m_std] [+10 Magazine, -2 Concealment] Value: 1
 		self.wpn_fps_ass_m16.override.wpn_fps_m4_uupg_m_std = {	
 			stats = {
 				value = 1,			 
@@ -667,7 +686,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 				concealment = -2	
 			}
 		}
-		-- Tactical Mag
+		--Tactical Mag [wpn_fps_upg_m4_m_pmag] [+10 Magazine, -2 Concealment] Value: 3
 		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_pmag = {	
 		stats = {
 				value = 3,
@@ -675,7 +694,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 				concealment = -2
 			}
 		}
-		-- Expert Mag
+		--Expert Mag [wpn_fps_ass_l85a2_m_emag] [+10 Magazine, -2 Concealment] Value: 1
 		self.wpn_fps_ass_m16.override.wpn_fps_ass_l85a2_m_emag = {	
 			stats = {
 				value = 1,			 
@@ -683,7 +702,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 				concealment = -2
 			}
 		}
-		-- CAR Quadstacked Mag
+		-- CAR Quadstacked Mag [wpn_fps_upg_m4_m_quad] [+40 Magazine, -10 Concealment] Value: 3
 		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_quad = {	
 			stats = {
 				value = 3,
@@ -715,8 +734,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 7, 11
 	--Notes:
-	--Active Mods: Extended Mag. [+28 Magazine, -4 Concealment]
-
+	--Active Mods: Extended Mag. [wpn_fps_pis_stech_m_extended] [+28 Magazine, -4 Concealment] Value: 5
+	--NOTE not in mws wiki. Leave this note.
+			
 	--------------------------------------
 				--Akimbo STRYK 18c--
 	--------------------------------------
@@ -733,7 +753,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes:
-	--Active Mods: Extended Mag. [+24 Magazine, -4 Concealment]
+	--Active Mods: Extended Mag. [wpn_fps_pis_g18c_m_mag_33rnd] [+24 Magazine, -4 Concealment] Value: 6
 
 	--------------------------------------
 				--Akimbo Czech 92 Pistols--
@@ -751,8 +771,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes:
-	--Active Mods: Extended Magazine [+20 Magazine, -4 Concealment]
-		
+	--Active Mods: Extended Magazine [wpn_fps_pis_czech_m_extended] [+20 Magazine, -4 Concealment] Value: 1
+	--NOTE not in mws wiki. Leave this note.
+
 	--------------------------------------
 				--Akimbo Bernetti Auto Pistols--
 	--------------------------------------
@@ -769,7 +790,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes:
-	--Active Mods: Extended Magazine [+12 Magazine, -2 Concealment]
+	--Active Mods: Extended Magazine [wpn_fps_pis_beer_m_extended] [+12 Magazine, -2 Concealment] Value: 3
+	--NOTE not in mws wiki. Leave this note.
 
 	--------------------------------------
 		--Akimbo SMGs--
@@ -829,7 +851,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 10
 	--Pickup: 8, 16
 	--Notes: 
-	--Active Mods: Extended Magazine [+20 Magazine, -5 Concealment]
+	--Active Mods: Extended Magazine [wpn_fps_smg_shepheard_mag_extended] [+20 Magazine, -5 Concealment] Value: 1
 
 	--------------------------------------
 				--Akimbo Compact-5--
@@ -865,7 +887,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 10
 	--Pickup: 8, 16
 	--Notes: 
-	--Active Mods: Extended Mag [+24 Magazine, -10 Concealment]
+	--Active Mods: Extended Mag [wpn_fps_smg_tec9_m_extended] [+24 Magazine, -10 Concealment] Value: 4
 
 	--------------------------------------
 				--Akimbo CMP--
@@ -883,8 +905,10 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 10
 	--Pickup: 8, 16
 	--Notes: 
-	--Active Mods: Extended Mag. [+30 Magazine, -5 Concealment]
-
+	--Active Mods: Extended Mag. [wpn_fps_smg_mp9_m_extended] [+30 Magazine, -5 Concealment] Value: 4
+	--NOTE: INCOMPLETE Missing "Tactical Suppressor" [wpn_fps_smg_mp9_b_suppressed] Value: 4
+	--Need to add for single CMP as well.
+--IND
 	--------------------------------------
 				--Akimbo Cobra--
 	--------------------------------------
@@ -942,7 +966,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 6, 10
 	--Notes: 
 	--Active Mods: Milspec Mag, Tactical Mag, Expert Mag, L5 Magazine [+20 Magazine, -10 Concealment]
-	--CAR Quadstacked Mag [+80 Magazine, -20 Concealment]
+	--CAR Quadstacked Mag [wpn_fps_upg_m4_m_quad] [+80 Magazine, -20 Concealment] Value: 3
 	--Speedpull Mag [+100% Reload Speed, +20 Magazine, -8 Concealment]
 
 	--------------------------------------
@@ -1166,8 +1190,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes:
-	--Active Mods: Vintage Mag [-20 Magazine, +5 Concealment]
-	--CAR Quadstacked Mag [+60 Magazine, -20 Concealment]
+	--Active Mods: Vintage Mag [wpn_fps_upg_m4_m_straight] [-20 Magazine, +5 Concealment] Value: 2
+	--CAR Quadstacked Mag [wpn_fps_upg_m4_m_quad] [+60 Magazine, -20 Concealment] Value: 3
 	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
 
 	--------------------------------------
@@ -1186,7 +1210,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes:
-	--Active Mods: AK Quadstacked Mag [+60 Magazine, -15 Concealment]
+	--Active Mods: AK Quadstacked Mag [wpn_fps_upg_ak_m_quad] [+60 Magazine, -15 Concealment] Value: 3
 	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
 
 	--------------------------------------
@@ -1591,7 +1615,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--ID: self.winchester1874
 	--Class: Precision
 	--Value: 9
-	--Magazine: --INCOMPLETE field in document is blank, wiki sez 15
+	--Magazine: 15
 	--Ammo: 75
 	--Fire Rate: 86
 	--Damage: 250
@@ -3039,7 +3063,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 6, 10
 	--Notes: 
 	--Active Mods: Milspec Mag, Tactical Mag, Expert Mag, L5 Magazine [+10 Magazine, -2 Concealment]
-	--CAR Quadstacked Mag [+40 Magazine, -10 Concealment]
+	--CAR Quadstacked Mag [wpn_fps_upg_m4_m_quad] [+40 Magazine, -10 Concealment] Value: 3
 	--Speed Pull Mag [+100% Reload Speed, +10 Magazine, -4 Concealment]
 
 	--------------------------------------
@@ -3268,8 +3292,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes: 
-	--Active Mods: CAR Quadstacked Mag [+30 Magazine, -10 Concealment]
-	--Vintage Mag [-10 Magazine, +5 Concealment]
+	--Active Mods: CAR Quadstacked Mag [wpn_fps_upg_m4_m_quad] [+30 Magazine, -10 Concealment] Value: 3
+	--Vintage Mag [wpn_fps_upg_m4_m_straight] [-10 Magazine, +5 Concealment] Value: 2
 	--Speed Pull Mag [+100% Reload Speed, -4 Concealment]
 
 	--------------------------------------
@@ -3288,7 +3312,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes: 
-	--Active Mods: AK Quadstacked Mag [+30 Magazine, -15 Concealment]
+	--Active Mods: AK Quadstacked Mag [wpn_fps_upg_ak_m_quad] [+30 Magazine, -15 Concealment] Value: 3
 	--Speed Pull Mag [+100% Reload Speed, -4 Concealment]
 
 	--------------------------------------
@@ -3684,13 +3708,13 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_upg_m4_m_pmag.stats = {value = 3}
 		-- Expert Magazine
 		self.parts.wpn_fps_ass_l85a2_m_emag.stats = {value = 1}
-		-- CAR Quadstacked Magazine
+		-- CAR Quadstacked Magazine [wpn_fps_upg_m4_m_quad] Value: 3
 		self.parts.wpn_fps_upg_m4_m_quad.stats = {
 			value = 3,		-- note wiki value incorrect
 			extra_ammo = 15, 
 			concealment = -10
 		}
-		-- Vintage Mag
+		--  [wpn_fps_upg_m4_m_straight] Value: 2
 		self.parts.wpn_fps_upg_m4_m_straight.stats = {	
 			value = 2,		
 			extra_ammo = -5, 
