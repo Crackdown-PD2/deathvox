@@ -906,9 +906,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 8, 16
 	--Notes: 
 	--Active Mods: Extended Mag. [wpn_fps_smg_mp9_m_extended] [+30 Magazine, -5 Concealment] Value: 4
-	--NOTE: INCOMPLETE Missing "Tactical Suppressor" [wpn_fps_smg_mp9_b_suppressed] Value: 4
-	--Need to add for single CMP as well.
---IND
+	--Tactical Suppressor [wpn_fps_smg_mp9_b_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 4
+
 	--------------------------------------
 				--Akimbo Cobra--
 	--------------------------------------
@@ -925,7 +924,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 10
 	--Pickup: 8, 16
 	--Notes: 
-	--Active Mods: Extended Mag [+40 Magazine, -10 Concealment]
+	--Active Mods: Extended Mag [wpn_fps_smg_scorpion_m_extended] [+40 Magazine, -10 Concealment] Value: 1
 
 	--------------------------------------
 				--Akimbo Micro Uzi--
@@ -944,7 +943,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 8, 16
 	--Notes: 
 	--Active Mods: 
-	--Futomaki Suppressor, Maki Suppressor, Spring Suppressor [Suppresses Weapon, +Quiet, -100 Threat]
+	--Futomaki Suppressor [wpn_fps_smg_baka_b_longsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
+	--Maki Suppressor [wpn_fps_smg_baka_b_midsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
+	--Spring Suppressor [wpn_fps_smg_baka_b_smallsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
 
 	--------------------------------------
 			--Akimbo Medium SMGs--
@@ -965,9 +966,17 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 13
 	--Pickup: 6, 10
 	--Notes: 
-	--Active Mods: Milspec Mag, Tactical Mag, Expert Mag, L5 Magazine [+20 Magazine, -10 Concealment]
+	--Active Mods: Milspec Mag [wpn_fps_m4_uupg_m_std] [+20 Magazine, -10 Concealment] Value: 1
+
+	--Tactical Mag [wpn_fps_upg_m4_m_pmag] [+20 Magazine, -10 Concealment] Value: 3
+
+	--Expert Mag [wpn_fps_ass_l85a2_m_emag] [+20 Magazine, -10 Concealment] Value: 1
+
+	--L5 Magazine [wpn_fps_upg_m4_m_l5] [+20 Magazine, -10 Concealment] Value: 1
+
 	--CAR Quadstacked Mag [wpn_fps_upg_m4_m_quad] [+80 Magazine, -20 Concealment] Value: 3
-	--Speedpull Mag [+100% Reload Speed, +20 Magazine, -8 Concealment]
+
+	--Speedpull Mag [wpn_fps_m4_upg_m_quick] [+100% Reload Speed, +20 Magazine, -8 Concealment] Value: 2
 
 	--------------------------------------
 				--Akimbo Chicago Typewriter--
@@ -1003,7 +1012,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 13
 	--Pickup: 6, 10
 	--Notes: 
-	--Active Mods: Speed Pull Mag [+100% Reload Speed, +20 Magazine, -8 Concealment]
+	--Active Mods: Speed Pull Mag [wpn_fps_smg_sr2_m_quick] [+100% Reload Speed, +20 Magazine, -8 Concealment] Value: 2
 
 	--------------------------------------
 				--Akimbo Kobus 90--
@@ -1021,7 +1030,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 13
 	--Pickup: 6, 10
 	--Notes: 
-	--Active Mods: Speed Pull Mag [+100% Reload Speed, +20 Magazine, -8 Concealment]
+	--Active Mods: Speed Pull Mag [wpn_fps_smg_p90_m_strap] [+100% Reload Speed, +20 Magazine, -8 Concealment] Value: 2
 
 	--------------------------------------
 				--Akimbo SpecOps--
@@ -1039,7 +1048,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 13
 	--Pickup: 6, 10
 	--Notes: 
-	--Active Mods: Extended Mag. [+20 Magazine, -5 Concealment]
+	--Active Mods: Extended Mag. [wpn_fps_smg_mp7_m_extended] [+20 Magazine, -5 Concealment] Value: 1
 
 	--------------------------------------
 				--Akimbo Mark 10--
@@ -1057,8 +1066,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 13
 	--Pickup: 6, 10
 	--Notes: 
-	--Active Mods: Extended Mag. [+40 Magazine, -10 Concealment]
-	--Speedpull Mag [+100% Reload Speed, +40 Magazine, -8 Concealment]
+	--Active Mods: Extended Mag. [wpn_fps_smg_mac10_m_extended] [+40 Magazine, -10 Concealment] Value: 2
+	--Speedpull Mag [wpn_fps_smg_mac10_m_quick] [+100% Reload Speed, +40 Magazine, -8 Concealment] Value: 2
 
 	--------------------------------------
 				--Akimbo Kross Vertex--
@@ -1115,9 +1124,14 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes: Formerly a Light SMG.
-	--Active Mods: Extended Mag [+20 Magazine, -10 Concealment]
-	--Short Mag [-20 Magazine, +10 Concealment]
-	--Heatsinked Suppressed Barrel, Suppressed Barrel [Suppresses Weapon, + Quiet, -100 Threat]
+	--Active Mods: 
+	--Extended Mag [wpn_fps_smg_sterling_m_long] [+20 Magazine, -10 Concealment] Value: 1
+
+	--Short Mag [wpn_fps_smg_sterling_m_short] [-20 Magazine, +10 Concealment] Value: 1
+
+	--Heatsinked Suppressed Barrel [wpn_fps_smg_sterling_b_e11] [Suppresses Weapon, + Quiet, -100 Threat] Value: 4
+
+	--Suppressed Barrel [wpn_fps_smg_sterling_b_suppressed] [Suppresses Weapon, + Quiet, -100 Threat] Value: 4
 
 	--------------------------------------
 				--Akimbo MP40--
@@ -1153,7 +1167,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes:
-	--Active Mods: Extended Mag. [+28 Magazine, -15 Concealment]
+	--Active Mods: Extended Mag. [wpn_fps_smg_m45_m_extended] [+28 Magazine, -15 Concealment] Value: 4
 
 	--------------------------------------
 				--Akimbo Jackal--
@@ -1171,8 +1185,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes:
-	--Active Mods: Extended Magazine [+20 Magazine, -15 Concealment]
-	--Short Magazine [+20 Magazine, +5 Concealment]
+	--Active Mods: Extended Magazine [wpn_fps_smg_schakal_m_long] [+20 Magazine, -15 Concealment] Value: 1
+	--Short Magazine [wpn_fps_smg_schakal_m_short] [+20 Magazine, +5 Concealment] Value: 1
 
 	--------------------------------------
 				--Akimbo CR 805B--
@@ -1192,7 +1206,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes:
 	--Active Mods: Vintage Mag [wpn_fps_upg_m4_m_straight] [-20 Magazine, +5 Concealment] Value: 2
 	--CAR Quadstacked Mag [wpn_fps_upg_m4_m_quad] [+60 Magazine, -20 Concealment] Value: 3
-	--Speedpull Mag [+100% Reload Speed, -4 Concealment]
+	--Vintage Mag [wpn_fps_upg_m4_m_straight] [-20 Magazine, +5 Concealment] Value: 2
+	--Speedpull Mag [wpn_fps_m4_upg_m_quick] [+100% Reload Speed, -4 Concealment] Value: 2
 
 	--------------------------------------
 				--Akimbo Krinkov--
@@ -1232,7 +1247,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 34
 	--Pickup: 1, 2
 	--Notes:
-	--Active Mods: Sawed-Off Barrel [-20 Accuracy]
+	--Active Mods: [wpn_fps_shot_b682_b_short] Sawed-Off Barrel [-20 Accuracy] Value: 1
 
 	--------------------------------------
 				--Mosconi 12G--
@@ -1250,7 +1265,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 34
 	--Pickup: 1, 2
 	--Notes:
-	--Active Mods: Road Warrior Barrel [-20 Accuracy]
+	--Active Mods: Road Warrior Barrel [wpn_fps_shot_huntsman_b_short] [-20 Accuracy] Value: 10
 
 	--------------------------------------
 				--Breaker 12G--
@@ -1322,8 +1337,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 34
 	--Pickup: 2, 3
 	--Notes:
-	--Active Mods: Short Barrel [-4 Magazine, +5 Concealment]
-	--Long Barrel [+4 Magazine, -5 Concealment]
+	--Active Mods: Short Barrel [wpn_fps_sho_ksg_b_short] [-4 Magazine, +5 Concealment] Value: 5
+	--Long Barrel [wpn_fps_sho_ksg_b_long] [+4 Magazine, -5 Concealment] Value: 7
 
 	--------------------------------------
 				--Predator 12G--
@@ -1341,7 +1356,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 34
 	--Pickup: 4, 5
 	--Notes:
-	--Active Mods: Extended Mag [+4 Magazine, -5 Concealment]
+	--Active Mods: Extended Mag [wpn_fps_sho_b_spas12_long] [+4 Magazine, -5 Concealment] Value: 1
 
 	--------------------------------------
 				--M1014--
@@ -1377,8 +1392,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 14
 	--Pickup: 4, 5
 	--Notes:
-	--Active Mods: Silenced Barrel [Suppresses Weapon, +Quiet, -100 Threat]
-
+	--Active Mods: Silenced Barrel [wpn_fps_sho_rota_b_silencer] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
+--IND
 	--------------------------------------
 				--Steakout 12G--
 	--------------------------------------
@@ -2936,7 +2951,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Active Mods: 
 
 	--------------------------------------
-				--Signature--
+				--Signature SMG--
 	--------------------------------------
 	--ID: self.shepheard
 	--Class: Rapid Fire
@@ -2951,7 +2966,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 13
 	--Pickup: 8, 16
 	--Notes: 
-	--Active Mods: Extended Magazine [+10 Magazine, -2 Concealment]
+	--Active Mods: Extended Magazine [wpn_fps_smg_shepheard_mag_extended]  [+10 Magazine, -2 Concealment] Value: 1
 
 	--------------------------------------
 				--Compact-5--
@@ -2987,7 +3002,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 10
 	--Pickup: 8, 16
 	--Notes: 
-	--Active Mods: Extended Mag [+12 Magazine, -2 Concealment]
+	--Active Mods: Extended Mag [wpn_fps_smg_tec9_m_extended] [+12 Magazine, -2 Concealment] Value: 4
 
 	--------------------------------------
 				--CMP--
@@ -3005,7 +3020,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 10
 	--Pickup: 8, 16
 	--Notes: 
-	--Active Mods: Extended Mag. [+15 Magazine, -2 Concealment]
+	--Active Mods: Extended Mag. [wpn_fps_smg_mp9_m_extended] [+15 Magazine, -2 Concealment] Value: 4
+	--Tactical Suppressor [wpn_fps_smg_mp9_b_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 4
 
 	--------------------------------------
 				--Cobra--
@@ -3041,7 +3057,10 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 10
 	--Pickup: 8, 16
 	--Notes: 
-	--Active Mods: Futomaki Suppressor, Maki Suppressor, Spring Suppressor [Suppresses Weapon, +Quiet, -100 Threat]
+	--Active Mods:
+	--Futomaki Suppressor [wpn_fps_smg_baka_b_longsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
+	--Maki Suppressor [wpn_fps_smg_baka_b_midsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
+	--Spring Suppressor [wpn_fps_smg_baka_b_smallsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
 
 	--------------------------------------
 			--Medium SMGs--
@@ -3062,9 +3081,12 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 13
 	--Pickup: 6, 10
 	--Notes: 
-	--Active Mods: Milspec Mag, Tactical Mag, Expert Mag, L5 Magazine [+10 Magazine, -2 Concealment]
+	--Active Mods: Milspec Mag [wpn_fps_m4_uupg_m_std] [+10 Magazine, -2 Concealment] Value: 1
+	--Tactical Mag [wpn_fps_upg_m4_m_pmag] [+10 Magazine, -2 Concealment] Value: 3
+	--Expert Mag [wpn_fps_ass_l85a2_m_emag] [+10 Magazine, -2 Concealment] Value: 1
+	--L5 Magazine [wpn_fps_upg_m4_m_l5] [+10 Magazine, -2 Concealment] Value: 1
 	--CAR Quadstacked Mag [wpn_fps_upg_m4_m_quad] [+40 Magazine, -10 Concealment] Value: 3
-	--Speed Pull Mag [+100% Reload Speed, +10 Magazine, -4 Concealment]
+	--Speedpull Mag [wpn_fps_m4_upg_m_quick] [+100% Reload Speed, +10 Magazine, -4 Concealment] Value: 2
 
 	--------------------------------------
 				--Chicago Typewriter--
@@ -3101,7 +3123,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 6, 10
 	--Notes: 
 	--Active Mods: 
-	--Speed Pull Mag [+100% Reload Speed, +20 Magazine, -3 Concealment]
+	--Speed Pull Mag [wpn_fps_smg_sr2_m_quick] [+100% Reload Speed, +20 Magazine, -8 Concealment] Value: 2 
+	--NOTE check with Kith re ammo between akimbo and single versions
 
 	--------------------------------------
 				--Kobus 90--
@@ -3120,7 +3143,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 6, 10
 	--Notes: 
 	--Active Mods: 
-	--Speed Pull Mag [+100% Reload Speed, +20 Magazine, -3 Concealment]
+	--Speed Pull Mag [wpn_fps_smg_p90_m_strap] [+100% Reload Speed, +20 Magazine, -3 Concealment] Value: 2
+	--NOTE check with Kith re ammo between akimbo and single versions
 
 	--------------------------------------
 				--SpecOps--
@@ -3139,7 +3163,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 6, 10
 	--Notes: 
 	--Active Mods: 
-	--Extended Mag. [+10 Magazine, -2 Concealment]
+	--Extended Mag. [wpn_fps_smg_mp7_m_extended] [+10 Magazine, -2 Concealment] Value: 1
 
 	--------------------------------------
 				--Mark 10--
@@ -3158,8 +3182,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 6, 10
 	--Notes: 
 	--Active Mods: 
-	--Extended Mag. [+20 Magazine, -5 Concealment]
-	--Speed Pull Mag [+100% Reload Speed, +20 Magazine, -10 Concealment]
+	--Extended Mag. [wpn_fps_smg_mac10_m_extended] [+20 Magazine, -5 Concealment] Value: 2
+	--Speed Pull Mag [wpn_fps_smg_mac10_m_quick] [+100% Reload Speed, +20 Magazine, -10 Concealment] Value: 2
 
 	--------------------------------------
 				--Kross Vertex--
@@ -3217,10 +3241,14 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 4, 6
 	--Notes: Formerly a Light SMG.
 	--Active Mods: 
-	--Extended Mag [+10 Magazine, -5 Concealment]
-	--Short Mag [-10 Magazine, +5 Concealment]
-	--Heatsinked Suppressed Barrel, Suppressed Barrel [Suppresses Weapon, +Quiet, -100 Threat]
-
+	--Extended Mag [wpn_fps_smg_sterling_m_long] [+10 Magazine, -5 Concealment] Value: 1
+		
+	--Short Mag [wpn_fps_smg_sterling_m_short] [-10 Magazine, +5 Concealment] Value: 1
+	
+	--Heatsinked Suppressed Barrel [wpn_fps_smg_sterling_b_e11] [Suppresses Weapon, + Quiet, -100 Threat] Value: 4
+		
+	--Suppressed Barrel [wpn_fps_smg_sterling_b_suppressed] [Suppresses Weapon, + Quiet, -100 Threat] Value: 4
+		
 	--------------------------------------
 				--MP40--
 	--------------------------------------
@@ -3255,7 +3283,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes: 
-	--Active Mods: Extended Mag. [+14 Magazine, -5 Concealment]
+	--Active Mods: Extended Mag. [wpn_fps_smg_m45_m_extended] [+14 Magazine, -5 Concealment] Value: 4
 
 	--------------------------------------
 				--Jackal--
@@ -3273,8 +3301,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes: 
-	--Active Mods: Extended Magazine [+10 Magazine, -10 Concealment]
-	--Extended Magazine [-10 Magazine, +5 Concealment]
+	--Active Mods: Extended Magazine [wpn_fps_smg_schakal_m_long] [+10 Magazine, -10 Concealment] Value: 1
+	--Extended Magazine [wpn_fps_smg_schakal_m_short] [-10 Magazine, +5 Concealment] Value: 1
 
 	--------------------------------------
 				--CR 805B--
@@ -3294,7 +3322,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes: 
 	--Active Mods: CAR Quadstacked Mag [wpn_fps_upg_m4_m_quad] [+30 Magazine, -10 Concealment] Value: 3
 	--Vintage Mag [wpn_fps_upg_m4_m_straight] [-10 Magazine, +5 Concealment] Value: 2
-	--Speed Pull Mag [+100% Reload Speed, -4 Concealment]
+	--Speed Pull Mag [wpn_fps_m4_upg_m_quick] [+100% Reload Speed, -4 Concealment] Value: 2
 
 	--------------------------------------
 				--Krinkov--
@@ -3313,7 +3341,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 4, 6
 	--Notes: 
 	--Active Mods: AK Quadstacked Mag [wpn_fps_upg_ak_m_quad] [+30 Magazine, -15 Concealment] Value: 3
-	--Speed Pull Mag [+100% Reload Speed, -4 Concealment]
+	--Speed Pull Mag [wpn_fps_upg_ak_m_quick] [+100% Reload Speed, -4 Concealment] Value: 2
 
 	--------------------------------------
 		--Secondary Shotguns--
@@ -3389,7 +3417,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 34
 	--Pickup: 4, 5
 	--Notes: 
-	--Active Mods: Silenced Barrel [Suppresses Weapon, + “Quiet” Class, -100 Threat]
+	--Active Mods: Silenced Barrel [wpn_fps_sho_rota_b_silencer] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
 
 	--------------------------------------
 				--Judge--
