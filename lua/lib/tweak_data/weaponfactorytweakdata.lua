@@ -1012,7 +1012,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 13
 	--Pickup: 6, 10
 	--Notes: 
-	--Active Mods: Speed Pull Mag [wpn_fps_smg_sr2_m_quick] [+100% Reload Speed, +20 Magazine, -8 Concealment] Value: 2
+	--Active Mods: Speed Pull Mag [wpn_fps_smg_sr2_m_quick] [+100% Reload Speed, -8 Concealment] Value: 2
 
 	--------------------------------------
 				--Akimbo Kobus 90--
@@ -1030,7 +1030,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 13
 	--Pickup: 6, 10
 	--Notes: 
-	--Active Mods: Speed Pull Mag [wpn_fps_smg_p90_m_strap] [+100% Reload Speed, +20 Magazine, -8 Concealment] Value: 2
+	--Active Mods: Speed Pull Mag [wpn_fps_smg_p90_m_strap] [+100% Reload Speed, -8 Concealment] Value: 2
 
 	--------------------------------------
 				--Akimbo SpecOps--
@@ -3123,8 +3123,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 6, 10
 	--Notes: 
 	--Active Mods: 
-	--Speed Pull Mag [wpn_fps_smg_sr2_m_quick] [+100% Reload Speed, +20 Magazine, -8 Concealment] Value: 2 
-	--NOTE check with Kith re ammo between akimbo and single versions
+	--Speed Pull Mag [wpn_fps_smg_sr2_m_quick] [+100% Reload Speed, -8 Concealment] Value: 2 
 
 	--------------------------------------
 				--Kobus 90--
@@ -3143,8 +3142,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 6, 10
 	--Notes: 
 	--Active Mods: 
-	--Speed Pull Mag [wpn_fps_smg_p90_m_strap] [+100% Reload Speed, +20 Magazine, -3 Concealment] Value: 2
-	--NOTE check with Kith re ammo between akimbo and single versions
+	--Speed Pull Mag [wpn_fps_smg_p90_m_strap] [+100% Reload Speed, -3 Concealment] Value: 2
 
 	--------------------------------------
 				--SpecOps--
