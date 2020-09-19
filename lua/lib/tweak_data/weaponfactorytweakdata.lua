@@ -1393,7 +1393,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 4, 5
 	--Notes:
 	--Active Mods: Silenced Barrel [wpn_fps_sho_rota_b_silencer] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
---IND
+
 	--------------------------------------
 				--Steakout 12G--
 	--------------------------------------
@@ -1410,8 +1410,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 34
 	--Pickup: 5, 6
 	--Notes:
-	--Active Mods: Suppressed Barrel [Suppresses Weapon, +Quiet, -100 Threat]
-	--Drum Magazine [+12 Magazine, -20 Concealment]
+	--Active Mods: Suppressed Barrel [wpn_fps_sho_aa12_barrel_silenced] [Suppresses Weapon, +Quiet, -100 Threat] Value: 5
+
+	--Drum Magazine [wpn_fps_sho_aa12_mag_drum] [+12 Magazine, -20 Concealment] Value: 1
 
 	--------------------------------------
 				--IZHMA 12G--
@@ -1429,7 +1430,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 34
 	--Pickup: 5, 6
 	--Notes:
-	--Active Mods: Big Brother Magazine [+3 Magazine, -5 Concealment]
+	--Active Mods: Big Brother Magazine [wpn_fps_sho_basset_m_extended] [+3 Magazine, -5 Concealment] Value: 1
+	--NOTE this mod is shared with the Grimms and has variable stats.
 
 	--------------------------------------
 				--Brothers Grimm 12G--
@@ -1447,7 +1449,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 22
 	--Pickup: 6, 7
 	--Notes:
-	--Active Mods: Big Brother Magazine [+6 Magazine, -10 Concealment]
+	--Active Mods: Big Brother Magazine [wpn_fps_sho_basset_m_extended] [+6 Magazine, -10 Concealment] Value: 1
 
 	--------------------------------------
 		--Marksman Rifles--
@@ -1504,7 +1506,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 10
 	--Pickup: 3, 4
 	--Notes: Armor Piercing
-	--Active Mods: Tooth Fairy Suppressor [Suppresses Weapon, +Quiet, -100 Threat]
+	--Active Mods: Tooth Fairy Suppressor [wpn_fps_ass_sub2000_fg_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 5
 
 	--------------------------------------
 				--M308--
@@ -1540,7 +1542,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 22
 	--Pickup: 3, 4
 	--Notes: Armor Piercing
-	--Active Mods: Magpouch Stock [+16 Ammo Stock, -5 Concealment]
+	--Active Mods: Magpouch Stock [wpn_fps_ass_ching_s_pouch] [+16 Ammo Stock, -5 Concealment] Value: 1
 
 	--------------------------------------
 		--Primary Sniper Rifles--
@@ -1564,7 +1566,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 2.5, 3
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Contractor Silencer [Suppresses Weapon, +Quiet, -100 Threat]
+	--Active Mods: Contractor Silencer [wpn_fps_snp_tti_ns_hex] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
 
 	--------------------------------------
 				--Lebensauger .308--
@@ -1582,7 +1584,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 2.5, 3
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Gedampfter Barrel [Suppresses Weapon, +Quiet, -100 Threat]
+	--Active Mods: Gedampfter Barrel [wpn_fps_snp_wa2000_b_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
 
 	--------------------------------------
 				--Grom--
@@ -1600,8 +1602,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 2.5, 3
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Tikho Barrel [Suppresses Weapon, +Quiet, -100 Threat]
-	--Iron Sights [+15 Concealment, -20 Stability]
+	--Active Mods: Tikho Barrel [wpn_fps_snp_siltstone_b_silenced] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
+	
+	--Iron Sights [wpn_fps_snp_siltstone_iron_sight] [+15 Concealment, -20 Stability] Value: 1
 
 	--------------------------------------
 			--Medium Sniper Rifles--
@@ -1622,7 +1625,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 2, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Sniper Suppressor [Suppresses Weapon, +Quiet, -100 Threat]
+	--Active Mods: Sniper Suppressor [wpn_fps_snp_msr_ns_suppressor] [Suppresses Weapon, +Quiet, -100 Threat] Value: 5
 
 	--------------------------------------
 				--Repeater 1874--
@@ -1640,7 +1643,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 14
 	--Pickup: 3, 4
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Outlaw’s Silenced Barrel [Suppresses Weapon, +Quiet, -100 Threat]
+	--Active Mods: Outlaw’s Silenced Barrel [wpn_fps_snp_winchester_b_suppressed [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
 
 	--------------------------------------
 			--Heavy Sniper Rifles--
@@ -1661,8 +1664,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Beak Suppressor [Suppresses Weapon, +Quiet, -100 Threat]
-
+	--Active Mods: Beak Suppressor [wpn_fps_snp_model70_ns_suppressor] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
+--IND
 	--------------------------------------
 				--R93--
 	--------------------------------------
@@ -1679,7 +1682,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Compensated Suppressor [Suppresses Weapon, +Quiet, -100 Threat]
+	--Active Mods: Compensated Suppressor [Suppresses Weapon, +Quiet, -100 Threat] Value: 
 
 	--------------------------------------
 				--Nagant--
@@ -1697,8 +1700,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Silenced Barrel [Suppresses Weapon, +Quiet, -100 Threat]
-	--Nagant Bayonet [Replaces Weapon Butt melee weapon with Nagant Bayonet melee weapon]
+	--Active Mods: Silenced Barrel [Suppresses Weapon, +Quiet, -100 Threat] Value: 
+
+	--Nagant Bayonet [Replaces Weapon Butt melee weapon with Nagant Bayonet melee weapon] Value: 
 
 	--------------------------------------
 				--Desertfox--
@@ -1716,7 +1720,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Silenced Barrel [Suppresses Weapon, +Quiet, -100 Threat]
+	--Active Mods: Silenced Barrel [Suppresses Weapon, +Quiet, -100 Threat] Value: 
 
 	--------------------------------------
 				--Thanatos .50 cal--
@@ -1734,7 +1738,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 0.25, 0.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Suppressed Barrel [Suppresses Weapon, +Quiet, -100 Threat]
+	--Active Mods: Suppressed Barrel [Suppresses Weapon, +Quiet, -100 Threat] Value: 
 
 	--------------------------------------
 		--Akimbo Pistols--
@@ -1776,7 +1780,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Magazine [+24 Magazine, -5 Concealment]
+	--Active Mods: Extended Magazine [+24 Magazine, -5 Concealment] Value: 
 
 	--------------------------------------
 				--Akimbo M13 9mm--
@@ -1812,7 +1816,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Mag.[+24 Magazine, -5 Concealment]
+	--Active Mods: Extended Mag.[+24 Magazine, -5 Concealment] Value: 
 	--------------------------------------
 				--Akimbo Crosskill Guard--
 	--------------------------------------
@@ -1829,7 +1833,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Mag [+8 Magazine, -2 Concealment]
+	--Active Mods: Extended Mag [+8 Magazine, -2 Concealment] Value: 
 
 	--------------------------------------
 				--Akimbo Bernetti 9--
@@ -1847,7 +1851,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Mag. [+24 Magazine, -5 Concealment]
+	--Active Mods: Extended Mag. [+24 Magazine, -5 Concealment] Value: 
 
 	--------------------------------------
 			--Akimbo Medium Pistols--
@@ -1868,8 +1872,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: 12rnd Mag. [+4 Magazine, -2 Concealment]
-	--Magazine with Ameritude! [+24 Magazine, -5 Concealment]
+	--Active Mods: 12rnd Mag. [+4 Magazine, -2 Concealment] Value: 
+	
+	--Magazine with Ameritude! [+24 Magazine, -5 Concealment] Value: 
 
 	--------------------------------------
 				--Akimbo Contractor--
@@ -1887,7 +1892,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Magazine[+20 Magazine, -5 Concealment]
+	--Active Mods: Extended Magazine[+20 Magazine, -5 Concealment] Value: 
+			
 	--------------------------------------
 				--Akimbo Signature .40--
 	--------------------------------------
@@ -1904,7 +1910,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag. [+16 Magazine, -5 Concealment]
+	--Active Mods: Extended Mag. [+16 Magazine, -5 Concealment] Value: 
 
 	--------------------------------------
 				--Akimbo Broomstick--
@@ -1922,9 +1928,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: High Capacity Mag [+20 Magazine, -5 Concealment]
+	--Active Mods: High Capacity Mag [+20 Magazine, -5 Concealment] Value: 
 	--Precision Barrel [+Armor Piercing, -45 Ammo Stock, +30 Damage, -12 Stability,
-	---5 Concealment, -0.5, -2 Pickup]
+	---5 Concealment, -0.5, -2 Pickup] Value: 
 
 	--------------------------------------
 				--Akimbo Interceptor 45--
@@ -1942,8 +1948,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag.[+16 Magazine, -4 Concealment]
-	--I want more Magazine! [+24 Magazine, -8 Concealment]
+	--Active Mods: Extended Mag.[+16 Magazine, -4 Concealment] Value: 
+			
+	--I want more Magazine! [+24 Magazine, -8 Concealment] Value: 
 
 	--------------------------------------
 				--Akimbo LEO--
@@ -1961,7 +1968,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag [+16 Magazine, -5 Concealment]
+	--Active Mods: Extended Mag [+16 Magazine, -5 Concealment] Value: 
 
 	--------------------------------------
 				--Akimbo Chimano Custom--
@@ -1979,7 +1986,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag. [+24 Magazine, -5 Concealment]
+	--Active Mods: Extended Mag. [+24 Magazine, -5 Concealment] Value: 
 
 	--------------------------------------
 			--Akimbo Heavy Pistols--
@@ -2000,7 +2007,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 9
 	--Pickup: 1.5, 3
 	--Notes: Armor Piercing
-	--Active Mods: Extended Magazine [+12 Magazine, -5 Concealment]
+	--Active Mods: Extended Magazine [+12 Magazine, -5 Concealment] Value: 
 
 	--------------------------------------
 				--Akimbo Parabellum--
@@ -2054,7 +2061,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 9
 	--Pickup: 1.5, 3
 	--Notes: Armor Piercing
-	--Active Mods: Extended Magazine [+4 Magazine, -1 Concealment]
+	--Active Mods: Extended Magazine [+4 Magazine, -1 Concealment] Value: 
 
 	--------------------------------------
 			--Akimbo Revolvers--
@@ -2243,7 +2250,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 0, 0
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: I’ll Take Half That Kit [-1500 Fire Rate] --NOTE may be pure benefit? ask
+	--Active Mods: I’ll Take Half That Kit [-1500 Fire Rate]  Value: 
+	--NOTE may be pure benefit? ask
 
 	--------------------------------------
 				--Airbow--
@@ -2261,8 +2269,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
-	--Active Mods: Explosive Arrow [-Armor Piercing, 2x Headshot Damage]
-	--Poison Arrow [-560 Damage, + Poison]
+	--Active Mods: Explosive Arrow [-Armor Piercing, 2x Headshot Damage] Value: 
+			
+	--Poison Arrow [-560 Damage, + Poison] Value: 
 
 	--------------------------------------
 				--Light Crossbow--
@@ -2280,8 +2289,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
-	--Active Mods: Explosive Bolt [-Armor Piercing, 2x Headshot Damage]
-	--Poison Bolt [-600 Damage, + Poison]
+	--Active Mods: Explosive Bolt [-Armor Piercing, 2x Headshot Damage] Value: 
+
+	--Poison Bolt [-600 Damage, + Poison] Value: 
 
 	--------------------------------------
 				--Plainsrider Bow--
@@ -2299,8 +2309,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
-	--Active Mods: Explosive Arrows [-Armor Piercing, 2x Headshot Damage]
-	--Poison Arrows [-200 Damage, + Poison]
+	--Active Mods: Explosive Arrows [-Armor Piercing, 2x Headshot Damage] Value: 
+
+	--Poison Arrows [-200 Damage, + Poison] Value: 
 
 	--------------------------------------
 				--DECA Technologies Compound Bow--
@@ -2318,8 +2329,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
-	--Active Mods: Explosive Arrow [-Armor Piercing, 2x Headshot Damage]
-	--Poison Arrow [-1600 Damage, + Poison]
+	--Active Mods: Explosive Arrow [-Armor Piercing, 2x Headshot Damage] Value: 
+
+	--Poison Arrow [-1600 Damage, + Poison] Value: 
 
 	--------------------------------------
 				--English Longbow--
@@ -2337,8 +2349,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
-	--Active Mods: Explosive Arrows [-Armor Piercing, 2x Headshot Damage]
-	--Poison Arrows [-1600 Damage, + Poison]
+	--Active Mods: Explosive Arrows [-Armor Piercing, 2x Headshot Damage] Value: 
+			
+	--Poison Arrows [-1600 Damage, + Poison] Value: 
 
 	--------------------------------------
 				--Heavy Crossbow--
@@ -2356,8 +2369,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
-	--Active Mods: Explosive Bolt [-Armor Piercing, 2x Headshot Damage]
-	--Poisoned Bolt [-1600 Damage, + Poison]
+	--Active Mods: Explosive Bolt [-Armor Piercing, 2x Headshot Damage] Value: 
+
+	--Poisoned Bolt [-1600 Damage, + Poison] Value: 
 
 	--------------------------------------
 				--GL 40 Grenade Launcher--
@@ -2375,7 +2389,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 0.1, 0.2
 	--Notes: Area Damage
-	--Active Mods: Incendiary Round [-1000 Damage, + Area Denial in a large area for 15 seconds.]
+	--Active Mods: Incendiary Round [-1000 Damage, + Area Denial in a large area for 15 seconds.] Value: 
 
 	--------------------------------------
 				--Piglet Grenade Launcher--
@@ -2393,7 +2407,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 0.1, 0.2
 	--Notes: Area Damage
-	--Active Mods: Incendiary Round [-1000 Damage, + Area Denial in a large area for 15 seconds.]
+	--Active Mods: Incendiary Round [-1000 Damage, + Area Denial in a large area for 15 seconds.] Value: 
 
 	--------------------------------------
 				--Flamethrower Mk.1--
@@ -2457,7 +2471,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 4
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Magazine [+12 Magazine, -3 Concealment]
+	--Active Mods: Extended Magazine [+12 Magazine, -3 Concealment] Value: 
 
 	--------------------------------------
 				--M13 9mm--
@@ -2493,7 +2507,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Mag. [+12 Magazine, -3 Concealment]
+	--Active Mods: Extended Mag. [+12 Magazine, -3 Concealment] Value: 
 
 	--------------------------------------
 				--Crosskill Guard--
@@ -2511,7 +2525,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Mag [+4 Magazine, -1 Concealment]
+	--Active Mods: Extended Mag [+4 Magazine, -1 Concealment] Value: 
 
 	--------------------------------------
 				--Bernetti 9--
@@ -2529,7 +2543,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Mag. [+12 Magazine, -3 Concealment]
+	--Active Mods: Extended Mag. [+12 Magazine, -3 Concealment] Value: 
 
 	--------------------------------------
 			--Medium Pistols--
@@ -2550,8 +2564,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: 12rnd Mag. [+2 Magazine, -1 Concealment]
-	--Magazine with Ameritude! [+12 Magazine, -3 Concealment]
+	--Active Mods: 12rnd Mag. [+2 Magazine, -1 Concealment] Value: 
+			
+	--Magazine with Ameritude! [+12 Magazine, -3 Concealment] Value: 
 
 	--------------------------------------
 				--Contractor--
@@ -2569,7 +2584,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Magazine [+10 Magazine, -1 Concealment]
+	--Active Mods: Extended Magazine [+10 Magazine, -1 Concealment] Value: 
 
 	--------------------------------------
 				--Signature .40--
@@ -2587,7 +2602,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag. [+8 Magazine, -2 Concealment]
+	--Active Mods: Extended Mag. [+8 Magazine, -2 Concealment] Value: 
 
 	--------------------------------------
 				--Broomstick--
@@ -2605,9 +2620,10 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: High Capacity Mag [+10 Magazine, -2 Concealment]
+	--Active Mods: High Capacity Mag [+10 Magazine, -2 Concealment] Value: 
+			
 	--Precision Barrel [+Armor Piercing, -30 Ammo Stock. +30 Damage,
-	--+32 Stability, 5 Concealment, -0.5, -2 Pickup]
+	--+32 Stability, 5 Concealment, -0.5, -2 Pickup] Value: 
 
 	--------------------------------------
 				--Interceptor 45--
@@ -2625,8 +2641,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag. [+18 Magazine, -2 Concealment]
-	--I want more Magazine! [+12 Magazine, -4 Concealment]
+	--Active Mods: Extended Mag. [+18 Magazine, -2 Concealment] Value: 
+			
+	--I want more Magazine! [+12 Magazine, -4 Concealment] Value: 
 
 	--------------------------------------
 				--LEO--
@@ -2644,7 +2661,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag [+16 Magazine, -5 Concealment]
+	--Active Mods: Extended Mag [+16 Magazine, -5 Concealment] Value: 
 
 	--------------------------------------
 				--Chimano Custom--
@@ -2662,7 +2679,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag. [+12 Magazine, -2 Concealment]
+	--Active Mods: Extended Mag. [+12 Magazine, -2 Concealment] Value: 
 
 	--------------------------------------
 			--Heavy Pistols--
@@ -2683,7 +2700,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 9
 	--Pickup: 0.5, 0.75
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Extended Magazine [+10 Magazine, -5 Concealment]
+	--Active Mods: Extended Magazine [+10 Magazine, -5 Concealment] Value: 
 
 	--------------------------------------
 				--Deagle--
@@ -2701,7 +2718,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 9
 	--Pickup: 1.5, 3
 	--Notes: Armor Piercing
-	--Active Mods: Extended Magazine [+6 Magazine, -2 Concealment]
+	--Active Mods: Extended Magazine [+6 Magazine, -2 Concealment] Value: 
 
 	--------------------------------------
 				--Parabellum--
@@ -2755,7 +2772,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 9
 	--Pickup: 1.5, 3
 	--Notes: Armor Piercing
-	--Active Mods: Extended Magazine [+2 Magazine, -1 Concealment]
+	--Active Mods: Extended Magazine [+2 Magazine, -1 Concealment] Value: 
 
 	--------------------------------------
 			--Revolvers--
@@ -2852,7 +2869,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 7, 11
 	--Notes: 
-	--Active Mods: Extended Mag. [+14 Magazine, -2 Concealment]
+	--Active Mods: Extended Mag. [+14 Magazine, -2 Concealment] Value: 
 
 	--------------------------------------
 				--STRYK 18c--
@@ -2870,7 +2887,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes: 
-	--Active Mods: Extended Mag. [+12 Magazine, -2 Concealment]
+	--Active Mods: Extended Mag. [+12 Magazine, -2 Concealment] Value: 
 
 	--------------------------------------
 				--Czech 92--
@@ -2888,7 +2905,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes: 
-	--Active Mods: Extended Magazine [+10 Magazine, -2 Concealment]
+	--Active Mods: Extended Magazine [+10 Magazine, -2 Concealment] Value: 
 
 	--------------------------------------
 				--Bernetti Auto--
@@ -2906,7 +2923,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes: 
-	--Active Mods: Extended Magazine [+6 Magazine, -2 Concealment]
+	--Active Mods: Extended Magazine [+6 Magazine, -2 Concealment] Value: 
 
 	--------------------------------------
 		--SMGs--
@@ -3021,6 +3038,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 8, 16
 	--Notes: 
 	--Active Mods: Extended Mag. [wpn_fps_smg_mp9_m_extended] [+15 Magazine, -2 Concealment] Value: 4
+
 	--Tactical Suppressor [wpn_fps_smg_mp9_b_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 4
 
 	--------------------------------------
@@ -3059,7 +3077,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes: 
 	--Active Mods:
 	--Futomaki Suppressor [wpn_fps_smg_baka_b_longsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
+
 	--Maki Suppressor [wpn_fps_smg_baka_b_midsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
+
 	--Spring Suppressor [wpn_fps_smg_baka_b_smallsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
 
 	--------------------------------------
@@ -3082,10 +3102,15 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 6, 10
 	--Notes: 
 	--Active Mods: Milspec Mag [wpn_fps_m4_uupg_m_std] [+10 Magazine, -2 Concealment] Value: 1
+
 	--Tactical Mag [wpn_fps_upg_m4_m_pmag] [+10 Magazine, -2 Concealment] Value: 3
+
 	--Expert Mag [wpn_fps_ass_l85a2_m_emag] [+10 Magazine, -2 Concealment] Value: 1
+
 	--L5 Magazine [wpn_fps_upg_m4_m_l5] [+10 Magazine, -2 Concealment] Value: 1
+
 	--CAR Quadstacked Mag [wpn_fps_upg_m4_m_quad] [+40 Magazine, -10 Concealment] Value: 3
+
 	--Speedpull Mag [wpn_fps_m4_upg_m_quick] [+100% Reload Speed, +10 Magazine, -4 Concealment] Value: 2
 
 	--------------------------------------
@@ -3181,6 +3206,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes: 
 	--Active Mods: 
 	--Extended Mag. [wpn_fps_smg_mac10_m_extended] [+20 Magazine, -5 Concealment] Value: 2
+
 	--Speed Pull Mag [wpn_fps_smg_mac10_m_quick] [+100% Reload Speed, +20 Magazine, -10 Concealment] Value: 2
 
 	--------------------------------------
@@ -3300,6 +3326,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 4, 6
 	--Notes: 
 	--Active Mods: Extended Magazine [wpn_fps_smg_schakal_m_long] [+10 Magazine, -10 Concealment] Value: 1
+
 	--Extended Magazine [wpn_fps_smg_schakal_m_short] [-10 Magazine, +5 Concealment] Value: 1
 
 	--------------------------------------
@@ -3319,7 +3346,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 4, 6
 	--Notes: 
 	--Active Mods: CAR Quadstacked Mag [wpn_fps_upg_m4_m_quad] [+30 Magazine, -10 Concealment] Value: 3
+
 	--Vintage Mag [wpn_fps_upg_m4_m_straight] [-10 Magazine, +5 Concealment] Value: 2
+
 	--Speed Pull Mag [wpn_fps_m4_upg_m_quick] [+100% Reload Speed, -4 Concealment] Value: 2
 
 	--------------------------------------
@@ -3339,6 +3368,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 4, 6
 	--Notes: 
 	--Active Mods: AK Quadstacked Mag [wpn_fps_upg_ak_m_quad] [+30 Magazine, -15 Concealment] Value: 3
+
 	--Speed Pull Mag [wpn_fps_upg_ak_m_quick] [+100% Reload Speed, -4 Concealment] Value: 2
 
 	--------------------------------------
@@ -3360,7 +3390,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 34
 	--Pickup: 1, 2
 	--Notes: 
-	--Active Mods: Sawed-Off Barrel [-20 Accuracy]
+	--Active Mods: Sawed-Off Barrel [-20 Accuracy] Value: 
 
 	--------------------------------------
 				--GSPS 12G--
@@ -3396,8 +3426,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 34
 	--Pickup: 2, 3
 	--Notes: 
-	--Active Mods: Extended Magazine [+2 Magazine, -3 Concealment]
-	--Shell Rack: [+5 Ammo Stock, -3 Concealment]
+	--Active Mods: Extended Magazine [+2 Magazine, -3 Concealment] Value: 
+			
+	--Shell Rack: [+5 Ammo Stock, -3 Concealment] Value: 
 
 	--------------------------------------
 				--Goliath 12G--
@@ -3451,7 +3482,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 5, 6
 	--Notes: 
-	--Active Mods: Big Brother Magazine [+3 Magazine, -5 Concealment]
+	--Active Mods: Big Brother Magazine [+3 Magazine, -5 Concealment] Value: 
 
 	--------------------------------------
 				--Street Sweeper--
@@ -3469,7 +3500,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 4, 5
 	--Notes: 
-	--Active Mods: Suppressed Barrel [Suppresses Weapon, + “Quiet” Class, -100 Threat]
+	--Active Mods: Suppressed Barrel [Suppresses Weapon, + “Quiet” Class, -100 Threat] Value: 
 
 	--------------------------------------
 		--Secondary Special Weapons--
@@ -3490,8 +3521,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
-	--Active Mods: Explosive Bolt [- Armor Piercing, 2x Headshot Damage]
-	--Poison Bolt [-250 Damage, +Poison]
+	--Active Mods: Explosive Bolt [- Armor Piercing, 2x Headshot Damage] Value: 
+
+	--Poison Bolt [-250 Damage, +Poison] Value: 
 
 	--------------------------------------
 				--MA-17 Flamethrower--
@@ -3528,7 +3560,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 0.05, 0.1
 	--Notes: Area Damage
-	--Active Mods: Incendiary Round [-1000 Damage, +Area Denial in a large area for 15 seconds.]
+	--Active Mods: Incendiary Round [-1000 Damage, +Area Denial in a large area for 15 seconds.] Value: 
 
 	--------------------------------------
 				--China Puff 40mm--
@@ -3546,7 +3578,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 0.05, 0.1
 	--Notes: Area Damage
-	--Active Mods: Incendiary Round [-1000 Damage, +Area Denial in a large area for 15 seconds.]
+	--Active Mods: Incendiary Round [-1000 Damage, +Area Denial in a large area for 15 seconds.] Value: 
 
 	--------------------------------------
 				--Arbiter--
@@ -3567,7 +3599,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--NOTE: Unlike other Area Denial effects that mimic the Molotov Cocktail’s full-sized pool of flame, 
 	-- the Arbiter’s Area Denial is based on the Incendiary Grenade’s reduced radius that only uses
 	-- the central flame of the Molotov Cocktail effect.
-	--Active Mods: Incendiary Round [-470 Damage, +Area Denial in a small area for 10 seconds.]
+	--Active Mods: Incendiary Round [-470 Damage, +Area Denial in a small area for 10 seconds.] Value: 
 	--------------------------------------
 				--HRL-7--
 	--------------------------------------
@@ -3624,10 +3656,13 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--NOTE: The hitbox is being moved to the middle of the screen. Rejoice!
 	-- No longer has a hidden damage bonus to Dozers.
 	-- The OVE9000 Saw is not available as a Secondary weapon without Handyman Aced.
-	--Active Mods: Silent Motor [-200 Fire Rate, +10 Concealment, Reduced noise radius (base game mechanic)]
-	--Fast Motor [-20 Concealment, +400 Fire Rate]
-	--Durable Blade [-40 Damage, +50 Magazine Size, +100 Ammo Stock]
-	--Sharp Blade [+20 Damage, +100 Magazine Size, -200 Ammo Stock]
+	--Active Mods: Silent Motor [-200 Fire Rate, +10 Concealment, Reduced noise radius (base game mechanic)] Value: 
+
+	--Fast Motor [-20 Concealment, +400 Fire Rate] Value: 
+
+	--Durable Blade [-40 Damage, +50 Magazine Size, +100 Ammo Stock] Value: 
+
+	--Sharp Blade [+20 Damage, +100 Magazine Size, -200 Ammo Stock] Value: 
 
 	--------------------------------------
 	--Shared Attachments--
