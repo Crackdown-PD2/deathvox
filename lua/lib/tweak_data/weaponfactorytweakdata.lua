@@ -1682,7 +1682,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Compensated Suppressor [Suppresses Weapon, +Quiet, -100 Threat] Value: 
+	--Active Mods: Compensated Suppressor [wpn_fps_snp_r93_b_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 4
 
 	--------------------------------------
 				--Nagant--
@@ -1700,10 +1700,10 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Silenced Barrel [Suppresses Weapon, +Quiet, -100 Threat] Value: 
+	--Active Mods: Silenced Barrel [wpn_fps_snp_mosin_b_sniper] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
 
-	--Nagant Bayonet [Replaces Weapon Butt melee weapon with Nagant Bayonet melee weapon] Value: 
-
+	--Nagant Bayonet [wpn_fps_snp_mosin_ns_bayonet] [Replaces Weapon Butt melee weapon with Nagant Bayonet melee weapon] Value: 1
+--IND
 	--------------------------------------
 				--Desertfox--
 	--------------------------------------
@@ -1720,7 +1720,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Silenced Barrel [Suppresses Weapon, +Quiet, -100 Threat] Value: 
+	--Active Mods: Silenced Barrel [bm_wp_desertfox_b_silenced][Suppresses Weapon, +Quiet, -100 Threat] Value: 
 
 	--------------------------------------
 				--Thanatos .50 cal--
