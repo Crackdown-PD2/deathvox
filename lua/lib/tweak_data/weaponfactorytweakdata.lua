@@ -1712,7 +1712,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Active Mods: Silenced Barrel [wpn_fps_snp_mosin_b_sniper] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
 
 	--Nagant Bayonet [wpn_fps_snp_mosin_ns_bayonet] [Replaces Weapon Butt melee weapon with Nagant Bayonet melee weapon] Value: 1
---IND
+
 	--------------------------------------
 				--Desertfox--
 	--------------------------------------
@@ -2473,7 +2473,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 				--Chimano 88--
 	--------------------------------------
 	--ID: self.g17
-	--NOTE incorrectly identified as "glock_17" in some sources
+	--NOTE listed as "glock_17" in weapontweak
 	--Class: Precision
 	--Value: 1
 	--Magazine: 17
@@ -2522,7 +2522,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Mag. [+12 Magazine, -3 Concealment] Value: 
+	--Active Mods: Extended Mag. [wpn_fps_pis_g18c_m_mag_33rnd] [+12 Magazine, -3 Concealment] Value: 3
 
 	--------------------------------------
 				--Crosskill Guard--
@@ -2540,7 +2540,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Mag [+4 Magazine, -1 Concealment] Value: 
+	--Active Mods: Extended Mag [wpn_fps_pis_shrew_m_extended] [+4 Magazine, -1 Concealment] Value: 1
 
 	--------------------------------------
 				--Bernetti 9--
@@ -2558,7 +2558,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
-	--Active Mods: Extended Mag. [+12 Magazine, -3 Concealment] Value: 
+	--Active Mods: Extended Mag. [wpn_fps_pis_beretta_m_extended] [+12 Magazine, -3 Concealment] Value: 2
 
 	--------------------------------------
 			--Medium Pistols--
@@ -2579,9 +2579,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: 12rnd Mag. [+2 Magazine, -1 Concealment] Value: 
+	--Active Mods: 12rnd Mag. [wpn_fps_pis_1911_m_extended] [+2 Magazine, -1 Concealment] Value: 3
 			
-	--Magazine with Ameritude! [+12 Magazine, -3 Concealment] Value: 
+	--Magazine with Ameritude! [wpn_fps_pis_1911_m_big] [+12 Magazine, -3 Concealment] Value: 2
 
 	--------------------------------------
 				--Contractor--
@@ -2599,7 +2599,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Magazine [+10 Magazine, -1 Concealment] Value: 
+	--Active Mods: Extended Magazine [wpn_fps_pis_packrat_m_extended] [+10 Magazine, -1 Concealment] Value: 2
 
 	--------------------------------------
 				--Signature .40--
@@ -2617,7 +2617,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag. [+8 Magazine, -2 Concealment] Value: 
+	--Active Mods: Extended Mag. [wpn_fps_pis_p226_m_extended] [+8 Magazine, -2 Concealment] Value: 1
 
 	--------------------------------------
 				--Broomstick--
@@ -2656,9 +2656,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag. [+18 Magazine, -2 Concealment] Value: 
+	--Active Mods: Extended Mag. [wpn_fps_pis_usp_m_extended] [+18 Magazine, -2 Concealment] Value: 3
 			
-	--I want more Magazine! [+12 Magazine, -4 Concealment] Value: 
+	--I want more Magazine! [wpn_fps_pis_usp_m_big] [+12 Magazine, -4 Concealment] Value: 2
 
 	--------------------------------------
 				--LEO--
@@ -2676,7 +2676,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag [+16 Magazine, -5 Concealment] Value: 
+	--Active Mods: Extended Mag [wpn_fps_pis_hs2000_m_extended] [+16 Magazine, -5 Concealment] Value: 1
 
 	--------------------------------------
 				--Chimano Custom--
@@ -2694,7 +2694,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
-	--Active Mods: Extended Mag. [+12 Magazine, -2 Concealment] Value: 
+	--Active Mods: Extended Mag. [wpn_fps_pis_g18c_m_mag_33rnd] [+12 Magazine, -2 Concealment] Value: 3
 
 	--------------------------------------
 			--Heavy Pistols--
@@ -2715,7 +2715,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 9
 	--Pickup: 0.5, 0.75
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
-	--Active Mods: Extended Magazine [+10 Magazine, -5 Concealment] Value: 
+	--Active Mods: Extended Magazine [wpn_fps_pis_lemming_m_ext] [+10 Magazine, -5 Concealment] Value: 1
 
 	--------------------------------------
 				--Deagle--
@@ -2733,7 +2733,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 9
 	--Pickup: 1.5, 3
 	--Notes: Armor Piercing
-	--Active Mods: Extended Magazine [+6 Magazine, -2 Concealment] Value: 
+	--Active Mods: Extended Magazine [wpn_fps_pis_deagle_m_extended] [+6 Magazine, -2 Concealment] Value: 7
 
 	--------------------------------------
 				--Parabellum--
@@ -2787,7 +2787,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 9
 	--Pickup: 1.5, 3
 	--Notes: Armor Piercing
-	--Active Mods: Extended Magazine [+2 Magazine, -1 Concealment] Value: 
+	--Active Mods: Extended Magazine [wpn_fps_pis_pl14_m_extended] [+2 Magazine, -1 Concealment] Value: 1
 
 	--------------------------------------
 			--Revolvers--
@@ -2795,7 +2795,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--------------------------------------
 				--Matever .357--
 	--------------------------------------
-	--ID: self.mateba
+	--ID: self.2006m
+	--NOTE listed as "mateba" in weapontweak
 	--Class: Precision
 	--Value: 1
 	--Magazine: 6
@@ -2884,12 +2885,13 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 7, 11
 	--Notes: 
-	--Active Mods: Extended Mag. [+14 Magazine, -2 Concealment] Value: 
+	--Active Mods: Extended Mag. [wpn_fps_pis_stech_m_extended] [+14 Magazine, -2 Concealment] Value: 5
 
 	--------------------------------------
 				--STRYK 18c--
 	--------------------------------------
-	--ID: self.glock_18c
+	--ID: self.g18c
+	--NOTE: listed as "glock_18c" in weapontweak
 	--Class: Rapid Fire
 	--Value: 1
 	--Magazine: 20
@@ -2902,7 +2904,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes: 
-	--Active Mods: Extended Mag. [+12 Magazine, -2 Concealment] Value: 
+	--Active Mods: Extended Mag. [wpn_fps_pis_g18c_m_mag_33rnd] [+12 Magazine, -2 Concealment] Value: 3
 
 	--------------------------------------
 				--Czech 92--
@@ -2920,7 +2922,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes: 
-	--Active Mods: Extended Magazine [+10 Magazine, -2 Concealment] Value: 
+	--Active Mods: Extended Magazine [wpn_fps_pis_czech_m_extended] [+10 Magazine, -2 Concealment] Value: 1
 
 	--------------------------------------
 				--Bernetti Auto--
@@ -2938,7 +2940,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes: 
-	--Active Mods: Extended Magazine [+6 Magazine, -2 Concealment] Value: 
+	--Active Mods: Extended Magazine [wpn_fps_pis_beer_m_extended] [+6 Magazine, -2 Concealment] Value: 3
 
 	--------------------------------------
 		--SMGs--
@@ -2998,7 +3000,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 13
 	--Pickup: 8, 16
 	--Notes: 
-	--Active Mods: Extended Magazine [wpn_fps_smg_shepheard_mag_extended]  [+10 Magazine, -2 Concealment] Value: 1
+	--Active Mods: Extended Magazine [wpn_fps_smg_shepheard_mag_extended] [+10 Magazine, -2 Concealment] Value: 1
 
 	--------------------------------------
 				--Compact-5--
@@ -3342,7 +3344,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes: 
 	--Active Mods: Extended Magazine [wpn_fps_smg_schakal_m_long] [+10 Magazine, -10 Concealment] Value: 1
 
-	--Extended Magazine [wpn_fps_smg_schakal_m_short] [-10 Magazine, +5 Concealment] Value: 1
+	--Short Magazine [wpn_fps_smg_schakal_m_short] [-10 Magazine, +5 Concealment] Value: 1
 
 	--------------------------------------
 				--CR 805B--
@@ -3385,7 +3387,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Active Mods: AK Quadstacked Mag [wpn_fps_upg_ak_m_quad] [+30 Magazine, -15 Concealment] Value: 3
 
 	--Speed Pull Mag [wpn_fps_upg_ak_m_quick] [+100% Reload Speed, -4 Concealment] Value: 2
-
+--IND
 	--------------------------------------
 		--Secondary Shotguns--
 	--------------------------------------
