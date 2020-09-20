@@ -2487,7 +2487,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 3, 6
 	--Notes: 
 	--Active Mods: Extended Magazine [wpn_fps_pis_g18c_m_mag_33rnd] [+12 Magazine, -3 Concealment] Value: 3
---IND
+
 	--------------------------------------
 				--M13 9mm--
 	--------------------------------------
@@ -3407,7 +3407,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 34
 	--Pickup: 1, 2
 	--Notes: 
-	--Active Mods: Sawed-Off Barrel [-20 Accuracy] Value: 
+	--Active Mods: Sawed-Off Barrel [wpn_fps_sho_coach_b_short] [-20 Accuracy] Value: 1
 
 	--------------------------------------
 				--GSPS 12G--
@@ -3443,9 +3443,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 34
 	--Pickup: 2, 3
 	--Notes: 
-	--Active Mods: Extended Magazine [+2 Magazine, -3 Concealment] Value: 
+	--Active Mods: Extended Magazine [wpn_fps_shot_shorty_m_extended_short] [+2 Magazine, -3 Concealment] Value: 1
 			
-	--Shell Rack: [+5 Ammo Stock, -3 Concealment] Value: 
+	--Shell Rack: [wpn_fps_shot_r870_body_rack] [+5 Ammo Stock, -3 Concealment] Value: 3
 
 	--------------------------------------
 				--Goliath 12G--
@@ -3499,7 +3499,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 11
 	--Pickup: 5, 6
 	--Notes: 
-	--Active Mods: Big Brother Magazine [+3 Magazine, -5 Concealment] Value: 
+	--Active Mods: Big Brother Magazine [wpn_fps_sho_basset_m_extended] [+3 Magazine, -5 Concealment] Value: 1
 
 	--------------------------------------
 				--Street Sweeper--
@@ -3517,7 +3517,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 4, 5
 	--Notes: 
-	--Active Mods: Suppressed Barrel [Suppresses Weapon, + “Quiet” Class, -100 Threat] Value: 
+	--Active Mods: Suppressed Barrel [wpn_fps_sho_striker_b_suppressed] [Suppresses Weapon, + “Quiet” Class, -100 Threat] Value: 5
 
 	--------------------------------------
 		--Secondary Special Weapons--
@@ -3538,9 +3538,10 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
-	--Active Mods: Explosive Bolt [- Armor Piercing, 2x Headshot Damage] Value: 
-
-	--Poison Bolt [-250 Damage, +Poison] Value: 
+	--Active Mods: Explosive Bolt [wpn_fps_upg_a_crossbow_explosion] [- Armor Piercing, 2x Headshot Damage] Value: 1
+	--NOTE: This type of mod given for free, infinite. Value stat may be unnecessary.
+	
+	--Poison Bolt [wpn_fps_upg_a_crossbow_poison] [-250 Damage, +Poison] Value: 1
 
 	--------------------------------------
 				--MA-17 Flamethrower--
@@ -3577,8 +3578,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 0.05, 0.1
 	--Notes: Area Damage
-	--Active Mods: Incendiary Round [-1000 Damage, +Area Denial in a large area for 15 seconds.] Value: 
-
+	--Active Mods: Incendiary Round [wpn_fps_upg_a_grenade_launcher_incendiary] [-1000 Damage, +Area Denial in a large area for 15 seconds.] Value: 1
+	--NOTE: This type of mod given for free, infinite. Value stat may be unnecessary.
+			
 	--------------------------------------
 				--China Puff 40mm--
 	--------------------------------------
@@ -3595,8 +3597,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat: 43
 	--Pickup: 0.05, 0.1
 	--Notes: Area Damage
-	--Active Mods: Incendiary Round [-1000 Damage, +Area Denial in a large area for 15 seconds.] Value: 
-
+	--Active Mods: Incendiary Round [wpn_fps_upg_a_grenade_launcher_incendiary] [-1000 Damage, +Area Denial in a large area for 15 seconds.] Value: 
+	--NOTE: This type of mod given for free, infinite. Value stat may be unnecessary.
+			
 	--------------------------------------
 				--Arbiter--
 	--------------------------------------
@@ -3616,7 +3619,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--NOTE: Unlike other Area Denial effects that mimic the Molotov Cocktail’s full-sized pool of flame, 
 	-- the Arbiter’s Area Denial is based on the Incendiary Grenade’s reduced radius that only uses
 	-- the central flame of the Molotov Cocktail effect.
-	--Active Mods: Incendiary Round [-470 Damage, +Area Denial in a small area for 10 seconds.] Value: 
+	--Active Mods: Incendiary Round [wpn_fps_upg_a_grenade_launcher_incendiary_arbiter] [-470 Damage, +Area Denial in a small area for 10 seconds.] Value: 1
+			
 	--------------------------------------
 				--HRL-7--
 	--------------------------------------
@@ -3673,13 +3677,13 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--NOTE: The hitbox is being moved to the middle of the screen. Rejoice!
 	-- No longer has a hidden damage bonus to Dozers.
 	-- The OVE9000 Saw is not available as a Secondary weapon without Handyman Aced.
-	--Active Mods: Silent Motor [-200 Fire Rate, +10 Concealment, Reduced noise radius (base game mechanic)] Value: 
+	--Active Mods: Silent Motor [wpn_fps_saw_body_silent] [-200 Fire Rate, +10 Concealment, Reduced noise radius (base game mechanic)] Value: 1
 
-	--Fast Motor [-20 Concealment, +400 Fire Rate] Value: 
+	--Fast Motor [wpn_fps_saw_body_speed] [-20 Concealment, +400 Fire Rate] Value: 1
 
-	--Durable Blade [-40 Damage, +50 Magazine Size, +100 Ammo Stock] Value: 
+	--Durable Blade [wpn_fps_saw_m_blade_durable] [-40 Damage, +50 Magazine Size, +100 Ammo Stock] Value: 1
 
-	--Sharp Blade [+20 Damage, +100 Magazine Size, -200 Ammo Stock] Value: 
+	--Sharp Blade [wpn_fps_saw_m_blade_sharp] [+20 Damage, +100 Magazine Size, -200 Ammo Stock] Value: 1
 
 	--------------------------------------
 	--Shared Attachments--
