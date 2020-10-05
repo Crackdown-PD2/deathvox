@@ -53,7 +53,21 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				
 				--enforcer
 				["menu_far_away_beta"] = "Point Blank",
-				["menu_far_away_beta_desc"] = "BASIC: ##$basic##\nFor the first 100cm, your Shotguns will now gain ##Armor Piercing, Shield Piercing, and Body Piercing.##\n\nACE: ##$pro##\nPoint Blank also grants ##+100%## Damage for the first meter."
+				["menu_far_away_beta_desc"] = "BASIC: ##$basic##\nFor the first 100cm, your Shotguns will now gain ##Armor Piercing, Shield Piercing, and Body Piercing.##\n\nACE: ##$pro##\nPoint Blank also grants ##+100%## Damage for the first meter.",
+				
+				--engineer
+				["menu_digging_in"] = "Digging In",
+				["menu_digging_in_desc"] = "BASIC: ##$basic##\nYou deploy and retrieve Sentry Guns ##90%## faster.\n\nACE: ##$pro##\nYour Sentry Guns become armored, rendering them almost completely invulnerable.",
+				["menu_advanced_rangefinder"] = "Advanced Rangefinder",
+				["menu_advanced_rangefinder_desc"] = "BASIC: ##$basic##\nSentry Guns gain ##+50%## Range and Accuracy.\n\nACE: ##$pro##\nRange and Accuracy bonus increased to ##+100%##.",
+				["menu_targeting_matrix"] = "Targeting Matrix",
+				["menu_targeting_matrix_desc"] = "BASIC: ##$basic##\nSentry Guns that aim at Special Enemies instantly Mark them for 5 seconds.\n\nACE: ##$pro##\nSentry Guns deal ##+25%## Damage to Marked enemies.",
+				["menu_wrangler"] = "Wrangler",
+				["menu_wrangler_desc"] = "BASIC: ##$basic##\nWhile in Manual Control of a Sentry Gun, it gains perfect Accuracy.\n\nACE: ##$pro##\nSentries deal ##+100%## Damage on Headshots.",
+				["menu_hobarts_funnies"] = "Hobart's Funnies",
+				["menu_hobarts_funnies_desc"] = "BASIC: ##$basic##\nNon-Basic Sentry Gun modes gain ##+25%## Fire Rate.\n\nACE: ##$pro##\nFire Rate bonus increased to ##+50%##.",
+				["menu_killer_machines"] = "Killer Machines",
+				["menu_killer_machines_desc"] = "BASIC: ##$basic##\nAll Sentry Gun modes deal ##+50## damage.\n\nACE: ##$pro##\nIncreases your Sentry Gun supply to ##2##."
 			})
 		end
 		loc:add_localized_strings({

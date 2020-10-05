@@ -374,6 +374,12 @@ end
 
 function SentryControlMenu:SetSentryAmmo(unit,ammo_type)
 	if unit and alive(unit) then 
+	
+		if unit:weapon()._ammo_type == ammo_type then 
+			--when selecting the same ammo type as current, selects "basic" ammo
+			ammo_type = "basic"
+		end
+		
 		unit:weapon():_set_ammo_type(ammo_type,true)
 		if unit:network() then 
 			unit:network():send("sync_player_movement_state",ammo_type,2,"")
@@ -384,11 +390,16 @@ end
 
 function SentryControlMenu:SelectSentryByUnit(unit)
 	if unit and alive(unit) then 
-		if not  self._selections[tostring(unit:key())] then 
+		self._selections = {
+			[tostring(unit:key())] = {unit = unit}
+		}
+	--[[ --multiselect
+		if not self._selections[tostring(unit:key())] then 
 			self._selections[tostring(unit:key())] = {
 				unit = unit
 			}
 		end
+	--]]
 	end
 end
 

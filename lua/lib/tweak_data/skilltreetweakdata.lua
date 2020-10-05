@@ -166,11 +166,140 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		}
 		
 		--Engineer
+		self.skills.defense_up = { --Digging In
+			{
+				upgrades = {
+					"player_digging_in_deploy_time",
+					"sentry_gun_digging_in_retrieve_time"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"sentry_gun_shield"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_digging_in",
+			desc_id = "menu_digging_in_desc",
+			icon_xy = {
+				9,
+				0
+			}
+		}
+
+		self.skills.sentry_targeting_package = { --Advanced Rangefinder
+			{
+				upgrades = {
+					"sentry_gun_advanced_rangefinder_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"sentry_gun_advanced_rangefinder_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_advanced_rangefinder",
+			desc_id = "menu_advanced_rangefinder_desc",
+			icon_xy = {
+				9,
+				1
+			}
+		}
+
+		self.skills.eco_sentry = { --Targeting Matrix
+			{
+				upgrades = {
+					"sentry_gun_targeting_matrix_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"sentry_gun_targeting_matrix_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_targeting_matrix",
+			desc_id = "menu_targeting_matrix_desc",
+			icon_xy = {
+				9,
+				2
+			}
+		}
+
+		self.skills.engineering = { --Wrangler
+			{
+				upgrades = {
+					"sentry_gun_wrangler_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"sentry_gun_wrangler_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_wrangler",
+			desc_id = "menu_wrangler_desc",
+			icon_xy = {
+				9,
+				3
+			}
+		}
+		
+		self.skills.jack_of_all_trades = { --Hobart's Funnies
+			{
+				upgrades = {
+					"sentry_gun_hobarts_funnies_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"sentry_gun_hobarts_funnies_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_hobarts_funnies",
+			desc_id = "menu_hobarts_funnies_desc",
+			icon_xy = {
+				9,
+				4
+			}
+		}
+		
+		self.skills.tower_defense = { --Killer Machines
+			{
+				upgrades = {
+					"sentry_gun_killer_machines"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"sentry_gun_quantity_1"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_killer_machines",
+			desc_id = "menu_killer_machines_desc",
+			icon_xy = {
+				9,
+				5
+			}
+		}
+		
+		
 		
 		--add sentry targeting basic/aced to default upgrades
 		table.insert(self.default_upgrades,"sentry_gun_spread_multiplier")
 		table.insert(self.default_upgrades,"sentry_gun_extra_ammo_multiplier_1")
 		table.insert(self.default_upgrades,"sentry_gun_rot_speed_multiplier")
+		table.insert(self.default_upgrades,"sentry_gun_ap_bullets") --this is necessary to enable the sentry gun firemode interactions, I GUESS
 		
 		--Thief
 		

@@ -17,9 +17,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 	}
 	SentryGunBase.MIN_DEPLOYEMENT_COST = 0
 
-
-	--the main change to spawn() is that the ap interaction object is no longer created
-	function SentryGunBase.spawn(owner, pos, rot, peer_id, verify_equipment, unit_idstring_index)
+--the only changes to this are the removal of the AP bullets skill check to spawn the interaction unit
+	function SentryGunBase.spawn(owner, pos, rot, peer_id, verify_equipment, unit_idstring_index,fire_mode_index)
 		local attached_data = SentryGunBase._attach(pos, rot)
 
 		if not attached_data then
@@ -61,14 +60,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		ammo_multiplier = SentryGunBase.AMMO_MUL[ammo_multiplier]
 
-		unit:base():setup(owner, ammo_multiplier, armor_multiplier, spread_multiplier, rot_speed_multiplier, has_shield, attached_data)
+		unit:base():setup(owner, ammo_multiplier, armor_multiplier, spread_multiplier, rot_speed_multiplier, has_shield, attached_data,fire_mode_index)
 
 		local owner_id = unit:base():get_owner_id()
-
 		if owner_id then --don't check for ap bullets; just create firemode unit for firemode toggle interaction
 		--(dirty firemode toggle interaction is now recycled for opening sentry control menu)
 			local fire_mode_unit = World:spawn_unit(Idstring("units/payday2/equipment/gen_equipment_sentry/gen_equipment_sentry_fire_mode"), unit:position(), unit:rotation())
-
 			unit:weapon():interaction_setup(fire_mode_unit, owner_id)
 			managers.network:session():send_to_peers_synched("sync_fire_mode_interaction", unit, fire_mode_unit, owner_id)
 		end
@@ -172,6 +169,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end)
 
 	function SentryGunBase:_create_ws() 
+--below panels are still created but not used
 		self._ws = SentryControlMenu:_create_panel(self._unit)
 		self._panel = self._ws:panel()
 		self._bitmap = self._panel:child("bitmap") or self._panel:bitmap({

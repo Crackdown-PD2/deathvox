@@ -204,6 +204,140 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		
 		--Engineer
+		self.definitions.player_digging_in_deploy_time = {
+			name_id = "menu_digging_in_deploy",
+			category = "feature",
+			upgrade = {
+				value = 2, --skip over base-game value... oh boy i sure hope pd2's upgrade system is well-written and doesn't bug out and give the value for index 1!!!!
+				upgrade = "sentry_gun_deploy_time_multiplier",
+				category = "player"
+			}
+		}
+		self.values.player.sentry_gun_deploy_time_multiplier = {
+			0.5, --base-game
+			0.1  --total cd
+		}
+		self.definitions.sentry_gun_digging_in_retrieve_time = {
+			name_id = "menu_digging_in_retrieve",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "interaction_speed_multiplier",
+				category = "sentry_gun"
+			}
+		}
+		self.values.sentry_gun.interaction_speed_multiplier = {
+			0.1
+		}
+		
+		self.definitions.sentry_gun_advanced_rangefinder_basic = {
+			name_id = "menu_advanced_rangefinder_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "advanced_rangefinder",
+				category = "sentry_gun"
+			}
+		}
+		self.definitions.sentry_gun_advanced_rangefinder_aced = {
+			name_id = "menu_advanced_rangefinder_aced",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "advanced_rangefinder",
+				category = "sentry_gun"
+			}
+		}
+		self.values.sentry_gun.advanced_rangefinder = {
+			{0.5,0.5}, -- range mul, accuracy mul (1 + n)
+			{1,1}
+		}
+		
+		self.definitions.sentry_gun_targeting_matrix_basic = {
+			name_id = "menu_targeting_matrix_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "targeting_matrix",
+				category = "sentry_gun"
+			}
+		}
+		self.definitions.sentry_gun_targeting_matrix_aced = {
+			name_id = "menu_targeting_matrix_aced",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "targeting_matrix",
+				category = "sentry_gun"
+			}
+		}
+		self.values.sentry_gun.targeting_matrix = {
+			{"mark_enemy_damage_bonus",0},
+			{"mark_enemy_damage_bonus",0.25},
+		}
+		
+		self.definitions.sentry_gun_wrangler_basic = {
+			name_id = "menu_wrangler_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "wrangler_accuracy",
+				category = "sentry_gun"
+			}
+		}
+		self.values.sentry_gun.wrangler_accuracy = {
+			true
+		}
+		
+		self.definitions.sentry_gun_wrangler_aced = {
+			name_id = "menu_wrangler_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "wrangler_headshot_damage_bonus",
+				category = "sentry_gun"
+			}
+		}
+		self.values.sentry_gun.wrangler_headshot_damage_bonus = {
+			1
+		}
+		
+		self.definitions.sentry_gun_hobarts_funnies_basic = {
+			name_id = "menu_hobarts_funnies_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "hobarts_funnies",
+				category = "sentry_gun"
+			}
+		}
+		self.definitions.sentry_gun_hobarts_funnies_aced = {
+			name_id = "menu_hobarts_funnies_aced",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "hobarts_funnies",
+				category = "sentry_gun"
+			}
+		}
+		self.values.sentry_gun.hobarts_funnies = {
+			0.25,
+			0.5
+		}
+
+		self.definitions.sentry_gun_killer_machines = {
+			name_id = "menu_player_killer_machines",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "killer_machines_bonus_damage",
+				category = "sentry_gun"
+			}
+		}
+		self.values.sentry_gun.killer_machines_bonus_damage = {
+			5
+		}
+				
 		
 		--Thief
 		

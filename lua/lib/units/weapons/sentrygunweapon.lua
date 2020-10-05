@@ -170,6 +170,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 			local td = self:_get_tweak_data()
 			if fired then
 				local fire_rate = td.auto.fire_rate * self._fire_rate_reduction
+				if self._unit:base():is_owner() then 
+					if self:_get_ammo_type() ~= "basic" then 
+					--turns out this fire-rate value is seconds per bullet, not bullets per second. 5HEAD
+						fire_rate = fire_rate * managers.player:upgrade_value("sentry_gun","hobarts_funnies",1)
+					end
+				end
 				self._next_fire_allowed = self._next_fire_allowed + fire_rate
 				self._interleaving_fire = self._interleaving_fire == 1 and 2 or 1
 			end
@@ -198,12 +204,11 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local firemode = self:_get_sentry_firemode()
 		local ammotype = self:_get_ammo_type()
 		
-		if firemode == "manual" then 
-			SPREAD = SPREAD * 2
-		end
-		
 		if firemode ~= "overwatch" then 
-			mvector3.spread(direction, SPREAD * self._spread_mul)
+			if (firemode ~= "manual") or not managers.player:has_category_upgrade("sentry","wrangler_accuracy") then
+				--for wrangler mode + wrangler basic skill, skip spread calculations and use perfect accuracy instead
+				mvector3.spread(direction, SPREAD * self._spread_mul)
+			end
 		end
 		World:effect_manager():spawn(self._muzzle_effect_table[self._interleaving_fire])
 
@@ -248,7 +253,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if firemode == "overwatch" then 
 			ray_distance = 100000
 		end
-		
+		if self._unit:base():is_owner() then 
+			local advanced_rangefinder_data = managers.player:upgrade_value("sentry_gun","advanced_rangefinder",{0,0})
+			ray_distance = ray_distance * (1 + advanced_rangefinder_data[1])
+		end
 
 		local hit_unit = nil
 		local result = {}
@@ -311,7 +319,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			for _, hit in ipairs(unique_hits) do
 				if not hit_player and shoot_player then
 					local player_hit_ray = deep_clone(hit)
-					local player_hit, player_ray_data  = RaycastWeaponBase.damage_player(self, player_hit_ray, from_pos, direction, result)
+					local player_hit, player_ray_data = RaycastWeaponBase.damage_player(self, player_hit_ray, from_pos, direction, result)
 
 					if player_hit then
 						hit_player = true
@@ -337,7 +345,20 @@ if deathvox:IsTotalCrackdownEnabled() then
 				end
 
 				local damage = self:_apply_dmg_mul(self._damage, hit, from_pos)
-
+				if alive(hit.unit) and self._unit:base():is_owner() then  
+					if hit.unit:contour() then
+						local mark_data = managers.player:upgrade_value("sentry_gun","targeting_matrix",false)
+						if mark_data and type(mark_data) == "table" then 
+							if mark_data[1] and hit.unit:contour():has_id(mark_data[1]) then 
+								damage = damage * (1 + mark_data[2])
+							end
+						end
+					end
+					if hit.body == hit.unit:body("Head") then 
+						damage = damage * (1 + managers.player:upgrade_value("sentry_gun","wrangler_headshot_damage_bonus",0))
+					end
+					
+				end
 				if bullet_base:on_collision(hit, self._unit, self._unit, damage) then
 					char_hit = true
 				end
@@ -410,9 +431,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 
 	function SentryGunWeapon:_apply_dmg_mul(damage, col_ray, from_pos)
+		if self._unit:base():is_owner() then 
+			damage = damage + managers.player:upgrade_value("sentry_gun","killer_machines_bonus_damage",0)
+		end
 		local damage_out = damage * self._current_damage_mul
 		
 		local td = self:_get_tweak_data()
+		
 		
 		if td.DAMAGE_MUL_RANGE then
 			local ray_dis = col_ray.distance or mvector3.distance(from_pos, col_ray.position)
@@ -463,7 +488,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 	
 	
- --(below are all custom function)
+ --(below are all custom functions)
 	function SentryGunWeapon:_get_tweak_data() --custom method
 		if self._ammo_type == "taser" then 
 			return tweak_data.weapon.sentry_taser
