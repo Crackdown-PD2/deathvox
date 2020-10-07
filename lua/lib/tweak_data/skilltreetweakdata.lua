@@ -5,6 +5,132 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		--Boss
 		
 		--Marksman
+		self.skills.point_and_click = { --Point and Click
+			{
+				upgrades = {
+					"player_point_and_click_basic",
+					"weapon_point_and_click_damage_bonus"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"weapon_marksman_steelsight_speed_multiplier"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_point_and_click",
+			desc_id = "menu_point_and_click_desc",
+			icon_xy = {
+				8,
+				5
+			}
+		}
+		
+		self.skills.tap_the_trigger = { --Tap the Trigger
+			{
+				upgrades = {
+					"weapon_tap_the_trigger_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"weapon_tap_the_trigger_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_tap_the_trigger",
+			desc_id = "menu_tap_the_trigger_desc",
+			icon_xy = {
+				8,
+				5
+			}
+		}
+		
+		self.skills.investment_returns = { --Investment Returns
+			{
+				upgrades = {
+					"player_investment_returns_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_investment_returns_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_investment_returns",
+			desc_id = "menu_investment_returns_desc",
+			icon_xy = {
+				8,
+				5
+			}
+		}
+		
+		self.skills.this_machine = { --This Machine
+			{
+				upgrades = {
+					"weapon_this_machine_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"weapon_this_machine_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_this_machine",
+			desc_id = "menu_this_machine_desc",
+			icon_xy = {
+				8,
+				5
+			}
+		}
+		
+		self.skills.mulligan = { --Mulligan
+			{
+				upgrades = {
+					"player_mulligan_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_mulligan_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_mulligan",
+			desc_id = "menu_mulligan_desc",
+			icon_xy = {
+				8,
+				5
+			}
+		}
+		
+		self.skills.magic_bullet = { --Magic Bullet
+			{
+				upgrades = {
+					"weapon_magic_bullet_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"weapon_magic_bullet_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_magic_bullet",
+			desc_id = "menu_magic_bullet_desc",
+			icon_xy = {
+				8,
+				5
+			}
+		}
 		
 		--Medic
 		
@@ -165,8 +291,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			}
 		}
 		
+		
 		--Engineer
-		self.skills.defense_up = { --Digging In
+		
+		self.skills.digging_in = { --Digging In
 			{
 				upgrades = {
 					"player_digging_in_deploy_time",
@@ -188,7 +316,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			}
 		}
 
-		self.skills.sentry_targeting_package = { --Advanced Rangefinder
+		self.skills.advanced_rangefinder = { --Advanced Rangefinder
 			{
 				upgrades = {
 					"sentry_gun_advanced_rangefinder_basic"
@@ -209,7 +337,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			}
 		}
 
-		self.skills.eco_sentry = { --Targeting Matrix
+		self.skills.targeting_matrix = { --Targeting Matrix
 			{
 				upgrades = {
 					"sentry_gun_targeting_matrix_basic"
@@ -230,7 +358,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			}
 		}
 
-		self.skills.engineering = { --Wrangler
+		self.skills.wrangler = { --Wrangler
 			{
 				upgrades = {
 					"sentry_gun_wrangler_basic"
@@ -251,7 +379,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			}
 		}
 		
-		self.skills.jack_of_all_trades = { --Hobart's Funnies
+		self.skills.hobarts_funnies = { --Hobart's Funnies
 			{
 				upgrades = {
 					"sentry_gun_hobarts_funnies_basic"
@@ -272,7 +400,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			}
 		}
 		
-		self.skills.tower_defense = { --Killer Machines
+		self.skills.killer_machines = { --Killer Machines
 			{
 				upgrades = {
 					"sentry_gun_killer_machines"
@@ -292,14 +420,6 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				5
 			}
 		}
-		
-		
-		
-		--add sentry targeting basic/aced to default upgrades
-		table.insert(self.default_upgrades,"sentry_gun_spread_multiplier")
-		table.insert(self.default_upgrades,"sentry_gun_extra_ammo_multiplier_1")
-		table.insert(self.default_upgrades,"sentry_gun_rot_speed_multiplier")
-		table.insert(self.default_upgrades,"sentry_gun_ap_bullets") --this is necessary to enable the sentry gun firemode interactions, I GUESS
 		
 		--Thief
 		
@@ -333,7 +453,62 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		--Fixer
 		
 		--Demolitions
+
+
+
+		self.trees[2] = {
+			skill = "mastermind",
+			name_id = "st_menu_dallas_marksman",
+			unlocked = true,
+			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
+			tiers = {
+				{
+					"point_and_click"
+				},
+				{
+					"tap_the_trigger",
+					"investment_returns"
+				},
+				{
+					"this_machine",
+					"mulligan"
+				},
+				{
+					"magic_bullet"
+				}
+			}
+		}
 		
+		self.trees[7] = { --should be 9 when the other subtrees are done
+			skill = "technician",
+			name_id = "st_menu_wolf_engineer",
+			unlocked = true,
+			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
+			tiers = {
+				{
+					"digging_in"
+				},
+				{
+					"advanced_rangefinder",
+					"targeting_matrix"
+				},
+				{
+					"wrangler",
+					"hobarts_funnies"
+				},
+				{
+					"killer_machines"
+				}
+			}
+		}
+
+		
+		--add sentry targeting basic/aced to default upgrades
+		table.insert(self.default_upgrades,"sentry_gun_spread_multiplier")
+		table.insert(self.default_upgrades,"sentry_gun_extra_ammo_multiplier_1")
+		table.insert(self.default_upgrades,"sentry_gun_rot_speed_multiplier")
+		table.insert(self.default_upgrades,"sentry_gun_ap_bullets") --this is necessary to enable the sentry gun firemode interactions, I GUESS
+
 	end
 end)
 

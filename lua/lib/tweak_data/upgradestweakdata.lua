@@ -2,10 +2,173 @@
 
 Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_data)
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
+	--weapon archetype categories
+		self.values.precision = self.values.precision or {}
+		self.values.heavy = self.values.heavy or {}
 	
 		--Boss
 		
 		--Marksman
+		
+		self.definitions.player_point_and_click_basic = {
+			name_id = "menu_point_and_click_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "point_and_click_stacks",
+				category = "player"
+			}
+		}
+		self.values.player.point_and_click_stacks = { 
+			1		--stacks per hit
+		}
+
+		self.definitions.weapon_point_and_click_damage_bonus = {
+			name_id = "menu_weapon_point_and_click_damage_bonus",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "point_and_click_damage_bonus",
+				category = "weapon"
+			}
+		}
+		self.values.weapon.point_and_click_damage_bonus = {
+			{0.01,5} --% bonus damage per stack, max bonus damage
+		}
+		
+		self.definitions.weapon_marksman_steelsight_speed_multiplier = {
+			name_id = "menu_marksman_steelsight_speed_multiplier",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "enter_steelsight_speed_multiplier",
+				category = "precision"
+			}
+		}
+		self.values.precision.enter_steelsight_speed_multiplier = { 
+			0.9 --was 2 for vanilla upgrade
+		}
+		
+		self.definitions.weapon_tap_the_trigger_basic = {
+			name_id = "menu_tap_the_trigger_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "point_and_click_rof_bonus",
+				category = "weapon"
+			}
+		}
+		
+		self.definitions.weapon_tap_the_trigger_aced = {
+			name_id = "menu_tap_the_trigger_aced",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "point_and_click_rof_bonus",
+				category = "weapon"
+			}
+		}
+		self.values.weapon.point_and_click_rof_bonus = {
+			{0.01,0.5}, --% bonus rof per stack
+			{0.01,1}
+		}
+		
+		self.definitions.player_investment_returns_basic = {
+			name_id = "menu_investment_returns_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "point_and_click_stack_from_kill",
+				category = "player"
+			}
+		}
+		self.values.player.point_and_click_stack_from_kill = {
+			1 --on kill
+		}
+		
+		self.definitions.player_investment_returns_aced = {
+			name_id = "menu_investment_returns_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "point_and_click_stack_from_headshot_kill",
+				category = "player"
+			}
+		}
+		self.values.player.point_and_click_stack_from_headshot_kill = {
+			1 --on headshot kill
+		}
+		
+		self.definitions.weapon_this_machine_basic = {
+			name_id = "menu_this_machine_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "point_and_click_bonus_reload_speed",
+				category = "weapon"
+			}
+		}
+		self.definitions.weapon_this_machine_aced = {
+			name_id = "menu_this_machine_aced",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "point_and_click_bonus_reload_speed",
+				category = "weapon"
+			}
+		}
+		self.values.weapon.point_and_click_bonus_reload_speed = {
+			{0.005,0.25},
+			{0.005,0.5}
+		}
+		
+		self.definitions.player_mulligan_basic = {
+			name_id = "menu_mulligan_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "point_and_click_stack_mulligan",
+				category = "player"
+			}
+		}
+		self.definitions.player_mulligan_aced = {
+			name_id = "menu_mulligan_aced",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "point_and_click_stack_mulligan",
+				category = "player"
+			}
+		}
+		self.values.player.point_and_click_stack_mulligan = {
+			1,
+			1.5
+		}
+		
+		self.definitions.weapon_magic_bullet_basic = {
+			name_id = "menu_magic_bullet_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "magic_bullet",
+				category = "weapon"
+			}
+		}
+		self.definitions.weapon_magic_bullet_aced = {
+			name_id = "menu_magic_bullet_aced",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "magic_bullet",
+				category = "weapon"
+			}
+		}
+		self.values.weapon.magic_bullet = {
+			1,2 --these don't actually mean anything; i plan to use upgrade_level() instead or whatever
+		}
+		
+	
+		
 		
 		--Medic
 		

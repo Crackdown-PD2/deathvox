@@ -33,6 +33,39 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 			loc:add_localized_strings({
 				["debug_interact_gage_assignment_take"] = "PRESS $BTN_INTERACT TO PICK UP THE PACKAGE",
 				
+				--skilltree sub-tree names
+				st_menu_dallas_boss = "Boss",
+				st_menu_dallas_marksman = "Marksman",
+				st_menu_dallas_medic = "Medic",
+				st_menu_chains_chief = "Chief",
+				st_menu_chains_enforcer = "Enforcer",
+				st_menu_chains_heavy = "Heavy",
+				st_menu_wolf_runner = "Runner",
+				st_menu_wolf_gunner = "Gunner",
+				st_menu_wolf_engineer = "Engineer",
+				st_menu_houston_thief = "Thief",
+				st_menu_houston_assassin = "Assassin",
+				st_menu_houston_sapper = "Sapper",
+				st_menu_hoxton_dealer = "Dealer",
+				st_menu_hoxton_fixer = "Fixer",
+				st_menu_hoxton_demolitionist = "Demolitionist",
+				
+				--marksman
+				menu_point_and_click = "Point and Click",
+				menu_point_and_click_desc = "BASIC: ##$basic##\nPrecision Weapons gain ##+1%## Damage per hit, up to ##500%##. All stacks are lost upon missing.\n\nACE: ##$pro##\nPrecision Weapons ADS ##90%## faster.",
+				menu_tap_the_trigger = "Tap the Trigger",
+				menu_tap_the_trigger_desc = "BASIC: ##$basic##\nPrecision Weapons also gain ##+1%## Rate of Fire per stack of Point and Click, up to ##+50%##.\n\nACE: ##$pro##\nMaximum Rate of Fire Bonus increased to ##+100%##.",
+				menu_investment_returns = "Investment Returns",
+				menu_investment_returns_desc = "BASIC: ##$basic##\nYou gain ##an extra stack## of Point and Click when you kill an enemy.\n\nACE: ##$pro##\nYou gain ##another extra stack## of Point and Click when you kill an enemy with a Headshot.",
+				menu_this_machine = "This Machine",
+				menu_this_machine_desc = "BASIC: ##$basic##\nPrecision Weapons also gain ##+0.5%## Reload Speed per stack of Point and Click, up to ##+25%##.\n\nACE: ##$pro##\nMaximum Reload Speed Bonus increased to ##+50%##.",
+				menu_mulligan = "Mulligan",
+				menu_mulligan_desc = "BASIC: ##$basic##\nAfter missing, you gain a ##1-second## grace period where you still benefit from your Point and Click stacks. Killing an enemy during the grace period will prevent your stacks from being lost.\n\nACE: ##$pro##\nThe grace period is extended to ##1.5 seconds##.",
+				menu_magic_bullet = "Magic Bullet",
+				menu_magic_bullet_desc = "BASIC: ##$basic##\nKilling an enemy with a Headshot from a Precision Weapon adds ##1## bullet to your reserve ammunition.\n\nACE: ##$pro##\nThe bullet is added to your current Magazine instead of your reserves.",
+			
+
+				
 				--gunner
 				["menu_steady_grip_beta"] = "Spray & Pray",
 				["menu_steady_grip_beta_desc"] = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles gain ##+10%## Critical Hit chance.\n\nACE: ##$pro##\nYour ranged weapons can now ##pierce Body Armor.##",

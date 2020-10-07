@@ -352,8 +352,24 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 	return ray_res
 end
 
-function RaycastWeaponBase:reload_speed_multiplier()
-	local multiplier = 1
+function RaycastWeaponBase:fire_rate_multiplier(rof_mul)
+--the addition of the optional rof_mul argument is from cd
+	rof_mul = rof_mul or 1
+	if self:is_category("precision") then
+		local tap_the_trigger_data = managers.player:upgrade_value("point_and_click_rof_bonus",{0,0})
+		rof_mul = rof_mul * (1 + math.min(tap_the_trigger_data[1] * managers.player:get_property("current_point_and_click_stacks",0),tap_the_trigger_data[2]))
+	end
+	return rof_mul
+end
+
+function RaycastWeaponBase:reload_speed_multiplier(multiplier)
+	multiplier = multiplier or 1
+--optional multiplier argument is added from cd here as well
+
+	if self:is_category("precision") then
+		local this_machine_data = managers.player:upgrade_value("point_and_click_reload_bonus",{0,0})
+		multiplier = multiplier * (1 + math.min(this_machine_data[1] * managers.player:get_property("current_point_and_click_stacks",0),this_machine_data[2]))
+	end
 	
 	for _, category in ipairs(self:weapon_tweak_data().categories) do
 		multiplier = multiplier * managers.player:upgrade_value(category, "reload_speed_multiplier", 1)
@@ -370,6 +386,17 @@ function RaycastWeaponBase:reload_speed_multiplier()
 	multiplier = managers.modifiers:modify_value("WeaponBase:GetReloadSpeedMultiplier", multiplier)
 
 	return multiplier
+end
+
+function RaycastWeaponBase:_get_current_damage(dmg_mul)
+	local point_and_click_data = managers.player:upgrade_value("weapon","point_and_click_damage_bonus",{0,0})
+	local damage = self._damage
+	if self:is_category("precision") then 
+		damage = damage + math.min(point_and_click_data[1] * managers.player:get_property("current_point_and_click_stacks",0),point_and_click_data[2])
+	end
+	damage = damage * (dmg_mul or 1)
+	damage = damage * managers.player:temporary_upgrade_value("temporary", "combat_medic_damage_multiplier", 1)
+	return damage
 end
 
 function RaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoot_player, spread_mul, autohit_mul, suppr_mul)
@@ -759,8 +786,9 @@ function InstantBulletBase:calculate_crit(weapon_unit, user_unit)
 	return critical_hit
 end
 
-function RaycastWeaponBase:enter_steelsight_speed_multiplier()
-	local multiplier = 1
+function RaycastWeaponBase:enter_steelsight_speed_multiplier(multiplier)
+--the addition of the optional multiplier argument is from cd
+	multiplier = multiplier or 1 
 
 	for _, category in ipairs(self:weapon_tweak_data().categories) do
 		multiplier = multiplier * managers.player:upgrade_value(category, "enter_steelsight_speed_multiplier", 1)
