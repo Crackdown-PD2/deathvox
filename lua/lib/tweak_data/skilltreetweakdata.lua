@@ -138,6 +138,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		
 		--Enforcer
 		
+--TODO don't override far_away
 		self.skills.far_away = { --Point Blank
 			{
 				upgrades = {
@@ -165,10 +166,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		
 		--Gunner
 		
-		self.skills.steady_grip = { --Spray and Pray
+		self.skills.spray_and_pray = { --Spray and Pray
 			{
 				upgrades = {
-					"player_spray_and_pray_basic"
+					"weapon_spray_and_pray_basic"
 				},
 				cost = self.costs.hightier
 			},
@@ -178,78 +179,80 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_steady_grip_beta",
-			desc_id = "menu_steady_grip_beta_desc",
+			name_id = "menu_spray_and_pray",
+			desc_id = "menu_spray_and_pray_desc",
 			icon_xy = {
 				9,
 				11
 			}
 		}
 		
-		self.skills.fire_control = { --Shot Grouping
+		self.skills.shot_grouping = { --Shot Grouping
 			{
 				upgrades = {
-					"player_shotgrouping_basic"
+					"rapidfire_shotgrouping_basic"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"player_shotgrouping_aced"
+					"rapidfire_shotgrouping_aced"
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_fire_control_beta",
-			desc_id = "menu_fire_control_beta_desc",
+			name_id = "menu_shot_grouping",
+			desc_id = "menu_shot_grouping_desc",
 			icon_xy = {
 				9,
 				10
 			}
 		}
 		
-		self.skills.heavy_impact = { --Money Shot
+		self.skills.money_shot = { --Money Shot
 			{
 				upgrades = {
-					"player_moneyshot_rapid_fire_basic"
+					"weapon_moneyshot_rapid_fire_basic"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"player_moneyshot_rapid_fire_aced"
+					"weapon_moneyshot_rapid_fire_aced"
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_heavy_impact_beta",
-			desc_id = "menu_heavy_impact_beta_desc",
+			name_id = "menu_money_shot",
+			desc_id = "menu_money_shot_desc",
 			icon_xy = {
 				10,
 				1
 			}
 		}
 		
-		self.skills.shock_and_awe = { --Making Miracles
+		self.skills.making_miracles = { --Making Miracles
 			{
 				upgrades = {
-					"player_making_miracles_basic"
+					"weapon_making_miracles_basic",
+					"weapon_making_miracles_crit_cap_1"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"player_making_miracles_aced"
+					"weapon_making_miracles_aced",
+					"weapon_making_miracles_crit_cap_2"
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_shock_and_awe_beta",
-			desc_id = "menu_shock_and_awe_beta_desc",
+			name_id = "menu_making_miracles",
+			desc_id = "menu_making_miracles_desc",
 			icon_xy = {
 				10,
 				0
 			}
 		}
 			
-		self.skills.fast_fire = { --Close Enough
+		self.skills.close_enough = { --Close Enough
 			{
 				upgrades = {
 					"player_ricochet_rapid_fire_basic"
@@ -262,29 +265,29 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_fast_fire_beta",
-			desc_id = "menu_fast_fire_beta_desc",
+			name_id = "menu_close_enough",
+			desc_id = "menu_close_enough_desc",
 			icon_xy = {
 				10,
 				2
 			}
 		}
 		
-		self.skills.body_expertise = { --Prayers Answered
+		self.skills.prayers_answered = { --Prayers Answered
 			{
 				upgrades = {
-					"player_prayers_answered_basic"
+					"weapon_prayers_answered_basic"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"player_prayers_answered_aced"
+					"weapon_prayers_answered_aced"
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_body_expertise_beta",
-			desc_id = "menu_body_expertise_beta_desc",
+			name_id = "menu_prayers_answered",
+			desc_id = "menu_prayers_answered_desc",
 			icon_xy = {
 				10,
 				3
@@ -454,8 +457,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		
 		--Demolitions
 
-
-
+--skilltrees
 		self.trees[2] = {
 			skill = "mastermind",
 			name_id = "st_menu_dallas_marksman",
@@ -475,6 +477,29 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				{
 					"magic_bullet"
+				}
+			}
+		}
+		
+		self.trees[8] = { --gunner
+			skill = "technician",
+			name_id = "st_menu_wolf_gunner",
+			unlocked = true,
+			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
+			tiers = {
+				{
+					"spray_and_pray"
+				},
+				{
+					"money_shot",
+					"shot_grouping"
+				},
+				{
+					"close_enough",
+					"making_miracles"
+				},
+				{
+					"prayers_answered"
 				}
 			}
 		}

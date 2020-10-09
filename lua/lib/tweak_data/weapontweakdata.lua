@@ -2334,6 +2334,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Notes: Being the "training wheels" gun and having notably lower DPS than every other AR, 
 	--it received additional buffs in multiple areas to make it a viable comfort pick. 
 
+		self.amcar.primary_class = "rapidfire"
+		self.amcar.subclasses = {}
 		self.amcar.FIRE_MODE = "auto"
 		self.amcar.fire_mode_data = {
 			fire_rate = 0.11
@@ -2402,7 +2404,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 22
 	--Pickup: 8, 16
 	--Notes:
-		
+	
+		self.tecci.primary_class = "rapidfire"
+		self.tecci.subclasses = {}
 		self.tecci.FIRE_MODE = "auto"
 		self.tecci.fire_mode_data = {
 			fire_rate = 0.09
@@ -2477,7 +2481,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 10
 	--Pickup: 9, 18
 	--Notes:
-
+	
+		self.g36.primary_class = "rapidfire"
+		self.g36.subclasses = {}
 		self.g36.FIRE_MODE = "auto"
 		self.g36.fire_mode_data = {
 			fire_rate = 0.085
@@ -2548,6 +2554,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 8, 16
 	--Notes:
 
+
+		self.s552.primary_class = "rapidfire"
+		self.s552.subclasses = {}
 		self.s552.FIRE_MODE = "auto"
 		self.s552.fire_mode_data = {
 			fire_rate = 0.084
@@ -2618,6 +2627,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 8, 16
 	--Notes:
 
+		self.famas.primary_class = "rapidfire"
+		self.famas.subclasses = {}
 		self.famas.FIRE_MODE = "auto"
 		self.famas.fire_mode_data = {
 			fire_rate = 0.06
@@ -2692,6 +2703,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Notes: Moved to a slower-firing, harder-hitting category upon community request.
 	--NOTE: Suppressed.
 
+		self.asval.primary_class = "rapidfire"
+		self.asval.subclasses = {"quiet"}
 		self.asval.FIRE_MODE = "auto"
 		self.asval.categories = {
 			"assault_rifle",
@@ -2761,6 +2774,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 6, 10
 	--Notes: 
 
+		self.new_m4.primary_class = "rapidfire"
+		self.new_m4.subclasses = {}
 		self.new_m4.FIRE_MODE = "auto"
 		self.new_m4.fire_mode_data = {
 			fire_rate = 0.1
@@ -2840,6 +2855,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 6, 10
 	--Notes: 
 
+		self.ak74.primary_class = "rapidfire"
+		self.ak74.subclasses = {}
 		self.ak74.FIRE_MODE = "auto"
 		self.ak74.fire_mode_data = {
 			fire_rate = 0.092
@@ -2910,6 +2927,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 6, 10
 	--Notes: Was previously a Heavy AR.
 
+		self.flint.primary_class = "rapidfire"
+		self.flint.subclasses = {}
 		self.flint.FIRE_MODE = "auto"
 		self.flint.fire_mode_data = {
 			fire_rate = 0.092
@@ -2980,6 +2999,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 6, 10
 	--Notes:
 			
+		self.ak5.primary_class = "rapidfire"
+		self.ak5.subclasses = {}
 		self.ak5.FIRE_MODE = "auto"
 		self.ak5.fire_mode_data = {
 			fire_rate = 0.085
@@ -3051,6 +3072,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 6, 10
 	--Notes:
 			
+		self.l85a2.primary_class = "rapidfire"
+		self.l85a2.subclasses = {}
 		self.l85a2.FIRE_MODE = "auto"
 		self.l85a2.fire_mode_data = {
 			fire_rate = 0.083
@@ -3126,6 +3149,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 6, 10
 	--Notes:
 
+		self.aug.primary_class = "rapidfire"
+		self.aug.subclasses = {}
 		self.aug.FIRE_MODE = "auto"
 		self.aug.fire_mode_data = {
 			fire_rate = 0.08
@@ -3196,6 +3221,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 14
 	--Pickup: 6, 10
 			
+		self.komodo.primary_class = "rapidfire"
+		self.komodo.subclasses = {}
 		self.komodo.FIRE_MODE = "auto"
 		self.komodo.fire_mode_data = {
 			fire_rate = 0.075
@@ -3266,6 +3293,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 6, 10
 	--Notes:
 			
+		self.galil.primary_class = "rapidfire"
+		self.galil.subclasses = {}
 		self.galil.FIRE_MODE = "auto"
 		self.galil.fire_mode_data = {
 			fire_rate = 0.071
@@ -3338,6 +3367,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 6, 10
 	--Notes:
 
+		self.vhs.primary_class = "rapidfire"
+		self.vhs.subclasses = {}
 		self.vhs.FIRE_MODE = "auto"
 		self.vhs.fire_mode_data = {
 			fire_rate = 0.07
@@ -3413,6 +3444,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 6, 10
 	--Notes:
 
+		self.corgi.primary_class = "rapidfire"
+		self.corgi.subclasses = {}
 		self.corgi.FIRE_MODE = "auto"
 		self.corgi.fire_mode_data = {
 			fire_rate = 0.07
@@ -3485,6 +3518,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 20
 	--Pickup: 4, 6
 
+		self.akm.primary_class = "rapidfire"
+		self.akm.subclasses = {}
 		self.akm.FIRE_MODE = "auto"
 		self.akm.fire_mode_data = {
 			fire_rate = 0.107
@@ -3556,6 +3591,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 6
 	--Notes:
 
+		self.akm_gold.primary_class = "rapidfire"
+		self.akm_gold.subclasses = {}
 		self.akm_gold.FIRE_MODE = "auto"
 		self.akm_gold.fire_mode_data = {
 			fire_rate = 0.107
@@ -3626,6 +3663,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 6
 	--Notes:
 
+		self.scar.primary_class = "rapidfire"
+		self.scar.subclasses = {}
 		self.scar.FIRE_MODE = "auto"
 		self.scar.fire_mode_data = {
 			fire_rate = 0.098
@@ -3696,6 +3735,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 6
 	--Notes:
 
+		self.g3.primary_class = "rapidfire"
+		self.g3.subclasses = {}
 		self.g3.FIRE_MODE = "auto"
 		self.g3.fire_mode_data = {
 			fire_rate = 0.092
@@ -3767,6 +3808,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 6
 	--Notes:
 
+		self.fal.primary_class = "rapidfire"
+		self.fal.subclasses = {}
 		self.fal.FIRE_MODE = "auto"
 		self.fal.fire_mode_data = {
 			fire_rate = 0.086
@@ -3837,6 +3880,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 6
 	--Notes:
 
+		self.m16.primary_class = "rapidfire"
+		self.m16.subclasses = {}
 		self.m16.FIRE_MODE = "auto"
 		self.m16.fire_mode_data = {
 			fire_rate = 0.07
@@ -4368,6 +4413,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1, 2
 	--Notes:
 
+		self.b682.primary_class = "shotgun"
+		self.b682.subclasses = {}
 		self.b682.FIRE_MODE = "single"
 		self.b682.fire_mode_data = {
 			fire_rate = 0.12
@@ -4446,6 +4493,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1, 2
 	--Notes:
 
+		self.huntsman.primary_class = "shotgun"
+		self.huntsman.subclasses = {}
 		self.huntsman.FIRE_MODE = "single"
 		self.huntsman.fire_mode_data = {
 			fire_rate = 0.12
@@ -4524,6 +4573,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1, 2
 	--Notes:
 
+		self.boot.primary_class = "shotgun"
+		self.boot.subclasses = {}
 		self.boot.FIRE_MODE = "single"
 		self.boot.fire_mode_data = {
 			fire_rate = 0.75
@@ -4628,6 +4679,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 2, 3
 	--Notes:
 
+		self.r870.primary_class = "shotgun"
+		self.r870.subclasses = {}
 		self.r870.FIRE_MODE = "single"
 		self.r870.fire_mode_data = {
 			fire_rate = 0.575
@@ -4709,6 +4762,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 2, 3
 	--Notes:
 
+		self.ksg.primary_class = "shotgun"
+		self.ksg.subclasses = {}
 		self.ksg.FIRE_MODE = "single"
 		self.ksg.fire_mode_data = {
 			fire_rate = 0.575
@@ -4790,6 +4845,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 5
 	--Notes:
 
+		self.spas12.primary_class = "shotgun"
+		self.spas12.subclasses = {}
 		self.spas12.FIRE_MODE = "single"
 		self.spas12.fire_mode_data = {
 			fire_rate = 0.2
@@ -4867,6 +4924,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 5
 	--Notes:
 
+		self.benelli.primary_class = "shotgun"
+		self.benelli.subclasses = {}
 		self.benelli.FIRE_MODE = "single"
 		self.benelli.fire_mode_data = {
 			fire_rate = 0.13986013986
@@ -4956,6 +5015,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 5, 6
 	--Notes:
 
+		self.aa12.primary_class = "shotgun"
+		self.aa12.subclasses = {}
 		self.aa12.FIRE_MODE = "auto"
 		self.aa12.fire_mode_data = {
 			fire_rate = 0.2
@@ -5030,6 +5091,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 5, 6
 	--Notes:
 			
+		self.saiga.primary_class = "shotgun"
+		self.saiga.subclasses = {}
 		self.saiga.FIRE_MODE = "auto"
 		self.saiga.fire_mode_data = {
 			fire_rate = 0.18
@@ -5124,6 +5187,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Notes: Armor Piercing
 
 
+		self.contraband.primary_class = "precision"
+		self.contraband.subclasses = {}
 		self.contraband.FIRE_MODE = "single"
 		self.contraband.categories = {
 			"assault_rifle",
@@ -5199,6 +5264,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 0.1, 0.1
 	--Notes: Area Damage
 
+		self.contraband_m203.primary_class = "specialist"
+		self.contraband_m203.subclasses = {}
 		self.contraband_m203.FIRE_MODE = "single"
 		self.contraband_m203.fire_mode_data = {
 			fire_rate = 0.75
@@ -5277,6 +5344,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 3, 4
 	--Notes: Armor Piercing
 
+		self.sub2000.primary_class = "precision"
+		self.sub2000.subclasses = {}
 		self.sub2000.FIRE_MODE = "single"
 		self.sub2000.fire_mode_data = {
 			fire_rate = 0.085
@@ -5349,6 +5418,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 3, 4
 	--Notes: Armor Piercing
 
+		self.new_m14.primary_class = "precision"
+		self.new_m14.subclasses = {}
 		self.new_m14.FIRE_MODE = "single"
 		self.new_m14.fire_mode_data = {
 			fire_rate = 0.085
@@ -5422,6 +5493,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 3, 4
 	--Notes: Armor Piercing
 	
+		self.ching.primary_class = "precision"
+		self.ching.subclasses = {}
 		self.ching.FIRE_MODE = "single"
 		self.ching.fire_mode_data = {
 			fire_rate = 0.1
@@ -5501,6 +5574,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 43
 	--Pickup: 2.5, 3
 
+		self.tti.primary_class = "precision"
+		self.tti.subclasses = {}
 		self.tti.FIRE_MODE = "single"
 		self.tti.fire_mode_data = {
 			fire_rate = 0.4
@@ -5581,6 +5656,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 2.5, 3
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+		self.wa2000.primary_class = "precision"
+		self.wa2000.subclasses = {}
 		self.wa2000.FIRE_MODE = "single"
 		self.wa2000.fire_mode_data = {
 			fire_rate = 0.4
@@ -5661,6 +5738,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 2.5, 3
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+		self.siltstone.primary_class = "precision"
+		self.siltstone.subclasses = {}
 		self.siltstone.FIRE_MODE = "single"
 		self.siltstone.fire_mode_data = {
 			fire_rate = 0.4
@@ -5743,6 +5822,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 2, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+		self.msr.primary_class = "precision"
+		self.msr.subclasses = {}
 		self.msr.FIRE_MODE = "single"
 		self.msr.fire_mode_data = {
 			fire_rate = 1
@@ -5824,6 +5905,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 3, 4
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+		self.winchester1874.primary_class = "precision"
+		self.winchester1874.subclasses = {}
 		self.winchester1874.FIRE_MODE = "single"
 		self.winchester1874.fire_mode_data = {
 			fire_rate = 0.7
@@ -5910,6 +5993,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+		self.model70.primary_class = "precision"
+		self.model70.subclasses = {}
 		self.model70.FIRE_MODE = "single"
 		self.model70.fire_mode_data = {
 			fire_rate = 1
@@ -5991,6 +6076,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+		self.r93.primary_class = "precision"
+		self.r93.subclasses = {}
 		self.r93.FIRE_MODE = "single"
 		self.r93.fire_mode_data = {
 			fire_rate = 1.2
@@ -6071,6 +6158,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+		self.mosin.primary_class = "precision"
+		self.mosin.subclasses = {}
 		self.mosin.FIRE_MODE = "single"
 		self.mosin.fire_mode_data = {
 			fire_rate = 1
@@ -6150,6 +6239,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+		self.desertfox.primary_class = "precision"
+		self.desertfox.subclasses = {}
 		self.desertfox.FIRE_MODE = "single"
 		self.desertfox.fire_mode_data = {
 			fire_rate = 1
@@ -6229,6 +6320,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 0.25, 0.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+	self.m95.primary_class = "heavy"
+	self.m95.subclasses = {}
 	self.m95.FIRE_MODE = "single"
 		self.m95.fire_mode_data = {
 			fire_rate = 1.5
@@ -6666,6 +6759,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 0.5, 0.6
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+		self.rpk.primary_class = "heavy"
+		self.rpk.subclasses = {}
 		self.rpk.FIRE_MODE = "auto"
 		self.rpk.fire_mode_data = {
 			fire_rate = 0.08
@@ -6740,6 +6835,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 0.4, 0.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+		self.hk21.primary_class = "heavy"
+		self.hk21.subclasses = {}
 		self.hk21.FIRE_MODE = "auto"
 		self.hk21.fire_mode_data = {
 			fire_rate = 0.083
@@ -6814,6 +6911,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 0.4, 0.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+		self.par.primary_class = "heavy"
+		self.par.subclasses = {}
 		self.par.FIRE_MODE = "auto"
 		self.par.fire_mode_data = {
 			fire_rate = 0.066
@@ -6888,6 +6987,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 0.5, 0.6
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+		self.m249.primary_class = "heavy"
+		self.m249.subclasses = {}
 		self.m249.FIRE_MODE = "auto"
 		self.m249.fire_mode_data = {
 			fire_rate = 0.066
@@ -6962,6 +7063,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 0.4, 0.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+		self.mg42.primary_class = "heavy"
+		self.mg42.subclasses = {}
 		self.mg42.FIRE_MODE = "auto"
 		self.mg42.fire_mode_data = {
 			fire_rate = 0.05
@@ -7039,6 +7142,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 0, 0
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 		
+		self.shuno.primary_class = "heavy"
+		self.shuno.subclasses = {}
 		self.shuno.FIRE_MODE = "auto"
 		self.shuno.fire_mode_data = {
 			fire_rate = 0.03
@@ -7114,6 +7219,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 0, 0
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+		self.m134.primary_class = "heavy"
+		self.m134.subclasses = {}
 		self.m134.FIRE_MODE = "auto"
 		self.m134.fire_mode_data = {
 			fire_rate = 0.02
@@ -7353,6 +7460,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 5
 	--Notes: 
 
+		self.ppk.primary_class = "precision"
+		self.ppk.subclasses = {}
 		self.ppk.FIRE_MODE = "single"
 		self.ppk.fire_mode_data = {
 			fire_rate = 0.125
@@ -7422,7 +7531,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 4
 	--Pickup: 3, 6
 	--Notes: 
-
+		
+		
+		self.glock_17.primary_class = "precision"
+		self.glock_17.subclasses = {}
 		self.glock_17.fire_mode_data = {
 			fire_rate = 0.125
 		}
@@ -7497,6 +7609,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 3, 6
 	--Notes: 
 
+		self.legacy.primary_class = "precision"
+		self.legacy.subclasses = {}
 		self.legacy.FIRE_MODE = "single"
 		self.legacy.fire_mode_data = {
 			fire_rate = 0.11
@@ -7567,6 +7681,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 3, 6
 	--Notes: 
 
+		self.g26.primary_class = "precision"
+		self.g26.subclasses = {}
 		self.g26.FIRE_MODE = "single"
 		self.g26.fire_mode_data = {
 			fire_rate = 0.125
@@ -7637,6 +7753,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 3, 6
 	--Notes: 
 
+		self.shrew.primary_class = "precision"
+		self.shrew.subclasses = {}
 		self.shrew.FIRE_MODE = "single"
 		self.shrew.fire_mode_data = {
 			fire_rate = 0.125
@@ -7712,6 +7830,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 3, 6
 	--Notes: 
 
+		self.b92fs.primary_class = "precision"
+		self.b92fs.subclasses = {}
 		self.b92fs.FIRE_MODE = "single"
 		self.b92fs.fire_mode_data = {
 			fire_rate = 0.125
@@ -7785,6 +7905,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 2, 5
 	--Notes: 
 
+		self.colt_1911.primary_class = "precision"
+		self.colt_1911.subclasses = {}
 		self.colt_1911.FIRE_MODE = "single"
 		self.colt_1911.fire_mode_data = {
 			fire_rate = 0.166
@@ -7855,6 +7977,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 2, 5
 	--Notes: 
 
+		self.packrat.primary_class = "precision"
+		self.packrat.subclasses = {}
 		self.packrat.FIRE_MODE = "single"
 		self.packrat.fire_mode_data = {
 			fire_rate = 0.166
@@ -7925,6 +8049,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 2, 5
 	--Notes: 
 
+		self.p226.primary_class = "precision"
+		self.p226.subclasses = {}
 		self.p226.FIRE_MODE = "single"
 		self.p226.fire_mode_data = {
 			fire_rate = 0.166
@@ -7995,6 +8121,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 2, 5
 	--Notes: 
 	
+		self.c96.primary_class = "precision"
+		self.c96.subclasses = {}
 		self.c96.FIRE_MODE = "single"
 		self.c96.fire_mode_data = {
 			fire_rate = 0.166
@@ -8065,6 +8193,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 2, 5
 	--Notes: 
 
+		self.usp.primary_class = "precision"
+		self.usp.subclasses = {}
 		self.usp.FIRE_MODE = "single"
 		self.usp.fire_mode_data = {
 			fire_rate = 0.166
@@ -8140,6 +8270,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 2, 5
 	--Notes: 
 			
+		self.hs2000.primary_class = "precision"
+		self.hs2000.subclasses = {}
 		self.hs2000.FIRE_MODE = "single"
 		self.hs2000.fire_mode_data = {
 			fire_rate = 0.166
@@ -8210,6 +8342,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 2, 5
 	--Notes: 
 
+		self.g22c.primary_class = "precision"
+		self.g22c.subclasses = {}
 		self.g22c.FIRE_MODE = "single"
 		self.g22c.fire_mode_data = {
 			fire_rate = 0.166
@@ -8288,6 +8422,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 0.5, 0.75
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+		self.lemming.primary_class = "precision"
+		self.lemming.subclasses = {}
 		self.lemming.FIRE_MODE = "single"
 		self.lemming.fire_mode_data = {
 			fire_rate = 0.1
@@ -8362,6 +8498,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1.5, 3
 	--Notes: Armor Piercing
 
+		self.deagle.primary_class = "precision"
+		self.deagle.subclasses = {}
 		self.deagle.FIRE_MODE = "single"
 		self.deagle.fire_mode_data = {
 			fire_rate = 0.25
@@ -8432,6 +8570,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1.5, 3
 	--Notes: Armor Piercing
 
+		self.breech.primary_class = "precision"
+		self.breech.subclasses = {}
 		self.breech.FIRE_MODE = "single"
 		self.breech.fire_mode_data = {
 			fire_rate = 0.166
@@ -8502,6 +8642,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1.5, 3
 	--Notes: Armor Piercing
 
+		self.sparrow.primary_class = "precision"
+		self.sparrow.subclasses = {}
 		self.sparrow.FIRE_MODE = "single"
 		self.sparrow.fire_mode_data = {
 			fire_rate = 0.25
@@ -8573,6 +8715,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1.5, 3
 	--Notes: Armor Piercing
 
+		self.pl14.primary_class = "precision"
+		self.pl14.subclasses = {}
 		self.pl14.FIRE_MODE = "single"
 		self.pl14.fire_mode_data = {
 			fire_rate = 0.25
@@ -8646,6 +8790,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1, 2
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 			
+		self.mateba.primary_class = "precision"
+		self.mateba.subclasses = {}
 		self.mateba.FIRE_MODE = "single"
 		self.mateba.fire_mode_data = {
 			fire_rate = 0.166
@@ -8717,6 +8863,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1, 2
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+		self.new_raging_bull.primary_class = "precision"
+		self.new_raging_bull.subclasses = {}
 		self.new_raging_bull.FIRE_MODE = "single"
 		self.new_raging_bull.fire_mode_data = {
 			fire_rate = 0.166
@@ -8788,6 +8936,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1, 2
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+		self.chinchilla.primary_class = "precision"
+		self.chinchilla.subclasses = {}
 		self.chinchilla.FIRE_MODE = "single"
 		self.chinchilla.fire_mode_data = {
 			fire_rate = 0.166
@@ -8859,6 +9009,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1, 2
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 
+		self.peacemaker.primary_class = "rapidfire"
+		self.peacemaker.subclasses = {"heavy"}
 		self.peacemaker.FIRE_MODE = "single"
 		self.peacemaker.fire_mode_data = {
 			fire_rate = 0.25
@@ -8961,6 +9113,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 9, 18
 	--Notes: 
 
+		self.glock_18c.primary_class = "rapidfire"
+		self.glock_18c.subclasses = {}
 		self.glock_18c.FIRE_MODE = "auto"
 		self.glock_18c.fire_mode_data = {
 			fire_rate = 0.066
@@ -9077,6 +9231,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 8, 16
 	--Notes: Formerly a Heavy SMG
 
+		self.coal.primary_class = "rapidfire"
+		self.coal.subclasses = {}
 		self.coal.FIRE_MODE = "auto"
 		self.coal.fire_mode_data = {
 			fire_rate = 0.092
@@ -9153,6 +9309,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 8, 16
 	--Notes: 
 
+		self.uzi.primary_class = "rapidfire"
+		self.uzi.subclasses = {}
 		self.uzi.FIRE_MODE = "auto"
 		self.uzi.fire_mode_data = {
 			fire_rate = 0.086
@@ -9225,6 +9383,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 8, 16
 	--Notes: 
 
+		self.shepheard.primary_class = "rapidfire"
+		self.shepheard.subclasses = {}
 		self.shepheard.FIRE_MODE = "auto"
 		self.shepheard.fire_mode_data = {
 			fire_rate = 0.08
@@ -9301,6 +9461,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 8, 16
 	--Notes: 
 
+		self.new_mp5.primary_class = "rapidfire"
+		self.new_mp5.subclasses = {}
 		self.new_mp5.FIRE_MODE = "auto"
 		self.new_mp5.fire_mode_data = {
 			fire_rate = 0.08
@@ -9373,6 +9535,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 8, 16
 	--Notes: 
 
+		self.tec9.primary_class = "rapidfire"
+		self.tec9.subclasses = {}
 		self.tec9.FIRE_MODE = "auto"
 		self.tec9.fire_mode_data = {
 			fire_rate = 0.067
@@ -9445,6 +9609,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 8, 16
 	--Notes: 
 
+		self.mp9.primary_class = "rapidfire"
+		self.mp9.subclasses = {}
 		self.mp9.FIRE_MODE = "auto"
 		self.mp9.fire_mode_data = {
 			fire_rate = 0.063
@@ -9522,6 +9688,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 8, 16
 	--Notes: 
 
+		self.scorpion.primary_class = "rapidfire"
+		self.scorpion.subclasses = {}
 		self.scorpion.FIRE_MODE = "auto"
 		self.scorpion.fire_mode_data = {
 			fire_rate = 0.06
@@ -9594,6 +9762,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 8, 16
 	--Notes: 
 
+		self.baka.primary_class = "rapidfire"
+		self.baka.subclasses = {}
 		self.baka.FIRE_MODE = "auto"
 		self.baka.fire_mode_data = {
 			fire_rate = 0.05
@@ -9674,6 +9844,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 6, 10
 	--Notes: 
 
+		self.olympic.primary_class = "rapidfire"
+		self.olympic.subclasses = {}
 		self.olympic.FIRE_MODE = "auto"
 		self.olympic.fire_mode_data = {
 			fire_rate = 0.088
@@ -9731,6 +9903,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 6, 10
 	--Notes: 
 
+		self.m1928.primary_class = "rapidfire"
+		self.m1928.subclasses = {}
 		self.m1928.FIRE_MODE = "auto"
 		self.m1928.fire_mode_data = {
 			fire_rate = 0.083
@@ -9807,6 +9981,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 6, 10
 	--Notes: 
 
+		self.sr2.primary_class = "rapidfire"
+		self.sr2.subclasses = {}
 		self.sr2.FIRE_MODE = "auto"
 		self.sr2.fire_mode_data = {
 			fire_rate = 0.08
@@ -9883,6 +10059,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 6, 10
 	--Notes: 
 
+		self.p90.primary_class = "rapidfire"
+		self.p90.subclasses = {}
 		self.p90.FIRE_MODE = "auto"
 		self.p90.fire_mode_data = {
 			fire_rate = 0.066
@@ -9954,6 +10132,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 6, 10
 	--Notes: 
 
+		self.mp7.primary_class = "rapidfire"
+		self.mp7.subclasses = {}
 		self.mp7.FIRE_MODE = "auto"
 		self.mp7.fire_mode_data = {
 			fire_rate = 0.063
@@ -10025,6 +10205,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 6, 10
 	--Notes: 
 
+		self.mac10.primary_class = "rapidfire"
+		self.mac10.subclasses = {}
 		self.mac10.FIRE_MODE = "auto"
 		self.mac10.fire_mode_data = {
 			fire_rate = 0.06
@@ -10096,6 +10278,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 6, 10
 	--Notes: 
 
+		self.polymer.primary_class = "rapidfire"
+		self.polymer.subclasses = {}
 		self.polymer.FIRE_MODE = "auto"
 		self.polymer.fire_mode_data = {
 			fire_rate = 0.05
@@ -10172,6 +10356,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 6, 10
 	--Notes: 
 
+		self.cobray.primary_class = "rapidfire"
+		self.cobray.subclasses = {}
 		self.cobray.FIRE_MODE = "auto"
 		self.cobray.fire_mode_data = {
 			fire_rate = 0.05
@@ -10251,6 +10437,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 6
 	--Notes: Formerly a Light SMG.
 
+		self.sterling.primary_class = "rapidfire"
+		self.sterling.subclasses = {}
 		self.sterling.FIRE_MODE = "auto"
 		self.sterling.fire_mode_data = {
 			fire_rate = 0.11
@@ -10322,6 +10510,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 6
 	--Notes: 
 
+		self.erma.primary_class = "rapidfire"
+		self.erma.subclasses = {}
 		self.erma.FIRE_MODE = "auto"
 		self.erma.fire_mode_data = {
 			fire_rate = 0.1
@@ -10392,6 +10582,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 6
 	--Notes: 
 
+		self.m45.primary_class = "rapidfire"
+		self.m45.subclasses = {}
 		self.m45.FIRE_MODE = "auto"
 		self.m45.fire_mode_data = {
 			fire_rate = 0.1
@@ -10462,6 +10654,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 6
 	--Notes: 
 
+		self.schakal.primary_class = "rapidfire"
+		self.schakal.subclasses = {}
 		self.schakal.FIRE_MODE = "auto"
 		self.schakal.fire_mode_data = {
 			fire_rate = 0.092
@@ -10538,6 +10732,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 6
 	--Notes: 
 
+		self.hajk.primary_class = "rapidfire"
+		self.hajk.subclasses = {}
 		self.hajk.FIRE_MODE = "auto"
 		self.hajk.fire_mode_data = {
 			fire_rate = 0.08
@@ -10614,6 +10810,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 6
 	--Notes: 
 
+		self.akmsu.primary_class = "rapidfire"
+		self.akmsu.subclasses = {}
 		self.akmsu.FIRE_MODE = "auto"
 		self.akmsu.fire_mode_data = {
 			fire_rate = 0.073
@@ -10688,6 +10886,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1, 2
 	--Notes: 
 
+		self.coach.primary_class = "shotgun"
+		self.coach.subclasses = {}
 		self.coach.FIRE_MODE = "single"
 		self.coach.fire_mode_data = {
 			fire_rate = 0.35294117647 
@@ -10770,6 +10970,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 2, 3
 	--Notes: 
 
+		self.m37.primary_class = "shotgun"
+		self.m37.subclasses = {}
 		self.m37.FIRE_MODE = "single"
 		self.m37.fire_mode_data = {
 			fire_rate = 0.57692307692 
@@ -10855,6 +11057,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 2, 3
 	--Notes: 
 
+		self.serbu.primary_class = "shotgun"
+		self.serbu.subclasses = {}
 		self.serbu.FIRE_MODE = "single"
 		self.serbu.fire_mode_data = {
 			fire_rate = 0.375
@@ -10926,6 +11130,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 5
 	--Notes: 
 
+		self.rota.primary_class = "shotgun"
+		self.rota.subclasses = {}
 		self.rota.FIRE_MODE = "single"
 		self.rota.fire_mode_data = {
 			fire_rate = 0.18
@@ -11000,6 +11206,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 0.5, 1
 	--Notes: 
 
+		self.judge.primary_class = "shotgun"
+		self.judge.subclasses = {}
 		self.judge.FIRE_MODE = "single"
 		self.judge.fire_mode_data = {
 			fire_rate = 0.12
@@ -11078,6 +11286,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 5, 6
 	--Notes: 
 
+		self.basset.primary_class = "shotgun"
+		self.basset.subclasses = {}
 		self.basset.FIRE_MODE = "auto"
 		self.basset.fire_mode_data = {
 			fire_rate = 0.2
@@ -11151,6 +11361,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 5
 	--Notes: 
 
+		self.striker.primary_class = "shotgun"
+		self.striker.subclasses = {}
 		self.striker.FIRE_MODE = "single"
 		self.striker.fire_mode_data = {
 			fire_rate = 0.14

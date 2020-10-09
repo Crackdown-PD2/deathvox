@@ -2,10 +2,23 @@
 
 Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_data)
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
-	--weapon archetype categories
+	--weapon classification categories
+		self.values.rapidfire = self.values.rapidfire or {}
+		self.values.class_shotgun = self.values.class_shotgun or {}
 		self.values.precision = self.values.precision or {}
 		self.values.heavy = self.values.heavy or {}
-	
+		self.values.specialist = self.values.specialist or {}
+		self.values.class_saw = self.values.class_saw or {}
+		self.values.class_grenade = self.values.class_grenade or {}
+		self.values.class_throwing = self.values.class_throwing or {}
+		self.values.class_melee = self.values.class_melee or {} 
+	--weapon subclass categories
+		self.values.subclass_poison = self.values.subclass_poison or {}
+		self.values.subclass_quiet = self.values.subclass_quiet or {}
+		self.values.subclass_areadenial = self.values.subclass_areadenial or {}
+		--todo make these consistent with the names in the converter script
+		
+		
 		--Boss
 		
 		--Marksman
@@ -46,7 +59,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		self.values.precision.enter_steelsight_speed_multiplier = { 
-			0.9 --was 2 for vanilla upgrade
+			0.1 --was 2 for vanilla upgrade
 		}
 		
 		self.definitions.weapon_tap_the_trigger_basic = {
@@ -164,7 +177,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		self.values.weapon.magic_bullet = {
-			1,2 --these don't actually mean anything; i plan to use upgrade_level() instead or whatever
+			1,1 --these don't actually mean anything; i plan to use upgrade_level() instead or whatever
 		}
 		
 	
@@ -210,73 +223,76 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		--Gunner
 		
-		self.values.player.spray_and_pray_basic = {
+		self.values.rapidfire.enter_steelsight_speed_multiplier = {
 			0.1
 		}
 		
-		self.definitions.player_spray_and_pray_basic = {
+		self.definitions.weapon_spray_and_pray_basic = {
 			name_id = "menu_spray_and_pray_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "spray_and_pray_basic",
-				category = "player"
+				upgrade = "enter_steelsight_speed_multiplier",
+				category = "rapidfire"
 			}
 		}
 		
-		self.values.player.money_shot = {
-			true
+		self.values.weapon.money_shot = {
+			{
+				1, --100% damage
+				250 --over 2.5 meters
+			}
 		}
 		
-		self.values.player.money_shot_aced = {
+		self.values.weapon.money_shot_aced = {
 			1.5
 		}
 			
-		self.definitions.player_moneyshot_rapid_fire_basic = {
+		self.definitions.weapon_moneyshot_rapid_fire_basic = {
 			name_id = "menu_moneyshot_rapid_fire_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "money_shot",
-				category = "player"
+				category = "weapon"
 			}
 		}
 					
-		self.definitions.player_moneyshot_rapid_fire_aced = {
+		self.definitions.weapon_moneyshot_rapid_fire_aced = {
 			name_id = "menu_moneyshot_rapid_fire_aced",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "money_shot_aced",
-				category = "player"
+				category = "weapon"
 			}
 		}
 		
-		self.values.player.shotgrouping_aced = { 
-			true
+		self.values.rapidfire.shotgrouping_aced = { 
+			14 --accuracy index addend
 		}
 		
-		self.values.player.shotgrouping_basic = { 
-			1.9
+		self.values.rapidfire.enter_steelsight_speed_multiplier = { 
+			0.1
 		}
 		
-		self.definitions.player_shotgrouping_basic = {
+		self.definitions.rapidfire_shotgrouping_basic = {
 			name_id = "menu_shotgrouping_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "shotgrouping_basic",
-				category = "player"
+				upgrade = "enter_steelsight_speed_multiplier",
+				category = "rapidfire"
 			}
 		}
 					
-		self.definitions.player_shotgrouping_aced = {
+		self.definitions.rapidfire_shotgrouping_aced = {
 			name_id = "menu_shotgrouping_aced",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "shotgrouping_aced",
-				category = "player"
+				category = "rapidfire"
 			}
 		}
 	
@@ -308,63 +324,92 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
-		self.values.player.making_miracles_basic = {
+		
+		
+		
+		self.values.weapon.making_miracles_basic = {
+			{
+				0.01, --crit chance per stack
+				4 --duration
+			}
+		}
+		
+		self.values.weapon.making_miracles_crit_cap = {
+			0.1,
+			0.2
+		}
+		
+		self.values.weapon.making_miracles_aced = {
 			true
 		}
 		
-		self.values.player.making_miracles_aced = {
-			true
-		}
-		
-		self.definitions.player_making_miracles_basic = {
+		self.definitions.weapon_making_miracles_basic = {
 			name_id = "menu_making_miracles_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "making_miracles_basic",
-				category = "player"
+				category = "weapon"
 			}
 		}
 		
-		self.definitions.player_making_miracles_aced = {
+		self.definitions.weapon_making_miracles_aced = {
 			name_id = "menu_making_miracles_aced",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "making_miracles_aced",
-				category = "player"
+				category = "weapon"
 			}
 		}
 		
-		self.values.player.prayers_answered_basic = {
-			0.1
+		self.definitions.weapon_making_miracles_crit_cap_1 = {
+			name_id = "menu_making_miracles_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "making_miracles_crit_cap",
+				category = "weapon"
+			}
 		}
 		
-		self.definitions.player_prayers_answered_basic = {
+		self.definitions.weapon_making_miracles_crit_cap_2 = {
+			name_id = "menu_making_miracles_aced",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "making_miracles_crit_cap",
+				category = "weapon"
+			}
+		}
+		
+		
+		
+		
+		self.values.weapon.prayers_answered = {
+			0.1,
+			0.2
+		}
+		
+		self.definitions.weapon_prayers_answered_basic = {
 			name_id = "menu_prayers_answered_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "prayers_answered_basic",
-				category = "player"
+				upgrade = "prayers_answered",
+				category = "weapon"
 			}
 		}
 		
-		self.values.player.prayers_answered_aced = {
-			0.1
-		}
-		
-		self.definitions.player_prayers_answered_aced = {
+		self.definitions.weapon_prayers_answered_aced = {
 			name_id = "menu_prayers_answered_aced",
 			category = "feature",
 			upgrade = {
-				value = 1,
-				upgrade = "prayers_answered_aced",
-				category = "player"
+				value = 2,
+				upgrade = "prayers_answered",
+				category = "weapon"
 			}
 		}
-		
-		
 		
 		--Engineer
 		self.definitions.player_digging_in_deploy_time = {

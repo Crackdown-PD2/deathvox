@@ -11,8 +11,8 @@ function NewRaycastWeaponBase:conditional_accuracy_addend(current_state)
 	
 	if not current_state:in_steelsight() then
 		index = index + pm:upgrade_value("player", "hip_fire_accuracy_inc", 0)
-	elseif has_category and self:is_category("assault_rifle", "smg", "rapidfire") and managers.player:player_unit() and managers.player:has_category_upgrade("player", "shotgrouping_aced") then
-		index = index + 14
+	elseif has_category and self:is_weapon_class("rapidfire") and pm:player_unit() then 
+		index = index + pm:upgrade_value("rapidfire","shotgrouping_aced",0)
 	end
 
 	if self:is_single_shot() and self:is_category("assault_rifle", "smg", "snp") then
@@ -59,9 +59,7 @@ function NewRaycastWeaponBase:enter_steelsight_speed_multiplier()
 		
 	local has_category = self._unit and alive(self._unit) and not self._unit:base().thrower_unit and self._unit:base().is_category
 	
-	if has_category and self:is_category("assault_rifle", "smg", "rapidfire") then
-		multiplier = multiplier * managers.player:upgrade_value("player", "shotgrouping_basic", 0)
-	end
-
+	multiplier = multiplier * managers.player:upgrade_value(self:get_weapon_class() or "","enter_steelsight_speed_multiplier",1)
+	
 	return self:_convert_add_to_mul(multiplier)
 end

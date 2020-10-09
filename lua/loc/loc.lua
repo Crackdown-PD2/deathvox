@@ -67,18 +67,18 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 
 				
 				--gunner
-				["menu_steady_grip_beta"] = "Spray & Pray",
-				["menu_steady_grip_beta_desc"] = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles gain ##+10%## Critical Hit chance.\n\nACE: ##$pro##\nYour ranged weapons can now ##pierce Body Armor.##",
-				["menu_heavy_impact_beta"] = "Money Shot",
-				["menu_heavy_impact_beta_desc"] = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles gain ##+100%## Damage on the last bullet fired from a fully loaded magazine.\n\nACE: ##$pro##\nYour SMGs and Assault Rifles' gain ##+50%## faster Reload Speed when their Magazine is empty.",
-				["menu_fire_control_beta"] = "Shot Grouping",
-				["menu_fire_control_beta_desc"] = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles ADS ##+90%## faster.\n\nACE: ##$pro##\nYour SMGs, and Assault Rifles gain ##+40 Accuracy and Stability while ADSing.##",
-				["menu_fast_fire_beta"] = "Close Enough",
-				["menu_fast_fire_beta_desc"] = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles' bullets that strike hard surfaces ##ricochet once.##\n\nACE: ##$pro##\nCritical Hits cause ricochets to ##angle towards the closest enemy.##",
-				["menu_shock_and_awe_beta"] = "Making Miracles",
-				["menu_shock_and_awe_beta_desc"] = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles gain ##+1%## Critical Hit chance for ##4## seconds when hitting an enemy with a Headshot, stacking up to ##+10%##.\n\nACE: ##$pro##\nKilling an enemy with a Headshot ##generates an additional stack##. Maximum bonus increased to ##+20%##.",
-				["menu_body_expertise_beta"] = "Prayers Answered",
-				["menu_body_expertise_beta_desc"] = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles have their Critical Hit chance increased by ##+10%##, for a total of ##+20%##.\n\nACE: ##$pro##\nYour SMGs, and Assault Rifles have their Critical Hit chance ##further## increased by ##+10%##, for a total of ##+30%##.",
+				menu_spray_and_pray = "Spray & Pray",
+				menu_spray_and_pray_desc = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles gain ##+10%## Critical Hit chance.\n\nACE: ##$pro##\nYour ranged weapons can now ##pierce Body Armor.##",
+				menu_money_shot = "Money Shot",
+				menu_money_shot_desc = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles gain ##+100%## Damage on the last bullet fired from a fully loaded magazine.\n\nACE: ##$pro##\nYour SMGs and Assault Rifles' gain ##+50%## faster Reload Speed when their Magazine is empty.",
+				menu_shot_grouping = "Shot Grouping",
+				menu_shot_grouping_desc = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles ADS ##+90%## faster.\n\nACE: ##$pro##\nYour SMGs, and Assault Rifles gain ##+40 Accuracy and Stability while ADSing.##",
+				menu_making_miracles = "Making Miracles",
+				menu_making_miracles_desc = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles gain ##+1%## Critical Hit chance for ##4## seconds when hitting an enemy with a Headshot, stacking up to ##+10%##.\n\nACE: ##$pro##\nKilling an enemy with a Headshot ##generates an additional stack##. Maximum bonus increased to ##+20%##.",
+				menu_close_enough = "Close Enough",
+				menu_close_enough_desc = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles' bullets that strike hard surfaces ##ricochet once.##\n\nACE: ##$pro##\nCritical Hits cause ricochets to ##angle towards the closest enemy.##",
+				menu_prayers_answered = "Prayers Answered",
+				menu_prayers_answered_desc = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles have their Critical Hit chance increased by ##+10%##, for a total of ##+20%##.\n\nACE: ##$pro##\nYour SMGs, and Assault Rifles have their Critical Hit chance ##further## increased by ##+10%##, for a total of ##+30%##.",
 				
 				--ghost
 				["menu_backstab_beta"] = "Professional's Choice",
@@ -89,18 +89,18 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				["menu_far_away_beta_desc"] = "BASIC: ##$basic##\nFor the first 100cm, your Shotguns will now gain ##Armor Piercing, Shield Piercing, and Body Piercing.##\n\nACE: ##$pro##\nPoint Blank also grants ##+100%## Damage for the first meter.",
 				
 				--engineer
-				["menu_digging_in"] = "Digging In",
-				["menu_digging_in_desc"] = "BASIC: ##$basic##\nYou deploy and retrieve Sentry Guns ##90%## faster.\n\nACE: ##$pro##\nYour Sentry Guns become armored, rendering them almost completely invulnerable.",
-				["menu_advanced_rangefinder"] = "Advanced Rangefinder",
-				["menu_advanced_rangefinder_desc"] = "BASIC: ##$basic##\nSentry Guns gain ##+50%## Range and Accuracy.\n\nACE: ##$pro##\nRange and Accuracy bonus increased to ##+100%##.",
-				["menu_targeting_matrix"] = "Targeting Matrix",
-				["menu_targeting_matrix_desc"] = "BASIC: ##$basic##\nSentry Guns that aim at Special Enemies instantly Mark them for 5 seconds.\n\nACE: ##$pro##\nSentry Guns deal ##+25%## Damage to Marked enemies.",
-				["menu_wrangler"] = "Wrangler",
-				["menu_wrangler_desc"] = "BASIC: ##$basic##\nWhile in Manual Control of a Sentry Gun, it gains perfect Accuracy.\n\nACE: ##$pro##\nSentries deal ##+100%## Damage on Headshots.",
-				["menu_hobarts_funnies"] = "Hobart's Funnies",
-				["menu_hobarts_funnies_desc"] = "BASIC: ##$basic##\nNon-Basic Sentry Gun modes gain ##+25%## Fire Rate.\n\nACE: ##$pro##\nFire Rate bonus increased to ##+50%##.",
-				["menu_killer_machines"] = "Killer Machines",
-				["menu_killer_machines_desc"] = "BASIC: ##$basic##\nAll Sentry Gun modes deal ##+50## damage.\n\nACE: ##$pro##\nIncreases your Sentry Gun supply to ##2##."
+				menu_digging_in = "Digging In",
+				menu_digging_in_desc = "BASIC: ##$basic##\nYou deploy and retrieve Sentry Guns ##90%## faster.\n\nACE: ##$pro##\nYour Sentry Guns become armored, rendering them almost completely invulnerable.",
+				menu_advanced_rangefinder = "Advanced Rangefinder",
+				menu_advanced_rangefinder_desc = "BASIC: ##$basic##\nSentry Guns gain ##+50%## Range and Accuracy.\n\nACE: ##$pro##\nRange and Accuracy bonus increased to ##+100%##.",
+				menu_targeting_matrix = "Targeting Matrix",
+				menu_targeting_matrix_desc = "BASIC: ##$basic##\nSentry Guns that aim at Special Enemies instantly Mark them for 5 seconds.\n\nACE: ##$pro##\nSentry Guns deal ##+25%## Damage to Marked enemies.",
+				menu_wrangler = "Wrangler",
+				menu_wrangler_desc = "BASIC: ##$basic##\nWhile in Manual Control of a Sentry Gun, it gains perfect Accuracy.\n\nACE: ##$pro##\nSentries deal ##+100%## Damage on Headshots.",
+				menu_hobarts_funnies = "Hobart's Funnies",
+				menu_hobarts_funnies_desc = "BASIC: ##$basic##\nNon-Basic Sentry Gun modes gain ##+25%## Fire Rate.\n\nACE: ##$pro##\nFire Rate bonus increased to ##+50%##.",
+				menu_killer_machines = "Killer Machines",
+				menu_killer_machines_desc = "BASIC: ##$basic##\nAll Sentry Gun modes deal ##+50## damage.\n\nACE: ##$pro##\nIncreases your Sentry Gun supply to ##2##."
 			})
 		end
 		loc:add_localized_strings({
