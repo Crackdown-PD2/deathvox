@@ -20,6 +20,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		SentryControlMenu:SelectSentryByUnit(self._sentry_gun_weapon._unit)
 		if SentryControlMenu.action_radial then 
 			SentryControlMenu.action_radial:Show()
+			self:unselect() --remove the prompt upon opening the menu
 			
 			SentryControlMenu.interacted_radial_start_t = Application:time()
 			SentryControlMenu.button_held_state = nil

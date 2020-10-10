@@ -532,8 +532,6 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		table.insert(self.default_upgrades,"sentry_gun_spread_multiplier")
 		table.insert(self.default_upgrades,"sentry_gun_extra_ammo_multiplier_1")
 		table.insert(self.default_upgrades,"sentry_gun_rot_speed_multiplier")
-		table.insert(self.default_upgrades,"sentry_gun_ap_bullets") --this is necessary to enable the sentry gun firemode interactions, I GUESS
-
 	end
 end)
 

@@ -4,6 +4,7 @@ Hooks:PostHook(PlayerManager,"_internal_load","deathvox_on_internal_load",functi
 	else
 		deathvox:ResetSessionSettings()
 	end
+	Hooks:Call("TCD_OnGameStarted")
 end)
 
 function PlayerManager:_chk_fellow_crimin_proximity(unit)
@@ -77,6 +78,67 @@ if deathvox:IsTotalCrackdownEnabled() then
 		
 		self:set_property("current_point_and_click_stacks",0)
 		if self:has_category_upgrade("player","point_and_click_stacks") then 
+		
+		
+			Hooks:Add("TCD_OnGameStarted","OnGameStart_CreatePACElement",function() --check_skills() is called before the hud is created so it must instead call on an event
+			
+				--create buff-specific hud element; todo create a buffmanager class to handle this
+				--this is temporary until more of the core systems are done, and then i can dedicate more time 
+				--to creating a buff tracker system + hud elements 
+				--		-offy
+				local hudtemp = managers.hud and managers.hud._hud_temp and managers.hud._hud_temp._hud_panel
+				if hudtemp and alive(hudtemp) then
+					local trackerhud = hudtemp:panel({
+						name = "point_and_click_tracker",
+						w = 100,
+						h = 100
+					})
+					trackerhud:set_position((hudtemp:w() - trackerhud:w()) / 2,450)
+					local debug_trackerhud = trackerhud:rect({
+						name = "debug",
+						color = Color.red,
+						visible = false,
+						alpha = 0.1
+					})
+					local icon_size = 64
+					local icon_x,icon_y = 6,11 --bullseye
+					local skill_atlas = "guis/textures/pd2/skilltree/icons_atlas"
+					local skill_atlas_2 = "guis/textures/pd2/skilltree_2/icons_atlas_2"
+					local perkdeck_atlas = "guis/textures/pd2/specialization/icons_atlas"	
+
+					local icon = trackerhud:bitmap({
+						name = "icon",
+						texture = skill_atlas_2,
+						texture_rect = {icon_x * 80,icon_y * 80,80,80},
+						alpha = 0.9,
+--						x = (trackerhud:w() - icon_size) / 2,
+--						y = 0,
+						w = icon_size,
+						h = icon_size
+					})
+					icon:set_center(trackerhud:w()/2,trackerhud:h()/2)
+					local stack_count = trackerhud:text({
+						name = "text",
+						text = "0",
+						font = tweak_data.hud.medium_font,
+						font_size = 16,
+						align = "center",
+						color = Color.white,
+						vertical = "bottom"
+					})
+					local function check_point_and_click_stacks(t,dt)
+						if alive(stack_count) then 
+							stack_count:set_text(self:get_property("current_point_and_click_stacks",0))
+							if managers.enemy:is_clbk_registered("point_and_click_on_shot_missed") and alive(icon) then 
+								icon:set_color(Color(math.sin(t * 300 * math.pi),0,0))
+							else
+								icon:set_color(Color.white)
+							end
+						end
+					end
+					BeardLib:AddUpdater("update_tcd_buffs_hud",check_point_and_click_stacks,false)
+				end
+			end)
 			self._message_system:register(Message.OnEnemyShot,"proc_point_and_click",function(unit,attack_data)
 				local player = self:local_player()
 				if not alive(player) then 
@@ -172,7 +234,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 					return
 				end
 				
-				if not managers.enemy:is_clbk_registered("point_and_click_on_shot_missed") then 
+				if (self:get_property("current_point_and_click_stacks",0) > 0) and not managers.enemy:is_clbk_registered("point_and_click_on_shot_missed") then 
 					managers.enemy:add_delayed_clbk("point_and_click_on_shot_missed",callback(self,self,"set_property","current_point_and_click_stacks",0),
 						Application:time() + self:upgrade_value("player","point_and_click_stack_mulligan",0)
 					)
@@ -205,9 +267,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 					local weapon_index = self:equipped_weapon_index()
 					if (magic_bullet_level == 2) and (clip_current < clip_max) then
 						weapon_base:set_ammo_remaining_in_clip(math.min(clip_max,clip_current + self:upgrade_value("weapon","magic_bullet",0)))
-					else
-						weapon_base:add_ammo_to_pool(self:upgrade_value("weapon","magic_bullet",0),self:equipped_weapon_index())
 					end
+					weapon_base:add_ammo_to_pool(self:upgrade_value("weapon","magic_bullet",0),self:equipped_weapon_index())
 					managers.hud:set_ammo_amount(weapon_index, weapon_base:ammo_info())
 					player:sound():play("pickup_ammo")
 				end

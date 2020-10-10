@@ -459,7 +459,7 @@ function RaycastWeaponBase:reload_speed_multiplier(multiplier)
 --optional multiplier argument is added from cd here as well
 
 	if self:is_weapon_class("precision") then
-		local this_machine_data = managers.player:upgrade_value("point_and_click_reload_bonus",{0,0})
+		local this_machine_data = managers.player:upgrade_value("weapon","point_and_click_bonus_reload_speed",{0,0})
 		multiplier = multiplier * (1 + math.min(this_machine_data[1] * managers.player:get_property("current_point_and_click_stacks",0),this_machine_data[2]))
 	end
 	

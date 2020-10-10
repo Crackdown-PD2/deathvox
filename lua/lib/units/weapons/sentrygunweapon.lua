@@ -349,7 +349,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 					if hit.unit:contour() then
 						local mark_data = managers.player:upgrade_value("sentry_gun","targeting_matrix",false)
 						if mark_data and type(mark_data) == "table" then 
-							if mark_data[1] and hit.unit:contour():has_id(mark_data[1]) then 
+							if mark_data[1] and hit.unit:contour()._contour_list and hit.unit:contour():has_id(mark_data[1]) then 
 								damage = damage * (1 + mark_data[2])
 							end
 						end
@@ -536,7 +536,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end		
 			self:stop_autofire()
 			self:flip_fire_sound()
-			self._use_armor_piecing = ammo_type == "ap"
+			self._use_armor_piercing = ammo_type == "ap"
 		end
 		
 		self._ammo_type = ammo_type

@@ -15,6 +15,6 @@ Hooks:PostHook(InteractionTweakData, "init", "cd_interact_timer_stuff", function
 				category = "sentry_gun"
 			}
 		}
-		
+		self.sentry_gun_fire_mode.requires_upgrade = nil --remove ap skill requirement for toggling sentry firemode/ammotype
 	end
 end)
