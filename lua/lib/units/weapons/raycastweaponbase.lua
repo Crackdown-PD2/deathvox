@@ -493,7 +493,7 @@ function RaycastWeaponBase:_get_current_damage(dmg_mul)
 	end
 	damage = damage * (dmg_mul or 1)
 	damage = damage * managers.player:temporary_upgrade_value("temporary", "combat_medic_damage_multiplier", 1)
-	if self:is_weapon_class("class_shotgun") and self:fire_mode() == "auto" then 
+	if self:is_weapon_class("class_shotgun") and self:fire_mode() == "auto" and self:clip_full() then 
 		damage = damage * (1 + managers.player:upgrade_value("class_shotgun","heartbreaker_damage",0))
 	end
 	return damage
@@ -1025,8 +1025,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 				end
 			end
 		end
-		
-		
+
 		pierce_armor = pierce_armor or weapon_unit:base()._use_armor_piercing
 		
 		if not blank then

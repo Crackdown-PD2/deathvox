@@ -89,7 +89,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_tender_meat = "Tender Meat",
 				menu_tender_meat_desc = "BASIC: ##$basic##\nShotguns deal ##50%## of their Headshot damage on Body Shots against Non-Dozer enemies.\n\nACE: ##$pro##\nShotguns gain ##+40## Stability.",
 				menu_heartbreaker = "Heartbreaker",
-				menu_heartbreaker_desc = "BASIC: ##$basic##\nDouble Barreled Shotguns can use the Fire Selector to switch to ##Double Barrel Mode##, causing them to fire twice per shot.\n\nACE: ##$pro##\nShotguns deal ##+100%## Damage while in ##Double Barrel Mode.##",
+				menu_heartbreaker_desc = "BASIC: ##$basic##\nDouble Barreled Shotguns can use the Fire Selector to switch to ##Double Barrel Mode##, causing them to fire twice per shot.\n\nACE: ##$pro##\nEach shot in ##Double Barrel Mode## deals ##+100%## Damage when firing both barrels.",
 				menu_shell_games = "Shell Games",
 				menu_shell_games_desc = "BASIC: ##$basic##\nShotguns gain ##+20%## Reload Speed every time a shell is loaded.\nBonuses are lost upon finishing or cancelling the Reload.\n\nACE: ##$pro##\nSingle-Fire Shotguns have their Fire Rate increased by ##50%##.",
 				menu_rolling_thunder = "Rolling Thunder",

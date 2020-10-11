@@ -924,7 +924,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 									self._shooting_t = t
 									start_shooting = true
 
-									if (fire_mode == "auto") and not (weap_base:is_weapon_class("class_shotgun") and managers.player:has_category_upgrade("class_shotgun","heartbreaker_doublebarrel")) then
+									if (fire_mode == "auto") and not (weap_base:is_weapon_class("class_shotgun") and managers.player:has_category_upgrade("class_shotgun","heartbreaker_doublebarrel") and weap_base:weapon_tweak_data().CLIP_AMMO_MAX == 2) then
 										self._unit:camera():play_redirect(self:get_animation("recoil_enter"))
 
 										if (not weap_base.akimbo or weap_base:weapon_tweak_data().allow_akimbo_autofire) and (not weap_base.third_person_important or weap_base.third_person_important and not weap_base:third_person_important()) then
@@ -1096,7 +1096,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				self._ext_network:send("sync_stop_auto_fire_sound", 0)
 			end
 
-			if fire_mode == "auto" and not self:_is_reloading() and not self:_is_meleeing() and not (weap_base:is_weapon_class("class_shotgun") and managers.player:has_category_upgrade("class_shotgun","heartbreaker_doublebarrel")) then
+			if fire_mode == "auto" and not self:_is_reloading() and not self:_is_meleeing() and not (weap_base:is_weapon_class("class_shotgun") and managers.player:has_category_upgrade("class_shotgun","heartbreaker_doublebarrel") and weap_base:weapon_tweak_data().CLIP_AMMO_MAX == 2) then
 				self._unit:camera():play_redirect(self:get_animation("recoil_exit"))
 			end
 
