@@ -85,8 +85,20 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				["menu_backstab_beta_desc"] = "BASIC: ##$basic##\nSilenced Weapons gain a ##+2% Fire Rate bonus## for every ##3## points of Detection Risk under ##35##, up to ##+10%##.\n\nACE: ##$pro##\nThe Fire Rate bonus is increased to ##+4%## and the maximum bonus is increased to ##+20%##.",
 				
 				--enforcer
-				["menu_far_away_beta"] = "Point Blank",
-				["menu_far_away_beta_desc"] = "BASIC: ##$basic##\nFor the first 100cm, your Shotguns will now gain ##Armor Piercing, Shield Piercing, and Body Piercing.##\n\nACE: ##$pro##\nPoint Blank also grants ##+100%## Damage for the first meter.",
+				--"BASIC: ##$basic##\n               \n\nACE: ##$pro##\n               "
+				menu_tender_meat = "Tender Meat",
+				menu_tender_meat_desc = "BASIC: ##$basic##\nShotguns deal ##50%## of their Headshot damage on Body Shots against Non-Dozer enemies.\n\nACE: ##$pro##\nShotguns gain ##+40## Stability.",
+				menu_heartbreaker = "Heartbreaker",
+				menu_heartbreaker_desc = "BASIC: ##$basic##\nDouble Barreled Shotguns can use the Fire Selector to switch to ##Double Barrel Mode##, causing them to fire twice per shot.\n\nACE: ##$pro##\nShotguns deal ##+100%## Damage while in ##Double Barrel Mode.##",
+				menu_shell_games = "Shell Games",
+				menu_shell_games_desc = "BASIC: ##$basic##\nShotguns gain ##+20%## Reload Speed every time a shell is loaded.\nBonuses are lost upon finishing or cancelling the Reload.\n\nACE: ##$pro##\nSingle-Fire Shotguns have their Fire Rate increased by ##50%##.",
+				menu_rolling_thunder = "Rolling Thunder",
+				menu_rolling_thunder_desc = "BASIC: ##$basic##\nIncreases the Magazine Size of Automatic Shotguns by ##50%##.\n\nACE: ##$pro##\nMagazine Size bonus increased to ##100%##.",
+				menu_point_blank = "Point Blank",
+				menu_point_blank_desc = "BASIC: ##$basic##\nShotguns gain ##Armor Piercing##, ##Shield Piercing##, and ##Body Piercing## against enemies within ##2.5## meters.\n\nACE: ##$pro##\nShotguns deal ##+100%## Damage against enemies within ##2.5## meters.",
+				menu_shotmaker = "Shotmaker",
+				menu_shotmaker_desc = "BASIC: ##$basic##\nIncreases Shotgun Headshot Damage by ##+50%##.\n\nACE: ##$pro##\nShotgun Headshot Damage is increased by an additional ##+50%##, for a total of ##+100%##.",
+				
 				
 				--engineer
 				menu_digging_in = "Digging In",

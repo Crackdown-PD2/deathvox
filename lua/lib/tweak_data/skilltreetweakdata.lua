@@ -23,7 +23,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			desc_id = "menu_point_and_click_desc",
 			icon_xy = {
 				8,
-				5
+				1
 			}
 		}
 		
@@ -64,8 +64,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_investment_returns",
 			desc_id = "menu_investment_returns_desc",
 			icon_xy = {
-				8,
-				5
+				7,
+				11
 			}
 		}
 		
@@ -85,8 +85,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_this_machine",
 			desc_id = "menu_this_machine_desc",
 			icon_xy = {
-				8,
-				5
+				1,
+				9
 			}
 		}
 		
@@ -106,8 +106,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_mulligan",
 			desc_id = "menu_mulligan_desc",
 			icon_xy = {
-				8,
-				5
+				0,
+				11
 			}
 		}
 		
@@ -128,7 +128,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			desc_id = "menu_magic_bullet_desc",
 			icon_xy = {
 				8,
-				5
+				4
 			}
 		}
 		
@@ -138,25 +138,126 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		
 		--Enforcer
 		
---TODO don't override far_away
-		self.skills.far_away = { --Point Blank
+		self.skills.tender_meat = { --Tender Meat
 			{
 				upgrades = {
-					"player_point_blank_shotgun_basic"
+					"class_weapon_tender_meat_bodyshots"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"player_point_blank_shotgun_aced"
+					"class_shotgun_tender_meat_stability"
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_far_away_beta",
-			desc_id = "menu_far_away_beta_desc",
+			name_id = "menu_tender_meat",
+			desc_id = "menu_tender_meat_desc",
+			icon_xy = {
+				10,
+				3
+			}
+		}
+		self.skills.heartbreaker = { --Heartbreaker
+			{
+				upgrades = {
+					"class_shotgun_doublebarrel_firemode"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"class_shotgun_doublebarrel_damage"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_heartbreaker",
+			desc_id = "menu_heartbreaker_desc",
+			icon_xy = {
+				4,
+				1
+			}
+		}
+		
+		self.skills.shell_games = { --Shell Games
+			{
+				upgrades = {
+					"class_shotgun_shell_games_reload_bonus"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"class_shotgun_shell_games_rof_bonus"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_shell_games",
+			desc_id = "menu_shell_games_desc",
+			icon_xy = {
+				4,
+				1
+			}
+		}
+		self.skills.rolling_thunder = { --Rolling Thunder
+			{
+				upgrades = {
+					"class_shotgun_rolling_thunder_magazine_size_1"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"class_shotgun_rolling_thunder_magazine_size_2"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_rolling_thunder",
+			desc_id = "menu_rolling_thunder_desc",
 			icon_xy = {
 				8,
-				5
+				7
+			}
+		}
+		self.skills.point_blank = { --Point Blank
+			{
+				upgrades = {
+					"class_shotgun_point_blank_shotgun_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"class_shotgun_point_blank_shotgun_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_point_blank",
+			desc_id = "menu_point_blank_desc",
+			icon_xy = {
+				4,
+				1
+			}
+		}
+		
+		self.skills.shotmaker = { --Shotmaker
+			{
+				upgrades = {
+					"class_shotgun_shotmaker_headshot_damage_bonus_1"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"class_shotgun_shotmaker_headshot_damage_bonus_2"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_shotmaker",
+			desc_id = "menu_shotmaker_desc",
+			icon_xy = {
+				6,
+				11
 			}
 		}
 		
@@ -182,8 +283,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_spray_and_pray",
 			desc_id = "menu_spray_and_pray_desc",
 			icon_xy = {
-				9,
-				11
+				7,
+				0
 			}
 		}
 		
@@ -204,7 +305,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			desc_id = "menu_shot_grouping_desc",
 			icon_xy = {
 				9,
-				10
+				11
 			}
 		}
 		
@@ -224,8 +325,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_money_shot",
 			desc_id = "menu_money_shot_desc",
 			icon_xy = {
-				10,
-				1
+				0,
+				6
 			}
 		}
 		
@@ -247,8 +348,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_making_miracles",
 			desc_id = "menu_making_miracles_desc",
 			icon_xy = {
-				10,
-				0
+				0,
+				12
 			}
 		}
 			
@@ -289,8 +390,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_prayers_answered",
 			desc_id = "menu_prayers_answered_desc",
 			icon_xy = {
-				10,
-				3
+				2,
+				9
 			}
 		}
 		
@@ -335,8 +436,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_advanced_rangefinder",
 			desc_id = "menu_advanced_rangefinder_desc",
 			icon_xy = {
-				9,
-				1
+				1,
+				6
 			}
 		}
 
@@ -356,8 +457,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_targeting_matrix",
 			desc_id = "menu_targeting_matrix_desc",
 			icon_xy = {
-				9,
-				2
+				1,
+				6
 			}
 		}
 
@@ -377,8 +478,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_wrangler",
 			desc_id = "menu_wrangler_desc",
 			icon_xy = {
-				9,
-				3
+				1,
+				6
 			}
 		}
 		
@@ -398,8 +499,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_hobarts_funnies",
 			desc_id = "menu_hobarts_funnies_desc",
 			icon_xy = {
-				9,
-				4
+				1,
+				6
 			}
 		}
 		
@@ -457,8 +558,233 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		
 		--Demolitions
 
---skilltrees
-		self.trees[2] = {
+--skilltrees; eventually this will override the whole trees table instead of selectively replacing by index
+--[[
+		self.trees[1] = { -- boss
+			skill = "mastermind",
+			name_id = "st_menu_dallas_boss",
+			unlocked = true,
+			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
+			tiers = {
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				}
+			}
+		}
+	
+		self.trees[3] = { -- medic
+			skill = "mastermind",
+			name_id = "st_menu_dallas_medic",
+			unlocked = true,
+			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
+			tiers = {
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				}
+			}
+		}
+		self.trees[4] = { -- chief
+			skill = "enforcer",
+			name_id = "st_menu_chains_chief",
+			unlocked = true,
+			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
+			tiers = {
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				}
+			}
+		}
+
+		self.trees[6] = { -- heavy
+			skill = "enforcer",
+			name_id = "st_menu_chains_heavy",
+			unlocked = true,
+			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
+			tiers = {
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				}
+			}
+		}
+		self.trees[7] = { -- runner
+			skill = "technician",
+			name_id = "st_menu_wolf_runner",
+			unlocked = true,
+			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
+			tiers = {
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				}
+			}
+		}
+
+		self.trees[10] = { -- thief
+			skill = "ghost",
+			name_id = "st_menu_houston_thief",
+			unlocked = true,
+			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
+			tiers = {
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				}
+			}
+		}
+		self.trees[11] = { -- assassin
+			skill = "ghost",
+			name_id = "st_menu_houston_assassin",
+			unlocked = true,
+			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
+			tiers = {
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				}
+			}
+		}
+		self.trees[12] = { -- sapper
+			skill = "ghost",
+			name_id = "st_menu_houston_sapper",
+			unlocked = true,
+			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
+			tiers = {
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				}
+			}
+		}
+		self.trees[13] = { -- dealer
+			skill = "fugitive",
+			name_id = "st_menu_hoxton_dealer",
+			unlocked = true,
+			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
+			tiers = {
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				}
+			}
+		}
+		self.trees[14] = { -- fixer
+			skill = "fugitive",
+			name_id = "st_menu_hoxton_fixer",
+			unlocked = true,
+			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
+			tiers = {
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				}
+			}
+		}
+		self.trees[15] = { -- demolitions
+			skill = "fugitive",
+			name_id = "st_menu_hoxton_demolitions",
+			unlocked = true,
+			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
+			tiers = {
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				},
+				{
+					""
+				}
+			}
+		}
+--]]
+		self.trees[2] = { ---marksman
 			skill = "mastermind",
 			name_id = "st_menu_dallas_marksman",
 			unlocked = true,
@@ -479,6 +805,29 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"magic_bullet"
 				}
 			}
+		}
+		self.trees[5] = { --enforcer
+			skill = "enforcer",
+			name_id = "st_menu_chains_enforcer",
+			unlocked = true,
+			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
+			tiers = {
+				{
+					"tender_meat"
+				},
+				{
+					"heartbreaker",
+					"shell_games"
+				},
+				{
+					"rolling_thunder",
+					"point_blank"
+				},
+				{
+					"shotmaker"
+				}
+			}
+			
 		}
 		
 		self.trees[8] = { --gunner

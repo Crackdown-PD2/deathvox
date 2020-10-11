@@ -25,6 +25,9 @@ end
 
 if deathvox:IsTotalCrackdownEnabled() then
 	Hooks:PostHook(PlayerManager,"check_skills","deathvox_check_cd_skills",function(self)
+		if self:has_category_upgrade("class_shotgun","shell_games_reload_bonus") then
+			self:set_property("shell_games_rounds_loaded",0)
+		end
 		if self:has_category_upgrade("weapon", "making_miracles_basic") then
 			self:set_property("making_miracles_stacks",0)
 			self._message_system:register(Message.OnHeadShot,"proc_making_miracles_basic",
@@ -74,8 +77,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 	else
 		self._message_system:unregister(Message.OnLethalHeadShot,"proc_making_miracles_aced")
 	end
-		
-		
 		self:set_property("current_point_and_click_stacks",0)
 		if self:has_category_upgrade("player","point_and_click_stacks") then 
 		

@@ -477,7 +477,6 @@ function CopDamage:damage_bullet(attack_data)
 	if self:is_friendly_fire(attack_data.attacker_unit) then
 		return "friendly_fire"
 	end
-
 	if alive(attack_data.attacker_unit) and attack_data.attacker_unit:in_slot(16) then
 		local has_surrendered = self._unit:brain().surrendered and self._unit:brain():surrendered() or self._unit:anim_data().surrender or self._unit:anim_data().hands_back or self._unit:anim_data().hands_tied
 
@@ -599,7 +598,10 @@ function CopDamage:damage_bullet(attack_data)
 	local headshot_by_player = false
 	local headshot_multiplier = 1
 
+	local headshot_mul_addend = 0
 	if attack_data.attacker_unit == managers.player:player_unit() then
+		headshot_mul_addend = managers.player:upgrade_value(attack_data.weapon_unit:base():get_weapon_class() or "weapon","headshot_mul_addend",0)
+	
 		local critical_hit, crit_damage = self:roll_critical_hit(attack_data)
 
 		if critical_hit then
@@ -623,7 +625,7 @@ function CopDamage:damage_bullet(attack_data)
 			managers.player:on_headshot_dealt()
 
 			headshot_by_player = true
-			headshot_multiplier = managers.player:upgrade_value("weapon", "passive_headshot_damage_multiplier", 1)
+			headshot_multiplier = managers.player:upgrade_value("weapon", "passive_headshot_damage_multiplier", 1) + headshot_mul_addend
 		end
 	end
 
@@ -654,7 +656,7 @@ function CopDamage:damage_bullet(attack_data)
 
 			if add_head_shot_mul then
 				local tweak_headshot_mul = math_max(0, self._char_tweak.headshot_dmg_mul - 1)
-				local mul = tweak_headshot_mul * add_head_shot_mul + 1
+				local mul = tweak_headshot_mul * add_head_shot_mul + 1 + headshot_mul_addend
 				damage = damage * mul
 			end
 		end

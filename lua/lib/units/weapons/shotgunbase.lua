@@ -26,17 +26,20 @@ end
 
 function ShotgunBase:fire_rate_multiplier()
 	local fire_rate_mul = self._fire_rate_multiplier
+	if self._fire_mode == Idstring("single") then 
+		if self._hip_fire_rate_inc ~= 0 then
+			local user_unit = self._setup and self._setup.user_unit
+			local current_state = alive(user_unit) and user_unit:movement() and user_unit:movement()._current_state
 
-	if self._hip_fire_rate_inc ~= 0 then
-		local user_unit = self._setup and self._setup.user_unit
-		local current_state = alive(user_unit) and user_unit:movement() and user_unit:movement()._current_state
-
-		if self._fire_mode == Idstring("single") and current_state and not current_state:in_steelsight() then --but only when firing in single mode as intended (and as usual, when not aiming)
-			fire_rate_mul = fire_rate_mul + 1 - self._hip_fire_rate_inc
-			fire_rate_mul = self:_convert_add_to_mul(fire_rate_mul)
+			if current_state and not current_state:in_steelsight() then --but only when firing in single mode as intended (and as usual, when not aiming)
+				fire_rate_mul = fire_rate_mul + 1 - self._hip_fire_rate_inc
+				fire_rate_mul = self:_convert_add_to_mul(fire_rate_mul)
+			end
+		end
+		if self:is_weapon_class("class_shotgun") then --i don't think there's any shotgun weapons that aren't crackdown weapon class "class_shotgun", but just to be safe 
+			fire_rate_mul = fire_rate_mul + managers.player:upgrade_value("class_shotgun","shell_games_rof_bonus",0)
 		end
 	end
-
 	return fire_rate_mul
 end
 

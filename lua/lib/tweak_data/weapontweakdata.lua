@@ -520,7 +520,7 @@ function WeaponTweakData:init(tweak_data)
 	if Global and Global.game_settings and Global.game_settings.difficulty then
 		local difficulty_index = table.index_of(difficulties, Global.game_settings.difficulty)
 		local diff_name = better_names[difficulty_index]
-		log(diff_name .. " DIFFICULTY NAME")
+--		log(diff_name .. " DIFFICULTY NAME")
 		for _, weapon_type in ipairs(self._gun_list_cd) do
 			if self.damage_tables[weapon_type] then
 				local damage_table = self.damage_tables[weapon_type]
@@ -4413,7 +4413,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1, 2
 	--Notes:
 
-		self.b682.primary_class = "shotgun"
+		self.b682.primary_class = "class_shotgun"
 		self.b682.subclasses = {}
 		self.b682.FIRE_MODE = "single"
 		self.b682.fire_mode_data = {
@@ -4493,7 +4493,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1, 2
 	--Notes:
 
-		self.huntsman.primary_class = "shotgun"
+		self.huntsman.primary_class = "class_shotgun"
 		self.huntsman.subclasses = {}
 		self.huntsman.FIRE_MODE = "single"
 		self.huntsman.fire_mode_data = {
@@ -4573,7 +4573,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1, 2
 	--Notes:
 
-		self.boot.primary_class = "shotgun"
+		self.boot.primary_class = "class_shotgun"
 		self.boot.subclasses = {}
 		self.boot.FIRE_MODE = "single"
 		self.boot.fire_mode_data = {
@@ -4679,7 +4679,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 2, 3
 	--Notes:
 
-		self.r870.primary_class = "shotgun"
+		self.r870.primary_class = "class_shotgun"
 		self.r870.subclasses = {}
 		self.r870.FIRE_MODE = "single"
 		self.r870.fire_mode_data = {
@@ -4762,7 +4762,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 2, 3
 	--Notes:
 
-		self.ksg.primary_class = "shotgun"
+		self.ksg.primary_class = "class_shotgun"
 		self.ksg.subclasses = {}
 		self.ksg.FIRE_MODE = "single"
 		self.ksg.fire_mode_data = {
@@ -4845,7 +4845,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 5
 	--Notes:
 
-		self.spas12.primary_class = "shotgun"
+		self.spas12.primary_class = "class_shotgun"
 		self.spas12.subclasses = {}
 		self.spas12.FIRE_MODE = "single"
 		self.spas12.fire_mode_data = {
@@ -4924,7 +4924,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 5
 	--Notes:
 
-		self.benelli.primary_class = "shotgun"
+		self.benelli.primary_class = "class_shotgun"
 		self.benelli.subclasses = {}
 		self.benelli.FIRE_MODE = "single"
 		self.benelli.fire_mode_data = {
@@ -5015,7 +5015,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 5, 6
 	--Notes:
 
-		self.aa12.primary_class = "shotgun"
+		self.aa12.primary_class = "class_shotgun"
 		self.aa12.subclasses = {}
 		self.aa12.FIRE_MODE = "auto"
 		self.aa12.fire_mode_data = {
@@ -5091,7 +5091,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 5, 6
 	--Notes:
 			
-		self.saiga.primary_class = "shotgun"
+		self.saiga.primary_class = "class_shotgun"
 		self.saiga.subclasses = {}
 		self.saiga.FIRE_MODE = "auto"
 		self.saiga.fire_mode_data = {
@@ -10886,7 +10886,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1, 2
 	--Notes: 
 
-		self.coach.primary_class = "shotgun"
+		self.coach.primary_class = "class_shotgun"
 		self.coach.subclasses = {}
 		self.coach.FIRE_MODE = "single"
 		self.coach.fire_mode_data = {
@@ -10970,7 +10970,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 2, 3
 	--Notes: 
 
-		self.m37.primary_class = "shotgun"
+		self.m37.primary_class = "class_shotgun"
 		self.m37.subclasses = {}
 		self.m37.FIRE_MODE = "single"
 		self.m37.fire_mode_data = {
@@ -10989,7 +10989,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			equip = 0.85
 		}
 		
-		self.m37.CLIP_AMMO_MAX = 7
+		self.m37.CLIP_AMMO_MAX = 2
 		self.m37.AMMO_MAX = 46
 		self.m37.AMMO_PICKUP = {
 			2,
@@ -11057,7 +11057,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 2, 3
 	--Notes: 
 
-		self.serbu.primary_class = "shotgun"
+		self.serbu.primary_class = "class_shotgun"
 		self.serbu.subclasses = {}
 		self.serbu.FIRE_MODE = "single"
 		self.serbu.fire_mode_data = {
@@ -11130,7 +11130,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 5
 	--Notes: 
 
-		self.rota.primary_class = "shotgun"
+		self.rota.primary_class = "class_shotgun"
 		self.rota.subclasses = {}
 		self.rota.FIRE_MODE = "single"
 		self.rota.fire_mode_data = {
@@ -11206,7 +11206,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 0.5, 1
 	--Notes: 
 
-		self.judge.primary_class = "shotgun"
+		self.judge.primary_class = "class_shotgun"
 		self.judge.subclasses = {}
 		self.judge.FIRE_MODE = "single"
 		self.judge.fire_mode_data = {
@@ -11286,7 +11286,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 5, 6
 	--Notes: 
 
-		self.basset.primary_class = "shotgun"
+		self.basset.primary_class = "class_shotgun"
 		self.basset.subclasses = {}
 		self.basset.FIRE_MODE = "auto"
 		self.basset.fire_mode_data = {
@@ -11361,7 +11361,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 4, 5
 	--Notes: 
 
-		self.striker.primary_class = "shotgun"
+		self.striker.primary_class = "class_shotgun"
 		self.striker.subclasses = {}
 		self.striker.FIRE_MODE = "single"
 		self.striker.fire_mode_data = {

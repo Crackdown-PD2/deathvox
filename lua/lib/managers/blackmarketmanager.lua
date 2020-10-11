@@ -2,7 +2,7 @@ function BlackMarketManager:recoil_addend(name, categories, recoil_index, silenc
 	local addend = 0
 	
 	--WHY, WHY WHY WHY WHY, WHY IS THIS HANDLED HERE, BUT SPREAD IS IN NEWRAYCASTWEAPONBASE, AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA its ok its just i spent like 10 mins trying to figure out where it was handled and i think this is dumb. 
-
+	--^ yeah same. -offy
 	if recoil_index and recoil_index >= 1 and recoil_index <= #tweak_data.weapon.stats.recoil then
 		local index = recoil_index
 		index = index + managers.player:upgrade_value("weapon", "recoil_index_addend", 0)
@@ -13,6 +13,7 @@ function BlackMarketManager:recoil_addend(name, categories, recoil_index, silenc
 		for _, category in ipairs(categories) do
 			index = index + managers.player:upgrade_value(category, "recoil_index_addend", 0)
 		end
+--		index = index + managers.player:upgrade_value(tweak_data.weapons[name].primary_class or "NO_WEAPON_CLASS","recoil_index_addend",0) --if we wanted to do it by tweakdata
 		
 		local pm = managers.player
 		local player_unit = pm:player_unit()

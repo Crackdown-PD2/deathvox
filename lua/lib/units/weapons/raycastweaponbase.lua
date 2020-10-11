@@ -57,6 +57,9 @@ function RaycastWeaponBase:get_weapon_subclasses()
 end
 
 function RaycastWeaponBase:is_weapon_class(class)
+	if not class then 
+		return false
+	end
 	local gadget_override = self:gadget_overrides_weapon_functions()
 	if gadget_override then 
 		local td = gadget_override.name_id and tweak_data.weapon[gadget_override.name_id]
@@ -450,6 +453,8 @@ function RaycastWeaponBase:fire_rate_multiplier(rof_mul)
 	if self:is_weapon_class("precision") then
 		local tap_the_trigger_data = managers.player:upgrade_value("point_and_click_rof_bonus",{0,0})
 		rof_mul = rof_mul * (1 + math.min(tap_the_trigger_data[1] * managers.player:get_property("current_point_and_click_stacks",0),tap_the_trigger_data[2]))
+	elseif self:is_weapon_class("class_shotgun") and self:fire_mode() == "single" then 
+		rof_mul = rof_mul + managers.player:upgrade_value("class_shotgun","shell_games_rof_bonus",0)
 	end
 	return rof_mul
 end
@@ -488,6 +493,9 @@ function RaycastWeaponBase:_get_current_damage(dmg_mul)
 	end
 	damage = damage * (dmg_mul or 1)
 	damage = damage * managers.player:temporary_upgrade_value("temporary", "combat_medic_damage_multiplier", 1)
+	if self:is_weapon_class("class_shotgun") and self:fire_mode() == "auto" then 
+		damage = damage * (1 + managers.player:upgrade_value("class_shotgun","heartbreaker_damage",0))
+	end
 	return damage
 end
 
@@ -676,6 +684,20 @@ function RaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul
 	end
 
 	return result
+end
+
+function RaycastWeaponBase:update_next_shooting_time()
+	if self:is_weapon_class("class_shotgun") and self:fire_mode() == "auto" then 
+		if tweak_data.weapon[self._name_id].CLIP_AMMO_MAX == 2 then 
+			if managers.player:has_category_upgrade("class_shotgun","heartbreaker_doublebarrel") then 
+--				self._next_fire_allowed = 0
+				return
+			end
+		end
+	end
+
+	local next_fire = (tweak_data.weapon[self._name_id].fire_mode_data and tweak_data.weapon[self._name_id].fire_mode_data.fire_rate or 0) / self:fire_rate_multiplier()
+	self._next_fire_allowed = self._next_fire_allowed + next_fire
 end
 
 local reflect_result = Vector3()
@@ -889,8 +911,8 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 	local enable_ricochets = managers.player:has_category_upgrade("player", "ricochet_bullets")
 	critical_hit = critical_hit or self:calculate_crit(weapon_unit, user_unit)
 	
+	local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
 	if enable_ricochets and not already_ricocheted and user_unit and user_unit == managers.player:player_unit() and col_ray.unit then
-		local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
 
 		if has_category and weapon_unit:base():is_weapon_class("rapidfire") then
 			local can_bounce_off = false
@@ -953,7 +975,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 		elseif is_shield and hit_unit:parent():character_damage() then
 			character_unit = hit_unit:parent()
 		end
-
+		
 		--if the unit hit is a character or a character's shield, do a friendly fire check before damaging the body extension that was hit
 		if character_unit and character_unit:character_damage().is_friendly_fire and character_unit:character_damage():is_friendly_fire(user_unit) then
 			damage_body_extension = false
@@ -991,11 +1013,21 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 	if alive(weapon_unit) and hit_unit:character_damage() and hit_unit:character_damage().damage_bullet then
 		local is_alive = not hit_unit:character_damage():dead()
 		
-		local pierce_armor = user_unit == managers.player:player_unit() and managers.player:has_category_upgrade("player", "point_blank") and has_category and weapon_unit:base():is_weapon_class("shotgun") and col_ray and col_ray.dis <= 200 or weapon_unit:base()._use_armor_piercing
-		
-		if user_unit == managers.player:player_unit() and has_category and weapon_unit:base():is_weapon_class("shotgun") and managers.player:has_category_upgrade("player", "point_blank_aced") and col_ray and col_ray.dis <= 200 then
-			damage = damage * 2
+		local pierce_armor = false
+		if user_unit == managers.player:player_unit() then
+			if has_category and weapon_unit:base():is_weapon_class("class_shotgun") then 
+				local point_blank_range = managers.player:upgrade_value("class_shotgun","point_blank_basic",0)
+				if point_blank_range > 0 then  --right now, basic and aced have the same proc range, but if you want to change that, this is where you'd do it
+					if col_ray and col_ray.distance and (col_ray.distance <= point_blank_range) then 
+						pierce_armor = true
+						damage = damage * (1 + managers.player:upgrade_value("class_shotgun","point_blank_aced",0)) 
+					end
+				end
+			end
 		end
+		
+		
+		pierce_armor = pierce_armor or weapon_unit:base()._use_armor_piercing
 		
 		if not blank then
 			local knock_down = weapon_unit:base()._knock_down and weapon_unit:base()._knock_down > 0 and math.random() < weapon_unit:base()._knock_down

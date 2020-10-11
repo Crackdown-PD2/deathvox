@@ -3,6 +3,7 @@
 Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_data)
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
 	--weapon classification categories
+		self.values.NO_WEAPON_CLASS = {} --addresses weapons whose weapon class has not been implemented
 		self.values.rapidfire = self.values.rapidfire or {}
 		self.values.class_shotgun = self.values.class_shotgun or {}
 		self.values.precision = self.values.precision or {}
@@ -189,33 +190,156 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		--Enforcer
 		
-		self.values.player.point_blank = {
-			true
+		self.values.class_shotgun.tender_meat_bodyshots = {
+			0.5
+		}
+		self.definitions.class_weapon_tender_meat_bodyshots = {
+			name_id = "menu_tender_meat_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "tender_meat_bodyshots",
+				category = "class_shotgun"
+			}
 		}
 		
-		self.values.player.point_blank_aced = {
-			true
+		self.values.class_shotgun.recoil_index_addend = {
+			10
+		}
+		self.definitions.class_shotgun_tender_meat_stability = {
+			name_id = "menu_tender_meat_aced",
+			category = "feature",
+			upgrade = {
+			value = 1,
+			upgrade = "recoil_index_addend",
+				category = "class_shotgun"
+			}
 		}
 		
-		self.definitions.player_point_blank_shotgun_basic = {
+		self.values.class_shotgun.heartbreaker_doublebarrel = {
+			true
+		}
+		self.definitions.class_shotgun_doublebarrel_firemode = {
+			name_id = "menu_heartbreaker_basic",
+			category = "feature",
+			upgrade = {
+			value = 1,
+			upgrade = "heartbreaker_doublebarrel",
+				category = "class_shotgun"
+			}
+		}
+		
+		self.values.class_shotgun.heartbreaker_damage = {
+			1
+		}
+		self.definitions.class_shotgun_doublebarrel_damage = {
+			name_id = "menu_heartbreaker_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "heartbreaker_damage",
+				category = "class_shotgun"
+			}
+		}
+		
+		self.values.class_shotgun.shell_games_reload_bonus = {
+			0.2 --% stack per shell reloaded
+		}
+		self.definitions.class_shotgun_shell_games_reload_bonus = {
+			name_id = "menu_shell_games_basic",
+			category = "feature",
+			upgrade = {
+			value = 1,
+			upgrade = "shell_games_reload_bonus",
+				category = "class_shotgun"
+			}
+		}
+		
+		self.values.class_shotgun.shell_games_rof_bonus = {
+			0.5
+		}
+		self.definitions.class_shotgun_shell_games_rof_bonus = {
+			name_id = "menu_shell_games_aced",
+			category = "feature",
+			upgrade = {
+			value = 1,
+			upgrade = "shell_games_rof_bonus",
+				category = "class_shotgun"
+			}
+		}
+		
+		self.values.class_shotgun.rolling_thunder_magazine_capacity_bonus = {
+			0.5,
+			1
+		}
+		self.definitions.class_shotgun_rolling_thunder_magazine_size_1 = {
+			name_id = "menu_rolling_thunder_basic",
+			category = "feature",
+			upgrade = {
+			value = 1,
+			upgrade = "rolling_thunder_magazine_capacity_bonus",
+				category = "class_shotgun"
+			}
+		}
+		self.definitions.class_shotgun_rolling_thunder_magazine_size_2 = {
+			name_id = "menu_rolling_thunder_aced",
+			category = "feature",
+			upgrade = {
+			value = 2,
+			upgrade = "rolling_thunder_magazine_capacity_bonus",
+				category = "class_shotgun"
+			}
+		}
+		
+		self.values.class_shotgun.point_blank_basic = {
+			250 --2.5m
+		}
+		self.values.class_shotgun.point_blank_aced = {
+			1
+		}
+		self.definitions.class_shotgun_point_blank_shotgun_basic = {
 			name_id = "menu_point_blank_shotgun_basic",
 			category = "feature",
 			upgrade = {
 			value = 1,
-			upgrade = "point_blank",
-				category = "player"
+			upgrade = "point_blank_basic",
+				category = "class_shotgun"
 			}
 		}
 					
-		self.definitions.player_point_blank_shotgun_aced = {
+		self.definitions.class_shotgun_point_blank_shotgun_aced = {
 			name_id = "menu_point_blank_shotgun_aced",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "point_blank_aced",
-				category = "player"
+				category = "class_shotgun"
 			}
 		}
+		
+		self.values.class_shotgun.headshot_mul_addend = {
+			0.5,
+			1
+		}
+		self.definitions.class_shotgun_shotmaker_headshot_damage_bonus_1 = {
+			name_id = "menu_shotmaker_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "headshot_mul_addend",
+				category = "class_shotgun"
+			}
+		}
+		self.definitions.class_shotgun_shotmaker_headshot_damage_bonus_2 = {
+			name_id = "menu_shotmaker_aced",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "headshot_mul_addend",
+				category = "class_shotgun"
+			}
+		}
+		
 		
 		--Heavy
 		
@@ -269,7 +393,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 		self.values.rapidfire.shotgrouping_aced = { 
-			14 --accuracy index addend
+			14 --accuracy/stability index addend
 		}
 		
 		self.values.rapidfire.enter_steelsight_speed_multiplier = { 
