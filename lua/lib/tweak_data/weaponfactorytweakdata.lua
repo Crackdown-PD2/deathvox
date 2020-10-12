@@ -20,6 +20,22 @@ end
 
 -- Begin Total Crackdown Weapon Attachment materials
 Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
+
+	--used for adding or changing override tables for weapon attachments
+	--example: stat_override("wpn_fps_sho_rota","wpn_fps_sho_rota_b_silencer",{stats = {suppression = -10,value=6}})
+		--wpn: the internal name of the weapon, such as "wpn_fps_sho_rota". 
+			--(not to be confused with the internal id such as "rota")
+		--part: the internal name of the weapon attachment 
+		--override_stats: the override for the weapon attachment parts
+	local function part_stat_override(wpn,part,override_stats)
+		if self[wpn] then 
+			self[wpn].override = self[wpn].override or {}
+			if layered_write and self[wpn].override[part] then 
+				self[wpn].override[part] = override_stats
+			end
+		end
+	end
+
 	--BEGIN THE NEW INSANITY! (OR SOMETHING LIKE THAT!)
 	if deathvox:IsTotalCrackdownEnabled() then
 
@@ -41,6 +57,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 --      zoom - Base zoom value used when aiming down sights.
 --      concealment - Base concealment of weapon.
 --      suppression - Base suppression value.
+	--Threat value = suppression * 2
 --      value - from table. Inconsistently reported/documented. Copy from decompile.
 
 --Template entry material:
@@ -1402,6 +1419,14 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 4, 5
 	--Notes:
 	--Active Mods: Silenced Barrel [wpn_fps_sho_rota_b_silencer] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
+	
+	part_stat_override("wpn_fps_sho_rota","wpn_fps_sho_rota_b_silencer",{
+		stats = {
+			suppression = -10,
+			value = 6
+		}
+	})
+
 
 	--------------------------------------
 				--Steakout 12G--
@@ -1441,7 +1466,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes:
 	--Active Mods: Big Brother Magazine [wpn_fps_sho_basset_m_extended] [+3 Magazine, -5 Concealment] Value: 1
 	--NOTE this mod is shared with the Grimms and has variable stats.
-
+--wpn_fps_sho_basset_m_extended has same stats as grimm
+	
 	--------------------------------------
 				--Brothers Grimm 12G--
 	--------------------------------------
@@ -1459,7 +1485,14 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 6, 7
 	--Notes:
 	--Active Mods: Big Brother Magazine [wpn_fps_sho_basset_m_extended] [+6 Magazine, -10 Concealment] Value: 1
-
+	
+	part_stat_override("wpn_fps_sho_x_basset","wpn_fps_sho_basset_m_extended",{stats = {
+			extra_ammo = 3,
+			concealment = -10,
+			value = 1
+		}
+	})
+	
 	--------------------------------------
 		--Marksman Rifles--
 	--------------------------------------
@@ -3465,6 +3498,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes: 
 	--Active Mods: Silenced Barrel [wpn_fps_sho_rota_b_silencer] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
 
+	self.parts.wpn_fps_sho_rota_b_silencer.stats.suppression = 50
+
+
 	--------------------------------------
 				--Judge--
 	--------------------------------------
@@ -3501,6 +3537,12 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes: 
 	--Active Mods: Big Brother Magazine [wpn_fps_sho_basset_m_extended] [+3 Magazine, -5 Concealment] Value: 1
 
+	self.parts.wpn_fps_sho_basset_m_extended.stats = {
+		concealment = -5,
+		extra_ammo = 2,
+		value = 1
+	}
+	
 	--------------------------------------
 				--Street Sweeper--
 	--------------------------------------

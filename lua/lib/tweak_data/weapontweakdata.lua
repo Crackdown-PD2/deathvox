@@ -4660,6 +4660,59 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 10
 	--Pickup: 0.5, 1
 	--Notes:
+	
+		self.x_judge.CLIP_AMMO_MAX = 10
+		self.x_judge.fire_mode_data = {
+			fire_rate = 0.12
+		}
+		self.x_judge.stats = {
+			concealment = 30,
+			suppression = 5,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 11,
+			recoil = 1,
+			value = 1,
+			alert_size = 7,
+			damage = 180,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_judge.AMMO_MAX = 60
+		self.x_judge.primary_class = "class_shotgun"
+		self.x_judge.AMMO_PICKUP = {
+			0.5,
+			1
+		}
+		self.x_judge.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_judge.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
 
 
 	--------------------------------------
@@ -4997,7 +5050,62 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 14
 	--Pickup: 4, 5
 	--Notes:
-	
+
+		self.x_rota.CLIP_AMMO_MAX = 12
+		self.x_rota.fire_mode_data = {
+			fire_rate = 0.18018018018018
+		}
+		self.x_rota.stats = {
+			concealment = 25,
+			suppression = 7,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 11,
+			recoil = 11,
+			value = 1,
+			alert_size = 7,
+			damage = 80,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_rota.AMMO_MAX = 72
+		self.x_rota.primary_class = "class_shotgun"
+		self.x_rota.AMMO_PICKUP = {
+			4,
+			5
+		}
+		self.x_rota.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_rota.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+
+
+
 	--------------------------------------
 				--Steakout 12G--
 	--------------------------------------
@@ -5165,7 +5273,61 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 22
 	--Pickup: 6, 7
 	--Notes:
+	
+		self.x_basset.CLIP_AMMO_MAX = 14
+		self.x_basset.fire_mode_data = {
+			fire_rate = 0.18018018018018
+		}
+		self.x_basset.stats = {
+			concealment = 25,
+			suppression = 11,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 11,
+			recoil = 6,
+			value = 1,
+			alert_size = 7,
+			damage = 40,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_basset.AMMO_MAX = 96
+		self.x_basset.primary_class = "class_shotgun"
+		self.x_basset.AMMO_PICKUP = {
+			6,
+			7
+		}
+		self.x_basset.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_basset.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
 
+		
 	--------------------------------------
 		--Marksman Rifles--
 	--------------------------------------
