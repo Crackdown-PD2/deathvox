@@ -6568,7 +6568,60 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 0
 	--Pickup: 4, 8
 	--Notes: 
-
+	
+		self.x_ppk.CLIP_AMMO_MAX = 28
+		self.x_ppk.fire_mode_data = {
+			fire_rate = 0.125
+		}
+		self.x_ppk.stats = {
+			concealment = 35,
+			suppression = 0,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 26,
+			value = 1,
+			alert_size = 7,
+			damage = 20,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_ppk.AMMO_MAX = 168
+		self.x_ppk.primary_class = "precision"
+		self.x_ppk.AMMO_PICKUP = {
+			4,
+			8
+		}
+		self.x_ppk.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_ppk.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+		
 	--------------------------------------
 				--Akimbo Chimano 88--
 	--------------------------------------
@@ -6586,6 +6639,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 3, 6
 	--Notes: 
 
+
+
 	--------------------------------------
 				--Akimbo M13 9mm--
 	--------------------------------------
@@ -6602,7 +6657,60 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
-
+	
+		self.x_legacy.CLIP_AMMO_MAX = 26
+		self.x_legacy.fire_mode_data = {
+			fire_rate = 0.11009174311927
+		}
+		self.x_legacy.stats = {
+			concealment = 30,
+			suppression = 4,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 22,
+			recoil = 13,
+			value = 1,
+			alert_size = 7,
+			damage = 50,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_legacy.AMMO_MAX = 300
+		self.x_legacy.primary_class = "precision"
+		self.x_legacy.AMMO_PICKUP = {
+			3,
+			6
+		}
+		self.x_legacy.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_legacy.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+		
 	--------------------------------------
 				--Akimbo Chimano Compact--
 	--------------------------------------
