@@ -2,10 +2,93 @@
 
 Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
+	
+	--replaces skills by position in the skilltree
+	--without having to look up the name (even you could just do it by list of names)
+	--usage:
+		--tree_index: the index of the tree [num 1-15]
+			--with 1-3 being the mastermind subtrees in vanilla,
+			--4-6 being enforcer,
+			--7-9 technician,
+			--10-12 ghost,
+			--13-15 fugitive
+		--skill_position: the position of the skill in the tree. [num 1-6]
+			--visually, position numbers are situated as follows:
+			--    6
+			--  4   5
+			--  2   3
+			--    1
+		--data: the skill data with upgrades etc that you're replacing existing values with [table]
+		
+		local function replace_skill(tree_index,position_index,data)
+			data = data or {}
+			local position_data = {
+				{1,1},
+				{2,1},
+				{2,2},
+				{3,1},
+				{3,2},
+				{4,1}
+			}
+			local tier,slot = unpack(position_data[position_index]) 
+			
+			local tree_data = self.trees[tree_index]
+			if not tree_data then 
+				log("deathvox: ERROR! Invalid replaced tree index " .. tostring(tree_index) .. " in skilltreetweakdata:local function replace_skill(tree_index " .. tostring(tree_index) .. ", position_index " .. tostring(position_index) .. ", data " .. table.concat(data,"=") .. ")")
+				return
+			end
+			local tier_data = tree_data.tiers[tier]
+			if not tier_data then 
+				log("deathvox: ERROR! Invalid replaced skill tier " .. tostring(tier) .. " in skilltreetweakdata:local function replace_skill(tree_index " .. tostring(tree_index) .. ", position_index " .. tostring(position_index) .. ", data " .. table.concat(data,"=") .. ")")
+				return
+			end
+			local skill_name = tier_data[slot]
+			if not skill_name then 
+				log("deathvox: ERROR! Invalid replaced skill slot " .. tostring(slot) .. " in skilltreetweakdata:local function replace_skill(tree_index " .. tostring(tree_index) .. ", position_index " .. tostring(position_index) .. ", data " .. table.concat(data,"=") .. ")")
+				return
+			end
+			self.skills[skill_name] = data
+		end
+	
+		local tree_indices = {
+			boss = 1,
+			marksman = 2,
+			medic = 3,
+			chief = 4,
+			enforcer = 5,
+			heavy = 6,
+			runner = 7,
+			gunner = 8,
+			engineer = 9,
+			thief = 10,
+			assassin = 11,
+			sapper = 12,
+			dealer = 13, 
+			fixer = 14,
+			demolitions = 15
+		}
+		
+		self.trees[1].name_id = "st_menu_dallas_boss"
+		self.trees[2].name_id = "st_menu_dallas_marksman"
+		self.trees[3].name_id = "st_menu_dallas_medic"
+		self.trees[4].name_id = "st_menu_chains_chief"
+		self.trees[5].name_id = "st_menu_chains_enforcer"
+		self.trees[6].name_id = "st_menu_chains_heavy"
+		self.trees[7].name_id = "st_menu_wolf_runner"
+		self.trees[8].name_id = "st_menu_wolf_gunner"
+		self.trees[9].name_id = "st_menu_wolf_engineer"
+		self.trees[10].name_id = "st_menu_houston_thief"
+		self.trees[11].name_id = "st_menu_houston_assassin"
+		self.trees[12].name_id = "st_menu_houston_sapper"
+		self.trees[13].name_id = "st_menu_hoxton_dealer"
+		self.trees[14].name_id = "st_menu_hoxton_fixer"
+		self.trees[15].name_id = "st_menu_hoxton_demolitionist"
+		
+		
 		--Boss
 		
 		--Marksman
-		self.skills.point_and_click = { --Point and Click
+		replace_skill(tree_indices.marksman,1,{ --Point and Click
 			{
 				upgrades = {
 					"player_point_and_click_basic",
@@ -25,9 +108,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				8,
 				1
 			}
-		}
-		
-		self.skills.tap_the_trigger = { --Tap the Trigger
+		})
+		replace_skill(tree_indices.marksman,2,{ --Tap the Trigger
 			{
 				upgrades = {
 					"weapon_tap_the_trigger_basic"
@@ -46,9 +128,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				8,
 				5
 			}
-		}
-		
-		self.skills.investment_returns = { --Investment Returns
+		})
+		replace_skill(tree_indices.marksman,3,{ --Investment Returns
 			{
 				upgrades = {
 					"player_investment_returns_basic"
@@ -67,9 +148,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				7,
 				11
 			}
-		}
-		
-		self.skills.this_machine = { --This Machine
+		})
+		replace_skill(tree_indices.marksman,4,{ --This Machine
 			{
 				upgrades = {
 					"weapon_this_machine_basic"
@@ -88,9 +168,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				1,
 				9
 			}
-		}
-		
-		self.skills.mulligan = { --Mulligan
+		})
+		replace_skill(tree_indices.marksman,5,{ --Mulligan
 			{
 				upgrades = {
 					"player_mulligan_basic"
@@ -109,9 +188,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				0,
 				11
 			}
-		}
-		
-		self.skills.magic_bullet = { --Magic Bullet
+		})
+		replace_skill(tree_indices.marksman,6,{ --Magic Bullet
 			{
 				upgrades = {
 					"weapon_magic_bullet_basic"
@@ -130,7 +208,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				8,
 				4
 			}
-		}
+		})
 		
 		--Medic
 		
@@ -138,7 +216,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		
 		--Enforcer
 		
-		self.skills.tender_meat = { --Tender Meat
+		replace_skill(tree_indices.enforcer,1,{ --Tender Meat
 			{
 				upgrades = {
 					"class_weapon_tender_meat_bodyshots"
@@ -157,8 +235,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				10,
 				3
 			}
-		}
-		self.skills.heartbreaker = { --Heartbreaker
+		})
+		replace_skill(tree_indices.enforcer,2,{ --Heartbreaker
 			{
 				upgrades = {
 					"class_shotgun_doublebarrel_firemode"
@@ -177,9 +255,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				4,
 				1
 			}
-		}
-		
-		self.skills.shell_games = { --Shell Games
+		})
+		replace_skill(tree_indices.enforcer,3,{ --Shell Games
 			{
 				upgrades = {
 					"class_shotgun_shell_games_reload_bonus"
@@ -198,8 +275,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				4,
 				1
 			}
-		}
-		self.skills.rolling_thunder = { --Rolling Thunder
+		})
+		replace_skill(tree_indices.enforcer,4,{ --Rolling Thunder
 			{
 				upgrades = {
 					"class_shotgun_rolling_thunder_magazine_size_1"
@@ -218,8 +295,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				8,
 				7
 			}
-		}
-		self.skills.point_blank = { --Point Blank
+		})
+		replace_skill(tree_indices.enforcer,5,{ --Point Blank
 			{
 				upgrades = {
 					"class_shotgun_point_blank_shotgun_basic"
@@ -238,9 +315,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				4,
 				1
 			}
-		}
-		
-		self.skills.shotmaker = { --Shotmaker
+		})
+		replace_skill(tree_indices.enforcer,6,{ --Shotmaker
 			{
 				upgrades = {
 					"class_shotgun_shotmaker_headshot_damage_bonus_1"
@@ -259,15 +335,136 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				6,
 				11
 			}
-		}
+		})
 		
 		--Heavy
 		
 		--Runner
 		
+		replace_skill(tree_indices.runner,1,{ --Hustle
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_hustle",
+			desc_id = "menu_hustle_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		replace_skill(tree_indices.runner,2,{ --Float Like A Butterfly
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_butterfly_bee",
+			desc_id = "menu_butterfly_bee_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		replace_skill(tree_indices.runner,3,{ --Heave-Ho
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_heave_ho",
+			desc_id = "menu_heave_ho_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		replace_skill(tree_indices.runner,4,{ --Mobile Offense
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_mobile_offense",
+			desc_id = "menu_mobile_offense_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		replace_skill(tree_indices.runner,5,{ --Escape Plan
+			{
+				upgrades = {
+					--rip old tf2 escape plan. you were too good for this world
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_escape_plan",
+			desc_id = "menu_escape_plan_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		replace_skill(tree_indices.runner,6,{ --Leg Day Enthusiast
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_leg_day",
+			desc_id = "menu_leg_day_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		
 		--Gunner
 		
-		self.skills.spray_and_pray = { --Spray and Pray
+		replace_skill(tree_indices.gunner,1,{ --Spray and Pray
 			{
 				upgrades = {
 					"weapon_spray_and_pray_basic"
@@ -286,30 +483,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				7,
 				0
 			}
-		}
-		
-		self.skills.shot_grouping = { --Shot Grouping
-			{
-				upgrades = {
-					"rapidfire_shotgrouping_basic"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"rapidfire_shotgrouping_aced"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_shot_grouping",
-			desc_id = "menu_shot_grouping_desc",
-			icon_xy = {
-				9,
-				11
-			}
-		}
-		
-		self.skills.money_shot = { --Money Shot
+		})
+		replace_skill(tree_indices.gunner,2,{ --Money Shot
 			{
 				upgrades = {
 					"weapon_moneyshot_rapid_fire_basic"
@@ -328,9 +503,48 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				0,
 				6
 			}
-		}
-		
-		self.skills.making_miracles = { --Making Miracles
+		})
+		replace_skill(tree_indices.gunner,3,{ --Shot Grouping
+			{
+				upgrades = {
+					"rapidfire_shotgrouping_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"rapidfire_shotgrouping_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_shot_grouping",
+			desc_id = "menu_shot_grouping_desc",
+			icon_xy = {
+				9,
+				11
+			}
+		})
+		replace_skill(tree_indices.gunner,4,{ --Close Enough
+			{
+				upgrades = {
+					"player_ricochet_rapid_fire_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_ricochet_rapid_fire_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_close_enough",
+			desc_id = "menu_close_enough_desc",
+			icon_xy = {
+				10,
+				2
+			}
+		})
+		replace_skill(tree_indices.gunner,5,{ --Making Miracles
 			{
 				upgrades = {
 					"weapon_making_miracles_basic",
@@ -351,30 +565,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				0,
 				12
 			}
-		}
-			
-		self.skills.close_enough = { --Close Enough
-			{
-				upgrades = {
-					"player_ricochet_rapid_fire_basic"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"player_ricochet_rapid_fire_aced"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_close_enough",
-			desc_id = "menu_close_enough_desc",
-			icon_xy = {
-				10,
-				2
-			}
-		}
-		
-		self.skills.prayers_answered = { --Prayers Answered
+		})
+		replace_skill(tree_indices.gunner,6,{ --Prayers Answered
 			{
 				upgrades = {
 					"weapon_prayers_answered_basic"
@@ -393,12 +585,11 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				2,
 				9
 			}
-		}
-		
+		})
 		
 		--Engineer
 		
-		self.skills.digging_in = { --Digging In
+		replace_skill(tree_indices.engineer,1,{ --Digging In
 			{
 				upgrades = {
 					"player_digging_in_deploy_time",
@@ -418,9 +609,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				9,
 				0
 			}
-		}
-
-		self.skills.advanced_rangefinder = { --Advanced Rangefinder
+		})
+		replace_skill(tree_indices.engineer,2,{ --Advanced Rangefinder
 			{
 				upgrades = {
 					"sentry_gun_advanced_rangefinder_basic"
@@ -439,9 +629,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				1,
 				6
 			}
-		}
-
-		self.skills.targeting_matrix = { --Targeting Matrix
+		})
+		replace_skill(tree_indices.engineer,3,{ --Targeting Matrix
 			{
 				upgrades = {
 					"sentry_gun_targeting_matrix_basic"
@@ -460,9 +649,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				1,
 				6
 			}
-		}
-
-		self.skills.wrangler = { --Wrangler
+		})
+		replace_skill(tree_indices.engineer,4,{ --Wrangler
 			{
 				upgrades = {
 					"sentry_gun_wrangler_basic"
@@ -481,9 +669,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				1,
 				6
 			}
-		}
-		
-		self.skills.hobarts_funnies = { --Hobart's Funnies
+		})
+		replace_skill(tree_indices.engineer,5,{ --Hobart's Funnies
 			{
 				upgrades = {
 					"sentry_gun_hobarts_funnies_basic"
@@ -502,9 +689,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				1,
 				6
 			}
-		}
-		
-		self.skills.killer_machines = { --Killer Machines
+		})
+		replace_skill(tree_indices.engineer,6,{ --Killer Machines
 			{
 				upgrades = {
 					"sentry_gun_killer_machines"
@@ -523,13 +709,13 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				9,
 				5
 			}
-		}
+		})
 		
 		--Thief
 		
 		--Assassin
 		
-		self.skills.backstab = { --professional's choice
+		replace_skill(tree_indices.assassin,1,{ --professional's choice
 			{
 				upgrades = {
 					"player_professionalschoice_basic"
@@ -548,8 +734,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				0,
 				12
 			}
-		}
-		
+		})
+
 		--Sapper
 		
 		--Dealer
@@ -559,324 +745,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		--Demolitions
 
 --skilltrees; eventually this will override the whole trees table instead of selectively replacing by index
---[[
-		self.trees[1] = { -- boss
-			skill = "mastermind",
-			name_id = "st_menu_dallas_boss",
-			unlocked = true,
-			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
-			tiers = {
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				}
-			}
-		}
-	
-		self.trees[3] = { -- medic
-			skill = "mastermind",
-			name_id = "st_menu_dallas_medic",
-			unlocked = true,
-			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
-			tiers = {
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				}
-			}
-		}
-		self.trees[4] = { -- chief
-			skill = "enforcer",
-			name_id = "st_menu_chains_chief",
-			unlocked = true,
-			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
-			tiers = {
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				}
-			}
-		}
 
-		self.trees[6] = { -- heavy
-			skill = "enforcer",
-			name_id = "st_menu_chains_heavy",
-			unlocked = true,
-			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
-			tiers = {
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				}
-			}
-		}
-		self.trees[7] = { -- runner
-			skill = "technician",
-			name_id = "st_menu_wolf_runner",
-			unlocked = true,
-			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
-			tiers = {
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				}
-			}
-		}
-
-		self.trees[10] = { -- thief
-			skill = "ghost",
-			name_id = "st_menu_houston_thief",
-			unlocked = true,
-			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
-			tiers = {
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				}
-			}
-		}
-		self.trees[11] = { -- assassin
-			skill = "ghost",
-			name_id = "st_menu_houston_assassin",
-			unlocked = true,
-			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
-			tiers = {
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				}
-			}
-		}
-		self.trees[12] = { -- sapper
-			skill = "ghost",
-			name_id = "st_menu_houston_sapper",
-			unlocked = true,
-			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
-			tiers = {
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				}
-			}
-		}
-		self.trees[13] = { -- dealer
-			skill = "fugitive",
-			name_id = "st_menu_hoxton_dealer",
-			unlocked = true,
-			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
-			tiers = {
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				}
-			}
-		}
-		self.trees[14] = { -- fixer
-			skill = "fugitive",
-			name_id = "st_menu_hoxton_fixer",
-			unlocked = true,
-			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
-			tiers = {
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				}
-			}
-		}
-		self.trees[15] = { -- demolitions
-			skill = "fugitive",
-			name_id = "st_menu_hoxton_demolitions",
-			unlocked = true,
-			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
-			tiers = {
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				},
-				{
-					""
-				}
-			}
-		}
---]]
-		self.trees[2] = { ---marksman
-			skill = "mastermind",
-			name_id = "st_menu_dallas_marksman",
-			unlocked = true,
-			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
-			tiers = {
-				{
-					"point_and_click"
-				},
-				{
-					"tap_the_trigger",
-					"investment_returns"
-				},
-				{
-					"this_machine",
-					"mulligan"
-				},
-				{
-					"magic_bullet"
-				}
-			}
-		}
-		self.trees[5] = { --enforcer
-			skill = "enforcer",
-			name_id = "st_menu_chains_enforcer",
-			unlocked = true,
-			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
-			tiers = {
-				{
-					"tender_meat"
-				},
-				{
-					"heartbreaker",
-					"shell_games"
-				},
-				{
-					"rolling_thunder",
-					"point_blank"
-				},
-				{
-					"shotmaker"
-				}
-			}
-			
-		}
-		
-		self.trees[8] = { --gunner
-			skill = "technician",
-			name_id = "st_menu_wolf_gunner",
-			unlocked = true,
-			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
-			tiers = {
-				{
-					"spray_and_pray"
-				},
-				{
-					"money_shot",
-					"shot_grouping"
-				},
-				{
-					"close_enough",
-					"making_miracles"
-				},
-				{
-					"prayers_answered"
-				}
-			}
-		}
-		
-		self.trees[7] = { --should be 9 when the other subtrees are done
-			skill = "technician",
-			name_id = "st_menu_wolf_engineer",
-			unlocked = true,
-			background_texture = "guis/textures/pd2/skilltree/bg_mastermind",
-			tiers = {
-				{
-					"digging_in"
-				},
-				{
-					"advanced_rangefinder",
-					"targeting_matrix"
-				},
-				{
-					"wrangler",
-					"hobarts_funnies"
-				},
-				{
-					"killer_machines"
-				}
-			}
-		}
-
-		
+		--add flashbang resistance to default upgrades
+		table.insert(self.default_upgrades,"player_flashbang_multiplier_1")
+		table.insert(self.default_upgrades,"player_flashbang_multiplier_2")
 		--add sentry targeting basic/aced to default upgrades
 		table.insert(self.default_upgrades,"sentry_gun_spread_multiplier")
 		table.insert(self.default_upgrades,"sentry_gun_extra_ammo_multiplier_1")

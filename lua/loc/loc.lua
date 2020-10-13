@@ -50,7 +50,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				st_menu_hoxton_fixer = "Fixer",
 				st_menu_hoxton_demolitionist = "Demolitionist",
 				
-				--marksman
+			--marksman
 				menu_point_and_click = "Point and Click",
 				menu_point_and_click_desc = "BASIC: ##$basic##\nPrecision Weapons gain ##+1%## Damage per hit, up to ##500%##. All stacks are lost upon missing.\n\nACE: ##$pro##\nPrecision Weapons ADS ##90%## faster.",
 				menu_tap_the_trigger = "Tap the Trigger",
@@ -66,7 +66,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 			
 
 				
-				--gunner
+			--gunner
 				menu_spray_and_pray = "Spray & Pray",
 				menu_spray_and_pray_desc = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles gain ##+10%## Critical Hit chance.\n\nACE: ##$pro##\nYour ranged weapons can now ##pierce Body Armor.##",
 				menu_money_shot = "Money Shot",
@@ -84,8 +84,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				["menu_backstab_beta"] = "Professional's Choice",
 				["menu_backstab_beta_desc"] = "BASIC: ##$basic##\nSilenced Weapons gain a ##+2% Fire Rate bonus## for every ##3## points of Detection Risk under ##35##, up to ##+10%##.\n\nACE: ##$pro##\nThe Fire Rate bonus is increased to ##+4%## and the maximum bonus is increased to ##+20%##.",
 				
-				--enforcer
-				--"BASIC: ##$basic##\n               \n\nACE: ##$pro##\n               "
+			--enforcer
 				menu_tender_meat = "Tender Meat",
 				menu_tender_meat_desc = "BASIC: ##$basic##\nShotguns deal ##50%## of their Headshot damage on Body Shots against Non-Dozer enemies.\n\nACE: ##$pro##\nShotguns gain ##+40## Stability.",
 				menu_heartbreaker = "Heartbreaker",
@@ -99,8 +98,27 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_shotmaker = "Shotmaker",
 				menu_shotmaker_desc = "BASIC: ##$basic##\nIncreases Shotgun Headshot Damage by ##+50%##.\n\nACE: ##$pro##\nShotgun Headshot Damage is increased by an additional ##+50%##, for a total of ##+100%##.",
 				
+			--runner
+				menu_hustle = "Hustle",
+				menu_hustle_desc = "NOT YET IMPLEMENTED",
+				--"BASIC: ##$basic##\nYou can Sprint in any direction.\n\nACE: ##$pro##\nYour Stamina starts regenerating ##25%## earlier and ##+25%## faster."
+				menu_butterfly_bee = "Float Like A Butterfly",
+				menu_butterfly_bee_desc = "NOT YET IMPLEMENTED",
+				--"BASIC: ##$basic##\nMelee Weapons can be swung and charged while Sprinting.\n\nACE: ##$pro##\nMelee Weapon damage increases your Movement Speed by ##+10%## for ##4## seconds."
+				menu_heave_ho = "Heave-Ho",
+				menu_heave_ho_desc = "NOT YET IMPLEMENTED",
+				--"BASIC: ##$basic##\nYou throw Bags ##50%## farther.\n\nACE: ##$pro##\nYour Movement Speed Penalty for carrying a Bag is reduced by ##20%##."
+				menu_mobile_offense = "Mobile Offense",
+				menu_mobile_offense_desc = "NOT YET IMPLEMENTED",
+				--"BASIC: ##$basic##\nYou can now Reload while Sprinting.\n\nACE: ##$pro##\nYou can now hip-fire weapons while Sprinting."
+				menu_escape_plan = "Escape Plan",
+				menu_escape_plan_desc = "NOT YET IMPLEMENTED",
+				--"BASIC: ##$basic##\nWhen your Armor breaks, you gain ##100%## of your Stamina and gain ##+25%## Sprint Speed for ##4## seconds.\n\nACE: ##$pro##\nYou also gain ##+20%## Movement Speed for 4 seconds."
+				menu_leg_day = "Leg Day Enthusiast",
+				menu_leg_day_desc = "NOT YET IMPLEMENTED",
+				--"BASIC: ##$basic##\nYou gain ##+10%## Movement Speed and ##+25%## Sprint Speed.\n\nACE: ##$pro##\nCrouching no longer reduces your Movement Speed."
 				
-				--engineer
+			--engineer
 				menu_digging_in = "Digging In",
 				menu_digging_in_desc = "BASIC: ##$basic##\nYou deploy and retrieve Sentry Guns ##90%## faster.\n\nACE: ##$pro##\nYour Sentry Guns become armored, rendering them almost completely invulnerable.",
 				menu_advanced_rangefinder = "Advanced Rangefinder",
