@@ -725,4 +725,14 @@
 	<unit_mat_seq path="units/pd2_mod_classic/characters/ene_acc_classic_helmet/ene_acc_classic_helmet" load="true"/>
 	<cooked_physics path="units/pd2_mod_classic/characters/ene_acc_classic_helmet/ene_acc_classic_helmet" force="false"/>					
 	
+	
+	<!-- TOTAL CRACKDOWN Armor Plates -->
+	<unit load="true"    path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
+	<unit load="true"    path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag_dummy"/>
+	<object                path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
+	<model                path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
+	<material_config    path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
+	<sequence_manager    path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
+	
+	
 </table>

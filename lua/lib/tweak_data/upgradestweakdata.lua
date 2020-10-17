@@ -2,6 +2,9 @@
 
 Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_data)
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
+		self.armor_plates_base = 4
+		self.armor_plates_dmg_reduction = 0.85 -- damage_applied = kevlar_plates_dmg_reduction * incoming_damage, so eg. 0.9 = 10% damage reduction
+	
 	--weapon classification categories
 		self.values.NO_WEAPON_CLASS = {} --addresses weapons whose weapon class has not been implemented
 		self.values.rapidfire = self.values.rapidfire or {}

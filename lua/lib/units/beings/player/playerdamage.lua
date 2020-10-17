@@ -733,3 +733,22 @@ function PlayerDamage:damage_explosion(attack_data)
 	pm:send_message(Message.OnPlayerDamage, nil, attack_data)
 	self:_call_listeners(damage_info)
 end
+
+
+Hooks:PostHook(PlayerDamage,"init","tcd_post_playerdamage_init",function(self,unit)
+	self._listener_holder:add("on_bleedout_remove_armor_plates_bonus",{"on_enter_bleedout"},callback(self,self,"remove_armor_plates_bonus"))
+end)
+
+--tcd only
+function PlayerDamage:has_armor_plates_bonus()
+	return managers.player:get_property("armor_plates_active")
+end
+
+function PlayerDamage:acquire_armor_plates_bonus()
+	managers.player:set_property("armor_plates_active",true)
+	self:restore_armor(self:_max_armor())
+end
+
+function PlayerDamage:remove_armor_plates_bonus()
+	managers.player:set_property("armor_plates_active",false)
+end

@@ -24,6 +24,70 @@ function PlayerManager:_chk_fellow_crimin_proximity(unit)
 end
 
 if deathvox:IsTotalCrackdownEnabled() then
+	function PlayerManager:check_equipment_placement_valid(player, equipment)
+		local equipment_data = managers.player:equipment_data_by_name(equipment)
+
+		if not equipment_data then
+			return false
+		end
+
+		if equipment_data.equipment == "trip_mine" or equipment_data.equipment == "ecm_jammer" then
+			return player:equipment():valid_look_at_placement(tweak_data.equipments[equipment_data.equipment]) and true or false
+		elseif equipment_data.equipment == "sentry_gun" or equipment_data.equipment == "ammo_bag" or equipment_data.equipment == "sentry_gun_silent" or equipment_data.equipment == "doctor_bag" or equipment_data.equipment == "first_aid_kit" or equipment_data.equipment == "bodybags_bag" then
+			return player:equipment():valid_shape_placement(equipment_data.equipment, tweak_data.equipments[equipment_data.equipment]) and true or false
+		elseif equipment_data.equipment == "armor_kit" then
+			return player:equipment():valid_shape_placement(equipment_data.equipment,tweak_data.equipments[equipment_data.equipment]) and true or false
+		end
+
+		return player:equipment():valid_placement(tweak_data.equipments[equipment_data.equipment]) and true or false
+	end
+
+
+	function PlayerManager:damage_reduction_skill_multiplier(damage_type)
+		local multiplier = 1
+		multiplier = multiplier * self:temporary_upgrade_value("temporary", "dmg_dampener_outnumbered", 1)
+		multiplier = multiplier * self:temporary_upgrade_value("temporary", "dmg_dampener_outnumbered_strong", 1)
+		multiplier = multiplier * self:temporary_upgrade_value("temporary", "dmg_dampener_close_contact", 1)
+		multiplier = multiplier * self:temporary_upgrade_value("temporary", "revived_damage_resist", 1)
+		multiplier = multiplier * self:upgrade_value("player", "damage_dampener", 1)
+		multiplier = multiplier * self:upgrade_value("player", "health_damage_reduction", 1)
+		multiplier = multiplier * self:temporary_upgrade_value("temporary", "first_aid_damage_reduction", 1)
+		multiplier = multiplier * self:temporary_upgrade_value("temporary", "revive_damage_reduction", 1)
+		multiplier = multiplier * self:get_hostage_bonus_multiplier("damage_dampener")
+		multiplier = multiplier * self._properties:get_property("revive_damage_reduction", 1)
+		multiplier = multiplier * self._temporary_properties:get_property("revived_damage_reduction", 1)
+		if self:get_property("armor_plates_active") then 
+			--this is the only change atm
+			multiplier = multiplier * tweak_data.upgrades.armor_plates_dmg_reduction
+		end
+		local dmg_red_mul = self:team_upgrade_value("damage_dampener", "team_damage_reduction", 1)
+
+
+		if self:has_category_upgrade("player", "passive_damage_reduction") then
+			local health_ratio = self:player_unit():character_damage():health_ratio()
+			local min_ratio = self:upgrade_value("player", "passive_damage_reduction")
+
+			if health_ratio < min_ratio then
+				dmg_red_mul = dmg_red_mul - (1 - dmg_red_mul)
+			end
+		end
+
+		multiplier = multiplier * dmg_red_mul
+
+		if damage_type == "melee" then
+			multiplier = multiplier * managers.player:upgrade_value("player", "melee_damage_dampener", 1)
+		end
+
+		local current_state = self:get_current_state()
+
+		if current_state and current_state:_interacting() then
+			multiplier = multiplier * managers.player:upgrade_value("player", "interacting_damage_multiplier", 1)
+		end
+
+
+		return multiplier
+	end
+
 	Hooks:PostHook(PlayerManager,"check_skills","deathvox_check_cd_skills",function(self)
 		if self:has_category_upgrade("class_shotgun","shell_games_reload_bonus") then
 			self:set_property("shell_games_rounds_loaded",0)

@@ -26,4 +26,20 @@ if deathvox:IsTotalCrackdownEnabled() then
 			SentryControlMenu.button_held_state = nil
 		end
 	end
+	
+	ArmorPlatesBaseInteractionExt = ArmorPlatesBaseInteractionExt or class(UseInteractionExt)
+	function ArmorPlatesBaseInteractionExt:_interact_blocked(player)
+		return managers.player:get_property("armor_plates_active")--,false,"already_has_armor_plates"
+	end
+	
+	function ArmorPlatesBaseInteractionExt:interact(player)
+		ArmorPlatesBaseInteractionExt.super.super.interact(self,player)
+		local interacted = self._unit:base():take(player)
+		if interacted then 
+			--managers.player:send_message(Message.OnArmorPlateUsed,nil,player)
+			--no current plans to that would require setting up a listener
+		end
+		return interacted
+	end
+	
 end
