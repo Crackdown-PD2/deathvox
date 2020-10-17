@@ -3921,3 +3921,28 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_upg_ass_m4_lower_reciever_core.stats = {value = 1}	
 	end
 end)
+
+--Removes all weapon mod stats from weapon mods without the .supported flag.
+--Has patchy support for custom weapons, but generally works on all vanilla stuff to my knowledge.
+Hooks:PostHook( WeaponFactoryTweakData, "create_bonuses", "strip_mod_stats", function(self)
+	if deathvox:IsTotalCrackdownEnabled() then
+		for _, part in pairs(self.parts) do
+			if not part.supported and part.stats then
+				--Logs for debugging. Remove if wanted for slightly better performance in loading screens.
+				if part.name_id then
+					log("Removing stats from: " .. part.name_id)
+				else
+					log("Removing stats from: Unknown Mod")
+				end
+
+				--Preserve cosmetic part stats.
+				part.stats = {
+					value = part.stats.value,
+					zoom = part.stats.zoom,
+					gadget_zoom = part.stats.gadget_zoom
+				}
+				part.custom_stats = nil
+			end
+		end
+	end
+end)
