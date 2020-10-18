@@ -1,0 +1,9 @@
+ContourExt._types.mark_enemy.fadeout = 60
+ContourExt._types.mark_enemy.fadeout_silent = 60
+ContourExt._types.mark_unit_dangerous.fadeout = 60
+ContourExt._types.mark_unit_dangerous_damage_bonus.fadeout = 60
+ContourExt._types.mark_unit_dangerous_damage_bonus_distance.fadeout = 60
+ContourExt._types.mark_enemy_damage_bonus.fadeout = 60
+ContourExt._types.mark_enemy_damage_bonus.fadeout_silent = 60
+ContourExt._types.mark_enemy_damage_bonus_distance.fadeout = 60
+ContourExt._types.mark_enemy_damage_bonus_distance.fadeout_silent = 60
