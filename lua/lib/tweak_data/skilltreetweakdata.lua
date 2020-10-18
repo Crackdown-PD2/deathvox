@@ -749,6 +749,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		--add flashbang resistance to default upgrades
 		table.insert(self.default_upgrades,"player_flashbang_multiplier_1")
 		table.insert(self.default_upgrades,"player_flashbang_multiplier_2")
+		table.insert(self.default_upgrades,"body_armor6") --ictv
 		--add sentry targeting basic/aced to default upgrades
 		table.insert(self.default_upgrades,"sentry_gun_spread_multiplier")
 		table.insert(self.default_upgrades,"sentry_gun_extra_ammo_multiplier_1")
