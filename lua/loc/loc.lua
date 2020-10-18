@@ -137,7 +137,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				hud_action_taking_armor_plates = "Taking Armor Plates...",
 				menu_equipment_armor_kit = "Armor Plates",
 				bm_equipment_armor_kit = "Armor Plates Bag",
-				bm_equipment_armor_kit_desc = "Place the Armor Plates Bag by holding $BTN_USE_ITEM. Once placed it cannot be moved, but it can be used by you and your crew by holding $BTN_INTERACT. Using the Armor Plates Bag will grant 15% damage resistance to the player. This effect is lost upon going down.\n\nYou cannot use the Armor Plates Bag while you already have its effect active.\nThe Armor Plates Bag can only be used four times. When the Armor Plates Bag is consumed, it disappears. You can see how many uses are left by looking at the Armor Plates Bag.\n\nThe Armor Plates Bag represents the latest in cutting-edge bullet-resistant ceramic armor plating, developed by GenSec and \"liberated\" by the PAYDAY Gang during one of their bank escapades."
+				bm_equipment_armor_kit_desc = "Advanced shock-resistant armor inserts that provide +15% Damage Resistance and allow the user to go down one additional time before instantly being taken into custody. To use, hold $BTN_USE_ITEM on a suitable surface and press $BTN_INTERACT to equip.\n\nOnce deployed, the Armor Plates Bag can be used 4 times before disappearing. Remaining uses are visible within the bag."
 			})
 		end
 		loc:add_localized_strings({
