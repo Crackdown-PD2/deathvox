@@ -160,7 +160,11 @@ function CharacterTweakData:get_ai_group_type()
 	--map_faction_override["des"] = "murky"
 	
 	--Reaper faction overrides begin here.
+	  map_faction_override["mad"] = "russia"		
 	--Federales faction overrides begin here.
+	  map_faction_override["bex"] = "federales"	
+	--map_faction_override["skm_bex"] = "federales"	
+	--map_faction_override["pex"] = "federales"		
 	--Halloween overrides begin here.
   
 	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)

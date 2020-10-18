@@ -86,10 +86,19 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 	self.skm_red2.package = {"packages/dlcs/skm/job_skm", "packages/deathvoxclassics"}
 	
 	map_faction_override["bank"] = "classic"
-	-- Murkywater Heists	
+	--Murky faction overrides begin here. Uncomment to apply the Murkywater faction on the Whitehouse, Henry's Rock, and Beneath the Mountain heists.
 	--map_faction_override["pbr"] = "murky"
 	--map_faction_override["vit"] = "murky"
 	--map_faction_override["des"] = "murky"
+	
+	--Reaper faction overrides begin here.
+	  map_faction_override["mad"] = "russia"		
+	--Federales faction overrides begin here.
+	  map_faction_override["bex"] = "federales"	
+	--map_faction_override["skm_bex"] = "federales"	
+	--map_faction_override["pex"] = "federales"		
+	--Halloween overrides begin here.
+	
 	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
 	if diff_index <= 3 then
 		group_to_use = "cop"
