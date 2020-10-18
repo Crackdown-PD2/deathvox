@@ -5,6 +5,11 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		self.armor_plates_base = 4 --armor plates deployable
 		self.armor_plates_dmg_reduction = 0.85 -- damage_applied = kevlar_plates_dmg_reduction * incoming_damage, so eg. 0.9 = 10% damage reduction
 	
+		
+		self.values.player.revive_damage_reduction = {
+			0.5 --up from vanilla 30% reduction
+		}
+		
 		self.values.player.body_armor.armor = {
 			0,
 			3,

@@ -744,16 +744,39 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		
 		--Demolitions
 
---skilltrees; eventually this will override the whole trees table instead of selectively replacing by index
-
-		--add flashbang resistance to default upgrades
-		table.insert(self.default_upgrades,"player_flashbang_multiplier_1")
-		table.insert(self.default_upgrades,"player_flashbang_multiplier_2")
-		table.insert(self.default_upgrades,"body_armor6") --ictv
-		--add sentry targeting basic/aced to default upgrades
-		table.insert(self.default_upgrades,"sentry_gun_spread_multiplier")
-		table.insert(self.default_upgrades,"sentry_gun_extra_ammo_multiplier_1")
-		table.insert(self.default_upgrades,"sentry_gun_rot_speed_multiplier")
+		
+		local more_default_upgrades = {
+			--flashbang resistance
+			"player_flashbang_multiplier_1",
+			"player_flashbang_multiplier_2",
+			
+			--ICTV access
+			"body_armor6",
+			
+			--die hard basic (damage resist when interacting)
+			"player_interacting_damage_multiplier",
+			
+			--cable tie speed
+			"cable_tie_interact_speed_multiplier",
+			--(cable tie amount is in equipmentstweakdata)
+			
+			--can purchase preplanning assets (sixth sense aced)
+			"player_buy_bodybags_asset",
+			"player_additional_assets",
+			"player_buy_spotter_asset",
+			
+			--damage reduction when reviving teammate
+			"player_revive_damage_reduction_1",
+			
+			--sentry targeting basic/aced 
+			"sentry_gun_spread_multiplier",
+			"sentry_gun_extra_ammo_multiplier_1",
+			"sentry_gun_rot_speed_multiplier"
+		}
+		
+		for _,upgrade_name in pairs(more_default_upgrades) do 
+			table.insert(self.default_upgrades,upgrade_name)
+		end
 	end
 end)
 
