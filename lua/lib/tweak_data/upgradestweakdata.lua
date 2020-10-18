@@ -2,8 +2,57 @@
 
 Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_data)
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
-		self.armor_plates_base = 4
+		self.armor_plates_base = 4 --armor plates deployable
 		self.armor_plates_dmg_reduction = 0.85 -- damage_applied = kevlar_plates_dmg_reduction * incoming_damage, so eg. 0.9 = 10% damage reduction
+	
+		self.values.player.body_armor.armor = {
+			0,
+			3,
+			4,
+			6,
+			8,
+			12,
+			18
+		}
+		
+		--speed = value / 35
+		self.values.player.body_armor.movement = {
+			1.05, --36.8
+			1.025, --35.9
+			1, --35
+			0.95, --33.3
+			30 / 35, --30
+			25 / 35, --25
+			20 / 35
+		}
+		self.values.player.body_armor.concealment = {
+			30,
+			28,
+			26,
+			24,
+			22,
+			10,
+			1
+		}
+		self.values.player.body_armor.dodge = {
+			0.15,
+			0.05,
+			0,
+			-0.05,
+			-0.3,
+			-0.5,
+			-1
+		}
+		self.values.player.body_armor.damage_shake = {
+			1,
+			0.96,
+			0.92,
+			0.85,
+			0.6125,
+			0.525,
+			0.44
+		}
+		--stamina is unchanged
 	
 	--weapon classification categories
 		self.values.NO_WEAPON_CLASS = {} --addresses weapons whose weapon class has not been implemented
