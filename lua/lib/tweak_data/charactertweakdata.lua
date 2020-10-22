@@ -160,11 +160,13 @@ function CharacterTweakData:get_ai_group_type()
 	--map_faction_override["des"] = "murky"
 	
 	--Reaper faction overrides begin here.
-	  map_faction_override["mad"] = "russia"		
+	  map_faction_override["mad"] = "russia"	
+	  
 	--Federales faction overrides begin here.
 	  map_faction_override["bex"] = "federales"	
-	--map_faction_override["skm_bex"] = "federales"	
-	--map_faction_override["pex"] = "federales"		
+	--map_faction_override["skm_bex"] = "federales"	--not sure about this yet.
+	  map_faction_override["pex"] = "federales"		
+	  
 	--Halloween overrides begin here.
   
 	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
@@ -4226,6 +4228,7 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	--self:_multiply_weapon_delay(self.presets.weapon.gang_member, 0)
 	
 	self.security = deep_clone(self.deathvox_guard) --  Requires further testing. May be fix for heist-specific crash tied to initial custom unit spawn.
+	self.security_mex = deep_clone(self.deathvox_guard) 
 	self.gensec = deep_clone(self.deathvox_guard)
 	
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
@@ -4923,6 +4926,21 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_cop_medic",
 			"ene_deathvox_cop_heavyswatshot",
 			"ene_deathvox_cop_heavyswat"
+		}
+	}				
+	char_map.federales = {
+		path = "units/pd2_mod_federales/characters/",
+		list = {
+			"ene_deathvox_cop_pistol",
+			"ene_deathvox_cop_revolver",
+			"ene_deathvox_cop_smg",
+			"ene_deathvox_cop_shotgun",
+			"ene_deathvox_swat",
+			"ene_deathvox_swatshot",
+			"ene_deathvox_fbi_heavyswat",
+			"ene_deathvox_fbi_heavyswatshot",
+			"ene_deathvox_heavyswat",
+			"ene_deathvox_heavyswatshot"
 		}
 	}				
 	return char_map

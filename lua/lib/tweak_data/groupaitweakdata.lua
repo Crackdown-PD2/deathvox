@@ -724,7 +724,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 				Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol")
 			},			
 			federales = {
-				Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol")
+				Idstring("units/pd2_mod_federales/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol")
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_cop_pistol/ene_deathvox_classic_cop_pistol")
@@ -739,7 +739,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 			gensec = "units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol",
 			zeal = "units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol",
 			murky = "units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol",			
-			federales = "units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol",			
+			federales = "units/pd2_mod_federales/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol",			
 			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_pistol/ene_deathvox_classic_cop_pistol",
 			russia = "units/pd2_mod_cops/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol"
 		},
@@ -763,7 +763,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 				Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver")
 			},			
 			federales = {
-				Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver")
+				Idstring("units/pd2_mod_federales/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver")
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_cop_revolver/ene_deathvox_classic_cop_revolver")
@@ -778,7 +778,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 			gensec = "units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver",
 			zeal = "units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver",
 			murky = "units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver",			
-			federales = "units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver",			
+			federales = "units/pd2_mod_federales/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver",			
 			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_revolver/ene_deathvox_classic_cop_revolver",
 			russia = "units/pd2_mod_cops/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver",
 		},
@@ -802,7 +802,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 				Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun")
 			},			
 			federales = {
-				Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun")
+				Idstring("units/pd2_mod_federales/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun")
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_cop_shotgun/ene_deathvox_classic_cop_shotgun")
@@ -817,7 +817,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 			gensec = "units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun",
 			zeal = "units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun",
 			murky = "units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun",			
-			federales = "units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun",			
+			federales = "units/pd2_mod_federales/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun",			
 			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_shotgun/ene_deathvox_classic_cop_shotgun",
 			russia = "units/pd2_mod_cops/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun"
 		},
@@ -841,7 +841,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 				Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg")
 			},			
 			federales = {
-				Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg")
+				Idstring("units/pd2_mod_federales/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg")
 			},			
 			classic = {
 				Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_cop_smg/ene_deathvox_classic_cop_smg")
@@ -856,7 +856,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 			gensec = "units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg",
 			zeal = "units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg",
 			murky = "units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg",			
-			federales = "units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg",			
+			federales = "units/pd2_mod_federales/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg",			
 			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_smg/ene_deathvox_classic_cop_smg",
 			russia = "units/pd2_mod_cops/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg"			
 		},
@@ -973,7 +973,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 				Idstring("units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat")
 			},
 			federales = {
-				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat")
+				Idstring("units/pd2_mod_federales/characters/ene_deathvox_swat/ene_deathvox_swat")
 			},
 			zeal = {
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar")
@@ -990,7 +990,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 		},
 		unit_type_spawner = {
 			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_swat/ene_deathvox_cop_swat",
-			federales = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat",
+			federales = "units/pd2_mod_federales/characters/ene_deathvox_swat/ene_deathvox_swat",
 			fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_swat/ene_deathvox_fbi_swat",
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar",
@@ -1006,7 +1006,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 					Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat")
 				},
 				federales = {
-					Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat")
+					Idstring("units/pd2_mod_federales/characters/ene_deathvox_heavyswat/ene_deathvox_heavyswat")
 				},
 				fbi = {
 					Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat")
@@ -1029,7 +1029,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 			},
 			unit_type_spawner = {
 				cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat",
-				federales = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat",
+				federales = "units/pd2_mod_federales/characters/ene_deathvox_heavyswat/ene_deathvox_heavyswat",
 				fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat",
 				gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat",
 				zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",
@@ -1046,7 +1046,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 					Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat")
 				},
 				federales = {
-					Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat")
+					Idstring("units/pd2_mod_federales/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat")
 				},
 				fbi = {
 					Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat")
@@ -1070,7 +1070,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 			unit_type_spawner = {
 				cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat",
 				fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat",
-				federales = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat",
+				federales = "units/pd2_mod_federales/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat",
 				gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat",
 				zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",
 				murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar",			
@@ -1089,7 +1089,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot")
 			},
 			federales = {
-				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot")
+				Idstring("units/pd2_mod_federales/characters/ene_deathvox_swatshot/ene_deathvox_swatshot")
 			},
 			gensec = {
 				Idstring("units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot")
@@ -1110,7 +1110,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 		unit_type_spawner = {
 			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_swatshot/ene_deathvox_cop_swatshot",
 			fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot",
-			federales = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_swatshot/ene_deathvox_fbi_swatshot",
+			federales = "units/pd2_mod_federales/characters/ene_deathvox_swatshot/ene_deathvox_swatshot",
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_lightshot/ene_deathvox_lightshot",			
@@ -1129,7 +1129,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 					Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot")
 				},
 				federales = {
-					Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot")
+					Idstring("units/pd2_mod_federales/characters/ene_deathvox_heavyswatshot/ene_deathvox_heavyswatshot")
 				},
 				gensec = {
 					Idstring("units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot")
@@ -1150,7 +1150,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 			unit_type_spawner = {
 				cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot",
 				fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot",
-				federales = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot",
+				federales = "units/pd2_mod_federales/characters/ene_deathvox_heavyswatshot/ene_deathvox_heavyswatshot",
 				gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot",
 				zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",
 				murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",			
@@ -1169,7 +1169,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 					Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot")
 				},
 				federales = {
-					Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot")
+					Idstring("units/pd2_mod_federales/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot")
 				},				
 				gensec = {
 					Idstring("units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot")
@@ -1190,7 +1190,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 			unit_type_spawner = {
 				cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot",
 				fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot",
-				federales = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot",
+				federales = "units/pd2_mod_federales/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot",
 				gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswatshot/ene_deathvox_gensec_heavyswatshot",
 				zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",
 				murky = "units/pd2_mod_gageammo/characters/ene_deathvox_heavyshot/ene_deathvox_heavyshot",			

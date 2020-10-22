@@ -211,8 +211,8 @@ local enemy_replacements = {
 --		["units/pd2_dlc_help/characters/ene_zeal_bulldozer_halloween/ene_zeal_bulldozer_halloween"]	
 
 --federales beat cops
-		-- ["units/pd2_dlc_bex/characters/ene_policia_01/ene_policia_01"] = "deathvox_cop_pistol",
-		-- ["units/pd2_dlc_bex/characters/ene_policia_02/ene_policia_02"] = "deathvox_cop_revolver",
+		["units/pd2_dlc_bex/characters/ene_policia_01/ene_policia_01"] = "deathvox_cop_pistol",
+	    ["units/pd2_dlc_bex/characters/ene_policia_02/ene_policia_02"] = "deathvox_cop_revolver",
 		
 --federales swat
 		["units/pd2_dlc_bex/characters/ene_swat_policia_federale/ene_swat_policia_federale"] = "deathvox_lightar",
@@ -335,4 +335,3 @@ function ElementSpawnEnemyDummy:get_enemy_by_diff(enemy_to_check, ai_type)
 	end
 	return "units/payday2/characters/ene_swat_1/ene_swat_1"
 end
-	
