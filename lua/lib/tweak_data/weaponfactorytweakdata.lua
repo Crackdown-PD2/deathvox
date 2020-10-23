@@ -3930,9 +3930,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "create_bonuses", "strip_mod_stats", fun
 			if not part.supported and part.stats then
 				--Logs for debugging. Remove if wanted for slightly better performance in loading screens.
 				if part.name_id then
-					log("Removing stats from: " .. part.name_id)
+--					log("Removing stats from: " .. part.name_id)
 				else
-					log("Removing stats from: Unknown Mod")
+--					log("Removing stats from: Unknown Mod")
 				end
 
 				--Preserve cosmetic part stats.

@@ -734,6 +734,23 @@ function PlayerDamage:damage_explosion(attack_data)
 	self:_call_listeners(damage_info)
 end
 
+Hooks:Register("OnPlayerShieldBroken")
+function PlayerDamage:_on_damage_event()
+	self:set_regenerate_timer_to_max()
+
+	local armor_broken = self:_max_armor() > 0 and self:get_real_armor() <= 0
+
+	if armor_broken then 
+		Hooks:Call("OnPlayerShieldBroken",self._unit)
+		if self._has_damage_speed then
+			managers.player:activate_temporary_upgrade("temporary", "damage_speed_multiplier")
+		end
+		if self._has_damage_speed_team then
+			managers.player:send_activate_temporary_team_upgrade_to_peers("temporary", "team_damage_speed_multiplier_received")
+		end
+	end
+end
+
 
 Hooks:PostHook(PlayerDamage,"init","tcd_post_playerdamage_init",function(self,unit)
 	self._listener_holder:add("on_bleedout_remove_armor_plates_bonus",{"on_enter_bleedout"},callback(self,self,"remove_armor_plates_bonus"))

@@ -4,7 +4,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 	if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		self.armor_plates_base = 4 --armor plates deployable
 		self.armor_plates_dmg_reduction = 0.85 -- damage_applied = kevlar_plates_dmg_reduction * incoming_damage, so eg. 0.9 = 10% damage reduction
-	
+		
 		
 		self.values.player.revive_damage_reduction = {
 			0.5 --up from vanilla 30% reduction
@@ -473,7 +473,6 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
-		
 		self.values.ammo_bag.quantity = {
 			1, --originally only 1
 			2
@@ -545,6 +544,80 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		
 		--Runner
+		self.values.player.can_melee_and_sprint = {
+			true
+		}
+		self.definitions.player_can_melee_and_sprint = {
+			name_id = "menu_butterfly_bee_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "can_melee_and_sprint",
+				category = "player"
+			}
+		}
+		
+		self.values.player.melee_hit_speed_boost = {
+			{4,0.1} -- +10% speed boost, 4s
+		}
+		self.definitions.player_melee_hit_speed_boost = {
+			name_id = "menu_butterfly_bee_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "melee_hit_speed_boost",
+				category = "player"
+			}
+		}
+		
+		self.values.player.heave_ho = {
+			0.2
+		}
+		self.definitions.player_carry_movement_penalty_reduction = {
+			name_id = "menu_heave_ho_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "heave_ho",
+				category = "player"
+			}
+		}
+		
+		self.values.player.escape_plan = {
+			{1,0.25,4,0},
+			{1,0.25,4,0.2}
+		}
+		self.definitions.player_escape_plan_basic = {
+			name_id = "menu_escape_plan_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "escape_plan",
+				category = "player"
+			}
+		}
+		self.definitions.player_escape_plan_aced = {
+			name_id = "menu_escape_plan_aced",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "escape_plan",
+				category = "player"
+			}
+		}
+		
+		self.values.player.leg_day_aced = {
+			true
+		}
+		self.definitions.player_crouch_speed_penalty_removal = {
+			name_id = "menu_leg_day_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "leg_day_aced",
+				category = "player"
+			}
+		}
 		
 		--Gunner
 		

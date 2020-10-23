@@ -24,6 +24,7 @@ function PlayerManager:_chk_fellow_crimin_proximity(unit)
 end
 
 if deathvox:IsTotalCrackdownEnabled() then
+
 	function PlayerManager:check_equipment_placement_valid(player, equipment)
 		local equipment_data = managers.player:equipment_data_by_name(equipment)
 
@@ -89,6 +90,35 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 
 	Hooks:PostHook(PlayerManager,"check_skills","deathvox_check_cd_skills",function(self)
+		if self:has_category_upgrade("player","melee_hit_speed_boost") then 	
+			Hooks:Add("OnPlayerMeleeHit","cd_proc_butterfly_bee_aced",
+				function(hit_unit,col_ray,action_data,defense_data,t)
+					if hit_unit and not managers.enemy:is_civilian(hit_unit) then 
+						managers.player:activate_temporary_property("float_butterfly_movement_speed_multiplier",unpack(managers.player:upgrade_value("player","melee_hit_speed_boost",{0,0})))
+					end
+				end
+			)
+		end
+		
+		if self:has_category_upgrade("player","escape_plan") then 
+			Hooks:Add("OnPlayerShieldBroken","cd_proc_escape_plan",
+				function(player_unit)
+					if alive(player_unit) then 
+						local movement = player_unit:movement()
+						
+						local escape_plan_data = managers.player:upgrade_value("player","escape_plan",{0,0,0,0})
+						local stamina_restored_percent = escape_plan_data[1]
+						local sprint_speed_bonus = escape_plan_data[2]
+						local escape_plan_duration = escape_plan_data[3]
+						local move_speed_bonus = escape_plan_data[4]
+						movement:_change_stamina(movement:_max_stamina() * stamina_restored_percent)
+						self:activate_temporary_property("escape_plan_speed_bonus",escape_plan_duration,{sprint_speed_bonus,move_speed_bonus})
+					end
+				end
+			)
+		end
+		
+	
 		if self:has_category_upgrade("heavy","collateral_damage") then 
 			self._message_system:register(Message.OnWeaponFired,"proc_collateral_damage",
 				function(weapon_unit,result)
@@ -436,4 +466,63 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 		
 	end)
+	
+	function PlayerManager:movement_speed_multiplier(speed_state, bonus_multiplier, upgrade_level, health_ratio)
+		local multiplier = 1
+		local armor_penalty = self:mod_movement_penalty(self:body_armor_value("movement", upgrade_level, 1))
+		multiplier = multiplier + armor_penalty - 1
+
+		if bonus_multiplier then
+			multiplier = multiplier + bonus_multiplier - 1
+		end
+
+		multiplier = multiplier + self:get_temporary_property("float_butterfly_movement_speed_multiplier",0)
+		
+		local escape_plan_status = self:get_temporary_property("escape_plan_speed_bonus",false)
+		local escape_plan_sprint_bonus = 0
+		local escape_plan_movement_bonus = 0
+
+		if escape_plan_status and type(escape_plan_status) == "table" then 
+			escape_plan_sprint_bonus = escape_plan_status[1] or escape_plan_sprint_bonus
+			escape_plan_movement_bonus = escape_plan_status[2] or escape_plan_movement_bonus
+		end
+		
+		if speed_state then
+			multiplier = multiplier + self:upgrade_value("player", speed_state .. "_speed_multiplier", 1) - 1
+			
+			if speed_state == "run" then 
+				multiplier = multiplier + escape_plan_sprint_bonus
+			end
+		end
+		multiplier = multiplier + escape_plan_movement_bonus
+
+		multiplier = multiplier + self:get_hostage_bonus_multiplier("speed") - 1
+		multiplier = multiplier + self:upgrade_value("player", "movement_speed_multiplier", 1) - 1
+
+		if self:num_local_minions() > 0 then
+			multiplier = multiplier + self:upgrade_value("player", "minion_master_speed_multiplier", 1) - 1
+		end
+
+		if self:has_category_upgrade("player", "secured_bags_speed_multiplier") then
+			local bags = 0
+			bags = bags + (managers.loot:get_secured_mandatory_bags_amount() or 0)
+			bags = bags + (managers.loot:get_secured_bonus_bags_amount() or 0)
+			multiplier = multiplier + bags * (self:upgrade_value("player", "secured_bags_speed_multiplier", 1) - 1)
+		end
+
+		if managers.player:has_activate_temporary_upgrade("temporary", "berserker_damage_multiplier") then
+			multiplier = multiplier * (tweak_data.upgrades.berserker_movement_speed_multiplier or 1)
+		end
+
+		if health_ratio then
+			local damage_health_ratio = self:get_damage_health_ratio(health_ratio, "movement_speed")
+			multiplier = multiplier * (1 + managers.player:upgrade_value("player", "movement_speed_damage_health_ratio_multiplier", 0) * damage_health_ratio)
+		end
+
+		local damage_speed_multiplier = managers.player:temporary_upgrade_value("temporary", "damage_speed_multiplier", managers.player:temporary_upgrade_value("temporary", "team_damage_speed_multiplier_received", 1))
+		multiplier = multiplier * damage_speed_multiplier
+		return multiplier
+	end
+
+	
 end

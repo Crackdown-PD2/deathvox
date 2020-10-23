@@ -582,17 +582,18 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		})
 		
 		
-		--Runner (not implemented)
+		--Runner
 		replace_skill(tree_indices.runner,1,{ --Hustle
 			{
 				upgrades = {
-					
+					"player_can_free_run"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"player_stamina_regen_timer_multiplier",
+					"player_stamina_regen_multiplier"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -606,13 +607,13 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.runner,2,{ --Float Like A Butterfly
 			{
 				upgrades = {
-					
+					"player_can_melee_and_sprint"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"player_melee_hit_speed_boost"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -626,13 +627,13 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.runner,3,{ --Heave-Ho
 			{
 				upgrades = {
-					
+					"carry_throw_distance_multiplier"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"player_carry_movement_penalty_reduction"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -646,13 +647,13 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.runner,4,{ --Mobile Offense
 			{
 				upgrades = {
-					
+					"player_run_and_reload"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"player_run_and_shoot_1"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -666,13 +667,13 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.runner,5,{ --Escape Plan
 			{
 				upgrades = {
-					--rip old tf2 escape plan. you were too good for this world
+					"player_escape_plan_basic"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"player_escape_plan_aced"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -686,13 +687,14 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.runner,6,{ --Leg Day Enthusiast
 			{
 				upgrades = {
-					
+					"player_run_speed_multiplier",
+					"player_movement_speed_multiplier"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"player_crouch_speed_penalty_removal"
 				},
 				cost = self.costs.hightierpro
 			},

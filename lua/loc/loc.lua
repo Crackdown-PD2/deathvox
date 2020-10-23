@@ -133,23 +133,17 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 			
 			--runner
 				menu_hustle = "Hustle",
-				menu_hustle_desc = "NOT YET IMPLEMENTED",
-				--menu_hustle_desc = "BASIC: ##$basic##\nYou can Sprint in any direction.\n\nACE: ##$pro##\nYour Stamina starts regenerating ##25%## earlier and ##+25%## faster."
+				menu_hustle_desc = "BASIC: ##$basic##\nYou can Sprint in any direction.\n\nACE: ##$pro##\nYour Stamina starts regenerating ##25%## earlier and ##+25%## faster.",
 				menu_butterfly_bee = "Float Like A Butterfly",
-				menu_butterfly_bee_desc = "NOT YET IMPLEMENTED",
-				--menu_butterfly_bee_desc = "BASIC: ##$basic##\nMelee Weapons can be swung and charged while Sprinting.\n\nACE: ##$pro##\nMelee Weapon damage increases your Movement Speed by ##+10%## for ##4## seconds."
+				menu_butterfly_bee_desc = "BASIC: ##$basic##\nMelee Weapons can be swung and charged while Sprinting.\n\nACE: ##$pro##\nMelee Weapon damage increases your Movement Speed by ##+10%## for ##4## seconds.",
 				menu_heave_ho = "Heave-Ho",
-				menu_heave_ho_desc = "NOT YET IMPLEMENTED",
-				--menu_heave_ho_desc = "BASIC: ##$basic##\nYou throw Bags ##50%## farther.\n\nACE: ##$pro##\nYour Movement Speed Penalty for carrying a Bag is reduced by ##20%##."
+				menu_heave_ho_desc = "BASIC: ##$basic##\nYou throw Bags ##50%## farther.\n\nACE: ##$pro##\nYour Movement Speed Penalty for carrying a Bag is reduced by ##20%##.",
 				menu_mobile_offense = "Mobile Offense",
-				menu_mobile_offense_desc = "NOT YET IMPLEMENTED",
-				--menu_mobile_offense_desc = "BASIC: ##$basic##\nYou can now Reload while Sprinting.\n\nACE: ##$pro##\nYou can now hip-fire weapons while Sprinting."
+				menu_mobile_offense_desc = "BASIC: ##$basic##\nYou can now Reload while Sprinting.\n\nACE: ##$pro##\nYou can now hip-fire weapons while Sprinting.",
 				menu_escape_plan = "Escape Plan",
-				menu_escape_plan_desc = "NOT YET IMPLEMENTED",
-				--menu_escape_plan_desc = "BASIC: ##$basic##\nWhen your Armor breaks, you gain ##100%## of your Stamina and gain ##+25%## Sprint Speed for ##4## seconds.\n\nACE: ##$pro##\nYou also gain ##+20%## Movement Speed for 4 seconds."
+				menu_escape_plan_desc = "BASIC: ##$basic##\nWhen your Armor breaks, you gain ##100%## of your Stamina and gain ##+25%## Sprint Speed for ##4## seconds.\n\nACE: ##$pro##\nYou also gain ##+20%## Movement Speed for 4 seconds.",
 				menu_leg_day = "Leg Day Enthusiast",
-				menu_leg_day_desc = "NOT YET IMPLEMENTED",
-				--menu_leg_day_desc = "BASIC: ##$basic##\nYou gain ##+10%## Movement Speed and ##+25%## Sprint Speed.\n\nACE: ##$pro##\nCrouching no longer reduces your Movement Speed."
+				menu_leg_day_desc = "BASIC: ##$basic##\nYou gain ##+10%## Movement Speed and ##+25%## Sprint Speed.\n\nACE: ##$pro##\nCrouching no longer reduces your Movement Speed.",
 				
 			--engineer
 				menu_digging_in = "Digging In",
