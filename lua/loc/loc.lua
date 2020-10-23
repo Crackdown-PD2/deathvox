@@ -31,7 +31,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 	if deathvox then
 		if deathvox:IsTotalCrackdownEnabled() then
 			loc:add_localized_strings({
-				["debug_interact_gage_assignment_take"] = "PRESS $BTN_INTERACT TO PICK UP THE PACKAGE",
+				debug_interact_gage_assignment_take = "PRESS $BTN_INTERACT TO PICK UP THE PACKAGE",
 				
 				--skilltree sub-tree names
 				st_menu_dallas_boss = "Boss",
@@ -99,8 +99,23 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_prayers_answered_desc = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles have their Critical Hit chance increased by ##+10%##, for a total of ##+20%##.\n\nACE: ##$pro##\nYour SMGs, and Assault Rifles have their Critical Hit chance ##further## increased by ##+10%##, for a total of ##+30%##.",
 				
 				--ghost
-				["menu_backstab_beta"] = "Professional's Choice",
-				["menu_backstab_beta_desc"] = "BASIC: ##$basic##\nSilenced Weapons gain a ##+2% Fire Rate bonus## for every ##3## points of Detection Risk under ##35##, up to ##+10%##.\n\nACE: ##$pro##\nThe Fire Rate bonus is increased to ##+4%## and the maximum bonus is increased to ##+20%##.",
+				menu_killers_notebook = "Killer's Notebook",
+				menu_killers_notebook_desc = "NOT YET IMPLEMENTED",
+--				menu_killers_notebook_desc = "BASIC: ##$basic##\nQuiet Weapons ADS ##90%## faster.\n\nACE: ##$pro##\nQuiet Weapons gain ##+20## Stability.",
+				menu_good_hunting = "Good Hunting",
+				menu_good_hunting_desc = "NOT YET IMPLEMENTED",
+--				menu_good_hunting_desc = "BASIC: ##$basic##\nBows have all of their Arrows readied instead of in reserve.\n\nACE: ##$pro##\nCrossbows instantly Reload themselves after a Headshot.",
+				menu_comfortable_silence = "Comfortable Silence",
+				menu_comfortable_silence_desc = "NOT YET IMPLEMENTED",
+--				menu_comfortable_silence_desc = "BASIC: ##$basic##\nQuiet Weapons gain ##+2## Concealment.\n\nACE: ##$pro##\nQuiet Weapons gain ##+4## Concealment.",
+				menu_toxic_shock = "Toxic Shock",
+				menu_toxic_shock_desc = "NOT YET IMPLEMENTED",
+--				menu_toxic_shock_desc = "BASIC: ##$basic##\nSuccessfully Poisoning an enemy will also Poison enemies within a ##3##-meter radius.\n\nACE: ##$pro##\nPoison deals ##+100%## damage.",
+				menu_professionals_choice = "Professional's Choice",
+				menu_professionals_choice_desc = "BASIC: ##$basic##\nSilenced Weapons gain a ##+2% Fire Rate bonus## for every ##3## points of Detection Risk under ##35##, up to ##+10%##.\n\nACE: ##$pro##\nThe Fire Rate bonus is increased to ##+4%## and the maximum bonus is increased to ##+20%##.",
+				menu_quiet_grave = "Quiet as the Grave",
+				menu_quiet_grave_desc = "NOT YET IMPLEMENTED",
+--				menu_quiet_grave_desc = "BASIC: ##$basic##\nQuiet Weapons deal ##+10%## Damage when attacking an enemy from behind.\n\nACE: ##$pro##\nQuiet Weapons also deal ##+10%## Damage when attacking an enemy that is not currently targeting you.",
 				
 			--enforcer
 				menu_tender_meat = "Tender Meat",
@@ -164,7 +179,10 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				hud_action_taking_armor_plates = "Taking Armor Plates...",
 				menu_equipment_armor_kit = "Armor Plates",
 				bm_equipment_armor_kit = "Armor Plates Bag",
-				bm_equipment_armor_kit_desc = "Advanced shock-resistant armor inserts that provide +15% Damage Resistance and allow the user to go down one additional time before instantly being taken into custody. To use, hold $BTN_USE_ITEM on a suitable surface and press $BTN_INTERACT to equip.\n\nOnce deployed, the Armor Plates Bag can be used 4 times before disappearing. Remaining uses are visible within the bag."
+				bm_equipment_armor_kit_desc = "Advanced shock-resistant armor inserts that provide +15% Damage Resistance and allow the user to go down one additional time before instantly being taken into custody. To use, hold $BTN_USE_ITEM on a suitable surface and press $BTN_INTERACT to equip.\n\nOnce deployed, the Armor Plates Bag can be used 4 times before disappearing. Remaining uses are visible within the bag.",
+				
+			--assassin
+				
 			})
 		end
 		loc:add_localized_strings({

@@ -473,8 +473,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_collateral_damage",
 			desc_id = "menu_collateral_damage_desc",
 			icon_xy = {
-				11,
-				9
+				8, --11,9
+				0
 			}
 		})
 		replace_skill(tree_indices.heavy,2,{ --Death Grips
@@ -600,8 +600,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_hustle",
 			desc_id = "menu_hustle_desc",
 			icon_xy = {
-				0,
-				0
+				2,
+				4
 			}
 		})
 		replace_skill(tree_indices.runner,2,{ --Float Like A Butterfly
@@ -620,8 +620,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_butterfly_bee",
 			desc_id = "menu_butterfly_bee_desc",
 			icon_xy = {
-				0,
-				0
+				11,
+				7
 			}
 		})
 		replace_skill(tree_indices.runner,3,{ --Heave-Ho
@@ -640,8 +640,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_heave_ho",
 			desc_id = "menu_heave_ho_desc",
 			icon_xy = {
-				0,
-				0
+				8,
+				8
 			}
 		})
 		replace_skill(tree_indices.runner,4,{ --Mobile Offense
@@ -660,8 +660,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_mobile_offense",
 			desc_id = "menu_mobile_offense_desc",
 			icon_xy = {
-				0,
-				0
+				10,
+				6
 			}
 		})
 		replace_skill(tree_indices.runner,5,{ --Escape Plan
@@ -680,8 +680,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_escape_plan",
 			desc_id = "menu_escape_plan_desc",
 			icon_xy = {
-				0,
-				0
+				1,
+				8
 			}
 		})
 		replace_skill(tree_indices.runner,6,{ --Leg Day Enthusiast
@@ -701,13 +701,12 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_leg_day",
 			desc_id = "menu_leg_day_desc",
 			icon_xy = {
-				0,
-				0
+				7,
+				3
 			}
 		})
 		
 		--Gunner
-		
 		replace_skill(tree_indices.gunner,1,{ --Spray and Pray
 			{
 				upgrades = {
@@ -832,7 +831,6 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		})
 		
 		--Engineer
-		
 		replace_skill(tree_indices.engineer,1,{ --Digging In
 			{
 				upgrades = {
@@ -958,7 +956,88 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		--Thief (not implemented)
 		
 		--Assassin (not fully implemented)
-		replace_skill(tree_indices.assassin,1,{ --professional's choice
+		replace_skill(tree_indices.assassin,1,{ --Killer's Notebook
+			{
+				upgrades = {
+--					"player_killers_notebook_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+--					"player_killers_notebook_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_killers_notebook",
+			desc_id = "menu_killers_notebook_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		replace_skill(tree_indices.assassin,2,{ --Good Hunting
+			{
+				upgrades = {
+--					"player_good_hunting_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+--					"player_good_hunting_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_good_hunting",
+			desc_id = "menu_good_hunting_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		replace_skill(tree_indices.assassin,3,{ --Comfortable Silence
+			{
+				upgrades = {
+--					"player_comfortable_silence_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+--					"player_comfortable_silence_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_comfortable_silence",
+			desc_id = "menu_comfortable_silence_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		replace_skill(tree_indices.assassin,4,{ --Toxic Shock
+			{
+				upgrades = {
+--					"player_toxic_shock_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+--					"player_toxic_shock_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_toxic_shock",
+			desc_id = "menu_toxic_shock_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		
+		replace_skill(tree_indices.assassin,5,{ --Professional's Choice
 			{
 				upgrades = {
 					"player_professionalschoice_basic"
@@ -971,13 +1050,34 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_backstab_beta",
-			desc_id = "menu_backstab_beta_desc",
+			name_id = "menu_professionals_choice",
+			desc_id = "menu_professionals_choice_desc",
 			icon_xy = {
-				0,
-				12
+				5,
+				9
 			}
 		})
+		replace_skill(tree_indices.assassin,6,{ --Quiet as the Grave
+			{
+				upgrades = {
+--					"player_quiet_grave_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+--					"player_quiet_grave_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_quiet_grave",
+			desc_id = "menu_quiet_grave_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		
 
 		--Sapper (not implemented)
 		
