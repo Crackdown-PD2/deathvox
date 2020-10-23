@@ -1,7 +1,7 @@
 <table directory="assets">
-	<!-- Policia Cap Acc.
+	<!-- Policia Cap Acc.-->
 	<unit_mat path="units/pd2_mod_federales/characters/ene_acc_policia_cap/ene_acc_policia_cap" />
-	<cooked_physics path="units/pd2_mod_federales/characters/ene_acc_policia_cap/ene_acc_policia_cap" /> -->
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_acc_policia_cap/ene_acc_policia_cap" /> 
 	
 	<!-- Pistol Beatcop -->
 	<unit path="units/pd2_mod_federales/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol" load="true" />
