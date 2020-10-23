@@ -64,7 +64,25 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_magic_bullet = "Magic Bullet",
 				menu_magic_bullet_desc = "BASIC: ##$basic##\nKilling an enemy with a Headshot from a Precision Weapon adds ##1## bullet to your reserve ammunition.\n\nACE: ##$pro##\nThe bullet is added to your current Magazine instead of your reserves.",
 			
-
+			--medic
+				menu_doctors_orders = "Doctor's Orders",
+				menu_doctors_orders_desc = "NOT YET IMPLEMENTED",
+				--menu_doctors_orders_desc = "BASIC: ##$basic##\nYou revive downed players ##30%## faster.\n\nACE: ##$pro##\nAfter you revive a player, you and the player you revived gain ##+50%## Damage Resistance for ##4## seconds.",
+				menu_in_case_of_trouble = "In Case Of Trouble",
+				menu_in_case_of_trouble_desc = "NOT YET IMPLEMENTED",
+				--menu_in_case_of_trouble_desc = "BASIC: ##$basic##\nYour supply of First Aid Kits is increased to ##12##.\n\nACE: ##$pro##\nYour supply of First Aid Kits is increased to ##18##.",
+				menu_checkup = "Checkup",
+				menu_checkup_desc = "NOT YET IMPLEMENTED",
+				--menu_checkup_desc = "BASIC: ##$basic##\nYour Doctor Bags restore ##1%## of a player's Maximum Health every ##2## seconds in a ##3## meter diameter.\n\nACE: ##$pro##\nRange increased to ##6## meters.",
+				menu_life_insurance = "Life Insurance",
+				menu_life_insurance_desc = "NOT YET IMPLEMENTED",
+				--menu_life_insurance_desc = "BASIC: ##$basic##\nYour deployed First Aid Kits will be automatically used if a player is downed within ##5## meters, healing them and preventing the down.\nThis effect has a ##20## second cooldown per player.\n\nACE: ##$pro##\nCooldown reduced to ##10## seconds.",
+				menu_outpatient = "Outpatient",
+				menu_outpatient_desc = "NOT YET IMPLEMENTED",
+				--menu_outpatient_desc = "BASIC: ##$basic##\nIncreases your Doctor Bag supply to ##2##.\n\nACE: ##$pro##\nIncreases your Doctor Bag supply to ##3##.",
+				menu_preventative_care = "Preventative Care",
+				menu_preventative_care_desc = "NOT YET IMPLEMENTED",
+				--menu_preventative_care_desc = "BASIC: ##$basic##\nYour First Aid Kits and Doctor Bags provide the user with a Damage Absorption shield equal to ##100%## of their Health and Armor.\n\nACE: ##$pro##\nPlayers become Invulnerable for ##2## seconds when their Damage Absorption shields are broken.",
 				
 			--gunner
 				menu_spray_and_pray = "Spray & Pray",
@@ -97,26 +115,41 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_point_blank_desc = "BASIC: ##$basic##\nShotguns gain ##Armor Piercing##, ##Shield Piercing##, and ##Body Piercing## against enemies within ##2.5## meters.\n\nACE: ##$pro##\nShotguns deal ##+100%## Damage against enemies within ##2.5## meters.",
 				menu_shotmaker = "Shotmaker",
 				menu_shotmaker_desc = "BASIC: ##$basic##\nIncreases Shotgun Headshot Damage by ##+50%##.\n\nACE: ##$pro##\nShotgun Headshot Damage is increased by an additional ##+50%##, for a total of ##+100%##.",
+			
+			--heavy
+				menu_collateral_damage = "Collateral Damage",
+				menu_collateral_damage_desc = "BASIC: ##$basic##\n\n(BASIC NOT YET IMPLEMENTED)\n\nHeavy Weapons deal ##50%## of their damage in a ##0.25## meter radius around the bullet trajectory.\n\nACE: ##$pro##\nHeavy Weapons ADS ##50%## faster.",
+				menu_death_grips = "Death Grips",
+				menu_death_grips_desc = "BASIC: ##$basic##\nHeavy Weapons gain ##+4## Accuracy and ##+4## Stability for 8 seconds per kill, stacking up to ##10## times.\n\nACE: ##$pro##\nAccuracy bonus increased to ##+8##.",
+				menu_bulletstorm = "Bulletstorm",
+				menu_bulletstorm_desc = "BASIC: ##$basic##\nAmmo Bags placed by you grant players the ability to shoot without depleting their ammunition for up to ##5## seconds after interacting with it.\nThe more ammo players replenish, the longer the duration of the effect.\n\nACE: ##$pro##\nIncreases the base duration of the effect by up to ##15## seconds.",
+				menu_lead_farmer = "Lead Farmer",
+				menu_lead_farmer_desc = "BASIC: ##$basic##\nHeavy Weapons gain ##+1%## Reload Speed per kill on their next Reload, up to ##50%##.\n\nACE: ##$pro##\nIncreases the amount of Reload Speed per kill to ##2%## and the maximum amount of Reload Speed to ##100%##.",
+				menu_armory_regular = "Armory Regular",
+				menu_armory_regular_desc = "BASIC: ##$basic##\nIncreases your Ammo Bag supply to ##2##.\n\nACE: ##$pro##\nIncreases your Ammo Bag supply to ##3##.",
+				menu_war_machine = "War Machine",
+				menu_war_machine_desc = "BASIC: ##$basic##\nIncreases the Ammo Bag's Ammunition Stock bonus for Heavy Weapons to ##+100%##.\n\nACE: ##$pro##\nIncreases the Ammo Bag's Ammunition Stock bonus to ##+100%## for non-Heavy weapons and ##+200%## for Heavy Weapons.",
 				
+			
 			--runner
 				menu_hustle = "Hustle",
 				menu_hustle_desc = "NOT YET IMPLEMENTED",
-				--"BASIC: ##$basic##\nYou can Sprint in any direction.\n\nACE: ##$pro##\nYour Stamina starts regenerating ##25%## earlier and ##+25%## faster."
+				--menu_hustle_desc = "BASIC: ##$basic##\nYou can Sprint in any direction.\n\nACE: ##$pro##\nYour Stamina starts regenerating ##25%## earlier and ##+25%## faster."
 				menu_butterfly_bee = "Float Like A Butterfly",
 				menu_butterfly_bee_desc = "NOT YET IMPLEMENTED",
-				--"BASIC: ##$basic##\nMelee Weapons can be swung and charged while Sprinting.\n\nACE: ##$pro##\nMelee Weapon damage increases your Movement Speed by ##+10%## for ##4## seconds."
+				--menu_butterfly_bee_desc = "BASIC: ##$basic##\nMelee Weapons can be swung and charged while Sprinting.\n\nACE: ##$pro##\nMelee Weapon damage increases your Movement Speed by ##+10%## for ##4## seconds."
 				menu_heave_ho = "Heave-Ho",
 				menu_heave_ho_desc = "NOT YET IMPLEMENTED",
-				--"BASIC: ##$basic##\nYou throw Bags ##50%## farther.\n\nACE: ##$pro##\nYour Movement Speed Penalty for carrying a Bag is reduced by ##20%##."
+				--menu_heave_ho_desc = "BASIC: ##$basic##\nYou throw Bags ##50%## farther.\n\nACE: ##$pro##\nYour Movement Speed Penalty for carrying a Bag is reduced by ##20%##."
 				menu_mobile_offense = "Mobile Offense",
 				menu_mobile_offense_desc = "NOT YET IMPLEMENTED",
-				--"BASIC: ##$basic##\nYou can now Reload while Sprinting.\n\nACE: ##$pro##\nYou can now hip-fire weapons while Sprinting."
+				--menu_mobile_offense_desc = "BASIC: ##$basic##\nYou can now Reload while Sprinting.\n\nACE: ##$pro##\nYou can now hip-fire weapons while Sprinting."
 				menu_escape_plan = "Escape Plan",
 				menu_escape_plan_desc = "NOT YET IMPLEMENTED",
-				--"BASIC: ##$basic##\nWhen your Armor breaks, you gain ##100%## of your Stamina and gain ##+25%## Sprint Speed for ##4## seconds.\n\nACE: ##$pro##\nYou also gain ##+20%## Movement Speed for 4 seconds."
+				--menu_escape_plan_desc = "BASIC: ##$basic##\nWhen your Armor breaks, you gain ##100%## of your Stamina and gain ##+25%## Sprint Speed for ##4## seconds.\n\nACE: ##$pro##\nYou also gain ##+20%## Movement Speed for 4 seconds."
 				menu_leg_day = "Leg Day Enthusiast",
 				menu_leg_day_desc = "NOT YET IMPLEMENTED",
-				--"BASIC: ##$basic##\nYou gain ##+10%## Movement Speed and ##+25%## Sprint Speed.\n\nACE: ##$pro##\nCrouching no longer reduces your Movement Speed."
+				--menu_leg_day_desc = "BASIC: ##$basic##\nYou gain ##+10%## Movement Speed and ##+25%## Sprint Speed.\n\nACE: ##$pro##\nCrouching no longer reduces your Movement Speed."
 				
 			--engineer
 				menu_digging_in = "Digging In",

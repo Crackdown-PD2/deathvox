@@ -85,7 +85,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		self.trees[15].name_id = "st_menu_hoxton_demolitionist"
 		
 		
-		--Boss
+		--Boss (not implemented)
 		
 		--Marksman
 		replace_skill(tree_indices.marksman,1,{ --Point and Click
@@ -211,11 +211,130 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		})
 		
 		--Medic
-		
-		--Chief
+		replace_skill(tree_indices.medic,1,{ --Doctor's Orders
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_doctors_orders",
+			desc_id = "menu_doctors_orders_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		replace_skill(tree_indices.medic,2,{ --In Case Of Trouble
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_in_case_of_trouble",
+			desc_id = "menu_in_case_of_trouble_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		replace_skill(tree_indices.medic,3,{ --Checkup
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_checkup",
+			desc_id = "menu_checkup_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		replace_skill(tree_indices.medic,4,{ --Life Insurance
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_life_insurance",
+			desc_id = "menu_life_insurance_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		replace_skill(tree_indices.medic,5,{ --Outpatient
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_outpatient",
+			desc_id = "menu_outpatient_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		replace_skill(tree_indices.medic,6,{ --Preventative Care
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_preventative_care",
+			desc_id = "menu_preventative_care_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+
+		--Chief (not implemented)
 		
 		--Enforcer
-		
 		replace_skill(tree_indices.enforcer,1,{ --Tender Meat
 			{
 				upgrades = {
@@ -338,9 +457,132 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		})
 		
 		--Heavy
+		replace_skill(tree_indices.heavy,1,{ --Collateral Damage
+			{
+				upgrades = {
+					"heavy_collateral_damage"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"heavy_steelsight_speed_multiplier"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_collateral_damage",
+			desc_id = "menu_collateral_damage_desc",
+			icon_xy = {
+				11,
+				9
+			}
+		})
+		replace_skill(tree_indices.heavy,2,{ --Death Grips
+			{
+				upgrades = {
+					"heavy_death_grips_stacks",
+					"heavy_death_grips_recoil_bonus",
+					"heavy_death_grips_spread_bonus_1"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"heavy_death_grips_spread_bonus_2"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_death_grips",
+			desc_id = "menu_death_grips_desc",
+			icon_xy = {
+				0,
+				5
+			}
+		})
+		replace_skill(tree_indices.heavy,3,{ --Bulletstorm
+			{
+				upgrades = {
+					"temporary_no_ammo_cost_1"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"temporary_no_ammo_cost_2"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_bulletstorm",
+			desc_id = "menu_bulletstorm_desc",
+			icon_xy = {
+				4,
+				5
+			}
+		})
 		
-		--Runner
+		replace_skill(tree_indices.heavy,4,{ --Lead Farmer
+			{
+				upgrades = {
+					"heavy_lead_farmer_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"heavy_lead_farmer_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_lead_farmer",
+			desc_id = "menu_lead_farmer_desc",
+			icon_xy = {
+				1,
+				9
+			}
+		})
+		replace_skill(tree_indices.heavy,5,{ --Armory Regular
+			{
+				upgrades = {
+					"ammo_bag_quantity"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"ammo_bag_quantity_2"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_armory_regular",
+			desc_id = "menu_armory_regular_desc",
+			icon_xy = {
+				7,
+				1
+			}
+		})
+		replace_skill(tree_indices.heavy,6,{ --War Machine
+			{
+				upgrades = {
+					"ammo_bag_war_machine_basic"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"ammo_bag_war_machine_aced"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_war_machine",
+			desc_id = "menu_war_machine_desc",
+			icon_xy = {
+				3,
+				0
+			}
+		})
 		
+		
+		--Runner (not implemented)
 		replace_skill(tree_indices.runner,1,{ --Hustle
 			{
 				upgrades = {
@@ -711,10 +953,9 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			}
 		})
 		
-		--Thief
+		--Thief (not implemented)
 		
-		--Assassin
-		
+		--Assassin (not fully implemented)
 		replace_skill(tree_indices.assassin,1,{ --professional's choice
 			{
 				upgrades = {
@@ -736,13 +977,13 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			}
 		})
 
-		--Sapper
+		--Sapper (not implemented)
 		
-		--Dealer
+		--Dealer (not implemented)
 		
-		--Fixer
+		--Fixer (not implemented)
 		
-		--Demolitions
+		--Demolitions (not implemented)
 
 		
 		local more_default_upgrades = {
@@ -771,7 +1012,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			--sentry targeting basic/aced 
 			"sentry_gun_spread_multiplier",
 			"sentry_gun_extra_ammo_multiplier_1",
-			"sentry_gun_rot_speed_multiplier"
+			"sentry_gun_rot_speed_multiplier",
+			
+			--passive +50% max ammo reserves if ammo bag equipped (from cd)
+			"ammo_bag_passive_ammo_stock_bonus"
 		}
 		
 		for _,upgrade_name in pairs(more_default_upgrades) do 

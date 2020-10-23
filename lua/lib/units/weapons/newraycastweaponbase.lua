@@ -31,6 +31,11 @@ function NewRaycastWeaponBase:conditional_accuracy_addend(current_state)
 		end
 	end
 	
+	if self:is_weapon_class("heavy") then 
+		local bonus = (pm:get_property("current_death_grips_stacks",0) * pm:upgrade_value("heavy","death_grips_spread_bonus",0))
+		index = index + bonus
+	end
+	
 	--log("we gunnin':" .. index .. "")
 
 	return index
@@ -48,6 +53,11 @@ function NewRaycastWeaponBase:recoil()
 	--		-offy
 	local recoil = self._current_stats_indices and self._current_stats_indices.recoil
 	recoil = (recoil or 0) + weapon_class_recoil_index_addend
+	
+	if self:is_weapon_class("heavy") then
+		local bonus = managers.player:get_property("current_death_grips_stacks",0) * managers.player:upgrade_value("heavy","death_grips_recoil_bonus",0)
+		recoil = recoil + bonus
+	end
 	
 	return managers.blackmarket:recoil_addend(self._name_id, self:weapon_tweak_data().categories, recoil, self._silencer, self._blueprint, current_state, self:is_single_shot())
 end
@@ -83,28 +93,29 @@ end
 function NewRaycastWeaponBase:reload_speed_multiplier(multiplier)
 	multiplier = multiplier or 1
 	local shell_games_bonus = 1
+	local pm = managers.player
 	if self._use_shotgun_reload then 
-		shell_games_bonus = managers.player:upgrade_value("class_shotgun","shell_games_reload_bonus",0) * managers.player:get_property("shell_games_rounds_loaded",0)
+		shell_games_bonus = pm:upgrade_value("class_shotgun","shell_games_reload_bonus",0) * pm:get_property("shell_games_rounds_loaded",0)
 	end
 	if self._current_reload_speed_multiplier then
 		return self._current_reload_speed_multiplier + shell_games_bonus
 	end
 	
 	if self:is_weapon_class("precision") then
-		local this_machine_data = managers.player:upgrade_value("weapon","point_and_click_bonus_reload_speed",{0,0})
-		multiplier = multiplier * (1 - math.min(this_machine_data[1] * managers.player:get_property("current_point_and_click_stacks",0),this_machine_data[2]))
+		local this_machine_data = pm:upgrade_value("weapon","point_and_click_bonus_reload_speed",{0,0})
+		multiplier = multiplier * (1 - math.min(this_machine_data[1] * pm:get_property("current_point_and_click_stacks",0),this_machine_data[2]))
 	end
 	
 	if self:is_weapon_class("rapidfire") and self:ammo_base():clip_empty() then
-		multiplier = multiplier * managers.player:upgrade_value("weapon", "money_shot_aced", 1)
+		multiplier = multiplier * pm:upgrade_value("weapon", "money_shot_aced", 1)
 	end
 	
 	for _, category in ipairs(self:weapon_tweak_data().categories) do
-		multiplier = multiplier + 1 - managers.player:upgrade_value(category, "reload_speed_multiplier", 1)
+		multiplier = multiplier + 1 - pm:upgrade_value(category, "reload_speed_multiplier", 1)
 	end
 
-	multiplier = multiplier + 1 - managers.player:upgrade_value("weapon", "passive_reload_speed_multiplier", 1)
-	multiplier = multiplier + 1 - managers.player:upgrade_value(self._name_id, "reload_speed_multiplier", 1)
+	multiplier = multiplier + 1 - pm:upgrade_value("weapon", "passive_reload_speed_multiplier", 1)
+	multiplier = multiplier + 1 - pm:upgrade_value(self._name_id, "reload_speed_multiplier", 1)
 
 	if self._setup and alive(self._setup.user_unit) and self._setup.user_unit:movement() then
 		local morale_boost_bonus = self._setup.user_unit:movement():morale_boost()
@@ -118,18 +129,25 @@ function NewRaycastWeaponBase:reload_speed_multiplier(multiplier)
 		end
 	end
 
-	if managers.player:has_activate_temporary_upgrade("temporary", "reload_weapon_faster") then
-		multiplier = multiplier + 1 - managers.player:temporary_upgrade_value("temporary", "reload_weapon_faster", 1)
+	if pm:has_activate_temporary_upgrade("temporary", "reload_weapon_faster") then
+		multiplier = multiplier + 1 - pm:temporary_upgrade_value("temporary", "reload_weapon_faster", 1)
 	end
 
-	if managers.player:has_activate_temporary_upgrade("temporary", "single_shot_fast_reload") then
-		multiplier = multiplier + 1 - managers.player:temporary_upgrade_value("temporary", "single_shot_fast_reload", 1)
+	if pm:has_activate_temporary_upgrade("temporary", "single_shot_fast_reload") then
+		multiplier = multiplier + 1 - pm:temporary_upgrade_value("temporary", "single_shot_fast_reload", 1)
 	end
 
-	multiplier = multiplier + 1 - managers.player:get_property("shock_and_awe_reload_multiplier", 1)
-	multiplier = multiplier + 1 - managers.player:get_temporary_property("bloodthirst_reload_speed", 1)
-	multiplier = multiplier + 1 - managers.player:upgrade_value("team", "crew_faster_reload", 1)
+	multiplier = multiplier + 1 - pm:get_property("shock_and_awe_reload_multiplier", 1)
+	multiplier = multiplier + 1 - pm:get_temporary_property("bloodthirst_reload_speed", 1)
+	multiplier = multiplier + 1 - pm:upgrade_value("team", "crew_faster_reload", 1)
 	multiplier = self:_convert_add_to_mul(multiplier)
+	
+	if self:is_weapon_class("heavy") then
+		local lead_farmer_data = pm:upgrade_value("heavy","lead_farmer",{0,0})
+		local lead_farmer_bonus = math.min(pm:get_property("current_lead_farmer_stacks",0) * lead_farmer_data[1],lead_farmer_data[2])
+		multiplier = multiplier + lead_farmer_bonus
+	end
+	
 	multiplier = multiplier * self:reload_speed_stat()
 	multiplier = managers.modifiers:modify_value("WeaponBase:GetReloadSpeedMultiplier", multiplier)
 	multiplier = multiplier + shell_games_bonus
@@ -263,3 +281,50 @@ function NewRaycastWeaponBase:get_add_head_shot_mul()
 	return nil
 end
 
+
+if deathvox:IsTotalCrackdownEnabled() then 
+
+	function NewRaycastWeaponBase:replenish()
+		local ammo_max_multiplier = managers.player:upgrade_value("player", "extra_ammo_multiplier", 1)
+
+		for _, category in ipairs(self:weapon_tweak_data().categories) do
+			ammo_max_multiplier = ammo_max_multiplier * managers.player:upgrade_value(category, "extra_ammo_multiplier", 1)
+		end
+
+		ammo_max_multiplier = ammo_max_multiplier + ammo_max_multiplier * (self._total_ammo_mod or 0)
+
+		if managers.player:has_category_upgrade("player", "add_armor_stat_skill_ammo_mul") then
+			ammo_max_multiplier = ammo_max_multiplier * managers.player:body_armor_value("skill_ammo_mul", nil, 1)
+		end
+		
+		local ammo_stock_bonus = 0
+		if managers.blackmarket:equipped_deployable_slot("ammo_bag") then 
+			ammo_stock_bonus = ammo_stock_bonus + managers.player:upgrade_value("ammo_bag","passive_ammo_stock_bonus",0)
+		end
+		ammo_stock_bonus = math.max(ammo_stock_bonus,managers.player:upgrade_value(self:get_weapon_class() or "","weapon_class_ammo_stock_bonus",0))
+		ammo_max_multiplier = ammo_max_multiplier + ammo_stock_bonus
+
+		ammo_max_multiplier = managers.modifiers:modify_value("WeaponBase:GetMaxAmmoMultiplier", ammo_max_multiplier)
+		local ammo_max_per_clip = self:calculate_ammo_max_per_clip()
+		local ammo_max = math.round((tweak_data.weapon[self._name_id].AMMO_MAX + managers.player:upgrade_value(self._name_id, "clip_amount_increase") * ammo_max_per_clip) * ammo_max_multiplier)
+		ammo_max_per_clip = math.min(ammo_max_per_clip, ammo_max)
+
+		self:set_ammo_max_per_clip(ammo_max_per_clip)
+		self:set_ammo_max(ammo_max)
+		self:set_ammo_total(ammo_max)
+		self:set_ammo_remaining_in_clip(ammo_max_per_clip)
+
+		self._ammo_pickup = tweak_data.weapon[self._name_id].AMMO_PICKUP
+
+		if self._assembly_complete then
+			for _, gadget in ipairs(self:get_all_override_weapon_gadgets()) do
+				if gadget and gadget.replenish then
+					gadget:replenish()
+				end
+			end
+		end
+
+		self:update_damage()
+	end
+	
+end

@@ -400,6 +400,150 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		--Heavy
 		
+		self.values.heavy.collateral_damage = { --it's graze, but again
+			{ 0.5,25 } --50% damage in 0.25m radius
+		}
+		self.values.heavy.enter_steelsight_speed_multiplier = {
+			0.1
+		}
+		self.definitions.heavy_collateral_damage = {
+			name_id = "menu_collateral_damage_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "collateral_damage",
+				category = "heavy"
+			}
+		}
+		self.definitions.heavy_steelsight_speed_multiplier = {
+			name_id = "menu_collateral_damage_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "enter_steelsight_speed_multiplier",
+				category = "heavy"
+			}
+		}
+		
+		self.values.heavy.death_grips_stacks = {
+			{8,10} --8s duration, 10 max stacks
+		}
+		self.values.heavy.death_grips_recoil_bonus = {
+			1 -- +4 stability (per stack)
+		}
+		self.values.heavy.death_grips_spread_bonus = {
+			1, -- +4 accuracy (per stack)
+			2 -- +8
+		}
+		
+		self.definitions.heavy_death_grips_stacks = {
+			name_id = "menu_death_grips_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "death_grips_stacks",
+				category = "heavy"
+			}
+		}
+		self.definitions.heavy_death_grips_recoil_bonus = {
+			name_id = "menu_death_grips_recoil_bonus",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "death_grips_recoil_bonus",
+				category = "heavy"
+			}
+		}
+		self.definitions.heavy_death_grips_spread_bonus_1 = {
+			name_id = "menu_death_grips_spread_bonus_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "death_grips_spread_bonus",
+				category = "heavy"
+			}
+		}
+		self.definitions.heavy_death_grips_spread_bonus_2 = {
+			name_id = "menu_death_grips_spread_bonus_2",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "death_grips_spread_bonus",
+				category = "heavy"
+			}
+		}
+		
+		
+		self.values.ammo_bag.quantity = {
+			1, --originally only 1
+			2
+		}
+		self.definitions.ammo_bag_quantity = { --this should already be the same as vanilla anyway, aside from the name_id
+			name_id = "menu_armory_regular_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "quantity",
+				category = "ammo_bag"
+			}
+		}
+		self.definitions.ammo_bag_quantity_2 = { --this is not a vanilla upgrade
+			name_id = "menu_armory_regular_aced",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "quantity",
+				category = "ammo_bag"
+			}
+		}
+		
+		self.values.heavy.lead_farmer = {
+			{0.01,0.5}, --1% per kill, 50% max
+			{0.02,1} --2% per kill, 100% max
+		}
+		self.definitions.heavy_lead_farmer_basic = {
+			name_id = "menu_lead_farmer_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "lead_farmer",
+				category = "heavy"
+			}
+		}
+		self.definitions.heavy_lead_farmer_aced = {
+			name_id = "menu_lead_farmer_aced",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "lead_farmer",
+				category = "heavy"
+			}
+		}
+		
+		self.values.heavy.weapon_class_ammo_stock_bonus = {
+			1,
+			2
+		}
+		self.definitions.ammo_bag_war_machine_basic = {
+			name_id = "menu_war_machine_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "weapon_class_ammo_stock_bonus",
+				category = "heavy"
+			}
+		}
+		self.definitions.ammo_bag_war_machine_aced = {
+			name_id = "menu_war_machine_aced",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "weapon_class_ammo_stock_bonus",
+				category = "heavy"
+			}
+		}
+		
+		
 		--Runner
 		
 		--Gunner
@@ -776,5 +920,25 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		--Demolitions
 		
+		
+		
+		
+		
+		
+		
+		--Passively increases Ammo Stock for equipped weapons by 50% 
+			--(default upgrade)
+		self.definitions.ammo_bag_passive_ammo_stock_bonus = {
+			name_id = "menu_ammo_bag_passive_ammo_stock_bonus",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "passive_ammo_stock_bonus",
+				category = "ammo_bag"
+			}
+		}
+		self.values.ammo_bag.passive_ammo_stock_bonus = {
+			0.5
+		}
 	end	
 end)

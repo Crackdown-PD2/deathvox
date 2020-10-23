@@ -462,22 +462,27 @@ end
 function RaycastWeaponBase:reload_speed_multiplier(multiplier)
 	multiplier = multiplier or 1
 --optional multiplier argument is added from cd here as well
+	local pm = managers.player
 
 	if self:is_weapon_class("precision") then
-		local this_machine_data = managers.player:upgrade_value("weapon","point_and_click_bonus_reload_speed",{0,0})
-		multiplier = multiplier * (1 + math.min(this_machine_data[1] * managers.player:get_property("current_point_and_click_stacks",0),this_machine_data[2]))
+		local this_machine_data = pm:upgrade_value("weapon","point_and_click_bonus_reload_speed",{0,0})
+		multiplier = multiplier * (1 + math.min(this_machine_data[1] * pm:get_property("current_point_and_click_stacks",0),this_machine_data[2]))
 	end
 	
 	for _, category in ipairs(self:weapon_tweak_data().categories) do
-		multiplier = multiplier * managers.player:upgrade_value(category, "reload_speed_multiplier", 1)
+		multiplier = multiplier * pm:upgrade_value(category, "reload_speed_multiplier", 1)
 	end
 
-	multiplier = multiplier * managers.player:upgrade_value("weapon", "passive_reload_speed_multiplier", 1)
-	multiplier = multiplier * managers.player:upgrade_value(self._name_id, "reload_speed_multiplier", 1)
+	multiplier = multiplier * pm:upgrade_value("weapon", "passive_reload_speed_multiplier", 1)
+	multiplier = multiplier * pm:upgrade_value(self._name_id, "reload_speed_multiplier", 1)
 	
 	--clean this up once all weapons are tagged appropriately
 	if self:is_weapon_class("rapidfire") and self:ammo_base():clip_empty() then
-		multiplier = multiplier * managers.player:upgrade_value("weapon", "money_shot_aced", 1)
+		multiplier = multiplier * pm:upgrade_value("weapon", "money_shot_aced", 1)
+	elseif self:is_weapon_class("heavy") then
+		local lead_farmer_data = pm:upgrade_value("heavy","lead_farmer",{0,0})
+		local lead_farmer_bonus = math.min(pm:get_property("current_lead_farmer_stacks",0) * lead_farmer_data[1],lead_farmer_data[2])
+		multiplier = multiplier + lead_farmer_bonus
 	end
 	
 	multiplier = managers.modifiers:modify_value("WeaponBase:GetReloadSpeedMultiplier", multiplier)
@@ -1456,79 +1461,7 @@ function ElectricBulletBase:give_impact_damage(col_ray, weapon_unit, user_unit, 
 	return defense_data
 end
 
-function RaycastWeaponBase:is_heavy_weapon() --new function
-	return self:weapon_tweak_data().IS_HEAVY_WEAPON
+function RaycastWeaponBase:is_heavy_weapon() --deprecated, do not use
+	log("function RaycastWeaponBase:is_heavy_weapon() is deprecated! Please use RaycastWeaponBase:is_weapon_class(\"heavy\") instead!")
+	return false
 end
-
-if deathvox:IsTotalCrackdownEnabled() then 
-
-	function RaycastWeaponBase:add_ammo(ratio, add_amount_override)
-		local function _add_ammo(ammo_base, ratio, add_amount_override)
-			if ammo_base:get_ammo_max() == ammo_base:get_ammo_total() then
-				return false, 0
-			end
-
-			local multiplier_min = 1
-			local multiplier_max = 1
-
-			if ammo_base._ammo_data and ammo_base._ammo_data.ammo_pickup_min_mul then
-				multiplier_min = ammo_base._ammo_data.ammo_pickup_min_mul
-			else
-				multiplier_min = managers.player:upgrade_value("player", "pick_up_ammo_multiplier", 1)
-				multiplier_min = multiplier_min + managers.player:upgrade_value("player", "pick_up_ammo_multiplier_2", 1) - 1
-				multiplier_min = multiplier_min + managers.player:crew_ability_upgrade_value("crew_scavenge", 0)
-				if self:is_heavy_weapon() then 
-					multiplier_min = multiplier_min + managers.player:upgrade_value("weapon", "heavy_weapons_ammo_pickup_bonus",1) - 1 --this is the cd thingy, replace the name here. also this is the only change to this function
-				end
-			end
-
-			if ammo_base._ammo_data and ammo_base._ammo_data.ammo_pickup_max_mul then
-				multiplier_max = ammo_base._ammo_data.ammo_pickup_max_mul
-			else
-				multiplier_max = managers.player:upgrade_value("player", "pick_up_ammo_multiplier", 1)
-				multiplier_max = multiplier_max + managers.player:upgrade_value("player", "pick_up_ammo_multiplier_2", 1) - 1
-				multiplier_max = multiplier_max + managers.player:crew_ability_upgrade_value("crew_scavenge", 0)
-				if self:is_heavy_weapon() then 
-					multiplier_max = multiplier_max + managers.player:upgrade_value("weapon", "heavy_weapons_ammo_pickup_bonus",1) - 1
-				end
-			end
-
-			local add_amount = add_amount_override
-			local picked_up = true
-
-			if not add_amount then
-				local rng_ammo = math.lerp(ammo_base._ammo_pickup[1] * multiplier_min, ammo_base._ammo_pickup[2] * multiplier_max, math.random())
-				picked_up = rng_ammo > 0
-				add_amount = math.max(0, math.round(rng_ammo))
-			end
-
-			add_amount = math.floor(add_amount * (ratio or 1))
-
-			ammo_base:set_ammo_total(math.clamp(ammo_base:get_ammo_total() + add_amount, 0, ammo_base:get_ammo_max()))
-
-			return picked_up, add_amount
-		end
-
-		local picked_up, add_amount = nil
-		picked_up, add_amount = _add_ammo(self, ratio, add_amount_override)
-
-		if self.AKIMBO then
-			local akimbo_rounding = self:get_ammo_total() % 2 + #self._fire_callbacks
-
-			if akimbo_rounding > 0 then
-				_add_ammo(self, nil, akimbo_rounding)
-			end
-		end
-
-		for _, gadget in ipairs(self:get_all_override_weapon_gadgets()) do
-			if gadget and gadget.ammo_base then
-				local p, a = _add_ammo(gadget:ammo_base(), ratio, add_amount_override)
-				picked_up = p or picked_up
-				add_amount = add_amount + a
-			end
-		end
-
-		return picked_up, add_amount
-	end
-end
-

@@ -759,6 +759,7 @@ Hooks:PostHook(PlayerStandard,"_interupt_action_reload","totalcrackdown_interrup
 	managers.player:set_property("shell_games_rounds_loaded",0)
 end)
 
+Hooks:Register("OnPlayerReloadComplete")
 function PlayerStandard:_update_reload_timers(t, dt, input)
 	if self._state_data.reload_enter_expire_t and self._state_data.reload_enter_expire_t <= t then
 		self._state_data.reload_enter_expire_t = nil
@@ -803,6 +804,7 @@ function PlayerStandard:_update_reload_timers(t, dt, input)
 			elseif self._equipped_unit then
 				if not interupt then
 					self._equipped_unit:base():on_reload()
+					Hooks:Call("OnPlayerReloadComplete",self._equipped_unit)
 				end
 
 				managers.statistics:reloaded()

@@ -89,6 +89,99 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 
 	Hooks:PostHook(PlayerManager,"check_skills","deathvox_check_cd_skills",function(self)
+		if self:has_category_upgrade("heavy","collateral_damage") then 
+			self._message_system:register(Message.OnWeaponFired,"proc_collateral_damage",
+				function(weapon_unit,result)
+				
+					--this is called on any weapon firing,
+					--so this needs checks to make sure that the weapon class is heavy
+					--and that the user_unit is the player
+					local player = self:local_player()
+					if not alive(player) then 
+						return
+					end
+					local weapon_base = weapon_unit and weapon_unit:base()
+					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("heavy") then 
+						if weapon_base._setup.user_unit ~= player then 
+							return
+						end
+					else
+						return
+					end
+					
+					local collateral_damage_data = self:upgrade_value("heavy","collateral_damage",{0,0})
+					local damage_mul = collateral_damage_data[1]
+					local radius = collateral_damage_data[2]
+					
+					--do stuff here
+					
+						--works on miss
+						--does not hit civs
+				end
+			)
+		end
+		
+		if self:has_category_upgrade("heavy","death_grips_stacks") then
+			self:set_property("current_death_grips_stacks",0)
+			self._message_system:register(Message.OnEnemyKilled,"proc_death_grips",
+				function(weapon_unit,variant,killed_unit)
+					local player = self:local_player()
+					if not alive(player) then 
+						return
+					end
+					local weapon_base = weapon_unit and weapon_unit:base()
+					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("heavy") then 
+						if weapon_base._setup.user_unit ~= player then 
+							return
+						end
+					else
+						return
+					end
+					local death_grips_data = self:upgrade_value("heavy","death_grips_stacks",{0,0})
+					self:set_property("current_death_grips_stacks",math.min(self:get_property("current_death_grips_stacks") + 1,death_grips_data[2]))
+					managers.enemy:remove_delayed_clbk("death_grips_stacks_expire",true)
+					managers.enemy:add_delayed_clbk("death_grips_stacks_expire",
+						function()
+							self:set_property("current_death_grips_stacks",0)
+						end,
+						Application:time() + death_grips_data[1]
+					)
+				end
+			)
+		end
+		
+		if self:has_category_upgrade("heavy","lead_farmer") then 
+			self:set_property("current_lead_farmer_stacks",0)
+			self._message_system:register(Message.OnEnemyKilled,"proc_lead_farmer",
+				function(weapon_unit,variant,killed_unit)
+					local player = self:local_player()
+					if not alive(player) then 
+						return
+					end
+					local weapon_base = weapon_unit and weapon_unit:base()
+					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("heavy") then 
+						if weapon_base._setup.user_unit ~= player then 
+							return
+						end
+					else
+						return
+					end
+					self:add_to_property("current_lead_farmer_stacks",1)
+				end
+			)
+			
+			Hooks:Add("OnPlayerReloadComplete","on_player_reloaded_consume_lead_farmer",
+				--Message.OnPlayerReload is called when reload STARTS, which is before the reload mul is calculated.
+				--so it's pretty useless to reset stacks from that message event.
+				function(weapon_unit)
+					local weapon_base = weapon_unit and weapon_unit:base()
+					if weapon_base and weapon_base:is_weapon_class("heavy") then 
+						managers.player:set_property("current_lead_farmer_stacks",0)
+					end
+				end
+			)
+		end
+		
 		if self:has_category_upgrade("class_shotgun","shell_games_reload_bonus") then
 			self:set_property("shell_games_rounds_loaded",0)
 		end
