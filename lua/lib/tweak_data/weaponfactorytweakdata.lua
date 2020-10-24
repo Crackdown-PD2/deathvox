@@ -254,7 +254,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	self.parts.wpn_fps_ass_asval_b_proto.stats = {
 		value = 1,
 		spread = -3, 
-		recoil = -5, 
+		recoil = -5,
+		alert_size = 12,
 		concealment = 10
 	}
 	-- Solid Stock
@@ -3759,9 +3760,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	-- Marmon Compensator -- name is tentative due to limited documentation of cartel optics pack files
 		self.parts.wpn_fps_upg_ns_ass_smg_v6.stats = {value = 3}
 	-- Jungle Ninja Suppressor
-		self.parts.wpn_fps_upg_ns_pis_jungle.stats = {suppression = 72,	value = 5}
+		self.parts.wpn_fps_upg_ns_pis_jungle.stats = {suppression = 72,	alert_size = 12, value = 5}
 	-- Budget Suppressor
-		self.parts.wpn_fps_upg_ns_ass_filter.stats = {suppression = 72,	value = 0} -- yes, value correct
+		self.parts.wpn_fps_upg_ns_ass_filter.stats = {suppression = 72,	alert_size = 12, value = 0} -- yes, value correct
 	-- Asepsis Suppressor
 		self.parts.wpn_fps_upg_ns_pis_medium_slim.stats = {suppression = 72, alert_size = 12, value = 1}
 	-- Monolith Suppressor
@@ -3934,12 +3935,18 @@ Hooks:PostHook( WeaponFactoryTweakData, "create_bonuses", "strip_mod_stats", fun
 				else
 --					log("Removing stats from: Unknown Mod")
 				end
-
+				
+				local alert_size
+				if (part.sub_type == "silencer") or (part.perks and table.contains(part.perks,"silencer")) then 
+					alert_size = part.stats.alert_size or 12
+				end
+				
 				--Preserve cosmetic part stats.
 				part.stats = {
 					value = part.stats.value,
 					zoom = part.stats.zoom,
-					gadget_zoom = part.stats.gadget_zoom
+					gadget_zoom = part.stats.gadget_zoom,
+					alert_size = alert_size
 				}
 				part.custom_stats = nil
 			end

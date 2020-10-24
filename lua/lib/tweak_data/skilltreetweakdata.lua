@@ -953,8 +953,135 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			}
 		})
 		
-		--Thief (not implemented)
+		--Thief (not fully implemented)
+		replace_skill(tree_indices.thief,1,{ --Classic Thievery
+			{
+				upgrades = {
+					"player_pick_lock_easy_speed_multiplier"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_suspicion_bonus"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_classic_thievery",
+			desc_id = "menu_classic_thievery_desc",
+			icon_xy = {
+				10,
+				4
+			}
+		})
+		replace_skill(tree_indices.thief,2,{ --People Watching
+			{
+				upgrades = {
+					"player_special_enemy_highlight_mask_off",
+					"player_sec_camera_highlight_mask_off",
+					"player_mask_off_pickup"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					--mark all enemies within 5 meters
+					--stand still for 3 seconds to increase range to 15s
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_people_watching",
+			desc_id = "menu_people_watching_desc",
+			icon_xy = {
+				6,
+				10
+			}
+		})
+		replace_skill(tree_indices.thief,3,{ --Blackout
+			{
+				upgrades = {
+					"ecm_jammer_duration_multiplier"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"ecm_jammer_duration_multiplier_2"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_blackout",
+			desc_id = "menu_blackout_desc",
+			icon_xy = {
+				6,
+				3
+			}
+		})
+		replace_skill(tree_indices.thief,4,{ --Tuned Out
+			{
+				upgrades = {
+					"player_tape_loop_duration_1"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_tape_loop_amount_unlimited", --unlimited not yet functional
+					"player_tape_loop_duration_2"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_tuned_out",
+			desc_id = "menu_tuned_out_desc",
+			icon_xy = {
+				4,
+				2
+			}
+		})
+		replace_skill(tree_indices.thief,5,{ --Electronic Warfare
+			{
+				upgrades = {
+					"ecm_jammer_quantity_increase_1"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"ecm_jammer_affects_pagers"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_electronic_warfare",
+			desc_id = "menu_electronic_warfare_desc",
+			icon_xy = {
+				3,
+				4
+			}
+		})
+		replace_skill(tree_indices.thief,6,{ --Skeleton Key
+			{
+				upgrades = {
+					"player_pick_lock_easy_speed_multiplier_2",
+					"player_pick_lock_hard"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_pick_lock_hard_speed_multiplier",
+					"player_can_hack_electronic_locks"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_skeleton_key",
+			desc_id = "menu_skeleton_key_desc",
+			icon_xy = {
+				5,
+				4
+			}
+		})
 		
+
 		--Assassin (not fully implemented)
 		replace_skill(tree_indices.assassin,1,{ --Killer's Notebook
 			{

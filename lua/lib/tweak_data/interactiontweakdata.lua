@@ -43,7 +43,28 @@ Hooks:PostHook(InteractionTweakData, "init", "cd_interact_timer_stuff", function
 			
 		}
 		
+		self.pick_lock_hard.upgrade_timer_multipliers = {
+			{
+				upgrade = "pick_lock_hard_speed_multiplier",
+				category = "player"
+			}
+		}
 		
+		self.requires_ecm_jammer = {
+			icon = "equipment_key_chain",
+			contour = "interactable_icon",
+			text_id = "hud_int_pick_electronic_lock",
+			timer = 20,
+			requires_upgrade = {
+				upgrade = "can_hack_electronic_locks",
+				category = "player"
+			},
+			action_text_id = "hud_action_picking_electronic_lock",
+			sound_start = "bar_keyboard",
+			sound_interupt = "bar_keyboard_cancel",
+			sound_done = "bar_keyboard_finished",
+			is_lockpicking = true
+		}
 	end
 	
 end)

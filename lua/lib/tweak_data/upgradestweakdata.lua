@@ -946,6 +946,62 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				
 		
 		--Thief
+		self.values.player.pick_lock_easy_speed_multiplier = {
+			0.5,
+			0.25 --vanilla tweaked
+		}
+		self.definitions.player_pick_lock_easy_speed_multiplier_2 = {
+			name_id = "menu_player_pick_lock_easy_speed_multiplier",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "pick_lock_easy_speed_multiplier",
+				category = "player"
+			}
+		}
+		
+		self.values.player.pick_lock_hard_speed_multiplier = {
+			0.5
+		}
+		self.definitions.player_pick_lock_hard_speed_multiplier = {
+			name_id = "menu_player_pick_lock_hard_speed_multiplier",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "pick_lock_hard_speed_multiplier",
+				category = "player"
+			}
+		}
+		
+		self.values.player.can_hack_electronic_locks = {
+			true
+		}
+		self.definitions.player_can_hack_electronic_locks = {
+			name_id = "menu_player_can_hack_electronic_locks",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "can_hack_electronic_locks",
+				category = "player"
+			}
+		}
+		
+		self.values.player.tape_loop_duration = {
+			15,
+			25
+		}
+		self.values.player.tape_loop_amount_unlimited = {
+			true
+		}
+		self.definitions.player_tape_loop_amount_unlimited = {
+			name_id = "menu_player_tape_loop_amount_unlimited",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "tape_loop_amount_unlimited",
+				category = "player"
+			}
+		}
 		
 		--Assassin
 		

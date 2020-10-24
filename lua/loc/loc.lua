@@ -110,7 +110,24 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_prayers_answered = "Prayers Answered",
 				menu_prayers_answered_desc = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles have their Critical Hit chance increased by ##+10%##, for a total of ##+20%##.\n\nACE: ##$pro##\nYour SMGs, and Assault Rifles have their Critical Hit chance ##further## increased by ##+10%##, for a total of ##+30%##.",
 				
-				--ghost
+				--thief
+				menu_classic_thievery = "Classic Thievery",
+				menu_classic_thievery_desc = "BASIC: ##$basic##\nIncrease lockpicking speed by ##100%##.\n\nACE: ##$pro##\nYou take ##25%## longer to be detected while in Casing Mode.",
+				menu_people_watching = "People Watching",
+				menu_people_watching_desc = "BASIC: ##$basic##\nYou gain the ability to Mark enemies and pick up items while in Casing Mode.\n\nACE: ##$pro##\nNOT YET IMPLEMENTED",
+--				menu_people_watching_desc = "BASIC: ##$basic##\nYou gain the ability to Mark enemies and pick up items while in Casing Mode.\n\nACE: ##$pro##\nWhile in Stealth, you automatically Mark all enemies within ##5## Meters.\nStanding still for ##3## seconds increases the radius to ##15## Meters.",
+				menu_blackout = "Blackout",
+				menu_blackout_desc = "BASIC: ##$basic##\nIncreases the ECM Jammer's duration by ##25%##.\n\nACE: ##$pro##\nIncreases the ECM Jammer's duration by an additional ##25%##, for a total of ##+50%##.",
+				menu_tuned_out = "Tuned Out",
+--				menu_tuned_out_desc = "BASIC: ##$basic##\nYou gain the ability to disable a camera from detecting your team for ##20## seconds. Only one camera may be disabled at a time.\n\nACE: ##$pro##\nDisable duration increases to ##30## seconds and an unlimited number of cameras may be disabled at one time.",
+				menu_tuned_out_desc = "BASIC: ##$basic##\nYou gain the ability to disable a camera from detecting your team for ##20## seconds. Only one camera may be disabled at a time.\n\nACE: ##$pro##\nDisable duration increases to ##30## seconds.\n\nNOT YET IMPLEMENTED: An unlimited number of cameras may be disabled at one time.",
+				menu_electronic_warfare = "Electronic Warfare",
+				menu_electronic_warfare_desc = "BASIC: ##$basic##\nIncreases your ECM Jammer count to ##2##.\n\nACE: ##$pro##\nECM Jammers delay pagers while active.",
+				menu_skeleton_key = "Skeleton Key",
+				menu_skeleton_key_desc = "BASIC: ##$basic##\nIncreases Lockpick Speed by ##+100%## and gain the ability to Lockpick Safes.\n\nACE: ##$pro##\nYou now Lockpick Safes ##100%## faster and you gain the ability to open Electronic Locks.",
+				
+				
+				--assassin
 				menu_killers_notebook = "Killer's Notebook",
 				menu_killers_notebook_desc = "NOT YET IMPLEMENTED",
 --				menu_killers_notebook_desc = "BASIC: ##$basic##\nQuiet Weapons ADS ##90%## faster.\n\nACE: ##$pro##\nQuiet Weapons gain ##+20## Stability.",
@@ -192,11 +209,11 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_equipment_armor_kit = "Armor Plates",
 				bm_equipment_armor_kit = "Armor Plates Bag",
 				bm_equipment_armor_kit_desc = "Advanced shock-resistant armor inserts that provide +15% Damage Resistance and allow the user to go down one additional time before instantly being taken into custody. To use, hold $BTN_USE_ITEM on a suitable surface and press $BTN_INTERACT to equip.\n\nOnce deployed, the Armor Plates Bag can be used 4 times before disappearing. Remaining uses are visible within the bag.",
-				bm_equipment_ammo_bag = "Deployable ammunition container that refills expended ammunition and passively increases the holder's Ammunition Stock by 50%, even after using all charges. To use, hold $BTN_USE_ITEM on a suitable surface and press $BTN_INTERACT to refill ammunition.\n\nOnce deployed, the Ammo Bag can completely refill ammunition stocks 4 times before disappearing. Remaining uses are visible within the bag.",
-				bm_equipment_first_aid_kit = "Single-use healing deployable that fully restores the user's health. To use, hold $BTN_USE_ITEM on a suitable surface and press $BTN_INTERACT to heal.\n\nFirst Aid Kits can also be used to instantly revive and fully heal an incapacitated teammate by deploying a First Aid Kit within 1.5 meters of them.",
-				hud_deploying_revive_fak = "Reviving $TEAMMATE_NAME..."
-			--assassin
-				
+				bm_equipment_ammo_bag_desc = "Deployable ammunition container that refills expended ammunition and passively increases the holder's Ammunition Stock by 50%, even after using all charges. To use, hold $BTN_USE_ITEM on a suitable surface and press $BTN_INTERACT to refill ammunition.\n\nOnce deployed, the Ammo Bag can completely refill ammunition stocks 4 times before disappearing. Remaining uses are visible within the bag.",
+				bm_equipment_first_aid_kit_desc = "Single-use healing deployable that fully restores the user's health. To use, hold $BTN_USE_ITEM on a suitable surface and press $BTN_INTERACT to heal.\n\nFirst Aid Kits can also be used to instantly revive and fully heal an incapacitated teammate by deploying a First Aid Kit within 1.5 meters of them.",
+				hud_deploying_revive_fak = "Reviving $TEAMMATE_NAME...",
+				hud_int_pick_electronic_lock = "Hold $BTN_INTERACT to hack the lock",
+				hud_action_picking_electronic_lock = "Hacking the lock..."
 			})
 		end
 		loc:add_localized_strings({
