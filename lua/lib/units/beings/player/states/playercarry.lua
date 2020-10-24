@@ -19,6 +19,7 @@ function PlayerCarry:_get_max_walk_speed(...)
 	multiplier = math.clamp(multiplier + managers.player:upgrade_value("player","heave_ho",0),0,1)
 
 	if managers.player:has_category_upgrade("player", "armor_carry_bonus") then
+		local armor_init = managers.player:player_unit():character_damage()._ARMOR_INIT
 		local base_max_armor = armor_init + managers.player:body_armor_value("armor") + managers.player:body_armor_skill_addend()
 		local mul = managers.player:upgrade_value("player", "armor_carry_bonus", 1)
 
