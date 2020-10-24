@@ -85,10 +85,16 @@
 	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_grenadier" load="true"/>
 	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_grenadier_grenade" load="true"/>
 	
-	<material_config path="units/payday2/weapons/wpn_npc_m4_yellow/wpn_npc_m4_yellow" force="true"/>
+	<!--NPC M4-->
+	<model path="units/payday2/weapons/wpn_npc_m4/wpn_npc_m4" force="true"/>
+	<texture path="units/payday2/weapons/wpn_npc_m4/m4_df" force="true"/>
+	<texture path="units/payday2/weapons/wpn_npc_m4/m4_nm" force="true"/>
+	
+	<!--NPC M4 Yellow-->
 	<model path="units/payday2/weapons/wpn_npc_m4_yellow/wpn_npc_m4_yellow" force="true"/>
-	<texture path="units/payday2/weapons/wpn_npc_m4_yellow/m4_yellow_nm" force="true"/>
-	<texture path="units/payday2/weapons/wpn_npc_m4_yellow/m4_yellow_df" force="true"/>
+	<material_config path="units/payday2/weapons/wpn_npc_m4_yellow/wpn_npc_m4_yellow" force="true"/>
+	<material_config path="units/payday2/weapons/wpn_npc_m4_yellow/wpn_npc_m4_yellow_contour" force="true"/>
+	<object path="units/payday2/weapons/wpn_npc_m4_yellow/wpn_npc_m4_yellow" force="true"/>	
 	
 	<unit_mat path="units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd" load="true"/>
 	<cooked_physics path="units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd"  force="false"/>					

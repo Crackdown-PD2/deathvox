@@ -4944,6 +4944,11 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_fbi_veteran",			
 			"ene_deathvox_shield",
 			"ene_deathvox_medic",
+			"ene_deathvox_tazer",
+			"ene_deathvox_sniper",
+			"ene_deathvox_greendozer",
+			"ene_deathvox_blackdozer",
+			"ene_deathvox_lmgdozer",
 			"ene_deathvox_cloaker",
 			"ene_deathvox_heavyswat",
 			"ene_deathvox_heavyswatshot"

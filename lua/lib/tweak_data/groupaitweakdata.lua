@@ -568,7 +568,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 				Idstring("units/pd2_mod_gageammo/characters/ene_deathvox_sniper/ene_deathvox_sniper")
 			},			
 			federales = {
-				Idstring("units/payday2/characters/ene_sniper_1/ene_sniper_1")
+				Idstring("units/pd2_mod_federales/characters/ene_deathvox_sniper/ene_deathvox_sniper")
 			},			
 			classic = {
 				Idstring("units/payday2/characters/ene_sniper_1/ene_sniper_1")
@@ -582,7 +582,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 			fbi = "units/payday2/characters/ene_sniper_2/ene_sniper_2",
 			gensec = "units/payday2/characters/ene_sniper_2/ene_sniper_2",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_sniper/ene_deathvox_sniper",
-			federales = "units/payday2/characters/ene_sniper_1/ene_sniper_1",
+			federales = "units/pd2_mod_federales/characters/ene_deathvox_sniper/ene_deathvox_sniper",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_sniper/ene_deathvox_sniper",	
 			classic = "units/payday2/characters/ene_sniper_1/ene_sniper_1",
 			russia = "units/payday2/characters/ene_sniper_1/ene_sniper_1"
@@ -864,8 +864,8 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 	}
 	
 	if level == "pal" or level == "dah" or level == "red2" or level == "glace" or level == "run" or level == "flat" or level == "dinner" or level == "man" or level == "nmh" then	
-		-- log("excellent! overwrite scripted spawns based on level!")
-		-- Beat Cop Spawn Overrides for Classic Heists		
+		-- Beat Cop/FBI Spawn Overrides for Classic Heists		
+		--cops
 		self.unit_categories.deathvox_cop_smg.unit_type_spawner.zeal = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_smg/ene_deathvox_classic_cop_smg"
 		
 		self.unit_categories.deathvox_cop_shotgun.unit_type_spawner.zeal = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_shotgun/ene_deathvox_classic_cop_shotgun"
@@ -874,14 +874,36 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 		
 		self.unit_categories.deathvox_cop_pistol.unit_type_spawner.zeal = "units/pd2_mod_classic/characters/ene_deathvox_classic_cop_pistol/ene_deathvox_classic_cop_pistol"
 		
-		-- Rookie Spawn Overrides for Classic Heists		
+		--dunno if these below actually work or not, but they should
+		
+		-- FBI
 		self.unit_categories.deathvox_fbi_rookie.unit_type_spawner.zeal = "units/pd2_mod_classic/characters/ene_deathvox_classic_rookie/ene_deathvox_classic_rookie"
-		-- HRT Spawn Overrides for Classic Heists		
+		
 		self.unit_categories.deathvox_fbi_hrt.unit_type_spawner.zeal = "units/pd2_mod_classic/characters/ene_deathvox_classic_hrt/ene_deathvox_classic_hrt"
-		self.unit_categories.deathvox_fbi_hrt.unit_types.zeal = {Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_cop_smg/ene_deathvox_classic_cop_smg")}
-		-- FBI Veteran Scripted Spawn Overrides for Classic Heists
+		self.unit_categories.deathvox_fbi_hrt.unit_types.zeal = {Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_hrt/ene_deathvox_classic_hrt")}
+		
 		self.unit_categories.deathvox_fbi_veteran.unit_type_spawner.zeal = "units/pd2_mod_classic/characters/ene_deathvox_classic_veteran/ene_deathvox_classic_veteran"	
-		self.unit_categories.deathvox_fbi_veteran.unit_types.zeal = {Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_veteran/ene_deathvox_classic_veteran")}				
+		self.unit_categories.deathvox_fbi_veteran.unit_types.zeal = {Idstring("units/pd2_mod_classic/characters/ene_deathvox_classic_veteran/ene_deathvox_classic_veteran")}	
+
+	-- Beat Cop/FBI Spawn Overrides for Federales Stuff		
+	elseif level == "pex" or level == "bex" or level == "skm_bex" then	
+		-- cops
+		self.unit_categories.deathvox_cop_smg.unit_type_spawner.zeal = "units/pd2_mod_federales/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg"
+		
+		self.unit_categories.deathvox_cop_shotgun.unit_type_spawner.zeal = "units/pd2_mod_federales/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun"
+		
+		self.unit_categories.deathvox_cop_revolver.unit_type_spawner.zeal = "units/pd2_mod_federales/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver"
+		
+		self.unit_categories.deathvox_cop_pistol.unit_type_spawner.zeal = "units/pd2_mod_federales/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol"
+
+		-- fbi
+		self.unit_categories.deathvox_fbi_rookie.unit_type_spawner.zeal = "units/pd2_mod_federales/characters/ene_deathvox_classic_rookie/ene_deathvox_classic_rookie"
+		
+		self.unit_categories.deathvox_fbi_hrt.unit_type_spawner.zeal = "units/pd2_mod_federales/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt"
+		self.unit_categories.deathvox_fbi_hrt.unit_types.zeal = {Idstring("units/pd2_mod_federales/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt")}
+		
+		self.unit_categories.deathvox_fbi_veteran.unit_type_spawner.zeal = "units/pd2_mod_federales/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran"	
+		self.unit_categories.deathvox_fbi_veteran.unit_types.zeal = {Idstring("units/pd2_mod_federales/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")}			
 	end
 	
 	self.unit_categories.deathvox_guard = {
@@ -1289,7 +1311,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser")
 			},
 			federales = {
-				Idstring("units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser")
+				Idstring("units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer") --accidentally put a z instead of an s in the enemy filename oopsie woopsies too lazy to fix UwU
 			},
 			gensec = {
 				Idstring("units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser")
@@ -1310,7 +1332,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 		unit_type_spawner = {
 			cop = "units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser",
 			fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser",
-			federales = "units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser",
+			federales = "units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer",
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser",			
@@ -1329,7 +1351,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer")
 			},
 			federales = {
-				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer")
+				Idstring("units/pd2_mod_federales/characters/ene_deathvox_greendozer/ene_deathvox_greendozer")
 			},
 			gensec = {
 				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer")
@@ -1350,7 +1372,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 		unit_type_spawner = {
 			cop = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer",
 			fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer",
-			federales = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer",
+			federales = "units/pd2_mod_federales/characters/ene_deathvox_greendozer/ene_deathvox_greendozer",
 			gensec = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_greendozer/ene_deathvox_fbi_greendozer",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_greendozer/ene_deathvox_greendozer",			
@@ -1409,7 +1431,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer")
 			},
 			federales = {
-				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer")
+				Idstring("units/pd2_mod_federales/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer")
 			},
 			gensec = {
 				Idstring("units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer")
@@ -1430,7 +1452,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 		unit_type_spawner = {
 			cop = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer",
 			fbi = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer",
-			federales = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer",
+			federales = "units/pd2_mod_federales/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer",
 			gensec = "units/pd2_mod_fbi/characters/ene_deathvox_fbi_blackdozer/ene_deathvox_fbi_blackdozer",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer",			
@@ -1449,7 +1471,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 				Idstring("units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer")
 			},
 			federales = {
-				Idstring("units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer")
+				Idstring("units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer")
 			},
 			gensec = {
 				Idstring("units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer")
@@ -1470,7 +1492,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 		unit_type_spawner = {
 			cop = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer",
 			fbi = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer",
-			federales = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer",
+			federales = "units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer",
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer",
 			murky = "units/pd2_mod_gageammo/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer",			

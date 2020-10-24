@@ -25,6 +25,18 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Localization", function(loc)
 		["hud_assault_gsg9_assault"] = "POLIZEIVORSTOẞ IM GANGE",
 		["hud_assault_gsg9_cover"]	= "IN DECKUNG BLEIBEN"
 	})
+	
+	local group_type = tweak_data.levels:get_ai_group_type()
+	local federales = tweak_data.levels.ai_groups.federales
+	local level = Global.level_data and Global.level_data.level_id
+
+	if group_type == federales then
+		loc:load_localization_file(ModPath .. "loc/federalesnames.txt")
+	elseif level == "pex" or level == "skm_bex" or level == "bex" then --forcefully load beat cop and hrt names on these levels so that they dont get overridden by cd diff killfeed/hoplib/whatever
+		-- log("head keeps spinnin")
+		loc:load_localization_file(ModPath .. "loc/federalespersistentnames.txt")	
+	end
+	
 end)
 
 Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
