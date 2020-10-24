@@ -995,9 +995,47 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		
 		
+		--FAK auto revive radius on deploying
+			--(default upgrade)
+		self.values.first_aid_kit.auto_revive = {
+			150 --1.5 meters
+		}
+		self.definitions.first_aid_kit_auto_revive = {
+			name_id = "menu_first_aid_kit_auto_revive",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "auto_revive",
+				category = "first_aid_kit"
+			}
+		}
 		
+		--FAK Interaction Speed increased by 80% 
+			--(default upgrade)
+		self.values.first_aid_kit.interaction_speed_multiplier = {
+			0.8
+		}
+		self.definitions.first_aid_kit_interaction_speed_multiplier = {
+			name_id = "menu_first_aid_kit_interaction_speed_multiplier",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "interaction_speed_multiplier",
+				category = "first_aid_kit"
+			}
+		}
 		
+		--FAK Deploy Speed increased by 80% 
+			--(default upgrade, tweaked vanilla; "first_aid_kit_deploy_time_multiplier") 
+		self.values.first_aid_kit.deploy_time_multiplier = {
+			0.2
+		}
 		
+		--Health regained upon being revived by deploying FAK
+		self.revive_health_multiplier = {
+			1 --100% of max health
+		--see also: player.revived_health_regain		
+		}
 		
 		--Passively increases Ammo Stock for equipped weapons by 50% 
 			--(default upgrade)

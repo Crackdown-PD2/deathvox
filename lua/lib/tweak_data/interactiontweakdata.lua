@@ -9,6 +9,12 @@ Hooks:PostHook(InteractionTweakData, "init", "cd_interact_timer_stuff", function
 		self.gage_assignment.sound_event = "money_grab"	
 		self.gage_assignment.sound_done = "money_grab"	
 		
+		self.first_aid_kit.upgrade_timer_multipliers = {
+			{
+				upgrade = "interaction_speed_multiplier",
+				category = "first_aid_kit"
+			}
+		}
 		
 		self.sentry_gun.upgrade_timer_multipliers = {
 			{

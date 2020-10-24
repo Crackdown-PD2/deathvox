@@ -35,15 +35,15 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if equipment_data.equipment == "trip_mine" or equipment_data.equipment == "ecm_jammer" then
 			return player:equipment():valid_look_at_placement(tweak_data.equipments[equipment_data.equipment]) and true or false
 		elseif equipment_data.equipment == "sentry_gun" or equipment_data.equipment == "ammo_bag" or equipment_data.equipment == "sentry_gun_silent" or equipment_data.equipment == "doctor_bag" or equipment_data.equipment == "first_aid_kit" or equipment_data.equipment == "bodybags_bag" then
-			return player:equipment():valid_shape_placement(equipment_data.equipment, tweak_data.equipments[equipment_data.equipment]) and true or false
+			local result,revivable_unit = player:equipment():valid_shape_placement(equipment_data.equipment, tweak_data.equipments[equipment_data.equipment])
+			return result and true or false,revivable_unit
 		elseif equipment_data.equipment == "armor_kit" then
 			return player:equipment():valid_shape_placement(equipment_data.equipment,tweak_data.equipments[equipment_data.equipment]) and true or false
 		end
 
 		return player:equipment():valid_placement(tweak_data.equipments[equipment_data.equipment]) and true or false
 	end
-
-
+	
 	function PlayerManager:damage_reduction_skill_multiplier(damage_type)
 		local multiplier = 1
 		multiplier = multiplier * self:temporary_upgrade_value("temporary", "dmg_dampener_outnumbered", 1)
@@ -524,5 +524,5 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return multiplier
 	end
 
-	
+
 end

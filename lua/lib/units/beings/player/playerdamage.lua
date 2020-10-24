@@ -769,3 +769,80 @@ end
 function PlayerDamage:remove_armor_plates_bonus()
 	managers.player:set_property("armor_plates_active",false)
 end
+
+if deathvox:IsTotalCrackdownEnabled() then 
+
+	function PlayerDamage:set_revive_boost(revive_health_level)
+		self._revive_health_multiplier = tweak_data.upgrades.revive_health_multiplier[revive_health_level]
+		--actually the only change here is removing the debug print() 
+		--but since i'm changing how the multiplier is applied i may as well override this too
+		--even if this function specifically is not functionally different
+				--offy
+	end	
+	
+	function PlayerDamage:revive(silent)
+		if Application:digest_value(self._revives, false) == 0 then
+			self._revive_health_multiplier = nil
+
+			return
+		end
+
+		local arrested = self:arrested()
+
+		managers.player:set_player_state("standard")
+
+		if not silent then
+			PlayerStandard.say_line(self, "s05x_sin")
+		end
+
+		self._bleed_out = false
+		self._incapacitated = nil
+		self._downed_timer = nil
+		self._downed_start_time = nil
+
+		if not arrested then
+			if self._revive_health_multiplier then 
+				self:set_health(self:_max_health() * self._revive_health_multiplier)
+				--if it is set, self._revive_health_multiplier now overrides other on-revive-health-regained bonuses and difficulty multipliers
+				--and is a direct multiplier to max health
+			else
+				self:set_health(self:_max_health() * tweak_data.player.damage.REVIVE_HEALTH_STEPS[self._revive_health_i] * managers.player:upgrade_value("player", "revived_health_regain", 1))
+			end
+			
+			self:set_armor(self:_max_armor())
+
+			self._revive_health_i = math.min(#tweak_data.player.damage.REVIVE_HEALTH_STEPS, self._revive_health_i + 1)
+			self._revive_miss = 2
+		end
+
+		self:_regenerate_armor()
+		managers.hud:set_player_health({
+			current = self:get_real_health(),
+			total = self:_max_health(),
+			revives = Application:digest_value(self._revives, false)
+		})
+		self:_send_set_health()
+		self:_set_health_effect()
+		managers.hud:pd_stop_progress()
+
+		self._revive_health_multiplier = nil
+
+		self._listener_holder:call("on_revive")
+
+		if managers.player:has_inactivate_temporary_upgrade("temporary", "revived_damage_resist") then
+			managers.player:activate_temporary_upgrade("temporary", "revived_damage_resist")
+		end
+
+		if managers.player:has_inactivate_temporary_upgrade("temporary", "increased_movement_speed") then
+			managers.player:activate_temporary_upgrade("temporary", "increased_movement_speed")
+		end
+
+		if managers.player:has_inactivate_temporary_upgrade("temporary", "swap_weapon_faster") then
+			managers.player:activate_temporary_upgrade("temporary", "swap_weapon_faster")
+		end
+
+		if managers.player:has_inactivate_temporary_upgrade("temporary", "reload_weapon_faster") then
+			managers.player:activate_temporary_upgrade("temporary", "reload_weapon_faster")
+		end
+	end
+end

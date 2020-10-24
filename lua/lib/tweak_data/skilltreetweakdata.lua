@@ -1117,7 +1117,14 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			"sentry_gun_rot_speed_multiplier",
 			
 			--passive +50% max ammo reserves if ammo bag equipped (from cd)
-			"ammo_bag_passive_ammo_stock_bonus"
+			"ammo_bag_passive_ammo_stock_bonus",
+			
+			--fak auto revive radius on deploying
+			"first_aid_kit_auto_revive",
+			--fak 80% faster interaction
+			"first_aid_kit_interaction_speed_multiplier",
+			--fak 80% faster deploy (tweaked vanilla)
+			"first_aid_kit_deploy_time_multiplier"
 		}
 		
 		for _,upgrade_name in pairs(more_default_upgrades) do 

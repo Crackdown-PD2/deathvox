@@ -1100,8 +1100,38 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self:_perform_jump(jump_vec)
 	end
 
+	function PlayerStandard:_update_use_item_timers(t, input)
+		if self._use_item_expire_t then
+			local valid,target_revive = managers.player:check_selected_equipment_placement_valid(self._unit)
+			if target_revive and alive(target_revive) then 
+				local teammate_name = "Teammate"
+				local teammate_peer_id = managers.criminals:character_peer_id_by_unit(target_revive)
+				local character_name = managers.criminals:character_name_by_unit(target_revive)
+				teammate_name = (teammate_peer_id and managers.network:session():peer(teammate_peer_id):name()) or (character_name and managers.localization:text("menu_" .. character_name)) or teammate_name
+				
+				managers.hud:show_progress_timer({
+					text = string.gsub(managers.localization:text("hud_deploying_revive_fak"),"$TEAMMATE_NAME",teammate_name)
+				})
+			else
+				managers.hud:show_progress_timer({
+					text = managers.player:selected_equipment_deploying_text() or managers.localization:text("hud_deploying_equipment", {
+						EQUIPMENT = managers.player:selected_equipment_name()
+					})
+				})
+			end
+			
+			local deploy_timer = managers.player:selected_equipment_deploy_timer()
 
+			managers.hud:set_progress_timer_bar_valid(valid, not valid and "hud_deploy_valid_help")
+			managers.hud:set_progress_timer_bar_width(deploy_timer - (self._use_item_expire_t - t), deploy_timer)
 
+			if self._use_item_expire_t <= t then
+				self:_end_action_use_item(valid)
+
+				self._use_item_expire_t = nil
+			end
+		end
+	end
 
 	function PlayerStandard:_check_action_primary_attack(t, input) --TEMPORARY FIX, REMOVE WHEN CLAIRE AUTO ANIMS ARE ADDED
 		local new_action = nil
