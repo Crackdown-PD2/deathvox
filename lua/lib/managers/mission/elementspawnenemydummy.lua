@@ -25,6 +25,7 @@ local enemy_replacements = {
 		
 -- snipers 
 		 ["units/payday2/characters/ene_sniper_2/ene_sniper_2"] = "deathvox_sniper",
+		 ["units/pd2_dlc_bex/characters/ene_swat_policia_sniper/ene_swat_policia_sniper"] = "deathvox_sniper",
 		 ["units/pd2_dlc_bph/characters/ene_murkywater_sniper/ene_murkywater_sniper"] = "deathvox_sniper",		
 		 ["units/payday2/characters/ene_sniper_1/ene_sniper_1"] = "deathvox_sniper",		
 
