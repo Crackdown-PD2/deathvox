@@ -98,17 +98,17 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				
 			--gunner
 				menu_spray_and_pray = "Spray & Pray",
-				menu_spray_and_pray_desc = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles gain ##+10%## Critical Hit chance.\n\nACE: ##$pro##\nYour ranged weapons can now ##pierce Body Armor.##",
+				menu_spray_and_pray_desc = "BASIC: ##$basic##\nRapid Fire weapons gain ##+10%## Critical Hit chance.\n\nACE: ##$pro##\nRapid Fire weapons can now pierce Body Armor.",
 				menu_money_shot = "Money Shot",
-				menu_money_shot_desc = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles gain ##+100%## Damage on the last bullet fired from a fully loaded magazine.\n\nACE: ##$pro##\nYour SMGs and Assault Rifles' gain ##+50%## faster Reload Speed when their Magazine is empty.",
+				menu_money_shot_desc = "BASIC: ##$basic##\nRapid Fire weapons deal ##+100%## Damage in a ##2.5## meter radius on impact when firing the last bullet from a fully loaded magazine.\n\nACE: ##$pro##\nRapid Fire weapons gain ##+50%## faster Reload Speed when their Magazine is empty.",
 				menu_shot_grouping = "Shot Grouping",
-				menu_shot_grouping_desc = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles ADS ##+90%## faster.\n\nACE: ##$pro##\nYour SMGs, and Assault Rifles gain ##+40 Accuracy and Stability while ADSing.##",
+				menu_shot_grouping_desc = "BASIC: ##$basic##\nRapid Fire weapons ADS ##+90%## faster.\n\nACE: ##$pro##\nRapid Fire weapons gain ##+40 Accuracy and Stability while ADSing.##",
 				menu_making_miracles = "Making Miracles",
-				menu_making_miracles_desc = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles gain ##+1%## Critical Hit chance for ##4## seconds when hitting an enemy with a Headshot, stacking up to ##+10%##.\n\nACE: ##$pro##\nKilling an enemy with a Headshot ##generates an additional stack##. Maximum bonus increased to ##+20%##.",
+				menu_making_miracles_desc = "BASIC: ##$basic##\nRapid Fire weapons gain ##+1%## Critical Hit chance for ##4## seconds when hitting an enemy with a Headshot, stacking up to ##+10%##.\n\nACE: ##$pro##\nKilling an enemy with a Headshot generates an additional stack. Maximum bonus increased to ##+20%##.",
 				menu_close_enough = "Close Enough",
-				menu_close_enough_desc = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles' bullets that strike hard surfaces ##ricochet once.##\n\nACE: ##$pro##\nCritical Hits cause ricochets to ##angle towards the closest enemy.##",
+				menu_close_enough_desc = "BASIC: ##$basic##\nRapid Fire bullets that strike hard surfaces ricochet once.\n\nACE: ##$pro##\nCritical Hits cause ricochets to angle towards the closest enemy.",
 				menu_prayers_answered = "Prayers Answered",
-				menu_prayers_answered_desc = "BASIC: ##$basic##\nYour SMGs, and Assault Rifles have their Critical Hit chance increased by ##+10%##, for a total of ##+20%##.\n\nACE: ##$pro##\nYour SMGs, and Assault Rifles have their Critical Hit chance ##further## increased by ##+10%##, for a total of ##+30%##.",
+				menu_prayers_answered_desc = "BASIC: ##$basic##\nRapid Fire weapons have their Critical Hit chance increased by ##+10%##, for a total of ##+20%##.\n\nACE: ##$pro##\nRapid Fire weapons have their Critical Hit chance further increased by ##+10%##, for a total of ##+30%##.",
 				
 				--thief
 				menu_classic_thievery = "Classic Thievery",
