@@ -1745,7 +1745,7 @@ function CopDamage:damage_melee(attack_data)
 
 				from_behind = mvec3_dot(mvec_1, mvec_2) >= 0
 
-				if from_behind and self._unit:movement():cool() then
+				if math_random() < managers.player:upgrade_value("player", "melee_kill_snatch_pager_chance", 0) then
 					snatch_pager = true
 					self._unit:unit_data().has_alarm_pager = false
 				end
