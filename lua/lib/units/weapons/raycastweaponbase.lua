@@ -8,13 +8,19 @@ local mvec3_dir = mvector3.direction
 local mvec3_set_l = mvector3.set_length
 local mvec3_len = mvector3.length
 local mvec3_dis = mvector3.distance_sq
+local mvec3_cpy = mvector3.copy
+
 local math_clamp = math.clamp
 local math_lerp = math.lerp
+
 local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
-local tmp_rot1 = Rotation()
-RaycastWeaponBase.TRAIL_EFFECT = Idstring("effects/particles/weapons/weapon_trail")
 
+local tmp_rot1 = Rotation()
+
+local world_g = World
+
+RaycastWeaponBase.TRAIL_EFFECT = Idstring("effects/particles/weapons/weapon_trail")
 
 
 Hooks:PostHook(RaycastWeaponBase,"init","deathvox_init_weapon_classes",function(self,unit)
@@ -114,7 +120,7 @@ function RaycastWeaponBase:check_autoaim(from_pos, direction, max_dist, use_aim_
 	mvector3.add(tmp_vec_to, mvector3.copy(from_pos))
 
 	local cone_radius = mvector3.length(tmp_vec_to) / 4
-	local enemies_in_cone = World:find_units("cone", from_pos, tmp_vec_to, cone_radius, managers.slot:get_mask("player_autoaim"))
+	local enemies_in_cone = world_g:find_units("cone", from_pos, tmp_vec_to, cone_radius, managers.slot:get_mask("player_autoaim"))
 
 	for _, enemy in pairs(enemies_in_cone) do
 		local com = enemy:movement():m_com()
@@ -140,7 +146,7 @@ function RaycastWeaponBase:check_autoaim(from_pos, direction, max_dist, use_aim_
 					mvector3.multiply(tar_vec, tar_vec_len)
 					mvector3.add(tar_vec, from_pos)
 
-					local vis_ray = World:raycast("ray", from_pos, tar_vec, "slot_mask", obstruction_slotmask, "ignore_unit", ignore_units)
+					local vis_ray = world_g:raycast("ray", from_pos, tar_vec, "slot_mask", obstruction_slotmask, "ignore_unit", ignore_units)
 
 					if vis_ray and vis_ray.unit:key() == enemy:key() and (not closest_error or error_angle < closest_error) then
 						closest_error = error_angle
@@ -238,7 +244,7 @@ function RaycastWeaponBase:set_laser_enabled(state)
 			local spawn_rot = self._obj_fire:rotation()
 			local spawn_pos = self._obj_fire:position()
 			spawn_pos = spawn_pos - spawn_rot:y() * 8 + spawn_rot:z() * 2 - spawn_rot:x() * 1.5
-			self._laser_unit = World:spawn_unit(Idstring("units/payday2/weapons/wpn_npc_upg_fl_ass_smg_sho_peqbox/wpn_npc_upg_fl_ass_smg_sho_peqbox"), spawn_pos, spawn_rot)
+			self._laser_unit = world_g:spawn_unit(Idstring("units/payday2/weapons/wpn_npc_upg_fl_ass_smg_sho_peqbox/wpn_npc_upg_fl_ass_smg_sho_peqbox"), spawn_pos, spawn_rot)
 			self._unit:link(self._obj_fire:name(), self._laser_unit)
 			self._laser_unit:base():set_npc()
 			self._laser_unit:base():set_on()
@@ -262,9 +268,9 @@ function RaycastWeaponBase:_collect_hits(from, to)
 	local bulletproof_ids = Idstring("bulletproof")
 
 	if self._can_shoot_through_wall then
-		ray_hits = World:raycast_wall("ray", from, to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units, "thickness", 40, "thickness_mask", wall_mask)
+		ray_hits = world_g:raycast_wall("ray", from, to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units, "thickness", 40, "thickness_mask", wall_mask)
 	else
-		ray_hits = World:raycast_all("ray", from, to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
+		ray_hits = world_g:raycast_all("ray", from, to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
 	end
 
 	local units_hit = {}
@@ -427,20 +433,38 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 	end
 
 	managers.player:send_message(Message.OnWeaponFired, nil, self._unit, ray_res)
-	if do_money_shot and ray_res.rays and ray_res.rays[1] and ray_res.rays[1].position then 
-		local position = ray_res.rays[1].position 
+
+	if do_money_shot and ray_res.rays and ray_res.rays[1] and ray_res.rays[1].position then
 		local money_shot_data = managers.player:upgrade_value("weapon","money_shot",{0,0})
-		for _,unit in pairs(World:find_units_quick("sphere",position,money_shot_data[2],managers.slot:get_mask("enemies"))) do 
-			if unit:character_damage() then 
-				unit:character_damage():damage_simple({
-					variant = "bullet",
-					damage = money_shot_data[1] * self:_get_current_damage(dmg_mul),
-					attacker_unit = managers.player:local_player(),
---					owner = managers.player:local_player(),
-					weapon_unit = self._unit,
-					pos = unit:position(),
-					attack_dir = direction
-				})
+		local origin_pos = ray_res.rays[1].position
+		local radius = money_shot_data[2]
+		local bodies_hit = world_g:find_bodies("intersect", "sphere", origin_pos, radius, managers.slot:get_mask("enemies"))
+		local enemies_hit = {}
+
+		for _, body in ipairs(bodies_hit) do
+			local enemy = body:unit()
+
+			if not enemies_hit[enemy:key()] then --not already hit (shapes and sphere rays can hit the same unit multiple times when usind find_bodies)
+				enemies_hit[enemy:key()] = true
+
+				local dmg_ext = enemy:character_damage()
+
+				if dmg_ext and dmg_ext.damage_simple then
+					local money_damage = money_shot_data[1] * self:_get_current_damage(dmg_mul)
+					local hit_pos = mvec3_cpy(body:position())
+					local hit_dir = hit_pos - origin_pos
+					mvec3_norm(hit_dir)
+
+					local attack_data = {
+						variant = "graze",
+						damage = money_damage,
+						attacker_unit = user_unit,
+						pos = hit_pos,
+						attack_dir = hit_dir
+					}
+
+					dmg_ext:damage_simple(attack_data)
+				end
 			end
 		end
 	end
@@ -670,12 +694,12 @@ function RaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul
 			self._obj_fire:m_position(self._trail_effect_table.position)
 			mvector3.set(self._trail_effect_table.normal, trail_direction)
 
-			local trail = World:effect_manager():spawn(self._trail_effect_table)
+			local trail = world_g:effect_manager():spawn(self._trail_effect_table)
 
 			if furthest_hit then
-				World:effect_manager():set_remaining_lifetime(trail, math.clamp((furthest_hit.distance - 600) / 10000, 0, furthest_hit.distance))
+				world_g:effect_manager():set_remaining_lifetime(trail, math.clamp((furthest_hit.distance - 600) / 10000, 0, furthest_hit.distance))
 			else
-				World:effect_manager():set_remaining_lifetime(trail, math.clamp((ray_distance - 600) / 10000, 0, ray_distance))
+				world_g:effect_manager():set_remaining_lifetime(trail, math.clamp((ray_distance - 600) / 10000, 0, ray_distance))
 			end
 		end
 	end
@@ -733,7 +757,7 @@ function InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, 
 	local impact_pos = col_ray.hit_position or col_ray.position
 
 	if guaranteed_hit and managers.player:has_category_upgrade("player", "ricochet_bullets_aced") then
-		local bodies = World:find_bodies("intersect", "sphere", impact_pos, ricochet_range, managers.slot:get_mask("enemies")) --use a sphere to find nearby enemies
+		local bodies = world_g:find_bodies("intersect", "sphere", impact_pos, ricochet_range, managers.slot:get_mask("enemies")) --use a sphere to find nearby enemies
 		local can_hit_enemy = false
 
 		if #bodies > 0 then
@@ -741,7 +765,7 @@ function InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, 
 				local hit_unit = hit_body:unit()
 
 				if hit_unit.character_damage and hit_unit:character_damage() and hit_unit:character_damage().damage_bullet and not hit_unit:character_damage():dead() then --check if the enemy can take bullet damage and they're not dead
-					local hit_ray = World:raycast("ray", impact_pos, hit_body:center_of_mass(), "slot_mask", self:bullet_slotmask(), "ignore_unit", ignore_units) --check if the enemy can actually be hit (isn't obstructed)
+					local hit_ray = world_g:raycast("ray", impact_pos, hit_body:center_of_mass(), "slot_mask", self:bullet_slotmask(), "ignore_unit", ignore_units) --check if the enemy can actually be hit (isn't obstructed)
 
 					if hit_ray and hit_ray.unit and hit_ray.unit:key() == hit_unit:key() then --make sure the one that's hit is the same as that was found in this loop
 						mvector3.set(reflect_result, hit_ray.ray)
@@ -795,7 +819,7 @@ function InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, 
 	local ai_vision_ids = Idstring("ai_vision")
 	local bulletproof_ids = Idstring("bulletproof")
 
-	ray_hits = World:raycast_all("ray", from_pos, from_pos + reflect_result * ricochet_range, "slot_mask", self:bullet_slotmask(), "ignore_unit", ignore_units)
+	ray_hits = world_g:raycast_all("ray", from_pos, from_pos + reflect_result * ricochet_range, "slot_mask", self:bullet_slotmask(), "ignore_unit", ignore_units)
 
 	local units_hit = {}
 	local unique_hits = {}
@@ -850,28 +874,28 @@ function InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, 
 	--guaranteed hits use sniper trails to show them, while simulated hits simply use a bullet trail
 	if guaranteed_hit then
 		if not self._trail_length then
-			self._trail_length = World:effect_manager():get_initial_simulator_var_vector2(Idstring("effects/particles/weapons/sniper_trail"), Idstring("trail"), Idstring("simulator_length"), Idstring("size"))
+			self._trail_length = world_g:effect_manager():get_initial_simulator_var_vector2(Idstring("effects/particles/weapons/sniper_trail"), Idstring("trail"), Idstring("simulator_length"), Idstring("size"))
 		end
 
-		local trail = World:effect_manager():spawn({
+		local trail = world_g:effect_manager():spawn({
 			effect = Idstring("effects/particles/weapons/sniper_trail"),
 			position = from_pos,
 			normal = reflect_result
 		})
 
 		mvector3.set_y(self._trail_length, furthest_hit and furthest_hit.distance or ricochet_range)
-		World:effect_manager():set_simulator_var_vector2(trail, Idstring("trail"), Idstring("simulator_length"), Idstring("size"), self._trail_length)
+		world_g:effect_manager():set_simulator_var_vector2(trail, Idstring("trail"), Idstring("simulator_length"), Idstring("size"), self._trail_length)
 	else
-		local trail = World:effect_manager():spawn({
+		local trail = world_g:effect_manager():spawn({
 			effect = Idstring("effects/particles/weapons/weapon_trail"),
 			position = from_pos,
 			normal = reflect_result
 		})
 
 		if furthest_hit then
-			World:effect_manager():set_remaining_lifetime(trail, math.clamp((furthest_hit.distance - 600) / 10000, 0, furthest_hit.distance))
+			world_g:effect_manager():set_remaining_lifetime(trail, math.clamp((furthest_hit.distance - 600) / 10000, 0, furthest_hit.distance))
 		else
-			World:effect_manager():set_remaining_lifetime(trail, math.clamp((ricochet_range - 600) / 10000, 0, ricochet_range))
+			world_g:effect_manager():set_remaining_lifetime(trail, math.clamp((ricochet_range - 600) / 10000, 0, ricochet_range))
 		end
 	end
 end
@@ -1276,7 +1300,7 @@ function RaycastWeaponBase:_suppress_units(from_pos, direction, distance, slotma
 	mvector3.add(tmp_to, mvector3.copy(from_pos))
 
 	local cone_radius = distance / 4
-	local enemies_in_cone = World:find_units(user_unit, "cone", from_pos, tmp_to, cone_radius, slotmask)
+	local enemies_in_cone = world_g:find_units(user_unit, "cone", from_pos, tmp_to, cone_radius, slotmask)
 	local enemies_to_suppress = {}
 
 	--draw the cone to see where it goes
@@ -1294,7 +1318,7 @@ function RaycastWeaponBase:_suppress_units(from_pos, direction, distance, slotma
 				if not table.contains(enemies_to_suppress, enemy) and enemy.character_damage and enemy:character_damage() and enemy:character_damage().build_suppression then --valid enemy + has suppression function
 					if not enemy:movement().cool or enemy:movement().cool and not enemy:movement():cool() then --is alerted or can't be alerted at all (player)
 						if enemy:character_damage().is_friendly_fire and not enemy:character_damage():is_friendly_fire(user_unit) then --not in the same team as the shooter
-							local obstructed = World:raycast("ray", from_pos, enemy:movement():m_head_pos(), "slot_mask", managers.slot:get_mask("AI_visibility"), "ray_type", "ai_vision", "report") --imitating AI checking for visibility for things like shouting
+							local obstructed = world_g:raycast("ray", from_pos, enemy:movement():m_head_pos(), "slot_mask", managers.slot:get_mask("AI_visibility"), "ray_type", "ai_vision", "report") --imitating AI checking for visibility for things like shouting
 
 							if not obstructed then
 								table.insert(enemies_to_suppress, enemy)
