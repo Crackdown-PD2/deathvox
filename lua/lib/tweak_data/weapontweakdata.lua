@@ -2704,6 +2704,12 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 7, 12
 	--Notes: Moved to a slower-firing, harder-hitting category upon community request.
 	--NOTE: Suppressed.
+	
+-- todo mod
+-- Prototype Barrel
+-- +10 Concealment
+-- -12 Accuracy
+-- -20 Stability
 
 		self.asval.primary_class = "rapidfire"
 		self.asval.subclasses = {"quiet"}
@@ -2713,11 +2719,11 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			"quiet"
 		}
 		self.asval.fire_mode_data = {
-			fire_rate = 0.11
+			fire_rate = 0.11009174311927
 		}
 		self.asval.CAN_TOGGLE_FIREMODE = true
 		self.asval.auto = {
-			fire_rate = 0.11
+			fire_rate = 0.11009174311927
 		}
 		self.asval.timers = {
 			reload_not_empty = 2.6,
@@ -2725,7 +2731,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			unequip = 0.5,
 			equip = 0.5
 		}
-		
+		self.asval.CLIP_AMMO_MAX = 20
 		self.asval.AMMO_MAX = 180
 		self.asval.AMMO_PICKUP = {
 			7,
@@ -2746,18 +2752,18 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.asval.kick.crouching = self.asval.kick.standing
 		self.asval.kick.steelsight = self.asval.kick.standing
 		self.asval.stats = {
-			zoom = 1,
-			total_ammo_mod = 21,
-			damage = 80,
-			alert_size = 24,
-			spread = 24,
+			concealment = 20,
+			suppression = 0,
+			reload = 11,
+			extra_ammo = 51,
 			spread_moving = 15,
+			spread = 24,
 			recoil = 26,
 			value = 9,
-			extra_ammo = 51,
-			reload = 11,
-			suppression = 24,
-			concealment = 20
+			alert_size = 7,
+			damage = 80,
+			total_ammo_mod = 21,
+			zoom = 1
 		}
 	--------------------------------------
 				--CAR-4--
@@ -3957,6 +3963,64 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 7, 11
 	--Notes:
+		self.x_stech.CLIP_AMMO_MAX = 40
+		self.x_stech.fire_mode_data = {
+			fire_rate = 0.08
+		}
+		self.x_stech.stats = {
+			concealment = 32,
+			suppression = 4,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 21,
+			recoil = 12,
+			value = 1,
+			alert_size = 7,
+			damage = 60,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_stech.AMMO_MAX = 400
+		self.x_stech.primary_class = "rapidfire"
+		self.x_stech.AMMO_PICKUP = {
+			7,
+			11
+		}
+		self.x_stech.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_stech.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod
+-- Extended Mag.
+-- +28 Magazine
+-- -4 Concealment
+
+
 
 	--------------------------------------
 				--Akimbo STRYK 18c--
@@ -4051,7 +4115,64 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes:
-		
+				self.x_czech.CLIP_AMMO_MAX = 30
+		self.x_czech.fire_mode_data = {
+			fire_rate = 0.06
+		}
+		self.x_czech.stats = {
+			concealment = 32,
+			suppression = 4,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 21,
+			recoil = 21,
+			value = 1,
+			alert_size = 7,
+			damage = 40,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_czech.AMMO_MAX = 600
+		self.x_czech.primary_class = "rapidfire"
+		self.x_czech.AMMO_PICKUP = {
+			9,
+			18
+		}
+		self.x_czech.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_czech.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod
+-- Extended Magazine
+-- +20 Magazine
+-- -4 Concealment
+
+
 	--------------------------------------
 				--Akimbo Bernetti Auto Pistols--
 	--------------------------------------
@@ -4068,6 +4189,64 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes:
+		self.x_beer.CLIP_AMMO_MAX = 30
+		self.x_beer.fire_mode_data = {
+			fire_rate = 0.05449591280654
+		}
+		self.x_beer.stats = {
+			concealment = 32,
+			suppression = 4,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 22,
+			recoil = 21,
+			value = 1,
+			alert_size = 7,
+			damage = 40,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_beer.AMMO_MAX = 600
+		self.x_beer.primary_class = "rapidfire"
+		self.x_beer.AMMO_PICKUP = {
+			9,
+			18
+		}
+		self.x_beer.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_beer.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod
+-- Extended Magazine
+-- +12 Magazine
+-- -2 Concealment
+
+
 
 	--------------------------------------
 		--Akimbo SMGs--
@@ -7420,6 +7599,81 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			damage = 2
 		}
 		
+		
+	--------------------------------------
+				--R700--
+	--------------------------------------
+		
+		self.r700.CLIP_AMMO_MAX = 5
+		self.r700.fire_mode_data = {
+			fire_rate = 0.8
+		}
+		self.r700.stats_modifiers = {
+			damage = 1.25
+		}
+		self.r700.can_shoot_through_shield = true
+		self.r700.stats = {
+			concealment = 20,
+			suppression = 22,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 6,
+			value = 1,
+			alert_size = 7,
+			damage = 200,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.r700.armor_piercing_chance = 1
+		self.r700.can_shoot_through_enemy = true
+		self.r700.can_shoot_through_wall = true
+		self.r700.AMMO_PICKUP = {
+			2,
+			2.5
+		}
+		self.r700.primary_class = "precision"
+		self.r700.AMMO_MAX = 60
+		self.r700.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.r700.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+		
+-- todo mod
+-- Medium Barrel
+-- Suppresses Weapon
+-- +Quiet
+-- -100 Threat
+
+
+
+
+		
 	--------------------------------------
 				--Repeater 1874--
 	--------------------------------------
@@ -8009,6 +8263,65 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 3, 6
 	--Notes: 
 
+		self.x_g17.CLIP_AMMO_MAX = 34
+		self.x_g17.fire_mode_data = {
+			fire_rate = 0.125
+		}
+		self.x_g17.stats = {
+			concealment = 30,
+			suppression = 4,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 22,
+			recoil = 13,
+			value = 1,
+			alert_size = 7,
+			damage = 50,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_g17.AMMO_MAX = 300
+		self.x_g17.primary_class = "precision"
+		self.x_g17.AMMO_PICKUP = {
+			3,
+			6
+		}
+		self.x_g17.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_g17.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod
+-- Extended Magazine
+-- +24 Magazine
+-- -5 Concealment
+
+
+
 
 
 	--------------------------------------
@@ -8097,6 +8410,64 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
+		self.jowi.CLIP_AMMO_MAX = 20
+		self.jowi.fire_mode_data = {
+			fire_rate = 0.089955022488756
+		}
+		self.jowi.stats = {
+			concealment = 30,
+			suppression = 4,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 22,
+			recoil = 13,
+			value = 1,
+			alert_size = 7,
+			damage = 50,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.jowi.AMMO_MAX = 300
+		self.jowi.primary_class = "precision"
+		self.jowi.AMMO_PICKUP = {
+			3,
+			6
+		}
+		self.jowi.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.jowi.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+
+-- todo mod
+-- Extended Mag.
+-- +24 Magazine
+-- -5 Concealment
+
 
 	--------------------------------------
 				--Akimbo Crosskill Guard--
@@ -8114,6 +8485,65 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
+	
+		self.x_shrew.CLIP_AMMO_MAX = 34
+		self.x_shrew.fire_mode_data = {
+			fire_rate = 0.089955022488756
+		}
+		self.x_shrew.stats = {
+			concealment = 30,
+			suppression = 4,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 22,
+			recoil = 13,
+			value = 1,
+			alert_size = 7,
+			damage = 50,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_shrew.AMMO_MAX = 300
+		self.x_shrew.primary_class = "precision"
+		self.x_shrew.AMMO_PICKUP = {
+			3,
+			6
+		}
+		self.x_shrew.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_shrew.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod
+-- Extended Mag
+-- +8 Magazine
+-- -2 Concealment
+
+
 
 	--------------------------------------
 				--Akimbo Bernetti 9--
@@ -8131,6 +8561,64 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 3, 6
 	--Notes: 
+		self.x_b92fs.CLIP_AMMO_MAX = 28
+		self.x_b92fs.fire_mode_data = {
+			fire_rate = 0.089955022488756
+		}
+		self.x_b92fs.stats = {
+			concealment = 30,
+			suppression = 4,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 22,
+			recoil = 13,
+			value = 1,
+			alert_size = 7,
+			damage = 50,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_b92fs.AMMO_MAX = 300
+		self.x_b92fs.primary_class = "precision"
+		self.x_b92fs.AMMO_PICKUP = {
+			3,
+			6
+		}
+		self.x_b92fs.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_b92fs.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod 
+-- Extended Mag.
+-- +24 Magazine
+-- -5 Concealment
+
+
 
 	--------------------------------------
 			--Akimbo Medium Pistols--
@@ -8151,6 +8639,68 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
+		self.x_1911.CLIP_AMMO_MAX = 20
+		self.x_1911.fire_mode_data = {
+			fire_rate = 0.16620498614958
+		}
+		self.x_1911.stats = {
+			concealment = 30,
+			suppression = 6,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 24,
+			recoil = 13,
+			value = 1,
+			alert_size = 7,
+			damage = 80,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_1911.AMMO_MAX = 180
+		self.x_1911.primary_class = "precision"
+		self.x_1911.AMMO_PICKUP = {
+			2,
+			5
+		}
+		self.x_1911.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_1911.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+--todo mod
+-- 12rnd Mag.
+-- +4 Magazine
+-- -2 Concealment
+
+-- Magazine with Ameritude!
+-- +24 Magazine
+-- -5 Concealment
+
+
 
 	--------------------------------------
 				--Akimbo Contractor--
@@ -8168,6 +8718,63 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
+		self.x_packrat.CLIP_AMMO_MAX = 30
+		self.x_packrat.fire_mode_data = {
+			fire_rate = 0.16620498614958
+		}
+		self.x_packrat.stats = {
+			concealment = 30,
+			suppression = 6,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 24,
+			recoil = 13,
+			value = 1,
+			alert_size = 7,
+			damage = 80,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_packrat.AMMO_MAX = 180
+		self.x_packrat.primary_class = "precision"
+		self.x_packrat.AMMO_PICKUP = {
+			2,
+			5
+		}
+		self.x_packrat.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_packrat.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod
+-- Extended Magazine
+-- +20 Magazine
+-- -5 Concealment
+
 
 	--------------------------------------
 				--Akimbo Signature .40--
@@ -8185,6 +8792,63 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
+		self.x_p226.CLIP_AMMO_MAX = 24
+		self.x_p226.fire_mode_data = {
+			fire_rate = 0.16620498614958
+		}
+		self.x_p226.stats = {
+			concealment = 30,
+			suppression = 6,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 24,
+			recoil = 13,
+			value = 1,
+			alert_size = 7,
+			damage = 80,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_p226.AMMO_MAX = 180
+		self.x_p226.primary_class = "precision"
+		self.x_p226.AMMO_PICKUP = {
+			2,
+			5
+		}
+		self.x_p226.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_p226.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod
+-- Extended Mag.
+-- +16 Magazine
+-- -5 Concealment
+
 
 	--------------------------------------
 				--Akimbo Broomstick--
@@ -8202,6 +8866,73 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
+	
+		self.x_c96.CLIP_AMMO_MAX = 20
+		self.x_c96.fire_mode_data = {
+			fire_rate = 0.16620498614958
+		}
+		self.x_c96.stats = {
+			concealment = 30,
+			suppression = 6,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 24,
+			recoil = 13,
+			value = 1,
+			alert_size = 7,
+			damage = 80,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_c96.AMMO_MAX = 180
+		self.x_c96.primary_class = "precision"
+		self.x_c96.AMMO_PICKUP = {
+			2,
+			5
+		}
+		self.x_c96.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_c96.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+		
+-- todo mod
+-- High Capacity Mag
+-- +20 Magazine
+-- -5 Concealment
+
+-- Precision Barrel
+-- +Armor Piercing
+-- -45 Ammo Stock
+-- +30 Damage
+-- -12 Stability
+-- -5 Concealment
+-- -0.5 Pickup Low
+-- -2 Pickup High
 
 	--------------------------------------
 				--Akimbo Interceptor 45--
@@ -8219,6 +8950,69 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
+		self.x_usp.CLIP_AMMO_MAX = 26
+		self.x_usp.fire_mode_data = {
+			fire_rate = 0.16620498614958
+		}
+		self.x_usp.stats = {
+			concealment = 30,
+			suppression = 6,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 24,
+			recoil = 13,
+			value = 1,
+			alert_size = 7,
+			damage = 80,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_usp.AMMO_MAX = 180
+		self.x_usp.primary_class = "precision"
+		self.x_usp.AMMO_PICKUP = {
+			2,
+			5
+		}
+		self.x_usp.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_usp.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+		
+-- todo mod
+-- Extended Mag.
+-- +16 Magazine
+-- -4 Concealment
+
+-- I want more Magazine!
+-- +24 Magazine
+-- -8 Concealment
+
+
 
 	--------------------------------------
 				--Akimbo LEO--
@@ -8236,6 +9030,64 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
+		self.x_hs2000.CLIP_AMMO_MAX = 38
+		self.x_hs2000.fire_mode_data = {
+			fire_rate = 0.16620498614958
+		}
+		self.x_hs2000.stats = {
+			concealment = 30,
+			suppression = 6,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 24,
+			recoil = 13,
+			value = 1,
+			alert_size = 7,
+			damage = 80,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_hs2000.AMMO_MAX = 180
+		self.x_hs2000.primary_class = "precision"
+		self.x_hs2000.AMMO_PICKUP = {
+			2,
+			5
+		}
+		self.x_hs2000.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_hs2000.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod
+-- Extended Mag
+-- +16 Magazine
+-- -5 Concealment
+
+
 
 	--------------------------------------
 				--Akimbo Chimano Custom--
@@ -8253,6 +9105,66 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 11
 	--Pickup: 2, 5
 	--Notes: 
+		self.x_g22c.CLIP_AMMO_MAX = 32
+		self.x_g22c.fire_mode_data = {
+			fire_rate = 0.16620498614958
+		}
+		self.x_g22c.stats = {
+			concealment = 30,
+			suppression = 6,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 24,
+			recoil = 13,
+			value = 1,
+			alert_size = 7,
+			damage = 80,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_g22c.AMMO_MAX = 180
+		self.x_g22c.primary_class = "precision"
+		self.x_g22c.AMMO_PICKUP = {
+			2,
+			5
+		}
+		self.x_g22c.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_g22c.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+
+-- todo mod
+-- Extended Mag.
+-- +24 Magazine
+-- -5 Concealment
+
+
+
 
 	--------------------------------------
 			--Akimbo Heavy Pistols--
@@ -8273,6 +9185,65 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 9
 	--Pickup: 1.5, 3
 	--Notes: Armor Piercing
+		self.x_deagle.armor_piercing_chance = 1
+		self.x_deagle.CLIP_AMMO_MAX = 20
+		self.x_deagle.fire_mode_data = {
+			fire_rate = 0.25
+		}
+		self.x_deagle.stats = {
+			concealment = 30,
+			suppression = 5,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 25,
+			recoil = 6,
+			value = 1,
+			alert_size = 7,
+			damage = 110,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_deagle.AMMO_MAX = 90
+		self.x_deagle.primary_class = "precision"
+		self.x_deagle.AMMO_PICKUP = {
+			1.5,
+			3
+		}
+		self.x_deagle.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_deagle.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod
+-- Extended Magazine
+-- +12 Magazine
+-- -5 Concealment
+
+
 
 	--------------------------------------
 				--Akimbo Parabellum--
@@ -8290,6 +9261,61 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 9
 	--Pickup: 1.5, 3
 	--Notes: Armor Piercing
+		self.x_breech.armor_piercing_chance = 1
+		self.x_breech.CLIP_AMMO_MAX = 16
+		self.x_breech.fire_mode_data = {
+			fire_rate = 0.16620498614958
+		}
+		self.x_breech.stats = {
+			concealment = 30,
+			suppression = 5,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 25,
+			recoil = 6,
+			value = 1,
+			alert_size = 7,
+			damage = 110,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_breech.AMMO_MAX = 90
+		self.x_breech.primary_class = "precision"
+		self.x_breech.AMMO_PICKUP = {
+			1.5,
+			3
+		}
+		self.x_breech.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_breech.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+
+
 
 	--------------------------------------
 				--Akimbo Baby Deagle--
@@ -8307,6 +9333,61 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 9
 	--Pickup: 1.5, 3
 	--Notes: Armor Piercing
+		self.x_sparrow.armor_piercing_chance = 1
+		self.x_sparrow.CLIP_AMMO_MAX = 24
+		self.x_sparrow.fire_mode_data = {
+			fire_rate = 0.16620498614958
+		}
+		self.x_sparrow.stats = {
+			concealment = 30,
+			suppression = 5,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 25,
+			recoil = 6,
+			value = 1,
+			alert_size = 7,
+			damage = 110,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_sparrow.AMMO_MAX = 90
+		self.x_sparrow.primary_class = "precision"
+		self.x_sparrow.AMMO_PICKUP = {
+			1.5,
+			3
+		}
+		self.x_sparrow.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_sparrow.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+
+
 
 	--------------------------------------
 				--Akimbo White Streak--
@@ -8324,6 +9405,65 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 9
 	--Pickup: 1.5, 3
 	--Notes: Armor Piercing
+		self.x_pl14.armor_piercing_chance = 1
+		self.x_pl14.CLIP_AMMO_MAX = 24
+		self.x_pl14.fire_mode_data = {
+			fire_rate = 0.16620498614958
+		}
+		self.x_pl14.stats = {
+			concealment = 30,
+			suppression = 5,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 25,
+			recoil = 6,
+			value = 1,
+			alert_size = 7,
+			damage = 110,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_pl14.AMMO_MAX = 90
+		self.x_pl14.primary_class = "precision"
+		self.x_pl14.AMMO_PICKUP = {
+			1.5,
+			3
+		}
+		self.x_pl14.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_pl14.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod
+-- Extended Magazine
+-- +4 Magazine
+-- -1 Concealment
+
+
 
 	--------------------------------------
 			--Akimbo Revolvers--
@@ -8344,6 +9484,64 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 9
 	--Pickup: 1, 2
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+		self.x_2006m.CLIP_AMMO_MAX = 12
+		self.x_2006m.fire_mode_data = {
+			fire_rate = 0.16620498614958
+		}
+		self.x_2006m.armor_piercing_chance = 1
+		self.x_2006m.can_shoot_through_shield = true
+		self.x_2006m.stats = {
+			concealment = 30,
+			suppression = 5,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 1,
+			value = 1,
+			alert_size = 7,
+			damage = 160,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_2006m.can_shoot_through_enemy = true
+		self.x_2006m.can_shoot_through_wall = true
+		self.x_2006m.AMMO_PICKUP = {
+			1,
+			2
+		}
+		self.x_2006m.primary_class = "precision"
+		self.x_2006m.AMMO_MAX = 90
+		self.x_2006m.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_2006m.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+
+
 
 	--------------------------------------
 				--Akimbo Bronco .44--
@@ -8361,6 +9559,64 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 9
 	--Pickup: 1, 2
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+		self.x_rage.CLIP_AMMO_MAX = 12
+		self.x_rage.fire_mode_data = {
+			fire_rate = 0.16620498614958
+		}
+		self.x_rage.armor_piercing_chance = 1
+		self.x_rage.can_shoot_through_shield = true
+		self.x_rage.stats = {
+			concealment = 30,
+			suppression = 5,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 1,
+			value = 1,
+			alert_size = 7,
+			damage = 160,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_rage.can_shoot_through_enemy = true
+		self.x_rage.can_shoot_through_wall = true
+		self.x_rage.AMMO_PICKUP = {
+			1,
+			2
+		}
+		self.x_rage.primary_class = "precision"
+		self.x_rage.AMMO_MAX = 90
+		self.x_rage.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_rage.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+
+
 
 	--------------------------------------
 				--Akimbo Castigo .44--
@@ -8378,6 +9634,65 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 9
 	--Pickup: 1, 2
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
+	
+		self.x_chinchilla.CLIP_AMMO_MAX = 12
+		self.x_chinchilla.fire_mode_data = {
+			fire_rate = 0.16620498614958
+		}
+		self.x_chinchilla.armor_piercing_chance = 1
+		self.x_chinchilla.can_shoot_through_shield = true
+		self.x_chinchilla.stats = {
+			concealment = 30,
+			suppression = 5,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 1,
+			value = 1,
+			alert_size = 7,
+			damage = 160,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.x_chinchilla.can_shoot_through_enemy = true
+		self.x_chinchilla.can_shoot_through_wall = true
+		self.x_chinchilla.AMMO_PICKUP = {
+			1,
+			2
+		}
+		self.x_chinchilla.primary_class = "precision"
+		self.x_chinchilla.AMMO_MAX = 90
+		self.x_chinchilla.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.x_chinchilla.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+
+
 
 	--------------------------------------
 		--Machine Guns--
@@ -8763,6 +10078,68 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 
 	--------------------------------------
+		--M60--
+	--------------------------------------
+		self.m60.CLIP_AMMO_MAX = 100
+		self.m60.fire_mode_data = {
+			fire_rate = 0.10909090909091
+		}
+		self.m60.armor_piercing_chance = 1
+		self.m60.can_shoot_through_shield = true
+		self.m60.stats = {
+			concealment = 0,
+			suppression = 22,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 23,
+			recoil = 24,
+			value = 1,
+			alert_size = 7,
+			damage = 120,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.m60.can_shoot_through_enemy = true
+		self.m60.can_shoot_through_wall = true
+		self.m60.AMMO_PICKUP = {
+			0.5,
+			0.6
+		}
+		self.m60.primary_class = "heavy"
+		self.m60.AMMO_MAX = 160
+		self.m60.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.m60.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+
+
+
+	--------------------------------------
 		--Primary Special Weapons--
 	--------------------------------------
 	--------------------------------------
@@ -8805,7 +10182,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.shuno.armor_piercing_chance = 1
 		
 		self.shuno.CLIP_AMMO_MAX = 600
-		self.shuno.AMMO_MAX = 600
+		self.shuno.AMMO_MAX = 200
 		--self.shuno.starting_ammo = 200
 		--self.shuno.starts_empty = true
 		self.shuno.AMMO_PICKUP = {
@@ -8863,11 +10240,11 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.m134.subclasses = {}
 		self.m134.FIRE_MODE = "auto"
 		self.m134.fire_mode_data = {
-			fire_rate = 0.02
+			fire_rate = 0.03
 		}
 		self.m134.CAN_TOGGLE_FIREMODE = false
 		self.m134.auto = {
-			fire_rate = 0.05
+			fire_rate = 0.03
 		}
 		self.m134.timers = {
 			reload_not_empty = 7.8,
@@ -8881,11 +10258,11 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.m134.can_shoot_through_wall = true
 		self.m134.armor_piercing_chance = 1
 		
-		self.m134.CLIP_AMMO_MAX = 750
+		self.m134.CLIP_AMMO_MAX = 600
 		self.m134.NR_CLIPS_MAX = 1
 		--self.m134.starting_ammo = 200
 		--self.m134.starts_empty = true
-		self.m134.AMMO_MAX = self.m134.CLIP_AMMO_MAX * self.m134.NR_CLIPS_MAX
+		self.m134.AMMO_MAX = 200
 		self.m134.AMMO_PICKUP = {
 			0,
 			0
@@ -8906,20 +10283,22 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			zoom = 1,
 			total_ammo_mod = 21,
 			damage = 100,
-			alert_size = 8,
-			spread = 13,
+			alert_size = 7,
+			spread = 10,
 			spread_moving = 13,
-			recoil = 18,
-			value = 9,
+			recoil = 23,
+			value = 1,
 			extra_ammo = 51,
 			reload = 11,
-			suppression = 0,
+			suppression = 22,
 			concealment = 0
 		}
 		self.m134.stats_modifiers = {
 			damage = 1
 		}
-
+-- todo mod
+-- I’ll Take Half That Kit
+-- -1500 Fire Rate
 	--------------------------------------
 				--Airbow--
 	--------------------------------------
@@ -8936,6 +10315,74 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
+		self.ecp.CLIP_AMMO_MAX = 6
+		self.ecp.fire_mode_data = {
+			fire_rate = 0.5
+		}
+		self.ecp.stats_modifiers = {
+			damage = 3.5
+		}
+		self.ecp.stats = {
+			concealment = 20,
+			suppression = 0,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 26,
+			value = 1,
+			alert_size = 7,
+			damage = 200,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.ecp.armor_piercing_chance = 1
+		self.ecp.AMMO_PICKUP = {
+			0,
+			0
+		}
+		self.ecp.primary_class = "precision"
+		self.ecp.subclasses = {"quiet"}
+		self.ecp.AMMO_MAX = 30
+		self.ecp.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.ecp.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod
+-- Explosive Arrow
+-- - Armor Piercing
+-- 2x Headshot Damage
+-- 
+-- Poison Arrow
+-- -560 Damage
+-- +Poison
+
+
+
 
 	--------------------------------------
 				--Light Crossbow--
@@ -8953,6 +10400,72 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
+		self.frankish.CLIP_AMMO_MAX = 1
+		self.frankish.fire_mode_data = {
+			fire_rate = 1.5
+		}
+		self.frankish.stats_modifiers = {
+			damage = 3.75
+		}
+		self.frankish.stats = {
+			concealment = 30,
+			suppression = 0,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 26,
+			value = 1,
+			alert_size = 7,
+			damage = 200,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.frankish.armor_piercing_chance = 1
+		self.frankish.AMMO_PICKUP = {
+			0,
+			0
+		}
+		self.frankish.primary_class = "precision"
+		self.frankish.subclasses = {"quiet"}
+		self.frankish.AMMO_MAX = 50
+		self.frankish.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.frankish.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod
+-- Explosive Bolt
+-- - Armor Piercing
+-- 2x Headshot Damage
+-- 
+-- Poison Bolt
+-- -600 Damage
+-- +Poison
+
 
 	--------------------------------------
 				--Plainsrider Bow--
@@ -8970,6 +10483,71 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
+		self.plainsrider.CLIP_AMMO_MAX = 1
+		self.plainsrider.fire_mode_data = {
+			fire_rate = 0.2
+		}
+		self.plainsrider.stats_modifiers = {
+			damage = 5
+		}
+		self.plainsrider.stats = {
+			concealment = 30,
+			suppression = 0,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 26,
+			value = 1,
+			alert_size = 7,
+			damage = 200,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.plainsrider.armor_piercing_chance = 1
+		self.plainsrider.AMMO_PICKUP = {
+			0,
+			0
+		}
+		self.plainsrider.primary_class = "precision"
+		self.plainsrider.subclasses = { "quiet" }
+		self.plainsrider.AMMO_MAX = 60
+		self.plainsrider.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.plainsrider.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod
+-- Explosive Arrows
+-- - Armor Piercing
+-- 2x Headshot Damage
+-- 
+-- Poisoned Arrows
+-- -200 Damage
+-- +Poison
 
 	--------------------------------------
 				--DECA Technologies Compound Bow--
@@ -9004,6 +10582,74 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
+		self.long.CLIP_AMMO_MAX = 1
+		self.long.fire_mode_data = {
+			fire_rate = 0.2
+		}
+		self.long.stats_modifiers = {
+			damage = 10
+		}
+		self.long.stats = {
+			concealment = 30,
+			suppression = 0,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 26,
+			value = 1,
+			alert_size = 7,
+			damage = 200,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.long.armor_piercing_chance = 1
+		self.long.AMMO_PICKUP = {
+			0,
+			0
+		}
+		self.long.primary_class = "precision"
+		self.long.subclasses = { "quiet" }
+		self.long.AMMO_MAX = 40
+		self.long.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.long.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+
+
+
+
+-- Explosive Arrows
+-- - Armor Piercing
+-- 2x Headshot Damage
+-- 
+-- Poisoned Arrows
+-- -1600 Damage
+-- +Poison
 
 	--------------------------------------
 				--Heavy Crossbow--
@@ -9021,6 +10667,72 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
+		self.arblast.CLIP_AMMO_MAX = 1
+		self.arblast.fire_mode_data = {
+			fire_rate = 2.8571428571429
+		}
+		self.arblast.stats_modifiers = {
+			damage = 10
+		}
+		self.arblast.stats = {
+			concealment = 30,
+			suppression = 0,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 26,
+			value = 1,
+			alert_size = 7,
+			damage = 200,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.arblast.armor_piercing_chance = 1
+		self.arblast.AMMO_PICKUP = {
+			0,
+			0
+		}
+		self.arblast.primary_class = "precision"
+		self.arblast.subclasses = { "quiet" }
+		self.arblast.AMMO_MAX = 40
+		self.arblast.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.arblast.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+
+-- todo mod
+-- Explosive Bolt
+-- - Armor Piercing
+-- 2x Headshot Damage
+-- 
+-- Poisoned Bolt
+-- -1600 Damage
+-- +Poison
 
 	--------------------------------------
 				--GL 40 Grenade Launcher--
@@ -9038,6 +10750,67 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 43
 	--Pickup: 0.1, 0.2
 	--Notes: Area Damage
+		self.gre_m79.stats_modifiers = {
+			damage = 5.5
+		}
+		self.gre_m79.CLIP_AMMO_MAX = 1
+		self.gre_m79.fire_mode_data = {
+			fire_rate = 2
+		}
+		self.gre_m79.stats = {
+			concealment = 25,
+			suppression = 22,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 26,
+			value = 1,
+			alert_size = 7,
+			damage = 200,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.gre_m79.AMMO_MAX = 6
+		self.gre_m79.primary_class = "specialist"
+		self.gre_m79.subclasses = {}
+		self.gre_m79.AMMO_PICKUP = {
+			0.1,
+			0.2
+		}
+		self.gre_m79.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.gre_m79.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+
+-- todo mod
+-- Incendiary Round
+-- -1000 Damage
+-- +Area Denial in a large area for 15 seconds.
 
 	--------------------------------------
 				--Piglet Grenade Launcher--
@@ -9055,6 +10828,68 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 43
 	--Pickup: 0.1, 0.2
 	--Notes: Area Damage
+	
+		self.m32.stats_modifiers = {
+			damage = 5.5
+		}
+		self.m32.CLIP_AMMO_MAX = 6
+		self.m32.fire_mode_data = {
+			fire_rate = 1
+		}
+		self.m32.stats = {
+			concealment = 0,
+			suppression = 22,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 26,
+			value = 1,
+			alert_size = 7,
+			damage = 200,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.m32.AMMO_MAX = 12
+		self.m32.primary_class = "specialist"
+		self.m32.subclasses = {}
+		self.m32.AMMO_PICKUP = {
+			0.15,
+			0.25
+		}
+		self.m32.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.m32.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+		
+-- todo mod
+-- Incendiary Round
+-- -1000 Damage
+-- + Area Denial in a large area for 15 seconds.
 
 	--------------------------------------
 				--Flamethrower Mk.1--
@@ -9073,6 +10908,65 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1, 1
 	--Notes:  Igniting, Armor Piercing, Body Piercing, Shield Piercing, Improv Expert Aced
 	--NOTE: The Flamethrower Mk.1 does not have an active Ammo Pickup without Improv Expert Aced.
+		self.flamethrower_mk2.CLIP_AMMO_MAX = 900
+		self.flamethrower_mk2.fire_mode_data = {
+			fire_rate = 0.03
+		}
+		self.flamethrower_mk2.armor_piercing_chance = 1
+		self.flamethrower_mk2.can_shoot_through_shield = true
+		self.flamethrower_mk2.stats = {
+			concealment = 10,
+			suppression = 22,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 1,
+			recoil = 26,
+			value = 1,
+			alert_size = 7,
+			damage = 100,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.flamethrower_mk2.can_shoot_through_enemy = true
+		self.flamethrower_mk2.can_shoot_through_wall = true
+		self.flamethrower_mk2.AMMO_PICKUP = {
+			1,
+			1
+		}
+		self.flamethrower_mk2.primary_class = "specialist"
+		self.flamethrower_mk2.subclasses = {"areadenial"}
+		self.flamethrower_mk2.AMMO_MAX = 900
+		self.flamethrower_mk2.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.flamethrower_mk2.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+
+
 
 	--------------------------------------
 	--Secondary Weapons--
@@ -10744,6 +12638,64 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 7, 11
 	--Notes: 
+		self.stech.CLIP_AMMO_MAX = 20
+		self.stech.fire_mode_data = {
+			fire_rate = 0.08
+		}
+		self.stech.stats = {
+			concealment = 32,
+			suppression = 4,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 21,
+			recoil = 12,
+			value = 1,
+			alert_size = 7,
+			damage = 60,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.stech.AMMO_MAX = 160
+		self.stech.primary_class = "rapidfire"
+		self.stech.AMMO_PICKUP = {
+			7,
+			11
+		}
+		self.stech.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.stech.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod
+-- Extended Mag.
+-- +14 Magazine
+-- -2 Concealment
+
+
 
 	--------------------------------------
 				--STRYK 18c--
@@ -10839,6 +12791,64 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes: 
+		self.czech.CLIP_AMMO_MAX = 15
+		self.czech.fire_mode_data = {
+			fire_rate = 0.06
+		}
+		self.czech.stats = {
+			concealment = 32,
+			suppression = 4,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 21,
+			recoil = 21,
+			value = 1,
+			alert_size = 7,
+			damage = 40,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.czech.AMMO_MAX = 300
+		self.czech.primary_class = "rapidfire"
+		self.czech.AMMO_PICKUP = {
+			9,
+			18
+		}
+		self.czech.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.czech.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod
+-- Extended Magazine
+-- +10 Magazine
+-- -2 Concealment
+
+
 
 	--------------------------------------
 				--Bernetti Auto--
@@ -10856,6 +12866,65 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 8
 	--Pickup: 9, 18
 	--Notes: 
+		self.beer.CLIP_AMMO_MAX = 15
+		self.beer.fire_mode_data = {
+			fire_rate = 0.05449591280654
+		}
+		self.beer.stats = {
+			concealment = 32,
+			suppression = 4,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 22,
+			recoil = 21,
+			value = 1,
+			alert_size = 7,
+			damage = 40,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.beer.AMMO_MAX = 300
+		self.beer.primary_class = "rapidfire"
+		self.beer.AMMO_PICKUP = {
+			9,
+			18
+		}
+		self.beer.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.beer.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+
+-- todo mod
+-- Extended Magazine
+-- +6 Magazine
+-- -2 Concealment
+
+
 
 	--------------------------------------
 		--SMGs--
@@ -13091,6 +15160,71 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
+		self.hunter.CLIP_AMMO_MAX = 1
+		self.hunter.fire_mode_data = {
+			fire_rate = 1.2
+		}
+		self.hunter.stats_modifiers = {
+			damage = 1.75
+		}
+		self.hunter.stats = {
+			concealment = 30,
+			suppression = 0,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 26,
+			value = 1,
+			alert_size = 7,
+			damage = 200,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.hunter.armor_piercing_chance = 1
+		self.hunter.AMMO_PICKUP = {
+			0,
+			0
+		}
+		self.hunter.primary_class = "precision"
+		self.hunter.AMMO_MAX = 30
+		self.hunter.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.hunter.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod
+-- Explosive Bolt
+-- - Armor Piercing
+-- 2x Headshot Damage
+-- 
+-- Poison Bolt
+-- -250 Damage
+-- +Poison
+
 
 	--------------------------------------
 				--MA-17 Flamethrower--
@@ -13109,6 +15243,64 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 1, 1
 	--Notes: Igniting, Armor Piercing, Body Piercing, Shield Piercing, Improv Expert Aced
 	--NOTE: Note: The MA-17 Flamethrower does not have an active Ammo Pickup without Improv Expert Aced.
+		self.system.CLIP_AMMO_MAX = 600
+		self.system.fire_mode_data = {
+			fire_rate = 0.03
+		}
+		self.system.armor_piercing_chance = 1
+		self.system.can_shoot_through_shield = true
+		self.system.stats = {
+			concealment = 20,
+			suppression = 22,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 1,
+			recoil = 26,
+			value = 1,
+			alert_size = 7,
+			damage = 100,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.system.can_shoot_through_enemy = true
+		self.system.can_shoot_through_wall = true
+		self.system.AMMO_PICKUP = {
+			1,
+			1
+		}
+		self.system.primary_class = "specialist"
+		self.system.subclasses = {"areadenial"}
+		self.system.AMMO_MAX = 600
+		self.system.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.system.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+
 
 	--------------------------------------
 				--Compact 40mm--
@@ -13126,6 +15318,67 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 43
 	--Pickup: 0.05, 0.1
 	--Notes: Area Damage
+		self.slap.stats_modifiers = {
+			damage = 5.5
+		}
+		self.slap.CLIP_AMMO_MAX = 1
+		self.slap.fire_mode_data = {
+			fire_rate = 2
+		}
+		self.slap.stats = {
+			concealment = 30,
+			suppression = 22,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 22,
+			recoil = 22,
+			value = 1,
+			alert_size = 7,
+			damage = 200,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.slap.AMMO_MAX = 6
+		self.slap.primary_class = "specialist"
+		self.slap.subclasses = {}
+		self.slap.AMMO_PICKUP = {
+			0.05,
+			0.1
+		}
+		self.slap.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.slap.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod
+-- Incendiary Round
+-- -1000 Damage
+-- +Area Denial in a large area for 15 seconds.
+
 
 	--------------------------------------
 				--China Puff 40mm--
@@ -13143,6 +15396,66 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 43
 	--Pickup: 0.05, 0.1
 	--Notes: Area Damage
+		self.china.stats_modifiers = {
+			damage = 5.5
+		}
+		self.china.CLIP_AMMO_MAX = 3
+		self.china.fire_mode_data = {
+			fire_rate = 1.2
+		}
+		self.china.stats = {
+			concealment = 20,
+			suppression = 22,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 26,
+			value = 1,
+			alert_size = 7,
+			damage = 200,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.china.AMMO_MAX = 6
+		self.china.primary_class = "specialist"
+		self.china.AMMO_PICKUP = {
+			0.05,
+			0.1
+		}
+		self.china.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.china.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+-- todo mod
+-- Incendiary Round
+-- -1000 Damage
+-- +Area Denial in a large area for 15 seconds.
+
 
 	--------------------------------------
 				--Arbiter--
@@ -13181,6 +15494,64 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 0.001, 0.001
 	--Notes: Area Damage, Improv Expert Aced
 	--NOTE: The HRL-7 does not have an active Ammo Pickup without Improv Expert Aced.
+		self.rpg7.stats_modifiers = {
+			damage = 62.5
+		}
+		self.rpg7.CLIP_AMMO_MAX = 1
+		self.rpg7.fire_mode_data = {
+			fire_rate = 2
+		}
+		self.rpg7.stats = {
+			concealment = 15,
+			suppression = 22,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 26,
+			value = 1,
+			alert_size = 7,
+			damage = 200,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.rpg7.AMMO_MAX = 4
+		self.rpg7.primary_class = "specialist"
+		self.rpg7.subclasses = {}
+		self.rpg7.AMMO_PICKUP = {
+			0.001,
+			0.001
+		}
+		self.rpg7.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.rpg7.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+
+
 
 	--------------------------------------
 				--Commando 101--
@@ -13199,6 +15570,64 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Pickup: 0.001, 0.001
 	--Notes: Area Damage, Improv Expert Aced
 	--NOTE: The Commando 101 does not have an active Ammo Pickup without Improv Expert Aced.
+		self.ray.stats_modifiers = {
+			damage = 62.5
+		}
+		self.ray.CLIP_AMMO_MAX = 4
+		self.ray.fire_mode_data = {
+			fire_rate = 1
+		}
+		self.ray.stats = {
+			concealment = 0,
+			suppression = 22,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 26,
+			value = 1,
+			alert_size = 7,
+			damage = 200,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.ray.AMMO_MAX = 4
+		self.ray.primary_class = "specialist"
+		self.ray.subclasses = {}
+		self.ray.AMMO_PICKUP = {
+			0.001,
+			0.001
+		}
+		self.ray.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.ray.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+
+
 
 
 	--------------------------------------
@@ -13220,6 +15649,87 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--NOTE: The hitbox is being moved to the middle of the screen. Rejoice!
 	-- No longer has a hidden damage bonus to Dozers.
 	-- The OVE9000 Saw is not available as a Secondary weapon without Handyman Aced.
+		self.saw.armor_piercing_chance = 1
+		self.saw.CLIP_AMMO_MAX = 150
+		self.saw.fire_mode_data = {
+			fire_rate = 0.15
+		}
+		self.saw.stats = {
+			concealment = 20,
+			suppression = 22,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 26,
+			value = 1,
+			alert_size = 7,
+			damage = 80,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.saw.AMMO_MAX = 300
+		self.saw.primary_class = "saw"
+		self.saw.AMMO_PICKUP = {
+			0,
+			0
+		}
+		self.saw.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.saw.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+		self.saw_secondary = deep_clone(self.saw)
+		self.saw_secondary.parent_weapon_id = "saw"
+		self.saw_secondary.use_data.selection_index = 1
+		self.saw_secondary.animations.reload_name_id = "saw"
+		self.saw_secondary.use_stance = "saw"
+		self.saw_secondary.texture_name = "saw"
+		self.saw_secondary.weapon_hold = "saw"
+-- todo mod
+-- Silent Motor
+-- -200 Fire Rate
+-- +10 Concealment
+-- Reduced noise radius (but not Silenced, aka base game mechanics)
+
+--  Fast Motor
+-- -20 Concealment
+-- +400 Fire Rate
+
+-- Durable Blade
+-- -40 Damage
+-- +50 Magazine Size
+-- +100 Ammo Stock
+
+-- Sharp Blade
+-- +20 Damage
+-- -100 Magazine Size
+-- -200 Ammo Stock
+
+
 
 -- END weapon data.
 
