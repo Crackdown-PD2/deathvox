@@ -95,6 +95,48 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_preventative_care = "Preventative Care",
 				menu_preventative_care_desc = "NOT YET IMPLEMENTED",
 				--menu_preventative_care_desc = "BASIC: ##$basic##\nYour First Aid Kits and Doctor Bags provide the user with a Damage Absorption shield equal to ##100%## of their Health and Armor.\n\nACE: ##$pro##\nPlayers become Invulnerable for ##2## seconds when their Damage Absorption shields are broken.",
+			--chief
+			--enforcer
+				menu_tender_meat = "Tender Meat",
+				menu_tender_meat_desc = "BASIC: ##$basic##\nShotguns deal ##50%## of their Headshot damage on Body Shots against Non-Dozer enemies.\n\nACE: ##$pro##\nShotguns gain ##+40## Stability.",
+				menu_heartbreaker = "Heartbreaker",
+				menu_heartbreaker_desc = "BASIC: ##$basic##\nDouble Barreled Shotguns can use the Fire Selector to switch to ##Double Barrel Mode##, causing them to fire twice per shot.\n\nACE: ##$pro##\nEach shot in ##Double Barrel Mode## deals ##+100%## Damage when firing both barrels.",
+				menu_shell_games = "Shell Games",
+				menu_shell_games_desc = "BASIC: ##$basic##\nShotguns gain ##+20%## Reload Speed every time a shell is loaded.\nBonuses are lost upon finishing or cancelling the Reload.\n\nACE: ##$pro##\nSingle-Fire Shotguns have their Fire Rate increased by ##50%##.",
+				menu_rolling_thunder = "Rolling Thunder",
+				menu_rolling_thunder_desc = "BASIC: ##$basic##\nIncreases the Magazine Size of Automatic Shotguns by ##50%##.\n\nACE: ##$pro##\nMagazine Size bonus increased to ##100%##.",
+				menu_point_blank = "Point Blank",
+				menu_point_blank_desc = "BASIC: ##$basic##\nShotguns gain ##Armor Piercing##, ##Shield Piercing##, and ##Body Piercing## against enemies within ##2.5## meters.\n\nACE: ##$pro##\nShotguns deal ##+100%## Damage against enemies within ##2.5## meters.",
+				menu_shotmaker = "Shotmaker",
+				menu_shotmaker_desc = "BASIC: ##$basic##\nIncreases Shotgun Headshot Damage by ##+50%##.\n\nACE: ##$pro##\nShotgun Headshot Damage is increased by an additional ##+50%##, for a total of ##+100%##.",
+				
+			--heavy
+				menu_collateral_damage = "Collateral Damage",
+				menu_collateral_damage_desc = "BASIC: ##$basic##\n\n(BASIC NOT YET IMPLEMENTED)\n\nHeavy Weapons deal ##50%## of their damage in a ##0.25## meter radius around the bullet trajectory.\n\nACE: ##$pro##\nHeavy Weapons ADS ##50%## faster.",
+				menu_death_grips = "Death Grips",
+				menu_death_grips_desc = "BASIC: ##$basic##\nHeavy Weapons gain ##+4## Accuracy and ##+4## Stability for 8 seconds per kill, stacking up to ##10## times.\n\nACE: ##$pro##\nAccuracy bonus increased to ##+8##.",
+				menu_bulletstorm = "Bulletstorm",
+				menu_bulletstorm_desc = "BASIC: ##$basic##\nAmmo Bags placed by you grant players the ability to shoot without depleting their ammunition for up to ##5## seconds after interacting with it.\nThe more ammo players replenish, the longer the duration of the effect.\n\nACE: ##$pro##\nIncreases the base duration of the effect by up to ##15## seconds.",
+				menu_lead_farmer = "Lead Farmer",
+				menu_lead_farmer_desc = "BASIC: ##$basic##\nHeavy Weapons gain ##+1%## Reload Speed per kill on their next Reload, up to ##50%##.\n\nACE: ##$pro##\nIncreases the amount of Reload Speed per kill to ##2%## and the maximum amount of Reload Speed to ##100%##.",
+				menu_armory_regular = "Armory Regular",
+				menu_armory_regular_desc = "BASIC: ##$basic##\nIncreases your Ammo Bag supply to ##2##.\n\nACE: ##$pro##\nIncreases your Ammo Bag supply to ##3##.",
+				menu_war_machine = "War Machine",
+				menu_war_machine_desc = "BASIC: ##$basic##\nIncreases the Ammo Bag's Ammunition Stock bonus for Heavy Weapons to ##+100%##.\n\nACE: ##$pro##\nIncreases the Ammo Bag's Ammunition Stock bonus to ##+100%## for non-Heavy weapons and ##+200%## for Heavy Weapons.",
+				
+			--runner
+				menu_hustle = "Hustle",
+				menu_hustle_desc = "BASIC: ##$basic##\nYou can Sprint in any direction.\n\nACE: ##$pro##\nYour Stamina starts regenerating ##25%## earlier and ##+25%## faster.",
+				menu_butterfly_bee = "Float Like A Butterfly",
+				menu_butterfly_bee_desc = "BASIC: ##$basic##\nMelee Weapons can be swung and charged while Sprinting.\n\nACE: ##$pro##\nMelee Weapon damage increases your Movement Speed by ##+10%## for ##4## seconds.",
+				menu_heave_ho = "Heave-Ho",
+				menu_heave_ho_desc = "BASIC: ##$basic##\nYou throw Bags ##50%## farther.\n\nACE: ##$pro##\nYour Movement Speed Penalty for carrying a Bag is reduced by ##20%##.",
+				menu_mobile_offense = "Mobile Offense",
+				menu_mobile_offense_desc = "BASIC: ##$basic##\nYou can now Reload while Sprinting.\n\nACE: ##$pro##\nYou can now hip-fire weapons while Sprinting.",
+				menu_escape_plan = "Escape Plan",
+				menu_escape_plan_desc = "BASIC: ##$basic##\nWhen your Armor breaks, you gain ##100%## of your Stamina and gain ##+25%## Sprint Speed for ##4## seconds.\n\nACE: ##$pro##\nYou also gain ##+20%## Movement Speed for 4 seconds.",
+				menu_leg_day = "Leg Day Enthusiast",
+				menu_leg_day_desc = "BASIC: ##$basic##\nYou gain ##+10%## Movement Speed and ##+25%## Sprint Speed.\n\nACE: ##$pro##\nCrouching no longer reduces your Movement Speed.",
 				
 			--gunner
 				menu_spray_and_pray = "Spray & Pray",
@@ -110,7 +152,21 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_prayers_answered = "Prayers Answered",
 				menu_prayers_answered_desc = "BASIC: ##$basic##\nRapid Fire weapons have their Critical Hit chance increased by ##+10%##, for a total of ##+20%##.\n\nACE: ##$pro##\nRapid Fire weapons have their Critical Hit chance further increased by ##+10%##, for a total of ##+30%##.",
 				
-				--thief
+			--engineer
+				menu_digging_in = "Digging In",
+				menu_digging_in_desc = "BASIC: ##$basic##\nYou deploy and retrieve Sentry Guns ##90%## faster.\n\nACE: ##$pro##\nYour Sentry Guns become armored, rendering them almost completely invulnerable.",
+				menu_advanced_rangefinder = "Advanced Rangefinder",
+				menu_advanced_rangefinder_desc = "BASIC: ##$basic##\nSentry Guns gain ##+50%## Range and Accuracy.\n\nACE: ##$pro##\nRange and Accuracy bonus increased to ##+100%##.",
+				menu_targeting_matrix = "Targeting Matrix",
+				menu_targeting_matrix_desc = "BASIC: ##$basic##\nSentry Guns that aim at Special Enemies instantly Mark them for 5 seconds.\n\nACE: ##$pro##\nSentry Guns deal ##+25%## Damage to Marked enemies.",
+				menu_wrangler = "Wrangler",
+				menu_wrangler_desc = "BASIC: ##$basic##\nWhile in Manual Control of a Sentry Gun, it gains perfect Accuracy.\n\nACE: ##$pro##\nSentries deal ##+100%## Damage on Headshots.",
+				menu_hobarts_funnies = "Hobart's Funnies",
+				menu_hobarts_funnies_desc = "BASIC: ##$basic##\nNon-Basic Sentry Gun modes gain ##+25%## Fire Rate.\n\nACE: ##$pro##\nFire Rate bonus increased to ##+50%##.",
+				menu_killer_machines = "Killer Machines",
+				menu_killer_machines_desc = "BASIC: ##$basic##\nAll Sentry Gun modes deal ##+50## damage.\n\nACE: ##$pro##\nIncreases your Sentry Gun supply to ##2##.",
+				
+			--thief
 				menu_classic_thievery = "Classic Thievery",
 				menu_classic_thievery_desc = "BASIC: ##$basic##\nIncrease lockpicking speed by ##100%##.\n\nACE: ##$pro##\nYou take ##25%## longer to be detected while in Casing Mode.",
 				menu_people_watching = "People Watching",
@@ -126,8 +182,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_skeleton_key = "Skeleton Key",
 				menu_skeleton_key_desc = "BASIC: ##$basic##\nIncreases Lockpick Speed by ##+100%## and gain the ability to Lockpick Safes.\n\nACE: ##$pro##\nYou now Lockpick Safes ##100%## faster and you gain the ability to open Electronic Locks.",
 				
-				
-				--assassin
+			--assassin
 				menu_killers_notebook = "Killer's Notebook",
 				menu_killers_notebook_desc = "NOT YET IMPLEMENTED",
 --				menu_killers_notebook_desc = "BASIC: ##$basic##\nQuiet Weapons ADS ##90%## faster.\n\nACE: ##$pro##\nQuiet Weapons gain ##+20## Stability.",
@@ -145,64 +200,27 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_quiet_grave = "Quiet as the Grave",
 				menu_quiet_grave_desc = "NOT YET IMPLEMENTED",
 --				menu_quiet_grave_desc = "BASIC: ##$basic##\nQuiet Weapons deal ##+10%## Damage when attacking an enemy from behind.\n\nACE: ##$pro##\nQuiet Weapons also deal ##+10%## Damage when attacking an enemy that is not currently targeting you.",
-				
-			--enforcer
-				menu_tender_meat = "Tender Meat",
-				menu_tender_meat_desc = "BASIC: ##$basic##\nShotguns deal ##50%## of their Headshot damage on Body Shots against Non-Dozer enemies.\n\nACE: ##$pro##\nShotguns gain ##+40## Stability.",
-				menu_heartbreaker = "Heartbreaker",
-				menu_heartbreaker_desc = "BASIC: ##$basic##\nDouble Barreled Shotguns can use the Fire Selector to switch to ##Double Barrel Mode##, causing them to fire twice per shot.\n\nACE: ##$pro##\nEach shot in ##Double Barrel Mode## deals ##+100%## Damage when firing both barrels.",
-				menu_shell_games = "Shell Games",
-				menu_shell_games_desc = "BASIC: ##$basic##\nShotguns gain ##+20%## Reload Speed every time a shell is loaded.\nBonuses are lost upon finishing or cancelling the Reload.\n\nACE: ##$pro##\nSingle-Fire Shotguns have their Fire Rate increased by ##50%##.",
-				menu_rolling_thunder = "Rolling Thunder",
-				menu_rolling_thunder_desc = "BASIC: ##$basic##\nIncreases the Magazine Size of Automatic Shotguns by ##50%##.\n\nACE: ##$pro##\nMagazine Size bonus increased to ##100%##.",
-				menu_point_blank = "Point Blank",
-				menu_point_blank_desc = "BASIC: ##$basic##\nShotguns gain ##Armor Piercing##, ##Shield Piercing##, and ##Body Piercing## against enemies within ##2.5## meters.\n\nACE: ##$pro##\nShotguns deal ##+100%## Damage against enemies within ##2.5## meters.",
-				menu_shotmaker = "Shotmaker",
-				menu_shotmaker_desc = "BASIC: ##$basic##\nIncreases Shotgun Headshot Damage by ##+50%##.\n\nACE: ##$pro##\nShotgun Headshot Damage is increased by an additional ##+50%##, for a total of ##+100%##.",
 			
-			--heavy
-				menu_collateral_damage = "Collateral Damage",
-				menu_collateral_damage_desc = "BASIC: ##$basic##\n\n(BASIC NOT YET IMPLEMENTED)\n\nHeavy Weapons deal ##50%## of their damage in a ##0.25## meter radius around the bullet trajectory.\n\nACE: ##$pro##\nHeavy Weapons ADS ##50%## faster.",
-				menu_death_grips = "Death Grips",
-				menu_death_grips_desc = "BASIC: ##$basic##\nHeavy Weapons gain ##+4## Accuracy and ##+4## Stability for 8 seconds per kill, stacking up to ##10## times.\n\nACE: ##$pro##\nAccuracy bonus increased to ##+8##.",
-				menu_bulletstorm = "Bulletstorm",
-				menu_bulletstorm_desc = "BASIC: ##$basic##\nAmmo Bags placed by you grant players the ability to shoot without depleting their ammunition for up to ##5## seconds after interacting with it.\nThe more ammo players replenish, the longer the duration of the effect.\n\nACE: ##$pro##\nIncreases the base duration of the effect by up to ##15## seconds.",
-				menu_lead_farmer = "Lead Farmer",
-				menu_lead_farmer_desc = "BASIC: ##$basic##\nHeavy Weapons gain ##+1%## Reload Speed per kill on their next Reload, up to ##50%##.\n\nACE: ##$pro##\nIncreases the amount of Reload Speed per kill to ##2%## and the maximum amount of Reload Speed to ##100%##.",
-				menu_armory_regular = "Armory Regular",
-				menu_armory_regular_desc = "BASIC: ##$basic##\nIncreases your Ammo Bag supply to ##2##.\n\nACE: ##$pro##\nIncreases your Ammo Bag supply to ##3##.",
-				menu_war_machine = "War Machine",
-				menu_war_machine_desc = "BASIC: ##$basic##\nIncreases the Ammo Bag's Ammunition Stock bonus for Heavy Weapons to ##+100%##.\n\nACE: ##$pro##\nIncreases the Ammo Bag's Ammunition Stock bonus to ##+100%## for non-Heavy weapons and ##+200%## for Heavy Weapons.",
+			--sapper
+			--dealer
+			--fixer
+				menu_rolling_cutter = "Rolling Cutter",
+				menu_rolling_cutter_desc = "BASIC: ##$basic##\nThe OVESAW9000 Saw no longer consumes Ammunition when damaging enemies and gains ##+10%## Damage for ##2## seconds after every hit, up to a maximum of ##500%##.\n\nACE: ##$pro##\nIncreases OVESAW9000 Saw blade durability by ##+50##.",
+				menu_walking_toolshed = "Walking Toolshed",
+				menu_walking_toolshed_desc = "BASIC: ##$basic##\nIncreases your spare OVESAW9000 Saw blades to ##2##.\n\nACE: ##$pro##\nIncreases your spare OVESAW9000 Saw blades to ##3##.",
+				menu_handyman = "Handyman",
+				menu_handyman_desc = "BASIC: ##$basic##\nThe OVESAW9000 Saw becomes available as a Secondary Weapon.\n\nACE: ##$pro##\nThe OVESAW9000 Saw gains ##+25%## range.",
+				menu_bloody_mess = "Bloody Mess",
+				menu_bloody_mess_desc = "BASIC: ##$basic##\nKills with the OVESAW9000 Saw deal the killing blow's damage to enemies within ##2.5## meters.\n\nACE: ##$pro##\nEnemies killed by Bloody Mess also deal damage to nearby enemies.",
+				menu_not_safe = "Not Safe",
+				menu_not_safe_desc = "BASIC: ##$basic##\nThe OVESAW9000 Saw can cut through Shields.\n\nACE: ##$pro##\nThe OVESAW9000 deals ##+100%## Damage to Dozers and their armor plates.",
+				menu_into_the_pit = "Into The Pit",
+				menu_into_the_pit_desc = "BASIC: ##$basic##\nThe OVESAW9000 Saw is guaranteed to deal a Critical Hit the first time it damages an enemy.\n\nACE: ##$pro##\nKills with the OVESAW9000 Saw inflict Panic on most enemies within ##6## meters, causing them to go into short bursts of uncontrollable fear.",
 				
+				
+			--demolitions
 			
-			--runner
-				menu_hustle = "Hustle",
-				menu_hustle_desc = "BASIC: ##$basic##\nYou can Sprint in any direction.\n\nACE: ##$pro##\nYour Stamina starts regenerating ##25%## earlier and ##+25%## faster.",
-				menu_butterfly_bee = "Float Like A Butterfly",
-				menu_butterfly_bee_desc = "BASIC: ##$basic##\nMelee Weapons can be swung and charged while Sprinting.\n\nACE: ##$pro##\nMelee Weapon damage increases your Movement Speed by ##+10%## for ##4## seconds.",
-				menu_heave_ho = "Heave-Ho",
-				menu_heave_ho_desc = "BASIC: ##$basic##\nYou throw Bags ##50%## farther.\n\nACE: ##$pro##\nYour Movement Speed Penalty for carrying a Bag is reduced by ##20%##.",
-				menu_mobile_offense = "Mobile Offense",
-				menu_mobile_offense_desc = "BASIC: ##$basic##\nYou can now Reload while Sprinting.\n\nACE: ##$pro##\nYou can now hip-fire weapons while Sprinting.",
-				menu_escape_plan = "Escape Plan",
-				menu_escape_plan_desc = "BASIC: ##$basic##\nWhen your Armor breaks, you gain ##100%## of your Stamina and gain ##+25%## Sprint Speed for ##4## seconds.\n\nACE: ##$pro##\nYou also gain ##+20%## Movement Speed for 4 seconds.",
-				menu_leg_day = "Leg Day Enthusiast",
-				menu_leg_day_desc = "BASIC: ##$basic##\nYou gain ##+10%## Movement Speed and ##+25%## Sprint Speed.\n\nACE: ##$pro##\nCrouching no longer reduces your Movement Speed.",
-				
-			--engineer
-				menu_digging_in = "Digging In",
-				menu_digging_in_desc = "BASIC: ##$basic##\nYou deploy and retrieve Sentry Guns ##90%## faster.\n\nACE: ##$pro##\nYour Sentry Guns become armored, rendering them almost completely invulnerable.",
-				menu_advanced_rangefinder = "Advanced Rangefinder",
-				menu_advanced_rangefinder_desc = "BASIC: ##$basic##\nSentry Guns gain ##+50%## Range and Accuracy.\n\nACE: ##$pro##\nRange and Accuracy bonus increased to ##+100%##.",
-				menu_targeting_matrix = "Targeting Matrix",
-				menu_targeting_matrix_desc = "BASIC: ##$basic##\nSentry Guns that aim at Special Enemies instantly Mark them for 5 seconds.\n\nACE: ##$pro##\nSentry Guns deal ##+25%## Damage to Marked enemies.",
-				menu_wrangler = "Wrangler",
-				menu_wrangler_desc = "BASIC: ##$basic##\nWhile in Manual Control of a Sentry Gun, it gains perfect Accuracy.\n\nACE: ##$pro##\nSentries deal ##+100%## Damage on Headshots.",
-				menu_hobarts_funnies = "Hobart's Funnies",
-				menu_hobarts_funnies_desc = "BASIC: ##$basic##\nNon-Basic Sentry Gun modes gain ##+25%## Fire Rate.\n\nACE: ##$pro##\nFire Rate bonus increased to ##+50%##.",
-				menu_killer_machines = "Killer Machines",
-				menu_killer_machines_desc = "BASIC: ##$basic##\nAll Sentry Gun modes deal ##+50## damage.\n\nACE: ##$pro##\nIncreases your Sentry Gun supply to ##2##.",
-				
+			
 				debug_interact_armor_plates_take = "Hold $BTN_INTERACT to take Armor Plates",
 				hint_hud_already_has_armor_plates = "You already have Armor Plates!",
 				hud_action_taking_armor_plates = "Taking Armor Plates...",

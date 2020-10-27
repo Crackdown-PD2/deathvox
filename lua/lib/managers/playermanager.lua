@@ -118,6 +118,27 @@ if deathvox:IsTotalCrackdownEnabled() then
 			)
 		end
 		
+		if self:has_category_upgrade("saw","consecutive_damage_bonus") then 
+			self:set_property("rolling_cutter_aced_stacks",0)
+			
+			Hooks:Register("OnProcRollingCutterBasic")
+			Hooks:Add("OnProcRollingCutterBasic","AddToRollingCutterStacks",
+				function(stack_add)
+					stack_add = stack_add or 1
+					local rolling_cutter_data = self:upgrade_value("saw","consecutive_damage_bonus",{0,0,0})
+					
+					self:add_to_property("rolling_cutter_aced_stacks",stack_add)
+					
+					managers.enemy:remove_delayed_clbk("rolling_cutter_stacks_expire",true)
+					managers.enemy:add_delayed_clbk("rolling_cutter_stacks_expire",
+						function()
+							self:set_property("rolling_cutter_aced_stacks",0)
+						end,
+						Application:time() + rolling_cutter_data[3]
+					)
+				end
+			)
+		end
 	
 		if self:has_category_upgrade("heavy","collateral_damage") then 
 			self._message_system:register(Message.OnWeaponFired,"proc_collateral_damage",

@@ -1004,7 +1004,6 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 		--Assassin
-		
 		self.values.player.professionalschoice = {
 			{
 				0.02,
@@ -1046,6 +1045,145 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		--Dealer
 		
 		--Fixer
+		
+			--no ammo consumed on enemy hit
+		self.values.saw.enemy_cutter = { true }
+		self.definitions.saw_enemy_cutter = {
+			name_id = "menu_saw_rolling_cutter_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "enemy_cutter",
+				category = "saw"
+			}
+		}
+			--+10% damage per hit for 2 seconds, up to +500%
+		self.values.saw.consecutive_damage_bonus = {
+			{0.1,5,2}
+		}
+		self.definitions.saw_consecutive_damage_bonus = {
+			name_id = "menu_saw_rolling_cutter_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "consecutive_damage_bonus",
+				category = "saw"
+			}
+		}
+		
+			--+50% durability
+		self.values.saw.durability_increase = {
+			0.5
+		}
+		self.definitions.saw_durability_increase = {
+			name_id = "menu_saw_rolling_cutter_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "durability_increase",
+				category = "saw"
+			}
+		}
+		
+			--ammo increase
+		self.values.class_saw.clip_amount_increase = {
+			2,
+			3
+		}
+		self.definitions.saw_extra_ammo_addend = {
+			name_id = "menu_saw_walking_toolshed_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "clip_amount_increase",
+				category = "class_saw" --by class since we don't want it to apply twice to the primary saw
+			}
+		}
+		self.definitions.saw_extra_ammo_addend_2 = {
+			name_id = "menu_saw_walking_toolshed_aced",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "clip_amount_increase",
+				category = "class_saw"
+			}
+		}
+		
+			--+25% range
+		self.values.saw.range_mul = {
+			1.25
+		}
+		self.definitions.saw_range_increase = {
+			name_id = "menu_saw_handyman_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "range_mul",
+				category = "saw"
+			}
+		}
+		
+		self.values.saw.killing_blow_radius = {
+			250
+		}
+		self.definitions.saw_killing_blow_radius = {
+			name_id = "menu_saw_bloody_mess_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "killing_blow_radius",
+				category = "saw"
+			}
+		}
+		
+		self.values.saw.killing_blow_chain = {
+			true
+		}
+		self.definitions.saw_killing_blow_chain = {
+			name_id = "menu_saw_bloody_mess_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "killing_blow_chain",
+				category = "saw"
+			}
+		}
+		
+		self.values.saw.dozer_bonus_damage_mul = {
+			2
+		}
+		self.definitions.saw_bonus_dozer_damage_mul = {
+			name_id = "menu_saw_not_safe_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "dozer_bonus_damage_mul",
+				category = "saw"
+			}
+		}
+		
+			--panic on saw kill (tweaked vanilla)
+		self.values.saw.panic_when_kill = {
+			{
+				chance = 1,
+				area = 600,
+				amount = 200
+			}
+		}
+			--guaranteed crit on the first hit
+		self.values.saw.crit_first_strike = {
+			true
+		}
+		self.definitions.saw_crit_first_strike = {
+			name_id = "menu_saw_into_pit_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "crit_first_strike",
+				category = "saw"
+			}
+		}
+		
 		
 		--Demolitions
 		

@@ -43,11 +43,18 @@ Hooks:PostHook(InteractionTweakData, "init", "cd_interact_timer_stuff", function
 			
 		}
 		
-		self.pick_lock_hard.upgrade_timer_multipliers = {
+		self.pick_lock_hard.upgrade_timer_multipliers = { 
 			{
 				upgrade = "pick_lock_hard_speed_multiplier",
 				category = "player"
 			}
+			--[[
+			--normal lockpick speed skills don't apply to safe locks... but they could
+			,{
+				upgrade = "pick_lock_easy_speed_multiplier",
+				category = "player"
+			}
+			--]]
 		}
 		
 		self.requires_ecm_jammer = {

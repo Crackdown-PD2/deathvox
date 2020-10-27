@@ -1210,7 +1210,129 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		
 		--Dealer (not implemented)
 		
-		--Fixer (not implemented)
+		--Fixer
+		replace_skill(tree_indices.fixer,1,{ --Rolling Cutter
+			{
+				upgrades = {
+					"saw_enemy_cutter",
+					"saw_consecutive_damage_bonus"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"saw_durability_increase"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_rolling_cutter",
+			desc_id = "menu_rolling_cutter_desc",
+			icon_xy = {
+				0,
+				1
+			}
+		})
+		replace_skill(tree_indices.fixer,2,{ --Walking Toolshed
+			{
+				upgrades = {
+					"saw_extra_ammo_addend"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"saw_extra_ammo_addend_2"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_walking_toolshed",
+			desc_id = "menu_walking_toolshed_desc",
+			icon_xy = {
+				0,
+				1
+			}
+		})
+		replace_skill(tree_indices.fixer,3,{ --Handyman
+			{
+				upgrades = {
+					"saw_secondary"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"saw_range_increase"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_handyman",
+			desc_id = "menu_handyman_desc",
+			icon_xy = {
+				0,
+				1
+			}
+		})
+		replace_skill(tree_indices.fixer,4,{ --Bloody Mess
+			{
+				upgrades = {
+					"saw_killing_blow_radius"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"saw_killing_blow_chain"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_bloody_mess",
+			desc_id = "menu_bloody_mess_desc",
+			icon_xy = {
+				0,
+				2
+			}
+		})
+		replace_skill(tree_indices.fixer,5,{ --Not Safe
+			{
+				upgrades = {
+					"saw_ignore_shields_1"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"saw_bonus_dozer_damage_mul"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_not_safe",
+			desc_id = "menu_not_safe_desc",
+			icon_xy = {
+				0,
+				2
+			}
+		})
+		replace_skill(tree_indices.fixer,6,{ --Into The Pit
+			{
+				upgrades = {
+					"saw_crit_first_strike"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"saw_panic_when_kill_1"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_into_the_pit",
+			desc_id = "menu_into_the_pit_desc",
+			icon_xy = {
+				0,
+				2
+			}
+		})
+		
 		
 		--Demolitions (not implemented)
 

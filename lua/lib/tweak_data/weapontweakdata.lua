@@ -2715,8 +2715,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.asval.subclasses = {"quiet"}
 		self.asval.FIRE_MODE = "auto"
 		self.asval.categories = {
-			"assault_rifle",
-			"quiet"
+			"assault_rifle"
 		}
 		self.asval.fire_mode_data = {
 			fire_rate = 0.11009174311927
@@ -6902,8 +6901,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.contraband.subclasses = {}
 		self.contraband.FIRE_MODE = "single"
 		self.contraband.categories = {
-			"assault_rifle",
-			"precision"
+			"assault_rifle"
 		}
 		self.contraband.fire_mode_data = {
 			fire_rate = 0.098
@@ -10935,7 +10933,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			1
 		}
 		self.flamethrower_mk2.primary_class = "specialist"
-		self.flamethrower_mk2.subclasses = {"areadenial"}
+		self.flamethrower_mk2.subclasses = {"subclass_areadenial"}
 		self.flamethrower_mk2.AMMO_MAX = 900
 		self.flamethrower_mk2.spread = {
 			standing = self.new_m4.spread.standing,
@@ -15270,7 +15268,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			1
 		}
 		self.system.primary_class = "specialist"
-		self.system.subclasses = {"areadenial"}
+		self.system.subclasses = {"subclass_areadenial"}
 		self.system.AMMO_MAX = 600
 		self.system.spread = {
 			standing = self.new_m4.spread.standing,
@@ -15669,7 +15667,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			zoom = 1
 		}
 		self.saw.AMMO_MAX = 300
-		self.saw.primary_class = "saw"
+		self.saw.primary_class = "class_saw"
 		self.saw.AMMO_PICKUP = {
 			0,
 			0
@@ -15702,6 +15700,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 				0.3
 			}
 		}
+		
+	--saw but again
 		self.saw_secondary = deep_clone(self.saw)
 		self.saw_secondary.parent_weapon_id = "saw"
 		self.saw_secondary.use_data.selection_index = 1

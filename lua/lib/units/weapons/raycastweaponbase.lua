@@ -517,13 +517,18 @@ end
 function RaycastWeaponBase:_get_current_damage(dmg_mul)
 	local point_and_click_data = managers.player:upgrade_value("weapon","point_and_click_damage_bonus",{0,0})
 	local damage = self._damage
-	if self:is_weapon_class("precision") then 
-		damage = damage + math.min(point_and_click_data[1] * managers.player:get_property("current_point_and_click_stacks",0),point_and_click_data[2])
-	end
 	damage = damage * (dmg_mul or 1)
 	damage = damage * managers.player:temporary_upgrade_value("temporary", "combat_medic_damage_multiplier", 1)
-	if self:is_weapon_class("class_shotgun") and self:fire_mode() == "auto" and self:clip_full() then 
-		damage = damage * (1 + managers.player:upgrade_value("class_shotgun","heartbreaker_damage",0))
+	if self:is_weapon_class("precision") then 
+		damage = damage + math.min(point_and_click_data[1] * managers.player:get_property("current_point_and_click_stacks",0),point_and_click_data[2])
+	elseif self:is_weapon_class("class_shotgun") then 
+		if self:fire_mode() == "auto" and self:clip_full() then 
+			damage = damage * (1 + managers.player:upgrade_value("class_shotgun","heartbreaker_damage",0))
+		end
+	elseif self:is_weapon_class("class_saw") then 
+		local rolling_cutter_data = managers.player:upgrade_value("saw","consecutive_damage_bonus",{0,0,0})
+		local rolling_cutter_stacks = managers.player:get_property("rolling_cutter_aced_stacks",0)
+		damage = damage * (1 + math.min(rolling_cutter_stacks * rolling_cutter_data[1],rolling_cutter_data[3]))
 	end
 	return damage
 end
