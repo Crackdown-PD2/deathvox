@@ -205,17 +205,17 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 			--dealer
 			--fixer
 				menu_rolling_cutter = "Rolling Cutter",
-				menu_rolling_cutter_desc = "BASIC: ##$basic##\nThe OVESAW9000 Saw no longer consumes Ammunition when damaging enemies and gains ##+10%## Damage for ##2## seconds after every hit, up to a maximum of ##500%##.\n\nACE: ##$pro##\nIncreases OVESAW9000 Saw blade durability by ##+50##.",
+				menu_rolling_cutter_desc = "BASIC: ##$basic##\nThe OVE9000 Saw no longer consumes Ammunition when damaging enemies and gains ##+10%## Damage for ##2## seconds after every hit, up to a maximum of ##500%##.\n\nACE: ##$pro##\nIncreases the OVE9000 Saw blade durability by ##+50##.",
 				menu_walking_toolshed = "Walking Toolshed",
-				menu_walking_toolshed_desc = "BASIC: ##$basic##\nIncreases your spare OVESAW9000 Saw blades to ##2##.\n\nACE: ##$pro##\nIncreases your spare OVESAW9000 Saw blades to ##3##.",
+				menu_walking_toolshed_desc = "BASIC: ##$basic##\nIncreases your spare OVE9000 Saw blades to ##2##.\n\nACE: ##$pro##\nIncreases your spare OVE9000 Saw blades to ##3##.",
 				menu_handyman = "Handyman",
-				menu_handyman_desc = "BASIC: ##$basic##\nThe OVESAW9000 Saw becomes available as a Secondary Weapon.\n\nACE: ##$pro##\nThe OVESAW9000 Saw gains ##+25%## range.",
+				menu_handyman_desc = "BASIC: ##$basic##\nThe OVE9000 Saw becomes available as a Secondary Weapon.\n\nACE: ##$pro##\nThe OVE9000 Saw gains ##+25%## range.",
 				menu_bloody_mess = "Bloody Mess",
-				menu_bloody_mess_desc = "BASIC: ##$basic##\nKills with the OVESAW9000 Saw deal the killing blow's damage to enemies within ##2.5## meters.\n\nACE: ##$pro##\nEnemies killed by Bloody Mess also deal damage to nearby enemies.",
+				menu_bloody_mess_desc = "BASIC: ##$basic##\nKills with the OVE9000 Saw deal the killing blow's damage to enemies within ##2.5## meters.\n\nACE: ##$pro##\nEnemies killed by Bloody Mess also deal damage to nearby enemies.",
 				menu_not_safe = "Not Safe",
-				menu_not_safe_desc = "BASIC: ##$basic##\nThe OVESAW9000 Saw can cut through Shields.\n\nACE: ##$pro##\nThe OVESAW9000 deals ##+100%## Damage to Dozers and their armor plates.",
+				menu_not_safe_desc = "BASIC: ##$basic##\nThe OVE9000 Saw can cut through Shields. Additionally, the OVE9000 Saw no longer consumes ammunition when hitting Shields.\n\nACE: ##$pro##\nThe OVE9000 Saw deals ##+100%## Damage to Dozers and their armor plates.",
 				menu_into_the_pit = "Into The Pit",
-				menu_into_the_pit_desc = "BASIC: ##$basic##\nThe OVESAW9000 Saw is guaranteed to deal a Critical Hit the first time it damages an enemy.\n\nACE: ##$pro##\nKills with the OVESAW9000 Saw inflict Panic on most enemies within ##6## meters, causing them to go into short bursts of uncontrollable fear.",
+				menu_into_the_pit_desc = "BASIC: ##$basic##\nThe OVE9000 Saw is guaranteed to deal a Critical Hit the first time it damages an enemy.\n\nACE: ##$pro##\nKills with the OVE9000 Saw inflict Panic on most enemies within ##6## meters, causing them to go into short bursts of uncontrollable fear.",
 				
 				
 			--demolitions
