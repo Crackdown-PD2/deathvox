@@ -6,5 +6,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		self.specials.cable_tie.quantity = 10
 		self.specials.cable_tie.max_quantity = 10
+		
+		self.armor_kit.limit_movement = false
 	end)
 end
