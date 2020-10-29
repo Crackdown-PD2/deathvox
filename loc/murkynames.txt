@@ -1,5 +1,5 @@
 {	
-	"ene_deathvox_tazer" : "Murkywater Taser",
+	"ene_deathvox_taser" : "Murkywater Taser",
 	"ene_deathvox_shield" : "Murkywater Shield",
 	"ene_deathvox_sniper" : "Murkywater Sniper",
 	"ene_deathvox_greendozer" : "Murkywater Greendozer",
