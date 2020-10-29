@@ -84,22 +84,31 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 	self.skm_bex.package = {"packages/dlcs/skm/job_skm", "packages/deathvoxclassics"} --fuck
 	self.skm_mus.package = {"packages/dlcs/skm/job_skm", "packages/deathvoxclassics"}
 	self.skm_red2.package = {"packages/dlcs/skm/job_skm", "packages/deathvoxclassics"}
-	
-	self.bex.package = {"packages/deathvoxfederales", "packages/job_bex"}
-	self.pex.package = {"packages/deathvoxfederales", "packages/job_pex"}
-	
+		
 	map_faction_override["bank"] = "classic"
-	--Murky faction overrides begin here. Uncomment to apply the Murkywater faction on the Whitehouse, Henry's Rock, and Beneath the Mountain heists.
-	--map_faction_override["pbr"] = "murky"
-	--map_faction_override["vit"] = "murky"
-	--map_faction_override["des"] = "murky"
+	
+	--Murky faction overrides begin here. Uncomment to apply the Murkywater faction on the Whitehouse, Henry's Rock, Hell's Island, and Beneath the Mountain heists.
+	  self.pbr.package = {"packages/deathvoxmurkies", "packages/narr_jerry1"}		
+	  map_faction_override["pbr"] = "murky"
+	  
+	  self.vit.package = {"packages/deathvoxmurkies", "packages/dlcs/vit/job_vit"}			  
+	  map_faction_override["vit"] = "murky"
+	  
+	  self.des.package = {"packages/deathvoxmurkies", "packages/job_des"}			  	  
+	  map_faction_override["des"] = "murky"
+	  
+	  self.bph.package = {"packages/deathvoxmurkies", "packages/dlcs/bph/job_bph"}			  	  
+	  map_faction_override["bph"] = "murky"
 	
 	--Reaper faction overrides begin here.
 	  map_faction_override["mad"] = "russia"	
 	  
 	--Federales faction overrides begin here.
+	  self.bex.package = {"packages/deathvoxfederales", "packages/job_bex"}	
 	  map_faction_override["bex"] = "federales"	
-	--map_faction_override["skm_bex"] = "federales"	
+	--map_faction_override["skm_bex"] = "federales"
+	
+	  self.pex.package = {"packages/deathvoxfederales", "packages/job_pex"}	
 	  map_faction_override["pex"] = "federales"		
 	  
 	--Halloween overrides begin here.

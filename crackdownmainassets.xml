@@ -1,4 +1,10 @@
 <table directory="assets">
+	<!--MOTHER FUCKING BERET ACC FUCK YEAH BEST FEATURE-->
+	<unit path="units/pd2_mod_sharks/characters/ene_acc_murky_beret/ene_acc_murky_beret" force="false" load="false"/>
+	<object path="units/pd2_mod_sharks/characters/ene_acc_murky_beret/ene_acc_murky_beret" force="false"/>
+	<cooked_physics path="units/pd2_mod_sharks/characters/ene_acc_murky_beret/ene_acc_murky_beret" force="false"/>	
+	<material_config path="units/pd2_mod_sharks/characters/ene_acc_murky_beret/ene_acc_murky_beret" force="false"/>	
+	<model path="units/pd2_mod_sharks/characters/ene_acc_murky_beret/ene_acc_murky_beret" force="false"/>	
 
 	<!-- VANILLA TEXTURE REPLACEMENTS/ADDITIONS -->
 	
@@ -424,12 +430,6 @@
 	<unit path="units/pd2_dlc1/characters/ene_security_gensec_2/ene_security_gensec_2_husk" load="true" force="true" />	
 	<object path="units/pd2_dlc1/characters/ene_security_gensec_2/ene_security_gensec_2" force="true" />	
 	<model path="units/pd2_dlc1/characters/ene_security_gensec_2/ene_security_gensec_2" force="true" />	
-
-	<unit_mat path="units/pd2_dlc1/characters/ene_acc_gensec_beret_but_red/ene_acc_gensec_beret_but_red" load="true"/>
-	<cooked_physics path="units/pd2_dlc1/characters/ene_acc_gensec_beret_but_red/ene_acc_gensec_beret_but_red" force="false"/>	
-	
-	<!-- <material_config path="units/pd2_dlc1/characters/ene_security_gensec_2/ene_security_gensec_2" force="true" />	 -->
-	<!-- <material_config path="units/pd2_dlc1/characters/ene_security_gensec_2/ene_security_gensec_2_contour" force="true" />	 -->
 
 	
 	<!--ZULU SQUADRON/ZEAL TEAM -->
