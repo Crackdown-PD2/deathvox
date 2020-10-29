@@ -160,7 +160,13 @@ function CharacterTweakData:get_ai_group_type()
 	--map_faction_override["des"] = "murky"
 	
 	--Reaper faction overrides begin here.
+	  map_faction_override["mad"] = "russia"	
+	  
 	--Federales faction overrides begin here.
+	  map_faction_override["bex"] = "federales"	
+	--map_faction_override["skm_bex"] = "federales"	--not sure about this yet.
+	  map_faction_override["pex"] = "federales"		
+	  
 	--Halloween overrides begin here.
   
 	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
@@ -4223,6 +4229,7 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	
 	self.security = deep_clone(self.deathvox_guard) --  Requires further testing. May be fix for heist-specific crash tied to initial custom unit spawn.
 	self.gensec = deep_clone(self.deathvox_guard)
+	self.security_mex = deep_clone(self.deathvox_guard)
 	
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	self.sniper = deep_clone(self.deathvox_sniper)
@@ -4690,6 +4697,93 @@ function CharacterTweakData:_init_region_murky() --will use these lines for now.
 	}	
 end
 
+--Bot Preferred Weapons Start Here--
+Hooks:PostHook(CharacterTweakData, "_init_russian", "cdhook_russian", function(self, presets)
+	self.russian.weapon.weapons_of_choice.primary = "wpn_fps_ass_amcar_npc"
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_german", "cdhook_german", function(self, presets)
+	self.german.weapon.weapons_of_choice.primary = "wpn_fps_shot_r870_npc"
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_spanish", "cdhook_spanish", function(self, presets)
+	self.spanish.weapon.weapons_of_choice.primary = "wpn_fps_lmg_hk21_npc"
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_american", "cdhook_american", function(self, presets)
+	self.american.weapon.weapons_of_choice.primary = "wpn_fps_ass_ak5_npc"
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_jowi", "cdhook_jowi", function(self, presets)
+	self.jowi.weapon.weapons_of_choice.primary = "wpn_fps_snp_tti_npc"
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_old_hoxton", "cdhook_hoxton", function(self, presets)
+	self.old_hoxton.weapon.weapons_of_choice.primary = "wpn_fps_ass_m14_npc"
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_clover", "cdhook_clover", function(self, presets)
+	self.female_1.weapon.weapons_of_choice.primary = "wpn_fps_ass_l85a2_npc"
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_dragan", "cdhook_dragan", function(self, presets)
+	self.dragan.weapon.weapons_of_choice.primary = "wpn_fps_ass_vhs_npc"
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_jacket", "cdhook_jacket", function(self, presets)
+	self.jacket.weapon.weapons_of_choice.primary = "wpn_fps_ass_akm_npc" --"wpn_fps_smg_cobray_npc"--
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_bonnie", "cdhook_bonnie", function(self, presets)
+	self.bonnie.weapon.weapons_of_choice.primary = "wpn_fps_shot_b682_npc"
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_sokol", "cdhook_sokol", function(self, presets)
+	self.sokol.weapon.weapons_of_choice.primary = "wpn_fps_ass_asval_npc"
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_dragon", "cdhook_dragon", function(self, presets)
+	self.dragon.weapon.weapons_of_choice.primary = "wpn_fps_snp_wa2000_npc"	 --"wpn_fps_smg_baka_npc"--
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_bodhi", "cdhook_bodhi", function(self, presets)
+	self.bodhi.weapon.weapons_of_choice.primary = "wpn_fps_snp_model70_npc"
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_jimmy", "cdhook_jimmy", function(self, presets)
+	self.jimmy.weapon.weapons_of_choice.primary = "wpn_fps_sho_ben_npc" --"wpn_fps_smg_sr2_npc"--
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_sydney", "cdhook_sydney", function(self, presets)
+	self.sydney.weapon.weapons_of_choice.primary = "wpn_fps_ass_tecci_npc"
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_wild", "cdhook_wild", function(self, presets)
+	self.wild.weapon.weapons_of_choice.primary = "wpn_fps_sho_boot_npc"
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_chico", "cdhook_chico", function(self, presets)
+	self.chico.weapon.weapons_of_choice.primary = "wpn_fps_ass_contraband_npc"
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_max", "cdhook_max", function(self, presets)
+	self.max.weapon.weapons_of_choice.primary = "wpn_fps_ass_akm_gold_npc"
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_joy", "cdhook_joy", function(self, presets)
+	self.joy.weapon.weapons_of_choice.primary = "wpn_fps_ass_m4_npc" --"wpn_fps_smg_shepheard_npc"--
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_myh", "cdhook_myh", function(self, presets)
+	self.myh.weapon.weapons_of_choice.primary = "wpn_fps_ass_ching_npc"
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_ecp", "cdhook_ecps", function(self, presets)
+	self.ecp_female.weapon.weapons_of_choice.primary = "wpn_fps_ass_famas_npc"
+	self.ecp_male.weapon.weapons_of_choice.primary = "wpn_fps_ass_scar_npc"
+end)
+--End Perferred Bot Weapons--
+
 function CharacterTweakData:character_map()
 	local char_map = origin_charmap(self)
 	char_map.gageammo = {
@@ -4704,7 +4798,7 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_heavyshot",
 			"ene_deathvox_taser",
 			"ene_deathvox_cloaker",
-			"ene_deathvox_sniper_assault",
+			"ene_deathvox_sniper",
 			"ene_deathvox_greendozer",
 			"ene_deathvox_blackdozer",
 			"ene_deathvox_lmgdozer",
@@ -4832,6 +4926,32 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_cop_medic",
 			"ene_deathvox_cop_heavyswatshot",
 			"ene_deathvox_cop_heavyswat"
+		}
+	}				
+	char_map.federales = {
+		path = "units/pd2_mod_federales/characters/",
+		list = {
+			"ene_deathvox_cop_pistol",
+			"ene_deathvox_cop_revolver",
+			"ene_deathvox_cop_smg",
+			"ene_deathvox_cop_shotgun",
+			"ene_deathvox_swat",
+			"ene_deathvox_swatshot",
+			"ene_deathvox_fbi_heavyswat",
+			"ene_deathvox_fbi_heavyswatshot",
+			"ene_deathvox_fbi_hrt",
+			"ene_deathvox_fbi_rookie",
+			"ene_deathvox_fbi_veteran",			
+			"ene_deathvox_shield",
+			"ene_deathvox_medic",
+			"ene_deathvox_tazer",
+			"ene_deathvox_sniper",
+			"ene_deathvox_greendozer",
+			"ene_deathvox_blackdozer",
+			"ene_deathvox_lmgdozer",
+			"ene_deathvox_cloaker",
+			"ene_deathvox_heavyswat",
+			"ene_deathvox_heavyswatshot"
 		}
 	}				
 	return char_map

@@ -1,0 +1,21 @@
+<dynamic_object>
+    <diesel orientation_object="rp_gen_pku_armorpak" materials="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag" />
+	<sequence_manager file="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag" />
+    <bodies>
+		<body name="dynamic" enabled="false" template="dynamic_no_ray" collision_class="bag" collides_with_mover="false" >
+			<object name="rp_gen_pku_armorpak" />
+			<object name="c_box" collision_type="box" padding="-2.5" />
+		</body>
+    </bodies>
+    <decal_surfaces>
+        <decal_mesh enabled="true" name="dm_metal" material="sheet_metal" />
+    </decal_surfaces>
+    <graphics>
+        <object name="g_flamingo"	enabled="true" />
+        <object name="g_pak_01"		enabled="true" />
+        <object name="g_pak_02"		enabled="true" />
+        <object name="g_pak_03"		enabled="true" />
+        <object name="g_pak_04"		enabled="true" />
+    </graphics>
+</dynamic_object>
+

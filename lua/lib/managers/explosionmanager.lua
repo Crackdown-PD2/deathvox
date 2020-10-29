@@ -258,6 +258,11 @@ function ExplosionManager:detect_and_give_dmg(params)
 	local col_ray = params.col_ray
 	local owner = params.owner
 	local push_units = true
+	local critical_hit = params.critical_hit
+	
+	--if critical_hit then
+		--log("BOOM")
+	--end
 
 	if params.push_units ~= nil then
 		push_units = params.push_units
@@ -492,6 +497,7 @@ function ExplosionManager:detect_and_give_dmg(params)
 							position = hit_body:position(),
 							ray = dir
 						},
+						critical_hit = params.critical_hit,
 						ignite_character = params.ignite_character
 					}
 

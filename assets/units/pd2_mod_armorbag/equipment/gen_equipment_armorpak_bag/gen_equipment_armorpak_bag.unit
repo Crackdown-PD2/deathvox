@@ -1,0 +1,15 @@
+<unit type="item" slot="14" >
+	<object file="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag" />
+	<network sync="spawn" />
+	<extensions>
+		<extension name="unit_data" class="ScriptUnitData" />
+		<extension name="base" class="ArmorPlatesBase" />
+		<extension name="damage" class="UnitDamage" />
+		<extension name="interaction" class="ArmorPlatesBaseInteractionExt" >
+			<var name="tweak_data" value="armor_plates" />
+		</extension>
+	</extensions>
+	<sounds>
+		<default_soundsource source="rp_gen_pku_armorpak"/>
+	</sounds>
+</unit>

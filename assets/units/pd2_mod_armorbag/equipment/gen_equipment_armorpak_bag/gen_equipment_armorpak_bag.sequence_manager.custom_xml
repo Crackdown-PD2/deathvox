@@ -1,0 +1,32 @@
+<table>
+	<unit>
+		<sequence editable_state="true" name=" 'state_1' " triggable="false">
+			<object enabled="true"	name=" 'g_pak_04' "/>
+			<object enabled="true"	name=" 'g_pak_03' "/>
+			<object enabled="true"	name=" 'g_pak_02' "/>
+			<object enabled="false"	name=" 'g_pak_01' "/>
+			<decal_mesh enabled="true" name=" 'dm_metal' " />
+		</sequence>
+		<sequence editable_state="true" name=" 'state_2' " triggable="false">
+			<object enabled="true"	name=" 'g_pak_04' "/>
+			<object enabled="true"	name=" 'g_pak_03' "/>
+			<object enabled="false"	name=" 'g_pak_02' "/>
+			<object enabled="false"	name=" 'g_pak_01' "/>
+			<decal_mesh enabled="true" name=" 'dm_metal' " />
+		</sequence>
+		<sequence editable_state="true" name=" 'state_3' " triggable="false">
+			<object enabled="true"	name=" 'g_pak_04' "/>
+			<object enabled="false"	name=" 'g_pak_03' "/>
+			<object enabled="false"	name=" 'g_pak_02' "/>
+			<object enabled="false"	name=" 'g_pak_01' "/>
+			<decal_mesh enabled="true" name=" 'dm_metal' " />
+		</sequence>
+		<sequence editable_state="true" name=" 'state_4' " triggable="false">
+			<object enabled="false"	name=" 'g_pak_04' "/>
+			<object enabled="false"	name=" 'g_pak_03' "/>
+			<object enabled="false"	name=" 'g_pak_02' "/>
+			<object enabled="false"	name=" 'g_pak_01' "/>
+			<decal_mesh enabled="false" name=" 'dm_metal' " />
+		</sequence>
+	</unit>
+</table>

@@ -15,6 +15,8 @@
 	<texture path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/helmets_heavy_taser_atlas_df" force="false"/>
 	<texture path="units/payday2/characters/shared_textures/tank_glass_df" force="false"/>
 	<texture path="units/payday2/characters/shared_textures/tank_glass_op" force="false"/>
+	<texture path="units/pd2_mod_classic/characters/classic_tank_glass_df" force="false"/>
+	<texture path="units/pd2_mod_classic/characters/classic_tank_glass_op" force="false"/>
 	<texture path="units/payday2/characters/shared_textures/ene_acc_deathvox_gensec_shield_df" force="false"/>
 	<texture path="units/payday2/characters/shared_textures/ene_acc_deathvox_gensec_shield_nm" force="false"/>
 	<texture path="units/payday2/characters/shared_textures/genshill_helm_df" force="false"/>
@@ -83,10 +85,16 @@
 	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_grenadier" load="true"/>
 	<unit path="units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_grenadier_grenade" load="true"/>
 	
-	<material_config path="units/payday2/weapons/wpn_npc_m4_yellow/wpn_npc_m4_yellow" force="true"/>
+	<!--NPC M4-->
+	<model path="units/payday2/weapons/wpn_npc_m4/wpn_npc_m4" force="true"/>
+	<texture path="units/payday2/weapons/wpn_npc_m4/m4_df" force="true"/>
+	<texture path="units/payday2/weapons/wpn_npc_m4/m4_nm" force="true"/>
+	
+	<!--NPC M4 Yellow-->
 	<model path="units/payday2/weapons/wpn_npc_m4_yellow/wpn_npc_m4_yellow" force="true"/>
-	<texture path="units/payday2/weapons/wpn_npc_m4_yellow/m4_yellow_nm" force="true"/>
-	<texture path="units/payday2/weapons/wpn_npc_m4_yellow/m4_yellow_df" force="true"/>
+	<material_config path="units/payday2/weapons/wpn_npc_m4_yellow/wpn_npc_m4_yellow" force="true"/>
+	<material_config path="units/payday2/weapons/wpn_npc_m4_yellow/wpn_npc_m4_yellow_contour" force="true"/>
+	<object path="units/payday2/weapons/wpn_npc_m4_yellow/wpn_npc_m4_yellow" force="true"/>	
 	
 	<unit_mat path="units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd" load="true"/>
 	<cooked_physics path="units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd"  force="false"/>					
@@ -405,7 +413,25 @@
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer_husk" load="true"/>
 	<sequence_manager path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_lmgdozer/ene_deathvox_gensec_lmgdozer"/>
 	
+	<unit path="units/pd2_dlc1/characters/ene_security_gensec_1/ene_security_gensec_1" load="true" force="true" />
+	<unit path="units/pd2_dlc1/characters/ene_security_gensec_1/ene_security_gensec_1_husk" load="true" force="true" />	
+	<object path="units/pd2_dlc1/characters/ene_security_gensec_1/ene_security_gensec_1" force="true" />	
+	<model path="units/pd2_dlc1/characters/ene_security_gensec_1/ene_security_gensec_1" force="true" />	
+	<material_config path="units/pd2_dlc1/characters/ene_security_gensec_1/ene_security_gensec_1" force="true" />	
+	<material_config path="units/pd2_dlc1/characters/ene_security_gensec_1/ene_security_gensec_1_contour" force="true" />	
 
+	<unit path="units/pd2_dlc1/characters/ene_security_gensec_2/ene_security_gensec_2" load="true" force="true" />
+	<unit path="units/pd2_dlc1/characters/ene_security_gensec_2/ene_security_gensec_2_husk" load="true" force="true" />	
+	<object path="units/pd2_dlc1/characters/ene_security_gensec_2/ene_security_gensec_2" force="true" />	
+	<model path="units/pd2_dlc1/characters/ene_security_gensec_2/ene_security_gensec_2" force="true" />	
+
+	<unit_mat path="units/pd2_dlc1/characters/ene_acc_gensec_beret_but_red/ene_acc_gensec_beret_but_red" load="true"/>
+	<cooked_physics path="units/pd2_dlc1/characters/ene_acc_gensec_beret_but_red/ene_acc_gensec_beret_but_red" force="false"/>	
+	
+	<!-- <material_config path="units/pd2_dlc1/characters/ene_security_gensec_2/ene_security_gensec_2" force="true" />	 -->
+	<!-- <material_config path="units/pd2_dlc1/characters/ene_security_gensec_2/ene_security_gensec_2_contour" force="true" />	 -->
+
+	
 	<!--ZULU SQUADRON/ZEAL TEAM -->
 	
 	<!--Z Sniper-->
@@ -724,5 +750,15 @@
 
 	<unit_mat_seq path="units/pd2_mod_classic/characters/ene_acc_classic_helmet/ene_acc_classic_helmet" load="true"/>
 	<cooked_physics path="units/pd2_mod_classic/characters/ene_acc_classic_helmet/ene_acc_classic_helmet" force="false"/>					
+	
+	
+	<!-- TOTAL CRACKDOWN Armor Plates -->
+	<unit load="true"    path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
+	<unit load="true"    path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag_dummy"/>
+	<object                path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
+	<model                path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
+	<material_config    path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
+	<sequence_manager    path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
+	
 	
 </table>

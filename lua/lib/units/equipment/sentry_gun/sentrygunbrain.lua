@@ -153,6 +153,18 @@ function SentryGunBrain:_upd_fire(t)
 
 			return
 		end
+		
+		if self._unit:base():is_owner() then 
+			local mark_data = managers.player:upgrade_value("sentry_gun","targeting_matrix",false)
+			if mark_data and type(mark_data) == "table" then 
+				if attention.unit and attention.unit:contour() then 
+					local mark_type = mark_data[1]
+					attention.unit:contour():add(mark_type, true, 1)
+--						managers.network:session():send_to_peers_synched("spot_enemy", attention.unit)
+				end
+			end
+		end
+		
 
 		local expend_ammo = Network:is_server()
 		local damage_player = attention.unit:base() and attention.unit:base().is_local_player
@@ -321,6 +333,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 			firing_range = SentryControlMenu.tweakdata.OVERWATCH_DETECTION_RANGE
 			max_detection_range = SentryControlMenu.tweakdata.OVERWATCH_DETECTION_RANGE
 		end
+		
+		if self._unit:base():is_owner() then 
+			local advanced_rangefinder_data = managers.player:upgrade_value("sentry_gun","advanced_rangefinder",{0,0})
+			firing_range = firing_range * (1 + advanced_rangefinder_data[1])
+			max_detection_range = max_detection_range * (1 + advanced_rangefinder_data[1])
+		end
+		
 
 		for u_key, attention_info in pairs(all_attention_objects) do
 			if u_key ~= my_key and not detected_objects[u_key] then

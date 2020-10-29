@@ -8,13 +8,5 @@
  "blt_version" : 2,
  "image" : "res.png",
  "undisablable" : false,
- "disable_safe_mode" : false,
- "updates" : [
-    {
-        "identifier" : "crackdown_autoupdate",
-        "host": {
-            "meta": "https://raw.githubusercontent.com/Crackdown-PD2/deathvox/autoupdate/meta.json"
-        }
-    }
- ]
+ "disable_safe_mode" : false
 }

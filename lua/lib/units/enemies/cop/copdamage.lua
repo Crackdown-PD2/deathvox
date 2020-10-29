@@ -82,23 +82,16 @@ end
 
 function CopDamage:roll_critical_hit(attack_data)
 	local damage = attack_data.damage
-	local crit_chance_weapon = attack_data.crit_chance or 0
+	if attack_data.critical_hit then
+		--log("well, yes")
+	end
 	if not self:can_be_critical(attack_data) then
+		--log("but actually, no")
 		return false, damage
 	end
 
 	local critical_hits = self._char_tweak.critical_hits or {}
-	local critical_hit = false
-	local critical_value = (critical_hits.base_chance or 0) + managers.player:critical_hit_chance() * (critical_hits.player_chance_multiplier or 1)
-	
-	critical_value = critical_value + crit_chance_weapon
-	
-	--log("crit in copdamage is " .. critical_value .. "!")
-	
-	if critical_value > 0 then
-		local critical_roll = math.rand(1)
-		critical_hit = critical_roll < critical_value
-	end
+	local critical_hit = attack_data.critical_hit or nil
 
 	if critical_hit then
 		local critical_damage_mul = critical_hits.damage_mul or self._char_tweak.headshot_dmg_mul
@@ -175,6 +168,13 @@ function CopDamage:damage_explosion(attack_data)
 
 	local is_civilian = CopDamage.is_civilian(self._unit:base()._tweak_table)
 	local damage = attack_data.damage
+	
+	--local critical_hit, crit_damage = self:roll_critical_hit(attack_data)
+
+	--if critical_hit then
+		--damage = crit_damage
+		--attack_data.critical_hit = true
+	--end	
 
 	if self._char_tweak.damage.explosion_damage_mul then
 		damage = damage * self._char_tweak.damage.explosion_damage_mul
@@ -198,6 +198,11 @@ function CopDamage:damage_explosion(attack_data)
 
 	if attacker_unit == managers.player:player_unit() and damage > 0 and attack_data.variant ~= "stun" then
 		managers.hud:on_hit_confirmed()
+		--if critical_hit then
+		--	managers.hud:on_crit_confirmed()
+		--else
+		--	managers.hud:on_hit_confirmed()
+		--end
 	end
 
 	if self._char_tweak.DAMAGE_CLAMP_EXPLOSION then
@@ -472,7 +477,6 @@ function CopDamage:damage_bullet(attack_data)
 	if self:is_friendly_fire(attack_data.attacker_unit) then
 		return "friendly_fire"
 	end
-
 	if alive(attack_data.attacker_unit) and attack_data.attacker_unit:in_slot(16) then
 		local has_surrendered = self._unit:brain().surrendered and self._unit:brain():surrendered() or self._unit:anim_data().surrender or self._unit:anim_data().hands_back or self._unit:anim_data().hands_tied
 
@@ -594,7 +598,10 @@ function CopDamage:damage_bullet(attack_data)
 	local headshot_by_player = false
 	local headshot_multiplier = 1
 
+	local headshot_mul_addend = 0
 	if attack_data.attacker_unit == managers.player:player_unit() then
+		headshot_mul_addend = managers.player:upgrade_value(attack_data.weapon_unit:base():get_weapon_class() or "weapon","headshot_mul_addend",0)
+	
 		local critical_hit, crit_damage = self:roll_critical_hit(attack_data)
 
 		if critical_hit then
@@ -618,7 +625,7 @@ function CopDamage:damage_bullet(attack_data)
 			managers.player:on_headshot_dealt()
 
 			headshot_by_player = true
-			headshot_multiplier = managers.player:upgrade_value("weapon", "passive_headshot_damage_multiplier", 1)
+			headshot_multiplier = managers.player:upgrade_value("weapon", "passive_headshot_damage_multiplier", 1) + headshot_mul_addend
 		end
 	end
 
@@ -649,7 +656,7 @@ function CopDamage:damage_bullet(attack_data)
 
 			if add_head_shot_mul then
 				local tweak_headshot_mul = math_max(0, self._char_tweak.headshot_dmg_mul - 1)
-				local mul = tweak_headshot_mul * add_head_shot_mul + 1
+				local mul = tweak_headshot_mul * add_head_shot_mul + 1 + headshot_mul_addend
 				damage = damage * mul
 			end
 		end
@@ -1738,7 +1745,7 @@ function CopDamage:damage_melee(attack_data)
 
 				from_behind = mvec3_dot(mvec_1, mvec_2) >= 0
 
-				if from_behind and self._unit:movement():cool() then
+				if math_random() < managers.player:upgrade_value("player", "melee_kill_snatch_pager_chance", 0) then
 					snatch_pager = true
 					self._unit:unit_data().has_alarm_pager = false
 				end

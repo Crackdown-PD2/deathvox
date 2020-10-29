@@ -1,0 +1,291 @@
+<table directory="assets">
+	<!-- Policia Cap Acc.-->
+	<unit_mat path="units/pd2_mod_federales/characters/ene_acc_policia_cap/ene_acc_policia_cap" />
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_acc_policia_cap/ene_acc_policia_cap" /> 
+	
+	<!-- Pistol Beatcop -->
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol" />
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_cop_pistol/ene_deathvox_cop_pistol_contour" />
+	
+	<!-- Revolver Beatcop -->
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver" />
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_cop_revolver/ene_deathvox_cop_revolver" />
+	
+	<!-- SMG Beatcop -->
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg" />
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_cop_smg/ene_deathvox_cop_smg" />
+	
+	<!-- Shotgun Beatcop -->
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun_contour" />	
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_cop_shotgun/ene_deathvox_cop_shotgun" />
+	
+	<!-- AR SWAT -->
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_swat/ene_deathvox_swat" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_swat/ene_deathvox_swat_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_swat/ene_deathvox_swat" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_swat/ene_deathvox_swat" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_swat/ene_deathvox_swat" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_swat/ene_deathvox_swat_contour" />	
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_swat/ene_deathvox_swat" />
+	
+	<!-- Shotgun SWAT -->
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_swatshot/ene_deathvox_swatshot" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_swatshot/ene_deathvox_swatshot_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_swatshot/ene_deathvox_swatshot" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_swatshot/ene_deathvox_swatshot" />
+	<!-- <material_config path="units/pd2_mod_federales/characters/ene_deathvox_swatshot/ene_deathvox_swatshot" /> -->
+	<!-- <material_config path="units/pd2_mod_federales/characters/ene_deathvox_swatshot/ene_deathvox_swatshot_contour" />	 -->
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_swatshot/ene_deathvox_swatshot" />
+	
+	<!-- AR FBI Heavy SWAT -->
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_contour" />	
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat" />
+	
+	<!-- Shotgun FBI Heavy SWAT -->
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot_contour" />	
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_fbi_heavyswatshot/ene_deathvox_fbi_heavyswatshot" />
+	
+	<!-- AR Heavy SWAT -->
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_heavyswat/ene_deathvox_heavyswat" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_heavyswat/ene_deathvox_heavyswat_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_heavyswat/ene_deathvox_heavyswat" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_heavyswat/ene_deathvox_heavyswat" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_heavyswat/ene_deathvox_heavyswat" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_heavyswat/ene_deathvox_heavyswat_contour" />	
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_heavyswat/ene_deathvox_heavyswat" />
+	
+	<!-- Shotgun Heavy SWAT -->
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_heavyswatshot/ene_deathvox_heavyswatshot" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_heavyswatshot/ene_deathvox_heavyswatshot_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_heavyswatshot/ene_deathvox_heavyswatshot" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_heavyswatshot/ene_deathvox_heavyswatshot" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_heavyswatshot/ene_deathvox_heavyswatshot" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_heavyswatshot/ene_deathvox_heavyswatshot_contour" />	
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_heavyswatshot/ene_deathvox_heavyswatshot" />
+
+	<!--security fixed materials-->
+	<object path="units/pd2_dlc_bex/characters/ene_bex_security_01/ene_bex_security_01" force="true"/>
+	<object path="units/pd2_dlc_bex/characters/ene_bex_security_02/ene_bex_security_02" force="true"/>
+	<object path="units/pd2_dlc_bex/characters/ene_bex_security_03/ene_bex_security_03" force="true"/>
+
+	<!-- Cloaker -->
+	<unit_obj path="units/pd2_mod_federales/characters/ene_deathvox_cloaker/debris/ene_deathvox_cloaker_head_debris" load="true"/>
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_cloaker/debris/ene_deathvox_cloaker_head_debris"  force="false"/>
+
+	<unit_obj path="units/pd2_mod_federales/characters/ene_deathvox_cloaker/debris/ene_deathvox_cloaker_body_debris" load="true"/>
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_cloaker/debris/ene_deathvox_cloaker_body_debris"  force="false"/>
+	
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_cloaker/ene_deathvox_cloaker" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_cloaker/ene_deathvox_cloaker_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_cloaker/ene_deathvox_cloaker" />
+	<sequence_manager path="units/pd2_mod_federales/characters/ene_deathvox_cloaker/ene_deathvox_cloaker" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_cloaker/ene_deathvox_cloaker" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_cloaker/ene_deathvox_cloaker" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_cloaker/ene_deathvox_cloaker_contour" />	
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_cloaker/ene_deathvox_cloaker" />
+	
+	<!--marijuana tijuana office cops with poppable caps -->
+	<unit path="units/pd2_dlc_pex/characters/ene_male_office_cop_01/ene_male_office_cop_01" force="true" load="true"/>
+	<unit path="units/pd2_dlc_pex/characters/ene_male_office_cop_01/ene_male_office_cop_01_husk" force="true" load="true"/>
+	<object path="units/pd2_dlc_pex/characters/ene_male_office_cop_01/ene_male_office_cop_01" force="true" />
+	<model path="units/pd2_dlc_pex/characters/ene_male_office_cop_01/ene_male_office_cop_01" force="true" />	
+	<material_config path="units/pd2_dlc_pex/characters/ene_male_office_cop_01/ene_male_office_cop_01" force="true" />
+	<material_config path="units/pd2_dlc_pex/characters/ene_male_office_cop_01/ene_male_office_cop_01_contour" force="true" />	
+	
+	<unit path="units/pd2_dlc_pex/characters/ene_male_office_cop_02/ene_male_office_cop_02" force="true" load="true"/>
+	<unit path="units/pd2_dlc_pex/characters/ene_male_office_cop_02/ene_male_office_cop_02_husk" force="true" load="true"/>
+	<object path="units/pd2_dlc_pex/characters/ene_male_office_cop_02/ene_male_office_cop_02" force="true" />
+	<model path="units/pd2_dlc_pex/characters/ene_male_office_cop_02/ene_male_office_cop_02" force="true" />	
+	<material_config path="units/pd2_dlc_pex/characters/ene_male_office_cop_02/ene_male_office_cop_02" force="true" />
+	<material_config path="units/pd2_dlc_pex/characters/ene_male_office_cop_02/ene_male_office_cop_02_contour" force="true" />	
+
+	<unit_mat path="units/pd2_dlc_pex/characters/ene_acc_office_cap/ene_acc_office_cap" load="true" />
+	<cooked_physics path="units/pd2_dlc_pex/characters/ene_acc_office_cap/ene_acc_office_cap"/>
+
+	<texture path="units/pd2_dlc_pex/characters/shared_textures/ene_office_cops_head_atlas_df" />	
+	<texture path="units/pd2_dlc_pex/characters/shared_textures/ene_office_cops_head_atlas_nm" />	
+
+	<!-- FBI Veteran -->
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran_contour" />	
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran" />
+	
+	<texture path="units/pd2_mod_federales/characters/ene_deathvox_fbi_veteran/bex_fbi_jerome_df" />
+	
+	<!-- FBI Rookie -->
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie_contour" />	
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_fbi_rookie/ene_deathvox_fbi_rookie" />
+
+	<!-- FBI HRT -->
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt" />
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt" />
+	
+	<!-- Shield (I feel like him having a unique appearance is a p. cool gimmick) -->
+	<unit_mat path="units/pd2_mod_federales/characters/ene_acc_shield_lights/ene_acc_shield_lights" load="true" />
+	<texture path="units/pd2_mod_federales/characters/ene_acc_shield_lights/ene_acc_shield_lights_df" />	
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_acc_shield_lights/ene_acc_shield_lights" />
+	
+	<unit_mat path="units/pd2_mod_federales/characters/ene_acc_mask/ene_acc_mask" load="true" />
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_acc_mask/ene_acc_mask" />
+	
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_shield/ene_deathvox_shield" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_shield/ene_deathvox_shield_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_shield/ene_deathvox_shield" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_shield/ene_deathvox_shield" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_shield/ene_deathvox_shield" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_shield/ene_deathvox_shield_contour" />	
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_shield/ene_deathvox_shield" />
+
+	<!-- Medic -->	
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_medic/ene_deathvox_medic" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_medic/ene_deathvox_medic_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_medic/ene_deathvox_medic" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_medic/ene_deathvox_medic" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_medic/ene_deathvox_medic" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_medic/ene_deathvox_medic_contour" />	
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_medic/ene_deathvox_medic" />
+	
+	<!-- Greendozer -->	
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_greendozer/ene_deathvox_greendozer" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_greendozer/ene_deathvox_greendozer_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_greendozer/ene_deathvox_greendozer" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_greendozer/ene_deathvox_greendozer" />
+	<sequence_manager path="units/pd2_mod_federales/characters/ene_deathvox_greendozer/ene_deathvox_greendozer" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_greendozer/ene_deathvox_greendozer" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_greendozer/ene_deathvox_greendozer_contour" />	
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_greendozer/ene_deathvox_greendozer" />
+	
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_greendozer/debris/ene_acc_greendozer_debris" />
+
+	<unit_obj path="units/pd2_mod_federales/characters/ene_deathvox_greendozer/debris/ene_acc_bulldozer_throat/ene_acc_bulldozer_throat" />
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_greendozer/debris/ene_acc_bulldozer_throat/ene_acc_bulldozer_throat" />
+	
+	<unit_obj path="units/pd2_mod_federales/characters/ene_deathvox_greendozer/debris/ene_acc_bulldozer_back/ene_acc_bulldozer_back" />
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_greendozer/debris/ene_acc_bulldozer_back/ene_acc_bulldozer_back" />
+	
+	<unit_obj path="units/pd2_mod_federales/characters/ene_deathvox_greendozer/debris/ene_acc_bulldozer_neck/ene_acc_bulldozer_neck" />
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_greendozer/debris/ene_acc_bulldozer_neck/ene_acc_bulldozer_neck" />
+	
+	<!-- blackdozer -->	
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer" />
+	<sequence_manager path="units/pd2_mod_federales/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer_contour" />	
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_blackdozer/ene_deathvox_blackdozer" />
+	
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_blackdozer/debris/ene_acc_blackdozer_debris" />
+
+	<unit_obj path="units/pd2_mod_federales/characters/ene_deathvox_blackdozer/debris/ene_acc_bulldozer_throat/ene_acc_bulldozer_throat" />
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_blackdozer/debris/ene_acc_bulldozer_throat/ene_acc_bulldozer_throat" />
+	
+	<unit_obj path="units/pd2_mod_federales/characters/ene_deathvox_blackdozer/debris/ene_acc_bulldozer_back/ene_acc_bulldozer_back" />
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_blackdozer/debris/ene_acc_bulldozer_back/ene_acc_bulldozer_back" />
+	
+	<unit_obj path="units/pd2_mod_federales/characters/ene_deathvox_blackdozer/debris/ene_acc_bulldozer_neck/ene_acc_bulldozer_neck" />
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_blackdozer/debris/ene_acc_bulldozer_neck/ene_acc_bulldozer_neck" />
+	
+	<!-- lmgdozer -->	
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer" />
+	<sequence_manager path="units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer_contour" />	
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/ene_deathvox_lmgdozer" />
+	
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/debris/ene_acc_lmgdozer_debris" />
+
+	<unit_obj path="units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/debris/ene_acc_bulldozer_throat/ene_acc_bulldozer_throat" />
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/debris/ene_acc_bulldozer_throat/ene_acc_bulldozer_throat" />
+	
+	<unit_obj path="units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/debris/ene_acc_bulldozer_face_plate/ene_acc_bulldozer_face_plate" />
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/debris/ene_acc_bulldozer_face_plate/ene_acc_bulldozer_face_plate" />
+	
+	<unit_obj path="units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/debris/ene_acc_bulldozer_back/ene_acc_bulldozer_back" />
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/debris/ene_acc_bulldozer_back/ene_acc_bulldozer_back" />
+	
+	<unit_obj path="units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/debris/ene_acc_bulldozer_neck/ene_acc_bulldozer_neck" />
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_lmgdozer/debris/ene_acc_bulldozer_neck/ene_acc_bulldozer_neck" />
+
+	<!-- taser -->	
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer_contour" />	
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer" />
+	
+	<!-- sniper -->	
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_sniper/ene_deathvox_sniper" load="true" />
+	<unit path="units/pd2_mod_federales/characters/ene_deathvox_sniper/ene_deathvox_sniper_husk" load="true" />
+	<model path="units/pd2_mod_federales/characters/ene_deathvox_sniper/ene_deathvox_sniper" />
+	<object path="units/pd2_mod_federales/characters/ene_deathvox_sniper/ene_deathvox_sniper" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_sniper/ene_deathvox_sniper" />
+	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_sniper/ene_deathvox_sniper_contour" />	
+	<cooked_physics path="units/pd2_mod_federales/characters/ene_deathvox_sniper/ene_deathvox_sniper" />
+	
+	<!-- Shared Textures -->
+	<texture path="units/pd2_mod_federales/characters/shared_textures/ene_nypd_medic_df" />
+	<texture path="units/pd2_mod_federales/characters/shared_textures/ene_deathvox_greendozer_df" />
+	<texture path="units/pd2_mod_federales/characters/shared_textures/ene_deathvox_blackdozer_df" />
+	<texture path="units/pd2_mod_federales/characters/shared_textures/ene_deathvox_lmgdozer_df" />
+	<texture path="units/pd2_mod_federales/characters/shared_textures/taser_body_df" />
+	<texture path="units/pd2_mod_federales/characters/shared_textures/taser_body_nm" />
+	<texture path="units/pd2_mod_federales/characters/shared_textures/tank_glass_df" />
+	<texture path="units/pd2_mod_federales/characters/shared_textures/tank_glass_op" />
+	<texture path="units/pd2_mod_federales/characters/shared_textures/ene_nypd_medic_head_df" />
+	<texture path="units/pd2_mod_federales/characters/shared_textures/sjnp_beatcop_atlas_df" />
+	<texture path="units/pd2_mod_federales/characters/shared_textures/sjnp_beatcop_atlas_nm" />
+	<texture path="units/pd2_mod_federales/characters/shared_textures/helmets_atlas_df" />
+	<texture path="units/pd2_mod_federales/characters/shared_textures/mask_df" />
+	<texture path="units/pd2_mod_federales/characters/shared_textures/heads_atlas_df" />
+	<texture path="units/pd2_mod_federales/characters/shared_textures/fbi_df" />
+	<texture path="units/pd2_mod_federales/characters/shared_textures/helmets_city_df" />
+	<texture path="units/pd2_mod_federales/characters/shared_textures/swat_fbi_body_df" />
+	<texture path="units/pd2_mod_federales/characters/shared_textures/swat_body_df" />
+	<texture path="units/pd2_mod_federales/characters/shared_textures/spook_heavy_df" />
+
+</table>

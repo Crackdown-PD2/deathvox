@@ -148,14 +148,42 @@ function ElementSpawnEnemyGroup:spawn_groups()
 		"hoplon"
 	}
 	dv_spawngroups = i_hate_lua(dv_spawngroups)
+	
 	local opt = self._values.preferred_spawn_groups
-	if not opt then
+	
+	local has_regular_enemies = nil
+	
+	if opt then
+		for name, name2 in pairs(opt) do
+			if name2 == "tac_swat_rifle_flank" or name2 == "tac_bull_rush" then
+				--log("fuck yes")
+				has_regular_enemies = true
+			end
+		end
+		
+		if not has_regular_enemies then
+			--log("i hate this")
+			return self._values.preferred_spawn_groups
+		else
+			for cat_name, team in pairs(tweak_data.group_ai.enemy_spawn_groups) do
+				if cat_name ~= "Phalanx" then
+					table.insert(opt, cat_name)
+				end
+			end
+			
+			return opt
+		end
+	else
 		opt = {}
-	end
-	for cat_name, team in pairs(tweak_data.group_ai.enemy_spawn_groups) do
-		if dv_spawngroups[cat_name] then
-			table.insert(opt, cat_name)
+	
+		for cat_name, team in pairs(tweak_data.group_ai.enemy_spawn_groups) do
+			if dv_spawngroups[cat_name] then
+				if cat_name ~= "Phalanx" then
+					table.insert(opt, cat_name)
+				end
+			end
 		end
 	end
+	
 	return opt
 end

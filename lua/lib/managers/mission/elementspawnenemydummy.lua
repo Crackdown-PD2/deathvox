@@ -25,6 +25,8 @@ local enemy_replacements = {
 		
 -- snipers 
 		 ["units/payday2/characters/ene_sniper_2/ene_sniper_2"] = "deathvox_sniper",
+		 ["units/pd2_dlc_bex/characters/ene_swat_policia_sniper/ene_swat_policia_sniper"] = "deathvox_sniper",
+		 ["units/pd2_dlc_bph/characters/ene_murkywater_sniper/ene_murkywater_sniper"] = "deathvox_sniper",		
 		 ["units/payday2/characters/ene_sniper_1/ene_sniper_1"] = "deathvox_sniper",		
 
 --blue and "white" swats.
@@ -49,9 +51,6 @@ local enemy_replacements = {
 --medics.
 		["units/payday2/characters/ene_medic_m4/ene_medic_m4"] = "deathvox_medic",
 		["units/payday2/characters/ene_medic_r870/ene_medic_r870"] = "deathvox_medic",
---snipers. commenting out in case we get custom unit appearance.
---		["units/payday2/characters/ene_sniper_1/ene_sniper_1"] = 
---		["units/payday2/characters/ene_sniper_2/ene_sniper_2"] = 
 --tasers.
 		["units/payday2/characters/ene_tazer_1/ene_tazer_1"] = "deathvox_taser",
 		["units/pd2_dlc_gitgud/characters/ene_zeal_tazer/ene_zeal_tazer"] = "deathvox_taser",
@@ -68,6 +67,7 @@ local enemy_replacements = {
 
 -- Medicdozer, in case of scripted use in future.
 		["units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"] = "deathvox_medicdozer",
+		["units/pd2_dlc_drm/characters/ene_bulldozer_medic_classic/ene_bulldozer_medic_classic"] = "deathvox_medicdozer",
 -- Minidozer, in case of scripted use in future.
 --		["units/pd2_dlc_drm/characters/ene_bulldozer_minigun/ene_bulldozer_minigun"] = 
 -- sm_ enemies currently unused.
@@ -211,6 +211,76 @@ local enemy_replacements = {
 -- Headless Zealdozer.
 --		["units/pd2_dlc_help/characters/ene_zeal_bulldozer_halloween/ene_zeal_bulldozer_halloween"]	
 
+--federales beat cops
+		["units/pd2_dlc_bex/characters/ene_policia_01/ene_policia_01"] = "deathvox_cop_pistol",
+	    ["units/pd2_dlc_bex/characters/ene_policia_02/ene_policia_02"] = "deathvox_cop_revolver",
+		
+--federales swat
+		["units/pd2_dlc_bex/characters/ene_swat_policia_federale/ene_swat_policia_federale"] = "deathvox_lightar",
+		["units/pd2_dlc_bex/characters/ene_swat_policia_federale_r870/ene_swat_policia_federale_r870"] = "deathvox_lightshot",
+		
+		["units/pd2_dlc_bex/characters/ene_swat_policia_federale_city/ene_swat_policia_federale_city"] = "deathvox_lightar",
+		["units/pd2_dlc_bex/characters/ene_swat_policia_federale_city_r870/ene_swat_policia_federale_city_r870"] = "deathvox_lightshot",
+		
+		["units/pd2_dlc_bex/characters/ene_swat_policia_federale_fbi/ene_swat_policia_federale_fbi"] = "deathvox_lightar",
+
+		["units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale/ene_swat_heavy_policia_federale"] = "deathvox_heavyar",
+		["units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_fbi/ene_swat_heavy_policia_federale_fbi"] = "deathvox_heavyar",
+		["units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_fbi_g36/ene_swat_heavy_policia_federale_fbi_g36"] = "deathvox_heavyar",
+		["units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_g36/ene_swat_heavy_policia_federale_g36"] = "deathvox_heavyar",
+
+		["units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_r870/ene_swat_heavy_policia_federale_r870"] = "deathvox_heavyshot",
+		["units/pd2_dlc_bex/characters/ene_swat_heavy_policia_federale_fbi/ene_swat_heavy_policia_federale_fbi_r870"] = "deathvox_heavyshot",
+		
+--federales dozers	
+		["units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_m249/ene_swat_dozer_policia_federale_m249"] = "deathvox_lmgdozer",
+		["units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_r870/ene_swat_dozer_policia_federale_r870"] = "deathvox_greendozer",
+		["units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_saiga/ene_swat_dozer_policia_federale_saiga"] = "deathvox_blackdozer",				
+		["units/pd2_dlc_bex/characters/ene_swat_dozer_policia_federale_minigun/ene_swat_dozer_policia_federale_minigun"] = "deathvox_lmgdozer",
+		["units/pd2_dlc_bex/characters/ene_swat_dozer_medic_policia_federale/ene_swat_dozer_medic_policia_federale"] = "deathvox_medicdozer",
+		
+-- federales shield	
+		["units/pd2_dlc_bex/characters/ene_swat_shield_policia_federale_c45/ene_swat_shield_policia_federale_c45"] = "deathvox_shield",	
+		["units/pd2_dlc_bex/characters/ene_swat_shield_policia_federale_mp9/ene_swat_shield_policia_federale_mp9"] = "deathvox_shield",	
+-- federales taser	
+		["units/pd2_dlc_bex/characters/ene_swat_tazer_policia_federale/ene_swat_tazer_policia_federale"] = "deathvox_taser",	
+-- federales cloaker	
+		["units/pd2_dlc_bex/characters/ene_swat_cloaker_policia_federale/ene_swat_cloaker_policia_federale"] = "deathvox_cloaker",	
+-- federales medics	
+		["units/pd2_dlc_bex/characters/ene_swat_medic_policia_federale/ene_swat_medic_policia_federale"] = "deathvox_medic",	
+		["units/pd2_dlc_bex/characters/ene_swat_medic_policia_federale_r870/ene_swat_medic_policia_federale_r870"] = "deathvox_medic",			
+		
+--murkywater swat
+		["units/pd2_dlc_bph/characters/ene_murkywater_light/ene_murkywater_light"] = "deathvox_lightar",
+		["units/pd2_dlc_bph/characters/ene_murkywater_light_r870/ene_murkywater_light_r870"] = "deathvox_lightshot",
+		
+		["units/pd2_dlc_bph/characters/ene_murkywater_light_city/ene_murkywater_light_city"] = "deathvox_lightar",
+		["units/pd2_dlc_bph/characters/ene_murkywater_light_city_r870/ene_murkywater_light_city_r870"] = "deathvox_lightshot",
+		
+		["units/pd2_dlc_bph/characters/ene_murkywater_light_fbi/ene_murkywater_light_fbi"] = "deathvox_lightar",
+		["units/pd2_dlc_bph/characters/ene_murkywater_light_fbi_r870/ene_murkywater_light_fbi_r870"] = "deathvox_lightshot",
+		
+		["units/pd2_dlc_bph/characters/ene_murkywater_heavy/ene_murkywater_heavy"] = "deathvox_heavyar",
+		["units/pd2_dlc_bph/characters/ene_murkywater_heavy_g36/ene_murkywater_heavy_g36"] = "deathvox_heavyar",
+		["units/pd2_dlc_bph/characters/ene_murkywater_heavy_shotgun/ene_murkywater_heavy_shotgun"] = "deathvox_heavyshot",
+		
+--lil mozers	
+		["units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_1/ene_murkywater_bulldozer_1"] = "deathvox_lmgdozer",
+		["units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_2/ene_murkywater_bulldozer_2"] = "deathvox_greendozer",
+		["units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_3/ene_murkywater_bulldozer_3"] = "deathvox_blackdozer",				
+		["units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_4/ene_murkywater_bulldozer_4"] = "deathvox_lmgdozer",
+		["units/pd2_dlc_bph/characters/ene_murkywater_bulldozer_medic/ene_murkywater_bulldozer_medic"] = "deathvox_medicdozer",
+		
+-- murky shield	
+		["units/pd2_dlc_bph/characters/ene_murkywater_shield/ene_murkywater_shield"] = "deathvox_shield",	
+-- murky taser	
+		["units/pd2_dlc_bph/characters/ene_murkywater_tazer/ene_murkywater_tazer"] = "deathvox_taser",	
+-- murky cloaker	
+		["units/pd2_dlc_bph/characters/ene_murkywater_cloaker/ene_murkywater_cloaker"] = "deathvox_cloaker",	
+-- murky medics	
+		["units/pd2_dlc_bph/characters/ene_murkywater_medic/ene_murkywater_medic"] = "deathvox_medic",	
+		["units/pd2_dlc_bph/characters/ene_murkywater_medic_r870/ene_murkywater_medic_r870"] = "deathvox_medic",	
+
 -- German unit replacement for specific custom heists.
 		["units/zdann/characters/ene_ger_city_heavy_g36/ene_ger_city_heavy_g36"] = "deathvox_heavyar",
 		["units/zdann/characters/ene_ger_city_heavy_r870/ene_ger_city_heavy_r870"] = "deathvox_heavyshot",
@@ -266,4 +336,3 @@ function ElementSpawnEnemyDummy:get_enemy_by_diff(enemy_to_check, ai_type)
 	end
 	return "units/payday2/characters/ene_swat_1/ene_swat_1"
 end
-	

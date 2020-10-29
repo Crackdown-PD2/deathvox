@@ -26,17 +26,20 @@ end
 
 function ShotgunBase:fire_rate_multiplier()
 	local fire_rate_mul = self._fire_rate_multiplier
+	if self._fire_mode == Idstring("single") then 
+		if self._hip_fire_rate_inc ~= 0 then
+			local user_unit = self._setup and self._setup.user_unit
+			local current_state = alive(user_unit) and user_unit:movement() and user_unit:movement()._current_state
 
-	if self._hip_fire_rate_inc ~= 0 then
-		local user_unit = self._setup and self._setup.user_unit
-		local current_state = alive(user_unit) and user_unit:movement() and user_unit:movement()._current_state
-
-		if self._fire_mode == Idstring("single") and current_state and not current_state:in_steelsight() then --but only when firing in single mode as intended (and as usual, when not aiming)
-			fire_rate_mul = fire_rate_mul + 1 - self._hip_fire_rate_inc
-			fire_rate_mul = self:_convert_add_to_mul(fire_rate_mul)
+			if current_state and not current_state:in_steelsight() then --but only when firing in single mode as intended (and as usual, when not aiming)
+				fire_rate_mul = fire_rate_mul + 1 - self._hip_fire_rate_inc
+				fire_rate_mul = self:_convert_add_to_mul(fire_rate_mul)
+			end
+		end
+		if self:is_weapon_class("class_shotgun") then --i don't think there's any shotgun weapons that aren't crackdown weapon class "class_shotgun", but just to be safe 
+			fire_rate_mul = fire_rate_mul + managers.player:upgrade_value("class_shotgun","shell_games_rof_bonus",0)
 		end
 	end
-
 	return fire_rate_mul
 end
 
@@ -49,6 +52,10 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 	if self:gadget_overrides_weapon_functions() then
 		return self:gadget_function_override("_fire_raycast", self, user_unit, from_pos, direction, dmg_mul, shoot_player, spread_mul, autohit_mul, suppr_mul) --in case someone makes something like this for a shotgun
 	end
+
+	local wall_piercing = self._can_shoot_through_wall
+	local shield_piercing = self._can_shoot_through_shield
+	local body_piercing = self._can_shoot_through_enemy
 
 	local ap_slug = self._bullet_class == InstantBulletBase and self._rays == 1
 	local he_round = self._bullet_class == InstantExplosiveBulletBase
@@ -103,7 +110,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 		--proper penetration using one ray, against walls and things like corpses, bots, etc (like other weapons have). HE rounds obviously still stop at the first thing they hit
 		if he_round then
 			ray_hits = World:raycast("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
-		elseif self._can_shoot_through_wall then
+		elseif wall_piercing then
 			ray_hits = World:raycast_wall("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units, "thickness", 40, "thickness_mask", wall_mask)
 		else
 			ray_hits = World:raycast_all("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
@@ -135,19 +142,19 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 					local weak_body = hit.body:has_ray_type(ai_vision_ids)
 					weak_body = weak_body or hit.body:has_ray_type(bulletproof_ids)
 					local checked_hit = unique_hits[#unique_hits]
-					local point_blank_pierce = user_unit == managers.player:player_unit() and managers.player:has_category_upgrade("player", "point_blank") and checked_hit and checked_hit.distance and checked_hit.distance <= 200
-
+					local point_blank_pierce = user_unit == managers.player:player_unit() and checked_hit and checked_hit.distance and checked_hit.distance <= managers.player:upgrade_value("class_shotgun", "point_blank_basic",0)
+					
 					if hit_an_enemy then --once an enemy gets hit, this is always true until another shot is fired
 						hit_an_enemy = hit_an_enemy
 					else
 						hit_an_enemy = hit.unit:in_slot(enemy_mask) and true or false
 					end
 
-					if not self._can_shoot_through_enemy and not point_blank_pierce and hit.unit:in_slot(enemy_mask) then
+					if not (body_piercing or point_blank_pierce) and hit.unit:in_slot(enemy_mask) then
 						break
 					elseif hit.unit:in_slot(wall_mask) then
 						if weak_body then --actually the other way around, this is a solid wall (just being consistent with vanilla)
-							if self._can_shoot_through_wall then
+							if (wall_piercing or point_blank_pierce) then
 								if went_through_wall then
 									break
 								else
@@ -157,7 +164,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 								break
 							end
 						end
-					elseif not self._can_shoot_through_shield and not point_blank_pierce and hit.unit:in_slot(shield_mask) then
+					elseif not (point_blank_pierce or shield_piercing or point_blank_pierce) and hit.unit:in_slot(shield_mask) then
 						break
 					end
 				end
@@ -189,7 +196,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 							--proper penetration using one ray, against walls and things like corpses, bots, etc (like other weapons have). HE rounds obviously still stop at the first thing they hit
 							if he_round then
 								ray_hits = World:raycast("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
-							elseif self._can_shoot_through_wall then
+							elseif wall_piercing then
 								ray_hits = World:raycast_wall("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units, "thickness", 40, "thickness_mask", wall_mask)
 							else
 								ray_hits = World:raycast_all("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
@@ -212,11 +219,11 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 										local checked_hit = unique_hits[#unique_hits]
 										local point_blank_pierce = user_unit == managers.player:player_unit() and managers.player:has_category_upgrade("player", "point_blank") and checked_hit and checked_hit.distance and checked_hit.distance <= 200
 
-										if not self._can_shoot_through_enemy and not point_blank_pierce and hit.unit:in_slot(enemy_mask) then
+										if not body_piercing and not point_blank_pierce and hit.unit:in_slot(enemy_mask) then
 											break
 										elseif hit.unit:in_slot(wall_mask) then
 											if weak_body then --actually the other way around, this is a solid wall (just being consistent with vanilla)
-												if self._can_shoot_through_wall then
+												if wall_piercing then
 													if went_through_wall then
 														break
 													else
@@ -226,7 +233,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 													break
 												end
 											end
-										elseif not self._can_shoot_through_shield and not point_blank_pierce and hit.unit:in_slot(shield_mask) then
+										elseif not shield_piercing and not point_blank_pierce and hit.unit:in_slot(shield_mask) then
 											break
 										end
 									end

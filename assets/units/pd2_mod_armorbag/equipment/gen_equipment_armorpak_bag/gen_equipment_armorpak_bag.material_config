@@ -1,0 +1,15 @@
+<materials version="3">
+	<material name="weapon_case" render_template="generic:CONTOUR:DIFFUSE_TEXTURE:NORMALMAP" version="2" unique="true">
+        <diffuse_texture		file="units/payday2/props/gen_prop_weapon_case/case_df"/>
+		<bump_normal_texture	file="units/payday2/equipment/gen_equipment_bodybags_bag/gen_equipment_bodybags_bag_nm"/>
+		<variable value="1" type="scalar" name="contour_opacity"/>
+		<variable value="0 1 0" type="vector3" name="contour_color"/>
+	</material>
+	<material name="armor_case_decal" render_template="generic:DIFFUSE_TEXTURE" version="2" >
+        <diffuse_texture		file="units/payday2/characters/shared_textures/equipment_armor_bag_df"/>
+	</material>
+	<material name="armorpak" render_template="generic:DIFFUSE_TEXTURE:NORMALMAP:VERTEX_COLOR" version="2">
+		<diffuse_texture		file="units/payday2/props/bnk_prop_security_armorpack/bnk_prop_security_armorpack_df"/>
+		<bump_normal_texture	file="units/payday2/props/bnk_prop_security_armorpack/bnk_prop_security_armorpack_nm"/>
+	</material>
+</materials>

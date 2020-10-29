@@ -1,22 +1,50 @@
---spoofed to sync sentry ammo type and firemode (and resultant laser color) in sentry control menu
-local orig_sync_movement_state = UnitNetworkHandler.sync_player_movement_state
-function UnitNetworkHandler:sync_player_movement_state(unit, state, down_time,unit_id_str,...)
---note: unit_id_str is also a string value that can be spoofed
---however, since firemode and ammotype are usually set separately, i did not choose to sync both at the same time
-	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
-		return
-	end
-	if (type(unit.weapon) == "function") and unit:weapon() then 
-		if down_time == 1 then 
-			unit:weapon():_set_sentry_firemode(state)
-			return
-		elseif down_time == 2 then 
-			unit:weapon():_set_ammo_type(state)
+if deathvox:IsTotalCrackdownEnabled() then 
+	--spoofed to sync sentry ammo type and firemode (and resultant laser color) in sentry control menu
+	local orig_sync_movement_state = UnitNetworkHandler.sync_player_movement_state
+	function UnitNetworkHandler:sync_player_movement_state(unit, state, down_time,unit_id_str,...)
+	--note: unit_id_str is also a string value that can be spoofed
+	--however, since firemode and ammotype are usually set separately, i did not choose to sync both at the same time
+		if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 			return
 		end
-		return
+		if (type(unit.weapon) == "function") and unit:weapon() then 
+			if down_time == 1 then 
+				unit:weapon():_set_sentry_firemode(state)
+				return
+			elseif down_time == 2 then 
+				unit:weapon():_set_ammo_type(state)
+				return
+			end
+			return
+		end
+		return orig_sync_movement_state(self,unit,state,down_time,unit_id_str,...)
 	end
-	return orig_sync_movement_state(self,unit,state,down_time,unit_id_str,...)
+	
+	function UnitNetworkHandler:revive_player(revive_health_level, revive_damage_reduction, sender)
+		local peer = self._verify_sender(sender)
+
+		if not self._verify_gamestate(self._gamestate_filter.need_revive) or not peer then
+			return
+		end
+
+		local player = managers.player:player_unit()
+
+		if revive_health_level > 0 and alive(player) then
+			player:character_damage():set_revive_boost(revive_health_level)
+		end
+
+		if revive_damage_reduction > 0 then
+			revive_damage_reduction = math.clamp(revive_damage_reduction, 1, 2)
+			local tweak = tweak_data.upgrades.first_aid_kit.revived_damage_reduction[revive_damage_reduction]
+
+			managers.player:activate_temporary_property("revived_damage_reduction", tweak[2], tweak[1])
+		end
+
+		if alive(player) then
+			player:character_damage():revive()
+		end
+	end
+	
 end
 
 function UnitNetworkHandler:sync_friendly_fire_damage(peer_id, unit, damage, variant, sender)
