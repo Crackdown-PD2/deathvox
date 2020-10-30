@@ -4698,8 +4698,9 @@ function CharacterTweakData:_init_region_murkywater() --will use these lines for
 	}	
 end
 
+----Hoxi: disabling for now
 --Bot Preferred Weapons Start Here--
-Hooks:PostHook(CharacterTweakData, "_init_russian", "cdhook_russian", function(self, presets)
+--[[Hooks:PostHook(CharacterTweakData, "_init_russian", "cdhook_russian", function(self, presets)
 	self.russian.weapon.weapons_of_choice.primary = "wpn_fps_ass_amcar_npc"
 end)
 
@@ -4782,7 +4783,7 @@ end)
 Hooks:PostHook(CharacterTweakData, "_init_ecp", "cdhook_ecps", function(self, presets)
 	self.ecp_female.weapon.weapons_of_choice.primary = "wpn_fps_ass_famas_npc"
 	self.ecp_male.weapon.weapons_of_choice.primary = "wpn_fps_ass_scar_npc"
-end)
+end)]]
 --End Perferred Bot Weapons--
 
 function CharacterTweakData:character_map()
