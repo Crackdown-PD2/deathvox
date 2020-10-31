@@ -1498,6 +1498,11 @@ function RaycastWeaponBase:is_heavy_weapon() --deprecated, do not use
 end
 
 if deathvox:IsTotalCrackdownEnabled() then
+	--doing it like this to make it more obvious
+	local integer_1 = 1
+	local float_1 = 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1
+	local cursed_floating_point_offset = integer_1 - float_1
+
 	function RaycastWeaponBase:add_ammo(ratio, add_amount_override)
 		local function _add_ammo(ammo_base, ratio, add_amount_override)
 			if ammo_base:get_ammo_max() == ammo_base:get_ammo_total() then
@@ -1519,18 +1524,24 @@ if deathvox:IsTotalCrackdownEnabled() then
 					multiplier_max = ammo_base._ammo_data.ammo_pickup_max_mul or multiplier_max
 				end
 
-				multiplier_min = multiplier_min + managers.player:upgrade_value("player", "pick_up_ammo_multiplier", 1) - 1
-				multiplier_min = multiplier_min + managers.player:upgrade_value("player", "pick_up_ammo_multiplier_2", 1) - 1
-				multiplier_min = multiplier_min + managers.player:crew_ability_upgrade_value("crew_scavenge", 0)
+				local ammo_mul_1 = managers.player:upgrade_value("player", "pick_up_ammo_multiplier", 1) - 1
+				local ammo_mul_2 = managers.player:upgrade_value("player", "pick_up_ammo_multiplier_2", 1) - 1
+				local team_ai_mul = managers.player:crew_ability_upgrade_value("crew_scavenge", 0)
 
-				multiplier_max = multiplier_max + managers.player:upgrade_value("player", "pick_up_ammo_multiplier", 1) - 1
-				multiplier_max = multiplier_max + managers.player:upgrade_value("player", "pick_up_ammo_multiplier_2", 1) - 1
-				multiplier_max = multiplier_max + managers.player:crew_ability_upgrade_value("crew_scavenge", 0)
+				multiplier_min = multiplier_min + ammo_mul_1 + ammo_mul_2 + team_ai_mul
+				multiplier_max = multiplier_max + ammo_mul_1 + ammo_mul_2 + team_ai_mul
 
 				--log("pickup - min mult: " .. tostring(multiplier_min) .. "")
 				--log("pickup - max mult: " .. tostring(multiplier_max) .. "")
 
-				add_amount = math_lerp(ammo_base._ammo_pickup[1] * multiplier_min, ammo_base._ammo_pickup[2] * multiplier_max, math_random())
+				local min_pickup = ammo_base._ammo_pickup[1] * multiplier_min
+				local max_pickup = ammo_base._ammo_pickup[2] * multiplier_max
+
+				if min_pickup == max_pickup then
+					add_amount = min_pickup
+				else
+					add_amount = math_lerp(min_pickup, max_pickup, math_random())
+				end
 
 				--log("pickup - initial value: " .. tostring(add_amount) .. "")
 			else
@@ -1551,11 +1562,15 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end
 
 			if add_amount < 1 then
-				--log("pickup - not enough: " .. tostring(add_amount) .. "")
+				if add_amount + cursed_floating_point_offset < 1 then
+					ammo_base._stored_ammo_leftover = add_amount
 
-				ammo_base._stored_ammo_leftover = add_amount
+					return picked_up, add_amount
+				else
+					--log("pickup - floating point strikes again, forcing to 1")
 
-				return picked_up, 0
+					add_amount = 1
+				end
 			end
 
 			local current_ammo = ammo_base:get_ammo_total()
