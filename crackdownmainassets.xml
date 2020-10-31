@@ -34,6 +34,7 @@
 	
 	<texture path="units/characters/enemies/textures/police_force_df" force="true"/>
 	<texture path="units/characters/enemies/textures/police_force_nm" force="true"/>
+	<texture path="units/pd2_mod_gensec/characters/ene_acc_mask/mask_df" />	
 	<texture path="units/payday2/characters/shared_textures/helmets_atlas_df" force="true"/>
 	<texture path="units/payday2/characters/shared_textures/helmets_atlas_nm" force="true"/>
 	<texture path="units/payday2/characters/shared_textures/helmets_heavy_taser_atlas_df" force="true"/>
@@ -357,6 +358,9 @@
 	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot_contour" force="false"/>
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot_husk" load="true"/>
 
+	<unit_mat path="units/pd2_mod_gensec/characters/ene_acc_mask/ene_acc_mask" load="true" />
+	<cooked_physics path="units/pd2_mod_gensec/characters/ene_acc_mask/ene_acc_mask" />
+	
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat" load="true"/>
 	<model path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat" force="false"/>
 	<cooked_physics path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat" force="false"/>	
