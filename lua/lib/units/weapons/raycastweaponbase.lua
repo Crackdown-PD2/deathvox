@@ -1559,11 +1559,11 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end
 
 			local current_ammo = ammo_base:get_ammo_total()
-			local new_ammo_in_mag = current_ammo + add_amount
-			local rounded_new_ammo = math_floor(new_ammo_in_mag)
+			local new_ammo = current_ammo + add_amount
+			local rounded_new_ammo = math_floor(new_ammo)
 			local max_allowed_ammo = ammo_base:get_ammo_max()
 
-			if new_ammo_in_mag < max_allowed_ammo then
+			if new_ammo < max_allowed_ammo then
 				--akimbos normally round up ammo if needed to get an even number due to their recoil animations (plus syncing I think), enable this block back if needed
 				--[[local is_akimbo = ammo_base.AKIMBO
 
@@ -1573,13 +1573,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 					if akimbo_rounding > 0 then
 						--log("pickup - akimbo rounding: " .. tostring(akimbo_rounding) .. "")
 
-						new_ammo_in_mag = new_ammo_in_mag + akimbo_rounding
-						rounded_new_ammo = math_floor(new_ammo_in_mag)
+						new_ammo = new_ammo + akimbo_rounding
+						rounded_new_ammo = math_floor(new_ammo)
 					end
 				end]]
 
-				if not is_akimbo or new_ammo_in_mag < max_allowed_ammo then
-					local leftover_ammo = new_ammo_in_mag - rounded_new_ammo
+				if not is_akimbo or new_ammo < max_allowed_ammo then
+					local leftover_ammo = new_ammo - rounded_new_ammo
 
 					if leftover_ammo > 0 then
 						--log("pickup - stored leftover: " .. tostring(leftover_ammo) .. "")
