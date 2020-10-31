@@ -89,16 +89,16 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 	
 	--Murky faction overrides begin here. Uncomment to apply the Murkywater faction on the Whitehouse, Henry's Rock, Hell's Island, and Beneath the Mountain heists.
 	  self.pbr.package = {"packages/deathvoxmurkies", "packages/narr_jerry1"}		
-	  map_faction_override["pbr"] = "murky"
+	  map_faction_override["pbr"] = "murkywater"
 	  
 	  self.vit.package = {"packages/deathvoxmurkies", "packages/dlcs/vit/job_vit"}			  
-	  map_faction_override["vit"] = "murky"
+	  map_faction_override["vit"] = "murkywater"
 	  
 	  self.des.package = {"packages/deathvoxmurkies", "packages/job_des"}			  	  
-	  map_faction_override["des"] = "murky"
+	  map_faction_override["des"] = "murkywater"
 	  
 	  self.bph.package = {"packages/deathvoxmurkies", "packages/dlcs/bph/job_bph"}			  	  
-	  map_faction_override["bph"] = "murky"
+	  map_faction_override["bph"] = "murkywater"
 	
 	--Reaper faction overrides begin here.
 	  map_faction_override["mad"] = "russia"	
