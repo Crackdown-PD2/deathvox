@@ -1,4 +1,10 @@
 <table directory="assets">
+	<!--MOTHER FUCKING BERET ACC FUCK YEAH BEST FEATURE-->
+	<unit path="units/pd2_mod_sharks/characters/ene_acc_murky_beret/ene_acc_murky_beret" force="false" load="false"/>
+	<object path="units/pd2_mod_sharks/characters/ene_acc_murky_beret/ene_acc_murky_beret" force="false"/>
+	<cooked_physics path="units/pd2_mod_sharks/characters/ene_acc_murky_beret/ene_acc_murky_beret" force="false"/>	
+	<material_config path="units/pd2_mod_sharks/characters/ene_acc_murky_beret/ene_acc_murky_beret" force="false"/>	
+	<model path="units/pd2_mod_sharks/characters/ene_acc_murky_beret/ene_acc_murky_beret" force="false"/>	
 
 	<!-- VANILLA TEXTURE REPLACEMENTS/ADDITIONS -->
 	
@@ -28,6 +34,7 @@
 	
 	<texture path="units/characters/enemies/textures/police_force_df" force="true"/>
 	<texture path="units/characters/enemies/textures/police_force_nm" force="true"/>
+	<texture path="units/pd2_mod_gensec/characters/ene_acc_mask/mask_df" />	
 	<texture path="units/payday2/characters/shared_textures/helmets_atlas_df" force="true"/>
 	<texture path="units/payday2/characters/shared_textures/helmets_atlas_nm" force="true"/>
 	<texture path="units/payday2/characters/shared_textures/helmets_heavy_taser_atlas_df" force="true"/>
@@ -351,6 +358,9 @@
 	<material_config path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot_contour" force="false"/>
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_swatshot/ene_deathvox_gensec_swatshot_husk" load="true"/>
 
+	<unit_mat path="units/pd2_mod_gensec/characters/ene_acc_mask/ene_acc_mask" load="true" />
+	<cooked_physics path="units/pd2_mod_gensec/characters/ene_acc_mask/ene_acc_mask" />
+	
 	<unit path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat" load="true"/>
 	<model path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat" force="false"/>
 	<cooked_physics path="units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat" force="false"/>	
@@ -424,12 +434,6 @@
 	<unit path="units/pd2_dlc1/characters/ene_security_gensec_2/ene_security_gensec_2_husk" load="true" force="true" />	
 	<object path="units/pd2_dlc1/characters/ene_security_gensec_2/ene_security_gensec_2" force="true" />	
 	<model path="units/pd2_dlc1/characters/ene_security_gensec_2/ene_security_gensec_2" force="true" />	
-
-	<unit_mat path="units/pd2_dlc1/characters/ene_acc_gensec_beret_but_red/ene_acc_gensec_beret_but_red" load="true"/>
-	<cooked_physics path="units/pd2_dlc1/characters/ene_acc_gensec_beret_but_red/ene_acc_gensec_beret_but_red" force="false"/>	
-	
-	<!-- <material_config path="units/pd2_dlc1/characters/ene_security_gensec_2/ene_security_gensec_2" force="true" />	 -->
-	<!-- <material_config path="units/pd2_dlc1/characters/ene_security_gensec_2/ene_security_gensec_2_contour" force="true" />	 -->
 
 	
 	<!--ZULU SQUADRON/ZEAL TEAM -->

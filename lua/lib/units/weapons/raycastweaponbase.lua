@@ -12,6 +12,8 @@ local mvec3_cpy = mvector3.copy
 
 local math_clamp = math.clamp
 local math_lerp = math.lerp
+local math_floor = math.floor
+local math_random = math.random
 
 local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
@@ -1493,4 +1495,120 @@ end
 function RaycastWeaponBase:is_heavy_weapon() --deprecated, do not use
 	log("function RaycastWeaponBase:is_heavy_weapon() is deprecated! Please use RaycastWeaponBase:is_weapon_class(\"heavy\") instead!")
 	return false
+end
+
+if deathvox:IsTotalCrackdownEnabled() then
+	function RaycastWeaponBase:add_ammo(ratio, add_amount_override)
+		local function _add_ammo(ammo_base, ratio, add_amount_override)
+			if ammo_base:get_ammo_max() == ammo_base:get_ammo_total() then
+				ammo_base._stored_ammo_leftover = nil --just in case
+
+				return false, 0
+			end
+
+			local add_amount = add_amount_override
+			local picked_up = true
+
+			if not add_amount then
+				local multiplier_min = 1
+				local multiplier_max = 1
+
+				--overrides won't prevent pickup bonuses from applying
+				if ammo_base._ammo_data then
+					multiplier_min = ammo_base._ammo_data.ammo_pickup_min_mul or multiplier_min
+					multiplier_max = ammo_base._ammo_data.ammo_pickup_max_mul or multiplier_max
+				end
+
+				multiplier_min = multiplier_min + managers.player:upgrade_value("player", "pick_up_ammo_multiplier", 1) - 1
+				multiplier_min = multiplier_min + managers.player:upgrade_value("player", "pick_up_ammo_multiplier_2", 1) - 1
+				multiplier_min = multiplier_min + managers.player:crew_ability_upgrade_value("crew_scavenge", 0)
+
+				multiplier_max = multiplier_max + managers.player:upgrade_value("player", "pick_up_ammo_multiplier", 1) - 1
+				multiplier_max = multiplier_max + managers.player:upgrade_value("player", "pick_up_ammo_multiplier_2", 1) - 1
+				multiplier_max = multiplier_max + managers.player:crew_ability_upgrade_value("crew_scavenge", 0)
+
+				--log("pickup - min mult: " .. tostring(multiplier_min) .. "")
+				--log("pickup - max mult: " .. tostring(multiplier_max) .. "")
+
+				add_amount = math_lerp(ammo_base._ammo_pickup[1] * multiplier_min, ammo_base._ammo_pickup[2] * multiplier_max, math_random())
+
+				--log("pickup - initial value: " .. tostring(add_amount) .. "")
+			else
+				--log("pickup - is override: " .. tostring(add_amount) .. "")
+			end
+
+			if ratio then
+				add_amount = add_amount * ratio
+
+				--log("pickup - after ratio: " .. tostring(add_amount) .. "")
+			end
+
+			if ammo_base._stored_ammo_leftover then
+				--log("pickup - had leftover: " .. tostring(ammo_base._stored_ammo_leftover) .. "")
+
+				add_amount = add_amount + ammo_base._stored_ammo_leftover
+				ammo_base._stored_ammo_leftover = nil
+			end
+
+			if add_amount < 1 then
+				--log("pickup - not enough: " .. tostring(add_amount) .. "")
+
+				ammo_base._stored_ammo_leftover = add_amount
+
+				return picked_up, 0
+			end
+
+			local current_ammo = ammo_base:get_ammo_total()
+			local new_ammo_in_mag = current_ammo + add_amount
+			local rounded_new_ammo = math_floor(new_ammo_in_mag)
+			local max_allowed_ammo = ammo_base:get_ammo_max()
+
+			if new_ammo_in_mag < max_allowed_ammo then
+				--akimbos normally round up ammo if needed to get an even number due to their recoil animations (plus syncing I think), enable this block back if needed
+				--[[local is_akimbo = ammo_base.AKIMBO
+
+				if is_akimbo then
+					local akimbo_rounding = rounded_new_ammo % 2 + #ammo_base._fire_callbacks
+
+					if akimbo_rounding > 0 then
+						--log("pickup - akimbo rounding: " .. tostring(akimbo_rounding) .. "")
+
+						new_ammo_in_mag = new_ammo_in_mag + akimbo_rounding
+						rounded_new_ammo = math_floor(new_ammo_in_mag)
+					end
+				end]]
+
+				if not is_akimbo or new_ammo_in_mag < max_allowed_ammo then
+					local leftover_ammo = new_ammo_in_mag - rounded_new_ammo
+
+					if leftover_ammo > 0 then
+						--log("pickup - stored leftover: " .. tostring(leftover_ammo) .. "")
+
+						ammo_base._stored_ammo_leftover = leftover_ammo
+					end
+				end
+			end
+
+			local ammo_to_add = math_clamp(rounded_new_ammo, 0, max_allowed_ammo)
+
+			ammo_base:set_ammo_total(ammo_to_add)
+
+			add_amount = ammo_to_add - current_ammo
+
+			return picked_up, add_amount
+		end
+
+		local picked_up, add_amount = nil
+		picked_up, add_amount = _add_ammo(self, ratio, add_amount_override)
+
+		for _, gadget in ipairs(self:get_all_override_weapon_gadgets()) do
+			if gadget and gadget.ammo_base then
+				local p, a = _add_ammo(gadget:ammo_base(), ratio, add_amount_override)
+				picked_up = p or picked_up
+				add_amount = add_amount + a
+			end
+		end
+
+		return picked_up, add_amount
+	end
 end

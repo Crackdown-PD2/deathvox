@@ -154,18 +154,19 @@ function CharacterTweakData:get_ai_group_type()
 	map_faction_override["apartment"] = "classic"
 	map_faction_override["street"] = "classic"
 	map_faction_override["bank"] = "classic"
-	--Murky faction overrides begin here. Uncomment to apply the Murkywater faction on the Whitehouse, Henry's Rock, and Beneath the Mountain heists.
-	--map_faction_override["pbr"] = "murky"
-	--map_faction_override["vit"] = "murky"
-	--map_faction_override["des"] = "murky"
+	--murkywater faction overrides begin here. Uncomment to apply the murkywaterwater faction on the Whitehouse, Henry's Rock, Hell's Island, and Beneath the Mountain heists.
+	map_faction_override["pbr"] = "murkywater"
+	map_faction_override["bph"] = "murkywater"
+	map_faction_override["vit"] = "murkywater"
+	map_faction_override["des"] = "murkywater"
 	
 	--Reaper faction overrides begin here.
-	  map_faction_override["mad"] = "russia"	
+	map_faction_override["mad"] = "russia"	
 	  
 	--Federales faction overrides begin here.
-	  map_faction_override["bex"] = "federales"	
+	map_faction_override["bex"] = "federales"	
 	--map_faction_override["skm_bex"] = "federales"	--not sure about this yet.
-	  map_faction_override["pex"] = "federales"		
+	map_faction_override["pex"] = "federales"		
 	  
 	--Halloween overrides begin here.
   
@@ -2844,9 +2845,9 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_gman.die_sound_event = "x01a_any_3p" -- pain lines are death lines for these units.
 	self.deathvox_gman.chatter = presets.enemy_chatter.geeeeeman --stops them using clear whisper
 	table.insert(self._enemy_list, "deathvox_gman")
-	local is_murky
-	if self:get_ai_group_type() == "murky" then
-		is_murky = true
+	local is_murkywater
+	if self:get_ai_group_type() == "murkywater" then
+		is_murkywater = true
 	end
 	local is_russia
 	if self:get_ai_group_type() == "russia" then
@@ -3468,7 +3469,7 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 	
 -- 	scripted police types.
 	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
---	scripted Murky unit types.
+--	scripted murkywater unit types.
 	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
 --	scripted criminal types.
 	self.gangster.HEALTH_INIT = 18 -- match to light SWAT value.
@@ -3605,7 +3606,7 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	
 -- 	scripted police types.
 	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
---	scripted Murky unit types.
+--	scripted murkywater unit types.
 	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
 --	scripted criminal types.
 	self.gangster.HEALTH_INIT = 18 -- match to light SWAT value.
@@ -3740,7 +3741,7 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 	
 -- 	scripted police types.
 	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
---	scripted Murky unit types.
+--	scripted murkywater unit types.
 	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
 --	scripted criminal types.
 	self.gangster.HEALTH_INIT = 24 -- match to light SWAT value.
@@ -3876,7 +3877,7 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	
 -- 	scripted police types.
 	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
---	scripted Murky unit types.
+--	scripted murkywater unit types.
 	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
 --	scripted criminal types.
 	self.gangster.HEALTH_INIT = 24 -- match to light SWAT value.
@@ -4013,7 +4014,7 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	
 -- 	scripted police types.
 	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
---	scripted Murky unit types.
+--	scripted murkywater unit types.
 	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
 --	scripted criminal types.
 	self.gangster.HEALTH_INIT = 32 -- match to light SWAT value.
@@ -4150,7 +4151,7 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	
 -- 	scripted police types.
 	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
---	scripted Murky unit types.
+--	scripted murkywater unit types.
 	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
 --	scripted criminal types.
 	self.gangster.HEALTH_INIT = 32 -- match to light SWAT value.
@@ -4269,7 +4270,7 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 
 -- 	scripted police types.
 	self.cop = deep_clone(self.deathvox_cop) -- Inverse copy of cop tweakdata.
---	scripted Murky unit types.
+--	scripted murkywater unit types.
 	self.city_swat = deep_clone(self.deathvox_heavyar) -- Inverse copy of city_swat tweakdata. 	
 --	scripted criminal types.
 	self.gangster.HEALTH_INIT = 48 -- match to light SWAT value.
@@ -4684,7 +4685,7 @@ function CharacterTweakData:_init_region_russia()
 	}
 end
 
-function CharacterTweakData:_init_region_murky() --will use these lines for now.
+function CharacterTweakData:_init_region_murkywater() --will use these lines for now.
 	self._default_chatter = "dispatch_generic_message"
 	self._unit_prefixes = {
 		cop = "l",
@@ -4697,8 +4698,9 @@ function CharacterTweakData:_init_region_murky() --will use these lines for now.
 	}	
 end
 
+----Hoxi: disabling for now
 --Bot Preferred Weapons Start Here--
-Hooks:PostHook(CharacterTweakData, "_init_russian", "cdhook_russian", function(self, presets)
+--[[Hooks:PostHook(CharacterTweakData, "_init_russian", "cdhook_russian", function(self, presets)
 	self.russian.weapon.weapons_of_choice.primary = "wpn_fps_ass_amcar_npc"
 end)
 
@@ -4781,7 +4783,7 @@ end)
 Hooks:PostHook(CharacterTweakData, "_init_ecp", "cdhook_ecps", function(self, presets)
 	self.ecp_female.weapon.weapons_of_choice.primary = "wpn_fps_ass_famas_npc"
 	self.ecp_male.weapon.weapons_of_choice.primary = "wpn_fps_ass_scar_npc"
-end)
+end)]]
 --End Perferred Bot Weapons--
 
 function CharacterTweakData:character_map()
@@ -4834,7 +4836,7 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_classic_veteran"
 		}
 	}
-	char_map.murky = {
+	char_map.murkywater = {
 		path = "units/pd2_mod_gageammo/characters/",
 		list = {
 			"ene_deathvox_guard",
@@ -4945,6 +4947,32 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_shield",
 			"ene_deathvox_medic",
 			"ene_deathvox_tazer",
+			"ene_deathvox_sniper",
+			"ene_deathvox_greendozer",
+			"ene_deathvox_blackdozer",
+			"ene_deathvox_lmgdozer",
+			"ene_deathvox_cloaker",
+			"ene_deathvox_heavyswat",
+			"ene_deathvox_heavyswatshot"
+		}
+	}				
+	char_map.murkywater = {
+		path = "units/pd2_mod_sharks/characters/",
+		list = {
+			"ene_deathvox_cop_pistol",
+			"ene_deathvox_cop_revolver",
+			"ene_deathvox_cop_smg",
+			"ene_deathvox_cop_shotgun",
+			"ene_deathvox_swat",
+			"ene_deathvox_swatshot",
+			"ene_deathvox_fbi_heavyswat",
+			"ene_deathvox_fbi_heavyswatshot",
+			"ene_deathvox_fbi_hrt",
+			"ene_deathvox_fbi_rookie",
+			"ene_deathvox_fbi_veteran",			
+			"ene_deathvox_shield",
+			"ene_deathvox_medic",
+			"ene_deathvox_taser",
 			"ene_deathvox_sniper",
 			"ene_deathvox_greendozer",
 			"ene_deathvox_blackdozer",

@@ -14,8 +14,8 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Localization", function(loc)
 		["hud_assault_zeal_cover"] = "TRY TO SURVIVE",
 		["hud_assault_federales_assault"] = "FEDERAL POLICE ADVANCING",
 		["hud_assault_federales_cover"] = "BRACE FOR IMPACT",
-		["hud_assault_murky_assault"] = "MURKYWATER ASSAULT IN PROGRESS",
-		["hud_assault_murky_cover"] = "STAND YOUR GROUND",
+		["hud_assault_murkywater_assault"] = "MURKYWATER ASSAULT IN PROGRESS",
+		["hud_assault_murkywater_cover"] = "STAND YOUR GROUND",
 		["hud_assault_akan_assault"] = "Идёт штурм наёмников",
 		["hud_assault_akan_cover"] = "Оставайтесь в укрытии",
 		["hud_assault_classic_assault"] = "POLICE ASSAULT IN PROGRESS",
@@ -31,12 +31,17 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Localization", function(loc)
 	local level = Global.level_data and Global.level_data.level_id
 
 	if group_type == federales then
-		loc:load_localization_file(ModPath .. "loc/federalesnames.txt")
-	elseif level == "pex" or level == "skm_bex" or level == "bex" then --forcefully load beat cop and hrt names on these levels so that they dont get overridden by cd diff killfeed/hoplib/whatever
-		-- log("head keeps spinnin")
-		loc:load_localization_file(ModPath .. "loc/federalespersistentnames.txt")	
-	end
-	
+			loc:load_localization_file(ModPath .. "loc/federalesnames.txt")
+		elseif level == "pex" or level == "skm_bex" or level == "bex" then --forcefully load beat cop and hrt names on these levels so that they dont get overridden by cd diff killfeed/hoplib/whatever
+			-- log("head keeps spinnin")
+			loc:load_localization_file(ModPath .. "loc/federalespersistentnames.txt")
+		end
+		
+		if group_type == murkywater then
+			loc:load_localization_file(ModPath .. "loc/murkynames.txt")
+		elseif level == "bph" or level == "vit" or level == "des" or level == "pbr" then 
+			loc:load_localization_file(ModPath .. "loc/murkypersistentnames.txt")
+		end	
 end)
 
 Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)

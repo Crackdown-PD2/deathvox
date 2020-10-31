@@ -163,9 +163,6 @@
 	<texture path="units/pd2_mod_federales/characters/ene_acc_shield_lights/ene_acc_shield_lights_df" />	
 	<cooked_physics path="units/pd2_mod_federales/characters/ene_acc_shield_lights/ene_acc_shield_lights" />
 	
-	<unit_mat path="units/pd2_mod_federales/characters/ene_acc_mask/ene_acc_mask" load="true" />
-	<cooked_physics path="units/pd2_mod_federales/characters/ene_acc_mask/ene_acc_mask" />
-	
 	<unit path="units/pd2_mod_federales/characters/ene_deathvox_shield/ene_deathvox_shield" load="true" />
 	<unit path="units/pd2_mod_federales/characters/ene_deathvox_shield/ene_deathvox_shield_husk" load="true" />
 	<model path="units/pd2_mod_federales/characters/ene_deathvox_shield/ene_deathvox_shield" />
@@ -280,7 +277,6 @@
 	<texture path="units/pd2_mod_federales/characters/shared_textures/sjnp_beatcop_atlas_df" />
 	<texture path="units/pd2_mod_federales/characters/shared_textures/sjnp_beatcop_atlas_nm" />
 	<texture path="units/pd2_mod_federales/characters/shared_textures/helmets_atlas_df" />
-	<texture path="units/pd2_mod_federales/characters/shared_textures/mask_df" />
 	<texture path="units/pd2_mod_federales/characters/shared_textures/heads_atlas_df" />
 	<texture path="units/pd2_mod_federales/characters/shared_textures/fbi_df" />
 	<texture path="units/pd2_mod_federales/characters/shared_textures/helmets_city_df" />

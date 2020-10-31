@@ -1,0 +1,16 @@
+{	
+	"ene_deathvox_taser" : "Murkywater Taser",
+	"ene_deathvox_shield" : "Murkywater Shield",
+	"ene_deathvox_sniper" : "Murkywater Sniper",
+	"ene_deathvox_greendozer" : "Murkywater Greendozer",
+	"ene_deathvox_lmgdozer" : "Murkywater Skulldozer",
+	"ene_deathvox_blackdozer" : "Murkywater Blackdozer",
+	"ene_deathvox_cloaker" : "Murkywater Cloaker",
+	"ene_deathvox_swat" : "Murkywater Marine",	
+	"ene_deathvox_swatshot" : "Murkywater Marine Shotgunner",	
+	"ene_deathvox_medic" : "Murkywater Medic",
+	"ene_deathvox_fbi_heavyswatshot" : "Murkywater Heavy Marine Shotgunner",
+	"ene_deathvox_fbi_heavyswat" : "Murkywater Heavy Marine",	
+	"ene_deathvox_heavyswatshot" : "Murkywater Heavy Security Shotgunner",
+	"ene_deathvox_heavyswat" : "Murkywater Heavy Security"	
+}

@@ -106,28 +106,64 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 --receive ammo picked up message from other players,
 --add shared ammo amount
-	local orig_sync_net_event = AmmoClip.sync_net_event
-	function AmmoClip:sync_net_event(event, peer,...)
-		if event == AmmoClip.EVENT_IDS.cd_share_ammo then 
+	function AmmoClip:sync_net_event(event, peer)
+		if event == AmmoClip.EVENT_IDS.register_grenade then --allow throwable registering even when the local player is downed/spectating/in custody
+			if peer and not self._grenade_registered then
+				managers.player:register_grenade(peer:id())
+
+				self._grenade_registered = true
+			end
+		else
 			local player = managers.player:local_player()
+
 			if not alive(player) then
 				return
 			end
-			local add_amount = 1/#managers.network:session()._peers_all
-			local picked_up
-			
-			for id,weapon in pairs(player:inventory():available_selections()) do 
-				if weapon.unit:base():add_ammo(add_amount) then 
-					picked_up = true
-					managers.hud:set_ammo_amount(id,weapon.unit:base():ammo_info())
+
+			local damage_ext = player:character_damage()
+
+			if not damage_ext or damage_ext:dead() then
+				return
+			end
+
+			if event == AmmoClip.EVENT_IDS.cd_share_ammo or event == AmmoClip.EVENT_IDS.bonnie_share_ammo then --allow ammo share receiving even when the local player is downed
+				local inventory = player:inventory()
+
+				if inventory then
+					local add_ratio, picked_up = nil
+
+					if event == AmmoClip.EVENT_IDS.cd_share_ammo then
+						local nr_alive_players = managers.groupai:state():num_alive_players()
+
+						add_ratio = 1 / nr_alive_players
+					else
+						add_ratio = tweak_data.upgrades.loose_ammo_give_team_ratio or 0.25
+					end
+
+					for id, weapon in pairs(inventory:available_selections()) do
+						if weapon.unit:base():add_ammo(add_ratio) then
+							picked_up = true
+
+							managers.hud:set_ammo_amount(id, weapon.unit:base():ammo_info())
+						end
+					end
+
+					if picked_up then
+						player:sound():play(self._pickup_event or "pickup_ammo", nil, true)
+					end
+				end
+			elseif AmmoClip.EVENT_IDS.bonnie_share_ammo < event and not damage_ext:need_revive() and not damage_ext:is_berserker() then --works as usual
+				local base_value = tweak_data.upgrades.loose_ammo_restore_health_values.base or 3
+				local restore_multiplier = tweak_data.upgrades.loose_ammo_restore_health_values.multiplier or 0.1
+				local share_restore_ratio = tweak_data.upgrades.loose_ammo_give_team_health_ratio or 0.35
+
+				local restore_value = base_value + event - 2
+				restore_value = restore_value * restore_multiplier * share_restore_ratio
+
+				if damage_ext:restore_health(restore_value, true, true) then
+					player:sound():play("pickup_ammo_health_boost", nil, true)
 				end
 			end
-			if picked_up then 
-				player:sound():play(self._pickup_event or "pickup_ammo", nil, true)
-			end
-			
-		else
-			return orig_sync_net_event(self,event,peer,...)
 		end
 	end
 end

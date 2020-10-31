@@ -1,0 +1,9 @@
+{		
+	"ene_deathvox_cop_smg" : "Murkywater Security",
+	"ene_deathvox_cop_shotgun" : "Murkywater Security",	
+	"ene_deathvox_cop_revolver" : "Murkywater Security",
+	"ene_deathvox_cop_pistol" : "Murkywater Security",	
+	"ene_deathvox_fbi_hrt" : "Murkywater SRT",
+	"ene_deathvox_fbi_rookie" : "Murkywater Recruit",	
+	"ene_deathvox_fbi_veteran" : "Murkywater Veteran"
+}

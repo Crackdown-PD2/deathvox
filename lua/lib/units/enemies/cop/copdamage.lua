@@ -477,6 +477,7 @@ function CopDamage:damage_bullet(attack_data)
 	if self:is_friendly_fire(attack_data.attacker_unit) then
 		return "friendly_fire"
 	end
+
 	if alive(attack_data.attacker_unit) and attack_data.attacker_unit:in_slot(16) then
 		local has_surrendered = self._unit:brain().surrendered and self._unit:brain():surrendered() or self._unit:anim_data().surrender or self._unit:anim_data().hands_back or self._unit:anim_data().hands_tied
 
@@ -491,7 +492,7 @@ function CopDamage:damage_bullet(attack_data)
 	if attack_data.weapon_unit and attack_data.weapon_unit:base().is_category and attack_data.weapon_unit:base():is_category("saw") then
 		managers.groupai:state():chk_say_enemy_chatter(self._unit, self._unit:movement():m_pos(), "saw")
 	end
-		
+
 	if attack_data.attacker_unit:base().sentry_gun then
 		managers.groupai:state():chk_say_enemy_chatter(self._unit, self._unit:movement():m_pos(), "sentry")
 	end
@@ -597,11 +598,13 @@ function CopDamage:damage_bullet(attack_data)
 	local damage = attack_data.damage
 	local headshot_by_player = false
 	local headshot_multiplier = 1
-
 	local headshot_mul_addend = 0
+
 	if attack_data.attacker_unit == managers.player:player_unit() then
-		headshot_mul_addend = managers.player:upgrade_value(attack_data.weapon_unit:base():get_weapon_class() or "weapon","headshot_mul_addend",0)
-	
+		local weap_base = alive(attack_data.weapon_unit) and attack_data.weapon_unit:base()
+		local weapon_class = weap_base and weap_base.get_weapon_class and weap_base:get_weapon_class() or "weapon"
+		headshot_mul_addend = managers.player:upgrade_value(weapon_class, "headshot_mul_addend", 0)
+
 		local critical_hit, crit_damage = self:roll_critical_hit(attack_data)
 
 		if critical_hit then
@@ -611,10 +614,8 @@ function CopDamage:damage_bullet(attack_data)
 			if damage > 0 then
 				managers.hud:on_crit_confirmed()
 			end
-		else
-			if damage > 0 then
-				managers.hud:on_hit_confirmed()
-			end
+		elseif damage > 0 then
+			managers.hud:on_hit_confirmed()
 		end
 
 		if self._char_tweak.priority_shout then
@@ -1584,10 +1585,8 @@ function CopDamage:damage_melee(attack_data)
 			if damage > 0 then
 				managers.hud:on_crit_confirmed()
 			end
-		else
-			if damage > 0 then
-				managers.hud:on_hit_confirmed()
-			end
+		elseif damage > 0 then
+			managers.hud:on_hit_confirmed()
 		end
 
 		if not is_civilian and tweak_data.achievement.cavity.melee_type == attack_data.name_id then
