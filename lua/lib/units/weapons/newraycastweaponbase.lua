@@ -106,7 +106,7 @@ function NewRaycastWeaponBase:reload_speed_multiplier(multiplier)
 		multiplier = multiplier * (1 - math.min(this_machine_data[1] * pm:get_property("current_point_and_click_stacks",0),this_machine_data[2]))
 	end
 	
-	if self:is_weapon_class("rapidfire") and self:ammo_base():clip_empty() then
+	if self:is_weapon_class("rapidfire") and self:clip_empty() then
 		multiplier = multiplier * pm:upgrade_value("weapon", "money_shot_aced", 1)
 	end
 	

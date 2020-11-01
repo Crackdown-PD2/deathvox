@@ -503,7 +503,7 @@ function RaycastWeaponBase:reload_speed_multiplier(multiplier)
 	multiplier = multiplier * pm:upgrade_value(self._name_id, "reload_speed_multiplier", 1)
 	
 	--clean this up once all weapons are tagged appropriately
-	if self:is_weapon_class("rapidfire") and self:ammo_base():clip_empty() then
+	if self:is_weapon_class("rapidfire") and self:clip_empty() then
 		multiplier = multiplier * pm:upgrade_value("weapon", "money_shot_aced", 1)
 	elseif self:is_weapon_class("heavy") then
 		local lead_farmer_data = pm:upgrade_value("heavy","lead_farmer",{0,0})
