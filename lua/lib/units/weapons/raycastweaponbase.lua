@@ -1498,11 +1498,6 @@ function RaycastWeaponBase:is_heavy_weapon() --deprecated, do not use
 end
 
 if deathvox:IsTotalCrackdownEnabled() then
-	--doing it like this to make it more obvious
-	local integer_1 = 1
-	local float_1 = 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1
-	local cursed_floating_point_offset = integer_1 - float_1
-
 	function RaycastWeaponBase:add_ammo(ratio, add_amount_override)
 		local function _add_ammo(ammo_base, ratio, add_amount_override)
 			if ammo_base:get_ammo_max() == ammo_base:get_ammo_total() then
@@ -1562,7 +1557,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end
 
 			if add_amount < 1 then
-				if add_amount + cursed_floating_point_offset < 1 then
+				if add_amount + 0.000001 < 1 then --tolerance check, thanks lua
 					ammo_base._stored_ammo_leftover = add_amount
 
 					return picked_up, add_amount
