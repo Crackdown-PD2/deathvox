@@ -1519,18 +1519,24 @@ if deathvox:IsTotalCrackdownEnabled() then
 					multiplier_max = ammo_base._ammo_data.ammo_pickup_max_mul or multiplier_max
 				end
 
-				multiplier_min = multiplier_min + managers.player:upgrade_value("player", "pick_up_ammo_multiplier", 1) - 1
-				multiplier_min = multiplier_min + managers.player:upgrade_value("player", "pick_up_ammo_multiplier_2", 1) - 1
-				multiplier_min = multiplier_min + managers.player:crew_ability_upgrade_value("crew_scavenge", 0)
+				local ammo_mul_1 = managers.player:upgrade_value("player", "pick_up_ammo_multiplier", 1) - 1
+				local ammo_mul_2 = managers.player:upgrade_value("player", "pick_up_ammo_multiplier_2", 1) - 1
+				local team_ai_mul = managers.player:crew_ability_upgrade_value("crew_scavenge", 0)
 
-				multiplier_max = multiplier_max + managers.player:upgrade_value("player", "pick_up_ammo_multiplier", 1) - 1
-				multiplier_max = multiplier_max + managers.player:upgrade_value("player", "pick_up_ammo_multiplier_2", 1) - 1
-				multiplier_max = multiplier_max + managers.player:crew_ability_upgrade_value("crew_scavenge", 0)
+				multiplier_min = multiplier_min + ammo_mul_1 + ammo_mul_2 + team_ai_mul
+				multiplier_max = multiplier_max + ammo_mul_1 + ammo_mul_2 + team_ai_mul
 
 				--log("pickup - min mult: " .. tostring(multiplier_min) .. "")
 				--log("pickup - max mult: " .. tostring(multiplier_max) .. "")
 
-				add_amount = math_lerp(ammo_base._ammo_pickup[1] * multiplier_min, ammo_base._ammo_pickup[2] * multiplier_max, math_random())
+				local min_pickup = ammo_base._ammo_pickup[1] * multiplier_min
+				local max_pickup = ammo_base._ammo_pickup[2] * multiplier_max
+
+				if min_pickup == max_pickup then
+					add_amount = min_pickup
+				else
+					add_amount = math_lerp(min_pickup, max_pickup, math_random())
+				end
 
 				--log("pickup - initial value: " .. tostring(add_amount) .. "")
 			else
@@ -1551,19 +1557,23 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end
 
 			if add_amount < 1 then
-				--log("pickup - not enough: " .. tostring(add_amount) .. "")
+				if add_amount + 0.000001 < 1 then --tolerance check, thanks lua
+					ammo_base._stored_ammo_leftover = add_amount
 
-				ammo_base._stored_ammo_leftover = add_amount
+					return picked_up, add_amount
+				else
+					--log("pickup - floating point strikes again, forcing to 1")
 
-				return picked_up, 0
+					add_amount = 1
+				end
 			end
 
 			local current_ammo = ammo_base:get_ammo_total()
-			local new_ammo_in_mag = current_ammo + add_amount
-			local rounded_new_ammo = math_floor(new_ammo_in_mag)
+			local new_ammo = current_ammo + add_amount
+			local rounded_new_ammo = math_floor(new_ammo)
 			local max_allowed_ammo = ammo_base:get_ammo_max()
 
-			if new_ammo_in_mag < max_allowed_ammo then
+			if new_ammo < max_allowed_ammo then
 				--akimbos normally round up ammo if needed to get an even number due to their recoil animations (plus syncing I think), enable this block back if needed
 				--[[local is_akimbo = ammo_base.AKIMBO
 
@@ -1573,13 +1583,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 					if akimbo_rounding > 0 then
 						--log("pickup - akimbo rounding: " .. tostring(akimbo_rounding) .. "")
 
-						new_ammo_in_mag = new_ammo_in_mag + akimbo_rounding
-						rounded_new_ammo = math_floor(new_ammo_in_mag)
+						new_ammo = new_ammo + akimbo_rounding
+						rounded_new_ammo = math_floor(new_ammo)
 					end
 				end]]
 
-				if not is_akimbo or new_ammo_in_mag < max_allowed_ammo then
-					local leftover_ammo = new_ammo_in_mag - rounded_new_ammo
+				if not is_akimbo or new_ammo < max_allowed_ammo then
+					local leftover_ammo = new_ammo - rounded_new_ammo
 
 					if leftover_ammo > 0 then
 						--log("pickup - stored leftover: " .. tostring(leftover_ammo) .. "")

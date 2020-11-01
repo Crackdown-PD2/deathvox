@@ -22,9 +22,9 @@ function EnemyManager:queue_task(id, task_clbk, data, execute_t, verification_cl
 
 		self:_execute_queued_task(1)
 	elseif not execute_t then
-		local all_tasks = self._queued_tasks_no_t or {}
+		self._queued_tasks_no_t = self._queued_tasks_no_t or {}
 
-		t_ins(all_tasks, task_data)
+		t_ins(self._queued_tasks_no_t, task_data)
 	else
 		local all_tasks = self._queued_tasks
 		local i = #all_tasks
@@ -38,7 +38,7 @@ function EnemyManager:queue_task(id, task_clbk, data, execute_t, verification_cl
 end
 
 function EnemyManager:update_queue_task(id, task_clbk, data, execute_t, verification_clbk, asap)
-	local task_had_no_t = nil
+	local task_had_no_t = false
 	local task_data, _ = t_fv(self._queued_tasks, function (td)
 		return td.id == id
 	end)
@@ -62,29 +62,10 @@ function EnemyManager:update_queue_task(id, task_clbk, data, execute_t, verifica
 		task_data.v_cb = verification_clbk or task_data.v_cb
 		task_data.asap = asap or task_data.asap
 
-		if not needs_moving then
-			return
+		if needs_moving then
+			self:unqueue_task(id, task_had_no_t)
+			self:queue_task(id, task_data.clbk, task_data.data, task_data.t, task_data.v_cb, task_data.asap)
 		end
-
-		local all_tasks, table_to_move_to = nil
-
-		if task_had_no_t then
-			all_tasks = self._queued_tasks_no_t
-			table_to_move_to = self._queued_tasks
-		else
-			all_tasks = self._queued_tasks
-			table_to_move_to = self._queued_tasks_no_t
-		end
-
-		for task_i, t_data in ipairs(all_tasks) do
-			if t_data.id == id then
-				t_rem(all_tasks, task_i)
-
-				break
-			end
-		end
-
-		self:queue_task(id, task_data.clbk, task_data.data, task_data.t, task_data.v_cb, task_data.asap)
 	end
 end
 
@@ -113,7 +94,7 @@ function EnemyManager:unqueue_task(id, check_no_t)
 		i = i - 1
 	end
 
-	if not check_no_t then
+	if check_no_t == nil then
 		self:unqueue_task(id, true)
 	end
 
@@ -183,9 +164,9 @@ function EnemyManager:_update_queued_tasks(t, dt)
 
 			if #all_tasks > 0 then
 				local max_nr_loops = #all_tasks
-				local i = 1
+				local i = 0
 
-				while i < max_nr_loops + 1 do
+				while i < max_nr_loops do
 					if all_tasks[1].t < t then
 						self:_execute_queued_task(1)
 
