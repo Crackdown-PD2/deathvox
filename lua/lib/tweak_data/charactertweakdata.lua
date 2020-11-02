@@ -4835,29 +4835,6 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_classic_veteran"
 		}
 	}
-	char_map.murkywater = {
-		path = "units/pd2_mod_gageammo/characters/",
-		list = {
-			"ene_deathvox_guard",
-			"ene_deathvox_heavyar",
-			"ene_deathvox_lightar",
-			"ene_deathvox_medic",
-			"ene_deathvox_shield",
-			"ene_deathvox_lightshot",
-			"ene_deathvox_heavyshot",
-			"ene_deathvox_taser",
-			"ene_deathvox_cloaker",
-			"ene_deathvox_sniper_assault",
-			"ene_deathvox_greendozer",
-			"ene_deathvox_blackdozer",
-			"ene_deathvox_lmgdozer",
-			"ene_deathvox_medicdozer",
-			"ene_deathvox_grenadier",
-			"ene_deathvox_gman",
-			"ene_deathvox_gman_noflashlight",
-			"ene_deathvox_guarddozer"
-		}
-	}
 	char_map.russia = {
 		path = "units/pd2_mod_gageammo/characters/",
 		list = {
