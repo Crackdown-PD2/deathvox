@@ -250,6 +250,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Active Mods: 
 
 	self.parts.wpn_fps_ass_asval_b_standard.stats = nil --why overkill -- probably to avoid a suppression overwrite? -Finale
+	self.parts.wpn_fps_ass_asval_b_standard.supported = true						
+	
 	--Prototype Barrel [self.parts.wpn_fps_ass_asval_b_prot] [+10 Concealment, -12 Accuracy, -20 Concealment] Value: 1
 	self.parts.wpn_fps_ass_asval_b_proto.stats = {
 		value = 1,
@@ -258,8 +260,11 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		alert_size = 12,
 		concealment = 10
 	}
+	self.parts.wpn_fps_ass_asval_b_proto.supported = true						
+	
 	-- Solid Stock
 	self.parts.wpn_fps_ass_asval_s_solid.stats = {value = 1}
+	self.parts.wpn_fps_ass_asval_s_solid.supported = true						
 
 	--------------------------------------
 				--CAR-4--
@@ -289,18 +294,25 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 
 		-- Aftermarket Special Handguard	
 		self.parts.wpn_fps_m4_uupg_fg_lr300.stats = {value = 5}
+		self.parts.wpn_fps_m4_uupg_fg_lr300.supported = true						
 		-- Competition Foregrip		
 		self.parts.wpn_fps_upg_fg_jp.stats = {value = 5}
+		self.parts.wpn_fps_upg_fg_jp.supported = true						
 		-- Gazelle Rail
 		self.parts.wpn_fps_upg_fg_smr.stats = {value = 5}
+		self.parts.wpn_fps_upg_fg_smr.supported = true						
 		-- OVAL Foregrip		
 		self.parts.wpn_fps_upg_ass_m4_fg_lvoa.stats = {value = 1}
+		self.parts.wpn_fps_upg_ass_m4_fg_lvoa.supported = true						
 		-- E.M.O. Foregrip		
 		self.parts.wpn_fps_upg_ass_m4_fg_moe.stats = {value = 1}
+		self.parts.wpn_fps_upg_ass_m4_fg_moe.supported = true				
 		-- Long Barrel
 		self.parts.wpn_fps_m4_uupg_b_long.stats = {value = 4}
+		self.parts.wpn_fps_m4_uupg_b_long.supported = true				
 		-- Short Barrel		
 		self.parts.wpn_fps_m4_uupg_b_short.stats = {value = 5}
+		self.parts.wpn_fps_m4_uupg_b_short.supported = true				
 
 	--Stealth Barrel [wpn_fps_m4_uupg_b_sd] [Suppresses Weapon, + Quiet, -12 Accuracy, +3 Concealment, -100 Threat] Value: 6		
 		self.parts.wpn_fps_m4_uupg_b_sd.stats = {
@@ -310,6 +322,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 			suppression = -72,
 			alert_size = 12
 		}
+		self.parts.wpn_fps_m4_uupg_b_sd.supported = true				
 	--------------------------------------
 				--CAR-4 (DMR Kit)--
 	--------------------------------------
@@ -323,6 +336,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 			recoil = -10,
 			concealment = -5
 		}
+		self.parts.wpn_fps_upg_ass_m4_b_beowulf.supported = true				
 		self.parts.wpn_fps_upg_ass_m4_b_beowulf.adds = {"car_dmr_kit_ammo_type"}
 		self.parts.car_dmr_kit_ammo_type = { --Dummy ammo type for DMR kit, needed for armor piercing and pickup multipliers to work properly.
 			a_obj = "a_m",
@@ -337,6 +351,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 				ammo_pickup_min_mul = 2.5
 			}
 		}
+		self.parts.car_dmr_kit_ammo_type.supported = true				
 
 	--------------------------------------
 				--AK--
@@ -683,10 +698,13 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 
 	-- Long Ergo Foregrip
 		self.parts.wpn_fps_upg_ass_m16_fg_stag.stats = {value = 1}
+		self.parts.wpn_fps_upg_ass_m16_fg_stag.supported = true				
 	-- Blast From the Past Handguard
 		self.parts.wpn_fps_m16_fg_vietnam.stats = {value = 10}
+		self.parts.wpn_fps_m16_fg_vietnam.supported = true		
 	-- Tactical Handguard
 		self.parts.wpn_fps_m16_fg_railed.stats = {value = 7}
+		self.parts.wpn_fps_m16_fg_railed.supported = true
 			
 	-- L5 Magazine [wpn_fps_upg_m4_m_l5] [+10 Magazine, -2 Concealment] Value: 1
 		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_l5 = {
@@ -1448,6 +1466,11 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Active Mods: Suppressed Barrel [wpn_fps_sho_aa12_barrel_silenced] [Suppresses Weapon, +Quiet, -100 Threat] Value: 5
 
 	--Drum Magazine [wpn_fps_sho_aa12_mag_drum] [+12 Magazine, -20 Concealment] Value: 1
+	self.parts.wpn_fps_sho_aa12_mag_drum.stats = {value = 1, concealment = -20, extra_ammo = 6}
+	self.parts.wpn_fps_sho_aa12_mag_drum.supported = true
+	
+	self.parts.wpn_fps_sho_aa12_barrel_silenced.stats = {suppression = 72, alert_size = 12, value = 6}
+	self.parts.wpn_fps_sho_aa12_barrel_silenced.supported = true
 
 	--------------------------------------
 				--IZHMA 12G--
@@ -3734,192 +3757,272 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 
 	--auto and singlefire mods
 	self.parts.wpn_fps_upg_i_singlefire.stats = {value = 5}
+	self.parts.wpn_fps_upg_i_singlefire.supported = true	
+	
 	self.parts.wpn_fps_upg_i_autofire.stats = {value = 8}
+	self.parts.wpn_fps_upg_i_autofire.supported = true
 
 	--Barrel extension stat changes begin here.
 	-- Ported Compensator
 		self.parts.wpn_fps_upg_ass_ns_battle.stats = {value = 1}
+		self.parts.wpn_fps_upg_ass_ns_battle.supported = true			
 	-- Stubby Compensator
 		self.parts.wpn_fps_upg_ns_ass_smg_stubby.stats = {value = 3}
+		self.parts.wpn_fps_upg_ns_ass_smg_stubby.supported = true					
 	-- The Tank Compensator
 		self.parts.wpn_fps_upg_ns_ass_smg_tank.stats = {value = 4}
+		self.parts.wpn_fps_upg_ns_ass_smg_tank.supported = true							
 	-- Fire Breather Nozzle
 		self.parts.wpn_fps_upg_ns_ass_smg_firepig.stats = {value = 5}
+		self.parts.wpn_fps_upg_ns_ass_smg_firepig.supported = true									
 	-- Tactical Compensator
 		self.parts.wpn_fps_upg_ass_ns_surefire.stats = {value = 5}
+		self.parts.wpn_fps_upg_ass_ns_surefire.supported = true											
 	-- Funnel of Fun Nozzle
 		self.parts.wpn_fps_upg_ass_ns_linear.stats = {value = 5}
+		self.parts.wpn_fps_upg_ass_ns_linear.supported = true													
 	-- Competitor's Compensator
 		self.parts.wpn_fps_upg_ass_ns_jprifles.stats = {value = 5}
+		self.parts.wpn_fps_upg_ass_ns_jprifles.supported = true		
 	-- Medium Suppressor
 		self.parts.wpn_fps_upg_ns_ass_smg_medium.stats = {suppression = 72, alert_size = 12, value = 2}
+		self.parts.wpn_fps_upg_ns_ass_smg_medium.supported = true				
 	-- The Bigger the Better Suppressor
 		self.parts.wpn_fps_upg_ns_ass_smg_large.stats = {suppression = 72, alert_size = 12, value = 5}
+		self.parts.wpn_fps_upg_ns_ass_smg_large.supported = true						
 	-- Hurricane Compensator -- name is tentative due to limited documentation of cartel optics pack files
 		self.parts.wpn_fps_upg_ns_pis_typhoon.stats = {value = 4}
+		self.parts.wpn_fps_upg_ns_pis_typhoon.supported = true								
 	-- Marmon Compensator -- name is tentative due to limited documentation of cartel optics pack files
 		self.parts.wpn_fps_upg_ns_ass_smg_v6.stats = {value = 3}
+		self.parts.wpn_fps_upg_ns_ass_smg_v6.supported = true										
 	-- Jungle Ninja Suppressor
 		self.parts.wpn_fps_upg_ns_pis_jungle.stats = {suppression = 72,	alert_size = 12, value = 5}
+		self.parts.wpn_fps_upg_ns_pis_jungle.supported = true												
 	-- Budget Suppressor
 		self.parts.wpn_fps_upg_ns_ass_filter.stats = {suppression = 72,	alert_size = 12, value = 0} -- yes, value correct
+		self.parts.wpn_fps_upg_ns_ass_filter.supported = true														
 	-- Asepsis Suppressor
 		self.parts.wpn_fps_upg_ns_pis_medium_slim.stats = {suppression = 72, alert_size = 12, value = 1}
+		self.parts.wpn_fps_upg_ns_pis_medium_slim.supported = true																
 	-- Monolith Suppressor
 		self.parts.wpn_fps_upg_ns_pis_large.stats = {suppression = 72, alert_size = 12, value = 5}
+		self.parts.wpn_fps_upg_ns_pis_large.supported = true																
 	-- Champion's Suppressor
 		self.parts.wpn_fps_upg_ns_pis_large_kac.stats = {suppression = 72, alert_size = 12, value = 6}
+		self.parts.wpn_fps_upg_ns_pis_large_kac.supported = true																		
 	-- Size Doesn't Matter Suppressor
 		self.parts.wpn_fps_upg_ns_pis_small.stats = {suppression = 72, alert_size = 12, value = 3}
+		self.parts.wpn_fps_upg_ns_pis_small.supported = true																				
 	-- Flash Hider
 		self.parts.wpn_fps_upg_pis_ns_flash.stats = {suppression = 72, alert_size = 12, value = 4}
+		self.parts.wpn_fps_upg_pis_ns_flash.supported = true																						
 	-- Facepunch Compensator -- NOTE consider name change for Knockout
 		self.parts.wpn_fps_upg_ns_pis_meatgrinder.stats = {suppression = 72, alert_size = 12, value = 7}
 	-- IPSC Compensator
 		self.parts.wpn_fps_upg_ns_pis_ipsccomp.stats = {suppression = 72, alert_size = 12, value = 4}
+		self.parts.wpn_fps_upg_ns_pis_ipsccomp.supported = true																						
 	-- Standard Issue Suppressor
 		self.parts.wpn_fps_upg_ns_pis_medium.stats = {suppression = 72, alert_size = 12, value = 1}
+		self.parts.wpn_fps_upg_ns_pis_medium.supported = true																							
 	-- Roctec Suppressor
 		self.parts.wpn_fps_upg_ns_pis_medium_gem.stats = {suppression = 72, alert_size = 12, value = 4}
+		self.parts.wpn_fps_upg_ns_pis_medium_gem.supported = true																						
 	
 	
 	--Sight stat changes begin here.
 	-- Milspec Scope
 		self.parts.wpn_fps_upg_o_specter.stats = {zoom = 4, value = 8} -- i should probably write it like this for the rest of the attachments
+		self.parts.wpn_fps_upg_o_specter.supported = true																																																																																			
 	-- Military Red Dot Sight 
 		self.parts.wpn_fps_upg_o_aimpoint.stats = {zoom = 4, value = 8}
+		self.parts.wpn_fps_upg_o_aimpoint.supported = true																																																																																		
 	-- Military Red Dot Sight -- NOTE this is the preorder edition.
 		self.parts.wpn_fps_upg_o_aimpoint_2.stats = {zoom = 4, value = 1}
+		self.parts.wpn_fps_upg_o_aimpoint_2.supported = true																																																																																		
 	-- Surgeon Sight
 		self.parts.wpn_fps_upg_o_docter.stats = {zoom = 2, value = 5}
+		self.parts.wpn_fps_upg_o_docter.supported = true																																																																																		
 	-- Holographic Sight
 		self.parts.wpn_fps_upg_o_eotech.stats = {zoom = 3, value = 3}
+		self.parts.wpn_fps_upg_o_eotech.supported = true																																																																																		
 	-- The Professional's Choice Sight
 		self.parts.wpn_fps_upg_o_t1micro.stats = {zoom = 3, value = 3}
+		self.parts.wpn_fps_upg_o_t1micro.supported = true																																																																																		
 	-- Marksman Sight
 		self.parts.wpn_upg_o_marksmansight_rear.stats = {zoom = 2, value = 5}
+		self.parts.wpn_upg_o_marksmansight_rear.supported = true																																																																																		
 	-- Theia Magnified Scope
 		self.parts.wpn_fps_upg_o_leupold.stats = {zoom = 10, value = 8}
+		self.parts.wpn_fps_upg_o_leupold.supported = true																																																																																		
 	-- See More Sight
 		self.parts.wpn_fps_upg_o_cmore.stats = {zoom = 3, value = 5}
+		self.parts.wpn_fps_upg_o_cmore.supported = true																																																																																		
 	-- Acough Optic Scope
 		self.parts.wpn_fps_upg_o_acog.stats = {zoom = 6, value = 6}
+		self.parts.wpn_fps_upg_o_acog.supported = true																																																																																		
 	-- Combat Sight
 		self.parts.wpn_fps_upg_o_cs.stats = {zoom = 4, value = 3}
+		self.parts.wpn_fps_upg_o_cs.supported = true																																																																																		
 	-- Speculator Sight
 		self.parts.wpn_fps_upg_o_reflex.stats = {zoom = 3, value = 5}
+		self.parts.wpn_fps_upg_o_reflex.supported = true																																																																																		
 	-- Trigonom Sight
 		self.parts.wpn_fps_upg_o_rx01.stats = {zoom = 3, value = 5}
+		self.parts.wpn_fps_upg_o_rx01.supported = true																																																																																		
 	-- Compact Holosight
 		self.parts.wpn_fps_upg_o_eotech_xps.stats = {zoom = 3, value = 5}
+		self.parts.wpn_fps_upg_o_eotech_xps.supported = true																																																																																
 	-- [NOTE unable to find name in documentation]
 		self.parts.wpn_fps_upg_o_bmg.stats = {zoom = 6, value = 8}
+		self.parts.wpn_fps_upg_o_bmg.supported = true																																																																																
 	-- [NOTE unable to find name in documentation]
 		self.parts.wpn_fps_upg_o_uh.stats = {zoom = 3, value = 5}
+		self.parts.wpn_fps_upg_o_uh.supported = true																																																																																
 	-- [NOTE unable to find name in documentation]
 		self.parts.wpn_fps_upg_o_fc1.stats = {zoom = 3, value = 5}
+		self.parts.wpn_fps_upg_o_fc1.supported = true																																																																														
 	-- SKOLD Reflex Micro Sight -- name is tentative due to limited documentation of cartel optics pack files (what of rmr?)
 		self.parts.wpn_fps_upg_o_rms.stats = {zoom = 3, value = 6}
+		self.parts.wpn_fps_upg_o_rms.supported = true																																																																												
 	-- Riktpunkt Holosight -- name is tentative due to limited documentation of cartel optics pack files
 		self.parts.wpn_fps_upg_o_rikt.stats = {zoom = 3, value = 6}
-			
+		self.parts.wpn_fps_upg_o_rikt.supported = true																																																																												
 	
 	-- Magazine stat changes begin here.
 		-- Milspec Magazine
 		self.parts.wpn_fps_m4_uupg_m_std.stats = {value = 1}
+		self.parts.wpn_fps_m4_uupg_m_std.supported = true																																																																										
 		-- L5 Magazine
 		self.parts.wpn_fps_upg_m4_m_l5.stats = {value = 1}
+		self.parts.wpn_fps_upg_m4_m_l5.supported = true																																																																										
 		-- Tactical Magazine
 		self.parts.wpn_fps_upg_m4_m_pmag.stats = {value = 3}
+		self.parts.wpn_fps_upg_m4_m_pmag.supported = true																																																																										
 		-- Expert Magazine
 		self.parts.wpn_fps_ass_l85a2_m_emag.stats = {value = 1}
+		self.parts.wpn_fps_ass_l85a2_m_emag.supported = true																																																																										
 		-- CAR Quadstacked Magazine [wpn_fps_upg_m4_m_quad] Value: 3
 		self.parts.wpn_fps_upg_m4_m_quad.stats = {
 			value = 3,		-- note wiki value incorrect
 			extra_ammo = 15, 
 			concealment = -10
 		}
+		self.parts.wpn_fps_upg_m4_m_quad.supported = true																																																																										
 		--  [wpn_fps_upg_m4_m_straight] Value: 2
 		self.parts.wpn_fps_upg_m4_m_straight.stats = {	
 			value = 2,		
 			extra_ammo = -5, 
 			concealment = 5
-		}		
+		}	
+		self.parts.wpn_fps_upg_m4_m_straight.supported = true																																																																								
 		-- Speedpull Magazine
 		self.parts.wpn_fps_m4_upg_m_quick.stats = {	
 			value = 2,		
 			reload = 10,
 			concealment = -4
 		}
+		self.parts.wpn_fps_m4_upg_m_quick.supported = true																																																																						
 	--Gadget stat changes begin here.
 		-- Flashlight
 		self.parts.wpn_fps_upg_fl_ass_smg_sho_surefire.stats = {value = 3}
+		self.parts.wpn_fps_upg_fl_ass_smg_sho_surefire.supported = true																																																																						
 		-- Tactical Laser										
 		self.parts.wpn_fps_upg_fl_ass_smg_sho_peqbox.stats = {value = 5}
+		self.parts.wpn_fps_upg_fl_ass_smg_sho_peqbox.supported = true																																																																						
 		-- Compact Laser								
 		self.parts.wpn_fps_upg_fl_ass_laser.stats = {value = 2}	
+		self.parts.wpn_fps_upg_fl_ass_laser.supported = true																																																																				
 		-- Military Laser						
 		self.parts.wpn_fps_upg_fl_ass_peq15.stats = {value = 5}	-- check vs wpn_fps_upg_fl_ass_peq15_flashlight
+		self.parts.wpn_fps_upg_fl_ass_peq15.supported = true																																																																		
 		-- LED Combo						
 		self.parts.wpn_fps_upg_fl_ass_utg.stats = {value = 5}	
+		self.parts.wpn_fps_upg_fl_ass_utg.supported = true																																																																	
 		-- Tactical Pistol Light						
 		self.parts.wpn_fps_upg_fl_pis_tlr1.stats = {value = 2}	
+		self.parts.wpn_fps_upg_fl_pis_tlr1.supported = true																																																															
 		-- Pocket Laser						
 		self.parts.wpn_fps_upg_fl_pis_laser.stats = {value = 5}	
+		self.parts.wpn_fps_upg_fl_pis_laser.supported = true																																																													
 		-- Combined Module
 		self.parts.wpn_fps_upg_fl_pis_x400v.stats = {value = 5}	
+		self.parts.wpn_fps_upg_fl_pis_x400v.supported = true																																																													
 		-- Polymer Flashlight
 		self.parts.wpn_fps_upg_fl_pis_m3x.stats = {value = 1}	
+		self.parts.wpn_fps_upg_fl_pis_m3x.supported = true																																																											
 		-- Micro Laser						
 		self.parts.wpn_fps_upg_fl_pis_crimson.stats = {value = 5}	
+		self.parts.wpn_fps_upg_fl_pis_crimson.supported = true																																																									
 		-- 45 Degree Red Dot Sight				
 		self.parts.wpn_fps_upg_o_45rds.stats = {value = 1, gadget_zoom = 1}	
+		self.parts.wpn_fps_upg_o_45rds.supported = true																																																							
 		-- Riktpunkt 45 Degree Sight
 		self.parts.wpn_fps_upg_o_45rds_v2.stats = {value = 1, gadget_zoom = 1}	
+		self.parts.wpn_fps_upg_o_45rds_v2.supported = true																																																					
 		-- Riktpunkt Magnifier
 		self.parts.wpn_fps_upg_o_xpsg33_magnifier.stats = {value = 1, gadget_zoom = 9}
+		self.parts.wpn_fps_upg_o_xpsg33_magnifier.supported = true																																																			
 		-- Signature Magnifier
 		self.parts.wpn_fps_upg_o_sig.stats = {value = 2, gadget_zoom = 9}
+		self.parts.wpn_fps_upg_o_sig.supported = true																																																	
 		-- 45 Degree Ironsights
 		self.parts.wpn_fps_upg_o_45steel.stats = {value = 1, gadget_zoom = 1}	
+		self.parts.wpn_fps_upg_o_45steel.supported = true																																															
 	
 	--Grip stat changes begin here.
 		-- Pro Grip
-		self.parts.wpn_fps_upg_m4_g_sniper.stats = {value = 6}	
+		self.parts.wpn_fps_upg_m4_g_sniper.stats = {value = 6}
+		self.parts.wpn_fps_upg_m4_g_sniper.supported = true																																															
 		-- Ergo Grip
 		self.parts.wpn_fps_upg_m4_g_ergo.stats = {value = 2}	
+		self.parts.wpn_fps_upg_m4_g_ergo.supported = true																																														
 		-- Rubber Grip
 		self.parts.wpn_fps_upg_m4_g_hgrip.stats = {value = 2}	
+		self.parts.wpn_fps_upg_m4_g_hgrip.supported = true																																												
 		-- Contractor Grip
 		self.parts.wpn_fps_snp_tti_g_grippy.stats = {value = 1}
+		self.parts.wpn_fps_snp_tti_g_grippy.supported = true																																										
 		-- Short Grip
 		self.parts.wpn_fps_upg_m4_g_mgrip.stats = {value = 2}	
+		self.parts.wpn_fps_upg_m4_g_mgrip.supported = true																																								
 		-- Titanium Skeleton Grip
 		self.parts.wpn_fps_upg_g_m4_surgeon.stats = {value = 1}	
+		self.parts.wpn_fps_upg_g_m4_surgeon.supported = true																																						
 
 	--Stock stat changes begin here.
 		--Tactical Stock
 		self.parts.wpn_fps_upg_m4_s_pts.stats = {value = 3}
+		self.parts.wpn_fps_upg_m4_s_pts.supported = true																																						
 		--Folding stock
 		self.parts.wpn_fps_m4_uupg_s_fold.stats = {value = 5}
+		self.parts.wpn_fps_m4_uupg_s_fold.supported = true																																				
 		-- Crane Stock
 		self.parts.wpn_fps_upg_m4_s_crane.stats = {value = 2}
+		self.parts.wpn_fps_upg_m4_s_crane.supported = true																																		
 		-- 2 Piece Stock
-		self.parts.wpn_fps_upg_m4_s_ubr.stats = {value = 1}		
+		self.parts.wpn_fps_upg_m4_s_ubr.stats = {value = 1}
+		self.parts.wpn_fps_upg_m4_s_ubr.supported = true																																
 		-- Contractor stock
 		self.parts.wpn_fps_snp_tti_s_vltor.stats = {value = 1}		
+		self.parts.wpn_fps_snp_tti_s_vltor.supported = true																														
 		-- War Torn stock
 		self.parts.wpn_fps_upg_m4_s_mk46.stats = {value = 6}	
+		self.parts.wpn_fps_upg_m4_s_mk46.supported = true																												
 			
 	--Upper/Lower Receiver stat changes begin here.
 		-- exotique receiver
 		self.parts.wpn_fps_m4_upper_reciever_edge.stats = {value = 3}	
+		self.parts.wpn_fps_m4_upper_reciever_edge.supported = true																												
 		-- lw upper receiver
-		self.parts.wpn_fps_upg_ass_m4_upper_reciever_ballos.stats = {value = 1}		
+		self.parts.wpn_fps_upg_ass_m4_upper_reciever_ballos.stats = {value = 1}	
+		self.parts.wpn_fps_upg_ass_m4_lower_reciever_core.supported = true																												
 		-- thrust upper receiver
 		self.parts.wpn_fps_upg_ass_m4_upper_reciever_core.stats = {value = 1}
+		self.parts.wpn_fps_upg_ass_m4_lower_reciever_core.supported = true																										
 		-- thrust lower receiver
 		self.parts.wpn_fps_upg_ass_m4_lower_reciever_core.stats = {value = 1}	
+		self.parts.wpn_fps_upg_ass_m4_lower_reciever_core.supported = true																								
 	end
 end)
 
