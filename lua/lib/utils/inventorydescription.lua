@@ -53,6 +53,12 @@ function WeaponDescription.get_weapon_ammo_info(weapon_id, extra_ammo, total_amm
 				clip_skill = clip_skill + managers.player:upgrade_value(category, "clip_ammo_increase", 0)
 			end
 		end
+	--[[
+	--todo move this to _get_skill_stats()
+	if weapon_tweak_data.primary_class == "class_shotgun" and ((weapon_tweak_data.FIRE_MODE == "auto") or weapon_tweak_data.CAN_TOGGLE_FIREMODE) then 
+		ammo_max_per_clip = ammo_max_per_clip * (1 + managers.player:upgrade_value("class_shotgun","rolling_thunder_magazine_capacity_bonus"))
+	end
+	--]]
 
 		return clip_base + clip_mod + clip_skill
 	end
@@ -73,3 +79,5 @@ function WeaponDescription.get_weapon_ammo_info(weapon_id, extra_ammo, total_amm
 	ammo_data.skill_in_effect = managers.player:has_category_upgrade("player", "extra_ammo_multiplier") or category_skill_in_effect or managers.player:has_category_upgrade("player", "add_armor_stat_skill_ammo_mul")
 	return ammo_max_per_clip, ammo_max, ammo_data
 end
+
+--todo get weaponclass modification from blueprint, move class-specific calculation to _get_stats()/_get_skill_stats()

@@ -643,7 +643,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 		self.values.weapon.money_shot_aced = {
-			1.5
+			0.5
 		}
 			
 		self.definitions.weapon_moneyshot_rapid_fire_basic = {

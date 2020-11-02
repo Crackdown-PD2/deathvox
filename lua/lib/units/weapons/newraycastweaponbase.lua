@@ -107,7 +107,7 @@ function NewRaycastWeaponBase:reload_speed_multiplier(multiplier)
 	end
 	
 	if self:is_weapon_class("rapidfire") and self:clip_empty() then
-		multiplier = multiplier * pm:upgrade_value("weapon", "money_shot_aced", 1)
+		multiplier = multiplier * (1 - pm:upgrade_value("weapon", "money_shot_aced", 1))
 	end
 	
 	for _, category in ipairs(self:weapon_tweak_data().categories) do

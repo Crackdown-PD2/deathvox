@@ -504,7 +504,7 @@ function RaycastWeaponBase:reload_speed_multiplier(multiplier)
 	
 	--clean this up once all weapons are tagged appropriately
 	if self:is_weapon_class("rapidfire") and self:clip_empty() then
-		multiplier = multiplier * pm:upgrade_value("weapon", "money_shot_aced", 1)
+		multiplier = multiplier * (1 + pm:upgrade_value("weapon", "money_shot_aced", 0))
 	elseif self:is_weapon_class("heavy") then
 		local lead_farmer_data = pm:upgrade_value("heavy","lead_farmer",{0,0})
 		local lead_farmer_bonus = math.min(pm:get_property("current_lead_farmer_stacks",0) * lead_farmer_data[1],lead_farmer_data[2])
