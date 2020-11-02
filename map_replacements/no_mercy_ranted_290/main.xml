@@ -51,7 +51,7 @@
 			</mod>
 		</script_data_mods>
 	</level>
-	<narrative briefing_event="Play_rb1_nmh_cbf_01" contact="classic" id="no_mercy_ranted_290" jc="30" region="street">
+	<narrative briefing_event="Play_rb1_nmh_cbf_01" contact="classic" icon="guis/textures/crackdown" id="no_mercy_ranted_290" jc="30" region="street">
 		<chain>
 			<table level_id="nmh_290" type="d" type_id="heist_type_assault"/>
 		</chain>
