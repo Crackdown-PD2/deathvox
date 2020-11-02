@@ -14705,7 +14705,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			equip = 0.85
 		}
 		
-		self.m37.CLIP_AMMO_MAX = 2
+		self.m37.CLIP_AMMO_MAX = 7
 		self.m37.AMMO_MAX = 46
 		self.m37.AMMO_PICKUP = {
 			2,
