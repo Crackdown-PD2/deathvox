@@ -15,7 +15,7 @@ function ShotgunBase:setup_default()
 	--if the shotgun has the free buckshot ammo type equipped, use damage-per-pellet
 	if alive(self._unit) and self._unit:base()._parts then
 		for part_id, part in pairs(self._unit:base()._parts) do
-			if part_id == "wpn_fps_upg_a_custom_free" or part_id == "wpn_fps_upg_a_custom" then
+			if part_id == "wpn_fps_upg_a_custom_free" then
 				self._single_damage_instance = false
 			end
 		end
