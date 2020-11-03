@@ -1498,15 +1498,16 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		wpn_fps_upg_a_custom = {
 			stats = {
 				value = 3, 
-				damage = -30, 
 				spread = -5
 				}
 			},
 		wpn_fps_upg_a_custom_free = {
 			stats = {
-				value = 3, 
-				damage = -30
-			}
+				value = 3
+			},
+			custom_stats = {				
+				rays = 6		
+			}			
 		},						
 		wpn_fps_upg_a_explosive = {
 			stats = {
@@ -4150,10 +4151,13 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		}
 		self.parts.wpn_fps_upg_a_slug.supported = true	
 		-- 000 buck
-		self.parts.wpn_fps_upg_a_custom.stats = {value = 3, damage = -30, spread = -5}	
+		self.parts.wpn_fps_upg_a_custom.stats = {value = 3, spread = -5}	
 		self.parts.wpn_fps_upg_a_custom.supported = true	
 		-- community 000 buck
-		self.parts.wpn_fps_upg_a_custom_free.stats = {value = 3, damage = -30}	
+		self.parts.wpn_fps_upg_a_custom_free.stats = {value = 3}	
+		self.parts.wpn_fps_upg_a_custom_free.custom_stats = {rays = 6}	
+		self.parts.wpn_fps_upg_a_custom_free.name_id = "bm_wp_upg_a_custom_free"	
+		self.parts.wpn_fps_upg_a_custom_free.desc_id = "bm_wp_upg_a_custom_free_desc"	
 		self.parts.wpn_fps_upg_a_custom_free.supported = true	
 		
 	end
