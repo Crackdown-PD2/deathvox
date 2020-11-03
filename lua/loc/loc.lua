@@ -49,7 +49,15 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 		if deathvox:IsTotalCrackdownEnabled() then
 			loc:add_localized_strings({
 				debug_interact_gage_assignment_take = "PRESS $BTN_INTERACT TO PICK UP THE PACKAGE",
+				--weapon stuff
 				
+				--shotgun ammo
+				bm_wp_upg_a_custom = "Iron Hand Buckshot",
+				bm_wp_upg_a_custom2_desc = "Makes all pellets that hit enemies deal individual damage, allowing for damage to stack.",
+				bm_wp_upg_a_custom_desc = "Makes all pellets that hit enemies deal individual damage, allowing for damage to stack.",
+				
+				bm_wp_striker_b_long_achievment = "Kill ##$progress## more Bulldozers with any shotgun using the Iron Hand Buckshot ammo type.", --not sure if this actually will display progress 
+			
 				--skilltree sub-tree names
 				st_menu_dallas_boss = "Boss",
 				st_menu_dallas_marksman = "Marksman",

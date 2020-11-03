@@ -119,7 +119,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_l5 = { -- gotta be like this or else the game shits the bed
 			stats = {	
 				value = 1,			 			 
-				extra_ammo = 5, 
+				extra_ammo = 10, 
 				concealment = -2
 			}
 		}			
@@ -127,7 +127,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.wpn_fps_ass_amcar.override.wpn_fps_m4_uupg_m_std = {	
 			stats = {			
 				value = 1,			 
-				extra_ammo = 5, 
+				extra_ammo = 10, 
 				concealment = -2
 			}
 		}
@@ -135,7 +135,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_pmag = {	
 			stats = {			
 				value = 3,
-				extra_ammo = 5, 
+				extra_ammo = 10, 
 				concealment = -2
 			}
 		}
@@ -143,7 +143,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.wpn_fps_ass_amcar.override.wpn_fps_ass_l85a2_m_emag = {	
 			stats = {
 				value = 1,			 
-				extra_ammo = 5, 
+				extra_ammo = 10, 
 				concealment = -2
 			}
 		}
@@ -151,7 +151,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_quad = {
 			stats = {
 				value = 3,
-				extra_ammo = 20, 
+				extra_ammo = 40, 
 				concealment = -10	
 			}	
 		}
@@ -190,6 +190,12 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 9, 18
 	--Notes:
 	--Active Mods: Speedpull Mag [wpn_fps_ass_g36_m_quick] [+100% Reload Speed, -5 Concealment] Value: 2
+	self.parts.wpn_fps_ass_g36_m_quick.stats = {	
+		value = 2,		
+		reload = 10,
+		concealment = -5
+	}
+	self.parts.wpn_fps_ass_g36_m_quick.supported = true
 
 	--------------------------------------
 				--Commando 553--
@@ -284,7 +290,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes: 
 	--Active Mods: 
 	--DMR Kit [wpn_fps_upg_ass_m4_b_beowulf] [- Rapid Fire, + Precision, +Armor Piercing, -135 Ammo Stock,
-		--+80 Damage, -40 Stability, -5 Concealment, -3, 6 Pickup] Value: 1
+	--+80 Damage, -40 Stability, -5 Concealment, -3, 6 Pickup] Value: 1
 
 	--Vintage Mag [wpn_fps_upg_m4_m_straight] [-10 Magazine, +5 Concealment] Value: 2
 			
@@ -710,7 +716,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_l5 = {
 			stats = {
 				value = 1,			 			 
-				extra_ammo = 5, 
+				extra_ammo = 10, 
 				concealment = -2	
 			}
 		}
@@ -718,7 +724,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.wpn_fps_ass_m16.override.wpn_fps_m4_uupg_m_std = {	
 			stats = {
 				value = 1,			 
-				extra_ammo = 5, 
+				extra_ammo = 10, 
 				concealment = -2	
 			}
 		}
@@ -726,7 +732,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_pmag = {	
 		stats = {
 				value = 3,
-				extra_ammo = 5, 
+				extra_ammo = 10, 
 				concealment = -2
 			}
 		}
@@ -734,7 +740,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.wpn_fps_ass_m16.override.wpn_fps_ass_l85a2_m_emag = {	
 			stats = {
 				value = 1,			 
-				extra_ammo = 5, 
+				extra_ammo = 10, 
 				concealment = -2
 			}
 		}
@@ -742,7 +748,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_quad = {	
 			stats = {
 				value = 3,
-				extra_ammo = 20, 
+				extra_ammo = 40, 
 				concealment = -10
 			}		
 		}
@@ -1466,11 +1472,58 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Active Mods: Suppressed Barrel [wpn_fps_sho_aa12_barrel_silenced] [Suppresses Weapon, +Quiet, -100 Threat] Value: 5
 
 	--Drum Magazine [wpn_fps_sho_aa12_mag_drum] [+12 Magazine, -20 Concealment] Value: 1
-	self.parts.wpn_fps_sho_aa12_mag_drum.stats = {value = 1, concealment = -20, extra_ammo = 6}
+	self.parts.wpn_fps_sho_aa12_mag_drum.stats = {value = 1, concealment = -20, extra_ammo = 12}
 	self.parts.wpn_fps_sho_aa12_mag_drum.supported = true
 	
 	self.parts.wpn_fps_sho_aa12_barrel_silenced.stats = {suppression = 72, alert_size = 12, value = 6}
 	self.parts.wpn_fps_sho_aa12_barrel_silenced.supported = true
+
+	self.wpn_fps_sho_aa12.override = {
+		wpn_fps_upg_a_slug = {
+			stats = {
+				value = 5, 
+				spread = 5, 
+				damage = 30
+			},
+			custom_stats = {				
+				damage_near_mul = 999999999,
+				damage_far_mul = 999999999, 
+				rays = 1,				
+				armor_piercing_add = 1,
+				can_shoot_through_enemy = false,
+				can_shoot_through_shield = true,
+				can_shoot_through_wall = true,
+				}
+			},
+		wpn_fps_upg_a_custom = {
+			stats = {
+				value = 3, 
+				damage = -30, 
+				spread = -5
+				}
+			},
+		wpn_fps_upg_a_custom_free = {
+			stats = {
+				value = 3, 
+				damage = -30
+			}
+		},						
+		wpn_fps_upg_a_explosive = {
+			stats = {
+				value = 5, 
+				spread = 5
+			},
+			custom_stats = {
+				ignore_statistic = true,
+				damage_far_mul = 999999999,	--as shit as this is this should theoretically work
+				damage_near_mul = 999999999,
+				ammo_pickup_max_mul = 4,
+				ammo_pickup_min_mul = 2.5,				
+				bullet_class = "InstantExplosiveBulletBase",
+				rays = 1
+			}
+		}
+	}
 
 	--------------------------------------
 				--IZHMA 12G--
@@ -1490,7 +1543,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes:
 	--Active Mods: Big Brother Magazine [wpn_fps_sho_basset_m_extended] [+3 Magazine, -5 Concealment] Value: 1
 	--NOTE this mod is shared with the Grimms and has variable stats.
---wpn_fps_sho_basset_m_extended has same stats as grimm
+	--wpn_fps_sho_basset_m_extended has same stats as grimm
 	
 	--------------------------------------
 				--Brothers Grimm 12G--
@@ -1511,7 +1564,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Active Mods: Big Brother Magazine [wpn_fps_sho_basset_m_extended] [+6 Magazine, -10 Concealment] Value: 1
 	
 	part_stat_override("wpn_fps_sho_x_basset","wpn_fps_sho_basset_m_extended",{stats = {
-			extra_ammo = 3,
+			extra_ammo = 6,
 			concealment = -10,
 			value = 1
 		}
@@ -3563,7 +3616,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 
 	self.parts.wpn_fps_sho_basset_m_extended.stats = {
 		concealment = -5,
-		extra_ammo = 2,
+		extra_ammo = 3,
 		value = 1
 	}
 	
@@ -3763,7 +3816,29 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	self.parts.wpn_fps_upg_i_autofire.supported = true
 
 	--Barrel extension stat changes begin here.
-	-- Ported Compensator
+	-- Shh! Suppressor		
+		self.parts.wpn_fps_upg_ns_sho_salvo_large.stats = {value = 7, spread = 5, suppression = 72, alert_size = 12}
+		self.parts.wpn_fps_upg_ns_sho_salvo_large.custom_stats = {damage_near_mul = 1.2}		
+		self.parts.wpn_fps_upg_ns_sho_salvo_large.supported = true
+	-- Silent Killer Suppressor		
+		self.parts.wpn_fps_upg_ns_shot_thick.stats = {value = 7, spread = -5, suppression = 72, alert_size = 12}
+		self.parts.wpn_fps_upg_ns_shot_thick.supported = true
+	-- King's Crown Compensator		
+		self.parts.wpn_fps_upg_shot_ns_king.stats = {value = 5, spread = 5}
+		self.parts.wpn_fps_upg_shot_ns_king.custom_stats = {damage_near_mul = 1.2}
+		self.parts.wpn_fps_upg_shot_ns_king.supported = true						
+	-- Shark Teeth Nozzle		
+		self.parts.wpn_fps_upg_ns_shot_shark.stats = {value = 5, spread = -5}
+		self.parts.wpn_fps_upg_ns_shot_shark.supported = true				
+	-- Donald's Horizontal Leveller		
+		self.parts.wpn_fps_upg_ns_duck.stats = {value = 1, spread_multi = {2.25, 0.5}}
+		self.parts.wpn_fps_upg_ns_duck.forbids = {
+			"wpn_fps_upg_a_explosive",
+			"wpn_fps_upg_a_slug",
+			"wpn_fps_upg_a_dragons_breath"
+		}
+		self.parts.wpn_fps_upg_ns_duck.supported = true			
+	-- Ported Compensator	
 		self.parts.wpn_fps_upg_ass_ns_battle.stats = {value = 1}
 		self.parts.wpn_fps_upg_ass_ns_battle.supported = true			
 	-- Stubby Compensator
@@ -3905,19 +3980,19 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		-- CAR Quadstacked Magazine [wpn_fps_upg_m4_m_quad] Value: 3
 		self.parts.wpn_fps_upg_m4_m_quad.stats = {
 			value = 3,		-- note wiki value incorrect
-			extra_ammo = 15, 
+			extra_ammo = 30, 
 			concealment = -10
 		}
 		self.parts.wpn_fps_upg_m4_m_quad.supported = true																																																																										
 		--  [wpn_fps_upg_m4_m_straight] Value: 2
 		self.parts.wpn_fps_upg_m4_m_straight.stats = {	
 			value = 2,		
-			extra_ammo = -5, 
+			extra_ammo = -10, 
 			concealment = 5
 		}	
 		self.parts.wpn_fps_upg_m4_m_straight.supported = true																																																																								
 		-- Speedpull Magazine
-		self.parts.wpn_fps_m4_upg_m_quick.stats = {	
+		self.parts.wpn_fps_m4_upg_m_quick.stats = {
 			value = 2,		
 			reload = 10,
 			concealment = -4
@@ -4022,7 +4097,65 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_upg_ass_m4_lower_reciever_core.supported = true																										
 		-- thrust lower receiver
 		self.parts.wpn_fps_upg_ass_m4_lower_reciever_core.stats = {value = 1}	
-		self.parts.wpn_fps_upg_ass_m4_lower_reciever_core.supported = true																								
+		self.parts.wpn_fps_upg_ass_m4_lower_reciever_core.supported = true
+
+	--Shotgun ammo type stat changes begin here.
+		-- flechette rounds
+		self.parts.wpn_fps_upg_a_piercing.stats = {value = 5, spread = 5}	
+		self.parts.wpn_fps_upg_a_piercing.custom_stats = {
+				damage_near_mul = 1.2 --not sure about these. might need to modify shotgunbase
+		}
+		self.parts.wpn_fps_upg_a_piercing.supported = true	
+		-- dragon's breath rounds (muzzleflash and actual hitbox/cone stuff ain't done)
+		self.parts.wpn_fps_upg_a_dragons_breath.stats = {value = 5}			
+		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats = {
+			ignore_statistic = true,
+			muzzleflash = "effects/payday2/particles/weapons/shotgun/sho_muzzleflash_dragons_breath",
+			can_shoot_through_shield = true,
+			can_shoot_through_enemy = true,
+			armor_piercing_add = 1,			
+			damage_far_mul = 0.1333333333333333,
+			damage_near_mul = 0.2,
+			bullet_class = "FlameBulletBase",
+			rays = 12,
+			fire_dot_data = {
+				dot_trigger_chance = "100",
+				dot_damage = "10",
+				dot_length = "3.1",
+				dot_trigger_max_distance = "400",
+				dot_tick_period = "0.5"
+			}
+		}
+		self.parts.wpn_fps_upg_a_dragons_breath.supported = true			
+		-- he slugs
+		self.parts.wpn_fps_upg_a_explosive.stats = {value = 5, spread = 5}			
+		self.parts.wpn_fps_upg_a_explosive.custom_stats = {
+				ignore_statistic = true,
+				damage_far_mul = 999999999,	--as shit as this is this should theoretically work
+				damage_near_mul = 999999999,
+				bullet_class = "InstantExplosiveBulletBase",
+				rays = 1
+		}
+		self.parts.wpn_fps_upg_a_explosive.supported = true	
+		-- ap slugs
+		self.parts.wpn_fps_upg_a_slug.stats = {value = 5, spread = 5, damage = 30}	
+		self.parts.wpn_fps_upg_a_slug.custom_stats = {
+				damage_near_mul = 999999999,
+				damage_far_mul = 999999999, 
+				rays = 1,				
+				armor_piercing_add = 1,
+				can_shoot_through_enemy = false,
+				can_shoot_through_shield = true,
+				can_shoot_through_wall = true,
+		}
+		self.parts.wpn_fps_upg_a_slug.supported = true	
+		-- 000 buck
+		self.parts.wpn_fps_upg_a_custom.stats = {value = 3, damage = -30, spread = -5}	
+		self.parts.wpn_fps_upg_a_custom.supported = true	
+		-- community 000 buck
+		self.parts.wpn_fps_upg_a_custom_free.stats = {value = 3, damage = -30}	
+		self.parts.wpn_fps_upg_a_custom_free.supported = true	
+		
 	end
 end)
 
