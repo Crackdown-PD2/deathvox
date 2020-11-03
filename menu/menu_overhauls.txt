@@ -8,14 +8,6 @@
 	"items" : [
 		{
 			"type" : "toggle",
-			"id" : "deathvox_toggle_hoppip",
-			"title" : "deathvox_toggle_hoppip_title",
-			"description" : "deathvox_toggle_hoppip_desc",
-			"callback" : "callback_deathvox_toggle_hoppip",
-			"value" : "useHoppipOverhaul"
-		},
-		{
-			"type" : "toggle",
 			"id" : "deathvox_toggle_totalcd",
 			"title" : "deathvox_toggle_totalcd_title",
 			"description" : "deathvox_toggle_totalcd_desc",
