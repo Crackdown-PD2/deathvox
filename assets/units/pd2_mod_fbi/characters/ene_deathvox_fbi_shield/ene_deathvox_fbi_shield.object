@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <dynamic_object>
-	<diesel materials="units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/ene_deathvox_classic_cloaker" orientation_object="root_point" />
-	<sequence_manager file="units/payday2/characters/ene_spook_1/ene_spook_1" /> <animation_def name="anims/units/enemies/cop/cop_def" />
+	<diesel materials="units/pd2_mod_fbi/characters/ene_deathvox_fbi_shield/ene_deathvox_fbi_shield" orientation_object="root_point" />
+	<sequence_manager file="units/payday2/characters/ragdoll" /> <animation_def name="anims/units/enemies/cop/cop_def" />
 
 	<bodies>
 		<body name="body" enabled="true" template="character" friction="0.6" collision_class="ragdoll">
@@ -176,7 +176,7 @@
 		<constraint type="limited_hinge" name="RightLeg" enabled="false">
 			<param body_a="rag_RightUpLeg" body_b="rag_RightLeg"/>
 			<param pivot="position:RightLeg"/>
-			<param min_angle="20" max_angle="60" axis="xaxis:RightLeg" twist_freedom="5"/>
+			<param min_angle="-40" max_angle="60" axis="xaxis:RightLeg" twist_freedom="5"/>
 			<param plane_axis="yaxis:RightLeg"/>
 			<param damping="1" spring_constant="200" min_restitution="0"/>
 		</constraint>
@@ -184,7 +184,7 @@
 		<constraint type="limited_hinge" name="LeftLeg" enabled="false">
 			<param body_b="rag_LeftLeg" body_a="rag_LeftUpLeg"/>
 			<param pivot="position:LeftLeg"/>
-			<param min_angle="20" max_angle="60" axis="xaxis:LeftLeg" twist_freedom="5"/>
+			<param min_angle="-40" max_angle="60" axis="xaxis:LeftLeg" twist_freedom="5"/>
 			<param plane_axis="yaxis:LeftLeg"/>
 			<param damping="1" spring_constant="200" min_restitution="0"/>
 		</constraint>
@@ -195,49 +195,51 @@
 	</decal_surfaces>
 
 	<graphics>
-		
-		<graphic_group name="character" enabled="true" culling_object="c_cullblock">
+		<graphic_group name="character" enabled="true" culling_object="g_body">
 
-			<lod_object name="g_body_lod">
-				<object name="g_body_lod0" enabled="true"  max_distance="1000" />
-				<object name="g_body_lod1" enabled="true" /> <!--Switches to ene_spook_classic_body_lod1_df.texture. Required cause of bad UV / texture issues when using the main texture + performance. NOTE: texture removed for optimisation for Resmod.-->
+			<lod_object name="lod_body">
+				<object name="g_body" 		enabled="true"  max_distance="3000"  max_draw_lod="0" cpy_material_vars="contour_color, contour_opacity">
+					<material materials="mtr_swat_fbi" max_distance="1000" />
+					<material materials="mtr_swat_fbi_lod_1" max_distance="1500" />
+					<material materials="mtr_swat_fbi_lod_2" />
+				</object>
+				<object name="g_body_lod1" 	enabled="true" lod="1" >
+					<material materials="mtr_swat_fbi" max_distance="0" cpy_material_vars="contour_color, contour_opacity"/>
+					<material materials="mtr_swat_fbi_lod_2" />
+				</object>
 			</lod_object>
-			<object name="g_head_lod0" enabled="false" /> <!--Set to false, textures removed for optimisation for ResMod.-->
-			<object name="g_helmet_lod1" enabled="true" />
-			<object name="g_helmet_lod2" enabled="true" />
-			<object name="s_body" 			enabled="true" shadow_caster="true"/>	
-		</graphic_group>		
 
-		<graphic_group name="grp_body_no_head" enabled="false" culling_object="c_cullblock">
-			<lod_object name="lod_no_head">
-				<object name="g_body_lod0" enabled="true"  max_distance="1000" />
-				<object name="g_body_lod1" enabled="true" />
+			<lod_object name="lod_head">
+				<object name="g_head" 		enabled="true"  max_distance="3000"  max_draw_lod="0" cpy_material_vars="contour_color, contour_opacity">
+					<material materials="mtr_head" max_distance="1000" />
+					<material materials="mtr_head_lod_1" max_distance="1500" />
+					<material materials="mtr_head_lod_2" />
+				</object>
+				<object name="g_head_lod1" 	enabled="true" lod="1" >
+					<material materials="mtr_head" max_distance="0" cpy_material_vars="contour_color, contour_opacity"/>
+					<material materials="mtr_head_lod_2" />
+				</object>
 			</lod_object>
-			<object name="g_helmet_lod1" enabled="true" />
-			<object name="g_helmet_lod2" enabled="true" />
-			<object name="s_body" 			enabled="true" shadow_caster="true"/>	
+			
+			<lod_object name="g_glass_lod">
+				<object name="g_helmet_lod3" enabled="true"  max_distance="3000" max_draw_lod="0" /> <!-- had to name it this so the glass could pop off properly with the helmet-->
+				<object name="g_helmet_lod4" enabled="true" lod="1" />
+			</lod_object>			
+
+			<lod_object name="lod_helmet">
+				<object name="g_helmet_lod1" 	enabled="true"  max_distance="3000"  max_draw_lod="0" cpy_material_vars="contour_color, contour_opacity">
+					<material materials="mtr_helmet" max_distance="1000" />
+					<material materials="mtr_helmet_lod_1" max_distance="1500" />
+					<material materials="mtr_helmet_lod_2" />
+				</object>
+				<object name="g_helmet_lod2" 	enabled="true" lod="1" >
+					<material materials="mtr_helmet" max_distance="0" cpy_material_vars="contour_color, contour_opacity"/>
+					<material materials="mtr_helmet_lod_2" />
+				</object>
+			</lod_object>
+			<object name="s_body" enabled="true" shadow_caster="true"/>
+			
 		</graphic_group>
-
-		<graphic_group name="grp_body_bottom" enabled="false" culling_object="c_cullblock">
-			<lod_object name="lod_bottom">
-				<object name="g_body_lod0" enabled="true"  max_distance="1000" />
-				<object name="g_body_lod1" enabled="true" />
-			</lod_object>
-			<object name="g_helmet_lod1" enabled="true" />
-			<object name="g_helmet_lod2" enabled="true" />
-			<object name="s_body" 			enabled="true" shadow_caster="true"/>	
-		</graphic_group>		
-		
-		<object name="g_il" 	enabled="false" culling_object="c_cullblock"/>
-		
 	</graphics>
 
-	<effects>
-		<effect_spawner name="es_light" enabled="false" object="Head" effect="units/pd2_mod_classic/characters/ene_deathvox_classic_cloaker/cloaker_goggle" />
-	</effects>	
-
-	<!--<lights>
-		<light name="point_light" enabled="true" multiplier="reddot" far_range="25" near_range="1" falloff="4.0" type="omni|specular" />
-	</lights>--> <!--Vanilla cloaker's ambient green lighting. Doesn't work on this model (Modified Reaper Medic).-->
-	
 </dynamic_object>
