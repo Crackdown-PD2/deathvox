@@ -289,6 +289,7 @@
 	<!--Shared textures-->	
 	<texture path="units/pd2_mod_sharks/characters/shared_textures/city_heads_atlas_df" force="false"/>	
 	<texture path="units/pd2_mod_sharks/characters/shared_textures/city_heads_atlas_nm" force="false"/>	
+	<texture path="units/pd2_mod_sharks/characters/shared_textures/ene_murky_hrt_df" force="false"/>	
 	<texture path="units/pd2_mod_sharks/characters/shared_textures/fbi_heads_atlas_df" force="false"/>	
 	<texture path="units/pd2_mod_sharks/characters/shared_textures/fbi_heads_atlas_nm" force="false"/>	
 	<texture path="units/pd2_mod_sharks/characters/shared_textures/fbi_helmets_atlas_df" force="false"/>	
