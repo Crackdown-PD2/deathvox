@@ -167,6 +167,7 @@ function CharacterTweakData:get_ai_group_type()
 	map_faction_override["bex"] = "federales"	
 	--map_faction_override["skm_bex"] = "federales"	--not sure about this yet.
 	map_faction_override["pex"] = "federales"		
+	map_faction_override["fex"] = "federales"		
 	  
 	--Halloween overrides begin here.
   
