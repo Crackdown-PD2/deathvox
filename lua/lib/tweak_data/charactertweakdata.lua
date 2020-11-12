@@ -4228,9 +4228,10 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	--self:_multiply_weapon_delay(self.presets.weapon.sniper, 0)
 	--self:_multiply_weapon_delay(self.presets.weapon.gang_member, 0)
 	
-	self.security = deep_clone(self.deathvox_guard) --  Requires further testing. May be fix for heist-specific crash tied to initial custom unit spawn.
+	self.security = deep_clone(self.deathvox_guard) --  Requires further testing. 
 	self.gensec = deep_clone(self.deathvox_guard)
 	self.security_mex = deep_clone(self.deathvox_guard)
+	self.security_mex_no_pager = deep_clone(self.deathvox_guard)
 	
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	self.sniper = deep_clone(self.deathvox_sniper)
