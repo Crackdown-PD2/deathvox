@@ -1,9 +1,9 @@
 {
 	"heist_nmh_new2_desc":"Press the button and wait for the elevator",
 	"heist_nmh_290_brief":"Our client needs a blood sample from a patient being kept in the isolation ward of Mercy Hospital. You gotta go in there, take out the surveillance, subdue the civilians and get me into the patient database so I can ID the guy. With the security in this place, it should be a nice clean job. I'll get you out via the roof when you're done. This job is a little shady, brokered through a third part, got some some serious shadow-company military industrial vibes, but worth the risk. The payday is something we're gonna need in the future, plus a nice cash bonus.",
-	"heist_no_mercy_ranted_290_name":"No Mercy Crackdown",
+	"heist_no_mercy_ranted_290_name":"No Mercy: Cracked",
 	"heist_no_mercy_ranted_290_brief":"Bain only has a couple more days. Those Kataru motherfuckers saw fit to shoot him full of virus. Same fucking stuff we stole from Mercy Hospital few years ago. Who ever we got it for, they sold it to Murkywater and now it's killing him. Knew from the start it was a bad job. Bain did too, but he wanted the Cagliostro manuscript. That fucking book. Should have told him to fuck off, but he said we really needed it for something, and to be honest, we'd never be where we are without it.",
-	"heist_nmh_290_name":"Mercy Hospital",
+	"heist_nmh_290_name":"Mercy Hospital: Cracked",
 	"heist_nmh_new3_desc":"Press the button and wait for the elevator",
 	"heist_nmh_new3":"Call the elevator",
 	"heist_nmh_new_desc":"You gotta find a sentrifuge to validate the blood samples.",
