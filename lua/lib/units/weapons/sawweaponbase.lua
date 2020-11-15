@@ -331,7 +331,7 @@ function SawHit:on_collision(col_ray, weapon_unit, user_unit, damage)
 				is_crit = true
 			end
 		end
-	elseif unit_base_ext.has_tag and unit_base_ext:has_tag("tank") then --vanilla (but fixed), add 500 damage to the hit against all Dozers
+	elseif unit_base_ext and unit_base_ext.has_tag and unit_base_ext:has_tag("tank") then --vanilla (but fixed), add 500 damage to the hit against all Dozers
 		damage = damage + 50
 	end
 
