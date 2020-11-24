@@ -1,6 +1,6 @@
-if deathvox:IsTotalCrackdownEnabled() then
+if deathvox and deathvox:IsTotalCrackdownEnabled() then
 
-	Hooks:PostHook(EquipmentsTweakData,"init","tcd_equipmentstweakdata_init",function(self)
+	Hooks:PostHook(EquipmentsTweakData,"init","tcd_equipmentstweakdata_init",function(self, tweak_data)
 		self.armor_kit.dummy_unit = "units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag_dummy"
 		self.armor_kit.use_function_name = "use_armor_plates"
 
