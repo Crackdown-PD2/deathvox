@@ -1,53 +1,66 @@
-function ECMJammerBase._detect_and_give_dmg(hit_pos, device_unit, user_unit, range)
-	local enemies_in_range = World:find_units_quick("sphere", hit_pos, range, managers.slot:get_mask("enemies"))
-	local enemies_to_stun = {}
+local mvec3_cpy = mvector3.copy
+local mvec3_norm = mvector3.normalize
 
-	if #enemies_in_range > 0 then
-		for _, enemy in ipairs(enemies_in_range) do
-			if not table.contains(enemies_to_stun, enemy) and enemy:character_damage() and enemy:character_damage().damage_explosion and not enemy:character_damage():dead() then
-				if enemy:base():char_tweak().ecm_vulnerability then
-					local stun = true
+local math_random = math.random
 
-					if enemy:brain() then
-						if enemy:brain().is_hostage and enemy:brain():is_hostage() or enemy:brain().surrendered and enemy:brain():surrendered() then
-							stun = false
-						end
+local world_g = World
+local ipairs_g = ipairs
+
+function ECMJammerBase._detect_and_give_dmg(from_pos, device_unit, user_unit, range)
+	local enemies_in_range = world_g:find_units_quick("sphere", from_pos, range, managers.slot:get_mask("enemies"))
+	local attacker = alive(user_unit) and user_unit
+	local weapon = alive(device_unit) and device_unit
+
+	for _, enemy in ipairs_g(enemies_in_range) do
+		local dmg_ext = enemy:character_damage()
+
+		if dmg_ext and dmg_ext.damage_explosion then
+			local ecm_vuln = enemy:base() and enemy:base():char_tweak() and enemy:base():char_tweak().ecm_vulnerability
+
+			if ecm_vuln and ecm_vuln ~= 0 then
+				local can_stun = true
+				local brain_ext = enemy:brain()
+
+				if brain_ext then
+					if brain_ext.is_hostage and brain_ext:is_hostage() or brain_ext.surrendered and brain_ext:surrendered() then
+						can_stun = false
 					end
+				end
 
-					if stun then
-						if enemy:anim_data() and enemy:anim_data().act then
-							stun = false
-						elseif enemy:base():char_tweak().ecm_vulnerability <= math.random() then
-							stun = false
-						end
+				if can_stun then
+					if enemy:anim_data() and enemy:anim_data().act or enemy:movement():chk_action_forbidden("hurt") or ecm_vuln < math_random() then
+						can_stun = false
 					end
+				end
 
-					if stun then
-						table.insert(enemies_to_stun, enemy)
-					end
+				if can_stun then
+					local hit_pos = mvec3_cpy(enemy:movement():m_head_pos())
+					local attack_dir = hit_pos - from_pos
+					mvec3_norm(attack_dir)
+
+					local attack_data = {
+						damage = 0,
+						variant = "stun",
+						attacker_unit = attacker,
+						weapon_unit = weapon,
+						col_ray = {
+							position = hit_pos,
+							ray = attack_dir
+						}
+					}
+
+					dmg_ext:damage_explosion(attack_data)
 				end
 			end
 		end
 	end
+end
 
-	for _, enemy in ipairs(enemies_to_stun) do
-		local e_head_pos = mvector3.copy(enemy:movement():m_head_pos())
-		local attack_dir = Vector3()
+local update_original = ECMJammerBase.update
+function ECMJammerBase:update(...)
+	--pain
+	self._unit:m_position(self._position)
+	self._unit:m_rotation(self._rotation)
 
-		mvector3.direction(attack_dir, hit_pos, e_head_pos)
-		mvector3.normalize(attack_dir)
-
-		local attack_data = {
-			damage = 0,
-			variant = "stun",
-			attacker_unit = alive(user_unit) and user_unit or nil,
-			weapon_unit = device_unit,
-			col_ray = {
-				position = mvector3.copy(enemy:movement():m_head_pos()),
-				ray = attack_dir
-			}
-		}
-
-		enemy:character_damage():damage_explosion(attack_data)
-	end
+	update_original(self, ...)
 end
