@@ -8,8 +8,8 @@ local ipairs_g = ipairs
 
 function ECMJammerBase._detect_and_give_dmg(from_pos, device_unit, user_unit, range)
 	local enemies_in_range = world_g:find_units_quick("sphere", from_pos, range, managers.slot:get_mask("enemies"))
-	local attacker = alive(user_unit) and user_unit
-	local weapon = alive(device_unit) and device_unit
+	local attacker = alive(user_unit) and user_unit or nil
+	local weapon = alive(device_unit) and device_unit or nil
 
 	for _, enemy in ipairs_g(enemies_in_range) do
 		local dmg_ext = enemy:character_damage()
