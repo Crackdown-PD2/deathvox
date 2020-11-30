@@ -16,3 +16,21 @@ function TeamAIMovement:is_taser_attack_allowed()
 	
 	return
 end
+
+function TeamAIMovement:pre_destroy()
+	--execute copmovement pre_destroy to ensure any changes to it also apply here
+	--this is how it should've been done from the start
+	TeamAIMovement.super.pre_destroy(self)
+
+	if self._heat_listener_clbk then
+		managers.groupai:state():remove_listener(self._heat_listener_clbk)
+
+		self._heat_listener_clbk = nil
+	end
+
+	if self._switch_to_not_cool_clbk_id then
+		managers.enemy:remove_delayed_clbk(self._switch_to_not_cool_clbk_id)
+
+		self._switch_to_not_cool_clbk_id = nil
+	end
+end
