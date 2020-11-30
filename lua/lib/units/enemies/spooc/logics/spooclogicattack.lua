@@ -87,13 +87,11 @@ function SpoocLogicAttack._upd_spooc_attack(data, my_data)
 
 	if focus_enemy and focus_enemy.nav_tracker and focus_enemy.is_person and AIAttentionObject.REACT_SHOOT <= focus_enemy.reaction and not data.unit:movement():chk_action_forbidden("walk") then
 		if focus_enemy.criminal_record then
-			if focus_enemy.criminal_record.status then
+			if focus_enemy.criminal_record.status or SpoocLogicAttack._is_last_standing_criminal(focus_enemy) then
 				return
-			else
-				if SpoocLogicAttack._is_last_standing_criminal(focus_enemy) then
-					return
-				end
 			end
+		elseif managers.groupai:state():is_enemy_converted_to_criminal(focus_enemy.unit) then
+			return
 		end
 
 		if focus_enemy.unit:movement().zipline_unit and focus_enemy.unit:movement():zipline_unit() then
