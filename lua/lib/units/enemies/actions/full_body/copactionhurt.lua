@@ -754,15 +754,13 @@ function CopActionHurt:init(action_desc, common_data)
 					tase_shooting = true
 				elseif action_type == "counter_tased" or action_type == "taser_tased" then
 					shoot_chance = 1
-				else
-					if not is_stealth then
-						if action_type == "death" then
-							if common_data.char_tweak.shooting_death then
-								shoot_chance = 0.1
-							end
-						elseif action_type == "hurt" or action_type == "heavy_hurt" or action_type == "expl_hurt" or action_type == "fire_hurt" then
+				elseif not is_stealth then
+					if action_type == "death" then
+						if common_data.char_tweak.shooting_death then
 							shoot_chance = 0.1
 						end
+					elseif action_type == "hurt" or action_type == "heavy_hurt" or action_type == "expl_hurt" or action_type == "fire_hurt" then
+						shoot_chance = 0.1
 					end
 				end
 			end
@@ -913,24 +911,30 @@ function CopActionHurt:init(action_desc, common_data)
 		end
 
 		if self._is_server then
-			local radius, filter_name = nil
+			local radius = nil
 
 			if is_stealth then
 				local default_radius = tweak_data.upgrades.cop_hurt_alert_radius_whisper
 
-				if action_desc.attacker_unit and alive(action_desc.attacker_unit) and action_desc.attacker_unit:base() then
-					if action_desc.attacker_unit:base().upgrade_value then
-						radius = action_desc.attacker_unit:base():upgrade_value("player", "silent_kill") or default_radius
-					elseif action_desc.attacker_unit:base().is_local_player then
-						radius = managers.player:upgrade_value("player", "silent_kill", default_radius)
+				if action_type == "fire_hurt" or action_type == "fire_death" then
+					radius = default_radius * 3
+				else
+					if action_desc.attacker_unit and alive(action_desc.attacker_unit) and action_desc.attacker_unit:base() then
+						if action_desc.attacker_unit:base().is_local_player then
+							radius = managers.player:upgrade_value("player", "silent_kill", default_radius)
+						elseif action_desc.attacker_unit:base().upgrade_value then
+							radius = action_desc.attacker_unit:base():upgrade_value("player", "silent_kill") or default_radius
+						end
 					end
-				end
 
-				if not radius then
-					radius = default_radius
+					radius = radius or default_radius
 				end
 			else
 				radius = tweak_data.upgrades.cop_hurt_alert_radius
+
+				if action_type == "fire_hurt" or action_type == "fire_death" then
+					radius = radius * 3
+				end
 			end
 
 			local new_alert = {
@@ -2329,21 +2333,21 @@ function CopActionHurt:on_death_drop(unit, stage)
 
 	if self._shooting_hurt then
 		if stage == 2 then
-			self._weapon_unit:base():stop_autofire()
-			self._ext_inventory:drop_weapon()
-
 			self._weapon_dropped = true
 			self._shooting_hurt = false
+
+			self._weapon_unit:base():stop_autofire()
+			self._ext_inventory:drop_weapon()
 		end
 	elseif self._ext_inventory then
-		self._ext_inventory:drop_weapon()
-
 		self._weapon_dropped = true
+
+		self._ext_inventory:drop_weapon()
 	end
 end
 
 function CopActionHurt:on_inventory_event(event)
-	local weapon_unit = self._ext_inventory:equipped_unit()
+	local weapon_unit = not self._weapon_dropped and self._ext_inventory:equipped_unit()
 
 	if weapon_unit then
 		local weap_tweak = weapon_unit:base():weapon_tweak_data()
@@ -2381,7 +2385,6 @@ function CopActionHurt:on_inventory_event(event)
 		}
 	else
 		self._weapon_unit = false
-		self._shooting_hurt = false
 	end
 end
 
