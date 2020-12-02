@@ -3770,7 +3770,7 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 	self.hector_boss.ecm_vulnerability = 0
 	self.hector_boss.weapon = self.presets.weapon.deathvox	
 	self.hector_boss_no_armor.HEALTH_INIT = 15
-	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox.is_pistol
+	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox
 	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
 	self.chavez_boss.HEALTH_INIT = 500
 	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
@@ -3906,7 +3906,7 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	self.hector_boss.ecm_vulnerability = 0
 	self.hector_boss.weapon = self.presets.weapon.deathvox	
 	self.hector_boss_no_armor.HEALTH_INIT = 15
-	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox.is_pistol
+	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox
 	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
 	self.chavez_boss.HEALTH_INIT = 500
 	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
@@ -4043,7 +4043,7 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self.hector_boss.ecm_vulnerability = 0
 	self.hector_boss.weapon = self.presets.weapon.deathvox	
 	self.hector_boss_no_armor.HEALTH_INIT = 15
-	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox.is_pistol
+	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox
 	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
 	self.chavez_boss.HEALTH_INIT = 600
 	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
@@ -4180,7 +4180,7 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	self.hector_boss.ecm_vulnerability = 0
 	self.hector_boss.weapon = self.presets.weapon.deathvox	
 	self.hector_boss_no_armor.HEALTH_INIT = 15
-	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox.is_pistol
+	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox
 	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
 	self.chavez_boss.HEALTH_INIT = 600
 	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
@@ -4300,7 +4300,7 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.hector_boss.ecm_vulnerability = 0
 	self.hector_boss.weapon = self.presets.weapon.deathvox	
 	self.hector_boss_no_armor.HEALTH_INIT = 15
-	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox.is_pistol
+	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox
 	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
 	self.chavez_boss.HEALTH_INIT = 900
 	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
