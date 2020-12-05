@@ -1,8 +1,6 @@
 [
     {
         "ident": "crackdown_autoupdate",
-        "hash": "4a2b2eabca6ed4507a4e59f47f820c7723ef59a814ad59aaaebbbf0e9f9b4de3",
-        "download_url": "https://github.com/Crackdown-PD2/deathvox/archive/master.zip",
-        "patchnotes": "https://raw.githubusercontent.com/Crackdown-PD2/deathvox/autoupdate/patchnotes.txt"
+        "version": "666"
     }
 ]
