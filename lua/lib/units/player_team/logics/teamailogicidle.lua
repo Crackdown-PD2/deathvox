@@ -451,6 +451,7 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 							local has_alerted = alert_dt < 5
 							local has_damaged = dmg_dt < 2
 							local is_marked = att_unit:contour() and att_unit:contour()._contour_list
+							local is_medic = nil
 
 							if att_base.sentry_gun then
 								target_priority_slot = too_close and 4 or near and 6 or is_marked and 8 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
@@ -487,6 +488,7 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 									elseif att_base:has_tag("medic") then
 										target_priority_slot = too_close and 2 or near and 4 or is_marked and 6 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
 										keep_checking = nil
+										is_medic = true
 									elseif att_base:has_tag("tank") then
 										target_priority_slot = too_close and 4 or near and 6 or is_marked and 8 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
 										keep_checking = nil
@@ -508,11 +510,11 @@ function TeamAILogicIdle._get_priority_attention(data, attention_objects, reacti
 										end
 
 										keep_checking = nil
-									end
-								elseif att_base._tweak_table == "deathvox_grenadier" then
-									target_priority_slot = too_close and 4 or near and 6 or is_marked and 7 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
+									elseif att_base._tweak_table == "deathvox_grenadier" then
+										target_priority_slot = too_close and 4 or near and 6 or is_marked and 7 or has_damaged and has_alerted and 9 or has_alerted and 10 or 11
 
-									keep_checking = nil
+										keep_checking = nil
+									end
 								end
 
 								if keep_checking then
