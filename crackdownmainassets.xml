@@ -46,6 +46,7 @@
 	<texture path="units/payday2/characters/shared_textures/swat_body_df" force="true"/>
 	<texture path="units/payday2/characters/shared_textures/swat_body_nm" force="true"/>
 	<texture path="units/payday2/characters/shared_textures/swat_fbi_body_df" force="true"/>
+	<texture path="units/payday2/characters/shared_textures/swat_fbi_body_nm" force="true"/>
 	<texture path="units/payday2/characters/shared_textures/swat_city_df" force="true"/>
 	<texture path="units/payday2/characters/shared_textures/taser_body_nm" force="true"/>
 	<texture path="units/payday2/characters/shared_textures/ene_medic_df" force="true"/>
