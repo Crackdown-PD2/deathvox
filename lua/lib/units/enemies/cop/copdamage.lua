@@ -24,6 +24,8 @@ local table_size = table.size
 
 local idstr_bullet_hit_blood = Idstring("effects/payday2/particles/impacts/blood/blood_impact_a")
 
+local world_g = World
+
 function CopDamage:is_immune_to_shield_knockback()
 	if self._immune_to_knockback or self._unit:anim_data() and self._unit:anim_data().act then
 		return true
@@ -107,43 +109,101 @@ function CopDamage:roll_critical_hit(attack_data)
 end
 
 function CopDamage:check_medic_heal()
-	if self._unit:anim_data() and self._unit:anim_data().act then
+	local anim_data = self._unit:anim_data()
+
+	if anim_data and anim_data.act then
 		return false
+	end
+
+	local disabled_units = tweak_data.medic.disabled_units
+	local tweak_table_name = self._unit:base()._tweak_table
+
+	if table_contains(disabled_units, tweak_table_name) then
+		return false
+	end
+
+	local mov_ext = self._unit:movement()
+	local team = mov_ext.team and mov_ext:team()
+
+	if team and team.id ~= "law1" then
+		if not team.friends or not team.friends.law1 then
+			return false
+		end
+	end
+
+	local brain_ext = self._unit:brain()
+
+	if brain_ext then
+		if brain_ext.converted then
+			if brain_ext:converted() then
+				return false
+			end
+		elseif brain_ext._logic_data and brain_ext._logic_data.is_converted then
+			return false
+		end
 	end
 
 	local medic = managers.enemy:get_nearby_medic(self._unit)
 
-	if medic and medic:character_damage():heal_unit(self._unit) then --heal was successful
-		local difficulty_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)
+	if medic then
+		local medic_dmg_ext = medic:character_damage()
 
-		if difficulty_index == 8 then --if playing on Crackdown/Death Sentence, find enemies around the Medic and proceed with the usual healing process on them as well
-			local enemies = World:find_units_quick(medic, "sphere", medic:position(), tweak_data.medic.radius, managers.slot:get_mask("enemies"))
+		if medic_dmg_ext:heal_unit(self._unit) then --heal was successful
+			local difficulty_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)
 
-			for _, enemy in ipairs(enemies) do
-				local skip_enemy = nil
+			--if playing on Crackdown difficulty, find enemies around the Medic and proceed with the usual healing process on them as well
+			if difficulty_index == 8 then
+				local enemies = world_g:find_units_quick(medic, "sphere", medic:position(), tweak_data.medic.radius, managers.slot:get_mask("enemies"))
 
-				if enemy == self._unit or enemy:anim_data() and enemy:anim_data().act then
-					skip_enemy = true
-				end
+				for i = 1, #enemies do
+					local enemy = enemies[i]
+					local anim_data = enemy:anim_data()
+					local skip_enemy = self._unit:key() == enemy:key() or anim_data and anim_data.act and true
 
-				if not skip_enemy and medic:character_damage():heal_unit(enemy, true) then
-					local damage_heal_info = {
-						damage = 0,
-						type = "healed",
-						variant = "healed",
-						result = {
-							variant = "healed",
-							type = "healed"
-						}
-					}
+					if not skip_enemy then
+						local tweak_table_name = enemy:base()._tweak_table
 
-					enemy:network():send("damage_simple", enemy, 0, 4, 1) --make sure the enemy is actually healed for other peers, as the game normally never restores health for the unit across peers
-					enemy:character_damage():_call_listeners(damage_heal_info)
+						skip_enemy = table_contains(disabled_units, tweak_table_name) and true
+
+						if not skip_enemy then
+							local mov_ext = enemy:movement()
+							local team = mov_ext.team and mov_ext:team()
+
+							if team and team.id ~= "law1" then
+								if not team.friends or not team.friends.law1 then
+									skip_enemy = true
+								end
+							end
+
+							if not skip_enemy then
+								local brain_ext = enemy:brain()
+
+								if brain_ext and brain_ext._logic_data and brain_ext._logic_data.is_converted then
+									skip_enemy = true
+								end
+
+								if not skip_enemy and medic_dmg_ext:heal_unit(enemy, true) then
+									local attack_data = {
+										damage = 0,
+										type = "healed",
+										variant = "healed",
+										result = {
+											variant = "healed",
+											type = "healed"
+										}
+									}
+
+									enemy:network():send("damage_simple", enemy, 0, 4, 1) --sync the healed instance to other peers
+									enemy:character_damage():_call_listeners(attack_data)
+								end
+							end
+						end
+					end
 				end
 			end
-		end
 
-		return true
+			return true
+		end
 	end
 end
 
