@@ -32,4 +32,24 @@ Hooks:PostHook(MenuNodeGui,"_setup_item_rows","crackdown_mod_incompatibility_war
             }
        ,true)
     end
+	
+	local current_ver = 666
+	local new_ver_string = deathvox.received_version
+	
+	if not deathvox.has_shown_update_warning and new_ver_string and current_ver < tonumber(new_ver_string) then
+		title = "Crackdown has a new update!"
+		desc = "Visit the ModWorkshop page or the Discord server to acquire it!"
+		QuickMenu:new(
+			title,
+			desc,
+			{
+				{
+					title = "OK, got it!",
+					is_cancel_button = true
+				}
+			}
+		,true)
+		deathvox.has_shown_update_warning = true
+	end
+	
 end)

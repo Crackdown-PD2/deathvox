@@ -6,6 +6,7 @@ DeathvoxMapFramework:new()
 
 _G.deathvox = deathvox or {}
 --deathvox.ModPath = ModPath
+deathvox.update_url = "https://raw.githubusercontent.com/Crackdown-PD2/deathvox/autoupdate/meta.json"
 deathvox.SavePath = SavePath
 deathvox.SaveName = "crackdown.txt"
 deathvox.SavePathFull = deathvox.SavePath .. deathvox.SaveName
@@ -27,6 +28,29 @@ deathvox.blt_menu_id = "deathvox_menu_main" --main menu id; all other menu ids s
 --Else, if you want a menu option that should only apply on restart/reload, use Session_Settings.
 function deathvox:IsHoppipOverhaulEnabled()
 	return self.Session_Settings.useHoppipOverhaul 
+end
+
+function deathvox:set_update_data(json_data)
+	if json_data:is_nil_or_empty() then
+		log("im mad")
+		return
+	end
+	
+	local received_data = json.decode(json_data)
+	
+	for _, data in pairs(received_data) do
+		if data.version then
+			deathvox.received_version = data.version
+			log("deathvox update data received")
+			break
+		end
+	end
+end
+
+function deathvox:check_for_updates()
+	dohttpreq(self.update_url, function(json_data, http_id)
+		self:set_update_data(json_data)
+	end)
 end
 
 function deathvox:IsTotalCrackdownEnabled()
@@ -56,6 +80,9 @@ function deathvox:Load()
 	else
 		self:Save()
 	end
+	
+	self:check_for_updates()
+
 	log("Loaded menu settings")
 	return self.Settings
 end
