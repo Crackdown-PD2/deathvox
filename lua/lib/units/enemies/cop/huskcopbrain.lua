@@ -13,18 +13,18 @@ function HuskCopBrain:post_init()
 	local is_cool = self._unit:movement():cool()
 	self._is_ally = is_ally
 
-	self._alert_listen_key = "HuskCopBrain" .. tostring(self._unit:key())
+	--self._alert_listen_key = "HuskCopBrain" .. tostring(self._unit:key())
 
-	local alert_listen_filter, alert_types = nil
+	--local alert_listen_filter, alert_types = nil
 
 	if is_ally then
-		alert_listen_filter = managers.groupai:state():get_unit_type_filter("combatant")
+		--[[alert_listen_filter = managers.groupai:state():get_unit_type_filter("combatant")
 		alert_types = {
 			explosion = true,
 			fire = true,
 			aggression = true,
 			bullet = true
-		}
+		}]]
 
 		if is_cool then
 			self._detect_local_player = true
@@ -37,7 +37,7 @@ function HuskCopBrain:post_init()
 		if is_cool then
 			self._detect_local_player = true
 
-			alert_listen_filter = managers.groupai:state():get_unit_type_filter("criminals_enemies_civilians")
+			--[[alert_listen_filter = managers.groupai:state():get_unit_type_filter("criminals_enemies_civilians")
 			alert_types = {
 				vo_distress = true,
 				fire = true,
@@ -55,11 +55,11 @@ function HuskCopBrain:post_init()
 				fire = true,
 				aggression = true,
 				bullet = true
-			}
+			}]]
 		end
 	end
 
-	managers.groupai:state():add_alert_listener(self._alert_listen_key, callback(self, self, "on_alert"), alert_listen_filter, alert_types, self._unit:movement():m_head_pos())
+	--managers.groupai:state():add_alert_listener(self._alert_listen_key, callback(self, self, "on_alert"), alert_listen_filter, alert_types, self._unit:movement():m_head_pos())
 
 	self._last_alert_t = 0
 
@@ -94,7 +94,7 @@ end
 function HuskCopBrain:sync_converted()
 	self._converted = true
 
-	if self._alert_listen_key then
+	--[[if self._alert_listen_key then
 		managers.groupai:state():remove_alert_listener(self._alert_listen_key)
 	else
 		self._alert_listen_key = "HuskCopBrain" .. tostring(self._unit:key())
@@ -108,12 +108,26 @@ function HuskCopBrain:sync_converted()
 		bullet = true
 	}
 
-	managers.groupai:state():add_alert_listener(self._alert_listen_key, callback(self, self, "on_alert"), alert_listen_filter, alert_types, self._unit:movement():m_head_pos())
+	managers.groupai:state():add_alert_listener(self._alert_listen_key, callback(self, self, "on_alert"), alert_listen_filter, alert_types, self._unit:movement():m_head_pos())]]
 
-	local SO_access_str = tweak_data.character.russian.access
-	self._SO_access_str = SO_access_str
-	self._SO_access = managers.navigation:convert_access_flag(SO_access_str)
+	local team_ai_so_access = tweak_data.character.russian.access
+	self._SO_access_str = team_ai_so_access
+	self._SO_access = managers.navigation:convert_access_flag(team_ai_so_access)
 	self._enemy_slotmask = managers.slot:get_mask("enemies")
+
+	local char_tweaks = deep_clone(self._unit:base()._char_tweak)
+
+	char_tweaks.suppression = nil
+	char_tweaks.crouch_move = false
+	char_tweaks.allowed_poses = {stand = true}
+	char_tweaks.access = team_ai_so_access
+	char_tweaks.no_run_start = true
+	char_tweaks.no_run_stop = true
+
+	self._unit:base()._char_tweak = char_tweaks
+	self._unit:character_damage()._char_tweak = char_tweaks
+	self._unit:movement()._tweak_data = char_tweaks
+	self._unit:movement()._action_common_data.char_tweak = char_tweaks
 end
 
 function HuskCopBrain:update(unit, t, dt)
@@ -181,16 +195,16 @@ function HuskCopBrain:on_cool_state_changed(state)
 		return
 	end
 
-	if self._alert_listen_key then
+	--[[if self._alert_listen_key then
 		managers.groupai:state():remove_alert_listener(self._alert_listen_key)
 	else
 		self._alert_listen_key = "HuskCopBrain" .. tostring(self._unit:key())
 	end
 
-	local alert_listen_filter, alert_types = nil
+	local alert_listen_filter, alert_types = nil]]
 
 	if state then
-		alert_listen_filter = managers.groupai:state():get_unit_type_filter("criminals_enemies_civilians")
+		--[[alert_listen_filter = managers.groupai:state():get_unit_type_filter("criminals_enemies_civilians")
 		alert_types = {
 			vo_distress = true,
 			fire = true,
@@ -200,22 +214,22 @@ function HuskCopBrain:on_cool_state_changed(state)
 			footstep = true,
 			aggression = true,
 			vo_cbt = true
-		}
+		}]]
 	else
-		alert_listen_filter = managers.groupai:state():get_unit_type_filter("criminal")
+		--[[alert_listen_filter = managers.groupai:state():get_unit_type_filter("criminal")
 		alert_types = {
 			explosion = true,
 			fire = true,
 			aggression = true,
 			bullet = true
-		}
+		}]]
 
 		if self._detected_player_att_data then
 			self:terminate_all_suspicion()
 		end
 	end
 
-	managers.groupai:state():add_alert_listener(self._alert_listen_key, callback(self, self, "on_alert"), alert_listen_filter, alert_types, self._unit:movement():m_head_pos())
+	--managers.groupai:state():add_alert_listener(self._alert_listen_key, callback(self, self, "on_alert"), alert_listen_filter, alert_types, self._unit:movement():m_head_pos())
 
 	self._detect_local_player = state
 end
