@@ -316,7 +316,6 @@
 	<object path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_shield/ene_deathvox_fbi_shield" force="false"/>		
 	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_shield/ene_deathvox_fbi_shield" force="false"/>	
 	<material_config path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_shield/ene_deathvox_fbi_shield_contour" force="false"/>	
-	<cooked_physics path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_shield/ene_deathvox_fbi_shield" force="false"/>	
 	
 	<unit path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker" load="true"/>
 	<model path="units/pd2_mod_fbi/characters/ene_deathvox_fbi_cloaker/ene_deathvox_fbi_cloaker" force="false"/>
