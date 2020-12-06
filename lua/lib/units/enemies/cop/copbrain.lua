@@ -343,15 +343,19 @@ function CopBrain:convert_to_criminal(mastermind_criminal)
 	local damage_multiplier = 1
 
 	if alive(mastermind_criminal) then
-		health_multiplier = health_multiplier * (mastermind_criminal:base():upgrade_value("player", "convert_enemies_health_multiplier") or 1)
-		health_multiplier = health_multiplier * (mastermind_criminal:base():upgrade_value("player", "passive_convert_enemies_health_multiplier") or 1)
-		damage_multiplier = damage_multiplier * (mastermind_criminal:base():upgrade_value("player", "convert_enemies_damage_multiplier") or 1)
-		damage_multiplier = damage_multiplier * (mastermind_criminal:base():upgrade_value("player", "passive_convert_enemies_damage_multiplier") or 1)
+		local base_ext = mastermind_criminal:base()
+
+		health_multiplier = health_multiplier * (base_ext:upgrade_value("player", "convert_enemies_health_multiplier") or 1)
+		health_multiplier = health_multiplier * (base_ext:upgrade_value("player", "passive_convert_enemies_health_multiplier") or 1)
+		damage_multiplier = damage_multiplier * (base_ext:upgrade_value("player", "convert_enemies_damage_multiplier") or 1)
+		damage_multiplier = damage_multiplier * (base_ext:upgrade_value("player", "passive_convert_enemies_damage_multiplier") or 1)
 	else
-		health_multiplier = health_multiplier * managers.player:upgrade_value("player", "convert_enemies_health_multiplier", 1)
-		health_multiplier = health_multiplier * managers.player:upgrade_value("player", "passive_convert_enemies_health_multiplier", 1)
-		damage_multiplier = damage_multiplier * managers.player:upgrade_value("player", "convert_enemies_damage_multiplier", 1)
-		damage_multiplier = damage_multiplier * managers.player:upgrade_value("player", "passive_convert_enemies_damage_multiplier", 1)
+		local player_manager = managers.player
+
+		health_multiplier = health_multiplier * player_manager:upgrade_value("player", "convert_enemies_health_multiplier", 1)
+		health_multiplier = health_multiplier * player_manager:upgrade_value("player", "passive_convert_enemies_health_multiplier", 1)
+		damage_multiplier = damage_multiplier * player_manager:upgrade_value("player", "convert_enemies_damage_multiplier", 1)
+		damage_multiplier = damage_multiplier * player_manager:upgrade_value("player", "passive_convert_enemies_damage_multiplier", 1)
 	end
 
 	self._unit:character_damage():convert_to_criminal(health_multiplier)
@@ -360,28 +364,52 @@ function CopBrain:convert_to_criminal(mastermind_criminal)
 
 	CopLogicBase._destroy_all_detected_attention_object_data(self._logic_data)
 
-	self._SO_access = managers.navigation:convert_access_flag(tweak_data.character.russian.access)
+	local team_ai_so_access = tweak_data.character.russian.access
+
+	self._SO_access = managers.navigation:convert_access_flag(team_ai_so_access)
 	self._logic_data.SO_access = self._SO_access
-	self._logic_data.SO_access_str = tweak_data.character.russian.access
+	self._logic_data.SO_access_str = team_ai_so_access
 	self._slotmask_enemies = managers.slot:get_mask("enemies")
 	self._logic_data.enemy_slotmask = self._slotmask_enemies
+
+	local char_tweaks = deep_clone(self._unit:base()._char_tweak)
+
+	char_tweaks.suppression = nil
+	char_tweaks.crouch_move = false
+	char_tweaks.allowed_poses = {stand = true}
+	char_tweaks.access = team_ai_so_access
+	char_tweaks.no_run_start = true
+	char_tweaks.no_run_stop = true
+
+	self._logic_data.char_tweak = char_tweaks
+	self._unit:base()._char_tweak = char_tweaks
+	self._unit:character_damage()._char_tweak = char_tweaks
+	self._unit:movement()._tweak_data = char_tweaks
+	self._unit:movement()._action_common_data.char_tweak = char_tweaks
+
 	local equipped_w_selection = self._unit:inventory():equipped_selection()
 
 	if equipped_w_selection then
 		self._unit:inventory():remove_selection(equipped_w_selection, true)
 	end
 
-	local weap_name = self._unit:base():default_weapon_name()
+	--[[self._unit:movement():add_weapons()
 
-	self._unit:movement():add_weapons()
 	if self._unit:inventory():is_selection_available(1) then
 		self._unit:inventory():equip_selection(1, true)
 	elseif self._unit:inventory():is_selection_available(2) then
 		self._unit:inventory():equip_selection(2, true)
-	end
+	end]]
+
+	local weap_name = self._unit:base():default_weapon_name()
+
+	TeamAIInventory.add_unit_by_name(self._unit:inventory(), weap_name, true)
+
 	local weapon_unit = self._unit:inventory():equipped_unit()
 
 	weapon_unit:base():add_damage_multiplier(damage_multiplier)
+
+	self._logic_data.important = true
 	self:set_objective(nil)
 	self:set_logic("idle", nil)
 
