@@ -12,7 +12,7 @@ local wave_difficulties = {
 
 function SkirmishManager:on_end_assault()
 	local wave_number = self:current_wave_number()
-	local new_ransom_amount = tweak_data.skirmish.ransom_amounts[self:current_wave_number()]
+	local new_ransom_amount = tweak_data.skirmish.ransom_amounts[wave_number]
 	self:set_ransom_amount(new_ransom_amount)
 
 	wave_number = wave_number + 1
