@@ -1,12 +1,17 @@
 local mvec3_dis = mvector3.distance
 local mvec3_dir = mvector3.direction
 local mvec3_angle = mvector3.angle
+
+local tmp_vec1 = Vector3()
+
 local math_lerp = math.lerp
 local math_clamp = math.clamp
 local math_min = math.min
-local tmp_vec1 = Vector3()
+
 local REACT_SCARED = AIAttentionObject.REACT_SCARED
 local REACT_SUSPICIOUS = AIAttentionObject.REACT_SUSPICIOUS
+
+local brain_idstr = Idstring("brain")
 
 function HuskCopBrain:post_init()
 	local is_ally = self._unit:in_slot(16)
@@ -77,6 +82,42 @@ function HuskCopBrain:post_init()
 	self._detection = char_tweak.detection.ntl
 	self._visibility_slotmask = managers.slot:get_mask("AI_visibility")
 	self._detected_player_att_data = {}
+end
+
+function HuskCopBrain:enable_weapon_laser()
+	if self._add_laser_t or self._weapon_laser_on then
+		return
+	end
+
+	local weapon_unit = not self._unit:character_damage():dead() and self._unit:inventory():equipped_unit()
+
+	if alive(weapon_unit) then
+		self._weapon_laser_on = true
+
+		weapon_unit:base():set_laser_enabled(true)
+
+		managers.enemy:_destroy_unit_gfx_lod_data(self._unit:key())
+	end
+end
+
+function HuskCopBrain:disable_weapon_laser()
+	self._add_laser_t = nil
+
+	if not self._weapon_laser_on then
+		return
+	end
+
+	self._weapon_laser_on = nil
+
+	local weapon_unit = self._unit:inventory():equipped_unit()
+
+	if alive(weapon_unit) then
+		weapon_unit:base():set_laser_enabled(false)
+
+		if not self._unit:character_damage():dead() then
+			managers.enemy:_create_unit_gfx_lod_data(self._unit)
+		end
+	end
 end
 
 function HuskCopBrain:sync_surrender(surrendered)
@@ -811,13 +852,27 @@ function HuskCopBrain:_destroy_all_detected_attention_object_data()
 	self._detected_player_att_data = {}
 end
 
-local clbk_death_original = HuskCopBrain.clbk_death
 function HuskCopBrain:clbk_death(my_unit, damage_info)
-	clbk_death_original(self, my_unit, damage_info)
-
 	self:_destroy_all_detected_attention_object_data()
+	self._unit:movement():synch_attention()
 
 	self._detect_local_player = nil
+
+	if self._alert_listen_key then
+		managers.groupai:state():remove_alert_listener(self._alert_listen_key)
+
+		self._alert_listen_key = nil
+	end
+
+	if self._following_hostage_contour_id then
+		self._unit:contour():remove_by_id(self._following_hostage_contour_id)
+
+		self._following_hostage_contour_id = nil
+	end
+
+	self:disable_weapon_laser()
+
+	self._unit:set_extension_update(brain_idstr, false)
 end
 
 function HuskCopBrain:pre_destroy()
@@ -832,9 +887,7 @@ function HuskCopBrain:pre_destroy()
 		self._alert_listen_key = nil
 	end
 
-	if self._weapon_laser_on then
-		self:sync_net_event(self._NET_EVENTS.weapon_laser_off)
-	end
+	self:disable_weapon_laser()
 end
 
 function HuskCopBrain:_send_client_detection_net_event(event_id)
