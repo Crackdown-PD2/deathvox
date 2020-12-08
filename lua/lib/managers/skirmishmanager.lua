@@ -1,4 +1,4 @@
-local wave_difficulties = {
+local cd_wave_difficulties = {
 	"normal", --1
 	"hard", --2
 	"overkill", --3
@@ -16,8 +16,7 @@ function SkirmishManager:on_end_assault()
 	self:set_ransom_amount(new_ransom_amount)
 
 	wave_number = wave_number + 1
-
-	local new_difficulty = wave_difficulties[wave_number]
+	local new_difficulty = cd_wave_difficulties[wave_number]
 
 	if new_difficulty and new_difficulty ~= Global.game_settings.difficulty then
 		Global.game_settings.difficulty = new_difficulty
@@ -29,21 +28,21 @@ function SkirmishManager:on_end_assault()
 	end
 end
 
-function SkirmishManager:sync_start_assault(wave_number)
-	if not self:is_skirmish() then
-		return
-	end
+function SkirmishManager:sync_load(data)
+	local state = data.SkirmishManager
+	local wave_number = state.wave_number
 
-	for i = (self._synced_wave_number or 0) + 1, wave_number do
-		self:_apply_modifiers_for_wave(i)
-	end
+	self:sync_start_assault(wave_number)
 
-	self._synced_wave_number = wave_number
+	self._start_wave = wave_number
 
 	local new_ransom_amount = tweak_data.skirmish.ransom_amounts[wave_number]
-	self:set_ransom_amount(new_ransom_amount)
 
-	local new_difficulty = wave_difficulties[wave_number]
+	if new_ransom_amount then
+		self:set_ransom_amount(new_ransom_amount)
+	end
+
+	local new_difficulty = cd_wave_difficulties[wave_number]
 
 	if new_difficulty and new_difficulty ~= Global.game_settings.difficulty then
 		Global.game_settings.difficulty = new_difficulty
