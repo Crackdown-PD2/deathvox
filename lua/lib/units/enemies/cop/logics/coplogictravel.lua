@@ -1159,9 +1159,13 @@ function CopLogicTravel.queued_update(data)
     my_data.close_to_criminal = nil
 	my_data.objective_outdated = nil
     local delay = CopLogicTravel._upd_enemy_detection(data)
-	
+
+	if data.internal_data ~= my_data then
+    	return
+    end
+
 	local focus_enemy = data.attention_obj
-	
+
 	if not data.is_converted and data.unit:base():has_tag("law") then
 		if objective then --currently trying to get rawed by 9 lonewolves at the ipear store in front of 39 other zulus
 			if data.tactics and data.tactics.lonewolf then
@@ -3329,10 +3333,6 @@ function CopLogicTravel.upd_advance(data)
 
 			CopLogicTravel._chk_stop_for_follow_unit(data, my_data)
 		end
-            
-		if my_data ~= data.internal_data then
-			return
-		end
 	elseif my_data.advance_path and not my_data.objective_outdated and not my_data.desynced_from_pathing then
 		CopLogicTravel._chk_begin_advance(data, my_data)
 
@@ -3341,10 +3341,6 @@ function CopLogicTravel.upd_advance(data)
 		end
 	elseif my_data.processing_advance_path or my_data.processing_coarse_path then
 		CopLogicTravel._upd_pathing(data, my_data)
-
-		if my_data ~= data.internal_data then
-			return
-		end
 	elseif objective and (objective.nav_seg or objective.type == "follow") then
 		if my_data.coarse_path then
 			if my_data.coarse_path_index == #my_data.coarse_path then
@@ -3359,8 +3355,6 @@ function CopLogicTravel.upd_advance(data)
 		end
 	else
 		CopLogicBase._exit(data.unit, "idle")
-
-		return
 	end
 end
 
