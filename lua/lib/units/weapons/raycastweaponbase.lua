@@ -310,6 +310,60 @@ function RaycastWeaponBase:_collect_hits(from, to)
 	return unique_hits, hit_enemy
 end
 
+local blacklist = {
+	["saw"] = true,
+	["saw_secondary"] = true,
+	["flamethrower_mk2"] = true,
+	["m134"] = true,
+	["mg42"] = true,
+	["shuno"] = true,
+	["system"] = true
+}
+--This blacklist defines which weapons are prevented from playing their single-fire sound in AFSF.
+	--Weapons not on this list will repeatedly play their single-fire sound rather than their auto-fire loop.
+	--Weapons on this list will play their sound as normal
+	-- either due to being an unconventional weapon (saw, flamethrower, other saw, other flamethrower), or lacking a singlefire sound (minigun, mg42, other minigun).
+--I could define this in the function but meh	
+	
+
+--Check for if AFSF's fix code should apply to this particular weapon
+function RaycastWeaponBase:_soundfix_should_play_normal()
+	local name_id = self:get_name_id() or "xX69dank420blazermachineXx" --if somehow get_name_id() returns nil, crashing won't be my fault. though i guess you'll have bigger problems in that case. also you'll look dank af B)
+	if not self._setup.user_unit == managers.player:player_unit() then
+		--don't apply fix for NPCs or other players
+		return true
+	elseif tweak_data.weapon[name_id].use_fix == true then 
+		--for custom weapons
+		return false
+	elseif blacklist[name_id] then
+		--blacklisted sound
+		return true
+	elseif not tweak_data.weapon[name_id].sounds.fire_single then
+		--no singlefire sound; should play normal
+		return true
+	end
+	return false
+	--else, AFSF2 can apply fix to this weapon
+end
+
+--Prevent playing sounds except for blacklisted weapons
+local orig_fire_sound = RaycastWeaponBase._fire_sound
+function RaycastWeaponBase:_fire_sound(...)
+	if self:_soundfix_should_play_normal() then
+		return orig_fire_sound(self,...)
+	end
+end
+
+local orig_stop_shooting = RaycastWeaponBase.stop_shooting
+function RaycastWeaponBase:stop_shooting(...)
+	if self:_soundfix_should_play_normal() then
+		return orig_stop_shooting(self,...)
+	end
+--	if self._sound_fire then 
+--		self._sound_fire:stop() --stops sounds immediately and without a reverb. unfortunately this cuts off the fire sound prematurely because it is VERY immediate.
+--	end
+end
+
 local mvec_to = Vector3()
 local mvec_spread_direction = Vector3()
 
@@ -320,6 +374,21 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 		if managers.player:has_category_upgrade("temporary", "no_ammo_cost") then
 			managers.player:activate_temporary_upgrade("temporary", "no_ammo_cost")
 		end
+	end
+	
+	if self._bullets_fired then
+	--i've commented and preserved the vanilla code that caused the need for this AFSF2 update:
+	--the game plays starts the firesound when firing, in addition to calling _fire_sound()
+	--this causes some firesounds to play twice, while also not playing the correct fire sound.
+	--so U200 both broke AutoFireSoundFix, made the existing problem worse, and then added a new problem on top of that
+	
+--		if self._bullets_fired == 1 and self:weapon_tweak_data().sounds.fire_single then
+--			self:play_tweak_data_sound("stop_fire")
+--			self:play_tweak_data_sound("fire_auto", "fire")
+--		end
+		self:play_tweak_data_sound(self:weapon_tweak_data().sounds.fire_single,"fire_single")
+		
+		self._bullets_fired = self._bullets_fired + 1
 	end
 	
 	local is_player = self._setup.user_unit == managers.player:player_unit()
