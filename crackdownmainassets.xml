@@ -760,12 +760,27 @@
 	
 	
 	<!-- TOTAL CRACKDOWN Armor Plates -->
-	<unit load="true"    path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
-	<unit load="true"    path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag_dummy"/>
-	<object                path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
-	<model                path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
-	<material_config    path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
-	<sequence_manager    path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
+	<unit load="true" path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
+	<unit load="true" path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag_dummy"/>
+	<object path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
+	<model path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
+	<material_config path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
+	<sequence_manager path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
+	
+	
+	<!-- TOTAL CRACKDOWN GUI assets -->
+	<texture path="guis/textures/pd2/blackmarket/icons/tcd/class_grenade"  force="false"/>
+	<texture path="guis/textures/pd2/blackmarket/icons/tcd/class_heavy"  force="false"/>
+	<texture path="guis/textures/pd2/blackmarket/icons/tcd/class_melee"  force="false"/>
+	<texture path="guis/textures/pd2/blackmarket/icons/tcd/class_precision"  force="false"/>
+	<texture path="guis/textures/pd2/blackmarket/icons/tcd/class_rapidfire"  force="false"/>
+	<texture path="guis/textures/pd2/blackmarket/icons/tcd/class_saw"  force="false"/>
+	<texture path="guis/textures/pd2/blackmarket/icons/tcd/class_shotgun"  force="false"/>
+	<texture path="guis/textures/pd2/blackmarket/icons/tcd/class_specialist"  force="false"/>
+	<texture path="guis/textures/pd2/blackmarket/icons/tcd/class_throwing"  force="false"/>
+	<texture path="guis/textures/pd2/blackmarket/icons/tcd/subclass_areadenial"  force="false"/>
+	<texture path="guis/textures/pd2/blackmarket/icons/tcd/subclass_poison"  force="false"/>
+	<texture path="guis/textures/pd2/blackmarket/icons/tcd/subclass_quiet"  force="false"/>
 	
 	
 </table>

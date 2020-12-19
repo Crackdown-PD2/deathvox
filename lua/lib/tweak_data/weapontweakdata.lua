@@ -10572,6 +10572,65 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 0
 	--Pickup: 0, 0
 	--Notes: Armor Piercing
+		self.elastic.CLIP_AMMO_MAX = 1
+		self.elastic.fire_mode_data = {
+			fire_rate = 0.2
+		}
+		self.elastic.stats = {
+			concealment = 30,
+			suppression = 0,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 26,
+			value = 1,
+			alert_size = 7,
+			damage = 200,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.elastic.subclasses = {
+			"quiet"
+		}
+		self.elastic.stats_modifiers = {
+			damage = 10
+		}
+		self.elastic.primary_class = "precision"
+		self.elastic.armor_piercing_chance = 1
+		self.plainsrider.AMMO_MAX = 40
+		self.elastic.AMMO_PICKUP = {
+			0,
+			0
+		}
+		self.elastic.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.elastic.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
 
 	--------------------------------------
 				--English Longbow--

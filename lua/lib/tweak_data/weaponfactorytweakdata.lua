@@ -118,31 +118,31 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	-- L5 Magazine [wpn_fps_upg_m4_m_l5]  [+10 Magazine, -2 Concealment]Value: 1
 		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_l5 = { -- gotta be like this or else the game shits the bed
 			stats = {	
-				value = 1,			 			 
+				value = 1,
 				extra_ammo = 10, 
 				concealment = -2
 			}
 		}			
 	-- Milspec Mag [wpn_fps_m4_uupg_m_std] [+10 Magazine, -2 Concealment] Value: 1
 		self.wpn_fps_ass_amcar.override.wpn_fps_m4_uupg_m_std = {	
-			stats = {			
-				value = 1,			 
+			stats = {
+				value = 1,
 				extra_ammo = 10, 
 				concealment = -2
 			}
 		}
 	-- Tactical Mag	[wpn_fps_upg_m4_m_pmag] [+10 Magazine, -2 Concealment] Value: 3
 		self.wpn_fps_ass_amcar.override.wpn_fps_upg_m4_m_pmag = {	
-			stats = {			
+			stats = {
 				value = 3,
 				extra_ammo = 10, 
 				concealment = -2
 			}
 		}
 	-- Expert Mag [wpn_fps_ass_l85a2_m_emag] [+10 Magazine, -2 Concealment] [Value: 1]	
-		self.wpn_fps_ass_amcar.override.wpn_fps_ass_l85a2_m_emag = {	
+		self.wpn_fps_ass_amcar.override.wpn_fps_ass_l85a2_m_emag = {
 			stats = {
-				value = 1,			 
+				value = 1,
 				extra_ammo = 10, 
 				concealment = -2
 			}
@@ -232,7 +232,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 8, 16
 	--Notes:
 	--Active Mods: Suppressed Barrel [wpn_fps_ass_famas_b_suppressed] [Suppresses Weapon, + Quiet, -100 Threat] Value: 4
-
+	self.parts.wpn_fps_ass_famas_b_suppressed.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	--------------------------------------
 			--Medium ARs--
 	--------------------------------------
@@ -256,7 +258,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Active Mods: 
 
 	self.parts.wpn_fps_ass_asval_b_standard.stats = nil --why overkill -- probably to avoid a suppression overwrite? -Finale
-	self.parts.wpn_fps_ass_asval_b_standard.supported = true						
+	self.parts.wpn_fps_ass_asval_b_standard.supported = true
 	
 	--Prototype Barrel [self.parts.wpn_fps_ass_asval_b_prot] [+10 Concealment, -12 Accuracy, -20 Concealment] Value: 1
 	self.parts.wpn_fps_ass_asval_b_proto.stats = {
@@ -266,11 +268,11 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		alert_size = 12,
 		concealment = 10
 	}
-	self.parts.wpn_fps_ass_asval_b_proto.supported = true						
+	self.parts.wpn_fps_ass_asval_b_proto.supported = true
 	
 	-- Solid Stock
 	self.parts.wpn_fps_ass_asval_s_solid.stats = {value = 1}
-	self.parts.wpn_fps_ass_asval_s_solid.supported = true						
+	self.parts.wpn_fps_ass_asval_s_solid.supported = true
 
 	--------------------------------------
 				--CAR-4--
@@ -300,35 +302,38 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 
 		-- Aftermarket Special Handguard	
 		self.parts.wpn_fps_m4_uupg_fg_lr300.stats = {value = 5}
-		self.parts.wpn_fps_m4_uupg_fg_lr300.supported = true						
+		self.parts.wpn_fps_m4_uupg_fg_lr300.supported = true
 		-- Competition Foregrip		
 		self.parts.wpn_fps_upg_fg_jp.stats = {value = 5}
-		self.parts.wpn_fps_upg_fg_jp.supported = true						
+		self.parts.wpn_fps_upg_fg_jp.supported = true
 		-- Gazelle Rail
 		self.parts.wpn_fps_upg_fg_smr.stats = {value = 5}
-		self.parts.wpn_fps_upg_fg_smr.supported = true						
+		self.parts.wpn_fps_upg_fg_smr.supported = true
 		-- OVAL Foregrip		
 		self.parts.wpn_fps_upg_ass_m4_fg_lvoa.stats = {value = 1}
-		self.parts.wpn_fps_upg_ass_m4_fg_lvoa.supported = true						
+		self.parts.wpn_fps_upg_ass_m4_fg_lvoa.supported = true
 		-- E.M.O. Foregrip		
 		self.parts.wpn_fps_upg_ass_m4_fg_moe.stats = {value = 1}
-		self.parts.wpn_fps_upg_ass_m4_fg_moe.supported = true				
+		self.parts.wpn_fps_upg_ass_m4_fg_moe.supported = true
 		-- Long Barrel
 		self.parts.wpn_fps_m4_uupg_b_long.stats = {value = 4}
-		self.parts.wpn_fps_m4_uupg_b_long.supported = true				
+		self.parts.wpn_fps_m4_uupg_b_long.supported = true
 		-- Short Barrel		
 		self.parts.wpn_fps_m4_uupg_b_short.stats = {value = 5}
-		self.parts.wpn_fps_m4_uupg_b_short.supported = true				
+		self.parts.wpn_fps_m4_uupg_b_short.supported = true
 
 	--Stealth Barrel [wpn_fps_m4_uupg_b_sd] [Suppresses Weapon, + Quiet, -12 Accuracy, +3 Concealment, -100 Threat] Value: 6		
 		self.parts.wpn_fps_m4_uupg_b_sd.stats = {
-			value = 6,		
+			value = 6,
 			spread = -3,
 			concealment = 3,
 			suppression = -72,
 			alert_size = 12
 		}
-		self.parts.wpn_fps_m4_uupg_b_sd.supported = true				
+		self.parts.wpn_fps_m4_uupg_b_sd.subclass_modifiers = {
+			"subclass_quiet"
+		}
+		self.parts.wpn_fps_m4_uupg_b_sd.supported = true
 	--------------------------------------
 				--CAR-4 (DMR Kit)--
 	--------------------------------------
@@ -342,7 +347,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 			recoil = -10,
 			concealment = -5
 		}
-		self.parts.wpn_fps_upg_ass_m4_b_beowulf.supported = true				
+		self.parts.wpn_fps_upg_ass_m4_b_beowulf.class_modifier = "precision"
+		self.parts.wpn_fps_upg_ass_m4_b_beowulf.supported = true
 		self.parts.wpn_fps_upg_ass_m4_b_beowulf.adds = {"car_dmr_kit_ammo_type"}
 		self.parts.car_dmr_kit_ammo_type = { --Dummy ammo type for DMR kit, needed for armor piercing and pickup multipliers to work properly.
 			a_obj = "a_m",
@@ -352,12 +358,12 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 				value = 1
 			},
 			custom_stats = {
-				armor_piercing_add = 1,			
+				armor_piercing_add = 1,
 				ammo_pickup_max_mul = 4,
 				ammo_pickup_min_mul = 2.5
 			}
 		}
-		self.parts.car_dmr_kit_ammo_type.supported = true				
+		self.parts.car_dmr_kit_ammo_type.supported = true
 
 	--------------------------------------
 				--AK--
@@ -386,6 +392,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--------------------------------------
 				--AK (DMR Kit)--
 	--------------------------------------
+	
+	self.parts.wpn_fps_upg_ass_ak_b_zastava.class_modifier = "precision"
 	--Note: Conversion kit entries are not actual weapons and are only listed for referential purposes.
 	--INCOMPLETE - consult mod information for AK instead.
 
@@ -534,7 +542,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 6, 10
 	--Notes:
 	--Active Mods: Silenced Barrel [wpn_fps_ass_vhs_b_silenced] [Suppresses Weapon, + Quiet, -100 Threat] Value: 2
-
+	self.parts.wpn_fps_ass_vhs_b_silenced.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	--------------------------------------
 				--Union 5.56--
 	--------------------------------------
@@ -651,10 +661,10 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Active Mods: 
 	--Assault Kit [wpn_fps_ass_g3_b_short] [+85 Ammo Stock, -30 Damage, -16 Accuracy, +16 Stability, +5 Concealment, +2, +4 Pickup] Value: 2
 	--DMR Kit [wpn_fps_ass_g3_b_sniper] [- Rapid Fire, + Precision, + Armor Piercing, -10 Magazine, -65 Ammo Stock, +50 Damage, -1, -2 Pickup] Value: 2
-
 	--------------------------------------
 				--Gewehr 3 (DMR Kit)--
 	--------------------------------------
+	self.parts.wpn_fps_ass_g3_b_sniper.class_modifier = "precision"
 	--Note: Conversion kit entries are not actual weapons and are only listed for referential purposes.
 	--INCOMPLETE --See main Gewehr mod entries for information.
 	--------------------------------------
@@ -704,10 +714,10 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 
 	-- Long Ergo Foregrip
 		self.parts.wpn_fps_upg_ass_m16_fg_stag.stats = {value = 1}
-		self.parts.wpn_fps_upg_ass_m16_fg_stag.supported = true				
+		self.parts.wpn_fps_upg_ass_m16_fg_stag.supported = true
 	-- Blast From the Past Handguard
 		self.parts.wpn_fps_m16_fg_vietnam.stats = {value = 10}
-		self.parts.wpn_fps_m16_fg_vietnam.supported = true		
+		self.parts.wpn_fps_m16_fg_vietnam.supported = true
 	-- Tactical Handguard
 		self.parts.wpn_fps_m16_fg_railed.stats = {value = 7}
 		self.parts.wpn_fps_m16_fg_railed.supported = true
@@ -715,17 +725,17 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	-- L5 Magazine [wpn_fps_upg_m4_m_l5] [+10 Magazine, -2 Concealment] Value: 1
 		self.wpn_fps_ass_m16.override.wpn_fps_upg_m4_m_l5 = {
 			stats = {
-				value = 1,			 			 
+				value = 1,			 
 				extra_ammo = 10, 
-				concealment = -2	
+				concealment = -2
 			}
 		}
 	--Milspec Mag [wpn_fps_m4_uupg_m_std] [+10 Magazine, -2 Concealment] Value: 1
 		self.wpn_fps_ass_m16.override.wpn_fps_m4_uupg_m_std = {	
 			stats = {
-				value = 1,			 
+				value = 1,
 				extra_ammo = 10, 
-				concealment = -2	
+				concealment = -2
 			}
 		}
 	--Tactical Mag [wpn_fps_upg_m4_m_pmag] [+10 Magazine, -2 Concealment] Value: 3
@@ -739,7 +749,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Expert Mag [wpn_fps_ass_l85a2_m_emag] [+10 Magazine, -2 Concealment] Value: 1
 		self.wpn_fps_ass_m16.override.wpn_fps_ass_l85a2_m_emag = {	
 			stats = {
-				value = 1,			 
+				value = 1,
 				extra_ammo = 10, 
 				concealment = -2
 			}
@@ -948,8 +958,11 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 8, 16
 	--Notes: 
 	--Active Mods: Extended Mag. [wpn_fps_smg_mp9_m_extended] [+30 Magazine, -5 Concealment] Value: 4
+	
 	--Tactical Suppressor [wpn_fps_smg_mp9_b_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 4
-
+	self.parts.wpn_fps_smg_mp9_b_suppressed.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	--------------------------------------
 				--Akimbo Cobra--
 	--------------------------------------
@@ -986,11 +999,20 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes: 
 	--Active Mods: 
 	--Futomaki Suppressor [wpn_fps_smg_baka_b_longsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
+	self.parts.wpn_fps_smg_baka_b_longsupp.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	
 	--Maki Suppressor [wpn_fps_smg_baka_b_midsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
+	self.parts.wpn_fps_smg_baka_b_midsupp.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	
 	--Spring Suppressor [wpn_fps_smg_baka_b_smallsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
-
+	self.parts.wpn_fps_smg_baka_b_smallsupp.subclass_modifiers = {
+		"subclass_quiet"
+	}
+	
 	--------------------------------------
 			--Akimbo Medium SMGs--
 	--------------------------------------
@@ -1175,9 +1197,14 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Short Mag [wpn_fps_smg_sterling_m_short] [-20 Magazine, +10 Concealment] Value: 1
 
 	--Heatsinked Suppressed Barrel [wpn_fps_smg_sterling_b_e11] [Suppresses Weapon, + Quiet, -100 Threat] Value: 4
-
+	self.parts.wpn_fps_smg_sterling_b_e11.subclass_modifiers = {
+		"subclass_quiet"
+	}
+	
 	--Suppressed Barrel [wpn_fps_smg_sterling_b_suppressed] [Suppresses Weapon, + Quiet, -100 Threat] Value: 4
-
+	self.parts.wpn_fps_smg_sterling_b_suppressed.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	--------------------------------------
 				--Akimbo MP40--
 	--------------------------------------
@@ -1444,13 +1471,15 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 4, 5
 	--Notes:
 	--Active Mods: Silenced Barrel [wpn_fps_sho_rota_b_silencer] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
-	
 	part_stat_override("wpn_fps_sho_rota","wpn_fps_sho_rota_b_silencer",{
 		stats = {
 			suppression = -10,
 			value = 6
 		}
 	})
+	self.parts.wpn_fps_sho_rota_b_silencer.subclass_modifiers = {
+		"subclass_quiet"
+	}
 
 
 	--------------------------------------
@@ -1477,7 +1506,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	
 	self.parts.wpn_fps_sho_aa12_barrel_silenced.stats = {suppression = 72, alert_size = 12, value = 6}
 	self.parts.wpn_fps_sho_aa12_barrel_silenced.supported = true
-
+	self.parts.wpn_fps_sho_aa12_barrel_silenced.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	self.wpn_fps_sho_aa12.override = {
 		wpn_fps_upg_a_slug = {
 			stats = {
@@ -1627,7 +1658,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 3, 4
 	--Notes: Armor Piercing
 	--Active Mods: Tooth Fairy Suppressor [wpn_fps_ass_sub2000_fg_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 5
-
+	self.parts.wpn_fps_ass_sub2000_fg_suppressed.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	--------------------------------------
 				--M308--
 	--------------------------------------
@@ -1687,7 +1720,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 2.5, 3
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Contractor Silencer [wpn_fps_snp_tti_ns_hex] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
-
+	self.parts.wpn_fps_snp_tti_ns_hex.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	--------------------------------------
 				--Lebensauger .308--
 	--------------------------------------
@@ -1705,7 +1740,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 2.5, 3
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Gedampfter Barrel [wpn_fps_snp_wa2000_b_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
-
+	self.parts.wpn_fps_snp_wa2000_b_suppressed.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	--------------------------------------
 				--Grom--
 	--------------------------------------
@@ -1723,7 +1760,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 2.5, 3
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Tikho Barrel [wpn_fps_snp_siltstone_b_silenced] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
-	
+	self.parts.wpn_fps_snp_siltstone_b_silenced.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	--Iron Sights [wpn_fps_snp_siltstone_iron_sight] [+15 Concealment, -20 Stability] Value: 1
 
 	--------------------------------------
@@ -1746,7 +1785,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 2, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Sniper Suppressor [wpn_fps_snp_msr_ns_suppressor] [Suppresses Weapon, +Quiet, -100 Threat] Value: 5
-
+	self.parts.wpn_fps_snp_msr_ns_suppressor.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	--------------------------------------
 				--Repeater 1874--
 	--------------------------------------
@@ -1764,7 +1805,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 3, 4
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Outlaw’s Silenced Barrel [wpn_fps_snp_winchester_b_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
-
+	self.parts.wpn_fps_snp_winchester_b_suppressed.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	--------------------------------------
 			--Heavy Sniper Rifles--
 	--------------------------------------
@@ -1785,7 +1828,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Beak Suppressor [wpn_fps_snp_model70_ns_suppressor] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
-
+	self.parts.wpn_fps_snp_model70_ns_suppressor.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	--------------------------------------
 				--R93--
 	--------------------------------------
@@ -1803,7 +1848,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Compensated Suppressor [wpn_fps_snp_r93_b_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 4
-
+	self.parts.wpn_fps_snp_r93_b_suppressed.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	--------------------------------------
 				--Nagant--
 	--------------------------------------
@@ -1821,7 +1868,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Silenced Barrel [wpn_fps_snp_mosin_b_sniper] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
-
+	self.parts.wpn_fps_snp_mosin_b_sniper.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	--Nagant Bayonet [wpn_fps_snp_mosin_ns_bayonet] [Replaces Weapon Butt melee weapon with Nagant Bayonet melee weapon] Value: 1
 
 	--------------------------------------
@@ -1841,7 +1890,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Silenced Barrel [wpn_fps_snp_desertfox_b_silencer] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
-
+	self.parts.wpn_fps_snp_desertfox_b_silencer.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	--------------------------------------
 				--Thanatos .50 cal--
 	--------------------------------------
@@ -1859,7 +1910,10 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 0.25, 0.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Suppressed Barrel [wpn_fps_snp_m95_barrel_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
-
+	self.parts.wpn_fps_snp_m95_barrel_suppressed.subclass_modifiers = {
+		"subclass_quiet"
+	}
+	
 	--------------------------------------
 		--Akimbo Pistols--
 	--------------------------------------
@@ -2394,7 +2448,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--NOTE: infinite of arrow mods are autogranted. Value may be unneccessary.
 			
 	--Poison Arrow [wpn_fps_bow_ecp_m_arrows_poison] [-560 Damage, + Poison] Value: 1
-
+	self.parts.wpn_fps_bow_ecp_m_arrows_poison.subclass_modifiers = {
+		"subclass_poison"
+	}
 	--------------------------------------
 				--Light Crossbow--
 	--------------------------------------
@@ -2414,7 +2470,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Active Mods: Explosive Bolt [wpn_fps_bow_frankish_m_explosive] [-Armor Piercing, 2x Headshot Damage] Value: 1
 
 	--Poison Bolt [wpn_fps_bow_frankish_m_poison] [-600 Damage, + Poison] Value: 1
-
+	self.parts.wpn_fps_bow_frankish_m_poison.subclass_modifiers = {
+		"subclass_poison"
+	}
 	--------------------------------------
 				--Plainsrider Bow--
 	--------------------------------------
@@ -2434,7 +2492,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Active Mods: Explosive Arrows [wpn_fps_upg_a_bow_explosion] [-Armor Piercing, 2x Headshot Damage] Value: 1
 
 	--Poison Arrows [wpn_fps_upg_a_bow_poison] [-200 Damage, + Poison] Value: 1
-
+	self.parts.wpn_fps_upg_a_bow_poison.subclass_modifiers = {
+		"subclass_poison"
+	}
 	--------------------------------------
 				--DECA Technologies Compound Bow--
 	--------------------------------------
@@ -2454,7 +2514,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Active Mods: Explosive Arrow [wpn_fps_bow_elastic_m_explosive] [-Armor Piercing, 2x Headshot Damage] Value: 1
 
 	--Poison Arrow [wpn_fps_bow_elastic_m_poison] [-1600 Damage, + Poison] Value: 1
-
+	self.parts.wpn_fps_bow_elastic_m_poison.subclass_modifiers = {
+		"subclass_poison"
+	}
 	--------------------------------------
 				--English Longbow--
 	--------------------------------------
@@ -2474,7 +2536,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Active Mods: Explosive Arrows [wpn_fps_bow_long_m_explosive] [-Armor Piercing, 2x Headshot Damage] Value: 1
 			
 	--Poison Arrows [wpn_fps_bow_long_m_poison] [-1600 Damage, + Poison] Value: 1
-
+	self.parts.wpn_fps_bow_long_m_poison.subclass_modifiers = {
+		"subclass_poison"
+	}
 	--------------------------------------
 				--Heavy Crossbow--
 	--------------------------------------
@@ -2494,7 +2558,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Active Mods: Explosive Bolt [wpn_fps_bow_arblast_m_explosive] [-Armor Piercing, 2x Headshot Damage] Value: 1
 
 	--Poisoned Bolt [wpn_fps_bow_arblast_m_poison] [-1600 Damage, + Poison] Value: 1
-
+	self.parts.wpn_fps_bow_arblast_m_poison.subclass_modifiers = {
+		"subclass_poison"
+	}
 	--------------------------------------
 				--GL 40 Grenade Launcher--
 	--------------------------------------
@@ -2513,8 +2579,10 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes: Area Damage
 	--Active Mods: Incendiary Round [wpn_fps_upg_a_grenade_launcher_incendiary] 
 	--[-1000 Damage, + Area Denial in a large area for 15 seconds.] Value: 1
-	--NOTE: may be coded in an unusual way. PRovided for free w/DLC- value stat may be unnecessary
-
+	--NOTE: may be coded in an unusual way. Provided for free w/DLC- value stat may be unnecessary
+	self.parts.wpn_fps_upg_a_grenade_launcher_incendiary.subclass_modifiers = {
+		"subclass_areadenial"
+	}		
 	--------------------------------------
 				--Piglet Grenade Launcher--
 	--------------------------------------
@@ -2533,6 +2601,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes: Area Damage
 	--Active Mods: Incendiary Round [wpn_fps_upg_a_grenade_launcher_incendiary] 
 	--[-1000 Damage, + Area Denial in a large area for 15 seconds.] Value: 1
+	--(data for Incendiary Round is added under weapon attachments for "gre_m79")
 
 	--------------------------------------
 				--Flamethrower Mk.1--
@@ -3168,7 +3237,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Active Mods: Extended Mag. [wpn_fps_smg_mp9_m_extended] [+15 Magazine, -2 Concealment] Value: 4
 
 	--Tactical Suppressor [wpn_fps_smg_mp9_b_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 4
-
+	self.parts.wpn_fps_smg_mp9_b_suppressed.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	--------------------------------------
 				--Cobra--
 	--------------------------------------
@@ -3205,11 +3276,19 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes: 
 	--Active Mods:
 	--Futomaki Suppressor [wpn_fps_smg_baka_b_longsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
-
+	self.parts.wpn_fps_smg_baka_b_longsupp.subclass_modifiers = {
+		"subclass_quiet"
+	}
+	
 	--Maki Suppressor [wpn_fps_smg_baka_b_midsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
-
+	self.parts.wpn_fps_smg_baka_b_midsupp.subclass_modifiers = {
+		"subclass_quiet"
+	}
+	
 	--Spring Suppressor [wpn_fps_smg_baka_b_smallsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
-
+	self.parts.wpn_fps_smg_baka_b_smallsupp.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	--------------------------------------
 			--Medium SMGs--
 	--------------------------------------
@@ -3399,8 +3478,15 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	
 	--Heatsinked Suppressed Barrel [wpn_fps_smg_sterling_b_e11] [Suppresses Weapon, + Quiet, -100 Threat] Value: 4
 		
+	self.parts.wpn_fps_smg_sterling_b_e11.subclass_modifiers = {
+		"subclass_quiet"
+	}
+	
 	--Suppressed Barrel [wpn_fps_smg_sterling_b_suppressed] [Suppresses Weapon, + Quiet, -100 Threat] Value: 4
 		
+	self.parts.wpn_fps_smg_sterling_b_suppressed.subclass_modifiers = {
+		"subclass_quiet"
+	}
 	--------------------------------------
 				--MP40--
 	--------------------------------------
@@ -3578,6 +3664,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 
 	self.parts.wpn_fps_sho_rota_b_silencer.stats.suppression = 50
 
+	self.parts.wpn_fps_sho_rota_b_silencer.subclass_modifiers = {
+		"subclass_quiet"
+	}
 
 	--------------------------------------
 				--Judge--
@@ -3639,6 +3728,10 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes: 
 	--Active Mods: Suppressed Barrel [wpn_fps_sho_striker_b_suppressed] [Suppresses Weapon, + “Quiet” Class, -100 Threat] Value: 5
 
+	self.parts.wpn_fps_sho_striker_b_suppressed.subclass_modifiers = {
+		"subclass_quiet"
+	}
+
 	--------------------------------------
 		--Secondary Special Weapons--
 	--------------------------------------
@@ -3662,7 +3755,10 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--NOTE: This type of mod given for free, infinite. Value stat may be unnecessary.
 	
 	--Poison Bolt [wpn_fps_upg_a_crossbow_poison] [-250 Damage, +Poison] Value: 1
-
+	self.parts.wpn_fps_upg_a_crossbow_poison.subclass_modifiers = {
+		"subclass_poison"
+	}
+	
 	--------------------------------------
 				--MA-17 Flamethrower--
 	--------------------------------------
@@ -3700,7 +3796,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes: Area Damage
 	--Active Mods: Incendiary Round [wpn_fps_upg_a_grenade_launcher_incendiary] [-1000 Damage, +Area Denial in a large area for 15 seconds.] Value: 1
 	--NOTE: This type of mod given for free, infinite. Value stat may be unnecessary.
-			
+	--(data for Incendiary Round is added under weapon attachments for "gre_m79")
+
 	--------------------------------------
 				--China Puff 40mm--
 	--------------------------------------
@@ -3719,7 +3816,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes: Area Damage
 	--Active Mods: Incendiary Round [wpn_fps_upg_a_grenade_launcher_incendiary] [-1000 Damage, +Area Denial in a large area for 15 seconds.] Value: 
 	--NOTE: This type of mod given for free, infinite. Value stat may be unnecessary.
-			
+	--(data for Incendiary Round is added under weapon attachments for "gre_m79")
 	--------------------------------------
 				--Arbiter--
 	--------------------------------------
@@ -3741,6 +3838,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	-- the central flame of the Molotov Cocktail effect.
 	--Active Mods: Incendiary Round [wpn_fps_upg_a_grenade_launcher_incendiary_arbiter] [-470 Damage, +Area Denial in a small area for 10 seconds.] Value: 1
 			
+	self.parts.wpn_fps_upg_a_grenade_launcher_incendiary_arbiter.subclass_modifiers = {
+		"subclass_areadenial"
+	}
 	--------------------------------------
 				--HRL-7--
 	--------------------------------------
@@ -3811,7 +3911,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 
 	--auto and singlefire mods
 	self.parts.wpn_fps_upg_i_singlefire.stats = {value = 5}
-	self.parts.wpn_fps_upg_i_singlefire.supported = true	
+	self.parts.wpn_fps_upg_i_singlefire.supported = true
 	
 	self.parts.wpn_fps_upg_i_autofire.stats = {value = 8}
 	self.parts.wpn_fps_upg_i_autofire.supported = true
@@ -3819,18 +3919,24 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Barrel extension stat changes begin here.
 	-- Shh! Suppressor		
 		self.parts.wpn_fps_upg_ns_sho_salvo_large.stats = {value = 7, spread = 5, suppression = 72, alert_size = 12}
-		self.parts.wpn_fps_upg_ns_sho_salvo_large.custom_stats = {damage_near_mul = 1.2}		
+		self.parts.wpn_fps_upg_ns_sho_salvo_large.custom_stats = {damage_near_mul = 1.2}
 		self.parts.wpn_fps_upg_ns_sho_salvo_large.supported = true
+		self.parts.wpn_fps_upg_ns_sho_salvo_large.subclass_modifiers = {
+			"subclass_quiet"
+		}
 	-- Silent Killer Suppressor		
 		self.parts.wpn_fps_upg_ns_shot_thick.stats = {value = 7, spread = -5, suppression = 72, alert_size = 12}
 		self.parts.wpn_fps_upg_ns_shot_thick.supported = true
+		self.parts.wpn_fps_upg_ns_shot_thick.subclass_modifiers = {
+			"subclass_quiet"
+		}
 	-- King's Crown Compensator		
 		self.parts.wpn_fps_upg_shot_ns_king.stats = {value = 5, spread = 5}
 		self.parts.wpn_fps_upg_shot_ns_king.custom_stats = {damage_near_mul = 1.2}
-		self.parts.wpn_fps_upg_shot_ns_king.supported = true						
+		self.parts.wpn_fps_upg_shot_ns_king.supported = true
 	-- Shark Teeth Nozzle		
 		self.parts.wpn_fps_upg_ns_shot_shark.stats = {value = 5, spread = -5}
-		self.parts.wpn_fps_upg_ns_shot_shark.supported = true				
+		self.parts.wpn_fps_upg_ns_shot_shark.supported = true
 	-- Donald's Horizontal Leveller		
 		self.parts.wpn_fps_upg_ns_duck.stats = {value = 1, spread_multi = {2.25, 0.5}}
 		self.parts.wpn_fps_upg_ns_duck.forbids = {
@@ -3838,264 +3944,299 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 			"wpn_fps_upg_a_slug",
 			"wpn_fps_upg_a_dragons_breath"
 		}
-		self.parts.wpn_fps_upg_ns_duck.supported = true			
+		self.parts.wpn_fps_upg_ns_duck.supported = true
 	-- Ported Compensator	
 		self.parts.wpn_fps_upg_ass_ns_battle.stats = {value = 1}
-		self.parts.wpn_fps_upg_ass_ns_battle.supported = true			
+		self.parts.wpn_fps_upg_ass_ns_battle.supported = true
 	-- Stubby Compensator
 		self.parts.wpn_fps_upg_ns_ass_smg_stubby.stats = {value = 3}
-		self.parts.wpn_fps_upg_ns_ass_smg_stubby.supported = true					
+		self.parts.wpn_fps_upg_ns_ass_smg_stubby.supported = true
 	-- The Tank Compensator
 		self.parts.wpn_fps_upg_ns_ass_smg_tank.stats = {value = 4}
-		self.parts.wpn_fps_upg_ns_ass_smg_tank.supported = true							
+		self.parts.wpn_fps_upg_ns_ass_smg_tank.supported = true
 	-- Fire Breather Nozzle
 		self.parts.wpn_fps_upg_ns_ass_smg_firepig.stats = {value = 5}
-		self.parts.wpn_fps_upg_ns_ass_smg_firepig.supported = true									
+		self.parts.wpn_fps_upg_ns_ass_smg_firepig.supported = true
 	-- Tactical Compensator
 		self.parts.wpn_fps_upg_ass_ns_surefire.stats = {value = 5}
-		self.parts.wpn_fps_upg_ass_ns_surefire.supported = true											
+		self.parts.wpn_fps_upg_ass_ns_surefire.supported = true
 	-- Funnel of Fun Nozzle
 		self.parts.wpn_fps_upg_ass_ns_linear.stats = {value = 5}
-		self.parts.wpn_fps_upg_ass_ns_linear.supported = true													
+		self.parts.wpn_fps_upg_ass_ns_linear.supported = true
 	-- Competitor's Compensator
 		self.parts.wpn_fps_upg_ass_ns_jprifles.stats = {value = 5}
-		self.parts.wpn_fps_upg_ass_ns_jprifles.supported = true		
+		self.parts.wpn_fps_upg_ass_ns_jprifles.supported = true
 	-- Medium Suppressor
 		self.parts.wpn_fps_upg_ns_ass_smg_medium.stats = {suppression = 72, alert_size = 12, value = 2}
-		self.parts.wpn_fps_upg_ns_ass_smg_medium.supported = true				
+		self.parts.wpn_fps_upg_ns_ass_smg_medium.supported = true
+		self.parts.wpn_fps_upg_ns_ass_smg_medium.subclass_modifiers = {
+			"subclass_quiet"
+		}
 	-- The Bigger the Better Suppressor
 		self.parts.wpn_fps_upg_ns_ass_smg_large.stats = {suppression = 72, alert_size = 12, value = 5}
-		self.parts.wpn_fps_upg_ns_ass_smg_large.supported = true						
+		self.parts.wpn_fps_upg_ns_ass_smg_large.subclass_modifiers = {
+			"subclass_quiet"
+		}
+		self.parts.wpn_fps_upg_ns_ass_smg_large.supported = true
 	-- Hurricane Compensator -- name is tentative due to limited documentation of cartel optics pack files
 		self.parts.wpn_fps_upg_ns_pis_typhoon.stats = {value = 4}
-		self.parts.wpn_fps_upg_ns_pis_typhoon.supported = true								
+		self.parts.wpn_fps_upg_ns_pis_typhoon.supported = true
 	-- Marmon Compensator -- name is tentative due to limited documentation of cartel optics pack files
 		self.parts.wpn_fps_upg_ns_ass_smg_v6.stats = {value = 3}
-		self.parts.wpn_fps_upg_ns_ass_smg_v6.supported = true										
+		self.parts.wpn_fps_upg_ns_ass_smg_v6.supported = true
 	-- Jungle Ninja Suppressor
 		self.parts.wpn_fps_upg_ns_pis_jungle.stats = {suppression = 72,	alert_size = 12, value = 5}
-		self.parts.wpn_fps_upg_ns_pis_jungle.supported = true												
+		self.parts.wpn_fps_upg_ns_pis_jungle.supported = true
+		self.parts.wpn_fps_upg_ns_pis_jungle.subclass_modifiers = {
+			"subclass_quiet"
+		}											
 	-- Budget Suppressor
 		self.parts.wpn_fps_upg_ns_ass_filter.stats = {suppression = 72,	alert_size = 12, value = 0} -- yes, value correct
-		self.parts.wpn_fps_upg_ns_ass_filter.supported = true														
+		self.parts.wpn_fps_upg_ns_ass_filter.supported = true
+		self.parts.wpn_fps_upg_ns_ass_filter.subclass_modifiers = {
+			"subclass_quiet"
+		}									
 	-- Asepsis Suppressor
 		self.parts.wpn_fps_upg_ns_pis_medium_slim.stats = {suppression = 72, alert_size = 12, value = 1}
-		self.parts.wpn_fps_upg_ns_pis_medium_slim.supported = true																
+		self.parts.wpn_fps_upg_ns_pis_medium_slim.supported = true
+		self.parts.wpn_fps_upg_ns_pis_medium_slim.subclass_modifiers = {
+			"subclass_quiet"
+		}
 	-- Monolith Suppressor
 		self.parts.wpn_fps_upg_ns_pis_large.stats = {suppression = 72, alert_size = 12, value = 5}
-		self.parts.wpn_fps_upg_ns_pis_large.supported = true																
+		self.parts.wpn_fps_upg_ns_pis_large.supported = true
+		self.parts.wpn_fps_upg_ns_pis_large.subclass_modifiers = {
+			"subclass_quiet"
+		}
 	-- Champion's Suppressor
 		self.parts.wpn_fps_upg_ns_pis_large_kac.stats = {suppression = 72, alert_size = 12, value = 6}
-		self.parts.wpn_fps_upg_ns_pis_large_kac.supported = true																		
+		self.parts.wpn_fps_upg_ns_pis_large_kac.supported = true
+		self.parts.wpn_fps_upg_ns_pis_large_kac.subclass_modifiers = {
+			"subclass_quiet"
+		}
 	-- Size Doesn't Matter Suppressor
 		self.parts.wpn_fps_upg_ns_pis_small.stats = {suppression = 72, alert_size = 12, value = 3}
-		self.parts.wpn_fps_upg_ns_pis_small.supported = true																				
+		self.parts.wpn_fps_upg_ns_pis_small.supported = true
+		self.parts.wpn_fps_upg_ns_pis_small.subclass_modifiers = {
+			"subclass_quiet"
+		}
 	-- Flash Hider
 		self.parts.wpn_fps_upg_pis_ns_flash.stats = {suppression = 72, alert_size = 12, value = 4}
-		self.parts.wpn_fps_upg_pis_ns_flash.supported = true																						
+		self.parts.wpn_fps_upg_pis_ns_flash.supported = true
+		
 	-- Facepunch Compensator -- NOTE consider name change for Knockout
 		self.parts.wpn_fps_upg_ns_pis_meatgrinder.stats = {suppression = 72, alert_size = 12, value = 7}
 	-- IPSC Compensator
 		self.parts.wpn_fps_upg_ns_pis_ipsccomp.stats = {suppression = 72, alert_size = 12, value = 4}
-		self.parts.wpn_fps_upg_ns_pis_ipsccomp.supported = true																						
+		self.parts.wpn_fps_upg_ns_pis_ipsccomp.supported = true
+		
 	-- Standard Issue Suppressor
 		self.parts.wpn_fps_upg_ns_pis_medium.stats = {suppression = 72, alert_size = 12, value = 1}
-		self.parts.wpn_fps_upg_ns_pis_medium.supported = true																							
+		self.parts.wpn_fps_upg_ns_pis_medium.supported = true
+		self.parts.wpn_fps_upg_ns_pis_medium.subclass_modifiers = {
+			"subclass_quiet"
+		}
+		
 	-- Roctec Suppressor
 		self.parts.wpn_fps_upg_ns_pis_medium_gem.stats = {suppression = 72, alert_size = 12, value = 4}
-		self.parts.wpn_fps_upg_ns_pis_medium_gem.supported = true																						
+		self.parts.wpn_fps_upg_ns_pis_medium_gem.supported = true
+		self.parts.wpn_fps_upg_ns_pis_medium_gem.subclass_modifiers = {
+			"subclass_quiet"
+		}
 	
 	
 	--Sight stat changes begin here.
 	-- Milspec Scope
 		self.parts.wpn_fps_upg_o_specter.stats = {zoom = 4, value = 8} -- i should probably write it like this for the rest of the attachments
-		self.parts.wpn_fps_upg_o_specter.supported = true																																																																																			
+		self.parts.wpn_fps_upg_o_specter.supported = true
 	-- Military Red Dot Sight 
 		self.parts.wpn_fps_upg_o_aimpoint.stats = {zoom = 4, value = 8}
-		self.parts.wpn_fps_upg_o_aimpoint.supported = true																																																																																		
+		self.parts.wpn_fps_upg_o_aimpoint.supported = true
 	-- Military Red Dot Sight -- NOTE this is the preorder edition.
 		self.parts.wpn_fps_upg_o_aimpoint_2.stats = {zoom = 4, value = 1}
-		self.parts.wpn_fps_upg_o_aimpoint_2.supported = true																																																																																		
+		self.parts.wpn_fps_upg_o_aimpoint_2.supported = true
 	-- Surgeon Sight
 		self.parts.wpn_fps_upg_o_docter.stats = {zoom = 2, value = 5}
-		self.parts.wpn_fps_upg_o_docter.supported = true																																																																																		
+		self.parts.wpn_fps_upg_o_docter.supported = true
 	-- Holographic Sight
 		self.parts.wpn_fps_upg_o_eotech.stats = {zoom = 3, value = 3}
-		self.parts.wpn_fps_upg_o_eotech.supported = true																																																																																		
+		self.parts.wpn_fps_upg_o_eotech.supported = true
 	-- The Professional's Choice Sight
 		self.parts.wpn_fps_upg_o_t1micro.stats = {zoom = 3, value = 3}
-		self.parts.wpn_fps_upg_o_t1micro.supported = true																																																																																		
+		self.parts.wpn_fps_upg_o_t1micro.supported = true
 	-- Marksman Sight
 		self.parts.wpn_upg_o_marksmansight_rear.stats = {zoom = 2, value = 5}
-		self.parts.wpn_upg_o_marksmansight_rear.supported = true																																																																																		
+		self.parts.wpn_upg_o_marksmansight_rear.supported = true
 	-- Theia Magnified Scope
 		self.parts.wpn_fps_upg_o_leupold.stats = {zoom = 10, value = 8}
-		self.parts.wpn_fps_upg_o_leupold.supported = true																																																																																		
+		self.parts.wpn_fps_upg_o_leupold.supported = true
 	-- See More Sight
 		self.parts.wpn_fps_upg_o_cmore.stats = {zoom = 3, value = 5}
-		self.parts.wpn_fps_upg_o_cmore.supported = true																																																																																		
+		self.parts.wpn_fps_upg_o_cmore.supported = true
 	-- Acough Optic Scope
 		self.parts.wpn_fps_upg_o_acog.stats = {zoom = 6, value = 6}
-		self.parts.wpn_fps_upg_o_acog.supported = true																																																																																		
+		self.parts.wpn_fps_upg_o_acog.supported = true
 	-- Combat Sight
 		self.parts.wpn_fps_upg_o_cs.stats = {zoom = 4, value = 3}
-		self.parts.wpn_fps_upg_o_cs.supported = true																																																																																		
+		self.parts.wpn_fps_upg_o_cs.supported = true
 	-- Speculator Sight
 		self.parts.wpn_fps_upg_o_reflex.stats = {zoom = 3, value = 5}
-		self.parts.wpn_fps_upg_o_reflex.supported = true																																																																																		
+		self.parts.wpn_fps_upg_o_reflex.supported = true
 	-- Trigonom Sight
 		self.parts.wpn_fps_upg_o_rx01.stats = {zoom = 3, value = 5}
-		self.parts.wpn_fps_upg_o_rx01.supported = true																																																																																		
+		self.parts.wpn_fps_upg_o_rx01.supported = true
 	-- Compact Holosight
 		self.parts.wpn_fps_upg_o_eotech_xps.stats = {zoom = 3, value = 5}
-		self.parts.wpn_fps_upg_o_eotech_xps.supported = true																																																																																
-	-- [NOTE unable to find name in documentation]
+		self.parts.wpn_fps_upg_o_eotech_xps.supported = true
+	-- Advanced Combat Sight
 		self.parts.wpn_fps_upg_o_bmg.stats = {zoom = 6, value = 8}
-		self.parts.wpn_fps_upg_o_bmg.supported = true																																																																																
-	-- [NOTE unable to find name in documentation]
+		self.parts.wpn_fps_upg_o_bmg.supported = true
+	-- Maelstrom Sight
 		self.parts.wpn_fps_upg_o_uh.stats = {zoom = 3, value = 5}
-		self.parts.wpn_fps_upg_o_uh.supported = true																																																																																
-	-- [NOTE unable to find name in documentation]
+		self.parts.wpn_fps_upg_o_uh.supported = true
+	-- Compact Profile Sight
 		self.parts.wpn_fps_upg_o_fc1.stats = {zoom = 3, value = 5}
-		self.parts.wpn_fps_upg_o_fc1.supported = true																																																																														
+		self.parts.wpn_fps_upg_o_fc1.supported = true
 	-- SKOLD Reflex Micro Sight -- name is tentative due to limited documentation of cartel optics pack files (what of rmr?)
 		self.parts.wpn_fps_upg_o_rms.stats = {zoom = 3, value = 6}
-		self.parts.wpn_fps_upg_o_rms.supported = true																																																																												
+		self.parts.wpn_fps_upg_o_rms.supported = true
 	-- Riktpunkt Holosight -- name is tentative due to limited documentation of cartel optics pack files
 		self.parts.wpn_fps_upg_o_rikt.stats = {zoom = 3, value = 6}
-		self.parts.wpn_fps_upg_o_rikt.supported = true																																																																												
+		self.parts.wpn_fps_upg_o_rikt.supported = true
 	
 	-- Magazine stat changes begin here.
 		-- Milspec Magazine
 		self.parts.wpn_fps_m4_uupg_m_std.stats = {value = 1}
-		self.parts.wpn_fps_m4_uupg_m_std.supported = true																																																																										
+		self.parts.wpn_fps_m4_uupg_m_std.supported = true
 		-- L5 Magazine
 		self.parts.wpn_fps_upg_m4_m_l5.stats = {value = 1}
-		self.parts.wpn_fps_upg_m4_m_l5.supported = true																																																																										
+		self.parts.wpn_fps_upg_m4_m_l5.supported = true
 		-- Tactical Magazine
 		self.parts.wpn_fps_upg_m4_m_pmag.stats = {value = 3}
-		self.parts.wpn_fps_upg_m4_m_pmag.supported = true																																																																										
+		self.parts.wpn_fps_upg_m4_m_pmag.supported = true
 		-- Expert Magazine
 		self.parts.wpn_fps_ass_l85a2_m_emag.stats = {value = 1}
-		self.parts.wpn_fps_ass_l85a2_m_emag.supported = true																																																																										
+		self.parts.wpn_fps_ass_l85a2_m_emag.supported = true
 		-- CAR Quadstacked Magazine [wpn_fps_upg_m4_m_quad] Value: 3
 		self.parts.wpn_fps_upg_m4_m_quad.stats = {
 			value = 3,		-- note wiki value incorrect
 			extra_ammo = 30, 
 			concealment = -10
 		}
-		self.parts.wpn_fps_upg_m4_m_quad.supported = true																																																																										
-		--  [wpn_fps_upg_m4_m_straight] Value: 2
+		self.parts.wpn_fps_upg_m4_m_quad.supported = true
+		
+		
+		-- Vintage Mag. [wpn_fps_upg_m4_m_straight] Value: 2
 		self.parts.wpn_fps_upg_m4_m_straight.stats = {	
 			value = 2,		
 			extra_ammo = -10, 
 			concealment = 5
 		}	
-		self.parts.wpn_fps_upg_m4_m_straight.supported = true																																																																								
+		self.parts.wpn_fps_upg_m4_m_straight.supported = true
 		-- Speedpull Magazine
 		self.parts.wpn_fps_m4_upg_m_quick.stats = {
 			value = 2,		
 			reload = 10,
 			concealment = -4
 		}
-		self.parts.wpn_fps_m4_upg_m_quick.supported = true																																																																						
+		self.parts.wpn_fps_m4_upg_m_quick.supported = true
 	--Gadget stat changes begin here.
 		-- Flashlight
 		self.parts.wpn_fps_upg_fl_ass_smg_sho_surefire.stats = {value = 3}
-		self.parts.wpn_fps_upg_fl_ass_smg_sho_surefire.supported = true																																																																						
+		self.parts.wpn_fps_upg_fl_ass_smg_sho_surefire.supported = true
 		-- Tactical Laser										
 		self.parts.wpn_fps_upg_fl_ass_smg_sho_peqbox.stats = {value = 5}
-		self.parts.wpn_fps_upg_fl_ass_smg_sho_peqbox.supported = true																																																																						
+		self.parts.wpn_fps_upg_fl_ass_smg_sho_peqbox.supported = true
 		-- Compact Laser								
 		self.parts.wpn_fps_upg_fl_ass_laser.stats = {value = 2}	
-		self.parts.wpn_fps_upg_fl_ass_laser.supported = true																																																																				
+		self.parts.wpn_fps_upg_fl_ass_laser.supported = true
 		-- Military Laser						
 		self.parts.wpn_fps_upg_fl_ass_peq15.stats = {value = 5}	-- check vs wpn_fps_upg_fl_ass_peq15_flashlight
-		self.parts.wpn_fps_upg_fl_ass_peq15.supported = true																																																																		
+		self.parts.wpn_fps_upg_fl_ass_peq15.supported = true
 		-- LED Combo						
 		self.parts.wpn_fps_upg_fl_ass_utg.stats = {value = 5}	
-		self.parts.wpn_fps_upg_fl_ass_utg.supported = true																																																																	
+		self.parts.wpn_fps_upg_fl_ass_utg.supported = true
 		-- Tactical Pistol Light						
 		self.parts.wpn_fps_upg_fl_pis_tlr1.stats = {value = 2}	
-		self.parts.wpn_fps_upg_fl_pis_tlr1.supported = true																																																															
+		self.parts.wpn_fps_upg_fl_pis_tlr1.supported = true
 		-- Pocket Laser						
 		self.parts.wpn_fps_upg_fl_pis_laser.stats = {value = 5}	
-		self.parts.wpn_fps_upg_fl_pis_laser.supported = true																																																													
+		self.parts.wpn_fps_upg_fl_pis_laser.supported = true
 		-- Combined Module
 		self.parts.wpn_fps_upg_fl_pis_x400v.stats = {value = 5}	
-		self.parts.wpn_fps_upg_fl_pis_x400v.supported = true																																																													
+		self.parts.wpn_fps_upg_fl_pis_x400v.supported = true
 		-- Polymer Flashlight
 		self.parts.wpn_fps_upg_fl_pis_m3x.stats = {value = 1}	
-		self.parts.wpn_fps_upg_fl_pis_m3x.supported = true																																																											
+		self.parts.wpn_fps_upg_fl_pis_m3x.supported = true
 		-- Micro Laser						
 		self.parts.wpn_fps_upg_fl_pis_crimson.stats = {value = 5}	
-		self.parts.wpn_fps_upg_fl_pis_crimson.supported = true																																																									
+		self.parts.wpn_fps_upg_fl_pis_crimson.supported = true
 		-- 45 Degree Red Dot Sight				
 		self.parts.wpn_fps_upg_o_45rds.stats = {value = 1, gadget_zoom = 1}	
-		self.parts.wpn_fps_upg_o_45rds.supported = true																																																							
+		self.parts.wpn_fps_upg_o_45rds.supported = true
 		-- Riktpunkt 45 Degree Sight
 		self.parts.wpn_fps_upg_o_45rds_v2.stats = {value = 1, gadget_zoom = 1}	
-		self.parts.wpn_fps_upg_o_45rds_v2.supported = true																																																					
+		self.parts.wpn_fps_upg_o_45rds_v2.supported = true
 		-- Riktpunkt Magnifier
 		self.parts.wpn_fps_upg_o_xpsg33_magnifier.stats = {value = 1, gadget_zoom = 9}
-		self.parts.wpn_fps_upg_o_xpsg33_magnifier.supported = true																																																			
+		self.parts.wpn_fps_upg_o_xpsg33_magnifier.supported = true
 		-- Signature Magnifier
 		self.parts.wpn_fps_upg_o_sig.stats = {value = 2, gadget_zoom = 9}
-		self.parts.wpn_fps_upg_o_sig.supported = true																																																	
+		self.parts.wpn_fps_upg_o_sig.supported = true
 		-- 45 Degree Ironsights
 		self.parts.wpn_fps_upg_o_45steel.stats = {value = 1, gadget_zoom = 1}	
-		self.parts.wpn_fps_upg_o_45steel.supported = true																																															
+		self.parts.wpn_fps_upg_o_45steel.supported = true
 	
 	--Grip stat changes begin here.
 		-- Pro Grip
 		self.parts.wpn_fps_upg_m4_g_sniper.stats = {value = 6}
-		self.parts.wpn_fps_upg_m4_g_sniper.supported = true																																															
+		self.parts.wpn_fps_upg_m4_g_sniper.supported = true
 		-- Ergo Grip
 		self.parts.wpn_fps_upg_m4_g_ergo.stats = {value = 2}	
-		self.parts.wpn_fps_upg_m4_g_ergo.supported = true																																														
+		self.parts.wpn_fps_upg_m4_g_ergo.supported = true
 		-- Rubber Grip
 		self.parts.wpn_fps_upg_m4_g_hgrip.stats = {value = 2}	
-		self.parts.wpn_fps_upg_m4_g_hgrip.supported = true																																												
+		self.parts.wpn_fps_upg_m4_g_hgrip.supported = true
 		-- Contractor Grip
 		self.parts.wpn_fps_snp_tti_g_grippy.stats = {value = 1}
-		self.parts.wpn_fps_snp_tti_g_grippy.supported = true																																										
+		self.parts.wpn_fps_snp_tti_g_grippy.supported = true
 		-- Short Grip
 		self.parts.wpn_fps_upg_m4_g_mgrip.stats = {value = 2}	
-		self.parts.wpn_fps_upg_m4_g_mgrip.supported = true																																								
+		self.parts.wpn_fps_upg_m4_g_mgrip.supported = true
 		-- Titanium Skeleton Grip
 		self.parts.wpn_fps_upg_g_m4_surgeon.stats = {value = 1}	
-		self.parts.wpn_fps_upg_g_m4_surgeon.supported = true																																						
+		self.parts.wpn_fps_upg_g_m4_surgeon.supported = true
 
 	--Stock stat changes begin here.
 		--Tactical Stock
 		self.parts.wpn_fps_upg_m4_s_pts.stats = {value = 3}
-		self.parts.wpn_fps_upg_m4_s_pts.supported = true																																						
+		self.parts.wpn_fps_upg_m4_s_pts.supported = true
 		--Folding stock
 		self.parts.wpn_fps_m4_uupg_s_fold.stats = {value = 5}
-		self.parts.wpn_fps_m4_uupg_s_fold.supported = true																																				
+		self.parts.wpn_fps_m4_uupg_s_fold.supported = true
 		-- Crane Stock
 		self.parts.wpn_fps_upg_m4_s_crane.stats = {value = 2}
-		self.parts.wpn_fps_upg_m4_s_crane.supported = true																																		
+		self.parts.wpn_fps_upg_m4_s_crane.supported = true
 		-- 2 Piece Stock
 		self.parts.wpn_fps_upg_m4_s_ubr.stats = {value = 1}
-		self.parts.wpn_fps_upg_m4_s_ubr.supported = true																																
+		self.parts.wpn_fps_upg_m4_s_ubr.supported = true
 		-- Contractor stock
 		self.parts.wpn_fps_snp_tti_s_vltor.stats = {value = 1}		
-		self.parts.wpn_fps_snp_tti_s_vltor.supported = true																														
+		self.parts.wpn_fps_snp_tti_s_vltor.supported = true
 		-- War Torn stock
 		self.parts.wpn_fps_upg_m4_s_mk46.stats = {value = 6}	
-		self.parts.wpn_fps_upg_m4_s_mk46.supported = true																												
+		self.parts.wpn_fps_upg_m4_s_mk46.supported = true
 			
 	--Upper/Lower Receiver stat changes begin here.
 		-- exotique receiver
 		self.parts.wpn_fps_m4_upper_reciever_edge.stats = {value = 3}	
-		self.parts.wpn_fps_m4_upper_reciever_edge.supported = true																												
+		self.parts.wpn_fps_m4_upper_reciever_edge.supported = true
 		-- lw upper receiver
 		self.parts.wpn_fps_upg_ass_m4_upper_reciever_ballos.stats = {value = 1}	
-		self.parts.wpn_fps_upg_ass_m4_lower_reciever_core.supported = true																												
+		self.parts.wpn_fps_upg_ass_m4_lower_reciever_core.supported = true
 		-- thrust upper receiver
 		self.parts.wpn_fps_upg_ass_m4_upper_reciever_core.stats = {value = 1}
-		self.parts.wpn_fps_upg_ass_m4_lower_reciever_core.supported = true																										
+		self.parts.wpn_fps_upg_ass_m4_lower_reciever_core.supported = true
 		-- thrust lower receiver
 		self.parts.wpn_fps_upg_ass_m4_lower_reciever_core.stats = {value = 1}	
 		self.parts.wpn_fps_upg_ass_m4_lower_reciever_core.supported = true
@@ -4106,7 +4247,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_upg_a_piercing.custom_stats = {
 				damage_near_mul = 1.2 --not sure about these. might need to modify shotgunbase
 		}
-		self.parts.wpn_fps_upg_a_piercing.supported = true	
+		self.parts.wpn_fps_upg_a_piercing.supported = true
 		-- dragon's breath rounds (muzzleflash and actual hitbox/cone stuff ain't done)
 		self.parts.wpn_fps_upg_a_dragons_breath.stats = {value = 5}			
 		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats = {
@@ -4127,7 +4268,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 				dot_tick_period = "0.5"
 			}
 		}
-		self.parts.wpn_fps_upg_a_dragons_breath.supported = true			
+		self.parts.wpn_fps_upg_a_dragons_breath.supported = true
 		-- he slugs
 		self.parts.wpn_fps_upg_a_explosive.stats = {value = 5, spread = 5}			
 		self.parts.wpn_fps_upg_a_explosive.custom_stats = {
@@ -4137,7 +4278,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 				bullet_class = "InstantExplosiveBulletBase",
 				rays = 1
 		}
-		self.parts.wpn_fps_upg_a_explosive.supported = true	
+		self.parts.wpn_fps_upg_a_explosive.supported = true
 		-- ap slugs
 		self.parts.wpn_fps_upg_a_slug.stats = {value = 5, spread = 5, damage = 30}	
 		self.parts.wpn_fps_upg_a_slug.custom_stats = {
@@ -4149,16 +4290,16 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 				can_shoot_through_shield = true,
 				can_shoot_through_wall = true,
 		}
-		self.parts.wpn_fps_upg_a_slug.supported = true	
+		self.parts.wpn_fps_upg_a_slug.supported = true
 		-- 000 buck
 		self.parts.wpn_fps_upg_a_custom.stats = {value = 3, spread = -5}	
-		self.parts.wpn_fps_upg_a_custom.supported = true	
+		self.parts.wpn_fps_upg_a_custom.supported = true
 		-- community 000 buck
 		self.parts.wpn_fps_upg_a_custom_free.stats = {value = 3}	
 		self.parts.wpn_fps_upg_a_custom_free.custom_stats = {rays = 6}	
 		self.parts.wpn_fps_upg_a_custom_free.name_id = "bm_wp_upg_a_custom_free"	
 		self.parts.wpn_fps_upg_a_custom_free.desc_id = "bm_wp_upg_a_custom_free_desc"	
-		self.parts.wpn_fps_upg_a_custom_free.supported = true	
+		self.parts.wpn_fps_upg_a_custom_free.supported = true
 		
 	end
 end)
