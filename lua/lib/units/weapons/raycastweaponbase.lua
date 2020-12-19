@@ -444,7 +444,7 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 	end
 	local do_money_shot
 	if is_player then
-		if mag <= 1 and managers.player:has_category_upgrade("weapon", "money_shot") and self:is_weapon_class("rapidfire") then
+		if mag <= 1 and managers.player:has_category_upgrade("weapon", "money_shot") and self:is_weapon_class("class_rapidfire") then
 			do_money_shot = true
 			local money_trail = Idstring("effects/particles/weapons/trail_dv_sniper")
 			local money_muzzle = Idstring("effects/particles/weapons/money_muzzle_fps")
@@ -545,7 +545,7 @@ end
 function RaycastWeaponBase:fire_rate_multiplier(rof_mul)
 --the addition of the optional rof_mul argument is from cd
 	rof_mul = rof_mul or 1
-	if self:is_weapon_class("precision") then
+	if self:is_weapon_class("class_precision") then
 		local tap_the_trigger_data = managers.player:upgrade_value("point_and_click_rof_bonus",{0,0})
 		rof_mul = rof_mul * (1 + math.min(tap_the_trigger_data[1] * managers.player:get_property("current_point_and_click_stacks",0),tap_the_trigger_data[2]))
 	elseif self:is_weapon_class("class_shotgun") and self:fire_mode() == "single" then 
@@ -559,7 +559,7 @@ function RaycastWeaponBase:reload_speed_multiplier(multiplier)
 --optional multiplier argument is added from cd here as well
 	local pm = managers.player
 
-	if self:is_weapon_class("precision") then
+	if self:is_weapon_class("class_precision") then
 		local this_machine_data = pm:upgrade_value("weapon","point_and_click_bonus_reload_speed",{0,0})
 		multiplier = multiplier * (1 + math.min(this_machine_data[1] * pm:get_property("current_point_and_click_stacks",0),this_machine_data[2]))
 	end
@@ -572,9 +572,9 @@ function RaycastWeaponBase:reload_speed_multiplier(multiplier)
 	multiplier = multiplier * pm:upgrade_value(self._name_id, "reload_speed_multiplier", 1)
 	
 	--clean this up once all weapons are tagged appropriately
-	if self:is_weapon_class("rapidfire") and self:clip_empty() then
+	if self:is_weapon_class("class_rapidfire") and self:clip_empty() then
 		multiplier = multiplier * (1 + pm:upgrade_value("weapon", "money_shot_aced", 0))
-	elseif self:is_weapon_class("heavy") then
+	elseif self:is_weapon_class("class_heavy") then
 		local lead_farmer_data = pm:upgrade_value("heavy","lead_farmer",{0,0})
 		local lead_farmer_bonus = math.min(pm:get_property("current_lead_farmer_stacks",0) * lead_farmer_data[1],lead_farmer_data[2])
 		multiplier = multiplier + lead_farmer_bonus
@@ -590,7 +590,7 @@ function RaycastWeaponBase:_get_current_damage(dmg_mul)
 	local damage = self._damage
 	damage = damage * (dmg_mul or 1)
 	damage = damage * managers.player:temporary_upgrade_value("temporary", "combat_medic_damage_multiplier", 1)
-	if self:is_weapon_class("precision") then 
+	if self:is_weapon_class("class_precision") then 
 		damage = damage + math.min(point_and_click_data[1] * managers.player:get_property("current_point_and_click_stacks",0),point_and_click_data[2])
 	elseif self:is_weapon_class("class_shotgun") then 
 		if self:fire_mode() == "auto" and self:clip_full() then 
@@ -985,7 +985,7 @@ function InstantBulletBase:calculate_crit(weapon_unit, user_unit)
 	
 	local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
 	
-	if has_category and weapon_unit:base():is_weapon_class("rapidfire") then
+	if has_category and weapon_unit:base():is_weapon_class("class_rapidfire") then
 	
 		crit_value = crit_value + managers.player:upgrade_value("weapon", "spray_and_pray_basic", 0)
 		
@@ -1019,7 +1019,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 	local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
 	if enable_ricochets and not already_ricocheted and user_unit and user_unit == managers.player:player_unit() and col_ray.unit then
 
-		if has_category and weapon_unit:base():is_weapon_class("rapidfire") then
+		if has_category and weapon_unit:base():is_weapon_class("class_rapidfire") then
 			local can_bounce_off = false
 
 			--easier to understand and to add more conditions if desired
@@ -1192,7 +1192,7 @@ function FlameBulletBase:calculate_crit(weapon_unit, user_unit)
 	local crit_value = managers.player:critical_hit_chance()
 	local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
 	
-	if has_category and weapon_unit:base():is_weapon_class("rapidfire") then
+	if has_category and weapon_unit:base():is_weapon_class("class_rapidfire") then
 		crit_value = crit_value + managers.player:upgrade_value("weapon", "spray_and_pray_basic", 0)
 		crit_value = crit_value + managers.player:upgrade_value("weapon", "prayers_answered", 0)
 		
@@ -1562,7 +1562,7 @@ function ElectricBulletBase:give_impact_damage(col_ray, weapon_unit, user_unit, 
 end
 
 function RaycastWeaponBase:is_heavy_weapon() --deprecated, do not use
-	log("function RaycastWeaponBase:is_heavy_weapon() is deprecated! Please use RaycastWeaponBase:is_weapon_class(\"heavy\") instead!")
+	log("function RaycastWeaponBase:is_heavy_weapon() is deprecated! Please use RaycastWeaponBase:is_weapon_class(\"class_heavy\") instead!")
 	return false
 end
 

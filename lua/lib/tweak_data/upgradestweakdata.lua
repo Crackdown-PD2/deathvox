@@ -61,11 +61,11 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 	
 	--weapon classification categories
 		self.values.NO_WEAPON_CLASS = {} --addresses weapons whose weapon class has not been implemented
-		self.values.rapidfire = self.values.rapidfire or {}
+		self.values.class_rapidfire = self.values.class_rapidfire or {}
 		self.values.class_shotgun = self.values.class_shotgun or {}
-		self.values.precision = self.values.precision or {}
-		self.values.heavy = self.values.heavy or {}
-		self.values.specialist = self.values.specialist or {}
+		self.values.class_precision = self.values.class_precision or {}
+		self.values.class_heavy = self.values.class_heavy or {}
+		self.values.class_specialist = self.values.class_specialist or {}
 		self.values.class_saw = self.values.class_saw or {}
 		self.values.class_grenade = self.values.class_grenade or {}
 		self.values.class_throwing = self.values.class_throwing or {}
@@ -113,10 +113,10 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "enter_steelsight_speed_multiplier",
-				category = "precision"
+				category = "class_precision"
 			}
 		}
-		self.values.precision.enter_steelsight_speed_multiplier = { 
+		self.values.class_precision.enter_steelsight_speed_multiplier = { 
 			0.1 --was 2 for vanilla upgrade
 		}
 		
@@ -250,7 +250,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		self.values.class_shotgun.tender_meat_bodyshots = {
 			0.5
 		}
-		self.definitions.class_weapon_tender_meat_bodyshots = {
+		self.definitions.class_shotgun_tender_meat_bodyshots = {
 			name_id = "menu_tender_meat_basic",
 			category = "feature",
 			upgrade = {
@@ -400,38 +400,38 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		--Heavy
 		
-		self.values.heavy.collateral_damage = { --it's graze, but again
+		self.values.class_heavy.collateral_damage = { --it's graze, but again
 			{ 0.5,25 } --50% damage in 0.25m radius
 		}
-		self.values.heavy.enter_steelsight_speed_multiplier = {
+		self.values.class_heavy.enter_steelsight_speed_multiplier = {
 			0.1
 		}
-		self.definitions.heavy_collateral_damage = {
+		self.definitions.class_heavy_collateral_damage = {
 			name_id = "menu_collateral_damage_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "collateral_damage",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
-		self.definitions.heavy_steelsight_speed_multiplier = {
+		self.definitions.class_heavy_steelsight_speed_multiplier = {
 			name_id = "menu_collateral_damage_aced",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "enter_steelsight_speed_multiplier",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
 		
-		self.values.heavy.death_grips_stacks = {
+		self.values.class_heavy.death_grips_stacks = {
 			{8,10} --8s duration, 10 max stacks
 		}
-		self.values.heavy.death_grips_recoil_bonus = {
+		self.values.class_heavy.death_grips_recoil_bonus = {
 			1 -- +4 stability (per stack)
 		}
-		self.values.heavy.death_grips_spread_bonus = {
+		self.values.class_heavy.death_grips_spread_bonus = {
 			1, -- +4 accuracy (per stack)
 			2 -- +8
 		}
@@ -442,7 +442,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "death_grips_stacks",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
 		self.definitions.heavy_death_grips_recoil_bonus = {
@@ -451,7 +451,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "death_grips_recoil_bonus",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
 		self.definitions.heavy_death_grips_spread_bonus_1 = {
@@ -460,7 +460,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "death_grips_spread_bonus",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
 		self.definitions.heavy_death_grips_spread_bonus_2 = {
@@ -469,7 +469,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 2,
 				upgrade = "death_grips_spread_bonus",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
 		
@@ -496,7 +496,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
-		self.values.heavy.lead_farmer = {
+		self.values.class_heavy.lead_farmer = {
 			{0.01,0.5}, --1% per kill, 50% max
 			{0.02,1} --2% per kill, 100% max
 		}
@@ -506,7 +506,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "lead_farmer",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
 		self.definitions.heavy_lead_farmer_aced = {
@@ -515,11 +515,11 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 2,
 				upgrade = "lead_farmer",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
 		
-		self.values.heavy.weapon_class_ammo_stock_bonus = {
+		self.values.class_heavy.weapon_class_ammo_stock_bonus = {
 			1,
 			2
 		}
@@ -529,7 +529,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "weapon_class_ammo_stock_bonus",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
 		self.definitions.ammo_bag_war_machine_aced = {
@@ -538,7 +538,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 2,
 				upgrade = "weapon_class_ammo_stock_bonus",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
 		
@@ -621,7 +621,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		--Gunner
 		
-		self.values.rapidfire.enter_steelsight_speed_multiplier = {
+		self.values.class_rapidfire.enter_steelsight_speed_multiplier = {
 			0.1
 		}
 		
@@ -631,7 +631,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "enter_steelsight_speed_multiplier",
-				category = "rapidfire"
+				category = "class_rapidfire"
 			}
 		}
 		
@@ -666,31 +666,31 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
-		self.values.rapidfire.shotgrouping_aced = { 
+		self.values.class_rapidfire.shotgrouping_aced = { 
 			14 --accuracy/stability index addend
 		}
 		
-		self.values.rapidfire.enter_steelsight_speed_multiplier = { 
+		self.values.class_rapidfire.enter_steelsight_speed_multiplier = { 
 			0.1
 		}
 		
-		self.definitions.rapidfire_shotgrouping_basic = {
+		self.definitions.class_rapidfire_shotgrouping_basic = {
 			name_id = "menu_shotgrouping_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "enter_steelsight_speed_multiplier",
-				category = "rapidfire"
+				category = "class_rapidfire"
 			}
 		}
 					
-		self.definitions.rapidfire_shotgrouping_aced = {
+		self.definitions.class_rapidfire_shotgrouping_aced = {
 			name_id = "menu_shotgrouping_aced",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "shotgrouping_aced",
-				category = "rapidfire"
+				category = "class_rapidfire"
 			}
 		}
 	

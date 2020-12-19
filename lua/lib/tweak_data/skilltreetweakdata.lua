@@ -338,7 +338,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.enforcer,1,{ --Tender Meat
 			{
 				upgrades = {
-					"class_weapon_tender_meat_bodyshots"
+					"class_shotgun_tender_meat_bodyshots"
 				},
 				cost = self.costs.hightier
 			},
@@ -460,13 +460,13 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.heavy,1,{ --Collateral Damage
 			{
 				upgrades = {
-					"heavy_collateral_damage"
+					"class_heavy_collateral_damage"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"heavy_steelsight_speed_multiplier"
+					"class_heavy_steelsight_speed_multiplier"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -480,15 +480,15 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.heavy,2,{ --Death Grips
 			{
 				upgrades = {
-					"heavy_death_grips_stacks",
-					"heavy_death_grips_recoil_bonus",
-					"heavy_death_grips_spread_bonus_1"
+					"class_heavy_death_grips_stacks",
+					"class_heavy_death_grips_recoil_bonus",
+					"class_heavy_death_grips_spread_bonus_1"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"heavy_death_grips_spread_bonus_2"
+					"class_heavy_death_grips_spread_bonus_2"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -523,13 +523,13 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.heavy,4,{ --Lead Farmer
 			{
 				upgrades = {
-					"heavy_lead_farmer_basic"
+					"class_heavy_lead_farmer_basic"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"heavy_lead_farmer_aced"
+					"class_heavy_lead_farmer_aced"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -750,13 +750,13 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.gunner,3,{ --Shot Grouping
 			{
 				upgrades = {
-					"rapidfire_shotgrouping_basic"
+					"class_rapidfire_shotgrouping_basic"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"rapidfire_shotgrouping_aced"
+					"class_rapidfire_shotgrouping_aced"
 				},
 				cost = self.costs.hightierpro
 			},

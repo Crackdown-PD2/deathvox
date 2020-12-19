@@ -35,15 +35,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 		},
 		weapons = {
 			class = {
-			--all weapon class names will be prepended with "class_"
-				grenade = "guis/textures/pd2/blackmarket/icons/tcd/class_grenade",
-				heavy = "guis/textures/pd2/blackmarket/icons/tcd/class_heavy",
-				melee = "guis/textures/pd2/blackmarket/icons/tcd/class_melee",
-				precision = "guis/textures/pd2/blackmarket/icons/tcd/class_precision",
-				rapidfire = "guis/textures/pd2/blackmarket/icons/tcd/class_rapidfire",
-				specialist = "guis/textures/pd2/blackmarket/icons/tcd/class_specialist",
-				throwing = "guis/textures/pd2/blackmarket/icons/tcd/class_throwing",
-			
 				class_grenade = "guis/textures/pd2/blackmarket/icons/tcd/class_grenade",
 				class_heavy = "guis/textures/pd2/blackmarket/icons/tcd/class_heavy",
 				class_melee = "guis/textures/pd2/blackmarket/icons/tcd/class_melee",

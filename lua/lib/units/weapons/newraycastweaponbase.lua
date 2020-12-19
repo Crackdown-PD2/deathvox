@@ -13,7 +13,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		
 		if not current_state:in_steelsight() then
 			index = index + pm:upgrade_value("player", "hip_fire_accuracy_inc", 0)
-		elseif has_category and self:is_weapon_class("rapidfire") and pm:player_unit() then 
+		elseif has_category and self:is_weapon_class("class_rapidfire") and pm:player_unit() then 
 			index = index + pm:upgrade_value("rapidfire","shotgrouping_aced",0)
 		end
 
@@ -33,7 +33,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end
 		end
 		
-		if self:is_weapon_class("heavy") then 
+		if self:is_weapon_class("class_heavy") then 
 			local bonus = (pm:get_property("current_death_grips_stacks",0) * pm:upgrade_value("heavy","death_grips_spread_bonus",0))
 			index = index + bonus
 		end
@@ -82,12 +82,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 			return self._current_reload_speed_multiplier + shell_games_bonus
 		end
 		
-		if self:is_weapon_class("precision") then
+		if self:is_weapon_class("class_precision") then
 			local this_machine_data = pm:upgrade_value("weapon","point_and_click_bonus_reload_speed",{0,0})
 			multiplier = multiplier * (1 - math.min(this_machine_data[1] * pm:get_property("current_point_and_click_stacks",0),this_machine_data[2]))
 		end
 		
-		if self:is_weapon_class("rapidfire") and self:clip_empty() then
+		if self:is_weapon_class("class_rapidfire") and self:clip_empty() then
 			multiplier = multiplier * (1 - pm:upgrade_value("weapon", "money_shot_aced", 1))
 		end
 		
@@ -123,7 +123,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		multiplier = multiplier + 1 - pm:upgrade_value("team", "crew_faster_reload", 1)
 		multiplier = self:_convert_add_to_mul(multiplier)
 		
-		if self:is_weapon_class("heavy") then
+		if self:is_weapon_class("class_heavy") then
 			local lead_farmer_data = pm:upgrade_value("heavy","lead_farmer",{0,0})
 			local lead_farmer_bonus = math.min(pm:get_property("current_lead_farmer_stacks",0) * lead_farmer_data[1],lead_farmer_data[2])
 			multiplier = multiplier + lead_farmer_bonus
@@ -275,7 +275,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local recoil = self._current_stats_indices and self._current_stats_indices.recoil
 		recoil = (recoil or 0) + weapon_class_recoil_index_addend
 		
-		if self:is_weapon_class("heavy") then
+		if self:is_weapon_class("class_heavy") then
 			local bonus = managers.player:get_property("current_death_grips_stacks",0) * managers.player:upgrade_value("heavy","death_grips_recoil_bonus",0)
 			recoil = recoil + bonus
 		end
