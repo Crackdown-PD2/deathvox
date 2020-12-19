@@ -347,7 +347,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 			recoil = -10,
 			concealment = -5
 		}
-		self.parts.wpn_fps_upg_ass_m4_b_beowulf.class_modifier = "precision"
+		self.parts.wpn_fps_upg_ass_m4_b_beowulf.class_modifier = "class_precision"
 		self.parts.wpn_fps_upg_ass_m4_b_beowulf.supported = true
 		self.parts.wpn_fps_upg_ass_m4_b_beowulf.adds = {"car_dmr_kit_ammo_type"}
 		self.parts.car_dmr_kit_ammo_type = { --Dummy ammo type for DMR kit, needed for armor piercing and pickup multipliers to work properly.
@@ -393,7 +393,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 				--AK (DMR Kit)--
 	--------------------------------------
 	
-	self.parts.wpn_fps_upg_ass_ak_b_zastava.class_modifier = "precision"
+	self.parts.wpn_fps_upg_ass_ak_b_zastava.class_modifier = "class_precision"
 	--Note: Conversion kit entries are not actual weapons and are only listed for referential purposes.
 	--INCOMPLETE - consult mod information for AK instead.
 
@@ -664,7 +664,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--------------------------------------
 				--Gewehr 3 (DMR Kit)--
 	--------------------------------------
-	self.parts.wpn_fps_ass_g3_b_sniper.class_modifier = "precision"
+	self.parts.wpn_fps_ass_g3_b_sniper.class_modifier = "class_precision"
 	--Note: Conversion kit entries are not actual weapons and are only listed for referential purposes.
 	--INCOMPLETE --See main Gewehr mod entries for information.
 	--------------------------------------
@@ -3970,6 +3970,11 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_upg_ns_ass_smg_medium.stats = {suppression = 72, alert_size = 12, value = 2}
 		self.parts.wpn_fps_upg_ns_ass_smg_medium.supported = true
 		self.parts.wpn_fps_upg_ns_ass_smg_medium.subclass_modifiers = {
+			"subclass_quiet"
+		}
+	-- Low Profile Suppressor
+		self.parts.wpn_fps_upg_ns_ass_smg_small.stats = {suppression = 72, alert_size = 12, value = 2}
+		self.parts.wpn_fps_upg_ns_ass_smg_small.subclass_modifiers = {
 			"subclass_quiet"
 		}
 	-- The Bigger the Better Suppressor

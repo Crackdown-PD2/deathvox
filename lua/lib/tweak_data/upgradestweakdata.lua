@@ -436,7 +436,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			2 -- +8
 		}
 		
-		self.definitions.heavy_death_grips_stacks = {
+		self.definitions.class_heavy_death_grips_stacks = {
 			name_id = "menu_death_grips_basic",
 			category = "feature",
 			upgrade = {
@@ -445,7 +445,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "class_heavy"
 			}
 		}
-		self.definitions.heavy_death_grips_recoil_bonus = {
+		self.definitions.class_heavy_death_grips_recoil_bonus = {
 			name_id = "menu_death_grips_recoil_bonus",
 			category = "feature",
 			upgrade = {
@@ -454,7 +454,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "class_heavy"
 			}
 		}
-		self.definitions.heavy_death_grips_spread_bonus_1 = {
+		self.definitions.class_heavy_death_grips_spread_bonus_1 = {
 			name_id = "menu_death_grips_spread_bonus_1",
 			category = "feature",
 			upgrade = {
@@ -463,7 +463,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "class_heavy"
 			}
 		}
-		self.definitions.heavy_death_grips_spread_bonus_2 = {
+		self.definitions.class_heavy_death_grips_spread_bonus_2 = {
 			name_id = "menu_death_grips_spread_bonus_2",
 			category = "feature",
 			upgrade = {
@@ -500,7 +500,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			{0.01,0.5}, --1% per kill, 50% max
 			{0.02,1} --2% per kill, 100% max
 		}
-		self.definitions.heavy_lead_farmer_basic = {
+		self.definitions.class_heavy_lead_farmer_basic = {
 			name_id = "menu_lead_farmer_basic",
 			category = "feature",
 			upgrade = {
@@ -509,7 +509,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "class_heavy"
 			}
 		}
-		self.definitions.heavy_lead_farmer_aced = {
+		self.definitions.class_heavy_lead_farmer_aced = {
 			name_id = "menu_lead_farmer_aced",
 			category = "feature",
 			upgrade = {

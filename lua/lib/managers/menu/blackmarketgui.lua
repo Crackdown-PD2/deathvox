@@ -132,7 +132,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				})
 				start_x = weapon_class_icon:right() + icon_margin
 			else
-	--			log("TOTAL CRACKDOWN: ERROR! No icon data found for class " .. tostring(item_class))
+				log("TOTAL CRACKDOWN: ERROR! No icon data found for class " .. tostring(item_class))
 			end
 		end
 		
@@ -153,7 +153,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 					blend_mode = "normal"
 				})
 			else
-	--			log("TOTAL CRACKDOWN: ERROR! No icon data found for subclass " .. tostring(subclass_name))
+				log("TOTAL CRACKDOWN: ERROR! No icon data found for subclass " .. tostring(subclass_name))
 			end
 		end
 	end)
