@@ -15540,6 +15540,63 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	-- the Arbiter’s Area Denial is based on the Incendiary Grenade’s reduced radius that only uses
 	-- the central flame of the Molotov Cocktail effect.
 
+		self.arbiter.CLIP_AMMO_MAX = 5
+		self.arbiter.fire_mode_data = {
+			fire_rate = 0.75
+		}
+		self.arbiter.stats = {
+			concealment = 20,
+			suppression = 22,
+			reload = 11,
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 26,
+			value = 1,
+			alert_size = 7,
+			damage = 200,
+			total_ammo_mod = 21,
+			zoom = 1
+		}
+		self.arbiter.stats_modifiers = {
+			damage = 2.6
+		}
+		self.arbiter.primary_class = "specialist"
+		self.arbiter.subclasses = {}
+		self.arbiter.AMMO_PICKUP = {
+			0.05,
+			0.1
+		}
+		self.arbiter.spread = {
+			standing = self.new_m4.spread.standing,
+			crouching = self.new_m4.spread.crouching,
+			steelsight = self.new_m4.spread.steelsight,
+			moving_standing = self.new_m4.spread.moving_standing,
+			moving_crouching = self.new_m4.spread.moving_crouching,
+			moving_steelsight = self.new_m4.spread.moving_steelsight
+		}
+		self.arbiter.kick = {
+			standing = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			crouching = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			},
+			steelsight = {
+				3,
+				4.8,
+				-0.3,
+				0.3
+			}
+		}
+
+
 	--------------------------------------
 				--HRL-7--
 	--------------------------------------

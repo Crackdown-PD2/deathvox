@@ -575,7 +575,7 @@ function RaycastWeaponBase:reload_speed_multiplier(multiplier)
 	if self:is_weapon_class("class_rapidfire") and self:clip_empty() then
 		multiplier = multiplier * (1 + pm:upgrade_value("weapon", "money_shot_aced", 0))
 	elseif self:is_weapon_class("class_heavy") then
-		local lead_farmer_data = pm:upgrade_value("heavy","lead_farmer",{0,0})
+		local lead_farmer_data = pm:upgrade_value("class_heavy","lead_farmer",{0,0})
 		local lead_farmer_bonus = math.min(pm:get_property("current_lead_farmer_stacks",0) * lead_farmer_data[1],lead_farmer_data[2])
 		multiplier = multiplier + lead_farmer_bonus
 	end
@@ -1690,4 +1690,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		return picked_up, add_amount
 	end
+	
+	function RaycastWeaponBase:recoil()
+		if self:is_weapon_class("class_heavy") then
+			local recoil_bonus = managers.player:get_property("current_death_grips_stacks",0) * managers.player:upgrade_value("class_heavy","death_grips_recoil_bonus",0) * -0.1
+			return math.max(0,self._recoil + recoil_bonus)
+		end
+		return self._recoil
+	end
+	
 end

@@ -14,7 +14,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if not current_state:in_steelsight() then
 			index = index + pm:upgrade_value("player", "hip_fire_accuracy_inc", 0)
 		elseif has_category and self:is_weapon_class("class_rapidfire") and pm:player_unit() then 
-			index = index + pm:upgrade_value("rapidfire","shotgrouping_aced",0)
+			index = index + pm:upgrade_value("class_rapidfire","shotgrouping_aced",0)
 		end
 
 		if self:is_single_shot() and self:is_category("assault_rifle", "smg", "snp") then
@@ -34,7 +34,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 		
 		if self:is_weapon_class("class_heavy") then 
-			local bonus = (pm:get_property("current_death_grips_stacks",0) * pm:upgrade_value("heavy","death_grips_spread_bonus",0))
+			local bonus = (pm:get_property("current_death_grips_stacks",0) * pm:upgrade_value("class_heavy","death_grips_spread_bonus",0))
 			index = index + bonus
 		end
 		
@@ -124,7 +124,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		multiplier = self:_convert_add_to_mul(multiplier)
 		
 		if self:is_weapon_class("class_heavy") then
-			local lead_farmer_data = pm:upgrade_value("heavy","lead_farmer",{0,0})
+			local lead_farmer_data = pm:upgrade_value("class_heavy","lead_farmer",{0,0})
 			local lead_farmer_bonus = math.min(pm:get_property("current_lead_farmer_stacks",0) * lead_farmer_data[1],lead_farmer_data[2])
 			multiplier = multiplier + lead_farmer_bonus
 		end
@@ -260,27 +260,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 			return managers.player:upgrade_value("weapon", "automatic_head_shot_add", nil)
 		end
 		return nil
-	end
-
-	function NewRaycastWeaponBase:recoil()
-		local user_unit = self._setup and self._setup.user_unit
-		local current_state = alive(user_unit) and user_unit:movement() and user_unit:movement()._current_state
-		local weapon_class_recoil_index_addend = managers.player:upgrade_value(self:get_weapon_class(),"recoil_index_addend",0)
-		--this has to be here, not in blackmarketmanager
-		--since this is dependent on weapon class,
-		--and weapon class can be potentially changed by weapon mods,
-		--but blackmarket doesn't get passed a direct reference to the weapon instance,
-		--and i don't want to significantly change the signatures of vanilla functions
-		--		-offy
-		local recoil = self._current_stats_indices and self._current_stats_indices.recoil
-		recoil = (recoil or 0) + weapon_class_recoil_index_addend
-		
-		if self:is_weapon_class("class_heavy") then
-			local bonus = managers.player:get_property("current_death_grips_stacks",0) * managers.player:upgrade_value("heavy","death_grips_recoil_bonus",0)
-			recoil = recoil + bonus
-		end
-		
-		return managers.blackmarket:recoil_addend(self._name_id, self:weapon_tweak_data().categories, recoil, self._silencer, self._blueprint, current_state, self:is_single_shot())
 	end
 
 	function NewRaycastWeaponBase:replenish()

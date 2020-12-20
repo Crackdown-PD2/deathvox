@@ -232,6 +232,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 8, 16
 	--Notes:
 	--Active Mods: Suppressed Barrel [wpn_fps_ass_famas_b_suppressed] [Suppresses Weapon, + Quiet, -100 Threat] Value: 4
+	self.parts.wpn_fps_ass_famas_b_suppressed.stats = {suppression = 72, alert_size = 12, value = 6}
 	self.parts.wpn_fps_ass_famas_b_suppressed.subclass_modifiers = {
 		"subclass_quiet"
 	}
@@ -542,7 +543,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 6, 10
 	--Notes:
 	--Active Mods: Silenced Barrel [wpn_fps_ass_vhs_b_silenced] [Suppresses Weapon, + Quiet, -100 Threat] Value: 2
-	self.parts.wpn_fps_ass_vhs_b_silenced.subclass_modifiers = {
+	self.parts.wpn_fps_ass_vhs_b_silenced.stats = {suppression = 72, alert_size = 12, value = 6}	self.parts.wpn_fps_ass_vhs_b_silenced.subclass_modifiers = {
 		"subclass_quiet"
 	}
 	--------------------------------------
@@ -960,9 +961,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Active Mods: Extended Mag. [wpn_fps_smg_mp9_m_extended] [+30 Magazine, -5 Concealment] Value: 4
 	
 	--Tactical Suppressor [wpn_fps_smg_mp9_b_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 4
-	self.parts.wpn_fps_smg_mp9_b_suppressed.subclass_modifiers = {
-		"subclass_quiet"
-	}
+
 	--------------------------------------
 				--Akimbo Cobra--
 	--------------------------------------
@@ -999,19 +998,11 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes: 
 	--Active Mods: 
 	--Futomaki Suppressor [wpn_fps_smg_baka_b_longsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
-	self.parts.wpn_fps_smg_baka_b_longsupp.subclass_modifiers = {
-		"subclass_quiet"
-	}
-	
+
 	--Maki Suppressor [wpn_fps_smg_baka_b_midsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
-	self.parts.wpn_fps_smg_baka_b_midsupp.subclass_modifiers = {
-		"subclass_quiet"
-	}
-	
+
 	--Spring Suppressor [wpn_fps_smg_baka_b_smallsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
-	self.parts.wpn_fps_smg_baka_b_smallsupp.subclass_modifiers = {
-		"subclass_quiet"
-	}
+
 	
 	--------------------------------------
 			--Akimbo Medium SMGs--
@@ -1197,14 +1188,9 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Short Mag [wpn_fps_smg_sterling_m_short] [-20 Magazine, +10 Concealment] Value: 1
 
 	--Heatsinked Suppressed Barrel [wpn_fps_smg_sterling_b_e11] [Suppresses Weapon, + Quiet, -100 Threat] Value: 4
-	self.parts.wpn_fps_smg_sterling_b_e11.subclass_modifiers = {
-		"subclass_quiet"
-	}
 	
 	--Suppressed Barrel [wpn_fps_smg_sterling_b_suppressed] [Suppresses Weapon, + Quiet, -100 Threat] Value: 4
-	self.parts.wpn_fps_smg_sterling_b_suppressed.subclass_modifiers = {
-		"subclass_quiet"
-	}
+
 	--------------------------------------
 				--Akimbo MP40--
 	--------------------------------------
@@ -1471,15 +1457,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 4, 5
 	--Notes:
 	--Active Mods: Silenced Barrel [wpn_fps_sho_rota_b_silencer] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
-	part_stat_override("wpn_fps_sho_rota","wpn_fps_sho_rota_b_silencer",{
-		stats = {
-			suppression = -10,
-			value = 6
-		}
-	})
-	self.parts.wpn_fps_sho_rota_b_silencer.subclass_modifiers = {
-		"subclass_quiet"
-	}
+
 
 
 	--------------------------------------
@@ -1658,6 +1636,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 3, 4
 	--Notes: Armor Piercing
 	--Active Mods: Tooth Fairy Suppressor [wpn_fps_ass_sub2000_fg_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 5
+	self.parts.wpn_fps_ass_sub2000_fg_suppressed.stats = {suppression = 72, alert_size = 12, value = 6}
 	self.parts.wpn_fps_ass_sub2000_fg_suppressed.subclass_modifiers = {
 		"subclass_quiet"
 	}
@@ -1720,7 +1699,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 2.5, 3
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Contractor Silencer [wpn_fps_snp_tti_ns_hex] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
-	self.parts.wpn_fps_snp_tti_ns_hex.subclass_modifiers = {
+	self.parts.wpn_fps_snp_tti_ns_hex.stats = {suppression = 72, alert_size = 12, value = 6}	self.parts.wpn_fps_snp_tti_ns_hex.subclass_modifiers = {
 		"subclass_quiet"
 	}
 	--------------------------------------
@@ -1740,6 +1719,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 2.5, 3
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Gedampfter Barrel [wpn_fps_snp_wa2000_b_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
+	
+	self.parts.wpn_fps_snp_wa2000_b_suppressed.stats = {suppression = 72, alert_size = 12, value = 6}
 	self.parts.wpn_fps_snp_wa2000_b_suppressed.subclass_modifiers = {
 		"subclass_quiet"
 	}
@@ -1760,7 +1741,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 2.5, 3
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Tikho Barrel [wpn_fps_snp_siltstone_b_silenced] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
-	self.parts.wpn_fps_snp_siltstone_b_silenced.subclass_modifiers = {
+
+	self.parts.wpn_fps_snp_siltstone_b_silenced.stats = {suppression = 72, alert_size = 12, value = 6}	self.parts.wpn_fps_snp_siltstone_b_silenced.subclass_modifiers = {
 		"subclass_quiet"
 	}
 	--Iron Sights [wpn_fps_snp_siltstone_iron_sight] [+15 Concealment, -20 Stability] Value: 1
@@ -1785,6 +1767,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 2, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Sniper Suppressor [wpn_fps_snp_msr_ns_suppressor] [Suppresses Weapon, +Quiet, -100 Threat] Value: 5
+	self.parts.wpn_fps_snp_msr_ns_suppressor.stats = {suppression = 72, alert_size = 12, value = 6}
 	self.parts.wpn_fps_snp_msr_ns_suppressor.subclass_modifiers = {
 		"subclass_quiet"
 	}
@@ -1805,6 +1788,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 3, 4
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Outlaw’s Silenced Barrel [wpn_fps_snp_winchester_b_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
+	self.parts.wpn_fps_snp_winchester_b_suppressed.stats = {suppression = 72, alert_size = 12, value = 6}
 	self.parts.wpn_fps_snp_winchester_b_suppressed.subclass_modifiers = {
 		"subclass_quiet"
 	}
@@ -1828,6 +1812,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Beak Suppressor [wpn_fps_snp_model70_ns_suppressor] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
+	self.parts.wpn_fps_snp_model70_ns_suppressor.stats = {suppression = 72, alert_size = 12, value = 6}
 	self.parts.wpn_fps_snp_model70_ns_suppressor.subclass_modifiers = {
 		"subclass_quiet"
 	}
@@ -1848,6 +1833,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Compensated Suppressor [wpn_fps_snp_r93_b_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 4
+	self.parts.wpn_fps_snp_r93_b_suppressed.stats = {suppression = 72, alert_size = 12, value = 6}
 	self.parts.wpn_fps_snp_r93_b_suppressed.subclass_modifiers = {
 		"subclass_quiet"
 	}
@@ -1868,6 +1854,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Silenced Barrel [wpn_fps_snp_mosin_b_sniper] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
+	self.parts.wpn_fps_snp_mosin_b_sniper.stats = {suppression = 72, alert_size = 12, value = 6}
 	self.parts.wpn_fps_snp_mosin_b_sniper.subclass_modifiers = {
 		"subclass_quiet"
 	}
@@ -1890,6 +1877,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 1.5, 2.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Silenced Barrel [wpn_fps_snp_desertfox_b_silencer] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
+	self.parts.wpn_fps_snp_desertfox_b_silencer.stats = {suppression = 72, alert_size = 12, value = 6}
 	self.parts.wpn_fps_snp_desertfox_b_silencer.subclass_modifiers = {
 		"subclass_quiet"
 	}
@@ -1910,6 +1898,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 0.25, 0.5
 	--Notes: Armor Piercing, Body Piercing, Shield Piercing
 	--Active Mods: Suppressed Barrel [wpn_fps_snp_m95_barrel_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
+	self.parts.wpn_fps_snp_m95_barrel_suppressed.stats = {suppression = 72, alert_size = 12, value = 6}
 	self.parts.wpn_fps_snp_m95_barrel_suppressed.subclass_modifiers = {
 		"subclass_quiet"
 	}
@@ -3237,6 +3226,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Active Mods: Extended Mag. [wpn_fps_smg_mp9_m_extended] [+15 Magazine, -2 Concealment] Value: 4
 
 	--Tactical Suppressor [wpn_fps_smg_mp9_b_suppressed] [Suppresses Weapon, +Quiet, -100 Threat] Value: 4
+	self.parts.wpn_fps_smg_mp9_b_suppressed.stats = {suppression = 72, alert_size = 12, value = 6}
 	self.parts.wpn_fps_smg_mp9_b_suppressed.subclass_modifiers = {
 		"subclass_quiet"
 	}
@@ -3276,17 +3266,19 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes: 
 	--Active Mods:
 	--Futomaki Suppressor [wpn_fps_smg_baka_b_longsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
+	self.parts.wpn_fps_smg_baka_b_longsupp.stats = {suppression = 72, alert_size = 12, value = 6}
 	self.parts.wpn_fps_smg_baka_b_longsupp.subclass_modifiers = {
 		"subclass_quiet"
 	}
 	
 	--Maki Suppressor [wpn_fps_smg_baka_b_midsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
+	self.parts.wpn_fps_smg_baka_b_midsupp.stats = {suppression = 72, alert_size = 12, value = 6}
 	self.parts.wpn_fps_smg_baka_b_midsupp.subclass_modifiers = {
 		"subclass_quiet"
 	}
 	
 	--Spring Suppressor [wpn_fps_smg_baka_b_smallsupp] [Suppresses Weapon, +Quiet, -100 Threat] Value: 1
-	self.parts.wpn_fps_smg_baka_b_smallsupp.subclass_modifiers = {
+	self.parts.wpn_fps_smg_baka_b_smallsupp.stats = {suppression = 72, alert_size = 12, value = 6}	self.parts.wpn_fps_smg_baka_b_smallsupp.subclass_modifiers = {
 		"subclass_quiet"
 	}
 	--------------------------------------
@@ -3477,14 +3469,12 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Short Mag [wpn_fps_smg_sterling_m_short] [-10 Magazine, +5 Concealment] Value: 1
 	
 	--Heatsinked Suppressed Barrel [wpn_fps_smg_sterling_b_e11] [Suppresses Weapon, + Quiet, -100 Threat] Value: 4
-		
-	self.parts.wpn_fps_smg_sterling_b_e11.subclass_modifiers = {
+	self.parts.wpn_fps_smg_sterling_b_e11.stats = {suppression = 72, alert_size = 12, value = 6}	self.parts.wpn_fps_smg_sterling_b_e11.subclass_modifiers = {
 		"subclass_quiet"
 	}
 	
 	--Suppressed Barrel [wpn_fps_smg_sterling_b_suppressed] [Suppresses Weapon, + Quiet, -100 Threat] Value: 4
-		
-	self.parts.wpn_fps_smg_sterling_b_suppressed.subclass_modifiers = {
+	self.parts.wpn_fps_smg_sterling_b_suppressed.stats = {suppression = 72, alert_size = 12, value = 6}	self.parts.wpn_fps_smg_sterling_b_suppressed.subclass_modifiers = {
 		"subclass_quiet"
 	}
 	--------------------------------------
@@ -3662,8 +3652,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Notes: 
 	--Active Mods: Silenced Barrel [wpn_fps_sho_rota_b_silencer] [Suppresses Weapon, +Quiet, -100 Threat] Value: 6
 
-	self.parts.wpn_fps_sho_rota_b_silencer.stats.suppression = 50
-
+	self.parts.wpn_fps_sho_rota_b_silencer.stats = {suppression = 72, alert_size = 12, value = 6}
 	self.parts.wpn_fps_sho_rota_b_silencer.subclass_modifiers = {
 		"subclass_quiet"
 	}
@@ -3727,7 +3716,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Pickup: 4, 5
 	--Notes: 
 	--Active Mods: Suppressed Barrel [wpn_fps_sho_striker_b_suppressed] [Suppresses Weapon, + “Quiet” Class, -100 Threat] Value: 5
-
+	self.parts.wpn_fps_sho_striker_b_suppressed.stats = {suppression = 72, alert_size = 12, value = 6}
 	self.parts.wpn_fps_sho_striker_b_suppressed.subclass_modifiers = {
 		"subclass_quiet"
 	}
@@ -4049,6 +4038,41 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 			"subclass_quiet"
 		}
 	
+	-- PBS Suppressor
+		self.parts.wpn_fps_upg_ns_ass_pbs1.stats = {suppression = 72, alert_size = 12, value = 6}
+		self.parts.wpn_fps_upg_ns_ass_pbs1.subclass_modifiers = {
+			"subclass_quiet"
+		}
+	
+	-- HPS Suppressor (Kross Vertex Submachine Gun)
+		self.parts.wpn_fps_smg_polymer_ns_silencer.stats = {suppression = 72, alert_size = 12, value = 6}
+		self.parts.wpn_fps_smg_polymer_ns_silencer.subclass_modifiers = {
+			"subclass_quiet"
+		}
+		
+	-- Werbell's Suppressor (Jacket's Piece Submachine Gun)
+		self.parts.wpn_fps_smg_cobray_ns_silencer.stats = {suppression = 72, alert_size = 12, value = 6}
+		self.parts.wpn_fps_smg_cobray_ns_silencer.subclass_modifiers = {
+			"subclass_quiet"
+		}
+		
+	-- Tishina Suppressor (Heather Submachine Gun)
+		self.parts.wpn_fps_smg_sr2_ns_silencer.stats = {suppression = 72, alert_size = 12, value = 6}
+		self.parts.wpn_fps_smg_sr2_ns_silencer.subclass_modifiers = {
+			"subclass_quiet"
+		}
+		
+	-- Suppressor (Cobra Submachinegun)
+		self.parts.wpn_fps_smg_scorpion_b_suppressed.stats = {suppression = 72, alert_size = 12, value = 6}
+		self.parts.wpn_fps_smg_scorpion_b_suppressed.subclass_modifiers = {
+			"subclass_quiet"
+		}
+	
+	-- Silentgear Silencer (Jackal Submachinegun)
+		self.parts.wpn_fps_smg_schakal_ns_silencer.stats = {suppression = 72, alert_size = 12, value = 6}
+		self.parts.wpn_fps_smg_schakal_ns_silencer.subclass_modifiers = {
+			"subclass_quiet"
+		}
 	
 	--Sight stat changes begin here.
 	-- Milspec Scope

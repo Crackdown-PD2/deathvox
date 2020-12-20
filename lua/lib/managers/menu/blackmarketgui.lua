@@ -56,7 +56,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 	Hooks:PostHook(BlackMarketGuiSlotItem,"init","tcd_bmgui_slotitem_init",function(self, main_panel, data, x, y, w, h)
 		
-		local item_id
 		local item_class
 		local item_name = data.name
 		local item_slot = data.slot
@@ -84,28 +83,28 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if wftd.parts[item_name] then --is weapon attachment
 			find_archetypes_from_part(item_name)
 		elseif wtd[item_name] then --is weapon
+			if not (item_name and wtd[item_name]) then 
+				return
+			end
+			item_class = wtd[item_name].primary_class
+			if wtd[item_name].subclasses then 
+				item_subclasses = table.deep_map_copy(wtd[item_name].subclasses)
+			end
 			if item_category and tcd_gui_data.allowed_categories[item_category] then
 				if managers.blackmarket._global.crafted_items[item_category] then 
-					local blackmarket_item_data = managers.blackmarket._global.crafted_items[item_category][data.slot]
-					if data.slot and blackmarket_item_data then 
-	--					item_name = blackmarket_item_data.weapon_id --redundant
-						item_class = wtd[item_name].primary_class
-						if wtd[item_name].subclasses then 
-							item_subclasses = table.deep_map_copy(wtd[item_name].subclasses)
-						end
-						
-						local blupr = managers.blackmarket._global.crafted_items[item_category][data.slot].blueprint 
-						if blupr then 
-							for _,partname in pairs(blupr) do 
+					local owned_item_data = item_slot and managers.blackmarket._global.crafted_items[item_category][item_slot]
+					if owned_item_data then 
+	--					item_name = owned_item_data.weapon_id --redundant
+						local blueprint = owned_item_data.blueprint 
+						if blueprint then 
+							for _,partname in pairs(blueprint) do 
 								find_archetypes_from_part(partname)
 							end
 						end
 					end
 				end
 			end
-		else
 			--todo check skin blueprints
-			--todo check subclasses from default blueprints
 		end
 		
 		local icon_size = 24
@@ -159,3 +158,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end)
 
 end
+
+
+
+

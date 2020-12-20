@@ -140,7 +140,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			)
 		end
 	
-		if self:has_category_upgrade("heavy","collateral_damage") then 
+		if self:has_category_upgrade("class_heavy","collateral_damage") then 
 			self._message_system:register(Message.OnWeaponFired,"proc_collateral_damage",
 				function(weapon_unit,result)
 				
@@ -152,7 +152,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 						return
 					end
 					local weapon_base = weapon_unit and weapon_unit:base()
-					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("heavy") then 
+					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_heavy") then 
 						if weapon_base._setup.user_unit ~= player then 
 							return
 						end
@@ -160,7 +160,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 						return
 					end
 					
-					local collateral_damage_data = self:upgrade_value("heavy","collateral_damage",{0,0})
+					local collateral_damage_data = self:upgrade_value("class_heavy","collateral_damage",{0,0})
 					local damage_mul = collateral_damage_data[1]
 					local radius = collateral_damage_data[2]
 					
@@ -172,7 +172,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			)
 		end
 		
-		if self:has_category_upgrade("heavy","death_grips_stacks") then
+		if self:has_category_upgrade("class_heavy","death_grips_stacks") then
 			self:set_property("current_death_grips_stacks",0)
 			self._message_system:register(Message.OnEnemyKilled,"proc_death_grips",
 				function(weapon_unit,variant,killed_unit)
@@ -181,14 +181,14 @@ if deathvox:IsTotalCrackdownEnabled() then
 						return
 					end
 					local weapon_base = weapon_unit and weapon_unit:base()
-					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("heavy") then 
+					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_heavy") then 
 						if weapon_base._setup.user_unit ~= player then 
 							return
 						end
 					else
 						return
 					end
-					local death_grips_data = self:upgrade_value("heavy","death_grips_stacks",{0,0})
+					local death_grips_data = self:upgrade_value("class_heavy","death_grips_stacks",{0,0})
 					self:set_property("current_death_grips_stacks",math.min(self:get_property("current_death_grips_stacks") + 1,death_grips_data[2]))
 					managers.enemy:remove_delayed_clbk("death_grips_stacks_expire",true)
 					managers.enemy:add_delayed_clbk("death_grips_stacks_expire",
@@ -201,7 +201,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			)
 		end
 		
-		if self:has_category_upgrade("heavy","lead_farmer") then 
+		if self:has_category_upgrade("class_heavy","lead_farmer") then 
 			self:set_property("current_lead_farmer_stacks",0)
 			self._message_system:register(Message.OnEnemyKilled,"proc_lead_farmer",
 				function(weapon_unit,variant,killed_unit)
@@ -210,7 +210,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 						return
 					end
 					local weapon_base = weapon_unit and weapon_unit:base()
-					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("heavy") then 
+					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_heavy") then 
 						if weapon_base._setup.user_unit ~= player then 
 							return
 						end
@@ -226,7 +226,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				--so it's pretty useless to reset stacks from that message event.
 				function(weapon_unit)
 					local weapon_base = weapon_unit and weapon_unit:base()
-					if weapon_base and weapon_base:is_weapon_class("heavy") then 
+					if weapon_base and weapon_base:is_weapon_class("class_heavy") then 
 						managers.player:set_property("current_lead_farmer_stacks",0)
 					end
 				end
@@ -245,7 +245,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 						return
 					end
 					local weapon = player:inventory():equipped_unit():base()
-					if not weapon:is_weapon_class("rapidfire") then 
+					if not weapon:is_weapon_class("class_rapidfire") then 
 						return
 					end
 					
@@ -271,7 +271,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 						return
 					end
 					local weapon_base = attack_data and attack_data.weapon_unit and attack_data.weapon_unit:base()
-					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("rapidfire") then 
+					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_rapidfire") then 
 						if weapon_base._setup.user_unit ~= player then 
 							return
 						end
@@ -354,7 +354,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 					return
 				end
 				local weapon_base = attack_data and attack_data.weapon_unit and attack_data.weapon_unit:base()
-				if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("precision") then 
+				if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_precision") then 
 					if weapon_base._setup.user_unit ~= player then 
 						return
 					end
@@ -370,7 +370,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 						return
 					end
 					local weapon_base = weapon_unit and weapon_unit:base()
-					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("precision") then 
+					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_precision") then 
 						if weapon_base._setup.user_unit ~= player then 
 							return
 						end
@@ -390,7 +390,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 						return
 					end
 					local weapon_base = attack_data and attack_data.weapon_unit and attack_data.weapon_unit:base()
-					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("precision") then 
+					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_precision") then 
 						if weapon_base._setup.user_unit ~= player then 
 							return
 						end
@@ -410,7 +410,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 						return
 					end
 					local weapon_base = weapon_unit and weapon_unit:base()
-					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("precision") then 
+					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_precision") then 
 						if weapon_base._setup.user_unit ~= player then 
 							return
 						end
@@ -435,7 +435,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				end
 				
 				local weapon_base = weapon_unit and weapon_unit:base()
-				if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("precision") then 
+				if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_precision") then 
 					if weapon_base._setup.user_unit ~= player then 
 						return
 					end
@@ -461,7 +461,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 					return
 				end
 				local weapon_base = attack_data.weapon_unit and attack_data.weapon_unit:base()
-				if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("precision") then 
+				if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_precision") then 
 					if weapon_base._setup.user_unit ~= player then 
 						return
 					end
