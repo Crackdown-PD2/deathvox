@@ -72,6 +72,10 @@ Hooks:PostHook(InteractionTweakData, "init", "cd_interact_timer_stuff", function
 			sound_done = "bar_keyboard_finished",
 			is_lockpicking = true
 		}
+		
+		self.trip_mine.requires_upgrade = nil
+		self.trip_mine.interact_distance = 2000
+		self.shaped_sharge.timer = 1
 	end
 	
 end)

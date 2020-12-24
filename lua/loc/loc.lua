@@ -47,6 +47,8 @@ end)
 Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 	if deathvox then
 		if deathvox:IsTotalCrackdownEnabled() then
+			local cursed_error = "oopsie whoopsie!\nuwu\nwe made a fucky wucky!!1 a wittle fucko boingo! the code monkies at our headquarters are working VEWY HAWD to fix this!" --preliminary research suggests that using this as an localization error string will make users 4206.9% more likely to report normally insignificant minor localization errors. i apologize for nothing. -offy
+			
 			loc:add_localized_strings({
 				debug_interact_gage_assignment_take = "PRESS $BTN_INTERACT TO PICK UP THE PACKAGE",
 				--weapon stuff
@@ -233,6 +235,26 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 			--demolitions
 			
 			
+			--deployable equipment
+				hud_int_equipment_sensor_mode_trip_mine = "Press $BTN_INTERACT to edit Trip Mine",
+				hud_int_equipment_normal_mode_trip_mine = "Press $BTN_INTERACT to edit Trip Mine",
+				debug_interact_trip_mine = cursed_error,
+				tripmine_payload_explosive = "Explosive",
+				tripmine_payload_incendiary = "Incendiary",
+				tripmine_payload_concussive = "Concussive",
+				tripmine_payload_sensor = "Sensor Mode",
+				tripmine_trigger_detonate = "Detonate Now",
+				tripmine_trigger_special = "Special Enemies Only",
+				tripmine_trigger_default = "Detect All",
+				sentry_mode_standard = "Standard Mode",
+				sentry_mode_overwatch = "Overwatch Mode",
+				sentry_mode_manual = "Manual Mode",
+				sentry_ammo_ap = "AP Ammo",
+				sentry_ammo_he = "HE Ammo",
+				sentry_ammo_taser = "Taser Ammo",
+				sentry_ammo_standard = "Standard Ammo",
+			
+				hud_interact_pickup_sentry_gun = "Hold $BTN_INTERACT to pick up sentry gun",
 				debug_interact_armor_plates_take = "Hold $BTN_INTERACT to take Armor Plates",
 				hint_hud_already_has_armor_plates = "You already have Armor Plates!",
 				hud_action_taking_armor_plates = "Taking Armor Plates...",
@@ -241,47 +263,45 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				bm_equipment_armor_kit_desc = "Advanced shock-resistant armor inserts that provide +15% Damage Resistance and allow the user to go down one additional time before instantly being taken into custody. To use, hold $BTN_USE_ITEM on a suitable surface and press $BTN_INTERACT to equip.\n\nOnce deployed, the Armor Plates Bag can be used 4 times before disappearing. Remaining uses are visible within the bag.",
 				bm_equipment_ammo_bag_desc = "Deployable ammunition container that refills expended ammunition and passively increases the holder's Ammunition Stock by 50%, even after using all charges. To use, hold $BTN_USE_ITEM on a suitable surface and press $BTN_INTERACT to refill ammunition.\n\nOnce deployed, the Ammo Bag can completely refill ammunition stocks 4 times before disappearing. Remaining uses are visible within the bag.",
 				bm_equipment_first_aid_kit_desc = "Single-use healing deployable that fully restores the user's health. To use, hold $BTN_USE_ITEM on a suitable surface and press $BTN_INTERACT to heal.\n\nFirst Aid Kits can also be used to instantly revive and fully heal an incapacitated teammate by deploying a First Aid Kit within 1.5 meters of them.",
+				bm_equipment_trip_mine_desc = "Trip Mines are explosive booby traps with multiple functions and trigger types. To deploy, hold $BTN_USE_ITEM on a suitable surface. To modify a placed Trip Mine, press $BTN_INTERACT while looking at them to open the radial menu.\n\nTrip Mines are bundled with Shaped Charges, explosive tools that can destroy specific obstacles or open containers. Hold $BTN_INTERACT on an object’s displayed weak point to prime it with a Shaped Charge.\n\nWarning: Shaped Charges will only activate when all of an object’s weak points are primed.",
 				hud_deploying_revive_fak = "Reviving $TEAMMATE_NAME...",
+				
+				bm_equipment_sentry_gun_desc = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Enemies will ignore Sentry Guns, making them excellent for fire support.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.",
+				bm_equipment_sentry_gun_silent_desc = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Enemies will ignore Sentry Guns, making them excellent for fire support.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.",
+				bm_equipment_sentry_gun_silent_desc_UNUSED = cursed_error,
+			--misc
 				hud_int_pick_electronic_lock = "Hold $BTN_INTERACT to hack the lock",
 				hud_action_picking_electronic_lock = "Hacking the lock..."
 			})
 		end
-		loc:add_localized_strings({
-			["bm_equipment_sentry_gun_desc"] = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Enemies will ignore Sentry Guns, making them excellent for fire support.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.",
-			["bm_equipment_sentry_gun_silent_desc"] = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Enemies will ignore Sentry Guns, making them excellent for fire support.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.",
-			["bm_equipment_sentry_gun_silent_desc_UNUSED"] = "oopsie whoopsie!\nuwu\nwe made a fucky wucky!!1 a wittle fucko boingo! the code monkies at our headquarters are working VEWY HAWD to fix this!",
-			["sentry_mode_standard"] = "Standard Mode",
-			["sentry_mode_overwatch"] = "Overwatch Mode",
-			["sentry_mode_manual"] = "Manual Mode",
-			["sentry_ammo_ap"] = "AP Ammo",
-			["sentry_ammo_he"] = "HE Ammo",
-			["sentry_ammo_taser"] = "Taser Ammo",
-			["sentry_ammo_standard"] = "Standard Ammo",
-			["hud_interact_pickup_sentry_gun"] = "Hold $BTN_INTERACT to pick up sentry gun",
-			["tcdso_menu_title"] = "Sentry Overhaul Menu",
-			["tcdso_menu_desc"] = "TOTAL CRACKDOWN Sentry Overhaul Menu (Standalone)",
-			["tcdso_option_keybind_select_sentry_title"] = "Keybind: Select Sentry",
-			["tcdso_option_keybind_select_sentry_desc"] = "When held, this selects any sentry or sentries you aim at.",
-			["tcdso_option_keybind_deselect_sentry_title"] = "Keybind: Deselect Sentry",
-			["tcdso_option_keybind_deselect_sentry_desc"] = "When held, this deselects any sentry or sentries you aim at.",
-			["tcdso_option_keybind_open_menu_title"] = "Keybind: Sentry Control Menu",
-			["tcdso_option_keybind_open_menu_desc"] = "Opens the Sentry Control Menu.",
-			["tcdso_option_open_menu_behavior_title"] = "Hold/Toggle Menu Behavior",
-			["tcdso_option_open_menu_behavior_desc"] = "Choose whether hold/release will select Sentry Modes with the Radial Menu",
-			["tdso_option_refresh_keybinds_title"] = "Apply Keybind Changes",
-			["tdso_option_refresh_keybinds_desc"] = "Click to refresh your keybinds if you have rebound them after the heist starts.",
-			["tcdso_option_hold_behavior"] = "On Button Hold+Release",
-			["tcdso_option_toggle_behavior"] = "On Second Button Press",
-			["tcdso_option_any_behavior"] = "On Hold+Release, Press, or Click",
-			["tcdso_option_click_behavior"] = "On Mouse-Click Only",
-			
-			["tcdso_mouseclick_on_menu_close_title"] = "Select Current Option on Menu Close",
-			["tcdso_mouseclick_on_menu_close_desc"] = "(Hold Behavior only)",
-			["tcdso_option_teammate_alpha_title"] = "Teammate Laser Alpha",
-			["tcdso_option_teammate_alpha_desc"] = "Set the opacity of teammate sentries' lasers",
-			["tcdso_option_hold_threshold_title"] = "Set button hold threshold",
-			["tcdso_option_hold_threshold_desc"] = "Holding 'Interact' for longer than this many seconds will hide the menu upon button release."
-
-		})
+		
+		--this is separate since some of these options are intended for menus, which are available regardless of whether or not the overhaul itself is enabled
 	end
+	loc:add_localized_strings({
+		tripmine_control_menu_title = "Tripmine Control",
+		tcdso_menu_title = "Sentry Overhaul Menu",
+		tcdso_menu_desc = "TOTAL CRACKDOWN Sentry Overhaul Menu (Standalone)",
+		tcdso_option_keybind_select_sentry_title = "Keybind: Select Sentry",
+		tcdso_option_keybind_select_sentry_desc = "When held, this selects any sentry or sentries you aim at.",
+		tcdso_option_keybind_deselect_sentry_title = "Keybind: Deselect Sentry",
+		tcdso_option_keybind_deselect_sentry_desc = "When held, this deselects any sentry or sentries you aim at.",
+		tcdso_option_keybind_open_menu_title = "Keybind: Sentry Control Menu",
+		tcdso_option_keybind_open_menu_desc = "Opens the Sentry Control Menu.",
+		tcdso_option_open_menu_behavior_title = "Hold/Toggle Menu Behavior",
+		tcdso_option_open_menu_behavior_desc = "Choose whether hold/release will select Sentry Modes with the Radial Menu",
+		tdso_option_refresh_keybinds_title = "Apply Keybind Changes",
+		tdso_option_refresh_keybinds_desc = "Click to refresh your keybinds if you have rebound them after the heist starts.",
+		tcdso_option_hold_behavior = "On Button Hold+Release",
+		tcdso_option_toggle_behavior = "On Second Button Press",
+		tcdso_option_any_behavior = "On Hold+Release, Press, or Click",
+		tcdso_option_click_behavior = "On Mouse-Click Only",
+		
+		tcdso_mouseclick_on_menu_close_title = "Select Current Option on Menu Close",
+		tcdso_mouseclick_on_menu_close_desc = "(Hold Behavior only)",
+		tcdso_option_teammate_alpha_title = "Teammate Laser Alpha",
+		tcdso_option_teammate_alpha_desc = "Set the opacity of teammate sentries' lasers",
+		tcdso_option_hold_threshold_title = "Set button hold threshold",
+		tcdso_option_hold_threshold_desc = "Holding 'Interact' for longer than this many seconds will hide the menu upon button release."
+
+	})
 end)

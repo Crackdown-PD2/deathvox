@@ -1,13 +1,52 @@
 if deathvox:IsTotalCrackdownEnabled() then 
+
+	--[[
+		if state == "_set_trigger_mode" then 
+			unit:base():_set_trigger_mode(unit_id_str)
+			return
+		elseif state == "_set_payload_mode" then 
+			unit:base():_set_payload_mode(unit_id_str)
+			return
+		else
+		--]]
+	function UnitNetworkHandler:sync_trip_mine_explode_spawn_fire(unit, user_unit, ray_from, ray_to, damage_size, damage, added_time, range_multiplier, sender)
+		if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_sender(sender) then
+			return
+		end
+		if damage == 0 and damage_size == 0 then --signifies that added_time field is used to hold the new mode, be it trigger or payload
+			local new_mode = added_time and TripmineControlMenu.NetworkSyncIDs[added_time]
+			if new_mode then 
+--				if TripmineControlMenu.VALID_TRIPMINE_TRIGGER_MODES[new_mode] then 
+				if range_multiplier == 0 then
+					unit:base():_set_trigger_mode(new_mode)
+				elseif range_multiplier == 1 then 
+--				elseif TripmineControlMenu.VALID_TRIPMINE_PAYLOAD_MODES[new_mode] then 
+					unit:base():_set_payload_mode(new_mode)
+					return
+				end
+			end
+		end
+		
+		if not alive(user_unit) then
+			user_unit = nil
+		end
+
+		if alive(unit) then
+			unit:base():sync_trip_mine_explode_and_spawn_fire(user_unit, ray_from, ray_to, damage_size, damage, added_time, range_multiplier)
+		end
+	end
+
 	--spoofed to sync sentry ammo type and firemode (and resultant laser color) in sentry control menu
 	local orig_sync_movement_state = UnitNetworkHandler.sync_player_movement_state
 	function UnitNetworkHandler:sync_player_movement_state(unit, state, down_time,unit_id_str,...)
 	--note: unit_id_str is also a string value that can be spoofed
-	--however, since firemode and ammotype are usually set separately, i did not choose to sync both at the same time
+	
+	
 		if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 			return
 		end
 		if (type(unit.weapon) == "function") and unit:weapon() then 
+			--for sentries, since firemode and ammotype are usually set separately, i did not choose to sync both at the same time
 			if down_time == 1 then 
 				unit:weapon():_set_sentry_firemode(state)
 				return
@@ -30,7 +69,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local player = managers.player:player_unit()
 
 		if revive_health_level > 0 and alive(player) then
+--			local char_dmg_ext = player:character_damage()
 			player:character_damage():set_revive_boost(revive_health_level)
+			--char_dmg_ext._revives = Application:digest_value(Application:digest_value(char_dmg_ext._revives, false) + 1, true)
+			--restore down here. check for revive_health_level == 1? since iirc there are no other sources of this upgrade except for FAKs in TCD, so it should be safe to use as a flag for a revive from a FAK
 		end
 
 		if revive_damage_reduction > 0 then

@@ -21,6 +21,7 @@
 	<post :script_path="tweak_data/blackmarket/projectilestweakdata.lua" :hook_id="tweak_data/blackmarket/projectilestweakdata"/>
 	<post :script_path="tweak_data/weaponfactorytweakdata.lua" :hook_id="tweak_data/weaponfactorytweakdata"/>
 	<post :script_path="tweak_data/playertweakdata.lua" :hook_id="tweak_data/playertweakdata"/>
+	<post :script_path="tweak_data/enveffecttweakdata.lua" :hook_id="tweak_data/enveffecttweakdata"/>
 	
 	<post :script_path="tweak_data/upgradestweakdata.lua" :hook_id="tweak_data/upgradestweakdata"/>
 	<post :script_path="tweak_data/skilltreetweakdata.lua" :hook_id="tweak_data/skilltreetweakdata"/>
@@ -115,7 +116,7 @@
 	<post :script_path="units/weapons/newnpcraycastweaponbase.lua" :hook_id="units/weapons/newnpcraycastweaponbase"/>
 	<post :script_path="units/weapons/npcraycastweaponbase.lua" :hook_id="units/weapons/npcraycastweaponbase"/>
 	<post :script_path="units/weapons/shotgunbase.lua" :hook_id="units/weapons/shotgun/shotgunbase"/>
-	<post :script_path="units/weapons/tripminebase.lua" :hook_id="units/weapons/trip_mine/tripminebase"/>
+	<post :script_path="units/weapons/trip_mine/tripminebase.lua" :hook_id="units/weapons/trip_mine/tripminebase"/>
 
 	<post :script_path="managers/hintmanager.lua" :hook_id="managers/hintmanager"/>
 	<post :script_path="managers/blackmarketmanager.lua" :hook_id="managers/blackmarketmanager"/>
@@ -140,6 +141,7 @@
 	<post :script_path="managers/player/snipergrazedamage.lua" :hook_id="managers/player/snipergrazedamage"/>
 	<post :script_path="managers/dialogmanager.lua" :hook_id="managers/dialogmanager"/>
 	<post :script_path="managers/hud/hudassaultcorner.lua" :hook_id="managers/hud/hudassaultcorner"/>
+	<post :script_path="managers/hud/hudtemp.lua" :hook_id="managers/hud/hudtemp"/>
 
 	<post :script_path="managers/musicmanager.lua" :hook_id="managers/musicmanager"/>
 

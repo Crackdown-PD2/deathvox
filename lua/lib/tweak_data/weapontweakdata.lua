@@ -15856,5 +15856,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 -- END weapon data.
 
 
+	--trip mine deployable 
+		self.trip_mines.damage = 150
+--		self.trip_mines.damage_size = 300 --3m, default
 	end
 end)

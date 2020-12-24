@@ -437,9 +437,9 @@ function SentryControlMenu:SelectMode(mode,selected_unit)
 end
 
 function SentryControlMenu:SetActionMenu(menu)
-	if not managers.hud then 
-		return
-	end
+--	if not managers.hud then 
+--		return
+--	end
 	self.action_radial = menu or self.action_radial
 
 	Hooks:Add("radialmenu_released_" .. self.action_radial:get_name(),"tcdso_menu_closed",function(num)
@@ -448,7 +448,7 @@ function SentryControlMenu:SetActionMenu(menu)
 	
 	
 --	managers.hud:add_updator("SentryControlMenu_Update",callback(self,self,"Update")) --no longer needed
-	self._gui = World:newgui()
+--	self._gui = World:newgui()
 end
 	
 

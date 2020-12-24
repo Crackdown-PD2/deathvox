@@ -10,6 +10,43 @@ local ids_contour_opacity = Idstring("contour_opacity")
 
 if deathvox:IsTotalCrackdownEnabled() then 
 
+	function TripMineInteractionExt:can_select(player)
+		if self._unit:base():is_owner() then 
+			return TripMineInteractionExt.super.can_select(self,player)
+		end
+		return false
+	end
+	
+	
+	function TripMineInteractionExt:interact(player)
+		if not self:can_interact(player) then
+			return false
+		end
+
+		TripMineInteractionExt.super.super.interact(self, player)
+
+		--local armed = not self._unit:base():armed()
+
+		--self._unit:base():set_armed(armed)
+		
+		if TripmineControlMenu.action_radial and self._unit:base():is_owner() then 
+--			TripmineControlMenu.action_radial:clear_items()
+--			local is_special = self._unit:base():_get_trigger_mode() == "special"
+--			local special_slot = 6
+--			TripmineControlMenu.action_radial._items,special_slot = TripmineControlMenu:GetMenuItems(is_special)
+--			TripmineControlMenu.action_radial:populate_items()
+--			TripmineControlMenu.action_radial._items[special_slot]._body:set_alpha(is_special and 0.5 or 1)
+		
+			TripmineControlMenu:SelectTripmineByUnit(self._unit)
+		
+			TripmineControlMenu.action_radial:Show()
+			self:unselect()
+			
+			TripmineControlMenu.interacted_radial_start_t = Application:time()
+			TripmineControlMenu.button_held_state = nil
+		end
+	end
+	
 	function SentryGunFireModeInteractionExt:interact(player)
 		if not self:can_interact(player) then
 			return false

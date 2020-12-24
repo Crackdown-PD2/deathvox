@@ -1,10 +1,11 @@
 Hooks:PostHook(PlayerManager,"_internal_load","deathvox_on_internal_load",function(self)
+--this will send whenever the player respawns, so... hm. 
 	if Network:is_server() then 
 		deathvox:SyncOptionsToClients()
 	else
 		deathvox:ResetSessionSettings()
 	end
-	Hooks:Call("TCD_OnGameStarted")
+--	Hooks:Call("TCD_OnGameStarted")
 end)
 
 function PlayerManager:_chk_fellow_crimin_proximity(unit)
@@ -287,16 +288,20 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 		self:set_property("current_point_and_click_stacks",0)
 		if self:has_category_upgrade("player","point_and_click_stacks") then 
-		
-		
-			Hooks:Add("TCD_OnGameStarted","OnGameStart_CreatePACElement",function() --check_skills() is called before the hud is created so it must instead call on an event
+			Hooks:Add("TCD_Create_Stack_Tracker_HUD","TCD_CreatePACElement",function(hudtemp)
+			 --check_skills() is called before the hud is created so it must instead call on an event
 			
-				--create buff-specific hud element; todo create a buffmanager class to handle this
+				--create buff-specific hud element; todo create a hudbuff class to handle this
 				--this is temporary until more of the core systems are done, and then i can dedicate more time 
 				--to creating a buff tracker system + hud elements 
-				--		-offy
-				local hudtemp = managers.hud and managers.hud._hud_temp and managers.hud._hud_temp._hud_panel
+				--		-offy\
+				
+--				local hudtemp = managers.hud and managers.hud._hud_temp and managers.hud._hud_temp._hud_panel
 				if hudtemp and alive(hudtemp) then
+					if alive(hudtemp:child("point_and_click_tracker")) then 
+						BeardLib:RemoveUpdater("update_tcd_buffs_hud")
+						hudtemp:remove(hudtemp:child("point_and_click_tracker"))
+					end
 					local trackerhud = hudtemp:panel({
 						name = "point_and_click_tracker",
 						w = 100,
@@ -335,7 +340,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 						color = Color.white,
 						vertical = "bottom"
 					})
-					local function check_point_and_click_stacks(t,dt)
+					
+					BeardLib:AddUpdater("update_tcd_buffs_hud",function(t,dt)
 						if alive(stack_count) then 
 							stack_count:set_text(self:get_property("current_point_and_click_stacks",0))
 							if managers.enemy:is_clbk_registered("point_and_click_on_shot_missed") and alive(icon) then 
@@ -344,10 +350,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 								icon:set_color(Color.white)
 							end
 						end
-					end
-					BeardLib:AddUpdater("update_tcd_buffs_hud",check_point_and_click_stacks,false)
+					end,false)
 				end
 			end)
+			
 			self._message_system:register(Message.OnEnemyShot,"proc_point_and_click",function(unit,attack_data)
 				local player = self:local_player()
 				if not alive(player) then 

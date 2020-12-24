@@ -924,6 +924,20 @@ if deathvox:IsTotalCrackdownEnabled() then
 						SentryControlMenu.button_held_state = false
 					end
 				end
+			elseif TripmineControlMenu.action_radial and TripmineControlMenu.action_radial:active() and TripmineControlMenu.interacted_radial_start_t then
+				if TripmineControlMenu.interacted_radial_start_t + SentryControlMenu:GetMenuButtonHoldThreshold() < t then 
+					local allow_selection = TripmineControlMenu.button_held_state
+					TripmineControlMenu.action_radial:Hide(nil,allow_selection)
+					
+					TripmineControlMenu.interacted_radial_start_t = nil
+				else
+					if TripmineControlMenu.button_held_state == nil then 
+						TripmineControlMenu.button_held_state = true
+						return
+					elseif TripmineControlMenu.button_held_state == true then 
+						TripmineControlMenu.button_held_state = false
+					end
+				end
 			end
 		end
 	end)

@@ -1,4 +1,4 @@
---v1.02
+--v1.03
 
 RadialMouseMenu = RadialMouseMenu or class()
 
@@ -440,7 +440,7 @@ function RadialMouseMenu:on_closed()
 end
 
 function RadialMouseMenu:clear_items() --removes ALL ITEM DATA
-	self:reset_items()
+	self:reset_items(true)
 	self._items = {}
 end
 
