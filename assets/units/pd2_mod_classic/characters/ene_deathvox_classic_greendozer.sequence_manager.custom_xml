@@ -74,7 +74,6 @@
 		</body>
 		<sequence editable_state="true" name="'leg_arm_hitbox'" triggable="true">
 			<body enabled="true" name="'body'"/>
-			<body enabled="true" name="'head'"/>
 			<body enabled="false" motion="'keyframed'" name="'rag_Hips'"/>
 			<body enabled="true" motion="'keyframed'" name="'rag_LeftUpLeg'"/>
 			<body enabled="true" motion="'keyframed'" name="'rag_RightUpLeg'"/>
