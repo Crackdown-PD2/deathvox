@@ -15561,7 +15561,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.arbiter.stats_modifiers = {
 			damage = 2.6
 		}
-		self.arbiter.primary_class = "specialist"
+		self.arbiter.primary_class = "class_specialist"
 		self.arbiter.subclasses = {}
 		self.arbiter.AMMO_PICKUP = {
 			0.05,
