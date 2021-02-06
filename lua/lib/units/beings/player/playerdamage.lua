@@ -97,6 +97,7 @@ function PlayerDamage:damage_bullet(attack_data)
 	if damage_absorption > 0 then
 		attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
 	end
+	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
 	local shake_armor_multiplier = pm:body_armor_value("damage_shake") * pm:upgrade_value("player", "damage_shake_multiplier", 1)
 	local gui_shake_number = tweak_data.gui.armor_damage_shake_base / shake_armor_multiplier
@@ -363,6 +364,7 @@ function PlayerDamage:damage_melee(attack_data)
 	if damage_absorption > 0 then
 		attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
 	end
+	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
 	if attack_data.tase_player then
 		if pm:current_state() == "standard" or pm:current_state() == "carry" or pm:current_state() == "bipod" then
@@ -610,6 +612,7 @@ function PlayerDamage:damage_fire(attack_data)
 	if damage_absorption > 0 then
 		attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
 	end
+	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
 	if self._bleed_out then
 		if attack_data.damage == 0 then
@@ -694,6 +697,7 @@ function PlayerDamage:damage_explosion(attack_data)
 	if damage_absorption > 0 then
 		attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
 	end
+	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
 	if attack_data.attacker_unit and alive(attack_data.attacker_unit) then
 		self:_hit_direction(attack_data.attacker_unit:position())
@@ -760,7 +764,6 @@ function PlayerDamage:_on_damage_event()
 	end
 end
 
-
 Hooks:PostHook(PlayerDamage,"init","tcd_post_playerdamage_init",function(self,unit)
 	self._listener_holder:add("on_bleedout_remove_armor_plates_bonus",{"on_enter_bleedout"},callback(self,self,"remove_armor_plates_bonus"))
 end)
@@ -782,6 +785,25 @@ end
 
 if deathvox:IsTotalCrackdownEnabled() then 
 
+	function PlayerDamage:_activate_preventative_care(upgrade_level)
+		
+		local pm = managers.player
+		local ehp = self:_max_health() + self:_max_armor()
+		if upgrade_level > 0 then 
+			local upgrade_data = pm:upgrade_value_by_level("first_aid_kit","damage_overshield",upgrade_level,{0,0})
+			pm:set_damage_overshield("preventative_care_absorption",ehp * upgrade_data[1],
+				{
+					depleted_callback = function(damage_before_overshield,damage_blocked_by_overshield)
+						local duration = upgrade_data[2]
+						if duration > 0 then 
+							pm:activate_temporary_property("preventative_care_invuln_active",duration,true)
+						end
+					end
+				}
+			)
+		end
+	end
+
 	function PlayerDamage:_check_bleed_out(can_activate_berserker, ignore_movement_state)
 		if self:get_real_health() == 0 and not self._check_berserker_done then
 			if self._unit:movement():zipline_unit() then
@@ -798,16 +820,22 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 			local time = Application:time()
 
-			if not self._block_medkit_auto_revive and time > self._uppers_elapsed + self._UPPERS_COOLDOWN then
+	--note to self: _block_medkit_auto_revive is from swansong. check this when implementing crook's Borrowed Time, which itself is just swan song with a different hat on
+	
+	--NOTE: _uppers_elapsed now represents the time at which the cooldown will end, rather than the time at which the cooldown began
+			if not self._block_medkit_auto_revive and time > self._uppers_elapsed then
 				local auto_recovery_kit = FirstAidKitBase.GetFirstAidKit(self._unit:position())
 
 				if auto_recovery_kit then
-					auto_recovery_kit:take(self._unit)
-					self._unit:sound():play("pickup_fak_skill")
-
-					self._uppers_elapsed = time
-
-					return
+					local cooldown = auto_recovery_kit:get_auto_recovery_cooldown()
+					if cooldown then 
+						self._uppers_elapsed = time + cooldown
+						
+						auto_recovery_kit:take(self._unit)
+						self._unit:sound():play("pickup_fak_skill")
+						
+						return
+					end
 				end
 			end
 
@@ -943,4 +971,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 			managers.player:activate_temporary_upgrade("temporary", "reload_weapon_faster")
 		end
 	end
+
+	local orig_chk_invuln = PlayerDamage._chk_can_take_dmg
+	function PlayerDamage:_chk_can_take_dmg(...)
+		return orig_chk_invuln(self,...) and not managers.player:has_active_temporary_property("preventative_care_invuln_active")
+	end
+
 end

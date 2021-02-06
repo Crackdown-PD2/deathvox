@@ -60,7 +60,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				bm_wp_striker_b_long_achievment = "Kill ##$progress## more Bulldozers with any shotgun using the 000 Buck or Iron Hand Buckshot ammo types.", --not sure if this actually will display progress 
 			
 				--skilltree sub-tree names
-				st_menu_dallas_boss = "Boss",
+				st_menu_dallas_taskmaster = "Taskmaster",
 				st_menu_dallas_marksman = "Marksman",
 				st_menu_dallas_medic = "Medic",
 				st_menu_chains_chief = "Chief",
@@ -75,6 +75,26 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				st_menu_hoxton_dealer = "Dealer",
 				st_menu_hoxton_fixer = "Fixer",
 				st_menu_hoxton_demolitionist = "Demolitionist",
+			
+			--taskmaster
+				menu_zip_it = "Zip It",
+				menu_zip_it_desc = "NOT YET IMPLEMENTED",
+				--"BASIC: ##$basic##\nCivilians are intimidated by the noise you make. Shouting intimidates all Civilians within ##10## meters of the target.\n\nACE: ##$pro##\nIncreases your supply of Cable Ties to ##20##.",
+				menu_pack_mules = "Pack Mules",
+				menu_pack_mules_desc = "NOT YET IMPLEMENTED",
+				--"BASIC: ##$basic##\nYour team's Civilian Hostages can carry Bags.\n\nACE: ##$pro##\nYour team's Civilian Hostages move ##+20% faster##.",
+				menu_stay_down = "Stay Down",
+				menu_stay_down_desc = "NOT YET IMPLEMENTED",
+				--"BASIC: ##$basic##\nYour team's Civilians are invulnerable while stationary.\n\nACE: ##$pro##\nYour team's Civilian Hostages will not flee when rescued.",
+				menu_lookout_duty = "Lookout Duty",
+				menu_lookout_duty_desc = "NOT YET IMPLEMENTED",
+				--"BASIC: ##$basic##\nEnemies within ##10## Meters of your team's Hostages are automatically Marked.\n\nACE: ##$pro##\nEnemies within ##10## meters of your team's Hostages take ##+10%## damage from all sources.",
+				menu_leverage = "Leverage",
+				menu_leverage_desc = "NOT YET IMPLEMENTED",
+				--"BASIC: ##$basic##\nYour team's Hostages grant ##+10%## Damage Resistance to teammates within ##0.25## meters.\n\nACE: ##$pro##\nYour team's Hostages also grant ##+10%## Damage Resistance to teammates within ##5## meters, and can stack up to ##+20%## when a teammate is within ##0.25## meters.",
+				menu_false_idol = "False Idol",
+				menu_false_idol_desc = "NOT YET IMPLEMENTED",
+				--"BASIC: ##$basic##\nYour team's Hostages release all teammates in custody when traded.\n\nACE: ##$pro##\nEach of your team's Hostages will fake surrendering once upon being traded, releasing your teammates from custody without turning themselves in.",
 				
 			--marksman
 				menu_point_and_click = "Point and Click",
@@ -92,24 +112,20 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 			
 			--medic
 				menu_doctors_orders = "Doctor's Orders",
-				menu_doctors_orders_desc = "NOT YET IMPLEMENTED",
-				--menu_doctors_orders_desc = "BASIC: ##$basic##\nYou revive downed players ##30%## faster.\n\nACE: ##$pro##\nAfter you revive a player, you and the player you revived gain ##+50%## Damage Resistance for ##4## seconds.",
+				menu_doctors_orders_desc = "BASIC: ##$basic##\nYou revive downed players ##30%## faster.\n\nACE: ##$pro##\nAfter you revive a player, you and the player you revived gain ##+50%## Damage Resistance for ##4## seconds.",
 				menu_in_case_of_trouble = "In Case Of Trouble",
-				menu_in_case_of_trouble_desc = "NOT YET IMPLEMENTED",
-				--menu_in_case_of_trouble_desc = "BASIC: ##$basic##\nYour supply of First Aid Kits is increased to ##12##.\n\nACE: ##$pro##\nYour supply of First Aid Kits is increased to ##18##.",
+				menu_in_case_of_trouble_desc = "BASIC: ##$basic##\nYour supply of First Aid Kits is increased to ##12##.\n\nACE: ##$pro##\nYour supply of First Aid Kits is increased to ##18##.",
 				menu_checkup = "Checkup",
-				menu_checkup_desc = "NOT YET IMPLEMENTED",
-				--menu_checkup_desc = "BASIC: ##$basic##\nYour Doctor Bags restore ##1%## of a player's Maximum Health every ##2## seconds in a ##3## meter diameter.\n\nACE: ##$pro##\nRange increased to ##6## meters.",
+				menu_checkup_desc = "BASIC: ##$basic##\nYour Doctor Bags restore ##1%## of a player's Maximum Health every ##2## seconds in a ##3## meter diameter.\n\nACE: ##$pro##\nRange increased to ##6## meters.\n\nNote: Healing effect cannot stack. Requires line of sight to the Doctor Bag in question.",
 				menu_life_insurance = "Life Insurance",
-				menu_life_insurance_desc = "NOT YET IMPLEMENTED",
-				--menu_life_insurance_desc = "BASIC: ##$basic##\nYour deployed First Aid Kits will be automatically used if a player is downed within ##5## meters, healing them and preventing the down.\nThis effect has a ##20## second cooldown per player.\n\nACE: ##$pro##\nCooldown reduced to ##10## seconds.",
+				menu_life_insurance_desc = "BASIC: ##$basic##\nYour deployed First Aid Kits will be automatically used if a player is downed within ##5## meters, healing them and preventing the down.\nThis effect has a ##20## second cooldown per player.\n\nACE: ##$pro##\nCooldown reduced to ##10## seconds.\n\nNote: This effect directly interacts with Crook’s Borrowed Time, allowing users to prevent going down at the end of the grace period with Life Insurance’s effect.",
 				menu_outpatient = "Outpatient",
-				menu_outpatient_desc = "NOT YET IMPLEMENTED",
-				--menu_outpatient_desc = "BASIC: ##$basic##\nIncreases your Doctor Bag supply to ##2##.\n\nACE: ##$pro##\nIncreases your Doctor Bag supply to ##3##.",
+				menu_outpatient_desc = "BASIC: ##$basic##\nIncreases your Doctor Bag supply to ##2##.\n\nACE: ##$pro##\nIncreases your Doctor Bag supply to ##3##.",
 				menu_preventative_care = "Preventative Care",
-				menu_preventative_care_desc = "NOT YET IMPLEMENTED",
-				--menu_preventative_care_desc = "BASIC: ##$basic##\nYour First Aid Kits and Doctor Bags provide the user with a Damage Absorption shield equal to ##100%## of their Health and Armor.\n\nACE: ##$pro##\nPlayers become Invulnerable for ##2## seconds when their Damage Absorption shields are broken.",
+				menu_preventative_care_desc = "BASIC: ##$basic##\nYour First Aid Kits and Doctor Bags provide the user with a Damage Absorption shield equal to ##100%## of their Health and Armor.\n\nACE: ##$pro##\nPlayers become Invulnerable for ##2## seconds when their Damage Absorption shields are broken.\n\nNote: Shield does not decay over time. Shield absorbs damage on a 1:1 ratio of Shield Amount : Damage Taken.",
+
 			--chief
+			
 			--enforcer
 				menu_tender_meat = "Tender Meat",
 				menu_tender_meat_desc = "BASIC: ##$basic##\nShotguns deal ##50%## of their Headshot damage on Body Shots against Non-Dozer enemies.\n\nACE: ##$pro##\nShotguns gain ##+40## Stability.",

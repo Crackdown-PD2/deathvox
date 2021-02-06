@@ -87,6 +87,22 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	end
 	
+	--same as vanilla but disabled HUD element in order to prevent conflicting with damage overshield mechanic
+	--if/when the actual absorption mechanic is overhauled, this function (and its accompanying HUD element) may also need to be revisited
+	function UnitNetworkHandler:sync_damage_absorption_hud(absorption_amount, sender)
+		local peer = self._verify_sender(sender)
+
+		if not peer or not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+			return
+		end
+
+		local teammate_panel = managers.hud:get_teammate_panel_by_peer(peer)
+
+		if teammate_panel then
+--			teammate_panel:set_absorb_active(absorption_amount)
+		end
+	end
+	
 end
 
 function UnitNetworkHandler:sync_friendly_fire_damage(peer_id, unit, damage, variant, sender)

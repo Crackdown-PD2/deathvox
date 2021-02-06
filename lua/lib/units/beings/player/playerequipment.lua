@@ -34,8 +34,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 			else
 				PlayerStandard.say_line(self, "s12")
 			
-				local upgrade_lvl = managers.player:has_category_upgrade("first_aid_kit", "damage_reduction_upgrade") and 1 or 0
-				local auto_recovery = managers.player:has_category_upgrade("first_aid_kit", "first_aid_kit_auto_recovery") and 1 or 0
+				local upgrade_lvl = managers.player:upgrade_level("first_aid_kit","damage_overshield",0)
+				local auto_recovery = managers.player:upgrade_level("first_aid_kit", "first_aid_kit_auto_recovery",0)
 				local bits = Bitwise:lshift(auto_recovery, FirstAidKitBase.auto_recovery_shift) + Bitwise:lshift(upgrade_lvl, FirstAidKitBase.upgrade_lvl_shift)
 				
 				if Network:is_client() then
@@ -121,5 +121,38 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return valid and ray,revivable_unit
 	end	
 	
-	
+	function PlayerEquipment:use_doctor_bag()
+		local ray = self:valid_shape_placement("doctor_bag")
+
+		if ray then
+			local pos = ray.position
+			local rot = self:_m_deploy_rot()
+			rot = Rotation(rot:yaw(), 0, 0)
+
+			PlayerStandard.say_line(self, "s02x_plu")
+
+			if managers.blackmarket:equipped_mask().mask_id == tweak_data.achievement.no_we_cant.mask then
+				managers.achievment:award_progress(tweak_data.achievement.no_we_cant.stat)
+			end
+
+			managers.mission:call_global_event("player_deploy_doctorbag")
+			managers.statistics:use_doctor_bag()
+
+			local upgrade_lvl = managers.player:upgrade_level("first_aid_kit","damage_overshield",0)-- managers.player:upgrade_level("first_aid_kit", "damage_reduction_upgrade")
+			local amount_upgrade_lvl = managers.player:upgrade_level("doctor_bag","aoe_health_regen",{0,0,math.huge})--managers.player:upgrade_level("doctor_bag", "amount_increase")
+			upgrade_lvl = math.clamp(upgrade_lvl, 0, 2)
+			amount_upgrade_lvl = math.clamp(amount_upgrade_lvl, 0, 2)
+			local bits = Bitwise:lshift(upgrade_lvl, DoctorBagBase.damage_reduce_lvl_shift) + Bitwise:lshift(amount_upgrade_lvl, DoctorBagBase.amount_upgrade_lvl_shift)
+
+			if Network:is_client() then
+				managers.network:session():send_to_host("place_deployable_bag", "DoctorBagBase", pos, rot, bits)
+			else
+				local unit = DoctorBagBase.spawn(pos, rot, bits, managers.network:session():local_peer():id())
+			end
+
+			return true
+		end
+
+		return false
+	end
 end

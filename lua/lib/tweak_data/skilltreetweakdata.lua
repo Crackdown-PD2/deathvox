@@ -51,7 +51,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		end
 	
 		local tree_indices = {
-			boss = 1,
+			taskmaster = 1,
 			marksman = 2,
 			medic = 3,
 			chief = 4,
@@ -68,7 +68,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			demolitions = 15
 		}
 		
-		self.trees[1].name_id = "st_menu_dallas_boss"
+		self.trees[1].name_id = "st_menu_dallas_taskmaster"
 		self.trees[2].name_id = "st_menu_dallas_marksman"
 		self.trees[3].name_id = "st_menu_dallas_medic"
 		self.trees[4].name_id = "st_menu_chains_chief"
@@ -85,7 +85,128 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		self.trees[15].name_id = "st_menu_hoxton_demolitionist"
 		
 		
-		--Boss (not implemented)
+		--Taskmaster (not implemented)
+		replace_skill(tree_indices.taskmaster,1,{ --Zip It
+			{
+				upgrades = {
+				
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+				
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_zip_it",
+			desc_id = "menu_zip_it_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		replace_skill(tree_indices.taskmaster,2,{ --Pack Mules
+			{
+				upgrades = {
+				
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+				
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_pack_mules",
+			desc_id = "menu_pack_mules_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		replace_skill(tree_indices.taskmaster,3,{ --Stay Down
+			{
+				upgrades = {
+				
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+				
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_stay_down",
+			desc_id = "menu_stay_down_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		replace_skill(tree_indices.taskmaster,4,{ --Lookout Duty
+			{
+				upgrades = {
+				
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+				
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_lookout_duty",
+			desc_id = "menu_lookout_duty_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		replace_skill(tree_indices.taskmaster,5,{ --Leverage
+			{
+				upgrades = {
+				
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+				
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_leverage",
+			desc_id = "menu_leverage_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		replace_skill(tree_indices.taskmaster,6,{ --False Idol
+			{
+				upgrades = {
+				
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+				
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_false_idol",
+			desc_id = "menu_false_idol_desc",
+			icon_xy = {
+				0,
+				0
+			}
+		})
+		
 		
 		--Marksman
 		replace_skill(tree_indices.marksman,1,{ --Point and Click
@@ -214,113 +335,113 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.medic,1,{ --Doctor's Orders
 			{
 				upgrades = {
-					
+					"revive_interaction_speed_multiplier"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"temporary_revive_damage_reduction_1"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_doctors_orders",
 			desc_id = "menu_doctors_orders_desc",
 			icon_xy = {
-				0,
-				0
+				5,
+				7
 			}
 		})
 		replace_skill(tree_indices.medic,2,{ --In Case Of Trouble
 			{
 				upgrades = {
-					
+					"first_aid_kit_quantity_increase_1"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"first_aid_kit_quantity_increase_2"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_in_case_of_trouble",
 			desc_id = "menu_in_case_of_trouble_desc",
 			icon_xy = {
-				0,
-				0
+				2,
+				11
 			}
 		})
 		replace_skill(tree_indices.medic,3,{ --Checkup
 			{
 				upgrades = {
-					
+					"doctor_bag_aoe_health_regen_1"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"doctor_bag_aoe_health_regen_2"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_checkup",
 			desc_id = "menu_checkup_desc",
 			icon_xy = {
-				0,
-				0
+				2,
+				7
 			}
 		})
 		replace_skill(tree_indices.medic,4,{ --Life Insurance
 			{
 				upgrades = {
-					
+					"first_aid_kit_auto_recovery_1"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"first_aid_kit_auto_recovery_2"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_life_insurance",
 			desc_id = "menu_life_insurance_desc",
 			icon_xy = {
-				0,
-				0
+				11,
+				5
 			}
 		})
 		replace_skill(tree_indices.medic,5,{ --Outpatient
 			{
 				upgrades = {
-					
+					"doctor_bag_quantity"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"doctor_bag_quantity_2"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_outpatient",
 			desc_id = "menu_outpatient_desc",
 			icon_xy = {
-				0,
-				0
+				5,
+				8
 			}
 		})
 		replace_skill(tree_indices.medic,6,{ --Preventative Care
 			{
 				upgrades = {
-					
+					"medic_damage_overshield"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"medic_overshield_break_invuln"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -328,7 +449,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			desc_id = "menu_preventative_care_desc",
 			icon_xy = {
 				0,
-				0
+				10
 			}
 		})
 

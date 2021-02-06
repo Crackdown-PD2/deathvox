@@ -239,9 +239,118 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 	
-		
-		
 		--Medic
+		self.values.player.revive_interaction_speed_multiplier = { --vanilla upgrade, but tweaked values
+			0.7
+		}
+	
+		self.values.temporary.revive_damage_reduction = { --vanilla upgrade, but tweaked values
+			{
+				0.5, --1 - 0.5 = 0.5 -> 50% damage reduction
+				4	--for 4 seconds
+			}
+		}
+	
+		self.values.first_aid_kit.quantity = {
+			8, -- + 4 = 12 total
+			14 -- + 4 = 18 total
+		}
+	
+			--i didn't want to change the data type from a number to a table to hold the cooldown
+			--for many reasons, including stability and mod compatibility
+			--and the upgrade level index is used instead of the direct value for networking anyway,
+			--so we'll just get the cooldown time that way
+		self.values.first_aid_kit.first_aid_kit_auto_recovery = {
+			500,
+			500
+		}
+		self.values.first_aid_kit.auto_recovery_cooldown = {--this is referenced by the index of the above upgrade instead of having its own cooldown upgrade
+			20, --20 seconds cooldown
+			10 --10 seconds cooldown
+		}
+		self.definitions.first_aid_kit_auto_recovery_2 = {
+			name_id = "menu_life_insurance",
+			category = "equipment_upgrade",
+			upgrade = {
+				value = 2,
+				upgrade = "first_aid_kit_auto_recovery",
+				category = "first_aid_kit"
+			}
+		}
+		
+		self.values.doctor_bag.quantity = { --this is for the number of deployable docbags you have
+			1, --2 total
+			2 --3 total
+		}
+		self.definitions.doctor_bag_quantity_2 = {
+			name_id = "menu_doctor_bag_quantity",
+			category = "equipment_upgrade",
+			upgrade = {
+				value = 2,
+				upgrade = "quantity",
+				category = "doctor_bag"
+			}
+		}
+		
+		self.values.doctor_bag.aoe_health_regen = {
+			{
+				0.01, --regenerate 1% of max health
+				2, --every 2 seconds
+				150 --when within a 1.5 meter radius (3 meter diameter) of the docbag
+			},
+			{
+				0.01,
+				2,
+				300 --range increase to 3 meter radius (6 meter diameter)
+			}
+		}
+		self.definitions.doctor_bag_aoe_health_regen_1 = {
+			name_id = "menu_checkup",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "aoe_health_regen",
+				category = "doctor_bag"
+			}
+		}
+		self.definitions.doctor_bag_aoe_health_regen_2 = {
+			name_id = "menu_checkup",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "aoe_health_regen",
+				category = "doctor_bag"
+			}
+		}
+		
+		self.values.first_aid_kit.damage_overshield = {
+			{
+				1, --100% of the sum of health and armor is added as an absorption overshield
+				0
+			},
+			{
+				1,
+				2 --2 seconds of invuln applied when this overshield is broken
+			}
+		}
+		self.definitions.medic_damage_overshield = {
+			name_id = "menu_preventative_care",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "damage_overshield",
+				category = "first_aid_kit"
+			}
+		}
+		self.definitions.medic_overshield_break_invuln = {
+			name_id = "menu_preventative_care",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "damage_overshield",
+				category = "first_aid_kit"
+			}
+		}
 		
 		--Chief
 		

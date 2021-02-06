@@ -25,7 +25,11 @@ function PlayerManager:_chk_fellow_crimin_proximity(unit)
 end
 
 if deathvox:IsTotalCrackdownEnabled() then
-
+	
+	Hooks:PostHook(PlayerManager,"init","tcd_playermanager_init",function(self)
+		self._damage_overshield = {}
+	end)
+	
 	function PlayerManager:check_equipment_placement_valid(player, equipment)
 		local equipment_data = managers.player:equipment_data_by_name(equipment)
 
@@ -90,8 +94,25 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return multiplier
 	end
 
+
+	--same as vanilla but disabled HUD element in order to prevent conflicting with damage overshield mechanic
+	--if/when the actual absorption mechanic is overhauled, this function (and its accompanying HUD element) may also need to be revisited
+	function PlayerManager:set_damage_absorption(key, value)
+		self._damage_absorption[key] = value and Application:digest_value(value, true) or nil
+
+--		managers.hud:set_absorb_active(HUDManager.PLAYER_PANEL, self:damage_absorption())
+	end
+	function PlayerManager:update_cocaine_hud()
+		if managers.hud then
+--			managers.hud:set_absorb_active(HUDManager.PLAYER_PANEL, self:damage_absorption())
+		end
+	end
+	
+
 	Hooks:PostHook(PlayerManager,"check_skills","deathvox_check_cd_skills",function(self)
-		if self:has_category_upgrade("player","melee_hit_speed_boost") then 	
+
+	
+		if self:has_category_upgrade("player","melee_hit_speed_boost") then
 			Hooks:Add("OnPlayerMeleeHit","cd_proc_butterfly_bee_aced",
 				function(hit_unit,col_ray,action_data,defense_data,t)
 					if hit_unit and not managers.enemy:is_civilian(hit_unit) then 
@@ -552,4 +573,100 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 
 
+end
+
+
+		--The overshield mechanic is only used in Total Crackdown ((TCD), but its methods are present outside of TCD so that two versions of player damage for any given damage type (damage_bullet, damage_explosion, damage_melee, etc) aren't necessary for TCD and normal Crackdown
+
+--new overshield mechanic whose sources are separate like damage absorption, and provides flat damage reduction like absorption, except the amount of damage you take is subtracted from your overshield amount.
+--....so, like overshield in basically any other video game.
+function PlayerManager:set_damage_overshield(id,amount,params,skip_update)
+	local overshield_data
+	
+	for i,_overshield_data in pairs(self._damage_overshield) do 
+		if _overshield_data.id == id then 
+			overshield_data = _overshield_data
+			break
+		end
+	end
+	if not overshield_data then 
+		local i = #self._damage_overshield + 1
+		self._damage_overshield[i] = {}
+		overshield_data = self._damage_overshield[i]
+	end
+	
+	overshield_data.amount = amount
+	if params then 
+		if params.depleted_callback then 
+			overshield_data.depleted_callback = params.depleted_callback
+		end
+	end
+	
+	--none of that Application:digest_value() nonsense here
+	if not skip_update then 
+		--skip_update should ideally be used when setting multiple damage overshields at once,
+		--since the get_damage_overshield_total() func involves iterating over a table,
+		--so it is somewhat inefficient
+		self:sort_damage_overshield()
+	end
+end
+
+--completely unregister a damage overshield
+function PlayerManager:remove_damage_overshield(key,skip_update)
+	self._damage_overshield[key] = nil
+	if not skip_update then 
+		self:sort_damage_overshield()
+	end
+end
+
+--subtracts incoming damage from overshields, and returns remaining damage
+--smaller overshield amounts are consumed first
+function PlayerManager:consume_damage_overshield(damage)
+	--overshield 
+	if damage <= 0 then 
+		return damage
+	end
+	local queued_remove = {}
+	for i,overshield_data in ipairs(self._damage_overshield) do 
+		if damage <= 0 then 
+			break
+		end
+		local prev_overshield_amount = overshield_data.amount
+		local new_overshield_amount = math.max(overshield_data.amount - damage,0)
+		overshield_data.amount = new_overshield_amount
+		local blocked_damage = prev_overshield_amount - new_overshield_amount
+		if new_overshield_amount <= 0 then 
+			if type(overshield_data.depleted_callback) == "function" then 
+				overshield_data.depleted_callback(damage,blocked_damage)
+				--note that this callback is performed before the player damage calculation is complete!
+			end
+			table.insert(queued_remove,i)
+		end
+		damage = damage - blocked_damage
+	end
+	
+	if #queued_remove > 0 then 
+		for i=#queued_remove,1,-1 do 
+			table.remove(self._damage_overshield,queued_remove[i])
+		end
+	end
+	self:sort_damage_overshield()
+	
+	return damage
+end
+
+function PlayerManager:sort_damage_overshield()
+	table.sort(self._damage_overshield,function(a,b)
+		return a.amount > b.amount
+	end)
+	
+	managers.hud:set_absorb_active(HUDManager.PLAYER_PANEL, self:get_damage_overshield_total())
+end
+
+function PlayerManager:get_damage_overshield_total()
+	local sum = 0
+	for k,v in pairs(self._damage_overshield) do 
+		sum = sum + v.amount
+	end
+	return sum
 end
