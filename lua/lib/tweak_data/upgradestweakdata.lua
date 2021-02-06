@@ -1095,6 +1095,14 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		self.values.player.omniscience_range = {
+			500,
+			1500
+		}
+		self.values.player.omniscience_timer = {
+			3
+		}
+		
 		self.values.player.tape_loop_duration = {
 			15,
 			25

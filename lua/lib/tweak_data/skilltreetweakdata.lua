@@ -1106,8 +1106,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			},
 			{
 				upgrades = {
-					--mark all enemies within 5 meters
-					--stand still for 3 seconds to increase range to 15s
+					"player_standstill_omniscience"
 				},
 				cost = self.costs.hightierpro
 			},
