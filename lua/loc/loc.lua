@@ -200,7 +200,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_classic_thievery = "Classic Thievery",
 				menu_classic_thievery_desc = "BASIC: ##$basic##\nIncrease lockpicking speed by ##100%##.\n\nACE: ##$pro##\nYou take ##25%## longer to be detected while in Casing Mode.",
 				menu_people_watching = "People Watching",
-				menu_people_watching_desc = "BASIC: ##$basic##\nYou gain the ability to Mark enemies and pick up items while in Casing Mode.\n\nACE: ##$pro##\nWhile in Stealth, you automatically Mark all enemies within ##5## Meters.\nStanding still for ##3## seconds increases the radius to ##15## Meters.",
+				menu_people_watching_desc = "BASIC: ##$basic##\nYou gain the ability to Mark enemies and pick up items while in Casing Mode.\n\nACE: ##$pro##\nWhile in Stealth, you automatically Mark enemies and Civilians within ##5## Meters.\nStanding still for ##3## seconds increases the radius to ##15## Meters.",
 				menu_blackout = "Blackout",
 				menu_blackout_desc = "BASIC: ##$basic##\nIncreases the ECM Jammer's duration by ##25%##.\n\nACE: ##$pro##\nIncreases the ECM Jammer's duration by an additional ##25%##, for a total of ##+50%##.",
 				menu_tuned_out = "Tuned Out",
