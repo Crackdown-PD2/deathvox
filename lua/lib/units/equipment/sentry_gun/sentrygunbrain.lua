@@ -159,6 +159,10 @@ function SentryGunBrain:_upd_fire(t)
 			if mark_data and type(mark_data) == "table" then 
 				if attention.unit and attention.unit:contour() then 
 					local mark_type = mark_data[1]
+					if attention.unit:base() and attention.unit:base().sentry_gun then 
+						mark_type = "mark_unit_dangerous_damage_bonus"
+						--temp fix 
+					end
 					attention.unit:contour():add(mark_type, true, 1)
 --						managers.network:session():send_to_peers_synched("spot_enemy", attention.unit)
 				end
