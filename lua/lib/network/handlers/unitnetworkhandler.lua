@@ -40,7 +40,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 	local orig_sync_movement_state = UnitNetworkHandler.sync_player_movement_state
 	function UnitNetworkHandler:sync_player_movement_state(unit, state, down_time,unit_id_str,...)
 	--note: unit_id_str is also a string value that can be spoofed
-	
+		if not alive(unit) then
+			return
+		end
 	
 		if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 			return
@@ -101,6 +103,25 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if teammate_panel then
 --			teammate_panel:set_absorb_active(absorption_amount)
 		end
+	end
+	
+	function UnitNetworkHandler:place_trip_mine(pos, normal, sensor_upgrade, rpc)
+		local peer = self._verify_sender(rpc)
+
+		if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not peer then
+			return
+		end
+
+--		if not managers.player:verify_equipment(peer:id(), "trip_mine") then
+--			return
+--		end
+
+		local rot = Rotation(normal, math.UP)
+		local peer = self._verify_sender(rpc)
+		local unit = TripMineBase.spawn(pos, rot, sensor_upgrade, peer:id())
+
+		unit:base():set_server_information(peer:id())
+		rpc:activate_trip_mine(unit)
 	end
 	
 end

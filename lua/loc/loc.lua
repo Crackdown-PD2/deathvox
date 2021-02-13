@@ -47,9 +47,14 @@ end)
 Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 	if deathvox then
 		if deathvox:IsTotalCrackdownEnabled() then
+--			local interact_keybind = utf8.to_upper(loc:btn_macro("use_item")) 
+--			local grenade_keybind = utf8.to_upper(loc:btn_macro("throw_grenade")) 
+--apparently keybind macros aren't active in the throwables descriptions, but also controllermanager isn't initialized in time for this
+			
 			local cursed_error = "oopsie whoopsie!\nuwu\nwe made a fucky wucky!!1 a wittle fucko boingo! the code monkies at our headquarters are working VEWY HAWD to fix this!" --preliminary research suggests that using this as an localization error string will make users 4206.9% more likely to report normally insignificant minor localization errors. i apologize for nothing. -offy
 			
 			loc:add_localized_strings({
+				cursed_error = cursed_error,
 				debug_interact_gage_assignment_take = "PRESS $BTN_INTERACT TO PICK UP THE PACKAGE",
 				--weapon stuff
 				
@@ -118,7 +123,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_checkup = "Checkup",
 				menu_checkup_desc = "BASIC: ##$basic##\nYour Doctor Bags restore ##1%## of a player's Maximum Health every ##2## seconds in a ##3## meter diameter.\n\nACE: ##$pro##\nRange increased to ##6## meters.\n\nNote: Healing effect cannot stack. Requires line of sight to the Doctor Bag in question.",
 				menu_life_insurance = "Life Insurance",
-				menu_life_insurance_desc = "BASIC: ##$basic##\nYour deployed First Aid Kits will be automatically used if a player is downed within ##5## meters, healing them and preventing the down.\nThis effect has a ##20## second cooldown per player.\n\nACE: ##$pro##\nCooldown reduced to ##10## seconds.\n\nNote: This effect directly interacts with Crook’s Borrowed Time, allowing users to prevent going down at the end of the grace period with Life Insurance’s effect.",
+				menu_life_insurance_desc = "BASIC: ##$basic##\nYour deployed First Aid Kits will be automatically used if a player is downed within ##5## meters, healing them and preventing the down.\nThis effect has a ##20## second cooldown per player.\n\nACE: ##$pro##\nCooldown reduced to ##10## seconds.\n\nNote: This effect directly interacts with Crook's Borrowed Time, allowing users to prevent going down at the end of the grace period with Life Insurance's effect.",
 				menu_outpatient = "Outpatient",
 				menu_outpatient_desc = "BASIC: ##$basic##\nIncreases your Doctor Bag supply to ##2##.\n\nACE: ##$pro##\nIncreases your Doctor Bag supply to ##3##.",
 				menu_preventative_care = "Preventative Care",
@@ -278,12 +283,17 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				bm_equipment_armor_kit_desc = "Advanced shock-resistant armor inserts that provide +15% Damage Resistance and allow the user to go down one additional time before instantly being taken into custody. To use, hold $BTN_USE_ITEM on a suitable surface and press $BTN_INTERACT to equip.\n\nOnce deployed, the Armor Plates Bag can be used 4 times before disappearing. Remaining uses are visible within the bag.",
 				bm_equipment_ammo_bag_desc = "Deployable ammunition container that refills expended ammunition and passively increases the holder's Ammunition Stock by 50%, even after using all charges. To use, hold $BTN_USE_ITEM on a suitable surface and press $BTN_INTERACT to refill ammunition.\n\nOnce deployed, the Ammo Bag can completely refill ammunition stocks 4 times before disappearing. Remaining uses are visible within the bag.",
 				bm_equipment_first_aid_kit_desc = "Single-use healing deployable that fully restores the user's health. To use, hold $BTN_USE_ITEM on a suitable surface and press $BTN_INTERACT to heal.\n\nFirst Aid Kits can also be used to instantly revive and fully heal an incapacitated teammate by deploying a First Aid Kit within 1.5 meters of them.",
-				bm_equipment_trip_mine_desc = "Trip Mines are explosive booby traps with multiple functions and trigger types. To deploy, hold $BTN_USE_ITEM on a suitable surface. To modify a placed Trip Mine, press $BTN_INTERACT while looking at them to open the radial menu.\n\nTrip Mines are bundled with Shaped Charges, explosive tools that can destroy specific obstacles or open containers. Hold $BTN_INTERACT on an object’s displayed weak point to prime it with a Shaped Charge.\n\nWarning: Shaped Charges will only activate when all of an object’s weak points are primed.",
+				bm_equipment_trip_mine = "Shaped Charges",
+				bm_equipment_trip_mine_desc = "Shaped Charges are explosive tools that can destroy specific obstacles or open containers. Hold $BTN_INTERACT on an object's displayed weak point to prime it with a Shaped Charge.\n\nWarning: Shaped Charges will only activate when all of an object's weak points are primed.",
 				hud_deploying_revive_fak = "Reviving $TEAMMATE_NAME...",
 				
 				bm_equipment_sentry_gun_desc = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Enemies will ignore Sentry Guns, making them excellent for fire support.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.",
 				bm_equipment_sentry_gun_silent_desc = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Enemies will ignore Sentry Guns, making them excellent for fire support.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.",
 				bm_equipment_sentry_gun_silent_desc_UNUSED = cursed_error,
+				debug_trip_mine_throwable = "Trip Mine",
+				bm_grenade_tripmine = "Trip Mine Throwable",
+				bm_grenade_tripmine_desc = "Trip Mines are explosive booby traps with multiple functions and trigger types. To deploy, hold $BTN_THROW_GRENADE on a suitable surface. To modify a placed Trip Mine, press $BTN_INTERACT while looking at them to open the radial menu.", --needs macros
+				debug_trip_mine = "Shaped Charges",
 			--misc
 				hud_int_pick_electronic_lock = "Hold $BTN_INTERACT to hack the lock",
 				hud_action_picking_electronic_lock = "Hacking the lock..."

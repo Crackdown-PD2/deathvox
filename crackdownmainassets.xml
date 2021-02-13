@@ -782,5 +782,6 @@
 	<texture path="guis/textures/pd2/blackmarket/icons/tcd/subclass_poison"  force="false"/>
 	<texture path="guis/textures/pd2/blackmarket/icons/tcd/subclass_quiet"  force="false"/>
 	
+	<texture path="guis/textures/pd2/blackmarket/icons/grenades/tripmine_throwable" force="false"/>
 	
 </table>

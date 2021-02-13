@@ -1,7 +1,7 @@
 
 
-Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_data)
-	if deathvox and deathvox:IsTotalCrackdownEnabled() then
+if deathvox:IsTotalCrackdownEnabled() then
+	Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_data)
 		self.armor_plates_base = 4 --armor plates deployable
 		self.armor_plates_dmg_reduction = 0.85 -- damage_applied = kevlar_plates_dmg_reduction * incoming_damage, so eg. 0.9 = 10% damage reduction
 		
@@ -74,8 +74,13 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		self.values.subclass_poison = self.values.subclass_poison or {}
 		self.values.subclass_quiet = self.values.subclass_quiet or {}
 		self.values.subclass_areadenial = self.values.subclass_areadenial or {}
-		--todo make these consistent with the names in the converter script
 		
+		self.definitions.tripmine_throwable = {
+			category = "grenade"
+		}
+		table.insert(self.level_tree[0].upgrades,"tripmine_throwable")
+		
+
 		
 		--Boss
 		
@@ -1362,5 +1367,5 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		self.values.ammo_bag.passive_ammo_stock_bonus = {
 			0.5
 		}
-	end	
-end)
+	end)
+end	

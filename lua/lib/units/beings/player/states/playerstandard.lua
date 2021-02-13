@@ -1417,6 +1417,200 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	end
 	
+
+	local orig_throw_grenade = PlayerStandard._check_action_throw_grenade
+	function PlayerStandard:_check_action_throw_grenade(t, input, ...)
+		local action_wanted = input.btn_throw_grenade_press
+		if not action_wanted then
+			return
+		end
+
+		local projectile_entry = managers.blackmarket:equipped_projectile()
+		local projectile_tweak = tweak_data.blackmarket.projectiles[projectile_entry]
+
+		if not managers.player:can_throw_grenade() then
+			return
+		end
+
+		local action_forbidden = not PlayerBase.USE_GRENADES or self:chk_action_forbidden("interact") or self._unit:base():stats_screen_visible() or self:_is_throwing_grenade() or self:_interacting() or self:is_deploying() or self:_changing_weapon() or self:_is_meleeing() or self:_is_using_bipod()
+
+		if action_forbidden then
+			return
+		end
+
+		if projectile_tweak.override_equipment_id then 
+			self:_start_action_use_throwable_equipment(t,projectile_tweak.override_equipment_id)
+		else
+			self:_start_action_throw_grenade(t, input)
+		end
+
+		return action_wanted
+	end
+
+	function PlayerStandard:_interupt_action_throw_grenade(t, input)
+		if not self:_is_throwing_grenade() then
+			return
+		end
+
+		if projectile_tweak.override_equipment_id then 
+			self:_interupt_action_use_throwable_equipment(t)
+
+		else
+			self._ext_camera:play_redirect(self:get_animation("equip"))
+			self._camera_unit:base():unspawn_grenade()
+			self._camera_unit:base():show_weapon()
+			self._state_data.throw_grenade_expire_t = nil
+		end
+
+		self:_stance_entered()
+	end
+
+
+
+	function PlayerStandard:_start_action_use_throwable_equipment(t,equipment_id)
+		local equipment_data = equipment_id and tweak_data.equipments[equipment_id]
+		
+		if not equipment_data then
+			return
+		end
+		
+		self:_interupt_action_reload(t)
+		self:_interupt_action_steelsight(t)
+		self:_interupt_action_running(t)
+		self:_interupt_action_charging_weapon(t)
+	
+		local equipment_name = managers.localization:text(equipment_data.text_id or "cursed_error")
+		local deploy_timer = equipment_data.deploy_time
+
+		self._use_throwable_equipment_expire_t = t + deploy_timer
+
+		self:_play_unequip_animation()
+
+		local text = managers.player:selected_equipment_deploying_text() or managers.localization:text("hud_deploying_equipment", {
+			EQUIPMENT = equipment_name
+		})
+
+		managers.hud:show_progress_timer({
+			text = text
+		})
+		managers.hud:show_progress_timer_bar(0, deploy_timer)
+		
+		if equipment_data.sound_start then
+			self._unit:sound_source():post_event(equipment_data.sound_start)
+		end
+
+		managers.network:session():send_to_peers_synched("sync_teammate_progress", 2, true, equipment_id, deploy_timer, false)
+	end
+
+	function PlayerStandard:_update_throwable_equipment_timers(t)
+ 		local projectile_entry = managers.blackmarket:equipped_projectile()
+		local projectile_tweak = tweak_data.blackmarket.projectiles[projectile_entry]
+		local equipment_id = projectile_tweak.override_equipment_id
+		local equipment_data = equipment_id and tweak_data.equipments[equipment_id]
+		if equipment_data then 
+
+			local valid = self._unit:equipment():valid_look_at_placement(equipment_data) and true or false
+			
+			local deploy_time_total = equipment_data.deploy_time
+			local deploy_time_current = deploy_time_total - math.max(0,self._use_throwable_equipment_expire_t - t)
+			
+			local text = managers.localization:text("hud_deploying_equipment", {
+				EQUIPMENT = managers.localization:text(equipment_data.text_id or "cursed_error")
+			})
+
+			managers.hud:show_progress_timer({
+				text = text
+			})
+			
+			managers.hud:set_progress_timer_bar_width(deploy_time_current,deploy_time_total)
+			managers.hud:set_progress_timer_bar_valid(valid, not valid and "hud_deploy_valid_help")
+			
+			
+			if self._use_throwable_equipment_expire_t <= t then 
+				self:_end_action_use_throwable_equipment(valid,equipment_data)
+			end
+		end
+	end
+	
+	
+	function PlayerStandard:_interupt_action_use_throwable_equipment(t, input, complete, equipment_data)
+
+		if self._use_throwable_equipment_expire_t then
+			self._use_throwable_equipment_expire_t = nil
+			local tweak_data = self._equipped_unit:base():weapon_tweak_data()
+			self._equip_weapon_expire_t = managers.player:player_timer():time() + (tweak_data.timers.equip or 0.7)
+			self:_play_equip_animation()
+			managers.hud:hide_progress_timer_bar(complete)
+			managers.hud:remove_progress_timer()
+
+
+			if not complete then
+				if not equipment_data then 
+					local projectile_entry = managers.blackmarket:equipped_projectile()
+					local projectile_tweak = tweak_data.blackmarket.projectiles[projectile_entry]
+					local equipment_id = projectile_tweak.override_equipment_id
+					equipment_data = equipment_id and tweak_data.equipments[equipment_id]
+				end
+				
+				if equipment_data.sound_interupt then 
+					self._unit:sound_source():post_event(post_event)
+				end
+				
+			end
+
+			self._unit:equipment():on_deploy_interupted()
+			managers.network:session():send_to_peers_synched("sync_teammate_progress", 2, false, "", 0, complete and true or false)
+		end
+	end
+
+	function PlayerStandard:_end_action_use_throwable_equipment(valid,equipment_data)
+		local pm = managers.player
+		local equipmentbase = self._unit:equipment()
+		
+		if not pm:can_throw_grenade() then 
+			valid = false
+		end
+		
+		if valid and equipment_data.use_function_name and equipmentbase[equipment_data.use_function_name] then 
+			valid = equipmentbase[equipment_data.use_function_name](equipmentbase)
+		end
+		
+		if valid then 
+			if equipment_data.sound_done then
+				self._unit:sound_source():post_event(equipment_data.sound_done)
+			end
+			pm:add_grenade_amount(-1)
+		end
+
+		self:_interupt_action_use_throwable_equipment(nil, nil, valid,equipment_data)
+
+	end
+	
+	
+	function PlayerStandard:_update_throw_grenade_timers(t,...)
+		if self._use_throwable_equipment_expire_t then 
+			return self:_update_throwable_equipment_timers(t,...)
+		end
+		
+		if self._state_data.throw_grenade_expire_t and self._state_data.throw_grenade_expire_t <= t then
+			self._state_data.throw_grenade_expire_t = nil
+
+			self:_stance_entered()
+
+			if self._equipped_unit and input.btn_steelsight_state then
+				self._steelsight_wanted = true
+			end
+		end
+	end
+
+	local orig_throwing_grenade_check = PlayerStandard._is_throwing_grenade
+	function PlayerStandard:_is_throwing_grenade(...)
+		return orig_throwing_grenade_check(self,...) or self._use_throwable_equipment_expire_t and true or false
+	end
+	
+	local orig_deploying_check = PlayerStandard.is_deploying
+	function PlayerStandard:is_deploying(...)
+		return orig_deploying_check(self,...) or self._use_throwable_equipment_expire_t
+	end
+
 end
-
-
