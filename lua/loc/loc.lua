@@ -293,6 +293,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				debug_trip_mine_throwable = "Trip Mine",
 				bm_grenade_tripmine = "Trip Mine Throwable",
 				bm_grenade_tripmine_desc = "Trip Mines are explosive booby traps with multiple functions and trigger types. To deploy, hold $BTN_THROW_GRENADE on a suitable surface. To modify a placed Trip Mine, press $BTN_INTERACT while looking at them to open the radial menu.", --needs macros
+				hud_deploying_tripmine_preview = "Ready to deploy $EQUIPMENT",
 				debug_trip_mine = "Shaped Charges",
 			--misc
 				hud_int_pick_electronic_lock = "Hold $BTN_INTERACT to hack the lock",

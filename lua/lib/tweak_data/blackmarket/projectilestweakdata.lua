@@ -17,6 +17,7 @@ Hooks:PostHook(BlackMarketTweakData, "_init_projectiles", "cdgren", function(sel
 			throwable = true,
 			max_amount = 6,
 			is_a_grenade = true,
+			instant_use = true,
 			override_equipment_id = "tripmine_throwable" --reference key for corresponding data in equipmentstweakdata
 		}
 	
