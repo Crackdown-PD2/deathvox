@@ -310,21 +310,26 @@ function RaycastWeaponBase:_collect_hits(from, to)
 	return unique_hits, hit_enemy
 end
 
-local blacklist = {
+
+--Original AutoFireSoundFix mod by 90e, uploaded by DarKobalt.
+--Reverb fixed by Doctor Mister Cool, aka Didn'tMeltCables, aka DinoMegaCool
+--New AFSF2 version (current 1.82) uploaded and maintained by Offyerrocker.
+_G.AutoFireSoundFixBlacklist = {
 	["saw"] = true,
 	["saw_secondary"] = true,
 	["flamethrower_mk2"] = true,
 	["m134"] = true,
 	["mg42"] = true,
 	["shuno"] = true,
-	["system"] = true
+	["system"] = true,
+	["par"] = true
 }
---This blacklist defines which weapons are prevented from playing their single-fire sound in AFSF.
-	--Weapons not on this list will repeatedly play their single-fire sound rather than their auto-fire loop.
-	--Weapons on this list will play their sound as normal
-	-- either due to being an unconventional weapon (saw, flamethrower, other saw, other flamethrower), or lacking a singlefire sound (minigun, mg42, other minigun).
---I could define this in the function but meh	
-	
+
+--Allows users/modders to easily edit this blacklist from outside of this mod
+Hooks:Register("AFSF2_OnWriteBlacklist")
+Hooks:Add("BaseNetworkSessionOnLoadComplete","AFSF2_OnLoadComplete",function()
+	Hooks:Call("AFSF2_OnWriteBlacklist",AutoFireSoundFixBlacklist)
+end)
 
 --Check for if AFSF's fix code should apply to this particular weapon
 function RaycastWeaponBase:_soundfix_should_play_normal()
@@ -332,20 +337,20 @@ function RaycastWeaponBase:_soundfix_should_play_normal()
 	if not self._setup.user_unit == managers.player:player_unit() then
 		--don't apply fix for NPCs or other players
 		return true
-	elseif tweak_data.weapon[name_id].use_fix == true then 
+	elseif tweak_data.weapon[name_id].use_fix ~= nil then 
 		--for custom weapons
-		return false
-	elseif blacklist[name_id] then
+		return tweak_data.weapon[name_id].use_fix
+	elseif AutoFireSoundFixBlacklist[name_id] then
 		--blacklisted sound
 		return true
-	elseif not tweak_data.weapon[name_id].sounds.fire_single then
+	elseif not self:weapon_tweak_data().sounds.fire_single then
 		--no singlefire sound; should play normal
 		return true
 	end
 	return false
 	--else, AFSF2 can apply fix to this weapon
 end
-
+--[[
 --Prevent playing sounds except for blacklisted weapons
 local orig_fire_sound = RaycastWeaponBase._fire_sound
 function RaycastWeaponBase:_fire_sound(...)
@@ -353,16 +358,25 @@ function RaycastWeaponBase:_fire_sound(...)
 		return orig_fire_sound(self,...)
 	end
 end
+--]]
+function RaycastWeaponBase:start_shooting()
+	if self:_soundfix_should_play_normal() then
+		self:_fire_sound()
 
+		self._next_fire_allowed = math.max(self._next_fire_allowed, self._unit:timer():time())
+		self._shooting = true
+		self._bullets_fired = 0
+	end
+end
+
+--stop_shooting is only used for fire sound loops, so playing individual single-fire sounds means it doesn't need to be called
 local orig_stop_shooting = RaycastWeaponBase.stop_shooting
 function RaycastWeaponBase:stop_shooting(...)
 	if self:_soundfix_should_play_normal() then
 		return orig_stop_shooting(self,...)
 	end
---	if self._sound_fire then 
---		self._sound_fire:stop() --stops sounds immediately and without a reverb. unfortunately this cuts off the fire sound prematurely because it is VERY immediate.
---	end
 end
+
 
 local mvec_to = Vector3()
 local mvec_spread_direction = Vector3()
@@ -376,16 +390,18 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 		end
 	end
 	
-	if self._bullets_fired then
-	--i've commented and preserved the vanilla code that caused the need for this AFSF2 update:
+	if not self:_soundfix_should_play_normal() then 
+		self._bullets_fired = 0
+		self:play_tweak_data_sound(self:weapon_tweak_data().sounds.fire_single,"fire_single")
+	elseif self._bullets_fired then
 	--the game plays starts the firesound when firing, in addition to calling _fire_sound()
 	--this causes some firesounds to play twice, while also not playing the correct fire sound.
 	--so U200 both broke AutoFireSoundFix, made the existing problem worse, and then added a new problem on top of that
 	
---		if self._bullets_fired == 1 and self:weapon_tweak_data().sounds.fire_single then
---			self:play_tweak_data_sound("stop_fire")
---			self:play_tweak_data_sound("fire_auto", "fire")
---		end
+		if self._bullets_fired == 1 and self:weapon_tweak_data().sounds.fire_single then
+			self:play_tweak_data_sound("stop_fire")
+			self:play_tweak_data_sound("fire_auto", "fire")
+		end
 		self:play_tweak_data_sound(self:weapon_tweak_data().sounds.fire_single,"fire_single")
 		
 		self._bullets_fired = self._bullets_fired + 1
