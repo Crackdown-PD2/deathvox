@@ -1167,6 +1167,7 @@ function CopActionWalk:on_attention(attention)
 end
 
 function CopActionWalk:_get_current_max_walk_speed(move_dir)
+	--if you change this, you may wish to change the corresponding civilian version in civilianactionwalk -offy
 	if move_dir == "l" or move_dir == "r" then
 		move_dir = "strafe"
 	end

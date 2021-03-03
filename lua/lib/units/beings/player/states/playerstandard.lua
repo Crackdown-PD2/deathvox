@@ -313,6 +313,14 @@ function PlayerStandard:_get_intimidation_action(prime_target, char_table, amoun
 
 						if prime_target_key == char.unit:key() then
 							voice_type = char.unit:brain():on_intimidated(amount or tweak_data.player.long_dis_interaction.intimidate_strength, self._unit) or voice_type
+							if managers.player:has_category_upgrade("player","shout_intimidation_aoe") then 
+								local intimidation_aoe_radius = managers.player:upgrade_value("player","shout_intimidation_aoe",0)
+								--can't reuse char_table since its targets aren't guaranteed to inside the same range
+								for _,aoe_intimidation_target in pairs(World:find_units_quick("sphere",char.unit:position(),intimidation_aoe_radius,managers.slot:get_mask("civilians"))) do
+									aoe_intimidation_target:brain():on_intimidated(amount or tweak_data.player.long_dis_interaction.intimidate_strength,self._unit)
+								end
+							end
+							
 						elseif not primary_only and char.unit_type ~= unit_type_enemy then
 							char.unit:brain():on_intimidated((amount or tweak_data.player.long_dis_interaction.intimidate_strength) * char.inv_wgt / max_inv_wgt, self._unit)
 						end

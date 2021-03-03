@@ -60,7 +60,11 @@
 		<post :script_path="actions/lower_body/copactionturn.lua" :hook_id="cop/actions/lower_body/copactionturn"/>
 		<post :script_path="taser/logics/taserlogicattack.lua" :hook_id="taser/logics/taserlogicattack"/>
 	</group>
-
+	<post :script_path="units/civilians/civilianbase.lua" :hook_id="units/civilians/civilianbase"/>
+	<post :script_path="units/civilians/civilianbrain.lua" :hook_id="units/civilians/civilianbrain"/>
+	<post :script_path="units/civilians/civiliandamage.lua" :hook_id="units/civilians/civiliandamage"/>
+	<post :script_path="units/civilians/logics/civilianlogicsurrender.lua" :hook_id="units/civilians/logics/civilianlogicsurrender"/>
+	<post :script_path="units/civilians/actions/lower_body/civilianactionwalk.lua" :hook_id="units/civilians/actions/lower_body/civilianactionwalk"/>
 
 	 <!-- Hoxi's Crew Bots Fixes  -->
 	<post :script_path="units/player_team/huskteamaidamage.lua" :hook_id="units/player_team/huskteamaidamage"/>
@@ -131,6 +135,7 @@
 	<post :script_path="managers/gameplaycentralmanager.lua" :hook_id="managers/gameplaycentralmanager"/>
 	<post :script_path="managers/enemymanager.lua" :hook_id="managers/enemymanager"/>
 	<post :script_path="managers/menumanager.lua" :hook_id="managers/menumanager"/>
+	<post :script_path="managers/trademanager.lua" :hook_id="managers/trademanager"/>
 	<post :script_path="managers/skirmishmanager.lua" :hook_id="managers/skirmishmanager"/>
 	<post :script_path="managers/dotmanager.lua" :hook_id="managers/dotmanager"/>
 	<post :script_path="managers/explosionmanager.lua" :hook_id="managers/explosionmanager"/>

@@ -82,7 +82,140 @@ if deathvox:IsTotalCrackdownEnabled() then
 		
 
 		
-		--Boss
+		--Taskmaster
+		
+		self.values.cable_tie.quantity_1 = {
+			10 --10 default, 10 from skill, 20 total
+		}
+
+--				"player_intimidate_range_mul",
+--				"player_intimidate_aura",
+--				"player_civ_intimidation_mul"		
+		self.definitions.player_shout_intimidation_aoe = {
+			name_id = "menu_zip_it",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "shout_intimidation_aoe",
+				category = "player"
+			}
+		}
+		self.values.player.shout_intimidation_aoe = {1000}
+		
+		self.definitions.team_civilian_hostage_carry_bags = {
+			name_id = "menu_BLANK",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "civilian_hostage_carry_bags",
+				category = "player"
+			}
+		}
+		self.values.team.player.civilian_hostage_carry_bags  = {true}
+		
+		self.definitions.team_civilian_hostage_speed_bonus = {
+			name_id = "menu_BLANK",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "civilian_hostage_speed_bonus",
+				category = "player"
+			}
+		}
+		self.values.team.player.civilian_hostage_speed_bonus = {1.2} --20% speed bonus
+		
+		
+		self.definitions.team_civilian_hostage_stationary_invuln = {
+			name_id = "menu_pack_mules",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "civilian_hostage_stationary_invuln",
+				category = "player"
+			}
+		}
+		self.values.team.player.civilian_hostage_stationary_invuln = {true}
+		
+		--this has to be written as a separate upgrade because apparently ovk checked for the same "super_syndrome" upgrade for both the no-fleeing mechanic, and the self-trading mechanic
+		self.definitions.team_civilian_hostage_no_fleeing = {
+			name_id = "menu_pack_mules",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "civilian_hostage_no_fleeing",
+				category = "player"
+			}
+		}
+		self.values.team.player.civilian_hostage_no_fleeing = {true}
+		
+		self.definitions.team_civilian_hostage_area_marking = {
+			name_id = "menu_BLANK",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "civilian_hostage_area_marking",
+				category = "player"
+			}
+		}
+		self.values.team.player.civilian_hostage_area_marking = {{1000,1},{1000,1.1}} --10m, 10% extra damage
+		self.values.team.player.civilian_hostage_area_marking_interval = 0.1 --referenced directly in civilianbrain
+		
+		self.definitions.team_civilian_hostage_aoe_damage_multiplier = {
+			name_id = "menu_BLANK",
+			category = "team",
+			upgrade = {
+				value = 2,
+				upgrade = "civilian_hostage_area_marking",
+				category = "player"
+			}
+		}
+		
+		--use this
+		self.definitions.team_civilian_hostage_aoe_damage_resistance_1 = {
+			name_id = "menu_BLANK",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "civilian_hostage_aoe_damage_resistance_1",
+				category = "player"
+			}
+		}
+		self.definitions.team_civilian_hostage_aoe_damage_resistance_2 = {
+			name_id = "menu_BLANK",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "civilian_hostage_aoe_damage_resistance_2",
+				category = "player"
+			}
+		
+		}
+		--10% damage resistance once, additive with second upgrade to a max of 20% from basic+aced
+		self.values.team.player.civilian_hostage_aoe_damage_resistance = {{25,0.1},{500,0.1}}
+		--looks like i'm gonna have to commit some sins to make the stacking upgrade work without additional unnecessary overhead from multiple vector distance checks
+		
+		self.definitions.team_civilian_hostage_vip_trade = {
+			name_id = "menu_false_idol",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "civilian_hostage_vip_trade",
+				category = "player"
+			}
+		}
+		self.values.team.player.civilian_hostage_vip_trade = {true}
+		
+		self.definitions.team_civilian_hostage_fakeout_trade = {
+			name_id = "menu_BLANK",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "civilian_hostage_fakeout_trade",
+				category = "player"
+			}
+		}
+		self.values.team.player.civilian_hostage_fakeout_trade = {true}
+		
 		
 		--Marksman
 		

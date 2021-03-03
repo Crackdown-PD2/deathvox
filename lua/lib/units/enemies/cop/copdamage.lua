@@ -26,6 +26,23 @@ local idstr_bullet_hit_blood = Idstring("effects/payday2/particles/impacts/blood
 
 local world_g = World
 
+--custom function- only used in tcd at the moment;
+--implemented into damage functions for each damage type.
+--this should also be usable outside of tcd
+function CopDamage:_get_incoming_damage_multiplier(multiplier)
+	multiplier = multiplier or 1
+	local pm = managers.player
+	if pm:team_upgrade_level("player","civilian_hostage_area_marking") == 2 then --this upgrade is tcd only but should be safe to check with or without tcd enabled
+		local range,lookout_aced_bonus = unpack(pm:team_upgrade_value("player","civilian_hostage_area_marking",{}))
+		--this applies to damage from all sources, so we don't need to check if the attacker unit is the player
+		if range and CivilianBase.get_nearby_civ(self._unit:movement():m_pos(),range,true) then 
+			multiplier = multiplier * lookout_aced_bonus
+		end
+	end
+	return multiplier
+end
+
+
 function CopDamage:is_immune_to_shield_knockback()
 	if self._immune_to_knockback or self._unit:anim_data() and self._unit:anim_data().act then
 		return true
@@ -252,7 +269,10 @@ function CopDamage:damage_explosion(attack_data)
 			end
 		end
 	end
-
+	
+	local damage_multiplier = 1
+	damage_multiplier = self:_get_incoming_damage_multiplier(damage_multiplier)
+	damage = damage * damage_multiplier 
 	damage = managers.modifiers:modify_value("CopDamage:DamageExplosion", damage, self._unit)
 	damage = self:_apply_damage_reduction(damage)
 
@@ -722,7 +742,11 @@ function CopDamage:damage_bullet(attack_data)
 			end
 		end
 	end
-
+	
+	local damage_multiplier = 1
+	damage_multiplier = self:_get_incoming_damage_multiplier(damage_multiplier)
+	damage = damage * damage_multiplier 
+	
 	damage = self:_apply_damage_reduction(damage)
 
 	--proper stealth insta-killing and damage clamping (the latter won't interfere for insta-kills)
@@ -1021,7 +1045,11 @@ function CopDamage:damage_tase(attack_data)
 	end
 
 	local damage = attack_data.damage
-
+	
+	local damage_multiplier = 1
+	damage_multiplier = self:_get_incoming_damage_multiplier(damage_multiplier)
+	damage = damage * damage_multiplier 
+	
 	damage = self:_apply_damage_reduction(damage)
 
 	attack_data.raw_damage = damage
@@ -1651,13 +1679,17 @@ function CopDamage:damage_melee(attack_data)
 
 		if not is_civilian and tweak_data.achievement.cavity.melee_type == attack_data.name_id then
 			managers.achievment:award(tweak_data.achievement.cavity.award)
-		end
+		end		
 	end
 
 	if self._marked_dmg_mul then
 		damage = damage * self._marked_dmg_mul
 		damage_effect = damage_effect * self._marked_dmg_mul
 	end
+	
+	local damage_multiplier = 1
+	damage_multiplier = self:_get_incoming_damage_multiplier(damage_multiplier)
+	damage = damage * damage_multiplier 
 
 	damage = self:_apply_damage_reduction(damage)
 	damage_effect = self:_apply_damage_reduction(damage_effect)
@@ -2283,7 +2315,11 @@ function CopDamage:damage_fire(attack_data)
 			end
 		end
 	end
-
+	
+	local damage_multiplier = 1
+	damage_multiplier = self:_get_incoming_damage_multiplier(damage_multiplier)
+	damage = damage * damage_multiplier 
+	
 	damage = self:_apply_damage_reduction(damage)
 
 	if self._char_tweak.DAMAGE_CLAMP_FIRE then
@@ -2632,7 +2668,11 @@ function CopDamage:damage_simple(attack_data)
 	local is_civilian = CopDamage.is_civilian(self._unit:base()._tweak_table)
 	local result = nil
 	local damage = attack_data.damage
-
+	
+	local damage_multiplier = 1
+	damage_multiplier = self:_get_incoming_damage_multiplier(damage_multiplier)
+	damage = damage * damage_multiplier 
+	
 	damage = self:_apply_damage_reduction(damage)
 
 	if self._unit:movement():cool() and self._unit:base():char_tweak()["stealth_instant_kill"] then --allowing stealth insta-kill
@@ -2892,6 +2932,10 @@ function CopDamage:damage_dot(attack_data)
 		damage = damage * self._marked_dmg_mul
 	end
 
+	local damage_multiplier = 1
+	damage_multiplier = self:_get_incoming_damage_multiplier(damage_multiplier)
+	damage = damage * damage_multiplier 
+	
 	damage = self:_apply_damage_reduction(damage)
 
 	if self._char_tweak.DAMAGE_CLAMP_DOT then --never hurts to add these additional clamps as they do nothing if you don't specifically add them in charactertweakdata

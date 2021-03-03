@@ -85,125 +85,126 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		self.trees[15].name_id = "st_menu_hoxton_demolitionist"
 		
 		
-		--Taskmaster (not implemented)
+		--Taskmaster
 		replace_skill(tree_indices.taskmaster,1,{ --Zip It
 			{
 				upgrades = {
-				
+					"player_civ_calming_alerts",
+					"player_shout_intimidation_aoe"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-				
+					"cable_tie_quantity"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_zip_it",
 			desc_id = "menu_zip_it_desc",
 			icon_xy = {
-				0,
-				0
+				4,
+				7
 			}
 		})
 		replace_skill(tree_indices.taskmaster,2,{ --Pack Mules
 			{
 				upgrades = {
-				
+					"team_civilian_hostage_carry_bags"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-				
+					"team_civilian_hostage_speed_bonus"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_pack_mules",
 			desc_id = "menu_pack_mules_desc",
 			icon_xy = {
-				0,
-				0
+				4,
+				8
 			}
 		})
 		replace_skill(tree_indices.taskmaster,3,{ --Stay Down
 			{
 				upgrades = {
-				
+					"team_civilian_hostage_stationary_invuln"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-				
+					"team_civilian_hostage_no_fleeing"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_stay_down",
 			desc_id = "menu_stay_down_desc",
 			icon_xy = {
-				0,
-				0
+				2,
+				8
 			}
 		})
 		replace_skill(tree_indices.taskmaster,4,{ --Lookout Duty
 			{
 				upgrades = {
-				
+					"team_civilian_hostage_area_marking"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-				
+					"team_civilian_hostage_aoe_damage_multiplier"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_lookout_duty",
 			desc_id = "menu_lookout_duty_desc",
 			icon_xy = {
-				0,
-				0
+				6,
+				7
 			}
 		})
 		replace_skill(tree_indices.taskmaster,5,{ --Leverage
 			{
 				upgrades = {
-				
+					"team_civilian_hostage_aoe_damage_resistance_1"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-				
+					"team_civilian_hostage_aoe_damage_resistance_2"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_leverage",
 			desc_id = "menu_leverage_desc",
 			icon_xy = {
-				0,
-				0
+				2,
+				10
 			}
 		})
 		replace_skill(tree_indices.taskmaster,6,{ --False Idol
 			{
 				upgrades = {
-				
+					"team_civilian_hostage_vip_trade"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-				
+					"team_civilian_hostage_fakeout_trade"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_false_idol",
 			desc_id = "menu_false_idol_desc",
 			icon_xy = {
-				0,
-				0
+				3,
+				8
 			}
 		})
 		
