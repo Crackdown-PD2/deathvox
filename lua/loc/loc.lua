@@ -81,174 +81,6 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				st_menu_hoxton_fixer = "Fixer",
 				st_menu_hoxton_demolitionist = "Demolitionist",
 			
-			--taskmaster
-				menu_zip_it = "Zip It",
-				menu_zip_it_desc = "BASIC: ##$basic##\nCivilians are ##intimidated by the noise you make##. Shouting intimidates all Civilians within ##10## meters of the target.\n\nACE: ##$pro##\nIncreases your supply of Cable Ties to ##20##.",
-				menu_pack_mules = "Pack Mules",
-				menu_pack_mules_desc = "BASIC: ##$basic##\n(BASIC NOT IMPLEMENTED) Your team's Civilian Hostages ##can carry Bags##.\n\nACE: ##$pro##\nYour team's Civilian Hostages move ##+20% faster##.",
-				menu_stay_down = "Stay Down",
-				menu_stay_down_desc = "BASIC: ##$basic##\nYour team's Civilians are ##invulnerable while stationary##.\n\nACE: ##$pro##\nYour team's Civilian Hostages ##will not flee## when rescued.",
-				menu_lookout_duty = "Lookout Duty",
-				menu_lookout_duty_desc = "BASIC: ##$basic##\nEnemies within ##10## Meters of your team's Hostages are automatically Marked.\n\nACE: ##$pro##\nEnemies within ##10## meters of your team's Hostages take ##+10%## damage from all sources.",
-				menu_leverage = "Leverage",
-				menu_leverage_desc = "BASIC: ##$basic##\nYour team's Hostages grant ##+10%## Damage Resistance to teammates within ##0.25## meters.\n\nACE: ##$pro##\nYour team's Hostages also grant ##+10%## Damage Resistance to teammates within ##5## meters, and can stack up to ##+20%## when a teammate is within ##0.25## meters.",
-				menu_false_idol = "False Idol",
-				menu_false_idol_desc = "BASIC: ##$basic##\nYour team's Hostages ##release all teammates in custody## when traded.\n\nACE: ##$pro##\n(ACED NOT IMPLEMENTED) Each of your team's Hostages will ##fake surrendering once## upon being traded, releasing your teammates from custody without turning themselves in.",
-				
-			--marksman
-				menu_point_and_click = "Point and Click",
-				menu_point_and_click_desc = "BASIC: ##$basic##\nPrecision Weapons gain ##+1%## Damage per hit, up to ##500%##. All stacks are lost upon missing.\n\nACE: ##$pro##\nPrecision Weapons ADS ##90%## faster.",
-				menu_tap_the_trigger = "Tap the Trigger",
-				menu_tap_the_trigger_desc = "BASIC: ##$basic##\nPrecision Weapons also gain ##+1%## Rate of Fire per stack of Point and Click, up to ##+50%##.\n\nACE: ##$pro##\nMaximum Rate of Fire Bonus increased to ##+100%##.",
-				menu_investment_returns = "Investment Returns",
-				menu_investment_returns_desc = "BASIC: ##$basic##\nYou gain ##an extra stack## of Point and Click when you kill an enemy.\n\nACE: ##$pro##\nYou gain ##another extra stack## of Point and Click when you kill an enemy with a Headshot.",
-				menu_this_machine = "This Machine",
-				menu_this_machine_desc = "BASIC: ##$basic##\nPrecision Weapons also gain ##+0.5%## Reload Speed per stack of Point and Click, up to ##+25%##.\n\nACE: ##$pro##\nMaximum Reload Speed Bonus increased to ##+50%##.",
-				menu_mulligan = "Mulligan",
-				menu_mulligan_desc = "BASIC: ##$basic##\nAfter missing, you gain a ##1-second## grace period where you still benefit from your Point and Click stacks. Killing an enemy during the grace period will prevent your stacks from being lost.\n\nACE: ##$pro##\nThe grace period is extended to ##1.5 seconds##.",
-				menu_magic_bullet = "Magic Bullet",
-				menu_magic_bullet_desc = "BASIC: ##$basic##\nKilling an enemy with a Headshot from a Precision Weapon adds ##1## bullet to your reserve ammunition.\n\nACE: ##$pro##\nThe bullet is added to your current Magazine instead of your reserves.",
-			
-			--medic
-				menu_doctors_orders = "Doctor's Orders",
-				menu_doctors_orders_desc = "BASIC: ##$basic##\nYou revive downed players ##30%## faster.\n\nACE: ##$pro##\nAfter you revive a player, you and the player you revived gain ##+50%## Damage Resistance for ##4## seconds.",
-				menu_in_case_of_trouble = "In Case Of Trouble",
-				menu_in_case_of_trouble_desc = "BASIC: ##$basic##\nYour supply of First Aid Kits is increased to ##12##.\n\nACE: ##$pro##\nYour supply of First Aid Kits is increased to ##18##.",
-				menu_checkup = "Checkup",
-				menu_checkup_desc = "BASIC: ##$basic##\nYour Doctor Bags restore ##1%## of a player's Maximum Health every ##2## seconds in a ##3## meter diameter.\n\nACE: ##$pro##\nRange increased to ##6## meters.\n\nNote: Healing effect cannot stack. Requires line of sight to the Doctor Bag in question.",
-				menu_life_insurance = "Life Insurance",
-				menu_life_insurance_desc = "BASIC: ##$basic##\nYour deployed First Aid Kits will be automatically used if a player is downed within ##5## meters, healing them and preventing the down.\nThis effect has a ##20## second cooldown per player.\n\nACE: ##$pro##\nCooldown reduced to ##10## seconds.\n\nNote: This effect directly interacts with Crook's Borrowed Time, allowing users to prevent going down at the end of the grace period with Life Insurance's effect.",
-				menu_outpatient = "Outpatient",
-				menu_outpatient_desc = "BASIC: ##$basic##\nIncreases your Doctor Bag supply to ##2##.\n\nACE: ##$pro##\nIncreases your Doctor Bag supply to ##3##.",
-				menu_preventative_care = "Preventative Care",
-				menu_preventative_care_desc = "BASIC: ##$basic##\nYour First Aid Kits and Doctor Bags provide the user with a Damage Absorption shield equal to ##100%## of their Health and Armor.\n\nACE: ##$pro##\nPlayers become Invulnerable for ##2## seconds when their Damage Absorption shields are broken.\n\nNote: Shield does not decay over time. Shield absorbs damage on a 1:1 ratio of Shield Amount : Damage Taken.",
-
-			--chief
-			
-			--enforcer
-				menu_tender_meat = "Tender Meat",
-				menu_tender_meat_desc = "BASIC: ##$basic##\nShotguns deal ##50%## of their Headshot damage on Body Shots against Non-Dozer enemies.\n\nACE: ##$pro##\nShotguns gain ##+40## Stability.",
-				menu_heartbreaker = "Heartbreaker",
-				menu_heartbreaker_desc = "BASIC: ##$basic##\nDouble Barreled Shotguns can use the Fire Selector to switch to ##Double Barrel Mode##, causing them to fire twice per shot.\n\nACE: ##$pro##\nEach shot in ##Double Barrel Mode## deals ##+100%## Damage when firing both barrels.",
-				menu_shell_games = "Shell Games",
-				menu_shell_games_desc = "BASIC: ##$basic##\nShotguns gain ##+20%## Reload Speed every time a shell is loaded.\nBonuses are lost upon finishing or cancelling the Reload.\n\nACE: ##$pro##\nSingle-Fire Shotguns have their Fire Rate increased by ##50%##.",
-				menu_rolling_thunder = "Rolling Thunder",
-				menu_rolling_thunder_desc = "BASIC: ##$basic##\nIncreases the Magazine Size of Automatic Shotguns by ##50%##.\n\nACE: ##$pro##\nMagazine Size bonus increased to ##100%##.",
-				menu_point_blank = "Point Blank",
-				menu_point_blank_desc = "BASIC: ##$basic##\nShotguns gain ##Armor Piercing##, ##Shield Piercing##, and ##Body Piercing## against enemies within ##2.5## meters.\n\nACE: ##$pro##\nShotguns deal ##+100%## Damage against enemies within ##2.5## meters.",
-				menu_shotmaker = "Shotmaker",
-				menu_shotmaker_desc = "BASIC: ##$basic##\nIncreases Shotgun Headshot Damage by ##+50%##.\n\nACE: ##$pro##\nShotgun Headshot Damage is increased by an additional ##+50%##, for a total of ##+100%##.",
-				
-			--heavy
-				menu_collateral_damage = "Collateral Damage",
-				menu_collateral_damage_desc = "BASIC: ##$basic##\n\n(BASIC NOT YET IMPLEMENTED)\n\nHeavy Weapons deal ##50%## of their damage in a ##0.25## meter radius around the bullet trajectory.\n\nACE: ##$pro##\nHeavy Weapons ADS ##50%## faster.",
-				menu_death_grips = "Death Grips",
-				menu_death_grips_desc = "BASIC: ##$basic##\nHeavy Weapons gain ##+4## Accuracy and ##+4## Stability for 8 seconds per kill, stacking up to ##10## times.\n\nACE: ##$pro##\nAccuracy bonus increased to ##+8##.",
-				menu_bulletstorm = "Bulletstorm",
-				menu_bulletstorm_desc = "BASIC: ##$basic##\nAmmo Bags placed by you grant players the ability to shoot without depleting their ammunition for up to ##5## seconds after interacting with it.\nThe more ammo players replenish, the longer the duration of the effect.\n\nACE: ##$pro##\nIncreases the base duration of the effect by up to ##15## seconds.",
-				menu_lead_farmer = "Lead Farmer",
-				menu_lead_farmer_desc = "BASIC: ##$basic##\nHeavy Weapons gain ##+1%## Reload Speed per kill on their next Reload, up to ##50%##.\n\nACE: ##$pro##\nIncreases the amount of Reload Speed per kill to ##2%## and the maximum amount of Reload Speed to ##100%##.",
-				menu_armory_regular = "Armory Regular",
-				menu_armory_regular_desc = "BASIC: ##$basic##\nIncreases your Ammo Bag supply to ##2##.\n\nACE: ##$pro##\nIncreases your Ammo Bag supply to ##3##.",
-				menu_war_machine = "War Machine",
-				menu_war_machine_desc = "BASIC: ##$basic##\nIncreases the Ammo Bag's Ammunition Stock bonus for Heavy Weapons to ##+100%##.\n\nACE: ##$pro##\nIncreases the Ammo Bag's Ammunition Stock bonus to ##+100%## for non-Heavy weapons and ##+200%## for Heavy Weapons.",
-				
-			--runner
-				menu_hustle = "Hustle",
-				menu_hustle_desc = "BASIC: ##$basic##\nYou can Sprint in any direction.\n\nACE: ##$pro##\nYour Stamina starts regenerating ##25%## earlier and ##+25%## faster.",
-				menu_butterfly_bee = "Float Like A Butterfly",
-				menu_butterfly_bee_desc = "BASIC: ##$basic##\nMelee Weapons can be swung and charged while Sprinting.\n\nACE: ##$pro##\nMelee Weapon damage increases your Movement Speed by ##+10%## for ##4## seconds.",
-				menu_heave_ho = "Heave-Ho",
-				menu_heave_ho_desc = "BASIC: ##$basic##\nYou throw Bags ##50%## farther.\n\nACE: ##$pro##\nYour Movement Speed Penalty for carrying a Bag is reduced by ##20%##.",
-				menu_mobile_offense = "Mobile Offense",
-				menu_mobile_offense_desc = "BASIC: ##$basic##\nYou can now Reload while Sprinting.\n\nACE: ##$pro##\nYou can now hip-fire weapons while Sprinting.",
-				menu_escape_plan = "Escape Plan",
-				menu_escape_plan_desc = "BASIC: ##$basic##\nWhen your Armor breaks, you gain ##100%## of your Stamina and gain ##+25%## Sprint Speed for ##4## seconds.\n\nACE: ##$pro##\nYou also gain ##+20%## Movement Speed for 4 seconds.",
-				menu_leg_day = "Leg Day Enthusiast",
-				menu_leg_day_desc = "BASIC: ##$basic##\nYou gain ##+10%## Movement Speed and ##+25%## Sprint Speed.\n\nACE: ##$pro##\nCrouching no longer reduces your Movement Speed.",
-				
-			--gunner
-				menu_spray_and_pray = "Spray & Pray",
-				menu_spray_and_pray_desc = "BASIC: ##$basic##\nRapid Fire weapons gain ##+10%## Critical Hit chance.\n\nACE: ##$pro##\nRapid Fire weapons can now pierce Body Armor.",
-				menu_money_shot = "Money Shot",
-				menu_money_shot_desc = "BASIC: ##$basic##\nRapid Fire weapons deal ##+100%## Damage in a ##2.5## meter radius on impact when firing the last bullet from a fully loaded magazine.\n\nACE: ##$pro##\nRapid Fire weapons gain ##+50%## faster Reload Speed when their Magazine is empty.",
-				menu_shot_grouping = "Shot Grouping",
-				menu_shot_grouping_desc = "BASIC: ##$basic##\nRapid Fire weapons ADS ##+90%## faster.\n\nACE: ##$pro##\nRapid Fire weapons gain ##+40 Accuracy and Stability while ADSing.##",
-				menu_making_miracles = "Making Miracles",
-				menu_making_miracles_desc = "BASIC: ##$basic##\nRapid Fire weapons gain ##+1%## Critical Hit chance for ##4## seconds when hitting an enemy with a Headshot, stacking up to ##+10%##.\n\nACE: ##$pro##\nKilling an enemy with a Headshot generates an additional stack. Maximum bonus increased to ##+20%##.",
-				menu_close_enough = "Close Enough",
-				menu_close_enough_desc = "BASIC: ##$basic##\nRapid Fire bullets that strike hard surfaces ricochet once.\n\nACE: ##$pro##\nCritical Hits cause ricochets to angle towards the closest enemy.",
-				menu_prayers_answered = "Prayers Answered",
-				menu_prayers_answered_desc = "BASIC: ##$basic##\nRapid Fire weapons have their Critical Hit chance increased by ##+10%##, for a total of ##+20%##.\n\nACE: ##$pro##\nRapid Fire weapons have their Critical Hit chance further increased by ##+10%##, for a total of ##+30%##.",
-				
-			--engineer
-				menu_digging_in = "Digging In",
-				menu_digging_in_desc = "BASIC: ##$basic##\nYou deploy and retrieve Sentry Guns ##90%## faster.\n\nACE: ##$pro##\nYour Sentry Guns become armored, rendering them almost completely invulnerable.",
-				menu_advanced_rangefinder = "Advanced Rangefinder",
-				menu_advanced_rangefinder_desc = "BASIC: ##$basic##\nSentry Guns gain ##+50%## Range and Accuracy.\n\nACE: ##$pro##\nRange and Accuracy bonus increased to ##+100%##.",
-				menu_targeting_matrix = "Targeting Matrix",
-				menu_targeting_matrix_desc = "BASIC: ##$basic##\nSentry Guns that aim at Special Enemies instantly Mark them for 5 seconds.\n\nACE: ##$pro##\nSentry Guns deal ##+25%## Damage to Marked enemies.",
-				menu_wrangler = "Wrangler",
-				menu_wrangler_desc = "BASIC: ##$basic##\nWhile in Manual Control of a Sentry Gun, it gains perfect Accuracy.\n\nACE: ##$pro##\nSentries deal ##+100%## Damage on Headshots.",
-				menu_hobarts_funnies = "Hobart's Funnies",
-				menu_hobarts_funnies_desc = "BASIC: ##$basic##\nNon-Basic Sentry Gun modes gain ##+25%## Fire Rate.\n\nACE: ##$pro##\nFire Rate bonus increased to ##+50%##.",
-				menu_killer_machines = "Killer Machines",
-				menu_killer_machines_desc = "BASIC: ##$basic##\nAll Sentry Gun modes deal ##+50## damage.\n\nACE: ##$pro##\nIncreases your Sentry Gun supply to ##2##.",
-				
-			--thief
-				menu_classic_thievery = "Classic Thievery",
-				menu_classic_thievery_desc = "BASIC: ##$basic##\nIncrease lockpicking speed by ##100%##.\n\nACE: ##$pro##\nYou take ##25%## longer to be detected while in Casing Mode.",
-				menu_people_watching = "People Watching",
-				menu_people_watching_desc = "BASIC: ##$basic##\nYou gain the ability to Mark enemies and pick up items while in Casing Mode.\n\nACE: ##$pro##\nWhile in Stealth, you automatically Mark enemies and Civilians within ##5## Meters.\nStanding still for ##3## seconds increases the radius to ##15## Meters.",
-				menu_blackout = "Blackout",
-				menu_blackout_desc = "BASIC: ##$basic##\nIncreases the ECM Jammer's duration by ##25%##.\n\nACE: ##$pro##\nIncreases the ECM Jammer's duration by an additional ##25%##, for a total of ##+50%##.",
-				menu_tuned_out = "Tuned Out",
---				menu_tuned_out_desc = "BASIC: ##$basic##\nYou gain the ability to disable a camera from detecting your team for ##20## seconds. Only one camera may be disabled at a time.\n\nACE: ##$pro##\nDisable duration increases to ##30## seconds and an unlimited number of cameras may be disabled at one time.",
-				menu_tuned_out_desc = "BASIC: ##$basic##\nYou gain the ability to disable a camera from detecting your team for ##20## seconds. Only one camera may be disabled at a time.\n\nACE: ##$pro##\nDisable duration increases to ##30## seconds.\n\nNOT YET IMPLEMENTED: An unlimited number of cameras may be disabled at one time.",
-				menu_electronic_warfare = "Electronic Warfare",
-				menu_electronic_warfare_desc = "BASIC: ##$basic##\nIncreases your ECM Jammer count to ##2##.\n\nACE: ##$pro##\nECM Jammers delay pagers while active.",
-				menu_skeleton_key = "Skeleton Key",
-				menu_skeleton_key_desc = "BASIC: ##$basic##\nIncreases Lockpick Speed by ##+100%## and gain the ability to Lockpick Safes.\n\nACE: ##$pro##\nYou now Lockpick Safes ##100%## faster and you gain the ability to open Electronic Locks.",
-				
-			--assassin
-				menu_killers_notebook = "Killer's Notebook",
-				menu_killers_notebook_desc = "NOT YET IMPLEMENTED",
---				menu_killers_notebook_desc = "BASIC: ##$basic##\nQuiet Weapons ADS ##90%## faster.\n\nACE: ##$pro##\nQuiet Weapons gain ##+20## Stability.",
-				menu_good_hunting = "Good Hunting",
-				menu_good_hunting_desc = "NOT YET IMPLEMENTED",
---				menu_good_hunting_desc = "BASIC: ##$basic##\nBows have all of their Arrows readied instead of in reserve.\n\nACE: ##$pro##\nCrossbows instantly Reload themselves after a Headshot.",
-				menu_comfortable_silence = "Comfortable Silence",
-				menu_comfortable_silence_desc = "NOT YET IMPLEMENTED",
---				menu_comfortable_silence_desc = "BASIC: ##$basic##\nQuiet Weapons gain ##+2## Concealment.\n\nACE: ##$pro##\nQuiet Weapons gain ##+4## Concealment.",
-				menu_toxic_shock = "Toxic Shock",
-				menu_toxic_shock_desc = "NOT YET IMPLEMENTED",
---				menu_toxic_shock_desc = "BASIC: ##$basic##\nSuccessfully Poisoning an enemy will also Poison enemies within a ##3##-meter radius.\n\nACE: ##$pro##\nPoison deals ##+100%## damage.",
-				menu_professionals_choice = "Professional's Choice",
-				menu_professionals_choice_desc = "BASIC: ##$basic##\nSilenced Weapons gain a ##+2% Fire Rate bonus## for every ##3## points of Detection Risk under ##35##, up to ##+10%##.\n\nACE: ##$pro##\nThe Fire Rate bonus is increased to ##+4%## and the maximum bonus is increased to ##+20%##.",
-				menu_quiet_grave = "Quiet as the Grave",
-				menu_quiet_grave_desc = "NOT YET IMPLEMENTED",
---				menu_quiet_grave_desc = "BASIC: ##$basic##\nQuiet Weapons deal ##+10%## Damage when attacking an enemy from behind.\n\nACE: ##$pro##\nQuiet Weapons also deal ##+10%## Damage when attacking an enemy that is not currently targeting you.",
-			
-			--sapper
-			--dealer
-			--fixer
-				menu_rolling_cutter = "Rolling Cutter",
-				menu_rolling_cutter_desc = "BASIC: ##$basic##\nThe OVE9000 Saw no longer consumes Ammunition when damaging enemies and gains ##+10%## Damage for ##2## seconds after every hit, up to a maximum of ##500%##.\n\nACE: ##$pro##\nIncreases the OVE9000 Saw blade durability by ##+50##.",
-				menu_walking_toolshed = "Walking Toolshed",
-				menu_walking_toolshed_desc = "BASIC: ##$basic##\nIncreases your spare OVE9000 Saw blades to ##2##.\n\nACE: ##$pro##\nIncreases your spare OVE9000 Saw blades to ##3##.",
-				menu_handyman = "Handyman",
-				menu_handyman_desc = "BASIC: ##$basic##\nThe OVE9000 Saw becomes available as a Secondary Weapon.\n\nACE: ##$pro##\nThe OVE9000 Saw gains ##+25%## range.",
-				menu_bloody_mess = "Bloody Mess",
-				menu_bloody_mess_desc = "BASIC: ##$basic##\nKills with the OVE9000 Saw deal the killing blow's damage to enemies within ##2.5## meters.\n\nACE: ##$pro##\nEnemies killed by Bloody Mess also deal damage to nearby enemies.",
-				menu_not_safe = "Not Safe",
-				menu_not_safe_desc = "BASIC: ##$basic##\nThe OVE9000 Saw can cut through Shields. Additionally, the OVE9000 Saw no longer consumes ammunition when hitting Shields.\n\nACE: ##$pro##\nThe OVE9000 Saw deals ##+100%## Damage to Dozers and their armor plates.",
-				menu_into_the_pit = "Into The Pit",
-				menu_into_the_pit_desc = "BASIC: ##$basic##\nThe OVE9000 Saw is guaranteed to deal a Critical Hit the first time it damages an enemy.\n\nACE: ##$pro##\nKills with the OVE9000 Saw inflict Panic on most enemies within ##6## meters, causing them to go into short bursts of uncontrollable fear.",
-				
-				
-			--demolitions
-			
-			
 			--deployable equipment
 				hud_int_equipment_sensor_mode_trip_mine = "Press $BTN_INTERACT to edit Trip Mine",
 				hud_int_equipment_normal_mode_trip_mine = "Press $BTN_INTERACT to edit Trip Mine",
@@ -293,6 +125,240 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				hud_int_pick_electronic_lock = "Hold $BTN_INTERACT to hack the lock",
 				hud_action_picking_electronic_lock = "Hacking the lock..."
 			})
+			
+			
+			
+			local tcd_skill_localizations = {
+			--taskmaster
+				menu_zip_it = "Zip It",
+				menu_zip_it_desc = "BASIC: ##$basic##\nCivilians are ##intimidated by the noise you make##. Shouting intimidates all Civilians within ##10## meters of the target.\n\nACE: ##$pro##\nIncreases your supply of Cable Ties to ##20##.",
+				menu_pack_mules = "Pack Mules",
+				menu_pack_mules_desc = "BASIC: ##$basic##\n(BASIC NOT IMPLEMENTED) Your team's Civilian Hostages ##can carry Bags##.\n\nACE: ##$pro##\nYour team's Civilian Hostages move ##+20% faster##.",
+				menu_stay_down = "Stay Down",
+				menu_stay_down_desc = "BASIC: ##$basic##\nYour team's Civilians are ##invulnerable while stationary##.\n\nACE: ##$pro##\nYour team's Civilian Hostages ##will not flee## when rescued.",
+				menu_lookout_duty = "Lookout Duty",
+				menu_lookout_duty_desc = "BASIC: ##$basic##\nEnemies within ##10## Meters of your team's Hostages are automatically Marked.\n\nACE: ##$pro##\nEnemies within ##10## meters of your team's Hostages take ##+10%## damage from all sources.",
+				menu_leverage = "Leverage",
+				menu_leverage_desc = "BASIC: ##$basic##\nYour team's Hostages grant ##+10%## Damage Resistance to teammates within ##0.25## meters.\n\nACE: ##$pro##\nYour team's Hostages also grant ##+10%## Damage Resistance to teammates within ##5## meters, and can stack up to ##+20%## when a teammate is within ##0.25## meters.",
+				menu_false_idol = "False Idol",
+				menu_false_idol_desc = "BASIC: ##$basic##\nYour team's Hostages ##release all teammates in custody## when traded.\n\nACE: ##$pro##\n(ACED NOT IMPLEMENTED) Each of your team's Hostages will ##fake surrendering once## upon being traded, releasing your teammates from custody without turning themselves in.",
+				
+			--marksman
+				menu_point_and_click = "Point and Click",
+				menu_point_and_click_desc = "BASIC: ##$basic##\n$ICN_PREPrecision Weapons gain ##+1%## Damage per hit, up to ##500%##. All stacks are lost upon missing.\n\nACE: ##$pro##\n$ICN_PREPrecision Weapons ADS ##90%## faster.",
+				menu_tap_the_trigger = "Tap the Trigger",
+				menu_tap_the_trigger_desc = "BASIC: ##$basic##\n$ICN_PREPrecision Weapons also gain ##+1%## Rate of Fire per stack of Point and Click, up to ##+50%##.\n\nACE: ##$pro##\nMaximum Rate of Fire Bonus increased to ##+100%##.",
+				menu_investment_returns = "Investment Returns",
+				menu_investment_returns_desc = "BASIC: ##$basic##\nYou gain ##an extra stack## of Point and Click when you kill an enemy.\n\nACE: ##$pro##\nYou gain ##another extra stack## of Point and Click when you kill an enemy with a Headshot.",
+				menu_this_machine = "This Machine",
+				menu_this_machine_desc = "BASIC: ##$basic##\n$ICN_PREPrecision Weapons also gain ##+0.5%## Reload Speed per stack of Point and Click, up to ##+25%##.\n\nACE: ##$pro##\nMaximum Reload Speed Bonus increased to ##+50%##.",
+				menu_mulligan = "Mulligan",
+				menu_mulligan_desc = "BASIC: ##$basic##\nAfter missing, you gain a ##1-second## grace period where you still benefit from your Point and Click stacks. Killing an enemy during the grace period will prevent your stacks from being lost.\n\nACE: ##$pro##\nThe grace period is extended to ##1.5 seconds##.",
+				menu_magic_bullet = "Magic Bullet",
+				menu_magic_bullet_desc = "BASIC: ##$basic##\nKilling an enemy with a Headshot from a $ICN_PREPrecision Weapon adds ##1## bullet to your reserve ammunition.\n\nACE: ##$pro##\nThe bullet is added to your current Magazine instead of your reserves.",
+			
+			--medic
+				menu_doctors_orders = "Doctor's Orders",
+				menu_doctors_orders_desc = "BASIC: ##$basic##\nYou revive downed players ##30%## faster.\n\nACE: ##$pro##\nAfter you revive a player, you and the player you revived gain ##+50%## Damage Resistance for ##4## seconds.",
+				menu_in_case_of_trouble = "In Case Of Trouble",
+				menu_in_case_of_trouble_desc = "BASIC: ##$basic##\nYour supply of First Aid Kits is increased to ##12##.\n\nACE: ##$pro##\nYour supply of First Aid Kits is increased to ##18##.",
+				menu_checkup = "Checkup",
+				menu_checkup_desc = "BASIC: ##$basic##\nYour Doctor Bags restore ##1%## of a player's Maximum Health every ##2## seconds in a ##3## meter diameter.\n\nACE: ##$pro##\nRange increased to ##6## meters.\n\nNote: Healing effect cannot stack. Requires line of sight to the Doctor Bag in question.",
+				menu_life_insurance = "Life Insurance",
+				menu_life_insurance_desc = "BASIC: ##$basic##\nYour deployed First Aid Kits will be automatically used if a player is downed within ##5## meters, healing them and preventing the down.\nThis effect has a ##20## second cooldown per player.\n\nACE: ##$pro##\nCooldown reduced to ##10## seconds.\n\nNote: This effect directly interacts with Crook's Borrowed Time, allowing users to prevent going down at the end of the grace period with Life Insurance's effect.",
+				menu_outpatient = "Outpatient",
+				menu_outpatient_desc = "BASIC: ##$basic##\nIncreases your Doctor Bag supply to ##2##.\n\nACE: ##$pro##\nIncreases your Doctor Bag supply to ##3##.",
+				menu_preventative_care = "Preventative Care",
+				menu_preventative_care_desc = "BASIC: ##$basic##\nYour First Aid Kits and Doctor Bags provide the user with a Damage Absorption shield equal to ##100%## of their Health and Armor.\n\nACE: ##$pro##\nPlayers become Invulnerable for ##2## seconds when their Damage Absorption shields are broken.\n\nNote: Shield does not decay over time. Shield absorbs damage on a 1:1 ratio of Shield Amount : Damage Taken.",
+
+			--chief
+			
+			--enforcer
+				menu_tender_meat = "Tender Meat",
+				menu_tender_meat_desc = "BASIC: ##$basic##\n$ICN_SHOShotguns deal ##50%## of their Headshot damage on Body Shots against Non-Dozer enemies.\n\nACE: ##$pro##\n$ICN_SHOShotguns gain ##+40## Stability.",
+				menu_heartbreaker = "Heartbreaker",
+				menu_heartbreaker_desc = "BASIC: ##$basic##\nDouble Barreled $ICN_SHOShotguns can use the Fire Selector to switch to ##Double Barrel Mode##, causing them to fire twice per shot.\n\nACE: ##$pro##\nEach shot in ##Double Barrel Mode## deals ##+100%## Damage when firing both barrels.",
+				menu_shell_games = "Shell Games",
+				menu_shell_games_desc = "BASIC: ##$basic##\n$ICN_SHOShotguns gain ##+20%## Reload Speed every time a shell is loaded.\nBonuses are lost upon finishing or cancelling the Reload.\n\nACE: ##$pro##\nSingle-Fire $ICN_SHOShotguns have their Fire Rate increased by ##50%##.",
+				menu_rolling_thunder = "Rolling Thunder",
+				menu_rolling_thunder_desc = "BASIC: ##$basic##\nIncreases the Magazine Size of Automatic $ICN_SHOShotguns by ##50%##.\n\nACE: ##$pro##\nMagazine Size bonus increased to ##100%##.",
+				menu_point_blank = "Point Blank",
+				menu_point_blank_desc = "BASIC: ##$basic##\n$ICN_SHOShotguns gain ##Armor Piercing##, ##Shield Piercing##, and ##Body Piercing## against enemies within ##2.5## meters.\n\nACE: ##$pro##\n$ICN_SHOShotguns deal ##+100%## Damage against enemies within ##2.5## meters.",
+				menu_shotmaker = "Shotmaker",
+				menu_shotmaker_desc = "BASIC: ##$basic##\nIncreases $ICN_SHOShotgun Headshot Damage by ##+50%##.\n\nACE: ##$pro##\n$ICN_SHOShotgun Headshot Damage is increased by an additional ##+50%##, for a total of ##+100%##.",
+				
+			--heavy
+				menu_collateral_damage = "Collateral Damage",
+				menu_collateral_damage_desc = "BASIC: ##$basic##\n\n(BASIC NOT YET IMPLEMENTED)\n\n$ICN_HVYHeavy Weapons deal ##50%## of their damage in a ##0.25## meter radius around the bullet trajectory.\n\nACE: ##$pro##\n$ICN_HVYHeavy Weapons ADS ##50%## faster.",
+				menu_death_grips = "Death Grips",
+				menu_death_grips_desc = "BASIC: ##$basic##\n$ICN_HVYHeavy Weapons gain ##+4## Accuracy and ##+4## Stability for 8 seconds per kill, stacking up to ##10## times.\n\nACE: ##$pro##\nAccuracy bonus increased to ##+8##.",
+				menu_bulletstorm = "Bulletstorm",
+				menu_bulletstorm_desc = "BASIC: ##$basic##\nAmmo Bags placed by you grant players the ability to shoot without depleting their ammunition for up to ##5## seconds after interacting with it.\nThe more ammo players replenish, the longer the duration of the effect.\n\nACE: ##$pro##\nIncreases the base duration of the effect by up to ##15## seconds.",
+				menu_lead_farmer = "Lead Farmer",
+				menu_lead_farmer_desc = "BASIC: ##$basic##\n$ICN_HVYHeavy Weapons gain ##+1%## Reload Speed per kill on their next Reload, up to ##50%##.\n\nACE: ##$pro##\nIncreases the amount of Reload Speed per kill to ##2%## and the maximum amount of Reload Speed to ##100%##.",
+				menu_armory_regular = "Armory Regular",
+				menu_armory_regular_desc = "BASIC: ##$basic##\nIncreases your Ammo Bag supply to ##2##.\n\nACE: ##$pro##\nIncreases your Ammo Bag supply to ##3##.",
+				menu_war_machine = "War Machine",
+				menu_war_machine_desc = "BASIC: ##$basic##\nIncreases the Ammo Bag's Ammunition Stock bonus for $ICN_HVYHeavy Weapons to ##+100%##.\n\nACE: ##$pro##\nIncreases the Ammo Bag's Ammunition Stock bonus to ##+100%## for non-Heavy weapons and ##+200%## for $ICN_HVYHeavy Weapons.",
+				
+			--runner
+				menu_hustle = "Hustle",
+				menu_hustle_desc = "BASIC: ##$basic##\nYou can Sprint in any direction.\n\nACE: ##$pro##\nYour Stamina starts regenerating ##25%## earlier and ##+25%## faster.",
+				menu_butterfly_bee = "Float Like A Butterfly",
+				menu_butterfly_bee_desc = "BASIC: ##$basic##\n$ICN_MELMelee Weapons can be swung and charged while Sprinting.\n\nACE: ##$pro##\n$ICN_MELMelee Weapon damage increases your Movement Speed by ##+10%## for ##4## seconds.",
+				menu_heave_ho = "Heave-Ho",
+				menu_heave_ho_desc = "BASIC: ##$basic##\nYou throw Bags ##50%## farther.\n\nACE: ##$pro##\nYour Movement Speed Penalty for carrying a Bag is reduced by ##20%##.",
+				menu_mobile_offense = "Mobile Offense",
+				menu_mobile_offense_desc = "BASIC: ##$basic##\nYou can now Reload while Sprinting.\n\nACE: ##$pro##\nYou can now hip-fire weapons while Sprinting.",
+				menu_escape_plan = "Escape Plan",
+				menu_escape_plan_desc = "BASIC: ##$basic##\nWhen your Armor breaks, you gain ##100%## of your Stamina and gain ##+25%## Sprint Speed for ##4## seconds.\n\nACE: ##$pro##\nYou also gain ##+20%## Movement Speed for 4 seconds.",
+				menu_leg_day = "Leg Day Enthusiast",
+				menu_leg_day_desc = "BASIC: ##$basic##\nYou gain ##+10%## Movement Speed and ##+25%## Sprint Speed.\n\nACE: ##$pro##\nCrouching no longer reduces your Movement Speed.",
+				
+			--gunner
+				menu_spray_and_pray = "Spray & Pray",
+				menu_spray_and_pray_desc = "BASIC: ##$basic##\n$ICN_RPFRapid Fire weapons gain ##+10%## Critical Hit chance.\n\nACE: ##$pro##\n$ICN_RPFRapid Fire weapons can now pierce Body Armor.",
+				menu_money_shot = "Money Shot",
+				menu_money_shot_desc = "BASIC: ##$basic##\n$ICN_RPFRapid Fire weapons deal ##+100%## Damage in a ##2.5## meter radius on impact when firing the last bullet from a fully loaded magazine.\n\nACE: ##$pro##\n$ICN_RPFRapid Fire weapons gain ##+50%## faster Reload Speed when their Magazine is empty.",
+				menu_shot_grouping = "Shot Grouping",
+				menu_shot_grouping_desc = "BASIC: ##$basic##\n$ICN_RPFRapid Fire weapons ADS ##+90%## faster.\n\nACE: ##$pro##\n$ICN_RPFRapid Fire weapons gain ##+40 Accuracy and Stability while ADSing.##",
+				menu_making_miracles = "Making Miracles",
+				menu_making_miracles_desc = "BASIC: ##$basic##\n$ICN_RPFRapid Fire weapons gain ##+1%## Critical Hit chance for ##4## seconds when hitting an enemy with a Headshot, stacking up to ##+10%##.\n\nACE: ##$pro##\nKilling an enemy with a Headshot generates an additional stack. Maximum bonus increased to ##+20%##.",
+				menu_close_enough = "Close Enough",
+				menu_close_enough_desc = "BASIC: ##$basic##\n$ICN_RPFRapid Fire bullets that strike hard surfaces ricochet once.\n\nACE: ##$pro##\nCritical Hits cause ricochets to angle towards the closest enemy.",
+				menu_prayers_answered = "Prayers Answered",
+				menu_prayers_answered_desc = "BASIC: ##$basic##\n$ICN_RPFRapid Fire weapons have their Critical Hit chance increased by ##+10%##, for a total of ##+20%##.\n\nACE: ##$pro##\n$ICN_RPFRapid Fire weapons have their Critical Hit chance further increased by ##+10%##, for a total of ##+30%##.",
+				
+			--engineer
+				menu_digging_in = "Digging In",
+				menu_digging_in_desc = "BASIC: ##$basic##\nYou deploy and retrieve Sentry Guns ##90%## faster.\n\nACE: ##$pro##\nYour Sentry Guns become armored, rendering them almost completely invulnerable.",
+				menu_advanced_rangefinder = "Advanced Rangefinder",
+				menu_advanced_rangefinder_desc = "BASIC: ##$basic##\nSentry Guns gain ##+50%## Range and Accuracy.\n\nACE: ##$pro##\nRange and Accuracy bonus increased to ##+100%##.",
+				menu_targeting_matrix = "Targeting Matrix",
+				menu_targeting_matrix_desc = "BASIC: ##$basic##\nSentry Guns that aim at Special Enemies instantly Mark them for 5 seconds.\n\nACE: ##$pro##\nSentry Guns deal ##+25%## Damage to Marked enemies.",
+				menu_wrangler = "Wrangler",
+				menu_wrangler_desc = "BASIC: ##$basic##\nWhile in Manual Control of a Sentry Gun, it gains perfect Accuracy.\n\nACE: ##$pro##\nSentries deal ##+100%## Damage on Headshots.",
+				menu_hobarts_funnies = "Hobart's Funnies",
+				menu_hobarts_funnies_desc = "BASIC: ##$basic##\nNon-Basic Sentry Gun modes gain ##+25%## Fire Rate.\n\nACE: ##$pro##\nFire Rate bonus increased to ##+50%##.",
+				menu_killer_machines = "Killer Machines",
+				menu_killer_machines_desc = "BASIC: ##$basic##\nAll Sentry Gun modes deal ##+50## damage.\n\nACE: ##$pro##\nIncreases your Sentry Gun supply to ##2##.",
+				
+			--thief
+				menu_classic_thievery = "Classic Thievery",
+				menu_classic_thievery_desc = "BASIC: ##$basic##\nIncrease lockpicking speed by ##100%##.\n\nACE: ##$pro##\nYou take ##25%## longer to be detected while in Casing Mode.",
+				menu_people_watching = "People Watching",
+				menu_people_watching_desc = "BASIC: ##$basic##\nYou gain the ability to Mark enemies and pick up items while in Casing Mode.\n\nACE: ##$pro##\nWhile in Stealth, you automatically Mark enemies and Civilians within ##5## Meters.\nStanding still for ##3## seconds increases the radius to ##15## Meters.",
+				menu_blackout = "Blackout",
+				menu_blackout_desc = "BASIC: ##$basic##\nIncreases the ECM Jammer's duration by ##25%##.\n\nACE: ##$pro##\nIncreases the ECM Jammer's duration by an additional ##25%##, for a total of ##+50%##.",
+				menu_tuned_out = "Tuned Out",
+--				menu_tuned_out_desc = "BASIC: ##$basic##\nYou gain the ability to disable a camera from detecting your team for ##20## seconds. Only one camera may be disabled at a time.\n\nACE: ##$pro##\nDisable duration increases to ##30## seconds and an unlimited number of cameras may be disabled at one time.",
+				menu_tuned_out_desc = "BASIC: ##$basic##\nYou gain the ability to disable a camera from detecting your team for ##20## seconds. Only one camera may be disabled at a time.\n\nACE: ##$pro##\nDisable duration increases to ##30## seconds.\n\nNOT YET IMPLEMENTED: An unlimited number of cameras may be disabled at one time.",
+				menu_electronic_warfare = "Electronic Warfare",
+				menu_electronic_warfare_desc = "BASIC: ##$basic##\nIncreases your ECM Jammer count to ##2##.\n\nACE: ##$pro##\nECM Jammers delay pagers while active.",
+				menu_skeleton_key = "Skeleton Key",
+				menu_skeleton_key_desc = "BASIC: ##$basic##\nIncreases Lockpick Speed by ##+100%## and gain the ability to Lockpick Safes.\n\nACE: ##$pro##\nYou now Lockpick Safes ##100%## faster and you gain the ability to open Electronic Locks.",
+				
+			--assassin
+				menu_killers_notebook = "Killer's Notebook",
+				menu_killers_notebook_desc = "NOT YET IMPLEMENTED",
+--				menu_killers_notebook_desc = "BASIC: ##$basic##\n$ICN_QUTQuiet Weapons ADS ##90%## faster.\n\nACE: ##$pro##\n$ICN_QUTQuiet Weapons gain ##+20## Stability.",
+				menu_good_hunting = "Good Hunting",
+				menu_good_hunting_desc = "NOT YET IMPLEMENTED",
+--				menu_good_hunting_desc = "BASIC: ##$basic##\nBows have all of their Arrows readied instead of in reserve.\n\nACE: ##$pro##\nCrossbows instantly Reload themselves after a Headshot.",
+				menu_comfortable_silence = "Comfortable Silence",
+				menu_comfortable_silence_desc = "NOT YET IMPLEMENTED",
+--				menu_comfortable_silence_desc = "BASIC: ##$basic##\n$ICN_QUTQuiet Weapons gain ##+2## Concealment.\n\nACE: ##$pro##\n$ICN_QUTQuiet Weapons gain ##+4## Concealment.",
+				menu_toxic_shock = "Toxic Shock",
+				menu_toxic_shock_desc = "NOT YET IMPLEMENTED",
+--				menu_toxic_shock_desc = "BASIC: ##$basic##\nSuccessfully Poisoning an enemy will also Poison enemies within a ##3##-meter radius.\n\nACE: ##$pro##\nPoison deals ##+100%## damage.",
+				menu_professionals_choice = "Professional's Choice",
+				menu_professionals_choice_desc = "BASIC: ##$basic##\n$ICN_QUTQuiet Weapons gain a ##+2% Fire Rate bonus## for every ##3## points of Detection Risk under ##35##, up to ##+10%##.\n\nACE: ##$pro##\nThe Fire Rate bonus is increased to ##+4%## and the maximum bonus is increased to ##+20%##.",
+				menu_quiet_grave = "Quiet as the Grave",
+				menu_quiet_grave_desc = "NOT YET IMPLEMENTED",
+--				menu_quiet_grave_desc = "BASIC: ##$basic##\n$ICN_QUTQuiet Weapons deal ##+10%## Damage when attacking an enemy from behind.\n\nACE: ##$pro##\n$ICN_QUTQuiet Weapons also deal ##+10%## Damage when attacking an enemy that is not currently targeting you.",
+			
+			--sapper
+			--dealer
+			--fixer
+				menu_rolling_cutter = "Rolling Cutter",
+				menu_rolling_cutter_desc = "BASIC: ##$basic##\nThe $ICN_SAWOVE9000 Saw no longer consumes Ammunition when damaging enemies and gains ##+10%## Damage for ##2## seconds after every hit, up to a maximum of ##500%##.\n\nACE: ##$pro##\nIncreases the $ICN_SAWOVE9000 Saw blade durability by ##+50##.",
+				menu_walking_toolshed = "Walking Toolshed",
+				menu_walking_toolshed_desc = "BASIC: ##$basic##\nIncreases your spare $ICN_SAWOVE9000 Saw blades to ##2##.\n\nACE: ##$pro##\nIncreases your spare $ICN_SAWOVE9000 Saw blades to ##3##.",
+				menu_handyman = "Handyman",
+				menu_handyman_desc = "BASIC: ##$basic##\nThe $ICN_SAWOVE9000 Saw becomes available as a Secondary Weapon.\n\nACE: ##$pro##\nThe $ICN_SAWOVE9000 Saw gains ##+25%## range.",
+				menu_bloody_mess = "Bloody Mess",
+				menu_bloody_mess_desc = "BASIC: ##$basic##\nKills with the $ICN_SAWOVE9000 Saw deal the killing blow's damage to enemies within ##2.5## meters.\n\nACE: ##$pro##\nEnemies killed by Bloody Mess also deal damage to nearby enemies.",
+				menu_not_safe = "Not Safe",
+				menu_not_safe_desc = "BASIC: ##$basic##\nThe $ICN_SAWOVE9000 Saw can cut through Shields. Additionally, the OVE9000 Saw no longer consumes ammunition when hitting Shields.\n\nACE: ##$pro##\nThe $ICN_SAWOVE9000 Saw deals ##+100%## Damage to Dozers and their armor plates.",
+				menu_into_the_pit = "Into The Pit",
+				menu_into_the_pit_desc = "BASIC: ##$basic##\nThe $ICN_SAWOVE9000 Saw is guaranteed to deal a Critical Hit the first time it damages an enemy.\n\nACE: ##$pro##\nKills with the $ICN_SAWOVE9000 Saw inflict Panic on most enemies within ##6## meters, causing them to go into short bursts of uncontrollable fear."
+				
+				
+			--demolitions
+			
+			}
+			
+			
+			local weapon_class_icon_data = {
+				heavy = {
+					character = "─",
+					macro = "$ICN_HVY",
+				},
+				grenade = {
+					character = "┼",
+					macro = "$ICN_GRN"
+				},
+				area_denial = {
+					character = "═",
+					macro = "$ICN_ARD"
+				},
+				throwing = {
+					character = "╤",
+					macro = "$ICN_THR"
+				},
+				specialist = {
+					character = "╥",
+					macro = "$ICN_SPC"
+				},
+				shotgun = {
+					character = "╦",
+					macro = "$ICN_SHO"
+				},
+				saw = {
+					character = "╧",
+					macro = "$ICN_SAW"
+				},
+				rapidfire = {
+					character = "╨",
+					macro = "$ICN_RPF"
+				},
+				quiet = {
+					character = "╩",
+					macro = "$ICN_QUT"
+				},
+				precision = {
+					character = "╪",
+					macro = "$ICN_PRE"
+				},
+				poison = {
+					character = "╫",
+					macro = "$ICN_POI"
+				},
+				melee = {
+					character = "╬",
+					macro = "$ICN_MEL"
+				}
+			}
+			local tcd_skill_localizations_with_icons = {}
+			for id,text in pairs(tcd_skill_localizations) do 
+				for class_id,weapon_icon_data in pairs(weapon_class_icon_data) do 
+					text = string.gsub(text,weapon_icon_data.macro,weapon_icon_data.character)
+				end
+				tcd_skill_localizations_with_icons[id] = text
+			end
+			loc:add_localized_strings(tcd_skill_localizations_with_icons)
+			
+			
 		end
 		
 		--this is separate since some of these options are intended for menus, which are available regardless of whether or not the overhaul itself is enabled
