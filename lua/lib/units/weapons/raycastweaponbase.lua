@@ -363,10 +363,10 @@ function RaycastWeaponBase:start_shooting()
 	if self:_soundfix_should_play_normal() then
 		self:_fire_sound()
 
-		self._next_fire_allowed = math.max(self._next_fire_allowed, self._unit:timer():time())
-		self._shooting = true
 		self._bullets_fired = 0
 	end
+	self._shooting = true
+	self._next_fire_allowed = math.max(self._next_fire_allowed, self._unit:timer():time())
 end
 
 --stop_shooting is only used for fire sound loops, so playing individual single-fire sounds means it doesn't need to be called
@@ -431,7 +431,7 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 					if roll < chance then
 						ammo_usage = 0
 
-						print("NO AMMO COST")
+--						print("NO AMMO COST")
 					end
 				end
 			end

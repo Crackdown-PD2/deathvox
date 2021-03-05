@@ -85,7 +85,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		self.trees[15].name_id = "st_menu_hoxton_demolitionist"
 		
 		
-		--Taskmaster
+		--Taskmaster (not fully implemented)
 		replace_skill(tree_indices.taskmaster,1,{ --Zip It
 			{
 				upgrades = {
@@ -103,11 +103,11 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_zip_it",
 			desc_id = "menu_zip_it_desc",
 			icon_xy = {
-				4,
-				7
+				1,
+				0
 			}
 		})
-		replace_skill(tree_indices.taskmaster,2,{ --Pack Mules
+		replace_skill(tree_indices.taskmaster,2,{ --Pack Mules (basic not yet implemented)
 			{
 				upgrades = {
 					"team_civilian_hostage_carry_bags"
@@ -123,8 +123,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_pack_mules",
 			desc_id = "menu_pack_mules_desc",
 			icon_xy = {
-				4,
-				8
+				0 or 1,
+				1 or 1
 			}
 		})
 		replace_skill(tree_indices.taskmaster,3,{ --Stay Down
@@ -143,8 +143,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_stay_down",
 			desc_id = "menu_stay_down_desc",
 			icon_xy = {
-				2,
-				8
+				1,
+				2
 			}
 		})
 		replace_skill(tree_indices.taskmaster,4,{ --Lookout Duty
@@ -163,8 +163,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_lookout_duty",
 			desc_id = "menu_lookout_duty_desc",
 			icon_xy = {
-				6,
-				7
+				1,
+				3
 			}
 		})
 		replace_skill(tree_indices.taskmaster,5,{ --Leverage
@@ -183,11 +183,11 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_leverage",
 			desc_id = "menu_leverage_desc",
 			icon_xy = {
-				2,
-				10
+				1,
+				4
 			}
 		})
-		replace_skill(tree_indices.taskmaster,6,{ --False Idol
+		replace_skill(tree_indices.taskmaster,6,{ --False Idol (aced not yet implemented)
 			{
 				upgrades = {
 					"team_civilian_hostage_vip_trade"
@@ -203,8 +203,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_false_idol",
 			desc_id = "menu_false_idol_desc",
 			icon_xy = {
-				3,
-				8
+				0 or 1,
+				1 or 5
 			}
 		})
 		
@@ -227,8 +227,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_point_and_click",
 			desc_id = "menu_point_and_click_desc",
 			icon_xy = {
-				8,
-				1
+				2,
+				0
 			}
 		})
 		replace_skill(tree_indices.marksman,2,{ --Tap the Trigger
@@ -247,8 +247,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_tap_the_trigger",
 			desc_id = "menu_tap_the_trigger_desc",
 			icon_xy = {
-				8,
-				5
+				2,
+				1
 			}
 		})
 		replace_skill(tree_indices.marksman,3,{ --Investment Returns
@@ -267,8 +267,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_investment_returns",
 			desc_id = "menu_investment_returns_desc",
 			icon_xy = {
-				7,
-				11
+				2,
+				2
 			}
 		})
 		replace_skill(tree_indices.marksman,4,{ --This Machine
@@ -287,8 +287,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_this_machine",
 			desc_id = "menu_this_machine_desc",
 			icon_xy = {
-				1,
-				9
+				2,
+				3
 			}
 		})
 		replace_skill(tree_indices.marksman,5,{ --Mulligan
@@ -307,8 +307,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_mulligan",
 			desc_id = "menu_mulligan_desc",
 			icon_xy = {
-				0,
-				11
+				2,
+				4
 			}
 		})
 		replace_skill(tree_indices.marksman,6,{ --Magic Bullet
@@ -327,8 +327,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_magic_bullet",
 			desc_id = "menu_magic_bullet_desc",
 			icon_xy = {
-				8,
-				4
+				2,
+				5
 			}
 		})
 		
@@ -349,8 +349,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_doctors_orders",
 			desc_id = "menu_doctors_orders_desc",
 			icon_xy = {
-				5,
-				7
+				3,
+				0
 			}
 		})
 		replace_skill(tree_indices.medic,2,{ --In Case Of Trouble
@@ -369,8 +369,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_in_case_of_trouble",
 			desc_id = "menu_in_case_of_trouble_desc",
 			icon_xy = {
-				2,
-				11
+				3,
+				1
 			}
 		})
 		replace_skill(tree_indices.medic,3,{ --Checkup
@@ -389,8 +389,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_checkup",
 			desc_id = "menu_checkup_desc",
 			icon_xy = {
-				2,
-				7
+				3,
+				2
 			}
 		})
 		replace_skill(tree_indices.medic,4,{ --Life Insurance
@@ -409,8 +409,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_life_insurance",
 			desc_id = "menu_life_insurance_desc",
 			icon_xy = {
-				11,
-				5
+				3,
+				3
 			}
 		})
 		replace_skill(tree_indices.medic,5,{ --Outpatient
@@ -429,8 +429,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_outpatient",
 			desc_id = "menu_outpatient_desc",
 			icon_xy = {
-				5,
-				8
+				3,
+				4
 			}
 		})
 		replace_skill(tree_indices.medic,6,{ --Preventative Care
@@ -449,12 +449,132 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_preventative_care",
 			desc_id = "menu_preventative_care_desc",
 			icon_xy = {
-				0,
-				10
+				3,
+				5
 			}
 		})
 
-		--Chief (not implemented)
+		--Chief (not yet implemented)
+		replace_skill(tree_indices.chief,1,{ --Protect and Serve
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_protect_and_serve",
+			desc_id = "menu_protect_and_serve_desc",
+			icon_xy = {
+				0 or 4,
+				0 or 0
+			}
+		})
+		replace_skill(tree_indices.chief,2,{ --Order through Law
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_order_through_law",
+			desc_id = "menu_order_through_law_desc",
+			icon_xy = {
+				0 or 4,
+				0 or 1
+			}
+		})
+		replace_skill(tree_indices.chief,3,{ --Justice with Mercy
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_justice_with_mercy",
+			desc_id = "menu_justice_with_mercy_desc",
+			icon_xy = {
+				0 or 4,
+				0 or 0
+			}
+		})
+		replace_skill(tree_indices.chief,4,{ --Standard of Excellence
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_standard_of_excellence",
+			desc_id = "menu_standard_of_excellence_desc",
+			icon_xy = {
+				0 or 4,
+				0 or 0
+			}
+		})
+		replace_skill(tree_indices.chief,5,{ --Maintaining the Peace
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_maintaining_the_peace",
+			desc_id = "menu_maintaining_the_peace_desc",
+			icon_xy = {
+				0 or 4,
+				0 or 0
+			}
+		})
+		replace_skill(tree_indices.chief,6,{ --Service above Self
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_service_above_self",
+			desc_id = "menu_service_above_self_desc",
+			icon_xy = {
+				0 or 4,
+				0 or 0
+			}
+		})
 		
 		--Enforcer
 		replace_skill(tree_indices.enforcer,1,{ --Tender Meat
@@ -473,8 +593,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_tender_meat",
 			desc_id = "menu_tender_meat_desc",
 			icon_xy = {
-				10,
-				3
+				5,
+				0
 			}
 		})
 		replace_skill(tree_indices.enforcer,2,{ --Heartbreaker
@@ -493,7 +613,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_heartbreaker",
 			desc_id = "menu_heartbreaker_desc",
 			icon_xy = {
-				4,
+				5,
 				1
 			}
 		})
@@ -513,8 +633,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_shell_games",
 			desc_id = "menu_shell_games_desc",
 			icon_xy = {
-				4,
-				1
+				5,
+				2
 			}
 		})
 		replace_skill(tree_indices.enforcer,4,{ --Rolling Thunder
@@ -533,8 +653,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_rolling_thunder",
 			desc_id = "menu_rolling_thunder_desc",
 			icon_xy = {
-				8,
-				7
+				5,
+				3
 			}
 		})
 		replace_skill(tree_indices.enforcer,5,{ --Point Blank
@@ -553,8 +673,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_point_blank",
 			desc_id = "menu_point_blank_desc",
 			icon_xy = {
-				4,
-				1
+				5,
+				4
 			}
 		})
 		replace_skill(tree_indices.enforcer,6,{ --Shotmaker
@@ -573,13 +693,13 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_shotmaker",
 			desc_id = "menu_shotmaker_desc",
 			icon_xy = {
-				6,
-				11
+				5,
+				5
 			}
 		})
 		
-		--Heavy
-		replace_skill(tree_indices.heavy,1,{ --Collateral Damage
+		--Heavy (not fully implemented)
+		replace_skill(tree_indices.heavy,1,{ --Collateral Damage (basic not fully implemented)
 			{
 				upgrades = {
 					"class_heavy_collateral_damage"
@@ -595,8 +715,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_collateral_damage",
 			desc_id = "menu_collateral_damage_desc",
 			icon_xy = {
-				8, --11,9
-				0
+				0 or 6,
+				1 or 0
 			}
 		})
 		replace_skill(tree_indices.heavy,2,{ --Death Grips
@@ -617,8 +737,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_death_grips",
 			desc_id = "menu_death_grips_desc",
 			icon_xy = {
-				0,
-				5
+				6,
+				1
 			}
 		})
 		replace_skill(tree_indices.heavy,3,{ --Bulletstorm
@@ -637,11 +757,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_bulletstorm",
 			desc_id = "menu_bulletstorm_desc",
 			icon_xy = {
-				4,
-				5
+				6,
+				2
 			}
-		})
-		
+		})		
 		replace_skill(tree_indices.heavy,4,{ --Lead Farmer
 			{
 				upgrades = {
@@ -658,8 +777,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_lead_farmer",
 			desc_id = "menu_lead_farmer_desc",
 			icon_xy = {
-				1,
-				9
+				6,
+				3
 			}
 		})
 		replace_skill(tree_indices.heavy,5,{ --Armory Regular
@@ -678,8 +797,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_armory_regular",
 			desc_id = "menu_armory_regular_desc",
 			icon_xy = {
-				7,
-				1
+				6,
+				4
 			}
 		})
 		replace_skill(tree_indices.heavy,6,{ --War Machine
@@ -698,8 +817,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_war_machine",
 			desc_id = "menu_war_machine_desc",
 			icon_xy = {
-				3,
-				0
+				6,
+				5
 			}
 		})
 		
@@ -722,8 +841,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_hustle",
 			desc_id = "menu_hustle_desc",
 			icon_xy = {
-				2,
-				4
+				7,
+				0
 			}
 		})
 		replace_skill(tree_indices.runner,2,{ --Float Like A Butterfly
@@ -742,8 +861,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_butterfly_bee",
 			desc_id = "menu_butterfly_bee_desc",
 			icon_xy = {
-				11,
-				7
+				7,
+				1
 			}
 		})
 		replace_skill(tree_indices.runner,3,{ --Heave-Ho
@@ -762,8 +881,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_heave_ho",
 			desc_id = "menu_heave_ho_desc",
 			icon_xy = {
-				8,
-				8
+				7,
+				2
 			}
 		})
 		replace_skill(tree_indices.runner,4,{ --Mobile Offense
@@ -782,8 +901,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_mobile_offense",
 			desc_id = "menu_mobile_offense_desc",
 			icon_xy = {
-				10,
-				6
+				7,
+				3
 			}
 		})
 		replace_skill(tree_indices.runner,5,{ --Escape Plan
@@ -802,8 +921,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_escape_plan",
 			desc_id = "menu_escape_plan_desc",
 			icon_xy = {
-				1,
-				8
+				7,
+				4
 			}
 		})
 		replace_skill(tree_indices.runner,6,{ --Leg Day Enthusiast
@@ -824,7 +943,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			desc_id = "menu_leg_day_desc",
 			icon_xy = {
 				7,
-				3
+				5
 			}
 		})
 		
@@ -845,7 +964,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_spray_and_pray",
 			desc_id = "menu_spray_and_pray_desc",
 			icon_xy = {
-				7,
+				8,
 				0
 			}
 		})
@@ -865,8 +984,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_money_shot",
 			desc_id = "menu_money_shot_desc",
 			icon_xy = {
-				0,
-				6
+				8,
+				1
 			}
 		})
 		replace_skill(tree_indices.gunner,3,{ --Shot Grouping
@@ -885,8 +1004,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_shot_grouping",
 			desc_id = "menu_shot_grouping_desc",
 			icon_xy = {
-				9,
-				11
+				8,
+				2
 			}
 		})
 		replace_skill(tree_indices.gunner,4,{ --Close Enough
@@ -905,8 +1024,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_close_enough",
 			desc_id = "menu_close_enough_desc",
 			icon_xy = {
-				10,
-				2
+				8,
+				3
 			}
 		})
 		replace_skill(tree_indices.gunner,5,{ --Making Miracles
@@ -927,8 +1046,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_making_miracles",
 			desc_id = "menu_making_miracles_desc",
 			icon_xy = {
-				0,
-				12
+				8,
+				4
 			}
 		})
 		replace_skill(tree_indices.gunner,6,{ --Prayers Answered
@@ -947,8 +1066,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_prayers_answered",
 			desc_id = "menu_prayers_answered_desc",
 			icon_xy = {
-				2,
-				9
+				8,
+				5
 			}
 		})
 		
@@ -990,8 +1109,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_advanced_rangefinder",
 			desc_id = "menu_advanced_rangefinder_desc",
 			icon_xy = {
-				1,
-				6
+				9,
+				1
 			}
 		})
 		replace_skill(tree_indices.engineer,3,{ --Targeting Matrix
@@ -1010,8 +1129,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_targeting_matrix",
 			desc_id = "menu_targeting_matrix_desc",
 			icon_xy = {
-				1,
-				6
+				9,
+				2
 			}
 		})
 		replace_skill(tree_indices.engineer,4,{ --Wrangler
@@ -1030,8 +1149,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_wrangler",
 			desc_id = "menu_wrangler_desc",
 			icon_xy = {
-				1,
-				6
+				9,
+				3
 			}
 		})
 		replace_skill(tree_indices.engineer,5,{ --Hobart's Funnies
@@ -1050,8 +1169,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_hobarts_funnies",
 			desc_id = "menu_hobarts_funnies_desc",
 			icon_xy = {
-				1,
-				6
+				9,
+				4
 			}
 		})
 		replace_skill(tree_indices.engineer,6,{ --Killer Machines
@@ -1093,7 +1212,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			desc_id = "menu_classic_thievery_desc",
 			icon_xy = {
 				10,
-				4
+				0
 			}
 		})
 		replace_skill(tree_indices.thief,2,{ --People Watching
@@ -1114,8 +1233,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_people_watching",
 			desc_id = "menu_people_watching_desc",
 			icon_xy = {
-				6,
-				10
+				10,
+				1
 			}
 		})
 		replace_skill(tree_indices.thief,3,{ --Blackout
@@ -1134,11 +1253,11 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_blackout",
 			desc_id = "menu_blackout_desc",
 			icon_xy = {
-				6,
-				3
+				10,
+				2
 			}
 		})
-		replace_skill(tree_indices.thief,4,{ --Tuned Out
+		replace_skill(tree_indices.thief,4,{ --Tuned Out (aced not fully implemented)
 			{
 				upgrades = {
 					"player_tape_loop_duration_1"
@@ -1155,8 +1274,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_tuned_out",
 			desc_id = "menu_tuned_out_desc",
 			icon_xy = {
-				4,
-				2
+				0 or 10,
+				1 or 3
 			}
 		})
 		replace_skill(tree_indices.thief,5,{ --Electronic Warfare
@@ -1175,7 +1294,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_electronic_warfare",
 			desc_id = "menu_electronic_warfare_desc",
 			icon_xy = {
-				3,
+				10,
 				4
 			}
 		})
@@ -1197,14 +1316,14 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_skeleton_key",
 			desc_id = "menu_skeleton_key_desc",
 			icon_xy = {
-				5,
-				4
+				10,
+				5
 			}
 		})
 		
 
 		--Assassin (not fully implemented)
-		replace_skill(tree_indices.assassin,1,{ --Killer's Notebook
+		replace_skill(tree_indices.assassin,1,{ --Killer's Notebook (not implemented)
 			{
 				upgrades = {
 --					"player_killers_notebook_basic"
@@ -1220,11 +1339,11 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_killers_notebook",
 			desc_id = "menu_killers_notebook_desc",
 			icon_xy = {
-				0,
-				0
+				0 or 11,
+				0 or 0
 			}
 		})
-		replace_skill(tree_indices.assassin,2,{ --Good Hunting
+		replace_skill(tree_indices.assassin,2,{ --Good Hunting (not implemented)
 			{
 				upgrades = {
 --					"player_good_hunting_basic"
@@ -1240,11 +1359,11 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_good_hunting",
 			desc_id = "menu_good_hunting_desc",
 			icon_xy = {
-				0,
-				0
+				0 or 11,
+				0 or 1
 			}
 		})
-		replace_skill(tree_indices.assassin,3,{ --Comfortable Silence
+		replace_skill(tree_indices.assassin,3,{ --Comfortable Silence (not implemented)
 			{
 				upgrades = {
 --					"player_comfortable_silence_basic"
@@ -1260,11 +1379,11 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_comfortable_silence",
 			desc_id = "menu_comfortable_silence_desc",
 			icon_xy = {
-				0,
-				0
+				0 or 11,
+				0 or 2
 			}
 		})
-		replace_skill(tree_indices.assassin,4,{ --Toxic Shock
+		replace_skill(tree_indices.assassin,4,{ --Toxic Shock (not implemented)
 			{
 				upgrades = {
 --					"player_toxic_shock_basic"
@@ -1280,11 +1399,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_toxic_shock",
 			desc_id = "menu_toxic_shock_desc",
 			icon_xy = {
-				0,
-				0
+				0 or 11,
+				0 or 3
 			}
-		})
-		
+		})	
 		replace_skill(tree_indices.assassin,5,{ --Professional's Choice
 			{
 				upgrades = {
@@ -1301,11 +1419,11 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_professionals_choice",
 			desc_id = "menu_professionals_choice_desc",
 			icon_xy = {
-				5,
-				9
+				11,
+				4
 			}
 		})
-		replace_skill(tree_indices.assassin,6,{ --Quiet as the Grave
+		replace_skill(tree_indices.assassin,6,{ --Quiet as the Grave (not implemented)
 			{
 				upgrades = {
 --					"player_quiet_grave_basic"
@@ -1321,15 +1439,257 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_quiet_grave",
 			desc_id = "menu_quiet_grave_desc",
 			icon_xy = {
-				0,
-				0
+				0 or 11,
+				0 or 5
 			}
 		})
 		
 
-		--Sapper (not implemented)
+		--Sapper (not yet implemented)
+		replace_skill(tree_indices.sapper,1,{ --Home Improvements
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_home_improvements",
+			desc_id = "menu_home_improvements_desc",
+			icon_xy = {
+				0 or 0,
+				0 or 0
+			}
+		})
+		replace_skill(tree_indices.sapper,2,{ --Perfect Alignment
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_perfect_alignment",
+			desc_id = "menu_perfect_alignment_desc",
+			icon_xy = {
+				0 or 0,
+				0 or 1
+			}
+		})
+		replace_skill(tree_indices.sapper,3,{ --Static Defense
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_static_defense",
+			desc_id = "menu_static_defense_desc",
+			icon_xy = {
+				0 or 0,
+				0 or 2
+			}
+		})
+		replace_skill(tree_indices.sapper,4,{ --Routine Maintenance
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_routine_maintenance",
+			desc_id = "menu_routine_maintenance_desc",
+			icon_xy = {
+				0 or 0,
+				0 or 3
+			}
+		})
+		replace_skill(tree_indices.sapper,5,{ --Automatic Reboot
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_automatic_reboot",
+			desc_id = "menu_automatic_reboot_desc",
+			icon_xy = {
+				0 or 0,
+				0 or 4
+			}
+		})
+		replace_skill(tree_indices.sapper,6,{ --Explosive Impatience
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_explosive_impatience",
+			desc_id = "menu_explosive_impatience_desc",
+			icon_xy = {
+				0 or 0,
+				0 or 5
+			}
+		})
 		
-		--Dealer (not implemented)
+		
+		
+		--Dealer (not yet implemented)
+		replace_skill(tree_indices.dealer,1,{ --High-Low Split
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_high_low",
+			desc_id = "menu_high_low_desc",
+			icon_xy = {
+				0 or 2,
+				0 or 6
+			}
+		})
+		replace_skill(tree_indices.dealer,2,{ --Wild Card
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_wild_card",
+			desc_id = "menu_wild_card_desc",
+			icon_xy = {
+				0 or 2,
+				0 or 7
+			}
+		})
+		replace_skill(tree_indices.dealer,3,{ --Value Bet
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_value_bet",
+			desc_id = "menu_value_bet_desc",
+			icon_xy = {
+				0 or 2,
+				0 or 8
+			}
+		})
+		replace_skill(tree_indices.dealer,4,{ --Face Value
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_face_value",
+			desc_id = "menu_face_value_desc",
+			icon_xy = {
+				0 or 2,
+				0 or 9
+			}
+		})
+		replace_skill(tree_indices.dealer,5,{ --Stacking the Deck
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_stacking_deck",
+			desc_id = "menu_stacking_deck_desc",
+			icon_xy = {
+				0 or 2,
+				0 or 10
+			}
+		})
+		replace_skill(tree_indices.dealer,6,{ --Shuffle and Cut
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_shuffle_and_cut",
+			desc_id = "menu_shuffle_and_cut_desc",
+			icon_xy = {
+				0 or 2,
+				0 or 11
+			}
+		})
 		
 		--Fixer
 		replace_skill(tree_indices.fixer,1,{ --Rolling Cutter
@@ -1349,8 +1709,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_rolling_cutter",
 			desc_id = "menu_rolling_cutter_desc",
 			icon_xy = {
-				0,
-				1
+				3,
+				6
 			}
 		})
 		replace_skill(tree_indices.fixer,2,{ --Walking Toolshed
@@ -1369,8 +1729,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_walking_toolshed",
 			desc_id = "menu_walking_toolshed_desc",
 			icon_xy = {
-				0,
-				1
+				3,
+				7
 			}
 		})
 		replace_skill(tree_indices.fixer,3,{ --Handyman
@@ -1389,8 +1749,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_handyman",
 			desc_id = "menu_handyman_desc",
 			icon_xy = {
-				0,
-				1
+				3,
+				8
 			}
 		})
 		replace_skill(tree_indices.fixer,4,{ --Bloody Mess
@@ -1409,8 +1769,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_bloody_mess",
 			desc_id = "menu_bloody_mess_desc",
 			icon_xy = {
-				0,
-				2
+				3,
+				9
 			}
 		})
 		replace_skill(tree_indices.fixer,5,{ --Not Safe
@@ -1429,8 +1789,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_not_safe",
 			desc_id = "menu_not_safe_desc",
 			icon_xy = {
-				0,
-				2
+				3,
+				10
 			}
 		})
 		replace_skill(tree_indices.fixer,6,{ --Into The Pit
@@ -1449,13 +1809,135 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_into_the_pit",
 			desc_id = "menu_into_the_pit_desc",
 			icon_xy = {
-				0,
-				2
+				3,
+				11
 			}
 		})
 		
 		
-		--Demolitions (not implemented)
+		--Demolitions (not yet implemented)
+		
+		replace_skill(tree_indices.demolitions,1,{ --Party Favors
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_party_favors",
+			desc_id = "menu_party_favors_desc",
+			icon_xy = {
+				0 or 4,
+				0 or 6
+			}
+		})
+		replace_skill(tree_indices.demolitions,2,{ --Special Toys
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_special_toys",
+			desc_id = "menu_special_toys_desc",
+			icon_xy = {
+				0 or 4,
+				0 or 7
+			}
+		})
+		replace_skill(tree_indices.demolitions,3,{ --Smart Bombs
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_smart_bombs",
+			desc_id = "menu_smart_bombs_desc",
+			icon_xy = {
+				0 or 4,
+				0 or 8
+			}
+		})
+		replace_skill(tree_indices.demolitions,4,{ --Third Degree
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_third_degree",
+			desc_id = "menu_third_degree_desc",
+			icon_xy = {
+				0 or 4,
+				0 or 9
+			}
+		})
+		replace_skill(tree_indices.demolitions,5,{ --Have a Blast
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_have_blast",
+			desc_id = "menu_have_blast_desc",
+			icon_xy = {
+				0 or 4,
+				0 or 10
+			}
+		})
+		replace_skill(tree_indices.demolitions,6,{ --Improv Expert
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_improv_expert",
+			desc_id = "menu_improv_expert_desc",
+			icon_xy = {
+				0 or 4,
+				0 or 11
+			}
+		})
+	
 
 		
 		local more_default_upgrades = {

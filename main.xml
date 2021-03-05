@@ -7,7 +7,7 @@
 		<event name="control" start_source="control_intro.ogg" source="control.ogg"/>
 	</HeistMusic>
 	<AddFiles file="crackdownmainassets.xml"/>
-	<Package id="packages/deathvoxclassics" file="crackdownclassicassets.xml" use_clbk="self:DebugLoadAssets"/>		
-	<Package id="packages/deathvoxmurkies" file="crackdownmurkies.xml" use_clbk="self:DebugLoadAssets"/>		
-	<Package id="packages/deathvoxfederales" file="crackdownfederales.xml" use_clbk="self:DebugLoadAssets"/>		
+	<Package id="packages/deathvoxclassics" file="crackdownclassicassets.xml" use_clbk="self:DebugLoadAssets"/>
+	<Package id="packages/deathvoxmurkies" file="crackdownmurkies.xml" use_clbk="self:DebugLoadAssets"/>
+	<Package id="packages/deathvoxfederales" file="crackdownfederales.xml" use_clbk="self:DebugLoadAssets"/>
 </table>
