@@ -17,7 +17,6 @@ end
 
 
 
-
 -- Begin Total Crackdown Weapon Attachment materials
 Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 

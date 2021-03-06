@@ -514,8 +514,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 			name_id = "menu_tender_meat_aced",
 			category = "feature",
 			upgrade = {
-			value = 1,
-			upgrade = "recoil_index_addend",
+				value = 1,
+				upgrade = "recoil_index_addend",
 				category = "class_shotgun"
 			}
 		}
@@ -527,8 +527,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 			name_id = "menu_heartbreaker_basic",
 			category = "feature",
 			upgrade = {
-			value = 1,
-			upgrade = "heartbreaker_doublebarrel",
+				value = 1,
+				upgrade = "heartbreaker_doublebarrel",
 				category = "class_shotgun"
 			}
 		}
@@ -580,8 +580,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 			name_id = "menu_rolling_thunder_basic",
 			category = "feature",
 			upgrade = {
-			value = 1,
-			upgrade = "rolling_thunder_magazine_capacity_bonus",
+				value = 1,
+				upgrade = "rolling_thunder_magazine_capacity_bonus",
 				category = "class_shotgun"
 			}
 		}
@@ -589,8 +589,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 			name_id = "menu_rolling_thunder_aced",
 			category = "feature",
 			upgrade = {
-			value = 2,
-			upgrade = "rolling_thunder_magazine_capacity_bonus",
+				value = 2,
+				upgrade = "rolling_thunder_magazine_capacity_bonus",
 				category = "class_shotgun"
 			}
 		}
@@ -788,6 +788,15 @@ if deathvox:IsTotalCrackdownEnabled() then
 				category = "class_heavy"
 			}
 		}
+		self.definitions.ammo_bag_passive_ammo_stock_bonus_2 = {
+			name_id = "menu_ammo_bag_passive_ammo_stock_bonus",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "passive_ammo_stock_bonus",
+				category = "ammo_bag"
+			}
+		}
 		
 		
 		--Runner
@@ -871,7 +880,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.values.class_rapidfire.enter_steelsight_speed_multiplier = {
 			0.1
 		}
-		
 		self.definitions.weapon_spray_and_pray_basic = {
 			name_id = "menu_spray_and_pray_basic",
 			category = "feature",
@@ -888,7 +896,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 				250 --over 2.5 meters
 			}
 		}
-		
 		self.values.weapon.money_shot_aced = {
 			0.5
 		}
@@ -901,8 +908,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				upgrade = "money_shot",
 				category = "weapon"
 			}
-		}
-					
+		}		
 		self.definitions.weapon_moneyshot_rapid_fire_aced = {
 			name_id = "menu_moneyshot_rapid_fire_aced",
 			category = "feature",
@@ -916,7 +922,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.values.class_rapidfire.shotgrouping_aced = { 
 			14 --accuracy/stability index addend
 		}
-		
 		self.values.class_rapidfire.enter_steelsight_speed_multiplier = { 
 			0.1
 		}
@@ -930,7 +935,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 				category = "class_rapidfire"
 			}
 		}
-					
 		self.definitions.class_rapidfire_shotgrouping_aced = {
 			name_id = "menu_shotgrouping_aced",
 			category = "feature",
@@ -944,7 +948,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.values.player.ricochet_bullets = {
 			true
 		}
-			
 		self.values.player.ricochet_bullets_aced = {
 			true
 		}
@@ -958,7 +961,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 				category = "player"
 			}
 		}
-					
 		self.definitions.player_ricochet_rapid_fire_aced = {
 			name_id = "menu_ricochet_rapid_fire_aced",
 			category = "feature",
@@ -969,25 +971,19 @@ if deathvox:IsTotalCrackdownEnabled() then
 			}
 		}
 		
-		
-		
-		
 		self.values.weapon.making_miracles_basic = {
 			{
 				0.01, --crit chance per stack
 				4 --duration
 			}
 		}
-		
 		self.values.weapon.making_miracles_crit_cap = {
 			0.1,
 			0.2
 		}
-		
 		self.values.weapon.making_miracles_aced = {
 			true
 		}
-		
 		self.definitions.weapon_making_miracles_basic = {
 			name_id = "menu_making_miracles_basic",
 			category = "feature",
@@ -997,7 +993,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 				category = "weapon"
 			}
 		}
-		
 		self.definitions.weapon_making_miracles_aced = {
 			name_id = "menu_making_miracles_aced",
 			category = "feature",
@@ -1007,7 +1002,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 				category = "weapon"
 			}
 		}
-		
 		self.definitions.weapon_making_miracles_crit_cap_1 = {
 			name_id = "menu_making_miracles_basic",
 			category = "feature",
@@ -1017,7 +1011,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 				category = "weapon"
 			}
 		}
-		
 		self.definitions.weapon_making_miracles_crit_cap_2 = {
 			name_id = "menu_making_miracles_aced",
 			category = "feature",
@@ -1028,14 +1021,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 			}
 		}
 		
-		
-		
-		
 		self.values.weapon.prayers_answered = {
 			0.1,
 			0.2
 		}
-		
 		self.definitions.weapon_prayers_answered_basic = {
 			name_id = "menu_prayers_answered_basic",
 			category = "feature",
@@ -1045,7 +1034,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 				category = "weapon"
 			}
 		}
-		
 		self.definitions.weapon_prayers_answered_aced = {
 			name_id = "menu_prayers_answered_aced",
 			category = "feature",
@@ -1441,11 +1429,14 @@ if deathvox:IsTotalCrackdownEnabled() then
 		
 		
 		--Demolitions
+			--note: demolitionist/Special Toys should add weapon_class_ammo_stock_bonus
 		
 		
-		
-		--FAK auto revive radius on deploying
-			--(default upgrade)
+
+
+
+		--General free skills (default upgrades)
+			--FAK auto revive radius on deploying
 		self.values.first_aid_kit.auto_revive = {
 			150 --1.5 meters
 		}
@@ -1459,8 +1450,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			}
 		}
 		
-		--FAK Interaction Speed increased by 80% 
-			--(default upgrade)
+			--FAK Interaction Speed increased by 80% 
 		self.values.first_aid_kit.interaction_speed_multiplier = {
 			0.8
 		}
@@ -1474,20 +1464,20 @@ if deathvox:IsTotalCrackdownEnabled() then
 			}
 		}
 		
-		--FAK Deploy Speed increased by 80% 
-			--(default upgrade, tweaked vanilla; "first_aid_kit_deploy_time_multiplier") 
+			--FAK Deploy Speed increased by 80% 
+				--(default upgrade, tweaked vanilla; "first_aid_kit_deploy_time_multiplier") 
 		self.values.first_aid_kit.deploy_time_multiplier = {
 			0.2
 		}
 		
-		--Health regained upon being revived by deploying FAK
+			--Health regained upon being revived by deploying FAK
 		self.revive_health_multiplier = {
 			1 --100% of max health
 		--see also: player.revived_health_regain		
 		}
 		
-		--Passively increases Ammo Stock for equipped weapons by 50% 
-			--(default upgrade)
+			--Passively increases Ammo Stock for equipped weapons by 50% 
+				--second tier is available through the War Machine Aced skill in the Heavy subtree
 		self.definitions.ammo_bag_passive_ammo_stock_bonus = {
 			name_id = "menu_ammo_bag_passive_ammo_stock_bonus",
 			category = "feature",
@@ -1498,7 +1488,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 			}
 		}
 		self.values.ammo_bag.passive_ammo_stock_bonus = {
-			0.5
+			0.5,
+			1
 		}
 	end)
 end	

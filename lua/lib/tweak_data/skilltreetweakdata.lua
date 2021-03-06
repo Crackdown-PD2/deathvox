@@ -810,7 +810,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			},
 			{
 				upgrades = {
-					"ammo_bag_war_machine_aced"
+					"ammo_bag_war_machine_aced",
+					"ammo_bag_passive_ammo_stock_bonus_2"
 				},
 				cost = self.costs.hightierpro
 			},
