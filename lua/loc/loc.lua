@@ -347,7 +347,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_third_degree_desc = "BASIC: ##$basic##\nYour $ICN_ARD Area Denial effects last ##+50%## longer.\n\nACE: ##$pro##\nYou and your $ICN_ARD Area Denial effects deal ##+25%## more damage to enemies that are on fire.",
 			
 				menu_have_blast = "Have A Blast",
-				menu_have_blast_desc = "BASIC: ##$basic##\nYou gain the ability to deploy a Trip Mine directly on an enemy. Doing so will cause the target and all enemies within ##10## meters to Panic until it detonates.\n\nACE: ##$pro##\nDeploying a Trip Mine on a Dozer stuns them and inflicts a ##+100%## Damage Vulnerability on all enemies within ##10## meters for ##10## seconds.",
+				menu_have_blast_desc = "BASIC: ##$basic##\nYou gain the ability to deploy a Trip Mine directly on an enemy.\n(NOT YET IMPLEMENTED): Doing so will cause the target and all enemies within ##10## meters to Panic until it detonates.\n\nACE: ##$pro##\n(NOT YET IMPLEMENTED): Deploying a Trip Mine on a Dozer stuns them and inflicts a ##+100%## Damage Vulnerability on all enemies within ##10## meters for ##10## seconds.",
 			
 				menu_improv_expert = "Improv Expert",
 				menu_improv_expert_desc = "BASIC: ##$basic##\nEvery ##50## Ammo Boxes grants ##+1## $ICN_GRN Grenade. \n\nACE: ##$pro##\n Rocket Launchers and Flamethrowers can gain Ammunition from Ammo Boxes. Grenade Launchers gain ##+50%## Ammunition from Ammo Boxes.\n\nNote: This applies to both Ammo Boxes picked up by yourself and by teammates."

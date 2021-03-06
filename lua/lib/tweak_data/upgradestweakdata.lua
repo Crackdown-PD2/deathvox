@@ -1430,7 +1430,16 @@ if deathvox:IsTotalCrackdownEnabled() then
 		
 		--Demolitions
 			--note: demolitionist/Special Toys should add weapon_class_ammo_stock_bonus
-		
+			self.values.trip_mine.can_place_on_enemies = {true}
+			self.definitions.trip_mine_can_place_on_enemies = {
+				name_id = "menu_trip_mine_can_place_on_enemies",
+				category = "feature",
+				upgrade = {
+					value = 1,
+					upgrade = "can_place_on_enemies",
+					category = "trip_mine"
+				}
+			}
 		
 
 

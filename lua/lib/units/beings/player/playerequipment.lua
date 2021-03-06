@@ -1,5 +1,108 @@
 if deathvox:IsTotalCrackdownEnabled() then
 
+	function PlayerEquipment:valid_look_at_placement(equipment_data,can_place_on_enemies)
+		local from = self._unit:movement():m_head_pos()
+		local to = from + self._unit:movement():m_head_rot():y() * 200
+		local slotmask
+		local ray_type = {}
+		if can_place_on_enemies then 
+			slotmask = managers.slot:get_mask("enemies","trip_mine_placeables")
+		else
+			slotmask = managers.slot:get_mask("trip_mine_placeables")
+			ray_type = {"ray_type", "equipment_placement"}
+		end
+		local ray = self._unit:raycast("ray", from, to, "slot_mask", slotmask, "ignore_unit", {},unpack(ray_type))
+
+		local on_enemy
+		if ray then 
+			if equipment_data and equipment_data.dummy_unit then
+				local pos = ray.position
+				local rot = Rotation(ray.normal, math.UP)
+
+				if not alive(self._dummy_unit) then
+					self._dummy_unit = World:spawn_unit(Idstring(equipment_data.dummy_unit), pos, rot)
+
+					self:_disable_contour(self._dummy_unit)
+				end
+
+				self._dummy_unit:set_position(pos)
+				self._dummy_unit:set_rotation(rot)
+			end
+			if ray.unit and alive(ray.unit) then 
+				if managers.enemy:is_enemy(ray.unit) then 
+					on_enemy = ray.unit
+				end
+			end
+		end
+
+		if alive(self._dummy_unit) then
+			self._dummy_unit:set_enabled(ray and true or false)
+		end
+
+		return ray,on_enemy
+	end
+
+	function PlayerEquipment:use_trip_mine()
+		local ray,stuck_enemy = self:valid_look_at_placement(nil,managers.player:has_category_upgrade("trip_mine","can_place_on_enemies"))
+		if ray then
+			managers.statistics:use_trip_mine()
+
+			local sensor_upgrade = managers.player:has_category_upgrade("trip_mine", "sensor_toggle")
+
+			if Network:is_client() then
+				managers.network:session():send_to_host("place_trip_mine", ray.position, ray.normal, sensor_upgrade)
+				--todo send unit to attach to
+				
+			else
+				local rot = Rotation(ray.normal, math.UP)
+				local unit = TripMineBase.spawn(ray.position, rot, sensor_upgrade, managers.network:session():local_peer():id())
+				unit:base():set_active(true, self._unit)
+				buth = unit
+				if stuck_enemy then 
+					local tripmine_body = unit:body("body_static")
+					tripmine_body:set_enabled(true)
+					tripmine_body:set_dynamic()
+					local parent_obj = ray.body:root_object()
+					stuck_enemy:link(parent_obj:name(),unit,unit:orientation_object():name())
+					
+					unit:set_position(ray.hit_position)
+					unit:set_rotation(rot)
+					local char_dmg = stuck_enemy:character_damage()
+--					char_dmg:register_stuck_tripmine(unit)
+--					stuck_enemy:character_damage():add_listener("stuck_tripmines_detonate_on_death",{"death"},callback(char_dmg,char_dmg,"detonate_stuck_tripmines"))
+					stuck_enemy:movement():play_redirect("fire_hurt")
+					stuck_enemy:sound():say("burnhurt")
+					
+					managers.enemy:add_delayed_clbk("tripmine_stuck_delayed_beep_" .. tostring(unit:key()),function()
+							if alive(unit) then 
+								unit:base():sync_trip_mine_beep_explode()
+							end
+						end,
+						Application:time() + 0.6
+					)
+					managers.enemy:add_delayed_clbk("tripmine_stuck_delayed_detonate_" .. tostring(unit:key()),function()
+							if alive(unit) then 
+								unit:base():explode()
+							end
+						end,
+						Application:time() + 1
+					)
+--					stuck_enemy:brain():on_suppressed("panic")
+
+					--todo:
+					--trigger unit to panic,
+					--if group panic upgrade, then panic group
+					
+					--deploying on dozer stuns the dozer
+					--and causes 100% damage vulnerability on all enemies within a 10m radius
+				end
+			end
+
+			return true
+		end
+
+		return false
+	end
 
 	function PlayerEquipment:use_armor_plates()
 		local ray = self:valid_shape_placement("armor_kit",{dummy_unit = tweak_data.equipments.armor_kit.dummy_unit})

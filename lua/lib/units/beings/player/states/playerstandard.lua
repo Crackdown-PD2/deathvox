@@ -1430,7 +1430,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 	function PlayerStandard:_check_action_throw_grenade(t, input, ...)
 		local action_wanted = input.btn_throw_grenade_press
 
-
 		local projectile_entry = managers.blackmarket:equipped_projectile()
 		local projectile_tweak = tweak_data.blackmarket.projectiles[projectile_entry]
 
@@ -1451,12 +1450,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 					if input.btn_projectile_state then --held
 						if not self._held_throwable_equipment then 
 							self._held_throwable_equipment = true
---							self:_play_unequip_animation()
+							self:_play_unequip_animation()
 						end
 --						managers.hud:hide_progress_timer_bar(complete)
 --						managers.hud:set_progress_timer_bar_valid(valid, not valid and "hud_deploy_valid_help")
-						local valid = self._unit:equipment():valid_look_at_placement(equipment_data) and true or false
-						
+						local valid,on_enemy = self._unit:equipment():valid_look_at_placement(equipment_data,managers.player:has_category_upgrade("trip_mine","can_place_on_enemies")) and true or false
+
 						local equipment_name = managers.localization:text(equipment_data.text_id or "cursed_error")
 --						managers.hud:show_progress_timer({
 --							text = managers.localization:text(valid and "hud_deploying_tripmine_preview" or "hud_deploy_valid_help",{EQUIPMENT = equipment_name})
@@ -1464,10 +1463,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 						if equipment_data.sound_start then
 							self._unit:sound_source():post_event(equipment_data.sound_start)
 						end
-					elseif input.btn_projectile_release then --released
+					elseif input.btn_projectile_release and self._held_throwable_equipment then
+						--the check for self._held_throwable_equipment is necessary because for some kithforsaken reason,
+						--input.btn_projectile_release is set true on releasing the interact key
 						self._held_throwable_equipment = nil
+						self:_play_equip_animation()
 						
-						local valid = self._unit:equipment():valid_look_at_placement(equipment_data) and true or false
+						local valid,on_enemy = self._unit:equipment():valid_look_at_placement(equipment_data,managers.player:has_category_upgrade("trip_mine","can_place_on_enemies")) and true or false
 						
 						local equipmentbase = self._unit:equipment()
 						if valid and equipment_data.use_function_name and equipmentbase[equipment_data.use_function_name] then 
@@ -1494,6 +1496,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 					end
 				else
 					if not action_wanted then
+						self._held_throwable_equipment = nil
 						return
 					end
 					self:_start_action_use_throwable_equipment(t,equipment_data)

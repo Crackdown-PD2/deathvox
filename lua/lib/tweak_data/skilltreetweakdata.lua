@@ -1841,7 +1841,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.demolitions,2,{ --Special Toys
 			{
 				upgrades = {
-					
+				
 				},
 				cost = self.costs.hightier
 			},
@@ -1901,7 +1901,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.demolitions,5,{ --Have a Blast
 			{
 				upgrades = {
-					
+					"trip_mine_can_place_on_enemies"
 				},
 				cost = self.costs.hightier
 			},
@@ -1915,7 +1915,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			desc_id = "menu_have_blast_desc",
 			icon_xy = {
 				0 or 4,
-				0 or 10
+				2 or 10
 			}
 		})
 		replace_skill(tree_indices.demolitions,6,{ --Improv Expert

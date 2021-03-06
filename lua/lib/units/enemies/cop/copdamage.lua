@@ -42,7 +42,6 @@ function CopDamage:_get_incoming_damage_multiplier(multiplier)
 	return multiplier
 end
 
-
 function CopDamage:is_immune_to_shield_knockback()
 	if self._immune_to_knockback or self._unit:anim_data() and self._unit:anim_data().act then
 		return true
@@ -3170,3 +3169,32 @@ function CopDamage:is_friendly_fire(unit)
 
 	return not unit:movement():team().foes[self._unit:movement():team().id]
 end
+
+
+--these are not used because they can apparently interfere with the unit's ability to despawn, even after it has died
+Hooks:PostHook(CopDamage,"init","deathvox_copdamage_init",function(self)
+	self._stuck_tripmines = {}
+end)
+
+function CopDamage:register_stuck_tripmine(unit)
+	table.insert(self._stuck_tripmines,unit)
+end
+
+function CopDamage:unregister_stuck_tripmine(unit,index)
+	for i,registered_tripmine in pairs(self._stuck_tripmines) do 
+		if (i == index) or (registered_tripmine == unit) then 
+			return table.remove(i)
+		end
+	end
+end
+
+function CopDamage:detonate_stuck_tripmines()
+	self:remove_listener("stuck_tripmines_detonate_on_death")
+	for i=#self._stuck_tripmines,1,-1 do 
+		local tripmine_unit = self:unregister_stuck_tripmine(nil,i)
+		if alive(tripmine_unit) then 
+			tripmine_unit:base():explode()
+		end
+	end
+end
+
