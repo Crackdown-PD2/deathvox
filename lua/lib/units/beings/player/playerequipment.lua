@@ -38,7 +38,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local from = mov_ext:m_head_pos()
 		local head_rot = self:_m_deploy_rot()
 		local to = from + head_rot:y() * 220
-		local ray, on_enemy = nil
+		local ray, stuck_enemy = nil
 
 		if can_place_on_enemies then
 			local slot_manager = managers.slot
@@ -46,7 +46,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			ray = unit:raycast("ray", from, to, "slot_mask", slot_manager:get_mask("enemies"))
 
 			if ray then
-				on_enemy = true
+				stuck_enemy = alive(ray.unit) and ray.unit
 			else
 				ray = unit:raycast("ray", from, to, "slot_mask", slot_manager:get_mask("trip_mine_placeables"), "ray_type", "equipment_placement")
 			end
@@ -82,7 +82,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		self._dummy_unit = dummy_unit
 
-		return ray, on_enemy
+		return ray, stuck_enemy
 	end
 
 	function PlayerEquipment:use_trip_mine()
