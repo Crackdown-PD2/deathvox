@@ -46,7 +46,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			ray = unit:raycast("ray", from, to, "slot_mask", slot_manager:get_mask("enemies"))
 
 			if ray then
-				stuck_enemy = alive(ray.unit) and ray.unit
+				stuck_enemy = ray.unit
 			else
 				ray = unit:raycast("ray", from, to, "slot_mask", slot_manager:get_mask("trip_mine_placeables"), "ray_type", "equipment_placement")
 			end
@@ -234,7 +234,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				local find_end_pos = dummy_pos + math_up * find_params[2]
 				local find_radius = find_params[3]
 
-				local bodies = dummy_unit:find_bodies(unit, "intersect", "capsule", find_start_pos, find_end_pos, find_radius, slotmask + 14 + 25)
+				local bodies = dummy_unit:find_bodies("intersect", "capsule", find_start_pos, find_end_pos, find_radius, slotmask + 14 + 25)
 
 				for i = 1, #bodies do
 					local body = bodies[i]
@@ -331,7 +331,7 @@ else
 				local find_end_pos = dummy_pos + math_up * find_params[2]
 				local find_radius = find_params[3]
 
-				local bodies = dummy_unit:find_bodies(unit, "intersect", "capsule", find_start_pos, find_end_pos, find_radius, slotmask + 14 + 25)
+				local bodies = dummy_unit:find_bodies("intersect", "capsule", find_start_pos, find_end_pos, find_radius, slotmask + 14 + 25)
 
 				for i = 1, #bodies do
 					local body = bodies[i]
