@@ -92,6 +92,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				tripmine_trigger_detonate = "Detonate Now",
 				tripmine_trigger_special = "Special Enemies Only",
 				tripmine_trigger_default = "Detect All",
+				tripmine_payload_recover = "Recover Tripmine",
 				sentry_mode_standard = "Standard Mode",
 				sentry_mode_overwatch = "Overwatch Mode",
 				sentry_mode_manual = "Manual Mode",
@@ -102,6 +103,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 			
 				hud_interact_pickup_sentry_gun = "Hold $BTN_INTERACT to pick up sentry gun",
 				debug_interact_armor_plates_take = "Hold $BTN_INTERACT to take Armor Plates",
+				hud_equipment_equipping_armor_kit = "Deploying Armor Plates...",
 				hint_hud_already_has_armor_plates = "You already have Armor Plates!",
 				hud_action_taking_armor_plates = "Taking Armor Plates...",
 				menu_equipment_armor_kit = "Armor Plates",
@@ -118,7 +120,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				bm_equipment_sentry_gun_silent_desc_UNUSED = cursed_error,
 				debug_trip_mine_throwable = "Trip Mine",
 				bm_grenade_tripmine = "Trip Mine Throwable",
-				bm_grenade_tripmine_desc = "Trip Mines are explosive booby traps with multiple functions and trigger types. To deploy, hold $BTN_THROW_GRENADE on a suitable surface. To modify a placed Trip Mine, press $BTN_INTERACT while looking at them to open the radial menu.", --needs macros
+				bm_grenade_tripmine_desc = "Trip Mines are explosive booby traps with multiple functions and trigger types. To deploy, hold your Use Throwable button on a suitable surface. To modify a placed Trip Mine, press $BTN_INTERACT while looking at them to open the radial menu.", --needs macros
 				hud_deploying_tripmine_preview = "Ready to deploy $EQUIPMENT",
 				debug_trip_mine = "Shaped Charges",
 			--misc
@@ -341,13 +343,13 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_special_toys_desc = "BASIC: ##$basic##\n$ICN_SPC Specialist Weapons gain ##+25%## more Ammunition.\n\nACE: ##$pro##\n$ICN_SPC Specialist Weapons gain ##+30%## Reload Speed.",
 			
 				menu_smart_bombs = "Smart Bombs",
-				menu_smart_bombs_desc = "BASIC: ##$basic##\nYour Trip Mines cannot be triggered by Civilians or Hostages when in Explosive Mode or Incendiary Mode.\n\nACE: ##$pro##\nYour Trip Mines can no longer damage Civilians or Hostages.",
+				menu_smart_bombs_desc = "BASIC: ##$basic##\nYour Trip Mines gain ##+30%## explosion radius.\n\nACE: ##$pro##\nYour Trip Mines can no longer damage Civilians or Hostages.",
 			
 				menu_third_degree = "Third Degree",
-				menu_third_degree_desc = "BASIC: ##$basic##\nYour $ICN_ARD Area Denial effects last ##+50%## longer.\n\nACE: ##$pro##\nYou and your $ICN_ARD Area Denial effects deal ##+25%## more damage to enemies that are on fire.",
+				menu_third_degree_desc = "BASIC: ##$basic##\n(NOT YET IMPLEMENTED): Your $ICN_ARD Area Denial effects last ##+50%## longer.\n\nACE: ##$pro##\n(NOT YET IMPLEMENTED): You and your $ICN_ARD Area Denial effects deal ##+25%## more damage to enemies that are on fire.",
 			
 				menu_have_blast = "Have A Blast",
-				menu_have_blast_desc = "BASIC: ##$basic##\nYou gain the ability to deploy a Trip Mine directly on an enemy.\n(NOT YET IMPLEMENTED): Doing so will cause the target and all enemies within ##10## meters to Panic until it detonates.\n\nACE: ##$pro##\n(NOT YET IMPLEMENTED): Deploying a Trip Mine on a Dozer stuns them and inflicts a ##+100%## Damage Vulnerability on all enemies within ##10## meters for ##10## seconds.",
+				menu_have_blast_desc = "BASIC: ##$basic##\nYou gain the ability to deploy a Trip Mine directly on an enemy.\nDoing so will cause the target and all enemies within ##10## meters to Panic until it detonates.\n\nACE: ##$pro##\nDeploying a Trip Mine on a Dozer stuns them and inflicts a ##+100%## Damage Vulnerability on all enemies within ##10## meters for ##10## seconds.",
 			
 				menu_improv_expert = "Improv Expert",
 				menu_improv_expert_desc = "BASIC: ##$basic##\nEvery ##50## Ammo Boxes grants ##+1## $ICN_GRN Grenade. \n\nACE: ##$pro##\n Rocket Launchers and Flamethrowers can gain Ammunition from Ammo Boxes. Grenade Launchers gain ##+50%## Ammunition from Ammo Boxes.\n\nNote: This applies to both Ammo Boxes picked up by yourself and by teammates."

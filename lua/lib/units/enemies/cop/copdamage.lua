@@ -24,7 +24,29 @@ local table_size = table.size
 
 local idstr_bullet_hit_blood = Idstring("effects/payday2/particles/impacts/blood/blood_impact_a")
 
+local alive_g = alive
 local world_g = World
+
+
+Hooks:PostHook(CopDamage,"init","deathvox_copdamage_init",function(self,unit)
+	self._stuck_tripmines = {} --not used
+	
+	self._damage_vulnerability_sources = {}
+	if managers.enemy:is_enemy(unit) then
+		--civilians don't need this
+		
+		self._damage_vulnerability_total = 0 --cached result; recalculated on vulnerability added or vulnerability ended
+		--init/declaring the value here ensures that setting damage multipliers will do nothing for non-enemies
+		--but also won't crash for non-enemies
+		
+		unit:set_extension_update_enabled(Idstring("character_damage"),true)
+	end
+end)
+
+function CopDamage:update(unit,t,dt)
+	self:update_damage_vulnerability(t,dt)
+end
+
 
 --custom function- only used in tcd at the moment;
 --implemented into damage functions for each damage type.
@@ -39,7 +61,114 @@ function CopDamage:_get_incoming_damage_multiplier(multiplier)
 			multiplier = multiplier * lookout_aced_bonus
 		end
 	end
-	return multiplier
+	return multiplier + self:get_damage_vulnerability_total()
+end
+
+--damage vulnerability system also added and only used in tcd 
+	--damage vulnerability is a multiplier to incoming damage that is additive with itself and all other sources
+	--damage vulnerability is checked every frame
+	--damage vulnerability is LOCAL, not synced
+	--force_recalculate should only be used if you are changing the vulnerability amount
+	--and plan to use the vulnerability value later on in the same frame
+	--(eg. if the same damage source that applies vulnerability also damages the enemy in the same frame)
+function CopDamage:add_to_damage_vulnerability(key,amount,duration,force_recalculate) 
+	if not key then 
+		return
+	end
+	local source = self._damage_vulnerability_sources[key]
+	if source then 
+		if duration then 
+			source.duration = source.duration + duration
+		end
+		if amount then 
+			source.amount = source.amount + amount
+		end
+	else
+		self:set_damage_vulnerability(key,amount,duration,force_recalculate)
+		--log("TCD ERROR: CopDamage:add_to_damage_vulnerability(" .. table.concat({key,amount,duration,force_recalculate},",")): source does not exist for this key! " .. debug.traceback())
+	end
+	if force_recalculate then 
+		self:recalculate_damage_vulnerability_total()
+	end
+end
+
+function CopDamage:set_damage_vulnerability(key,amount,duration,force_recalculate)
+	if not key then 
+		return
+	end
+	local source = self._damage_vulnerability_sources[key]
+	if source then 
+		if duration then 
+			source.duration = duration
+		end
+		if amount then 
+			source.amount = amount
+		end
+	else
+		source = {
+			start_t = Application:time(),
+			key = key,
+			amount = amount,
+			duration = duration
+		}
+		self._damage_vulnerability_sources[key] = source
+	end
+	if force_recalculate then 
+		self:recalculate_damage_vulnerability_total()
+	end
+end
+
+function CopDamage:remove_damage_vulnerability(key,force_recalculate)
+	if not key then 
+		return
+	end
+	local source = self._damage_vulnerability_sources[key]
+	self._damage_vulnerability_sources[key] =  nil
+	if force_recalculate then 
+		self:recalculate_damage_vulnerability_total()
+	end
+	return source
+end
+
+function CopDamage:update_damage_vulnerability(t,dt,idk)
+	local total = 0
+	for key,data in pairs(self._damage_vulnerability_sources) do 
+		if data.start_t + data.duration < t then
+			self._damage_vulnerability_sources[key] = nil
+		else
+			total = total + data.amount
+		end
+	end
+	self._damage_vulnerability_total = total
+end
+
+function CopDamage:get_damage_vulnerability(key)
+	if not key then 
+		return
+	end
+	local data = self._damage_vulnerability_sources[key]
+	if data then 
+		return data.amount,data.duration
+	end
+end
+
+function CopDamage:get_damage_vulnerability_total(force_recalculate) --try not to use this!
+	if force_recalculate then 
+		self:recalculate_damage_vulnerability_total()
+	end
+	return self._damage_vulnerability_total or 0
+end
+
+function CopDamage:recalculate_damage_vulnerability_total()
+	if self._damage_vulnerability_total then 
+		local total = 0
+		for key,data in pairs(self._damage_vulnerability_sources) do 
+			if data.amount then 
+				total = total + data.amount
+			end
+		end
+		self._damage_vulnerability_total = total
+	end
 end
 
 function CopDamage:is_immune_to_shield_knockback()
@@ -3171,11 +3300,11 @@ function CopDamage:is_friendly_fire(unit)
 end
 
 
---these are not used because they can apparently interfere with the unit's ability to despawn, even after it has died
-Hooks:PostHook(CopDamage,"init","deathvox_copdamage_init",function(self)
-	self._stuck_tripmines = {}
+Hooks:PreHook(CopDamage,"_on_death","deathvox_on_cop_damage_death",function(self)
+	self._unit:set_extension_update_enabled(Idstring("character_damage"),false)
 end)
 
+--these are not used because they can apparently interfere with the unit's ability to despawn, even after it has died
 function CopDamage:register_stuck_tripmine(unit)
 	table.insert(self._stuck_tripmines,unit)
 end

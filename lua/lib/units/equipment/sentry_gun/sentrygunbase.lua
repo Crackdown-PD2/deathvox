@@ -163,13 +163,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self._unit:set_slot(0)
 	end
 	
-	Hooks:PostHook(SentryGunBase,"pre_destroy","tcdso_sentry_predestroy",function(self)
-		SentryControlMenu:_remove_ws(self._ws)
-		self._ws = nil	
-	end)
+--	Hooks:PostHook(SentryGunBase,"pre_destroy","tcdso_sentry_predestroy",function(self)
+--		SentryControlMenu:_remove_ws(self._ws)
+--		self._ws = nil	
+--	end)
 
 	function SentryGunBase:_create_ws() 
---below panels are still created but not used
+--deprecated
 		self._ws = SentryControlMenu:_create_panel(self._unit)
 		self._panel = self._ws:panel()
 		self._bitmap = self._panel:child("bitmap") or self._panel:bitmap({

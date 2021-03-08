@@ -293,6 +293,15 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self:set_ammo_remaining_in_clip(ammo_max_per_clip)
 
 		self._ammo_pickup = tweak_data.weapon[self._name_id].AMMO_PICKUP
+		local weapon_id = self:get_name_id()
+		if weapon_id == "ray" then
+			self._ammo_pickup = managers.player:upgrade_value("weapon","ray_ammo_pickup_modifier",self._ammo_pickup)
+		elseif weapon_id == "rpg7" then 
+			self._ammo_pickup = managers.player:upgrade_value("weapon","rpg7_ammo_pickup_modifier",self._ammo_pickup)
+		end
+		if self:is_category("flamethrower") then 
+			self._ammo_pickup = managers.player:upgrade_value("weapon","flamethrower_ammo_pickup_modifier",self._ammo_pickup)
+		end
 
 		if self._assembly_complete then
 			for _, gadget in ipairs(self:get_all_override_weapon_gadgets()) do

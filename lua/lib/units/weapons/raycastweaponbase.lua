@@ -1583,6 +1583,41 @@ function RaycastWeaponBase:is_heavy_weapon() --deprecated, do not use
 end
 
 if deathvox:IsTotalCrackdownEnabled() then
+	function RaycastWeaponBase:replenish()
+		local ammo_max_multiplier = managers.player:upgrade_value("player", "extra_ammo_multiplier", 1)
+
+		for _, category in ipairs(self:weapon_tweak_data().categories) do
+			ammo_max_multiplier = ammo_max_multiplier * managers.player:upgrade_value(category, "extra_ammo_multiplier", 1)
+		end
+
+		ammo_max_multiplier = ammo_max_multiplier + ammo_max_multiplier * (self._total_ammo_mod or 0)
+		ammo_max_multiplier = managers.modifiers:modify_value("WeaponBase:GetMaxAmmoMultiplier", ammo_max_multiplier)
+		local ammo_max_per_clip = self:calculate_ammo_max_per_clip()
+		local ammo_max = math.round((tweak_data.weapon[self._name_id].AMMO_MAX + managers.player:upgrade_value(self._name_id, "clip_amount_increase") * ammo_max_per_clip) * ammo_max_multiplier)
+		ammo_max_per_clip = math.min(ammo_max_per_clip, ammo_max)
+
+		self:set_ammo_max_per_clip(ammo_max_per_clip)
+		self:set_ammo_max(ammo_max)
+		self:set_ammo_total(ammo_max)
+		self:set_ammo_remaining_in_clip(ammo_max_per_clip)
+
+		self._ammo_pickup = tweak_data.weapon[self._name_id].AMMO_PICKUP
+		
+		--only change was this
+		local weapon_id = self:get_name_id()
+		if weapon_id == "ray" then
+			self._ammo_pickup = managers.player:upgrade_value("weapon","ray_ammo_pickup_modifier",self._ammo_pickup)
+		elseif weapon_id == "rpg7" then 
+			self._ammo_pickup = managers.player:upgrade_value("weapon","rpg7_ammo_pickup_modifier",self._ammo_pickup)
+		end
+		if self:is_category("flamethrower") then 
+			self._ammo_pickup = managers.player:upgrade_value("weapon","flamethrower_ammo_pickup_modifier",self._ammo_pickup)
+		end
+		
+		
+		self:update_damage()
+	end
+
 	function RaycastWeaponBase:add_ammo(ratio, add_amount_override)
 		local function _add_ammo(ammo_base, ratio, add_amount_override)
 			if ammo_base:get_ammo_max() == ammo_base:get_ammo_total() then
@@ -1607,9 +1642,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 				local ammo_mul_1 = managers.player:upgrade_value("player", "pick_up_ammo_multiplier", 1) - 1
 				local ammo_mul_2 = managers.player:upgrade_value("player", "pick_up_ammo_multiplier_2", 1) - 1
 				local team_ai_mul = managers.player:crew_ability_upgrade_value("crew_scavenge", 0)
-
-				multiplier_min = multiplier_min + ammo_mul_1 + ammo_mul_2 + team_ai_mul
-				multiplier_max = multiplier_max + ammo_mul_1 + ammo_mul_2 + team_ai_mul
+				local grenadelauncher_pickup_bonus = 0
+				if self:is_category("grenade_launcher") then 
+					grenadelauncher_pickup_bonus = managers.player:upgrade_value("weapon","grenade_launcher_ammo_pickup_increase",0)
+				end
+				
+				multiplier_min = multiplier_min + ammo_mul_1 + ammo_mul_2 + team_ai_mul + grenadelauncher_pickup_bonus
+				multiplier_max = multiplier_max + ammo_mul_1 + ammo_mul_2 + team_ai_mul + grenadelauncher_pickup_bonus
 
 				--log("pickup - min mult: " .. tostring(multiplier_min) .. "")
 				--log("pickup - max mult: " .. tostring(multiplier_max) .. "")

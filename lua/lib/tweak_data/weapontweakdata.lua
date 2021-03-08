@@ -10994,8 +10994,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.flamethrower_mk2.can_shoot_through_enemy = true
 		self.flamethrower_mk2.can_shoot_through_wall = true
 		self.flamethrower_mk2.AMMO_PICKUP = {
-			1,
-			1
+			0,
+			0
 		}
 		self.flamethrower_mk2.primary_class = "class_specialist"
 		self.flamethrower_mk2.subclasses = {"subclass_areadenial"}
@@ -15329,8 +15329,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.system.can_shoot_through_enemy = true
 		self.system.can_shoot_through_wall = true
 		self.system.AMMO_PICKUP = {
-			1,
-			1
+			0,
+			0
 		}
 		self.system.primary_class = "class_specialist"
 		self.system.subclasses = {"subclass_areadenial"}
@@ -15639,8 +15639,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.rpg7.primary_class = "class_specialist"
 		self.rpg7.subclasses = {}
 		self.rpg7.AMMO_PICKUP = {
-			0.001,
-			0.001
+			0,
+			0
 		}
 		self.rpg7.spread = {
 			standing = self.new_m4.spread.standing,
@@ -15715,8 +15715,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.ray.primary_class = "class_specialist"
 		self.ray.subclasses = {}
 		self.ray.AMMO_PICKUP = {
-			0.001,
-			0.001
+			0,
+			0
 		}
 		self.ray.spread = {
 			standing = self.new_m4.spread.standing,

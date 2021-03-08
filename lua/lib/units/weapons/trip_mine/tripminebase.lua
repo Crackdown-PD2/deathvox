@@ -13,6 +13,7 @@ local math_min = math.min
 local math_ceil = math.ceil
 local table_insert = table.insert
 local world_g = World
+local alive_g = alive
 
 local draw_explosion_sphere = nil
 local draw_sync_explosion_sphere = nil
@@ -63,7 +64,11 @@ end
 
 --tripmine overhaul
 if deathvox:IsTotalCrackdownEnabled() then 
-			
+	TripMineBase.vulnerability_upgrade_shift = 2
+	TripMineBase.radius_upgrade_shift = 4
+	
+--todo disable tripmine updates etc. when it has been stuck to an enemy	
+	
 --new methods
 	function TripMineBase:_get_trigger_mode()
 		return self._trigger_mode
@@ -74,6 +79,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 
 	function TripMineBase:set_trigger_mode(mode) --local
+		if self._activate_timer then 
+			self._activate_timer = nil
+			self:set_armed(self:_get_payload_mode() ~= "payload_sensor")
+		end
 		if self:_get_trigger_mode() == mode and mode == "trigger_special" then 
 			--this one's a single-switch toggle between default/special (detonate doesn't really count as a trigger mode here since uh. as they say, it's a neat trick, but you can only do it once)
 			self:_set_trigger_mode("trigger_default")
@@ -93,6 +102,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 	
 	function TripMineBase:_set_trigger_mode(mode)
 		if mode and TripmineControlMenu.VALID_TRIPMINE_TRIGGER_MODES[mode] then
+			if self._activate_timer then 
+				self._activate_timer = nil
+				self:set_armed(mode)
+			end
 			self._trigger_mode = mode
 		else
 			log("TOTAL CRACKDOWN: TripMineBase:_set_trigger_mode(" .. tostring(mode) .. "): Unknown trigger mode")
@@ -101,16 +114,37 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 	
 	function TripMineBase:set_payload_mode(mode) --local
+		if self._activate_timer then 
+			self._activate_timer = nil
+			self:set_armed(mode ~= "payload_sensor")
+		end
 		if self:is_owner() and mode ~= self:_get_payload_mode() then 
 			self:_set_payload_mode(mode)
 			self:sync_send_payload_mode(mode)
+			if mode == "payload_recover" then 
+				managers.player:add_grenade_amount(1)
+			end
 		end
 	end
 
 	function TripMineBase:_set_payload_mode(mode)
 		if mode and TripmineControlMenu.VALID_TRIPMINE_PAYLOAD_MODES[mode] then
 			self._payload_mode = mode
-			self:set_armed(mode ~= "payload_sensor")
+			if self._activate_timer then 
+				self._activate_timer = nil
+			end
+			if mode == "payload_recover" then			
+--				self:set_armed(false)
+				if Network:is_server() or self._unit:id() == -1 then 
+					self._unit:set_slot(0)
+				else
+					self._active = false
+					self._unit:interaction():set_disabled(true)
+					self._unit:set_visible(false)
+				end
+			else
+				self:set_armed(mode ~= "payload_sensor")
+			end
 		else
 			log("TOTAL CRACKDOWN: TripMineBase:_set_payload_mode(" .. tostring(mode) .. "): Unknown payload mode")
 			return
@@ -151,6 +185,114 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return managers.network:session() and self._owner_peer_id == managers.network:session():local_peer():id()
 	end
 
+	function TripMineBase:attach_to_enemy(stuck_enemy,position,rot,parent_obj,radius_upgrade_level,vulnerability_upgrade_level)
+		local unit = self._unit
+		local player_unit = managers.player:local_player()
+--		local parent_obj = ray.body:root_object()
+
+		if self:_get_payload_mode() == "payload_sensor" then 
+			self:_set_payload_mode("payload_explosive")
+		end
+		self._unit:interaction():set_active(false)
+		local char_dmg = stuck_enemy and stuck_enemy:character_damage()
+		if not alive(stuck_enemy) or char_dmg:dead() then 
+			--this might happen in cases of severe lag where the stuck_enemy and is killed between the time of the placement request and the time of execution
+			self._unit:set_slot(0)
+			return
+		end
+		
+		stuck_enemy:link(parent_obj:name(), unit)
+
+		unit:set_position(position)
+		unit:set_rotation(rot)
+
+		
+--					char_dmg:register_stuck_tripmine(unit)
+--					stuck_enemy:character_damage():add_listener("stuck_tripmines_detonate_on_death", {"death"}, callback(char_dmg,char_dmg, "detonate_stuck_tripmines"))
+		local attack_data = {
+			damage = 0,
+			variant = "fire",
+			pos = mvec3_copy(position),
+			attack_dir = mvec3_copy(player_unit:equipment():_m_deploy_rot():y()),
+			attacker_unit = player_unit,
+			result = {
+				variant = "fire",
+				type = "fire_hurt"
+			}
+		}
+		char_dmg:_call_listeners(attack_data)
+	
+		if stuck_enemy:sound() then 
+			local voice_roll = math.random()
+			if voice_roll > 0.75 then 
+				stuck_enemy:sound():say("hlp")
+			elseif voice_roll > 0.25 then
+				stuck_enemy:sound():say("burnhurt")
+			elseif voice_roll > 0.01 then 
+				stuck_enemy:sound():say("burndeath")
+			else
+				stuck_enemy:sound():say("ch1")
+--				stuck_enemy:sound():say("lk3a") --not really urgent sounding enough
+			end
+		end
+		
+	
+		local t = Application:time()
+		local u_key_str = tostring(unit:key())
+		
+		unit:sound_source():post_event("c4_beep")
+		
+		managers.enemy:add_delayed_clbk("tripmine_stuck_delayed_beep_" .. u_key_str, function()
+				if alive_g(unit) then 
+					unit:sound_source():stop()
+					unit:base():sync_trip_mine_beep_explode()
+				end
+			end,
+			t + 0.6
+		)
+		managers.enemy:add_delayed_clbk("tripmine_stuck_delayed_detonate_" .. u_key_str, function()
+				if alive_g(unit) then 
+					unit:base():explode()
+				end
+			end,
+			t + 1
+		)
+		
+		local panic_radius = managers.player:upgrade_value_by_level("trip_mine","stuck_enemy_panic_radius",radius_upgrade_level,0)
+		if panic_radius > 0 then 
+			local is_dozer = stuck_enemy:base():has_tag("tank")
+			local apply_vuln_data
+			if is_dozer and (vulnerability_upgrade_level > 0) then 
+				local amount,duration = unpack(managers.player:upgrade_value("trip_mine","stuck_dozer_damage_vulnerability",{0,0}))
+				apply_vuln_data = {
+					id = "have_blast_aced_aoe_vulnerability",
+					amount = amount,
+					duration = duration
+				}
+			end
+			
+			--not sure if i should use tripmine's position or stuck_enemy's position
+			--i guess hit_position since the other enemies would be afraid of the tripmine itself?
+			local nearby_enemies = World:find_units_quick("sphere",position or stuck_enemy:movement():m_pos(),panic_radius,managers.slot:get_mask("enemies"),"ignore_unit",{ignore_unit = stuck_enemy})
+			for _,nearby_enemy in pairs(nearby_enemies) do 
+				if nearby_enemy ~= stuck_enemy then 
+					local nme_brain = nearby_enemy:brain()
+					if nme_brain then 
+						nme_brain:on_suppressed("panic")
+					end
+				end
+				if apply_vuln_data then 
+					local nme_dmg = nearby_enemy:character_damage()
+					if nme_dmg and nme_dmg.set_damage_vulnerability then 
+						--doesn't apply to turrets
+						nme_dmg:set_damage_vulnerability(apply_vuln_data.id,apply_vuln_data.amount,apply_vuln_data.duration)
+					end
+				end
+			end
+		end
+		
+	end
+
 
 
 
@@ -164,11 +306,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 	function TripMineBase.spawn(pos, rot, sensor_upgrade, peer_id)
 		local unit = World:spawn_unit(Idstring("units/payday2/equipment/gen_equipment_tripmine/gen_equipment_tripmine"), pos, rot)
 
-		
 		managers.network:session():send_to_peers_synched("sync_trip_mine_setup", unit, sensor_upgrade, peer_id or 0)
 		unit:base():setup(sensor_upgrade)
 		
-		unit:interaction():set_disabled(peer_id and (peer_id ~= managers.network:session():local_peer():id())) --only the owner can change the tripmine
+		unit:interaction():set_active(peer_id and peer_id == managers.network:session():local_peer():id()) --only the owner can change the tripmine
 
 		return unit
 	end
@@ -218,12 +359,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self._armed = false
 
 		if sensor_upgrade then
-			self._startup_armed = not managers.groupai:state():whisper_mode()
-		else
-			self._startup_armed = true
+--			self._MARK_CONTOUR = ""
+--not needed actually
 		end
 
-		self._sensor_upgrade = sensor_upgrade
+		self._startup_armed = not managers.groupai:state():whisper_mode()
+
+		self._sensor_upgrade = true
 
 		self:set_active(false)
 		self._unit:sound_source():post_event("trip_mine_attach")
@@ -308,7 +450,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 				if (self:_get_trigger_mode() ~= "trigger_special") or (managers.groupai:state():whisper_mode() and tweak_data.character[ray.unit:base()._tweak_table].silent_priority_shout or tweak_data.character[ray.unit:base()._tweak_table].priority_shout) then 
 				--or managers.groupai:state():is_enemy_special(ray.unit)
-					managers.game_play_central:auto_highlight_enemy(ray.unit, true)
+					managers.game_play_central:auto_highlight_enemy(ray.unit, true,self:is_owner()) --only apply tripmine spotting upgrades if the person is the owner
 					self:_emit_sensor_sound_and_effect()
 
 					if managers.network:session() then
@@ -375,12 +517,24 @@ if deathvox:IsTotalCrackdownEnabled() then
 			return
 		end
 		
+		local pm = managers.player
+		local player = pm:player_unit()
+		local sm = managers.slot
+		local slotmask = sm:get_mask("explosion_targets")
+		local cant_hit_civilians = pm:has_category_upgrade("trip_mine","no_damaging_civilians")
+		local cant_hit_hostages = pm:has_category_upgrade("trip_mine","no_damaging_hostages")
 		
-		local player = managers.player:player_unit()
-		local slotmask = managers.slot:get_mask("explosion_targets")
-		local damage = tweak_data.weapon.trip_mines.damage * managers.player:upgrade_value("trip_mine", "damage_multiplier", 1)
-		local damage_size = tweak_data.weapon.trip_mines.damage_size * managers.player:upgrade_value("trip_mine", "explosion_size_multiplier_1", 1) * managers.player:upgrade_value("trip_mine", "damage_multiplier", 1)
+		if cant_hit_civilians then 
+			slotmask = slotmask - sm:get_mask("civilians")
+		end
+		if cant_hit_hostages then 
+			slotmask = slotmask - 22 --hostages slotmask
+		end
+		local damage = tweak_data.weapon.trip_mines.damage * pm:upgrade_value("trip_mine", "damage_multiplier", 1)
+		local damage_size = tweak_data.weapon.trip_mines.damage_size * pm:upgrade_value("trip_mine", "explosion_size_multiplier_1", 1) * pm:upgrade_value("trip_mine", "damage_multiplier", 1)
 		local bodies = World:find_bodies("intersect", "cylinder", self._ray_from_pos, self._ray_to_pos, damage_size, slotmask)
+		
+		
 		
 		local function explosion_aoe()
 			local characters_hit = {}

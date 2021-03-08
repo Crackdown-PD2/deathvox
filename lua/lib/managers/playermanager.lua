@@ -591,6 +591,43 @@ if deathvox:IsTotalCrackdownEnabled() then
 			self._message_system:unregister(Message.OnLethalHeadShot,"proc_magic_bullet")
 		end
 		
+		if self:has_category_upgrade("player","throwable_regen") then 
+			self._improv_expert_basic_throwable_regen_kills = 0
+			local kills_to_regen_grenade,grenades_replenished = unpack(self:upgrade_value("player","throwable_regen",{0,0}))
+			if kills_to_regen_grenade > 0 then 
+				self._message_system:register(Message.OnEnemyKilled,"proc_improv_expert_basic",function(weapon_unit,variant,killed_unit)
+
+					local player = self:local_player()
+					if not alive(player) then 
+						return
+					end
+					local weapon_base = weapon_unit and weapon_unit:base()
+					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit then 
+						if weapon_base._setup.user_unit ~= player then 
+							return
+						end
+					else
+						return
+					end
+					
+					
+					local grenade_id = managers.blackmarket:equipped_grenade()
+					local ptd = tweak_data.blackmarket.projectiles
+					local gtd = ptd and grenade_id and ptd[grenade_id]
+					local is_a_grenade = gtd.is_a_grenade
+					
+					self._improv_expert_basic_throwable_regen_kills = self._improv_expert_basic_throwable_regen_kills + 1
+					if self._improv_expert_basic_throwable_regen_kills >= kills_to_regen_grenade then 
+						if is_a_grenade then 
+							self:add_grenade_amount(grenades_replenished,true)
+						end
+						self._improv_expert_basic_throwable_regen_kills = 0
+					end
+					
+				end)
+			end
+		end
+		
 	end)
 	
 	function PlayerManager:movement_speed_multiplier(speed_state, bonus_multiplier, upgrade_level, health_ratio)
@@ -650,6 +687,21 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return multiplier
 	end
 
+	function PlayerManager:get_max_grenades(grenade_id)
+		grenade_id = grenade_id or managers.blackmarket:equipped_grenade()
+		local ptd = tweak_data.blackmarket.projectiles
+		local gtd = ptd and grenade_id and ptd[grenade_id]
+--		local max_amount = tweak_data:get_raw_value("blackmarket", "projectiles", grenade_id, "max_amount") or 0
+		local max_amount = 0
+		if gtd then 
+			max_amount = gtd.max_amount or max_amount
+			if gtd.is_a_grenade then 
+				max_amount = math.round(max_amount * self:upgrade_value("player","grenades_amount_increase_mul",1))
+			end
+			max_amount = managers.modifiers:modify_value("PlayerManager:GetThrowablesMaxAmount", max_amount)
+		end
+		return max_amount
+	end
 
 end
 

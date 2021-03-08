@@ -1429,20 +1429,199 @@ if deathvox:IsTotalCrackdownEnabled() then
 		
 		
 		--Demolitions
-			--note: demolitionist/Special Toys should add weapon_class_ammo_stock_bonus
-			self.values.trip_mine.can_place_on_enemies = {true}
-			self.definitions.trip_mine_can_place_on_enemies = {
-				name_id = "menu_trip_mine_can_place_on_enemies",
-				category = "feature",
-				upgrade = {
-					value = 1,
-					upgrade = "can_place_on_enemies",
-					category = "trip_mine"
-				}
-			}
 		
-
-
+			--Party Favors Basic
+		self.values.player.grenades_amount_increase_mul = {4/3}
+		self.definitions.player_grenades_amount_increase_mul = {
+			name_id = "menu_party_favors",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "grenades_amount_increase_mul",
+				category = "player"
+			}
+		}
+			--Party Favors Aced
+		self.values.trip_mine.extended_mark_duration = {1.5}
+		self.definitions.trip_mine_extended_mark_duration = {
+			name_id = "menu_party_favors",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "extended_mark_duration",
+				category = "trip_mine"
+			}
+		}
+		
+			--Special Toys Basic
+		self.values.class_specialist.weapon_class_ammo_stock_bonus = { 0.25 }
+		self.definitions.class_specialist_ammo_stock_increase = {
+			name_id = "menu_special_toys",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "weapon_class_ammo_stock_bonus",
+				category = "class_specialist"
+			}
+		}
+		
+			--Special Toys Aced
+		self.values.class_specialist.reload_speed_multiplier = {1 - 0.3} --30% faster reload speed
+		self.definitions.class_specialist_reload_speed_multiplier = {
+			name_id = "menu_special_toys",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "reload_speed_multiplier",
+				category = "class_specialist"
+			}
+		}
+		
+		--(basic is vanilla upgrade trip_mine_explosion_size_multiplier_1)
+			--Smart Bombs Aced
+		self.values.trip_mine.no_damaging_hostages = {true}
+		self.definitions.trip_mine_dont_damage_hostages = {
+			name_id = "menu_smart_bombs",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "no_damaging_hostages",
+				category = "trip_mine"
+			}
+		}
+		self.values.trip_mine.no_damaging_civilians = {true}
+		self.definitions.trip_mine_dont_damage_civilians = {
+			name_id = "menu_smart_bombs",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "no_damaging_civilians",
+				category = "trip_mine"
+			}
+		}
+		
+			--Third Degree Basic
+		self.values.subclass_areadenial.effect_duration_increase_mul = {1.5}
+		self.definitions.subclass_areadenial_effect_duration_increase_1 = {
+			name_id = "menu_third_degree",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "effect_duration_increase_mul",
+				category = "subclass_areadenial"
+			}
+		}
+			
+			--Third Degree Aced
+		self.values.subclass_areadenial.effect_doubleroasting_damage_increase_mul = {1.25}
+		self.definitions.subclass_areadenial_effect_doubleroasting_damage_increase_mul = {
+			name_id = "menu_third_degree",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "effect_doubleroasting_damage_increase_mul",
+				category = "subclass_areadenial"
+			}
+		}
+			 --Have a Blast basic
+		self.values.trip_mine.can_place_on_enemies = {true}
+		self.definitions.trip_mine_can_place_on_enemies = {
+			name_id = "menu_have_blast",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "can_place_on_enemies",
+				category = "trip_mine"
+			}
+		}
+		self.values.trip_mine.stuck_enemy_panic_radius = {1000}
+		self.definitions.trip_mine_stuck_enemy_panic = {
+			name_id = "menu_have_blast",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stuck_enemy_panic_radius",
+				category = "trip_mine"
+			}
+		}
+			--Have a Blast Aced
+		self.values.trip_mine.stuck_dozer_stun = {true}
+		self.definitions.trip_mine_stuck_dozer_stun = {
+			name = "menu_have_blast",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stuck_dozer_stun",
+				category = "trip_mine"
+			}
+		}
+		self.values.trip_mine.stuck_dozer_damage_vulnerability = { {1,10} } --100% damage vuln increase for 10s (relies on stuck_enemy_panic_radius for area)
+		self.definitions.trip_mine_stuck_dozer_damage_vulnerability = {
+			name_id = "menu_have_blast",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stuck_dozer_damage_vulnerability",
+				category = "trip_mine"
+			}
+		}
+		
+			--Improv Expert Basic
+		self.values.player.throwable_regen = {{50,1}}
+		self.definitions.player_throwable_regen = {
+			name_id = "menu_improv_expert",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "throwable_regen",
+				category = "player"
+			}
+		}
+			--Improv Expert Aced
+		self.values.weapon.rpg7_ammo_pickup_modifier = { {0.001,0.001} }
+		self.definitions.weapon_rpg7_ammo_pickup_modifier = {
+			name_id = "menu_improv_expert",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rpg7_ammo_pickup_modifier",
+				category = "weapon"
+			}
+		}
+		self.values.weapon.ray_ammo_pickup_modifier = { {0.001,0.001} }
+		self.definitions.weapon_ray_ammo_pickup_modifier = {
+			name_id = "menu_improv_expert",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "ray_ammo_pickup_modifier",
+				category = "weapon"
+			}
+		}
+		
+		self.values.weapon.grenade_launcher_ammo_pickup_increase = { 0.5 } --50% increase (additive)
+		self.definitions.weapon_grenade_launcher_ammo_pickup_increase = {
+			name_id = "menu_improv_expert_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "grenade_launcher_ammo_pickup_increase",
+				category = "weapon"
+			}
+		}
+		
+		self.values.weapon.flamethrower_ammo_pickup_modifier = { {1,1} }
+		self.definitions.weapon_flamethrower_ammo_pickup_modifier = {
+			name_id = "menu_improv_expert_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "flamethrower_ammo_pickup_modifier",
+				category = "weapon"
+			}
+		}
+		
+		
 
 		--General free skills (default upgrades)
 			--FAK auto revive radius on deploying

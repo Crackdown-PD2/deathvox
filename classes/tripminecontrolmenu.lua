@@ -13,7 +13,8 @@ TripmineControlMenu.NetworkSyncIDs = { --ordered table for network ids- DO NOT C
 	"trigger_special",
 	"payload_sensor",
 	"trigger_detonate",
-	"payload_concussive"
+	"payload_concussive",
+	"payload_recover"
 }
 TripmineControlMenu.NetworkSyncIDsReverseLookup = {} --ordered table for network ids- DO NOT CHANGE THIS
 for k,v in ipairs(TripmineControlMenu.NetworkSyncIDs) do 
@@ -21,12 +22,13 @@ for k,v in ipairs(TripmineControlMenu.NetworkSyncIDs) do
 end
 
 TripmineControlMenu.MenuOrder = { --this can be edited to change the cosmetic order in the radial menu without risking sync issues
-	"payload_explosive", --top
-	"payload_incendiary",
-	"trigger_special",
-	"payload_sensor", --bottom
-	"trigger_detonate",
-	"payload_concussive"
+	"payload_incendiary", --top
+	"trigger_special",--bottom
+	"payload_sensor", 
+--	"trigger_detonate", --disabled
+	"payload_concussive",
+	"payload_recover",
+	"payload_explosive" --top
 }
 TripmineControlMenu.MenuOrderReverseLookup = {}
 
@@ -40,7 +42,8 @@ TripmineControlMenu.VALID_TRIPMINE_PAYLOAD_MODES = {
 	payload_sensor = true,
 	payload_explosive = true,
 	payload_incendiary = true,
-	payload_concussive = true
+	payload_concussive = true,
+	payload_recover = true
 }
 
 function TripmineControlMenu:SelectTripmineByUnit(unit)
@@ -295,6 +298,21 @@ function TripmineControlMenu:LoadMenuData()
 			show_text = true,
 			stay_open = false,
 			callback = callback(self,self,"SelectTrigger","trigger_default")
+		},
+		payload_recover = {
+			text = managers.localization:text("tripmine_payload_recover"),
+			icon = {
+				texture = tweak_data.hud_icons.develop.texture,
+				texture_rect = tweak_data.hud_icons.develop.texture_rect,
+				layer = 3,
+				w = 24,
+				h = 24,
+				alpha = 0.7,
+				color = Color(1,1,1)
+			},
+			show_text = true,
+			stay_open = false,
+			callback = callback(self,self,"SelectPayload","payload_recover")
 		}
 	}
 	self:BuildMenuItems()

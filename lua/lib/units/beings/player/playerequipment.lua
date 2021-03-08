@@ -91,66 +91,31 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if ray then
 			managers.statistics:use_trip_mine()
 
-			local sensor_upgrade = managers.player:has_category_upgrade("trip_mine", "sensor_toggle")
-
+			local mark_duration_upgrade = managers.player:has_category_upgrade("trip_mine", "trip_mine_extended_mark_duration")
+			
+			local hit_position = ray.hit_position
+			local rot = Rotation(ray.normal, math_up)
+			local radius_upgrade_level = managers.player:upgrade_level("trip_mine","stuck_enemy_panic_radius",0)
+			local vulnerability_upgrade_level = managers.player:upgrade_level("trip_mine","stuck_dozer_damage_vulnerability",0)
+			local bits = Bitwise:lshift(radius_upgrade_level, TripMineBase.radius_upgrade_shift) + Bitwise:lshift(vulnerability_upgrade_level, TripMineBase.vulnerability_upgrade_shift) + 1
+			local session = managers.network:session()
+			
 			if Network:is_client() then
-				managers.network:session():send_to_host("place_trip_mine", ray.position, ray.normal, sensor_upgrade)
 				--todo send unit to attach to
+				if stuck_enemy then 
+					session:send_to_host("sync_attach_projectile",stuck_enemy,false,stuck_enemy,ray.body,ray.body:root_object(),hit_position,ray.normal,bits,session:local_peer():id())
+				else
+					managers.network:session():send_to_host("place_trip_mine", ray.position, ray.normal, mark_duration_upgrade)
+				end
+--				session:send_to_host("sync_deployable_attachment",stuck_enemy,ray.body,hit_position,rot)
 			else
-				local rot = Rotation(ray.normal, math_up)
-				local unit = TripMineBase.spawn(ray.position, rot, sensor_upgrade, managers.network:session():local_peer():id())
+				local unit = TripMineBase.spawn(ray.position, rot, trip_mine_extended_mark_duration, managers.network:session():local_peer():id())
 				local player_unit = self._unit
 				unit:base():set_active(true, player_unit)
-
-				if stuck_enemy then 
-					local parent_obj = ray.body:root_object()
-					stuck_enemy:link(parent_obj:name(), unit)--, unit:orientation_object():name())
-
-					unit:set_position(ray.hit_position)
-					unit:set_rotation(rot)
-
-					local char_dmg = stuck_enemy:character_damage()
---					char_dmg:register_stuck_tripmine(unit)
---					stuck_enemy:character_damage():add_listener("stuck_tripmines_detonate_on_death", {"death"}, callback(char_dmg,char_dmg, "detonate_stuck_tripmines"))
-					local attack_data = {
-						damage = 0,
-						variant = "fire",
-						pos = mvec3_cpy(ray.hit_position),
-						attack_dir = mvec3_cpy(self:_m_deploy_rot():y()),
-						attacker_unit = player_unit,
-						result = {
-							variant = "fire",
-							type = "fire_hurt"
-						}
-					}
-
-					char_dmg:_call_listeners(attack_data)
-
-					local t = Application:time()
-					local u_key_str = tostring(unit:key())
-
-					managers.enemy:add_delayed_clbk("tripmine_stuck_delayed_beep_" .. u_key_str, function()
-							if alive_g(unit) then 
-								unit:base():sync_trip_mine_beep_explode()
-							end
-						end,
-						t + 0.6
-					)
-					managers.enemy:add_delayed_clbk("tripmine_stuck_delayed_detonate_" .. u_key_str, function()
-							if alive_g(unit) then 
-								unit:base():explode()
-							end
-						end,
-						t + 1
-					)
---					stuck_enemy:brain():on_suppressed("panic")
-
-					--todo:
-					--trigger unit to panic,
-					--if group panic upgrade, then panic group
-					
-					--deploying on dozer stuns the dozer
-					--and causes 100% damage vulnerability on all enemies within a 10m radius
+				
+				if stuck_enemy then
+					unit:base():attach_to_enemy(stuck_enemy,ray.position,rot,ray.body:root_object(),radius_upgrade_level,vulnerability_upgrade_level)
+					session:send_to_peers("sync_attach_projectile",unit,false,stuck_enemy,ray.body,ray.body:root_object(),hit_position,ray.normal,bits,session:local_peer():id())
 				end
 			end
 

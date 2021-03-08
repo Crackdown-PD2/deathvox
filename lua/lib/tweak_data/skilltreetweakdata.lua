@@ -1821,73 +1821,74 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.demolitions,1,{ --Party Favors
 			{
 				upgrades = {
-					
+					"player_grenades_amount_increase_mul"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"trip_mine_extended_mark_duration"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_party_favors",
 			desc_id = "menu_party_favors_desc",
 			icon_xy = {
-				0 or 4,
-				0 or 6
+				4,
+				6
 			}
 		})
 		replace_skill(tree_indices.demolitions,2,{ --Special Toys
 			{
 				upgrades = {
-				
+					"class_specialist_ammo_stock_increase"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"class_specialist_reload_speed_multiplier"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_special_toys",
 			desc_id = "menu_special_toys_desc",
 			icon_xy = {
-				0 or 4,
-				0 or 7
+				4,
+				7
 			}
 		})
 		replace_skill(tree_indices.demolitions,3,{ --Smart Bombs
 			{
 				upgrades = {
-					
+					"trip_mine_explosion_size_multiplier_1"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"trip_mine_dont_damage_hostages",
+					"trip_mine_dont_damage_civilians"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_smart_bombs",
 			desc_id = "menu_smart_bombs_desc",
 			icon_xy = {
-				0 or 4,
-				0 or 8
+				4,
+				8
 			}
 		})
 		replace_skill(tree_indices.demolitions,4,{ --Third Degree
 			{
 				upgrades = {
-					
+					"subclass_areadenial_effect_duration_increase_1" --not implemented
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"subclass_areadenial_effect_doubleroasting_damage_increase_mul" --not implemented
 				},
 				cost = self.costs.hightierpro
 			},
@@ -1901,41 +1902,46 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.demolitions,5,{ --Have a Blast
 			{
 				upgrades = {
-					"trip_mine_can_place_on_enemies"
+					"trip_mine_can_place_on_enemies",
+					"trip_mine_stuck_enemy_panic"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"trip_mine_stuck_dozer_stun",
+					"trip_mine_stuck_dozer_damage_vulnerability"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_have_blast",
 			desc_id = "menu_have_blast_desc",
 			icon_xy = {
-				0 or 4,
-				2 or 10
+				4,
+				10
 			}
 		})
 		replace_skill(tree_indices.demolitions,6,{ --Improv Expert
 			{
 				upgrades = {
-					
+					"player_throwable_regen"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"weapon_rpg7_ammo_pickup_modifier",
+					"weapon_ray_ammo_pickup_modifier",
+					"weapon_flamethrower_ammo_pickup_modifier",
+					"weapon_grenade_launcher_ammo_pickup_increase"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_improv_expert",
 			desc_id = "menu_improv_expert_desc",
 			icon_xy = {
-				0 or 4,
-				0 or 11
+				4,
+				11
 			}
 		})
 	

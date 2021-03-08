@@ -111,7 +111,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not peer then
 			return
 		end
-
+		
+--no anticheat for this since this is now a grenade AND can be replenished in multiple ways
 --		if not managers.player:verify_equipment(peer:id(), "trip_mine") then
 --			return
 --		end
@@ -124,7 +125,56 @@ if deathvox:IsTotalCrackdownEnabled() then
 		rpc:activate_trip_mine(unit)
 	end
 	
+	--used for tripmine syncing
+		--from host as client
+	local orig_sync_attach_projectile = UnitNetworkHandler.sync_attach_projectile
+	function UnitNetworkHandler:sync_attach_projectile(unit, instant_dynamic_pickup, parent_unit, parent_body, parent_object, local_pos, dir, projectile_type_index, peer_id, sender,...)
+		local peer = self._verify_sender(sender)
+
+		if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not peer then
+--			print("_verify failed!!!")
+
+			return
+		end
+		
+		if unit:base() and not unit:base().set_thrower_unit_by_peer_id then 
+			local bits = projectile_type_index - 1 --change range to [0,63] instead of [1,64]
+			local radius_upgrade_level = Bitwise:rshift(bits,TripMineBase.radius_upgrade_shift)
+			local vulnerability_upgrade_level = Bitwise:rshift(bits,TripMineBase.vulnerability_upgrade_shift) % 2^TripMineBase.vulnerability_upgrade_shift
+			local rot = Rotation(dir,math.UP)
+			if Network:is_server() then 
+				local tripmine_unit = TripMineBase.spawn(local_pos,rot,true,peer_id)
+				self:activate_trip_mine(trimpine_unit)
+				tripmine_unit:base():set_server_information(peer_id)
+				managers.network:session():send_to_peers("sync_attach_projectile",tripmine_unit,false,parent_unit,parent_body,parent_object,local_pos,dir,projectile_type_index,peer_id)
+
+				return
+			elseif unit:base().get_name_id and unit:base():get_name_id() == "trip_mine" then 
+				unit:base():attach_to_enemy(parent_unit,local_pos,rot,parent_body,radius_upgrade_level,vulnerability_upgrade_level)
+				return
+			end
+		end
+			--assume that this is the spoofed function
+		return orig_sync_attach_projectile(self,unit, instant_dynamic_pickup, parent_unit, parent_body, parent_object, local_pos, dir, projectile_type_index, peer_id, sender,...)
+	end
+	
 end
+--[[
+local orig_sync_deployable_attachment = UnitNetworkHandler.sync_deployable_attachment
+function UnitNetworkHandler:sync_deployable_attachment(unit, body, relative_pos, relative_rot, rpc,...)
+	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+		return
+	end
+
+	if not alive(unit) then
+		return
+	end
+
+	if unit:base() and unit:base().get_name_id and unit:base():get_name_id() == "trip_mine" then 
+		return orig_sync_deployable_attachment(unit, body, relative_pos, relative_rot, rpc,...)
+	end
+end
+--]]
 
 function UnitNetworkHandler:sync_friendly_fire_damage(peer_id, unit, damage, variant, sender)
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_sender(sender) then
