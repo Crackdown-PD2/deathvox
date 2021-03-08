@@ -128,7 +128,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 	function SentryGunWeapon:setup(setup_data)
 		if self._unit:base():is_owner() then 
-			self._unit:base():_create_ws()
+--			self._unit:base():_create_ws()
 		end
 		self:_init()
 		
