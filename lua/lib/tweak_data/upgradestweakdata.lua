@@ -1431,7 +1431,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		--Demolitions
 		
 			--Party Favors Basic
-		self.values.player.grenades_amount_increase_mul = {4/3}
+		self.values.player.grenades_amount_increase_mul = {1.5}
 		self.definitions.player_grenades_amount_increase_mul = {
 			name_id = "menu_party_favors",
 			category = "feature",
