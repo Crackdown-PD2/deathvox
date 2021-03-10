@@ -188,7 +188,32 @@ if deathvox:IsTotalCrackdownEnabled() then
 	
 
 	Hooks:PostHook(PlayerManager,"check_skills","deathvox_check_cd_skills",function(self)
-
+		
+		if self:has_category_upgrade("weapon","xbow_headshot_instant_reload") then 
+		
+			self._message_system:register(Message.OnLethalHeadShot,"proc_good_hunting_aced",
+				function(attack_data)
+					local player = self:local_player()
+					if not alive(player) then 
+						return
+					end
+					local weapon_base = attack_data and attack_data.weapon_unit and attack_data.weapon_unit:base()
+					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_category("crossbow") then 
+						if weapon_base._setup.user_unit ~= player then 
+							return
+						end
+					else
+						return
+					end
+					
+					weapon_base:set_ammo_remaining_in_clip(weapon_base:calculate_ammo_max_per_clip())
+					for i,selection in pairs(player:inventory():available_selections()) do 
+						managers.hud:set_ammo_amount(i, selection.unit:base():ammo_info())
+					end
+				end
+			)
+		end
+		
 	
 		if self:has_category_upgrade("player","melee_hit_speed_boost") then
 			Hooks:Add("OnPlayerMeleeHit","cd_proc_butterfly_bee_aced",
@@ -241,6 +266,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	
 		if self:has_category_upgrade("class_heavy","collateral_damage") then 
+			local slot_mask = managers.slot:get_mask("enemies")
+			
+			local collateral_damage_data = self:upgrade_value("class_heavy","collateral_damage",{0,0})
+			local damage_mul = collateral_damage_data[1]
+			local radius = collateral_damage_data[2]
+			
 			self._message_system:register(Message.OnWeaponFired,"proc_collateral_damage",
 				function(weapon_unit,result)
 				
@@ -259,15 +290,52 @@ if deathvox:IsTotalCrackdownEnabled() then
 					else
 						return
 					end
+					if #result.rays == 0 then 
+						return
+					end
 					
-					local collateral_damage_data = self:upgrade_value("class_heavy","collateral_damage",{0,0})
-					local damage_mul = collateral_damage_data[1]
-					local radius = collateral_damage_data[2]
+					local first_ray = result.rays[1] 
+					local from = player:movement():current_state():get_fire_weapon_position()
+					--sort of cheating here by assuming the origin of the ray is the current fire position
+					local dir = mvector3.copy(first_ray.ray)
+					local to
+					local hits = {}
 					
-					--do stuff here
+					for n,ray in ipairs(result.rays) do 
+						local damage = weapon_base:_get_current_damage()
+						local dir = ray.ray or Vector3()
+						if ray.damage_result then 
+							local attack_data = ray.damage_result.attack_data or {}
+							damage = attack_data and attack_data.damage_raw or damage
+						end
+						damage = damage * damage_mul
+						
+						to = mvector3.copy(ray.hit_position or ray.position or Vector3())
+--						Draw:brush(Color.red:with_alpha(0.1),5):sphere(from,50)
+--						Draw:brush(Color.blue:with_alpha(0.1),5):sphere(to,50)
+--						Draw:brush(Color(1,n / #result.rays,1):with_alpha(0.1),5):cylinder(from,to,radius)
+						local grazed_enemies = World:raycast_all("ray", from, to, "sphere_cast_radius", radius, "disable_inner_ray", "slot_mask", slot_mask)
+						for _,hit in pairs(grazed_enemies) do 
+							hits[hit.unit:key()] = hit.unit
+							--collect hits here to prevent the same enemy from being hit by multiple rays, in the case of penetrating or ricochet shots
+						end
+						
+						from = mvector3.copy(to)
+					end
+
 					
-						--works on miss
-						--does not hit civs
+					for _,enemy in pairs(hits) do 
+						if enemy and enemy.character_damage and enemy:character_damage() then 
+							enemy:character_damage():damage_simple({
+								variant = "graze",
+								damage = damage,
+								attacker_unit = player,
+								pos = from,
+								attack_dir = dir
+							})
+						end
+					end
+					
 				end
 			)
 		end
@@ -382,9 +450,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 					self:add_to_property("making_miracles_stacks",1)
 				end
 			)
-	else
-		self._message_system:unregister(Message.OnLethalHeadShot,"proc_making_miracles_aced")
-	end
+		else
+			self._message_system:unregister(Message.OnLethalHeadShot,"proc_making_miracles_aced")
+		end
 		self:set_property("current_point_and_click_stacks",0)
 		if self:has_category_upgrade("player","point_and_click_stacks") then 
 			Hooks:Add("TCD_Create_Stack_Tracker_HUD","TCD_CreatePACElement",function(hudtemp)

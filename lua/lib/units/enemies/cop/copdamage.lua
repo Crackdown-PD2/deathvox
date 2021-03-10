@@ -695,7 +695,8 @@ function CopDamage:damage_bullet(attack_data)
 	end
 
 	local is_civilian = CopDamage.is_civilian(self._unit:base()._tweak_table)
-
+	
+	local attacker_is_main_player = attack_data.attacker_unit == managers.player:player_unit()
 	--moved up here so that blocked shots don't interfere
 	if attack_data.weapon_unit and attack_data.weapon_unit:base().is_category and attack_data.weapon_unit:base():is_category("saw") then
 		managers.groupai:state():chk_say_enemy_chatter(self._unit, self._unit:movement():m_pos(), "saw")
@@ -704,7 +705,13 @@ function CopDamage:damage_bullet(attack_data)
 	if attack_data.attacker_unit:base().sentry_gun then
 		managers.groupai:state():chk_say_enemy_chatter(self._unit, self._unit:movement():m_pos(), "sentry")
 	end
+	
+	mvec3_set(mvec_1, self._unit:position())
+	mvec3_sub(mvec_1, attack_data.attacker_unit:position())
+	mvec3_norm(mvec_1)
+	mvec3_set(mvec_2, self._unit:rotation():y())
 
+	local from_behind = mvec3_dot(mvec_1, mvec_2) >= 0
 	if self._has_plate and attack_data.col_ray.body and attack_data.col_ray.body:name() == self._ids_plate_name then
 		if attack_data.armor_piercing or attack_data.weapon_unit:base().thrower_unit then
 			World:effect_manager():spawn({
@@ -716,12 +723,11 @@ function CopDamage:damage_bullet(attack_data)
 			local armor_pierce_roll = math_random()
 			local armor_pierce_value = 0
 
-			if attack_data.attacker_unit == managers.player:player_unit() then
+			if attacker_is_main_player then
 				armor_pierce_value = armor_pierce_value + attack_data.weapon_unit:base():armor_piercing_chance()
 				armor_pierce_value = armor_pierce_value + managers.player:upgrade_value("player", "armor_piercing_chance", 0)
 				armor_pierce_value = armor_pierce_value + managers.player:upgrade_value("weapon", "armor_piercing_chance", 0)
 				armor_pierce_value = armor_pierce_value + managers.player:upgrade_value("weapon", "armor_piercing_chance_2", 0)
-
 				if attack_data.weapon_unit:base():got_silencer() then
 					armor_pierce_value = armor_pierce_value + managers.player:upgrade_value("weapon", "armor_piercing_chance_silencer", 0)
 				end
@@ -794,9 +800,7 @@ function CopDamage:damage_bullet(attack_data)
 		mvec3_set(mvec_1, attack_data.col_ray.ray)
 		m_rot_z(self._unit:movement():m_head_rot(), mvec_2)
 
-		local not_from_the_front = mvec3_dot(mvec_1, mvec_2) >= 0
-
-		if not_from_the_front then
+		if from_behind then
 			head = false
 		end
 	end
@@ -808,9 +812,29 @@ function CopDamage:damage_bullet(attack_data)
 	local headshot_multiplier = 1
 	local headshot_mul_addend = 0
 
-	if attack_data.attacker_unit == managers.player:player_unit() then
+	if attacker_is_main_player then
+		local backstab_bullets_mul = 1
 		local weap_base = alive(attack_data.weapon_unit) and attack_data.weapon_unit:base()
-		local weapon_class = weap_base and weap_base.get_weapon_class and weap_base:get_weapon_class() or "weapon"
+		local weapon_class = weap_base and weap_base.get_weapon_class and weap_base:get_weapon_class() or "NO_WEAPON_CLASS"
+		local subclasses = weap_base and weap_base.get_weapon_subclasses and weap_base:get_weapon_subclasses() or {}
+		
+		local player_has_aggro = false
+		local brain = self._unit:brain()
+		local attention_obj = brain and brain._logic_data.attention_obj
+		if attention_obj and attention_obj.unit == player_unit then 
+			player_has_aggro = true
+		end
+		
+		if from_behind then 
+			for _,subclass in pairs(subclasses) do 
+				backstab_bullets_mul = backstab_bullets_mul + managers.player:upgrade_value(subclass,"backstab_bullets",0)
+				if not player_has_aggro then 
+					backstab_bullets_mul = backstab_bullets_mul + managers.player:upgrade_value(subclass,"unnoticed_damage_bonus",0)
+				end
+			end
+		end
+		damage = damage * backstab_bullets_mul
+		
 		headshot_mul_addend = managers.player:upgrade_value(weapon_class, "headshot_mul_addend", 0)
 
 		local critical_hit, crit_damage = self:roll_critical_hit(attack_data)
@@ -970,7 +994,7 @@ function CopDamage:damage_bullet(attack_data)
 
 		managers.statistics:killed_by_anyone(data)
 
-		if attack_data.attacker_unit == managers.player:player_unit() then
+		if attacker_is_main_player then
 			if is_civilian then
 				managers.money:civilian_killed()
 			elseif alive(attack_data.attacker_unit) and not attack_data.weapon_unit:base().thrower_unit and managers.player:has_category_upgrade("temporary", "overkill_damage_multiplier") and attack_data.weapon_unit:base():is_category("shotgun", "saw") then

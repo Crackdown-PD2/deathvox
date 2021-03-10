@@ -699,7 +699,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		})
 		
 		--Heavy (not fully implemented)
-		replace_skill(tree_indices.heavy,1,{ --Collateral Damage (basic not fully implemented)
+		replace_skill(tree_indices.heavy,1,{ --Collateral Damage
 			{
 				upgrades = {
 					"class_heavy_collateral_damage"
@@ -715,8 +715,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_collateral_damage",
 			desc_id = "menu_collateral_damage_desc",
 			icon_xy = {
-				0 or 6,
-				1 or 0
+				6,
+				0
 			}
 		})
 		replace_skill(tree_indices.heavy,2,{ --Death Grips
@@ -1324,76 +1324,76 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		
 
 		--Assassin (not fully implemented)
-		replace_skill(tree_indices.assassin,1,{ --Killer's Notebook (not implemented)
+		replace_skill(tree_indices.assassin,1,{ --Killer's Notebook
 			{
 				upgrades = {
---					"player_killers_notebook_basic"
+					"subclass_quiet_steelsight_speed_multiplier"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
---					"player_killers_notebook_aced"
+					"subclass_quiet_stability_addend"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_killers_notebook",
 			desc_id = "menu_killers_notebook_desc",
 			icon_xy = {
-				0 or 11,
-				0 or 0
+				11,
+				0
 			}
 		})
-		replace_skill(tree_indices.assassin,2,{ --Good Hunting (not implemented)
+		replace_skill(tree_indices.assassin,2,{ --Good Hunting
 			{
 				upgrades = {
---					"player_good_hunting_basic"
+					"weapon_bow_instant_ready"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
---					"player_good_hunting_aced"
+					"weapon_crossbow_headshot_instant_reload"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_good_hunting",
 			desc_id = "menu_good_hunting_desc",
 			icon_xy = {
-				0 or 11,
-				0 or 1
+				11,
+				1
 			}
 		})
-		replace_skill(tree_indices.assassin,3,{ --Comfortable Silence (not implemented)
+		replace_skill(tree_indices.assassin,3,{ --Comfortable Silence
 			{
 				upgrades = {
---					"player_comfortable_silence_basic"
+					"subclass_quiet_concealment_addend_1"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
---					"player_comfortable_silence_aced"
+					"subclass_quiet_concealment_addend_2"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_comfortable_silence",
 			desc_id = "menu_comfortable_silence_desc",
 			icon_xy = {
-				0 or 11,
-				0 or 2
+				11,
+				2
 			}
 		})
 		replace_skill(tree_indices.assassin,4,{ --Toxic Shock (not implemented)
 			{
 				upgrades = {
---					"player_toxic_shock_basic"
+--					"subclass_poison_dot_aoe"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
---					"player_toxic_shock_aced"
+--					"subclass_poison_damage_mul"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -1407,13 +1407,13 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.assassin,5,{ --Professional's Choice
 			{
 				upgrades = {
-					"player_professionalschoice_basic"
+					"subclass_quiet_detection_risk_rof_bonus_1"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"player_professionalschoice_aced"
+					"subclass_quiet_detection_risk_rof_bonus_2"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -1424,24 +1424,24 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				4
 			}
 		})
-		replace_skill(tree_indices.assassin,6,{ --Quiet as the Grave (not implemented)
+		replace_skill(tree_indices.assassin,6,{ --Quiet as the Grave
 			{
 				upgrades = {
---					"player_quiet_grave_basic"
+					"subclass_quiet_backstab_bullets"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
---					"player_quiet_grave_aced"
+					"subclass_quiet_unnoticed_damage_bonus"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_quiet_grave",
 			desc_id = "menu_quiet_grave_desc",
 			icon_xy = {
-				0 or 11,
-				0 or 5
+				11,
+				5
 			}
 		})
 		

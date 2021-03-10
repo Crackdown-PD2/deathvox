@@ -1247,7 +1247,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 		}
 		
 		--Assassin
-		self.values.player.professionalschoice = {
+		
+		self.values.subclass_quiet.subclass_detection_risk_rof_bonus = {
 			{
 				0.02,
 				3,
@@ -1264,22 +1265,130 @@ if deathvox:IsTotalCrackdownEnabled() then
 			}
 		}
 		
-		self.definitions.player_professionalschoice_basic = {
-			name_id = "menu_player_professionalschoice_basic",
+		self.definitions.subclass_quiet_detection_risk_rof_bonus_1 = {
+			name_id = "menu_professionals_choice",
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "professionalschoice",
-				category = "player"
+				upgrade = "subclass_detection_risk_rof_bonus",
+				category = "subclass_quiet"
 			}
 		}
-		self.definitions.player_professionalschoice_aced = {
-			name_id = "menu_player_professionalschoice_aced",
+		self.definitions.subclass_quiet_detection_risk_rof_bonus_2 = {
+			name_id = "menu_professionals_choice",
 			category = "feature",
 			upgrade = {
 				value = 2,
-				upgrade = "professionalschoice",
-				category = "player"
+				upgrade = "subclass_detection_risk_rof_bonus",
+				category = "subclass_quiet"
+			}
+		}
+		
+		self.definitions.subclass_poison_damage_mul = { --not implemented
+			name_id = "menu_toxic_shock",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "weapon_subclass_damage_mul",
+				category = "subclass_poison"
+			}
+		}
+		self.values.subclass_poison.weapon_subclass_damage_mul = {2} --this should actually be a dot-specific damage bonus
+		
+		self.definitions.subclass_poison_dot_aoe = { --not implemented
+			name_id = "menu_toxic_shock",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "poison_dot_aoe",
+				category = "subclass_poison"
+			}
+		}
+		self.values.subclass_poison.poison_dot_aoe = { 300 }
+		
+		self.values.subclass_quiet.enter_steelsight_speed_multiplier = { 0.1 }
+		self.definitions.subclass_quiet_steelsight_speed_multiplier = {
+			name_id = "menu_killers_notebook",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "enter_steelsight_speed_multiplier",
+				category = "subclass_quiet"
+			}
+		}
+		
+		self.definitions.subclass_quiet_stability_addend = {
+			name_id = "menu_killers_notebook",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "subclass_stability_addend",
+				category = "subclass_quiet"
+			}
+		}
+		self.values.subclass_quiet.subclass_stability_addend = { 5 }
+		
+		self.values.weapon.xbow_headshot_instant_reload = {true}
+		self.definitions.weapon_crossbow_headshot_instant_reload = {
+			name_id = "menu_good_hunting",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "xbow_headshot_instant_reload",
+				category = "weapon"
+			}
+		}
+		
+		self.values.weapon.bow_instant_ready = {true}
+		self.definitions.weapon_bow_instant_ready = {
+			name_id = "menu_good_hunting",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "bow_instant_ready",
+				category = "weapon"
+			}
+		}
+		
+		self.definitions.subclass_quiet_concealment_addend_1 = {
+			name_id = "menu_comfortable_silence",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "subclass_concealment_addend",
+				category = "subclass_quiet"
+			}
+		}
+		self.definitions.subclass_quiet_concealment_addend_2 = {
+			name_id = "menu_comfortable_silence",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "subclass_concealment_addend",
+				category = "subclass_quiet"
+			}
+		}
+		self.values.subclass_quiet.subclass_concealment_addend = { 2,4 }
+		
+		self.values.subclass_quiet.backstab_bullets = { 1.1 }
+		self.definitions.subclass_quiet_backstab_bullets = {
+			name_id = "menu_quiet_grave",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "backstab_bullets",
+				category = "subclass_quiet"
+			}
+		}
+		
+		self.values.subclass_quiet.unnoticed_damage_bonus = { 1.1 }
+		self.definitions.subclass_quiet_unnoticed_damage_bonus = {
+			name_id = "menu_quiet_grave",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "unnoticed_damage_bonus",
+				category = "subclass_quiet"
 			}
 		}
 		
@@ -1337,7 +1446,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.values.player.drill_shock_trap_alert = {true}
 		self.values.player.drill_shock_trap_duration = {5}
 		
-		--Dealer
+		--Dealer (not yet implemented)
+		
+		
+		
 		
 		--Fixer
 		

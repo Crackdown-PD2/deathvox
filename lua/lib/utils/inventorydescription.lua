@@ -258,13 +258,9 @@ local func_create_list = InventoryDescription._create_list
 
 					if stat.name == "damage" then
 						multiplier = managers.blackmarket:damage_multiplier(name, weapon_tweak.categories, silencer, detection_risk, nil, blueprint)
-						--[[
-						--not yet implemented (assassin/toxic shock)
-								--also this needs to be implemented in the actual effects part and not just the inventory stats preview
-						for _,subclass_id in pairs(subclasses) do 
-							multiplier = multiplier + managers.player:upgrade_value(subclass,"subclass_damage_multiplier",0)
+						for _,subclass in pairs(subclasses) do 
+							multiplier = multiplier * managers.player:upgrade_value(subclass,"subclass_damage_mul",1)
 						end
-						--]]
 						
 						modifier = math.floor(managers.blackmarket:damage_addend(name, weapon_tweak.categories, silencer, detection_risk, nil, blueprint) * tweak_data.gui.stats_present_multiplier * multiplier)
 						
@@ -275,18 +271,11 @@ local func_create_list = InventoryDescription._create_list
 					elseif stat.name == "recoil" then
 						multiplier = managers.blackmarket:recoil_multiplier(name, weapon_tweak.categories, silencer, blueprint)
 						modifier = managers.blackmarket:recoil_addend(name, weapon_tweak.categories, base_index, silencer, blueprint, nil, is_single_shot) * tweak_data.gui.stats_present_multiplier
-						for _,subclass_id in pairs(subclasses) do 
-							--modifier = modifier + managers.player:upgrade_value(subclass_id,"subclass_recoil_addend",0) 
-							--not yet implemented (assassin/killer's notebook aced)
-								--also this needs to be implemented in the actual effects part and not just the inventory stats preview
-						end
 					elseif stat.name == "suppression" then
 						multiplier = managers.blackmarket:threat_multiplier(name, weapon_tweak.categories, silencer)
 					elseif stat.name == "concealment" then
 						for _,subclass_id in pairs(subclasses) do 
-							--modifier = modifier + managers.player:upgrade_value(subclass_id,"subclass_concealment_addend")
-							--not yet implemented (assassin/comfortable silence)
-								--also this needs to be implemented in the actual effects part and not just the inventory stats preview
+							modifier = modifier + managers.player:upgrade_value(subclass_id,"subclass_concealment_addend")
 						end
 					
 						if silencer and managers.player:has_category_upgrade("player", "silencer_concealment_increase") then
@@ -305,22 +294,6 @@ local func_create_list = InventoryDescription._create_list
 						if (single_mod or (weapon_tweak.FIRE_MODE == "single" and not weapon_tweak.CAN_TOGGLE_FIREMODE)) and primary_class == "class_shotgun" then 
 							multiplier = multiplier + managers.player:upgrade_value("class_shotgun","shell_games_rof_bonus",0)
 						end
---[[
-						
-								--not yet implemented;
-								--this is pseudocode with placeholder upgrade ids and functions!
-								--also this needs to be implemented in the actual effects part and not just the inventory stats preview
-						if managers.player:has_category_upgrade("subclass_quiet","subclass_fire_rate_for_low_detection_risk") then 
-							local mul_add = 0
-							local detection_risk_bonus_rate,detection_risk_bonus_cap,detection_risk_bonus_interval,detection_risk_bonus_threshold = unpack(managers.player:upgrade_value("subclass_quiet","subclass_fire_rate_for_low_detection_risk",{})
-							if table.contains(subclasses,"subclass_quiet") then 
-								local detection_risk = managers.blackmarket:get_detection_risk() or whatever
-								local detection_bonus_stacks = math.floor((detection_risk_bonus_threshold - detection_risk) / detection_risk_bonus_interval)
-								mul_add = mul_add + math.min(detection_risk_bonus_cap,detection_risk_bonus_rate * detection_bonus_stacks)
-							end
-						end
-	--]]					
-						
 					end
 
 					if modifier ~= 0 then

@@ -27,8 +27,9 @@ RaycastWeaponBase.TRAIL_EFFECT = Idstring("effects/particles/weapons/weapon_trai
 
 Hooks:PostHook(RaycastWeaponBase,"init","deathvox_init_weapon_classes",function(self,unit)
 	self:set_weapon_class(tweak_data.weapon[self._name_id].primary_class)
-	--todo check blueprint for class-/subclass-modifying attachments
-	self._subclasses = tweak_data.weapon[self._name_id].subclasses and table.deep_map_copy(tweak_data.weapon[self._name_id].subclasses) or {}
+	local name_id = self._name_id
+	self._subclasses = tweak_data.weapon[self._name_id].subclasses and table.deep_map_copy(tweak_data.weapon[name_id].subclasses) or {}
+	--init; reset elsewhere
 end)
 
 function RaycastWeaponBase:get_weapon_class()
@@ -175,8 +176,14 @@ function RaycastWeaponBase:check_autoaim(from_pos, direction, max_dist, use_aim_
 end
 
 function RaycastWeaponBase:setup(setup_data, damage_multiplier)
+	
+	local name_id = self._name_id
+	local blueprint = self._blueprint
+	self:set_weapon_class(managers.weapon_factory:get_primary_weapon_class_from_blueprint(name_id,blueprint))
+	self._subclasses = managers.weapon_factory:get_weapon_subclasses_from_blueprint(name_id,blueprint)
+
 	self._autoaim = setup_data.autoaim
-	local stats = tweak_data.weapon[self._name_id].stats
+	local stats = tweak_data.weapon[name_id].stats
 	self._alert_events = setup_data.alert_AI and {} or nil
 	self._alert_fires = {}
 	local weapon_stats = tweak_data.weapon.stats
@@ -198,11 +205,11 @@ function RaycastWeaponBase:setup(setup_data, damage_multiplier)
 			if not stat then
 				self["_" .. tostring(i)] = weapon_stats[i][5]
 
-				debug_pause("[RaycastWeaponBase] Weapon \"" .. tostring(self._name_id) .. "\" is missing stat \"" .. tostring(i) .. "\"!")
+				debug_pause("[RaycastWeaponBase] Weapon \"" .. tostring(name_id) .. "\" is missing stat \"" .. tostring(i) .. "\"!")
 			end
 		end
 	else
-		debug_pause("[RaycastWeaponBase] Weapon \"" .. tostring(self._name_id) .. "\" is missing stats block!")
+		debug_pause("[RaycastWeaponBase] Weapon \"" .. tostring(name_id) .. "\" is missing stats block!")
 
 		self._zoom = 60
 		self._alert_size = 5000
@@ -222,7 +229,7 @@ function RaycastWeaponBase:setup(setup_data, damage_multiplier)
 	end
 
 	self._setup = setup_data
-	self._fire_mode = self._fire_mode or tweak_data.weapon[self._name_id].FIRE_MODE or "single"
+	self._fire_mode = self._fire_mode or tweak_data.weapon[name_id].FIRE_MODE or "single"
 
 	if self._setup.timer then
 		self:set_timer(self._setup.timer)
@@ -616,6 +623,9 @@ function RaycastWeaponBase:_get_current_damage(dmg_mul)
 		local rolling_cutter_data = managers.player:upgrade_value("saw","consecutive_damage_bonus",{0,0,0})
 		local rolling_cutter_stacks = managers.player:get_property("rolling_cutter_aced_stacks",0)
 		damage = damage * (1 + math.min(rolling_cutter_stacks * rolling_cutter_data[1],rolling_cutter_data[3]))
+	end
+	for _,subclass in pairs(self:get_weapon_subclasses()) do 
+		damage = damage * managers.player:upgrade_value(subclass,"weapon_subclass_damage_mul",1)
 	end
 	return damage
 end

@@ -12,3 +12,12 @@ tweak_data.projectiles.dv_grenadier_grenade = {
 	adjust_z = 0,
 	push_at_body_index = 0
 }
+
+tweak_data.dot_types = {
+	poison = {
+		damage_class = "PoisonBulletBase",
+		dot_damage = 150,
+		dot_length = 3,
+		hurt_animation_chance = 0
+	}
+}

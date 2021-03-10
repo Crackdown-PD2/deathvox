@@ -1,5 +1,8 @@
 function BlackMarketManager:recoil_addend(name, categories, recoil_index, silencer, blueprint, current_state, is_single_shot)
 	local addend = 0
+	local factory_id = managers.weapon_factory:get_factory_id_by_weapon_id(name)
+	
+	local subclasses = managers.weapon_factory:get_weapon_subclasses_from_blueprint(name,blueprint)
 	
 	--WHY, WHY WHY WHY WHY, WHY IS THIS HANDLED HERE, BUT SPREAD IS IN NEWRAYCASTWEAPONBASE, AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA its ok its just i spent like 10 mins trying to figure out where it was handled and i think this is dumb. 
 	--^ yeah same. -offy
@@ -10,27 +13,19 @@ function BlackMarketManager:recoil_addend(name, categories, recoil_index, silenc
 		index = index + managers.player:upgrade_value("player", "stability_increase_bonus_2", 0)
 		index = index + managers.player:upgrade_value(name, "recoil_index_addend", 0)
 
+	
 		for _, category in ipairs(categories) do
 			index = index + managers.player:upgrade_value(category, "recoil_index_addend", 0)
 		end
---		index = index + managers.player:upgrade_value(tweak_data.weapons[name].primary_class or "NO_WEAPON_CLASS","recoil_index_addend",0) --if we wanted to do it by tweakdata
 		
 		local pm = managers.player
 		local player_unit = pm:player_unit()
 		
-		if player_unit and alive(player_unit) then
-			if managers.player:has_category_upgrade("player", "shotgrouping_aced") and player_unit:movement():current_state():in_steelsight() then
-				for _, category in ipairs(categories) do
-					if category == "assault_rifle" or category == "smg" or category == "rapidfire" then 
-						index = index + 14
-						--log("index:" .. index .. "") 
-						--log("aw yeah")
-						break
-					end
-				end
-			end
+		for _,subclass in pairs(subclasses) do 
+			index = index + managers.player:upgrade_value(subclass,"subclass_stability_addend",0)
 		end
-
+		
+		
 		if managers.player:player_unit() and managers.player:player_unit():character_damage():is_suppressed() then
 			for _, category in ipairs(categories) do
 				if managers.player:has_team_category_upgrade(category, "suppression_recoil_index_addend") then
@@ -61,7 +56,7 @@ function BlackMarketManager:recoil_addend(name, categories, recoil_index, silenc
 			end
 		end
 
-		if blueprint and self:is_weapon_modified(managers.weapon_factory:get_factory_id_by_weapon_id(name), blueprint) then
+		if blueprint and self:is_weapon_modified(factory_id, blueprint) then
 			index = index + managers.player:upgrade_value("weapon", "modded_recoil_index_addend", 0)
 		end
 
@@ -77,6 +72,7 @@ function BlackMarketManager:recoil_addend(name, categories, recoil_index, silenc
 end
 
 function BlackMarketManager:fire_rate_multiplier(name, categories, silencer, detection_risk, current_state, blueprint)
+	local subclasses = managers.weapon_factory:get_weapon_subclasses_from_blueprint(name,blueprint)
 	local multiplier = 1
 	multiplier = multiplier + 1 - managers.player:upgrade_value(name, "fire_rate_multiplier", 1)
 	multiplier = multiplier + 1 - managers.player:upgrade_value("weapon", "fire_rate_multiplier", 1)
@@ -85,15 +81,44 @@ function BlackMarketManager:fire_rate_multiplier(name, categories, silencer, det
 		multiplier = multiplier + 1 - managers.player:upgrade_value(category, "fire_rate_multiplier", 1)
 	end
 	
-	for _, category in ipairs(categories) do
-		if category == "quiet" or silencer then
-			local detection_risk_add_firerate = managers.player:upgrade_value("player", "professionalschoice")
+	for _, subclass in pairs(subclasses) do
+		if managers.player:has_category_upgrade(subclass,"subclass_detection_risk_rof_bonus") then 
+			local detection_risk_add_firerate = managers.player:upgrade_value(subclass, "subclass_detection_risk_rof_bonus")
 			multiplier = multiplier - managers.player:get_value_from_risk_upgrade(detection_risk_add_firerate, detection_risk)
 			--log("multiplier is: " .. multiplier .. "")
-			
-			break
 		end
+		
 	end
 
 	return self:_convert_add_to_mul(multiplier)
 end
+
+function BlackMarketManager:_calculate_weapon_concealment(weapon)
+	local factory_id = weapon.factory_id
+	local weapon_id = weapon.weapon_id or managers.weapon_factory:get_weapon_id_by_factory_id(factory_id)
+	local blueprint = weapon.blueprint
+	local base_stats = tweak_data.weapon[weapon_id].stats
+	local modifiers_stats = tweak_data.weapon[weapon_id].stats_modifiers
+	local bonus = 0
+	
+	local subclasses = managers.weapon_factory:get_weapon_subclasses_from_blueprint(weapon_id,blueprint)
+
+	if not base_stats or not base_stats.concealment then
+		return 0
+	end
+
+	local bonus_stats = {}
+
+	if weapon.cosmetics and weapon.cosmetics.id and weapon.cosmetics.bonus and not managers.job:is_current_job_competitive() and not managers.weapon_factory:has_perk("bonus", factory_id, blueprint) then
+		bonus_stats = tweak_data:get_raw_value("economy", "bonuses", tweak_data.blackmarket.weapon_skins[weapon.cosmetics.id].bonus, "stats") or {}
+	end
+
+	local parts_stats = managers.weapon_factory:get_stats(factory_id, blueprint)
+	
+	for _,subclass_id in pairs(subclasses) do 
+		bonus = bonus + managers.player:upgrade_value(subclass_id,"subclass_concealment_addend")
+	end
+
+	return (base_stats.concealment + bonus + (parts_stats.concealment or 0) + (bonus_stats.concealment or 0)) * (modifiers_stats and modifiers_stats.concealment or 1)
+end
+
