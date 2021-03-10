@@ -1446,57 +1446,59 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		})
 		
 
-		--Sapper (not yet implemented)
+		--Sapper
 		replace_skill(tree_indices.sapper,1,{ --Home Improvements
 			{
 				upgrades = {
-					
+					"player_drill_upgrade_interaction_speed_multiplier",
+					"player_drill_alert",
+					"player_silent_drill"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_home_improvements",
 			desc_id = "menu_home_improvements_desc",
 			icon_xy = {
-				0 or 0,
-				0 or 0
+				0,
+				6
 			}
 		})
 		replace_skill(tree_indices.sapper,2,{ --Perfect Alignment
 			{
 				upgrades = {
-					
+					"player_drill_place_interaction_speed_multiplier"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"player_drill_speed_multiplier1",
+					"player_drill_speed_multiplier2"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_perfect_alignment",
 			desc_id = "menu_perfect_alignment_desc",
 			icon_xy = {
-				0 or 0,
-				0 or 1
+				0,
+				7
 			}
 		})
 		replace_skill(tree_indices.sapper,3,{ --Static Defense
 			{
 				upgrades = {
-					
+--					"player_drill_shock_trap_1"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+--					"player_drill_shock_trap_2"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -1504,67 +1506,67 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			desc_id = "menu_static_defense_desc",
 			icon_xy = {
 				0 or 0,
-				0 or 2
+				0 or 8
 			}
 		})
 		replace_skill(tree_indices.sapper,4,{ --Routine Maintenance
 			{
 				upgrades = {
-					
+					"player_drill_fix_interaction_speed_multiplier"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"player_drill_melee_hit_restart_chance_1"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_routine_maintenance",
 			desc_id = "menu_routine_maintenance_desc",
 			icon_xy = {
-				0 or 0,
-				0 or 3
+				0,
+				9
 			}
 		})
 		replace_skill(tree_indices.sapper,5,{ --Automatic Reboot
 			{
 				upgrades = {
-					
+					"player_drill_autorepair_1"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"player_drill_autorepair_2"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_automatic_reboot",
 			desc_id = "menu_automatic_reboot_desc",
 			icon_xy = {
-				0 or 0,
-				0 or 4
+				0,
+				10
 			}
 		})
 		replace_skill(tree_indices.sapper,6,{ --Explosive Impatience
 			{
 				upgrades = {
-					
+					"shape_charge_quantity_increase_1"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"shape_charge_quantity_increase_2"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_explosive_impatience",
 			desc_id = "menu_explosive_impatience_desc",
 			icon_xy = {
-				0 or 0,
-				0 or 5
+				0,
+				11
 			}
 		})
 		

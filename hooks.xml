@@ -109,6 +109,8 @@
 	<!-- stealth skill change
 	<post :script_path="units/props/securitycamera.lua" :hook_id="units/props/securitycamera"/>
 	-->
+	<post :script_path="units/props/drill.lua" :hook_id="units/props/drill"/>
+	
 	<post :script_path="utils/inventorydescription.lua" :hook_id="utils/inventorydescription" />
 	
 	<post :script_path="units/contourext.lua" :hook_id="units/contourext"/>

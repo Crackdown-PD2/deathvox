@@ -11,7 +11,7 @@ if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		
 		self.trip_mine.quantity = {
 			0,
-			8 --should be 4 base, +2 and +2 from the sapper tree = 8 max total, but the sapper tree isn't implemented so you all get the max by default until then. merry kithmas -offy
+			4
 		}
 		
 		self.tripmine_throwable = {

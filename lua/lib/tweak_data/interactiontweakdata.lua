@@ -1,5 +1,5 @@
-Hooks:PostHook(InteractionTweakData, "init", "cd_interact_timer_stuff", function(self, tweak_data)
-	if deathvox:IsTotalCrackdownEnabled() then
+if deathvox:IsTotalCrackdownEnabled() then
+	Hooks:PostHook(InteractionTweakData, "init", "tcd_interactiontweakdata_init", function(self, tweak_data)
 		self.take_pardons.timer = 0		
 		self.take_pardons.sound_start = "money_grab"	
 		self.take_pardons.sound_event = "money_grab"	
@@ -8,6 +8,66 @@ Hooks:PostHook(InteractionTweakData, "init", "cd_interact_timer_stuff", function
 		self.gage_assignment.sound_start = "money_grab"	
 		self.gage_assignment.sound_event = "money_grab"	
 		self.gage_assignment.sound_done = "money_grab"	
+		
+		self.drill.upgrade_timer_multiplier = {
+			upgrade = "drill_place_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.drill_upgrade.upgrade_timer_multiplier = {
+			upgrade = "drill_upgrade_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.suburbia_drill.upgrade_timer_multiplier = {
+			upgrade = "drill_place_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.suburbia_drill_jammed.upgrade_timer_multiplier = {
+			upgrade = "drill_fix_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.apartment_drill_jammed.upgrade_timer_multiplier = {
+			upgrade = "drill_fix_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.goldheist_drill.upgrade_timer_multiplier = {
+			upgrade = "drill_place_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.goldheist_drill_jammed.upgrade_timer_multiplier = {
+			upgrade = "drill_fix_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.huge_lance.upgrade_timer_multiplier = {
+			upgrade = "drill_place_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.huge_lance_jammed.upgrade_timer_multiplier = {
+			upgrade = "drill_fix_interaction_speed_multiplier",
+			category = "player"
+		}
+		
+		
+		self.gen_int_saw_upgrade.upgrade_timer_multiplier = {
+			upgrade = "drill_upgrade_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.secret_stash_saw.upgrade_timer_multiplier = {
+			upgrade = "drill_place_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.apartment_saw.upgrade_timer_multiplier = {
+			upgrade = "drill_place_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.hospital_saw.upgrade_timer_multiplier = {
+			upgrade = "drill_place_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.gen_int_saw.upgrade_timer_multiplier = {
+			upgrade = "drill_place_interaction_speed_multiplier",
+			category = "player"
+		}
+		
 		
 		self.first_aid_kit.upgrade_timer_multipliers = {
 			{
@@ -76,6 +136,6 @@ Hooks:PostHook(InteractionTweakData, "init", "cd_interact_timer_stuff", function
 		self.trip_mine.requires_upgrade = nil
 		self.trip_mine.interact_distance = 2000
 		self.shaped_sharge.timer = 1
-	end
+	end)
+end
 	
-end)
