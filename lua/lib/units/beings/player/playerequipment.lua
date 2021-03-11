@@ -196,7 +196,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				local closest_rev_dis = managers.player:upgrade_value("first_aid_kit", "auto_revive", 0) --init as max distance
 
 				if closest_rev_dis > 0 then
-					local nearby_criminals = worlg_g:find_units_quick(unit, "sphere" , dummy_pos, closest_rev_dis, slot_manager:get_mask("criminals_no_deployables"))
+					local nearby_criminals = world_g:find_units_quick(unit, "sphere" , dummy_pos, closest_rev_dis, slot_manager:get_mask("criminals_no_deployables"))
 
 					for i = 1, #nearby_criminals do
 						local criminal = nearby_criminals[i]
