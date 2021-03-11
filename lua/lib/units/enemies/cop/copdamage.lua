@@ -858,7 +858,7 @@ function CopDamage:damage_bullet(attack_data)
 			managers.player:on_headshot_dealt()
 
 			headshot_by_player = true
-			headshot_multiplier = managers.player:upgrade_value("weapon", "passive_headshot_damage_multiplier", 1) + headshot_mul_addend
+			headshot_multiplier = headshot_multiplier * (managers.player:upgrade_value("weapon", "passive_headshot_damage_multiplier", 1) + headshot_mul_addend)
 		end
 	end
 
@@ -1792,6 +1792,7 @@ function CopDamage:damage_melee(attack_data)
 
 	local result = nil
 	local is_civilian, is_gangster, is_cop = nil
+	local attacker_is_main_player = attack_data.attacker_unit == managers.player:player_unit()
 
 	if CopDamage.is_civilian(self._unit:base()._tweak_table) then
 		is_civilian = true
@@ -1804,8 +1805,13 @@ function CopDamage:damage_melee(attack_data)
 	local head = self._head_body_name and not self._unit:in_slot(16) and not self._char_tweak.ignore_headshot and attack_data.col_ray.body and attack_data.col_ray.body:name() == self._ids_head_body_name
 	local damage = attack_data.damage
 	local damage_effect = attack_data.damage_effect
+	
+	local damage_multiplier = 1
+	local headshot_multiplier = 1
 
-	if attack_data.attacker_unit == managers.player:player_unit() then
+	local can_headshot = false
+	if attacker_is_main_player then
+		can_headshot = managers.player:has_category_upgrade("class_melee","can_headshot") and not self._char_tweak.ignore_headshot
 		local critical_hit, crit_damage = self:roll_critical_hit(attack_data)
 
 		if critical_hit then
@@ -1831,7 +1837,20 @@ function CopDamage:damage_melee(attack_data)
 
 		if not is_civilian and tweak_data.achievement.cavity.melee_type == attack_data.name_id then
 			managers.achievment:award(tweak_data.achievement.cavity.award)
-		end		
+		end
+		if head and can_headshot then 
+			attack_data.headshot = head
+				
+			if not self._damage_reduction_multiplier then
+				if self._char_tweak.headshot_dmg_mul then
+					headshot_multiplier = headshot_multiplier * self._char_tweak.headshot_dmg_mul
+				end
+			end
+		
+			managers.player:on_headshot_dealt()
+			headshot_multiplier = headshot_multiplier * managers.player:upgrade_value("weapon", "passive_headshot_damage_multiplier", 1)
+		end
+		
 	end
 
 	if self._marked_dmg_mul then
@@ -1839,8 +1858,8 @@ function CopDamage:damage_melee(attack_data)
 		damage_effect = damage_effect * self._marked_dmg_mul
 	end
 	
-	local damage_multiplier = 1
 	damage_multiplier = self:_get_incoming_damage_multiplier(damage_multiplier)
+	damage_multiplier = damage_multiplier * headshot_multiplier
 	damage = damage * damage_multiplier 
 
 	damage = self:_apply_damage_reduction(damage)
@@ -1952,6 +1971,9 @@ function CopDamage:damage_melee(attack_data)
 		managers.statistics:killed_by_anyone(data)
 
 		if head then
+			if can_headshot then 
+				managers.player:on_lethal_headshot_dealt(attack_data.attacker_unit,attack_data)
+			end
 			if data.name == "deathvox_grenadier" then
 				self._unit:damage():run_sequence_simple("grenadier_glass_break")
 			else
@@ -1963,7 +1985,7 @@ function CopDamage:damage_melee(attack_data)
 			end
 		end
 
-		if attack_data.attacker_unit == managers.player:player_unit() then
+		if attacker_is_main_player then
 			local special_comment = self:_check_special_death_conditions("melee", attack_data.col_ray.body, attack_data.attacker_unit, attack_data.name_id)
 
 			self:_comment_death(attack_data.attacker_unit, self._unit, special_comment)
@@ -2001,7 +2023,7 @@ function CopDamage:damage_melee(attack_data)
 	end
 
 	--only check for achievements if the attacker is the local player and they're alive (to be more specific, if their unit still exists)
-	if attack_data.attacker_unit == managers.player:player_unit() and tweak_data.blackmarket.melee_weapons[attack_data.name_id] then
+	if attacker_is_main_player and tweak_data.blackmarket.melee_weapons[attack_data.name_id] then
 		local achievements = tweak_data.achievement.enemy_melee_hit_achievements or {}
 		local melee_type = tweak_data.blackmarket.melee_weapons[attack_data.name_id].type
 		local enemy_base = self._unit:base()

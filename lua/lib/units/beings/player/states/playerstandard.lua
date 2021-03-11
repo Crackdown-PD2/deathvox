@@ -639,6 +639,7 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 	if col_ray and alive(col_ray.unit) then
 		local damage, damage_effect = managers.blackmarket:equipped_melee_weapon_damage_info(charge_lerp_value)
 		local damage_effect_mul = math.max(managers.player:upgrade_value("player", "melee_knockdown_mul", 1), managers.player:upgrade_value(self._equipped_unit:base():weapon_tweak_data().categories and self._equipped_unit:base():weapon_tweak_data().categories[1], "melee_knockdown_mul", 1))
+			--^knockdown effect goes here when melee weapons overhaul is in
 		damage = damage * managers.player:get_melee_dmg_multiplier()
 		damage_effect = damage_effect * damage_effect_mul
 		col_ray.sphere_cast_radius = sphere_cast_radius
@@ -697,7 +698,6 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 
 		managers.rumble:play("melee_hit", nil, nil, custom_data)
 		managers.game_play_central:physics_push(col_ray)
-
 		local character_unit, shield_knock = nil
 		local can_shield_knock = managers.player:has_category_upgrade("player", "shield_knock")
 
@@ -707,11 +707,17 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 		end
 
 		character_unit = character_unit or hit_unit
+		local target_is_civilian = managers.enemy:is_civilian(character_unit)
 
 		if character_unit:character_damage() and character_unit:character_damage().damage_melee then
 			local dmg_multiplier = 1
 
-			if not managers.enemy:is_civilian(character_unit) and not managers.groupai:state():is_enemy_special(character_unit) then
+			dmg_multiplier = dmg_multiplier + managers.player:upgrade_value("class_melee","weapon_class_damage_mul",0)
+			local stacking_deck_add_mul = managers.player:get_temporary_property("shuffle_cut_melee_bonus_damage",0)
+
+			dmg_multiplier = dmg_multiplier + stacking_deck_add_mul
+			
+			if not target_is_civilian and not managers.groupai:state():is_enemy_special(character_unit) then
 				dmg_multiplier = dmg_multiplier * managers.player:upgrade_value("player", "non_special_melee_multiplier", 1)
 			else
 				dmg_multiplier = dmg_multiplier * managers.player:upgrade_value("player", "melee_damage_multiplier", 1)
@@ -719,6 +725,7 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 
 			dmg_multiplier = dmg_multiplier * managers.player:upgrade_value("player", "melee_" .. tostring(tweak_data.blackmarket.melee_weapons[melee_entry].stats.weapon_type) .. "_damage_multiplier", 1)
 
+			
 			if managers.player:has_category_upgrade("melee", "stacking_hit_damage_multiplier") then
 				self._state_data.stacking_dmg_mul = self._state_data.stacking_dmg_mul or {}
 				self._state_data.stacking_dmg_mul.melee = self._state_data.stacking_dmg_mul.melee or {
@@ -794,13 +801,14 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 					stack[2] = 0
 				end
 			end
-
+			if not character_unit:character_damage():dead() then 
+				Hooks:Call("OnPlayerMeleeHit",character_unit,col_ray,action_data,defense_data,t)
+			end
 			local defense_data = character_unit:character_damage():damage_melee(action_data)
 
 			self:_check_melee_dot_damage(col_ray, defense_data, melee_entry)
 			self:_perform_sync_melee_damage(hit_unit, col_ray, action_data.damage)
 			
-			Hooks:Call("OnPlayerMeleeHit",character_unit,col_ray,action_data,defense_data,t)
 			
 			return defense_data
 		else
@@ -907,6 +915,44 @@ function PlayerStandard:_update_reload_timers(t, dt, input)
 end
 
 if deathvox:IsTotalCrackdownEnabled() then 
+
+	function PlayerStandard:_do_action_throw_projectile(t, input, drop_projectile)
+		local current_state_name = self._camera_unit:anim_state_machine():segment_state(self:get_animation("base"))
+		self._state_data.throwing_projectile = nil
+		local projectile_entry = managers.blackmarket:equipped_projectile()
+		local projectile_data = tweak_data.blackmarket.projectiles[projectile_entry]
+		self._state_data.projectile_expire_t = t + projectile_data.expire_t
+		self._state_data.projectile_repeat_expire_t = t + math.min(projectile_data.repeat_expire_t, projectile_data.expire_t)
+
+		managers.network:session():send_to_peers_synched("play_distance_interact_redirect", self._unit, "throw_grenade")
+
+		self._state_data.projectile_global_value = projectile_data.anim_global_param or "projectile_frag"
+
+		self._camera_unit:anim_state_machine():set_global(self._state_data.projectile_global_value, 1)
+		self._ext_camera:play_redirect(self:get_animation("projectile_throw"))
+		self:_stance_entered()
+		
+		if managers.player:has_category_upgrade("class_throwing","projectile_charged_damage_mul") then 
+			local held_time = self._state_data.projectile_start_t and (t - self._state_data.projectile_start_t)
+			local charge_time_threshold,damage_mul_addend = unpack(managers.player:upgrade_value("class_throwing","projectile_charged_damage_mul",{math.huge,0}))
+			if held_time and held_time >= charge_time_threshold then 
+				managers.player:set_property("charged_throwable_damage_bonus",damage_mul_addend)
+			end
+		end
+	end
+
+	function PlayerStandard:_get_melee_charge_lerp_value(t, offset)
+		offset = offset or 0
+		local melee_entry = managers.blackmarket:equipped_melee_weapon()
+		local max_charge_time = tweak_data.blackmarket.melee_weapons[melee_entry].stats.charge_time / (1 + managers.player:upgrade_value("class_melee","melee_charge_speed_mul",0))
+
+		if not self._state_data.melee_start_t then
+			return 0
+		end
+
+		return math.clamp(t - self._state_data.melee_start_t - offset, 0, max_charge_time) / max_charge_time
+	end
+
 	Hooks:PreHook(PlayerStandard,"_check_action_interact","totalcrackdown_sentry_checkclosemenu",function(self,t, input)
 		--if tcd's sentry control menu is open, close it when interact button is pressed again
 		--also, conditionally select mode (same as left-clicking any option) if settings and holding allow
@@ -1464,8 +1510,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 							self._unit:sound_source():post_event(equipment_data.sound_start)
 						end
 					elseif input.btn_projectile_release and self._held_throwable_equipment then
-						--the check for self._held_throwable_equipment is necessary because for some kithforsaken reason,
-						--input.btn_projectile_release is set true on releasing the interact key
 						self._held_throwable_equipment = nil
 						self:_play_equip_animation()
 						

@@ -203,7 +203,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				
 			--heavy
 				menu_collateral_damage = "Collateral Damage",
-				menu_collateral_damage_desc = "BASIC: ##$basic##\n\n(NOT YET IMPLEMENTED) $ICN_HVY Heavy Weapons deal ##50%## of their damage in a ##0.25## meter radius around the bullet trajectory.\n\nACE: ##$pro##\n$ICN_HVY Heavy Weapons ADS ##50%## faster.",
+				menu_collateral_damage_desc = "BASIC: ##$basic##\n\n$ICN_HVY Heavy Weapons deal ##50%## of their damage in a ##0.25## meter radius around the bullet trajectory.\n\nACE: ##$pro##\n$ICN_HVY Heavy Weapons ADS ##50%## faster.",
 				menu_death_grips = "Death Grips",
 				menu_death_grips_desc = "BASIC: ##$basic##\n$ICN_HVY Heavy Weapons gain ##+4## Accuracy and ##+4## Stability for 8 seconds per kill, stacking up to ##10## times.\n\nACE: ##$pro##\nAccuracy bonus increased to ##+8##.",
 				menu_bulletstorm = "Bulletstorm",
@@ -310,13 +310,13 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_value_bet_desc = "BASIC: ##$basic##\n$ICN_THR Throwing Weapons can be charged, dealing ##+100%## Damage after being held for ##1## second.\n\nACE: ##$pro##\n$ICN_MEL Melee Weapons gain ##+100%## Charge Speed.",
 			
 				menu_face_value = "Face Value",
-				menu_face_value_desc = "BASIC: ##$basic##\nIncreases the Knockdown strength of your $ICN_MEL Melee Weapons by ##one stage##.\n\nACE: ##$pro##\nAttacking a Shield with any $ICN_MEL Melee Weapon will stagger them.",
+				menu_face_value_desc = "BASIC: ##$basic##\n(NOT YET IMPLEMENTED) Increases the Knockdown strength of your $ICN_MEL Melee Weapons by ##one stage##.\n\nACE: ##$pro##\nAttacking a Shield with any $ICN_MEL Melee Weapon will stagger them.",
 			
 				menu_stacking_deck = "Stacking the Deck",
 				menu_stacking_deck_desc = "BASIC: ##$basic##\n$ICN_THR Throwing Weapons gain ##+50%## Ammunition.\n\nACE: ##$pro##\n$ICN_THR Throwing Weapons gain ##+100%## increased Velocity, increasing their speed and range.",
 			
 				menu_shuffle_and_cut = "Shuffle and Cut",
-				menu_shuffle_and_cut_desc = "BASIC: ##$basic##\nHitting an enemy with a $ICN_THR Throwing Weapon grants ##+500%## Damage to your next $ICN_MEL Melee Weapon hit.\n\nACE: ##$pro##\nHitting an enemy with a $ICN_MEL Melee Weapon grants ##+500%## Damage to your next $ICN_THR Throwing Weapon hit.",
+				menu_shuffle_and_cut_desc = "BASIC: ##$basic##\nHitting an enemy with a $ICN_THR Throwing Weapon grants ##+500%## Damage to your $ICN_MEL Melee Weapons for ##5## seconds.\n\nACE: ##$pro##\nHitting an enemy with a $ICN_MEL Melee Weapon grants ##+500%## Damage to $ICN_THR Throwing Weapons for ##5## seconds.",
 			
 			
 			--fixer

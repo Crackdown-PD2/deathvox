@@ -8,6 +8,14 @@ Hooks:PostHook(PlayerManager,"_internal_load","deathvox_on_internal_load",functi
 		deathvox:ResetSessionSettings()
 	end
 --	Hooks:Call("TCD_OnGameStarted")
+
+	if deathvox:IsTotalCrackdownEnabled() then 
+		local grenade = managers.blackmarket:equipped_grenade()
+		self:_set_grenade({
+			grenade = grenade,
+			amount = self:get_max_grenades() --for some reason, in vanilla, spawn amount is math.min()'d with the DEFAULT amount 
+		})
+	end
 end)
 
 function PlayerManager:_chk_fellow_crimin_proximity(unit)
@@ -188,6 +196,33 @@ if deathvox:IsTotalCrackdownEnabled() then
 	
 
 	Hooks:PostHook(PlayerManager,"check_skills","deathvox_check_cd_skills",function(self)
+		
+		if self:has_category_upgrade("class_throwing","projectile_charged_damage_mul") then
+			self:set_property("charged_throwable_damage_bonus",0)
+		end
+		
+		if self:has_category_upgrade("class_throwing","throwing_boosts_melee_loop") then
+			local duration,value = unpack(self:upgrade_value("class_throwing","throwing_boosts_melee_loop",{0,0}))
+			self._message_system:register(Message.OnEnemyShot,"proc_shuffle_cut_basic",function(unit,attack_data)
+				local player = self:local_player()
+				if not alive(player) then 
+					return
+				end
+				local weapon_base = attack_data and attack_data.weapon_unit and attack_data.weapon_unit:base()
+				if not (weapon_base and weapon_base.is_weapon_class and weapon_base:is_weapon_class("class_throwing") and weapon_base._thrower_unit and weapon_base._thrower_unit == player) then 
+					return
+				end
+				self:activate_temporary_property("shuffle_cut_melee_bonus_damage",duration,value)
+			end)
+		end
+		
+		if self:has_category_upgrade("class_melee","melee_boosts_throwing_loop") then 
+			local duration,value = unpack(self:upgrade_value("class_melee","melee_boosts_throwing_loop",{0,0}))
+			Hooks:Add("OnPlayerMeleeHit","proc_shuffle_cut_aced",function(character_unit,col_ray,action_data,defense_data,t)
+				self:activate_temporary_property("shuffle_cut_throwing_bonus_damage",duration,value)
+			end)
+		end
+	
 		
 		if self:has_category_upgrade("weapon","xbow_headshot_instant_reload") then 
 		
@@ -756,15 +791,23 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 
 	function PlayerManager:get_max_grenades(grenade_id)
-		grenade_id = grenade_id or managers.blackmarket:equipped_grenade()
+		local eq_gr,eq_max = managers.blackmarket:equipped_grenade()
+		local max_amount = 0
+		if not grenade_id then 
+			grenade_id = eq_gr
+			max_amount = eq_max
+		end
 		local ptd = tweak_data.blackmarket.projectiles
 		local gtd = ptd and grenade_id and ptd[grenade_id]
 --		local max_amount = tweak_data:get_raw_value("blackmarket", "projectiles", grenade_id, "max_amount") or 0
-		local max_amount = 0
 		if gtd then 
 			max_amount = gtd.max_amount or max_amount
-			if gtd.is_a_grenade then 
-				max_amount = math.round(max_amount * self:upgrade_value("player","grenades_amount_increase_mul",1))
+			if gtd.throwable then
+				if gtd.is_a_grenade then 
+					max_amount = math.round(max_amount * self:upgrade_value("player","grenades_amount_increase_mul",1))
+				else
+					max_amount = math.round(max_amount * self:upgrade_value("class_throwing","throwing_amount_increase_mul",1))
+				end
 			end
 			max_amount = managers.modifiers:modify_value("PlayerManager:GetThrowablesMaxAmount", max_amount)
 		end

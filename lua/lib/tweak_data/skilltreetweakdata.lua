@@ -1,7 +1,7 @@
 
 
 Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
-	if deathvox and deathvox:IsTotalCrackdownEnabled() then
+	if deathvox:IsTotalCrackdownEnabled() then
 	
 	--replaces skills by position in the skilltree
 	--without having to look up the name (even you could just do it by list of names)
@@ -1572,77 +1572,78 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		
 		
 		
-		--Dealer (not yet implemented)
+		--Dealer
 		replace_skill(tree_indices.dealer,1,{ --High-Low Split
 			{
 				upgrades = {
-					
+					"weapon_swap_speed_multiplier"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"class_throwing_weapon_class_damage_mul",
+					"class_melee_weapon_class_damage_mul"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_high_low",
 			desc_id = "menu_high_low_desc",
 			icon_xy = {
-				0 or 2,
-				0 or 6
+				2,
+				6
 			}
 		})
 		replace_skill(tree_indices.dealer,2,{ --Wild Card
 			{
 				upgrades = {
-					
+					"melee_can_headshot"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"class_throwing_headshot_mul_addend"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_wild_card",
 			desc_id = "menu_wild_card_desc",
 			icon_xy = {
-				0 or 2,
-				0 or 7
+				2,
+				7
 			}
 		})
 		replace_skill(tree_indices.dealer,3,{ --Value Bet
 			{
 				upgrades = {
-					
+					"class_throwing_charged_damage"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"class_melee_charge_speed_mul"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_value_bet",
 			desc_id = "menu_value_bet_desc",
 			icon_xy = {
-				0 or 2,
-				0 or 8
+				2,
+				8
 			}
 		})
 		replace_skill(tree_indices.dealer,4,{ --Face Value
 			{
 				upgrades = {
-					
+--					"class_melee_knockdown_tier_increase"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"player_shield_knock"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -1650,47 +1651,47 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			desc_id = "menu_face_value_desc",
 			icon_xy = {
 				0 or 2,
-				0 or 9
+				2 or 9
 			}
 		})
 		replace_skill(tree_indices.dealer,5,{ --Stacking the Deck
 			{
 				upgrades = {
-					
+					"class_throwing_amount_increase_mul"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"class_throwing_projectile_velocity_mul"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_stacking_deck",
 			desc_id = "menu_stacking_deck_desc",
 			icon_xy = {
-				0 or 2,
-				0 or 10
+				2,
+				10
 			}
 		})
 		replace_skill(tree_indices.dealer,6,{ --Shuffle and Cut
 			{
 				upgrades = {
-					
+					"class_throwing_melee_loop"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"class_melee_throwing_loop"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_shuffle_and_cut",
 			desc_id = "menu_shuffle_and_cut_desc",
 			icon_xy = {
-				0 or 2,
-				0 or 11
+				2,
+				11
 			}
 		})
 		
@@ -1818,7 +1819,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		})
 		
 		
-		--Demolitions (not yet implemented)
+		--Demolitions (not fully implemented)
 		
 		replace_skill(tree_indices.demolitions,1,{ --Party Favors
 			{

@@ -20,6 +20,14 @@ Hooks:PostHook(BlackMarketTweakData, "_init_projectiles", "cdgren", function(sel
 			instant_use = true,
 			override_equipment_id = "tripmine_throwable" --reference key for corresponding data in equipmentstweakdata
 		}
-	
+		
+		self.projectiles.bow_poison_arrow.is_poison = true
+		self.projectiles.crossbow_poison_arrow.is_poison = true
+		self.projectiles.arblast_poison_arrow.is_poison = true
+		self.projectiles.frankish_poison_arrow.is_poison = true
+		self.projectiles.long_poison_arrow.is_poison = true
+		self.projectiles.wpn_prj_four.is_poison = true
+		self.projectiles.ecp_arrow_poison.is_poison = true
+		self.projectiles.elastic_arrow_poison.is_poison = true
 	end
 end)

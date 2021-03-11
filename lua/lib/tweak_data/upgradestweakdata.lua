@@ -1,7 +1,31 @@
 
 
-if deathvox:IsTotalCrackdownEnabled() then
-	Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_data)
+Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_data)
+	--create the tcd upgrade tables in all cases so that upgrade checks won't crash when the overhaul is not enabled
+	
+--weapon classification categories
+	self.values.NO_WEAPON_CLASS = {} --addresses weapons whose weapon class has not been implemented
+	self.values.class_rapidfire = self.values.class_rapidfire or {}
+	self.values.class_shotgun = self.values.class_shotgun or {}
+	self.values.class_precision = self.values.class_precision or {}
+	self.values.class_heavy = self.values.class_heavy or {}
+	self.values.class_specialist = self.values.class_specialist or {}
+	self.values.class_saw = self.values.class_saw or {}
+	self.values.class_grenade = self.values.class_grenade or {}
+	self.values.class_throwing = self.values.class_throwing or {}
+	self.values.class_melee = self.values.class_melee or {} 
+--weapon subclass categories
+	self.values.subclass_poison = self.values.subclass_poison or {}
+	self.values.subclass_quiet = self.values.subclass_quiet or {}
+	self.values.subclass_areadenial = self.values.subclass_areadenial or {}
+	
+	if deathvox:IsTotalCrackdownEnabled() then
+	
+		self.definitions.tripmine_throwable = {
+			category = "grenade"
+		}
+		table.insert(self.level_tree[0].upgrades,"tripmine_throwable")
+		
 		self.armor_plates_base = 4 --armor plates deployable
 		self.armor_plates_dmg_reduction = 0.85 -- damage_applied = kevlar_plates_dmg_reduction * incoming_damage, so eg. 0.9 = 10% damage reduction
 		
@@ -58,29 +82,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 			0.44
 		}
 		--stamina is unchanged
-	
-	--weapon classification categories
-		self.values.NO_WEAPON_CLASS = {} --addresses weapons whose weapon class has not been implemented
-		self.values.class_rapidfire = self.values.class_rapidfire or {}
-		self.values.class_shotgun = self.values.class_shotgun or {}
-		self.values.class_precision = self.values.class_precision or {}
-		self.values.class_heavy = self.values.class_heavy or {}
-		self.values.class_specialist = self.values.class_specialist or {}
-		self.values.class_saw = self.values.class_saw or {}
-		self.values.class_grenade = self.values.class_grenade or {}
-		self.values.class_throwing = self.values.class_throwing or {}
-		self.values.class_melee = self.values.class_melee or {} 
-	--weapon subclass categories
-		self.values.subclass_poison = self.values.subclass_poison or {}
-		self.values.subclass_quiet = self.values.subclass_quiet or {}
-		self.values.subclass_areadenial = self.values.subclass_areadenial or {}
-		
-		self.definitions.tripmine_throwable = {
-			category = "grenade"
-		}
-		table.insert(self.level_tree[0].upgrades,"tripmine_throwable")
-		
-
 		
 		--Taskmaster
 		
@@ -1446,7 +1447,129 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.values.player.drill_shock_trap_alert = {true}
 		self.values.player.drill_shock_trap_duration = {5}
 		
-		--Dealer (not yet implemented)
+		--Dealer
+		self.values.class_melee.weapon_class_damage_mul = {1.1}
+		self.definitions.class_melee_weapon_class_damage_mul = {
+			name_id = "menu_high_low",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "weapon_class_damage_mul",
+				category = "class_melee"
+			}
+		}
+		
+		self.values.class_throwing.weapon_class_damage_mul = {1.1}
+		self.definitions.class_throwing_weapon_class_damage_mul = {
+			name_id = "menu_high_low",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "weapon_class_damage_mul",
+				category = "class_throwing"
+			}
+		}
+		
+		self.values.class_melee.can_headshot = {true}
+		self.definitions.melee_can_headshot = {
+			name_id = "menu_wild_card",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "can_headshot",
+				category = "class_melee"
+			}
+		}	
+		
+		self.values.class_throwing.headshot_mul_addend = { 1 }
+		self.definitions.class_throwing_headshot_mul_addend = {
+			name_id = "menu_wild_card",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "headshot_mul_addend",
+				category = "class_throwing"
+			}
+		}
+		
+		self.values.class_throwing.projectile_charged_damage_mul = { {1,1} } -- after 1s charge, +100% damage
+		self.definitions.class_throwing_charged_damage = {
+			name_id = "menu_value_bet",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "projectile_charged_damage_mul",
+				category = "class_throwing"
+			}
+		}
+		self.values.class_melee.melee_charge_speed_mul = { 1 } --1 + 1 => double charge speed increase
+		self.definitions.class_melee_charge_speed_mul = {
+			name_id = "menu_value_bet",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "melee_charge_speed_mul",
+				category = "class_melee"
+			}
+		}
+		
+		self.values.class_melee.knockdown_tier_increase = { 1 }
+		self.definitions.class_melee_knockdown_tier_increase = {
+			name_id = "menu_face_value",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "knockdown_tier_increase",
+				category = "class_melee"
+			}
+		}
+		
+		self.values.class_throwing.throwing_amount_increase_mul = {1.5}
+		self.definitions.class_throwing_amount_increase_mul = {
+			name_id = "menu_stacking_deck",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "throwing_amount_increase_mul",
+				category = "class_throwing"
+			}
+		}
+		
+		self.values.class_throwing.projectile_velocity_mul = { 2 }
+		self.definitions.class_throwing_projectile_velocity_mul = {
+			name_id = "menu_stacking_deck",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "projectile_velocity_mul",
+				category = "class_throwing"
+			}
+		}
+		
+		--award this on throwing weapon hit
+		self.values.class_throwing.throwing_boosts_melee_loop = { {5,5} } --5s duration,+500% damage
+		self.definitions.class_throwing_melee_loop = {
+			name_id = "menu_shuffle_cut",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "throwing_boosts_melee_loop",
+				category = "class_throwing"
+			}
+		}
+		
+		--award this on melee hit
+		self.values.class_melee.melee_boosts_throwing_loop = { {5,5} } --5s duration,+500% damage
+		self.definitions.class_melee_throwing_loop = {
+			name_id = "menu_shuffle_cut",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "melee_boosts_throwing_loop",
+				category = "class_melee"
+			}
+		}
+		
 		
 		
 		
@@ -1843,5 +1966,5 @@ if deathvox:IsTotalCrackdownEnabled() then
 			0.5,
 			1
 		}
-	end)
-end	
+	end
+end)
