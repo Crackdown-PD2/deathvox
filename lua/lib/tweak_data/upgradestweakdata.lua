@@ -831,12 +831,22 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			0.2
 		}
 		self.definitions.player_carry_movement_penalty_reduction = {
-			name_id = "menu_heave_ho_aced",
+			name_id = "menu_heave_ho",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "heave_ho",
 				category = "player"
+			}
+		}
+		self.values.carry.can_sprint_with_bag = {true}
+		self.definitions.carry_can_sprint_with_bag = {
+			name_id = "menu_heave_ho",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "can_sprint_with_bag",
+				category = "carry"
 			}
 		}
 		

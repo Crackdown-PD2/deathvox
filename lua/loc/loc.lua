@@ -221,7 +221,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_butterfly_bee = "Float Like A Butterfly",
 				menu_butterfly_bee_desc = "BASIC: ##$basic##\n$ICN_MEL Melee Weapons can be swung and charged while Sprinting.\n\nACE: ##$pro##\n$ICN_MEL Melee Weapon damage increases your Movement Speed by ##+10%## for ##4## seconds.",
 				menu_heave_ho = "Heave-Ho",
-				menu_heave_ho_desc = "BASIC: ##$basic##\nYou throw Bags ##50%## farther.\n\nACE: ##$pro##\nYour Movement Speed Penalty for carrying a Bag is reduced by ##20%##.",
+				menu_heave_ho_desc = "BASIC: ##$basic##\nYou throw Bags ##50%## farther.\n\nACE: ##$pro##\nYour Movement Speed Penalty for carrying a Bag is reduced by ##20%##, and you can ##Sprint while carrying a Bag##.",
 				menu_mobile_offense = "Mobile Offense",
 				menu_mobile_offense_desc = "BASIC: ##$basic##\nYou can now Reload while Sprinting.\n\nACE: ##$pro##\nYou can now hip-fire weapons while Sprinting.",
 				menu_escape_plan = "Escape Plan",

@@ -875,7 +875,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			},
 			{
 				upgrades = {
-					"player_carry_movement_penalty_reduction"
+					"player_carry_movement_penalty_reduction",
+					"carry_sprint_with_bag"
 				},
 				cost = self.costs.hightierpro
 			},
