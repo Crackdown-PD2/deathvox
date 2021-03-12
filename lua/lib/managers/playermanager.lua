@@ -1,4 +1,5 @@
 local mvec3_dis = mvector3.distance
+local mvec3_copy = mvector3.copy
 
 Hooks:PostHook(PlayerManager,"_internal_load","deathvox_on_internal_load",function(self)
 --this will send whenever the player respawns, so... hm. 
@@ -332,10 +333,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 					local first_ray = result.rays[1] 
 					local from = player:movement():current_state():get_fire_weapon_position()
 					--sort of cheating here by assuming the origin of the ray is the current fire position
-					local dir = mvector3.copy(first_ray.ray)
+					local dir = mvec3_copy(first_ray.ray)
 					local to
 					local hits = {}
-					
 					for n,ray in ipairs(result.rays) do 
 						local damage = weapon_base:_get_current_damage()
 						local dir = ray.ray or Vector3()
@@ -344,30 +344,50 @@ if deathvox:IsTotalCrackdownEnabled() then
 							damage = attack_data and attack_data.damage_raw or damage
 						end
 						damage = damage * damage_mul
-						
-						to = mvector3.copy(ray.hit_position or ray.position or Vector3())
+						if ray.unit then
+							hits[ray.unit:key()] = {
+								disabled = true
+							}
+						end
+						to = mvec3_copy(ray.hit_position or ray.position or Vector3())
 --						Draw:brush(Color.red:with_alpha(0.1),5):sphere(from,50)
 --						Draw:brush(Color.blue:with_alpha(0.1),5):sphere(to,50)
 --						Draw:brush(Color(1,n / #result.rays,1):with_alpha(0.1),5):cylinder(from,to,radius)
 						local grazed_enemies = World:raycast_all("ray", from, to, "sphere_cast_radius", radius, "disable_inner_ray", "slot_mask", slot_mask)
 						for _,hit in pairs(grazed_enemies) do 
-							hits[hit.unit:key()] = hit.unit
+							local hit_data = hits[hit.unit:key()]
+							local add_hit = not (hit_data and hit_data.disabled)
+							if add_hit and hit_data and hit_data.damage < damage then 
+								add_hit = false
+							end
+							if add_hit and hit.unit then 
+								hits[hit.unit:key()] = {
+									unit = hit.unit,
+									damage = damage,
+									attacker_unit = player,
+									pos = mvec3_copy(from),
+									attack_dir = mvec3_copy(dir)
+								}
+							end
 							--collect hits here to prevent the same enemy from being hit by multiple rays, in the case of penetrating or ricochet shots
 						end
 						
-						from = mvector3.copy(to)
+						from = mvec3_copy(to)
 					end
 
 					
-					for _,enemy in pairs(hits) do 
-						if enemy and enemy.character_damage and enemy:character_damage() then 
-							enemy:character_damage():damage_simple({
-								variant = "graze",
-								damage = damage,
-								attacker_unit = player,
-								pos = from,
-								attack_dir = dir
-							})
+					for _,hit_data in pairs(hits) do 
+						if not hit_data.disabled then 
+							local enemy = hit_data.unit
+							if enemy and enemy.character_damage and enemy:character_damage() then 
+								enemy:character_damage():damage_simple({
+									variant = "graze",
+									damage = hit_data.damage,
+									attacker_unit = hit_data.attacker_unit,
+									pos = hit_data.pos,
+									attack_dir = hit_data.attack_dir
+								})
+							end
 						end
 					end
 					
