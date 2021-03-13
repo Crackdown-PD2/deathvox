@@ -60,3 +60,13 @@ function HuskCopDamage:die(attack_data)
 	--to add later after adding some mutator fixes, if even wanted
 	--managers.mutators:notify(Message.OnCopDamageDeath, self, attack_data)
 end
+
+if deathvox:IsTotalCrackdownEnabled()
+	function HuskCopDamage:sync_net_event(event_id)
+		if event_id ~= 1 then
+			return
+		end
+
+		self._tased_time = tweak_data.upgrades.player.drill_shock_tase_time
+	end
+end
