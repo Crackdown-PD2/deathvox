@@ -1,4 +1,8 @@
-if deathvox:IsTotalCrackdownEnabled() then 
+if deathvox:IsTotalCrackdownEnabled() then
+	local mvec3_cpy = mvector3.copy
+	local alive_g = alive
+	local tostring_g = tostring
+
 	function Drill.get_upgrades(drill_unit, player)
 		local is_drill = drill_unit:base() and drill_unit:base().is_drill
 		local is_saw = drill_unit:base() and drill_unit:base().is_saw
@@ -154,7 +158,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 					--removed rng check
 				end
 
-				add_bg_icon_func(background_icons, "drillgui_icon_restarter", timer_gui_ext:get_upgrade_icon_color("upgrade_color_1"))
+				add_bg_icon_func(background_icons, "drillgui_icon_restarter", timer_gui_ext:get_upgrade_icon_color("upgrade_color_2"))
 			else
 				add_bg_icon_func(background_icons, "drillgui_icon_restarter", timer_gui_ext:get_upgrade_icon_color("upgrade_color_0"))
 			end
@@ -194,7 +198,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			self:_reset_melee_autorepair()
 			local drill_autorepair_delay = self._autorepair
 			if drill_autorepair_delay and not (self._autorepair_clbk_id or self._has_done_guaranteed_autorepair) then --check for has done autorepair flag
-				self._autorepair_clbk_id = "Drill_autorepair" .. tostring(self._unit:key())
+				self._autorepair_clbk_id = "Drill_autorepair" .. tostring_g(self._unit:key())
 				managers.enemy:add_delayed_clbk(self._autorepair_clbk_id, callback(self, self, "clbk_autorepair"), TimerManager:game():time() + drill_autorepair_delay)
 			end
 		elseif self._jammed_effect then
@@ -231,19 +235,20 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 
 	function Drill:set_autorepair(state)
-
 		local autorepair_upgrade_tier = 0
+
 		if self._skill_upgrades.auto_repair_level_2 then
 			autorepair_upgrade_tier = 2
 		elseif self._skill_upgrades.auto_repair_level_1 then
 			autorepair_upgrade_tier = 1
 		end
+
 		local drill_autorepair_delay = autorepair_upgrade_tier and tweak_data.upgrades.values.player.drill_auto_repair_guaranteed[autorepair_upgrade_tier]
-		
+
 		if not drill_autorepair_delay then
 			return
 		end
-		
+
 		if state and drill_autorepair_delay > 0 then 
 			self._autorepair = drill_autorepair_delay
 		else
@@ -257,7 +262,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 					return
 				end
 				
-				self._autorepair_clbk_id = "Drill_autorepair" .. tostring(self._unit:key())
+				self._autorepair_clbk_id = "Drill_autorepair" .. tostring_g(self._unit:key())
 
 				managers.enemy:add_delayed_clbk(self._autorepair_clbk_id, callback(self, self, "clbk_autorepair"), TimerManager:game():time() + drill_autorepair_delay)
 			end
@@ -271,60 +276,140 @@ if deathvox:IsTotalCrackdownEnabled() then
 	function Drill:clbk_autorepair()
 		self._autorepair_clbk_id = nil
 
-		if alive(self._unit) then
+		if alive_g(self._unit) then
 			self._has_done_guaranteed_autorepair = true --add flag since this can only happen once
 			self._unit:timer_gui():set_jammed(false)
 			self._unit:interaction():set_active(false, true)
 		end
 	end
 
-
-
-	do return end
-
-
 	function Drill:on_sabotage_SO_started(saboteur)
-		if not self._saboteur or self._saboteur:key() ~= saboteur:key() then
---			debug_pause_unit(self._unit, "[Drill:on_sabotage_SO_started] wrong saboteur", self._unit, saboteur, self._saboteur)
+		local my_unit = self._unit
+
+		--flag to set when enabling the upgrade for the first time, or after the cooldown expires
+		if self._use_static_defense then
+			local timer_manager = TimerManager:game()
+			local objective = saboteur:brain():objective()
+
+			managers.enemy:add_delayed_clbk("static_defense_clbk" .. tostring_g(saboteur:key()), function()
+				if not alive_g(my_unit) or not alive_g(self._saboteur) or not alive_g(saboteur) or self._saboteur:key() ~= saboteur:key() then
+					return
+				end
+
+				local cur_objective = saboteur:brain():objective()
+
+				if cur_objective ~= objective then
+					return
+				end
+
+				--enable once a sound is selected/added for this
+				--[[if self._static_defense_ace then
+					my_unit:sound_source():post_event("")
+					managers.network:session():send_to_peers_synched("sync_unit_event_id_16", my_unit, "base", 1)
+				end]]
+
+				self._use_static_defense = false
+
+				local hit_pos = saboteur:movement():m_com()
+				local attack_dir = hit_pos - objective.pos:with_z(hit_pos.z)
+				attack_dir = attack_dir:normalized()
+
+				managers.groupai:state():on_objective_failed(saboteur, objective)
+
+				saboteur:brain():action_request({
+					type = "idle",
+					body_part = 1,
+					non_persistent = true
+				})
+
+				local attack_data = {
+					damage = 0,
+					variant = "melee",
+					pos = mvec3_cpy(hit_pos),
+					attack_dir = attack_dir,
+					result = {
+						variant = "melee",
+						type = "taser_tased"
+					}
+				}
+
+				local dmg_ext = saboteur:character_damage()
+				dmg_ext._tased_time = tweak_data.upgrades.player.drill_shock_tase_time --to be used in huskcopdamage as well
+
+				managers.network:session():send_to_peers_synched("sync_unit_event_id_16", saboteur, "character_damage", 1)
+
+				dmg_ext:_call_listeners(attack_data)
+
+				local cooldown_time = self._static_defense_cooldown
+				local cooldown_id = "static_defense_cooldown_clbk" .. tostring_g(my_unit:key())
+				self._static_defense_cooldown_id = cooldown_id
+
+				managers.enemy:add_delayed_clbk(cooldown_id, function()
+					self._use_static_defense = true
+				end, timer_manager:time() + cooldown_time)
+			end, timer_manager:time() + 0.5)
+
+			return
 		end
 
 		self._saboteur = nil
-		
-		if true then  --if self._skill_upgrades.static_defense then --(not checked/synced yet)
-			return
-		end
-		
 
-		self._unit:timer_gui():set_jammed(true)
+		my_unit:timer_gui():set_jammed(true)
 
-		if not self._bain_report_sabotage_clbk_id then
-			self._bain_report_sabotage_clbk_id = "Drill_bain_report_sabotage" .. tostring(self._unit:key())
+		--the voiceline used here only applies to drills, so don't schedule the delayed callback unless the device is indeed a drill
+		if self.is_drill and not self._bain_report_sabotage_clbk_id then
+			self._bain_report_sabotage_clbk_id = "Drill_bain_report_sabotage" .. tostring_g(my_unit:key())
 
 			managers.enemy:add_delayed_clbk(self._bain_report_sabotage_clbk_id, callback(self, self, "clbk_bain_report_sabotage"), TimerManager:game():time() + 2 + 4 * math.random())
 		end
 	end
 
-	--Hooks:PostHook(Drill,"_unregister_sabotage_SO","blarghlblargh",function(self,...)
-	--	Log("Unregistered from sabotage " .. tostring(self._unit))
-	--	Log(tostring(debug.traceback()))
-	--end)
-
-	function Drill:on_sabotage_SO_completed(saboteur)
-		if true then  --if self._skill_upgrades.static_defense then --(not checked/synced yet)
-			local attack_data = {
-				damage = 0,
-				variant = "bullet",
-				pos = mvector3.copy(self._unit:position()),
-				attack_dir = Vector3(0,0,0),
-				attacker_unit = managers.player:local_player(),
-				result = {
-					variant = "bullet",
-					type = "taser_tased"
-				}
-			}
-			saboteur:character_damage():_call_listeners(attack_data)
+	function Drill:sync_net_event(event_id)
+		if event_id ~= 1 then
+			return
 		end
-		self._saboteur = nil
+
+		--my_unit:sound_source():post_event("")
 	end
 
+	--Hooks:PostHook(Drill,"_unregister_sabotage_SO","blarghlblargh",function(self,...)
+	--	Log("Unregistered from sabotage " .. tostring_g(self._unit))
+	--	Log(tostring_g(debug.traceback()))
+	--end)
+
+	local destroy_original = Drill.destroy
+	function Drill:destroy(...)
+		Drill.super.destroy(self, ...)
+		destroy_original(self)
+
+		local nav_tracker = self._nav_tracker
+
+		if nav_tracker then
+			managers.navigation:destroy_nav_tracker(nav_tracker)
+
+			self._nav_tracker = nil
+		end
+
+		local static_defense_cooldown_id = self._static_defense_cooldown_id
+
+		if static_defense_cooldown_id then
+			managers.enemy:remove_delayed_clbk(static_defense_cooldown_id)
+
+			self._static_defense_cooldown_id = nil
+		end
+	end
+else
+	local destroy_original = Drill.destroy
+	function Drill:destroy(...)
+		Drill.super.destroy(self, ...)
+		destroy_original(self)
+
+		local nav_tracker = self._nav_tracker
+
+		if nav_tracker then
+			managers.navigation:destroy_nav_tracker(nav_tracker)
+
+			self._nav_tracker = nil
+		end
+	end
 end
