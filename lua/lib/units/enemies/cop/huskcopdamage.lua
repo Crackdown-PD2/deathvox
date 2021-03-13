@@ -61,7 +61,7 @@ function HuskCopDamage:die(attack_data)
 	--managers.mutators:notify(Message.OnCopDamageDeath, self, attack_data)
 end
 
-if deathvox:IsTotalCrackdownEnabled()
+if deathvox:IsTotalCrackdownEnabled() then
 	function HuskCopDamage:sync_net_event(event_id)
 		if event_id ~= 1 then
 			return
