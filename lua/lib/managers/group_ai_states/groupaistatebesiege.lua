@@ -33,7 +33,7 @@ function GroupAIStateBesiege:init(group_ai_state)
 	self._tweak_data = tweak_data.group_ai[group_ai_state]
 	self._spawn_group_timers = {}
 	self._graph_distance_cache = {}
-	self:set_debug_draw_state(true) --Uncomment to debug AI stuff.
+	--self:set_debug_draw_state(true) --Uncomment to debug AI stuff.
 end
 
 function GroupAIStateBesiege:_draw_enemy_activity(t)
