@@ -261,57 +261,6 @@ function CopBrain:sync_net_event(event_id, peer)
 	end
 end
 
-function CopBrain:on_nav_link_unregistered(element_id)
-	if self._logic_data.pathing_results then
-		local failed_search_ids = nil
-
-		for path_name, path in pairs(self._logic_data.pathing_results) do
-			if type(path) == "table" and path[1] and type(path[1]) ~= "table" then
-				for i, nav_point in ipairs(path) do
-					if not nav_point.x and nav_point.script_data and nav_point:script_data().element._id == element_id then
-						failed_search_ids = failed_search_ids or {}
-						failed_search_ids[path_name] = true
-
-						break
-					end
-				end
-			end
-		end
-
-		if failed_search_ids then
-			for search_id, _ in pairs(failed_search_ids) do
-				self._logic_data.pathing_results[search_id] = "failed"
-			end
-		end
-	end
-
-	local paths = self._current_logic._get_all_paths and self._current_logic._get_all_paths(self._logic_data)
-
-	if not paths then
-		return
-	end
-
-	local verified_paths = {}
-
-	for path_name, path in pairs(paths) do
-		local path_is_ok = true
-
-		for i, nav_point in ipairs(path) do
-			if not nav_point.x and nav_point.script_data and nav_point:script_data().element._id == element_id then
-				path_is_ok = false
-
-				break
-			end
-		end
-
-		if path_is_ok then
-			verified_paths[path_name] = path
-		end
-	end
-
-	self._current_logic._set_verified_paths(self._logic_data, verified_paths)
-end
-
 function CopBrain:convert_to_criminal(mastermind_criminal)
 	if self._alert_listen_key then
 		managers.groupai:state():remove_alert_listener(self._alert_listen_key)
@@ -431,10 +380,6 @@ function CopBrain:convert_to_criminal(mastermind_criminal)
 	managers.network:session():send_to_peers_synched("sync_unit_converted", self._unit)
 end
 
-function CopBrain:clbk_pathing_results(search_id, path)
-    self:_add_pathing_result(search_id, path)
-end
-
 function CopBrain:clbk_alarm_pager(ignore_this, data)
 	local pager_data = self._alarm_pager_data
 	local clbk_id = pager_data.pager_clbk_id
@@ -500,8 +445,126 @@ function CopBrain:clbk_alarm_pager(ignore_this, data)
 		managers.enemy:add_delayed_clbk(self._alarm_pager_data.pager_clbk_id, callback(self, self, "clbk_alarm_pager"), TimerManager:game():time() + call_delay)
 	end
 end
+
+local next_g = next
+local pairs_g = pairs
+local type_g = type
+
+local on_nav_link_unregistered_original = CopBrain.on_nav_link_unregistered
+function CopBrain:on_nav_link_unregistered(element_id)
+	on_nav_link_unregistered_original(self, element_id)
+
+	if next_g(self._logic_data.active_searches) then
+		for search_id, search_type in pairs_g(self._logic_data.active_searches) do
+			if search_type ~= 2 then
+				self._nav_links_to_check = self._nav_links_to_check or {}
+				self._nav_links_to_check[search_id] = element_id
+			end
+		end
+	end
+end
+
+function CopBrain:clbk_pathing_results(search_id, path)
+	local dead_nav_links = self._nav_links_to_check
+
+	if dead_nav_links then
+		if path then
+			local element_id = dead_nav_links[search_id]
+
+			if element_id then
+				for i = 1, #path do
+					local nav_point = path[i]
+
+					if not nav_point.x and nav_point:script_data().element._id == element_id then
+						path = nil
+
+						break
+					end
+				end
+			end
+
+			dead_nav_links[search_id] = nil
+
+			if not next_g(dead_nav_links) then
+				dead_nav_links = nil
+			end
+		elseif dead_nav_links[search_id] then
+			dead_nav_links[search_id] = nil
+
+			if not next_g(dead_nav_links) then
+				dead_nav_links = nil
+			end
+		end
+
+		self._nav_links_to_check = dead_nav_links
+	end
+
+	self:_add_pathing_result(search_id, path)
+end
+
+function CopBrain:abort_detailed_pathing(search_id)
+	if not self._logic_data.active_searches[search_id] then
+		return
+	end
+
+	self._logic_data.active_searches[search_id] = nil
+
+	managers.navigation:cancel_pathing_search(search_id)
+
+	local dead_nav_links = self._nav_links_to_check
+
+	if dead_nav_links and dead_nav_links[search_id] then
+		dead_nav_links[search_id] = nil
+
+		if not next_g(dead_nav_links) then
+			dead_nav_links = nil
+		end
+
+		self._nav_links_to_check = dead_nav_links
+	end
+end
+
+function CopBrain:cancel_all_pathing_searches()
+	local dead_nav_links = self._nav_links_to_check
+	local contains_dead_nav_link = {}
+
+	for search_id, search_type in pairs_g(self._logic_data.active_searches) do
+		if search_type == 2 then
+			managers.navigation:cancel_coarse_search(search_id)
+		else
+			managers.navigation:cancel_pathing_search(search_id)
+
+			if dead_nav_links and dead_nav_links[search_id] then
+				contains_dead_nav_link[search_id] = true
+				dead_nav_links[search_id] = nil
+			end
+		end
+	end
+
+	if dead_nav_links and not next_g(dead_nav_links) then
+		self._nav_links_to_check = nil
+	end
 	
+	local path_results = self._logic_data.pathing_results
+
+	if path_results and next_g(path_results) then
+		for search_id, path in pairs_g(path_results) do
+			if path ~= "failed" and not contains_dead_nav_link[search_id] and type_g(path[1]) ~= "table" then
+				for i = 1, #path do
+					local nav_point = path[i]
+
+					if not nav_point.x and nav_point:script_data().element:nav_link_delay() then
+						nav_point:set_delay_time(0)
+					end
+				end
+			end
+		end
+	end
 	
+	self._logic_data.active_searches = {}
+	self._logic_data.pathing_results = nil
+end
+
 function CopBrain:on_suppressed(state)
     self._logic_data.is_suppressed = state or nil
 

@@ -197,9 +197,9 @@ function GroupAIStateBase:on_enemy_unregistered(unit)
 
 	if e_data.group then
 		self:_remove_group_member(e_data.group, u_key, dead)
+		self._last_killed_cop_t = self._t
 		if dead and self._task_data and self._task_data.assault and self._task_data.assault.active then
-			self:_voice_friend_dead(e_data.group)
-			self._last_killed_cop_t = self._t
+			self:_voice_friend_dead(e_data.group)	
 		end
 	end
 
@@ -935,14 +935,3 @@ function GroupAIStateBase:chk_unregister_irrelevant_attention_objects()
 		end
 	end
 end
-
-local _remove_group_member_ori = GroupAIStateBase._remove_group_member
-function GroupAIStateBase:_remove_group_member(group, u_key, is_casualty)
-	_remove_group_member_ori(self, group, u_key, is_casualty)
-	if is_casualty then
-		local unit_to_scream = group.units[math.random(#group.units)]
-		if unit_to_scream then
-			unit_to_scream:sound():say("buddy_died", true)
-		end
-	end
-end 
