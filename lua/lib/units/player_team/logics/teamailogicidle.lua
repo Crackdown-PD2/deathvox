@@ -1309,7 +1309,7 @@ function TeamAILogicIdle._check_should_relocate(data, my_data, objective)
 	local m_field_pos = movement_ext:nav_tracker():field_position()
 	local follow_unit_mov_ext = follow_unit:movement()
 	local follow_unit_field_pos = follow_unit_mov_ext:nav_tracker():field_position()
-	local max_allowed_dis_xy = 700 * 700
+	local max_allowed_dis_xy = 500 * 500
 	local max_allowed_dis_z = 200
 
 	local too_far = nil
