@@ -110,9 +110,8 @@
 	<post :script_path="units/equipment/sentry_gun/sentrygunequipment.lua" :hook_id="units/equipment/sentry_gun/sentrygunequipment"/>
 	<post :script_path="units/equipment/sentry_gun/sentrygunmovement.lua" :hook_id="units/equipment/sentry_gun/sentrygunmovement"/>
 	<post :script_path="units/interactions/interactionext.lua" :hook_id="units/interactions/interactionext"/>
-	<!-- stealth skill change
+	
 	<post :script_path="units/props/securitycamera.lua" :hook_id="units/props/securitycamera"/>
-	-->
 	<post :script_path="units/props/drill.lua" :hook_id="units/props/drill"/>
 	
 	<post :script_path="utils/inventorydescription.lua" :hook_id="utils/inventorydescription" />

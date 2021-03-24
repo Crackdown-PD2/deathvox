@@ -1244,12 +1244,12 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			15,
 			25
 		}
-		self.values.player.tape_loop_amount_unlimited = {
+		self.values.team.player.tape_loop_amount_unlimited = {
 			true
 		}
-		self.definitions.player_tape_loop_amount_unlimited = {
+		self.definitions.team_player_tape_loop_amount_unlimited = {
 			name_id = "menu_player_tape_loop_amount_unlimited",
-			category = "feature",
+			category = "team",
 			upgrade = {
 				value = 1,
 				upgrade = "tape_loop_amount_unlimited",

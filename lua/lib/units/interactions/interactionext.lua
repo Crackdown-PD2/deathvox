@@ -295,9 +295,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	end
 		
-		--[[
 	function SecurityCameraInteractionExt:check_interupt()
-		if not managers.player:has_category_upgrade("player","tape_loop_amount_unlimited") or alive(SecurityCamera.active_tape_loop_unit) then
+		if not SecurityCamera.can_start_new_tape_loop(self._unit) then
 			return true
 		end
 
@@ -305,13 +304,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 
 	function SecurityCameraInteractionExt:_interact_blocked(player)
-		if not managers.player:has_category_upgrade("player","tape_loop_amount_unlimited") or alive(SecurityCamera.active_tape_loop_unit) then
+		if not SecurityCamera.can_start_new_tape_loop(self._unit) then
 			return true, nil, "tape_loop_limit_reached"
 		end
 
 		return false
 	end
---]]
 	
 end
 

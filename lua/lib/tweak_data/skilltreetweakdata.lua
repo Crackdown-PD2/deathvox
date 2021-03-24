@@ -1268,7 +1268,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			},
 			{
 				upgrades = {
-					"player_tape_loop_amount_unlimited", --unlimited not yet functional
+					"team_player_tape_loop_amount_unlimited", --unlimited not yet functional
 					"player_tape_loop_duration_2"
 				},
 				cost = self.costs.hightierpro
@@ -1276,8 +1276,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_tuned_out",
 			desc_id = "menu_tuned_out_desc",
 			icon_xy = {
-				0 or 10,
-				1 or 3
+				10,
+				3
 			}
 		})
 		replace_skill(tree_indices.thief,5,{ --Electronic Warfare
