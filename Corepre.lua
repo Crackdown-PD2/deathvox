@@ -7,6 +7,7 @@ DeathvoxMapFramework:new()
 _G.deathvox = deathvox or {}
 --deathvox.ModPath = ModPath
 deathvox.update_url = "https://raw.githubusercontent.com/Crackdown-PD2/deathvox/autoupdate/meta.json"
+deathvox.ModPath = deathvoxcore and deathvoxcore:GetPath() or deathvox.ModPath
 deathvox.SavePath = SavePath
 deathvox.SaveName = "crackdown.txt"
 deathvox.SavePathFull = deathvox.SavePath .. deathvox.SaveName
@@ -127,7 +128,14 @@ function deathvox:SyncOptionsToClient(peer_id) --single target client; for late 
 end
 
 --load contents now, as well as on menu load
-deathvox:Load()	
+deathvox:Load()
+if deathvox:IsTotalCrackdownEnabled() then 
+	--load tcd skill icons
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree_2/icons_atlas_2"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/skilltree_2/icons_atlas_2.texture")
+else
+	--load vanilla skill icons (in case user launched with tcd but toggled off tcd and reloaded game state)
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree_2/icons_atlas_2"),Idstring("texture"),"guis/textures/pd2/skilltree_2/icons_atlas_2.texture")
+end
 
 -- Voice Framework Setup
 local C = blt_class()

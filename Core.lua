@@ -5,8 +5,8 @@ local file = file
 
 if not (_G.deathvox and deathvox.HAS_LOADED_ASSETS) then
 	_G.deathvox = deathvox or {}
-	deathvox.ModPath = ModPath
-	deathvox.SavePath = SavePath --probably safe to comment this one out since it's also in corepre. not gonna mess with it now though
+	deathvox.ModPath = deathvox.ModPath or ModPath
+	deathvox.SavePath = deathvox.SavePath or SavePath
 	deathvox.HAS_LOADED_ASSETS = true
 
 --loads radialmousemenu and sentrycontrolmenu (they don't do anything unless total cd is enabled)

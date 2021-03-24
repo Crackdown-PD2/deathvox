@@ -1,4 +1,4 @@
-<table name="Crackdown Music By Rainbowmaker">
+<table name="Crackdown Music By Rainbowmaker" min_lib_ver="4.3" global_key="deathvoxcore">
    <Localization directory="loc" default="en.txt"/>
 	<HeistMusic id="rb_dead_end" directory="music/rb_dead_end"> 
 		<event name="setup" start_source="stealth_intro.ogg" source="stealth.ogg"/>

@@ -785,13 +785,9 @@
 	<texture path="guis/textures/pd2/blackmarket/icons/grenades/tripmine_throwable" force="false"/>
 	
 	
-<!--todo figure out how to selectively load it based on if total crackdown is enabled, since this asset conflicts with vanilla's)
--->
-	<texture path="guis/textures/pd2/skilltree_2/icons_atlas_2" force="true"/>
-<!--temp disabled until i figure out how to selectively load it based on if BeardLibFileManager:ForceEarlyLoad() exists (Note: Repo version of BeardLib is required to use this, or else you will crash!)
+<!--Adds weapon class icons from TCD. Since this only overwrites a few characters in the box drawing character set, it is unlikely to conflict, and the additional overhead cost should be low. Requires BeardLib v4.3+. -->
 	<font path="fonts/tcd_weapon_class_icons" early_load = "true" load="true" unload="false" />
 	<texture path="fonts/tcd_weapon_class_icons" />
 	<merged_font path="fonts/font_small_mf" />
--->
 
 </table>
