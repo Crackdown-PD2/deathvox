@@ -3217,7 +3217,46 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_grenadier = deep_clone(presets.base)
 	self.deathvox_grenadier.tags = {"law", "custom", "special"}
 	self.deathvox_grenadier.experience = {}
-	self.deathvox_grenadier.weapon = deep_clone(presets.weapon.normal)
+	self.deathvox_grenadier.weapon = deep_clone(presets.weapon.normal) --Make sure this idiot doesnt keep firing silent shots goddamnit
+	self.deathvox_grenadier.weapon.is_heavy_rifle = {
+		aim_delay = {
+			0,
+			0
+		},
+		focus_delay = 0,
+		focus_dis = 200,
+		spread = 3,
+		miss_dis = 20,
+		RELOAD_SPEED = 1.4,
+		melee_speed = 1,
+		melee_dmg = 20,
+		melee_retry_delay = presets.weapon.expert.is_rifle.melee_retry_delay,
+		range = {
+			optimal = 4000,
+			far = 6000,
+			close = 3000
+		},
+		FALLOFF = {
+			{
+				dmg_mul = 1,
+				r = 100,
+				acc = {
+					1,
+					1
+				},
+				recoil = {
+					0.7,
+					0.7
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
+			}
+		}
+	}
 	self.deathvox_grenadier.melee_weapon = "knife_1"
 	self.deathvox_grenadier.melee_weapon_dmg_multiplier = 1
 	self.deathvox_grenadier.weapon_safety_range = 1000
@@ -4467,8 +4506,7 @@ function CharacterTweakData:_set_characters_weapon_preset(preset)
 		"deathvox_greendozer",
 		"deathvox_blackdozer",
 		"deathvox_lmgdozer",
-		"deathvox_medicdozer",
-		"deathvox_grenadier"
+		"deathvox_medicdozer"
 	}
 	for _, name in ipairs(all_units) do
 		
@@ -4560,8 +4598,7 @@ function CharacterTweakData:_set_specials_weapon_preset(preset)
 		"deathvox_greendozer",
 		"deathvox_blackdozer",
 		"deathvox_lmgdozer",
-		"deathvox_medicdozer",
-		"deathvox_grenadier"
+		"deathvox_medicdozer"
 	}
 	for _, name in ipairs(all_units) do
 		self[name].weapon = deep_clone(self.presets.weapon[preset])

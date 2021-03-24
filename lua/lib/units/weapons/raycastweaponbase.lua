@@ -1,3 +1,4 @@
+local TCDEnabled = deathvox:IsTotalCrackdownEnabled()
 local mvec3_set = mvector3.set
 local mvec3_add = mvector3.add
 local mvec3_dot = mvector3.dot
@@ -945,7 +946,14 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 	local weapon_base = weapon_unit:base()
 
 	local enable_ricochets = managers.player:has_category_upgrade("player", "ricochet_bullets")
-	critical_hit = critical_hit or self:calculate_crit(weapon_unit, user_unit)
+	
+	critical_hit = critical_hit
+	
+	if not critical_hit then
+		if TCDEnabled then
+			critical_hit = self:calculate_crit(weapon_unit, user_unit)
+		end
+	end
 	
 	local has_category = weapon_unit and alive(weapon_unit) and not weapon_base.thrower_unit and weapon_base.is_category
 	if enable_ricochets and not already_ricocheted and user_unit and user_unit == managers.player:player_unit() and col_ray.unit then
@@ -1137,7 +1145,11 @@ end
 function FlameBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage, blank)
 	local hit_unit = col_ray.unit
 	local play_impact_flesh = false
-	local critical_hit = self:calculate_crit(weapon_unit, user_unit)
+	local critical_hit = nil
+	
+	if TCDEnabled then
+		critical_hit = self:calculate_crit(weapon_unit, user_unit)
+	end
 
 	if hit_unit:damage() and col_ray.body:extension() and col_ray.body:extension().damage then
 		local sync_damage = not blank and hit_unit:id() ~= -1
@@ -1489,7 +1501,7 @@ function RaycastWeaponBase:is_heavy_weapon() --deprecated, do not use
 	return false
 end
 
-if deathvox:IsTotalCrackdownEnabled() then
+if TCDEnabled then
 
 	DOTBulletBase.DOT_DATA = {
 		hurt_animation_chance = 0,
@@ -1734,7 +1746,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return damage
 	end
 
-	
 	function FlameBulletBase:calculate_crit(weapon_unit, user_unit)
 		if not user_unit or user_unit ~= managers.player:player_unit() then
 			return nil
@@ -1761,7 +1772,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 		
 		return math.random() < crit_value
 	end
-	
 		
 	function InstantBulletBase:calculate_crit(weapon_unit, user_unit)
 		if not user_unit or user_unit ~= managers.player:player_unit() then

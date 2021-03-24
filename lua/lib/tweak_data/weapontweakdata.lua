@@ -388,7 +388,8 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_grenadier.looped_reload_speed = 10
 	self.deathvox_grenadier.timers = {reload_not_empty = 10}
 	self.deathvox_grenadier.timers.reload_empty = self.deathvox_grenadier.timers.reload_not_empty
-	self.deathvox_grenadier.auto.fire_rate = 1
+	self.deathvox_grenadier.fire_rate = 10.8 --ignore this
+	self.deathvox_grenadier.auto = nil --ignore this
 	self.deathvox_grenadier.hold = {
 		"bullpup",
 		"rifle"
