@@ -273,6 +273,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				self:set_weapon_class("class_grenade")
 				--not really used but might as well have it there
 			end
+			self._use_armor_piercing = projectile_td.can_pierce_armor
 		else
 --			log("TOTAL CRACKDOWN: Error! ProjectileBase:set_projectile_entry(" .. tostring(projectile_entry) .. "): No tweak entry for ".. tostring(entry))
 		end

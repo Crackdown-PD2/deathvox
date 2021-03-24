@@ -359,6 +359,7 @@ function CopDamage:damage_explosion(attack_data)
 
 	local attacker_unit = attack_data.attacker_unit
 	local weap_unit = attack_data.weapon_unit
+	local thrower_unit = weap_unit:base().thrower_unit
 
 	if attacker_unit and alive(attacker_unit) then
 		if attacker_unit:base() and attacker_unit:base().thrower_unit then
@@ -374,12 +375,12 @@ function CopDamage:damage_explosion(attack_data)
 	local is_civilian = CopDamage.is_civilian(self._unit:base()._tweak_table)
 	local damage = attack_data.damage
 	
-	--local critical_hit, crit_damage = self:roll_critical_hit(attack_data)
-
-	--if critical_hit then
-		--damage = crit_damage
-		--attack_data.critical_hit = true
-	--end	
+	local critical_hit, crit_damage = self:roll_critical_hit(attack_data)
+	if critical_hit then
+		managers.hud:on_crit_confirmed()
+		damage = crit_damage
+		attack_data.critical_hit = true
+	end	
 
 	if self._char_tweak.damage.explosion_damage_mul then
 		damage = damage * self._char_tweak.damage.explosion_damage_mul
@@ -491,7 +492,7 @@ function CopDamage:damage_explosion(attack_data)
 		if attacker_unit == managers.player:player_unit() then
 			if is_civilian then
 				managers.money:civilian_killed()
-			elseif alive(attacker_unit) and attack_data.weapon_unit and attack_data.weapon_unit:base().weapon_tweak_data and not attack_data.weapon_unit:base().thrower_unit and managers.player:has_category_upgrade("temporary", "overkill_damage_multiplier") and attack_data.weapon_unit:base().is_category and attack_data.weapon_unit:base():is_category("shotgun", "saw") then
+			elseif alive(attacker_unit) and attack_data.weapon_unit and attack_data.weapon_unit:base().weapon_tweak_data and not thrower_unit and managers.player:has_category_upgrade("temporary", "overkill_damage_multiplier") and attack_data.weapon_unit:base().is_category and attack_data.weapon_unit:base():is_category("shotgun", "saw") then
 				managers.player:activate_temporary_upgrade("temporary", "overkill_damage_multiplier")
 			end
 
@@ -713,7 +714,7 @@ function CopDamage:damage_bullet(attack_data)
 
 	local from_behind = mvec3_dot(mvec_1, mvec_2) >= 0
 	if self._has_plate and attack_data.col_ray.body and attack_data.col_ray.body:name() == self._ids_plate_name then
-		if attack_data.armor_piercing or attack_data.weapon_unit:base().thrower_unit then
+		if attack_data.armor_piercing or (attack_data.weapon_unit:base().thrower_unit and deathvox:IsTotalCrackdownEnabled()) then --icky
 			World:effect_manager():spawn({
 				effect = idstr_bullet_hit_blood,
 				position = attack_data.col_ray.position,
@@ -722,8 +723,8 @@ function CopDamage:damage_bullet(attack_data)
 		else
 			local armor_pierce_roll = math_random()
 			local armor_pierce_value = 0
-
-			if attacker_is_main_player then
+			local thrower_unit = attack_data.weapon_unit:base().thrower_unit
+			if attacker_is_main_player and not thrower_unit then
 				armor_pierce_value = armor_pierce_value + attack_data.weapon_unit:base():armor_piercing_chance()
 				armor_pierce_value = armor_pierce_value + managers.player:upgrade_value("player", "armor_piercing_chance", 0)
 				armor_pierce_value = armor_pierce_value + managers.player:upgrade_value("weapon", "armor_piercing_chance", 0)

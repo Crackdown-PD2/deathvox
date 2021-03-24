@@ -487,6 +487,11 @@ function ExplosionManager:detect_and_give_dmg(params)
 				damage = math_max(damage, 1)
 
 				if character and damage_character then
+				
+					local function roll_critical_hit(chance)
+						return math.random() >= chance
+					end
+					
 					local dead_before = hit_unit:character_damage():dead()
 					local action_data = {
 						variant = "explosion",
@@ -497,7 +502,7 @@ function ExplosionManager:detect_and_give_dmg(params)
 							position = hit_body:position(),
 							ray = dir
 						},
-						critical_hit = params.critical_hit,
+						critical_hit = params.critical_hit or params.critical_chance and roll_critical_hit(params.critical_chance),
 						ignite_character = params.ignite_character
 					}
 

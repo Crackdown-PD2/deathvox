@@ -1067,7 +1067,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 					managers.player:set_property("shuffle_cut_melee_bonus_damage",managers.player:upgrade_value("class_throwing","throwing_boosts_melee_loop",0))
 				end
 				
-				local throwing_weapon_add_mul = 0
+				local throwing_weapon_add_mul = 1
 				
 				if managers.player:has_category_upgrade("class_throwing","projectile_charged_damage_mul") then 
 					throwing_weapon_add_mul = throwing_weapon_add_mul + managers.player:get_property("charged_throwable_damage_bonus",0)
@@ -1083,7 +1083,6 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 		
 
 		pierce_armor = pierce_armor or weapon_base._use_armor_piercing
-		
 		if not blank then
 			local knock_down = weapon_base._knock_down and weapon_base._knock_down > 0 and math.random() < weapon_base._knock_down
 			result = self:give_impact_damage(col_ray, weapon_unit, user_unit, damage, pierce_armor, false, knock_down, weapon_base._stagger, weapon_base._variant, critical_hit)
@@ -1491,6 +1490,14 @@ function RaycastWeaponBase:is_heavy_weapon() --deprecated, do not use
 end
 
 if deathvox:IsTotalCrackdownEnabled() then
+
+	DOTBulletBase.DOT_DATA = {
+		hurt_animation_chance = 0,
+		dot_damage = 0.5,
+		dot_length = 6,
+		dot_tick_period = 0.5
+	}
+
 	function RaycastWeaponBase:replenish()
 		local ammo_max_multiplier = managers.player:upgrade_value("player", "extra_ammo_multiplier", 1)
 

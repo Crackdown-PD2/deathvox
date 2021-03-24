@@ -47,6 +47,72 @@ end)
 Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 	if deathvox then
 		if deathvox:IsTotalCrackdownEnabled() then
+		
+		
+			local weapon_class_icon_data = {
+				heavy = {
+					character = "─",
+					macro = "$ICN_HVY",
+				},
+				grenade = {
+					character = "┼",
+					macro = "$ICN_GRN"
+				},
+				area_denial = {
+					character = "═",
+					macro = "$ICN_ARD"
+				},
+				throwing = {
+					character = "╤",
+					macro = "$ICN_THR"
+				},
+				specialist = {
+					character = "╥",
+					macro = "$ICN_SPC"
+				},
+				shotgun = {
+					character = "╦",
+					macro = "$ICN_SHO"
+				},
+				saw = {
+					character = "╧",
+					macro = "$ICN_SAW"
+				},
+				rapidfire = {
+					character = "╨",
+					macro = "$ICN_RPF"
+				},
+				quiet = {
+					character = "╩",
+					macro = "$ICN_QUT"
+				},
+				precision = {
+					character = "╪",
+					macro = "$ICN_PRE"
+				},
+				poison = {
+					character = "╫",
+					macro = "$ICN_POI"
+				},
+				melee = {
+					character = "╬",
+					macro = "$ICN_MEL"
+				}
+			}
+
+
+
+			--bit of extra overhead here for tcd icons
+			LocalizationManager._orig_text = LocalizationManager.text
+			function LocalizationManager:text(...)
+				local result = self:_orig_text(...)
+				for class_id,weapon_icon_data in pairs(weapon_class_icon_data) do 
+					result = string.gsub(result,weapon_icon_data.macro,weapon_icon_data.character)
+				end
+				return result
+			end
+			
+			
 --			local interact_keybind = utf8.to_upper(loc:btn_macro("use_item")) 
 --			local grenade_keybind = utf8.to_upper(loc:btn_macro("throw_grenade")) 
 --apparently keybind macros aren't active in the throwables descriptions, but also controllermanager isn't initialized in time for this
@@ -115,6 +181,20 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				bm_equipment_trip_mine_desc = "Shaped Charges are explosive tools that can destroy specific obstacles or open containers. Hold $BTN_INTERACT on an object's displayed weak point to prime it with a Shaped Charge.\n\nWarning: Shaped Charges will only activate when all of an object's weak points are primed.",
 				hud_deploying_revive_fak = "Reviving $TEAMMATE_NAME...",
 				
+				bm_wpn_prj_four_desc = "$ICN_THR Throwing weapons coated in $ICN_POI Poison that deals 150 damage per 0.5 seconds for 3 seconds. $ICN_POI Poison damage can stack and can incapacitate targets.",
+				bm_wpn_prj_ace_desc = "$ICN_THR Throwing weapons disguised as playing cards that deal 200 damage. They can't penetrate body armor, but they come in large amounts.",
+				bm_wpn_prj_target_desc = "$ICN_THR Throwing weapons that deal 800 damage.",
+				bm_wpn_prj_hur_desc = "$ICN_THR Throwing weapons that deal 4000 damage and can punch through Body Armor.",
+				bm_wpn_prj_jav_desc = "$ICN_THR Throwing weapons that deal 1400 damage and can slice through Body Armor.",
+				
+				bm_grenade_frag_desc = "$ICN_GRN Grenade that deals 300 damage in a 10m radius.\nEach enemy hit has a 40% chance to take Critical damage from the explosion.",
+				bm_grenade_frag_com_desc = "$ICN_GRN Grenade that deals 1000 damage in a 5m radius.",
+				bm_dynamite_desc = "$ICN_GRN Grenade that deals 5000 damage in a 10m radius. Reduced stock.",
+				bm_grenade_dada_com_desc = "$ICN_GRN Grenade that deals 400 damage in a 2m radius and then splits into 7 miniature grenades that also deal 400 damage in a 2m radius.",
+				bm_concussion_desc = "$ICN_GRN Grenade that deals no damage, but Stuns enemies in an 8m radius for 4 seconds.\nStunned enemies suffer a -50% Accuracy penalty for 5 seconds after being Stunned.",
+				bm_grenade_molotov_desc = "$ICN_GRN Grenade that creates a 2.5m radius pool of flame for 15 seconds that deals 250 damage (50 vs allies) every 0.5 seconds.",
+				bm_grenade_fir_com_desc = "$ICN_GRN Grenade that creates a 1m radius pool of flame for 30 seconds that deals 250 damage (50 vs allies) every 0.5 seconds.",
+				
 				bm_equipment_sentry_gun_desc = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Enemies will ignore Sentry Guns, making them excellent for fire support.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.",
 				bm_equipment_sentry_gun_silent_desc = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Enemies will ignore Sentry Guns, making them excellent for fire support.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.",
 				bm_equipment_sentry_gun_silent_desc_UNUSED = cursed_error,
@@ -125,12 +205,10 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				debug_trip_mine = "Shaped Charges",
 			--misc
 				hud_int_pick_electronic_lock = "Hold $BTN_INTERACT to hack the lock",
-				hud_action_picking_electronic_lock = "Hacking the lock..."
-			})
+				hud_action_picking_electronic_lock = "Hacking the lock...",
 			
-			
-			
-			local tcd_skill_localizations = {
+			--skills:
+				
 			--taskmaster
 				menu_zip_it = "Zip It",
 				menu_zip_it_desc = "BASIC: ##$basic##\nCivilians are ##intimidated by the noise you make##. Shouting intimidates all Civilians within ##10## meters of the target.\n\nACE: ##$pro##\nIncreases your supply of Cable Ties to ##20##.",
@@ -354,71 +432,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_improv_expert = "Improv Expert",
 				menu_improv_expert_desc = "BASIC: ##$basic##\nEvery ##50## Ammo Boxes grants ##+1## $ICN_GRN Grenade. \n\nACE: ##$pro##\n Rocket Launchers and Flamethrowers can gain Ammunition from Ammo Boxes. Grenade Launchers gain ##+50%## Ammunition from Ammo Boxes.\n\nNote: This applies to both Ammo Boxes picked up by yourself and by teammates."
 			
-			}
-			
-			
-			--todo move this into core or somewhere else that can be referenced
-			--and/or add a macro function to localizationmanager to automate this
-			local weapon_class_icon_data = {
-				heavy = {
-					character = "─",
-					macro = "$ICN_HVY",
-				},
-				grenade = {
-					character = "┼",
-					macro = "$ICN_GRN"
-				},
-				area_denial = {
-					character = "═",
-					macro = "$ICN_ARD"
-				},
-				throwing = {
-					character = "╤",
-					macro = "$ICN_THR"
-				},
-				specialist = {
-					character = "╥",
-					macro = "$ICN_SPC"
-				},
-				shotgun = {
-					character = "╦",
-					macro = "$ICN_SHO"
-				},
-				saw = {
-					character = "╧",
-					macro = "$ICN_SAW"
-				},
-				rapidfire = {
-					character = "╨",
-					macro = "$ICN_RPF"
-				},
-				quiet = {
-					character = "╩",
-					macro = "$ICN_QUT"
-				},
-				precision = {
-					character = "╪",
-					macro = "$ICN_PRE"
-				},
-				poison = {
-					character = "╫",
-					macro = "$ICN_POI"
-				},
-				melee = {
-					character = "╬",
-					macro = "$ICN_MEL"
-				}
-			}
-			local tcd_skill_localizations_with_icons = {}
-			for id,text in pairs(tcd_skill_localizations) do 
-				for class_id,weapon_icon_data in pairs(weapon_class_icon_data) do 
-					text = string.gsub(text,weapon_icon_data.macro,weapon_icon_data.character)
-				end
-				tcd_skill_localizations_with_icons[id] = text
-			end
-			loc:add_localized_strings(tcd_skill_localizations_with_icons)
-			
-			
+			})
 		end
 		
 		--this is separate since some of these options are intended for menus, which are available regardless of whether or not the overhaul itself is enabled
