@@ -537,10 +537,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 						alpha = 0.1
 					})
 					local icon_size = 64
-					local icon_x,icon_y = 6,11 --bullseye
-					local skill_atlas = "guis/textures/pd2/skilltree/icons_atlas"
+					local icon_x,icon_y = unpack(tweak_data.skilltree.skills.triathlete.icon_xy) --triathlete is the skill that point and click replaced
+--					local skill_atlas = "guis/textures/pd2/skilltree/icons_atlas"
 					local skill_atlas_2 = "guis/textures/pd2/skilltree_2/icons_atlas_2"
-					local perkdeck_atlas = "guis/textures/pd2/specialization/icons_atlas"	
+--					local perkdeck_atlas = "guis/textures/pd2/specialization/icons_atlas"	
 
 					local icon = trackerhud:bitmap({
 						name = "icon",
