@@ -27,6 +27,13 @@ local idstr_bullet_hit_blood = Idstring("effects/payday2/particles/impacts/blood
 local alive_g = alive
 local world_g = World
 
+CopDamage.melee_knockback_tiers = {
+	[1] = false,
+	[2] = "light_hurt",
+	[3] = "hurt",
+	[4] = "heavy_hurt",
+	[5] = "expl_hurt"
+}
 
 Hooks:PostHook(CopDamage,"init","deathvox_copdamage_init",function(self,unit)
 	self._stuck_tripmines = {} --not used
@@ -359,7 +366,7 @@ function CopDamage:damage_explosion(attack_data)
 
 	local attacker_unit = attack_data.attacker_unit
 	local weap_unit = attack_data.weapon_unit
-	local thrower_unit = weap_unit:base().thrower_unit
+	local thrower_unit = weap_unit and weap_unit:base().thrower_unit
 
 	if attacker_unit and alive(attacker_unit) then
 		if attacker_unit:base() and attacker_unit:base().thrower_unit then
@@ -1917,7 +1924,7 @@ function CopDamage:damage_melee(attack_data)
 		attack_data.damage_effect = damage_effect
 
 		local result_type = nil
-
+		local is_tank = self._unit:base():has_tag("tank")
 		if attack_data.shield_knock and self._char_tweak.damage.shield_knocked and not self:is_immune_to_shield_knockback() then
 			result_type = "shield_knock"
 		elseif attack_data.variant == "counter_tased" then
@@ -1939,12 +1946,20 @@ function CopDamage:damage_melee(attack_data)
 					self._tased_down_time = self._tased_time * 2
 				end
 			end
-		elseif attack_data.variant == "counter_spooc" and not self._unit:base():has_tag("tank") and not self._unit:base():has_tag("boss") then
+		elseif attack_data.variant == "counter_spooc" and not is_tank and not self._unit:base():has_tag("boss") then
 			result_type = "expl_hurt"
 		end
 
 		if not result_type then
-			result_type = self:get_damage_type(damage_effect_percent, "melee")
+			if attack_data.knockback_tier then 
+				result_type = attack_data.knockback_tier and self.melee_knockback_tiers[math.min(#self.melee_knockback_tiers,attack_data.knockback_tier)]
+				if result_type == "expl_hurt" and is_tank then 
+					--expl_hurt is listed as a tier above hurt_heavy, but is not as severe an animation for bulldozers as hurt_heavy,
+					--so don't punish the player for being TOO GOOD at punching things
+					result_type = self.melee_knockback_tiers[4]
+				end
+			end
+			result_type = result_type or self:get_damage_type(damage_effect_percent, "melee")				
 		end
 
 		result = {

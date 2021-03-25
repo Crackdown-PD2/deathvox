@@ -621,8 +621,9 @@ local melee_vars = {
 }
 function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_entry, hand_id)
 	melee_entry = melee_entry or managers.blackmarket:equipped_melee_weapon()
-	local instant_hit = tweak_data.blackmarket.melee_weapons[melee_entry].instant
-	local melee_damage_delay = tweak_data.blackmarket.melee_weapons[melee_entry].melee_damage_delay or 0
+	local melee_td = tweak_data.blackmarket.melee_weapons[melee_entry]
+	local instant_hit = melee_td.instant
+	local melee_damage_delay = melee_td.melee_damage_delay or 0
 	local charge_lerp_value = instant_hit and 0 or self:_get_melee_charge_lerp_value(t, melee_damage_delay)
 
 	self._ext_camera:play_shaker(melee_vars[math.random(#melee_vars)], math.max(0.3, charge_lerp_value))
@@ -639,7 +640,6 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 	if col_ray and alive(col_ray.unit) then
 		local damage, damage_effect = managers.blackmarket:equipped_melee_weapon_damage_info(charge_lerp_value)
 		local damage_effect_mul = math.max(managers.player:upgrade_value("player", "melee_knockdown_mul", 1), managers.player:upgrade_value(self._equipped_unit:base():weapon_tweak_data().categories and self._equipped_unit:base():weapon_tweak_data().categories[1], "melee_knockdown_mul", 1))
-			--^knockdown effect goes here when melee weapons overhaul is in
 		damage = damage * managers.player:get_melee_dmg_multiplier()
 		damage_effect = damage_effect * damage_effect_mul
 		col_ray.sphere_cast_radius = sphere_cast_radius
@@ -723,7 +723,7 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 				dmg_multiplier = dmg_multiplier * managers.player:upgrade_value("player", "melee_damage_multiplier", 1)
 			end
 
-			dmg_multiplier = dmg_multiplier * managers.player:upgrade_value("player", "melee_" .. tostring(tweak_data.blackmarket.melee_weapons[melee_entry].stats.weapon_type) .. "_damage_multiplier", 1)
+			dmg_multiplier = dmg_multiplier * managers.player:upgrade_value("player", "melee_" .. tostring(melee_td.stats.weapon_type) .. "_damage_multiplier", 1)
 
 			
 			if managers.player:has_category_upgrade("melee", "stacking_hit_damage_multiplier") then
@@ -759,10 +759,13 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 				self._unit:character_damage():restore_health(managers.player:temporary_upgrade_value("temporary", "melee_life_leech", 1))
 			end
 
-			local special_weapon = tweak_data.blackmarket.melee_weapons[melee_entry].special_weapon
+			local special_weapon = melee_td.special_weapon
 			local action_data = {
-				variant = "melee"
+				variant = "melee",
 			}
+			if melee_td.stats.knockback_tier then 
+				action_data.knockback_tier = melee_td.stats.knockback_tier + math.floor(charge_lerp_value) + managers.player:upgrade_value("class_melee","knockdown_tier_increase",0) --only used in tcd
+			end
 
 			if special_weapon == "taser" then
 				action_data.variant = "taser_tased"
@@ -940,7 +943,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end
 		end
 	end
-
+	
 	function PlayerStandard:_get_melee_charge_lerp_value(t, offset)
 		offset = offset or 0
 		local melee_entry = managers.blackmarket:equipped_melee_weapon()
@@ -949,7 +952,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if not self._state_data.melee_start_t then
 			return 0
 		end
-
+		
 		return math.clamp(t - self._state_data.melee_start_t - offset, 0, max_charge_time) / max_charge_time
 	end
 
@@ -1560,7 +1563,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if not self:_is_throwing_grenade() then
 			return
 		end
-
+ 		local projectile_entry = managers.blackmarket:equipped_projectile()
+		local projectile_tweak = tweak_data.blackmarket.projectiles[projectile_entry]
 		if projectile_tweak.override_equipment_id then 
 			self:_interupt_action_use_throwable_equipment(t)
 

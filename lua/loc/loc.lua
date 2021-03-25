@@ -388,7 +388,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_value_bet_desc = "BASIC: ##$basic##\n$ICN_THR Throwing Weapons can be charged, dealing ##+100%## Damage after being held for ##1## second.\n\nACE: ##$pro##\n$ICN_MEL Melee Weapons gain ##+100%## Charge Speed.",
 			
 				menu_face_value = "Face Value",
-				menu_face_value_desc = "BASIC: ##$basic##\n(NOT YET IMPLEMENTED) Increases the Knockdown strength of your $ICN_MEL Melee Weapons by ##one stage##.\n\nACE: ##$pro##\nAttacking a Shield with any $ICN_MEL Melee Weapon will stagger them.",
+				menu_face_value_desc = "BASIC: ##$basic##\nIncreases the Knockdown strength of your $ICN_MEL Melee Weapons by ##one stage##.\n\nACE: ##$pro##\nAttacking a Shield with any $ICN_MEL Melee Weapon will stagger them.",
 			
 				menu_stacking_deck = "Stacking the Deck",
 				menu_stacking_deck_desc = "BASIC: ##$basic##\n$ICN_THR Throwing Weapons gain ##+50%## Ammunition.\n\nACE: ##$pro##\n$ICN_THR Throwing Weapons gain ##+100%## increased Velocity, increasing their speed and range.",

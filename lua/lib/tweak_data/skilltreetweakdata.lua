@@ -1638,7 +1638,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.dealer,4,{ --Face Value
 			{
 				upgrades = {
---					"class_melee_knockdown_tier_increase"
+					"class_melee_knockdown_tier_increase"
 				},
 				cost = self.costs.hightier
 			},
@@ -1651,8 +1651,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_face_value",
 			desc_id = "menu_face_value_desc",
 			icon_xy = {
-				0 or 2,
-				2 or 9
+				2,
+				9
 			}
 		})
 		replace_skill(tree_indices.dealer,5,{ --Stacking the Deck

@@ -26,13 +26,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 	
 	function Drill.create_upgrades(auto_repair_level, shock_trap_level, speed_upgrade_level, silent_drill, reduced_alert)
 		return {
-			auto_repair_level = auto_repair_level,
+			auto_repair_level = auto_repair_level or 0,
 			auto_repair_level_1 = 0, --auto_repair_level_1,
 			auto_repair_level_2 = 0, --auto_repair_level_2,
-			speed_upgrade_level = speed_upgrade_level,
+			speed_upgrade_level = speed_upgrade_level or 0,
 			silent_drill = silent_drill,
 			reduced_alert = reduced_alert,
-			shock_trap = shock_trap_level
+			shock_trap = shock_trap_level or 0
 		}
 	end
 
@@ -113,7 +113,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			local got_silent_drill = upgrades.silent_drill or false
 			local current_silent_drill = self._skill_upgrades.silent_drill or false
 			local auto_repair_level = upgrades.auto_repair_level or 0
-			local current_auto_repair_level = self._skill_upgrades.auto_repair_level
+			local current_auto_repair_level = self._skill_upgrades.auto_repair_level or 0
 			local shock_trap = upgrades.shock_trap or 0
 			local current_shock_trap = self._skill_upgrades.shock_trap or 0
 
