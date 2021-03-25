@@ -51,6 +51,7 @@ Hooks:PostHook(BlackMarketTweakData, "_init_projectiles", "cdgren", function(sel
 		self.projectiles.wpn_prj_jav.can_pierce_armor = true
 		self.projectiles.wpn_prj_jav.subclasses = {}
 		
+		self.projectiles.frag.impact_detonation = true
 		self.projectiles.frag.max_amount = 3
 		self.projectiles.frag.repeat_expire_t = 1.5
 		self.projectiles.frag.throw_allowed_expire_t = 0.1
@@ -58,6 +59,7 @@ Hooks:PostHook(BlackMarketTweakData, "_init_projectiles", "cdgren", function(sel
 		self.projectiles.frag.primary_class = "class_grenade"
 		self.projectiles.frag.subclasses = {}
 		
+		self.projectiles.frag_com.impact_detonation = true
 		self.projectiles.frag_com.max_amount = 3
 		self.projectiles.frag_com.repeat_expire_t = 1.5
 		self.projectiles.frag_com.throw_allowed_expire_t = 0.1
@@ -65,6 +67,7 @@ Hooks:PostHook(BlackMarketTweakData, "_init_projectiles", "cdgren", function(sel
 		self.projectiles.frag_com.primary_class = "class_grenade"
 		self.projectiles.frag_com.subclasses = {}
 		
+		self.projectiles.dynamite.impact_detonation = true
 		self.projectiles.dynamite.max_amount = 1
 		self.projectiles.dynamite.repeat_expire_t = 1.5
 		self.projectiles.dynamite.throw_allowed_expire_t = 0.1
@@ -72,6 +75,7 @@ Hooks:PostHook(BlackMarketTweakData, "_init_projectiles", "cdgren", function(sel
 		self.projectiles.dynamite.primary_class = "class_grenade"
 		self.projectiles.dynamite.subclasses = {}
 		
+		self.projectiles.dada_com.impact_detonation = true
 		self.projectiles.dada_com.max_amount = 3
 		self.projectiles.dada_com.repeat_expire_t = 1.5
 		self.projectiles.dada_com.throw_allowed_expire_t = 0.1
@@ -79,6 +83,7 @@ Hooks:PostHook(BlackMarketTweakData, "_init_projectiles", "cdgren", function(sel
 		self.projectiles.dada_com.primary_class = "class_grenade"
 		self.projectiles.dada_com.subclasses = {}
 		
+		self.projectiles.concussion.impact_detonation = true
 		self.projectiles.concussion.max_amount = 6
 		self.projectiles.concussion.repeat_expire_t = 1.5
 		self.projectiles.concussion.throw_allowed_expire_t = 0.1
@@ -93,6 +98,7 @@ Hooks:PostHook(BlackMarketTweakData, "_init_projectiles", "cdgren", function(sel
 		self.projectiles.molotov.primary_class = "class_grenade"
 		self.projectiles.molotov.subclasses = {"subclass_areadenial"}
 		
+		self.projectiles.fir_com.impact_detonation = true
 		self.projectiles.fir_com.max_amount = 6
 		self.projectiles.fir_com.repeat_expire_t = 1.5
 		self.projectiles.fir_com.throw_allowed_expire_t = 0.1

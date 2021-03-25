@@ -4,6 +4,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local tweak_entry = tweak_data.projectiles[grenade_entry]
 		self._critical_chance = tweak_entry.critical_chance
 		self._child_clusters = tweak_entry.child_clusters
+		if tweak_entry.slot_mask_id then 
+			self._slot_mask = managers.slot:get_mask(tweak_entry.slot_mask_id)
+		end
+		self._cant_be_shot_to_detonate = tweak_entry._cant_be_shot_to_detonate
 	end)
 
 	function FragGrenade:_detonate(tag, unit, body, other_unit, other_body, position, normal, collision_velocity, velocity, other_velocity, new_velocity, direction, damage, ...)
@@ -40,13 +44,17 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self._unit:set_slot(0)
 	end
 
---[[
-	function FragGrenade:_detonate_on_client()
-		local pos = self._unit:position()
-		local range = self._range
+	
+	function FragGrenade:bullet_hit()
+		if self._cant_be_shot_to_detonate then 
+			return
+		elseif not Network:is_server() then
+			return
+		end
+			
+		self._timer = nil
 
-		managers.explosion:give_local_player_dmg(pos, range, self._player_damage)
-		managers.explosion:explode_on_client(pos, math.UP, nil, self._damage, range, self._curve_pow, self._custom_params)
+		self:_detonate()
 	end
-	--]]
+
 end

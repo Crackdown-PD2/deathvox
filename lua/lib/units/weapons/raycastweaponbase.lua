@@ -1505,8 +1505,8 @@ if TCDEnabled then
 
 	DOTBulletBase.DOT_DATA = {
 		hurt_animation_chance = 0,
-		dot_damage = 0.5,
-		dot_length = 6,
+		dot_damage = 15,
+		dot_length = 3,
 		dot_tick_period = 0.5
 	}
 
