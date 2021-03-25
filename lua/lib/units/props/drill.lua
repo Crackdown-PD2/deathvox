@@ -11,8 +11,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if is_drill or is_saw then
 			local player_skill = PlayerSkill
 			upgrades = {
-				auto_repair_level_1 = player_skill.skill_level("player", "drill_autorepair_1", 0, player),
-				auto_repair_level_2 = player_skill.skill_level("player", "drill_autorepair_2", 0, player),
+				auto_repair_level = player_skill.skill_level("player", "drill_autorepair_1", 0, player) + player_skill.skill_level("player", "drill_autorepair_2", 0, player),
+				auto_repair_level_1 = player_skill.skill_level("player", "drill_autorepair_1", 0, player), --
+				auto_repair_level_2 = player_skill.skill_level("player", "drill_autorepair_2", 0, player), --
 				speed_upgrade_level = player_skill.skill_level("player", "drill_speed_multiplier", 0, player),
 				silent_drill = player_skill.has_skill("player", "silent_drill", player),
 				reduced_alert = player_skill.has_skill("player", "drill_alert_rad", player),
@@ -21,6 +22,18 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 
 		return upgrades
+	end
+	
+	function Drill.create_upgrades(auto_repair_level, shock_trap_level, speed_upgrade_level, silent_drill, reduced_alert)
+		return {
+			auto_repair_level = auto_repair_level,
+			auto_repair_level_1 = 0, --auto_repair_level_1,
+			auto_repair_level_2 = 0, --auto_repair_level_2,
+			speed_upgrade_level = speed_upgrade_level,
+			silent_drill = silent_drill,
+			reduced_alert = reduced_alert,
+			shock_trap = shock_trap_level
+		}
 	end
 
 
@@ -46,7 +59,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if self._disable_upgrades then
 			return
 		end
-		
+		butt = self --!
 		local background_icons = {}
 		local timer_gui_ext = self._unit:timer_gui()
 		local background_icon_template = {
@@ -99,10 +112,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 			local current_reduced_alert = self._skill_upgrades.reduced_alert or false
 			local got_silent_drill = upgrades.silent_drill or false
 			local current_silent_drill = self._skill_upgrades.silent_drill or false
-			local auto_repair_level_1 = upgrades.auto_repair_level_1 or 0
-			local auto_repair_level_2 = upgrades.auto_repair_level_2 or 0
-			local current_auto_repair_level_1 = self._skill_upgrades.auto_repair_level_1 or 0
-			local current_auto_repair_level_2 = self._skill_upgrades.auto_repair_level_2 or 0
+			local auto_repair_level = upgrades.auto_repair_level or 0
+			local current_auto_repair_level = self._skill_upgrades.auto_repair_level
+			local shock_trap = upgrades.shock_trap or 0
+			local current_shock_trap = self._skill_upgrades.shock_trap or 0
 
 			timer_gui_ext:set_timer_multiplier(timer_multiplier)
 
@@ -127,41 +140,44 @@ if deathvox:IsTotalCrackdownEnabled() then
 				add_bg_icon_func(background_icons, "drillgui_icon_silent", timer_gui_ext:get_upgrade_icon_color("upgrade_color_0"))
 			end
 			local do_set_autorepair
-			if auto_repair_level_1 > 0 or current_auto_repair_level_1 > 0 or auto_repair_level_2 > 0 or current_auto_repair_level_2 > 0 then
-				
-				upgrades.auto_repair_level_1 = current_auto_repair_level_1
-				upgrades.auto_repair_level_2 = current_auto_repair_level_2
-				local drill_autorepair_chance = 0
-
-				if current_auto_repair_level_1 < auto_repair_level_1 then
-					current_auto_repair_level_1 = auto_repair_level_1
-					upgrades.auto_repair_level_1 = auto_repair_level_1
-				end
-
-				if current_auto_repair_level_2 < auto_repair_level_2 then
-					current_auto_repair_level_2 = auto_repair_level_2
-					upgrades.auto_repair_level_2 = auto_repair_level_2
-				end
-
-				if current_auto_repair_level_1 > 0 then
-					drill_autorepair_chance = drill_autorepair_chance + tweak_data.upgrades.values.player.drill_autorepair_2[1]
-				end
-
-				if current_auto_repair_level_2 > 0 then
-					drill_autorepair_chance = drill_autorepair_chance + tweak_data.upgrades.values.player.drill_autorepair_1[1]
-				end
-				
-				
+			if auto_repair_level > 0 or current_auto_repair_level > 0 then 
+				upgrades.auto_repair_level = auto_repair_level
 				if Network:is_server() then
 					do_set_autorepair = true
-					
-					--removed rng check
 				end
-
-				add_bg_icon_func(background_icons, "drillgui_icon_restarter", timer_gui_ext:get_upgrade_icon_color("upgrade_color_2"))
+				if upgrades.auto_repair_level == 2 then 
+					add_bg_icon_func(background_icons, "drillgui_icon_restarter", timer_gui_ext:get_upgrade_icon_color("upgrade_color_2"))
+				else
+					add_bg_icon_func(background_icons, "drillgui_icon_restarter", timer_gui_ext:get_upgrade_icon_color("upgrade_color_1"))
+				end
 			else
 				add_bg_icon_func(background_icons, "drillgui_icon_restarter", timer_gui_ext:get_upgrade_icon_color("upgrade_color_0"))
 			end
+			if shock_trap > 0 or current_shock_trap > 0 then
+				self._use_static_defense = true
+				--TODO this will cause any upgrades to the drill to reset the static defense cooldown; this is not intended behavior
+				
+				if shock_trap < current_shock_trap then 
+					--current shock trap is better than player's 
+					upgrades.shock_trap = current_shock_trap
+				else
+					--shock trap upgraded
+					self._static_defense_cooldown = managers.player:upgrade_value_by_level("player","drill_shock_trap",shock_trap,false)
+					if shock_trap == 2 then 
+						--in the future this should be tied to a separate upgrade instead 
+						self._static_defense_alert = true
+					end
+					
+					local upgrade_color_tier
+					if shock_trap == 1 then 
+						upgrade_color_tier = "upgrade_color_1"
+					elseif shock_trap == 2 then 
+						upgrade_color_tier = "upgrade_color_2"
+					end
+					add_bg_icon_func(background_icons,"drillgui_icon_shocktrap",timer_gui_ext:get_upgrade_icon_color(upgrade_color_tier))
+				end
+			end
+			
 			self._skill_upgrades = deep_clone(upgrades)
 			
 			if do_set_autorepair then --moved this down here along with a check so that the skill upgrades can apply first
@@ -235,14 +251,14 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 
 	function Drill:set_autorepair(state)
-		local autorepair_upgrade_tier = 0
-
+		local autorepair_upgrade_tier = self._skill_upgrades.auto_repair_level
+--[[
 		if self._skill_upgrades.auto_repair_level_2 then
 			autorepair_upgrade_tier = 2
 		elseif self._skill_upgrades.auto_repair_level_1 then
 			autorepair_upgrade_tier = 1
 		end
-
+--]]
 		local drill_autorepair_delay = autorepair_upgrade_tier and tweak_data.upgrades.values.player.drill_auto_repair_guaranteed[autorepair_upgrade_tier]
 
 		if not drill_autorepair_delay then
@@ -289,67 +305,62 @@ if deathvox:IsTotalCrackdownEnabled() then
 		--flag to set when enabling the upgrade for the first time, or after the cooldown expires
 		if self._use_static_defense then
 			local timer_manager = TimerManager:game()
+			local t = timer_manager:time()
 			local objective = saboteur:brain():objective()
+			
+			if not self._static_defense_cooldown_end or self._static_defense_cooldown_end < t then 
+				self._static_defense_cooldown_end = t + self._static_defense_cooldown
+				managers.enemy:add_delayed_clbk("static_defense_clbk" .. tostring_g(saboteur:key()), function()
+					if not alive_g(my_unit) or not alive_g(self._saboteur) or not alive_g(saboteur) or self._saboteur:key() ~= saboteur:key() then
+						return
+					end
 
-			managers.enemy:add_delayed_clbk("static_defense_clbk" .. tostring_g(saboteur:key()), function()
-				if not alive_g(my_unit) or not alive_g(self._saboteur) or not alive_g(saboteur) or self._saboteur:key() ~= saboteur:key() then
-					return
-				end
+					local cur_objective = saboteur:brain():objective()
 
-				local cur_objective = saboteur:brain():objective()
+					if cur_objective ~= objective then
+						return
+					end
+					
+					if self._static_defense_alert then 
+						managers.network:session():send_to_peers_synched("sync_unit_event_id_16", my_unit, "base", 1)
+						self:on_shock_trap_alert()
+					end
 
-				if cur_objective ~= objective then
-					return
-				end
+					local hit_pos = saboteur:movement():m_com()
+					local attack_dir = hit_pos - objective.pos:with_z(hit_pos.z)
+					attack_dir = attack_dir:normalized()
 
-				--enable once a sound is selected/added for this
-				--[[if self._static_defense_ace then
-					my_unit:sound_source():post_event("")
-					managers.network:session():send_to_peers_synched("sync_unit_event_id_16", my_unit, "base", 1)
-				end]]
+					managers.groupai:state():on_objective_failed(saboteur, objective)
 
-				self._use_static_defense = false
+					saboteur:brain():action_request({
+						type = "idle",
+						body_part = 1,
+						non_persistent = true
+					})
 
-				local hit_pos = saboteur:movement():m_com()
-				local attack_dir = hit_pos - objective.pos:with_z(hit_pos.z)
-				attack_dir = attack_dir:normalized()
-
-				managers.groupai:state():on_objective_failed(saboteur, objective)
-
-				saboteur:brain():action_request({
-					type = "idle",
-					body_part = 1,
-					non_persistent = true
-				})
-
-				local attack_data = {
-					damage = 0,
-					variant = "melee",
-					pos = mvec3_cpy(hit_pos),
-					attack_dir = attack_dir,
-					result = {
+					local attack_data = {
+						damage = 0,
 						variant = "melee",
-						type = "taser_tased"
+						pos = mvec3_cpy(hit_pos),
+						attack_dir = attack_dir,
+						result = {
+							variant = "melee",
+							type = "taser_tased"
+						}
 					}
-				}
 
-				local dmg_ext = saboteur:character_damage()
-				dmg_ext._tased_time = tweak_data.upgrades.player.drill_shock_tase_time --to be used in huskcopdamage as well
+					local dmg_ext = saboteur:character_damage()
+					dmg_ext._tased_time = tweak_data.upgrades.values.player.drill_shock_tase_time --to be used in huskcopdamage as well
 
-				managers.network:session():send_to_peers_synched("sync_unit_event_id_16", saboteur, "character_damage", 1)
+					managers.network:session():send_to_peers_synched("sync_unit_event_id_16", saboteur, "character_damage", 1)
 
-				dmg_ext:_call_listeners(attack_data)
-
-				local cooldown_time = self._static_defense_cooldown
-				local cooldown_id = "static_defense_cooldown_clbk" .. tostring_g(my_unit:key())
-				self._static_defense_cooldown_id = cooldown_id
-
-				managers.enemy:add_delayed_clbk(cooldown_id, function()
-					self._use_static_defense = true
-				end, timer_manager:time() + cooldown_time)
-			end, timer_manager:time() + 0.5)
-
-			return
+					dmg_ext:_call_listeners(attack_data)
+				end,t + 0.5
+				)
+				return
+			elseif self._static_defense_cooldown_end > t then 
+				--still on cooldown
+			end
 		end
 
 		self._saboteur = nil
@@ -365,11 +376,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 
 	function Drill:sync_net_event(event_id)
-		if event_id ~= 1 then
-			return
+		if event_id == 1 then
+			self:on_shock_trap_alert()
 		end
-
-		--my_unit:sound_source():post_event("")
+	end
+	
+	function Drill:on_shock_trap_alert()
+		self._unit:sound_source():post_event("trip_mine_sensor_alarm")
 	end
 
 	--Hooks:PostHook(Drill,"_unregister_sabotage_SO","blarghlblargh",function(self,...)

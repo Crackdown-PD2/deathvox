@@ -1493,21 +1493,21 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.sapper,3,{ --Static Defense
 			{
 				upgrades = {
---					"player_drill_shock_trap_1"
+					"player_drill_shock_trap_1"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
---					"player_drill_shock_trap_2"
+					"player_drill_shock_trap_2"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_static_defense",
 			desc_id = "menu_static_defense_desc",
 			icon_xy = {
-				0 or 0,
-				0 or 8
+				0,
+				8
 			}
 		})
 		replace_skill(tree_indices.sapper,4,{ --Routine Maintenance

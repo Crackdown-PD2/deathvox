@@ -1432,7 +1432,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		self.values.shape_charge.quantity = { 2, 4 } --vanilla value tweaked
 		
-		self.values.player.drill_shock_trap = {true,true}
+		self.values.player.drill_shock_trap = {60,30} --cooldown
 		self.definitions.player_drill_shock_trap_1 = {
 			name_id = "menu_static_defense",
 			category = "feature",
@@ -1452,10 +1452,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
-			--Static Defense values, not yet implemented
-		self.values.player.drill_shock_trap_cooldown = {60,30}
-		self.values.player.drill_shock_trap_alert = {true}
-		self.values.player.drill_shock_trap_duration = {5}
+		self.values.player.drill_shock_tase_time = 5 --by direct reference only
 		
 		--Dealer
 		self.values.class_melee.weapon_class_damage_mul = {1.1}
