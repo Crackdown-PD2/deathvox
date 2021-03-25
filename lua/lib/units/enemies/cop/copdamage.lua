@@ -1959,7 +1959,9 @@ function CopDamage:damage_melee(attack_data)
 					result_type = self.melee_knockback_tiers[4]
 				end
 			end
-			result_type = result_type or self:get_damage_type(damage_effect_percent, "melee")				
+			if result_type == nil then 
+				result_type = self:get_damage_type(damage_effect_percent, "melee")
+			end
 		end
 
 		result = {
