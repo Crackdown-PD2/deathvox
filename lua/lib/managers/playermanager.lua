@@ -61,12 +61,12 @@ function PlayerManager:team_upgrade_level(category, upgrade, default)
 	return self._global.team_upgrades[category][upgrade]
 end
 
+
+Hooks:PostHook(PlayerManager,"init","tcd_playermanager_init",function(self)
+	self._damage_overshield = {}
+end)
+
 if deathvox:IsTotalCrackdownEnabled() then
-	
-	Hooks:PostHook(PlayerManager,"init","tcd_playermanager_init",function(self)
-		self._damage_overshield = {}
-	end)
-	
 	function PlayerManager:check_equipment_placement_valid(player, equipment)
 		local equipment_data = managers.player:equipment_data_by_name(equipment)
 
