@@ -105,11 +105,13 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 			--bit of extra overhead here for tcd icons
 			LocalizationManager._orig_text = LocalizationManager.text
 			function LocalizationManager:text(...)
-				local result = self:_orig_text(...)
+				local result = {self:_orig_text(...)}
 				for class_id,weapon_icon_data in pairs(weapon_class_icon_data) do 
-					result = string.gsub(result,weapon_icon_data.macro,weapon_icon_data.character)
+					if result[1] and weapon_icon_data and weapon_icon_data.macro then 
+						result[1] = string.gsub(result[1],weapon_icon_data.macro,weapon_icon_data.character)
+					end
 				end
-				return result
+				return unpack(result)
 			end
 			
 			
@@ -303,7 +305,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_mobile_offense = "Mobile Offense",
 				menu_mobile_offense_desc = "BASIC: ##$basic##\nYou can now Reload while Sprinting.\n\nACE: ##$pro##\nYou can now hip-fire weapons while Sprinting.",
 				menu_escape_plan = "Escape Plan",
-				menu_escape_plan_desc = "BASIC: ##$basic##\nWhen your Armor breaks, you gain ##100%## of your Stamina and gain ##+25%## Sprint Speed for ##4## seconds.\n\nACE: ##$pro##\nYou also gain ##+20%## Movement Speed for 4 seconds.",
+				menu_escape_plan_desc = "BASIC: ##$basic##\nWhen your Armor breaks, you gain ##100%## of your Stamina and gain ##+25%## Sprint Speed for ##4## seconds.\n\nACE: ##$pro##\nYou also gain ##+20%## Movement Speed for ##4## seconds.",
 				menu_leg_day = "Leg Day Enthusiast",
 				menu_leg_day_desc = "BASIC: ##$basic##\nYou gain ##+10%## Movement Speed and ##+25%## Sprint Speed.\n\nACE: ##$pro##\nCrouching no longer reduces your Movement Speed.",
 				

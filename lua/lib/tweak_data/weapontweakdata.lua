@@ -12782,7 +12782,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.glock_18c.subclasses = {}
 		self.glock_18c.FIRE_MODE = "auto"
 		self.glock_18c.fire_mode_data = {
-			fire_rate = 0.066
+			fire_rate = 0.066006600660066
 		}
 		self.glock_18c.CAN_TOGGLE_FIREMODE = true
 		self.glock_18c.auto = {
@@ -12799,18 +12799,10 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.glock_18c.NR_CLIPS_MAX = 8
 		self.glock_18c.AMMO_MAX = self.glock_18c.CLIP_AMMO_MAX * self.glock_18c.NR_CLIPS_MAX
 		self.glock_18c.AMMO_PICKUP = {
-			1.60,
-			5.60
+			9,
+			18
 		}
 		
-		self.glock_18c.spread = {
-			standing = self.new_m4.spread.standing,
-			crouching = self.new_m4.spread.crouching,
-			steelsight = self.new_m4.spread.steelsight,
-			moving_standing = self.new_m4.spread.moving_standing,
-			moving_crouching = self.new_m4.spread.moving_crouching,
-			moving_steelsight = self.new_m4.spread.moving_steelsight
-		}
 		self.glock_18c.kick = {
 			standing = {
 				0.3,
@@ -12821,24 +12813,23 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.glock_18c.kick.crouching = self.glock_18c.kick.standing
 		self.glock_18c.kick.steelsight = self.glock_18c.kick.standing
-		
+
 		self.glock_18c.stats = {
-			zoom = 1,
-			total_ammo_mod = 21,
-			damage = 35,
-			alert_size = 7,
-			spread = 14,
-			spread_moving = 14,
-			recoil = 15,
-			value = 1,
-			extra_ammo = 101,
+			concealment = 32,
+			suppression = 4,
 			reload = 11,
-			suppression = 14,
-			concealment = 29
+			extra_ammo = 51,
+			spread_moving = 1,
+			spread = 18,
+			recoil = 23,
+			value = 1,
+			alert_size = 7,
+			damage = 40,
+			total_ammo_mod = 21,
+			zoom = 1
 		}
-		self.glock_18c.stats_modifiers = {
-			damage = 1
-		}
+
+
 	--------------------------------------
 				--Czech 92--
 	--------------------------------------	
