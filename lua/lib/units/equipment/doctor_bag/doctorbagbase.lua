@@ -17,12 +17,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 
 		self:_set_visual_stage()
+		local should_update = self._aoe_health_regen and true or false
 
 		if Network:is_server() and self._is_attachable then
 			local from_pos = self._unit:position() + self._unit:rotation():z() * 10
 			local to_pos = self._unit:position() + self._unit:rotation():z() * -10
 			local ray = self._unit:raycast("ray", from_pos, to_pos, "slot_mask", managers.slot:get_mask("world_geometry"))
-
+			
 			if ray then
 				self._attached_data = {
 					body = ray.body,
@@ -31,14 +32,16 @@ if deathvox:IsTotalCrackdownEnabled() then
 					index = 1,
 					max_index = 3
 				}
-
-				self._unit:set_extension_update_enabled(Idstring("base"), true)
 			end
+			
+			should_update = true
 		end
+		self._unit:set_extension_update_enabled(Idstring("base"), should_update)
 	end
 
 	local mvec3_dis = mvector3.distance
-	Hooks:PostHook(DoctorBagBase,"update","tcd_docbag_update",function(self,unit, t, dt)
+	
+	function DoctorBagBase:update(unit, t, dt)
 		if self._aoe_health_regen then 
 			local rate,interval,range = unpack(self._aoe_health_regen)
 			if (t - self.last_aoe_heal_t) >= interval then 
@@ -58,7 +61,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 				end
 			end
 		end
-	end)
+		if Network:is_server() and self._attached_data then 
+			self:_check_body()
+		end
+	end
 
 	function DoctorBagBase:take(unit)
 		if self._empty then
