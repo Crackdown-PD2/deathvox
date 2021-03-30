@@ -1,14 +1,5 @@
 if deathvox:IsTotalCrackdownEnabled() then 
 
-	--[[
-		if state == "_set_trigger_mode" then 
-			unit:base():_set_trigger_mode(unit_id_str)
-			return
-		elseif state == "_set_payload_mode" then 
-			unit:base():_set_payload_mode(unit_id_str)
-			return
-		else
-		--]]
 	function UnitNetworkHandler:sync_trip_mine_explode_spawn_fire(unit, user_unit, ray_from, ray_to, damage_size, damage, added_time, range_multiplier, sender)
 		if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_sender(sender) then
 			return
@@ -22,9 +13,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 				elseif range_multiplier == 1 then 
 --				elseif TripmineControlMenu.VALID_TRIPMINE_PAYLOAD_MODES[new_mode] then 
 					unit:base():_set_payload_mode(new_mode)
-					return
 				end
 			end
+			return
 		end
 		
 		if not alive(user_unit) then

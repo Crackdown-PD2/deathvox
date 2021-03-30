@@ -50,6 +50,7 @@ function TripMineBase:_check_body()
 end
 
 function TripMineBase:_play_sound_and_effects(range)
+	
 	local custom_params = {
 		camera_shake_max_mul = 4,
 		sound_muffle_effect = true,
@@ -58,6 +59,7 @@ function TripMineBase:_play_sound_and_effects(range)
 		feedback_range = range * 2,
 		on_unit = true
 	}
+	
 
 	managers.explosion:play_sound_and_effects(self._position, self._unit:rotation():y(), range, custom_params)
 end
@@ -277,7 +279,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			for _,nearby_enemy in pairs(nearby_enemies) do 
 				if nearby_enemy ~= stuck_enemy then 
 					local nme_brain = nearby_enemy:brain()
-					if nme_brain then 
+					if nme_brain and nme_brain.on_suppressed then 
 						nme_brain:on_suppressed("panic")
 					end
 				end
