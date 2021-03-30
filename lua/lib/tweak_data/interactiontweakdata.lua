@@ -136,6 +136,17 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.trip_mine.requires_upgrade = nil
 		self.trip_mine.interact_distance = 2000
 		self.shaped_sharge.timer = 1
+		
+		self.hospital_security_cable.is_snip = true
+		self.hospital_security_cable_red.is_snip = true
+		self.hospital_security_cable_blue.is_snip = true
+		self.hospital_security_cable_green.is_snip = true
+		self.hospital_security_cable_yellow.is_snip = true
+		self.security_cable_grey.is_snip = true
+		self.cut_fence.is_snip = true
+		self.hold_cut_cable.is_snip = true
+		self.hold_cut_wires.is_snip = true
+		self.pex_cut_open_chains.is_snip = true
 	end)
 end
 	

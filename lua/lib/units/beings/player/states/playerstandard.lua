@@ -641,6 +641,14 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 		local damage, damage_effect = managers.blackmarket:equipped_melee_weapon_damage_info(charge_lerp_value)
 		local damage_effect_mul = math.max(managers.player:upgrade_value("player", "melee_knockdown_mul", 1), managers.player:upgrade_value(self._equipped_unit:base():weapon_tweak_data().categories and self._equipped_unit:base():weapon_tweak_data().categories[1], "melee_knockdown_mul", 1))
 		damage = damage * managers.player:get_melee_dmg_multiplier()
+--		if mark_enemy_on_hit then 
+		if melee_td.random_damage_mul then 
+			--because the above function is probably meant to be a constant, 
+			--calculate random damage multiplier here (currently only used by jackpot lever)
+			damage = damage * melee_td.random_damage_mul[#melee_td.random_damage_mul]
+		end
+
+		
 		damage_effect = damage_effect * damage_effect_mul
 		col_ray.sphere_cast_radius = sphere_cast_radius
 		local hit_unit = col_ray.unit
@@ -764,9 +772,13 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 				variant = "melee",
 			}
 			if melee_td.stats.knockback_tier then 
-				action_data.knockback_tier = melee_td.stats.knockback_tier + math.floor(charge_lerp_value) + managers.player:upgrade_value("class_melee","knockdown_tier_increase",0) --only used in tcd
+				local knockback_tier = melee_td.stats.knockback_tier
+				if melee_td.random_knockback_tier then 
+					knockback_tier = CopDamage.melee_knockback_tiers[math.random(#CopDamage.melee_knockback_tiers)]
+				end
+				action_data.knockback_tier = knockback_tier + math.floor(charge_lerp_value) + managers.player:upgrade_value("class_melee","knockdown_tier_increase",0) --only used in tcd
 			end
-
+			
 			if special_weapon == "taser" then
 				action_data.variant = "taser_tased"
 			end

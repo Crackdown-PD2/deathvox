@@ -1858,6 +1858,17 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		"subclass_quiet"
 	}
 	--Nagant Bayonet [wpn_fps_snp_mosin_ns_bayonet] [Replaces Weapon Butt melee weapon with Nagant Bayonet melee weapon] Value: 1
+	self.parts.wpn_fps_snp_mosin_ns_bayonet.supported = true
+	self.parts.wpn_fps_snp_mosin_ns_bayonet.stats = {
+		knockback_tier = 3,
+		range = 250,
+		min_damage = 50,
+		min_damage_effect = 1,
+		concealment = 0, --weapon butt's 30 + this 0
+		max_damage_effect = 1,
+		value = 1,
+		max_damage = 80
+	}
 
 	--------------------------------------
 				--Desertfox--

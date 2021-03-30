@@ -1043,6 +1043,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.detector.stats.max_damage = 10
 		self.melee_weapons.detector.stats.range = 225
 		self.melee_weapons.detector.stats.min_damage = 5
+		self.melee_weapons.detector.mark_enemy_on_hit = true --mark target on hit
+		self.melee_weapons.detector.aoe_mark_enemy_on_hit = true --aoe mark on charged hit
 
 
 				--Rivertown Glen Bottle--
@@ -1056,6 +1058,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.whiskey.stats.max_damage = 10
 		self.melee_weapons.whiskey.stats.range = 185
 		self.melee_weapons.whiskey.stats.min_damage = 5
+		self.melee_weapons.whiskey.bonus_dodge_while_held = 0.1
 
 
 				--Jackpot--
@@ -1069,6 +1072,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.slot_lever.stats.max_damage = 20
 		self.melee_weapons.slot_lever.stats.range = 225
 		self.melee_weapons.slot_lever.stats.min_damage = 10
+		self.melee_weapons.slot_lever.random_damage_mul = { 1,2,4,6,8,10 } --possible random damage multipliers
 
 
 				--Buckler Shield--
@@ -1095,6 +1099,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.nin.stats.max_damage = 80
 		self.melee_weapons.nin.stats.range = 185
 		self.melee_weapons.nin.stats.min_damage = 50
+		self.melee_weapons.nin.pierce_body_armor = true
+		self.melee_weapons.nin.pierce_shields = true
 
 
 				--Kunai Knife--
@@ -1122,6 +1128,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.model24.stats.max_damage = 30
 		self.melee_weapons.model24.stats.range = 185
 		self.melee_weapons.model24.stats.min_damage = 20
+		self.melee_weapons.model24.panic_on_hit = true
 
 
 				--Kazaguruma--
@@ -1148,6 +1155,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.cutters.stats.max_damage = 10
 		self.melee_weapons.cutters.stats.range = 275
 		self.melee_weapons.cutters.stats.min_damage = 5
+		self.melee_weapons.cutters.interact_cut_faster = 0.5
 
 
 				--Electrical Brass Knuckles--
@@ -1187,6 +1195,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.croupier_rake.stats.max_damage = 10
 		self.melee_weapons.croupier_rake.stats.range = 250
 		self.melee_weapons.croupier_rake.stats.min_damage = 5
+		self.melee_weapons.croupier_rake.random_knockback_tier = true --reference possible melee tiers
 
 
 				--Money Bundle--
@@ -1200,7 +1209,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.moneybundle.stats.max_damage = 25
 		self.melee_weapons.moneybundle.stats.range = 150
 		self.melee_weapons.moneybundle.stats.min_damage = 15
-
+		self.melee_weapons.moneybundle.generate_cash = true
 
 				--Chain Whip--
 		self.melee_weapons.road.subclasses = {
