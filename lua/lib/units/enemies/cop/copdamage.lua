@@ -828,7 +828,7 @@ function CopDamage:damage_bullet(attack_data)
 		
 		local player_has_aggro = false
 		local brain = self._unit:brain()
-		local attention_obj = brain and brain._logic_data.attention_obj
+		local attention_obj = brain and brain._logic_data and brain._logic_data.attention_obj
 		if attention_obj and attention_obj.unit == player_unit then 
 			player_has_aggro = true
 		end
