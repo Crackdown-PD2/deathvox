@@ -893,3 +893,9 @@ end
 function HuskCopBrain:_send_client_detection_net_event(event_id)
 	managers.network:session():send_to_peer_synched(managers.network:session():peer(1), "sync_unit_event_id_16", self._unit, "brain", event_id)
 end
+
+--from crackdown
+function HuskCopBrain:is_tied()
+	local anim_data = self._unit:anim_data()
+	return anim_data and anim_data.tied
+end

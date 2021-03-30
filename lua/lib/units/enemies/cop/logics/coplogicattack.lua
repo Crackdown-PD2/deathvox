@@ -248,7 +248,8 @@ function CopLogicAttack._upd_combat_movement(data)
 
 	if not my_data.surprised and data.important and focus_enemy.verified and not my_data.turning and CopLogicAttack._can_move(data) and not unit:movement():chk_action_forbidden("walk") then
 		if not my_data.in_cover or not my_data.in_cover[4] then
-			if data.is_suppressed and t - unit:character_damage():last_suppression_t() < 0.7 then
+			local last_suppression_t = unit:character_damage():last_suppression_t()
+			if last_suppression_t and data.is_suppressed and t - last_suppression_t < 0.7 then
 				action_taken = CopLogicBase.chk_start_action_dodge(data, "scared")
 			end
 
