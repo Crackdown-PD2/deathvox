@@ -50,7 +50,7 @@ function TripMineBase:_check_body()
 end
 
 function TripMineBase:_play_sound_and_effects(range)
-	
+	range = range or tweak_data.weapon.trip_mines.damage_size
 	local custom_params = {
 		camera_shake_max_mul = 4,
 		sound_muffle_effect = true,
@@ -673,7 +673,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self._unit:set_slot(0)
 	end
 
---[[
 	--todo add syncing for concussive payload here
 	function TripMineBase:sync_trip_mine_explode(user_unit, ray_from, ray_to, damage_size, damage)
 		local range = damage_size
@@ -739,7 +738,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		self._unit:set_slot(0)
 	end
---]]
 
 else
 
