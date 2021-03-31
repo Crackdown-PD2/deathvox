@@ -181,7 +181,11 @@ function CopLogicTravel.enter(data, new_logic_name, enter_params)
 	local key_str = tostring(data.key)
 	my_data.upd_task_key = "CopLogicTravel.queued_update" .. key_str
 
-	CopLogicTravel.queue_update(data, my_data)
+	if data.is_converted then
+		CopLogicTravel.queue_converted_enemy_update(data, my_data)
+	else
+		CopLogicTravel.queue_update(data, my_data)
+	end
 
 	my_data.cover_update_task_key = "CopLogicTravel._update_cover" .. key_str
 
@@ -226,7 +230,11 @@ function CopLogicTravel.enter(data, new_logic_name, enter_params)
 		})
 	end
 
-	data.brain:set_update_enabled_state(false)
+	if data.is_converted then
+		data.brain:set_update_enabled_state(true)
+	else
+		data.brain:set_update_enabled_state(false)
+	end
 
 	local path_style = objective.path_style
 
@@ -330,6 +338,14 @@ function CopLogicTravel.exit(data, new_logic_name, enter_params)
 	data.brain:set_update_enabled_state(true)
 end
 
+--used by converted enemies
+function CopLogicTravel.update(data)
+	data.t = TimerManager:game():time()
+	data.internal_data.close_to_criminal = false
+
+	CopLogicTravel.upd_advance(data)
+end
+
 function CopLogicTravel.queued_update(data)
 	data.t = TimerManager:game():time()
 	local my_data = data.internal_data
@@ -347,13 +363,25 @@ function CopLogicTravel.queued_update(data)
 		return
 	end
 
-	if not delay then
-		--debug_pause_unit(data.unit, "crap!!!", inspect(data))
-
-		delay = 1
-	end
+	delay = delay or 1
 
 	CopLogicTravel.queue_update(data, data.internal_data, delay)
+end
+
+function CopLogicTravel.queued_converted_enemy_update(data)
+	data.t = TimerManager:game():time()
+	local my_data = data.internal_data
+	my_data.close_to_criminal = false
+
+	local delay = CopLogicTravel._upd_enemy_detection(data)
+
+	if data.internal_data ~= my_data then
+		return
+	end
+
+	delay = delay or 1
+
+	CopLogicTravel.queue_converted_enemy_update(data, data.internal_data, delay)
 end
 
 function CopLogicTravel.upd_advance(data)
@@ -373,7 +401,6 @@ function CopLogicTravel.upd_advance(data)
 		if data.unit:movement():action_request(action_desc) then
 			CopLogicTravel._on_destination_reached(data)
 		end
-	--elseif CopLogicTravel._chk_target_area(data, my_data) then
 	elseif my_data.advancing then
 		if not my_data.old_action_advancing and my_data.coarse_path then
 			CopLogicTravel._chk_stop_for_follow_unit(data, my_data)
@@ -1322,8 +1349,10 @@ function CopLogicTravel._determine_destination_occupation(data, objective)
 				threat_pos = data.attention_obj.nav_tracker:field_position()
 			end
 
-			if my_data.called then
-				max_dist = 450
+			if data.is_converted then
+				max_dist = 250
+			elseif my_data.called then
+				max_dist = 400
 			end
 
 			cover = managers.navigation:find_cover_in_nav_seg_3(dest_area.nav_segs, max_dist, follow_pos, threat_pos)
@@ -1341,10 +1370,10 @@ function CopLogicTravel._determine_destination_occupation(data, objective)
 			local max_dist = nil
 			follow_pos = follow_pos or objective.follow_unit:movement():nav_tracker():field_position()
 
-			if my_data.called then
+			if data.is_converted then
+				max_dist = 250
+			elseif my_data.called then
 				max_dist = 400
-			else
-				max_dist = 500
 			end
 
 			local to_pos = CopLogicTravel._get_pos_on_wall(follow_pos, max_dist, nil, nil, data.pos_rsrv_id)
@@ -1524,11 +1553,9 @@ function CopLogicTravel._get_pos_on_wall(from_pos, max_dist, step_offset, is_rec
 end
 
 function CopLogicTravel.queue_update(data, my_data, delay)
-	delay = data.important and 0 or delay or 0
-	
 	local hostage_count = managers.groupai:state():get_hostage_count_for_chatter() --check current hostage count
 	local chosen_panic_chatter = "controlpanic" --set default generic assault break chatter
-	
+
 	if hostage_count > 0 then --make sure the hostage count is actually above zero before replacing any of the lines
 		if hostage_count > 3 then  -- hostage count needs to be above 3
 			if math_random() < 0.4 then --40% chance for regular panic if hostages are present
@@ -1690,7 +1717,27 @@ function CopLogicTravel.queue_update(data, my_data, delay)
 		end	
 	end
 
-	CopLogicBase.queue_task(my_data, my_data.upd_task_key, CopLogicTravel.queued_update, data, data.t + delay, data.important and true)
+	local asap = nil
+
+	if data.cool then
+		delay = 0
+		asap = true
+	elseif data.important then
+		delay = delay or 0
+		delay = delay < 0.5 and delay or 0.5
+		asap = true
+	else
+		delay = delay or 0
+	end
+
+	CopLogicBase.queue_task(my_data, my_data.upd_task_key, CopLogicTravel.queued_update, data, data.t + delay, asap)
+end
+
+function CopLogicTravel.queue_converted_enemy_update(data, my_data, delay)
+	local asap = true
+	delay = delay or 0
+
+	CopLogicBase.queue_task(my_data, my_data.upd_task_key, CopLogicTravel.queued_converted_enemy_update, data, data.t + delay, true)
 end
 
 function CopLogicTravel._try_anounce(data)
@@ -2598,8 +2645,6 @@ function CopLogicTravel._chk_stop_for_follow_unit(data, my_data)
 	end
 
 	if not my_data.coarse_path_index then
-		--debug_pause_unit(data.unit, "[CopLogicTravel._chk_stop_for_follow_unit]", data.unit, inspect(data), inspect(my_data))
-
 		return
 	end
 
@@ -2612,26 +2657,19 @@ function CopLogicTravel._chk_stop_for_follow_unit(data, my_data)
 			objective.in_place = true
 
 			data.logic.on_new_objective(data)
+
+			return
 		end
 	end
-end
 
-function CopLogicTravel._chk_target_area(data, my_data) ----eventually try reenabling
-	local objective = data.objective
+	if not data.unit:in_slot(16) then
+		return
+	end
 
-	if objective and objective.type == "defend_area" and objective.grp_objective then
-		if objective.grp_objective.type == "assault_area" or objective.grp_objective.type == "defend_area" then
-			if CopLogicTravel._chk_close_to_criminal(data, my_data) then
-				--data.objective_failed_clbk(data.unit, data.objective)
-				local my_seg = data.unit:movement():nav_tracker():nav_segment()
-				local my_area = managers.groupai:state():get_area_from_nav_seg_id(my_seg)
-				objective.in_place = true
-				objective.nav_seg = my_seg
-				objective.area = my_area
-				objective.pos = nil
+	local follow_unit_area = managers.groupai:state():get_area_from_nav_seg_id(follow_unit_nav_seg)
+	local target_area = managers.groupai:state():get_area_from_nav_seg_id(my_data.coarse_path[#my_data.coarse_path][1])
 
-				return true
-			end
-		end
+	if follow_unit_area ~= target_area then
+		data.logic.on_new_objective(data)
 	end
 end
