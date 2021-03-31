@@ -177,7 +177,8 @@ function CopLogicIdle.enter(data, new_logic_name, enter_params)
 
 	my_data.upd_task_key = "CopLogicIdle.update" .. key_str
 
-	CopLogicBase.queue_task(my_data, my_data.upd_task_key, CopLogicIdle.queued_update, data, data.t, is_cool and true or data.important and true)
+	local asap = is_cool or data.is_converted or data.important
+	CopLogicBase.queue_task(my_data, my_data.upd_task_key, CopLogicIdle.queued_update, data, data.t, asap and true)
 
 	if my_data.nearest_cover or my_data.best_cover then
 		my_data.cover_update_task_key = "CopLogicIdle._update_cover" .. key_str
@@ -248,7 +249,20 @@ function CopLogicIdle.queued_update(data)
 
 	if my_data.has_old_action then
 		CopLogicIdle._upd_stop_old_action(data, my_data, objective)
-		CopLogicBase.queue_task(my_data, my_data.upd_task_key, CopLogicIdle.queued_update, data, data.t + delay, data.cool and true or data.important and true)
+
+		local asap = nil
+
+		if data.cool then
+			delay = 0
+			asap = true
+		elseif data.is_converted then
+			delay = delay / 2
+			asap = true
+		elseif data.important then
+			asap = true
+		end
+
+		CopLogicBase.queue_task(my_data, my_data.upd_task_key, CopLogicIdle.queued_update, data, data.t + delay, asap and true)
 
 		return
 	end
@@ -286,7 +300,16 @@ function CopLogicIdle.queued_update(data)
 		return
 	end
 
-	CopLogicBase.queue_task(my_data, my_data.upd_task_key, CopLogicIdle.queued_update, data, data.t + delay, data.cool and true or data.important and true)
+	local asap = nil
+
+	if data.cool or data.is_converted then
+		delay = 0
+		asap = true
+	elseif data.important then
+		asap = true
+	end
+
+	CopLogicBase.queue_task(my_data, my_data.upd_task_key, CopLogicIdle.queued_update, data, data.t + delay, asap and true)
 end
 
 function CopLogicIdle._upd_enemy_detection(data)
