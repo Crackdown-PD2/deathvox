@@ -2123,11 +2123,9 @@ function CopLogicAttack.on_new_objective(data, old_objective)
 end
 
 function CopLogicAttack.queue_update(data, my_data)
-	local delay = data.important and 0 or 0.7
-	
 	local hostage_count = managers.groupai:state():get_hostage_count_for_chatter() --check current hostage count
 	local chosen_panic_chatter = "controlpanic" --set default generic assault break chatter
-	
+
 	if hostage_count > 0 then --make sure the hostage count is actually above zero before replacing any of the lines
 		if hostage_count > 3 then  -- hostage count needs to be above 3
 			if math_random() < 0.4 then --40% chance for regular panic if hostages are present
@@ -2280,7 +2278,7 @@ function CopLogicAttack.queue_update(data, my_data)
 			
 		end	
 	end
-	
+
 	local delay, asap = nil
 
 	if data.is_converted then
