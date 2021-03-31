@@ -159,10 +159,10 @@ function CopLogicIntimidated.exit(data, new_logic_name, enter_params)
 	if new_logic_name ~= "inactive" then
 		data.unit:base():set_slot(data.unit, 12)
 		data.brain:set_update_enabled_state(true)
+	end
 
-		if my_data.set_convert_interact then ----check this
-			data.unit:interaction():set_active(false, true, false)
-		end
+	if my_data.set_convert_interact then
+		data.unit:interaction():set_active(false, true, false)
 	end
 
 	if my_data.tied then
