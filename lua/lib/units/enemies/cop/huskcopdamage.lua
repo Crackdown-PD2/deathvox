@@ -1,4 +1,11 @@
 function HuskCopDamage:die(attack_data)
+	if not managers.enemy:is_corpse_disposal_enabled() then
+		local unit_pos = self._unit:position()
+		local unit_rot = self._unit:rotation()
+
+		managers.network:session():send_to_peers_synched("sync_fall_position", self._unit, unit_pos, unit_rot)
+	end
+
 	CopDamage.MAD_3_ACHIEVEMENT(attack_data)
 	self:_check_friend_4(attack_data)
 	self:_remove_debug_gui()
