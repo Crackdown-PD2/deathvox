@@ -218,7 +218,10 @@ function CopActionTase:on_attention(attention)
 		local att_base_ext = attention_unit:base()
 
 		if att_base_ext.is_husk_player then
-			if att_base_ext:upgrade_value("player", "convert_enemies_tackle_specials") then
+			local tackle_upgrade = att_base_ext:upgrade_value("player", "convert_enemies_tackle_specials")
+
+			if tackle_upgrade then
+				self._joker_cooldown = tackle_upgrade
 				self._joker_vis_mask = managers.slot:get_mask("AI_visibility")
 			end
 		else
@@ -226,6 +229,7 @@ function CopActionTase:on_attention(attention)
 				self._tasing_player = true
 
 				if managers.player:has_category_upgrade("player", "convert_enemies_tackle_specials") then
+					self._joker_cooldown = managers.player:upgrade_value("player", "convert_enemies_tackle_specials")
 					self._joker_vis_mask = managers.slot:get_mask("AI_visibility")
 				end
 			end
@@ -738,7 +742,7 @@ function CopActionTase:execute_tackle_counter(minion_unit, direction)
 		return
 	end
 
-	minion_mov_ext:set_joker_cooldown(true)
+	minion_mov_ext:set_joker_cooldown(self._joker_cooldown)
 
 	local my_unit = self._unit
 	local action_data = {
