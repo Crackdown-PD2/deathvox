@@ -169,8 +169,9 @@ function GamePlayCentralManager:auto_highlight_enemy(unit, use_player_upgrades,f
 
 	local time_multiplier = 1
 	local contour_type = "mark_enemy"
+	local is_camera = unit:base() and unit:base().is_security_camera
 
-	if unit:base() and unit:base().is_security_camera then
+	if is_camera then
 		contour_type = "mark_unit"
 		time_multiplier = managers.player:upgrade_value("player", "mark_enemy_time_multiplier", 1)
 	elseif use_player_upgrades then
@@ -181,7 +182,7 @@ function GamePlayCentralManager:auto_highlight_enemy(unit, use_player_upgrades,f
 		end
 	end
 
-	if use_player_upgrades and Network:is_server() then
+	if not is_camera and use_player_upgrades and Network:is_server() then
 		unit:contour():add(contour_type, true, time_multiplier, nil, nil, managers.network:session():local_peer():id())
 	else
 		unit:contour():add(contour_type, true, time_multiplier)
