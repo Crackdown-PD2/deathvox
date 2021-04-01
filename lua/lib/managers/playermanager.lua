@@ -285,8 +285,22 @@ if deathvox:IsTotalCrackdownEnabled() then
 			Hooks:Register("OnProcRollingCutterBasic")
 			Hooks:Add("OnProcRollingCutterBasic","AddToRollingCutterStacks",
 				function(stack_add)
+					if self._rolling_cutter_maxed_out then --temporary, I'm not familiar with this code so I don't know how to disable this properly nor I have the time to look
+						return
+					end
+
 					stack_add = stack_add or 1
-					local rolling_cutter_data = self:upgrade_value("saw","consecutive_damage_bonus",{0,0,0})
+					self._rolling_cutter_stacks = self._rolling_cutter_stacks or 0
+					self._rolling_cutter_stacks = self._rolling_cutter_stacks + stack_add
+
+					if self._rolling_cutter_stacks >= 500 then --temporary because my head is going to explode, implement through upgrades later
+						self._rolling_cutter_stacks = 500
+						self._rolling_cutter_maxed_out = true
+					end
+
+					self:set_property("rolling_cutter_aced_stacks", self._rolling_cutter_stacks)
+
+					--[[local rolling_cutter_data = self:upgrade_value("saw","consecutive_damage_bonus",{0,0,0})
 					
 					self:add_to_property("rolling_cutter_aced_stacks",stack_add)
 					
@@ -296,7 +310,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 							self:set_property("rolling_cutter_aced_stacks",0)
 						end,
 						Application:time() + rolling_cutter_data[3]
-					)
+					)]]
 				end
 			)
 		end

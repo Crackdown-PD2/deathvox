@@ -18,6 +18,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 	self.values.subclass_poison = self.values.subclass_poison or {}
 	self.values.subclass_quiet = self.values.subclass_quiet or {}
 	self.values.subclass_areadenial = self.values.subclass_areadenial or {}
+	self.values.friendship_collar = self.values.friendship_collar or {}
 	
 	if deathvox:IsTotalCrackdownEnabled() then
 	
@@ -217,6 +218,19 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		self.values.team.player.civilian_hostage_fakeout_trade = {true}
 		
+		self.values.player.falseidol_aced_followers = {
+			true
+		}
+		self.definitions.player_falseidol_aced_followers = {
+			name_id = "menu_falseidol_aced_followers",
+			category = "player",
+			upgrade = {
+				value = 1,
+				synced = true,
+				upgrade = "falseidol_aced_followers",
+				category = "player"
+			}
+		}
 		
 		--Marksman
 		
@@ -492,6 +506,136 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 		--Chief
+		
+		self.values.player.passive_convert_enemies_health_multiplier = {
+			0.5,
+			0.25
+		}
+		self.values.player.convert_enemies_interaction_speed_multiplier = {
+			0.1 --90% faster; modified vanilla upgrade
+		}
+		self.values.friendship_collar.quantity = {
+			3
+		}
+		self.definitions.friendship_collar_quantity = {
+			name = "menu_protect_and_serve",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "quantity",
+				category = "friendship_collar"
+			}
+		}
+		
+		
+		self.values.player.convert_enemies_knockback_proof = {
+			true
+		}
+		self.definitions.player_convert_enemies_knockback_proof = {
+			name = "menu_order_through_law",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_knockback_proof",
+				synced = true,
+				category = "player"
+			}
+		}
+		self.values.player.convert_enemies_melee = {
+			true
+		}
+		self.definitions.player_convert_enemies_melee = {
+			name = "menu_order_through_law",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_melee",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.convert_enemies_piercing_bullets = {
+			true
+		}
+		self.definitions.player_convert_enemies_piercing_bullets = {
+			name = "menu_justice_with_mercy",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_piercing_bullets",
+				synced = true,
+				category = "player"
+			}
+		}
+		self.values.player.convert_enemies_accuracy_bonus = {
+			1.9
+		}
+		self.definitions.player_convert_enemies_accuracy_bonus = {
+			name = "menu_justice_with_mercy",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_accuracy_bonus",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.convert_enemies_health_regen = {
+			0.025
+		}
+		self.definitions.player_convert_enemies_health_regen = {
+			name = "menu_standard_of_excellence",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_health_regen",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.convert_enemies_target_marked = {
+			true
+		}
+		self.definitions.player_convert_enemies_target_marked = {
+			name = "menu_maintaining_the_peace",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_target_marked",
+				synced = true,
+				category = "player"
+			}
+		}
+		self.values.player.convert_enemies_marked_damage_bonus = {
+			1.25
+		}
+		self.definitions.player_convert_enemies_marked_damage_bonus = {
+			name = "menu_maintaining_the_peace",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_marked_damage_bonus",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.convert_enemies_tackle_specials = {
+			30
+		}
+		self.definitions.player_convert_enemies_tackle_specials = {
+			name_id = "menu_service_above_self",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_tackle_specials",
+				synced = true,
+				category = "player"
+			}
+		}
 		
 		--Enforcer
 		
@@ -1596,7 +1740,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 			--+10% damage per hit for 2 seconds, up to +500%
 		self.values.saw.consecutive_damage_bonus = {
-			{0.1,5,2}
+			{0.01,5,5}
 		}
 		self.definitions.saw_consecutive_damage_bonus = {
 			name_id = "menu_saw_rolling_cutter_basic",

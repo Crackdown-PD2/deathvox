@@ -19,20 +19,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 --the only changes to this are the removal of the AP bullets skill check to spawn the interaction unit
 	function SentryGunBase.spawn(owner, pos, rot, peer_id, verify_equipment, unit_idstring_index,fire_mode_index)
-		local attached_data = SentryGunBase._attach(pos, rot)
-
-		if not attached_data then
-	--		Application:error("[SentryGunBase.spawn] Failed attaching sentry gun", owner, pos, rot, peer_id, verify_equipment, unit_idstring_index)
-
-			return
-		end
-
-		if verify_equipment and not managers.player:verify_equipment(peer_id, "sentry_gun") then
-	--		Application:error("[SentryGunBase.spawn] Player equipment verification failed", owner, pos, rot, peer_id, verify_equipment, unit_idstring_index)
-
-			return
-		end
-
 		local sentry_owner = nil
 
 		if owner and owner:base().upgrade_value then

@@ -1,7 +1,7 @@
 local mvec3_set = mvector3.set
 local mvec3_set_z = mvector3.set_z
 local mvec3_dot = mvector3.dot
-local mvec3_copy = mvector3.copy
+local mvec3_cpy = mvector3.copy
 local mvec3_norm = mvector3.normalize
 
 local temp_vec2 = Vector3()
@@ -13,6 +13,7 @@ local math_up = math.UP
 local taser_thread_idstr = Idstring("effects/payday2/particles/character/taser_thread")
 local obj_fire_idstr = Idstring("fire")
 
+local pairs_g = pairs
 local world_g = World
 
 CopActionTase._ik_presets = CopActionShoot._ik_presets
@@ -179,7 +180,7 @@ function CopActionTase:on_attention(attention)
 		self._aim_transition = {
 			duration = 0.333,
 			start_t = t,
-			start_vec = mvec3_copy(self._common_data.look_vec)
+			start_vec = mvec3_cpy(self._common_data.look_vec)
 		}
 		self._get_target_pos = self._get_transition_target_pos
 	else
@@ -214,10 +215,27 @@ function CopActionTase:on_attention(attention)
 	if self._is_server then
 		self._common_data.ext_network:send("action_tase_event", 1)
 
-		if not attention_unit:base().is_husk_player then
+		local att_base_ext = attention_unit:base()
+
+		if att_base_ext.is_husk_player then
+			local tackle_upgrade = att_base_ext:upgrade_value("player", "convert_enemies_tackle_specials")
+
+			if tackle_upgrade then
+				self._joker_cooldown = tackle_upgrade
+				self._joker_vis_mask = managers.slot:get_mask("AI_visibility")
+			end
+		else
+			if att_base_ext.is_local_player then
+				self._tasing_player = true
+
+				if managers.player:has_category_upgrade("player", "convert_enemies_tackle_specials") then
+					self._joker_cooldown = managers.player:upgrade_value("player", "convert_enemies_tackle_specials")
+					self._joker_vis_mask = managers.slot:get_mask("AI_visibility")
+				end
+			end
+
 			self._shoot_t = self._mod_enable_t + shoot_delay
 			self._tasing_local_unit = attention_unit
-			self._tasing_player = attention_unit:base().is_local_player and true or nil
 		end
 	elseif attention_unit:base().is_local_player then
 		self._shoot_t = self._mod_enable_t + shoot_delay
@@ -339,6 +357,10 @@ function CopActionTase:update(t)
 
 	if not self._ext_anim.reload and not self._ext_anim.equip and not self._ext_anim.melee then
 		if self._firing_at_husk then
+			if self._joker_vis_mask and self:check_joker_counter(t) then
+				return
+			end
+
 			if self._attention.unit:movement():tased() then
 				if self._tase_effect then
 					world_g:effect_manager():fade_kill(self._tase_effect)
@@ -367,6 +389,8 @@ function CopActionTase:update(t)
 				if self._is_server then
 					self._expired = true
 				end
+			elseif self._joker_vis_mask and self:check_joker_counter(t) then
+				return
 			end
 		elseif self._discharging then
 			local cancel_tase = nil
@@ -392,6 +416,8 @@ function CopActionTase:update(t)
 
 					self._discharging = nil
 				end
+			elseif self._joker_vis_mask and	self:check_joker_counter(t) then
+				return
 			end
 		elseif target_vec and self._shoot_t and self._common_data.allow_fire then
 			if self._mod_enable_t < t and self._shoot_t < t then
@@ -606,4 +632,132 @@ function CopActionTase:_upd_ik_r_arm(target_vec, fwd_dot, t)
 
 		return nil
 	end
+end
+
+function CopActionTase:check_joker_counter(t)
+	local last_t_check = self._last_joker_counter_chk_t
+
+	if last_t_check and t < last_t_check then
+		return
+	end
+
+	self._last_joker_counter_chk_t = t + 0.5
+
+	local my_unit = self._unit
+	local closest_dis, closest_minion_data = 500, {}
+	local record = managers.groupai:state():criminal_record(self._attention.unit:key())
+	local minions = record and record.minions
+
+	if minions then
+		local ext_mov = self._ext_movement
+		local my_pos = ext_mov:m_pos()
+		local my_head_pos = ext_mov:m_head_pos()
+		local vis_mask = self._joker_vis_mask
+
+		--extra nav obstruction checks
+		--[[local nav_manager = managers.navigation
+		local nav_ray_f = nav_manager.raycast
+
+		local my_tracker = self._common_data.nav_tracker
+		local ray_params = {
+			allow_entry = false
+		}
+
+		if my_tracker:lost() then
+			ray_params.pos_to = my_tracker:field_position()
+		else
+			ray_params.tracker_to = my_tracker
+		end]]
+
+		for key, u_data in pairs_g(minions) do
+			local minion_unit = u_data.unit
+			local minion_mov_ext = minion_unit:movement()
+
+			if not minion_mov_ext:joker_counter_on_cooldown() and not minion_mov_ext:chk_action_forbidden("walk") then
+				local vec = my_pos - u_data.m_pos
+				local dis = vec:length()
+
+				if dis < closest_dis then
+					local obstructed = minion_unit:raycast("ray", minion_mov_ext:m_head_pos(), my_head_pos, "slot_mask", vis_mask, "ray_type", "ai_vision")
+
+					if not obstructed then
+						--[[local minion_tracker = minion_mov_ext:nav_tracker()
+
+						if minion_tracker:lost() then
+							ray_params.pos_from = minion_tracker:field_position()
+							ray_params.tracker_from = nil
+						else
+							ray_params.tracker_from = minion_tracker
+							ray_params.pos_from = nil
+						end
+
+						if not nav_ray_f(nav_manager, ray_params) then]]
+							closest_dis = dis
+							closest_minion_data.unit = minion_unit
+							closest_minion_data.vec = vec
+						--end
+					end
+				end
+			end
+		end
+	end
+
+	local found_minion = closest_minion_data.unit
+
+	if not found_minion then
+		return
+	end
+
+	local tackle_dir = closest_minion_data.vec:with_z(0):normalized()
+
+	return self:execute_tackle_counter(found_minion, tackle_dir)
+end
+
+function CopActionTase:execute_tackle_counter(minion_unit, direction)
+	local action_data = {
+		type = "dodge",
+		body_part = 1,
+		variation = "dive",
+		side = "fwd",
+		direction = mvec3_cpy(direction),
+		timeout = {0, 0},
+		speed = 2,
+		blocks = {
+			act = -1,
+			tase = -1,
+			bleedout = -1,
+			dodge = -1,
+			walk = -1,
+			action = -1,
+			aim = -1,
+			hurt = -1,
+			heavy_hurt = -1
+		}
+	}
+
+	local minion_mov_ext = minion_unit:movement()
+	local action = minion_mov_ext:action_request(action_data)
+
+	if not action then
+		return
+	end
+
+	minion_mov_ext:set_joker_cooldown(self._joker_cooldown)
+
+	local my_unit = self._unit
+	local action_data = {
+		damage_effect = 1,
+		damage = 0,
+		variant = "counter_spooc",
+		attacker_unit = minion_unit,
+		col_ray = {
+			body = my_unit:body("body"),
+			position = mvec3_cpy(self._ext_movement:m_com())
+		},
+		attack_dir = direction
+	}
+
+	my_unit:character_damage():damage_melee(action_data)
+
+	return true
 end

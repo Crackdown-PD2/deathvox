@@ -23,6 +23,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 			multiplier = multiplier * managers.player:crew_ability_upgrade_value("crew_interact", 1)
 		end
 
+		if self.tweak_data == "hostage_convert" then 
+			local brain = self._unit:brain()
+			if brain and brain.is_tied and brain:is_tied() then 
+				return 0.01
+			end
+		end
+
 		if self._tweak_data.upgrade_timer_multiplier then
 			multiplier = multiplier * managers.player:upgrade_value(self._tweak_data.upgrade_timer_multiplier.category, self._tweak_data.upgrade_timer_multiplier.upgrade, 1)
 		end
@@ -399,6 +406,42 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 
 		return can_place
+	end
+	
+	function IntimitateInteractionExt:_interact_blocked(player)
+		if self.tweak_data == "corpse_dispose" then
+			if managers.player:is_carrying() then
+				return true
+			end
+
+			if managers.player:chk_body_bags_depleted() then
+				return true, nil, "body_bag_limit_reached"
+			end
+
+			local has_upgrade = managers.player:has_category_upgrade("player", "corpse_dispose")
+
+			if not has_upgrade then
+				return true
+			end
+
+			return not managers.player:can_carry("person")
+		elseif self.tweak_data == "hostage_convert" then
+			return not managers.player:has_category_upgrade("player", "convert_enemies") or managers.player:chk_minion_limit_reached() or managers.groupai:state():whisper_mode()
+		elseif self.tweak_data == "hostage_move" then
+			if not self._unit:anim_data().tied then
+				return true
+			end
+
+			local following_hostages = managers.groupai:state():get_following_hostages(player)
+			local max_nr = player:base():upgrade_level("player", "falseidol_aced_followers") and 3 or 1
+
+			if following_hostages and max_nr <= table.size(following_hostages) then
+				log("a")
+				return true, nil, "hint_hostage_follow_limit"
+			end
+		elseif self.tweak_data == "hostage_stay" then
+			return not self._unit:anim_data().stand or self._unit:anim_data().to_idle
+		end
 	end
 	
 end

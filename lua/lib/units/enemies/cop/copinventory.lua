@@ -10,66 +10,105 @@ local unit_idstr = idstr_func("unit")
 local medium_col_unit_idstr = idstr_func("units/payday2/weapons/box_collision/box_collision_medium_ar")
 local medium_col_idstr = idstr_func("rp_box_collision_medium")
 
+local alive_g = alive
 local world_g = World
-local to_number_g = tonumber
+local tonumber_g = tonumber
+local tostring_g = tonumber
 
 function CopInventory:drop_weapon()
 	local selection = self._available_selections[self._equipped_selection]
 	local unit = selection and selection.unit
 
-	self._equipped_selection = nil
+	if not alive_g(unit) then
+		self._equipped_selection = nil
 
-	if alive(unit) then
-		unit:unlink()
+		return
+	end
 
-		if unit:damage() then
-			unit:damage():run_sequence_simple("enable_body")
+	local base_ext = unit:base()
+	local second_gun = base_ext and base_ext._second_gun
+
+	unit:unlink()
+
+	local u_dmg = unit:damage()
+
+	if u_dmg and u_dmg:has_sequence("enable_body") then
+		u_dmg:run_sequence_simple("enable_body")
+	else
+		local u_pos = unit:position()
+		local u_rot = unit:rotation()
+		local dropped_col = world_g:spawn_unit(medium_col_unit_idstr, u_pos, u_rot)
+
+		if dropped_col then
+			dropped_col:link(medium_col_idstr, unit)
+			unit:base()._collider_unit = dropped_col
+
+			mvec3_set(tmp_vec1, u_rot:y())
+			mvec3_mul(tmp_vec1, math_random(75, 200))
+
+			dropped_col:push(10, tmp_vec1)
+
+			--[[local listener_key = "added_collision" .. tostring_g(dropped_col:key())
+
+			unit:base():add_destroy_listener(listener_key, function()
+				if alive_g(dropped_col) then
+					dropped_col:set_slot(0)
+				end
+
+				if not alive_g(unit) then
+					return
+				end
+
+				unit:base():remove_destroy_listener(listener_key)
+			end)]]
+		end
+	end
+
+	managers.game_play_central:weapon_dropped(unit)
+
+	if alive_g(second_gun) then
+		second_gun:unlink()
+
+		local s_gun_u_dmg = second_gun:damage()
+
+		if s_gun_u_dmg and s_gun_u_dmg:has_sequence("enable_body") then
+			s_gun_u_dmg:run_sequence_simple("enable_body")
 		else
-			local u_pos = unit:position()
-			local u_rot = unit:rotation()
+			local u_pos = second_gun:position()
+			local u_rot = second_gun:rotation()
 			local dropped_col = world_g:spawn_unit(medium_col_unit_idstr, u_pos, u_rot)
 
 			if dropped_col then
-				dropped_col:link(medium_col_idstr, unit)
-				unit:base()._collider_unit = dropped_col
+				dropped_col:link(medium_col_idstr, second_gun)
+				second_gun:base()._collider_unit = dropped_col
 
 				mvec3_set(tmp_vec1, u_rot:y())
 				mvec3_mul(tmp_vec1, math_random(75, 200))
 
 				dropped_col:push(10, tmp_vec1)
+
+				--[[local listener_key = "added_collision" .. tostring_g(dropped_col:key())
+
+				second_gun:base():add_destroy_listener(listener_key, function()
+					if alive_g(dropped_col) then
+						dropped_col:set_slot(0)
+					end
+
+					if not alive_g(second_gun) then
+						return
+					end
+
+					second_gun:base():remove_destroy_listener(listener_key)
+				end)]]
 			end
 		end
 
-		managers.game_play_central:weapon_dropped(unit)
-
-		local second_gun = unit:base() and alive(unit:base()._second_gun) and unit:base()._second_gun
-
-		if second_gun then
-			second_gun:unlink()
-
-			if second_gun:damage() then
-				second_gun:damage():run_sequence_simple("enable_body")
-			else
-				local u_pos = second_gun:position()
-				local u_rot = second_gun:rotation()
-				local dropped_col = world_g:spawn_unit(medium_col_unit_idstr, u_pos, u_rot)
-
-				if dropped_col then
-					dropped_col:link(medium_col_idstr, second_gun)
-					second_gun:base()._collider_unit = dropped_col
-
-					mvec3_set(tmp_vec1, u_rot:y())
-					mvec3_mul(tmp_vec1, math_random(75, 200))
-
-					dropped_col:push(10, tmp_vec1)
-				end
-			end
-
-			managers.game_play_central:weapon_dropped(second_gun)
-		end
-
-		self:_call_listeners("unequip")
+		managers.game_play_central:weapon_dropped(second_gun)
 	end
+
+	self._equipped_selection = nil
+
+	self:_call_listeners("unequip")
 end
 
 function CopInventory:add_unit_by_factory_name(factory_name, equip, instant, blueprint_string, cosmetics_string)
@@ -90,7 +129,7 @@ function CopInventory:add_unit_by_factory_name(factory_name, equip, instant, blu
 		local quality_index_s = cosmetics_data[2] or "1"
 		local bonus_id_s = cosmetics_data[3] or "0"
 		local bonus = bonus_id_s == "1" and true or false
-		local quality = tweak_data.economy:get_entry_from_index("qualities", to_number_g(quality_index_s))
+		local quality = tweak_data.economy:get_entry_from_index("qualities", tonumber_g(quality_index_s))
 
 		cosmetics = {
 			id = weapon_skin_id,
