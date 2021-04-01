@@ -36,7 +36,7 @@ function GamePlayCentralManager:do_shotgun_push(unit, hit_pos, dir, distance, at
 			local unit_pos = unit:position()
 			local unit_rot = unit:rotation()
 
-			managers.network:session():send_to_peers_synched("sync_fall_position", unit, unit_pos, unit_rot)
+			--managers.network:session():send_to_peers_synched("sync_fall_position", unit, unit_pos, unit_rot)
 			managers.network:session():send_to_peers_synched("sync_shotgun_push", unit, hit_pos, dir, distance, attacker)
 
 			self:_add_corpse_to_shotgun_push_sync_list(unit)
@@ -97,7 +97,7 @@ function GamePlayCentralManager:update(t, dt)
 				if not alive(unit) then
 					self:_remove_corpse_from_shotgun_push_sync_list(corpse_info.u_key)
 				else
-					self:_sync_shotgun_pushed_body(unit)
+					--self:_sync_shotgun_pushed_body(unit)
 
 					local active_actions_1 = unit:movement()._active_actions[1]
 
@@ -137,9 +137,7 @@ function GamePlayCentralManager:_remove_corpse_from_shotgun_push_sync_list(u_key
 end
 
 function GamePlayCentralManager:_sync_shotgun_pushed_body(unit)
-	--to readd later after testing something else
-
-	--[[local nr_u_bodies = unit:num_bodies()
+	local nr_u_bodies = unit:num_bodies()
 	local i_u_body = 0
 
 	while nr_u_bodies > i_u_body do
@@ -152,7 +150,7 @@ function GamePlayCentralManager:_sync_shotgun_pushed_body(unit)
 		end
 
 		i_u_body = i_u_body + 1
-	end]]
+	end
 end
 
 
@@ -183,7 +181,11 @@ function GamePlayCentralManager:auto_highlight_enemy(unit, use_player_upgrades,f
 		end
 	end
 
-	unit:contour():add(contour_type, true, time_multiplier)
+	if use_player_upgrades and Network:is_server() then
+		unit:contour():add(contour_type, true, time_multiplier, nil, nil, managers.network:session():local_peer():id())
+	else
+		unit:contour():add(contour_type, true, time_multiplier)
+	end
 
 	return true
 end
