@@ -934,6 +934,17 @@ function CopDamage:damage_bullet(attack_data)
 				damage = damage * spott_dst[2]
 			end
 		end
+
+		local attacker = attack_data.attacker_unit
+
+		if alive(attacker) then
+			local attacker_dmg_ext = attacker:character_damage()
+			local joker_dmg_bonus = attacker_dmg_ext and attacker_dmg_ext._joker_mark_dmg_bonus
+
+			if joker_dmg_bonus then
+				damage = damage * joker_dmg_bonus
+			end
+		end
 	end
 
 	if not head and attack_data.weapon_unit:base().get_add_head_shot_mul and not self._unit:base():has_tag("tank") then
@@ -1971,6 +1982,17 @@ function CopDamage:damage_melee(attack_data)
 	if self._marked_dmg_mul then
 		damage = damage * self._marked_dmg_mul
 		damage_effect = damage_effect * self._marked_dmg_mul
+
+		local attacker = attack_data.attacker_unit
+
+		if alive(attacker) then
+			local attacker_dmg_ext = attacker:character_damage()
+			local joker_dmg_bonus = attacker_dmg_ext and attacker_dmg_ext._joker_mark_dmg_bonus
+
+			if joker_dmg_bonus then
+				damage = damage * joker_dmg_bonus
+			end
+		end
 	end
 	
 	damage_multiplier = self:_get_incoming_damage_multiplier(damage_multiplier)
