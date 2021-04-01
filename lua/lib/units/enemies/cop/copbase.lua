@@ -1,3 +1,7 @@
+local alive_g = _G.alive
+local ids_func = _G.Idstring
+local ids_unit = ids_func("unit")
+
 function CopBase:_chk_spawn_gear()
 	--[[if self._unit:base():char_tweak().ends_assault_on_death then
 		managers.groupai:state():register_phalanx_vip(self._unit)
@@ -240,7 +244,6 @@ function CopBase:melee_weapon()
 				local name = ids_func(third_unit)
 				local dr = ms.dyn_resource
 				local pack_path = "packages/dyn_resources"
-
 				if not dr:is_resource_ready(ids_unit, name, pack_path) then
 					dr:load(ids_unit, name, pack_path, false)
 				end

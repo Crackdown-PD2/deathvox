@@ -317,7 +317,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			damage_multiplier = damage_multiplier * player_manager:upgrade_value("player", "passive_convert_enemies_damage_multiplier", 1)
 
 			--TCD placeholders
-			accuracy_multiplier = base_ext:upgrade_value("player", "convert_enemies_acc_multiplier") or 1
+			accuracy_multiplier = player_manager:upgrade_value("player", "convert_enemies_acc_multiplier") or 1
 			no_hurt_animations = nil
 			melee_stagger = nil
 			health_regen = nil

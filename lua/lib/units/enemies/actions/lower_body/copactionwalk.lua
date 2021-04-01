@@ -1501,7 +1501,7 @@ function CopActionWalk:update(t)
 	local stance_name = stance.name
 	local pose = stance.values[4] > 0 and "wounded" or ext_anim.pose or "stand"
 	local anim_velocities = self._walk_anim_velocities
-	local wanted_walk = anim_velocities[pose] or anim_velocities["stand"] or or anim_velocities["crouch"]
+	local wanted_walk = anim_velocities[pose] or anim_velocities["stand"] or anim_velocities["crouch"]
 	wanted_walk = wanted_walk[stance_name] or wanted_walk["cbt"] or wanted_walk["hos"] or wanted_walk["ntl"]
 
 	local real_velocity = self._cur_vel
