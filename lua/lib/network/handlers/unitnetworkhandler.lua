@@ -65,7 +65,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			char_damage:set_revive_boost(revive_health_level)
 			if revive_health_level == 1 then --restore down if revived from fak
 			--since iirc there are no other sources of this upgrade except for FAKs in TCD, so it should be safe to use as a flag for a revive from a FAK
-				char_damage._revives = Application:digest_value(Application:digest_value(char_damage._revives, false) + 1), true)
+				char_damage._revives = Application:digest_value(Application:digest_value(char_damage._revives, false) + 1, true)
 			end
 		end
 
