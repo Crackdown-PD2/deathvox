@@ -1,4 +1,5 @@
 local mvec3_z = mvector3.z
+local mvec3_sub = mvector3.subtract
 local mvec3_set = mvector3.set
 local mvec3_lerp = mvector3.lerp
 local mvec3_dis_sq = mvector3.distance_sq
@@ -38,6 +39,7 @@ script_redirects[#script_redirects + 1] = "cmd_stop"
 script_redirects[#script_redirects + 1] = "cmd_down"
 script_redirects[#script_redirects + 1] = "cmd_gogo"
 script_redirects[#script_redirects + 1] = "cmd_point"
+--need to change at least one of these to pissing later
 
 CopActionAct._act_redirects.script = script_redirects
 
