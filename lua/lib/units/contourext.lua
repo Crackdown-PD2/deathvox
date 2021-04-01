@@ -67,7 +67,7 @@ function ContourExt:apply_to_linked(func_name, ...)
 	end
 end
 
-function ContourExt:add(type, sync, multiplier, override_color, add_as_child)
+function ContourExt:add(type, sync, multiplier, override_color, add_as_child, mark_peer_id)
 	--[[if Global.debug_contour_enabled then
 		return
 	end]]
@@ -140,6 +140,11 @@ function ContourExt:add(type, sync, multiplier, override_color, add_as_child)
 
 			setup.color = override_color or setup.color
 
+			if mark_peer_id then
+				setup.peer_ids = setup.peer_ids or {}
+				setup.peer_ids[mark_peer_id] = true
+			end
+
 			type_was_in_list = setup
 		else
 			if setup.priority <= prio then
@@ -179,6 +184,13 @@ function ContourExt:add(type, sync, multiplier, override_color, add_as_child)
 		unique = data.unique,
 		color = override_color or data.color
 	}
+
+	if mark_peer_id then
+		setup.peer_ids = {
+			mark_peer_id = true
+		}
+	end
+
 	local old_preset = contour_list[1]
 	local old_preset_type = old_preset and old_preset.type
 	local new_contour_list = {}
@@ -214,6 +226,21 @@ function ContourExt:add(type, sync, multiplier, override_color, add_as_child)
 	end
 
 	return setup
+end
+
+function ContourExt:chk_joker_should_prioritize(owner_id)
+	local list = self._contour_list
+
+	for i = 1, #list do
+		local setup = list[i]
+		local peer_ids = setup.peer_ids
+
+		if peer_ids and peer_ids[owner_id] then
+			return true
+		end
+	end
+
+	return false
 end
 
 function ContourExt:change_color(type, color)
