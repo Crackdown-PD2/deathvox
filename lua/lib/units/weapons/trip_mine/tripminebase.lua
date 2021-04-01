@@ -189,7 +189,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 	function TripMineBase:attach_to_enemy(stuck_enemy,position,rot,parent_obj,radius_upgrade_level,vulnerability_upgrade_level)
 		local unit = self._unit
-		local player_unit = managers.player:local_player()
+
+		local peer = self._owner_peer_id and managers.network:session():peer(self._owner_peer_id)
+		local owner = peer and peer:unit() or managers.player:local_player()
 --		local parent_obj = ray.body:root_object()
 
 		if self:_get_payload_mode() == "payload_sensor" then 
@@ -215,8 +217,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 			damage = 0,
 			variant = "fire",
 			pos = mvec3_copy(position),
-			attack_dir = mvec3_copy(player_unit:equipment():_m_deploy_rot():y()),
-			attacker_unit = player_unit,
+			attack_dir = mvec3_copy(rot:y()),
+			attacker_unit = owner,
 			result = {
 				variant = "fire",
 				type = "fire_hurt"
@@ -254,12 +256,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 		)
 		managers.enemy:add_delayed_clbk("tripmine_stuck_delayed_detonate_" .. u_key_str, function()
 				if alive_g(unit) then 
-					unit:base():explode()
+					unit:base():explode(true)
 				end
 			end,
 			t + 1
 		)
-		
+
 		local panic_radius = managers.player:upgrade_value_by_level("trip_mine","stuck_enemy_panic_radius",radius_upgrade_level,0)
 		if panic_radius > 0 then 
 			local is_dozer = stuck_enemy:base():has_tag("tank")
@@ -494,15 +496,18 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	end
 	
-	function TripMineBase:explode()
-		if not self._active then
-			return
-		end
+	function TripMineBase:explode(force)
 		
-		if self._payload_mode == "payload_sensor" then 
-		--self._active is used to check whether the unit is doing anything, basically, including its regular extension update
-		--so check for the sensor mode manually here instead of doing set_active() when toggling sensor mode
-			return
+		if not force then 
+			if not self._active then
+				return
+			end
+			
+			if self._payload_mode == "payload_sensor" then 
+			--self._active is used to check whether the unit is doing anything, basically, including its regular extension update
+			--so check for the sensor mode manually here instead of doing set_active() when toggling sensor mode
+				return
+			end
 		end
 
 		self._active = false
