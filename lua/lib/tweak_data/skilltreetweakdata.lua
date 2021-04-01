@@ -458,121 +458,123 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.chief,1,{ --Protect and Serve
 			{
 				upgrades = {
-					
+					"player_convert_enemies_interaction_speed_multiplier"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					 "friendship_collar_quantity" --not yet connected
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_protect_and_serve",
 			desc_id = "menu_protect_and_serve_desc",
 			icon_xy = {
-				0 or 4,
-				0 or 0
+				4,
+				0
 			}
 		})
 		replace_skill(tree_indices.chief,2,{ --Order through Law
 			{
 				upgrades = {
-					
+					"player_convert_enemies_knockback_proof" --not yet connected
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"player_convert_enemies_melee" --not yet connected
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_order_through_law",
 			desc_id = "menu_order_through_law_desc",
 			icon_xy = {
-				0 or 4,
-				0 or 1
+				4,
+				1
 			}
 		})
 		replace_skill(tree_indices.chief,3,{ --Justice with Mercy
 			{
 				upgrades = {
-					
+					"player_convert_enemies_piercing_bullets" --not yet connected
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"player_convert_enemies_accuracy_bonus" --not yet connected
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_justice_with_mercy",
 			desc_id = "menu_justice_with_mercy_desc",
 			icon_xy = {
-				0 or 4,
-				0 or 0
+				4,
+				2
 			}
 		})
 		replace_skill(tree_indices.chief,4,{ --Standard of Excellence
 			{
 				upgrades = {
-					
+					"player_passive_convert_enemies_health_multiplier_2"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"player_convert_enemies_health_regen" --not yet connected
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_standard_of_excellence",
 			desc_id = "menu_standard_of_excellence_desc",
 			icon_xy = {
-				0 or 4,
-				0 or 0
+				4,
+				3
 			}
 		})
 		replace_skill(tree_indices.chief,5,{ --Maintaining the Peace
 			{
 				upgrades = {
-					
+					"player_convert_enemies_target_marked", --not yet connected
+					"weapon_steelsight_highlight_specials"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"player_convert_enemies_marked_damage_bonus" --not yet connected
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_maintaining_the_peace",
 			desc_id = "menu_maintaining_the_peace_desc",
 			icon_xy = {
-				0 or 4,
-				0 or 0
+				4,
+				4
 			}
 		})
 		replace_skill(tree_indices.chief,6,{ --Service above Self
 			{
 				upgrades = {
-					
+					"player_convert_enemies_max_minions_1",
+					"player_convert_enemies_max_minions_2"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					
+					"player_convert_enemies_tackle_specials" --not yet connected
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_service_above_self",
 			desc_id = "menu_service_above_self_desc",
 			icon_xy = {
-				0 or 4,
-				0 or 0
+				4,
+				5
 			}
 		})
 		
@@ -1388,13 +1390,13 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.assassin,4,{ --Toxic Shock (not implemented)
 			{
 				upgrades = {
---					"subclass_poison_dot_aoe"
+					"subclass_poison_dot_aoe" --not yet implemented
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
---					"subclass_poison_damage_mul"
+					"subclass_poison_damage_mul" --not yet implemented
 				},
 				cost = self.costs.hightierpro
 			},
@@ -1987,7 +1989,11 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			--fak 80% faster interaction
 			"first_aid_kit_interaction_speed_multiplier",
 			--fak 80% faster deploy (tweaked vanilla)
-			"first_aid_kit_deploy_time_multiplier"
+			"first_aid_kit_deploy_time_multiplier",
+			
+			"player_convert_enemies",
+			"sentry_gun_silent",
+			"player_passive_convert_enemies_health_multiplier_1" --50% damage resistance
 		}
 		
 		for _,upgrade_name in pairs(more_default_upgrades) do 
