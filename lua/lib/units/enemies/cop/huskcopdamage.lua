@@ -63,10 +63,21 @@ end
 
 if deathvox:IsTotalCrackdownEnabled() then
 	function HuskCopDamage:sync_net_event(event_id)
-		if event_id ~= 1 then
-			return
-		end
+		if event_id == 1 then
+			self._tased_time = tweak_data.upgrades.player.drill_shock_tase_time
+		elseif event_id == 2 then
+			local char_tweaks = deep_clone(self._unit:base()._char_tweak)
 
-		self._tased_time = tweak_data.upgrades.player.drill_shock_tase_time
+			char_tweaks.damage.hurt_severity = tweak_data.character.presets.hurt_severities.no_hurts_no_tase
+			char_tweaks.can_be_tased = false
+			char_tweaks.use_animation_on_fire_damage = false
+			char_tweaks.immune_to_knock_down = true
+			char_tweaks.immune_to_concussion = true
+
+			self._unit:base()._char_tweak = char_tweaks
+			self._unit:character_damage()._char_tweak = char_tweaks
+			self._unit:movement()._tweak_data = char_tweaks
+			self._unit:movement()._action_common_data.char_tweak = char_tweaks
+		end
 	end
 end
