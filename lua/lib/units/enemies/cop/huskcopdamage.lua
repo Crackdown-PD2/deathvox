@@ -79,7 +79,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local net_events = HuskCopDamage._NET_EVENTS
 
 		if event_id == net_events.set_drill_shock_tase_time then
-			self._tased_time = tweak_data.upgrades.player.drill_shock_tase_time
+			self._tased_time = tweak_data.upgrades.values.player.drill_shock_tase_time
 		elseif event_id == net_events.set_joker_no_hurts then
 			local char_tweaks = deep_clone(self._unit:base()._char_tweak)
 
