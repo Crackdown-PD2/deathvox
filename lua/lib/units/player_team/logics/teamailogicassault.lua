@@ -180,7 +180,7 @@ function TeamAILogicAssault.update(data)
 		TeamAILogicAssault._upd_combat_movement(data)
 	end
 
-	if not data.logic.action_taken then
+	if not data.logic.action_taken(data, my_data) then
 		CopLogicAttack._chk_start_action_move_out_of_the_way(data, my_data)
 	end
 end

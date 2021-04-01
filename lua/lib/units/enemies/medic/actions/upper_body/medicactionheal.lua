@@ -28,4 +28,7 @@ function MedicActionHeal:update(t)
 end
 
 function MedicActionHeal:on_exit()
+	if self._expired then
+		CopActionWalk._chk_correct_pose(self)
+	end
 end

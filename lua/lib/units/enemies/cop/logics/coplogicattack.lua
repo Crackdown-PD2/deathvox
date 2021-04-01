@@ -105,7 +105,8 @@ function CopLogicAttack.enter(data, new_logic_name, enter_params)
 	local key_str = tostring(data.key)
 	my_data.detection_task_key = "CopLogicAttack._upd_enemy_detection" .. key_str
 
-	CopLogicBase.queue_task(my_data, my_data.detection_task_key, CopLogicAttack._upd_enemy_detection, data, data.t, data.important and true)
+	local asap = data.is_converted or data.important
+	CopLogicBase.queue_task(my_data, my_data.detection_task_key, CopLogicAttack._upd_enemy_detection, data, data.t, asap and true)
 
 	if objective then
 		if objective.action_duration or objective.action_timeout_t and data.t < objective.action_timeout_t then
@@ -226,7 +227,7 @@ function CopLogicAttack.update(data)
 		end
 	end
 
-	if not data.logic.action_taken then
+	if not data.logic.action_taken(data, my_data) then
 		CopLogicAttack._chk_start_action_move_out_of_the_way(data, my_data)
 	end
 
@@ -1073,15 +1074,16 @@ function CopLogicAttack._update_cover(data)
 			local threat_pos = focus_enemy.nav_tracker:field_position()
 
 			if data.objective and data.objective.type == "follow" then
-				local near_pos = data.objective.follow_unit:movement():nav_tracker():field_position() --small clarification, follow_unit and focus_enemy can easily not be the same thing -- also using field_position if possible for valid navigation purposes
+				local near_pos = data.objective.follow_unit:movement():nav_tracker():field_position()
+				local max_dis = data.is_converted and 250 or data.unit:in_slot(16) and 450 or my_data.weapon_range.far
 
-				if not best_cover or not CopLogicAttack._verify_follow_cover(best_cover[1], near_pos, threat_pos, 200, my_data.weapon_range.far) then
+				if not best_cover or not CopLogicAttack._verify_follow_cover(best_cover[1], near_pos, threat_pos, 200, max_dis) then
 					local follow_unit_area = managers.groupai:state():get_area_from_nav_seg_id(data.objective.follow_unit:movement():nav_tracker():nav_segment())
 					local max_near_dis = data.objective.distance and data.objective.distance * 0.9 or nil
 					local found_cover = managers.navigation:find_cover_in_nav_seg_3(follow_unit_area.nav_segs, max_near_dis, near_pos, threat_pos)
 
 					if found_cover then
-						if not best_cover or CopLogicAttack._verify_follow_cover(found_cover, near_pos, threat_pos, 200, my_data.weapon_range.far) then
+						if not best_cover or CopLogicAttack._verify_follow_cover(found_cover, near_pos, threat_pos, 200, max_dis) then
 							local better_cover = {
 								found_cover
 							}
@@ -2121,11 +2123,9 @@ function CopLogicAttack.on_new_objective(data, old_objective)
 end
 
 function CopLogicAttack.queue_update(data, my_data)
-	local delay = data.important and 0 or 0.7
-	
 	local hostage_count = managers.groupai:state():get_hostage_count_for_chatter() --check current hostage count
 	local chosen_panic_chatter = "controlpanic" --set default generic assault break chatter
-	
+
 	if hostage_count > 0 then --make sure the hostage count is actually above zero before replacing any of the lines
 		if hostage_count > 3 then  -- hostage count needs to be above 3
 			if math_random() < 0.4 then --40% chance for regular panic if hostages are present
@@ -2278,8 +2278,20 @@ function CopLogicAttack.queue_update(data, my_data)
 			
 		end	
 	end
-	
-	CopLogicBase.queue_task(my_data, my_data.update_queue_id, data.logic.queued_update, data, data.t + delay, data.important and true)
+
+	local delay, asap = nil
+
+	if data.is_converted then
+		delay = 0
+		asap = true
+	elseif data.important then
+		delay = 0.5
+		asap = true
+	else
+		delay = 2
+	end
+
+	CopLogicBase.queue_task(my_data, my_data.update_queue_id, data.logic.queued_update, data, data.t + delay, asap and true)
 end
 
 function CopLogicAttack._get_expected_attention_position(data, my_data)

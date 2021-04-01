@@ -35,10 +35,14 @@ end
 
 function CopActionHealed:on_exit()
 	self._ext_movement:drop_held_items()
+
+	if self._expired then
+		CopActionWalk._chk_correct_pose(self)
+	end
 end
 
 function CopActionHealed:update(t)
-	if not self._unit:anim_data().heal then
+	if not self._ext_anim.heal then
 		self._healed = true
 		self._expired = true
 	end

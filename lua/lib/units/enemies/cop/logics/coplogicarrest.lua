@@ -195,9 +195,7 @@ function CopLogicArrest.queued_update(data)
 	end
 
 	if my_data.has_old_action then
-		--CopLogicIdle._upd_stop_old_action(data, my_data, data.objective)
-		CopLogicAttack._upd_stop_old_action(data, my_data)
-
+		CopLogicIdle._upd_stop_old_action(data, my_data, data.objective)
 		CopLogicBase.queue_task(my_data, my_data.update_task_key, CopLogicArrest.queued_update, data, data.t + delay, data.important and true)
 
 		return

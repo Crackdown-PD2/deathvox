@@ -33,16 +33,18 @@
 	<post :script_path="mutators/mutatorfriendlyfire.lua" :hook_id="mutators/mutatorfriendlyfire"/>
 
 	<group :script_path="units/enemies/" :hook_id="units/enemies/">
-		<post :script_path="cop/copbrain.lua" :hook_id="cop/copbrain"/>
-		<post :script_path="cop/huskcopbrain.lua" :hook_id="cop/huskcopbrain"/>
-		<post :script_path="cop/copmovement.lua" :hook_id="cop/copmovement"/>
-		<post :script_path="cop/copinventory.lua" :hook_id="cop/copinventory"/>
-		<post :script_path="cop/copdamage.lua" :hook_id="cop/copdamage"/>
 		<post :script_path="cop/copbase.lua" :hook_id="cop/copbase"/>
+		<post :script_path="cop/copbrain.lua" :hook_id="cop/copbrain"/>
+		<post :script_path="cop/copdamage.lua" :hook_id="cop/copdamage"/>
+		<post :script_path="cop/copinventory.lua" :hook_id="cop/copinventory"/>
+		<post :script_path="cop/copmovement.lua" :hook_id="cop/copmovement"/>
 		<post :script_path="cop/copsound.lua" :hook_id="cop/copsound"/>
+		<post :script_path="cop/huskcopbase.lua" :hook_id="cop/huskcopbase"/>
+		<post :script_path="cop/huskcopbrain.lua" :hook_id="cop/huskcopbrain"/>
+		<post :script_path="cop/huskcopdamage.lua" :hook_id="cop/huskcopdamage"/>
+		<post :script_path="cop/huskcopinventory.lua" :hook_id="cop/huskcopinventory"/>
 		<post :script_path="medic/medicdamage.lua" :hook_id="medic/medicdamage"/>
 		<post :script_path="medic/actions/upper_body/medicactionheal.lua" :hook_id="medic/actions/upper_body/medicactionheal"/>
-		<post :script_path="cop/huskcopdamage.lua" :hook_id="cop/huskcopdamage"/>
 		<post :script_path="cop/logics/coplogicattack.lua" :hook_id="cop/logics/coplogicattack"/>
 		<post :script_path="cop/logics/coplogicinactive.lua" :hook_id="cop/logics/coplogicinactive"/>
 		<post :script_path="cop/logics/coplogictravel.lua" :hook_id="cop/logics/coplogictravel"/>
@@ -60,26 +62,35 @@
 		<post :script_path="actions/upper_body/copactionreload.lua" :hook_id="cop/actions/upper_body/copactionreload"/>
 		<post :script_path="actions/full_body/copactionhurt.lua" :hook_id="cop/actions/full_body/copactionhurt"/>
 		<post :script_path="actions/full_body/copactionact.lua" :hook_id="cop/actions/full_body/copactionact"/>
+		<post :script_path="actions/full_body/copactionwarp.lua" :hook_id="cop/actions/full_body/copactionwarp"/>
 		<post :script_path="actions/lower_body/copactionwalk.lua" :hook_id="cop/actions/lower_body/copactionwalk"/>
 		<post :script_path="actions/lower_body/copactionturn.lua" :hook_id="cop/actions/lower_body/copactionturn"/>
+		<post :script_path="actions/lower_body/copactionstand.lua" :hook_id="cop/actions/lower_body/copactionstand"/>
+		<post :script_path="actions/lower_body/copactionidle.lua" :hook_id="cop/actions/lower_body/copactionidle"/>
+		<post :script_path="actions/lower_body/copactioncrouch.lua" :hook_id="cop/actions/lower_body/copactioncrouch"/>
 		<post :script_path="taser/logics/taserlogicattack.lua" :hook_id="taser/logics/taserlogicattack"/>
 	</group>
 	<post :script_path="units/civilians/civilianbase.lua" :hook_id="units/civilians/civilianbase"/>
 	<post :script_path="units/civilians/civilianbrain.lua" :hook_id="units/civilians/civilianbrain"/>
 	<post :script_path="units/civilians/civiliandamage.lua" :hook_id="units/civilians/civiliandamage"/>
+	<post :script_path="units/civilians/huskcivilianbase.lua" :hook_id="units/civilians/huskcivilianbase"/>
 	<post :script_path="units/civilians/logics/civilianlogicsurrender.lua" :hook_id="units/civilians/logics/civilianlogicsurrender"/>
-	<post :script_path="units/civilians/actions/lower_body/civilianactionwalk.lua" :hook_id="units/civilians/actions/lower_body/civilianactionwalk"/>
+	<post :script_path="units/civilians/logics/civilianlogicidle.lua" :hook_id="units/civilians/logics/civilianlogicidle"/>
+	<post :script_path="units/civilians/logics/civilianlogicflee.lua" :hook_id="units/civilians/logics/civilianlogicflee"/>
 
 	 <!-- Hoxi's Crew Bots Fixes  -->
+	<post :script_path="units/player_team/huskteamaibase.lua" :hook_id="units/player_team/huskteamaibase"/>
 	<post :script_path="units/player_team/huskteamaidamage.lua" :hook_id="units/player_team/huskteamaidamage"/>
+	<post :script_path="units/player_team/huskteamaiinventory.lua" :hook_id="units/player_team/huskteamaiinventory"/>
+	<post :script_path="units/player_team/huskteamaimovement.lua" :hook_id="units/player_team/huskteamaimovement"/>
+	<post :script_path="units/player_team/teamaibase.lua" :hook_id="units/player_team/teamaibase"/>
+	<post :script_path="units/player_team/teamaibrain.lua" :hook_id="units/player_team/teamaibrain"/>
 	<post :script_path="units/player_team/teamaiinventory.lua" :hook_id="units/player_team/teamaiinventory"/>
 	<post :script_path="units/player_team/teamaimovement.lua" :hook_id="units/player_team/teamaimovement"/>
-	<group :script_path="units/player_team/logics/" :hook_id="units/player_team/logics/">
-		<post :script_path="teamailogicassault.lua" :hook_id="teamailogicassault"/>
-		<post :script_path="teamailogicdisabled.lua" :hook_id="teamailogicdisabled"/>
-		<post :script_path="teamailogicidle.lua" :hook_id="teamailogicidle"/>
-		<post :script_path="teamailogictravel.lua" :hook_id="teamailogictravel"/>
-	</group>
+	<post :script_path="units/player_team/logics/teamailogicassault.lua" :hook_id="units/player_team/logics/teamailogicassault"/>
+	<post :script_path="units/player_team/logics/teamailogicdisabled.lua" :hook_id="units/player_team/logics/teamailogicdisabled"/>
+	<post :script_path="units/player_team/logics/teamailogicidle.lua" :hook_id="units/player_team/logics/teamailogicidle"/>
+	<post :script_path="units/player_team/logics/teamailogictravel.lua" :hook_id="units/player_team/logics/teamailogictravel"/>
 	
 	<post :script_path="tweak_data/equipmentstweakdata.lua" :hook_id="tweak_data/equipmentstweakdata"/>	
 	<post :script_path="tweak_data/interactiontweakdata.lua" :hook_id="tweak_data/interactiontweakdata"/>
@@ -92,6 +103,7 @@
 	<post :script_path="units/beings/player/playermovement.lua" :hook_id="units/beings/player/playermovement"/>
 	<post :script_path="units/beings/player/huskplayermovement.lua" :hook_id="units/beings/player/huskplayermovement"/>
 	<post :script_path="units/beings/player/playerequipment.lua" :hook_id="units/beings/player/playerequipment"/>
+	<post :script_path="units/beings/player/playerinventory.lua" :hook_id="units/beings/player/playerinventory"/>
 
 	<post :script_path="units/weapons/bowweaponbase.lua" :hook_id="units/weapons/bowweaponbase"/>
 	<post :script_path="units/weapons/concussiongrenade.lua" :hook_id="units/weapons/grenades/concussiongrenade"/>
@@ -112,13 +124,23 @@
 	<post :script_path="units/equipment/sentry_gun/sentrygunmovement.lua" :hook_id="units/equipment/sentry_gun/sentrygunmovement"/>
 	<post :script_path="units/interactions/interactionext.lua" :hook_id="units/interactions/interactionext"/>
 	
-	<post :script_path="units/props/securitycamera.lua" :hook_id="units/props/securitycamera"/>
+	<post :script_path="units/props/aiattentionobject.lua" :hook_id="units/props/aiattentionobject"/>
+	<post :script_path="units/props/carrydata.lua" :hook_id="units/props/carrydata"/>
 	<post :script_path="units/props/drill.lua" :hook_id="units/props/drill"/>
+	<post :script_path="units/props/missiondoor.lua" :hook_id="units/props/missiondoor"/>
+	<post :script_path="units/props/securitycamera.lua" :hook_id="units/props/securitycamera"/>
+	<post :script_path="units/props/smalllootbase.lua" :hook_id="units/props/smalllootbase"/>
+	<post :script_path="units/props/zipline.lua" :hook_id="units/props/zipline"/>
+	
+	<post :script_path="units/vehicles/animatedvehiclebase.lua" :hook_id="units/vehicles/animatedvehiclebase"/>
+	<post :script_path="units/vehicles/vehicledrivingext.lua" :hook_id="units/vehicles/vehicledrivingext"/>
 	
 	<post :script_path="utils/inventorydescription.lua" :hook_id="utils/inventorydescription" />
 	
 	<post :script_path="units/contourext.lua" :hook_id="units/contourext"/>
 	<post :script_path="units/pickups/ammoclip.lua" :hook_id="units/pickups/ammoclip"/>
+	<post :script_path="units/pickups/gageassignmentbase.lua" :hook_id="units/pickups/gageassignmentbase"/>
+	<post :script_path="units/pickups/pickup.lua" :hook_id="units/pickups/pickup"/>
 	<post :script_path="units/equipment/armor_plates/armorplatesbase.lua" :hook_id="units/equipment/doctor_bag/doctorbagbase"/>
 	<post :script_path="units/equipment/doctor_bag/doctorbagbase.lua" :hook_id="units/equipment/doctor_bag/doctorbagbase"/>
 	<post :script_path="units/equipment/first_aid_kit/firstaidkitbase.lua" :hook_id="units/equipment/first_aid_kit/firstaidkitbase"/>

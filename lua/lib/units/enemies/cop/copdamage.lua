@@ -1,13 +1,21 @@
 local mvec3_set = mvector3.set
+local mvec3_set_stat = mvector3.set_static
 local mvec3_set_z = mvector3.set_z
+local mvec3_add = mvector3.add
+local mvec3_mul = mvector3.multiply
 local mvec3_sub = mvector3.subtract
 local mvec3_dot = mvector3.dot
 local mvec3_dis = mvector3.distance
 local mvec3_norm = mvector3.normalize
 local mvec3_cpy = mvector3.copy
+local mvec3_neg = mvector3.negate
+local mvec3_lerp = mvector3.lerp
+local mvec3_spread = mvector3.spread
 
 local mvec_1 = Vector3()
 local mvec_2 = Vector3()
+local mvec_3 = Vector3()
+local mvec_4 = Vector3()
 
 local m_rot_z = mrotation.z
 
@@ -17,15 +25,20 @@ local math_clamp = math.clamp
 local math_min = math.min
 local math_max = math.max
 local math_ceil = math.ceil
+local math_up = math.UP
+local math_down = math.DOWN
 
 local table_insert = table.insert
 local table_contains = table.contains
 local table_size = table.size
 
-local idstr_bullet_hit_blood = Idstring("effects/payday2/particles/impacts/blood/blood_impact_a")
-
+local tostring_g = tostring
 local alive_g = alive
 local world_g = World
+
+local idstr_func = Idstring
+local ids_flesh = idstr_func("flesh")
+local idstr_bullet_hit_blood = idstr_func("effects/payday2/particles/impacts/blood/blood_impact_a")
 
 CopDamage.melee_knockback_tiers = {
 	[1] = false,
@@ -295,22 +308,32 @@ function CopDamage:check_medic_heal()
 		end
 	end
 
+	--further ensure that the unit isn't acting or plans to act
+	local act_action, was_queued = self._unit:movement():_get_latest_act_action()
+
+	if act_action then
+		if not was_queued or not act_action.host_expired then
+			return false
+		end
+	end
+
 	local medic = managers.enemy:get_nearby_medic(self._unit)
 
 	if medic then
 		local medic_dmg_ext = medic:character_damage()
 
-		if medic_dmg_ext:heal_unit(self._unit) then --heal was successful
+		if medic_dmg_ext:heal_unit(self._unit) then
 			local difficulty_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)
 
 			--if playing on Crackdown difficulty, find enemies around the Medic and proceed with the usual healing process on them as well
 			if difficulty_index == 8 then
-				local enemies = world_g:find_units_quick(medic, "sphere", medic:position(), tweak_data.medic.radius, managers.slot:get_mask("enemies"))
+				local enemies = medic:find_units_quick("sphere", medic:position(), tweak_data.medic.radius, managers.slot:get_mask("enemies"))
+				local my_key = self._unit:key()
 
 				for i = 1, #enemies do
 					local enemy = enemies[i]
 					local anim_data = enemy:anim_data()
-					local skip_enemy = self._unit:key() == enemy:key() or anim_data and anim_data.act and true
+					local skip_enemy = anim_data and anim_data.act or my_key == enemy:key()
 
 					if not skip_enemy then
 						local tweak_table_name = enemy:base()._tweak_table
@@ -722,11 +745,6 @@ function CopDamage:damage_bullet(attack_data)
 	local from_behind = mvec3_dot(mvec_1, mvec_2) >= 0
 	if self._has_plate and attack_data.col_ray.body and attack_data.col_ray.body:name() == self._ids_plate_name then
 		if attack_data.armor_piercing or (attack_data.weapon_unit:base().thrower_unit and deathvox:IsTotalCrackdownEnabled()) then --icky
-			World:effect_manager():spawn({
-				effect = idstr_bullet_hit_blood,
-				position = attack_data.col_ray.position,
-				normal = attack_data.col_ray.ray
-			})
 		else
 			local armor_pierce_roll = math_random()
 			local armor_pierce_value = 0
@@ -789,11 +807,34 @@ function CopDamage:damage_bullet(attack_data)
 
 				return result
 			end
+		end
 
-			World:effect_manager():spawn({
+		local col_ray = attack_data.col_ray
+		local decal_ray_from = mvec_1
+		local decal_ray_to = mvec_2
+
+		mvec3_set(decal_ray_from, col_ray.ray)
+		mvec3_set(decal_ray_to, col_ray.position)
+		mvec3_mul(decal_ray_from, 25)
+		mvec3_add(decal_ray_to, decal_ray_from)
+		mvec3_neg(decal_ray_from)
+		mvec3_add(decal_ray_from, col_ray.position)
+
+		local material_name = world_g:pick_decal_material(col_ray.unit, decal_ray_from, decal_ray_to, managers.slot:get_mask("bullet_impact_targets"))
+
+		if material_name ~= idstr_bullet_hit_blood then
+			local effect_normal = mvec_3
+			mvec3_set(effect_normal, col_ray.normal)
+
+			mvec3_set(mvec_4, col_ray.ray)
+			mvec3_neg(mvec_4)
+			mvec3_lerp(effect_normal, col_ray.normal, mvec_4, math_random())
+			mvec3_spread(effect_normal, 10)
+
+			world_g:effect_manager():spawn({
 				effect = idstr_bullet_hit_blood,
-				position = attack_data.col_ray.position,
-				normal = attack_data.col_ray.ray
+				position = col_ray.position,
+				normal = effect_normal
 			})
 		end
 	end
@@ -825,14 +866,17 @@ function CopDamage:damage_bullet(attack_data)
 		local weap_base = alive(attack_data.weapon_unit) and attack_data.weapon_unit:base()
 		local weapon_class = weap_base and weap_base.get_weapon_class and weap_base:get_weapon_class() or "NO_WEAPON_CLASS"
 		local subclasses = weap_base and weap_base.get_weapon_subclasses and weap_base:get_weapon_subclasses() or {}
-		
+
 		local player_has_aggro = false
-		local brain = self._unit:brain()
-		local attention_obj = brain and brain._logic_data and brain._logic_data.attention_obj
-		if attention_obj and attention_obj.unit == player_unit then 
-			player_has_aggro = true
+		local set_attention = self._unit:movement():attention()
+
+		if set_attention then
+			local att_unit = set_attention.unit
+			local att_base_ext = att_unit and att_unit:base()
+
+			player_has_aggro = att_base_ext and att_base_ext.is_local_player
 		end
-		
+
 		if from_behind then 
 			for _,subclass in pairs(subclasses) do 
 				backstab_bullets_mul = backstab_bullets_mul + managers.player:upgrade_value(subclass,"backstab_bullets",0)
@@ -841,6 +885,7 @@ function CopDamage:damage_bullet(attack_data)
 				end
 			end
 		end
+
 		damage = damage * backstab_bullets_mul
 		
 		headshot_mul_addend = managers.player:upgrade_value(weapon_class, "headshot_mul_addend", 0)
@@ -887,6 +932,17 @@ function CopDamage:damage_bullet(attack_data)
 
 			if spott_dst[1] < dst then
 				damage = damage * spott_dst[2]
+			end
+		end
+
+		local attacker = attack_data.attacker_unit
+
+		if alive(attacker) then
+			local attacker_dmg_ext = attacker:character_damage()
+			local joker_dmg_bonus = attacker_dmg_ext and attacker_dmg_ext._joker_mark_dmg_bonus
+
+			if joker_dmg_bonus then
+				damage = damage * joker_dmg_bonus
 			end
 		end
 	end
@@ -1088,6 +1144,13 @@ function CopDamage:damage_bullet(attack_data)
 end
 
 function CopDamage:die(attack_data)
+	if not managers.enemy:is_corpse_disposal_enabled() then
+		local unit_pos = self._unit:position()
+		local unit_rot = self._unit:rotation()
+
+		managers.network:session():send_to_peers_synched("sync_fall_position", self._unit, unit_pos, unit_rot)
+	end
+
 	self:_check_friend_4(attack_data)
 	CopDamage.MAD_3_ACHIEVEMENT(attack_data)
 	self:_remove_debug_gui()
@@ -1632,6 +1695,18 @@ function CopDamage:_on_damage_received(damage_info)
 	end
 
 	self:_update_debug_ws(damage_info)
+
+	if self._start_regen_on_damage_taken then
+		if self._dead then
+			self._start_regen_on_damage_taken = nil
+			self._health_regen_clbk_id = nil
+			self._regen_percent = nil
+		elseif self._health_ratio < 1 then
+			self._start_regen_on_damage_taken = nil
+
+			managers.enemy:add_delayed_clbk(self._health_regen_clbk_id, callback(self, self, "clbk_regen"), TimerManager:game():time() + 1)
+		end
+	end
 end
 
 function CopDamage:sync_damage_bullet(attacker_unit, damage_percent, i_body, hit_offset_height, i_result, death)
@@ -1644,7 +1719,7 @@ function CopDamage:sync_damage_bullet(attacker_unit, damage_percent, i_body, hit
 		attacker_unit = attacker_unit
 	}
 
-	local from_pos, attack_dir, distance, result, shotgun_push = nil
+	local from_pos, attack_dir, distance, result, shotgun_push, normal_push, is_shotgun = nil
 	local body = self._unit:body(i_body)
 	local head = self._head_body_name and not self._unit:in_slot(16) and not self._char_tweak.ignore_headshot and body and body:name() == self._ids_head_body_name
 	local hit_pos = mvec3_cpy(body:position())
@@ -1705,35 +1780,55 @@ function CopDamage:sync_damage_bullet(attacker_unit, damage_percent, i_body, hit
 			end
 		end
 
-		if data.weapon_unit then
-			self:_check_special_death_conditions("bullet", body, attacker_unit, data.weapon_unit)
+		local weapon = data.weapon_unit
+
+		if weapon then
+			self:_check_special_death_conditions("bullet", body, attacker_unit, weapon)
 			managers.statistics:killed_by_anyone(data)
 
-			if distance and managers.enemy:is_corpse_disposal_enabled() and not data.weapon_unit:base().thrower_unit and data.weapon_unit:base().is_category and data.weapon_unit:base():is_category("shotgun") then
-				local negate_push = nil
+			local can_shotgun_push_locally = managers.enemy:is_corpse_disposal_enabled()
 
-				if data.weapon_unit:base()._parts then
-					for part_id, part in pairs(data.weapon_unit:base()._parts) do
-						if tweak_data.weapon.factory.parts[part_id].custom_stats and tweak_data.weapon.factory.parts[part_id].custom_stats.rays == 1 then
-							negate_push = true
+			if can_shotgun_push_locally then
+				if distance then
+					local weapon_base = weapon:base()
+					is_shotgun = weapon_base and not weapon_base.thrower_unit and weapon_base.is_category and weapon_base:is_category("shotgun") or false
 
-							break
+					if is_shotgun then
+						local negate = nil
+
+						if weapon_base._parts then
+							for part_id, part in pairs(weapon_base._parts) do
+								if tweak_data.weapon.factory.parts[part_id].custom_stats and tweak_data.weapon.factory.parts[part_id].custom_stats.rays == 1 then
+									negate = true
+
+									break
+								end
+							end
+						end
+
+						if not negate then
+							local max_distance = 500
+
+							if attacker_unit:base() then
+								if attacker_unit:base().is_husk_player or managers.groupai:state():is_unit_team_AI(attacker_unit) then
+									max_distance = managers.game_play_central:get_shotgun_push_range()
+								end
+							end
+
+							if distance < max_distance then
+								shotgun_push = true
+							end
 						end
 					end
 				end
+			end
 
-				if not negate_push then
-					local max_distance = 500
+			if not shotgun_push then
+				normal_push = true
 
-					if attacker_unit:base() then
-						if attacker_unit:base().is_husk_player or managers.groupai:state():is_unit_team_AI(attacker_unit) then
-							max_distance = managers.game_play_central:get_shotgun_push_range()
-						end
-					end
-
-					if distance < max_distance then
-						shotgun_push = true
-					end
+				if is_shotgun == nil then
+					local weapon_base = weapon:base()
+					is_shotgun = weapon_base and not weapon_base.thrower_unit and weapon_base.is_category and weapon_base:is_category("shotgun")
 				end
 			end
 		end
@@ -1771,13 +1866,36 @@ function CopDamage:sync_damage_bullet(attacker_unit, damage_percent, i_body, hit
 			push_dir = attacker_unit:movement():detect_look_dir()
 		end
 
-		local hit_ray = World:raycast("ray", from_pos, body:center_of_mass(), "target_body", body)
+		local hit_ray = world_g:raycast("ray", from_pos, body:center_of_mass(), "target_body", body)
 
 		if hit_ray then
 			push_hit_pos = hit_ray.position
 		end
 
 		managers.game_play_central:_do_shotgun_push(self._unit, push_hit_pos, push_dir, distance, attacker_unit)
+	elseif normal_push then
+		local active_actions = self._unit:movement()._active_actions
+		local full_body_action = active_actions and active_actions[1]
+
+		if not full_body_action or full_body_action:type() ~= "hurt" or not full_body_action._ragdolled then
+			return
+		end
+
+		local hit_ray = world_g:raycast("ray", from_pos, body:center_of_mass(), "target_body", body)
+
+		--use a fake ray if the raycast somehow misses
+		if not hit_ray then
+			hit_ray = {
+				unit = self._unit,
+				body = body,
+				position = hit_pos,
+				ray = attack_dir
+			}
+		end
+
+		local push_multiplier = not is_shotgun and 2.5 or nil
+
+		managers.game_play_central:physics_push(hit_ray, push_multiplier)
 	end
 end
 
@@ -1864,6 +1982,17 @@ function CopDamage:damage_melee(attack_data)
 	if self._marked_dmg_mul then
 		damage = damage * self._marked_dmg_mul
 		damage_effect = damage_effect * self._marked_dmg_mul
+
+		local attacker = attack_data.attacker_unit
+
+		if alive(attacker) then
+			local attacker_dmg_ext = attacker:character_damage()
+			local joker_dmg_bonus = attacker_dmg_ext and attacker_dmg_ext._joker_mark_dmg_bonus
+
+			if joker_dmg_bonus then
+				damage = damage * joker_dmg_bonus
+			end
+		end
 	end
 	
 	damage_multiplier = self:_get_incoming_damage_multiplier(damage_multiplier)
@@ -2553,7 +2682,7 @@ function CopDamage:damage_fire(attack_data)
 
 		local result_type = "dmg_rcv"
 
-		if not attack_data.is_fire_dot_damage then
+		if not attack_data.is_fire_dot_damage and not deathvox:IsTotalCrackdownEnabled() then
 			result_type = self:get_damage_type(damage_percent, "fire")
 		end
 
@@ -2663,7 +2792,7 @@ function CopDamage:damage_fire(attack_data)
 
 					managers.fire:add_doted_enemy(self._unit, t, weap_unit, fire_dot_data.dot_length, dot_damage, attacker_unit, attack_data.is_molotov)
 
-					if result.type ~= "healed" then
+					if result.type ~= "healed" and not deathvox:IsTotalCrackdownEnabled() then
 						local use_animation_on_fire_damage = nil
 
 						if self._char_tweak.use_animation_on_fire_damage == nil then
@@ -3391,3 +3520,152 @@ function CopDamage:detonate_stuck_tripmines()
 	end
 end
 
+function CopDamage:_spawn_head_gadget(params)
+	local head_gear = self._head_gear
+
+	if not head_gear then
+		return
+	end
+
+	self._head_gear = nil
+
+	local gear_object = self._head_gear_object
+
+	if gear_object then
+		local my_unit = self._unit
+		local nr_gear_objects = self._nr_head_gear_objects
+
+		if nr_gear_objects then
+			for i = 1, nr_gear_objects do
+				local head_gear_obj_name = gear_object .. tostring_g(i)
+
+				my_unit:get_object(idstr_func(head_gear_obj_name)):set_visibility(false)
+			end
+		else
+			my_unit:get_object(idstr_func(gear_object)):set_visibility(false)
+		end
+
+		local gear_decal_mesh = self._head_gear_decal_mesh
+
+		if gear_decal_mesh then
+			local mesh_name_idstr = idstr_func(gear_decal_mesh)
+
+			my_unit:decal_surface(mesh_name_idstr):set_mesh_material(mesh_name_idstr, ids_flesh)
+		end
+	end
+
+	local unit = world_g:spawn_unit(idstr_func(head_gear), params.position, params.rotation)
+	self._head_gear_unit = unit
+
+	if params.skip_push then
+		return
+	end
+
+	local dir = math_up - params.dir / 2
+	dir = dir:spread(25)
+	local body = unit:body(0)
+
+	body:push_at(body:mass(), dir * math_lerp(300, 650, math_random()), unit:position() + Vector3(math_random(), math_random(), math_random()))
+end
+
+if deathvox:IsTotalCrackdownEnabled() then
+	function CopDamage:set_health_regen(regen)
+		self._regen_percent = regen or nil
+
+		local clbk_id = self._health_regen_clbk_id
+
+		if regen then
+			if not clbk_id then
+				clbk_id = "health_regen" .. tostring_g(self._unit:key())
+				self._health_regen_clbk_id = clbk_id
+
+				managers.enemy:add_delayed_clbk(clbk_id, callback(self, self, "clbk_regen"), TimerManager:game():time() + 1)
+			end
+		elseif clbk_id then
+			if not self._start_regen_on_damage_taken then
+				managers.enemy:remove_delayed_clbk(clbk_id)
+			end
+
+			self._start_regen_on_damage_taken = nil
+			self._health_regen_clbk_id = nil
+		end
+	end
+
+	function CopDamage:clbk_regen()
+		local init_health = self._HEALTH_INIT
+		local new_health = init_health * self._regen_percent + self._health
+
+		if new_health >= init_health then
+			self._health = init_health
+			self._health_ratio = 1
+
+			self._start_regen_on_damage_taken = true
+		else
+			self._health = new_health
+			self._health_ratio = new_health / init_health
+
+			managers.enemy:add_delayed_clbk(self._health_regen_clbk_id, callback(self, self, "clbk_regen"), TimerManager:game():time() + 1)
+		end
+
+		self:_update_debug_ws()
+
+		managers.network:session():send_to_peers_synched("sync_unit_event_id_16", self._unit, "character_damage", HuskCopDamage._NET_EVENTS.joker_regen)
+	end
+
+	local destroy_original = CopDamage.destroy
+	function CopDamage:destroy(...)
+		destroy_original(self, ...)
+
+		local head_gear_unit = self._head_gear_unit
+
+		if alive_g(head_gear_unit) then
+			head_gear_unit:set_slot(0)
+
+			self._head_gear_unit = nil
+		end
+
+		self:set_health_regen()
+	end
+else
+	local destroy_original = CopDamage.destroy
+	function CopDamage:destroy(...)
+		destroy_original(self, ...)
+
+		local head_gear_unit = self._head_gear_unit
+
+		if alive_g(head_gear_unit) then
+			head_gear_unit:set_slot(0)
+
+			self._head_gear_unit = nil
+		end
+	end
+end
+
+function CopDamage:_on_stun_hit_exit()
+	local acc_reset_t = TimerManager:game():time() + self._ON_STUN_ACCURACY_DECREASE_TIME
+	local reset_acc_clbk_id = self._reset_acc_clbk_id
+
+	if reset_acc_clbk_id then
+		managers.enemy:reschedule_delayed_clbk(reset_acc_clbk_id, acc_reset_t)
+	else
+		local original_multiplier = self._accuracy_multiplier
+		self._original_acc_mul = original_multiplier
+
+		self:set_accuracy_multiplier(self._ON_STUN_ACCURACY_DECREASE * original_multiplier)
+
+		local function f()
+			self:set_accuracy_multiplier(self._original_acc_mul)
+			self._original_acc_mul = nil
+			self._reset_acc_clbk_id = nil
+		end
+
+		reset_acc_clbk_id = "ResetAccuracy" .. tostring_g(self._unit:key())
+		self._reset_acc_clbk_id = reset_acc_clbk_id
+
+		managers.enemy:add_delayed_clbk(reset_acc_clbk_id, f, acc_reset_t)
+
+		self._stun_exit_clbk = nil
+
+		self._listener_holder:remove("after_stun_accuracy")
+	end
+end

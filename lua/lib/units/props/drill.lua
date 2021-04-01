@@ -352,7 +352,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 					local dmg_ext = saboteur:character_damage()
 					dmg_ext._tased_time = tweak_data.upgrades.values.player.drill_shock_tase_time --to be used in huskcopdamage as well
 
-					managers.network:session():send_to_peers_synched("sync_unit_event_id_16", saboteur, "character_damage", 1)
+					managers.network:session():send_to_peers_synched("sync_unit_event_id_16", saboteur, "character_damage", HuskCopDamage._NET_EVENTS.set_drill_shock_tase_time)
 
 					dmg_ext:_call_listeners(attack_data)
 				end,t + 0.5
