@@ -261,123 +261,301 @@ function CopBrain:sync_net_event(event_id, peer)
 	end
 end
 
-function CopBrain:convert_to_criminal(mastermind_criminal)
-	if self._alert_listen_key then
-		managers.groupai:state():remove_alert_listener(self._alert_listen_key)
-	else
-		self._alert_listen_key = "CopBrain" .. tostring(self._unit:key())
+if deathvox:IsTotalCrackdownEnabled() then
+	function CopBrain:convert_to_criminal(mastermind_criminal)
+		managers.network:session():send_to_peers_synched("sync_unit_converted", self._unit)
+
+		if self._alert_listen_key then
+			managers.groupai:state():remove_alert_listener(self._alert_listen_key)
+		else
+			self._alert_listen_key = "CopBrain" .. tostring(self._unit:key())
+		end
+
+		local alert_listen_filter = managers.groupai:state():get_unit_type_filter("combatant")
+		local alert_types = {
+			explosion = true,
+			fire = true,
+			aggression = true,
+			bullet = true
+		}
+
+		managers.groupai:state():add_alert_listener(self._alert_listen_key, callback(self, self, "on_alert"), alert_listen_filter, alert_types, self._unit:movement():m_head_pos())
+
+		self._logic_data.is_converted = true
+		self._logic_data.group = nil
+		local mover_col_body = self._unit:body("mover_blocker")
+
+		mover_col_body:set_enabled(false)
+
+		local attention_preset = PlayerMovement._create_attention_setting_from_descriptor(self, tweak_data.attention.settings.team_enemy_cbt, "team_enemy_cbt")
+
+		self._attention_handler:override_attention("enemy_team_cbt", attention_preset)
+
+		local health_multiplier, damage_multiplier, accuracy_multiplier = 1, 1
+		local add_armor_piercing, no_hurt_animations, melee_stagger, health_regen, highlight_prioritizing = nil
+
+		if alive(mastermind_criminal) then
+			local base_ext = mastermind_criminal:base()
+
+			health_multiplier = health_multiplier * (base_ext:upgrade_value("player", "convert_enemies_health_multiplier") or 1)
+			health_multiplier = health_multiplier * (base_ext:upgrade_value("player", "passive_convert_enemies_health_multiplier") or 1)
+			damage_multiplier = damage_multiplier * (base_ext:upgrade_value("player", "convert_enemies_damage_multiplier") or 1)
+			damage_multiplier = damage_multiplier * (base_ext:upgrade_value("player", "passive_convert_enemies_damage_multiplier") or 1)
+
+			--TCD placeholders
+			accuracy_multiplier = base_ext:upgrade_value("player", "convert_enemies_acc_multiplier") or 1 --placeholder
+			no_hurt_animations = nil
+			melee_stagger = nil
+			health_regen = nil
+			highlight_prioritizing = nil
+		else
+			local player_manager = managers.player
+
+			health_multiplier = health_multiplier * player_manager:upgrade_value("player", "convert_enemies_health_multiplier", 1)
+			health_multiplier = health_multiplier * player_manager:upgrade_value("player", "passive_convert_enemies_health_multiplier", 1)
+			damage_multiplier = damage_multiplier * player_manager:upgrade_value("player", "convert_enemies_damage_multiplier", 1)
+			damage_multiplier = damage_multiplier * player_manager:upgrade_value("player", "passive_convert_enemies_damage_multiplier", 1)
+
+			--TCD placeholders
+			accuracy_multiplier = base_ext:upgrade_value("player", "convert_enemies_acc_multiplier") or 1
+			no_hurt_animations = nil
+			melee_stagger = nil
+			health_regen = nil
+			highlight_prioritizing = nil
+		end
+
+		local ext_dmg = self._unit:character_damage()
+		ext_dmg:convert_to_criminal(health_multiplier)
+
+		if health_regen and health_regen ~= 1 then
+			ext_dmg:set_health_regen(health_regen)
+		end
+
+		if accuracy_multiplier ~= 1 then
+			if ext_dmg._original_acc_mul then
+				ext_dmg._original_acc_mul = accuracy_multiplier
+
+				ext_dmg:set_accuracy_multiplier(ext_dmg._ON_STUN_ACCURACY_DECREASE * accuracy_multiplier)
+			else
+				ext_dmg:set_accuracy_multiplier(accuracy_multiplier)
+			end
+		end
+
+		if self._logic_data.attention_obj then
+			CopLogicBase._set_attention_obj(self._logic_data, nil, nil)
+		end
+
+		local current_attention = self._unit:movement():attention()
+
+		if current_attention then
+			CopLogicBase._reset_attention(self._logic_data)
+		end
+
+		CopLogicBase._destroy_all_detected_attention_object_data(self._logic_data)
+
+		local team_ai_so_access = tweak_data.character.russian.access
+
+		self._SO_access = managers.navigation:convert_access_flag(team_ai_so_access)
+		self._logic_data.SO_access = self._SO_access
+		self._logic_data.SO_access_str = team_ai_so_access
+		self._slotmask_enemies = managers.slot:get_mask("enemies")
+		self._logic_data.enemy_slotmask = self._slotmask_enemies
+
+		local char_tweaks = deep_clone(self._unit:base()._char_tweak)
+
+		if no_hurt_animations then
+			char_tweaks.damage.hurt_severity = tweak_data.character.presets.hurt_severities.no_hurts_no_tase
+			char_tweaks.can_be_tased = false
+			char_tweaks.use_animation_on_fire_damage = false
+			char_tweaks.immune_to_knock_down = true
+			char_tweaks.immune_to_concussion = true
+
+			managers.network:session():send_to_peers_synched("sync_unit_event_id_16", self._unit, "character_damage", 2)
+		end
+
+		if melee_stagger then
+			self._unit:movement()._joker_melee_stagger = true
+		end
+
+		if highlight_prioritizing then
+			self._unit:brain()._prioritize_marked_units_by_owner = true
+		end
+
+		char_tweaks.suppression = nil
+		char_tweaks.crouch_move = false
+		char_tweaks.allowed_poses = {stand = true}
+		char_tweaks.access = team_ai_so_access
+		char_tweaks.no_run_stop = true
+
+		self._logic_data.char_tweak = char_tweaks
+		self._unit:base()._char_tweak = char_tweaks
+		ext_dmg._char_tweak = char_tweaks
+		self._unit:movement()._tweak_data = char_tweaks
+		self._unit:movement()._action_common_data.char_tweak = char_tweaks
+
+		local equipped_w_selection = self._unit:inventory():equipped_selection()
+
+		if equipped_w_selection then
+			self._unit:inventory():remove_selection(equipped_w_selection, true)
+		end
+
+		local weap_name = self._unit:base():default_weapon_name()
+
+		TeamAIInventory.add_unit_by_name(self._unit:inventory(), weap_name, true)
+
+		local weapon_unit = self._unit:inventory():equipped_unit()
+
+		weapon_unit:base():add_damage_multiplier(damage_multiplier)
+
+		if add_armor_piercing then
+			weapon_unit:base()._use_armor_piercing = true
+		end
+
+		self._logic_data.important = true
+
+		self:set_objective(nil)
+		self:set_logic("idle", nil)
+
+		self._logic_data.objective_complete_clbk = callback(managers.groupai:state(), managers.groupai:state(), "on_criminal_objective_complete")
+		self._logic_data.objective_failed_clbk = callback(managers.groupai:state(), managers.groupai:state(), "on_criminal_objective_failed")
+
+		managers.groupai:state():on_criminal_jobless(self._unit)
+		self._unit:base():set_slot(self._unit, 16)
+		self._unit:movement():set_stance("hos")
+
+		local action_data = {
+			variant = "stand",
+			body_part = 1,
+			type = "act"
+		}
+
+		self._unit:brain():action_request(action_data)
+		self._unit:sound():say("cn1", true, nil)
 	end
+else
+	function CopBrain:convert_to_criminal(mastermind_criminal)
+		managers.network:session():send_to_peers_synched("sync_unit_converted", self._unit)
 
-	local alert_listen_filter = managers.groupai:state():get_unit_type_filter("combatant")
-	local alert_types = {
-		explosion = true,
-		fire = true,
-		aggression = true,
-		bullet = true
-	}
+		if self._alert_listen_key then
+			managers.groupai:state():remove_alert_listener(self._alert_listen_key)
+		else
+			self._alert_listen_key = "CopBrain" .. tostring(self._unit:key())
+		end
 
-	managers.groupai:state():add_alert_listener(self._alert_listen_key, callback(self, self, "on_alert"), alert_listen_filter, alert_types, self._unit:movement():m_head_pos())
+		local alert_listen_filter = managers.groupai:state():get_unit_type_filter("combatant")
+		local alert_types = {
+			explosion = true,
+			fire = true,
+			aggression = true,
+			bullet = true
+		}
 
-	self._logic_data.is_converted = true
-	self._logic_data.group = nil
-	local mover_col_body = self._unit:body("mover_blocker")
+		managers.groupai:state():add_alert_listener(self._alert_listen_key, callback(self, self, "on_alert"), alert_listen_filter, alert_types, self._unit:movement():m_head_pos())
 
-	mover_col_body:set_enabled(false)
+		self._logic_data.is_converted = true
+		self._logic_data.group = nil
+		local mover_col_body = self._unit:body("mover_blocker")
 
-	local attention_preset = PlayerMovement._create_attention_setting_from_descriptor(self, tweak_data.attention.settings.team_enemy_cbt, "team_enemy_cbt")
+		mover_col_body:set_enabled(false)
 
-	self._attention_handler:override_attention("enemy_team_cbt", attention_preset)
+		local attention_preset = PlayerMovement._create_attention_setting_from_descriptor(self, tweak_data.attention.settings.team_enemy_cbt, "team_enemy_cbt")
 
-	local health_multiplier = 1
-	local damage_multiplier = 1
+		self._attention_handler:override_attention("enemy_team_cbt", attention_preset)
 
-	if alive(mastermind_criminal) then
-		local base_ext = mastermind_criminal:base()
+		local health_multiplier, damage_multiplier = 1, 1
 
-		health_multiplier = health_multiplier * (base_ext:upgrade_value("player", "convert_enemies_health_multiplier") or 1)
-		health_multiplier = health_multiplier * (base_ext:upgrade_value("player", "passive_convert_enemies_health_multiplier") or 1)
-		damage_multiplier = damage_multiplier * (base_ext:upgrade_value("player", "convert_enemies_damage_multiplier") or 1)
-		damage_multiplier = damage_multiplier * (base_ext:upgrade_value("player", "passive_convert_enemies_damage_multiplier") or 1)
-	else
-		local player_manager = managers.player
+		if alive(mastermind_criminal) then
+			local base_ext = mastermind_criminal:base()
 
-		health_multiplier = health_multiplier * player_manager:upgrade_value("player", "convert_enemies_health_multiplier", 1)
-		health_multiplier = health_multiplier * player_manager:upgrade_value("player", "passive_convert_enemies_health_multiplier", 1)
-		damage_multiplier = damage_multiplier * player_manager:upgrade_value("player", "convert_enemies_damage_multiplier", 1)
-		damage_multiplier = damage_multiplier * player_manager:upgrade_value("player", "passive_convert_enemies_damage_multiplier", 1)
+			health_multiplier = health_multiplier * (base_ext:upgrade_value("player", "convert_enemies_health_multiplier") or 1)
+			health_multiplier = health_multiplier * (base_ext:upgrade_value("player", "passive_convert_enemies_health_multiplier") or 1)
+			damage_multiplier = damage_multiplier * (base_ext:upgrade_value("player", "convert_enemies_damage_multiplier") or 1)
+			damage_multiplier = damage_multiplier * (base_ext:upgrade_value("player", "passive_convert_enemies_damage_multiplier") or 1)
+		else
+			local player_manager = managers.player
+
+			health_multiplier = health_multiplier * player_manager:upgrade_value("player", "convert_enemies_health_multiplier", 1)
+			health_multiplier = health_multiplier * player_manager:upgrade_value("player", "passive_convert_enemies_health_multiplier", 1)
+			damage_multiplier = damage_multiplier * player_manager:upgrade_value("player", "convert_enemies_damage_multiplier", 1)
+			damage_multiplier = damage_multiplier * player_manager:upgrade_value("player", "passive_convert_enemies_damage_multiplier", 1)
+		end
+
+		local ext_dmg = self._unit:character_damage()
+		ext_dmg:convert_to_criminal(health_multiplier)
+
+		if self._logic_data.attention_obj then
+			CopLogicBase._set_attention_obj(self._logic_data, nil, nil)
+		end
+
+		local current_attention = self._unit:movement():attention()
+
+		if current_attention then
+			CopLogicBase._reset_attention(self._logic_data)
+		end
+
+		CopLogicBase._destroy_all_detected_attention_object_data(self._logic_data)
+
+		local team_ai_so_access = tweak_data.character.russian.access
+
+		self._SO_access = managers.navigation:convert_access_flag(team_ai_so_access)
+		self._logic_data.SO_access = self._SO_access
+		self._logic_data.SO_access_str = team_ai_so_access
+		self._slotmask_enemies = managers.slot:get_mask("enemies")
+		self._logic_data.enemy_slotmask = self._slotmask_enemies
+
+		local char_tweaks = deep_clone(self._unit:base()._char_tweak)
+
+		char_tweaks.suppression = nil
+		char_tweaks.crouch_move = false
+		char_tweaks.allowed_poses = {stand = true}
+		char_tweaks.access = team_ai_so_access
+		char_tweaks.no_run_stop = true
+
+		self._logic_data.char_tweak = char_tweaks
+		self._unit:base()._char_tweak = char_tweaks
+		ext_dmg._char_tweak = char_tweaks
+		self._unit:movement()._tweak_data = char_tweaks
+		self._unit:movement()._action_common_data.char_tweak = char_tweaks
+
+		local equipped_w_selection = self._unit:inventory():equipped_selection()
+
+		if equipped_w_selection then
+			self._unit:inventory():remove_selection(equipped_w_selection, true)
+		end
+
+		local weap_name = self._unit:base():default_weapon_name()
+
+		TeamAIInventory.add_unit_by_name(self._unit:inventory(), weap_name, true)
+
+		local weapon_unit = self._unit:inventory():equipped_unit()
+
+		weapon_unit:base():add_damage_multiplier(damage_multiplier)
+
+		if add_armor_piercing then
+			weapon_unit:base()._use_armor_piercing = true
+		end
+
+		self._logic_data.important = true
+
+		self:set_objective(nil)
+		self:set_logic("idle", nil)
+
+		self._logic_data.objective_complete_clbk = callback(managers.groupai:state(), managers.groupai:state(), "on_criminal_objective_complete")
+		self._logic_data.objective_failed_clbk = callback(managers.groupai:state(), managers.groupai:state(), "on_criminal_objective_failed")
+
+		managers.groupai:state():on_criminal_jobless(self._unit)
+		self._unit:base():set_slot(self._unit, 16)
+		self._unit:movement():set_stance("hos")
+
+		local action_data = {
+			variant = "stand",
+			body_part = 1,
+			type = "act"
+		}
+
+		self._unit:brain():action_request(action_data)
+		self._unit:sound():say("cn1", true, nil)
 	end
-
-	self._unit:character_damage():convert_to_criminal(health_multiplier)
-
-	self._logic_data.attention_obj = nil
-
-	CopLogicBase._destroy_all_detected_attention_object_data(self._logic_data)
-
-	local team_ai_so_access = tweak_data.character.russian.access
-
-	self._SO_access = managers.navigation:convert_access_flag(team_ai_so_access)
-	self._logic_data.SO_access = self._SO_access
-	self._logic_data.SO_access_str = team_ai_so_access
-	self._slotmask_enemies = managers.slot:get_mask("enemies")
-	self._logic_data.enemy_slotmask = self._slotmask_enemies
-
-	local char_tweaks = deep_clone(self._unit:base()._char_tweak)
-
-	char_tweaks.suppression = nil
-	char_tweaks.crouch_move = false
-	char_tweaks.allowed_poses = {stand = true}
-	char_tweaks.access = team_ai_so_access
-	char_tweaks.no_run_start = true
-	char_tweaks.no_run_stop = true
-
-	self._logic_data.char_tweak = char_tweaks
-	self._unit:base()._char_tweak = char_tweaks
-	self._unit:character_damage()._char_tweak = char_tweaks
-	self._unit:movement()._tweak_data = char_tweaks
-	self._unit:movement()._action_common_data.char_tweak = char_tweaks
-
-	local equipped_w_selection = self._unit:inventory():equipped_selection()
-
-	if equipped_w_selection then
-		self._unit:inventory():remove_selection(equipped_w_selection, true)
-	end
-
-	--[[self._unit:movement():add_weapons()
-
-	if self._unit:inventory():is_selection_available(1) then
-		self._unit:inventory():equip_selection(1, true)
-	elseif self._unit:inventory():is_selection_available(2) then
-		self._unit:inventory():equip_selection(2, true)
-	end]]
-
-	local weap_name = self._unit:base():default_weapon_name()
-
-	TeamAIInventory.add_unit_by_name(self._unit:inventory(), weap_name, true)
-
-	local weapon_unit = self._unit:inventory():equipped_unit()
-
-	weapon_unit:base():add_damage_multiplier(damage_multiplier)
-
-	self._logic_data.important = true
-	self:set_objective(nil)
-	self:set_logic("idle", nil)
-
-	self._logic_data.objective_complete_clbk = callback(managers.groupai:state(), managers.groupai:state(), "on_criminal_objective_complete")
-	self._logic_data.objective_failed_clbk = callback(managers.groupai:state(), managers.groupai:state(), "on_criminal_objective_failed")
-
-	managers.groupai:state():on_criminal_jobless(self._unit)
-	self._unit:base():set_slot(self._unit, 16)
-	self._unit:movement():set_stance("hos")
-
-	local action_data = {
-		variant = "stand",
-		body_part = 1,
-		type = "act"
-	}
-
-	self._unit:brain():action_request(action_data)
-	self._unit:sound():say("cn1", true, nil)
-	managers.network:session():send_to_peers_synched("sync_unit_converted", self._unit)
 end
 
 function CopBrain:clbk_alarm_pager(ignore_this, data)
@@ -464,6 +642,7 @@ function CopBrain:on_nav_link_unregistered(element_id)
 	end
 end
 
+local clbk_pathing_results_original = CopBrain.clbk_pathing_results
 function CopBrain:clbk_pathing_results(search_id, path)
 	local dead_nav_links = self._nav_links_to_check
 
@@ -499,7 +678,7 @@ function CopBrain:clbk_pathing_results(search_id, path)
 		self._nav_links_to_check = dead_nav_links
 	end
 
-	self:_add_pathing_result(search_id, path)
+	clbk_pathing_results_original(self, search_id, path)
 end
 
 function CopBrain:abort_detailed_pathing(search_id)
@@ -544,7 +723,7 @@ function CopBrain:cancel_all_pathing_searches()
 	if dead_nav_links and not next_g(dead_nav_links) then
 		self._nav_links_to_check = nil
 	end
-	
+
 	local path_results = self._logic_data.pathing_results
 
 	if path_results and next_g(path_results) then
@@ -560,25 +739,23 @@ function CopBrain:cancel_all_pathing_searches()
 			end
 		end
 	end
-	
+
 	self._logic_data.active_searches = {}
 	self._logic_data.pathing_results = nil
 end
 
 function CopBrain:on_suppressed(state)
-    self._logic_data.is_suppressed = state or nil
+	self._logic_data.is_suppressed = state or nil
 
-	if self._current_logic.on_suppressed_state then
+	if state and self._current_logic.on_suppressed_state then
 		self._current_logic.on_suppressed_state(self._logic_data)
 
 		if self._logic_data.char_tweak.chatter.suppress then
-		    local roll = math.rand(1, 100)
-			local chance_heeeeelpp = 50
-			if roll <= chance_heeeeelpp then
-                self._unit:sound():say("hlp", true) 
+			if math.random() <= 0.5 then
+				self._unit:sound():say("hlp", true) 
 			else --hopefully some variety here now
-                self._unit:sound():say("lk3a", true) 
+				self._unit:sound():say("lk3a", true) 
 			end
-        end
+		end
 	end
 end
