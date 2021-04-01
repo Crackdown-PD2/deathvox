@@ -49,7 +49,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				local player = managers.player:local_player()
 				if alive(player) then 
 					local docbag_pos = unit:position() + unit:rotation():z() * 10
-					local player_pos = player:movement():m_pos()
+					local player_pos = player:movement():m_head_pos()
 					if mvec3_dis(docbag_pos,player_pos) <= range then 
 						local raycast = World:raycast("ray",docbag_pos,player_pos,"slot_mask",managers.slot:get_mask("world_geometry"),"ignore_unit",unit)
 						if not raycast then 
