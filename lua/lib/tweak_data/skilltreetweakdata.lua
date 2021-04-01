@@ -196,7 +196,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			},
 			{
 				upgrades = {
-					"team_civilian_hostage_fakeout_trade"
+					"team_civilian_hostage_fakeout_trade",
+					"player_falseidol_aced_followers"
 				},
 				cost = self.costs.hightierpro
 			},

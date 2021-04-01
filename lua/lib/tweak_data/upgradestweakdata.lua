@@ -218,6 +218,19 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		self.values.team.player.civilian_hostage_fakeout_trade = {true}
 		
+		self.values.player.falseidol_aced_followers = {
+			true
+		}
+		self.definitions.player_falseidol_aced_followers = {
+			name_id = "menu_falseidol_aced_followers",
+			category = "player",
+			upgrade = {
+				value = 1,
+				synced = true,
+				upgrade = "falseidol_aced_followers",
+				category = "player"
+			}
+		}
 		
 		--Marksman
 		
