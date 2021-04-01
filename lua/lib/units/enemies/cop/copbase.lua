@@ -1,6 +1,13 @@
 local alive_g = _G.alive
 local ids_func = _G.Idstring
+local pairs_g = pairs
 local ids_unit = ids_func("unit")
+local ids_unit = ids_func("unit")
+local ids_lod = ids_func("lod")
+local ids_lod1 = ids_func("lod1")
+local ids_ik_aim = ids_func("ik_aim")
+local ids_r_toe = ids_func("RightToeBase")
+local ids_l_toe = ids_func("LeftToeBase")
 
 function CopBase:_chk_spawn_gear()
 	--[[if self._unit:base():char_tweak().ends_assault_on_death then
