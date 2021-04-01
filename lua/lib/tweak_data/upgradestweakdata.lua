@@ -496,7 +496,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		self.values.player.passive_convert_enemies_health_multiplier = {
 			0.5,
-			0.75 --may need to be 0.25 if it's actually a damage resist mul
+			0.25
 		}
 		self.values.player.convert_enemies_interaction_speed_multiplier = {
 			0.1 --90% faster; modified vanilla upgrade
