@@ -1,0 +1,1 @@
+TeamAIBase.chk_freeze_anims = CopBase.chk_freeze_anims
