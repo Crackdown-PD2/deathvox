@@ -1633,8 +1633,8 @@ function CopMovement:joker_counter_on_cooldown()
 	return self._joker_ccd_clbk_id and true
 end
 
-function CopMovement:set_joker_cooldown(state, was_delayed_clbk)
-	if state then
+function CopMovement:set_joker_cooldown(time_amount, was_delayed_clbk)
+	if time_amount then
 		if self._joker_ccd_clbk_id then
 			return
 		end
@@ -1642,7 +1642,7 @@ function CopMovement:set_joker_cooldown(state, was_delayed_clbk)
 		return
 	end
 
-	if state then
+	if time_amount then
 		local function f()
 			self:set_joker_cooldown(false, true)
 		end
@@ -1650,7 +1650,7 @@ function CopMovement:set_joker_cooldown(state, was_delayed_clbk)
 		local joker_ccd_clbk_id = "remove_counter_cooldown" .. tostring_g(self._unit:key())
 		self._joker_ccd_clbk_id = joker_ccd_clbk_id
 
-		managers.enemy:add_delayed_clbk(joker_ccd_clbk_id, f, TimerManager:game():time() + 30)
+		managers.enemy:add_delayed_clbk(joker_ccd_clbk_id, f, TimerManager:game():time() + time_amount)
 	elseif was_delayed_clbk then
 		self._joker_ccd_clbk_id = nil
 	else
