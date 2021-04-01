@@ -77,7 +77,8 @@ function ActionSpooc:init(action_desc, common_data)
 		local target_base_ext = target_unit:base()
 
 		if target_base_ext.is_local_player then
-			if is_server and managers.player:has_category_upgrade("player", "convert_enemies_tackle_counter") then
+			if is_server and managers.player:has_category_upgrade("player", "convert_enemies_tackle_specials") then
+				self._joker_cooldown = managers.player:upgrade_value("player", "convert_enemies_tackle_specials")
 				self._joker_vis_mask = managers.slot:get_mask("AI_visibility")
 			end
 
@@ -86,7 +87,10 @@ function ActionSpooc:init(action_desc, common_data)
 			target_unit:movement():on_targetted_for_attack(true, my_unit)
 		elseif is_server then
 			if target_base_ext.is_husk_player then
-				if target_base_ext:upgrade_value("player", "convert_enemies_tackle_counter") then
+				local tackle_upgrade = target_base_ext:upgrade_value("player", "convert_enemies_tackle_specials")
+
+				if tackle_upgrade then
+					self._joker_cooldown = tackle_upgrade
 					self._joker_vis_mask = managers.slot:get_mask("AI_visibility")
 				end
 			else
