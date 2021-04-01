@@ -148,7 +148,50 @@ if deathvox:IsTotalCrackdownEnabled() then
 			--assume that this is the spoofed function
 		return orig_sync_attach_projectile(self,unit, instant_dynamic_pickup, parent_unit, parent_body, parent_object, local_pos, dir, projectile_type_index, peer_id, sender,...)
 	end
-	
+
+	function UnitNetworkHandler:sync_contour_state(unit, u_id, type, state, multiplier, sender)
+		if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+			return
+		end
+
+		local peer = self._verify_sender(sender)
+
+		if not peer then
+			return
+		end
+
+		local contour_unit = nil
+
+		if alive(unit) and unit:id() ~= -1 then
+			contour_unit = unit
+		else
+			local unit_data = managers.enemy:get_corpse_unit_data_from_id(u_id)
+
+			if unit_data then
+				contour_unit = unit_data.unit
+			end
+		end
+
+		if not contour_unit then
+			return
+		end
+
+		if state then
+			if Network:is_server() then
+				local peer_unit = peer:unit()
+
+				if alive(peer_unit) and peer_unit:id() ~= -1 and peer_unit:base() and peer_unit:base():upgrade_value("player", "convert_enemies_target_marked") then
+					contour_unit:contour():add(ContourExt.indexed_types[type], false, multiplier, nil, nil, peer:id())
+				else
+					contour_unit:contour():add(ContourExt.indexed_types[type], false, multiplier)
+				end
+			else
+				contour_unit:contour():add(ContourExt.indexed_types[type], false, multiplier)
+			end
+		else
+			contour_unit:contour():remove(ContourExt.indexed_types[type], nil)
+		end
+	end
 end
 --[[
 local orig_sync_deployable_attachment = UnitNetworkHandler.sync_deployable_attachment
@@ -207,8 +250,8 @@ function UnitNetworkHandler:sync_friendly_fire_damage(peer_id, unit, damage, var
 	managers.job:set_memory("trophy_flawless", true, false)
 end
 
-function UnitNetworkHandler:sync_add_doted_enemy(enemy_unit, variant, weapon_unit, dot_length, dot_damage, user_unit, is_molotov_or_hurt_animation, rpc)
-	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+function UnitNetworkHandler:sync_add_doted_enemy(enemy_unit, variant, weapon_unit, dot_length, dot_damage, user_unit, is_molotov_or_hurt_animation, sender)
+	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_sender(sender) then
 		return
 	end
 
@@ -260,8 +303,8 @@ function UnitNetworkHandler:action_aim_state(unit, state)
 	end
 end
 
-function UnitNetworkHandler:action_spooc_start(unit, target_u_pos, flying_strike, action_id)
-	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_character(unit) then
+function UnitNetworkHandler:action_spooc_start(unit, target_u_pos, flying_strike, action_id, sender)
+	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_sender(sender) or not self._verify_character(unit) then
 		return
 	end
 
@@ -296,69 +339,78 @@ function UnitNetworkHandler:action_spooc_start(unit, target_u_pos, flying_strike
 	unit:movement():action_request(action_desc)
 end
 
-function UnitNetworkHandler:action_hurt_start(unit, hurt_type_idx, body_part, death_type_idx, type_idx, variant_idx, direction_vec, hit_pos)
+function UnitNetworkHandler:action_hurt_start(unit, hurt_type_idx, body_part, death_type_idx, type_idx, variant_idx, direction_vec, hit_pos, sender)
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+		return
+	end
+
+	local peer = self._verify_sender(sender)
+
+	if not peer then
 		return
 	end
 
 	local hurt_type = CopActionHurt.idx_to_hurt_type(hurt_type_idx)
 
 	if hurt_type == "death" then
-		if alive(unit) then
-			local action_type = CopActionHurt.idx_to_type(type_idx)
-			local variant = CopActionHurt.idx_to_variant(variant_idx)
-			local block_type = hurt_type
-			local mov_ext = unit:movement()
-			local client_interrupt = nil
-
-			if mov_ext._queued_actions then
-				mov_ext._queued_actions = {}
-			end
-
-			if mov_ext._rope then
-				mov_ext._rope:base():retract()
-
-				mov_ext._rope = nil
-				mov_ext._rope_death = true
-
-				if unit:sound().anim_clbk_play_sound then
-					unit:sound():anim_clbk_play_sound(unit, "repel_end")
-				end
-			end
-
-			if Network:is_server() then
-				mov_ext:set_attention()
-			else
-				client_interrupt = true
-				mov_ext:synch_attention()
-			end
-
-			local blocks = {
-				act = -1,
-				aim = -1,
-				action = -1,
-				tase = -1,
-				walk = -1,
-				light_hurt = -1,
-				death = -1
-			}
-
-			local action_data = {
-				allow_network = false,
-				client_interrupt = client_interrupt,
-				hurt_type = hurt_type,
-				block_type = block_type,
-				blocks = blocks,
-				body_part = body_part,
-				death_type = CopActionHurt.idx_to_death_type(death_type_idx),
-				type = action_type,
-				variant = variant,
-				direction_vec = direction_vec,
-				hit_pos = hit_pos
-			}
-
-			unit:movement():action_request(action_data)
+		if not alive(unit) then
+			return
 		end
+
+		local action_type = CopActionHurt.idx_to_type(type_idx)
+		local variant = CopActionHurt.idx_to_variant(variant_idx)
+		local block_type = hurt_type
+		local mov_ext = unit:movement()
+		local client_interrupt = nil
+
+		if mov_ext._queued_actions then
+			mov_ext._queued_actions = {}
+		end
+
+		if mov_ext._rope then
+			mov_ext._rope:base():retract()
+
+			mov_ext._rope = nil
+			mov_ext._rope_death = true
+
+			if unit:sound().anim_clbk_play_sound then
+				unit:sound():anim_clbk_play_sound(unit, "repel_end")
+			end
+		end
+
+		if Network:is_server() then
+			mov_ext:set_attention()
+		else
+			client_interrupt = true
+			mov_ext:synch_attention()
+		end
+
+		local blocks = {
+			act = -1,
+			aim = -1,
+			action = -1,
+			tase = -1,
+			walk = -1,
+			light_hurt = -1,
+			death = -1
+		}
+
+		local action_data = {
+			allow_network = false,
+			client_interrupt = client_interrupt,
+			hurt_type = hurt_type,
+			block_type = block_type,
+			blocks = blocks,
+			body_part = body_part,
+			death_type = CopActionHurt.idx_to_death_type(death_type_idx),
+			type = action_type,
+			variant = variant,
+			direction_vec = direction_vec,
+			hit_pos = hit_pos,
+			sync_t = Application:time() - peer:qos().ping / 1000
+		}
+
+		unit:movement():action_request(action_data)
 	else
 		if not self._verify_character(unit) then
 			return
@@ -368,6 +420,15 @@ function UnitNetworkHandler:action_hurt_start(unit, hurt_type_idx, body_part, de
 		local action_type = CopActionHurt.idx_to_type(type_idx)
 
 		if action_type == "healed" then
+			--[[local dmg_ext = unit:character_damage()
+			dmg_ext._health = dmg_ext._HEALTH_INIT
+			dmg_ext._health_ratio = 1
+
+			if unit:contour() then
+				unit:contour():add("medic_heal")
+				unit:contour():flash("medic_heal", 0.2)
+			end]]
+
 			if unit:anim_data() and unit:anim_data().act then
 				return
 			end
@@ -435,7 +496,8 @@ function UnitNetworkHandler:action_hurt_start(unit, hurt_type_idx, body_part, de
 				type = action_type,
 				variant = variant,
 				direction_vec = direction_vec,
-				hit_pos = hit_pos
+				hit_pos = hit_pos,
+				sync_t = Application:time() - peer:qos().ping / 1000
 			}
 		end
 
@@ -450,43 +512,244 @@ function UnitNetworkHandler:sync_medic_heal(unit, sender)
 
 	MedicActionHeal:check_achievements()
 
-	if self._verify_character(unit) then
-		unit:character_damage()._heal_cooldown_t = Application:time()
+	if not self._verify_character(unit) then
+		return
+	end
 
-		if unit:anim_data() and unit:anim_data().act then
-			unit:sound():say("heal")
-		else
-			local action_data = {
-				body_part = 1,
-				type = "heal",
-				client_interrupt = Network:is_client()
-			}
+	unit:character_damage()._heal_cooldown_t = Application:time()
 
-			unit:movement():action_request(action_data)
-		end
+	local anim_data = unit:anim_data()
+
+	if anim_data and anim_data.act then
+		unit:sound():say("heal")
+	else
+		local action_data = {
+			body_part = 1,
+			type = "heal",
+			client_interrupt = Network:is_client()
+		}
+
+		unit:movement():action_request(action_data)
 	end
 end
 
-function UnitNetworkHandler:m79grenade_explode_on_client(position, normal, user, damage, range, curve_pow, sender)
+function UnitNetworkHandler:sync_heist_time(time, sender)
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 		return
 	end
 
-	if not self._verify_character_and_sender(user, sender) then
-		if alive(user) and user:movement() and user:movement()._active_actions then --this instance was actually a shotgun push ragdoll pos sync
-			local death_action = user:movement()._active_actions[1]
+	local peer = self._verify_sender(sender)
 
-			if death_action and death_action:type() == "hurt" and death_action._hips_obj then
-				local u_body = user:body(damage)
+	if not peer then
+		return
+	end
 
-				if u_body:enabled() and u_body:dynamic() then
-					u_body:set_position(position)
-				end
-			end
+	time = time + peer:qos().ping / 1000
+
+	managers.game_play_central:sync_heist_time(time)
+end
+
+function UnitNetworkHandler:request_place_ecm_jammer(battery_life_upgrade_lvl, body, pos, rot, sender)
+	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+		return
+	end
+
+	local peer = self._verify_sender(sender)
+
+	if not peer then
+		return
+	end
+
+	if not alive(body) then
+		sender:from_server_ecm_jammer_place_result(nil, nil, Vector3(), Rotation())
+
+		return
+	end
+
+	local owner_unit = peer:unit()
+
+	if not alive(owner_unit) or owner_unit:id() == -1 then
+		sender:from_server_ecm_jammer_place_result(nil, nil, Vector3(), Rotation())
+
+		return
+	end
+
+	local peer_id = peer:id()
+
+	if not managers.player:verify_equipment(peer_id, "ecm_jammer") then
+		return
+	end
+
+	local unit = ECMJammerBase.spawn(pos, rot, battery_life_upgrade_lvl, owner_unit, peer_id)
+
+	if not alive(unit) then
+		sender:from_server_ecm_jammer_place_result(nil, nil, Vector3(), Rotation())
+
+		return
+	end
+
+	sender:from_server_ecm_jammer_place_result(unit, body, pos, rot)
+	managers.network:session():send_to_peers_synched_except(peer_id, "sync_deployable_attachment", unit, body, pos, rot)
+
+	local base_ext = unit:base()
+
+	base_ext:set_server_information(peer_id)
+	base_ext:set_active(true)
+
+	local inv_body_rot = body:rotation():inverse()
+	local relative_pos = pos - body:position()
+
+	mvector3.rotate_with(relative_pos, inv_body_rot)
+
+	local relative_rot = inv_body_rot * rot
+
+	base_ext:link_attachment(body, relative_pos, relative_rot)
+end
+
+function UnitNetworkHandler:from_server_ecm_jammer_place_result(unit, body, pos, rot, sender)
+	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_sender(sender) then
+		return
+	end
+
+	unit = alive(unit) and unit or nil
+
+	local local_player = managers.player:player_unit()
+
+	if alive(local_player) then
+		local_player:equipment():from_server_ecm_jammer_placement_result(unit and true or false)
+	end
+
+	if not unit then
+		return
+	end
+
+	local base_ext = unit:base()
+
+	base_ext:set_owner(local_player)
+
+	if not alive(body) then
+		return
+	end
+
+	local inv_body_rot = body:rotation():inverse()
+	local relative_pos = pos - body:position()
+
+	mvector3.rotate_with(relative_pos, inv_body_rot)
+
+	local relative_rot = inv_body_rot * rot
+
+	base_ext:link_attachment(body, relative_pos, relative_rot)
+end
+
+function UnitNetworkHandler:sync_deployable_attachment(unit, body, pos, rot, sender)
+	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_sender(sender) then
+		return
+	end
+
+	if not alive(unit) or not alive(body) then
+		return
+	end
+
+	local inv_body_rot = body:rotation():inverse()
+	local relative_pos = pos - body:position()
+
+	mvector3.rotate_with(relative_pos, inv_body_rot)
+
+	local relative_rot = inv_body_rot * rot
+
+	unit:base():link_attachment(body, relative_pos, relative_rot)
+end
+
+function UnitNetworkHandler:place_sentry_gun(pos, rot, equipment_selection_index, user_unit, unit_idstring_index, ammo_level, fire_mode_index, sender)
+	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+		return
+	end
+
+	local peer = self._verify_sender(sender)
+
+	if not peer then
+		return
+	end
+
+	if equipment_selection_index == 0 or not alive(user_unit) or user_unit:id() == -1 then
+		sender:from_server_sentry_gun_place_result(peer:id(), 0, nil, 1, 1, false, 1, 1)
+
+		return
+	end
+
+	local peer_id = peer:id()
+
+	if not managers.player:verify_equipment(peer_id, "sentry_gun") then
+		return
+	end
+
+	local unit, spread_level, rot_level = SentryGunBase.spawn(user_unit, pos, rot, peer_id, true, unit_idstring_index)
+
+	if not unit then
+		sender:from_server_sentry_gun_place_result(peer_id, 0, nil, 1, 1, false, 1, 1)
+
+		return
+	end
+
+	local can_switch_fire_mode = PlayerSkill.has_skill("sentry_gun", "ap_bullets", user_unit)
+	fire_mode_index = can_switch_fire_mode and fire_mode_index or 1
+
+	unit:base():set_server_information(peer_id)
+
+	local has_shield = unit:base():has_shield()
+
+	managers.network:session():send_to_peers_synched("from_server_sentry_gun_place_result", peer_id, equipment_selection_index or 0, unit, rot_level, spread_level, has_shield, ammo_level, fire_mode_index)
+	unit:event_listener():call("on_setup", false)
+	unit:base():post_setup(fire_mode_index)
+end
+
+function UnitNetworkHandler:from_server_sentry_gun_place_result(owner_peer_id, equipment_selection_index, sentry_gun_unit, rot_level, spread_level, shield, ammo_level, fire_mode_index, sender)
+	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_sender(sender) then
+		return
+	end
+
+	local local_peer = managers.network:session():local_peer()
+	local local_player = local_peer:unit()
+	local_player = alive(local_player) and local_player or nil
+
+	if equipment_selection_index == 0 or not alive(sentry_gun_unit) then
+		if local_player and owner_peer_id == local_peer:id() then
+			local_player:equipment():from_server_sentry_gun_place_result()
 		end
 
 		return
 	end
 
-	ProjectileBase._explode_on_client(position, normal, user, damage, range, curve_pow)
+	local base_ext = sentry_gun_unit:base()
+
+	base_ext:set_owner_id(owner_peer_id)
+
+	if local_player and owner_peer_id == local_peer:id() then
+		managers.player:from_server_equipment_place_result(equipment_selection_index, local_player, sentry_gun_unit)
+	end
+
+	if shield then
+		base_ext:enable_shield()
+	end
+
+	local rot_speed_mul = SentryGunBase.ROTATION_SPEED_MUL[rot_level]
+
+	sentry_gun_unit:movement():setup(rot_speed_mul)
+	sentry_gun_unit:brain():setup(1 / rot_speed_mul)
+
+	local spread_mul = SentryGunBase.SPREAD_MUL[spread_level]
+	local setup_data = {
+		spread_mul = spread_mul,
+		ignore_units = {
+			sentry_gun_unit
+		}
+	}
+
+	sentry_gun_unit:weapon():setup(setup_data)
+
+	local ammo_mul = SentryGunBase.AMMO_MUL[ammo_level]
+
+	sentry_gun_unit:weapon():setup_virtual_ammo(ammo_mul)
+	sentry_gun_unit:event_listener():call("on_setup", base_ext:is_owner())
+	base_ext:post_setup(fire_mode_index)
 end
