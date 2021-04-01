@@ -370,7 +370,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			char_tweaks.immune_to_knock_down = true
 			char_tweaks.immune_to_concussion = true
 
-			managers.network:session():send_to_peers_synched("sync_unit_event_id_16", self._unit, "character_damage", 2)
+			managers.network:session():send_to_peers_synched("sync_unit_event_id_16", self._unit, "character_damage", HuskCopDamage._NET_EVENTS.set_joker_no_hurts)
 		end
 
 		if melee_stagger then
