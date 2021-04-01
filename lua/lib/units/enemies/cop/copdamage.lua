@@ -308,22 +308,32 @@ function CopDamage:check_medic_heal()
 		end
 	end
 
+	--further ensure that the unit isn't acting or plans to act
+	local act_action, was_queued = self._unit:movement():_get_latest_act_action()
+
+	if act_action then
+		if not was_queued or not act_action.host_expired then
+			return false
+		end
+	end
+
 	local medic = managers.enemy:get_nearby_medic(self._unit)
 
 	if medic then
 		local medic_dmg_ext = medic:character_damage()
 
-		if medic_dmg_ext:heal_unit(self._unit) then --heal was successful
+		if medic_dmg_ext:heal_unit(self._unit) then
 			local difficulty_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)
 
 			--if playing on Crackdown difficulty, find enemies around the Medic and proceed with the usual healing process on them as well
 			if difficulty_index == 8 then
-				local enemies = world_g:find_units_quick(medic, "sphere", medic:position(), tweak_data.medic.radius, managers.slot:get_mask("enemies"))
+				local enemies = medic:find_units_quick("sphere", medic:position(), tweak_data.medic.radius, managers.slot:get_mask("enemies"))
+				local my_key = self._unit:key()
 
 				for i = 1, #enemies do
 					local enemy = enemies[i]
 					local anim_data = enemy:anim_data()
-					local skip_enemy = self._unit:key() == enemy:key() or anim_data and anim_data.act and true
+					local skip_enemy = anim_data and anim_data.act or my_key == enemy:key()
 
 					if not skip_enemy then
 						local tweak_table_name = enemy:base()._tweak_table
@@ -2650,7 +2660,7 @@ function CopDamage:damage_fire(attack_data)
 
 		local result_type = "dmg_rcv"
 
-		if not attack_data.is_fire_dot_damage then
+		if not attack_data.is_fire_dot_damage and not deathvox:IsTotalCrackdownEnabled() then
 			result_type = self:get_damage_type(damage_percent, "fire")
 		end
 
@@ -2760,7 +2770,7 @@ function CopDamage:damage_fire(attack_data)
 
 					managers.fire:add_doted_enemy(self._unit, t, weap_unit, fire_dot_data.dot_length, dot_damage, attacker_unit, attack_data.is_molotov)
 
-					if result.type ~= "healed" then
+					if result.type ~= "healed" and not deathvox:IsTotalCrackdownEnabled() then
 						local use_animation_on_fire_damage = nil
 
 						if self._char_tweak.use_animation_on_fire_damage == nil then
