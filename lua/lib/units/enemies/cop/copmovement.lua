@@ -1247,6 +1247,57 @@ function CopMovement:clbk_sync_attention(attention)
 	end
 end
 
+function CopMovement:get_hold_type(hold_type)
+	if not hold_type then
+		return
+	end
+
+	if type(hold_type) == "table" then
+		for _, hold in ipairs(hold_type) do
+			if HuskPlayerMovement.reload_times[hold] then
+				return hold
+			end
+		end
+
+		return
+	elseif HuskPlayerMovement.reload_times[hold_type] then
+		return hold_type
+	else
+		return
+	end
+end
+
+function CopMovement:anim_clbk_start_reload_looped()
+	local weapon_unit = self._ext_inventory:equipped_unit()
+
+	if not weapon_unit then
+		return
+	end
+
+	local weap_tweak = weapon_unit:base():weapon_tweak_data()
+	local weapon_usage_tweak = self._tweak_data.weapon[weap_tweak.usage]
+	local anim_multiplier = weapon_usage_tweak.RELOAD_SPEED or 1
+	local hold_type = self:get_hold_type(weap_tweak.hold)
+
+	if weap_tweak.looped_reload_speed then
+		anim_multiplier = anim_multiplier * weap_tweak.looped_reload_speed
+	end
+
+	local redir_res = self:play_redirect("reload_looped")
+
+	if redir_res then
+		self._machine:set_speed(redir_res, anim_multiplier)
+
+		if hold_type then
+			self._machine:set_parameter(redir_res, hold_type, 1)
+		end
+	end
+end
+
+function CopMovement:anim_clbk_reload_exit()
+	self:anim_clbk_hide_magazine_in_hand()
+end
+
 local _equip_item_original = CopMovement._equip_item
 function CopMovement:_equip_item(item_type, align_place, droppable)
 	if item_type == "needle" then
