@@ -218,14 +218,14 @@ function CopActionTase:on_attention(attention)
 		local att_base_ext = attention_unit:base()
 
 		if att_base_ext.is_husk_player then
-			if att_base_ext:upgrade_value("player", "convert_enemies_tackle_counter") then
+			if att_base_ext:upgrade_value("player", "convert_enemies_tackle_specials") then
 				self._joker_vis_mask = managers.slot:get_mask("AI_visibility")
 			end
 		else
 			if att_base_ext.is_local_player then
 				self._tasing_player = true
 
-				if managers.player:has_category_upgrade("player", "convert_enemies_tackle_counter") then
+				if managers.player:has_category_upgrade("player", "convert_enemies_tackle_specials") then
 					self._joker_vis_mask = managers.slot:get_mask("AI_visibility")
 				end
 			end
