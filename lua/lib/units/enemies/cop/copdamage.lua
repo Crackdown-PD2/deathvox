@@ -3608,3 +3608,32 @@ else
 		end
 	end
 end
+
+function CopDamage:_on_stun_hit_exit()
+	local acc_reset_t = TimerManager:game():time() + self._ON_STUN_ACCURACY_DECREASE_TIME
+	local reset_acc_clbk_id = self._reset_acc_clbk_id
+
+	if reset_acc_clbk_id then
+		managers.enemy:reschedule_delayed_clbk(reset_acc_clbk_id, acc_reset_t)
+	else
+		local original_multiplier = self._accuracy_multiplier
+		self._original_acc_mul = original_multiplier
+
+		self:set_accuracy_multiplier(self._ON_STUN_ACCURACY_DECREASE * original_multiplier)
+
+		local function f()
+			self:set_accuracy_multiplier(self._original_acc_mul)
+			self._original_acc_mul = nil
+			self._reset_acc_clbk_id = nil
+		end
+
+		reset_acc_clbk_id = "ResetAccuracy" .. tostring_g(self._unit:key())
+		self._reset_acc_clbk_id = reset_acc_clbk_id
+
+		managers.enemy:add_delayed_clbk(reset_acc_clbk_id, f, acc_reset_t)
+
+		self._stun_exit_clbk = nil
+
+		self._listener_holder:remove("after_stun_accuracy")
+	end
+end
