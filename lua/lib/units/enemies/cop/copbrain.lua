@@ -292,7 +292,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self._attention_handler:override_attention("enemy_team_cbt", attention_preset)
 
 		local health_multiplier, damage_multiplier, accuracy_multiplier = 1, 1
-		local add_armor_piercing, no_hurt_animations, melee_stagger, health_regen, highlight_prioritizing = nil
+		local add_armor_piercing, no_hurt_animations, melee_stagger, health_regen, highlight_prioritizing, marked_enemy_bonus = nil
 
 		if alive(mastermind_criminal) then
 			local base_ext = mastermind_criminal:base()
@@ -302,12 +302,14 @@ if deathvox:IsTotalCrackdownEnabled() then
 			damage_multiplier = damage_multiplier * (base_ext:upgrade_value("player", "convert_enemies_damage_multiplier") or 1)
 			damage_multiplier = damage_multiplier * (base_ext:upgrade_value("player", "passive_convert_enemies_damage_multiplier") or 1)
 
-			--TCD placeholders
-			accuracy_multiplier = base_ext:upgrade_value("player", "convert_enemies_acc_multiplier") or 1 --placeholder
-			no_hurt_animations = nil
-			melee_stagger = nil
-			health_regen = nil
-			highlight_prioritizing = nil
+			--TCD skills
+			accuracy_multiplier = base_ext:upgrade_value("player", "convert_enemies_accuracy_bonus") or 1
+			add_armor_piercing = base_ext:upgrade_value("player", "convert_enemies_piercing_bullets")
+			no_hurt_animations = base_ext:upgrade_value("player", "convert_enemies_knockback_proof ")
+			melee_stagger = base_ext:upgrade_value("player", "convert_enemies_melee")
+			health_regen = base_ext:upgrade_value("player", "convert_enemies_health_regen") or 0
+			highlight_prioritizing = base_ext:upgrade_value("player", "convert_enemies_target_marked")
+			marked_enemy_bonus = base_ext:upgrade_value("player", "convert_enemies_marked_damage_bonus") or 1
 		else
 			local player_manager = managers.player
 
@@ -316,19 +318,25 @@ if deathvox:IsTotalCrackdownEnabled() then
 			damage_multiplier = damage_multiplier * player_manager:upgrade_value("player", "convert_enemies_damage_multiplier", 1)
 			damage_multiplier = damage_multiplier * player_manager:upgrade_value("player", "passive_convert_enemies_damage_multiplier", 1)
 
-			--TCD placeholders
-			accuracy_multiplier = player_manager:upgrade_value("player", "convert_enemies_acc_multiplier") or 1
-			no_hurt_animations = nil
-			melee_stagger = nil
-			health_regen = nil
-			highlight_prioritizing = nil
+			--TCD skills
+			accuracy_multiplier = player_manager:upgrade_value("player", "convert_enemies_accuracy_bonus", 1)
+			add_armor_piercing = player_manager:upgrade_value("player", "convert_enemies_piercing_bullets")
+			no_hurt_animations = player_manager:upgrade_value("player", "convert_enemies_knockback_proof ")
+			melee_stagger = player_manager:upgrade_value("player", "convert_enemies_melee")
+			health_regen = player_manager:upgrade_value("player", "convert_enemies_health_regen", 0)
+			highlight_prioritizing = player_manager:upgrade_value("player", "convert_enemies_target_marked")
+			marked_enemy_bonus = player_manager:upgrade_value("player", "convert_enemies_marked_damage_bonus", 1)
 		end
 
 		local ext_dmg = self._unit:character_damage()
 		ext_dmg:convert_to_criminal(health_multiplier)
 
-		if health_regen and health_regen ~= 1 then
+		if health_regen and health_regen ~= 0 then
 			ext_dmg:set_health_regen(health_regen)
+		end
+
+		if marked_enemy_bonus and marked_enemy_bonus ~= 1 then
+			ext_dmg._joker_mark_dmg_bonus = marked_enemy_bonus
 		end
 
 		if accuracy_multiplier ~= 1 then
@@ -378,7 +386,15 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 
 		if highlight_prioritizing then
-			self._unit:brain()._prioritize_marked_units_by_owner = true
+			if alive(mastermind_criminal) then
+				local peer = managers.network:session():peer_by_unit(mastermind_criminal)
+
+				if peer then
+					self._unit:brain()._prioritize_marked_units_by_owner_id = peer:id()
+				end
+			else
+				self._unit:brain()._prioritize_marked_units_by_owner_id = managers.network:session():local_peer():id()
+			end
 		end
 
 		char_tweaks.suppression = nil
