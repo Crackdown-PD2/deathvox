@@ -316,7 +316,7 @@ end
 function SawHit:on_collision(col_ray, weapon_unit, user_unit, damage)
 	local hit_unit = col_ray.unit
 	local unit_base_ext = hit_unit:base()
-	local is_crit = nil
+	local is_crit, unit_dmg_ext = nil
 
 	if is_total_cd then
 		if unit_base_ext and self._bonus_dozer_damage and unit_base_ext.has_tag and unit_base_ext:has_tag("tank") then
@@ -324,7 +324,7 @@ function SawHit:on_collision(col_ray, weapon_unit, user_unit, damage)
 		end
 
 		if self._into_the_pit then
-			local unit_dmg_ext = hit_unit:character_damage()
+			unit_dmg_ext = hit_unit:character_damage()
 
 			if unit_dmg_ext and not unit_dmg_ext._INTO_THE_PIT_PROC then
 				unit_dmg_ext._INTO_THE_PIT_PROC = true
@@ -336,6 +336,10 @@ function SawHit:on_collision(col_ray, weapon_unit, user_unit, damage)
 	end
 
 	local result = InstantBulletBase.on_collision(self, col_ray, weapon_unit, user_unit, damage, nil, nil, nil, is_crit)
+
+	if is_crit and alive(hit_unit) and unit_dmg_ext.build_suppression then
+		unit_dmg_ext:build_suppression("panic")
+	end
 
 	if hit_unit:damage() and col_ray.body:extension() and col_ray.body:extension().damage then
 		damage = math_clamp(damage * managers.player:upgrade_value("saw", "lock_damage_multiplier", 1) * 4, 0, 200)
