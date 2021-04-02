@@ -182,7 +182,7 @@ function GamePlayCentralManager:auto_highlight_enemy(unit, use_player_upgrades,f
 		end
 	end
 
-	if not is_camera and use_player_upgrades and Network:is_server() then
+	if not is_camera and use_player_upgrades and Network:is_server() and managers.player:has_category_upgrade("player", "convert_enemies_target_marked") then
 		unit:contour():add(contour_type, true, time_multiplier, nil, nil, managers.network:session():local_peer():id())
 	else
 		unit:contour():add(contour_type, true, time_multiplier)
