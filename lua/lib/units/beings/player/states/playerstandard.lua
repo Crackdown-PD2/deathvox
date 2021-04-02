@@ -1762,7 +1762,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				end
 
 				if managers.player:has_category_upgrade("player", "special_enemy_highlight") then
-					if Network:is_server() then
+					if Network:is_server() and managers.player:has_category_upgrade("player", "convert_enemies_target_marked") then
 						prime_target.unit:contour():add(managers.player:get_contour_for_marked_enemy(), true, managers.player:upgrade_value("player", "mark_enemy_time_multiplier", 1), nil, nil, managers.network:session():local_peer():id())
 					else
 						prime_target.unit:contour():add(managers.player:get_contour_for_marked_enemy(), true, managers.player:upgrade_value("player", "mark_enemy_time_multiplier", 1))
@@ -1851,9 +1851,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				interact_type = "cmd_point"
 				local type = prime_target.unit:base().get_type and prime_target.unit:base():get_type()
 
-				prime_target.unit:contour():add(managers.player:get_contour_for_marked_enemy(type), true, managers.player:upgrade_value("player", "mark_enemy_time_multiplier", 1))
-
-				if Network:is_server() then
+				if Network:is_server() and managers.player:has_category_upgrade("player", "convert_enemies_target_marked") then
 					prime_target.unit:contour():add(managers.player:get_contour_for_marked_enemy(type), true, managers.player:upgrade_value("player", "mark_enemy_time_multiplier", 1), nil, nil, managers.network:session():local_peer():id())
 				else
 					prime_target.unit:contour():add(managers.player:get_contour_for_marked_enemy(type), true, managers.player:upgrade_value("player", "mark_enemy_time_multiplier", 1))
