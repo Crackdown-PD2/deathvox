@@ -2097,7 +2097,7 @@ function CopActionWalk._calculate_simplified_path(good_pos, original_path, nr_it
 					local next_point = original_path[index_to]
 
 					if not next_point.x then
-						index_from = index_to + 1
+						index_from = index_to - 1
 
 						s_path[#s_path + 1] = next_point
 					else
