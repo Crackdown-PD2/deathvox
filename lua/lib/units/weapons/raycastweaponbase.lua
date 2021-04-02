@@ -421,7 +421,8 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 	local mag = base:get_ammo_remaining_in_clip()
 	
 
-	if consume_ammo and (is_player or Network:is_server()) then
+	--if consume_ammo and (is_player or Network:is_server()) then
+	if consume_ammo then
 
 		if base:get_ammo_remaining_in_clip() == 0 then
 			return
