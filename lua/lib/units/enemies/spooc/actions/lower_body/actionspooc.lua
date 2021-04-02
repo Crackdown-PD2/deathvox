@@ -413,7 +413,7 @@ function ActionSpooc:_send_stop()
 		local server_peer = session:server_peer()
 
 		if server_peer then
-			session:send_to_peer_synched(server_peer:id(), "action_spooc_stop", self._unit, mvec3_cpy(self._common_data.pos), stop_nav_index, self._action_id)
+			session:send_to_peer_synched(server_peer, "action_spooc_stop", self._unit, mvec3_cpy(self._common_data.pos), stop_nav_index, self._action_id)
 		end
 	end
 end
