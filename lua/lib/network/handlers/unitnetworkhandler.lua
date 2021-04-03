@@ -129,7 +129,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			return
 		end
 		
-		if unit:base() and not unit:base().set_thrower_unit_by_peer_id then 
+		if alive(unit) and unit:base() and not unit:base().set_thrower_unit_by_peer_id then 
 			local bits = projectile_type_index - 1 --change range to [0,63] instead of [1,64]
 			local radius_upgrade_level = Bitwise:rshift(bits,TripMineBase.radius_upgrade_shift)
 			local vulnerability_upgrade_level = Bitwise:rshift(bits,TripMineBase.vulnerability_upgrade_shift) % 2^TripMineBase.vulnerability_upgrade_shift
