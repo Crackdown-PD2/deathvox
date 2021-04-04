@@ -691,22 +691,21 @@ function CopActionWalk._calculate_shortened_path(path)
 	local test_pos = tmp_vec1
 
 	while index < #path do
+		local prev_point = path[index - 1]
 		local cur_point = path[index]
 
 		if not cur_point.x then
-			--current point is a nav_link, skip two points ahead
+			--current point is a nav_link, cannot shorten this section of the path, skip two points ahead
 			index = index + 2
-
-			--if the previous nav point to the new index is a nav_link, skip an extra point ahead
-			if not path[index - 1].x then
-				index = index + 1
-			end
+		elseif not prev_point.x then
+			--previous point is a nav_link, cannot shorten this section of the path, skip one point ahead
+			index = index + 1
 		else
 			--if the next nav point is a nav_link, that's fine, its initial pos is valid for these purposes
 			--in this case, clamping isn't needed as it was already done when applying padding
 
 			local pos = cur_point
-			local bwd_pos = path[index - 1]
+			local bwd_pos = prev_point
 			local fwd_pos = nav_point_pos_func(path[index + 1])
 			local vec1 = fwd_pos - pos
 			local vec2 = bwd_pos - pos
@@ -802,23 +801,24 @@ function CopActionWalk._apply_padding_to_simplified_path(path)
 	local temp_tracker, chk_clamp_prev, chk_clamp_next = nil
 
 	while index < #path do
+		local prev_point = path[index - 1]
 		local cur_point = path[index]
 
 		if not cur_point.x then
-			--current nav point is a nav_link, skip two points ahead
+			--current point is a nav_link, cannot apply padding to this section, skip two points ahead
 			index = index + 2
 
 			chk_clamp_prev, chk_clamp_next = nil
+		elseif not prev_point.x then
+			--previous point is a nav_link, cannot apply padding to this section, skip one point ahead
+			index = index + 1
 
-			--if the previous nav point to the new index is a nav_link, skip an extra point ahead
-			if not path[index - 1].x then
-				index = index + 1
-			end
+			chk_clamp_prev, chk_clamp_next = nil
 		else
 			--if the next nav point is a nav_link, that's fine, its initial pos is valid for these purposes
 
 			local pos = cur_point
-			local bwd_pos = path[index - 1]
+			local bwd_pos = prev_point
 			local fwd_point = path[index + 1]
 			local fwd_pos = nav_point_pos_func(fwd_point)
 			local too_much_height = math_abs(pos.z - fwd_pos.z - (pos.z - bwd_pos.z)) > 60
@@ -2098,8 +2098,6 @@ function CopActionWalk._calculate_simplified_path(good_pos, original_path, nr_it
 
 					if not next_point.x then
 						index_from = index_to - 1
-
-						s_path[#s_path + 1] = next_point
 					else
 						index_from = index_to
 
