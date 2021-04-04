@@ -87,6 +87,7 @@
 	<post :script_path="units/player_team/teamaibrain.lua" :hook_id="units/player_team/teamaibrain"/>
 	<post :script_path="units/player_team/teamaiinventory.lua" :hook_id="units/player_team/teamaiinventory"/>
 	<post :script_path="units/player_team/teamaimovement.lua" :hook_id="units/player_team/teamaimovement"/>
+	<post :script_path="units/player_team/actions/lower_body/criminalactionwalk.lua" :hook_id="units/player_team/actions/lower_body/criminalactionwalk"/>
 	<post :script_path="units/player_team/logics/teamailogicassault.lua" :hook_id="units/player_team/logics/teamailogicassault"/>
 	<post :script_path="units/player_team/logics/teamailogicdisabled.lua" :hook_id="units/player_team/logics/teamailogicdisabled"/>
 	<post :script_path="units/player_team/logics/teamailogicidle.lua" :hook_id="units/player_team/logics/teamailogicidle"/>
