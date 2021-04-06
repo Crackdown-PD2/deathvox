@@ -940,70 +940,66 @@ function InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, 
 end
 
 function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage, blank, no_sound, already_ricocheted, critical_hit)
-	if Network:is_client() and not blank and user_unit ~= managers.player:player_unit() then
+	if not blank and Network:is_client() and user_unit ~= managers.player:player_unit() then
 		blank = true
-	end
-	
-	local weapon_base = weapon_unit:base()
-
-	local enable_ricochets = managers.player:has_category_upgrade("player", "ricochet_bullets")
-	
-	critical_hit = critical_hit
-	
-	if not critical_hit then
-		if TCDEnabled then
-			critical_hit = self:calculate_crit(weapon_unit, user_unit)
-		end
-	end
-	
-	local has_category = weapon_unit and alive(weapon_unit) and not weapon_base.thrower_unit and weapon_base.is_category
-	if enable_ricochets and not already_ricocheted and user_unit and user_unit == managers.player:player_unit() and col_ray.unit then
-
-		if has_category and weapon_base:is_weapon_class("class_rapidfire") then
-			local can_bounce_off = false
-
-			--easier to understand and to add more conditions if desired
-			if not weapon_base._can_shoot_through_shield and col_ray.unit:in_slot(managers.slot:get_mask("enemy_shield_check")) then
-				can_bounce_off = true
-			elseif not weapon_base._can_shoot_through_wall and col_ray.unit:in_slot(managers.slot:get_mask("world_geometry", "vehicles")) and (col_ray.body:has_ray_type(Idstring("ai_vision")) or col_ray.body:has_ray_type(Idstring("bulletproof"))) then
-				can_bounce_off = true
-			end
-
-			if can_bounce_off then
-				InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, blank, no_sound, critical_hit)
-			end
-		end
 	end
 
 	local hit_unit = col_ray.unit
 	local is_shield = hit_unit:in_slot(managers.slot:get_mask("enemy_shield_check")) and alive(hit_unit:parent())
 
-	--more proper checks for knocking back a shield
-	if alive(weapon_unit) and is_shield and weapon_base._shield_knock then
-		local enemy_unit = hit_unit:parent()
+	local weap_unit = alive(weapon_unit) and weapon_unit or nil
+	local weapon_base = weap_unit and weap_unit:base()
 
-		if enemy_unit:character_damage() and enemy_unit:character_damage().dead and not enemy_unit:character_damage():dead() then
-			if enemy_unit:base():char_tweak() and not enemy_unit:base().is_phalanx and enemy_unit:base():char_tweak().damage.shield_knocked and not enemy_unit:character_damage():is_immune_to_shield_knockback() then
-				local MIN_KNOCK_BACK = 200
-				local KNOCK_BACK_CHANCE = 0.8
-				local dmg_ratio = math.min(damage, MIN_KNOCK_BACK)
-				dmg_ratio = dmg_ratio / MIN_KNOCK_BACK + 1
+	if not blank then
+		if TCDEnabled and weap_unit and not critical_hit then
+			critical_hit = self:calculate_crit(weap_unit, user_unit)
+		end
 
-				local rand = math.random() * dmg_ratio
+		local has_category = weapon_base and weapon_base.thrower_unit and weapon_base.is_category
 
-				if KNOCK_BACK_CHANCE < rand then
-					local damage_info = {
-						damage = 0,
-						type = "shield_knock",
-						variant = "melee",
-						col_ray = col_ray,
-						result = {
+		if not already_ricocheted and has_category and user_unit == managers.player:player_unit() and hit_unit and managers.player:has_category_upgrade("player", "ricochet_bullets") then
+			if weapon_base:is_weapon_class("class_rapidfire") then
+				local can_bounce_off = false
+
+				if not weapon_base._can_shoot_through_shield and hit_unit:in_slot(managers.slot:get_mask("enemy_shield_check")) then
+					can_bounce_off = true
+				elseif not weapon_base._can_shoot_through_wall and hit_unit:in_slot(managers.slot:get_mask("world_geometry", "vehicles")) and (col_ray.body:has_ray_type(Idstring("ai_vision")) or col_ray.body:has_ray_type(Idstring("bulletproof"))) then
+					can_bounce_off = true
+				end
+
+				if can_bounce_off then
+					InstantBulletBase:on_ricochet(col_ray, weap_unit, user_unit, damage, blank, no_sound, critical_hit)
+				end
+			end
+		end
+
+		--more proper checks for knocking back a shield
+		if weap_unit and is_shield and weapon_base._shield_knock then
+			local enemy_unit = hit_unit:parent()
+
+			if enemy_unit:character_damage() and enemy_unit:character_damage().dead and not enemy_unit:character_damage():dead() then
+				if enemy_unit:base():char_tweak() and not enemy_unit:base().is_phalanx and enemy_unit:base():char_tweak().damage.shield_knocked and not enemy_unit:character_damage():is_immune_to_shield_knockback() then
+					local MIN_KNOCK_BACK = 200
+					local KNOCK_BACK_CHANCE = 0.8
+					local dmg_ratio = math.min(damage, MIN_KNOCK_BACK)
+					dmg_ratio = dmg_ratio / MIN_KNOCK_BACK + 1
+
+					local rand = math.random() * dmg_ratio
+
+					if KNOCK_BACK_CHANCE < rand then
+						local damage_info = {
+							damage = 0,
+							type = "shield_knock",
 							variant = "melee",
-							type = "shield_knock"
+							col_ray = col_ray,
+							result = {
+								variant = "melee",
+								type = "shield_knock"
+							}
 						}
-					}
 
-					enemy_unit:character_damage():_call_listeners(damage_info)
+						enemy_unit:character_damage():_call_listeners(damage_info)
+					end
 				end
 			end
 		end
@@ -1044,7 +1040,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 				col_ray.body:extension().damage:damage_bullet(user_unit, col_ray.normal, col_ray.position, col_ray.ray, 1)
 				col_ray.body:extension().damage:damage_damage(user_unit, col_ray.normal, col_ray.position, col_ray.ray, damage)
 
-				if alive(weapon_unit) and weapon_base.categories and weapon_base:categories() then
+				if weapon_base and weapon_base.categories and weapon_base:categories() then
 					for _, category in ipairs(weapon_base:categories()) do
 						col_ray.body:extension().damage:damage_bullet_type(category, user_unit, col_ray.normal, col_ray.position, col_ray.ray, 1)
 					end
@@ -1056,45 +1052,47 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 	local result = nil
 
 	local projectile_entry = weapon_base._projectile_entry or weapon_base._tweak_projectile_entry
-	local projectile_td = projectile_entry and tweak_data.blackmarket.projectiles[projectile_entry] 
-	if alive(weapon_unit) and hit_unit:character_damage() and hit_unit:character_damage().damage_bullet then
+	local projectile_td = projectile_entry and tweak_data.blackmarket.projectiles[projectile_entry]
+
+	if weap_unit and hit_unit:character_damage() and hit_unit:character_damage().damage_bullet then
 		local is_alive = not hit_unit:character_damage():dead()
-		
-		local pierce_armor = false
-		if user_unit == managers.player:player_unit() then
-			if has_category and weapon_base:is_weapon_class("class_shotgun") then 
-				local point_blank_range = managers.player:upgrade_value("class_shotgun","point_blank_basic",0)
-				if point_blank_range > 0 then  --right now, basic and aced have the same proc range, but if you want to change that, this is where you'd do it
-					if col_ray and col_ray.distance and (col_ray.distance <= point_blank_range) then 
-						pierce_armor = true
-						damage = damage * (1 + managers.player:upgrade_value("class_shotgun","point_blank_aced",0)) 
+
+		if not blank then
+			local pierce_armor = false
+
+			if user_unit == managers.player:player_unit() then
+				if has_category and weapon_base:is_weapon_class("class_shotgun") then 
+					local point_blank_range = managers.player:upgrade_value("class_shotgun","point_blank_basic",0)
+					if point_blank_range > 0 then  --right now, basic and aced have the same proc range, but if you want to change that, this is where you'd do it
+						if col_ray and col_ray.distance and (col_ray.distance <= point_blank_range) then 
+							pierce_armor = true
+							damage = damage * (1 + managers.player:upgrade_value("class_shotgun","point_blank_aced",0)) 
+						end
 					end
 				end
-			end
-			if projectile_td and projectile_td.throwable and not projectile_td.is_a_grenade then 
-				if managers.player:has_category_upgrade("class_throwing","throwing_boosts_melee_loop") then 
-					managers.player:set_property("shuffle_cut_melee_bonus_damage",managers.player:upgrade_value("class_throwing","throwing_boosts_melee_loop",0))
-				end
-				
-				local throwing_weapon_add_mul = 1
-				
-				if managers.player:has_category_upgrade("class_throwing","projectile_charged_damage_mul") then 
-					throwing_weapon_add_mul = throwing_weapon_add_mul + managers.player:get_property("charged_throwable_damage_bonus",0)
-					managers.player:set_property("charged_throwable_damage_bonus",0)
-				end
-				if managers.player:has_category_upgrade("class_melee","melee_boosts_throwing_loop") then 
-					throwing_weapon_add_mul = throwing_weapon_add_mul + managers.player:get_temporary_property("shuffle_cut_throwing_bonus_damage",0)
-				end
-				throwing_weapon_add_mul = throwing_weapon_add_mul + managers.player:upgrade_value("class_throwing","weapon_class_damage_mul",0)
-				damage = damage * throwing_weapon_add_mul
-			end
-		end
-		
+				if projectile_td and projectile_td.throwable and not projectile_td.is_a_grenade then 
+					if managers.player:has_category_upgrade("class_throwing","throwing_boosts_melee_loop") then 
+						managers.player:set_property("shuffle_cut_melee_bonus_damage",managers.player:upgrade_value("class_throwing","throwing_boosts_melee_loop",0))
+					end
 
-		pierce_armor = pierce_armor or weapon_base._use_armor_piercing
-		if not blank then
+					local throwing_weapon_add_mul = 1
+
+					if managers.player:has_category_upgrade("class_throwing","projectile_charged_damage_mul") then 
+						throwing_weapon_add_mul = throwing_weapon_add_mul + managers.player:get_property("charged_throwable_damage_bonus",0)
+						managers.player:set_property("charged_throwable_damage_bonus",0)
+					end
+					if managers.player:has_category_upgrade("class_melee","melee_boosts_throwing_loop") then 
+						throwing_weapon_add_mul = throwing_weapon_add_mul + managers.player:get_temporary_property("shuffle_cut_throwing_bonus_damage",0)
+					end
+					throwing_weapon_add_mul = throwing_weapon_add_mul + managers.player:upgrade_value("class_throwing","weapon_class_damage_mul",0)
+					damage = damage * throwing_weapon_add_mul
+				end
+			end
+
+			pierce_armor = pierce_armor or weapon_base._use_armor_piercing
+
 			local knock_down = weapon_base._knock_down and weapon_base._knock_down > 0 and math.random() < weapon_base._knock_down
-			result = self:give_impact_damage(col_ray, weapon_unit, user_unit, damage, pierce_armor, false, knock_down, weapon_base._stagger, weapon_base._variant, critical_hit)
+			result = self:give_impact_damage(col_ray, weap_unit, user_unit, damage, pierce_armor, false, knock_down, weapon_base._stagger, weapon_base._variant, critical_hit)
 		end
 
 		local is_dead = hit_unit:character_damage():dead()
@@ -1106,7 +1104,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 			end
 		end
 
-		local push_multiplier = self:_get_character_push_multiplier(weapon_unit, is_alive and is_dead)
+		local push_multiplier = self:_get_character_push_multiplier(weap_unit, is_alive and is_dead)
 
 		managers.game_play_central:physics_push(col_ray, push_multiplier)
 	else
@@ -1118,7 +1116,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 			col_ray = col_ray,
 			no_sound = no_sound
 		})
-		self:play_impact_sound_and_effects(weapon_unit, col_ray, no_sound)
+		self:play_impact_sound_and_effects(weap_unit, col_ray, no_sound)
 	end
 
 	return result
