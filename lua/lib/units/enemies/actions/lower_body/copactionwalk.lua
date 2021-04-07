@@ -2994,7 +2994,7 @@ function CopActionWalk:stop()
 			self._end_of_curved_path = nil
 		end
 
-		--attempt to shortcut to the end position if the path has more than 2 nav_points + unit isn't playing an animation that dictates movement
+		--attempt to shortcut to the end position if the path has more than two nav_points + unit isn't playing an animation that dictates movement
 		if s_path[3] and not hard_anim_updators[self._updator_name] and math_abs(self._common_data.pos.z - end_pos.z) < 100 then
 			local ray_params = {
 				tracker_from = self._common_data.nav_tracker,
@@ -3019,14 +3019,14 @@ function CopActionWalk:stop()
 		end
 	end
 
-	--attempt to shortcut to the end pos from subsequent nav_points if the path has more than 2
+	--attempt to shortcut to the end pos from subsequent nav_points if the path has more than two
 	if s_path[3] then
 		local chk_shortcut_func = self._chk_shortcut_pos_to_pos
 		nav_point_pos_func = nav_point_pos_func or self._nav_point_pos
 
 		for i_nav_point = 2, #s_path - 1 do
-			local pos_from = nav_point_pos_func(s_path[i_nav_point])
-			local blocked = math_abs(pos_from.z - end_pos.z) >= 100 or chk_shortcut_func(pos_from, end_pos)
+			local point_from = s_path[i_nav_point]
+			local blocked = not point_from.x or math_abs(point_from.z - end_pos.z) >= 100 or chk_shortcut_func(point_from, end_pos)
 
 			if not blocked then
 				local new_s_path = {}
@@ -3369,17 +3369,30 @@ function CopActionWalk:_upd_nav_link(t)
 
 		if is_server then
 			self:_send_nav_point(next_nav_point)
-		elseif not self._persistent and s_path[3] then --action expired for the host while the nav_link was going here
-			local last_nav_point_pos = nav_point_pos_func(s_path[#s_path])
+		elseif not self._persistent then --action expired for the host while the nav_link was still going here
+			if s_path[3] then --attempt to shortcut to the end pos if the path still has more than two nav_points
+				local chk_shortcut_func = self._chk_shortcut_pos_to_pos
+				local last_nav_point_pos = nav_point_pos_func(s_path[#s_path])
+				local i_start = common_data.nav_tracker:lost() and 2 or 1 --start with the current position if the unit didn't end up outside the nav_field
 
-			--attempt to shortcut to the last synced position
-			if math_abs(s_path[1].z - last_nav_point_pos.z) < 100 and not self._chk_shortcut_pos_to_pos(next_nav_point, last_nav_point_pos) then
-				s_path = {
-					s_path[1],
-					mvec3_cpy(last_nav_point_pos)
-				}
+				for i_nav_point = i_start, #s_path - 1 do
+					local point_from = s_path[i_nav_point]
+					local blocked = not point_from.x or math_abs(point_from.z - last_nav_point_pos.z) >= 100 or chk_shortcut_func(point_from, last_nav_point_pos)
 
-				next_nav_point = s_path[2]
+					if not blocked then
+						local new_s_path = {}
+
+						for i = 1, i_nav_point do
+							new_s_path[#new_s_path + 1] = s_path[i]
+						end
+
+						new_s_path[#new_s_path + 1] = last_nav_point_pos
+
+						s_path = new_s_path
+
+						break
+					end
+				end
 			end
 		end
 
@@ -3423,7 +3436,6 @@ function CopActionWalk:_upd_nav_link(t)
 
 		self:update(t)
 	elseif self._persistent then
-		--not needed, here just in case persistent walk actions becomes a thing for the host
 		self._end_of_curved_path = true
 
 		self._simplified_path[1] = mvec3_cpy(common_data.pos)
