@@ -1121,7 +1121,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar",
 			murkywater = "units/pd2_mod_sharks/characters/ene_deathvox_swat/ene_deathvox_swat",			
-			classic = "units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_swat/ene_deathvox_classic_swat"
 		},
 		access = access_type_all
 	}
