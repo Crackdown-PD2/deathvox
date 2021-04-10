@@ -1455,12 +1455,6 @@ function CopActionWalk:update(t)
 							self._stop_anim_fwd = stop_anim_fwd
 							self._stop_dis = stop_dis
 
-							if not self._root_blend_disabled then
-								self._ext_movement:set_root_blend(false)
-
-								self._root_blend_disabled = true
-							end
-
 							self:_set_updator("_upd_stop_anim_first_frame")
 						end
 					else
@@ -2757,10 +2751,86 @@ function CopActionWalk:_upd_wait(t)
 	self._simplified_path = s_path
 end
 
+local run_stop_displacement_functions = {
+	stand = {
+		fwd = function (p1, p2, t)
+			local t_clamp = (math_clamp(t, 0, 0.6) / 0.6)^0.8
+
+			return math_lerp(p1, p2, t_clamp)
+		end,
+		bwd = function (p1, p2, t)
+			local low = 0.97
+			local p_1_5 = 0.9
+			local t_clamp = math_clamp(t, 0, 0.8) / 0.8
+
+			if p_1_5 > t_clamp then
+				t_clamp = low * (1 - (p_1_5 - t_clamp) / p_1_5)
+			else
+				t_clamp = low + (1 - low) * (t_clamp - p_1_5) / (1 - p_1_5)
+			end
+
+			return math_lerp(p1, p2, t_clamp)
+		end,
+		l = function (p1, p2, t)
+			local p_1_5 = 0.6
+			local low = 0.8
+			local t_clamp = math_clamp(t, 0, 0.75) / 0.75
+
+			if p_1_5 > t_clamp then
+				t_clamp = low * t_clamp / p_1_5
+			else
+				t_clamp = low + (1 - low) * (t_clamp - p_1_5) / (1 - p_1_5)
+			end
+
+			return math_lerp(p1, p2, t_clamp)
+		end,
+		r = function (p1, p2, t)
+			local low = 0.9
+			local p_1_5 = 0.85
+			local t_clamp = math_clamp(t, 0, 0.8) / 0.8
+
+			if p_1_5 > t_clamp then
+				t_clamp = low * (1 - (p_1_5 - t_clamp) / p_1_5)
+			else
+				t_clamp = low + (1 - low) * (t_clamp - p_1_5) / (1 - p_1_5)
+			end
+
+			return math_lerp(p1, p2, t_clamp)
+		end
+	},
+	crouch = {
+		fwd = function (p1, p2, t)
+			local t_clamp = math_clamp(t, 0, 0.4) / 0.4
+			t_clamp = t_clamp^0.85
+
+			return math_lerp(p1, p2, t_clamp)
+		end,
+		bwd = function (p1, p2, t)
+			local t_clamp = math_clamp(t, 0, 0.4) / 0.4
+			t_clamp = t_clamp^0.85
+
+			return math_lerp(p1, p2, t_clamp)
+		end,
+		l = function (p1, p2, t)
+			local t_clamp = math_clamp(t, 0, 0.3) / 0.3
+			t_clamp = t_clamp^0.85
+
+			return math_lerp(p1, p2, t_clamp)
+		end,
+		r = function (p1, p2, t)
+			local t_clamp = math_clamp(t, 0, 0.6) / 0.6
+			t_clamp = t_clamp^0.85
+
+			return math_lerp(p1, p2, t_clamp)
+		end
+	}
+}
+
 function CopActionWalk:_upd_stop_anim_first_frame(t)
+	local ext_mov = self._ext_movement
 	local stop_side = self._stop_anim_side
 	local redir_name = "run_stop_" .. stop_side
-	local redir_res = self._ext_movement:play_redirect(redir_name)
+	local redir_res = ext_mov:play_redirect(redir_name)
 
 	if not redir_res then
 		return
@@ -2775,6 +2845,12 @@ function CopActionWalk:_upd_stop_anim_first_frame(t)
 	local speed_mul = self:_get_current_max_walk_speed(stop_side) / self._walk_anim_velocities[pose][self._stance.name][self._haste][stop_side]
 	self._machine:set_speed(redir_res, speed_mul)
 
+	--[[if not self._root_blend_disabled then
+		ext_mov:set_root_blend(false)
+
+		self._root_blend_disabled = true
+	end]]
+
 	self._stop_anim_init_pos = mvec3_cpy(self._last_pos)
 
 	local s_path = self._simplified_path
@@ -2783,78 +2859,7 @@ function CopActionWalk:_upd_stop_anim_first_frame(t)
 	self:_set_updator("_upd_stop_anim")
 
 	--define the displacement function to move the unit from the init pos to the end pos based on the progress of the animation
-	if pose ~= "crouch" then
-		if stop_side == "fwd" then
-			function self._stop_anim_displacement_f(p1, p2, t)
-				local t_clamp = (math_clamp(t, 0, 0.6) / 0.6)^0.8
-
-				return math_lerp(p1, p2, t_clamp)
-			end
-		elseif stop_side == "bwd" then
-			function self._stop_anim_displacement_f(p1, p2, t)
-				local low = 0.97
-				local p_1_5 = 0.9
-				local t_clamp = math_clamp(t, 0, 0.8) / 0.8
-
-				if p_1_5 > t_clamp then
-					t_clamp = low * (1 - (p_1_5 - t_clamp) / p_1_5)
-				else
-					t_clamp = low + (1 - low) * (t_clamp - p_1_5) / (1 - p_1_5)
-				end
-
-				return math_lerp(p1, p2, t_clamp)
-			end
-		elseif stop_side == "l" then
-			function self._stop_anim_displacement_f(p1, p2, t)
-				local p_1_5 = 0.6
-				local low = 0.8
-				local t_clamp = math_clamp(t, 0, 0.75) / 0.75
-
-				if p_1_5 > t_clamp then
-					t_clamp = low * t_clamp / p_1_5
-				else
-					t_clamp = low + (1 - low) * (t_clamp - p_1_5) / (1 - p_1_5)
-				end
-
-				return math_lerp(p1, p2, t_clamp)
-			end
-		else
-			function self._stop_anim_displacement_f(p1, p2, t)
-				local low = 0.9
-				local p_1_5 = 0.85
-				local t_clamp = math_clamp(t, 0, 0.8) / 0.8
-
-				if p_1_5 > t_clamp then
-					t_clamp = low * (1 - (p_1_5 - t_clamp) / p_1_5)
-				else
-					t_clamp = low + (1 - low) * (t_clamp - p_1_5) / (1 - p_1_5)
-				end
-
-				return math_lerp(p1, p2, t_clamp)
-			end
-		end
-	elseif stop_side == "fwd" or stop_side == "bwd" then
-		function self._stop_anim_displacement_f(p1, p2, t)
-			local t_clamp = math_clamp(t, 0, 0.4) / 0.4
-			t_clamp = t_clamp^0.85
-
-			return math_lerp(p1, p2, t_clamp)
-		end
-	elseif stop_side == "l" then
-		function self._stop_anim_displacement_f(p1, p2, t)
-			local t_clamp = math_clamp(t, 0, 0.3) / 0.3
-			t_clamp = t_clamp^0.85
-
-			return math_lerp(p1, p2, t_clamp)
-		end
-	else
-		function self._stop_anim_displacement_f(p1, p2, t)
-			local t_clamp = math_clamp(t, 0, 0.6) / 0.6
-			t_clamp = t_clamp^0.85
-
-			return math_lerp(p1, p2, t_clamp)
-		end
-	end
+	self._stop_anim_displacement_f = run_stop_displacement_functions[pose or "stand"][stop_side or "r"]
 
 	self._ext_base:chk_freeze_anims()
 	self:update(t)
@@ -2890,11 +2895,11 @@ function CopActionWalk:_upd_stop_anim(t)
 	ext_mov:set_rotation(new_rot)
 
 	if not self._ext_anim.run_stop then
-		if self._root_blend_disabled then
+		--[[if self._root_blend_disabled then
 			ext_mov:set_root_blend(true)
 
 			self._root_blend_disabled = nil
-		end
+		end]]
 
 		local update_immediately = nil
 
@@ -3369,29 +3374,29 @@ function CopActionWalk:_upd_nav_link(t)
 
 		if is_server then
 			self:_send_nav_point(next_nav_point)
-		elseif not self._persistent then --action expired for the host while the nav_link was still going here
-			if s_path[3] then --attempt to shortcut to the end pos if the path still has more than two nav_points
-				local chk_shortcut_func = self._chk_shortcut_pos_to_pos
-				local last_nav_point_pos = nav_point_pos_func(s_path[#s_path])
-				local i_start = common_data.nav_tracker:lost() and 2 or 1 --start with the current position if the unit didn't end up outside the nav_field
+		elseif not self._persistent and s_path[3] then --action expired for the host while the nav_link was still going here + the path still has more than two nav_points
+			--attempt to shortcut to the end position
 
-				for i_nav_point = i_start, #s_path - 1 do
-					local point_from = s_path[i_nav_point]
-					local blocked = not point_from.x or math_abs(point_from.z - last_nav_point_pos.z) >= 100 or chk_shortcut_func(point_from, last_nav_point_pos)
+			local chk_shortcut_func = self._chk_shortcut_pos_to_pos
+			local last_nav_point_pos = nav_point_pos_func(s_path[#s_path])
+			local i_start = common_data.nav_tracker:lost() and 2 or 1 --start with the current position if the unit didn't end up outside the nav_field
 
-					if not blocked then
-						local new_s_path = {}
+			for i_nav_point = i_start, #s_path - 1 do
+				local point_from = s_path[i_nav_point]
+				local blocked = not point_from.x or math_abs(point_from.z - last_nav_point_pos.z) >= 100 or chk_shortcut_func(point_from, last_nav_point_pos)
 
-						for i = 1, i_nav_point do
-							new_s_path[#new_s_path + 1] = s_path[i]
-						end
+				if not blocked then
+					local new_s_path = {}
 
-						new_s_path[#new_s_path + 1] = last_nav_point_pos
-
-						s_path = new_s_path
-
-						break
+					for i = 1, i_nav_point do
+						new_s_path[#new_s_path + 1] = s_path[i]
 					end
+
+					new_s_path[#new_s_path + 1] = last_nav_point_pos
+
+					s_path = new_s_path
+
+					break
 				end
 			end
 		end
@@ -3474,6 +3479,7 @@ function CopActionWalk:_upd_walk_turn_first_frame(t)
 	end
 
 	local common_data = self._common_data
+	local ext_mov = self._ext_movement
 	local machine = self._machine
 
 	local curve_vec = pos2 - pos1
@@ -3490,7 +3496,7 @@ function CopActionWalk:_upd_walk_turn_first_frame(t)
 	local left_foot = seg_rel_t < 0.25 or seg_rel_t > 0.75
 	local foot = left_foot and "l" or "r"
 	local anim = "walk_turn_" .. side .. "_" .. foot .. "f"
-	local redir_res = self._ext_movement:play_redirect(anim)
+	local redir_res = ext_mov:play_redirect(anim)
 
 	if redir_res then
 		local cur_vel = self:_get_current_max_walk_speed("fwd")
@@ -3498,6 +3504,12 @@ function CopActionWalk:_upd_walk_turn_first_frame(t)
 
 		local speed_mul = cur_vel / self._walk_anim_velocities.stand.ntl.walk.fwd
 		machine:set_speed(redir_res, speed_mul)
+
+		if not self._root_blend_disabled then
+			ext_mov:set_root_blend(false)
+
+			self._root_blend_disabled = true
+		end
 
 		self._walk_turn_start_t = machine:segment_relative_time(idstr_base)
 		self._walk_turn_start_yaw = walk_turn_start_yaw
@@ -3554,6 +3566,12 @@ function CopActionWalk:_upd_walk_turn(t)
 		self._ext_movement:set_rotation(new_rot)
 
 		return
+	end
+
+	if self._root_blend_disabled then
+		self._ext_movement:set_root_blend(true)
+
+		self._root_blend_disabled = nil
 	end
 
 	if self._walk_turn_blend_to_middle then
