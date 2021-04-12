@@ -31,7 +31,7 @@ function SawWeaponBase:init(unit)
 
 	if is_total_cd then
 		self._rolling_cutter = managers.player:has_category_upgrade("saw", "enemy_cutter") --no ammo consumed on enemy hit
-		self._rolling_cutter_damage = managers.player:has_category_upgrade("saw","consecutive_damage_bonus") --stacking damage bonus on hit
+		self._rolling_cutter_damage = managers.player:has_category_upgrade("saw","consecutive_damage_bonus") and managers.player:upgrade_value("saw","consecutive_damage_bonus",{0,0})[1] --damage bonus per kill
 		self._extra_saw_range_mul = managers.player:upgrade_value("saw","range_mul",1) --basically what it says on the tin
 		self._saw_through_shields = managers.player:has_category_upgrade("saw", "ignore_shields") --also what it says on the tin + don't spend ammo when hitting shields
 		self._into_the_pit = managers.player:has_category_upgrade("saw","crit_first_strike") --see: tin
@@ -82,10 +82,6 @@ function SawWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spread_m
 
 	local user_unit = self._setup.user_unit
 	local ray_res, hit_something, drain_ammo, hit_an_enemy = self:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoot_player, spread_mul, autohit_mul, suppr_mul, target_unit)
-
-	if hit_an_enemy and is_total_cd and self._rolling_cutter_damage then 
-		Hooks:Call("OnProcRollingCutterBasic",1)
-	end
 
 	if hit_something then
 		self:_start_sawing_effect()
@@ -166,6 +162,11 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 	end
 
 	local damage = self:_get_current_damage(dmg_mul)
+	if self._rolling_cutter_damage then 
+		local rolling_cutter_bonus = self._rolling_cutter_damage * managers.player:get_property("rolling_cutter_aced_stacks",0)
+		damage = damage * (1 + rolling_cutter_bonus)
+	end
+	
 	--raycast_all allows proper penetration by just using 1 ray, use it consistently instead of only when the player has the shield penetration upgrade
 	local ray_hits = world_g:raycast_all("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units, "ray_type", "body bullet lock")
 	local units_hit, actual_hits = {}, {}
@@ -201,16 +202,25 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 			end
 
 			local hit_result = SawHit:on_collision(hit, self._unit, user_unit, damage)
+			
+			if hit_result and is_total_cd and hit_an_enemy and hit_result.type and hit_result.type == "death" and hit_result.attack_data then
+				
+				--give rolling cutter basic damage bonus stacks here
+				if self._rolling_cutter_damage then 
+					Hooks:Call("OnProcRollingCutterBasic",1)
+				end
+				
+				--do bloody mess effect here
+				if self._bloody_mess_radius then 
+					do_bloody_mess = true
 
-			if hit_result and is_total_cd and hit_an_enemy and self._bloody_mess_radius and hit_result.type and hit_result.type == "death" and hit_result.attack_data then
-				do_bloody_mess = true
+					--raw_damage means the amount of damage dealt by a hit after all multipliers and reductions are applied, but before clamping the damage dealt to the maximum/current health of the unit
+					local new_bloody_damage = hit_result.attack_data.raw_damage or damage
 
-				--raw_damage means the amount of damage dealt by a hit after all multipliers and reductions are applied, but before clamping the damage dealt to the maximum/current health of the unit
-				local new_bloody_damage = hit_result.attack_data.raw_damage or damage
-
-				if not bloody_hit_damage or bloody_hit_damage < new_bloody_damage then
-					bloody_hit_damage = new_bloody_damage
-					bloody_hit_pos = hit.position
+					if not bloody_hit_damage or bloody_hit_damage < new_bloody_damage then
+						bloody_hit_damage = new_bloody_damage
+						bloody_hit_pos = hit.position
+					end
 				end
 			end
 

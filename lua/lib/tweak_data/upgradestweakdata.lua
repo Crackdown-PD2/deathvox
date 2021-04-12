@@ -1738,10 +1738,12 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "saw"
 			}
 		}
-			--+10% damage per hit for 2 seconds, up to +500%
+		
+			--permanent +1% damage per kill, up to +500%
 		self.values.saw.consecutive_damage_bonus = {
-			{0.01,5,5}
+			{0.01,500}
 		}
+		
 		self.definitions.saw_consecutive_damage_bonus = {
 			name_id = "menu_saw_rolling_cutter_basic",
 			category = "feature",
