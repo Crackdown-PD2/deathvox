@@ -163,8 +163,11 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 
 	local damage = self:_get_current_damage(dmg_mul)
 	if self._rolling_cutter_damage then 
+		--log("stacks " .. tostring(managers.player:get_property("rolling_cutter_aced_stacks",0)) .. "")
 		local rolling_cutter_bonus = self._rolling_cutter_damage * managers.player:get_property("rolling_cutter_aced_stacks",0)
+		--log("damage_mul " .. tostring(rolling_cutter_bonus) .. "")
 		damage = damage * (1 + rolling_cutter_bonus)
+		--log("damage " .. tostring(damage) .. "")
 	end
 	
 	--raycast_all allows proper penetration by just using 1 ray, use it consistently instead of only when the player has the shield penetration upgrade

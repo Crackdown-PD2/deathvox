@@ -1734,9 +1734,10 @@ if TCDEnabled then
 				damage = damage * (1 + managers.player:upgrade_value("class_shotgun","heartbreaker_damage",0))
 			end
 		elseif self:is_weapon_class("class_saw") then 
-			local rolling_cutter_data = managers.player:upgrade_value("saw","consecutive_damage_bonus",{0,0,0})
+			local rolling_cutter_data = managers.player:upgrade_value("saw","consecutive_damage_bonus",{0,0})
+			
 			local rolling_cutter_stacks = managers.player:get_property("rolling_cutter_aced_stacks",0)
-			damage = damage * (1 + math.min(rolling_cutter_stacks * rolling_cutter_data[1],rolling_cutter_data[3]))
+			damage = damage * (1 + math.min(rolling_cutter_stacks * rolling_cutter_data[1],rolling_cutter_data[2]))
 		end
 		for _,subclass in pairs(self:get_weapon_subclasses()) do 
 			damage = damage * managers.player:upgrade_value(subclass,"weapon_subclass_damage_mul",1)
