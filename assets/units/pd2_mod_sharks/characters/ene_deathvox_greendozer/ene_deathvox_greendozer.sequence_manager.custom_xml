@@ -26,7 +26,7 @@
 			<object enabled="false" name="'g_armor_chest'"/>
 			<object enabled="false" name="'g_armor_chest_lod1'"/>
 			<decal_mesh enabled="false" name="'dm_armor_chest'"/>
-			<spawn_unit name="'units/pd2_mod_sharks/characters/ene_acc_bulldozer_chest_murky_1/ene_acc_bulldozer_chest_murky_1'" position="object_pos('Spine1')" rotation="object_rot('Spine1')"/>
+			<spawn_unit name="'units/pd2_mod_sharks/characters/ene_deathvox_greendozer/debris/ene_acc_bulldozer_chest_murky_1/ene_acc_bulldozer_chest_murky_1'" position="object_pos('Spine1')" rotation="object_rot('Spine1')"/>
 			<sound action="'play'" event="'bulldozer_metal_plate_shatter'" object="'Spine1'"/>
 		</sequence>
 		<sequence name="'int_seq_armor_back'" once="true">
@@ -34,7 +34,7 @@
 			<object enabled="false" name="'g_armor_back'"/>
 			<object enabled="false" name="'g_armor_back_lod1'"/>
 			<decal_mesh enabled="false" name="'dm_armor_back'"/>
-			<spawn_unit name="'units/pd2_mod_sharks/characters/ene_acc_bulldozer_back_murky_1/ene_acc_bulldozer_back_murky_1'" position="object_pos('Spine1')" rotation="object_rot('Spine1')"/>
+			<spawn_unit name="'units/pd2_mod_sharks/characters/ene_deathvox_greendozer/debris/ene_acc_bulldozer_back_murky_1/ene_acc_bulldozer_back_murky_1'" position="object_pos('Spine1')" rotation="object_rot('Spine1')"/>
 			<sound action="'play'" event="'bulldozer_metal_plate_shatter'" object="'Spine1'"/>
 		</sequence>
 		<body name="'body_helmet_glass'">
