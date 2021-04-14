@@ -1333,7 +1333,8 @@ function CopLogicTravel._determine_destination_occupation(data, objective)
 		occupation = {
 			type = "act",
 			seg = objective.nav_seg,
-			pos = objective.pos
+			pos = objective.pos,
+			pos_is_precise = true
 		}
 	elseif objective.type == "follow" then
 		local my_data = data.internal_data
@@ -1460,6 +1461,10 @@ function CopLogicTravel._determine_destination_occupation(data, objective)
 			seg = objective.nav_seg,
 			pos = objective.pos
 		}
+	end
+	
+	if objective.followup_SO or objective.action then
+		occupation.pos_is_precise = true
 	end
 
 	return occupation
@@ -2327,8 +2332,9 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index)
 				wants_reservation = true
 			else
 				to_pos = new_occupation.pos
-
-				if to_pos then
+				wants_reservation = true
+				
+				if to_pos and not new_occupation.pos_is_precise then
 					local pos_rsrv_id = data.pos_rsrv_id
 					local rsrv_desc = {
 						position = to_pos,
@@ -2339,8 +2345,6 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index)
 					if not managers.navigation:is_pos_free(rsrv_desc) then
 						to_pos = CopLogicTravel._get_pos_on_wall(to_pos, 700, nil, nil, pos_rsrv_id)
 					end
-
-					wants_reservation = true
 				end
 			end
 		end

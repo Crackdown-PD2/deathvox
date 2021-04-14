@@ -598,10 +598,6 @@ function CopActionAct:_play_anim()
 		dmg_ext:set_mover_collision_state(false)
 	end
 
-	if ext_anim.act_idle then
-		self._blocks.walk = nil
-	end
-
 	local unit = self._unit
 
 	if action_desc.clamp_to_graph then
