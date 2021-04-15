@@ -974,7 +974,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 		end
 
 		--more proper checks for knocking back a shield
-		if weap_unit and is_shield and weapon_base._shield_knock then
+		if is_shield and weapon_base and weapon_base._shield_knock then
 			local enemy_unit = hit_unit:parent()
 
 			if enemy_unit:character_damage() and enemy_unit:character_damage().dead and not enemy_unit:character_damage():dead() then
@@ -1051,9 +1051,6 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 
 	local result = nil
 
-	local projectile_entry = weapon_base and weapon_base._projectile_entry or weapon_base._tweak_projectile_entry
-	local projectile_td = projectile_entry and tweak_data.blackmarket.projectiles[projectile_entry]
-
 	if weap_unit and hit_unit:character_damage() and hit_unit:character_damage().damage_bullet then
 		local is_alive = not hit_unit:character_damage():dead()
 
@@ -1069,6 +1066,13 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 							damage = damage * (1 + managers.player:upgrade_value("class_shotgun","point_blank_aced",0)) 
 						end
 					end
+				end
+
+				local projectile_td = nil
+
+				if weapon_base then
+					local projectile_entry = weapon_base._projectile_entry or weapon_base._tweak_projectile_entry
+					projectile_td = projectile_entry and tweak_data.blackmarket.projectiles[projectile_entry]
 				end
 
 				if projectile_td and projectile_td.throwable and not projectile_td.is_a_grenade then 
