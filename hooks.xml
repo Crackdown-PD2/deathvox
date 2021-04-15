@@ -62,6 +62,7 @@
 		<post :script_path="actions/upper_body/copactionreload.lua" :hook_id="cop/actions/upper_body/copactionreload"/>
 		<post :script_path="actions/full_body/copactionhurt.lua" :hook_id="cop/actions/full_body/copactionhurt"/>
 		<post :script_path="actions/full_body/copactionact.lua" :hook_id="cop/actions/full_body/copactionact"/>
+		<post :script_path="actions/full_body/copactiondodge.lua" :hook_id="cop/actions/full_body/copactiondodge"/>
 		<post :script_path="actions/full_body/copactionwarp.lua" :hook_id="cop/actions/full_body/copactionwarp"/>
 		<post :script_path="actions/lower_body/copactionwalk.lua" :hook_id="cop/actions/lower_body/copactionwalk"/>
 		<post :script_path="actions/lower_body/copactionturn.lua" :hook_id="cop/actions/lower_body/copactionturn"/>
