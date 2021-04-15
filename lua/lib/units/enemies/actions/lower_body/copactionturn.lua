@@ -1,5 +1,4 @@
 local mrot_lookat = mrotation.set_look_at
-local tmp_rot = Rotation()
 
 local math_abs = math.abs
 local math_up = math.UP
@@ -8,8 +7,8 @@ function CopActionTurn:init(action_desc, common_data)
 	local ext_mov = common_data.ext_movement
 	local ext_anim = common_data.ext_anim
 
-	if not ext_anim.idle and not ext_mov:play_redirect("idle") then
-		return false --the redirect shouldn't fail unless something related to animations is messed up
+	if not ext_anim.idle then
+		ext_mov:play_redirect("idle")
 	end
 
 	self._common_data = common_data
@@ -85,7 +84,7 @@ function CopActionTurn:update(t)
 	if new_fwd:dot(end_dir) < 0.98 then
 		ext_mov:set_rotation(new_rot)
 
-		if not self._no_turn_animation and not ext_anim.turn and ext_anim.idle_full_blend then
+		if not self._no_turn_animation and not ext_anim.turn and ext_anim.idle_full_blend and vis_state < 3 then
 			self:play_new_turn_anim(end_dir, new_fwd)
 		end
 	else
@@ -146,7 +145,10 @@ function CopActionTurn:play_new_turn_anim(end_dir, new_fwd)
 end
 
 function CopActionTurn:_upd_wait_full_blend(t)
-	if not self._ext_anim.idle_full_blend then --start updating immediately, don't bother waiting to be able to play the animation
+	local vis_state = self._ext_base:lod_stage() or 4
+
+	--do not play a turn animation if the unit is invisible or in the lowest lod animation stage, or if it's not ready to play one
+	if vis_state > 2 or not self._ext_anim.idle_full_blend then
 		self._ext_base:chk_freeze_anims()
 
 		self._timer = TimerManager:game()
