@@ -2472,15 +2472,14 @@ function CopLogicAttack.action_taken(data, my_data)
 end
 
 function CopLogicAttack._upd_stop_old_action(data, my_data)
-	if data.unit:anim_data().to_idle then
-		return
-	end
-
-	if data.unit:movement():chk_action_forbidden("walk") then
+	if my_data.advancing then
 		if not data.unit:movement():chk_action_forbidden("idle") then
-			CopLogicIdle._start_idle_action_from_act(data)
+			data.brain:action_request({
+				body_part = 2,
+				type = "idle"
+			})
 		end
-	elseif data.unit:anim_data().act and data.unit:anim_data().needs_idle then
+	elseif data.unit:anim_data().act then
 		CopLogicIdle._start_idle_action_from_act(data)
 	end
 
