@@ -1051,7 +1051,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 
 	local result = nil
 
-	local projectile_entry = weapon_base._projectile_entry or weapon_base._tweak_projectile_entry
+	local projectile_entry = weapon_base and weapon_base._projectile_entry or weapon_base._tweak_projectile_entry
 	local projectile_td = projectile_entry and tweak_data.blackmarket.projectiles[projectile_entry]
 
 	if weap_unit and hit_unit:character_damage() and hit_unit:character_damage().damage_bullet then
@@ -1070,6 +1070,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 						end
 					end
 				end
+
 				if projectile_td and projectile_td.throwable and not projectile_td.is_a_grenade then 
 					if managers.player:has_category_upgrade("class_throwing","throwing_boosts_melee_loop") then 
 						managers.player:set_property("shuffle_cut_melee_bonus_damage",managers.player:upgrade_value("class_throwing","throwing_boosts_melee_loop",0))
@@ -1089,9 +1090,9 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 				end
 			end
 
-			pierce_armor = pierce_armor or weapon_base._use_armor_piercing
+			pierce_armor = pierce_armor or weapon_base and weapon_base._use_armor_piercing
 
-			local knock_down = weapon_base._knock_down and weapon_base._knock_down > 0 and math.random() < weapon_base._knock_down
+			local knock_down = weapon_base and weapon_base._knock_down and weapon_base._knock_down > 0 and math.random() < weapon_base._knock_down
 			result = self:give_impact_damage(col_ray, weap_unit, user_unit, damage, pierce_armor, false, knock_down, weapon_base._stagger, weapon_base._variant, critical_hit)
 		end
 
