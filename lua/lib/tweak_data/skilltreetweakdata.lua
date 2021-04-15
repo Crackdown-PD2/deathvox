@@ -50,39 +50,39 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			self.skills[skill_name] = data
 		end
 	
-		local tree_indices = {
+		local tree_indices = { --these are the positions of the skilltrees; if you want to change the positions, here is the place
 			taskmaster = 1,
 			marksman = 2,
 			medic = 3,
 			chief = 4,
 			enforcer = 5,
 			heavy = 6,
-			runner = 7,
+			runner = 12,
 			gunner = 8,
 			engineer = 9,
 			thief = 10,
 			assassin = 11,
-			sapper = 12,
+			sapper = 7,
 			dealer = 13, 
 			fixer = 14,
 			demolitions = 15
 		}
 		
-		self.trees[1].name_id = "st_menu_dallas_taskmaster"
-		self.trees[2].name_id = "st_menu_dallas_marksman"
-		self.trees[3].name_id = "st_menu_dallas_medic"
-		self.trees[4].name_id = "st_menu_chains_chief"
-		self.trees[5].name_id = "st_menu_chains_enforcer"
-		self.trees[6].name_id = "st_menu_chains_heavy"
-		self.trees[7].name_id = "st_menu_wolf_runner"
-		self.trees[8].name_id = "st_menu_wolf_gunner"
-		self.trees[9].name_id = "st_menu_wolf_engineer"
-		self.trees[10].name_id = "st_menu_houston_thief"
-		self.trees[11].name_id = "st_menu_houston_assassin"
-		self.trees[12].name_id = "st_menu_houston_sapper"
-		self.trees[13].name_id = "st_menu_hoxton_dealer"
-		self.trees[14].name_id = "st_menu_hoxton_fixer"
-		self.trees[15].name_id = "st_menu_hoxton_demolitionist"
+		self.trees[tree_indices.taskmaster].name_id = "st_menu_dallas_taskmaster" 
+		self.trees[tree_indices.marksman].name_id = "st_menu_dallas_marksman"
+		self.trees[tree_indices.medic].name_id = "st_menu_dallas_medic"
+		self.trees[tree_indices.chief].name_id = "st_menu_chains_chief"
+		self.trees[tree_indices.enforcer].name_id = "st_menu_chains_enforcer"
+		self.trees[tree_indices.heavy].name_id = "st_menu_chains_heavy"
+		self.trees[tree_indices.runner].name_id = "st_menu_wolf_runner"
+		self.trees[tree_indices.gunner].name_id = "st_menu_wolf_gunner"
+		self.trees[tree_indices.engineer].name_id = "st_menu_wolf_engineer"
+		self.trees[tree_indices.thief].name_id = "st_menu_houston_thief"
+		self.trees[tree_indices.assassin].name_id = "st_menu_houston_assassin"
+		self.trees[tree_indices.sapper].name_id = "st_menu_houston_sapper"
+		self.trees[tree_indices.dealer].name_id = "st_menu_hoxton_dealer"
+		self.trees[tree_indices.fixer].name_id = "st_menu_hoxton_fixer"
+		self.trees[tree_indices.demolitions].name_id = "st_menu_hoxton_demolitionist"
 		
 		
 		--Taskmaster (not fully implemented)
