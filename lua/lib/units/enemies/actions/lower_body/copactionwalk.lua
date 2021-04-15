@@ -3187,6 +3187,12 @@ function CopActionWalk:_play_nav_link_anim(t)
 
 		self._changed_driving = true
 
+		if not self._root_blend_disabled then
+			ext_mov:set_root_blend(false)
+
+			self._root_blend_disabled = true
+		end
+
 		self:_set_updator("_upd_nav_link")
 
 		--interrupt upper_body actions
@@ -3278,25 +3284,25 @@ function CopActionWalk:_play_nav_link_anim(t)
 end
 
 function CopActionWalk:_upd_nav_link(t)
+	local my_unit = self._unit
 	local ext_anim = self._ext_anim
+	local ext_mov = self._ext_movement
+	local new_pos = my_unit:position()
+
+	ext_mov:set_m_pos(new_pos)
+	ext_mov:set_m_rot(my_unit:rotation())
 
 	--animation isn't done yet, set position and rotation mutables to match how the animation has moved and rotated the unit
 	if ext_anim.act and not ext_anim.walk then
-		local unit = self._unit
-		local new_pos = unit:position()
 		self._last_pos = new_pos
-
-		local ext_mov = self._ext_movement
-
-		ext_mov:set_m_pos(new_pos)
-		ext_mov:set_m_rot(unit:rotation())
 
 		return
 	end
 
+	self._last_pos = mvec3_cpy(new_pos)
+
 	local is_server = self._sync
 	local common_data = self._common_data
-	local ext_mov = self._ext_movement
 	local nav_point_pos_func = self._nav_point_pos
 
 	if self._nav_link_invul_on then
@@ -3305,8 +3311,14 @@ function CopActionWalk:_upd_nav_link(t)
 		common_data.ext_damage:set_invulnerable(false)
 	end
 
-	common_data.unit:set_driving("script")
+	my_unit:set_driving("script")
 	self._changed_driving = nil
+
+	if self._root_blend_disabled then
+		ext_mov:set_root_blend(true)
+
+		self._root_blend_disabled = nil
+	end
 
 	self:_set_blocks(self._old_blocks)
 
