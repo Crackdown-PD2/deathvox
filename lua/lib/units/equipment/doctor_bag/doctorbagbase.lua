@@ -77,8 +77,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			pm:activate_temporary_upgrade("temporary", "first_aid_damage_reduction")
 		end
 
-		if _damage_overshield_upgrade and self._damage_overshield_upgrade > 1 then 
-			
+		if self._damage_overshield_upgrade and self._damage_overshield_upgrade > 1 then 
 			unit:character_damage():_activate_preventative_care(self._damage_overshield_upgrade)
 		end
 

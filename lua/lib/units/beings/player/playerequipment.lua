@@ -277,7 +277,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			local upgrade_lvl = managers.player:upgrade_level("first_aid_kit", "damage_overshield", 0)
 			--local upgrade_lvl = managers.player:upgrade_level("first_aid_kit", "damage_reduction_upgrade")
 
-			local amount_upgrade_lvl = managers.player:upgrade_level("doctor_bag", "aoe_health_regen", {0, 0, math_huge})
+			local amount_upgrade_lvl = managers.player:upgrade_level("doctor_bag", "aoe_health_regen",0)
 			--local amount_upgrade_lvl = managers.player:upgrade_level("doctor_bag", "amount_increase")
 
 			upgrade_lvl = math_clamp(upgrade_lvl, 0, 2)
