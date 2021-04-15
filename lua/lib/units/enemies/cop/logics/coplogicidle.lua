@@ -2360,36 +2360,15 @@ function CopLogicIdle._perform_objective_action(data, my_data, objective)
 end
 
 function CopLogicIdle._upd_stop_old_action(data, my_data, objective)
-	local can_stop_action = nil
-
-	if objective then
-		if objective.type == "free" then
-			can_stop_action = true
-		elseif objective.action and not my_data.action_started and not data.unit:anim_data().to_idle then
-			can_stop_action = true
-		end
-	end
-
-	if not can_stop_action then
-		return
-	end
-
 	if my_data.advancing then
 		if not data.unit:movement():chk_action_forbidden("idle") then
 			data.brain:action_request({
-				sync = true,
 				body_part = 2,
 				type = "idle"
 			})
 		end
-	elseif not data.unit:movement():chk_action_forbidden("idle") and data.unit:anim_data().needs_idle then
+	elseif data.unit:anim_data().act then
 		CopLogicIdle._start_idle_action_from_act(data)
-	elseif data.unit:anim_data().act_idle then
-		data.brain:action_request({
-			sync = true,
-			body_part = 2,
-			type = "idle"
-		})
 	end
 
 	CopLogicIdle._chk_has_old_action(data, my_data)
