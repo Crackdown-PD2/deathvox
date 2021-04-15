@@ -1,6 +1,6 @@
 local mvec3_z = mvector3.z
-local mvec3_sub = mvector3.subtract
 local mvec3_set = mvector3.set
+local mvec3_sub = mvector3.subtract
 local mvec3_lerp = mvector3.lerp
 local mvec3_dis_sq = mvector3.distance_sq
 local mvec3_cpy = mvector3.copy
@@ -56,6 +56,9 @@ function CopActionAct:init(action_desc, common_data)
 	local ext_anim = common_data.ext_anim
 	self._ext_anim = ext_anim
 
+	local ext_base = common_data.ext_base
+	self._ext_base = ext_base
+
 	local body_part = action_desc.body_part
 	self._body_part = body_part
 
@@ -65,7 +68,6 @@ function CopActionAct:init(action_desc, common_data)
 	local host_expired = action_desc.host_expired
 	self._host_expired = host_expired
 
-	self._ext_base = common_data.ext_base
 	self._ext_damage = common_data.ext_damage
 
 	self._last_vel_z = 0
@@ -91,8 +93,23 @@ function CopActionAct:init(action_desc, common_data)
 		end
 	end
 
-	--if action_desc.needs_full_blend and not ext_anim.idle_full_blend then
-	if action_desc.needs_full_blend and ext_anim.idle and (not ext_anim.idle_full_blend or ext_anim.to_idle) then
+	local wait_for_full_blend = action_desc.needs_full_blend
+
+	if wait_for_full_blend then
+		if CopDamage.is_civilian(ext_base._tweak_table) then
+			self._is_civilian = true
+
+			if not ext_anim.idle or ext_anim.idle_full_blend and not ext_anim.to_idle then
+				wait_for_full_blend = nil
+			end
+		elseif ext_anim.idle_full_blend then
+			wait_for_full_blend = nil
+		elseif not ext_anim.idle then
+			ext_mov:play_redirect("idle")
+		end
+	end
+
+	if wait_for_full_blend then
 		self._waiting_full_blend = true
 
 		self:_set_updator("_upd_wait_for_full_blend")
@@ -111,15 +128,6 @@ function CopActionAct:init(action_desc, common_data)
 		end
 	elseif host_expired or not self:_play_anim() then
 		return
-	else
-		self:_init_ik()
-	end
-
-	self._last_upd_t = timer:time() - 0.001
-	self._skipped_frames = 1
-
-	if is_server then
-		self:_sync_anim_play()
 	end
 
 	ext_mov:enable_update()
@@ -173,7 +181,7 @@ function CopActionAct:on_exit()
 
 	if not self._is_server then
 		ext_mov:set_m_host_stop_pos(self._common_data.pos)
-	elseif not expired then
+	elseif not expired and self._synced then
 		self._common_data.ext_network:send("action_act_end")
 	end
 end
@@ -322,32 +330,44 @@ end
 function CopActionAct:_upd_empty()
 end
 
-function CopActionAct:_upd_wait_for_full_blend()
-	local ext_anim = self._ext_anim
+function CopActionAct:_upd_wait_for_full_blend(t)
+	if self._is_civilian then
+		local ext_anim = self._ext_anim
 
-	if not ext_anim.idle or ext_anim.idle_full_blend and not ext_anim.to_idle then
-		self._waiting_full_blend = nil
-
-		if self._host_expired then
-			self._expired = true
-			self:_set_updator("_upd_empty")
-
-			return
+		if ext_anim.idle then
+			if not ext_anim.idle_full_blend or ext_anim.to_idle then
+				return
+			end
 		end
-
-		if self._is_server then
-			self._common_data.ext_brain:rem_pos_rsrv("stand")
-		end
-
-		if not self:_play_anim() then
-			return
-		end
-
-		self:_init_ik()
+	elseif not self._ext_anim.idle_full_blend then
+		return
 	end
+
+	self._waiting_full_blend = nil
+
+	if self._host_expired then
+		self._expired = true
+		self:_set_updator("_upd_empty")
+
+		return
+	end
+
+	local is_server = self._is_server
+
+	if is_server then
+		self._common_data.ext_brain:rem_pos_rsrv("stand")
+	end
+
+	self:_play_anim()
 end
 
 function CopActionAct:_clamping_update(t)
+	local ik_update = self._ik_update
+
+	if ik_update then
+		ik_update(t)
+	end
+
 	if self._ext_anim.act then
 		local unit = self._unit
 
@@ -365,13 +385,10 @@ function CopActionAct:_clamping_update(t)
 		end
 	else
 		self._expired = true
+		self:_set_updator("_upd_empty")
 	end
 
 	self._last_upd_t = t
-
-	if self._ik_update then
-		self._ik_update(t)
-	end
 end
 
 function CopActionAct:update(t)
@@ -409,12 +426,13 @@ function CopActionAct:update(t)
 			mvec3_add(pos_new, delta_pos)
 			ext_mov:upd_ground_ray(pos_new, true)
 
+			local new_z = pos_new.z
 			local gnd_z = common_data.gnd_ray.position.z
 
-			if gnd_z < pos_new.z then
+			if gnd_z < new_z then
 				self._last_vel_z = self._apply_freefall(pos_new, self._last_vel_z, gnd_z, dt)
 			else
-				if pos_new.z < gnd_z then
+				if new_z < gnd_z then
 					pos_new = pos_new:with_z(gnd_z)
 				end
 
@@ -436,21 +454,33 @@ function CopActionAct:update(t)
 			self._changed_driving = true
 		end
 	elseif not unit:parent() then
+		ext_mov:set_m_rot(unit:rotation())
+		ext_mov:set_m_pos(unit:position())
+
 		if ext_anim.freefall then
 			self._freefall = true
 			self._last_vel_z = 0
+			self._skipped_frames = 1
 
-			self._apply_freefall = CopActionWalk._apply_freefall
-		else
-			ext_mov:set_m_rot(unit:rotation())
-			ext_mov:set_m_pos(unit:position())
+			self._apply_freefall = self._apply_freefall or CopActionWalk._apply_freefall
+
+			if self._changed_driving then
+				self._changed_driving = nil
+
+				unit:set_driving("script")
+			end
 		end
+	elseif self._changed_driving then
+		self._changed_driving = nil
+
+		unit:set_driving("script")
 	end
 
 	self._last_upd_t = t
 
 	if not ext_anim.act then
 		self._expired = true
+		self:_set_updator("_upd_empty")
 	end
 
 	self._ext_movement:spawn_wanted_items()
@@ -463,6 +493,7 @@ function CopActionAct:save(save_data)
 
 	save_data.blocks = save_data.blocks or {
 		act = -1,
+		idle = -1,
 		action = -1,
 		walk = -1
 	}
@@ -479,13 +510,8 @@ function CopActionAct:save(save_data)
 	save_data.pos_z = mvec3_z(self._common_data.pos)
 end
 
-----improve conditions, maybe make a boolean lookup list to filter which ones need updating (determine in init)
 function CopActionAct:need_upd()
-	if self._ik_data or self._look_trans or self._waiting_full_blend or self._freefall then
-		return true
-	end
-
-	return false
+	return true
 end
 
 function CopActionAct:chk_block(action_type, t)
@@ -572,7 +598,7 @@ function CopActionAct:_play_anim()
 	else
 		redir_name = variant
 
-		if redir_name == "idle" and self._common_data.stance.name == "ntl" then
+		if redir_name == "idle" then
 			redir_name = "exit"
 		end
 
@@ -627,8 +653,17 @@ function CopActionAct:_play_anim()
 	ext_mov:set_root_blend(false)
 	ext_mov:spawn_wanted_items()
 
+	self:_init_ik()
+
+	self._last_upd_t = self._timer:time() - 0.001
+	self._skipped_frames = 1
+
 	if ext_anim.ik_type then
 		self:_update_ik_type()
+	end
+
+	if self._is_server then
+		self:_sync_anim_play()
 	end
 
 	return true
@@ -641,6 +676,8 @@ function CopActionAct:_sync_anim_play()
 	if not action_index then
 		return
 	end
+
+	self._synced = true
 
 	local common_data = self._common_data
 	local blocks_hurts = self._blocks.heavy_hurt and true or false
@@ -665,8 +702,4 @@ end
 
 function CopActionAct:_set_updator(func_name)
 	self.update = self[func_name]
-
-	if not func_name then
-		self._last_upd_t = self._timer:time() - 0.001
-	end
 end
