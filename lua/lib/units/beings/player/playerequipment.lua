@@ -1,10 +1,15 @@
 local mvec3_dis = mvector3.distance
 local mvec3_cpy = mvector3.copy
+local mvec3_rotate = mvector3.rotate_with
+local mvec3_dir = mvector3.direction
+local tmp_vec1 = Vector3()
+local tmp_vec2 = Vector3()
+
+local mrot_lookat = mrotation.set_look_at
 
 local math_up = math.UP
 local math_dot = math.dot
 local math_clamp = math.clamp
-local math_huge = math.huge
 
 local alive_g = alive
 local world_g = World
@@ -86,37 +91,112 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 
 	function PlayerEquipment:use_trip_mine()
-		local ray, stuck_enemy = self:valid_look_at_placement(nil, managers.player:has_category_upgrade("trip_mine", "can_place_on_enemies"))
+		local ray, stuck_enemy = self:valid_look_at_placement(nil, true)
 
 		if ray then
 			managers.statistics:use_trip_mine()
 
-			local mark_duration_upgrade = managers.player:has_category_upgrade("trip_mine", "trip_mine_extended_mark_duration")
-			
-			local hit_position = ray.hit_position
-			local rot = Rotation(ray.normal, math_up)
-			local radius_upgrade_level = managers.player:upgrade_level("trip_mine","stuck_enemy_panic_radius",0)
-			local vulnerability_upgrade_level = managers.player:upgrade_level("trip_mine","stuck_dozer_damage_vulnerability",0)
-			local bits = Bitwise:lshift(radius_upgrade_level, TripMineBase.radius_upgrade_shift) + Bitwise:lshift(vulnerability_upgrade_level, TripMineBase.vulnerability_upgrade_shift) + 1
 			local session = managers.network:session()
-			
+
 			if Network:is_client() then
-				--todo send unit to attach to
-				if stuck_enemy then 
-					session:send_to_host("sync_attach_projectile",stuck_enemy,false,stuck_enemy,ray.body,ray.body:root_object(),hit_position,ray.normal,bits,session:local_peer():id())
+				if stuck_enemy then
+					local parent_obj, child_obj, local_pos = nil
+					local global_pos = ray.position
+					local damage_ext = stuck_enemy:character_damage()
+
+					if damage_ext and damage_ext.get_impact_segment then
+						parent_obj, child_obj = damage_ext:get_impact_segment(global_pos)
+
+						if parent_obj and child_obj then
+							local parent_pos = parent_obj:position()
+							local child_pos = child_obj:position()
+							local segment_dir = tmp_vec1
+							local segment_dist = mvec3_dir(segment_dir, parent_pos, child_pos)
+							local collision_to_parent = global_pos - parent_pos
+
+							local projected_dist = collision_to_parent:dot(segment_dir)
+							projected_dist = math_clamp(projected_dist, 0, segment_dist)
+							local projected_pos = parent_pos + projected_dist * segment_dir
+							local max_dist_from_segment = 10
+							local dir_from_segment = tmp_vec2
+							local dist_from_segment = mvec3_dir(dir_from_segment, projected_pos, global_pos)
+
+							if max_dist_from_segment < dist_from_segment then
+								global_pos = projected_pos + max_dist_from_segment * dir_from_segment
+							end
+
+							local_pos = global_pos - parent_pos
+							local_pos = local_pos:rotate_with(parent_obj:rotation():inverse())
+						end
+					end
+
+					parent_obj = parent_obj or ray.body:root_object()
+
+					local radius_upgrade_level = managers.player:upgrade_level("trip_mine", "stuck_enemy_panic_radius", 0)
+					local vulnerability_upgrade_level = managers.player:upgrade_level("trip_mine", "stuck_dozer_damage_vulnerability", 0)
+					local bits = Bitwise:lshift(radius_upgrade_level, TripMineBase.radius_upgrade_shift) + Bitwise:lshift(vulnerability_upgrade_level, TripMineBase.vulnerability_upgrade_shift) + 1
+
+					session:send_to_host("sync_attach_projectile", stuck_enemy, false, stuck_enemy, nil, parent_obj, local_pos or global_pos, ray.normal, bits, session:local_peer():id())
 				else
-					managers.network:session():send_to_host("place_trip_mine", ray.position, ray.normal, mark_duration_upgrade)
+					local mark_duration_upgrade = managers.player:has_category_upgrade("trip_mine", "trip_mine_extended_mark_duration")
+
+					session:send_to_host("place_trip_mine", ray.position, ray.normal, mark_duration_upgrade)
 				end
---				session:send_to_host("sync_deployable_attachment",stuck_enemy,ray.body,hit_position,rot)
+			elseif stuck_enemy then
+				local parent_obj, child_obj, local_pos = nil
+				local global_pos = ray.position
+				local damage_ext = stuck_enemy:character_damage()
+
+				if damage_ext and damage_ext.get_impact_segment then
+					parent_obj, child_obj = damage_ext:get_impact_segment(global_pos)
+
+					if parent_obj and child_obj then
+						local parent_pos = parent_obj:position()
+						local child_pos = child_obj:position()
+						local segment_dir = tmp_vec1
+						local segment_dist = mvec3_dir(segment_dir, parent_pos, child_pos)
+						local collision_to_parent = global_pos - parent_pos
+
+						local projected_dist = collision_to_parent:dot(segment_dir)
+						projected_dist = math_clamp(projected_dist, 0, segment_dist)
+						local projected_pos = parent_pos + projected_dist * segment_dir
+						local max_dist_from_segment = 10
+						local dir_from_segment = tmp_vec2
+						local dist_from_segment = mvec3_dir(dir_from_segment, projected_pos, global_pos)
+
+						if max_dist_from_segment < dist_from_segment then
+							global_pos = projected_pos + max_dist_from_segment * dir_from_segment
+						end
+
+						local_pos = global_pos - parent_pos
+						local_pos = local_pos:rotate_with(parent_obj:rotation():inverse())
+					end
+				end
+
+				parent_obj = parent_obj or ray.body:root_object()
+
+				local rot = Rotation()
+				mrot_lookat(rot, ray.normal, math_up)
+
+				local unit = TripMineBase.spawn(global_pos, rot, false, session:local_peer():id())
+				local player_unit = self._unit
+				unit:base():set_active(true, player_unit, true)
+
+				local radius_upgrade_level = managers.player:upgrade_level("trip_mine", "stuck_enemy_panic_radius", 0)
+				local vulnerability_upgrade_level = managers.player:upgrade_level("trip_mine", "stuck_dozer_damage_vulnerability", 0)
+				local bits = Bitwise:lshift(radius_upgrade_level, TripMineBase.radius_upgrade_shift) + Bitwise:lshift(vulnerability_upgrade_level, TripMineBase.vulnerability_upgrade_shift) + 1
+
+				unit:base():attach_to_enemy(stuck_enemy, unit:position(), unit:rotation(), parent_obj, radius_upgrade_level, vulnerability_upgrade_level)
+
+				session:send_to_peers_synched("sync_attach_projectile", unit, false, stuck_enemy, nil, parent_obj, local_pos or global_pos, ray.normal, bits, session:local_peer():id())
 			else
-				local unit = TripMineBase.spawn(ray.position, rot, trip_mine_extended_mark_duration, managers.network:session():local_peer():id())
+				local mark_duration_upgrade = managers.player:has_category_upgrade("trip_mine", "trip_mine_extended_mark_duration")
+				local rot = Rotation()
+				mrot_lookat(rot, ray.normal, math_up)
+
+				local unit = TripMineBase.spawn(ray.position, rot, mark_duration_upgrade, session:local_peer():id())
 				local player_unit = self._unit
 				unit:base():set_active(true, player_unit)
-				
-				if stuck_enemy then
-					unit:base():attach_to_enemy(stuck_enemy,ray.position,rot,ray.body:root_object(),radius_upgrade_level,vulnerability_upgrade_level)
-					session:send_to_peers("sync_attach_projectile",unit,false,stuck_enemy,ray.body,ray.body:root_object(),hit_position,ray.normal,bits,session:local_peer():id())
-				end
 			end
 
 			return true
