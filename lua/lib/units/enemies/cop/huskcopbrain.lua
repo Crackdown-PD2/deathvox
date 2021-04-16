@@ -143,7 +143,7 @@ function HuskCopBrain:disable_weapon_laser()
 		weapon_unit:base():set_laser_enabled(false)
 	end
 
-	if not self._unit:character_damage():dead() then
+	if not self._pre_destroying and not self._unit:character_damage():dead() then
 		managers.enemy:_create_unit_gfx_lod_data(self._unit)
 	end
 end
@@ -897,6 +897,8 @@ function HuskCopBrain:clbk_death(my_unit, damage_info)
 end
 
 function HuskCopBrain:pre_destroy()
+	self._pre_destroying = true
+
 	self:_destroy_all_detected_attention_object_data()
 	self._unit:movement():synch_attention()
 
