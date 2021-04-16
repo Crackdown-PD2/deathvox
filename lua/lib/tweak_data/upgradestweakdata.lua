@@ -1948,6 +1948,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "effect_duration_increase_mul",
+				synced = true,
 				category = "subclass_areadenial"
 			}
 		}
@@ -1960,6 +1961,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "effect_doubleroasting_damage_increase_mul",
+				synced = true,
 				category = "subclass_areadenial"
 			}
 		}
