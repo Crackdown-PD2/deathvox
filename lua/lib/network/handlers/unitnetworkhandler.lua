@@ -118,36 +118,138 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 	
 	--used for tripmine syncing
-		--from host as client
-	local orig_sync_attach_projectile = UnitNetworkHandler.sync_attach_projectile
-	function UnitNetworkHandler:sync_attach_projectile(unit, instant_dynamic_pickup, parent_unit, parent_body, parent_object, local_pos, dir, projectile_type_index, peer_id, sender,...)
-		local peer = self._verify_sender(sender)
-
-		if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not peer then
---			print("_verify failed!!!")
-
+		local orig_sync_attach_projectile = UnitNetworkHandler.sync_attach_projectile
+	function UnitNetworkHandler:sync_attach_projectile(unit, instant_dynamic_pickup, parent_unit, parent_body, parent_object, local_or_global_pos, dir, projectile_type_index, peer_id, sender)
+		if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 			return
 		end
-		
-		if alive(unit) and unit:base() and not unit:base().set_thrower_unit_by_peer_id then 
-			local bits = projectile_type_index - 1 --change range to [0,63] instead of [1,64]
-			local radius_upgrade_level = Bitwise:rshift(bits,TripMineBase.radius_upgrade_shift)
-			local vulnerability_upgrade_level = Bitwise:rshift(bits,TripMineBase.vulnerability_upgrade_shift) % 2^TripMineBase.vulnerability_upgrade_shift
-			local rot = Rotation(dir,math.UP)
-			if Network:is_server() then 
-				local tripmine_unit = TripMineBase.spawn(local_pos,rot,true,peer_id)
-				self:activate_trip_mine(trimpine_unit)
-				tripmine_unit:base():set_server_information(peer_id)
-				managers.network:session():send_to_peers("sync_attach_projectile",tripmine_unit,false,parent_unit,parent_body,parent_object,local_pos,dir,projectile_type_index,peer_id)
 
-				return
-			elseif unit:base().get_name_id and unit:base():get_name_id() == "trip_mine" then 
-				unit:base():attach_to_enemy(parent_unit,local_pos,rot,parent_body,radius_upgrade_level,vulnerability_upgrade_level)
+		local peer = self._verify_sender(sender)
+
+		if not peer then
+			return
+		end
+
+		if alive(unit) then
+			local base_ext = unit:base()
+
+			if base_ext and not base_ext.set_thrower_unit_by_peer_id then
+				local bits = projectile_type_index - 1
+				local radius_upgrade_level = Bitwise:rshift(bits, TripMineBase.radius_upgrade_shift)
+				local vulnerability_upgrade_level = Bitwise:rshift(bits, TripMineBase.vulnerability_upgrade_shift) % 2^TripMineBase.vulnerability_upgrade_shift
+				local parent_is_alive = alive(parent_unit)
+				local local_pos = mvector3.copy(local_or_global_pos)
+				local world_position = parent_is_alive and parent_object and local_pos:rotate_with(parent_object:rotation()) + parent_object:position() or local_pos
+				local rot = Rotation()
+				mrotation.set_look_at(rot, dir, math.UP)
+
+				if Network:is_server() then
+					local tripmine_unit = TripMineBase.spawn(world_position, rot, false, peer_id)
+
+					tripmine_unit:set_position(world_position)
+					tripmine_unit:set_rotation(rot)
+					tripmine_unit:base():set_server_information(peer_id)
+
+					if parent_is_alive and parent_unit:id() ~= -1 then
+						managers.network:session():send_to_peers_synched("sync_attach_projectile", tripmine_unit, false, parent_unit, nil, parent_object, local_or_global_pos, dir, projectile_type_index, peer_id)
+					else
+						managers.network:session():send_to_peers_synched("sync_attach_projectile", tripmine_unit, false, nil, nil, nil, local_or_global_pos, dir, projectile_type_index, peer_id)
+					end
+
+					if parent_is_alive then
+						local parent_obj, child_obj, new_local_pos = nil
+						local global_pos = world_position
+						local damage_ext = parent_unit:character_damage()
+
+						if damage_ext and damage_ext.get_impact_segment then
+							parent_obj, child_obj = damage_ext:get_impact_segment(global_pos)
+
+							if parent_obj and child_obj then
+								local parent_pos = parent_obj:position()
+								local child_pos = child_obj:position()
+								local segment_dir = Vector3()
+								local segment_dist = mvector3.direction(segment_dir, parent_pos, child_pos)
+								local collision_to_parent = global_pos - parent_pos
+
+								local projected_dist = collision_to_parent:dot(segment_dir)
+								projected_dist = math.clamp(projected_dist, 0, segment_dist)
+								local projected_pos = parent_pos + projected_dist * segment_dir
+								local max_dist_from_segment = 10
+								local dir_from_segment = Vector3()
+								local dist_from_segment = mvector3.direction(dir_from_segment, projected_pos, global_pos)
+
+								if max_dist_from_segment < dist_from_segment then
+									global_pos = projected_pos + max_dist_from_segment * dir_from_segment
+								end
+
+								new_local_pos = global_pos - parent_pos
+								new_local_pos = new_local_pos:rotate_with(parent_obj:rotation():inverse())
+							end
+
+							if parent_obj then
+								parent_object = parent_obj
+							end
+						end
+
+						tripmine_unit:set_position(new_local_pos or global_pos)
+					end
+
+					tripmine_unit:base():attach_to_enemy(parent_unit, tripmine_unit:position(), tripmine_unit:rotation(), parent_object, radius_upgrade_level, vulnerability_upgrade_level)
+				elseif base_ext.get_name_id and base_ext:get_name_id() == "trip_mine" then
+					if managers.network:session():local_peer():id() == peer_id then
+						base_ext:set_active(true, managers.player:player_unit(), true)
+					end
+
+					unit:set_position(world_position)
+					unit:set_rotation(rot)
+
+					if parent_is_alive then
+						local parent_obj, child_obj, new_local_pos = nil
+						local global_pos = world_position
+						local damage_ext = parent_unit:character_damage()
+
+						if damage_ext and damage_ext.get_impact_segment then
+							parent_obj, child_obj = damage_ext:get_impact_segment(global_pos)
+
+							if parent_obj and child_obj then
+								local parent_pos = parent_obj:position()
+								local child_pos = child_obj:position()
+								local segment_dir = Vector3()
+								local segment_dist = mvector3.direction(segment_dir, parent_pos, child_pos)
+								local collision_to_parent = global_pos - parent_pos
+
+								local projected_dist = collision_to_parent:dot(segment_dir)
+								projected_dist = math.clamp(projected_dist, 0, segment_dist)
+								local projected_pos = parent_pos + projected_dist * segment_dir
+								local max_dist_from_segment = 10
+								local dir_from_segment = Vector3()
+								local dist_from_segment = mvector3.direction(dir_from_segment, projected_pos, global_pos)
+
+								if max_dist_from_segment < dist_from_segment then
+									global_pos = projected_pos + max_dist_from_segment * dir_from_segment
+								end
+
+								new_local_pos = global_pos - parent_pos
+								new_local_pos = new_local_pos:rotate_with(parent_obj:rotation():inverse())
+							end
+
+							if parent_obj then
+								parent_object = parent_obj
+							end
+						end
+
+						unit:set_position(new_local_pos or global_pos)
+					end
+
+					base_ext:attach_to_enemy(parent_unit, unit:position(), unit:rotation(), parent_object, radius_upgrade_level, vulnerability_upgrade_level)
+				end
+
 				return
 			end
 		end
-			--assume that this is the spoofed function
-		return orig_sync_attach_projectile(self,unit, instant_dynamic_pickup, parent_unit, parent_body, parent_object, local_pos, dir, projectile_type_index, peer_id, sender,...)
+
+		--assume that this is the spoofed function
+		return orig_sync_attach_projectile(self, unit, instant_dynamic_pickup, parent_unit, parent_body, parent_object, local_or_global_pos, dir, projectile_type_index, peer_id, sender)
 	end
 
 	function UnitNetworkHandler:sync_contour_state(unit, u_id, type, state, multiplier, sender)
