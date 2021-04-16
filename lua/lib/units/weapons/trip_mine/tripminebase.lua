@@ -559,10 +559,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 			unit = stuck_enemy
 		}
 
-		local listener_class = hit_unit:base()
+		local listener_class = stuck_enemy:base()
 
 		if listener_class and listener_class.add_destroy_listener then
-			local listener_key = "TripMineBase" .. tostring_g(my_unit:key())
+			local listener_key = "TripMineBase" .. u_key_str
 			self._attached_data.destroy_listener_key = listener_key
 
 			listener_class:add_destroy_listener(listener_key, callback(self, self, "_clbk_attached_body_destroyed"))
