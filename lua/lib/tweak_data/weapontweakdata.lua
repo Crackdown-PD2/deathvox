@@ -15533,6 +15533,8 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	-- the central flame of the Molotov Cocktail effect.
 
 		self.arbiter.CLIP_AMMO_MAX = 5
+		self.arbiter.NR_CLIPS_MAX = 3
+		self.arbiter.AMMO_MAX = self.arbiter.CLIP_AMMO_MAX * self.arbiter.NR_CLIPS_MAX
 		self.arbiter.fire_mode_data = {
 			fire_rate = 0.75
 		}
@@ -15762,7 +15764,6 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	-- No longer has a hidden damage bonus to Dozers.
 	-- The OVE9000 Saw is not available as a Secondary weapon without Handyman Aced.
 		self.saw.armor_piercing_chance = 1
-		self.saw.CLIP_AMMO_MAX = 150
 		self.saw.fire_mode_data = {
 			fire_rate = 0.15
 		}
@@ -15780,7 +15781,9 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			total_ammo_mod = 21,
 			zoom = 1
 		}
-		self.saw.AMMO_MAX = 300
+		self.saw.CLIP_AMMO_MAX = 150
+		self.saw.NR_CLIPS_MAX = 2
+		self.saw.AMMO_MAX = self.saw.CLIP_AMMO_MAX * self.saw.NR_CLIPS_MAX
 		self.saw.primary_class = "class_saw"
 		self.saw.AMMO_PICKUP = {
 			0,
