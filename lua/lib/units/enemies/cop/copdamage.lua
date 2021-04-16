@@ -428,7 +428,24 @@ function CopDamage:damage_explosion(attack_data)
 			end
 		end
 	end
-	
+
+	if managers.fire:is_set_on_fire(self._unit) then
+		local third_degree_dmg_mul = 1
+		local attacker_base_ext = alive(attacker_unit) and attacker_unit:base()
+
+		if attacker_base_ext then
+			if attacker_base_ext.is_local_player then
+				third_degree_dmg_mul = managers.player:upgrade_value("subclass_areadenial", "effect_doubleroasting_damage_increase_mul", 1)
+			elseif attacker_base_ext.is_husk_player then
+				third_degree_dmg_mul = attacker_base_ext:upgrade_value("subclass_areadenial", "effect_doubleroasting_damage_increase_mul") or 1
+			end
+		end
+
+		if third_degree_dmg_mul > 1 then
+			damage = damage * third_degree_dmg_mul
+		end
+	end
+
 	local damage_multiplier = 1
 	damage_multiplier = self:_get_incoming_damage_multiplier(damage_multiplier)
 	damage = damage * damage_multiplier 
@@ -887,7 +904,15 @@ function CopDamage:damage_bullet(attack_data)
 		end
 
 		damage = damage * backstab_bullets_mul
-		
+
+		if managers.fire:is_set_on_fire(self._unit) then
+			local third_degree_dmg_mul = managers.player:upgrade_value("subclass_areadenial", "effect_doubleroasting_damage_increase_mul", 1)
+
+			if third_degree_dmg_mul > 1 then
+				damage = damage * third_degree_dmg_mul
+			end
+		end
+
 		headshot_mul_addend = managers.player:upgrade_value(weapon_class, "headshot_mul_addend", 0)
 
 		local critical_hit, crit_damage = self:roll_critical_hit(attack_data)
@@ -1272,7 +1297,24 @@ function CopDamage:damage_tase(attack_data)
 	local damage_multiplier = 1
 	damage_multiplier = self:_get_incoming_damage_multiplier(damage_multiplier)
 	damage = damage * damage_multiplier 
-	
+
+	if managers.fire:is_set_on_fire(self._unit) then
+		local third_degree_dmg_mul = 1
+		local attacker_base_ext = alive(attacker_unit) and attacker_unit:base()
+
+		if attacker_base_ext then
+			if attacker_base_ext.is_local_player then
+				third_degree_dmg_mul = managers.player:upgrade_value("subclass_areadenial", "effect_doubleroasting_damage_increase_mul", 1)
+			elseif attacker_base_ext.is_husk_player then
+				third_degree_dmg_mul = attacker_base_ext:upgrade_value("subclass_areadenial", "effect_doubleroasting_damage_increase_mul") or 1
+			end
+		end
+
+		if third_degree_dmg_mul > 1 then
+			damage = damage * third_degree_dmg_mul
+		end
+	end
+
 	damage = self:_apply_damage_reduction(damage)
 
 	attack_data.raw_damage = damage
@@ -1976,7 +2018,15 @@ function CopDamage:damage_melee(attack_data)
 			managers.player:on_headshot_dealt()
 			headshot_multiplier = headshot_multiplier * managers.player:upgrade_value("weapon", "passive_headshot_damage_multiplier", 1)
 		end
-		
+
+		if managers.fire:is_set_on_fire(self._unit) then
+			local third_degree_dmg_mul = managers.player:upgrade_value("subclass_areadenial", "effect_doubleroasting_damage_increase_mul", 1)
+			local attacker_base_ext = alive(attacker_unit) and attacker_unit:base()
+
+			if third_degree_dmg_mul > 1 then
+				damage = damage * third_degree_dmg_mul
+			end
+		end
 	end
 
 	if self._marked_dmg_mul then
@@ -2636,11 +2686,35 @@ function CopDamage:damage_fire(attack_data)
 			end
 		end
 	end
-	
+
 	local damage_multiplier = 1
 	damage_multiplier = self:_get_incoming_damage_multiplier(damage_multiplier)
 	damage = damage * damage_multiplier 
-	
+
+	if managers.fire:is_set_on_fire(self._unit) then
+		local weapon_base = alive(weap_unit) and weap_unit:base()
+		local stored_dmg_bonus = weapon_base and weapon_base._on_fire_dmg_mul
+
+		if stored_dmg_bonus then
+			damage = damage * stored_dmg_bonus
+		else
+			local third_degree_dmg_mul = 1
+			local attacker_base_ext = alive(attacker_unit) and attacker_unit:base()
+
+			if attacker_base_ext then
+				if attacker_base_ext.is_local_player then
+					third_degree_dmg_mul = managers.player:upgrade_value("subclass_areadenial", "effect_doubleroasting_damage_increase_mul", 1)
+				elseif attacker_base_ext.is_husk_player then
+					third_degree_dmg_mul = attacker_base_ext:upgrade_value("subclass_areadenial", "effect_doubleroasting_damage_increase_mul") or 1
+				end
+			end
+
+			if third_degree_dmg_mul > 1 then
+				damage = damage * third_degree_dmg_mul
+			end
+		end
+	end
+
 	damage = self:_apply_damage_reduction(damage)
 
 	if self._char_tweak.DAMAGE_CLAMP_FIRE then
@@ -2993,7 +3067,24 @@ function CopDamage:damage_simple(attack_data)
 	local damage_multiplier = 1
 	damage_multiplier = self:_get_incoming_damage_multiplier(damage_multiplier)
 	damage = damage * damage_multiplier 
-	
+
+	if managers.fire:is_set_on_fire(self._unit) then
+		local third_degree_dmg_mul = 1
+		local attacker_base_ext = alive(attacker_unit) and attacker_unit:base()
+
+		if attacker_base_ext then
+			if attacker_base_ext.is_local_player then
+				third_degree_dmg_mul = managers.player:upgrade_value("subclass_areadenial", "effect_doubleroasting_damage_increase_mul", 1)
+			elseif attacker_base_ext.is_husk_player then
+				third_degree_dmg_mul = attacker_base_ext:upgrade_value("subclass_areadenial", "effect_doubleroasting_damage_increase_mul") or 1
+			end
+		end
+
+		if third_degree_dmg_mul > 1 then
+			damage = damage * third_degree_dmg_mul
+		end
+	end
+
 	damage = self:_apply_damage_reduction(damage)
 
 	if self._unit:movement():cool() and self._unit:base():char_tweak()["stealth_instant_kill"] then --allowing stealth insta-kill
@@ -3251,6 +3342,24 @@ function CopDamage:damage_dot(attack_data)
 
 	if self._marked_dmg_mul then
 		damage = damage * self._marked_dmg_mul
+	end
+
+	if managers.fire:is_set_on_fire(self._unit) then
+		local third_degree_dmg_mul = 1
+		local attacker = attack_data.attacker_unit
+		local attacker_base_ext = alive(attacker) and attacker:base()
+
+		if attacker_base_ext then
+			if attacker_base_ext.is_local_player then
+				third_degree_dmg_mul = managers.player:upgrade_value("subclass_areadenial", "effect_doubleroasting_damage_increase_mul", 1)
+			elseif attacker_base_ext.is_husk_player then
+				third_degree_dmg_mul = attacker_base_ext:upgrade_value("subclass_areadenial", "effect_doubleroasting_damage_increase_mul") or 1
+			end
+		end
+
+		if third_degree_dmg_mul > 1 then
+			damage = damage * third_degree_dmg_mul
+		end
 	end
 
 	local damage_multiplier = 1
