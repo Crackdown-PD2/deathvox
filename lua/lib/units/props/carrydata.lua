@@ -136,6 +136,12 @@ function CarryData:init(unit)
 end
 
 function CarryData._register_body_bag(unit)
+	local level_data = Global.level_data
+
+	if level_data and level_data.level_id == "mad" then
+		return
+	end
+
 	CarryData._body_bags[unit:key()] = unit
 
 	if managers.groupai:state():enemy_weapons_hot() then
@@ -158,6 +164,12 @@ function CarryData._register_body_bag(unit)
 end
 
 function CarryData._unregister_body_bag(unit)
+	local level_data = Global.level_data
+
+	if level_data and level_data.level_id == "mad" then
+		return
+	end
+
 	CarryData._body_bags[unit:key()] = nil
 
 	if next_g(CarryData._body_bags) then
