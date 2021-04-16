@@ -74,6 +74,16 @@ local big_enemy_visor_shattering_table = { --this is now responsible for the gla
 	idstr_func("units/pd2_mod_sharks/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat"),
 	idstr_func("units/pd2_mod_sharks/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_husk"),
 	
+	-- CLASSIC TIER--
+	idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat"),
+	idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat_husk"),	
+	idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot"),
+	idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot_husk"),	
+	idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat_noarmor/ene_deathvox_classic_heavyswat_noarmor"),
+	idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat_noarmor/ene_deathvox_classic_heavyswat_noarmor_husk"),	
+	idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor"),
+	idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor"),	
+	
 	-- FEDERALES TIER--
 	idstr_func("units/pd2_mod_federales/characters/ene_deathvox_heavyswat/ene_deathvox_heavyswat"),
 	idstr_func("units/pd2_mod_federales/characters/ene_deathvox_heavyswat/ene_deathvox_heavyswat_husk"),
