@@ -39,6 +39,49 @@ local world_g = World
 local idstr_func = Idstring
 local ids_flesh = idstr_func("flesh")
 local idstr_bullet_hit_blood = idstr_func("effects/payday2/particles/impacts/blood/blood_impact_a")
+local table_contains = table.contains
+
+local big_enemy_visor_shattering_table = { --this is now responsible for the glass shattering effects. insert/remove anything in this table to add and remove shattering, respectively
+	-- BLUE SWAT TIER--
+	idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat"),
+	idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat_husk"),
+	idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot"),
+	idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot_husk"),
+	idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser"),
+	idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser_husk"),
+	idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield"),
+	idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield_husk"),
+	
+	-- FBI TIER--
+	idstr_func("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat"),
+	idstr_func("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_husk"),
+	idstr_func("units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser"),
+	idstr_func("units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser_husk"),
+	
+	-- GENSEC TIER--
+	idstr_func("units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat"),
+	idstr_func("units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat_husk"),
+	idstr_func("units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser"),
+	idstr_func("units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser_husk"),	
+	
+	-- ZULU TIER--
+	idstr_func("units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser"),
+	idstr_func("units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_husk"),
+
+	-- MURKYWATER--
+	idstr_func("units/pd2_mod_sharks/characters/ene_deathvox_taser/ene_deathvox_taser"),
+	idstr_func("units/pd2_mod_sharks/characters/ene_deathvox_taser/ene_deathvox_taser_husk"),
+	idstr_func("units/pd2_mod_sharks/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat"),
+	idstr_func("units/pd2_mod_sharks/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_husk"),
+	
+	-- FEDERALES TIER--
+	idstr_func("units/pd2_mod_federales/characters/ene_deathvox_heavyswat/ene_deathvox_heavyswat"),
+	idstr_func("units/pd2_mod_federales/characters/ene_deathvox_heavyswat/ene_deathvox_heavyswat_husk"),
+	idstr_func("units/pd2_mod_federales/characters/ene_deathvox_heavyswatshot/ene_deathvox_heavyswatshot"),
+	idstr_func("units/pd2_mod_federales/characters/ene_deathvox_heavyswatshot/ene_deathvox_heavyswatshot_husk"),
+	idstr_func("units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer"),
+	idstr_func("units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer_husk")
+}
 
 CopDamage.melee_knockback_tiers = {
 	[1] = false,
@@ -3631,6 +3674,7 @@ end
 
 function CopDamage:_spawn_head_gadget(params)
 	local head_gear = self._head_gear
+	local my_unit = self._unit
 
 	if not head_gear then
 		return
@@ -3641,7 +3685,6 @@ function CopDamage:_spawn_head_gadget(params)
 	local gear_object = self._head_gear_object
 
 	if gear_object then
-		local my_unit = self._unit
 		local nr_gear_objects = self._nr_head_gear_objects
 
 		if nr_gear_objects then
@@ -3675,6 +3718,29 @@ function CopDamage:_spawn_head_gadget(params)
 	local body = unit:body(0)
 
 	body:push_at(body:mass(), dir * math_lerp(300, 650, math_random()), unit:position() + Vector3(math_random(), math_random(), math_random()))
+
+	if not table_contains(big_enemy_visor_shattering_table, my_unit:name()) then
+		return
+	end
+
+	local head_obj = idstr_func("Head")
+	local head_object_get = my_unit:get_object(head_obj)
+	
+	if not head_object_get then
+		return
+	end
+	
+	local world_g = World		
+	local sound_ext = my_unit:sound()	
+	
+	world_g:effect_manager():spawn({
+		effect = idstr_func("effects/particles/bullet_hit/glass_breakable/bullet_hit_glass_breakable"),
+		parent = head_object_get		
+	})			
+	
+	sound_ext:play("swat_heavy_visor_shatter", nil, nil)
+	sound_ext:play("swat_heavy_visor_shatter", nil, nil)
+	sound_ext:play("swat_heavy_visor_shatter", nil, nil)
 end
 
 if deathvox:IsTotalCrackdownEnabled() then
