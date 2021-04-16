@@ -741,13 +741,11 @@
 	<texture path="units/pd2_mod_gageammo/characters/shared_textures/swat_heavy_head_nm"  force="false"/>
 	<!-- <texture path="units/pd2_mod_gageammo/characters/shared_textures/swat_heavy_nm"  force="false"/> -->
 	<texture path="units/pd2_mod_gageammo/characters/shared_textures/glass_op"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_body_df"  force="false"/>	
 	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_df"  force="false"/>
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_il"  force="false"/>
 	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_nm"  force="false"/>
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_body_df"  force="false"/>
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_body_nm"  force="false"/>
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/material_body_df"  force="false"/>
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/material_body_nm"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_mask_df"  force="false"/>	
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_hood_df"  force="false"/>
 
 	<!-- TOTAL CRACKDOWN Armor Plates -->
 	<unit load="true" path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
