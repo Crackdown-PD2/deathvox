@@ -426,7 +426,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_smart_bombs_desc = "BASIC: ##$basic##\nYour Trip Mines gain ##+30%## explosion radius.\n\nACE: ##$pro##\nYour Trip Mines can no longer damage Civilians or Hostages.",
 			
 				menu_third_degree = "Third Degree",
-				menu_third_degree_desc = "BASIC: ##$basic##\n(NOT YET IMPLEMENTED): Your $ICN_ARD Area Denial effects last ##+50%## longer.\n\nACE: ##$pro##\n(NOT YET IMPLEMENTED): You and your $ICN_ARD Area Denial effects deal ##+25%## more damage to enemies that are on fire.",
+				menu_third_degree_desc = "BASIC: ##$basic##\nYour $ICN_ARD Area Denial effects last ##+50%## longer.\n\nACE: ##$pro##\nYou and your $ICN_ARD Area Denial effects deal ##+25%## more damage to enemies that are on fire.",
 			
 				menu_have_blast = "Have A Blast",
 				menu_have_blast_desc = "BASIC: ##$basic##\nYou gain the ability to deploy a Trip Mine directly on an enemy.\nDoing so will cause the target and all enemies within ##10## meters to Panic until it detonates.\n\nACE: ##$pro##\nDeploying a Trip Mine on a Dozer stuns them and inflicts a ##+100%## Damage Vulnerability on all enemies within ##10## meters for ##10## seconds.",

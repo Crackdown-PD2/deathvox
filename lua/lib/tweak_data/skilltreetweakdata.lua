@@ -85,7 +85,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		self.trees[tree_indices.demolitions].name_id = "st_menu_hoxton_demolitionist"
 		
 		
-		--Taskmaster (not fully implemented)
+		--Taskmaster
 		replace_skill(tree_indices.taskmaster,1,{ --Zip It
 			{
 				upgrades = {
@@ -1889,21 +1889,21 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.demolitions,4,{ --Third Degree
 			{
 				upgrades = {
-					"subclass_areadenial_effect_duration_increase_1" --not implemented
+					"subclass_areadenial_effect_duration_increase_1"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"subclass_areadenial_effect_doubleroasting_damage_increase_mul" --not implemented
+					"subclass_areadenial_effect_doubleroasting_damage_increase_mul"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_third_degree",
 			desc_id = "menu_third_degree_desc",
 			icon_xy = {
-				0 or 4,
-				0 or 9
+				4,
+				9
 			}
 		})
 		replace_skill(tree_indices.demolitions,5,{ --Have a Blast

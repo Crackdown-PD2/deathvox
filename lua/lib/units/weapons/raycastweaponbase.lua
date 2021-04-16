@@ -1689,7 +1689,7 @@ if TCDEnabled then
 	--the addition of the optional rof_mul argument is from tcd, not from vanilla
 		rof_mul = rof_mul or 1
 		if self:is_weapon_class("class_precision") then
-			local tap_the_trigger_data = managers.player:upgrade_value("point_and_click_rof_bonus",{0,0})
+			local tap_the_trigger_data = managers.player:upgrade_value("weapon","point_and_click_rof_bonus",{0,0})
 			rof_mul = rof_mul * (1 + math.min(tap_the_trigger_data[1] * managers.player:get_property("current_point_and_click_stacks",0),tap_the_trigger_data[2]))
 		elseif self:is_weapon_class("class_shotgun") and self:fire_mode() == "single" then 
 			rof_mul = rof_mul + managers.player:upgrade_value("class_shotgun","shell_games_rof_bonus",0)

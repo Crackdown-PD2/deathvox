@@ -318,4 +318,15 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self:update_damage()
 	end
 	
+	function NewRaycastWeaponBase:fire_rate_multiplier()
+		local rof_mul = self._fire_rate_multiplier or 1
+		if self:is_weapon_class("class_precision") then
+			local tap_the_trigger_data = managers.player:upgrade_value("weapon","point_and_click_rof_bonus",{0,0})
+			rof_mul = rof_mul * (1 + math.min(tap_the_trigger_data[1] * managers.player:get_property("current_point_and_click_stacks",0),tap_the_trigger_data[2]))
+		elseif self:is_weapon_class("class_shotgun") and self:fire_mode() == "single" then 
+			rof_mul = rof_mul + managers.player:upgrade_value("class_shotgun","shell_games_rof_bonus",0)
+		end
+		return rof_mul
+	end
+	
 end
