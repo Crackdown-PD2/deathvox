@@ -107,7 +107,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				0
 			}
 		})
-		replace_skill(tree_indices.taskmaster,2,{ --Pack Mules (basic not yet implemented)
+		replace_skill(tree_indices.taskmaster,2,{ --Pack Mules
 			{
 				upgrades = {
 					"team_civilian_hostage_carry_bags"
@@ -123,8 +123,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_pack_mules",
 			desc_id = "menu_pack_mules_desc",
 			icon_xy = {
-				0 or 1,
-				1 or 1
+				1,
+				1
 			}
 		})
 		replace_skill(tree_indices.taskmaster,3,{ --Stay Down
@@ -187,7 +187,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				4
 			}
 		})
-		replace_skill(tree_indices.taskmaster,6,{ --False Idol (aced not yet implemented)
+		replace_skill(tree_indices.taskmaster,6,{ --False Idol
 			{
 				upgrades = {
 					"team_civilian_hostage_vip_trade"
@@ -204,8 +204,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_false_idol",
 			desc_id = "menu_false_idol_desc",
 			icon_xy = {
-				0 or 1,
-				1 or 5
+				1,
+				5
 			}
 		})
 		
@@ -1388,24 +1388,24 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				2
 			}
 		})
-		replace_skill(tree_indices.assassin,4,{ --Toxic Shock (not implemented)
+		replace_skill(tree_indices.assassin,4,{ --Toxic Shock
 			{
 				upgrades = {
-					"subclass_poison_dot_aoe" --not yet implemented
+					"subclass_poison_dot_aoe"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"subclass_poison_damage_mul" --not yet implemented
+					"subclass_poison_damage_mul"
 				},
 				cost = self.costs.hightierpro
 			},
 			name_id = "menu_toxic_shock",
 			desc_id = "menu_toxic_shock_desc",
 			icon_xy = {
-				0 or 11,
-				0 or 3
+				11,
+				3
 			}
 		})	
 		replace_skill(tree_indices.assassin,5,{ --Professional's Choice

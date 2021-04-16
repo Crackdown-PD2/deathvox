@@ -215,7 +215,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_zip_it = "Zip It",
 				menu_zip_it_desc = "BASIC: ##$basic##\nCivilians are ##intimidated by the noise you make##. Shouting intimidates all Civilians within ##10## meters of the target.\n\nACE: ##$pro##\nIncreases your supply of Cable Ties to ##20##.",
 				menu_pack_mules = "Pack Mules",
-				menu_pack_mules_desc = "BASIC: ##$basic##\n(NOT IMPLEMENTED) Your team's Civilian Hostages ##can carry Bags##.\n\nACE: ##$pro##\nYour team's Civilian Hostages move ##+20% faster##.",
+				menu_pack_mules_desc = "BASIC: ##$basic##\nYour team's Civilian Hostages ##can carry Bags##.\n\nACE: ##$pro##\nYour team's Civilian Hostages move ##+20% faster##.",
 				menu_stay_down = "Stay Down",
 				menu_stay_down_desc = "BASIC: ##$basic##\nYour team's Civilians are ##invulnerable while stationary##.\n\nACE: ##$pro##\nYour team's Civilian Hostages ##will not flee## when rescued.",
 				menu_lookout_duty = "Lookout Duty",
@@ -223,7 +223,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_leverage = "Leverage",
 				menu_leverage_desc = "BASIC: ##$basic##\nYour team's Hostages grant ##+10%## Damage Resistance to teammates within ##0.25## meters.\n\nACE: ##$pro##\nYour team's Hostages also grant ##+10%## Damage Resistance to teammates within ##5## meters, and can stack up to ##+20%## when a teammate is within ##0.25## meters.",
 				menu_false_idol = "False Idol",
-				menu_false_idol_desc = "BASIC: ##$basic##\nYour team's Hostages ##release all teammates in custody## when traded.\n\n(NOT YET IMPLEMENTED) You can have up to ##2## Civilian Hostages following you at once.\n\nACE: ##$pro##\n(NOT YET IMPLEMENTED) Each of your team's Hostages will ##fake surrendering once## upon being traded, releasing your teammates from custody without turning themselves in.\n\n(NOT YET IMPLEMENTED) You can have up to ##3## Civilian Hostages following you at once.",
+				menu_false_idol_desc = "BASIC: ##$basic##\nYour team's Hostages ##release all teammates in custody## when traded.\n\nYou can have up to ##2## Civilian Hostages following you at once.\n\nACE: ##$pro##\nEach of your team's Hostages will ##fake surrendering once## upon being traded, releasing your teammates from custody without turning themselves in.\n\nYou can have up to ##3## Civilian Hostages following you at once.",
 				
 			--marksman
 				menu_point_and_click = "Point and Click",
@@ -283,7 +283,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				
 			--heavy
 				menu_collateral_damage = "Collateral Damage",
-				menu_collateral_damage_desc = "BASIC: ##$basic##\n\n$ICN_HVY Heavy Weapons deal ##50%## of their damage in a ##0.25## meter radius around the bullet trajectory.\n\nACE: ##$pro##\n$ICN_HVY Heavy Weapons ADS ##50%## faster.",
+				menu_collateral_damage_desc = "BASIC: ##$basic##\n$ICN_HVY Heavy Weapons deal ##50%## of their damage in a ##0.25## meter radius around the bullet trajectory.\n\nACE: ##$pro##\n$ICN_HVY Heavy Weapons ADS ##50%## faster.",
 				menu_death_grips = "Death Grips",
 				menu_death_grips_desc = "BASIC: ##$basic##\n$ICN_HVY Heavy Weapons gain ##+4## Accuracy and ##+4## Stability for 8 seconds per kill, stacking up to ##10## times.\n\nACE: ##$pro##\nAccuracy bonus increased to ##+8##.",
 				menu_bulletstorm = "Bulletstorm",
