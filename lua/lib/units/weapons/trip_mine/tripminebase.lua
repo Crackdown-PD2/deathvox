@@ -435,13 +435,22 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return managers.network:session() and self._owner_peer_id == managers.network:session():local_peer():id()
 	end
 
+	function TripMineBase:set_server_information(peer_id)
+		self._server_information = {
+			owner_peer_id = peer_id
+		}
+
+		--not actually a deployable in Total Crackdown, disabling
+		--managers.network:session():peer(peer_id):set_used_deployable(true)
+	end
+
 	function TripMineBase:attach_to_enemy(stuck_enemy, position, rot, parent_obj, radius_upgrade_level, vulnerability_upgrade_level)
 		local unit = self._unit
 
 		unit:interaction():set_active(false)
 		unit:set_extension_update_enabled(ids_base, false)
 
-		local char_dmg = alive(stuck_enemy) and stuck_enemy:character_damage()
+		local char_dmg = alive_g(stuck_enemy) and stuck_enemy:character_damage()
 
 		if not char_dmg or char_dmg:dead() then
 			--this might happen in cases of severe lag where the stuck_enemy and is killed between the time of the placement request and the time of execution
@@ -1168,6 +1177,11 @@ if deathvox:IsTotalCrackdownEnabled() then
 			})
 
 			if Network:is_server() then
+				local owner_peer = managers.network:session():peer(self._server_information.owner_peer_id)
+				local owner_unit = owner_peer and owner_peer:unit()
+				owner_unit = alive_g(owner_unit) and owner_unit or nil
+
+				local alert_filter = owner_unit and owner_unit:movement():SO_access() or managers.groupai:state():get_unit_type_filter("civilians_enemies")
 				local hit_units, splinters = managers.explosion:detect_and_stun({
 					player_damage = 1,
 					hit_pos = hit_pos,
@@ -1176,9 +1190,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 					curve_pow = 2,
 					damage = self._CONCUSSION_DAMAGE,
 					ignore_unit = unit,
-					alert_filter = self._alert_filter or managers.groupai:state():get_unit_type_filter("civilians_enemies"),
+					alert_filter = alert_filter,
 					alert_radius = tweak_data.weapon.trip_mines.alert_radius,
-					user = managers.player:player_unit() or nil or unit,
+					user = owner_unit or unit,
 					verify_callback = callback(self, self, "_can_stun_unit")
 				})
 			end
