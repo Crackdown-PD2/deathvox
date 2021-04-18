@@ -97,23 +97,28 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	end
 	
-	function UnitNetworkHandler:place_trip_mine(pos, normal, sensor_upgrade, rpc)
-		local peer = self._verify_sender(rpc)
-
-		if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not peer then
+	function UnitNetworkHandler:place_trip_mine(pos, normal, mark_duration_upgrade, rpc)
+		if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 			return
 		end
-		
---no anticheat for this since this is now a grenade AND can be replenished in multiple ways
---		if not managers.player:verify_equipment(peer:id(), "trip_mine") then
---			return
---		end
+
+		local peer = self._verify_sender(rpc)
+
+		if not peer then
+			return
+		end
+
+		local peer_id = peer:id()
+
+		--use throwable anti-cheat check instead of the deployable one
+		if not managers.player:verify_grenade(peer_id) then
+			return
+		end
 
 		local rot = Rotation(normal, math.UP)
-		local peer = self._verify_sender(rpc)
-		local unit = TripMineBase.spawn(pos, rot, sensor_upgrade, peer:id())
+		local unit = TripMineBase.spawn(pos, rot, mark_duration_upgrade, peer_id)
 
-		unit:base():set_server_information(peer:id())
+		unit:base():set_server_information(peer_id)
 		rpc:activate_trip_mine(unit)
 	end
 	
@@ -134,6 +139,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 			local base_ext = unit:base()
 
 			if base_ext and not base_ext.set_thrower_unit_by_peer_id then
+				local is_server = Network:is_server()
+
+				--since this is a tripmine, and it works as a throwable/grenade, use the throwable anticheat check
+				if is_server and not managers.player:verify_grenade(peer_id) then
+					return
+				end
+
 				local bits = projectile_type_index - 1
 				local radius_upgrade_level = Bitwise:rshift(bits, TripMineBase.radius_upgrade_shift)
 				local vulnerability_upgrade_level = Bitwise:rshift(bits, TripMineBase.vulnerability_upgrade_shift) % 2^TripMineBase.vulnerability_upgrade_shift
@@ -143,7 +155,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				local rot = Rotation()
 				mrotation.set_look_at(rot, dir, math.UP)
 
-				if Network:is_server() then
+				if is_server then
 					local tripmine_unit = TripMineBase.spawn(world_position, rot, false, peer_id)
 
 					tripmine_unit:set_position(world_position)
