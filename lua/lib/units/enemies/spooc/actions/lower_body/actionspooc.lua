@@ -1383,7 +1383,7 @@ function ActionSpooc:_nav_chk(t, dt)
 		local strike_index = self._strike_nav_index
 
 		if strike_index then
-			if complete or strike_index <= new_nav_index and strike_index == new_nav_index + 1 then
+			if complete and strike_index == new_nav_index + 1 or strike_index <= new_nav_index then
 				new_nav_index = strike_index - 1
 				new_pos = mvec3_cpy(path[strike_index])
 
