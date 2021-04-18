@@ -121,9 +121,19 @@ if deathvox:IsTotalCrackdownEnabled() then
 		unit:base():set_server_information(peer_id)
 		rpc:activate_trip_mine(unit)
 	end
-	
-	--used for tripmine syncing
-		local orig_sync_attach_projectile = UnitNetworkHandler.sync_attach_projectile
+
+	function UnitNetworkHandler:sync_trip_mine_setup(unit, mark_duration_upgrade, peer_id)
+		if not alive(unit) or not self._verify_gamestate(self._gamestate_filter.any_ingame) then
+			return
+		end
+
+		--same as the other cases, but for clients
+		managers.player:verify_grenade(peer_id)
+		unit:base():sync_setup(mark_duration_upgrade)
+	end
+
+	--used for tripmine syncing when attached to an enemy
+	local orig_sync_attach_projectile = UnitNetworkHandler.sync_attach_projectile
 	function UnitNetworkHandler:sync_attach_projectile(unit, instant_dynamic_pickup, parent_unit, parent_body, parent_object, local_or_global_pos, dir, projectile_type_index, peer_id, sender)
 		if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 			return
