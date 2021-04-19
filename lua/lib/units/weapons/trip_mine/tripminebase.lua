@@ -9,6 +9,7 @@ local math_random = math.random
 
 local tostring_g = tostring
 
+local call_on_next_update_g = call_on_next_update
 local alive_g = alive
 
 local ids_base = Idstring("base")
@@ -638,7 +639,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			local listener_key = "TripMineBase" .. u_key_str
 			self._attached_data.destroy_listener_key = listener_key
 
-			listener_class:add_destroy_listener(listener_key, callback(self, self, "_clbk_attached_body_destroyed"))
+			listener_class:add_destroy_listener(listener_key, callback(self, self, "_clbk_attached_unit_destroyed"))
 		end
 
 		if char_dmg.add_listener then
@@ -654,6 +655,29 @@ if deathvox:IsTotalCrackdownEnabled() then
 	function TripMineBase:_clbk_attached_unit_death()
 		self:_remove_attached_body_callbacks()
 		self:_attach_explode()
+	end
+
+	function TripMineBase:_clbk_attached_unit_destroyed()
+		self:_remove_attached_body_callbacks()
+
+		local my_unit = self._unit
+		my_unit:set_extension_update_enabled(ids_base, false)
+
+		local explode_clbk_id = self._explode_clbk_id
+
+		if explode_clbk_id then
+			managers.enemy:remove_delayed_clbk(explode_clbk_id)
+
+			self._explode_clbk_id = nil
+		end
+
+		call_on_next_update_g(function ()
+			if not alive_g(my_unit) then
+				return
+			end
+
+			self:_explode()
+		end)
 	end
 
 
@@ -879,6 +903,18 @@ if deathvox:IsTotalCrackdownEnabled() then
 			managers.enemy:remove_delayed_clbk(activate_clbk_id)
 
 			self._activate_clbk_id = nil
+		end
+
+		local attached_data = self._attached_data
+		local death_key = attached_data and attached_data.death_listener_key
+
+		if death_key then
+			local attached_unit = attached_data.unit
+			local listener_class = alive_g(attached_unit) and attached_unit:character_damage()
+
+			if listener_class then
+				listener_class:remove_listener(death_key)
+			end
 		end
 
 		local player_manager = managers.player
