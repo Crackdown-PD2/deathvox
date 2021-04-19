@@ -43,7 +43,12 @@ function TripMineBase:set_active(active, owner, stuck_on_enemy)
 	local attached_data = self._attached_data
 
 	if not attached_data then
-		self:_explode()
+		--refund the trip mine to the owner for Total Crackdown, else explode (I'd need to rework some equipment functions to make that work normally)
+		if self.set_payload_mode then
+			self:set_payload_mode("payload_recover")
+		else
+			self:_explode()
+		end
 
 		return
 	end
@@ -221,12 +226,25 @@ function TripMineBase:_remove_attached_body_callbacks()
 				end
 			end
 
-			if data.disabled_clbk then
-				attached_unit:remove_body_enabled_callback(data.disabled_clbk)
+			local death_key = data.death_listener_key
+
+			if death_key then
+				local listener_class = attached_unit:character_damage()
+
+				if listener_class then
+					listener_class:remove_listener(death_key)
+				end
 			end
 
-			if data.activation_clbk then
-				attached_unit:remove_body_activation_callback(data.activation_clbk)
+			local disabled_clbk = data.disabled_clbk
+			local activation_clbk = data.activation_clbk
+
+			if disabled_clbk then
+				attached_unit:remove_body_enabled_callback(disabled_clbk)
+			end
+
+			if activation_clbk then
+				attached_unit:remove_body_activation_callback(activation_clbk)
 			end
 		end
 	end
@@ -453,35 +471,19 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local char_dmg = alive_g(stuck_enemy) and stuck_enemy:character_damage()
 
 		if not char_dmg or char_dmg:dead() then
-			--this might happen in cases of severe lag where the stuck_enemy and is killed between the time of the placement request and the time of execution
+			--due to latency, the enemy was killed/despawned before the client received the placement result from the host
 			if self:is_owner() then
-				if self:_get_payload_mode() == "payload_sensor" then
-					self:set_payload_mode("payload_explosive")
-				end
-
-				self:_explode()
+				--refund the trip mine to the owner
+				self:set_payload_mode("payload_recover")
+			else
+				--make it invisible for non-owners since it's getting refunded anyway
+				unit:set_visible(false)
 			end
 
 			return
 		end
 
 		stuck_enemy:link(parent_obj:name(), unit)
-
-		local sound_ext = stuck_enemy:sound()
-
-		if sound_ext then 
-			local voice_roll = math_random()
-
-			if voice_roll > 0.75 then 
-				sound_ext:say("hlp")
-			elseif voice_roll > 0.25 then
-				sound_ext:say("burnhurt")
-			elseif voice_roll > 0.01 then 
-				sound_ext:say("burndeath")
-			else
-				sound_ext:say("ch1")
-			end
-		end
 
 		if not self:is_owner() then
 			return
@@ -491,25 +493,60 @@ if deathvox:IsTotalCrackdownEnabled() then
 			self:set_payload_mode("payload_explosive")
 		end
 
-		local attack_data = {
-			damage = 0,
-			variant = "fire",
-			pos = mvec3_cpy(position),
-			attack_dir = mvec3_cpy(rot:y()),
-			result = {
-				variant = "fire",
-				type = "fire_hurt"
-			}
-		}
-		char_dmg:_call_listeners(attack_data)
-
+		local base_ext = stuck_enemy:base()
+		local is_dozer = base_ext and base_ext.has_tag and base_ext:has_tag("tank")
 		local panic_radius = managers.player:upgrade_value_by_level("trip_mine", "stuck_enemy_panic_radius", radius_upgrade_level, 0)
 
-		if panic_radius > 0 then
-			local is_dozer = stuck_enemy:base():has_tag("tank")
+		if not is_dozer then
+			local attack_data = {
+				damage = 0,
+				variant = "fire",
+				pos = mvec3_cpy(position),
+				attack_dir = mvec3_cpy(rot:y()),
+				result = {
+					variant = "fire",
+					type = "fire_hurt"
+				}
+			}
+			char_dmg:_call_listeners(attack_data)
+
+			local sound_ext = stuck_enemy:sound()
+
+			if sound_ext then
+				local voice_roll = math_random()
+
+				if voice_roll > 0.75 then
+					sound_ext:say("hlp", true)
+				elseif voice_roll > 0.25 then
+					sound_ext:say("burnhurt", true)
+				elseif voice_roll > 0.01 then
+					sound_ext:say("burndeath", true)
+				else
+					sound_ext:say("ch1", true)
+				end
+			end
+
+			if panic_radius > 0 then
+				if char_dmg.build_suppression then 
+					char_dmg:build_suppression("panic")
+				end
+
+				--not sure if i should use tripmine's position or stuck_enemy's position
+				--i guess hit_position since the other enemies would be afraid of the tripmine itself?
+				local nearby_enemies = stuck_enemy:find_units_quick("sphere", position or stuck_enemy:movement():m_pos(), panic_radius, managers.slot:get_mask("enemies"))
+
+				for i = 1, #nearby_enemies do
+					local nearby_enemy_dmg_ext = nearby_enemies[i]:character_damage()
+
+					if nearby_enemy_dmg_ext and nearby_enemy_dmg_ext.build_suppression then 
+						nearby_enemy_dmg_ext:build_suppression("panic")
+					end
+				end
+			end
+		else
 			local apply_vuln_data = nil
 
-			if is_dozer and vulnerability_upgrade_level > 0 then
+			if vulnerability_upgrade_level > 0 then
 				local amount, duration = unpack(managers.player:upgrade_value("trip_mine", "stuck_dozer_damage_vulnerability", {0, 0}))
 				apply_vuln_data = {
 					id = "have_blast_aced_aoe_vulnerability",
@@ -522,24 +559,52 @@ if deathvox:IsTotalCrackdownEnabled() then
 				if dmg_ext.set_damage_vulnerability then
 					stuck_enemy:character_damage():set_damage_vulnerability(apply_vuln_data.id, apply_vuln_data.amount, apply_vuln_data.duration)
 				end
+
+				local attack_data = {
+					damage = 0,
+					variant = "explosion",
+					pos = mvec3_cpy(position),
+					attack_dir = mvec3_cpy(rot:y()),
+					result = {
+						variant = "explosion",
+						type = "expl_hurt"
+					}
+				}
+				char_dmg:_call_listeners(attack_data)
 			end
 
-			--not sure if i should use tripmine's position or stuck_enemy's position
-			--i guess hit_position since the other enemies would be afraid of the tripmine itself?
-			local nearby_enemies = stuck_enemy:find_units_quick("sphere", position or stuck_enemy:movement():m_pos(), panic_radius, managers.slot:get_mask("enemies"))
+			if panic_radius > 0 then
+				if char_dmg.build_suppression then 
+					char_dmg:build_suppression("panic")
+				end
 
-			for i = 1, #nearby_enemies do
-				local nearby_enemy = nearby_enemies[i]
-				local dmg_ext = nearby_enemy:character_damage()
+				local nearby_enemies = stuck_enemy:find_units_quick("sphere", position or stuck_enemy:movement():m_pos(), panic_radius, managers.slot:get_mask("enemies"))
 
-				if dmg_ext then
-					if dmg_ext.build_suppression then 
-						dmg_ext:build_suppression("panic")
+				for i = 1, #nearby_enemies do
+					local nearby_enemy = nearby_enemies[i]
+					local dmg_ext = nearby_enemy:character_damage()
+
+					if dmg_ext then
+						if dmg_ext.build_suppression then 
+							dmg_ext:build_suppression("panic")
+						end
+
+						if apply_vuln_data and dmg_ext.set_damage_vulnerability then
+							--doesn't apply to turrets
+							dmg_ext:set_damage_vulnerability(apply_vuln_data.id, apply_vuln_data.amount, apply_vuln_data.duration)
+						end
 					end
+				end
+			elseif apply_vuln_data then
+				local vulnerability_radius = tweak_data.upgrades.values.trip_mine.stuck_enemy_panic_radius[1]
+				local nearby_enemies = stuck_enemy:find_units_quick("sphere", position or stuck_enemy:movement():m_pos(), vulnerability_radius, managers.slot:get_mask("enemies"))
 
-					if apply_vuln_data and dmg_ext.set_damage_vulnerability then
+				for i = 1, #nearby_enemies do
+					local nearby_enemy_dmg_ext = nearby_enemies[i]:character_damage()
+
+					if nearby_enemy_dmg_ext and nearby_enemy_dmg_ext.set_damage_vulnerability then
 						--doesn't apply to turrets
-						dmg_ext:set_damage_vulnerability(apply_vuln_data.id, apply_vuln_data.amount, apply_vuln_data.duration)
+						nearby_enemy_dmg_ext:set_damage_vulnerability(apply_vuln_data.id, apply_vuln_data.amount, apply_vuln_data.duration)
 					end
 				end
 			end
@@ -550,7 +615,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		managers.enemy:add_delayed_clbk("tripmine_stuck_delayed_beep_" .. u_key_str, function()
 			if alive_g(unit) then
-				unit:sound_source():stop()
 				unit:sound_source():post_event("trip_mine_beep_explode")
 
 				managers.network:session():send_to_peers_synched("sync_unit_event_id_16", unit, "base", TripMineBase.EVENT_IDS.explosion_beep)
@@ -568,16 +632,28 @@ if deathvox:IsTotalCrackdownEnabled() then
 			unit = stuck_enemy
 		}
 
-		local listener_class = stuck_enemy:base()
+		local listener_class = base_ext
 
 		if listener_class and listener_class.add_destroy_listener then
 			local listener_key = "TripMineBase" .. u_key_str
 			self._attached_data.destroy_listener_key = listener_key
 
 			listener_class:add_destroy_listener(listener_key, callback(self, self, "_clbk_attached_body_destroyed"))
-
-			has_destroy_listener = true
 		end
+
+		if char_dmg.add_listener then
+			local listener_key = "TripMineBase_death" .. u_key_str
+			self._attached_data.death_listener_key = listener_key
+
+			char_dmg:add_listener(listener_key, {
+				"death"
+			}, callback(self, self, "_clbk_attached_unit_death"))
+		end
+	end
+
+	function TripMineBase:_clbk_attached_unit_death()
+		self:_remove_attached_body_callbacks()
+		self:_attach_explode()
 	end
 
 
@@ -1124,7 +1200,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local unit = self._unit
 
 		if payload_mode == "payload_explosive" then
-			managers.explosion:give_local_player_dmg(hit_pos, damage_size, tweak_data.weapon.trip_mines.player_damage)
+			local hit_pos_player = unit:position() + unit:rotation():y() * 5
+
+			managers.explosion:give_local_player_dmg(hit_pos_player, damage_size, tweak_data.weapon.trip_mines.player_damage)
 			self:_play_sound_and_effects(damage_size)
 
 			if draw_sync_explosion_sphere then
