@@ -190,11 +190,56 @@ function CharacterTweakData:get_ai_group_type()
 	return group_to_use
 end
 
-
 function CharacterTweakData:_presets(tweak_data)
 	local presets = origin_presets(self, tweak_data)
 	
 	-- Fug's Notes: Consider creating custom hurt presets to compensate for the incredibly high survivability these enemies have, these guys don't stumble around enough, and heavies esp. have Terminator 2 syndrome, which actually technically makes it EASIER to hit them!
+	
+	presets.hurt_severities.no_hurts = { --due to overkill's recent updates, i have to do this now, apparently >:c
+		tase = true,
+		bullet = {
+			health_reference = 1,
+			zones = {
+				{
+					none = 1
+				}
+			}
+		},
+		explosion = {
+			health_reference = 1,
+			zones = {
+				{
+					none = 1
+				}
+			}
+		},
+		melee = {
+			health_reference = 1,
+			zones = {
+				{
+					none = 1
+				}
+			}
+		},
+		fire = {
+			health_reference = 1,
+			zones = {
+				{
+					none = 1
+				}
+			}
+		},
+		poison = {
+			health_reference = 1,
+			zones = {
+				{
+					none = 1
+				}
+			}
+		}
+	}
+	presets.hurt_severities.no_hurts_no_tase = deep_clone(presets.hurt_severities.no_hurts)
+	presets.hurt_severities.no_hurts_no_tase.tase = false
 	
 	presets.base.stealth_instant_kill = true
 	presets.enemy_chatter = {
