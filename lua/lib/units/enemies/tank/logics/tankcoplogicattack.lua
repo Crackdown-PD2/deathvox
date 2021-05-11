@@ -105,16 +105,18 @@ function TankCopLogicAttack.update(data)
 
 	if my_data.has_old_action then
 		CopLogicAttack._upd_stop_old_action(data, my_data)
+		
+		if my_data.has_old_action then
+			if not my_data.update_queue_id then
+				data.brain:set_update_enabled_state(false)
 
-		if not my_data.update_queue_id then
-			data.brain:set_update_enabled_state(false)
+				my_data.update_queue_id = "TankLogicAttack.queued_update" .. tostring(data.key)
 
-			my_data.update_queue_id = "TankLogicAttack.queued_update" .. tostring(data.key)
+				TankCopLogicAttack.queue_update(data, my_data)
+			end
 
-			TankCopLogicAttack.queue_update(data, my_data)
+			return
 		end
-
-		return
 	end
 
 	if CopLogicIdle._chk_relocate(data) or CopLogicAttack._chk_exit_non_walkable_area(data) then

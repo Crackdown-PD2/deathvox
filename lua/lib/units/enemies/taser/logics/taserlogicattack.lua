@@ -63,9 +63,13 @@ function TaserLogicAttack.queued_update(data)
 
 	if my_data.has_old_action then
 		CopLogicAttack._upd_stop_old_action(data, my_data)
-		CopLogicBase.queue_task(my_data, my_data.update_task_key, TaserLogicAttack.queued_update, data, data.t + 0.01, true)
-
-		return
+		
+		if my_data.has_old_action then
+			CopLogicBase.queue_task(my_data, my_data.update_task_key, TaserLogicAttack.queued_update, data, data.t + 0.01, true)
+			
+			return
+		end
+		
 	end
 
 	--[[if CopLogicIdle._chk_relocate(data) then

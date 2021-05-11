@@ -15,9 +15,13 @@ function SpoocLogicAttack.queued_update(data)
 
 	if my_data.has_old_action then
 		CopLogicAttack._upd_stop_old_action(data, my_data)
-		SpoocLogicAttack.queue_update(data, my_data)
+		
+		if my_data.has_old_action then
+			SpoocLogicAttack.queue_update(data, my_data)
+			
 
-		return
+			return
+		end
 	end
 
 	if CopLogicIdle._chk_relocate(data) then

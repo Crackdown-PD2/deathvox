@@ -390,7 +390,13 @@ function CopLogicTravel.upd_advance(data)
 
 	if my_data.has_old_action then
 		CopLogicAttack._upd_stop_old_action(data, my_data)
-	elseif my_data.warp_pos then
+		
+		if my_data.has_old_action then
+			return
+		end
+	end
+	
+	if my_data.warp_pos then
 		local action_desc = {
 			body_part = 1,
 			type = "warp",

@@ -161,15 +161,17 @@ function CopLogicAttack.update(data)
 	if my_data.has_old_action then
 		CopLogicAttack._upd_stop_old_action(data, my_data)
 
-		if not my_data.update_queue_id then
-			data.brain:set_update_enabled_state(false)
+		if my_data.has_old_action then
+			if not my_data.update_queue_id then
+				data.brain:set_update_enabled_state(false)
 
-			my_data.update_queue_id = "CopLogicAttack.queued_update" .. tostring(data.key)
+				my_data.update_queue_id = "CopLogicAttack.queued_update" .. tostring(data.key)
 
-			CopLogicAttack.queue_update(data, my_data)
+				CopLogicAttack.queue_update(data, my_data)
+			end
+
+			return
 		end
-
-		return
 	end
 
 	local groupai = managers.groupai:state()
@@ -2480,7 +2482,12 @@ function CopLogicAttack._upd_stop_old_action(data, my_data)
 			})
 		end
 	elseif data.unit:anim_data().act then
-		CopLogicIdle._start_idle_action_from_act(data)
+		if not my_data.starting_idle_action_from_act then
+			my_data.starting_idle_action_from_act = true
+			CopLogicIdle._start_idle_action_from_act(data)
+		end
+	else
+		my_data.starting_idle_action_from_act = nil
 	end
 
 	CopLogicIdle._chk_has_old_action(data, my_data)

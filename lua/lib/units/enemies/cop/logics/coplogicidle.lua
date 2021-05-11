@@ -249,22 +249,24 @@ function CopLogicIdle.queued_update(data)
 
 	if my_data.has_old_action then
 		CopLogicIdle._upd_stop_old_action(data, my_data, objective)
+		
+		if my_data.has_old_action then
+			local asap = nil
 
-		local asap = nil
+			if data.cool then
+				delay = 0
+				asap = true
+			elseif data.is_converted then
+				delay = delay / 2
+				asap = true
+			elseif data.important then
+				asap = true
+			end
 
-		if data.cool then
-			delay = 0
-			asap = true
-		elseif data.is_converted then
-			delay = delay / 2
-			asap = true
-		elseif data.important then
-			asap = true
+			CopLogicBase.queue_task(my_data, my_data.upd_task_key, CopLogicIdle.queued_update, data, data.t + delay, asap and true)
+
+			return
 		end
-
-		CopLogicBase.queue_task(my_data, my_data.upd_task_key, CopLogicIdle.queued_update, data, data.t + delay, asap and true)
-
-		return
 	end
 
 	if data.is_converted then
@@ -2368,7 +2370,12 @@ function CopLogicIdle._upd_stop_old_action(data, my_data, objective)
 			})
 		end
 	elseif data.unit:anim_data().act then
-		CopLogicIdle._start_idle_action_from_act(data)
+		if not my_data.starting_idle_action_from_act then
+			my_data.starting_idle_action_from_act = true
+			CopLogicIdle._start_idle_action_from_act(data)
+		end
+	else
+		my_data.starting_idle_action_from_act = nil
 	end
 
 	CopLogicIdle._chk_has_old_action(data, my_data)
