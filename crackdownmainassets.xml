@@ -480,6 +480,7 @@
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/ene_deathvox_heavyar_husk" load="true"/>
 	
 	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/swat_heavy_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/swat_heavy_nm"  force="false"/>
 	<texture path="units/pd2_mod_gageammo/characters/ene_deathvox_heavyar/swat_heavy_head_df"  force="false"/>
 	
 	<!--Z Heavy Shotgunner-->
@@ -497,9 +498,6 @@
 	
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet" load="true"/>
 	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_zeal_swat_heavy_helmet/ene_acc_zeal_swat_heavy_helmet" force="false"/>
-	
-	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_zeal_swat_heavy_sg_helmet/ene_acc_zeal_swat_heavy_sg_helmet" load="true"/>
-	<cooked_physics path="units/pd2_mod_gageammo/characters/ene_acc_zeal_swat_heavy_sg_helmet/ene_acc_zeal_swat_heavy_sg_helmet" force="false"/>
 
 	<!--Z Medic-->
 	<unit path="units/pd2_mod_gageammo/characters/ene_deathvox_medic/ene_deathvox_medic" load="true"/>
