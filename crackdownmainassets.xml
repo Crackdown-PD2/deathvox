@@ -729,7 +729,8 @@
 	<unit_mat path="units/pd2_mod_gageammo/characters/ene_acc_mlady/ene_acc_mlady"/>
 	
 	<!--Z-Textures-->
-	<texture path="units/pd2_mod_gageammo/characters/shared_textures/bulldozer_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/dozers_head_atlas_df"  force="false"/>
+	<texture path="units/pd2_mod_gageammo/characters/shared_textures/dozers_head_atlas_nm"  force="false"/>
 	<texture path="units/pd2_mod_gageammo/characters/shared_textures/bulldozer_visor_il" load="true"/>
 	<texture path="units/pd2_mod_gageammo/characters/shared_textures/medicdozer_visor_il" load="true"/>
 	<texture path="units/pd2_mod_gageammo/characters/shared_textures/ene_zeal_swat_df"  force="false"/>
