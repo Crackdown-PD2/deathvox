@@ -47,6 +47,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 end
 
+Hooks:PostHook(EnvironmentFire, "init", "deathvox_environmentfire_init", function(self, unit)
+	EnvironmentFire.super.init(self, unit, true)
+end
+
 local destroy_original = EnvironmentFire.destroy
 function EnvironmentFire:destroy(...)
 	EnvironmentFire.super.destroy(self, ...)
