@@ -3,6 +3,17 @@
 Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 	if deathvox:IsTotalCrackdownEnabled() then
 	
+	
+
+
+
+
+
+	-------------------------------------------------------------------------------------
+	--********************************** SKILL TREES **********************************--
+	-------------------------------------------------------------------------------------
+
+
 	--replaces skills by position in the skilltree
 	--without having to look up the name (even you could just do it by list of names)
 	--usage:
@@ -1951,6 +1962,2430 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				11
 			}
 		})
+	
+	
+	------------------------------------------------------------------------------------
+	--********************************** PERK DECKS **********************************--
+	------------------------------------------------------------------------------------
+	local perkdeck_tier_costs = {
+		200,
+		300,
+		400,
+		600,
+		1000,
+		1600,
+		2400,
+		3200,
+		4000
+	}
+	local perkdeck_indices = {
+		crew_chief = 1,
+		muscle = 2,
+		armorer = 3,
+		rogue = 4,
+		crook = 5,
+		hitman = 6,
+		burglar = 7,
+		infiltrator = 8,
+		sociopath = 9,
+		gambler = 10,
+		grinder = 11,
+		yakuza = 12,
+		expresident = 13,
+		maniac = 14,
+		anarchist = 15,
+		biker = 16,
+		kingpin = 17,
+		sicario = 18,
+		stoic = 19,
+		tagteam = 20,
+		hacker = 21
+	}
+	
+	self.specializations[perkdeck_indices.crew_chief] = {
+		{
+			name_id = "menu_deck1_1",
+			desc_id = "menu_deck1_1_desc",
+			cost = perkdeck_tier_costs[1],
+			upgrades = {
+				"team_passive_damage_resistance"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck1_2",
+			desc_id = "menu_deck1_2_desc",
+			cost = perkdeck_tier_costs[2],
+			upgrades = {
+				"team_passive_stamina_regen_mul"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck1_3",
+			desc_id = "menu_deck1_3_desc",
+			cost = perkdeck_tier_costs[3],
+			upgrades = {
+				"team_passive_health_multiplier"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck1_4",
+			desc_id = "menu_deck1_4_desc",
+			cost = perkdeck_tier_costs[4],
+			upgrades = {
+				"team_passive_stamina_multiplier_1"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck1_5",
+			desc_id = "menu_deck1_5_desc",
+			cost = perkdeck_tier_costs[5],
+			upgrades = {
+				"team_passive_health_regen"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck1_6",
+			desc_id = "menu_deck1_6_desc",
+			cost = perkdeck_tier_costs[6],
+			upgrades = {
+				"team_passive_interaction_speed_multiplier"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck1_7",
+			desc_id = "menu_deck1_7_desc",
+			cost = perkdeck_tier_costs[7],
+			upgrades = {
+				"team_passive_armor_multiplier"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck1_8",
+			desc_id = "menu_deck1_8_desc",
+			cost = perkdeck_tier_costs[8],
+			upgrades = {
+				"team_passive_armor_regen_time_multiplier"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck1_9",
+			desc_id = "menu_deck1_9_desc",
+			cost = perkdeck_tier_costs[9],
+			upgrades = {
+				"cooldown_long_dis_revive"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		desc_id = "menu_st_spec_1_desc",
+		name_id = "menu_st_spec_1"
+	}
+	if false then --reamining perk decks will be added as time goes on; template data is here
+		self.specializations[perkdeck_indices.muscle] = {
+			{
+				name_id = "menu_deck2_1",
+				desc_id = "menu_deck2_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck2_2",
+				desc_id = "menu_deck2_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck2_3",
+				desc_id = "menu_deck2_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck2_4",
+				desc_id = "menu_deck2_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck2_5",
+				desc_id = "menu_deck2_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck2_6",
+				desc_id = "menu_deck2_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck2_7",
+				desc_id = "menu_deck2_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck2_8",
+				desc_id = "menu_deck2_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck2_9",
+				desc_id = "menu_deck2_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_2_desc",
+			name_id = "menu_st_spec_2"
+		}
+		self.specializations[perkdeck_indices.armorer] = {
+			{
+				name_id = "menu_deck3_1",
+				desc_id = "menu_deck3_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck3_2",
+				desc_id = "menu_deck3_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck3_3",
+				desc_id = "menu_deck3_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck3_4",
+				desc_id = "menu_deck3_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck3_5",
+				desc_id = "menu_deck3_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck3_6",
+				desc_id = "menu_deck3_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck3_7",
+				desc_id = "menu_deck3_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck3_8",
+				desc_id = "menu_deck3_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck3_9",
+				desc_id = "menu_deck3_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_3_desc",
+			name_id = "menu_st_spec_3"
+		}
+		
+		self.specializations[perkdeck_indices.rogue] = {
+			{
+				name_id = "menu_deck4_1",
+				desc_id = "menu_deck4_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck4_2",
+				desc_id = "menu_deck4_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck4_3",
+				desc_id = "menu_deck4_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck4_4",
+				desc_id = "menu_deck4_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck4_5",
+				desc_id = "menu_deck4_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck4_6",
+				desc_id = "menu_deck4_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck4_7",
+				desc_id = "menu_deck4_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck4_8",
+				desc_id = "menu_deck4_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck4_9",
+				desc_id = "menu_deck4_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_4_desc",
+			name_id = "menu_st_spec_4"
+		}
+		self.specializations[perkdeck_indices.crook] = {
+			{
+				name_id = "menu_deck5_1",
+				desc_id = "menu_deck5_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck5_2",
+				desc_id = "menu_deck5_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck5_3",
+				desc_id = "menu_deck5_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck5_4",
+				desc_id = "menu_deck5_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck5_5",
+				desc_id = "menu_deck5_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck5_6",
+				desc_id = "menu_deck5_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck5_7",
+				desc_id = "menu_deck5_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck5_8",
+				desc_id = "menu_deck5_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck5_9",
+				desc_id = "menu_deck5_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_5_desc",
+			name_id = "menu_st_spec_5"
+		}
+		self.specializations[perkdeck_indices.hitman] = {
+			{
+				name_id = "menu_deck6_1",
+				desc_id = "menu_deck6_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck6_2",
+				desc_id = "menu_deck6_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck6_3",
+				desc_id = "menu_deck6_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck6_4",
+				desc_id = "menu_deck6_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck6_5",
+				desc_id = "menu_deck6_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck6_6",
+				desc_id = "menu_deck6_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck6_7",
+				desc_id = "menu_deck6_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck6_8",
+				desc_id = "menu_deck6_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck6_9",
+				desc_id = "menu_deck6_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_6_desc",
+			name_id = "menu_st_spec_6"
+		}
+		
+		self.specializations[perkdeck_indices.burglar] = {
+			{
+				name_id = "menu_deck7_1",
+				desc_id = "menu_deck7_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck7_2",
+				desc_id = "menu_deck7_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck7_3",
+				desc_id = "menu_deck7_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck7_4",
+				desc_id = "menu_deck7_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck7_5",
+				desc_id = "menu_deck7_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck7_6",
+				desc_id = "menu_deck7_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck7_7",
+				desc_id = "menu_deck7_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck7_8",
+				desc_id = "menu_deck7_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck7_9",
+				desc_id = "menu_deck7_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_7_desc",
+			name_id = "menu_st_spec_7"
+		}
+		
+		self.specializations[perkdeck_indices.infiltrator] = {
+			{
+				name_id = "menu_deck8_1",
+				desc_id = "menu_deck8_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck8_2",
+				desc_id = "menu_deck8_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck8_3",
+				desc_id = "menu_deck8_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck8_4",
+				desc_id = "menu_deck8_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck8_5",
+				desc_id = "menu_deck8_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck8_6",
+				desc_id = "menu_deck8_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck8_7",
+				desc_id = "menu_deck8_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck8_8",
+				desc_id = "menu_deck8_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck8_9",
+				desc_id = "menu_deck8_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_8_desc",
+			name_id = "menu_st_spec_8"
+		}
+		
+		self.specializations[perkdeck_indices.sociopath] = {
+			{
+				name_id = "menu_deck9_1",
+				desc_id = "menu_deck9_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck9_2",
+				desc_id = "menu_deck9_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck9_3",
+				desc_id = "menu_deck9_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck9_4",
+				desc_id = "menu_deck9_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck9_5",
+				desc_id = "menu_deck9_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck9_6",
+				desc_id = "menu_deck9_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck9_7",
+				desc_id = "menu_deck9_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck9_8",
+				desc_id = "menu_deck9_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck9_9",
+				desc_id = "menu_deck9_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_9_desc",
+			name_id = "menu_st_spec_9"
+		}
+		
+		self.specializations[perkdeck_indices.gambler] = {
+			{
+				name_id = "menu_deck10_1",
+				desc_id = "menu_deck10_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck10_2",
+				desc_id = "menu_deck10_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck10_3",
+				desc_id = "menu_deck10_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck10_4",
+				desc_id = "menu_deck10_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck10_5",
+				desc_id = "menu_deck10_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck10_6",
+				desc_id = "menu_deck10_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck10_7",
+				desc_id = "menu_deck10_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck10_8",
+				desc_id = "menu_deck10_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck10_9",
+				desc_id = "menu_deck10_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_10_desc",
+			name_id = "menu_st_spec_10"
+		}
+		 
+		self.specializations[perkdeck_indices.grinder] = {
+			{
+				name_id = "menu_deck11_1",
+				desc_id = "menu_deck11_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck11_2",
+				desc_id = "menu_deck11_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck11_3",
+				desc_id = "menu_deck11_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck11_4",
+				desc_id = "menu_deck11_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck11_5",
+				desc_id = "menu_deck11_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck11_6",
+				desc_id = "menu_deck11_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck11_7",
+				desc_id = "menu_deck11_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck11_8",
+				desc_id = "menu_deck11_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck11_9",
+				desc_id = "menu_deck11_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_11_desc",
+			name_id = "menu_st_spec_11"
+		}
+		
+		self.specializations[perkdeck_indices.yakuza] = {
+			{
+				name_id = "menu_deck12_1",
+				desc_id = "menu_deck12_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck12_2",
+				desc_id = "menu_deck12_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck12_3",
+				desc_id = "menu_deck12_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck12_4",
+				desc_id = "menu_deck12_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck12_5",
+				desc_id = "menu_deck12_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck12_6",
+				desc_id = "menu_deck12_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck12_7",
+				desc_id = "menu_deck12_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck12_8",
+				desc_id = "menu_deck12_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck12_9",
+				desc_id = "menu_deck12_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_12_desc",
+			name_id = "menu_st_spec_12"
+		}
+		
+		self.specializations[perkdeck_indices.expresident] = {
+			{
+				name_id = "menu_deck13_1",
+				desc_id = "menu_deck13_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck13_2",
+				desc_id = "menu_deck13_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck13_3",
+				desc_id = "menu_deck13_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck13_4",
+				desc_id = "menu_deck13_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck13_5",
+				desc_id = "menu_deck13_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck13_6",
+				desc_id = "menu_deck13_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck13_7",
+				desc_id = "menu_deck13_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck13_8",
+				desc_id = "menu_deck13_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck13_9",
+				desc_id = "menu_deck13_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_13_desc",
+			name_id = "menu_st_spec_13"
+		}
+		
+		self.specializations[perkdeck_indices.maniac] = {
+			{
+				name_id = "menu_deck14_1",
+				desc_id = "menu_deck14_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck14_2",
+				desc_id = "menu_deck14_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck14_3",
+				desc_id = "menu_deck14_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck14_4",
+				desc_id = "menu_deck14_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck14_5",
+				desc_id = "menu_deck14_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck14_6",
+				desc_id = "menu_deck14_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck14_7",
+				desc_id = "menu_deck14_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck14_8",
+				desc_id = "menu_deck14_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck14_9",
+				desc_id = "menu_deck14_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_14_desc",
+			name_id = "menu_st_spec_14"
+		}
+		
+		self.specializations[perkdeck_indices.anarchist] = {
+			{
+				name_id = "menu_deck15_1",
+				desc_id = "menu_deck15_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck15_2",
+				desc_id = "menu_deck15_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck15_3",
+				desc_id = "menu_deck15_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck15_4",
+				desc_id = "menu_deck15_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck15_5",
+				desc_id = "menu_deck15_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck15_6",
+				desc_id = "menu_deck15_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck15_7",
+				desc_id = "menu_deck15_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck15_8",
+				desc_id = "menu_deck15_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck15_9",
+				desc_id = "menu_deck15_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_15_desc",
+			name_id = "menu_st_spec_15"
+		}
+		
+		self.specializations[perkdeck_indices.biker] = {
+			{
+				name_id = "menu_deck16_1",
+				desc_id = "menu_deck16_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck16_2",
+				desc_id = "menu_deck16_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck16_3",
+				desc_id = "menu_deck16_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck16_4",
+				desc_id = "menu_deck16_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck16_5",
+				desc_id = "menu_deck16_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck16_6",
+				desc_id = "menu_deck16_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck16_7",
+				desc_id = "menu_deck16_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck16_8",
+				desc_id = "menu_deck16_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck16_9",
+				desc_id = "menu_deck16_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_16_desc",
+			name_id = "menu_st_spec_16"
+		}
+		
+		self.specializations[perkdeck_indices.kingpin] = {
+			{
+				name_id = "menu_deck17_1",
+				desc_id = "menu_deck17_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck17_2",
+				desc_id = "menu_deck17_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck17_3",
+				desc_id = "menu_deck17_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck17_4",
+				desc_id = "menu_deck17_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck17_5",
+				desc_id = "menu_deck17_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck17_6",
+				desc_id = "menu_deck17_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck17_7",
+				desc_id = "menu_deck17_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck17_8",
+				desc_id = "menu_deck17_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck17_9",
+				desc_id = "menu_deck17_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_17_desc",
+			name_id = "menu_st_spec_17"
+		}
+		
+		self.specializations[perkdeck_indices.sicario] = {
+			{
+				name_id = "menu_deck18_1",
+				desc_id = "menu_deck18_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck18_2",
+				desc_id = "menu_deck18_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck18_3",
+				desc_id = "menu_deck18_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck18_4",
+				desc_id = "menu_deck18_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck18_5",
+				desc_id = "menu_deck18_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck18_6",
+				desc_id = "menu_deck18_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck18_7",
+				desc_id = "menu_deck18_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck18_8",
+				desc_id = "menu_deck18_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck18_9",
+				desc_id = "menu_deck18_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_18_desc",
+			name_id = "menu_st_spec_18"
+		}
+		self.specializations[perkdeck_indices.stoic] = {
+			{
+				name_id = "menu_deck19_1",
+				desc_id = "menu_deck19_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck19_2",
+				desc_id = "menu_deck19_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck19_3",
+				desc_id = "menu_deck19_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck19_4",
+				desc_id = "menu_deck19_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck19_5",
+				desc_id = "menu_deck19_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck19_6",
+				desc_id = "menu_deck19_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck19_7",
+				desc_id = "menu_deck19_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck19_8",
+				desc_id = "menu_deck19_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck19_9",
+				desc_id = "menu_deck19_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_19_desc",
+			name_id = "menu_st_spec_19"
+		}
+		
+		self.specializations[perkdeck_indices.tagteam] = {
+			{
+				name_id = "menu_deck20_1",
+				desc_id = "menu_deck20_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck20_2",
+				desc_id = "menu_deck20_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck20_3",
+				desc_id = "menu_deck20_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck20_4",
+				desc_id = "menu_deck20_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck20_5",
+				desc_id = "menu_deck20_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck20_6",
+				desc_id = "menu_deck20_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck20_7",
+				desc_id = "menu_deck20_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck20_8",
+				desc_id = "menu_deck20_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck20_9",
+				desc_id = "menu_deck20_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_20_desc",
+			name_id = "menu_st_spec_20"
+		}
+		
+		self.specializations[perkdeck_indices.hacker] = {
+			{
+				name_id = "menu_deck21_1",
+				desc_id = "menu_deck21_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck21_2",
+				desc_id = "menu_deck21_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck21_3",
+				desc_id = "menu_deck21_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck21_4",
+				desc_id = "menu_deck21_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck21_5",
+				desc_id = "menu_deck21_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck21_6",
+				desc_id = "menu_deck21_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck21_7",
+				desc_id = "menu_deck21_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck21_8",
+				desc_id = "menu_deck21_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			{
+				name_id = "menu_deck21_9",
+				desc_id = "menu_deck21_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					0,
+					0
+				}
+			},
+			desc_id = "menu_st_spec_21_desc",
+			name_id = "menu_st_spec_21"
+		}
+		
+	end
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 		

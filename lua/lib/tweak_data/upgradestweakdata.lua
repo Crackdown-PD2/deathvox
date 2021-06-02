@@ -2063,6 +2063,78 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+	--perk decks
+		self.values.team.crewchief = {}
+		
+		
+			--Crew Chief 1: +10% damage resistance
+		self.values.team.passive_damage_resistance = {
+			0.1
+		}
+		self.definitions.team_passive_damage_resistance = {
+			name_id = "menu_deck1_1",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "passive_damage_resistance",
+				category = "crewchief"
+			}
+		}
+		
+			--Crew Chief 2: +10% stamina recovery rate
+		self.values.team.crewchief.passive_stamina_regen_mul = {
+			0.1
+		}
+		self.definitions.team_passive_stamina_regen_mul = {
+			name_id = "menu_deck1_2",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "passive_stamina_regen_mul",
+				category = "crewchief"
+			}
+		}
+
+			--Crew Chief 4: +10% maximum stamina
+		self.values.team.stamina.passive_multiplier = {
+			1.1,
+			1.3 --seems to be unused
+		}
+		
+			--Crew Chief 5: 1% health regen
+		self.values.team.crewchief.passive_health_regen = {
+			0.01
+		}
+		self.definitions.team_passive_health_regen = {
+			name_id = "menu_deck1_5",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "passive_health_regen",
+				category = "crewchief"
+			}
+		}
+
+		
+		
+			--Crew Chief 6: +10% interaction speed (does not apply to pagers)
+		self.values.team.crewchief.passive_interaction_speed_multiplier = {
+			0.9
+		}
+		self.definitions.team_passive_interaction_speed_multiplier = {
+			name_id = "menu_deck1_6",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "passive_interaction_speed_multiplier",
+				category = "crewchief"
+			}
+		}
+
+			--Crew Chief 7: +10% armor
+		self.values.team.armor.multiplier = {
+			1.1
+		}
 		
 
 		--General free skills (default upgrades)

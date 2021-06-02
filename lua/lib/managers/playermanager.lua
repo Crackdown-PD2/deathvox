@@ -100,6 +100,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		multiplier = multiplier * self:get_hostage_bonus_multiplier("damage_dampener")
 		multiplier = multiplier * self._properties:get_property("revive_damage_reduction", 1)
 		multiplier = multiplier * self._temporary_properties:get_property("revived_damage_reduction", 1)
+		multiplier = multiplier + self:team_upgrade_value("crewchief","passive_damage_resistance",1)
 		if self:get_property("armor_plates_active") then 
 			multiplier = multiplier * tweak_data.upgrades.armor_plates_dmg_reduction
 		end
@@ -181,6 +182,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return multiplier
 	end
 
+	PlayerManager.tcd_orig_health_regen = PlayerManager.health_regen
+	function PlayerManager:health_regen(...)
+		local health_regen = self:tcd_orig_health_regen(...)
+		health_regen = health_regen + self:team_upgrade_value("crewchief","passive_health_regen",0)
+		return health_regen 
+	end
 
 	--same as vanilla but disabled HUD element in order to prevent conflicting with damage overshield mechanic
 	--if/when the actual absorption mechanic is overhauled, this function (and its accompanying HUD element) may also need to be revisited

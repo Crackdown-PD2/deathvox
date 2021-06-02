@@ -95,3 +95,38 @@ function PlayerMovement:on_non_lethal_electrocution()
 		self._unit:sound():say("s07x_sin", true)
 	end
 end
+
+if deathvox:IsTotalCrackdownEnabled() then
+		
+	function PlayerMovement:update_stamina(t, dt, ignore_running)
+		local dt = self._last_stamina_regen_t and t - self._last_stamina_regen_t or dt
+		self._last_stamina_regen_t = t
+
+		if not ignore_running and self._is_running then
+			self:subtract_stamina(dt * tweak_data.player.movement_state.stamina.STAMINA_DRAIN_RATE)
+		elseif self._regenerate_timer then
+			self._regenerate_timer = self._regenerate_timer - dt
+
+			local regen_rate = dt * tweak_data.player.movement_state.stamina.STAMINA_REGEN_RATE
+			regen_rate = regen_rate * (1 + (managers.player:team_upgrade_value("crewchief","passive_stamina_regen_mul",0)))
+			
+			if self._regenerate_timer < 0 then
+				self:add_stamina(regen_rate)
+
+				if self:_max_stamina() <= self._stamina then
+					self._regenerate_timer = nil
+				end
+			end
+		elseif self._stamina < self:_max_stamina() then
+			self:_restart_stamina_regen_timer()
+		end
+
+		if _G.IS_VR then
+			managers.hud:set_stamina({
+				current = self._stamina,
+				total = self:_max_stamina()
+			})
+		end
+	end
+
+end
