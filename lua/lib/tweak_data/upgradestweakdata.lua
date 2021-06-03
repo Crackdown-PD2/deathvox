@@ -2068,7 +2068,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		
 			--Crew Chief 1: +10% damage resistance
-		self.values.team.passive_damage_resistance = {
+		self.values.team.crewchief.passive_damage_resistance = {
 			0.1
 		}
 		self.definitions.team_passive_damage_resistance = {
