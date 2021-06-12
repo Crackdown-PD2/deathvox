@@ -49,7 +49,7 @@ end
 
 Hooks:PostHook(EnvironmentFire, "init", "deathvox_environmentfire_init", function(self, unit)
 	EnvironmentFire.super.init(self, unit, true)
-end
+end)
 
 local destroy_original = EnvironmentFire.destroy
 function EnvironmentFire:destroy(...)

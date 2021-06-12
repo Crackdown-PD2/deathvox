@@ -30,6 +30,7 @@ local tmp_vec2 = Vector3()
 local old_group_misc_data = GroupAIStateBase._init_misc_data
 function GroupAIStateBase:_init_misc_data()
 	old_group_misc_data(self)
+	self._nr_important_cops = 8
 	self._special_unit_types = {
 		tank = true,
 		spooc = true,
@@ -45,6 +46,7 @@ end
 local old_group_base = GroupAIStateBase.on_simulation_started
 function GroupAIStateBase:on_simulation_started()
 	old_group_base(self)
+	self._nr_important_cops = 8
 	self._special_unit_types = {
 		tank = true,
 		spooc = true,
@@ -151,6 +153,14 @@ function GroupAIStateBase:update(t, dt)
 
 	if self._draw_drama then
 		self:_debug_draw_drama(t)
+	end
+	
+	if not Global.game_settings.single_player then
+		if not Network:is_server() then
+			local new_value = 8 / table.size(self:all_player_criminals()) 
+
+			self._nr_important_cops = new_value
+		end
 	end
 
 	self:_upd_debug_draw_attentions()
