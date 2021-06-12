@@ -766,7 +766,16 @@ end
 
 Hooks:PostHook(PlayerDamage,"init","tcd_post_playerdamage_init",function(self,unit)
 	self._listener_holder:add("on_bleedout_remove_armor_plates_bonus",{"on_enter_bleedout"},callback(self,self,"remove_armor_plates_bonus"))
+	
+	if managers.player:has_category_upgrade("player", "muscle_beachyboys") then
+		self._listener_holder:add("on_bleedout_beach_health_point_removal",{"on_enter_bleedout"},callback(self,self,"blush_beach_hp"))
+	end
 end)
+
+function PlayerDamage:blush_beach_hp()
+	--log(tostring(self:_max_health()))
+	managers.player._beach_health_points = 0
+end
 
 --tcd only
 function PlayerDamage:has_armor_plates_bonus()
@@ -777,6 +786,10 @@ function PlayerDamage:acquire_armor_plates_bonus()
 	managers.player:set_property("armor_plates_active",true)
 	managers.player:set_property("armor_plates_free_revive",true)
 	self:restore_armor(self:_max_armor())
+end
+
+function PlayerDamage:remove_armor_plates_bonus()
+	managers.player:set_property("armor_plates_active",false)
 end
 
 function PlayerDamage:remove_armor_plates_bonus()

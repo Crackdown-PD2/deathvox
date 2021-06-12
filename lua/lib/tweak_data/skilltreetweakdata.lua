@@ -2114,119 +2114,122 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		desc_id = "menu_st_spec_1_desc",
 		name_id = "menu_st_spec_1"
 	}
+	
+	self.specializations[perkdeck_indices.muscle] = {
+		{
+			name_id = "menu_deck2_1",
+			desc_id = "menu_deck2_1_desc",
+			cost = perkdeck_tier_costs[1],
+			upgrades = {
+				"muscle_1_health",
+				"muscle_aggro_weight_add"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck2_2",
+			desc_id = "menu_deck2_2_desc",
+			cost = perkdeck_tier_costs[2],
+			upgrades = {
+				"muscle_2"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck2_3",
+			desc_id = "menu_deck2_3_desc",
+			cost = perkdeck_tier_costs[3],
+			upgrades = {
+				"muscle_3"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck2_4",
+			desc_id = "menu_deck2_4_desc",
+			cost = perkdeck_tier_costs[4],
+			upgrades = {
+				"muscle_4"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck2_5",
+			desc_id = "menu_deck2_5_desc",
+			cost = perkdeck_tier_costs[5],
+			upgrades = {
+				"muscle_5"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck2_6",
+			desc_id = "menu_deck2_6_desc",
+			cost = perkdeck_tier_costs[6],
+			upgrades = {
+				"muscle_6"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck2_7",
+			desc_id = "menu_deck2_7_desc",
+			cost = perkdeck_tier_costs[7],
+			upgrades = {
+				"muscle_7"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck2_8",
+			desc_id = "menu_deck2_8_desc",
+			cost = perkdeck_tier_costs[8],
+			upgrades = {
+				"muscle_8"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck2_9",
+			desc_id = "menu_deck2_9_desc",
+			cost = perkdeck_tier_costs[9],
+			upgrades = {
+				"muscle_9"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		desc_id = "menu_st_spec_2_desc",
+		name_id = "menu_st_spec_2"
+	}
+	
 	if false then --reamining perk decks will be added as time goes on; template data is here
-		self.specializations[perkdeck_indices.muscle] = {
-			{
-				name_id = "menu_deck2_1",
-				desc_id = "menu_deck2_1_desc",
-				cost = perkdeck_tier_costs[1],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck2_2",
-				desc_id = "menu_deck2_2_desc",
-				cost = perkdeck_tier_costs[2],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck2_3",
-				desc_id = "menu_deck2_3_desc",
-				cost = perkdeck_tier_costs[3],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck2_4",
-				desc_id = "menu_deck2_4_desc",
-				cost = perkdeck_tier_costs[4],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck2_5",
-				desc_id = "menu_deck2_5_desc",
-				cost = perkdeck_tier_costs[5],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck2_6",
-				desc_id = "menu_deck2_6_desc",
-				cost = perkdeck_tier_costs[6],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck2_7",
-				desc_id = "menu_deck2_7_desc",
-				cost = perkdeck_tier_costs[7],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck2_8",
-				desc_id = "menu_deck2_8_desc",
-				cost = perkdeck_tier_costs[8],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck2_9",
-				desc_id = "menu_deck2_9_desc",
-				cost = perkdeck_tier_costs[9],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			desc_id = "menu_st_spec_2_desc",
-			name_id = "menu_st_spec_2"
-		}
 		self.specializations[perkdeck_indices.armorer] = {
 			{
 				name_id = "menu_deck3_1",

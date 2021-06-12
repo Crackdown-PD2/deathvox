@@ -2193,5 +2193,118 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			0.5,
 			1
 		}
+		
+		
+		--Muscle Perkdeck
+		self.values.player.muscle_aggro_weight_add = {true}
+		self.values.player.muscle_health_mul = {
+			1.25,
+			1.5,
+			1.75,
+			2
+		}
+		self.values.player.muscle_health_regen = {
+			0.005,
+			0.01,
+			0.015,
+			0.02
+		}
+		self.values.player.muscle_beachyboys = {
+			true
+		}
+		
+		self.definitions.muscle_1_health = {
+			name_id = "menu_deck2_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "muscle_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.muscle_1_aggro = {
+			name_id = "menu_deck2_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				synced = true,
+				upgrade = "muscle_aggro_weight_add",
+				category = "player"
+			}
+		}
+		self.definitions.muscle_2 = {
+			name_id = "menu_deck2_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "muscle_health_regen",
+				category = "player"
+			}
+		}
+		self.definitions.muscle_3 = {
+			name_id = "menu_deck2_3",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "muscle_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.muscle_4 = {
+			name_id = "menu_deck2_4",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "muscle_health_regen",
+				category = "player"
+			}
+		}
+		self.definitions.muscle_5 = {
+			name_id = "menu_deck2_5",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "muscle_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.muscle_6 = {
+			name_id = "menu_deck2_6",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "muscle_health_regen",
+				category = "player"
+			}
+		}
+		self.definitions.muscle_7 = {
+			name_id = "menu_deck2_7",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "muscle_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.muscle_8 = {
+			name_id = "menu_deck2_8",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "muscle_health_regen",
+				category = "player"
+			}
+		}
+		self.definitions.muscle_9 = {
+			name_id = "menu_deck2_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "muscle_beachyboys",
+				category = "player"
+			}
+		}
+		
+		
 	end
 end)

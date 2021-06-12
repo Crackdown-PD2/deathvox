@@ -453,29 +453,31 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck1_8 = "State of Grace",
 				menu_deck1_8_desc = "Your team gains ##+10%## Armor Recovery Rate.",
 				menu_deck1_9 = "Angels with Dirty Faces",
-				menu_deck1_9_desc = "You can revive Downed players within your line of sight by Shouting at them when they are within ##10## meters of you. This effect has a ##20## second cooldown."
-				--[[
-				,
+				menu_deck1_9_desc = "You can revive Downed players within your line of sight by Shouting at them when they are within ##10## meters of you. This effect has a ##20## second cooldown.",
+				
 				
 				--Muscle
-				menu_deck2_1 = "PLACEHOLDER",
-				menu_deck2_1_desc = "PLACEHOLDER",
-				menu_deck2_2 = "PLACEHOLDER",
-				menu_deck2_2_desc = "PLACEHOLDER",
-				menu_deck2_3 = "PLACEHOLDER",
-				menu_deck2_3_desc = "PLACEHOLDER",
-				menu_deck2_4 = "PLACEHOLDER",
-				menu_deck2_4_desc = "PLACEHOLDER",
-				menu_deck2_5 = "PLACEHOLDER",
-				menu_deck2_5_desc = "PLACEHOLDER",
-				menu_deck2_6 = "PLACEHOLDER",
-				menu_deck2_6_desc = "PLACEHOLDER",
-				menu_deck2_7 = "PLACEHOLDER",
-				menu_deck2_7_desc = "PLACEHOLDER",
-				menu_deck2_8 = "PLACEHOLDER",
-				menu_deck2_8_desc = "PLACEHOLDER",
-				menu_deck2_9 = "PLACEHOLDER",
-				menu_deck2_9_desc = "PLACEHOLDER",
+				menu_deck2_1 = "Dynamic Tension",
+				menu_deck2_1_desc = "You gain ##+25%## Maximum Health and you become ##25%## more likely to be targeted over your teammates.",
+				menu_deck2_2 = "Endurance Training",
+				menu_deck2_2_desc = "You regenerate ##0.5%## of your Maximum Health per second.",
+				menu_deck2_3 = "Chump Into Champ",
+				menu_deck2_3_desc = "Increases your Maximum Health bonus to ##+50%##.",
+				menu_deck2_4 = "Dauntless Improvement",
+				menu_deck2_4_desc = "Your Health Regeneration increases to ##1%## of your Maximum Health per second.",
+				menu_deck2_5 = "15 Minutes A Day",
+				menu_deck2_5_desc = "Increases your Maximum Health bonus to ##+75%##.",
+				menu_deck2_6 = "Tireless Physique",
+				menu_deck2_6_desc = "Your Health Regeneration increases to ##1.5%## of your Maximum Health per second.",
+				menu_deck2_7 = "Muscle Mystery",
+				menu_deck2_7_desc = "Increases your Maximum Health bonus to ##+100%##.",
+				menu_deck2_8 = "Flex Eternal",
+				menu_deck2_8_desc = "Your Health Regeneration increases to ##2%## of your Maximum Health per second.",
+				menu_deck2_9 = "Hero Of The Beach",
+				menu_deck2_9_desc = "Each kill you make during a heist increases your Maximum Health by ##+1##, up to ##+200##. All stacks are lost upon being downed.",
+				
+				--[[
+				,
 				
 				--Armorer
 				menu_deck3_1 = "PLACEHOLDER",

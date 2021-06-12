@@ -1771,7 +1771,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 					
 					--the general idea here is that groups will generally try to wait until other groups have headed into the area
 					--by pushing in one big pile, you make sure to punish players camping and not trying to keep the cops away, without making them too rushy.
-					if tactics_map.charge then
+					if tactics_map and tactics_map.charge then
 						push = true
 					elseif not group.in_place_t then
 						pull_back = true

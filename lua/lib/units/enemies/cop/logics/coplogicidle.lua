@@ -1815,6 +1815,10 @@ function CopLogicIdle._get_priority_attention(data, attention_objects, reaction_
 								weight_mul = weight_mul * managers.player:upgrade_value("player", "stand_still_crouch_camouflage_bonus", 1)
 							end
 							
+							if managers.player:has_category_upgrade("player", "muscle_aggro_weight_add") then
+								weight_mul = weight_mul * 1.25
+							end
+							
 							if harasser and cur_state:_is_reloading() then
 								valid_harass = true
 							end
@@ -1847,6 +1851,10 @@ function CopLogicIdle._get_priority_attention(data, attention_objects, reaction_
 									if mul then
 										weight_mul = weight_mul * mul
 									end
+								end
+								
+								if att_base_ext:upgrade_value("player", "muscle_aggro_weight_add") then
+									weight_mul = weight_mul * 1.25
 								end
 
 								--[[if att_base_ext.has_activate_temporary_upgrade and att_base_ext:has_activate_temporary_upgrade("temporary", "chico_injector") and att_base_ext:upgrade_value("player", "chico_preferred_target") then
