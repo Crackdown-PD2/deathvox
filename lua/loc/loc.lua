@@ -476,28 +476,28 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck2_9 = "Hero Of The Beach",
 				menu_deck2_9_desc = "Each kill you make during a heist increases your Maximum Health by ##+1##, up to ##+200##. All stacks are lost upon being downed.",
 				
+				--Armorer
+				menu_deck3_1 = "Reactive Armor",
+				menu_deck3_1_desc = "You are rendered ##Invulnerable## to damage for ##2## seconds after your Armor breaks. This effect has a ##10## second cooldown.",
+				menu_deck3_2 = "Mk1 Plating",
+				menu_deck3_2_desc = "You gain ##+25%## Maximum Armor.",
+				menu_deck3_3 = "Steadfast",
+				menu_deck3_3_desc = "##Doubles## the Steadiness of your equipped Armor, ##reducing how much you Flinch## from taking Damage.",
+				menu_deck3_4 = "Mk2 Plating",
+				menu_deck3_4_desc = "Increases your Maximum Armor bonus to ##+50%##.",
+				menu_deck3_5 = "Armored Grace",
+				menu_deck3_5_desc = "Your Speed penalty for wearing Armor is reduced by ##50%##.",
+				menu_deck3_6 = "Mk3 Plating",
+				menu_deck3_6_desc = "Increases your Maximum Armor bonus to ##+75%##.",
+				menu_deck3_7 = "Unbreakable Will",
+				menu_deck3_7_desc = "You gain ##+25%## Armor Recovery.",
+				menu_deck3_8 = "Mk4 Plating",
+				menu_deck3_8_desc = "Increases your Maximum Armor bonus to ##+100%##.",
+				menu_deck3_9 = "Ironclad",
+				menu_deck3_9_desc = "You gain ##+10%## Damage Resistance when you have any amount of Armor.",
+				
 				--[[
 				,
-				
-				--Armorer
-				menu_deck3_1 = "PLACEHOLDER",
-				menu_deck3_1_desc = "PLACEHOLDER",
-				menu_deck3_2 = "PLACEHOLDER",
-				menu_deck3_2_desc = "PLACEHOLDER",
-				menu_deck3_3 = "PLACEHOLDER",
-				menu_deck3_3_desc = "PLACEHOLDER",
-				menu_deck3_4 = "PLACEHOLDER",
-				menu_deck3_4_desc = "PLACEHOLDER",
-				menu_deck3_5 = "PLACEHOLDER",
-				menu_deck3_5_desc = "PLACEHOLDER",
-				menu_deck3_6 = "PLACEHOLDER",
-				menu_deck3_6_desc = "PLACEHOLDER",
-				menu_deck3_7 = "PLACEHOLDER",
-				menu_deck3_7_desc = "PLACEHOLDER",
-				menu_deck3_8 = "PLACEHOLDER",
-				menu_deck3_8_desc = "PLACEHOLDER",
-				menu_deck3_9 = "PLACEHOLDER",
-				menu_deck3_9_desc = "PLACEHOLDER",
 				
 				--Rogue
 				menu_deck4_1 = "PLACEHOLDER",

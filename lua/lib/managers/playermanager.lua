@@ -101,13 +101,19 @@ if deathvox:IsTotalCrackdownEnabled() then
 		multiplier = multiplier * self._properties:get_property("revive_damage_reduction", 1)
 		multiplier = multiplier * self._temporary_properties:get_property("revived_damage_reduction", 1)
 		multiplier = multiplier + self:team_upgrade_value("crewchief","passive_damage_resistance",1)
+		
 		if self:get_property("armor_plates_active") then 
 			multiplier = multiplier * tweak_data.upgrades.armor_plates_dmg_reduction
 		end
+		
 		local dmg_red_mul = self:team_upgrade_value("damage_dampener", "team_damage_reduction", 1)
 
-
 		local player = self:local_player()
+		
+		if player:character_damage():get_real_armor() > 0 then
+			multiplier = multiplier * self:upgrade_value("player", "armorer_ironclad", 1)
+		end
+		
 		local team_upgrade_level = managers.player:team_upgrade_level("player","civilian_hostage_aoe_damage_resistance")
 		if team_upgrade_level > 0 then 
 			--this whole mess is for the Leverage skill in Taskmaster
@@ -186,6 +192,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 	function PlayerManager:health_regen(...)
 		local health_regen = self:tcd_orig_health_regen(...)
 		health_regen = health_regen + self:team_upgrade_value("crewchief","passive_health_regen",0)
+		health_regen = health_regen + self:upgrade_value("player", "muscle_health_regen", 0)
 		return health_regen 
 	end
 
@@ -757,8 +764,19 @@ if deathvox:IsTotalCrackdownEnabled() then
 	function PlayerManager:movement_speed_multiplier(speed_state, bonus_multiplier, upgrade_level, health_ratio)
 		local multiplier = 1
 		local armor_penalty = self:mod_movement_penalty(self:body_armor_value("movement", upgrade_level, 1))
+		
 		multiplier = multiplier + armor_penalty - 1
-
+		
+		if multiplier < 1.05 then
+			local diff = 1.05 - multiplier
+			
+			diff = diff * self:upgrade_value("player", "armorer_armor_pen_mul", 1)
+			
+			multiplier = 1.05 - diff
+			
+			--log("speed_mul: " .. tostring(multiplier))
+		end
+		
 		if bonus_multiplier then
 			multiplier = multiplier + bonus_multiplier - 1
 		end
@@ -964,14 +982,56 @@ function PlayerManager:health_skill_multiplier()
 	return multiplier
 end
 
-function PlayerManager:health_regen()
-	local health_regen = tweak_data.player.damage.HEALTH_REGEN
-	health_regen = health_regen + self:temporary_upgrade_value("temporary", "wolverine_health_regen", 0)
-	health_regen = health_regen + self:get_hostage_bonus_addend("health_regen")
-	health_regen = health_regen + self:upgrade_value("player", "muscle_health_regen", 0)
-	health_regen = health_regen + self:upgrade_value("player", "passive_health_regen", 0)
+function PlayerManager:body_armor_value(category, override_value, default)
+	local armor_data = tweak_data.blackmarket.armors[managers.blackmarket:equipped_armor(true, true)]
+	
+	if category == "damage_shake" then
+		local shake = self:upgrade_value_by_level("player", "body_armor", category, {})[override_value or armor_data.upgrade_level] or default or 0
+		
+		shake = shake * self:upgrade_value("player", "armorer_shake_mul", 1)
+		
+		return shake
+	end
+	
+	return self:upgrade_value_by_level("player", "body_armor", category, {})[override_value or armor_data.upgrade_level] or default or 0
+end
 
-	return health_regen
+function PlayerManager:body_armor_skill_multiplier(override_armor)
+	local multiplier = 1
+	multiplier = multiplier + self:upgrade_value("player", "armorer_armor_mul", 1) - 1
+	multiplier = multiplier + self:upgrade_value("player", "tier_armor_multiplier", 1) - 1
+	multiplier = multiplier + self:upgrade_value("player", "passive_armor_multiplier", 1) - 1
+	multiplier = multiplier + self:upgrade_value("player", "armor_multiplier", 1) - 1
+	multiplier = multiplier + self:team_upgrade_value("armor", "multiplier", 1) - 1
+	multiplier = multiplier + self:get_hostage_bonus_multiplier("armor") - 1
+	multiplier = multiplier + self:upgrade_value("player", "perk_armor_loss_multiplier", 1) - 1
+	multiplier = multiplier + self:upgrade_value("player", tostring(override_armor or managers.blackmarket:equipped_armor(true, true)) .. "_armor_multiplier", 1) - 1
+	multiplier = multiplier + self:upgrade_value("player", "chico_armor_multiplier", 1) - 1
+
+	return multiplier
+end
+
+function PlayerManager:body_armor_regen_multiplier(moving, health_ratio)
+	local multiplier = 1
+	multiplier = multiplier * self:upgrade_value("player", "armorer_armor_regen_mul", 1)
+	--log("regen_mul: " .. tostring(multiplier) .. "")
+	multiplier = multiplier * self:upgrade_value("player", "armor_regen_timer_multiplier_tier", 1)
+	multiplier = multiplier * self:upgrade_value("player", "armor_regen_timer_multiplier", 1)
+	multiplier = multiplier * self:upgrade_value("player", "armor_regen_timer_multiplier_passive", 1)
+	multiplier = multiplier * self:team_upgrade_value("armor", "regen_time_multiplier", 1)
+	multiplier = multiplier * self:team_upgrade_value("armor", "passive_regen_time_multiplier", 1)
+	multiplier = multiplier * self:upgrade_value("player", "perk_armor_regen_timer_multiplier", 1)
+
+	if not moving then
+		multiplier = multiplier * managers.player:upgrade_value("player", "armor_regen_timer_stand_still_multiplier", 1)
+	end
+
+	if health_ratio then
+		local damage_health_ratio = self:get_damage_health_ratio(health_ratio, "armor_regen")
+		multiplier = multiplier * (1 - managers.player:upgrade_value("player", "armor_regen_damage_health_ratio_multiplier", 0) * damage_health_ratio)
+	end
+
+	return multiplier
 end
 
 function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id)

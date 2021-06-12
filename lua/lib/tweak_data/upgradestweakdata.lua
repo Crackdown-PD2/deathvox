@@ -2305,6 +2305,96 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		--Armorer Perkdeck
+		self.values.temporary.armor_break_invulnerable = { --Armorer 1
+			{
+				2,
+				10
+			}
+		}
+		self.values.player.armorer_armor_mul = {
+			1.25,
+			1.5,
+			1.75,
+			2
+		}
+		self.values.player.armorer_shake_mul = {0.5}
+		self.values.player.armorer_armor_pen_mul = {0.5} --Armor Speed Penalty reducer
+		self.values.player.armorer_armor_regen_mul = {0.75}
+		self.values.player.armorer_ironclad = {0.9}
 		
+		--Armorer 1 is not defined here
+		self.definitions.armorer_2 = {
+			name_id = "menu_deck3_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_armor_mul",
+				category = "player"
+			}
+		}
+		self.definitions.armorer_3 = {
+			name_id = "menu_deck3_3",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_shake_mul",
+				category = "player"
+			}
+		}
+		self.definitions.armorer_4 = {
+			name_id = "menu_deck3_4",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "armorer_armor_mul",
+				category = "player"
+			}
+		}
+		self.definitions.armorer_5 = {
+			name_id = "menu_deck3_5",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_armor_pen_mul",
+				category = "player"
+			}
+		}
+		self.definitions.armorer_6 = {
+			name_id = "menu_deck3_6",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "armorer_armor_mul",
+				category = "player"
+			}
+		}
+		self.definitions.armorer_7 = {
+			name_id = "menu_deck3_7",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_armor_regen_mul",
+				category = "player"
+			}
+		}
+		self.definitions.armorer_8 = {
+			name_id = "menu_deck3_8",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "armorer_armor_mul",
+				category = "player"
+			}
+		}
+		self.definitions.armorer_9 = {
+			name_id = "menu_deck2_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_ironclad",
+				category = "player"
+			}
+		}
 	end
 end)
