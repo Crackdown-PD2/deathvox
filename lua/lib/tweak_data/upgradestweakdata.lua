@@ -2388,7 +2388,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		self.definitions.armorer_9 = {
-			name_id = "menu_deck2_9",
+			name_id = "menu_deck3_9",
 			category = "feature",
 			upgrade = {
 				value = 1,
@@ -2396,5 +2396,116 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
+		
+		--Rogue
+		self.values.player.rogue_dodge_add = {
+			0.1,
+			0.2,
+			0.3,
+			0.4
+		}
+		self.values.player.rogue_melee_dodge = {true}
+		self.values.player.rogue_sniper_dodge = {true}
+		self.values.player.rogue_cloaker_dodge = {true}
+		self.values.player.rogue_taser_dodge = {true}
+		self.values.player.detection_risk_add_dodge_chance = {
+			{
+				0.02,
+				2,
+				"below",
+				35,
+				0.2
+			},
+			{
+				0.01,
+				1,
+				"below",
+				35,
+				0.1
+			}
+		}
+		
+		self.definitions.rogue_1 = {
+			name_id = "menu_deck4_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_dodge_add",
+				category = "player"
+			}
+		}
+		self.definitions.rogue_2 = {
+			name_id = "menu_deck4_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_melee_dodge",
+				category = "player"
+			}
+		}
+		self.definitions.rogue_3 = {
+			name_id = "menu_deck4_3",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "rogue_dodge_add",
+				category = "player"
+			}
+		}
+		self.definitions.rogue_4 = {
+			name_id = "menu_deck4_4",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_sniper_dodge",
+				category = "player"
+			}
+		}
+		self.definitions.rogue_5 = {
+			name_id = "menu_deck4_5",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "rogue_dodge_add",
+				category = "player"
+			}
+		}
+		self.definitions.rogue_6 = {
+			name_id = "menu_deck4_6",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_cloaker_dodge",
+				category = "player"
+			}
+		}
+		self.definitions.rogue_7 = {
+			name_id = "menu_deck4_7",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "rogue_dodge_add",
+				category = "player"
+			}
+		}
+		self.definitions.rogue_8 = {
+			name_id = "menu_deck4_8",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_taser_dodge",
+				category = "player"
+			}
+		}
+		self.definitions.rogue_9 = {
+			name_id = "menu_deck4_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "detection_risk_add_dodge_chance",
+				category = "player"
+			}
+		}
+		
 	end
 end)

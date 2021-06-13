@@ -2342,120 +2342,121 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		name_id = "menu_st_spec_3"
 	}
 	
+	self.specializations[perkdeck_indices.rogue] = {
+		{
+			name_id = "menu_deck4_1",
+			desc_id = "menu_deck4_1_desc",
+			cost = perkdeck_tier_costs[1],
+			upgrades = {
+				"rogue_1"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck4_2",
+			desc_id = "menu_deck4_2_desc",
+			cost = perkdeck_tier_costs[2],
+			upgrades = {
+				"rogue_2"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck4_3",
+			desc_id = "menu_deck4_3_desc",
+			cost = perkdeck_tier_costs[3],
+			upgrades = {
+				"rogue_3"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck4_4",
+			desc_id = "menu_deck4_4_desc",
+			cost = perkdeck_tier_costs[4],
+			upgrades = {
+				"rogue_4"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck4_5",
+			desc_id = "menu_deck4_5_desc",
+			cost = perkdeck_tier_costs[5],
+			upgrades = {
+				"rogue_5"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck4_6",
+			desc_id = "menu_deck4_6_desc",
+			cost = perkdeck_tier_costs[6],
+			upgrades = {
+				"rogue_6"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck4_7",
+			desc_id = "menu_deck4_7_desc",
+			cost = perkdeck_tier_costs[7],
+			upgrades = {
+				"rogue_7"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck4_8",
+			desc_id = "menu_deck4_8_desc",
+			cost = perkdeck_tier_costs[8],
+			upgrades = {
+				"rogue_8"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck4_9",
+			desc_id = "menu_deck4_9_desc",
+			cost = perkdeck_tier_costs[9],
+			upgrades = {
+				"rogue_9"
+			},
+			icon_xy = {
+				0,
+				0	
+			}
+		},
+		desc_id = "menu_st_spec_4_desc",
+		name_id = "menu_st_spec_4"
+	}
+	
 	if false then --reamining perk decks will be added as time goes on; template data is here
 		
-		self.specializations[perkdeck_indices.rogue] = {
-			{
-				name_id = "menu_deck4_1",
-				desc_id = "menu_deck4_1_desc",
-				cost = perkdeck_tier_costs[1],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck4_2",
-				desc_id = "menu_deck4_2_desc",
-				cost = perkdeck_tier_costs[2],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck4_3",
-				desc_id = "menu_deck4_3_desc",
-				cost = perkdeck_tier_costs[3],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck4_4",
-				desc_id = "menu_deck4_4_desc",
-				cost = perkdeck_tier_costs[4],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck4_5",
-				desc_id = "menu_deck4_5_desc",
-				cost = perkdeck_tier_costs[5],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck4_6",
-				desc_id = "menu_deck4_6_desc",
-				cost = perkdeck_tier_costs[6],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck4_7",
-				desc_id = "menu_deck4_7_desc",
-				cost = perkdeck_tier_costs[7],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck4_8",
-				desc_id = "menu_deck4_8_desc",
-				cost = perkdeck_tier_costs[8],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck4_9",
-				desc_id = "menu_deck4_9_desc",
-				cost = perkdeck_tier_costs[9],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			desc_id = "menu_st_spec_4_desc",
-			name_id = "menu_st_spec_4"
-		}
 		self.specializations[perkdeck_indices.crook] = {
 			{
 				name_id = "menu_deck5_1",

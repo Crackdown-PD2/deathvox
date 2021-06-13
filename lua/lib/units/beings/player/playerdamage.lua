@@ -1,3 +1,23 @@
+Hooks:PostHook(PlayerDamage, "init", "dv_post_init", function(self, unit)
+	local player_manager = managers.player
+	
+	if player_manager:has_category_upgrade("player", "rogue_melee_dodge") then
+		self._next_melee_dodge_t = 0
+	end
+	
+	if player_manager:has_category_upgrade("player", "rogue_sniper_dodge") then
+		self._next_sniper_dodge_t = 0
+	end
+	
+	if player_manager:has_category_upgrade("player", "rogue_cloaker_dodge") then
+		self._next_cloaker_dodge_t = 0
+	end
+	
+	if player_manager:has_category_upgrade("player", "rogue_taser_dodge") then
+		self._next_taser_dodge_t = 0
+	end
+end)
+
 function PlayerDamage:damage_bullet(attack_data)
 	if not self:_chk_can_take_dmg() then
 		return
@@ -320,39 +340,19 @@ function PlayerDamage:damage_melee(attack_data)
 	self._last_received_dmg = attack_data.damage
 	self._next_allowed_dmg_t = Application:digest_value(pm:player_timer():time() + self._dmg_interval, true)
 
-	local allow_melee_dodge = false --manual toggle, to be later replaced with a Rogue melee dodge perk check
+	local allow_melee_dodge = self._next_melee_dodge_t and self._next_melee_dodge_t < pm:player_timer():time() --manual toggle, to be later replaced with a Rogue melee dodge perk check
 
 	if allow_melee_dodge and pm:current_state() ~= "bleed_out" and pm:current_state() ~= "bipod" and pm:current_state() ~= "tased" then --self._bleed_out and current_state() ~= "bleed_out" aren't the same thing
-		local dodge_roll = math.random()
-		local dodge_value = tweak_data.player.damage.DODGE_INIT or 0
-		local armor_dodge_chance = pm:body_armor_value("dodge")
-		local skill_dodge_chance = pm:skill_dodge_chance(self._unit:movement():running(), self._unit:movement():crouching(), self._unit:movement():zipline_unit())
-		dodge_value = dodge_value + armor_dodge_chance + skill_dodge_chance
+		self._unit:movement():push(attack_data.push_vel)
+		self._unit:camera():play_shaker("melee_hit", 0.2)
+			
+		self._unit:sound():play("clk_baton_swing", nil, false)
+		self._unit:sound():play("clk_baton_swing", nil, false)
+		
+		self._next_melee_dodge_t = pm:player_timer():time() + 10
+		pm:send_message(Message.OnPlayerDodge)
 
-		if self._temporary_dodge_t and TimerManager:game():time() < self._temporary_dodge_t then
-			dodge_value = dodge_value + self._temporary_dodge
-		end
-
-		local smoke_dodge = 0
-
-		for _, smoke_screen in ipairs(pm._smoke_screen_effects or {}) do
-			if smoke_screen:is_in_smoke(self._unit) then
-				smoke_dodge = tweak_data.projectiles.smoke_screen_grenade.dodge_chance
-
-				break
-			end
-		end
-
-		dodge_value = 1 - (1 - dodge_value) * (1 - smoke_dodge)
-
-		if dodge_roll < dodge_value then
-			--do a push to simulate the dodge + small camera shake + show an indicator (no hit sounds or a blood effect)
-			self._unit:movement():push(attack_data.push_vel)
-			self._unit:camera():play_shaker("melee_hit", 0.2)
-			pm:send_message(Message.OnPlayerDodge)
-
-			return
-		end
+		return
 	end
 
 	local dmg_mul = pm:damage_reduction_skill_multiplier("melee") --the vanilla function has this line, but it also uses bullet damage reduction skills due to it redirecting to damage_bullet to get results
@@ -551,6 +551,55 @@ function PlayerDamage:play_melee_hit_sound_and_effects(attack_data, sound_type, 
 				--some sounds are too low to hear, playing them twice helps and or accentuates a hit even more)
 				self._unit:sound():play(post_event, nil, false)
 				self._unit:sound():play(post_event, nil, false)
+			end
+		end
+	end
+end
+
+function PlayerDamage:damage_tase(attack_data)
+	if self._god_mode then
+		return
+	end
+	
+	local pm = managers.player
+	
+	if self._next_taser_dodge_t and self._next_taser_dodge_t < pm:player_timer():time() then 
+		self._next_taser_dodge_t = pm:player_timer():time() + 10
+		
+		self._unit:sound():play("clk_baton_swing", nil, false)
+		self._unit:sound():play("clk_baton_swing", nil, false)
+
+		self._unit:camera():play_shaker("melee_hit", 0.3)
+		
+		local params = {text = "NARROWLY AVOIDED A TASER'S HOOKS!", time = 1}
+		managers.hud._hud_hint:show(params)
+		
+		return
+	end
+	
+	local cur_state = self._unit:movement():current_state_name()
+
+	if cur_state ~= "tased" and cur_state ~= "fatal" then
+		self:on_tased(false)
+
+		self._tase_data = attack_data
+
+		managers.player:set_player_state("tased")
+
+		local damage_info = {
+			result = {
+				variant = "tase",
+				type = "hurt"
+			}
+		}
+
+		self:_call_listeners(damage_info)
+
+		if attack_data.attacker_unit and attack_data.attacker_unit:alive() and attack_data.attacker_unit:base()._tweak_table == "taser" then
+			attack_data.attacker_unit:sound():say("post_tasing_taunt")
+
+			if managers.blackmarket:equipped_mask().mask_id == tweak_data.achievement.its_alive_its_alive.mask then
+				managers.achievment:award_progress(tweak_data.achievement.its_alive_its_alive.stat)
 			end
 		end
 	end

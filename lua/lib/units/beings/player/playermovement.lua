@@ -130,3 +130,48 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 
 end
+
+function PlayerMovement:on_SPOOCed(enemy_unit)
+	if managers.player:has_category_upgrade("player", "counter_strike_spooc") and self._current_state.in_melee and self._current_state:in_melee() then
+		self._current_state:discharge_melee()
+
+		return "countered"
+	end
+
+	if self._unit:character_damage()._god_mode or self._unit:character_damage():get_mission_blocker("invulnerable") then
+		return
+	end
+	
+	if self._unit:character_damage()._next_cloaker_dodge_t then
+		local pm_timer = managers.player:player_timer():time()
+		if self._unit:character_damage()._next_cloaker_dodge_t <= pm_timer then
+			self._unit:character_damage()._next_cloaker_dodge_t = pm_timer + 10
+		
+			self._unit:sound():play("clk_baton_swing", nil, false)
+			self._unit:sound():play("clk_baton_swing", nil, false)
+
+			self._unit:camera():play_shaker("melee_hit", 0.3)
+		
+			local push_vec = Vector3()
+			local distance = mvector3.direction(push_vec, enemy_unit:movement():m_head_pos(), self._unit:movement():m_pos())
+			mvector3.normalize(push_vec)
+			mvector3.set_z(push_vec, 0)
+			
+			self._unit:movement():push(push_vec * 2000)
+			local params = {text = "NARROWLY AVOIDED A CLOAKER'S KICK!", time = 1}
+			managers.hud._hud_hint:show(params)
+			
+			return
+		end
+	end
+
+	if self._current_state_name == "standard" or self._current_state_name == "carry" or self._current_state_name == "bleed_out" or self._current_state_name == "tased" or self._current_state_name == "bipod" then
+		local state = "incapacitated"
+		state = managers.modifiers:modify_value("PlayerMovement:OnSpooked", state)
+
+		managers.player:set_player_state(state)
+		managers.achievment:award(tweak_data.achievement.finally.award)
+
+		return true
+	end
+end

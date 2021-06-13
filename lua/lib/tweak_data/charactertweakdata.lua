@@ -3100,7 +3100,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.access = "any"
 	self.deathvox_taser.no_retreat = false
 	table.insert(self._enemy_list, "deathvox_taser") 
-
+	
+	self.spooc.dodge_with_grenade = nil
 	self.deathvox_cloaker = deep_clone(self.spooc)
 	--self.deathvox_cloaker.tags = {"spooc"}-- commented out as it was actually breaking the tags
 	table.insert(self.deathvox_cloaker.tags, "takedown")
@@ -3125,6 +3126,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker.no_retreat = false
 	self.deathvox_cloaker.chatter = presets.enemy_chatter.spooc
 	self.deathvox_cloaker.spooc_attack_use_smoke_chance = 0
+	self.deathvox_cloaker.dodge_with_grenade = nil
 	self.deathvox_cloaker.special_deaths = {
 		melee = {
 			[("head"):id():key()] = {

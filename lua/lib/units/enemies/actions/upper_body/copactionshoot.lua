@@ -64,6 +64,11 @@ function CopActionShoot:init(action_desc, common_data)
 
 	local char_tweak = common_data.char_tweak
 	local weapon_usage_tweak = char_tweak.weapon[weap_tweak.usage]
+	
+	if char_tweak.is_special_unit and char_tweak.is_special_unit == "sniper" then
+		self._sniper_enemy = true
+	end
+	
 	self._w_usage_tweak = weapon_usage_tweak
 
 	self._aim_delay_minmax = weapon_usage_tweak.aim_delay or {0, 0}
@@ -924,8 +929,43 @@ function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, falloff, i_range, shoot
 	if att_anim_data and att_anim_data.dodge then
 		hit_chance = hit_chance * 0.5
 	end
-
-	if hit_chance == 0 or hit_chance < 1 and math_random() > hit_chance then
+	
+	local dodge_sniper_shot = nil
+	local hit = nil
+	
+	if hit_chance >= 1 then
+		hit = true
+	elseif hit_chance > 0 then
+		hit = math_random() < hit_chance
+	end
+		
+	
+	if shooting_local_player then
+		if hit then
+			if self._sniper_enemy and shooting_local_player then
+				if att_unit:character_damage()._next_sniper_dodge_t then
+					local pm_timer = managers.player:player_timer():time()
+					if att_unit:character_damage()._next_sniper_dodge_t <= pm_timer then
+						hit = nil
+						
+						att_unit:sound():play_whizby()
+						att_unit:sound():play_whizby()
+						att_unit:sound():play_whizby()
+						att_unit:sound():play_whizby()
+						att_unit:sound():play("clk_baton_swing", nil, false)
+						att_unit:sound():play("clk_baton_swing", nil, false)
+						
+						att_unit:character_damage()._next_sniper_dodge_t = pm_timer + 10
+						
+						local params = {text = "NARROWLY AVOIDED A SNIPER'S SHOT!", time = 1}
+						managers.hud._hud_hint:show(params)
+					end
+				end
+			end
+		end
+	end
+	
+	if not hit then
 		local enemy_vec = temp_vec2
 
 		if shooting_local_player then

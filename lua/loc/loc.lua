@@ -496,28 +496,28 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck3_9 = "Ironclad",
 				menu_deck3_9_desc = "You gain ##+10%## Damage Resistance when you have any amount of Armor.",
 				
+				--Rogue
+				menu_deck4_1 = "Fat Chance",
+				menu_deck4_1_desc = "You gain ##+10%## Dodge Chance.",
+				menu_deck4_2 = "Hands Off",
+				menu_deck4_2_desc = "You are ##guaranteed to Dodge an enemy Melee attack##. This effect has a ##10## second cooldown.",
+				menu_deck4_3 = "Playing the Odds",
+				menu_deck4_3_desc = "Increases your Dodge Chance bonus to ##+20%##.",
+				menu_deck4_4 = "Elusive Target",
+				menu_deck4_4_desc = "You are ##guaranteed to Dodge a Sniper shot##. This effect has a ##10## second cooldown.",
+				menu_deck4_5 = "Tricky Business",
+				menu_deck4_5_desc = "Increases your Dodge Chance bonus to ##+30%##.",
+				menu_deck4_6 = "Kansas City Shuffle",
+				menu_deck4_6_desc = "You are guaranteed to Dodge a Cloaker kick. This effect has a 10 second cooldown.",
+				menu_deck4_7 = "Isai's Wisdom",
+				menu_deck4_7_desc = "Increases your Dodge Chance bonus to ##+40%##.",
+				menu_deck4_8 = "The Electric Slide",
+				menu_deck4_8_desc = "You are ##guaranteed to Dodge a Taser shock##. This effect has a ##10## second cooldown.",
+				menu_deck4_9 = "Smooth Criminal",
+				menu_deck4_9_desc = "You gain a bonus ##+2%## Dodge Chance for every ##2## points of Detection Risk under ##35##, up to ##+20%##.",
+				
 				--[[
 				,
-				
-				--Rogue
-				menu_deck4_1 = "PLACEHOLDER",
-				menu_deck4_1_desc = "PLACEHOLDER",
-				menu_deck4_2 = "PLACEHOLDER",
-				menu_deck4_2_desc = "PLACEHOLDER",
-				menu_deck4_3 = "PLACEHOLDER",
-				menu_deck4_3_desc = "PLACEHOLDER",
-				menu_deck4_4 = "PLACEHOLDER",
-				menu_deck4_4_desc = "PLACEHOLDER",
-				menu_deck4_5 = "PLACEHOLDER",
-				menu_deck4_5_desc = "PLACEHOLDER",
-				menu_deck4_6 = "PLACEHOLDER",
-				menu_deck4_6_desc = "PLACEHOLDER",
-				menu_deck4_7 = "PLACEHOLDER",
-				menu_deck4_7_desc = "PLACEHOLDER",
-				menu_deck4_8 = "PLACEHOLDER",
-				menu_deck4_8_desc = "PLACEHOLDER",
-				menu_deck4_9 = "PLACEHOLDER",
-				menu_deck4_9_desc = "PLACEHOLDER",
 				
 				--Crook
 				menu_deck5_1 = "PLACEHOLDER",
