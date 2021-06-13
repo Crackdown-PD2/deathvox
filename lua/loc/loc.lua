@@ -516,28 +516,33 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck4_9 = "Smooth Criminal",
 				menu_deck4_9_desc = "You gain a bonus ##+2%## Dodge Chance for every ##2## points of Detection Risk under ##35##, up to ##+20%##.",
 				
+				--Crook
+				menu_st_spec_5 = "Crook",
+				menu_deck5_1 = "Extra Padding",
+				menu_deck5_1_desc = "Ballistic Vests gain ##+15## Maximum Armor.",
+				menu_deck5_2 = "Bounce Back",
+				menu_deck5_2_desc = "Ballistic Vests gain ##+20%## Armor Recovery Rate.",
+				menu_deck5_3 = "Vital Protection",
+				menu_deck5_3_desc = "Increases the Maximum Armor bonus for Ballistic Vests to ##+30##.",
+				menu_deck5_4 = "Basic Tailoring",
+				menu_deck5_4_desc = "When wearing a Ballistic Vest, you gain ##+15%## Dodge Chance.",
+				menu_deck5_5 = "Custom Weave",
+				menu_deck5_5_desc = "Increases the Maximum Armor bonus for Ballistic Vests to ##+45##.",
+				menu_deck5_6 = "Keeping Cool",
+				menu_deck5_6_desc = "Increases the Ballistic Vest Armor Recovery Rate bonus to ##+40%##.",
+				menu_deck5_7 = "Prototype Material",
+				menu_deck5_7_desc = "Increases the Maximum Armor bonus for Ballistic Vests to ##+60##.",
+				menu_deck5_8 = "Perfect Fit",
+				menu_deck5_8_desc = "Your Dodge Chance bonus for Ballistic Vests increases to ##+30%##.",
+				menu_deck5_9 = "Borrowed Time",
+				menu_deck5_9_desc = "Instead of being incapacitated when you lose all of your health, you will enter a grace period where you can continue to act for ##4## seconds before falling. During this grace period, you are ##invulnerable## and your weapons ##instantly reload##. Borrowed Time cannot be triggered by fall damage or fire damage.",
+				
+				menu_st_spec_6 = "Hitman, soon lmao",
+				
 				--[[
 				,
 				
-				--Crook
-				menu_deck5_1 = "PLACEHOLDER",
-				menu_deck5_1_desc = "PLACEHOLDER",
-				menu_deck5_2 = "PLACEHOLDER",
-				menu_deck5_2_desc = "PLACEHOLDER",
-				menu_deck5_3 = "PLACEHOLDER",
-				menu_deck5_3_desc = "PLACEHOLDER",
-				menu_deck5_4 = "PLACEHOLDER",
-				menu_deck5_4_desc = "PLACEHOLDER",
-				menu_deck5_5 = "PLACEHOLDER",
-				menu_deck5_5_desc = "PLACEHOLDER",
-				menu_deck5_6 = "PLACEHOLDER",
-				menu_deck5_6_desc = "PLACEHOLDER",
-				menu_deck5_7 = "PLACEHOLDER",
-				menu_deck5_7_desc = "PLACEHOLDER",
-				menu_deck5_8 = "PLACEHOLDER",
-				menu_deck5_8_desc = "PLACEHOLDER",
-				menu_deck5_9 = "PLACEHOLDER",
-				menu_deck5_9_desc = "PLACEHOLDER",
+				
 				
 				--Hitman
 				menu_deck6_1 = "PLACEHOLDER",

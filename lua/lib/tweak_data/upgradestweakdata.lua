@@ -2507,5 +2507,114 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		self.values.player.crook_vest_dodge_addend = {
+			0.15,
+			0.3
+		}
+		self.values.player.crook_vest_armor_addend = {
+			1.5,
+			3,
+			4.5,
+			6
+		}
+		self.values.player.crook_vest_armor_regen = {
+			0.8,
+			0.6,
+			0.4
+		}
+		self.berserker_movement_speed_multiplier = 1
+		self.values.temporary.berserker_damage_multiplier = {
+			{
+				1,
+				4
+			},
+			{
+				1,
+				6
+			}
+		}
+		
+		self.definitions.crook_1 = {
+			name_id = "menu_deck5_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "crook_vest_armor_addend",
+				category = "player"
+			}
+		}
+		self.definitions.crook_2 = {
+			name_id = "menu_deck5_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "crook_vest_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.crook_3 = {
+			name_id = "menu_deck5_3",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "crook_vest_armor_addend",
+				category = "player"
+			}
+		}
+		self.definitions.crook_4 = {
+			name_id = "menu_deck5_4",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "crook_vest_dodge_addend",
+				category = "player"
+			}
+		}
+		self.definitions.crook_5 = {
+			name_id = "menu_deck5_5",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "crook_vest_armor_addend",
+				category = "player"
+			}
+		}
+		self.definitions.crook_6 = {
+			name_id = "menu_deck5_6",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "crook_vest_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.crook_7 = {
+			name_id = "menu_deck5_7",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "crook_vest_armor_addend",
+				category = "player"
+			}
+		}
+		self.definitions.crook_8 = {
+			name_id = "menu_deck5_8",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "crook_vest_dodge_addend",
+				category = "player"
+			}
+		}
+		self.definitions.crook_9 = {
+			name_id = "menu_deck5_9",
+			category = "temporary",
+			upgrade = {
+				value = 1,
+				upgrade = "berserker_damage_multiplier",
+				category = "temporary"
+			}
+		}
+	
 	end
 end)

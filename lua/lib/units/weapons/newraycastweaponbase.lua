@@ -79,6 +79,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 		multiplier = multiplier or 1
 		local shell_games_bonus = 1
 		local pm = managers.player
+		
+		local pm = managers.player
+		
+		if pm:player_unit():character_damage().swansong then
+			return 99
+		end
+		
 		if self._use_shotgun_reload then 
 			shell_games_bonus = pm:upgrade_value("class_shotgun","shell_games_reload_bonus",0) * pm:get_property("shell_games_rounds_loaded",0)
 		end

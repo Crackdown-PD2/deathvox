@@ -100,8 +100,6 @@ function RaycastWeaponBase:is_weapon_subclass(...)
 	return matched
 end
 
-
-
 function RaycastWeaponBase:check_autoaim(from_pos, direction, max_dist, use_aim_assist, autohit_override_data)
 	local autohit = use_aim_assist and self._aim_assist_data or self._autohit_data
 	autohit = autohit_override_data or autohit
@@ -1701,6 +1699,10 @@ if TCDEnabled then
 		multiplier = multiplier or 1
 	--optional multiplier argument is added from cd here as well
 		local pm = managers.player
+		
+		if pm:player_unit():character_damage().swansong then
+			return 99
+		end
 
 		if self:is_weapon_class("class_precision") then
 			local this_machine_data = pm:upgrade_value("weapon","point_and_click_bonus_reload_speed",{0,0})

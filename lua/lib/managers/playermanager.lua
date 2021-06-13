@@ -996,6 +996,12 @@ function PlayerManager:body_armor_value(category, override_value, default)
 	return self:upgrade_value_by_level("player", "body_armor", category, {})[override_value or armor_data.upgrade_level] or default or 0
 end
 
+local crook_armor_types = {
+	level_2 = true,
+	level_3 = true,
+	level_4 = true
+}
+
 function PlayerManager:body_armor_skill_multiplier(override_armor)
 	local multiplier = 1
 	multiplier = multiplier + self:upgrade_value("player", "armorer_armor_mul", 1) - 1
@@ -1011,9 +1017,41 @@ function PlayerManager:body_armor_skill_multiplier(override_armor)
 	return multiplier
 end
 
+function PlayerManager:body_armor_skill_addend(override_armor)
+	local addend = 0
+	addend = addend + self:upgrade_value("player", tostring(override_armor or managers.blackmarket:equipped_armor(true, true)) .. "_armor_addend", 0)
+
+	if self:has_category_upgrade("player", "armor_increase") then
+		local health_multiplier = self:health_skill_multiplier()
+		local max_health = (PlayerDamage._HEALTH_INIT + self:health_skill_addend()) * health_multiplier
+		addend = addend + max_health * self:upgrade_value("player", "armor_increase", 1)
+	end
+	
+	if self:has_category_upgrade("player", "crook_vest_armor_addend") then
+		local armor = tostring(override_armor or managers.blackmarket:equipped_armor(true, true))
+
+		if crook_armor_types[armor] then
+			addend = addend + self:upgrade_value("player", "crook_vest_armor_addend", 0)
+		end
+	end
+
+	addend = addend + self:upgrade_value("team", "crew_add_armor", 0)
+
+	return addend
+end
+
 function PlayerManager:body_armor_regen_multiplier(moving, health_ratio)
 	local multiplier = 1
 	multiplier = multiplier * self:upgrade_value("player", "armorer_armor_regen_mul", 1)
+	
+	if self:has_category_upgrade("player", "crook_vest_armor_regen") then
+		local armor = tostring(override_armor or managers.blackmarket:equipped_armor(true, true))
+		
+		if crook_armor_types[armor] then
+			multiplier = multiplier * self:upgrade_value("player", "crook_vest_armor_regen", 0)
+		end
+	end
+	
 	--log("regen_mul: " .. tostring(multiplier) .. "")
 	multiplier = multiplier * self:upgrade_value("player", "armor_regen_timer_multiplier_tier", 1)
 	multiplier = multiplier * self:upgrade_value("player", "armor_regen_timer_multiplier", 1)
@@ -1067,6 +1105,15 @@ function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, overri
 
 	local detection_risk_add_dodge_chance = managers.player:upgrade_value("player", "detection_risk_add_dodge_chance")
 	chance = chance + self:get_value_from_risk_upgrade(detection_risk_add_dodge_chance, detection_risk)
+	
+	if self:has_category_upgrade("player", "crook_vest_dodge_addend") then
+		local armor = tostring(override_armor or managers.blackmarket:equipped_armor(true, true))
+		
+		if crook_armor_types[armor] then
+			chance = chance + self:upgrade_value("player", "crook_vest_dodge_addend", 0)
+		end
+	end
+	
 	chance = chance + self:upgrade_value("player", tostring(override_armor or managers.blackmarket:equipped_armor(true, true)) .. "_dodge_addend", 0)
 	chance = chance + self:upgrade_value("team", "crew_add_dodge", 0)
 	chance = chance + self:temporary_upgrade_value("temporary", "pocket_ecm_kill_dodge", 0)
