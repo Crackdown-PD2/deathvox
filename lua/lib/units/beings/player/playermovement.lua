@@ -132,8 +132,16 @@ if deathvox:IsTotalCrackdownEnabled() then
 end
 
 function PlayerMovement:on_SPOOCed(enemy_unit)
+
 	if managers.player:has_category_upgrade("player", "counter_strike_spooc") and self._current_state.in_melee and self._current_state:in_melee() then
 		self._current_state:discharge_melee()
+		local comeback_strike = managers.player:has_category_upgrade("player", "infiltrator_comeback_strike")
+		
+		if comeback_strike then
+			local ray = self._unit:raycast("ray", self._unit:movement():m_head_pos(), enemy_unit:movement():m_head_pos(), "slot_mask", managers.slot:get_mask("bullet_impact_targets"), "sphere_cast_radius", 20, "ray_type", "body melee")
+			
+			self._unit:movement():current_state():_do_melee_damage(managers.player:player_timer():time(), nil, ray, nil, nil, true)
+		end
 
 		return "countered"
 	end

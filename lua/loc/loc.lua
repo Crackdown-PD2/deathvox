@@ -578,28 +578,28 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck7_9 = "Blessing of the Strigidae",
 				menu_deck7_9_desc = "You can ##freely rotate your camera## while Interacting with something.",
 				
+				--Infiltrator
+				menu_deck8_1 = "Frontliner",
+				menu_deck8_1_desc = "Charging your $ICN_MELMelee Weapon, holding the $ICN_SAW##OVE9000 Saw##, or hitting an enemy with a $ICN_MELMelee Weapon grants you ##+20%## Damage Resistance for ##5## seconds.",
+				menu_deck8_2 = "Man Opener",
+				menu_deck8_2_desc = "Killing an enemy with a $ICN_MELMelee Weapon or the ICN_SAW##OVE9000 Saw## restores ##2%## of your Maximum Health.",
+				menu_deck8_3 = "Eye of The Tiger",
+				menu_deck8_3_desc = "You become ##immune to the visual effect of Flashbangs##.",
+				menu_deck8_4 = "Bulk Up",
+				menu_deck8_4_desc = "You gain ##+40%## Maximum Health.",
+				menu_deck8_5 = "Grit",
+				menu_deck8_5_desc = "You gain ##+10%## Damage Resistance.",
+				menu_deck8_6 = "Playing Rough",
+				menu_deck8_6_desc = "Killing an enemy with a $ICN_MELMelee Weapon or the ICN_SAW##OVE9000 Saw## restores ##2%## of your Maximum Armor.",
+				menu_deck8_7 = "Cross-Counter",
+				menu_deck8_7_desc = "If you are struck by an enemy melee attack or Cloaker kick while Charging your $ICN_MELMelee Weapon, you will ##automatically counter-attack##, avoiding the attack and performing a fully Charged $ICN_MELMelee Attack in return.",
+				menu_deck8_8 = "Scar Tissue",
+				menu_deck8_8_desc = "You gain ##+40%## Maximum Armor.",
+				menu_deck8_9 = "Insulated",
+				menu_deck8_9_desc = "You ##automatically break out of being shocked## by a Taser after ##1.5## seconds.",
+				
 				--[[
 				,
-				
-				--Infiltrator
-				menu_deck8_1 = "PLACEHOLDER",
-				menu_deck8_1_desc = "PLACEHOLDER",
-				menu_deck8_2 = "PLACEHOLDER",
-				menu_deck8_2_desc = "PLACEHOLDER",
-				menu_deck8_3 = "PLACEHOLDER",
-				menu_deck8_3_desc = "PLACEHOLDER",
-				menu_deck8_4 = "PLACEHOLDER",
-				menu_deck8_4_desc = "PLACEHOLDER",
-				menu_deck8_5 = "PLACEHOLDER",
-				menu_deck8_5_desc = "PLACEHOLDER",
-				menu_deck8_6 = "PLACEHOLDER",
-				menu_deck8_6_desc = "PLACEHOLDER",
-				menu_deck8_7 = "PLACEHOLDER",
-				menu_deck8_7_desc = "PLACEHOLDER",
-				menu_deck8_8 = "PLACEHOLDER",
-				menu_deck8_8_desc = "PLACEHOLDER",
-				menu_deck8_9 = "PLACEHOLDER",
-				menu_deck8_9_desc = "PLACEHOLDER",
 				
 				--Sociopath
 				menu_deck9_1 = "PLACEHOLDER",

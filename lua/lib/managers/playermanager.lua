@@ -91,8 +91,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 	
 	function PlayerManager:damage_reduction_skill_multiplier(damage_type)
-	--the only changes are the armor plates dmg resist, and the nearby-hostage dmg resist bonus from Leverage
 		local multiplier = 1
+		
+		if self._melee_stance_dr_t then
+			multiplier = multiplier * 0.8
+		end
+		
+		multiplier = multiplier * self:upgrade_value("player", "infiltrator_passive_DR", 1)
 		multiplier = multiplier * self:temporary_upgrade_value("temporary", "dmg_dampener_outnumbered", 1)
 		multiplier = multiplier * self:temporary_upgrade_value("temporary", "dmg_dampener_outnumbered_strong", 1)
 		multiplier = multiplier * self:temporary_upgrade_value("temporary", "dmg_dampener_close_contact", 1)
@@ -1196,6 +1201,20 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id)
 
 		damage_ext:change_regenerate_speed(amount * multiplier, tweak_data.upgrades.kill_change_regenerate_speed_percentage)
 	end
+	
+	if damage_ext then
+		if variant == "melee" then
+			damage_ext:restore_health(self:upgrade_value("player", "infiltrator_melee_heal", 0))
+			damage_ext:restore_armor_percent(self:upgrade_value("player", "infiltrator_armor_restore", 0))
+		else
+			local equipped_unit = self:get_current_state()._equipped_unit:base()
+				
+			if equipped_unit:is_category("saw") then
+				damage_ext:restore_health(self:upgrade_value("player", "infiltrator_melee_heal", 0))
+				damage_ext:restore_armor_percent(self:upgrade_value("player", "infiltrator_armor_restore", 0))
+			end
+		end
+	end
 
 	local gain_throwable_per_kill = managers.player:upgrade_value("team", "crew_throwable_regen", 0)
 
@@ -1257,4 +1276,105 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id)
 
 		player_unit:movement():add_stamina(stamina_regen)
 	end
+end
+
+function PlayerManager:on_damage_dealt(unit, damage_info)
+	local player_unit = self:player_unit()
+
+	if not player_unit then
+		return
+	end
+
+	local t = Application:time()
+
+	self:_check_damage_to_hot(t, unit, damage_info)
+	self:_check_damage_to_cops(t, unit, damage_info)
+	
+	if self:has_category_upgrade("player", "infiltrator_melee_stance_DR") then
+		local current_state = self:get_current_state()
+		
+		if damage_info.variant == "melee" then
+			self._melee_stance_dr_t = t + 5
+		else
+			local equipped_unit = current_state._equipped_unit:base()
+			
+			if equipped_unit:is_category("saw") and damage_info.variant == "bullet" then
+				self._melee_stance_dr_t = t + 5
+			end
+		end
+	end
+
+	if self._on_damage_dealt_t and t < self._on_damage_dealt_t then
+		return
+	end
+
+	self._on_damage_dealt_t = t + (tweak_data.upgrades.on_damage_dealt_cooldown or 0)
+end
+
+function PlayerManager:update(t, dt)
+	self._message_system:update()
+	self:_update_timers(t)
+
+	if self._need_to_send_player_status then
+		self._need_to_send_player_status = nil
+
+		self:need_send_player_status()
+	end
+
+	self._sent_player_status_this_frame = nil
+	local local_player = self:local_player()
+
+	if self:has_category_upgrade("player", "close_to_hostage_boost") and (not self._hostage_close_to_local_t or self._hostage_close_to_local_t <= t) then
+		self._is_local_close_to_hostage = alive(local_player) and managers.groupai and managers.groupai:state():is_a_hostage_within(local_player:movement():m_pos(), tweak_data.upgrades.hostage_near_player_radius)
+		self._hostage_close_to_local_t = t + tweak_data.upgrades.hostage_near_player_check_t
+	end
+	
+	if self:has_category_upgrade("player", "infiltrator_melee_stance_DR") then
+		local current_state = self:get_current_state()
+		
+		if current_state then
+			if current_state.in_melee and current_state:in_melee() then
+				self._melee_stance_dr_t = t + 5
+			else
+				local equipped_unit = current_state._equipped_unit:base()
+				
+				if equipped_unit:is_category("saw") then
+					self._melee_stance_dr_t = t + 5
+				end
+			end
+		end
+	end
+		
+	if self._melee_stance_dr_t and self._melee_stance_dr_t < t then
+		self._melee_stance_dr_t = nil
+	end
+
+	self:_update_damage_dealt(t, dt)
+
+	if #self._global.synced_cocaine_stacks >= 4 then
+		local amount = 0
+
+		for i, stack in pairs(self._global.synced_cocaine_stacks) do
+			if stack.in_use then
+				amount = amount + stack.amount
+			end
+
+			if PlayerManager.TARGET_COCAINE_AMOUNT <= amount then
+				managers.achievment:award("mad_5")
+			end
+		end
+	end
+
+	self._coroutine_mgr:update(t, dt)
+	self._action_mgr:update(t, dt)
+
+	if self._unseen_strike and not self._coroutine_mgr:is_running(PlayerAction.UnseenStrike) then
+		local data = self:upgrade_value("player", "unseen_increased_crit_chance", 0)
+
+		if data ~= 0 then
+			self._coroutine_mgr:add_coroutine(PlayerAction.UnseenStrike, PlayerAction.UnseenStrike, self, data.min_time, data.max_duration, data.crit_chance)
+		end
+	end
+
+	self:update_smoke_screens(t, dt)
 end

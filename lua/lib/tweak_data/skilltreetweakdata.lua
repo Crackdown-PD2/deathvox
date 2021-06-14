@@ -2796,120 +2796,122 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		name_id = "menu_st_spec_7"
 	}
 	
+	self.specializations[perkdeck_indices.infiltrator] = {
+		{
+			name_id = "menu_deck8_1",
+			desc_id = "menu_deck8_1_desc",
+			cost = perkdeck_tier_costs[1],
+			upgrades = {
+				"infiltrator_1"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck8_2",
+			desc_id = "menu_deck8_2_desc",
+			cost = perkdeck_tier_costs[2],
+			upgrades = {
+				"infiltrator_2"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck8_3",
+			desc_id = "menu_deck8_3_desc",
+			cost = perkdeck_tier_costs[3],
+			upgrades = {
+				"infiltrator_3"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck8_4",
+			desc_id = "menu_deck8_4_desc",
+			cost = perkdeck_tier_costs[4],
+			upgrades = {
+				"infiltrator_4"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck8_5",
+			desc_id = "menu_deck8_5_desc",
+			cost = perkdeck_tier_costs[5],
+			upgrades = {
+				"infiltrator_5"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck8_6",
+			desc_id = "menu_deck8_6_desc",
+			cost = perkdeck_tier_costs[6],
+			upgrades = {
+				"infiltrator_6"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck8_7",
+			desc_id = "menu_deck8_7_desc",
+			cost = perkdeck_tier_costs[7],
+			upgrades = {
+				"infiltrator_7",
+				"player_counter_strike_melee",
+				"player_counter_strike_spooc"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck8_8",
+			desc_id = "menu_deck8_8_desc",
+			cost = perkdeck_tier_costs[8],
+			upgrades = {
+				"infiltrator_8"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck8_9",
+			desc_id = "menu_deck8_9_desc",
+			cost = perkdeck_tier_costs[9],
+			upgrades = {
+				"infiltrator_9"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		desc_id = "menu_st_spec_8_desc",
+		name_id = "menu_st_spec_8"
+	}
+	
 	if false then --reamining perk decks will be added as time goes on; template data is here
-		
-		self.specializations[perkdeck_indices.infiltrator] = {
-			{
-				name_id = "menu_deck8_1",
-				desc_id = "menu_deck8_1_desc",
-				cost = perkdeck_tier_costs[1],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck8_2",
-				desc_id = "menu_deck8_2_desc",
-				cost = perkdeck_tier_costs[2],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck8_3",
-				desc_id = "menu_deck8_3_desc",
-				cost = perkdeck_tier_costs[3],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck8_4",
-				desc_id = "menu_deck8_4_desc",
-				cost = perkdeck_tier_costs[4],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck8_5",
-				desc_id = "menu_deck8_5_desc",
-				cost = perkdeck_tier_costs[5],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck8_6",
-				desc_id = "menu_deck8_6_desc",
-				cost = perkdeck_tier_costs[6],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck8_7",
-				desc_id = "menu_deck8_7_desc",
-				cost = perkdeck_tier_costs[7],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck8_8",
-				desc_id = "menu_deck8_8_desc",
-				cost = perkdeck_tier_costs[8],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck8_9",
-				desc_id = "menu_deck8_9_desc",
-				cost = perkdeck_tier_costs[9],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			desc_id = "menu_st_spec_8_desc",
-			name_id = "menu_st_spec_8"
-		}
 		
 		self.specializations[perkdeck_indices.sociopath] = {
 			{

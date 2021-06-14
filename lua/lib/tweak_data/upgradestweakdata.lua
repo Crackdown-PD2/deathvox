@@ -2818,5 +2818,99 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		
+		--Infiltrator aka the deck fug's gonna be using until the end of time
+		self.values.player.infiltrator_melee_stance_DR = {true}
+		self.values.player.infiltrator_melee_heal = {0.02}
+		self.values.player.infiltrator_flash_immunity = {true}
+		self.values.player.infiltrator_max_health_mul = {1.4}
+		self.values.player.infiltrator_passive_DR = {0.9}
+		self.values.player.infiltrator_armor_restore = {0.02}
+		self.values.player.infiltrator_comeback_strike = {true} --this is used to make sure counters actually deal damage
+		self.values.player.infiltrator_max_armor_mul = {1.4}
+		self.values.player.infiltrator_taser_breakout = {true}
+		
+		self.definitions.infiltrator_1 = {
+			name_id = "menu_deck8_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "infiltrator_melee_stance_DR",
+				category = "player"
+			}
+		}
+		self.definitions.infiltrator_2 = {
+			name_id = "menu_deck8_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "infiltrator_melee_heal",
+				category = "player"
+			}
+		}
+		self.definitions.infiltrator_3 = {
+			name_id = "menu_deck8_3",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "infiltrator_flash_immunity",
+				category = "player"
+			}
+		}
+		self.definitions.infiltrator_4 = {
+			name_id = "menu_deck8_4",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "infiltrator_max_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.infiltrator_5 = {
+			name_id = "menu_deck8_5",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "infiltrator_passive_DR",
+				category = "player"
+			}
+		}
+		self.definitions.infiltrator_6 = {
+			name_id = "menu_deck8_6",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "infiltrator_armor_restore",
+				category = "player"
+			}
+		}
+		self.definitions.infiltrator_7 = {
+			name_id = "menu_deck8_7",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "infiltrator_comeback_strike",
+				category = "player"
+			}
+		}
+		self.definitions.infiltrator_8 = {
+			name_id = "menu_deck8_8",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "infiltrator_max_armor_mul",
+				category = "player"
+			}
+		}
+		self.definitions.infiltrator_9 = {
+			name_id = "menu_deck8_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "infiltrator_taser_breakout",
+				category = "player"
+			}
+		}
+		
 	end
 end)

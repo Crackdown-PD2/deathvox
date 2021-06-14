@@ -92,7 +92,7 @@ function SpoocLogicAttack._upd_spooc_attack(data, my_data)
 			if focus_enemy.criminal_record.status then
 				return
 			elseif SpoocLogicAttack._is_last_standing_criminal(focus_enemy) then
-				return
+				--return
 			end
 		end
 

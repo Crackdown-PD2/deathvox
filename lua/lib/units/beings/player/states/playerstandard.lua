@@ -619,12 +619,12 @@ local melee_vars = {
 	"player_melee",
 	"player_melee_var2"
 }
-function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_entry, hand_id)
+function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_entry, hand_id, force_max_charge)
 	melee_entry = melee_entry or managers.blackmarket:equipped_melee_weapon()
 	local melee_td = tweak_data.blackmarket.melee_weapons[melee_entry]
 	local instant_hit = melee_td.instant
 	local melee_damage_delay = melee_td.melee_damage_delay or 0
-	local charge_lerp_value = instant_hit and 0 or self:_get_melee_charge_lerp_value(t, melee_damage_delay)
+	local charge_lerp_value = instant_hit and 0 or force_max_charge and 1 or self:_get_melee_charge_lerp_value(t, melee_damage_delay)
 
 	self._ext_camera:play_shaker(melee_vars[math.random(#melee_vars)], math.max(0.3, charge_lerp_value))
 
@@ -1041,6 +1041,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 			return
 		end
+		
+		managers.player._melee_stance_dr_t = t + 5
 
 		self:_stance_entered()
 

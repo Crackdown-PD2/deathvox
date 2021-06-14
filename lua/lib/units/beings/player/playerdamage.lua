@@ -18,6 +18,27 @@ Hooks:PostHook(PlayerDamage, "init", "dv_post_init", function(self, unit)
 	end
 end)
 
+function PlayerDamage:restore_armor_percent(armor_restored)
+	if self._dead or self._bleed_out or self._check_berserker_done then
+		return
+	end
+
+	local max_armor = self:_max_armor()
+	local armor = self:get_real_armor()
+	local new_armor = max_armor * armor_restored
+	
+	new_armor = armor + new_armor
+	
+	new_armor = math.min(new_armor, max_armor)
+	
+	self:set_armor(new_armor)
+	self:_send_set_armor()
+
+	if self._unit:sound() and new_armor ~= armor and new_armor == max_armor then
+		self._unit:sound():play("shield_full_indicator")
+	end
+end
+
 function PlayerDamage:damage_bullet(attack_data)
 	if not self:_chk_can_take_dmg() then
 		return
@@ -296,10 +317,18 @@ function PlayerDamage:damage_melee(attack_data)
 
 	if can_counter_strike and self._unit:movement():current_state().in_melee and self._unit:movement():current_state():in_melee() then
 		if attack_data.attacker_unit and alive(attack_data.attacker_unit) and attack_data.attacker_unit:base() then
-			local is_dozer = attack_data.attacker_unit:base().has_tag and attack_data.attacker_unit:base():has_tag("tank")
+			local comeback_strike = pm:has_category_upgrade("player", "infiltrator_comeback_strike")
+			local is_dozer = not comeback_strike and attack_data.attacker_unit:base().has_tag and attack_data.attacker_unit:base():has_tag("tank")
 
 			--prevent the player from countering Dozers or other players through FF, for obvious reasons
 			if not attack_data.attacker_unit:base().is_husk_player and not is_dozer then
+			
+				if comeback_strike then
+					local ray = self._unit:raycast("ray", self._unit:movement():m_head_pos(), attack_data.attacker_unit:movement():m_head_pos(), "slot_mask", managers.slot:get_mask("bullet_impact_targets"), "sphere_cast_radius", 20, "ray_type", "body melee")
+					
+					self._unit:movement():current_state():_do_melee_damage(pm:player_timer():time(), nil, ray, nil, nil, true)
+				end	
+				
 				self._unit:movement():current_state():discharge_melee()
 
 				return "countered"
