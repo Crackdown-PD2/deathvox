@@ -67,6 +67,10 @@ Hooks:PostHook(PlayerManager,"init","tcd_playermanager_init",function(self)
 end)
 
 if deathvox:IsTotalCrackdownEnabled() then
+	function PlayerManager:use_messiah_charge()
+		--nothing
+	end
+
 	function PlayerManager:check_equipment_placement_valid(player, equipment)
 		local equipment_data = managers.player:equipment_data_by_name(equipment)
 
@@ -1043,6 +1047,8 @@ end
 function PlayerManager:body_armor_regen_multiplier(moving, health_ratio)
 	local multiplier = 1
 	multiplier = multiplier * self:upgrade_value("player", "armorer_armor_regen_mul", 1)
+	multiplier = multiplier * self:upgrade_value("player", "hitman_armor_regen", 1)
+	
 	
 	if self:has_category_upgrade("player", "crook_vest_armor_regen") then
 		local armor = tostring(override_armor or managers.blackmarket:equipped_armor(true, true))

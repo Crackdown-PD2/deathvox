@@ -537,32 +537,30 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck5_9 = "Borrowed Time",
 				menu_deck5_9_desc = "Instead of being incapacitated when you lose all of your health, you will enter a grace period where you can continue to act for ##4## seconds before falling. During this grace period, you are ##invulnerable## and your weapons ##instantly reload##. Borrowed Time cannot be triggered by fall damage or fire damage.",
 				
-				menu_st_spec_6 = "Hitman, soon lmao",
+				--Hitman
+				menu_st_spec_6 = "Hitman",
+				menu_deck6_1 = "Aerodynamic",
+				menu_deck6_1_desc = "You gain ##+10%## Armor Recovery Rate.",
+				menu_deck6_2 = "Revolution 909",
+				menu_deck6_2_desc = "Your Armor will Recover ##2## seconds after being broken, no matter the situation. ",
+				menu_deck6_3 = "High Fidelity",
+				menu_deck6_3_desc = "Your Armor Recovery Rate bonus increases to ##+25%##.",
+				menu_deck6_4 = "Rollin & Scratchin",
+				menu_deck6_4_desc = "Revolution 909 now activates after ##1.75## seconds.",
+				menu_deck6_5 = "Fresh",
+				menu_deck6_5_desc = "Your Armor Recovery Rate bonus increases to ##+45%##.",
+				menu_deck6_6 = "Steam Machine",
+				menu_deck6_6_desc = "Revolution 909 now activates after ##1.5## seconds.",
+				menu_deck6_7 = "Face to Face",
+				menu_deck6_7_desc = "Your Armor Recovery Rate bonus increases to ##+70%##.",
+				menu_deck6_8 = "Hitmen After All",
+				menu_deck6_8_desc = "Revolution 909 now activates after ##1.25## seconds.",
+				menu_deck6_9 = "One More Time",
+				menu_deck6_9_desc = "You become ##Invulnerable while in bleedout##. While in bleedout, you can ##Revive yourself by killing an enemy and then pressing Jump##.",
 				
 				--[[
 				,
 				
-				
-				
-				--Hitman
-				menu_deck6_1 = "PLACEHOLDER",
-				menu_deck6_1_desc = "PLACEHOLDER",
-				menu_deck6_2 = "PLACEHOLDER",
-				menu_deck6_2_desc = "PLACEHOLDER",
-				menu_deck6_3 = "PLACEHOLDER",
-				menu_deck6_3_desc = "PLACEHOLDER",
-				menu_deck6_4 = "PLACEHOLDER",
-				menu_deck6_4_desc = "PLACEHOLDER",
-				menu_deck6_5 = "PLACEHOLDER",
-				menu_deck6_5_desc = "PLACEHOLDER",
-				menu_deck6_6 = "PLACEHOLDER",
-				menu_deck6_6_desc = "PLACEHOLDER",
-				menu_deck6_7 = "PLACEHOLDER",
-				menu_deck6_7_desc = "PLACEHOLDER",
-				menu_deck6_8 = "PLACEHOLDER",
-				menu_deck6_8_desc = "PLACEHOLDER",
-				menu_deck6_9 = "PLACEHOLDER",
-				menu_deck6_9_desc = "PLACEHOLDER",
 				
 				--Burglar
 				menu_deck7_1 = "PLACEHOLDER",

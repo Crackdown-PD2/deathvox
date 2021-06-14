@@ -33,6 +33,8 @@ function PlayerDamage:damage_bullet(attack_data)
 
 	if self:is_friendly_fire(attack_data.attacker_unit) then
 		return
+	elseif self._bleed_out and managers.player:has_category_upgrade("player", "hitman_bleedout_invuln") then
+		return
 	elseif self._god_mode then
 		if attack_data.damage > 0 then
 			self:_send_damage_drama(attack_data, attack_data.damage)
@@ -314,6 +316,8 @@ function PlayerDamage:damage_melee(attack_data)
 	}
 
 	if self:is_friendly_fire(attack_data.attacker_unit) then
+		return
+	elseif self._bleed_out and managers.player:has_category_upgrade("player", "hitman_bleedout_invuln") then
 		return
 	elseif self._god_mode then
 		if attack_data.damage > 0 then
@@ -621,6 +625,8 @@ function PlayerDamage:damage_fire(attack_data)
 		return
 	elseif self:is_friendly_fire(attack_data.attacker_unit) then
 		return
+	elseif self._bleed_out and managers.player:has_category_upgrade("player", "hitman_bleedout_invuln") then
+		return
 	end
 
 	local damage_info = {
@@ -713,6 +719,8 @@ function PlayerDamage:damage_explosion(attack_data)
 	if attack_data.range < distance then
 		return
 	elseif self:is_friendly_fire(attack_data.attacker_unit) then
+		return
+	elseif self._bleed_out and managers.player:has_category_upgrade("player", "hitman_bleedout_invuln") then
 		return
 	end
 

@@ -2507,6 +2507,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		--Crook
 		self.values.player.crook_vest_dodge_addend = {
 			0.15,
 			0.3
@@ -2615,6 +2616,111 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "temporary"
 			}
 		}
-	
+		
+		--Hitman After All
+		self.values.player.hitman_armor_regen = {
+			0.9,
+			0.75,
+			0.55,
+			0.3
+		}
+		self.values.player.passive_always_regen_armor = {
+			2,
+			1.75,
+			1.5,
+			1.25
+		}
+		self.values.player.hitman_bleedout_invuln = {true}
+		
+		self.definitions.hitman_1 = {
+			name_id = "menu_deck6_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "hitman_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.hitman_2 = {
+			name_id = "menu_deck6_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "passive_always_regen_armor",
+				category = "player"
+			}
+		}
+		self.definitions.hitman_3 = {
+			name_id = "menu_deck6_3",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "hitman_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.hitman_4 = {
+			name_id = "menu_deck6_4",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "passive_always_regen_armor",
+				category = "player"
+			}
+		}
+		self.definitions.hitman_5 = {
+			name_id = "menu_deck6_5",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "hitman_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.hitman_6 = {
+			name_id = "menu_deck6_6",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "passive_always_regen_armor",
+				category = "player"
+			}
+		}
+		self.definitions.hitman_7 = {
+			name_id = "menu_deck6_7",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "hitman_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.hitman_8 = {
+			name_id = "menu_deck6_8",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "passive_always_regen_armor",
+				category = "player"
+			}
+		}
+		self.definitions.hitman_9_messiah = {
+			name_id = "menu_deck6_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "messiah_revive_from_bleed_out",
+				category = "player"
+			}
+		}
+		self.definitions.hitman_9_bleedout_invuln = {
+			name_id = "menu_deck6_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "hitman_bleedout_invuln",
+				category = "player"
+			}
+		}
 	end
 end)
