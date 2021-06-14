@@ -2722,5 +2722,101 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
+		
+		--Burglar
+		self.values.player.burglar_stealth_interaction_speed_mul = {
+			0.9,
+			0.8,
+			0.7,
+			0.6
+		}
+		self.values.player.burglar_max_concealment = {true}
+		self.values.player.burglar_fall_damage_resist = {true}
+		self.values.player.burglar_body_interaction_speed_mul = {0.8}
+		self.values.player.burglar_pager_interaction_speed_mul = {0.9}
+		self.values.player.burglar_camera_freeturn = {true}
+		
+		self.definitions.burglar_1 = {
+			name_id = "menu_deck7_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_stealth_interaction_speed_mul",
+				category = "player"
+			}
+		}
+		self.definitions.burglar_2 = {
+			name_id = "menu_deck7_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_max_concealment",
+				category = "player"
+			}
+		}
+		self.definitions.burglar_3 = {
+			name_id = "menu_deck7_3",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "burglar_stealth_interaction_speed_mul",
+				category = "player"
+			}
+		}
+		self.definitions.burglar_4 = {
+			name_id = "menu_deck7_4",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_fall_damage_resist",
+				category = "player"
+			}
+		}
+		self.definitions.burglar_5 = {
+			name_id = "menu_deck7_5",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "burglar_stealth_interaction_speed_mul",
+				category = "player"
+			}
+		}
+		self.definitions.burglar_6 = {
+			name_id = "menu_deck7_6",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_body_interaction_speed_mul",
+				category = "player"
+			}
+		}
+		self.definitions.burglar_7 = {
+			name_id = "menu_deck7_7",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "burglar_stealth_interaction_speed_mul",
+				category = "player"
+			}
+		}
+		self.definitions.burglar_8 = {
+			name_id = "menu_deck7_8",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_pager_interaction_speed_mul",
+				category = "player"
+			}
+		}
+		self.definitions.burglar_9 = {
+			name_id = "menu_deck7_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_camera_freeturn",
+				category = "player"
+			}
+		}
+		
 	end
 end)

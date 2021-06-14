@@ -19,9 +19,18 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		local multiplier = 1
 
-		if self.tweak_data ~= "corpse_alarm_pager" then
+		
+		if self.tweak_data == "corpse_dispose" then
+			multiplier = multiplier * managers.player:upgrade_value("player", "burglar_body_interaction_speed_mul")
+		elseif self.tweak_data == "corpse_alarm_pager" then
+			multiplier = multiplier * managers.player:upgrade_value("player", "burglar_pager_interaction_speed_mul")
+		else
 			multiplier = multiplier * managers.player:crew_ability_upgrade_value("crew_interact", 1)
 			multiplier = multiplier * managers.player:team_upgrade_value("crewchief","passive_interaction_speed_multiplier",1)
+			
+			if managers.groupai:state():whisper_mode() then
+				multiplier = multiplier * managers.player:upgrade_value("player", "burglar_stealth_interaction_speed_mul")
+			end
 		end
 
 		if self.tweak_data == "hostage_convert" then 

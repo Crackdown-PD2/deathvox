@@ -1486,7 +1486,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	end
 	
-
 	local orig_throw_grenade = PlayerStandard._check_action_throw_grenade
 	function PlayerStandard:_check_action_throw_grenade(t, input, ...)
 		local action_wanted = input.btn_throw_grenade_press
@@ -1590,8 +1589,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self:_stance_entered()
 	end
 
-
-
 	function PlayerStandard:_start_action_use_throwable_equipment(t,equipment_data)
 	
 		self:_interupt_action_reload(t)
@@ -1651,8 +1648,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end
 		end
 	end
-	
-	
+		
 	function PlayerStandard:_interupt_action_use_throwable_equipment(t, input, complete, equipment_data)
 
 		if self._use_throwable_equipment_expire_t then
@@ -1706,7 +1702,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 	end
 	
-	
 	function PlayerStandard:_update_throw_grenade_timers(t,input,...)
 		if self._use_throwable_equipment_expire_t then 
 			return self:_update_throwable_equipment_timers(t,...)
@@ -1731,6 +1726,76 @@ if deathvox:IsTotalCrackdownEnabled() then
 	local orig_deploying_check = PlayerStandard.is_deploying
 	function PlayerStandard:is_deploying(...)
 		return orig_deploying_check(self,...) or self._use_throwable_equipment_expire_t
+	end
+
+	function PlayerStandard:_check_action_interact(t, input)
+		local keyboard = self._controller.TYPE == "pc" or managers.controller:get_default_wrapper_type() == "pc"
+		local new_action, timer, interact_object = nil
+
+		if input.btn_interact_press then
+			if _G.IS_VR then
+				self._interact_hand = input.btn_interact_left_press and PlayerHand.LEFT or PlayerHand.RIGHT
+			end
+
+			if not self:_action_interact_forbidden() then
+				new_action, timer, interact_object = self._interaction:interact(self._unit, input.data, self._interact_hand)
+
+				if new_action then
+					self:_play_interact_redirect(t, input)
+				end
+
+				if timer then
+					new_action = true
+					
+					if not managers.player:has_category_upgrade("player", "burglar_camera_freeturn") then
+						self._ext_camera:camera_unit():base():set_limits(80, 50)
+					end
+					
+					self:_start_action_interact(t, input, timer, interact_object)
+				end
+
+				if not new_action then
+					self._start_intimidate = true
+					self._start_intimidate_t = t
+				end
+			end
+		end
+
+		local secondary_delay = tweak_data.team_ai.stop_action.delay
+		local force_secondary_intimidate = false
+
+		if not new_action and keyboard and input.btn_interact_secondary_press then
+			force_secondary_intimidate = true
+		end
+
+		if input.btn_interact_release then
+			local released = true
+
+			if _G.IS_VR then
+				local release_hand = input.btn_interact_left_release and PlayerHand.LEFT or PlayerHand.RIGHT
+				released = release_hand == self._interact_hand
+			end
+
+			if released then
+				if self._start_intimidate and not self:_action_interact_forbidden() then
+					if t < self._start_intimidate_t + secondary_delay then
+						self:_start_action_intimidate(t)
+
+						self._start_intimidate = false
+					end
+				else
+					self:_interupt_action_interact()
+				end
+			end
+		end
+
+		if (self._start_intimidate or force_secondary_intimidate) and not self:_action_interact_forbidden() and (not keyboard and t > self._start_intimidate_t + secondary_delay or force_secondary_intimidate) then
+			self:_start_action_intimidate(t, true)
+
+			self._start_intimidate = false
+		end
+
+		return new_action
 	end
 
 	function PlayerStandard:_start_action_intimidate(t, secondary)

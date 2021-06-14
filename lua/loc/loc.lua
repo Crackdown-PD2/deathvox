@@ -558,29 +558,28 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck6_9 = "One More Time",
 				menu_deck6_9_desc = "You become ##Invulnerable while in bleedout##. While in bleedout, you can ##Revive yourself by killing an enemy and then pressing Jump##.",
 				
+				--Burglar
+				menu_deck7_1 = "Hands in the Dark",
+				menu_deck7_1_desc = "You gain ##+10%## Object Interact Speed while in Stealth.",
+				menu_deck7_2 = "The Toothpick",
+				menu_deck7_2_desc = "You gain ##+232## Concealment.",
+				menu_deck7_3 = "Deft Fingers",
+				menu_deck7_3_desc = "Your Object Interact Speed bonus increases to ##+20%##.",
+				menu_deck7_4 = "Ranzer’s Edge",
+				menu_deck7_4_desc = "You ##no longer take Fall Damage when falling from Non-Fatal heights##. Additionally, the distance you must fall before a fall is considered Fatal is ##doubled##.",
+				menu_deck7_5 = "Silent Work",
+				menu_deck7_5_desc = "Your Object Interact Speed bonus increases to ##+30%##.",
+				menu_deck7_6 = "Long Haul",
+				menu_deck7_6_desc = "You bag corpses ##+20%## faster and can Sprint ##while carrying heavy Bags##.",
+				menu_deck7_7 = "Criminal Discretion",
+				menu_deck7_7_desc = "Your Object Interact Speed bonus increases to ##+40%##.",
+				menu_deck7_8 = "Fast Talker",
+				menu_deck7_8_desc = "You answer Pagers ##+10%## faster.",
+				menu_deck7_9 = "Blessing of the Strigidae",
+				menu_deck7_9_desc = "You can ##freely rotate your camera## while Interacting with something.",
+				
 				--[[
 				,
-				
-				
-				--Burglar
-				menu_deck7_1 = "PLACEHOLDER",
-				menu_deck7_1_desc = "PLACEHOLDER",
-				menu_deck7_2 = "PLACEHOLDER",
-				menu_deck7_2_desc = "PLACEHOLDER",
-				menu_deck7_3 = "PLACEHOLDER",
-				menu_deck7_3_desc = "PLACEHOLDER",
-				menu_deck7_4 = "PLACEHOLDER",
-				menu_deck7_4_desc = "PLACEHOLDER",
-				menu_deck7_5 = "PLACEHOLDER",
-				menu_deck7_5_desc = "PLACEHOLDER",
-				menu_deck7_6 = "PLACEHOLDER",
-				menu_deck7_6_desc = "PLACEHOLDER",
-				menu_deck7_7 = "PLACEHOLDER",
-				menu_deck7_7_desc = "PLACEHOLDER",
-				menu_deck7_8 = "PLACEHOLDER",
-				menu_deck7_8_desc = "PLACEHOLDER",
-				menu_deck7_9 = "PLACEHOLDER",
-				menu_deck7_9_desc = "PLACEHOLDER",
 				
 				--Infiltrator
 				menu_deck8_1 = "PLACEHOLDER",

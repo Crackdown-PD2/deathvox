@@ -2682,120 +2682,121 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		name_id = "menu_st_spec_6"
 	}
 	
+	self.specializations[perkdeck_indices.burglar] = {
+		{
+			name_id = "menu_deck7_1",
+			desc_id = "menu_deck7_1_desc",
+			cost = perkdeck_tier_costs[1],
+			upgrades = {
+				"burglar_1"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck7_2",
+			desc_id = "menu_deck7_2_desc",
+			cost = perkdeck_tier_costs[2],
+			upgrades = {
+				"burglar_2"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck7_3",
+			desc_id = "menu_deck7_3_desc",
+			cost = perkdeck_tier_costs[3],
+			upgrades = {
+				"burglar_3"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck7_4",
+			desc_id = "menu_deck7_4_desc",
+			cost = perkdeck_tier_costs[4],
+			upgrades = {
+				"burglar_4"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck7_5",
+			desc_id = "menu_deck7_5_desc",
+			cost = perkdeck_tier_costs[5],
+			upgrades = {
+				"burglar_5"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck7_6",
+			desc_id = "menu_deck7_6_desc",
+			cost = perkdeck_tier_costs[6],
+			upgrades = {
+				"burglar_6",
+				"carry_movement_penalty_nullifier"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck7_7",
+			desc_id = "menu_deck7_7_desc",
+			cost = perkdeck_tier_costs[7],
+			upgrades = {
+				"burglar_7"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck7_8",
+			desc_id = "menu_deck7_8_desc",
+			cost = perkdeck_tier_costs[8],
+			upgrades = {
+				"burglar_8"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck7_9",
+			desc_id = "menu_deck7_9_desc",
+			cost = perkdeck_tier_costs[9],
+			upgrades = {
+				"burglar_9"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		desc_id = "menu_st_spec_7_desc",
+		name_id = "menu_st_spec_7"
+	}
+	
 	if false then --reamining perk decks will be added as time goes on; template data is here
-		
-		self.specializations[perkdeck_indices.burglar] = {
-			{
-				name_id = "menu_deck7_1",
-				desc_id = "menu_deck7_1_desc",
-				cost = perkdeck_tier_costs[1],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck7_2",
-				desc_id = "menu_deck7_2_desc",
-				cost = perkdeck_tier_costs[2],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck7_3",
-				desc_id = "menu_deck7_3_desc",
-				cost = perkdeck_tier_costs[3],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck7_4",
-				desc_id = "menu_deck7_4_desc",
-				cost = perkdeck_tier_costs[4],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck7_5",
-				desc_id = "menu_deck7_5_desc",
-				cost = perkdeck_tier_costs[5],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck7_6",
-				desc_id = "menu_deck7_6_desc",
-				cost = perkdeck_tier_costs[6],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck7_7",
-				desc_id = "menu_deck7_7_desc",
-				cost = perkdeck_tier_costs[7],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck7_8",
-				desc_id = "menu_deck7_8_desc",
-				cost = perkdeck_tier_costs[8],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck7_9",
-				desc_id = "menu_deck7_9_desc",
-				cost = perkdeck_tier_costs[9],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			desc_id = "menu_st_spec_7_desc",
-			name_id = "menu_st_spec_7"
-		}
 		
 		self.specializations[perkdeck_indices.infiltrator] = {
 			{
