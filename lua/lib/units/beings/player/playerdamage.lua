@@ -18,6 +18,255 @@ Hooks:PostHook(PlayerDamage, "init", "dv_post_init", function(self, unit)
 	end
 end)
 
+
+function PlayerDamage:_raw_max_health()
+	if managers.player:has_category_upgrade("player", "sociopath_mode") then
+		local hp = 4
+		
+		hp = hp + managers.player:upgrade_value("player", "sociopath_health_addend", 0)
+		
+		return hp
+	end
+
+	local base_max_health = self._HEALTH_INIT + managers.player:health_skill_addend()
+	local mul = managers.player:health_skill_multiplier()
+	mul = managers.modifiers:modify_value("PlayerDamage:GetMaxHealth", mul)
+
+	return base_max_health * mul
+end
+
+function PlayerDamage:_max_health()
+	if managers.player:has_category_upgrade("player", "sociopath_mode") then
+		return self:_raw_max_health()
+	end
+
+	local max_health = self:_raw_max_health()
+
+	if managers.player:has_category_upgrade("player", "armor_to_health_conversion") then
+		local max_armor = self:_raw_max_armor()
+		local conversion_factor = managers.player:upgrade_value("player", "armor_to_health_conversion") * 0.01
+		max_health = max_health + max_armor * conversion_factor
+	end
+
+	return max_health
+end
+
+function PlayerDamage:_raw_max_armor()
+	if managers.player:has_category_upgrade("player", "sociopath_mode") then
+		return 0
+	end
+
+	local base_max_armor = self._ARMOR_INIT + managers.player:body_armor_value("armor") + managers.player:body_armor_skill_addend()
+	local mul = managers.player:body_armor_skill_multiplier()
+	mul = managers.modifiers:modify_value("PlayerDamage:GetMaxArmor", mul)
+
+	return base_max_armor * mul
+end
+
+function PlayerDamage:_max_armor()
+	if managers.player:has_category_upgrade("player", "sociopath_mode") then
+		return 0
+	end
+
+	local max_armor = self:_raw_max_armor()
+
+	if managers.player:has_category_upgrade("player", "armor_to_health_conversion") then
+		local conversion_factor = managers.player:upgrade_value("player", "armor_to_health_conversion") * 0.01
+		max_armor = max_armor * (1 - conversion_factor)
+	end
+
+	return max_armor
+end
+
+function PlayerDamage:update(unit, t, dt)
+	if _G.IS_VR and self._heartbeat_t and t < self._heartbeat_t then
+		local intensity_mul = 1 - (t - self._heartbeat_start_t) / (self._heartbeat_t - self._heartbeat_start_t)
+		local controller = self._unit:base():controller():get_controller("vr")
+
+		for i = 0, 1 do
+			local intensity = get_heartbeat_value(t)
+			intensity = intensity * (1 - math.clamp(self:health_ratio() / 0.3, 0, 1))
+			intensity = intensity * intensity_mul
+
+			controller:trigger_haptic_pulse(i, 0, intensity * 900)
+		end
+	end
+
+	self:_check_update_max_health()
+	self:_check_update_max_armor()
+	self:_update_can_take_dmg_timer(dt)
+	self:_update_regen_on_the_side(dt)
+
+	if not self._armor_stored_health_max_set then
+		self._armor_stored_health_max_set = true
+
+		self:update_armor_stored_health()
+	end
+
+	if managers.player:has_activate_temporary_upgrade("temporary", "chico_injector") then
+		self._chico_injector_active = true
+		local total_time = managers.player:upgrade_value("temporary", "chico_injector")[2]
+		local current_time = managers.player:get_activate_temporary_expire_time("temporary", "chico_injector") - t
+
+		managers.hud:set_player_ability_radial({
+			current = current_time,
+			total = total_time
+		})
+	elseif self._chico_injector_active then
+		managers.hud:set_player_ability_radial({
+			current = 0,
+			total = 1
+		})
+
+		self._chico_injector_active = nil
+	end
+
+	local is_berserker_active = managers.player:has_activate_temporary_upgrade("temporary", "berserker_damage_multiplier")
+
+	if self._check_berserker_done then
+		if is_berserker_active then
+			if self._unit:movement():tased() then
+				self._tased_during_berserker = true
+			else
+				self._tased_during_berserker = false
+			end
+		end
+
+		if not is_berserker_active then
+			if self._unit:movement():tased() then
+				self._bleed_out_blocked_by_tased = true
+			else
+				self._bleed_out_blocked_by_tased = false
+				self._check_berserker_done = nil
+
+				managers.hud:set_teammate_condition(HUDManager.PLAYER_PANEL, "mugshot_normal", "")
+				managers.hud:set_player_custom_radial({
+					current = 0,
+					total = self:_max_health(),
+					revives = Application:digest_value(self._revives, false)
+				})
+				self:force_into_bleedout()
+
+				if not self._bleed_out then
+					self._disable_next_swansong = true
+				end
+			end
+		else
+			local expire_time = managers.player:get_activate_temporary_expire_time("temporary", "berserker_damage_multiplier")
+			local total_time = managers.player:upgrade_value("temporary", "berserker_damage_multiplier")
+			total_time = total_time and total_time[2] or 0
+			local delta = 0
+			local max_health = self:_max_health()
+
+			if total_time ~= 0 then
+				delta = math.clamp((expire_time - Application:time()) / total_time, 0, 1)
+			end
+
+			managers.hud:set_player_custom_radial({
+				current = delta * max_health,
+				total = max_health,
+				revives = Application:digest_value(self._revives, false)
+			})
+			managers.network:session():send_to_peers("sync_swansong_timer", self._unit, delta * max_health, max_health, Application:digest_value(self._revives, false), managers.network:session():local_peer():id())
+		end
+	end
+
+	if self._bleed_out_blocked_by_zipline and not self._unit:movement():zipline_unit() then
+		self:force_into_bleedout(true)
+
+		self._bleed_out_blocked_by_zipline = nil
+	end
+
+	if self._bleed_out_blocked_by_movement_state and not self._unit:movement():current_state():bleed_out_blocked() then
+		self:force_into_bleedout()
+
+		self._bleed_out_blocked_by_movement_state = nil
+	end
+
+	if self._bleed_out_blocked_by_tased and not self._tased_during_berserker and not self._unit:movement():tased() then
+		self:force_into_bleedout()
+
+		self._bleed_out_blocked_by_tased = nil
+	end
+
+	if self._current_state then
+		self:_current_state(t, dt)
+	end
+
+	self:_update_armor_hud(t, dt)
+
+	if self._tinnitus_data then
+		self._tinnitus_data.intensity = (self._tinnitus_data.end_t - t) / self._tinnitus_data.duration
+
+		if self._tinnitus_data.intensity <= 0 then
+			self:_stop_tinnitus()
+		else
+			SoundDevice:set_rtpc("downed_state_progression", math.max(self._downed_progression or 0, self._tinnitus_data.intensity * 100))
+		end
+	end
+
+	if self._concussion_data then
+		self._concussion_data.intensity = (self._concussion_data.end_t - t) / self._concussion_data.duration
+
+		if self._concussion_data.intensity <= 0 then
+			self:_stop_concussion()
+		else
+			SoundDevice:set_rtpc("concussion_effect", self._concussion_data.intensity * 100)
+		end
+	end
+
+	if not self._downed_timer and self._downed_progression then
+		self._downed_progression = math.max(0, self._downed_progression - dt * 50)
+
+		if not _G.IS_VR then
+			managers.environment_controller:set_downed_value(self._downed_progression)
+		end
+
+		SoundDevice:set_rtpc("downed_state_progression", self._downed_progression)
+
+		if self._downed_progression == 0 then
+			self._unit:sound():play("critical_state_heart_stop")
+
+			self._downed_progression = nil
+		end
+	end
+
+	if self._auto_revive_timer then
+		if not managers.platform:presence() == "Playing" or not self._bleed_out or self._dead or self:incapacitated() or self:arrested() or self._check_berserker_done then
+			self._auto_revive_timer = nil
+		else
+			self._auto_revive_timer = self._auto_revive_timer - dt
+
+			if self._auto_revive_timer <= 0 then
+				self:revive(true)
+				self._unit:sound_source():post_event("nine_lives_skill")
+
+				self._auto_revive_timer = nil
+			end
+		end
+	end
+
+	if self._revive_miss then
+		self._revive_miss = self._revive_miss - dt
+
+		if self._revive_miss <= 0 then
+			self._revive_miss = nil
+		end
+	end
+
+	self:_upd_suppression(t, dt)
+	
+	if not managers.player:has_category_upgrade("player", "sociopath_mode") then
+		if not self._dead and not self._bleed_out and not self._check_berserker_done then
+			self:_upd_health_regen(t, dt)
+		end
+
+		if not self:is_downed() then
+			self:_update_delayed_damage(t, dt)
+		end
+	end
+end
+
 function PlayerDamage:restore_armor_percent(armor_restored)
 	if self._dead or self._bleed_out or self._check_berserker_done then
 		return
@@ -76,10 +325,6 @@ function PlayerDamage:damage_bullet(attack_data)
 		self:play_whizby(attack_data.col_ray.position)
 
 		return
-	elseif not attack_data.ignore_suppression and not self:is_suppressed() then
-		self:play_whizby(attack_data.col_ray.position)
-
-		return
 	elseif self:_chk_dmg_too_soon(attack_data.damage) then
 		return
 	end
@@ -89,57 +334,62 @@ function PlayerDamage:damage_bullet(attack_data)
 	local pm = managers.player
 	self._last_received_dmg = attack_data.damage
 	self._next_allowed_dmg_t = Application:digest_value(pm:player_timer():time() + self._dmg_interval, true)
+	
+	if not managers.player:has_category_upgrade("player", "sociopath_mode") then
+		local dodge_roll = math.random()
+		local dodge_value = tweak_data.player.damage.DODGE_INIT or 0
+		local armor_dodge_chance = pm:body_armor_value("dodge")
+		local skill_dodge_chance = pm:skill_dodge_chance(self._unit:movement():running(), self._unit:movement():crouching(), self._unit:movement():zipline_unit())
+		dodge_value = dodge_value + armor_dodge_chance + skill_dodge_chance
 
-	local dodge_roll = math.random()
-	local dodge_value = tweak_data.player.damage.DODGE_INIT or 0
-	local armor_dodge_chance = pm:body_armor_value("dodge")
-	local skill_dodge_chance = pm:skill_dodge_chance(self._unit:movement():running(), self._unit:movement():crouching(), self._unit:movement():zipline_unit())
-	dodge_value = dodge_value + armor_dodge_chance + skill_dodge_chance
-
-	if self._temporary_dodge_t and TimerManager:game():time() < self._temporary_dodge_t then
-		dodge_value = dodge_value + self._temporary_dodge
-	end
-
-	local smoke_dodge = 0
-
-	for _, smoke_screen in ipairs(pm._smoke_screen_effects or {}) do
-		if smoke_screen:is_in_smoke(self._unit) then
-			smoke_dodge = tweak_data.projectiles.smoke_screen_grenade.dodge_chance
-
-			break
+		if self._temporary_dodge_t and TimerManager:game():time() < self._temporary_dodge_t then
+			dodge_value = dodge_value + self._temporary_dodge
 		end
-	end
 
-	dodge_value = 1 - (1 - dodge_value) * (1 - smoke_dodge)
+		local smoke_dodge = 0
 
-	if dodge_roll < dodge_value then
-		self:play_whizby(attack_data.col_ray.position)
-		pm:send_message(Message.OnPlayerDodge)
+		for _, smoke_screen in ipairs(pm._smoke_screen_effects or {}) do
+			if smoke_screen:is_in_smoke(self._unit) then
+				smoke_dodge = tweak_data.projectiles.smoke_screen_grenade.dodge_chance
 
-		return
-	end
-
-	local dmg_mul = pm:damage_reduction_skill_multiplier("bullet")
-	attack_data.damage = attack_data.damage * dmg_mul
-	attack_data.damage = pm:modify_value("damage_taken", attack_data.damage, attack_data)
-	attack_data.damage = managers.mutators:modify_value("PlayerDamage:TakeDamageBullet", attack_data.damage)
-	attack_data.damage = managers.modifiers:modify_value("PlayerDamage:TakeDamageBullet", attack_data.damage)
-
-	if _G.IS_VR then
-		local distance = mvector3.distance(self._unit:position(), attack_data.attacker_unit:position())
-
-		if tweak_data.vr.long_range_damage_reduction_distance[1] < distance then
-			local step = math.clamp(distance / tweak_data.vr.long_range_damage_reduction_distance[2], 0, 1)
-			local mul = 1 - math.step(tweak_data.vr.long_range_damage_reduction[1], tweak_data.vr.long_range_damage_reduction[2], step)
-			attack_data.damage = attack_data.damage * mul
+				break
+			end
 		end
-	end
 
-	local damage_absorption = pm:damage_absorption()
+		dodge_value = 1 - (1 - dodge_value) * (1 - smoke_dodge)
 
-	if damage_absorption > 0 then
-		attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
+		if dodge_roll < dodge_value then
+			self:play_whizby(attack_data.col_ray.position)
+			pm:send_message(Message.OnPlayerDodge)
+
+			return
+		end
+	
+		local dmg_mul = pm:damage_reduction_skill_multiplier("bullet")
+		attack_data.damage = attack_data.damage * dmg_mul
+		attack_data.damage = pm:modify_value("damage_taken", attack_data.damage, attack_data)
+		attack_data.damage = managers.mutators:modify_value("PlayerDamage:TakeDamageBullet", attack_data.damage)
+		attack_data.damage = managers.modifiers:modify_value("PlayerDamage:TakeDamageBullet", attack_data.damage)
+		
+		if _G.IS_VR then
+			local distance = mvector3.distance(self._unit:position(), attack_data.attacker_unit:position())
+
+			if tweak_data.vr.long_range_damage_reduction_distance[1] < distance then
+				local step = math.clamp(distance / tweak_data.vr.long_range_damage_reduction_distance[2], 0, 1)
+				local mul = 1 - math.step(tweak_data.vr.long_range_damage_reduction[1], tweak_data.vr.long_range_damage_reduction[2], step)
+				attack_data.damage = attack_data.damage * mul
+			end
+		end
+		
+		local damage_absorption = pm:damage_absorption()
+
+		if damage_absorption > 0 then
+			attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
+		end
+	else
+		attack_data.damage = 1
 	end
+	
 	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
 	local shake_armor_multiplier = pm:body_armor_value("damage_shake") * pm:upgrade_value("player", "damage_shake_multiplier", 1)
@@ -273,19 +523,96 @@ function PlayerDamage:_chk_dmg_too_soon(damage, ...)
 	end
 end
 
+function PlayerDamage:damage_killzone(attack_data)
+	local damage_info = {
+		result = {
+			variant = "killzone",
+			type = "hurt"
+		}
+	}
+
+	if self._god_mode or self._invulnerable or self._mission_damage_blockers.invulnerable then
+		self:_call_listeners(damage_info)
+
+		return
+	elseif self:incapacitated() then
+		return
+	elseif self._unit:movement():current_state().immortal then
+		return
+	end
+
+	if attack_data.instant_death then
+		self._unit:sound():play("player_hit_permadamage")
+		self:set_armor(0)
+		self:set_health(0)
+		self:_send_set_armor()
+		self:_send_set_health()
+		managers.hud:set_player_health({
+			current = self:get_real_health(),
+			total = self:_max_health(),
+			revives = Application:digest_value(self._revives, false)
+		})
+		self:_set_health_effect()
+		self:_damage_screen()
+		self:_check_bleed_out(nil)	
+	else
+		if not self:_chk_can_take_dmg() then
+			return
+		end
+		
+		if self:get_real_armor() > 0 then
+			self._unit:sound():play("player_hit")
+		else
+			self._unit:sound():play("player_hit_permadamage")
+		end
+		
+		self:_hit_direction(attack_data.col_ray.origin)
+
+		if self._bleed_out then
+			return
+		end
+		
+		local pm = managers.player
+		
+		if pm:has_category_upgrade("player", "sociopath_mode") then
+			attack_data.damage = 1
+		else
+			attack_data.damage = pm:modify_value("damage_taken", attack_data.damage, attack_data)
+		end
+		
+		attack_data.damage = pm:consume_damage_overshield(attack_data.damage) 
+
+		self:_check_chico_heal(attack_data)
+
+		local armor_reduction_multiplier = 0
+
+		if self:get_real_armor() <= 0 then
+			armor_reduction_multiplier = 1
+		end
+
+		local health_subtracted = self:_calc_armor_damage(attack_data)
+		attack_data.damage = attack_data.damage * armor_reduction_multiplier
+		health_subtracted = health_subtracted + self:_calc_health_damage(attack_data)
+	end
+
+	self:_call_listeners(damage_info)
+end
+
 local _calc_armor_damage_original = PlayerDamage._calc_armor_damage
 function PlayerDamage:_calc_armor_damage(attack_data, ...)
 	--[[if not deathvox:IsHoppipOverhaulEnabled() then
 		return _calc_armor_damage_original(self, attack_data, ...)
    	end]]
-
-	if self._old_last_received_dmg then
-		attack_data.damage = attack_data.damage - self._old_last_received_dmg
+	
+	if self:get_real_armor() > 0 then
+		if self._old_last_received_dmg then
+			attack_data.damage = attack_data.damage - self._old_last_received_dmg
+		end
+		
+		self._next_allowed_dmg_t = self._old_next_allowed_dmg_t and Application:digest_value(self._old_next_allowed_dmg_t, true) or self._next_allowed_dmg_t
+		self._old_last_received_dmg = nil
+		self._old_next_allowed_dmg_t = nil
 	end
-
-	self._next_allowed_dmg_t = self._old_next_allowed_dmg_t and Application:digest_value(self._old_next_allowed_dmg_t, true) or self._next_allowed_dmg_t
-	self._old_last_received_dmg = nil
-	self._old_next_allowed_dmg_t = nil
 
 	return _calc_armor_damage_original(self, attack_data, ...)
 end
@@ -387,16 +714,21 @@ function PlayerDamage:damage_melee(attack_data)
 
 		return
 	end
+	
+	if not pm:has_category_upgrade("player", "sociopath_mode") then
+		local dmg_mul = pm:damage_reduction_skill_multiplier("melee") --the vanilla function has this line, but it also uses bullet damage reduction skills due to it redirecting to damage_bullet to get results
+		attack_data.damage = attack_data.damage * dmg_mul
+		attack_data.damage = pm:modify_value("damage_taken", attack_data.damage, attack_data) --apply damage resistances before checking for bleedout and other things
 
-	local dmg_mul = pm:damage_reduction_skill_multiplier("melee") --the vanilla function has this line, but it also uses bullet damage reduction skills due to it redirecting to damage_bullet to get results
-	attack_data.damage = attack_data.damage * dmg_mul
-	attack_data.damage = pm:modify_value("damage_taken", attack_data.damage, attack_data) --apply damage resistances before checking for bleedout and other things
+		local damage_absorption = pm:damage_absorption()
 
-	local damage_absorption = pm:damage_absorption()
-
-	if damage_absorption > 0 then
-		attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
+		if damage_absorption > 0 then
+			attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
+		end
+	else
+		attack_data.damage = 1
 	end
+	
 	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
 	if attack_data.tase_player then
@@ -580,7 +912,9 @@ function PlayerDamage:play_melee_hit_sound_and_effects(attack_data, sound_type, 
 						post_event = post_event[1]
 					end
 				end
-
+				
+				--log(tostring(post_event))
+				
 				--some sounds are too low to hear, playing them twice helps and or accentuates a hit even more)
 				self._unit:sound():play(post_event, nil, false)
 				self._unit:sound():play(post_event, nil, false)
@@ -686,16 +1020,22 @@ function PlayerDamage:damage_fire(attack_data)
 
 	self._last_received_dmg = attack_data.damage
 	self._next_allowed_dmg_t = Application:digest_value(pm:player_timer():time() + self._dmg_interval, true)
+	
+	if not pm:has_category_upgrade("player", "sociopath_mode") then
+		local dmg_mul = pm:damage_reduction_skill_multiplier("fire")
+		attack_data.damage = attack_data.damage * dmg_mul
+		attack_data.damage = pm:modify_value("damage_taken", attack_data.damage, attack_data)
+	
 
-	local dmg_mul = pm:damage_reduction_skill_multiplier("fire")
-	attack_data.damage = attack_data.damage * dmg_mul
-	attack_data.damage = pm:modify_value("damage_taken", attack_data.damage, attack_data)
+		local damage_absorption = pm:damage_absorption()
 
-	local damage_absorption = pm:damage_absorption()
-
-	if damage_absorption > 0 then
-		attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
+		if damage_absorption > 0 then
+			attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
+		end
+	else
+		attack_data.damage = 1
 	end
+	
 	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
 	if self._bleed_out then
@@ -769,20 +1109,26 @@ function PlayerDamage:damage_explosion(attack_data)
 	end
 
 	local pm = managers.player
-	local damage = attack_data.damage or 1
-	attack_data.damage = damage
-	attack_data.damage = attack_data.damage * (1 - distance / attack_data.range)
+	
+	if not pm:has_category_upgrade("player", "sociopath_mode") then
+		local damage = attack_data.damage or 1
+		attack_data.damage = damage
+		attack_data.damage = attack_data.damage * (1 - distance / attack_data.range)
 
-	local dmg_mul = pm:damage_reduction_skill_multiplier("explosion")
-	attack_data.damage = attack_data.damage * dmg_mul
-	attack_data.damage = pm:modify_value("damage_taken", attack_data.damage, attack_data)
-	attack_data.damage = managers.modifiers:modify_value("PlayerDamage:OnTakeExplosionDamage", attack_data.damage)
+		local dmg_mul = pm:damage_reduction_skill_multiplier("explosion")
+		attack_data.damage = attack_data.damage * dmg_mul
+		attack_data.damage = pm:modify_value("damage_taken", attack_data.damage, attack_data)
+		attack_data.damage = managers.modifiers:modify_value("PlayerDamage:OnTakeExplosionDamage", attack_data.damage)
 
-	local damage_absorption = pm:damage_absorption()
+		local damage_absorption = pm:damage_absorption()
 
-	if damage_absorption > 0 then
-		attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
+		if damage_absorption > 0 then
+			attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
+		end
+	else
+		attack_data.damage = 1
 	end
+	
 	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
 	if attack_data.attacker_unit and alive(attack_data.attacker_unit) then
@@ -834,8 +1180,70 @@ function PlayerDamage:damage_explosion(attack_data)
 end
 
 Hooks:Register("OnPlayerShieldBroken")
+
+function PlayerDamage:_damage_screen()
+	if not managers.player:has_category_upgrade("player", "sociopath_mode") then
+		local armor_ratio = self:armor_ratio()
+		self._hurt_value = 1 - math.clamp(0.8 - math.pow(armor_ratio, 2), 0, 1)
+		self._armor_value = math.clamp(armor_ratio, 0, 1)
+
+		managers.environment_controller:set_hurt_value(self._hurt_value)
+	end
+	
+	self._listener_holder:call("on_damage")
+end
+
+function PlayerDamage:_set_health_effect()
+	if not managers.player:has_category_upgrade("player", "sociopath_mode") then
+		local hp = self:get_real_health() / self:_max_health()
+
+		math.clamp(hp, 0, 1)
+		managers.environment_controller:set_health_effect_value(hp)
+	end
+end
+
+function PlayerDamage:build_suppression(amount)
+
+	if not managers.player:has_category_upgrade("player", "sociopath_mode") then
+		if self:_chk_suppression_too_soon(amount) then
+			return
+		end
+
+		local data = self._supperssion_data
+		amount = amount * managers.player:upgrade_value("player", "suppressed_multiplier", 1)
+		local morale_boost_bonus = self._unit:movement():morale_boost()
+
+		if morale_boost_bonus then
+			amount = amount * morale_boost_bonus.suppression_resistance
+		end
+
+		amount = amount * tweak_data.player.suppression.receive_mul
+		data.value = math.min(tweak_data.player.suppression.max_value, (data.value or 0) + amount * tweak_data.player.suppression.receive_mul)
+		self._last_received_sup = amount
+		self._next_allowed_sup_t = managers.player:player_timer():time() + self._dmg_interval
+		data.decay_start_t = managers.player:player_timer():time() + tweak_data.player.suppression.decay_start_delay
+	end
+end
+
 function PlayerDamage:_on_damage_event()
+	local sociopath_mode = managers.player:has_category_upgrade("player", "sociopath_mode")
+	
 	self:set_regenerate_timer_to_max()
+	
+	if sociopath_mode then
+		World:effect_manager():spawn({
+			effect = Idstring("effects/pd2_mod_gageammo/particles/character/sociopath_damage"),
+			position = Vector3(),
+			rotation = Rotation()
+		})
+		self._unit:sound():play("knife_hit_body", nil, nil)
+		self._hurt_value = 0
+		self._can_take_dmg_timer = 2 + managers.player:upgrade_value("player", "sociopath_i_frames_add", 0)
+		
+		local env_value = self._can_take_dmg_timer - 0.35
+		
+		managers.environment_controller:set_sociopath_inv_value(env_value)
+	end
 
 	local armor_broken = self:_max_armor() > 0 and self:get_real_armor() <= 0
 
@@ -883,7 +1291,17 @@ function PlayerDamage:remove_armor_plates_bonus()
 end
 
 if deathvox:IsTotalCrackdownEnabled() then 
+	
+	function PlayerDamage:_update_regenerate_timer(t, dt)
+		local regen_speed = self._regenerate_speed or 1
+		local dt_mul = regen_speed * math.lerp(1, 0, self:suppression_ratio())
+		self._regenerate_timer = math.max(self._regenerate_timer - dt * dt_mul, 0)
 
+		if self._regenerate_timer <= 0 then
+			self:_regenerate_armor()
+		end
+	end
+	
 	function PlayerDamage:_activate_preventative_care(upgrade_level)
 		
 		local pm = managers.player
@@ -1026,18 +1444,24 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self._downed_start_time = nil
 
 		if not arrested then
-			if self._revive_health_multiplier then 
-				self:set_health(self:_max_health() * self._revive_health_multiplier)
-				--if it is set, self._revive_health_multiplier now overrides other on-revive-health-regained bonuses and difficulty multipliers
-				--and is a direct multiplier to max health
-			else
-				self:set_health(self:_max_health() * tweak_data.player.damage.REVIVE_HEALTH_STEPS[self._revive_health_i] * managers.player:upgrade_value("player", "revived_health_regain", 1))
-			end
-			
-			self:set_armor(self:_max_armor())
+			if not managers.player:has_category_upgrade("player", "sociopath_mode") then
+				if self._revive_health_multiplier then 
+					self:set_health(self:_max_health() * self._revive_health_multiplier)
+					--if it is set, self._revive_health_multiplier now overrides other on-revive-health-regained bonuses and difficulty multipliers
+					--and is a direct multiplier to max health
+				else
+					self:set_health(self:_max_health() * tweak_data.player.damage.REVIVE_HEALTH_STEPS[self._revive_health_i] * managers.player:upgrade_value("player", "revived_health_regain", 1))
+				end
+				
+				self:set_armor(self:_max_armor())
 
-			self._revive_health_i = math.min(#tweak_data.player.damage.REVIVE_HEALTH_STEPS, self._revive_health_i + 1)
-			self._revive_miss = 2
+				self._revive_health_i = math.min(#tweak_data.player.damage.REVIVE_HEALTH_STEPS, self._revive_health_i + 1)
+				self._revive_miss = 2
+			else
+				self:set_armor(self:_max_armor())
+				self:set_health(self:_max_health())
+				self._can_take_dmg_timer = 2 + managers.player:upgrade_value("player", "sociopath_i_frames_add", 0)
+			end
 		end
 
 		self:_regenerate_armor()
@@ -1099,8 +1523,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local height_limit = 300
 		local death_limit = 631
 		
-		if managers.player:has_category_upgrade("player", "burglar_fall_damage_resist") then
-			death_limit = death_limit * 2
+		local pm = managers.player
+		
+		if pm:has_category_upgrade("player", "burglar_fall_damage_resist") or pm:has_category_upgrade("player", "sociopath_mode") then
+			if pm:has_category_upgrade("player", "burglar_fall_damage_resist") then
+				death_limit = death_limit * 2
+			end
 			
 			if data.height < death_limit then
 				return
@@ -1131,8 +1559,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 			if self._unit:movement():current_state_name() == "jerry1" then
 				self._revives = Application:digest_value(1, true)
 			end
-		elseif not managers.player:has_category_upgrade("player", "burglar_fall_damage_resist") then
-			health_damage_multiplier = managers.player:upgrade_value("player", "fall_damage_multiplier", 1) * managers.player:upgrade_value("player", "fall_health_damage_multiplier", 1)
+		elseif not pm:has_category_upgrade("player", "burglar_fall_damage_resist") then
+			health_damage_multiplier = pm:upgrade_value("player", "fall_damage_multiplier", 1) * pm:upgrade_value("player", "fall_health_damage_multiplier", 1)
 
 			self:change_health(-(tweak_data.player.fall_health_damage * health_damage_multiplier))
 		end
@@ -1155,7 +1583,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if die then
 			self:set_armor(0)
 		else
-			self:change_armor(-max_armor * managers.player:upgrade_value("player", "fall_damage_multiplier", 1))
+			self:change_armor(-max_armor * pm:upgrade_value("player", "fall_damage_multiplier", 1))
 		end
 
 		SoundDevice:set_rtpc("shield_status", 0)
@@ -1176,5 +1604,4 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		return true
 	end
-
 end

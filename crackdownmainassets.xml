@@ -128,6 +128,7 @@
 	<effect path="effects/particles/weapons/trail_dv_sniper" load="true"/>
 	<effect path="effects/particles/weapons/money_muzzle_fps" load="true"/>
 	<effect path="effects/pd2_mod_gageammo/particles/character/flashlight_ss" load="true"/>
+	<effect path="effects/pd2_mod_gageammo/particles/character/sociopath_damage" load="true"/>
 	<effect path="effects/pd2_mod_gageammo/particles/explosions/hellfire_endless" load="true"/>
 	<effect path="effects/pd2_mod_gageammo/particles/explosions/hellfire_endless_cheap" load="true"/>
 	<effect path="effects/pd2_mod_gageammo/particles/explosions/hellfire_endless_nolight" load="true"/>

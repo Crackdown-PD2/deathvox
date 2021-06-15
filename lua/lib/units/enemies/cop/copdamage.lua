@@ -435,6 +435,12 @@ function CopDamage:check_medic_heal()
 	end
 end
 
+function CopDamage:chk_killshot(attacker_unit, variant, headshot, weapon_id, weapon_unit)
+	if attacker_unit and attacker_unit == managers.player:player_unit() then
+		managers.player:on_killshot(self._unit, variant, headshot, weapon_id, weapon_unit)
+	end
+end
+
 function CopDamage:damage_explosion(attack_data)
 	if self._dead or self._invulnerable then
 		return
@@ -1078,7 +1084,7 @@ function CopDamage:damage_bullet(attack_data)
 			}
 
 			self:die(attack_data)
-			self:chk_killshot(attack_data.attacker_unit, "bullet", headshot_by_player)
+			self:chk_killshot(attack_data.attacker_unit, "bullet", headshot_by_player, nil, alive(attack_data.weapon_unit) and attack_data.weapon_unit)
 		end
 	else
 		attack_data.damage = damage

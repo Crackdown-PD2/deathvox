@@ -2911,121 +2911,120 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		name_id = "menu_st_spec_8"
 	}
 	
-	if false then --reamining perk decks will be added as time goes on; template data is here
-		
-		self.specializations[perkdeck_indices.sociopath] = {
-			{
-				name_id = "menu_deck9_1",
-				desc_id = "menu_deck9_1_desc",
-				cost = perkdeck_tier_costs[1],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
+	self.specializations[perkdeck_indices.sociopath] = {
+		{
+			name_id = "menu_deck9_1",
+			desc_id = "menu_deck9_1_desc",
+			cost = perkdeck_tier_costs[1],
+			upgrades = {
+				"sociopath_1"
 			},
-			{
-				name_id = "menu_deck9_2",
-				desc_id = "menu_deck9_2_desc",
-				cost = perkdeck_tier_costs[2],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck9_2",
+			desc_id = "menu_deck9_2_desc",
+			cost = perkdeck_tier_costs[2],
+			upgrades = {
+				"sociopath_2"
 			},
-			{
-				name_id = "menu_deck9_3",
-				desc_id = "menu_deck9_3_desc",
-				cost = perkdeck_tier_costs[3],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck9_3",
+			desc_id = "menu_deck9_3_desc",
+			cost = perkdeck_tier_costs[3],
+			upgrades = {
+				"sociopath_3"
 			},
-			{
-				name_id = "menu_deck9_4",
-				desc_id = "menu_deck9_4_desc",
-				cost = perkdeck_tier_costs[4],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck9_4",
+			desc_id = "menu_deck9_4_desc",
+			cost = perkdeck_tier_costs[4],
+			upgrades = {
+				"sociopath_4"
 			},
-			{
-				name_id = "menu_deck9_5",
-				desc_id = "menu_deck9_5_desc",
-				cost = perkdeck_tier_costs[5],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck9_5",
+			desc_id = "menu_deck9_5_desc",
+			cost = perkdeck_tier_costs[5],
+			upgrades = {
+				"sociopath_5"
 			},
-			{
-				name_id = "menu_deck9_6",
-				desc_id = "menu_deck9_6_desc",
-				cost = perkdeck_tier_costs[6],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck9_6",
+			desc_id = "menu_deck9_6_desc",
+			cost = perkdeck_tier_costs[6],
+			upgrades = {
+				"sociopath_6"
 			},
-			{
-				name_id = "menu_deck9_7",
-				desc_id = "menu_deck9_7_desc",
-				cost = perkdeck_tier_costs[7],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck9_7",
+			desc_id = "menu_deck9_7_desc",
+			cost = perkdeck_tier_costs[7],
+			upgrades = {
+				"sociopath_7"
 			},
-			{
-				name_id = "menu_deck9_8",
-				desc_id = "menu_deck9_8_desc",
-				cost = perkdeck_tier_costs[8],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck9_8",
+			desc_id = "menu_deck9_8_desc",
+			cost = perkdeck_tier_costs[8],
+			upgrades = {
+				"sociopath_8"
 			},
-			{
-				name_id = "menu_deck9_9",
-				desc_id = "menu_deck9_9_desc",
-				cost = perkdeck_tier_costs[9],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck9_9",
+			desc_id = "menu_deck9_9_desc",
+			cost = perkdeck_tier_costs[9],
+			upgrades = {
+				"sociopath_9"
 			},
-			desc_id = "menu_st_spec_9_desc",
-			name_id = "menu_st_spec_9"
-		}
-		
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		desc_id = "menu_st_spec_9_desc",
+		name_id = "menu_st_spec_9"
+	}
+	
+	if false then --reamining perk decks will be added as time goes on; template data is here	
 		self.specializations[perkdeck_indices.gambler] = {
 			{
 				name_id = "menu_deck10_1",

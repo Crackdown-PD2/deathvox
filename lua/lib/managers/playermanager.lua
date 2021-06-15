@@ -1,5 +1,10 @@
 local mvec3_dis = mvector3.distance
+local mvec3_dis_sq = mvector3_distance_sq
 local mvec3_copy = mvector3.copy
+local pairs_g = pairs
+local alive_g = alive
+local world_g = World
+
 
 Hooks:PostHook(PlayerManager,"_internal_load","deathvox_on_internal_load",function(self)
 --this will send whenever the player respawns, so... hm. 
@@ -22,9 +27,9 @@ end)
 function PlayerManager:_chk_fellow_crimin_proximity(unit)
 	local players_nearby = 0
 		
-	local criminals = World:find_units_quick(unit, "sphere", unit:position(), 1500, managers.slot:get_mask("criminals_no_deployables"))
+	local criminals = world_g:find_units_quick(unit, "sphere", unit:position(), 1500, managers.slot:get_mask("criminals_no_deployables"))
 
-	for _, criminal in ipairs(criminals) do
+	for i = 1, #criminals do
 		players_nearby = players_nearby + 1
 	end
 		
@@ -136,7 +141,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end
 			
 			local near_hostage_close,near_hostage_far
-			for _,hostage_unit in pairs(World:find_units_quick("sphere",player_pos,hostage_range_far or hostage_range_close,21,22)) do --managers.slot:get_mask("civilians") fails because tied civs are moved out of slot 22 and back into slot upon being moved
+			for _,hostage_unit in pairs(world_g:find_units_quick("sphere",player_pos,hostage_range_far or hostage_range_close,21,22)) do --managers.slot:get_mask("civilians") fails because tied civs are moved out of slot 22 and back into slot upon being moved
 				if managers.enemy:is_civilian(hostage_unit) and hostage_unit:brain():is_tied() then 
 					
 					if team_upgrade_level == 2 then 
@@ -370,7 +375,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 --						Draw:brush(Color.red:with_alpha(0.1),5):sphere(from,50)
 --						Draw:brush(Color.blue:with_alpha(0.1),5):sphere(to,50)
 --						Draw:brush(Color(1,n / #result.rays,1):with_alpha(0.1),5):cylinder(from,to,radius)
-						local grazed_enemies = World:raycast_all("ray", from, to, "sphere_cast_radius", radius, "disable_inner_ray", "slot_mask", slot_mask)
+						local grazed_enemies = world_g:raycast_all("ray", from, to, "sphere_cast_radius", radius, "disable_inner_ray", "slot_mask", slot_mask)
 						for _,hit in pairs(grazed_enemies) do 
 							local hit_data = hits[hit.unit:key()]
 							local add_hit = not (hit_data and hit_data.disabled)
@@ -789,7 +794,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if bonus_multiplier then
 			multiplier = multiplier + bonus_multiplier - 1
 		end
-
+		
+		multiplier = multiplier + self:upgrade_value("player", "sociopath_speed_mul", 1) - 1
+		
 		multiplier = multiplier + self:get_temporary_property("float_butterfly_movement_speed_multiplier",0)
 		
 		local escape_plan_status = self:get_temporary_property("escape_plan_speed_bonus",false)
@@ -962,6 +969,15 @@ end
 
 function PlayerManager:health_skill_addend()
 	local addend = 0
+	
+	if managers.player:has_category_upgrade("player", "sociopath_mode") then
+		addend = -22.6
+		
+		addend = addend + managers.player:upgrade_value("player", "sociopath_health_addend", 0) * 0.1
+		
+		return addend
+	end
+	
 	addend = addend + self:upgrade_value("team", "crew_add_health", 0)
 	
 	if self._beach_health_points then
@@ -977,6 +993,11 @@ end
 
 function PlayerManager:health_skill_multiplier()
 	local multiplier = 1
+	
+	if managers.player:has_category_upgrade("player", "sociopath_mode") then
+		return multiplier
+	end
+	
 	multiplier = multiplier + self:upgrade_value("player", "health_multiplier", 1) - 1
 	multiplier = multiplier + self:upgrade_value("player", "muscle_health_mul", 1) - 1
 	multiplier = multiplier + self:upgrade_value("player", "passive_health_multiplier", 1) - 1
@@ -1012,6 +1033,10 @@ local crook_armor_types = {
 }
 
 function PlayerManager:body_armor_skill_multiplier(override_armor)
+	if managers.player:has_category_upgrade("player", "sociopath_mode") then
+		return 0
+	end
+
 	local multiplier = 1
 	multiplier = multiplier + self:upgrade_value("player", "armorer_armor_mul", 1) - 1
 	multiplier = multiplier + self:upgrade_value("player", "tier_armor_multiplier", 1) - 1
@@ -1027,6 +1052,10 @@ function PlayerManager:body_armor_skill_multiplier(override_armor)
 end
 
 function PlayerManager:body_armor_skill_addend(override_armor)
+	if managers.player:has_category_upgrade("player", "sociopath_mode") then
+		return 0
+	end
+
 	local addend = 0
 	addend = addend + self:upgrade_value("player", tostring(override_armor or managers.blackmarket:equipped_armor(true, true)) .. "_armor_addend", 0)
 
@@ -1132,7 +1161,19 @@ function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, overri
 	return chance
 end
 
-function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id)
+function PlayerManager:stamina_multiplier()
+	local multiplier = 1
+	multiplier = multiplier + self:upgrade_value("player", "sociopath_stamina_mul", 1) - 1
+	multiplier = multiplier + self:upgrade_value("player", "stamina_multiplier", 1) - 1
+	multiplier = multiplier + self:team_upgrade_value("stamina", "multiplier", 1) - 1
+	multiplier = multiplier + self:team_upgrade_value("stamina", "passive_multiplier", 1) - 1
+	multiplier = multiplier + self:get_hostage_bonus_multiplier("stamina") - 1
+	multiplier = managers.modifiers:modify_value("PlayerManager:GetStaminaMultiplier", multiplier)
+
+	return multiplier
+end
+
+function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, weapon_unit)
 	local player_unit = self:player_unit()
 
 	if not player_unit then
@@ -1179,7 +1220,7 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id)
 				local area = skill.area
 				local chance = skill.chance
 				local amount = skill.amount
-				local enemies = World:find_units_quick("sphere", pos, area, 12, 21)
+				local enemies = world_g:find_units_quick("sphere", pos, area, 12, 21)
 
 				for i = 1, #enemies do
 					local unit = enemies[i]
@@ -1207,9 +1248,9 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id)
 			damage_ext:restore_health(self:upgrade_value("player", "infiltrator_melee_heal", 0))
 			damage_ext:restore_armor_percent(self:upgrade_value("player", "infiltrator_armor_restore", 0))
 		else
-			local equipped_unit = self:get_current_state()._equipped_unit:base()
+			local equipped_unit = alive(weapon_unit) and weapon_unit or self:get_current_state()._equipped_unit:base()
 				
-			if equipped_unit:is_category("saw") then
+			if equipped_unit:is_category("saw") and variant == "bullet" then
 				damage_ext:restore_health(self:upgrade_value("player", "infiltrator_melee_heal", 0))
 				damage_ext:restore_armor_percent(self:upgrade_value("player", "infiltrator_armor_restore", 0))
 			end
@@ -1227,13 +1268,83 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id)
 			self._throw_regen_kills = 0
 		end
 	end
-
+	
+	local dist_sq = mvector3.distance_sq(player_unit:movement():m_pos(), killed_unit:movement():m_pos())
+	
+	if self:has_category_upgrade("player", "sociopath_mode") then
+		local range = self:has_category_upgrade("player", "sociopath_combo_master") and 2250000 or 1000000
+		local throwing_add = self:has_category_upgrade("player", "sociopath_throwing_combo")
+		
+		if weapon_unit then
+			if throwing_add then
+				if weapon_unit:base()._primary_class == "class_throwing" then
+					if self._combo_stacks then
+						self._combo_stacks = self._combo_stacks + 2
+					else
+						self._combo_stacks = 2
+					end
+				end
+			end
+		end
+			
+		if dist_sq <= range then
+			self._combo_timer = t + 5
+			
+			local melee_add = self:has_category_upgrade("player", "sociopath_melee_combo")
+			local saw_add = self:has_category_upgrade("player", "sociopath_saw_combo")
+			
+			if self._combo_stacks then
+				self._combo_stacks = self._combo_stacks + 1
+			else
+				self._combo_stacks = 1
+			end
+			
+			if self:has_category_upgrade("player", "sociopath_melee_combo") then
+				if variant == "melee" then
+					self._combo_stacks = self._combo_stacks + 1
+				end
+			end		
+			
+			if self:has_category_upgrade("player", "sociopath_saw_combo") then
+				local equipped_unit = alive(weapon_unit) and weapon_unit:base() or self:get_current_state()._equipped_unit:base()
+				
+				if equipped_unit:is_category("saw") and variant == "bullet" then
+					self._combo_stacks = self._combo_stacks + 1
+				end
+			end
+			
+			--log("combo: " .. tostring(self._combo_stacks))
+			
+			if not self._needed_combo_stacks_for_hp then
+				self._needed_combo_stacks_for_hp = 5
+			end
+			
+			if not self._next_combo_hp_stack_reduction then
+				self._next_combo_hp_stack_reduction = 10
+			elseif self._combo_stacks > self._next_combo_hp_stack_reduction then
+				self._needed_combo_stacks_for_hp = math.max(1, self._needed_combo_stacks_for_hp - 1)
+				self._next_combo_hp_stack_reduction = self._next_combo_hp_stack_reduction + 10
+				--log("next_hp_stack_reduction: " .. tostring(self._next_combo_hp_stack_reduction))
+			end
+			
+			if not self._next_combo_hp then
+				self._next_combo_hp = self._needed_combo_stacks_for_hp
+			end
+			
+			if self._combo_stacks >= self._next_combo_hp then
+				damage_ext:restore_health(1, true)
+				
+				self._next_combo_hp = self._next_combo_hp + self._needed_combo_stacks_for_hp
+				--log("next_combo_hp: " .. tostring(self._next_combo_hp))
+			end
+		end
+	end
+	
 	if self._on_killshot_t and t < self._on_killshot_t then
 		return
 	end
 
 	local regen_armor_bonus = self:upgrade_value("player", "killshot_regen_armor_bonus", 0)
-	local dist_sq = mvector3.distance_sq(player_unit:movement():m_pos(), killed_unit:movement():m_pos())
 	local close_combat_sq = tweak_data.upgrades.close_combat_distance * tweak_data.upgrades.close_combat_distance
 
 	if dist_sq <= close_combat_sq then
@@ -1243,7 +1354,7 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id)
 
 		if panic_chance > 0 or panic_chance == -1 then
 			local slotmask = managers.slot:get_mask("enemies")
-			local units = World:find_units_quick("sphere", player_unit:movement():m_pos(), tweak_data.upgrades.killshot_close_panic_range, slotmask)
+			local units = world_g:find_units_quick("sphere", player_unit:movement():m_pos(), tweak_data.upgrades.killshot_close_panic_range, slotmask)
 
 			for e_key, unit in pairs(units) do
 				if alive(unit) and unit:character_damage() and not unit:character_damage():dead() then
@@ -1311,6 +1422,69 @@ function PlayerManager:on_damage_dealt(unit, damage_info)
 	self._on_damage_dealt_t = t + (tweak_data.upgrades.on_damage_dealt_cooldown or 0)
 end
 
+function PlayerManager:player_destroyed(id)
+	self._players[id] = nil
+	self._respawn = true
+
+	if id == 1 then
+		if self._marked_enemies then
+			for u_key, unit in pairs_g(self._marked_enemies) do
+				if alive(unit) then
+					unit:contour():remove("hostage_trade")
+				end
+			end
+		end
+		
+		self._marked_enemies = nil
+	
+		self:clear_timers()
+	end
+end
+
+function PlayerManager:_upd_sociopath_combo_master(player_unit, t)
+	if not player_unit or not alive(player_unit) then
+		return
+	end
+
+	local last_check_t = self._rasmus_check_t
+
+	if last_check_t and t < last_check_t then
+		return
+	end
+
+	self._rasmus_check_t = t + 0.2
+
+	local prev_enemies = self._marked_enemies
+	local enemies = world_g:find_units_quick("sphere", player_unit:movement():m_pos(), 1500, managers.slot:get_mask("enemies"))
+	local cur_enemies = {}
+
+	--local line1 = Draw:brush(Color.blue:with_alpha(0.5), 0.1)
+	--line1:sphere(self:m_pos(), 1000)
+
+	for i = 1, #enemies do
+		local enemy = enemies[i]
+		local u_key = enemy:key()
+
+		if not prev_enemies or not prev_enemies[u_key] then
+			if enemy:contour() then
+				enemy:contour():add("hostage_trade")
+			end
+		end
+
+		cur_enemies[u_key] = enemy
+	end
+
+	if prev_enemies then
+		for u_key, unit in pairs_g(prev_enemies) do
+			if not cur_enemies[u_key] and alive_g(unit) then
+				unit:contour():remove("hostage_trade")
+			end
+		end
+	end
+
+	self._marked_enemies = cur_enemies
+end
+
 function PlayerManager:update(t, dt)
 	self._message_system:update()
 	self:_update_timers(t)
@@ -1322,31 +1496,45 @@ function PlayerManager:update(t, dt)
 	end
 
 	self._sent_player_status_this_frame = nil
-	local local_player = self:local_player()
-
-	if self:has_category_upgrade("player", "close_to_hostage_boost") and (not self._hostage_close_to_local_t or self._hostage_close_to_local_t <= t) then
-		self._is_local_close_to_hostage = alive(local_player) and managers.groupai and managers.groupai:state():is_a_hostage_within(local_player:movement():m_pos(), tweak_data.upgrades.hostage_near_player_radius)
-		self._hostage_close_to_local_t = t + tweak_data.upgrades.hostage_near_player_check_t
-	end
 	
-	if self:has_category_upgrade("player", "infiltrator_melee_stance_DR") then
-		local current_state = self:get_current_state()
-		
-		if current_state then
-			if current_state.in_melee and current_state:in_melee() then
-				self._melee_stance_dr_t = t + 5
-			else
-				local equipped_unit = current_state._equipped_unit:base()
-				
-				if equipped_unit:is_category("saw") then
+	local player_unit = self:player_unit()
+	
+	if player_unit then
+		if self:has_category_upgrade("player", "close_to_hostage_boost") and (not self._hostage_close_to_local_t or self._hostage_close_to_local_t <= t) then
+			self._is_local_close_to_hostage = alive(player_unit) and managers.groupai and managers.groupai:state():is_a_hostage_within(player_unit:movement():m_pos(), tweak_data.upgrades.hostage_near_player_radius)
+			self._hostage_close_to_local_t = t + tweak_data.upgrades.hostage_near_player_check_t
+		end
+	
+		if self:has_category_upgrade("player", "infiltrator_melee_stance_DR") then
+			local current_state = self:get_current_state()
+			
+			if current_state then
+				if current_state.in_melee and current_state:in_melee() then
 					self._melee_stance_dr_t = t + 5
+				else
+					local equipped_unit = current_state._equipped_unit:base()
+					
+					if equipped_unit:is_category("saw") then
+						self._melee_stance_dr_t = t + 5
+					end
 				end
 			end
 		end
-	end
 		
-	if self._melee_stance_dr_t and self._melee_stance_dr_t < t then
-		self._melee_stance_dr_t = nil
+		if self._rasmus_check_t or self:has_category_upgrade("player", "sociopath_combo_master") then
+			self:_upd_sociopath_combo_master(player_unit, t)
+		end
+		
+		if self._combo_timer and self._combo_timer < t then
+			self._combo_stacks = 0
+			self._needed_combo_stacks_for_hp = 5
+			self._next_combo_hp = self._needed_combo_stacks_for_hp
+			self._next_combo_hp_stack_reduction = 10
+		end
+			
+		if self._melee_stance_dr_t and self._melee_stance_dr_t < t then
+			self._melee_stance_dr_t = nil
+		end
 	end
 
 	self:_update_damage_dealt(t, dt)

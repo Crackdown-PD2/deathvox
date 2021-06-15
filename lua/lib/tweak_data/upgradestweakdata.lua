@@ -2912,5 +2912,98 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		--Sociopath
+		self.values.player.sociopath_mode = {true}
+		self.values.player.sociopath_stamina_mul = {2}
+		self.values.player.sociopath_melee_combo = {true}
+		self.values.player.sociopath_health_addend = {1}
+		self.values.player.sociopath_throwing_combo = {true}
+		self.values.player.sociopath_speed_mul = {1.1}
+		self.values.player.sociopath_saw_combo = {true}
+		self.values.player.sociopath_i_frames_add = {0.5}
+		self.values.player.sociopath_combo_master = {true}
+		
+		self.definitions.sociopath_1 = {
+			name_id = "menu_deck8_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "sociopath_mode",
+				category = "player"
+			}
+		}
+		self.definitions.sociopath_2 = {
+			name_id = "menu_deck8_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "sociopath_stamina_mul",
+				category = "player"
+			}
+		}
+		self.definitions.sociopath_3 = {
+			name_id = "menu_deck8_3",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "sociopath_melee_combo",
+				category = "player"
+			}
+		}
+		self.definitions.sociopath_4 = {
+			name_id = "menu_deck8_4",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "sociopath_health_addend",
+				category = "player"
+			}
+		}
+		self.definitions.sociopath_5 = {
+			name_id = "menu_deck8_5",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "sociopath_throwing_combo",
+				category = "player"
+			}
+		}
+		self.definitions.sociopath_6 = {
+			name_id = "menu_deck8_6",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "sociopath_speed_mul",
+				category = "player"
+			}
+		}
+		self.definitions.sociopath_7 = {
+			name_id = "menu_deck8_7",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "sociopath_saw_combo",
+				category = "player"
+			}
+		}
+		self.definitions.sociopath_8 = {
+			name_id = "menu_deck8_8",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "sociopath_i_frames_add",
+				category = "player"
+			}
+		}
+		self.definitions.sociopath_9 = {
+			name_id = "menu_deck8_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "sociopath_combo_master",
+				category = "player"
+			}
+		}
+		
 	end
 end)

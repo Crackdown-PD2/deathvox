@@ -1,4 +1,5 @@
 local mvec3_dis_sq = mvector3.distance_sq
+local tmp_vec = Vector3()
 
 local math_lerp = math.lerp
 
@@ -78,8 +79,7 @@ function ContourExt:add(type, sync, multiplier, override_color, add_as_child, ma
 	local stealth_fadeout = data.fadeout_silent
 
 	if stealth_fadeout and managers.groupai:state():whisper_mode() then
-		local ext_base = unit:base()
-		local char_tweak = ext_basea and ext_base:char_tweak()
+		local char_tweak = unit:base():char_tweak()
 
 		if char_tweak and char_tweak.silent_priority_shout then
 			fadeout = stealth_fadeout
@@ -169,12 +169,13 @@ function ContourExt:add(type, sync, multiplier, override_color, add_as_child, ma
 		return type_was_in_list
 	end
 
+	local has_ray_check = data.ray_check
 	local setup = {
 		ref_c = 1,
 		type = type,
 		fadeout_t = fadeout and self._timer:time() + fadeout or nil,
 		sync = sync,
-		ray_check = data.ray_check,
+		ray_check = has_ray_check,
 		persistence = data.persistence,
 		material_swap_required = data.material_swap_required,
 		trigger_marked_event = data.trigger_marked_event,
@@ -189,6 +190,14 @@ function ContourExt:add(type, sync, multiplier, override_color, add_as_child, ma
 		setup.peer_ids = {
 			mark_peer_id = true
 		}
+	end
+	
+	if has_ray_check then
+		local mov_ext = unit:movement()
+
+		if mov_ext and mov_ext.m_com then
+			setup.ray_pos = mov_ext:m_com()
+		end
 	end
 
 	local old_preset = contour_list[1]
@@ -495,9 +504,11 @@ end
 local lerp_opacity = false --current contours don't support this
 
 function ContourExt:update(u_unit, t, dt)
+	local cam_pos = nil
 	local index = 1
-	local contour_list = self._contour_list
 	local unit = self._unit
+	local contour_list = self._contour_list
+	local ray_check_slotmask = self._slotmask_world_geometry
 
 	while index <= #contour_list do
 		local setup = contour_list[index]
@@ -516,22 +527,36 @@ function ContourExt:update(u_unit, t, dt)
 
 			if is_current and setup.ray_check then
 				local turn_on = false
-				local cam_pos = managers.viewport:get_current_camera_position()
+				cam_pos = cam_pos or managers.viewport:get_current_camera_position()
 
 				if cam_pos then
-					local mov_ext = unit:movement()
-					local u_pos = mov_ext and mov_ext:m_com() or unit:position()
+					local u_pos = setup.ray_pos
+
+					if not u_pos then
+						u_pos = tmp_vec
+						unit:m_position(u_pos)
+					end
 
 					turn_on = mvec3_dis_sq(cam_pos, u_pos) > 16000000
-					turn_on = turn_on or unit:raycast("ray", u_pos, cam_pos, "slot_mask", self._slotmask_world_geometry, "report")
+					turn_on = turn_on or unit:raycast("ray", u_pos, cam_pos, "slot_mask", ray_check_slotmask, "report")
 				end
 
-				if turn_on then
-					setup.last_turned_on_t = t
-				elseif not setup.persistence or not setup.last_turned_on_t or setup.persistence < t - setup.last_turned_on_t then
-					turn_off = true
+				local persistence = setup.persistence
 
-					setup.last_turned_on_t = nil
+				if persistence then
+					if turn_on then
+						setup.last_turned_on_t = t
+					else
+						local last_t = setup.last_turned_on_t
+
+						if not last_t or persistence < t - last_t then
+							turn_off = true
+
+							setup.last_turned_on_t = nil
+						end
+					end
+				elseif not turn_on then
+					turn_off = not turn_on
 				end
 			end
 
