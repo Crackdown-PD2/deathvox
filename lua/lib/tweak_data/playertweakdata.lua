@@ -75,3 +75,9 @@ Hooks:PostHook(PlayerTweakData, "init", "DV_init", function(self)
 		}
 	end
 end)
+
+function PlayerTweakData:_set_singleplayer()
+	if not deathvox:IsTotalCrackdownEnabled() then
+		self.damage.REGENERATE_TIME = 1.75
+	end
+end

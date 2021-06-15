@@ -2620,9 +2620,9 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		--Hitman After All
 		self.values.player.hitman_armor_regen = {
 			0.9,
-			0.75,
-			0.55,
-			0.3
+			0.8,
+			0.7,
+			0.6
 		}
 		self.values.player.passive_always_regen_armor = {
 			2,
