@@ -314,13 +314,7 @@ function CopDamage:roll_critical_hit(attack_data)
 	local critical_hit = attack_data.critical_hit or nil
 
 	if critical_hit then
-		local critical_damage_mul = critical_hits.damage_mul or self._char_tweak.headshot_dmg_mul
-
-		if critical_damage_mul then
-			damage = damage * critical_damage_mul
-		else
-			damage = self._health * 10
-		end
+		damage = damage * 2
 	end
 
 	return critical_hit, damage
