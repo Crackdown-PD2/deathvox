@@ -79,7 +79,8 @@ function ContourExt:add(type, sync, multiplier, override_color, add_as_child, ma
 	local stealth_fadeout = data.fadeout_silent
 
 	if stealth_fadeout and managers.groupai:state():whisper_mode() then
-		local char_tweak = unit:base():char_tweak()
+		local ext_base = unit:base()
+		local char_tweak = ext_base and ext_base:char_tweak()
 
 		if char_tweak and char_tweak.silent_priority_shout then
 			fadeout = stealth_fadeout
