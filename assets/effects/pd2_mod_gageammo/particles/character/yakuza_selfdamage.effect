@@ -1,0 +1,48 @@
+<effect force_synch="false">
+    <atom name="driplets_near" min_size="1" max_size="5" lifetime="1" random_start_time="true" min_start_time="0" max_start_time="0" preroll="0" inherit_velocity_multiplier="1" fade_in_start="-1" fade_in_length="0" fade_out_start="-1" spawn_cull_policy="initialize" cull_policy="update_render" cull_gracetime="1" max_particle_radius="-1" soundbank="" cue="" ambient="false" grab_relative="effect" grab_pos="0 0 -100" grab_radius="200" grab_backfacing="false" timeline="">
+        <effect_spawn event="collision" effect="effects/pd2_mod_gageammo/particles/character/yakuza_blood_splash"/>
+        <initializerstack>
+            <boxrandomposition relative="effect" min="0 0 0" max="0 0 0"/>
+            <boxrandomage min="1" max="1"/>
+            <boxrandomvelocity relative="effect" min="-10 -10 -200" max="10 10 -200"/>
+            <boxrandomangle min="0" max="0"/>
+            <boxrandomaspectsize size="2 3" min="3" max="3.5"/>
+        </initializerstack>
+        <simulatorstack>
+            <ager/>
+            <velocityintegrator channel="world"/>
+            <variableacceleration name="" relative="world" acceleration="0 0 -1000"/>
+            <particleworldcollision radius="5" elasticity="0.08"/>
+        </simulatorstack>
+        <visualizerstack>
+            <billboard texture="effects/textures/liquid/test_blood_df" intensity="identity" billboard_type="axialz_locked" rotation_channel="world_rotation" blend_mode="normal" render_template="effect_blood" origo="0.5 0.2" per_particle_age="true" size_input="scaled_channel" color_input="constant" color="252.00001525879 252.00001525879 252.00001525879" opacity_input="keys" rotation_input="constant" rotation="0" rotation_axis="0 0 1" uv_size="1 1" uv_offset_input="constant" uv_offset="0 0">
+                <size_scale_keys loop="false">
+                    <key t="0" v="0.40000000596046 2"/>
+                    <key t="0.74698799848557" v="0.20000000298023 3"/>
+                    <key t="1.4698799848557" v="0.40000000596046 1"/>
+                    <key t="1.9860626459122" v="0 0"/>
+                </size_scale_keys>
+                <opacity_keys loop="false">
+                    <key t="1.4543889760971" v="70"/>
+                    <key t="2.996515750885" v="255"/>
+                </opacity_keys>
+            </billboard>
+        </visualizerstack>
+    </atom>
+	<atom name="locked_flash00" min_size="1" max_size="1" lifetime="0.08" random_start_time="false" start_time="0" preroll="0" inherit_velocity_multiplier="1" fade_in_start="-1" fade_in_length="0" fade_out_start="-1" spawn_cull_policy="kill" cull_policy="kill" cull_gracetime="0" max_particle_radius="-1" soundbank="" cue="" ambient="false" grab_relative="effect" grab_pos="0 0 0" grab_radius="200" grab_backfacing="false" timeline="">
+        <initializerstack>
+            <localboxrandomposition min="0 20 0" max="0 20 0"/>
+        </initializerstack>
+        <simulatorstack>
+            <worldtransform transform_rotations="false"/>
+        </simulatorstack>
+        <visualizerstack>
+            <light per_particle_age="false" shadow_caster="false" specular="true" color_input="constant" color="173 64 48.000003814697" multiplier_input="keys" far_range_input="constant" far_range="50">
+                <multiplier_keys loop="false">
+                    <key t="0.023411370813847" v="0.025000000372529"/>
+                    <key t="0.079999998211861" v="0"/>
+                </multiplier_keys>
+            </light>
+        </visualizerstack>
+    </atom>
+</effect>

@@ -3104,5 +3104,105 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		--Yakuza
+		
+		self.values.player.yakuza_frenzy_dr = {
+			--Damage Resistance gained, max DR, percentage steps, in that specific order
+			--Added the percentage steps as possible future-proofing
+			{0.02, 0.9, 0.1}, 
+			{0.04, 0.8, 0.1}, 
+			{0.06, 0.7, 0.1}, 
+			{0.08, 0.6, 0.1}
+		}
+		self.values.player.yakuza_on_damage_dr = {
+			0.1,
+			0.2,
+			0.3,
+			0.4
+		}
+		self.values.player.yakuza_on_damage_iframes = {true}
+		
+		self.definitions.yakuza_1 = {
+			name_id = "menu_deck12_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "yakuza_frenzy_dr",
+				category = "player"
+			}
+		}
+		self.definitions.yakuza_2 = {
+			name_id = "menu_deck12_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "yakuza_on_damage_dr",
+				category = "player"
+			}
+		}
+		self.definitions.yakuza_3 = {
+			name_id = "menu_deck12_3",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "yakuza_frenzy_dr",
+				category = "player"
+			}
+		}
+		self.definitions.yakuza_4 = {
+			name_id = "menu_deck12_4",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "yakuza_on_damage_dr",
+				category = "player"
+			}
+		}
+		self.definitions.yakuza_5 = {
+			name_id = "menu_deck12_5",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "yakuza_frenzy_dr",
+				category = "player"
+			}
+		}
+		self.definitions.yakuza_6 = {
+			name_id = "menu_deck12_6",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "yakuza_on_damage_dr",
+				category = "player"
+			}
+		}
+		self.definitions.yakuza_7 = {
+			name_id = "menu_deck12_7",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "yakuza_frenzy_dr",
+				category = "player"
+			}
+		}
+		self.definitions.yakuza_8 = {
+			name_id = "menu_deck12_8",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "yakuza_on_damage_dr",
+				category = "player"
+			}
+		}
+		self.definitions.yakuza_9 = {
+			name_id = "menu_deck12_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "yakuza_on_damage_iframes",
+				category = "player"
+			}
+		}
+		
 	end
 end)

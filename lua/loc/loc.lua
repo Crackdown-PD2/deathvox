@@ -638,6 +638,26 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck11_9 = "Bar Down",
 				menu_deck11_9_desc = "Increases the amount of Health gained from damage dealt to ##2.5%##.",
 				
+				--Yakuza
+				menu_deck12_1 = "Fujin Irezumi",
+				menu_deck12_1_desc = "You gain ##+2%## Damage Resistance per ##10%## of Missing Health, up to ##+10%## Damage Resistance.\n\nCharging your Melee Weapon for ##5## seconds causes you to ##lose 5%## Maximum Health per second spent Charging afterwards, up to ##50%##.\n\n##Yakuza negates Regeneration effects while equipped.##",
+				menu_deck12_2 = "Raijin Irezumi",
+				menu_deck12_2_desc = "Taking damage grants ##+10%## Damage Resistance for ##5## seconds.",
+				menu_deck12_3 = "Taubushi",
+				menu_deck12_3_desc = "Increases the Damage Resistance bonus per Missing Health to ##+4%##, up to ##+20%##.",
+				menu_deck12_4 = "Gobu",
+				menu_deck12_4_desc = "Increases the Damage Resistance bonus per Missing Health to ##+4%##, up to ##+20%##.",
+				menu_deck12_5 = "Hanzubon",
+				menu_deck12_5_desc = "Increases the Damage Resistance bonus per Missing Health to ##+6%##, up to ##+30%##.",
+				menu_deck12_6 = "Shichibu",
+				menu_deck12_6_desc = "Increases the Damage Resistance bonus from taking damage to ##+30%##",
+				menu_deck12_7 = "Munewari",
+				menu_deck12_7_desc = "Increases the Damage Resistance bonus per Missing Health to ##+8%##, up to ##+40%##",
+				menu_deck12_8 = "Nagasode",
+				menu_deck12_8_desc = "Increases the Damage Resistance bonus from taking damage to ##+40%##.",
+				menu_deck12_9 = "Donburi Soshinbori",
+				menu_deck12_9_desc = "You become Invulnerable for ##1## second after taking damage from any source.",
+				
 				--[[
 				,
 				
@@ -660,26 +680,6 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck10_8_desc = "PLACEHOLDER",
 				menu_deck10_9 = "PLACEHOLDER",
 				menu_deck10_9_desc = "PLACEHOLDER",
-				
-				--Yakuza
-				menu_deck12_1 = "PLACEHOLDER",
-				menu_deck12_1_desc = "PLACEHOLDER",
-				menu_deck12_2 = "PLACEHOLDER",
-				menu_deck12_2_desc = "PLACEHOLDER",
-				menu_deck12_3 = "PLACEHOLDER",
-				menu_deck12_3_desc = "PLACEHOLDER",
-				menu_deck12_4 = "PLACEHOLDER",
-				menu_deck12_4_desc = "PLACEHOLDER",
-				menu_deck12_5 = "PLACEHOLDER",
-				menu_deck12_5_desc = "PLACEHOLDER",
-				menu_deck12_6 = "PLACEHOLDER",
-				menu_deck12_6_desc = "PLACEHOLDER",
-				menu_deck12_7 = "PLACEHOLDER",
-				menu_deck12_7_desc = "PLACEHOLDER",
-				menu_deck12_8 = "PLACEHOLDER",
-				menu_deck12_8_desc = "PLACEHOLDER",
-				menu_deck12_9 = "PLACEHOLDER",
-				menu_deck12_9_desc = "PLACEHOLDER",
 				
 				--Ex-President
 				menu_deck13_1 = "PLACEHOLDER",

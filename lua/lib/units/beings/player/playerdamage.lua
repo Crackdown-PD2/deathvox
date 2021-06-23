@@ -96,6 +96,14 @@ function PlayerDamage:update(unit, t, dt)
 	self:_check_update_max_armor()
 	self:_update_can_take_dmg_timer(dt)
 	self:_update_regen_on_the_side(dt)
+	
+	if self._yakuza_dmg_event_dr then
+		if self._yakuza_dmg_event_dr <= 0 then
+			self._yakuza_dmg_event_dr = nil
+		else
+			self._yakuza_dmg_event_dr = self._yakuza_dmg_event_dr - dt
+		end
+	end
 
 	if not self._armor_stored_health_max_set then
 		self._armor_stored_health_max_set = true
@@ -256,7 +264,7 @@ function PlayerDamage:update(unit, t, dt)
 
 	self:_upd_suppression(t, dt)
 	
-	if not managers.player:has_category_upgrade("player", "sociopath_mode") then
+	if not managers.player:has_category_upgrade("player", "sociopath_mode") and not managers.player:has_category_upgrade("player", "yakuza_frenzy_dr") then
 		if not self._dead and not self._bleed_out and not self._check_berserker_done then
 			self:_upd_health_regen(t, dt)
 		end
@@ -1226,11 +1234,9 @@ function PlayerDamage:build_suppression(amount)
 end
 
 function PlayerDamage:_on_damage_event()
-	local sociopath_mode = managers.player:has_category_upgrade("player", "sociopath_mode")
-	
 	self:set_regenerate_timer_to_max()
 	
-	if sociopath_mode then
+	if managers.player:has_category_upgrade("player", "sociopath_mode") then
 		World:effect_manager():spawn({
 			effect = Idstring("effects/pd2_mod_gageammo/particles/character/sociopath_damage"),
 			position = Vector3(),
@@ -1243,6 +1249,14 @@ function PlayerDamage:_on_damage_event()
 		local env_value = self._can_take_dmg_timer - 0.35
 		
 		managers.environment_controller:set_sociopath_inv_value(env_value)
+	end
+	
+	if managers.player:has_category_upgrade("player", "yakuza_on_damage_iframes") then
+		self._can_take_dmg_timer = 1
+	end
+	
+	if managers.player:has_category_upgrade("player", "yakuza_on_damage_dr") then
+		self._yakuza_dmg_event_dr = 5
 	end
 
 	local armor_broken = self:_max_armor() > 0 and self:get_real_armor() <= 0

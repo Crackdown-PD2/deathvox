@@ -123,9 +123,37 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local dmg_red_mul = self:team_upgrade_value("damage_dampener", "team_damage_reduction", 1)
 
 		local player = self:local_player()
+		local damage_ext = player:character_damage()
 		
-		if player:character_damage():get_real_armor() > 0 then
+		if damage_ext:get_real_armor() > 0 then
 			multiplier = multiplier * self:upgrade_value("player", "armorer_ironclad", 1)
+		end
+		
+		if self:has_category_upgrade("player", "yakuza_frenzy_dr") then
+			local inv_health_ratio = 1 - damage_ext:health_ratio()
+			local yakuza_data = self:upgrade_value("player", "yakuza_frenzy_dr", {0, 0, 1})
+			local percent_gain = yakuza_data[1] --0.02 (2% damage resistance)
+			local percent_max = yakuza_data[2] --0.9 (10% damage resistance limit)
+			local health_step = yakuza_data[3] --0.1 (10% missing health step)
+			local yakuza_mul = 1
+
+			while inv_health_ratio >= health_step do
+				yakuza_mul = yakuza_mul - percent_gain
+
+				if yakuza_mul < percent_max then
+					inv_health_ratio = inv_health_ratio - health_step
+				else
+					yakuza_mul = percent_max
+
+					break
+				end
+			end
+
+			multiplier = multiplier * yakuza_mul
+		end
+		
+		if damage_ext._yakuza_dmg_event_dr then
+			multiplier = multiplier - self:upgrade_value("player", "yakuza_on_damage_dr", 0)
 		end
 		
 		local team_upgrade_level = managers.player:team_upgrade_level("player","civilian_hostage_aoe_damage_resistance")
@@ -1432,6 +1460,8 @@ function PlayerManager:on_damage_dealt(unit, damage_info)
 			end
 		end
 	end
+	
+	
 
 	if self._on_damage_dealt_t and t < self._on_damage_dealt_t then
 		return
@@ -1454,6 +1484,8 @@ function PlayerManager:player_destroyed(id)
 		end
 		
 		self._marked_enemies = nil
+		self._next_drain_damage_t = nil
+		self._yakuza_charging_t = nil
 	
 		self:clear_timers()
 	end
@@ -1503,6 +1535,10 @@ function PlayerManager:_upd_sociopath_combo_master(player_unit, t)
 	self._marked_enemies = cur_enemies
 end
 
+local right_hand_ids = Idstring("a_weapon_right")
+local left_hand_ids = Idstring("a_weapon_left")
+local yakuza_bleed_ids = Idstring("effects/pd2_mod_gageammo/particles/character/yakuza_selfdamage")
+
 function PlayerManager:update(t, dt)
 	self._message_system:update()
 	self:_update_timers(t)
@@ -1522,14 +1558,57 @@ function PlayerManager:update(t, dt)
 			self._is_local_close_to_hostage = alive(player_unit) and managers.groupai and managers.groupai:state():is_a_hostage_within(player_unit:movement():m_pos(), tweak_data.upgrades.hostage_near_player_radius)
 			self._hostage_close_to_local_t = t + tweak_data.upgrades.hostage_near_player_check_t
 		end
-	
-		if self:has_category_upgrade("player", "infiltrator_melee_stance_DR") then
-			local current_state = self:get_current_state()
-			
-			if current_state then
-				if current_state.in_melee and current_state:in_melee() then
+		
+		local current_state = self:get_current_state()
+		
+		if current_state then
+			if current_state.in_melee and current_state:in_melee() then
+				if self:has_category_upgrade("player", "yakuza_frenzy_dr") then
+					local damage_ext = player_unit:character_damage()
+					
+					if damage_ext:health_ratio() > 0.5 then
+						if self._next_drain_damage_t then
+							if self._next_drain_damage_t <= 0 then
+								self._next_drain_damage_t = 1
+								local damage_to_take = damage_ext:_max_health() * 0.05
+								local new_health = damage_ext:get_real_health() - damage_to_take
+								
+								damage_ext:set_health(new_health)
+								
+								player_unit:sound():play("knife_hit_body")
+								player_unit:sound():play("knuckles_hit_body")
+
+								local camera = player_unit and player_unit:camera()
+								local camera_unit = camera and camera._camera_unit
+								
+								if camera_unit then
+									local righthand = camera_unit:get_object(right_hand_ids)
+									local lefthand = camera_unit:get_object(left_hand_ids)
+									
+									
+									camera:play_shaker("player_bullet_damage", 0.1)
+									world_g:effect_manager():spawn({effect = yakuza_bleed_ids, parent = righthand})
+									world_g:effect_manager():spawn({effect = yakuza_bleed_ids, parent = lefthand})
+								end
+							else
+								self._next_drain_damage_t = self._next_drain_damage_t - dt
+							end
+						elseif not self._yakuza_charging_t  then
+							self._yakuza_charging_t = 5
+						elseif self._yakuza_charging_t > 0 then
+							self._yakuza_charging_t = self._yakuza_charging_t - dt
+						else
+							self._next_drain_damage_t = 0
+						end
+					end
+				elseif self:has_category_upgrade("player", "infiltrator_melee_stance_DR") then
 					self._melee_stance_dr_t = t + 5
-				else
+				end
+			else
+				if self:has_category_upgrade("player", "yakuza_frenzy_dr") then 
+					self._yakuza_charging_t = nil
+					self._next_drain_damage_t = nil
+				elseif self:has_category_upgrade("player", "infiltrator_melee_stance_DR") then
 					local equipped_unit = current_state._equipped_unit:base()
 					
 					if equipped_unit:is_category("saw") then

@@ -1,0 +1,31 @@
+<effect force_synch="true">
+    <atom name="Ripples Small" min_size="0" max_size="1" lifetime="1" random_start_time="false" start_time="0" preroll="0" inherit_velocity_multiplier="0" fade_in_start="-1" fade_in_length="0" fade_out_start="-1" spawn_cull_policy="initialize" cull_policy="update" cull_gracetime="0" max_particle_radius="-1" soundbank="" cue="" ambient="false" grab_relative="effect" grab_pos="0 0 0" grab_radius="200" grab_backfacing="false" timeline="">
+        <initializerstack>
+            <boxrandomposition relative="world" min="0 0 0" max="0 0 0"/>
+            <boxrandomvelocity relative="effect" min="0 0 0" max="0 0 0"/>
+            <boxrandomangle min="-3.14" max="3.14"/>
+            <boxrandomaspectsize size="15 15" min="0.4" max="1"/>
+            <boxrandomuvoffset uv_size="0.125 0.0625" frame_start="0 0.9375" primary_step_direction="+x" secondary_step_direction="+y" num_frames="4"/>
+            <boxrandomrotation relative="effect" min="0 0 1" max="0 0 1" min_rot="0" max_rot="0"/>
+            <constantage age="99999"/>
+        </initializerstack>
+        <simulatorstack>
+            <velocityintegrator channel="world"/>
+            <ager/>
+        </simulatorstack>
+        <visualizerstack>
+            <billboard texture="effects/textures/bullet_hit/e_liquid_splash_01" intensity="identity" billboard_type="axialz_locked" rotation_channel="world_rotation" blend_mode="normal" render_template="effect_op" origo="0.6 1" per_particle_age="false" size_input="scaled_channel" color_input="constant" color="114.00000762939 37 39" opacity_input="keys" rotation_input="constant" rotation="0" rotation_axis="0 0 1" uv_size="1 1" uv_offset_input="constant" uv_offset="1 1">
+                <size_scale_keys loop="false">
+                    <key t="0" v="2 2.4000000953674"/>
+                    <key t="0.1010449975729" v="2 2.2999999523163"/>
+                    <key t="0.48881238698959" v="1.2999999523163 0"/>
+                </size_scale_keys>
+                <opacity_keys loop="false">
+                    <key t="0" v="155"/>
+                    <key t="0.038327526301146" v="155"/>
+                    <key t="0.71944922208786" v="0"/>
+                </opacity_keys>
+            </billboard>
+        </visualizerstack>
+    </atom>
+</effect>
