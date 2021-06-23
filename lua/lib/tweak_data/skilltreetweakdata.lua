@@ -3023,6 +3023,119 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		desc_id = "menu_st_spec_9_desc",
 		name_id = "menu_st_spec_9"
 	}
+		
+	self.specializations[perkdeck_indices.grinder] = {
+		{
+			name_id = "menu_deck11_1",
+			desc_id = "menu_deck11_1_desc",
+			cost = perkdeck_tier_costs[1],
+			upgrades = {
+				"grinder_1"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck11_2",
+			desc_id = "menu_deck11_2_desc",
+			cost = perkdeck_tier_costs[2],
+			upgrades = {
+				"grinder_2"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck11_3",
+			desc_id = "menu_deck11_3_desc",
+			cost = perkdeck_tier_costs[3],
+			upgrades = {
+				"grinder_3"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck11_4",
+			desc_id = "menu_deck11_4_desc",
+			cost = perkdeck_tier_costs[4],
+			upgrades = {
+				"grinder_4"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck11_5",
+			desc_id = "menu_deck11_5_desc",
+			cost = perkdeck_tier_costs[5],
+			upgrades = {
+				"grinder_5"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck11_6",
+			desc_id = "menu_deck11_6_desc",
+			cost = perkdeck_tier_costs[6],
+			upgrades = {
+				"grinder_6"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck11_7",
+			desc_id = "menu_deck11_7_desc",
+			cost = perkdeck_tier_costs[7],
+			upgrades = {
+				"grinder_7"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck11_8",
+			desc_id = "menu_deck11_8_desc",
+			cost = perkdeck_tier_costs[8],
+			upgrades = {
+				"grinder_8"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck11_9",
+			desc_id = "menu_deck11_9_desc",
+			cost = perkdeck_tier_costs[9],
+			upgrades = {
+				"grinder_9"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		desc_id = "menu_st_spec_11_desc",
+		name_id = "menu_st_spec_11"
+	}
 	
 	if false then --reamining perk decks will be added as time goes on; template data is here	
 		self.specializations[perkdeck_indices.gambler] = {
@@ -3136,119 +3249,6 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			},
 			desc_id = "menu_st_spec_10_desc",
 			name_id = "menu_st_spec_10"
-		}
-		 
-		self.specializations[perkdeck_indices.grinder] = {
-			{
-				name_id = "menu_deck11_1",
-				desc_id = "menu_deck11_1_desc",
-				cost = perkdeck_tier_costs[1],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck11_2",
-				desc_id = "menu_deck11_2_desc",
-				cost = perkdeck_tier_costs[2],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck11_3",
-				desc_id = "menu_deck11_3_desc",
-				cost = perkdeck_tier_costs[3],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck11_4",
-				desc_id = "menu_deck11_4_desc",
-				cost = perkdeck_tier_costs[4],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck11_5",
-				desc_id = "menu_deck11_5_desc",
-				cost = perkdeck_tier_costs[5],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck11_6",
-				desc_id = "menu_deck11_6_desc",
-				cost = perkdeck_tier_costs[6],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck11_7",
-				desc_id = "menu_deck11_7_desc",
-				cost = perkdeck_tier_costs[7],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck11_8",
-				desc_id = "menu_deck11_8_desc",
-				cost = perkdeck_tier_costs[8],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck11_9",
-				desc_id = "menu_deck11_9_desc",
-				cost = perkdeck_tier_costs[9],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			desc_id = "menu_st_spec_11_desc",
-			name_id = "menu_st_spec_11"
 		}
 		
 		self.specializations[perkdeck_indices.yakuza] = {

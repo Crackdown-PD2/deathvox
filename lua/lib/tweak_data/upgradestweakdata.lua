@@ -3005,5 +3005,104 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		--Grinder
+		self.values.player.grinder_dmgtohp = {
+			0.005,
+			0.01,
+			0.015,
+			0.02,
+			0.025
+		}
+		self.values.player.grinder_killtohp = {
+			0.005,
+			0.01
+		}
+		self.values.player.grinder_health_mul = {
+			1.2,
+			1.4
+		}
+		
+		self.definitions.grinder_1 = {
+			name_id = "menu_deck11_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "grinder_dmgtohp",
+				category = "player"
+			}
+		}
+		self.definitions.grinder_2 = {
+			name_id = "menu_deck11_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "grinder_killtohp",
+				category = "player"
+			}
+		}
+		self.definitions.grinder_3 = {
+			name_id = "menu_deck11_3",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "grinder_dmgtohp",
+				category = "player"
+			}
+		}
+		self.definitions.grinder_4 = {
+			name_id = "menu_deck11_4",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "grinder_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.grinder_5 = {
+			name_id = "menu_deck11_5",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "grinder_dmgtohp",
+				category = "player"
+			}
+		}
+		self.definitions.grinder_6 = {
+			name_id = "menu_deck11_6",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "grinder_killtohp",
+				category = "player"
+			}
+		}
+		self.definitions.grinder_7 = {
+			name_id = "menu_deck11_7",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "grinder_dmgtohp",
+				category = "player"
+			}
+		}
+		self.definitions.grinder_8 = {
+			name_id = "menu_deck11_8",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "grinder_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.grinder_9 = {
+			name_id = "menu_deck11_9",
+			category = "feature",
+			upgrade = {
+				value = 5,
+				upgrade = "grinder_dmgtohp",
+				category = "player"
+			}
+		}
+		
 	end
 end)

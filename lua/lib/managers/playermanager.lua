@@ -999,6 +999,7 @@ function PlayerManager:health_skill_multiplier()
 	end
 	
 	multiplier = multiplier + self:upgrade_value("player", "health_multiplier", 1) - 1
+	multiplier = multiplier + self:upgrade_value("player", "grinder_health_mul", 1) - 1
 	multiplier = multiplier + self:upgrade_value("player", "muscle_health_mul", 1) - 1
 	multiplier = multiplier + self:upgrade_value("player", "passive_health_multiplier", 1) - 1
 	multiplier = multiplier + self:team_upgrade_value("health", "passive_multiplier", 1) - 1
@@ -1244,6 +1245,10 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 	end
 	
 	if damage_ext then
+		if self:has_category_upgrade("player", "grinder_killtohp") then
+			damage_ext:restore_health(self:upgrade_value("player", "grinder_killtohp", 0))
+		end
+	
 		if variant == "melee" then
 			damage_ext:restore_health(self:upgrade_value("player", "infiltrator_melee_heal", 0))
 			damage_ext:restore_armor_percent(self:upgrade_value("player", "infiltrator_armor_restore", 0))
@@ -1256,7 +1261,7 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 			end
 		end
 	end
-
+	
 	local gain_throwable_per_kill = managers.player:upgrade_value("team", "crew_throwable_regen", 0)
 
 	if gain_throwable_per_kill ~= 0 then
@@ -1398,8 +1403,21 @@ function PlayerManager:on_damage_dealt(unit, damage_info)
 
 	local t = Application:time()
 
-	self:_check_damage_to_hot(t, unit, damage_info)
+	if self:has_category_upgrade("player", "damage_to_hot") then
+		self:_check_damage_to_hot(t, unit, damage_info)
+	end
+	
 	self:_check_damage_to_cops(t, unit, damage_info)
+	
+	if self:has_category_upgrade("player", "grinder_dmgtohp") then
+		if damage_info.variant ~= "dot" and damage_info.variant ~= "poison" and type(damage_info.damage) == "number" then
+			local mul = self:upgrade_value("player", "grinder_dmgtohp", 0)
+			local damage = damage_info.damage
+			local hp_to_restore = damage * mul
+			local damage_ext = player_unit:character_damage()
+			damage_ext:restore_health(hp_to_restore, true)
+		end
+	end
 	
 	if self:has_category_upgrade("player", "infiltrator_melee_stance_DR") then
 		local current_state = self:get_current_state()

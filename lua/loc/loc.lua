@@ -618,6 +618,26 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck9_9 = "Rasmus",
 				menu_deck9_9_desc = "Increases ##Combo## radius to ##15## meters. All enemies within ##Combo## range are Highlighted.",
 				
+				--Grinder
+				menu_deck11_1 = "Break Out",
+				menu_deck11_1_desc = "##0.5%## of the damage you deal is returned to you as Health.",
+				menu_deck11_2 = "Life Tap",
+				menu_deck11_2_desc = "You regain ##+0.5%## of your Maximum Health when you kill an enemy.",
+				menu_deck11_3 = "Offensive Pressure",
+				menu_deck11_3_desc = "Increases the amount of Health gained from damage dealt to ##1%##.",
+				menu_deck11_4 = "Backcheck",
+				menu_deck11_4_desc = "You gain ##+20%## Maximum Health.",
+				menu_deck11_5 = "Strong Side",
+				menu_deck11_5_desc = "Increases the amount of Health gained from damage dealt to ##1.5%##.",
+				menu_deck11_6 = "Life Rush",
+				menu_deck11_6_desc = "Increases the amount of Maximum Health gained from killing an enemy to ##1%##.",
+				menu_deck11_7 = "Scoring Chance",
+				menu_deck11_7_desc = "Increases the amount of Health gained from damage dealt to ##2%##.",
+				menu_deck11_8 = "Forecheck",
+				menu_deck11_8_desc = "Increases your Maximum Health bonus to ##+40%##.",
+				menu_deck11_9 = "Bar Down",
+				menu_deck11_9_desc = "Increases the amount of Health gained from damage dealt to ##2.5%##.",
+				
 				--[[
 				,
 				
@@ -640,26 +660,6 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck10_8_desc = "PLACEHOLDER",
 				menu_deck10_9 = "PLACEHOLDER",
 				menu_deck10_9_desc = "PLACEHOLDER",
-				
-				--Grinder
-				menu_deck11_1 = "PLACEHOLDER",
-				menu_deck11_1_desc = "PLACEHOLDER",
-				menu_deck11_2 = "PLACEHOLDER",
-				menu_deck11_2_desc = "PLACEHOLDER",
-				menu_deck11_3 = "PLACEHOLDER",
-				menu_deck11_3_desc = "PLACEHOLDER",
-				menu_deck11_4 = "PLACEHOLDER",
-				menu_deck11_4_desc = "PLACEHOLDER",
-				menu_deck11_5 = "PLACEHOLDER",
-				menu_deck11_5_desc = "PLACEHOLDER",
-				menu_deck11_6 = "PLACEHOLDER",
-				menu_deck11_6_desc = "PLACEHOLDER",
-				menu_deck11_7 = "PLACEHOLDER",
-				menu_deck11_7_desc = "PLACEHOLDER",
-				menu_deck11_8 = "PLACEHOLDER",
-				menu_deck11_8_desc = "PLACEHOLDER",
-				menu_deck11_9 = "PLACEHOLDER",
-				menu_deck11_9_desc = "PLACEHOLDER",
 				
 				--Yakuza
 				menu_deck12_1 = "PLACEHOLDER",
