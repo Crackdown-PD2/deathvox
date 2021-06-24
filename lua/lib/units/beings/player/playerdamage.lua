@@ -1,3 +1,7 @@
+--i hate my life
+PlayerDamage._expres_election_stacks = 0
+PlayerDamage._expres_regenerate_speed = 1
+
 Hooks:PostHook(PlayerDamage, "init", "dv_post_init", function(self, unit)
 	local player_manager = managers.player
 	
@@ -16,8 +20,11 @@ Hooks:PostHook(PlayerDamage, "init", "dv_post_init", function(self, unit)
 	if player_manager:has_category_upgrade("player", "rogue_taser_dodge") then
 		self._next_taser_dodge_t = 0
 	end
+	
+	if player_manager:has_category_upgrade("player", "expres_hot_armorup") then
+		self._expres_drain_t = player_manager:upgrade_value("player", "expres_hot_armorup", 5)
+	end
 end)
-
 
 function PlayerDamage:_raw_max_health()
 	if managers.player:has_category_upgrade("player", "sociopath_mode") then
@@ -272,6 +279,92 @@ function PlayerDamage:update(unit, t, dt)
 		if not self:is_downed() then
 			self:_update_delayed_damage(t, dt)
 		end
+	end
+end
+
+function PlayerDamage:_upd_health_regen(t, dt)
+	if self._health_regen_update_timer then
+		self._health_regen_update_timer = self._health_regen_update_timer - dt
+
+		if self._health_regen_update_timer <= 0 then
+			self._health_regen_update_timer = nil
+		end
+	end
+
+	local player_manager = managers.player
+	local current_health = self:get_real_health()
+	local max_health = self:_max_health()
+	local armor = self:get_real_armor()
+	
+	if not self._health_regen_update_timer then
+		if current_health < max_health then
+			local health_regen = player_manager:health_regen()
+			local fixed_health_regen = player_manager:fixed_health_regen(self:health_ratio())
+			
+			if health_regen > 0 then
+				self:restore_health(health_regen, false)
+			end
+			
+			if fixed_health_regen > 0 then
+				self:restore_health(fixed_health_regen, true)
+			end
+
+			self._health_regen_update_timer = 5
+		end
+	end
+	
+	if self._expres_election_stacks > 0 then
+		if current_health < max_health and not self._expres_can_insta_regen then
+			if player_manager:has_category_upgrade("player", "expres_hot_armorup") then
+				if self._expres_drain_t > 0 then
+					self._expres_drain_t = self._expres_drain_t - dt
+				else
+					self._expres_drain_t = player_manager:upgrade_value("player", "expres_hot_armorup", 5)
+		
+					local current_health_f = self.get_real_health
+					local regen_data = managers.player:upgrade_value("player", "expres_hot_election", {0, 0})
+					local stacks_to_consume = 0.5
+					
+					self._expres_election_stacks = self._expres_election_stacks - stacks_to_consume
+					self:restore_health(stacks_to_consume, true)
+					
+					if managers.hud then
+						local shown_stacks = self._expres_election_stacks
+						local max_stacks = regen_data[2]
+						
+						local stored_health_ratio = shown_stacks / max_stacks
+
+						managers.hud:set_stored_health(stored_health_ratio)
+					end
+					
+				end
+			end
+		end
+	end
+
+	if #self._damage_to_hot_stack > 0 then
+		repeat
+			local next_doh = self._damage_to_hot_stack[1]
+			local done = not next_doh or TimerManager:game():time() < next_doh.next_tick
+
+			if not done then
+				local regen_rate = player_manager:upgrade_value("player", "damage_to_hot", 0)
+
+				self:restore_health(regen_rate, true)
+
+				next_doh.ticks_left = next_doh.ticks_left - 1
+
+				if next_doh.ticks_left == 0 then
+					table.remove(self._damage_to_hot_stack, 1)
+				else
+					next_doh.next_tick = next_doh.next_tick + (self._doh_data.tick_time or 1)
+				end
+
+				table.sort(self._damage_to_hot_stack, function (x, y)
+					return x.next_tick < y.next_tick
+				end)
+			end
+		until done
 	end
 end
 
@@ -1236,7 +1329,9 @@ end
 function PlayerDamage:_on_damage_event()
 	self:set_regenerate_timer_to_max()
 	
-	if managers.player:has_category_upgrade("player", "sociopath_mode") then
+	local player_manager = managers.player
+	
+	if player_manager:has_category_upgrade("player", "sociopath_mode") then
 		World:effect_manager():spawn({
 			effect = Idstring("effects/pd2_mod_gageammo/particles/character/sociopath_damage"),
 			position = Vector3(),
@@ -1244,30 +1339,49 @@ function PlayerDamage:_on_damage_event()
 		})
 		self._unit:sound():play("knife_hit_body", nil, nil)
 		self._hurt_value = 0
-		self._can_take_dmg_timer = 2 + managers.player:upgrade_value("player", "sociopath_i_frames_add", 0)
+		self._can_take_dmg_timer = 2 + player_manager:upgrade_value("player", "sociopath_i_frames_add", 0)
 		
 		local env_value = self._can_take_dmg_timer - 0.35
 		
 		managers.environment_controller:set_sociopath_inv_value(env_value)
 	end
 	
-	if managers.player:has_category_upgrade("player", "yakuza_on_damage_iframes") then
+	if player_manager:has_category_upgrade("player", "yakuza_on_damage_iframes") then
 		self._can_take_dmg_timer = 1
 	end
 	
-	if managers.player:has_category_upgrade("player", "yakuza_on_damage_dr") then
+	if player_manager:has_category_upgrade("player", "yakuza_on_damage_dr") then
 		self._yakuza_dmg_event_dr = 5
 	end
 
 	local armor_broken = self:_max_armor() > 0 and self:get_real_armor() <= 0
 
 	if armor_broken then 
+		self._expres_can_insta_regen = true
+		
+		if player_manager:has_category_upgrade("player", "expres_approval_regenerate_time") then
+			local max_regen_speed = player_manager:upgrade_value("player", "expres_approval_regenerate_time", 0)
+			local expres_stacks = self._expres_election_stacks
+			local step = 8
+			
+			while expres_stacks >= step do
+				self._expres_regenerate_speed = self._expres_regenerate_speed + 0.2
+
+				if self._expres_regenerate_speed < 1.6 then
+					step = step + 8
+				else
+					break
+				end
+			end
+		end
+		
+		
 		Hooks:Call("OnPlayerShieldBroken",self._unit)
 		if self._has_damage_speed then
-			managers.player:activate_temporary_upgrade("temporary", "damage_speed_multiplier")
+			player_manager:activate_temporary_upgrade("temporary", "damage_speed_multiplier")
 		end
 		if self._has_damage_speed_team then
-			managers.player:send_activate_temporary_team_upgrade_to_peers("temporary", "team_damage_speed_multiplier_received")
+			player_manager:send_activate_temporary_team_upgrade_to_peers("temporary", "team_damage_speed_multiplier_received")
 		end
 	end
 end
@@ -1305,10 +1419,83 @@ function PlayerDamage:remove_armor_plates_bonus()
 end
 
 if deathvox:IsTotalCrackdownEnabled() then 
+
+	function PlayerDamage:max_armor_stored_health()
+		local player_manager = managers.player
+		
+		if not player_manager:has_category_upgrade("player", "expres_hot_election") then
+			return 0
+		end
+
+		local regen_data = player_manager:upgrade_value("player", "expres_hot_election", {0, 0})
+		local max_stacks = regen_data[2]
+
+		return max_stacks
+	end
+
+	function PlayerDamage:update_armor_stored_health()
+		if managers.hud then
+			local player_manager = managers.player
+			
+			local max_health = self:_max_health()
+			local regen_data = player_manager:upgrade_value("player", "expres_hot_election", {0, 0})
+			local max_stacks = regen_data[2]
+			
+			managers.hud:set_stored_health_max(math.min(max_stacks / max_health, 1))
+
+			if self._expres_election_stacks then
+				local shown_stacks = self._expres_election_stacks
+				
+				shown_stacks = math.min(shown_stacks, max_stacks)
+				local stored_health_ratio = shown_stacks / max_stacks
+
+				managers.hud:set_stored_health(stored_health_ratio)
+			end
+		end
+	end
+	
+	function PlayerDamage:consume_armor_stored_health()
+		if self._expres_election_stacks > 0 then
+			if not self._dead and not self._bleed_out and not self._check_berserker_done then
+				local current_health_f = self.get_real_health
+				local max_health = self._current_max_health
+				local regen_data = managers.player:upgrade_value("player", "expres_hot_election", {0, 0})
+				local stacks_to_consume = regen_data[1]
+				local restore_health_f = self.restore_health
+				
+				repeat
+					self._expres_election_stacks = self._expres_election_stacks - stacks_to_consume
+					restore_health_f(self, stacks_to_consume, true)
+				until current_health_f(self) >= max_health or self._expres_election_stacks <= 0
+				
+				self:update_armor_stored_health()
+			end
+		end
+	end
+	
+	function PlayerDamage:_regenerate_armor(no_sound)
+		if self._unit:sound() and not no_sound then
+			self._unit:sound():play("shield_full_indicator")
+		end
+
+		self._regenerate_speed = nil
+		
+		if self._expres_can_insta_regen then
+			self:consume_armor_stored_health()
+			self._expres_can_insta_regen = nil
+		end
+		
+		self:set_armor(self:_max_armor())
+		self:_send_set_armor()
+		
+		self._expres_regenerate_speed = 1
+		self._current_state = nil
+	end
 	
 	function PlayerDamage:_update_regenerate_timer(t, dt)
 		local regen_speed = self._regenerate_speed or 1
-		local dt_mul = regen_speed * math.lerp(1, 0, self:suppression_ratio())
+		regen_speed = regen_speed + self._expres_regenerate_speed - 1
+		local dt_mul = regen_speed * math.lerp(1, 0, self:effective_suppression_ratio())
 		self._regenerate_timer = math.max(self._regenerate_timer - dt * dt_mul, 0)
 
 		if self._regenerate_timer <= 0 then

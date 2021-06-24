@@ -69,8 +69,8 @@ Hooks:PostHook(PlayerTweakData, "init", "DV_init", function(self)
 			receive_mul = 1,
 			decay_start_delay = 1,
 			spread_mul = 1,
-			tolerance = 0,
-			max_value = 20,
+			tolerance = 1,
+			max_value = 11,
 			autohit_chance_mul = 1
 		}
 	end

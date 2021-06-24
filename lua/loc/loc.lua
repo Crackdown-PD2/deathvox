@@ -640,7 +640,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				
 				--Yakuza
 				menu_deck12_1 = "Fujin Irezumi",
-				menu_deck12_1_desc = "You gain ##+2%## Damage Resistance per ##10%## of Missing Health, up to ##+10%## Damage Resistance.\n\nCharging your Melee Weapon for ##5## seconds causes you to ##lose 5%## Maximum Health per second spent Charging afterwards, up to ##50%##.\n\n##Yakuza negates Regeneration effects while equipped.##",
+				menu_deck12_1_desc = "You gain ##+2%## Damage Resistance per ##10%## of Missing Health, up to ##+10%## Damage Resistance.\n\nCharging your $ICN_MELMelee Weapon for ##5## seconds causes you to ##lose 5%## Maximum Health per second spent Charging afterwards, up to ##50%##.\n\n##Yakuza negates Regeneration effects while equipped.##",
 				menu_deck12_2 = "Raijin Irezumi",
 				menu_deck12_2_desc = "Taking damage grants ##+10%## Damage Resistance for ##5## seconds.",
 				menu_deck12_3 = "Taubushi",
@@ -657,6 +657,26 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck12_8_desc = "Increases the Damage Resistance bonus from taking damage to ##+40%##.",
 				menu_deck12_9 = "Donburi Soshinbori",
 				menu_deck12_9_desc = "You become Invulnerable for ##1## second after taking damage from any source.",
+				
+				--Ex-President
+				menu_deck13_1 = "Election",
+				menu_deck13_1_desc = "When you ##have any amount of Armor##, kills generate ##5 Approval##, up to ##200##.\n\nWhen your Armor has been ##completely depleted and starts to regenerate##, ##Approval## is converted into healing to ##restore missing Health##.",
+				menu_deck13_2 = "Inauguration",
+				menu_deck13_2_desc = "If you are missing Health when you have any amount of Armor, ##5 Approval## is converted to Health every ##5## seconds.",
+				menu_deck13_3 = "Appointment",
+				menu_deck13_3_desc = "You gain ##+30%## Maximum Health.",
+				menu_deck13_4 = "Delegation",
+				menu_deck13_4_desc = "Reduces the amount of time to convert ##Approval## while Armored to ##4## seconds.",
+				menu_deck13_5 = "Rough Times",
+				menu_deck13_5_desc = "You gain ##+20%## Dodge Chance.",
+				menu_deck13_6 = "Bad Decisions",
+				menu_deck13_6_desc = "Reduces the amount of time to convert ##Approval## while Armored to ##3## seconds.",
+				menu_deck13_7 = "Scandal",
+				menu_deck13_7_desc = "You now generate ##10 Approval## per kill and the maximum amount of ##Approval## increases to ##300##.",
+				menu_deck13_8 = "Impeachment",
+				menu_deck13_8_desc = "Reduces the amount of time to convert ##Approval## while Armored to ##2## seconds.",
+				menu_deck13_9 = "Departure",
+				menu_deck13_9_desc = "When your Armor ##has been completely depleted##, you gain ##+20%## Armor Recovery Rate for every ##80 Approval## you have stored, up to ##+60%##.",
 				
 				--[[
 				,
@@ -680,26 +700,6 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck10_8_desc = "PLACEHOLDER",
 				menu_deck10_9 = "PLACEHOLDER",
 				menu_deck10_9_desc = "PLACEHOLDER",
-				
-				--Ex-President
-				menu_deck13_1 = "PLACEHOLDER",
-				menu_deck13_1_desc = "PLACEHOLDER",
-				menu_deck13_2 = "PLACEHOLDER",
-				menu_deck13_2_desc = "PLACEHOLDER",
-				menu_deck13_3 = "PLACEHOLDER",
-				menu_deck13_3_desc = "PLACEHOLDER",
-				menu_deck13_4 = "PLACEHOLDER",
-				menu_deck13_4_desc = "PLACEHOLDER",
-				menu_deck13_5 = "PLACEHOLDER",
-				menu_deck13_5_desc = "PLACEHOLDER",
-				menu_deck13_6 = "PLACEHOLDER",
-				menu_deck13_6_desc = "PLACEHOLDER",
-				menu_deck13_7 = "PLACEHOLDER",
-				menu_deck13_7_desc = "PLACEHOLDER",
-				menu_deck13_8 = "PLACEHOLDER",
-				menu_deck13_8_desc = "PLACEHOLDER",
-				menu_deck13_9 = "PLACEHOLDER",
-				menu_deck13_9_desc = "PLACEHOLDER",
 				
 				--Maniac
 				menu_deck14_1 = "PLACEHOLDER",

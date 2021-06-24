@@ -1029,6 +1029,7 @@ function PlayerManager:health_skill_multiplier()
 	multiplier = multiplier + self:upgrade_value("player", "health_multiplier", 1) - 1
 	multiplier = multiplier + self:upgrade_value("player", "grinder_health_mul", 1) - 1
 	multiplier = multiplier + self:upgrade_value("player", "muscle_health_mul", 1) - 1
+	multiplier = multiplier + self:upgrade_value("player", "expres_health_mul", 1) - 1
 	multiplier = multiplier + self:upgrade_value("player", "passive_health_multiplier", 1) - 1
 	multiplier = multiplier + self:team_upgrade_value("health", "passive_multiplier", 1) - 1
 	multiplier = multiplier + self:get_hostage_bonus_multiplier("health") - 1
@@ -1159,6 +1160,7 @@ function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, overri
 	chance = chance + dodge_shot_gain
 	chance = chance + self:upgrade_value("player", "tier_dodge_chance", 0)
 	chance = chance + self:upgrade_value("player", "rogue_dodge_add", 0)
+	chance = chance + self:upgrade_value("player", "expres_dodge_add", 0)
 
 	if running then
 		chance = chance + self:upgrade_value("player", "run_dodge_chance", 0)
@@ -1270,6 +1272,25 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 		local multiplier = self:upgrade_value("player", "kill_change_regenerate_speed", 0)
 
 		damage_ext:change_regenerate_speed(amount * multiplier, tweak_data.upgrades.kill_change_regenerate_speed_percentage)
+	end
+	
+	if self:has_category_upgrade("player", "expres_hot_election") then
+		if damage_ext:armor_ratio() >= 1 then
+			local expres_data = self:upgrade_value("player", "expres_hot_election", {0, 0})
+			local stacks_to_generate = expres_data[1]
+			local max_stacks = expres_data[2]
+			
+			if damage_ext._expres_election_stacks < max_stacks then
+				damage_ext._expres_election_stacks = damage_ext._expres_election_stacks + stacks_to_generate
+
+				local shown_stacks = damage_ext._expres_election_stacks * stacks_to_generate
+				
+				shown_stacks = math.min(shown_stacks, max_stacks)
+				local stored_health_ratio = shown_stacks / max_stacks
+
+				managers.hud:set_stored_health(stored_health_ratio)
+			end
+		end
 	end
 	
 	if damage_ext then
@@ -1584,7 +1605,6 @@ function PlayerManager:update(t, dt)
 								if camera_unit then
 									local righthand = camera_unit:get_object(right_hand_ids)
 									local lefthand = camera_unit:get_object(left_hand_ids)
-									
 									
 									camera:play_shaker("player_bullet_damage", 0.1)
 									world_g:effect_manager():spawn({effect = yakuza_bleed_ids, parent = righthand})

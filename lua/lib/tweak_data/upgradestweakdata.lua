@@ -3204,5 +3204,111 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		--Ex-President
+		--this perkdeck was kind of a nightmare but i managed to pull it together 
+		--im really sorry for offy, who will probably look at this code later and feel nothing but disgust
+		
+		self.values.player.expres_hot_election = {
+			{0.5, 20}, --stacks generated per kill, max stacks
+			{1, 30}
+		}
+		self.values.player.expres_hot_armorup = { --cooldown timers for armor up regen
+			5,
+			4,
+			3,
+			2
+		}
+		self.values.player.expres_health_mul = {
+			1.3
+		}
+		self.values.player.expres_dodge_add = {
+			0.2
+		}
+		self.values.player.expres_approval_regenerate_time = {
+			1.6
+		}
+		
+		self.definitions.expres_1 = {
+			name_id = "menu_deck13_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "expres_hot_election",
+				category = "player"
+			}
+		}
+		self.definitions.expres_2 = {
+			name_id = "menu_deck13_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "expres_hot_armorup",
+				category = "player"
+			}
+		}
+		self.definitions.expres_3 = {
+			name_id = "menu_deck13_3",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "expres_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.expres_4 = {
+			name_id = "menu_deck13_4",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "expres_hot_armorup",
+				category = "player"
+			}
+		}
+		self.definitions.expres_5 = {
+			name_id = "menu_deck13_5",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "expres_dodge_add",
+				category = "player"
+			}
+		}
+		self.definitions.expres_6 = {
+			name_id = "menu_deck13_6",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "expres_hot_armorup",
+				category = "player"
+			}
+		}
+		self.definitions.expres_7 = {
+			name_id = "menu_deck13_7",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "expres_hot_election",
+				category = "player"
+			}
+		}
+		self.definitions.expres_8 = {
+			name_id = "menu_deck13_8",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "expres_hot_armorup",
+				category = "player"
+			}
+		}
+		self.definitions.expres_9 = {
+			name_id = "menu_deck13_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "expres_approval_regenerate_time",
+				category = "player"
+			}
+		}
+		
 	end
 end)
