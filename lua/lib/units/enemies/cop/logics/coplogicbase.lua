@@ -1343,6 +1343,10 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 								soft_t = 1 
 							end
 							
+							if data.internal_data.want_to_take_cover then
+								soft_t = soft_t + 2
+							end
+							
 							local visible_softer = attention.verified_t and data.t - attention.verified_t < soft_t
 							if visible_softer and attention.dis <= dis then
 								return true, false

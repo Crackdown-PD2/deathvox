@@ -2073,6 +2073,15 @@ function CopLogicAttack._chk_wants_to_take_cover(data, my_data)
 	if data.is_suppressed then
 		return true
 	end
+	
+	local last_sup_t = data.unit:character_damage():last_suppression_t()
+		
+	if last_sup_t then
+		if data.t - last_sup_t < 1 then
+			return true
+		end
+	end
+	
 end
 
 function CopLogicAttack._set_best_cover(data, my_data, cover_data)
