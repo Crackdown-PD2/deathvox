@@ -1338,16 +1338,14 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 							local dis = data.unit:base()._engagement_range or data.internal_data.weapon_range and data.internal_data.weapon_range.optimal or 500
 							local my_data = data.internal_data
 							local soft_t = 3.5
+							
 							if grp_objective and not grp_objective.open_fire then
 								dis = dis * 0.5
 								soft_t = 1 
 							end
 							
-							if data.internal_data.want_to_take_cover then
-								soft_t = soft_t + 2
-							end
+							local visible_softer = data.internal_data.want_to_take_cover or attention.verified_t and data.t - attention.verified_t < soft_t
 							
-							local visible_softer = attention.verified_t and data.t - attention.verified_t < soft_t
 							if visible_softer and attention.dis <= dis then
 								return true, false
 							end
