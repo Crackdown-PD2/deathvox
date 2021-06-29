@@ -678,6 +678,26 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck13_9 = "Departure",
 				menu_deck13_9_desc = "When your Armor ##has been completely depleted##, you gain ##+20%## Armor Recovery Rate for every ##80 Approval## you have stored, up to ##+60%##.",
 				
+				--Anarchist
+				menu_deck15_1 = "Nazi Punks Fuck Off",
+				menu_deck15_1_desc = "Instead of ##fully regenerating Armor when out of combat##, you will ##constantly regenerate Armor based on your suit##. Heavier suits regenerates more Armor, but during longer intervals.\n\n##50%## of your Health is converted into Armor.",
+				menu_deck15_2 = "Dog Bite",
+				menu_deck15_2_desc = "Damaging an enemy generates ##5## Armor.",
+				menu_deck15_3 = "Cesspools In Eden",
+				menu_deck15_3_desc = "Increases the amount of Health converted into Armor to ##60%##.",
+				menu_deck15_4 = "Life Sentence",
+				menu_deck15_4_desc = "Killing an enemy generates ##5## Armor.",
+				menu_deck15_5 = "Dead End",
+				menu_deck15_5_desc = "Increases the amount of Health converted into Armor to ##70%##.",
+				menu_deck15_6 = "I Spy",
+				menu_deck15_6_desc = "Hitting an enemy with a Headshot generates ##10## Armor.",
+				menu_deck15_7 = "The Great Wall",
+				menu_deck15_7_desc = "Increases the amount of Health converted into Armor to ##80%##.",
+				menu_deck15_8 = "Let's Lynch The Landlord",
+				menu_deck15_8_desc = "Killing an enemy with a Headshot generates ##10## Armor.",
+				menu_deck15_9 = "This Could Be Anywhere",
+				menu_deck15_9_desc = "Increases the amount of Health converted into Armor to ##90%##.",
+				
 				--[[
 				,
 				
@@ -720,26 +740,6 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck14_8_desc = "PLACEHOLDER",
 				menu_deck14_9 = "PLACEHOLDER",
 				menu_deck14_9_desc = "PLACEHOLDER",
-				
-				--Anarchist
-				menu_deck15_1 = "PLACEHOLDER",
-				menu_deck15_1_desc = "PLACEHOLDER",
-				menu_deck15_2 = "PLACEHOLDER",
-				menu_deck15_2_desc = "PLACEHOLDER",
-				menu_deck15_3 = "PLACEHOLDER",
-				menu_deck15_3_desc = "PLACEHOLDER",
-				menu_deck15_4 = "PLACEHOLDER",
-				menu_deck15_4_desc = "PLACEHOLDER",
-				menu_deck15_5 = "PLACEHOLDER",
-				menu_deck15_5_desc = "PLACEHOLDER",
-				menu_deck15_6 = "PLACEHOLDER",
-				menu_deck15_6_desc = "PLACEHOLDER",
-				menu_deck15_7 = "PLACEHOLDER",
-				menu_deck15_7_desc = "PLACEHOLDER",
-				menu_deck15_8 = "PLACEHOLDER",
-				menu_deck15_8_desc = "PLACEHOLDER",
-				menu_deck15_9 = "PLACEHOLDER",
-				menu_deck15_9_desc = "PLACEHOLDER",
 				
 				--Biker
 				menu_deck16_1 = "PLACEHOLDER",

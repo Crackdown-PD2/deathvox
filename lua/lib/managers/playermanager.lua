@@ -1038,6 +1038,11 @@ function PlayerManager:health_skill_multiplier()
 	if self:num_local_minions() > 0 then
 		multiplier = multiplier + self:upgrade_value("player", "minion_master_health_multiplier", 1) - 1
 	end
+	
+	if self:has_category_upgrade("player", "anarch_conversion") then
+		local anarch_mul = 1 - self:upgrade_value("player", "anarch_conversion", 0)
+		multiplier = multiplier * anarch_mul
+	end
 
 	return multiplier
 end
@@ -1093,6 +1098,11 @@ function PlayerManager:body_armor_skill_addend(override_armor)
 		local health_multiplier = self:health_skill_multiplier()
 		local max_health = (PlayerDamage._HEALTH_INIT + self:health_skill_addend()) * health_multiplier
 		addend = addend + max_health * self:upgrade_value("player", "armor_increase", 1)
+	end
+	
+	if self:has_category_upgrade("player", "anarch_conversion") then
+		local max_health = (PlayerDamage._HEALTH_INIT + self:health_skill_addend())
+		addend = addend + max_health * self:upgrade_value("player", "anarch_conversion", 0)
 	end
 	
 	if self:has_category_upgrade("player", "crook_vest_armor_addend") then
@@ -1297,6 +1307,22 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 		if self:has_category_upgrade("player", "grinder_killtohp") then
 			damage_ext:restore_health(self:upgrade_value("player", "grinder_killtohp", 0))
 		end
+		
+		if self:has_category_upgrade("player", "anarch_conversion") then
+			if variant ~= "dot" and variant ~= "poison" then
+				local regenerate = 0
+				
+				regenerate = self:upgrade_value("player", "anarch_onkill_armor_regen", 0)
+				
+				if headshot then
+					regenerate = regenerate + self:upgrade_value("player", "anarch_onheadshotkill_armor_regen", 0)
+				end
+				
+				if regenerate > 0 then
+					damage_ext:restore_armor(regenerate)
+				end
+			end
+		end
 	
 		if variant == "melee" then
 			damage_ext:restore_health(self:upgrade_value("player", "infiltrator_melee_heal", 0))
@@ -1458,12 +1484,29 @@ function PlayerManager:on_damage_dealt(unit, damage_info)
 	
 	self:_check_damage_to_cops(t, unit, damage_info)
 	
+	local damage_ext = player_unit:character_damage()
+	
+	if self:has_category_upgrade("player", "anarch_conversion") then
+		if damage_info.variant ~= "dot" and damage_info.variant ~= "poison" and type(damage_info.damage) == "number" then
+			local regenerate = 0
+			
+			regenerate = self:upgrade_value("player", "anarch_ondmg_armor_regen", 0)
+			
+			if damage_info.headshot then
+				regenerate = regenerate + self:upgrade_value("player", "anarch_onheadshotdmg_armor_regen", 0)
+			end
+			
+			if regenerate > 0 then
+				damage_ext:restore_armor(regenerate)
+			end
+		end
+	end
+
 	if self:has_category_upgrade("player", "grinder_dmgtohp") then
 		if damage_info.variant ~= "dot" and damage_info.variant ~= "poison" and type(damage_info.damage) == "number" then
 			local mul = self:upgrade_value("player", "grinder_dmgtohp", 0)
 			local damage = damage_info.damage
 			local hp_to_restore = damage * mul
-			local damage_ext = player_unit:character_damage()
 			damage_ext:restore_health(hp_to_restore, true)
 		end
 	end
@@ -1481,8 +1524,6 @@ function PlayerManager:on_damage_dealt(unit, damage_info)
 			end
 		end
 	end
-	
-	
 
 	if self._on_damage_dealt_t and t < self._on_damage_dealt_t then
 		return
