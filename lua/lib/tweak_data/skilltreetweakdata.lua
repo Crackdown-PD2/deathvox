@@ -3363,6 +3363,120 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		name_id = "menu_st_spec_13"
 	}
 	
+	self.specializations[perkdeck_indices.anarchist] = {
+		{
+			name_id = "menu_deck15_1",
+			desc_id = "menu_deck15_1_desc",
+			cost = perkdeck_tier_costs[1],
+			upgrades = {
+				"player_armor_grinding_1",
+				"anarch_1"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck15_2",
+			desc_id = "menu_deck15_2_desc",
+			cost = perkdeck_tier_costs[2],
+			upgrades = {
+				"anarch_2"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck15_3",
+			desc_id = "menu_deck15_3_desc",
+			cost = perkdeck_tier_costs[3],
+			upgrades = {
+				"anarch_3"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck15_4",
+			desc_id = "menu_deck15_4_desc",
+			cost = perkdeck_tier_costs[4],
+			upgrades = {
+				"anarch_4"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck15_5",
+			desc_id = "menu_deck15_5_desc",
+			cost = perkdeck_tier_costs[5],
+			upgrades = {
+				"anarch_5"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck15_6",
+			desc_id = "menu_deck15_6_desc",
+			cost = perkdeck_tier_costs[6],
+			upgrades = {
+				"anarch_6"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck15_7",
+			desc_id = "menu_deck15_7_desc",
+			cost = perkdeck_tier_costs[7],
+			upgrades = {
+				"anarch_7"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck15_8",
+			desc_id = "menu_deck15_8_desc",
+			cost = perkdeck_tier_costs[8],
+			upgrades = {
+				"anarch_8"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck15_9",
+			desc_id = "menu_deck15_9_desc",
+			cost = perkdeck_tier_costs[9],
+			upgrades = {
+				"anarch_9"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		desc_id = "menu_st_spec_15_desc",
+		name_id = "menu_st_spec_15"
+	}
+
 	if false then --reamining perk decks will be added as time goes on; template data is here	
 		self.specializations[perkdeck_indices.gambler] = {
 			{
@@ -3588,119 +3702,6 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			},
 			desc_id = "menu_st_spec_14_desc",
 			name_id = "menu_st_spec_14"
-		}
-		
-		self.specializations[perkdeck_indices.anarchist] = {
-			{
-				name_id = "menu_deck15_1",
-				desc_id = "menu_deck15_1_desc",
-				cost = perkdeck_tier_costs[1],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck15_2",
-				desc_id = "menu_deck15_2_desc",
-				cost = perkdeck_tier_costs[2],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck15_3",
-				desc_id = "menu_deck15_3_desc",
-				cost = perkdeck_tier_costs[3],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck15_4",
-				desc_id = "menu_deck15_4_desc",
-				cost = perkdeck_tier_costs[4],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck15_5",
-				desc_id = "menu_deck15_5_desc",
-				cost = perkdeck_tier_costs[5],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck15_6",
-				desc_id = "menu_deck15_6_desc",
-				cost = perkdeck_tier_costs[6],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck15_7",
-				desc_id = "menu_deck15_7_desc",
-				cost = perkdeck_tier_costs[7],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck15_8",
-				desc_id = "menu_deck15_8_desc",
-				cost = perkdeck_tier_costs[8],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck15_9",
-				desc_id = "menu_deck15_9_desc",
-				cost = perkdeck_tier_costs[9],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			desc_id = "menu_st_spec_15_desc",
-			name_id = "menu_st_spec_15"
 		}
 		
 		self.specializations[perkdeck_indices.biker] = {
@@ -4446,4 +4447,3 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		end
 	end
 end)
-
