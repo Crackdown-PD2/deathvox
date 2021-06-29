@@ -1437,6 +1437,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if managers.hud then
 			local player_manager = managers.player
 			
+			if not player_manager:has_category_upgrade("player", "expres_hot_election") then
+				return
+			end
+			
 			local max_health = self:_max_health()
 			local regen_data = player_manager:upgrade_value("player", "expres_hot_election", {0, 0})
 			local max_stacks = regen_data[2]
