@@ -3310,5 +3310,100 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		--Anarchist
+		self.values.player.anarch_conversion = { --i...don't understand why the math turns out this way but you need to do it like this or the health doesnt apply properly
+			0.5,
+			0.6,
+			0.7,
+			0.8,
+			0.9
+		}
+		self.values.player.anarch_ondmg_armor_regen = {0.5}
+		self.values.player.anarch_onkill_armor_regen = {0.5}
+		self.values.player.anarch_onheadshotdmg_armor_regen = {1}
+		self.values.player.anarch_onheadshotkill_armor_regen = {1}
+		
+		self.definitions.anarch_1 = {
+			name_id = "menu_deck13_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "anarch_conversion",
+				category = "player"
+			}
+		}
+		self.definitions.anarch_2 = {
+			name_id = "menu_deck13_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "anarch_ondmg_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.anarch_3 = {
+			name_id = "menu_deck13_3",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "anarch_conversion",
+				category = "player"
+			}
+		}
+		self.definitions.anarch_4 = {
+			name_id = "menu_deck13_4",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "anarch_onkill_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.anarch_5 = {
+			name_id = "menu_deck13_5",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "anarch_conversion",
+				category = "player"
+			}
+		}
+		self.definitions.anarch_6 = {
+			name_id = "menu_deck13_6",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "anarch_onheadshotdmg_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.anarch_7 = {
+			name_id = "menu_deck13_7",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "anarch_conversion",
+				category = "player"
+			}
+		}
+		self.definitions.anarch_8 = {
+			name_id = "menu_deck13_8",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "anarch_onheadshotkill_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.anarch_9 = {
+			name_id = "menu_deck13_9",
+			category = "feature",
+			upgrade = {
+				value = 5,
+				upgrade = "anarch_conversion",
+				category = "player"
+			}
+		}
+		
 	end
-end)
+end)	
