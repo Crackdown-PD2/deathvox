@@ -170,7 +170,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 
 	function PlayerEquipment:use_trip_mine()
-		local ray, stuck_enemy = self:valid_look_at_placement(nil, true)
+		local ray, stuck_enemy = self:valid_look_at_placement(nil, managers.player:has_category_upgrade("trip_mine", "can_place_on_enemies"))
 
 		if ray then
 			managers.statistics:use_trip_mine()
