@@ -3,6 +3,8 @@ local mvec3_cpy = mvector3.copy
 local mvec3_not_equal = mvector3.not_equal
 
 local mrot_equal = mrotation.equal
+local mrot_set = mrotation.set_yaw_pitch_roll
+local tmp_rot = Rotation()
 
 local math_ceil = math.ceil
 local math_random = math.random
@@ -463,7 +465,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		--managers.network:session():peer(peer_id):set_used_deployable(true)
 	end
 
-	function TripMineBase:attach_to_enemy(stuck_enemy, position, rot, parent_obj, radius_upgrade_level, vulnerability_upgrade_level)
+	function TripMineBase:attach_to_enemy(stuck_enemy, local_pos, local_rot_vec, parent_obj, radius_upgrade_level, vulnerability_upgrade_level)
 		local unit = self._unit
 
 		unit:interaction():set_active(false)
@@ -486,6 +488,15 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		stuck_enemy:link(parent_obj:name(), unit)
 
+		if local_pos then
+			unit:set_local_position(local_pos)
+		end
+
+		if local_rot_vec then
+			mrot_set(tmp_rot, local_rot_vec.x, local_rot_vec.y, local_rot_vec.z)
+			unit:set_local_rotation(tmp_rot)
+		end
+
 		if not self:is_owner() then
 			return
 		end
@@ -502,8 +513,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 			local attack_data = {
 				damage = 0,
 				variant = "fire",
-				pos = mvec3_cpy(position),
-				attack_dir = mvec3_cpy(rot:y()),
+				pos = unit:position(),
+				attack_dir = unit:rotation():inverse():y(),
+				attacker_unit = managers.player:player_unit() or nil,
 				result = {
 					variant = "fire",
 					type = "fire_hurt"
@@ -564,8 +576,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 				local attack_data = {
 					damage = 0,
 					variant = "explosion",
-					pos = mvec3_cpy(position),
-					attack_dir = mvec3_cpy(rot:y()),
+					pos = unit:position(),
+					attack_dir = unit:rotation():inverse():y(),
+					attacker_unit = managers.player:player_unit() or nil,
 					result = {
 						variant = "explosion",
 						type = "expl_hurt"
@@ -579,7 +592,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 					char_dmg:build_suppression("panic")
 				end
 
-				local nearby_enemies = stuck_enemy:find_units_quick("sphere", position or stuck_enemy:movement():m_pos(), panic_radius, managers.slot:get_mask("enemies"))
+				local nearby_enemies = stuck_enemy:find_units_quick("sphere", stuck_enemy:movement():m_pos(), panic_radius, managers.slot:get_mask("enemies"))
 
 				for i = 1, #nearby_enemies do
 					local nearby_enemy = nearby_enemies[i]
@@ -598,7 +611,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				end
 			elseif apply_vuln_data then
 				local vulnerability_radius = tweak_data.upgrades.values.trip_mine.stuck_enemy_panic_radius[1]
-				local nearby_enemies = stuck_enemy:find_units_quick("sphere", position or stuck_enemy:movement():m_pos(), vulnerability_radius, managers.slot:get_mask("enemies"))
+				local nearby_enemies = stuck_enemy:find_units_quick("sphere", stuck_enemy:movement():m_pos(), vulnerability_radius, managers.slot:get_mask("enemies"))
 
 				for i = 1, #nearby_enemies do
 					local nearby_enemy_dmg_ext = nearby_enemies[i]:character_damage()
