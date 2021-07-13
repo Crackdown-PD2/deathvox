@@ -69,6 +69,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local player_manager = managers.player
 		local throwable_id = self._projectile_id
 		local picked_up, is_projectile_or_throwable = false
+		
+		local pickup_event = self._pickup_event
 
 		if throwable_id then
 			is_projectile_or_throwable = true
@@ -197,6 +199,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				session:send_to_peers_synched("sync_unit_event_id_16", my_unit, "pickup", AmmoClip.EVENT_IDS.bonnie_share_ammo)
 			end
 
+		
 			if Network:is_client() then
 				local server_peer = session:server_peer()
 
@@ -205,9 +208,23 @@ if deathvox:IsTotalCrackdownEnabled() then
 					--will ensure it arrives in the correct order, as the send_to_host function doesn't do this normally
 					session:send_to_peer_synched(server_peer, "sync_pickup", my_unit)
 				end
+			else --if Network:is_server() then 
+				if player_manager:has_team_category_upgrade("player","ammo_pickup_counter_thresholds") then 
+					local cap = player_manager:team_upgrade_value("player","ammo_pickup_counter_thresholds",tweak_data.upgrades.values.team.player.ammo_pickup_counter_thresholds[1])
+					local counter = player_manager:get_property("gambler_team_ammo_pickups_grabbed") + 1
+					if counter >= cap then
+						counter = counter % cap
+						local healing_amount = player_manager:team_upgrade_value("player","ammo_pickup_health_restore",tweak_data.upgrades.values.team.player.ammo_pickup_health_restore[1])
+						if damage_ext:restore_health(healing_amount,false,true) then 
+							pickup_event = "pickup_ammo_health_boost"
+						end
+					end
+					player_manager:set_property("gambler_team_ammo_pickups_grabbed",counter)
+					
+				end
 			end
 
-			unit:sound():play(self._pickup_event or "pickup_ammo")
+			unit:sound():play(pickup_event or "pickup_ammo")
 			self:consume()
 
 			if is_ammo_box then
@@ -221,7 +238,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 
 	function AmmoClip:sync_net_event(event, peer)
-		local player = managers.player:local_player()
+		local player_manager = managers.player
+		local player = player_manager:local_player()
 
 		if not alive_g(player) then
 			return
@@ -274,6 +292,25 @@ if deathvox:IsTotalCrackdownEnabled() then
 				player:sound():play("pickup_ammo_health_boost")
 			end
 		end
+		
+		if Network:is_server() then 
+			if player_manager:has_team_category_upgrade("player","ammo_pickup_counter_thresholds") then 
+				local cap = player_manager:team_upgrade_value("player","ammo_pickup_counter_thresholds",tweak_data.upgrades.values.team.player.ammo_pickup_counter_thresholds[1])
+				local counter = player_manager:get_property("gambler_team_ammo_pickups_grabbed",0) + 1
+				if counter >= cap then
+					counter = counter % cap
+					local healing_amount = player_manager:team_upgrade_value("player","ammo_pickup_health_restore",tweak_data.upgrades.values.team.player.ammo_pickup_health_restore[1])
+					--send to others
+					player:network():send("sync_player_movement_state", "on_gambler_proc", 0, player:id())
+					if damage_ext:restore_health(healing_amount,false,true) then 
+						player:sound():play("pickup_ammo_health_boost")
+					end
+				end
+				player_manager:set_property("gambler_team_ammo_pickups_grabbed",counter)
+				
+			end
+		end
+		
 	end
 else
 	function AmmoClip:_pickup(unit)
@@ -414,7 +451,7 @@ else
 						end
 
 						if not damage_ext:need_revive() and not damage_ext:dead() and not damage_ext:is_berserker() then
-							damage_ext:restore_health(restore_value, true)
+							damage_ext:restore_health(restore_value,false,true)
 							unit:sound():play("pickup_ammo_health_boost")
 						end
 					end

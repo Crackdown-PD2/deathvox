@@ -3310,6 +3310,118 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		--Gambler
+		self.values.team.player.ammo_pickup_counter_thresholds = {
+			20,
+			15,
+			10,
+			5
+		}
+		self.values.team.player.ammo_pickup_range_mul = {
+			1,
+			1.25, --25%
+			1.50, --+50%
+			1.75, --+75%
+			2 --+100%
+		}
+		self.values.team.player.ammo_pickup_health_restore = {
+			0.01,
+			0.015
+		}
+		
+		self.definitions.gambler_range_1 = {
+			name_id = "menu_deck10_2",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "ammo_pickup_range_mul",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_range_2 = {
+			name_id = "menu_deck10_4",
+			category = "team",
+			upgrade = {
+				value = 2,
+				upgrade = "ammo_pickup_range_mul",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_range_3 = {
+			name_id = "menu_deck10_6",
+			category = "team",
+			upgrade = {
+				value = 3,
+				upgrade = "ammo_pickup_range_mul",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_range_4 = {
+			name_id = "menu_deck10_8",
+			category = "team",
+			upgrade = {
+				value = 4,
+				upgrade = "ammo_pickup_range_mul",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_threshold_1 = {
+			name_id = "menu_deck10_1_threshold",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "ammo_pickup_counter_thresholds",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_threshold_2 = {
+			name_id = "menu_deck10_3",
+			category = "team",
+			upgrade = {
+				value = 2,
+				upgrade = "ammo_pickup_counter_thresholds",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_threshold_3 = {
+			name_id = "menu_deck10_5",
+			category = "team",
+			upgrade = {
+				value = 3,
+				upgrade = "ammo_pickup_counter_thresholds",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_threshold_4 = {
+			name_id = "menu_deck10_7",
+			category = "team",
+			upgrade = {
+				value = 4,
+				upgrade = "ammo_pickup_counter_thresholds",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_healing_1 = {
+			name_id = "menu_deck10_1",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "ammo_pickup_health_restore",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_healing_2 = {
+			name_id = "menu_deck10_9",
+			category = "team",
+			upgrade = {
+				value = 2,
+				upgrade = "ammo_pickup_health_restore",
+				category = "player"
+			}
+		}
+		
+		
+		
 		--Anarchist
 		self.values.player.anarch_conversion = { --i...don't understand why the math turns out this way but you need to do it like this or the health doesnt apply properly
 			0.5,

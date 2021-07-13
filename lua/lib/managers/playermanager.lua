@@ -801,6 +801,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end
 		end
 		
+		if Network:is_server() then 
+			self:set_property("gambler_team_ammo_pickups_grabbed",0)
+		end
 	end)
 	
 	function PlayerManager:movement_speed_multiplier(speed_state, bonus_multiplier, upgrade_level, health_ratio)

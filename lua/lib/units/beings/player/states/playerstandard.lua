@@ -1931,4 +1931,32 @@ if deathvox:IsTotalCrackdownEnabled() then
 			self:_do_action_intimidate(t, interact_type, sound_name, skip_alert)
 		end
 	end
+
+
+	function PlayerStandard:_find_pickups(t)
+		local pm = managers.player
+		
+		local pickup_radius = 200 * pm:upgrade_value("player", "increased_pickup_area", 1) * pm:team_upgrade_value("player","ammo_pickup_range_mul",1)
+	
+		local pickups = World:find_units_quick("sphere", self._unit:movement():m_pos(), pickup_radius, self._slotmask_pickups)
+		local grenade_tweak = tweak_data.blackmarket.projectiles[managers.blackmarket:equipped_grenade()]
+		local may_find_grenade = grenade_tweak and not grenade_tweak.base_cooldown and pm:has_category_upgrade("player", "regain_throwable_from_ammo")
+
+		for _, pickup in ipairs(pickups) do
+			if pickup:pickup() and pickup:pickup():pickup(self._unit) then
+				if may_find_grenade then
+					local data = pm:upgrade_value("player", "regain_throwable_from_ammo", nil)
+
+					if data then
+						pm:add_coroutine("regain_throwable_from_ammo", PlayerAction.FullyLoaded, pm, data.chance, data.chance_inc)
+					end
+				end
+
+				for id, weapon in pairs(self._unit:inventory():available_selections()) do
+					managers.hud:set_ammo_amount(id, weapon.unit:base():ammo_info())
+				end
+			end
+		end
+	end
+	
 end

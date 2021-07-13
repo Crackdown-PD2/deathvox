@@ -38,7 +38,18 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 			return
 		end
-		if (type(unit.weapon) == "function") and unit:weapon() then 
+		if state == "on_gambler_proc" then
+			local player_manager = managers.player
+			local player = player_manager and player_manager:local_player()
+			if player then 
+				local damage_ext = player:character_damage()
+
+				local healing_amount = player_manager:team_upgrade_value("player","ammo_pickup_health_restore",tweak_data.upgrades.values.team.player.ammo_pickup_health_restore[1])
+				if damage_ext:restore_health(healing_amount,false,true) then 
+					player:sound():play("pickup_ammo_health_boost")
+				end
+			end
+		elseif type(unit.weapon) == "function" and unit:weapon() then 
 			--for sentries, since firemode and ammotype are usually set separately, i did not choose to sync both at the same time
 			if down_time == 1 then 
 				unit:weapon():_set_sentry_firemode(state)
@@ -47,7 +58,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				unit:weapon():_set_ammo_type(state)
 				return
 			end
-			return
+			return		
 		end
 		return orig_sync_movement_state(self,unit,state,down_time,unit_id_str,...)
 	end

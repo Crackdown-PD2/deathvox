@@ -3477,119 +3477,121 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		name_id = "menu_st_spec_15"
 	}
 
+	self.specializations[perkdeck_indices.gambler] = {
+		{
+			name_id = "menu_deck10_1",
+			desc_id = "menu_deck10_1_desc",
+			cost = perkdeck_tier_costs[1],
+			upgrades = {
+				"gambler_threshold_1",
+				"gambler_healing_1"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck10_2",
+			desc_id = "menu_deck10_2_desc",
+			cost = perkdeck_tier_costs[2],
+			upgrades = {
+				"gambler_range_1"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck10_3",
+			desc_id = "menu_deck10_3_desc",
+			cost = perkdeck_tier_costs[3],
+			upgrades = {
+				"gambler_threshold_2"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck10_4",
+			desc_id = "menu_deck10_4_desc",
+			cost = perkdeck_tier_costs[4],
+			upgrades = {
+				"gambler_range_2"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck10_5",
+			desc_id = "menu_deck10_5_desc",
+			cost = perkdeck_tier_costs[5],
+			upgrades = {
+				"gambler_threshold_3"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck10_6",
+			desc_id = "menu_deck10_6_desc",
+			cost = perkdeck_tier_costs[6],
+			upgrades = {
+				"gambler_range_3"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck10_7",
+			desc_id = "menu_deck10_7_desc",
+			cost = perkdeck_tier_costs[7],
+			upgrades = {
+				"gambler_threshold_4"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck10_8",
+			desc_id = "menu_deck10_8_desc",
+			cost = perkdeck_tier_costs[8],
+			upgrades = {
+				"gambler_range_4"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		{
+			name_id = "menu_deck10_9",
+			desc_id = "menu_deck10_9_desc",
+			cost = perkdeck_tier_costs[9],
+			upgrades = {
+				"gambler_healing_2"
+			},
+			icon_xy = {
+				0,
+				0
+			}
+		},
+		desc_id = "menu_st_spec_10_desc",
+		name_id = "menu_st_spec_10"
+	}
+	
 	if false then --reamining perk decks will be added as time goes on; template data is here	
-		self.specializations[perkdeck_indices.gambler] = {
-			{
-				name_id = "menu_deck10_1",
-				desc_id = "menu_deck10_1_desc",
-				cost = perkdeck_tier_costs[1],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck10_2",
-				desc_id = "menu_deck10_2_desc",
-				cost = perkdeck_tier_costs[2],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck10_3",
-				desc_id = "menu_deck10_3_desc",
-				cost = perkdeck_tier_costs[3],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck10_4",
-				desc_id = "menu_deck10_4_desc",
-				cost = perkdeck_tier_costs[4],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck10_5",
-				desc_id = "menu_deck10_5_desc",
-				cost = perkdeck_tier_costs[5],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck10_6",
-				desc_id = "menu_deck10_6_desc",
-				cost = perkdeck_tier_costs[6],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck10_7",
-				desc_id = "menu_deck10_7_desc",
-				cost = perkdeck_tier_costs[7],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck10_8",
-				desc_id = "menu_deck10_8_desc",
-				cost = perkdeck_tier_costs[8],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			{
-				name_id = "menu_deck10_9",
-				desc_id = "menu_deck10_9_desc",
-				cost = perkdeck_tier_costs[9],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					0
-				}
-			},
-			desc_id = "menu_st_spec_10_desc",
-			name_id = "menu_st_spec_10"
-		}
 				
 		self.specializations[perkdeck_indices.maniac] = {
 			{
