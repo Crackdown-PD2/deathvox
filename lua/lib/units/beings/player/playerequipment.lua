@@ -39,7 +39,7 @@ local world_g = World
 local idstr_func = Idstring
 local body_idstr = idstr_func("body")
 
-local rot_mods = {
+local rot_yaw_mods = {
 	bodybags_bag = -90
 }
 
