@@ -948,10 +948,10 @@ function CopActionShoot:_get_unit_shoot_pos(t, pos, dis, falloff, i_range, shoot
 					if att_unit:character_damage()._next_sniper_dodge_t <= pm_timer then
 						hit = nil
 						
-						att_unit:sound():play_whizby()
-						att_unit:sound():play_whizby()
-						att_unit:sound():play_whizby()
-						att_unit:sound():play_whizby()
+						att_unit:sound():play("bullet_whizby_medium", nil, false)
+						att_unit:sound():play("bullet_whizby_medium", nil, false)
+						att_unit:sound():play("bullet_whizby_medium", nil, false)
+						att_unit:sound():play("bullet_whizby_medium", nil, false)
 						att_unit:sound():play("clk_baton_swing", nil, false)
 						att_unit:sound():play("clk_baton_swing", nil, false)
 						
