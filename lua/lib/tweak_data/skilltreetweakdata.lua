@@ -2749,7 +2749,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			cost = perkdeck_tier_costs[6],
 			upgrades = {
 				"burglar_6",
-				"carry_movement_penalty_nullifier"
+				"burglar_6_bags"
 			},
 			icon_xy = {
 				0,

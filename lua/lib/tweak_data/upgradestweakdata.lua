@@ -2790,6 +2790,15 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
+		self.definitions.burglar_6_bags = {
+			name_id = "menu_deck7_6",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "movement_penalty_nullifier",
+				category = "carry"
+			}
+		}
 		self.definitions.burglar_7 = {
 			name_id = "menu_deck7_7",
 			category = "feature",

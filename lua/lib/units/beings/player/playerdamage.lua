@@ -804,8 +804,8 @@ function PlayerDamage:damage_melee(attack_data)
 	local allow_melee_dodge = self._next_melee_dodge_t and self._next_melee_dodge_t < pm:player_timer():time() --manual toggle, to be later replaced with a Rogue melee dodge perk check
 
 	if allow_melee_dodge and pm:current_state() ~= "bleed_out" and pm:current_state() ~= "bipod" and pm:current_state() ~= "tased" then --self._bleed_out and current_state() ~= "bleed_out" aren't the same thing
-		self._unit:movement():push(attack_data.push_vel)
-		self._unit:camera():play_shaker("melee_hit", 0.2)
+		self._unit:movement():push(attack_data.push_vel * 0.25)
+		self._unit:camera():play_shaker("melee_hit", 0.1)
 			
 		self._unit:sound():play("clk_baton_swing", nil, false)
 		self._unit:sound():play("clk_baton_swing", nil, false)
