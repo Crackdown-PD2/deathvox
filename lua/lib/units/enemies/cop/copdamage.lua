@@ -37,60 +37,64 @@ local alive_g = alive
 local world_g = World
 
 local idstr_func = Idstring
+local ids_head_obj = idstr_func("Head")
 local ids_flesh = idstr_func("flesh")
+local ids_char_dmg = idstr_func("character_damage")
 local idstr_bullet_hit_blood = idstr_func("effects/payday2/particles/impacts/blood/blood_impact_a")
+local ids_bullet_hit_glass_effect = idstr_func("effects/particles/bullet_hit/glass_breakable/bullet_hit_glass_breakable")
 local table_contains = table.contains
 
-local big_enemy_visor_shattering_table = { --this is now responsible for the glass shattering effects. insert/remove anything in this table to add and remove shattering, respectively
+--this is now responsible for the glass shattering effects. insert/remove anything in this table to add and remove shattering, respectively
+local big_enemy_visor_shattering_table = {
 	-- BLUE SWAT TIER--
-	idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat"),
-	idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat_husk"),
-	idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot"),
-	idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot_husk"),
-	idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser"),
-	idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser_husk"),
-	idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield"),
-	idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield_husk"),
-	
+	[idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat"):key()] = true,
+	[idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswat/ene_deathvox_cop_heavyswat_husk"):key()] = true,
+	[idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot"):key()] = true,
+	[idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_heavyswatshot/ene_deathvox_cop_heavyswatshot_husk"):key()] = true,
+	[idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser"):key()] = true,
+	[idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_taser/ene_deathvox_cop_taser_husk"):key()] = true,
+	[idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield"):key()] = true,
+	[idstr_func("units/pd2_mod_cops/characters/ene_deathvox_cop_shield/ene_deathvox_cop_shield_husk"):key()] = true,
+
 	-- FBI TIER--
-	idstr_func("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat"),
-	idstr_func("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_husk"),
-	idstr_func("units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser"),
-	idstr_func("units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser_husk"),
-	
+	[idstr_func("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat"):key()] = true,
+	[idstr_func("units/pd2_mod_fbi/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_husk"):key()] = true,
+	[idstr_func("units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser"):key()] = true,
+	[idstr_func("units/pd2_mod_fbi/characters/ene_deathvox_fbi_taser/ene_deathvox_fbi_taser_husk"):key()] = true,
+
 	-- GENSEC TIER--
-	idstr_func("units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat"),
-	idstr_func("units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat_husk"),
-	idstr_func("units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser"),
-	idstr_func("units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser_husk"),	
-	
+	[idstr_func("units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat"):key()] = true,
+	[idstr_func("units/pd2_mod_gensec/characters/ene_deathvox_gensec_heavyswat/ene_deathvox_gensec_heavyswat_husk"):key()] = true,
+	[idstr_func("units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser"):key()] = true,
+	[idstr_func("units/pd2_mod_gensec/characters/ene_deathvox_gensec_taser/ene_deathvox_gensec_taser_husk"):key()] = true,	
+
 	-- ZULU TIER--
-	idstr_func("units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser"),
-	idstr_func("units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_husk"),
+	[idstr_func("units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser"):key()] = true,
+	[idstr_func("units/pd2_mod_gageammo/characters/ene_deathvox_taser/ene_deathvox_taser_husk"):key()] = true,
 
 	-- MURKYWATER--
-	idstr_func("units/pd2_mod_sharks/characters/ene_deathvox_taser/ene_deathvox_taser"),
-	idstr_func("units/pd2_mod_sharks/characters/ene_deathvox_taser/ene_deathvox_taser_husk"),
-	idstr_func("units/pd2_mod_sharks/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat"),
-	idstr_func("units/pd2_mod_sharks/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_husk"),
-	
+	[idstr_func("units/pd2_mod_sharks/characters/ene_deathvox_taser/ene_deathvox_taser"):key()] = true,
+	[idstr_func("units/pd2_mod_sharks/characters/ene_deathvox_taser/ene_deathvox_taser_husk"):key()] = true,
+	[idstr_func("units/pd2_mod_sharks/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat"):key()] = true,
+	[idstr_func("units/pd2_mod_sharks/characters/ene_deathvox_fbi_heavyswat/ene_deathvox_fbi_heavyswat_husk"):key()] = true,
+
 	-- CLASSIC TIER--
-	idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat"),
-	idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat_husk"),	
-	idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot"),
-	idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot_husk"),	
-	idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat_noarmor/ene_deathvox_classic_heavyswat_noarmor"),
-	idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat_noarmor/ene_deathvox_classic_heavyswat_noarmor_husk"),	
-	idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor"),
-	idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor"),	
-	
+	[idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat"):key()] = true,
+	[idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat/ene_deathvox_classic_heavyswat_husk"):key()] = true,	
+	[idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot"):key()] = true,
+	[idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot/ene_deathvox_classic_heavyswatshot_husk"):key()] = true,	
+	[idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat_noarmor/ene_deathvox_classic_heavyswat_noarmor"):key()] = true,
+	[idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswat_noarmor/ene_deathvox_classic_heavyswat_noarmor_husk"):key()] = true,	
+	[idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor"):key()] = true,
+	[idstr_func("units/pd2_mod_classic/characters/ene_deathvox_classic_heavyswatshot_noarmor/ene_deathvox_classic_heavyswatshot_noarmor"):key()] = true,	
+
 	-- FEDERALES TIER--
-	idstr_func("units/pd2_mod_federales/characters/ene_deathvox_heavyswat/ene_deathvox_heavyswat"),
-	idstr_func("units/pd2_mod_federales/characters/ene_deathvox_heavyswat/ene_deathvox_heavyswat_husk"),
-	idstr_func("units/pd2_mod_federales/characters/ene_deathvox_heavyswatshot/ene_deathvox_heavyswatshot"),
-	idstr_func("units/pd2_mod_federales/characters/ene_deathvox_heavyswatshot/ene_deathvox_heavyswatshot_husk"),
-	idstr_func("units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer"),
-	idstr_func("units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer_husk")
+	[idstr_func("units/pd2_mod_federales/characters/ene_deathvox_heavyswat/ene_deathvox_heavyswat"):key()] = true,
+	[idstr_func("units/pd2_mod_federales/characters/ene_deathvox_heavyswat/ene_deathvox_heavyswat_husk"):key()] = true,
+	[idstr_func("units/pd2_mod_federales/characters/ene_deathvox_heavyswatshot/ene_deathvox_heavyswatshot"):key()] = true,
+	[idstr_func("units/pd2_mod_federales/characters/ene_deathvox_heavyswatshot/ene_deathvox_heavyswatshot_husk"):key()] = true,
+	[idstr_func("units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer"):key()] = true,
+	[idstr_func("units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer_husk"):key()] = true
 }
 
 CopDamage.melee_knockback_tiers = {
@@ -112,7 +116,7 @@ Hooks:PostHook(CopDamage,"init","deathvox_copdamage_init",function(self,unit)
 		--init/declaring the value here ensures that setting damage multipliers will do nothing for non-enemies
 		--but also won't crash for non-enemies
 		
-		unit:set_extension_update_enabled(Idstring("character_damage"),true)
+		unit:set_extension_update_enabled(ids_char_dmg,true)
 	end
 end)
 
@@ -3656,7 +3660,7 @@ end
 
 
 Hooks:PreHook(CopDamage,"_on_death","deathvox_on_cop_damage_death",function(self)
-	self._unit:set_extension_update_enabled(Idstring("character_damage"),false)
+	self._unit:set_extension_update_enabled(ids_char_dmg,false)
 end)
 
 --these are not used because they can apparently interfere with the unit's ability to despawn, even after it has died
@@ -3729,25 +3733,22 @@ function CopDamage:_spawn_head_gadget(params)
 
 	body:push_at(body:mass(), dir * math_lerp(300, 650, math_random()), unit:position() + Vector3(math_random(), math_random(), math_random()))
 
-	if not table_contains(big_enemy_visor_shattering_table, my_unit:name()) then
+	if not big_enemy_visor_shattering_table[my_unit:name():key()] then
 		return
 	end
 
-	local head_obj = idstr_func("Head")
-	local head_object_get = my_unit:get_object(head_obj)
-	
+	local head_object_get = my_unit:get_object(ids_head_obj)
+
 	if not head_object_get then
 		return
 	end
-	
-	local world_g = World		
-	local sound_ext = my_unit:sound()	
-	
+
 	world_g:effect_manager():spawn({
-		effect = idstr_func("effects/particles/bullet_hit/glass_breakable/bullet_hit_glass_breakable"),
-		parent = head_object_get		
-	})			
-	
+		effect = ids_bullet_hit_glass_effect,
+		parent = head_object_get
+	})
+
+	local sound_ext = my_unit:sound()
 	sound_ext:play("swat_heavy_visor_shatter", nil, nil)
 	sound_ext:play("swat_heavy_visor_shatter", nil, nil)
 	sound_ext:play("swat_heavy_visor_shatter", nil, nil)
