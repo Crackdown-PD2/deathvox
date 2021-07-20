@@ -547,7 +547,7 @@ function CopLogicIntimidated._do_tied(data, aggressor_unit)
 		my_data.nearest_cover = nil
 	end
 
-	--CopLogicIntimidated._chk_begin_alarm_pager(data)
+	CopLogicIntimidated._chk_begin_alarm_pager(data)
 
 	if not data.brain:is_pager_started() and not managers.groupai:state():whisper_mode() then
 		my_data.set_convert_interact = true
