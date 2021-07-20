@@ -608,7 +608,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck9_4 = "Rufus",
 				menu_deck9_4_desc = "You gain ##+1## Maximum Health.",
 				menu_deck9_5 = "Jake",
-				menu_deck9_5_desc = "Killing an enemy with a %ICN_THRThrowing Weapon generates ##2## stacks of ##Combo##, regardless of range.",
+				menu_deck9_5_desc = "Killing an enemy with a $ICN_THRThrowing Weapon generates ##2## stacks of ##Combo##, regardless of range.",
 				menu_deck9_6 = "Brandon",
 				menu_deck9_6_desc = "You gain ##+10%## Movement Speed.",
 				menu_deck9_7 = "Carl",
