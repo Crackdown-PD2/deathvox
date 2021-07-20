@@ -280,49 +280,63 @@ function PlayerStandard:_get_intimidation_action(prime_target, char_table, amoun
 						elseif voice_type == "down" and not char.unit:anim_data().move and not char.unit:anim_data().drop then
 							num_affected = num_affected + 1
 						end
+
+						if num_affected > 1 then
+							plural = true
+
+							break
+						end
 					end
 				end
-
-				plural = num_affected > 1 and true or false
-			end
-
-			local max_inv_wgt = 0
-
-			for _, char in pairs(char_table) do
-				if max_inv_wgt < char.inv_wgt then
-					max_inv_wgt = char.inv_wgt
-				end
-			end
-
-			if max_inv_wgt < 1 then
-				max_inv_wgt = 1
 			end
 
 			if detect_only then
 				voice_type = "come"
 			else
+				local max_inv_wgt = 0
+
+				for _, char in pairs(char_table) do
+					if max_inv_wgt < char.inv_wgt then
+						max_inv_wgt = char.inv_wgt
+					end
+				end
+
+				if max_inv_wgt < 1 then
+					max_inv_wgt = 1
+				end
+
+				if not amount then
+					amount = tweak_data.player.long_dis_interaction.intimidate_strength
+				end
+
+				local amount_civ = amount * managers.player:upgrade_value("player", "civ_intimidation_mul", 1) * managers.player:team_upgrade_value("player", "civ_intimidation_mul", 1)
+
 				for _, char in pairs(char_table) do
 					if char.unit_type ~= unit_type_camera and char.unit_type ~= unit_type_teammate and (not is_whisper_mode or not char.unit:movement():cool()) then
-						if char.unit_type == unit_type_civilian then
-							if not amount then
-								slot23 = tweak_data.player.long_dis_interaction.intimidate_strength
-							end
-
-							amount = slot23 * managers.player:upgrade_value("player", "civ_intimidation_mul", 1) * managers.player:team_upgrade_value("player", "civ_intimidation_mul", 1)
-						end
+						local int_amount = char.unit_type == unit_type_civilian and amount_civ or amount
 
 						if prime_target_key == char.unit:key() then
-							voice_type = char.unit:brain():on_intimidated(amount or tweak_data.player.long_dis_interaction.intimidate_strength, self._unit) or voice_type
-							if managers.player:has_category_upgrade("player","shout_intimidation_aoe") then 
-								local intimidation_aoe_radius = managers.player:upgrade_value("player","shout_intimidation_aoe",0)
-								--can't reuse char_table since its targets aren't guaranteed to inside the same range
-								for _,aoe_intimidation_target in pairs(World:find_units_quick("sphere",char.unit:position(),intimidation_aoe_radius,managers.slot:get_mask("civilians"))) do
-									aoe_intimidation_target:brain():on_intimidated(amount or tweak_data.player.long_dis_interaction.intimidate_strength,self._unit)
-								end
-							end
-							
+							voice_type = char.unit:brain():on_intimidated(int_amount, self._unit) or voice_type
 						elseif not primary_only and char.unit_type ~= unit_type_enemy then
-							char.unit:brain():on_intimidated((amount or tweak_data.player.long_dis_interaction.intimidate_strength) * char.inv_wgt / max_inv_wgt, self._unit)
+							char.unit:brain():on_intimidated(int_amount * char.inv_wgt / max_inv_wgt, self._unit)
+						end
+					end
+				end
+
+				local aoe_intimidation_radius = managers.player:upgrade_value("player", "shout_intimidation_aoe", 0)
+
+				if aoe_intimidation_radius > 0 then
+					local target_unit = prime_target.unit
+					--target unit will be ignored by the search
+					local aoe_civs = target_unit:find_units_quick("sphere", target_unit:position(), aoe_intimidation_radius, managers.slot:get_mask("civilians"))
+
+					for i = 1, #aoe_civs do
+						local aoe_civ = aoe_civs[i]
+
+						if not is_whisper_mode or not aoe_civ:movement():cool() then
+							if not aoe_civ:anim_data().long_dis_interact_disabled then
+								aoe_civ:brain():on_intimidated(amount_civ, self._unit)
+							end
 						end
 					end
 				end
