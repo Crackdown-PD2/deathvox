@@ -774,6 +774,8 @@
 	
 	<texture path="guis/textures/pd2/blackmarket/icons/grenades/tripmine_throwable" force="false"/>
 	
+	<texture path="guis/textures/pd2/hud_health_sociopath" />
+	
 	
 <!--Adds weapon class icons from TCD. Since this only overwrites a few characters in the box drawing character set, it is unlikely to conflict, and the additional overhead cost should be low. Requires BeardLib v4.3+. -->
 	<font path="fonts/tcd_weapon_class_icons" early_load = "true" load="true" unload="false" />

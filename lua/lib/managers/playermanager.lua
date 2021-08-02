@@ -156,16 +156,16 @@ if deathvox:IsTotalCrackdownEnabled() then
 			multiplier = multiplier - self:upgrade_value("player", "yakuza_on_damage_dr", 0)
 		end
 		
-		local team_upgrade_level = managers.player:team_upgrade_level("player","civilian_hostage_aoe_damage_resistance")
+		local team_upgrade_level = self:team_upgrade_level("player","civilian_hostage_aoe_damage_resistance")
 		if team_upgrade_level > 0 then 
 			--this whole mess is for the Leverage skill in Taskmaster
 			local player_pos = player:movement():m_pos()
 			
-			local hostage_range_close,hostage_dmg_resist_1 = unpack(managers.player:team_upgrade_value_by_level("player","civilian_hostage_aoe_damage_resistance",1,{}))
+			local hostage_range_close,hostage_dmg_resist_1 = unpack(self:team_upgrade_value_by_level("player","civilian_hostage_aoe_damage_resistance",1,{}))
 			local hostage_range_far,hostage_dmg_resist_2
 			
 			if team_upgrade_level == 2 then 
-				hostage_range_far,hostage_dmg_resist_2 = unpack(managers.player:team_upgrade_value_by_level("player","civilian_hostage_aoe_damage_resistance",2,{}))
+				hostage_range_far,hostage_dmg_resist_2 = unpack(self:team_upgrade_value_by_level("player","civilian_hostage_aoe_damage_resistance",2,{}))
 			end
 			
 			local near_hostage_close,near_hostage_far
@@ -226,11 +226,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 			multiplier = multiplier * managers.player:upgrade_value("player", "interacting_damage_multiplier", 1)
 		end
 
-
+		multiplier = multiplier + self:get_temporary_property("deathvox_tag_team_bonus_damage_resistance",0)
+		
 		return multiplier
 	end
 
-	PlayerManager.tcd_orig_health_regen = PlayerManager.health_regen
+	local tcd_orig_health_regen = PlayerManager.health_regen
+	PlayerManager.tcd_orig_health_regen = tcd_orig_health_regen
 	function PlayerManager:health_regen(...)
 		local health_regen = self:tcd_orig_health_regen(...)
 		health_regen = health_regen + self:team_upgrade_value("crewchief","passive_health_regen",0)
@@ -862,16 +864,18 @@ if deathvox:IsTotalCrackdownEnabled() then
 			multiplier = multiplier + bags * (self:upgrade_value("player", "secured_bags_speed_multiplier", 1) - 1)
 		end
 
-		if managers.player:has_activate_temporary_upgrade("temporary", "berserker_damage_multiplier") then
+		if self:has_activate_temporary_upgrade("temporary", "berserker_damage_multiplier") then
 			multiplier = multiplier * (tweak_data.upgrades.berserker_movement_speed_multiplier or 1)
 		end
-
+		
+		multiplier = multiplier * self:get_temporary_property("deathvox_tag_team_bonus_movement_speed",1)
+		
 		if health_ratio then
 			local damage_health_ratio = self:get_damage_health_ratio(health_ratio, "movement_speed")
-			multiplier = multiplier * (1 + managers.player:upgrade_value("player", "movement_speed_damage_health_ratio_multiplier", 0) * damage_health_ratio)
+			multiplier = multiplier * (1 + self:upgrade_value("player", "movement_speed_damage_health_ratio_multiplier", 0) * damage_health_ratio)
 		end
 
-		local damage_speed_multiplier = managers.player:temporary_upgrade_value("temporary", "damage_speed_multiplier", managers.player:temporary_upgrade_value("temporary", "team_damage_speed_multiplier_received", 1))
+		local damage_speed_multiplier = self:temporary_upgrade_value("temporary", "damage_speed_multiplier", self:temporary_upgrade_value("temporary", "team_damage_speed_multiplier_received", 1))
 		multiplier = multiplier * damage_speed_multiplier
 		return multiplier
 	end
@@ -900,6 +904,129 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return max_amount
 	end
 
+	function PlayerManager:_attempt_tag_team()
+--		log("Attempted tag team")
+		if not self:has_category_upgrade("player","tag_team_base_deathvox") then 
+			return
+		end
+		
+		local base_data = self:upgrade_value("player", "tag_team_base_deathvox")
+		
+		local player = self:local_player()
+		local player_eye = player:camera():position()
+		local player_fwd = player:camera():rotation():y()
+		local tagged = nil
+		local heisters_slot_mask = World:make_slot_mask(2, 3, 4, 5, 16, 24)
+		local tag_distance = base_data.distance
+		local long_distance_revive_health = self:upgrade_value("player","tag_team_long_distance_revive",0)
+		local long_distance_revive_level = self:upgrade_level("player","tag_team_long_distance_revive",0)
+		local max_angle = base_data.max_angle
+
+		local head_pos = player:movement():m_head_pos()
+		local head_rot = player:movement():m_head_rot()
+		local aim_direction = head_rot:yaw()
+		local best_pick = {
+			unit = nil,
+			distance = nil,
+			angle = 360
+		}
+		
+		local nearby_heisters = World:find_units_quick("sphere",head_pos,tag_distance,heisters_slot_mask)
+		for _,unit in pairs(nearby_heisters) do 
+			local unit_pos = unit:oobb() and unit:oobb():center() or unit:position()
+			local angle = math.abs(mvector3.angle(unit_pos - head_pos,head_rot:y()))
+			if angle < max_angle then 
+				if angle < best_pick.angle then 
+					best_pick = {
+						unit = unit,
+						distance = distance,
+						angle = angle
+					}
+				end					
+			end
+		end
+		tagged = best_pick.unit
+--[[
+
+--		local cone_radius = base_data.radius
+		
+		local cone_camera = player:camera():camera_object()
+		local cone_center = Vector3(0, 0)
+		
+		local heisters = World:find_units("camera_cone", cone_camera, cone_center, cone_radius, tag_distance, heisters_slot_mask)
+		local best_dot = -1
+
+		for _, heister in ipairs(heisters) do
+			local heister_center = heister:oobb():center()
+			local heister_dir = heister_center - player_eye
+			local distance_pass = mvector3.length_sq(heister_dir) <= tag_distance * tag_distance
+			local raycast = nil
+
+			if distance_pass then
+				mvector3.normalize(heister_dir)
+
+				local heister_dot = Vector3.dot(player_fwd, heister_dir)
+
+				if best_dot < heister_dot then
+					best_dot = heister_dot
+					raycast = World:raycast(player_eye, heister_center)
+					tagged = raycast and raycast.unit:in_slot(heisters_slot_mask) and heister
+				end
+			end
+		end
+--]]
+
+		if not tagged then 
+--			log("No tagged unit")
+			return false
+		elseif self._coroutine_mgr:is_running("tag_team") then
+--			log("tagteam already running")
+			return false
+		end
+		
+		if long_distance_revive_level > 0 then 
+			if tagged:movement() and tagged:movement().downed then 
+				if tagged:movement():downed() then 
+					
+					local is_ai = not managers.criminals:character_peer_id_by_unit(tagged)
+					buttstack = tagged
+					managers.statistics:revived({
+						npc = is_ai,
+						reviving_unit = tagged
+					})
+					
+					if not is_ai then 
+						player:network():send_to_unit({
+							"revive_player",
+							long_distance_revive_health,
+							self:upgrade_value("player","revive_damage_reduction_level",0)
+						})
+					else
+						tagged:interaction():interact(player,true)
+					end
+					
+					local event_listener = tagged:event_listener()
+
+					if event_listener then
+						event_listener:call("on_revive_interaction_success")
+					end
+					
+					player:sound():say("f36x_any")
+					
+--					log("revived " .. tostring(is_ai or "bot") .. " via tagteam")
+					if long_distance_revive_level < 2 then
+--						log("No extra revive upgrade, returning")
+						return true
+					end
+					
+				end
+			end
+		end
+		
+		self:add_coroutine("tag_team", PlayerAction.TagTeam, tagged, player)
+		return true
+	end
+	
 end
 
 

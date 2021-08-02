@@ -3526,5 +3526,131 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		--Tag Team
+		self.values.player.tag_team_base_deathvox = {
+			{
+				distance = 1800,
+				duration = 5,
+				cooldown = 60,
+				max_angle = 30,
+--				radius = 0.6
+			}
+		}
+		self.definitions.player_tag_team_base_deathvox = {
+			name_id = "menu_deck20_0",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "tag_team_base_deathvox",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.tag_team_health_regen = {
+			0.05,
+			0.10
+		}
+		self.definitions.player_tag_team_health_regen_1 = {
+			name_id = "menu_deck20_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "tag_team_health_regen",
+				synced = true,
+				category = "player"
+			}
+		}
+		self.definitions.player_tag_team_health_regen_2 = {
+			name_id = "menu_deck20_6",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "tag_team_health_regen",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.tag_team_long_distance_revive = {	
+			0.1,
+			0.1
+		}
+		self.definitions.player_tag_team_long_distance_revive = { 
+			name_id = "menu_deck20_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "tag_team_long_distance_revive",
+				synced = true,
+				category = "player"
+			}
+		}
+		self.definitions.player_tag_team_long_distance_revive_full_effects = {
+			name_id = "menu_deck20_9",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "tag_team_long_distance_revive",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.tag_team_movement_speed_bonus = {
+			1.2
+		}
+		self.definitions.player_tag_team_movement_speed_bonus = {
+			name_id = "menu_deck20_3",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "tag_team_movement_speed_bonus",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.tag_team_effect_empathy = {true}
+		self.definitions.player_tag_team_effect_empathy = {
+			name_id = "menu_deck20_4",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "tag_team_effect_empathy",
+				category = "player"
+			}
+		}
+		
+		self.values.player.tag_team_damage_resistance = {
+			0.1
+		}
+		self.definitions.player_tag_team_damage_resistance = {
+			name_id = "menu_deck20_5",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "tag_team_damage_resistance",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.tag_team_cooldown_drain[1].tagged = 1
+		self.values.player.tag_team_cooldown_drain[1].owner = 1
+		
+		self.values.player.tag_team_duration_increase = {
+			5
+		}
+		self.definitions.player_tag_team_duration_increase_1 = {
+			name_id = "menu_deck20_8",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "tag_team_duration_increase",
+				synced = true,
+				category = "player"
+			}
+		}
 	end
 end)	

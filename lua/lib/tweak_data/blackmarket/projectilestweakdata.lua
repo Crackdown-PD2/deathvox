@@ -128,5 +128,8 @@ Hooks:PostHook(BlackMarketTweakData, "_init_projectiles", "cdgren", function(sel
 		self.projectiles.wpn_prj_four.is_poison = true
 		self.projectiles.ecp_arrow_poison.is_poison = true
 		self.projectiles.elastic_arrow_poison.is_poison = true
+		
+		self.projectiles.tag_team.base_cooldown = 60 --same as vanilla anyway
+		self.projectiles.tag_team.hold_function_name = "_update_tagteam_hud_targets"
 	end
 end)

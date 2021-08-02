@@ -1946,6 +1946,148 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	end
 
+	--wrote the HUD code and stuff real quick and dirty just so that we could start getting feedback from testers
+	--IOU some prettier code
+	-- -offy
+	Hooks:Add("TCD_Create_Stack_Tracker_HUD","TCD_Create_TagTeam_HUD",function(hudtemp)
+		if hudtemp and alive(hudtemp) then
+			if alive(hudtemp:child("deathvox_tagteam")) then 
+				hudtemp:remove(hudtemp:child("deathvox_tagteam"))
+			end
+			local deathvox_tagteam = hudtemp:panel({
+				name = "deathvox_tagteam"
+			})
+		end
+	end)
+	
+	function PlayerStandard:_update_tagteam_hud_targets(t,input)
+		
+		local released
+		if self._cache_held_grenade then --todo make consistent with tripmine code
+			if not input.btn_projectile_state then 
+				self._cache_held_grenade = false
+				released = true
+			end
+		else
+			self._cache_held_grenade = input.btn_projectile_state
+			if not input.btn_projectile_state then
+				return false
+			end
+		end
+
+		local pm = managers.player
+		--todo: external function to update tag team targets on hud?
+		--or just new waypoint w/callback destroy function?
+		
+		local base_data = pm:upgrade_value("player", "tag_team_base_deathvox")
+		
+		local player = pm:local_player()
+		local player_eye = player:camera():position()
+		local player_fwd = player:camera():rotation():y()
+		local tagged = nil
+		local heisters_slot_mask = World:make_slot_mask(2, 3, 4, 5, 16, 24)
+		local tag_distance = base_data.distance
+		local long_distance_revive_health = pm:upgrade_value("player","tag_team_long_distance_revive",0)
+		local long_distance_revive_level = pm:upgrade_level("player","tag_team_long_distance_revive",0)
+		local max_angle = base_data.max_angle
+
+		local head_pos = player:movement():m_head_pos()
+		local head_rot = player:movement():m_head_rot()
+		local aim_direction = head_rot:yaw()
+		local best_pick = {
+			unit = nil,
+			distance = nil,
+			hud_element = nil,
+			angle = 360
+		}
+		local panel = managers.hud and managers.hud._hud_temp and managers.hud._hud_temp._hud_panel:child("deathvox_tagteam")
+		if not alive(panel) then 
+			return
+		end
+
+		local ws = managers.hud._workspace
+		local current_camera = managers.viewport:get_current_camera()
+		local this_frame = {}
+		local texture,texture_rect = tweak_data.hud_icons:get_icon_data("tag_team")
+		local nearby_heisters = World:find_units_quick("sphere",head_pos,tag_distance,heisters_slot_mask)
+		for _,unit in pairs(nearby_heisters) do 
+			local u_key = tostring(unit:key())
+			this_frame[u_key] = true
+			local unit_pos = unit:oobb() and unit:oobb():center() or unit:position()
+			local angle = math.abs(mvector3.angle(unit_pos - head_pos,head_rot:y()))
+			local hud_element = panel:child(u_key)
+			local coords = ws:world_to_screen(current_camera,unit_pos) or {x = -100,y = -100}
+			local c_x,c_y = coords.x,coords.y
+			
+			if alive(hud_element) then 
+				hud_element:set_color(Color("888888"))
+				hud_element:set_alpha(0.5)
+			else
+				hud_element = panel:bitmap({
+					name = tostring(u_key),
+					texture = texture,
+					texture_rect = texture_rect,
+					alpha = 0.5,
+					w = 48,
+					h = 48
+				})
+			end
+			
+			if angle < max_angle then 
+				hud_element:show()
+				hud_element:set_center(c_x,c_y)
+				if angle < best_pick.angle then 
+					best_pick = {
+						unit = unit,
+						distance = distance,
+						hud_element = hud_element,
+						angle = angle
+					}
+				end
+			else
+				hud_element:hide()
+			end
+		end
+		
+		if released then 
+			for _,element in pairs(panel:children()) do 
+				panel:remove(element)
+			end
+		else
+			for _,element in pairs(panel:children()) do 
+				if element == best_pick.hud_element then 
+					element:set_color(Color.white)
+					element:set_alpha(1)
+				elseif not this_frame[element:name()] then --i have strong feelings about doing it this way. i'll be back for this
+					panel:remove(element)
+				end
+			end
+		end
+		
+		return released
+	end
+
+	function PlayerStandard:_check_action_use_ability(t, input)
+		local action_wanted = input.btn_throw_grenade_press
+		local held = input.btn_projectile_state
+
+		local equipped_ability,amount = managers.blackmarket:equipped_grenade()
+		local ptd = equipped_ability and tweak_data.blackmarket.projectiles[equipped_ability] 
+		if ptd then 
+			if ptd.hold_function_name then 
+				action_wanted = self[ptd.hold_function_name](self,t, input) 
+			end
+		end
+		
+		if not action_wanted then
+			return
+		end
+		if not managers.player:attempt_ability(equipped_ability) then
+			return
+		end
+
+		return action_wanted
+	end
 
 	function PlayerStandard:_find_pickups(t)
 		local pm = managers.player

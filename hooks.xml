@@ -184,6 +184,7 @@
 	<post :script_path="managers/dialogmanager.lua" :hook_id="managers/dialogmanager"/>
 	<post :script_path="managers/hud/hudassaultcorner.lua" :hook_id="managers/hud/hudassaultcorner"/>
 	<post :script_path="managers/hud/hudtemp.lua" :hook_id="managers/hud/hudtemp"/>
+	<post :script_path="managers/hud/hudteammate.lua" :hook_id="managers/hud/hudteammate"/>
 
 	<post :script_path="managers/musicmanager.lua" :hook_id="managers/musicmanager"/>
 
@@ -197,4 +198,6 @@
 	<post :script_path="network/base/hostnetworksession.lua" :hook_id="network/base/hostnetworksession"/>
 	<post :script_path="network/handlers/unitnetworkhandler.lua" :hook_id="network/handlers/unitnetworkhandler"/>
 	<post :script_path="network/matchmaking/networkmatchmakingsteam.lua" :hook_id="network/matchmaking/networkmatchmakingsteam"/>
+	
+	<post :script_path="player_actions/skills/playeractiontagteam.lua" :hook_id="player_actions/skills/playeractiontagteam"/>
 </hooks>
