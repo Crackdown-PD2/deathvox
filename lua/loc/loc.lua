@@ -565,7 +565,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck7_2_desc = "You gain ##+232## Concealment.",
 				menu_deck7_3 = "Deft Fingers",
 				menu_deck7_3_desc = "Your Object Interact Speed bonus increases to ##+20%##.",
-				menu_deck7_4 = "Ranzer’s Edge",
+				menu_deck7_4 = "Ranzer's Edge",
 				menu_deck7_4_desc = "You ##no longer take Fall Damage when falling from Non-Fatal heights##. Additionally, the distance you must fall before a fall is considered Fatal is ##doubled##.",
 				menu_deck7_5 = "Silent Work",
 				menu_deck7_5_desc = "Your Object Interact Speed bonus increases to ##+30%##.",
@@ -646,7 +646,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck12_3 = "Taubushi",
 				menu_deck12_3_desc = "Increases the Damage Resistance bonus per Missing Health to ##+4%##, up to ##+20%##.",
 				menu_deck12_4 = "Gobu",
-				menu_deck12_4_desc = "Increases the Damage Resistance bonus per Missing Health to ##+4%##, up to ##+20%##.",
+				menu_deck12_4_desc = "Increases the Damage Resistance bonus from taking damage to ##+20%##",
 				menu_deck12_5 = "Hanzubon",
 				menu_deck12_5_desc = "Increases the Damage Resistance bonus per Missing Health to ##+6%##, up to ##+30%##.",
 				menu_deck12_6 = "Shichibu",
@@ -803,7 +803,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				
 				--Sicario
 				menu_deck18_1 = "Vanishing Act",
-				menu_deck18_1_desc = "Unlocks the Sicario Smoke Bomb, which can be equipped in the Throwable slot and thrown by pressing the Throwable key. Deploying the Smoke Bomb creates a smoke screen for 10 seconds. Allies within the smoke screen Evade ##50## of all incoming attacks, and enemies within the smoke screen suffer from a ##50%## Accuracy penalty.\n\nThe Smoke Bomb has a ##60## second cooldown.\n\nMechanical Note: Evasion is separate from Dodge and rolls its chance to negate damage after Dodge’s chance to negate damage is calculated.",
+				menu_deck18_1_desc = "Unlocks the Sicario Smoke Bomb, which can be equipped in the Throwable slot and thrown by pressing the Throwable key. Deploying the Smoke Bomb creates a smoke screen for 10 seconds. Allies within the smoke screen Evade ##50## of all incoming attacks, and enemies within the smoke screen suffer from a ##50%## Accuracy penalty.\n\nThe Smoke Bomb has a ##60## second cooldown.\n\nMechanical Note: Evasion is separate from Dodge and rolls its chance to negate damage after Dodge's chance to negate damage is calculated.",
 				menu_deck18_2 = "Smoke Signals",
 				menu_deck18_2_desc = "Enemies within the smoke screen are Marked.",
 				menu_deck18_3 = "Wraith Walk",
