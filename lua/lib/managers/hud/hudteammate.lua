@@ -90,7 +90,7 @@ end)
 
 Hooks:PostHook(HUDTeammate,"set_health","deathvox_hudteammate_sethealth",function(self,data)
 	if alive(self._sociopath_health) then 
-		local current_index = 5 - data.current
+		local current_index = math.floor(5 - data.current)
 		local tw = HUDTeammate.sociopath_health_texture_w
 		local th = HUDTeammate.sociopath_health_texture_h
 		self._sociopath_health:set_texture_rect(1 + ((1 + tw) * current_index),1,tw,th)

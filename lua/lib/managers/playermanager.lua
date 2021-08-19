@@ -821,12 +821,19 @@ if deathvox:IsTotalCrackdownEnabled() then
 						visible = false,
 						alpha = 0.1
 					})
-					
-					local color_idle_speed = 1
+					local anim_pulse_duration = 0.5
+					local anim_timeout_fade_duration = 1
+					local anim_timeout_hold_duration = tweak_data.upgrades.values.player.sociopath_combo_duration - (anim_timeout_fade_duration + anim_pulse_duration)
+					--these must add up to tweak_data.upgrades.values.player.sociopath_combo_duration,
+						--which is 5
 					
 					local font_size = 32
-					local font_color_primary = Color("db72e3")
-					local font_color_secondary = Color("830166")
+--					local font_color_primary = Color("db72e3")
+					local font_color_primary = Color("f579ff")
+					local font_color_secondary = Color("43ebed")
+					local font_color_pulse = Color("ffffff")
+--					local font_color_pulse = Color("d90a0a")
+--					local font_color_pulse = Color("43ebed")
 					
 					local stack_count = trackerhud:text({
 						name = "stack_count",
@@ -839,21 +846,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 						vertical = "top"
 					})
 					
-					local combo_anim_thread
-					local color_anim_thread
-					local function anim_color_idle(o,speed,from_color,to_color)
-						local t = 0
-						repeat
-							local dt = coroutine.yield()
-							t = t + dt
-							local s = (-math.cos(t * speed * 180) + 1) / 2
-							o:set_color(from_color + ((to_color - from_color) * s))
-						until false
-					end
 					Hooks:Add("TCD_OnSociopathComboStacksChanged","TCD_SetSociopathComboStacksHUD",function(previous,current)
-						local anim_duration = 1
-						local font_scale = math.min(current / 2,2)
-						local light_col = Color("ffffff") * math.min(current/10,1)
+						local font_scale = 1.2
+						local color_scale = math.min(current/10,1)
 						local to_font_size = font_size
 						local from_font_size = to_font_size * font_scale
 						local s
@@ -865,34 +860,41 @@ if deathvox:IsTotalCrackdownEnabled() then
 						if alive(stack_count) then 
 							if current > 1 then 
 								stack_count:stop()
-								color_anim_thread = nil
-								
-								combo_anim_thread = stack_count:animate(
-									function (o,duration,from_size,to_size,from_color,to_color)
-										over(duration,
+								stack_count:animate(
+									function (o)
+										over(anim_pulse_duration,
 											function (t)
-												local interp = 1 - ((duration - t) /  duration)
-												o:set_font_size(from_size + ((to_size - from_size) * interp))
-												o:set_color(from_color + ((to_color - from_color) * interp))
-												if t >= duration then 
-													if color_anim_thread then 
-														o:stop(color_anim_thread)
-													end
-													color_anim_thread = o:animate(
-														anim_color_idle,
-														color_idle_speed,font_color_primary,font_color_secondary
-													)
-													
-												end
+												local from_color = font_color_pulse
+												local to_color = font_color_primary
+												o:set_font_size(from_font_size + ((to_font_size - from_font_size) * t))
+												o:set_color(from_color + ((to_color - from_color) * t))
 											end
 										)
-									end,
-									anim_duration,from_font_size,to_font_size,font_color_primary + light_col,font_color_primary
+										
+										local c = o:color()
+										--[[
+										local t = 0
+										while t < anim_timeout_fade_duration do 
+											local dt = coroutine.yield()
+											t = t + dt
+											local interp = (anim_timeout_fade_duration - math.sqrt(t)) / anim_timeout_fade_duration
+											local to_color = font_color_secondary
+											o:set_color(c + ((to_color - c) * t))
+											
+										end
+										--]]
+										wait(anim_timeout_hold_duration)
+										local c = o:color()
+										over(anim_timeout_fade_duration,
+											function(t)
+												local to_color = font_color_secondary
+												o:set_color(c + ((to_color - c) * t))
+											end
+										)
+									end
 								)
 							else
 								stack_count:stop()
-								combo_anim_thread = nil
-								color_anim_thread = nil
 							end
 							
 							stack_count:set_text(s)
@@ -1598,7 +1600,7 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 		end
 			
 		if dist_sq <= range then
-			self._combo_timer = t + 5
+			self._combo_timer = t + tweak_data.upgrades.values.player.sociopath_combo_duration
 			
 			local melee_add = self:has_category_upgrade("player", "sociopath_melee_combo")
 			local saw_add = self:has_category_upgrade("player", "sociopath_saw_combo")
