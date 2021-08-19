@@ -6,9 +6,24 @@ Hooks:PostHook(HUDTeammate,"_create_radial_health","deathvox_hudteammate_creater
 	
 	local is_sociopath
 	if self._main_player then 
---		is_sociopath = managers.player:has_category_upgrade("player","sociopath_mode")
+		is_sociopath = managers.player:has_category_upgrade("player","sociopath_mode")
 	else
+		local peer_id = self:peer_id()
+		if peer_id then 
 		--todo peer detection
+			local peer = managers.network:session():peer(peer_id) 
+			if peer then 
+				local outfit = peer and peer:blackmarket_outfit()
+				local skills = outfit and outfit.skills
+				local perk = skills and skills.specializations
+				if perk then 
+					if perk[1] == 9 then --sociopath is deck #9
+						is_sociopath = true
+					end
+				end
+			end
+		end
+
 	end
 	
 	if is_sociopath then 
@@ -19,6 +34,11 @@ Hooks:PostHook(HUDTeammate,"_create_radial_health","deathvox_hudteammate_creater
 				radial_health:hide()
 			end
 			
+			local radial_bg = panel:child("radial_bg")
+			if alive(radial_bg) then 
+				radial_bg:hide()
+			end
+			
 			local sociopath_health = panel:bitmap({
 				name = "sociopath_health",
 				texture = self.sociopath_health_texture_path,
@@ -26,14 +46,14 @@ Hooks:PostHook(HUDTeammate,"_create_radial_health","deathvox_hudteammate_creater
 				texture_rect = {
 					0,
 					0,
-					self.sociopath_health_texture_w,
-					self.sociopath_health_texture_h
+					HUDTeammate.sociopath_health_texture_w,
+					HUDTeammate.sociopath_health_texture_h
 				},
 				layer = 1,
 				w = panel:w(),
 				h = panel:h()
 			})
-	--		sociopath_health:set_center(c_x,c_y)
+			self._sociopath_health = sociopath_health
 			
 			local radial_shield = panel:child("radial_shield")
 			if alive(radial_shield) then 
@@ -58,20 +78,22 @@ Hooks:PostHook(HUDTeammate,"_create_radial_health","deathvox_hudteammate_creater
 			if alive(radial_absorb_shield_active) then 
 				radial_absorb_shield_active:hide()
 			end
+			--[[
 			local radial_info_meter_bg = panel:child("radial_info_meter_bg")
 			if alive(radial_info_meter_bg) then 
 				radial_info_meter_bg:hide()
 			end
+			--]]
 		end
 	end
 end)
 
-Hooks:PostHook(HUDTeammate,"set_health","deathvox_hudteammate_sethealth",function(self,current,total)
+Hooks:PostHook(HUDTeammate,"set_health","deathvox_hudteammate_sethealth",function(self,data)
 	if alive(self._sociopath_health) then 
-		local tw = self.sociopath_health_texture_w
-		local th = self.sociopath_health_texture_h
-		self._sociopath_health:set_texture_rect(1 + ((1 + tw) * math.round(current)),1,tw,th)
-		
+		local current_index = 5 - data.current
+		local tw = HUDTeammate.sociopath_health_texture_w
+		local th = HUDTeammate.sociopath_health_texture_h
+		self._sociopath_health:set_texture_rect(1 + ((1 + tw) * current_index),1,tw,th)
 	end
 	
 end)

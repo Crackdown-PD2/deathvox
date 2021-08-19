@@ -803,6 +803,106 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end
 		end
 		
+		if self:has_category_upgrade("player","sociopath_mode") then 
+		
+			Hooks:Add("TCD_Create_Stack_Tracker_HUD","TCD_CreateSociopathElement",function(hudtemp)
+				local panel_name = "sociopath_combo_tracker"
+				if hudtemp and alive(hudtemp) then
+					if alive(hudtemp:child(panel_name)) then 
+						hudtemp:remove(hudtemp:child(panel_name))
+					end
+					local trackerhud = hudtemp:panel({
+						name = panel_name
+					})
+					trackerhud:set_position((hudtemp:w() - trackerhud:w()) / 2,100)
+					local debug_trackerhud = trackerhud:rect({
+						name = "debug",
+						color = Color.red,
+						visible = false,
+						alpha = 0.1
+					})
+					
+					local color_idle_speed = 1
+					
+					local font_size = 32
+					local font_color_primary = Color("db72e3")
+					local font_color_secondary = Color("830166")
+					
+					local stack_count = trackerhud:text({
+						name = "stack_count",
+						text = "",
+						font = "fonts/font_justice_shadow_outline",
+						font_size = font_size,
+						align = "center",
+						color = font_color_primary,
+						layer = 4,
+						vertical = "top"
+					})
+					
+					local combo_anim_thread
+					local color_anim_thread
+					local function anim_color_idle(o,speed,from_color,to_color)
+						local t = 0
+						repeat
+							local dt = coroutine.yield()
+							t = t + dt
+							local s = (-math.cos(t * speed * 180) + 1) / 2
+							o:set_color(from_color + ((to_color - from_color) * s))
+						until false
+					end
+					Hooks:Add("TCD_OnSociopathComboStacksChanged","TCD_SetSociopathComboStacksHUD",function(previous,current)
+						local anim_duration = 1
+						local font_scale = math.min(current / 2,2)
+						local light_col = Color("ffffff") * math.min(current/10,1)
+						local to_font_size = font_size
+						local from_font_size = to_font_size * font_scale
+						local s
+						if current > 1 then 
+							s = string.format("%ix combo",current)
+						else
+							s = ""
+						end
+						if alive(stack_count) then 
+							if current > 1 then 
+								stack_count:stop()
+								color_anim_thread = nil
+								
+								combo_anim_thread = stack_count:animate(
+									function (o,duration,from_size,to_size,from_color,to_color)
+										over(duration,
+											function (t)
+												local interp = 1 - ((duration - t) /  duration)
+												o:set_font_size(from_size + ((to_size - from_size) * interp))
+												o:set_color(from_color + ((to_color - from_color) * interp))
+												if t >= duration then 
+													if color_anim_thread then 
+														o:stop(color_anim_thread)
+													end
+													color_anim_thread = o:animate(
+														anim_color_idle,
+														color_idle_speed,font_color_primary,font_color_secondary
+													)
+													
+												end
+											end
+										)
+									end,
+									anim_duration,from_font_size,to_font_size,font_color_primary + light_col,font_color_primary
+								)
+							else
+								stack_count:stop()
+								combo_anim_thread = nil
+								color_anim_thread = nil
+							end
+							
+							stack_count:set_text(s)
+						end
+					end)
+					
+				end
+			end)
+		end
+		
 		if Network:is_server() then 
 			self:set_property("gambler_team_ammo_pickups_grabbed",0)
 		end
@@ -1484,7 +1584,7 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 	if self:has_category_upgrade("player", "sociopath_mode") then
 		local range = self:has_category_upgrade("player", "sociopath_combo_master") and 2250000 or 1000000
 		local throwing_add = self:has_category_upgrade("player", "sociopath_throwing_combo")
-		
+		local combo_stacks_start = self._combo_stacks
 		if weapon_unit then
 			if throwing_add then
 				if weapon_unit:base()._primary_class == "class_throwing" then
@@ -1546,6 +1646,10 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 				
 				self._next_combo_hp = self._next_combo_hp + self._needed_combo_stacks_for_hp
 				--log("next_combo_hp: " .. tostring(self._next_combo_hp))
+			end
+			
+			if combo_stacks_start then 
+				Hooks:Call("TCD_OnSociopathComboStacksChanged",combo_stacks_start,self._combo_stacks)
 			end
 		end
 	end
@@ -1814,6 +1918,7 @@ function PlayerManager:update(t, dt)
 		end
 		
 		if self._combo_timer and self._combo_timer < t then
+			Hooks:Call("TCD_OnSociopathComboStacksChanged",self._combo_stacks,0)
 			self._combo_stacks = 0
 			self._needed_combo_stacks_for_hp = 5
 			self._next_combo_hp = self._needed_combo_stacks_for_hp
