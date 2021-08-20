@@ -1266,6 +1266,7 @@ function PlayerManager:health_skill_multiplier()
 	multiplier = multiplier + self:team_upgrade_value("health", "passive_multiplier", 1) - 1
 	multiplier = multiplier + self:get_hostage_bonus_multiplier("health") - 1
 	multiplier = multiplier - self:upgrade_value("player", "health_decrease", 0)
+	multiplier = multiplier + self:upgrade_value("player", "infiltrator_max_health_mul",0)
 
 	if self:num_local_minions() > 0 then
 		multiplier = multiplier + self:upgrade_value("player", "minion_master_health_multiplier", 1) - 1
@@ -1314,6 +1315,7 @@ function PlayerManager:body_armor_skill_multiplier(override_armor)
 	multiplier = multiplier + self:upgrade_value("player", "perk_armor_loss_multiplier", 1) - 1
 	multiplier = multiplier + self:upgrade_value("player", tostring(override_armor or managers.blackmarket:equipped_armor(true, true)) .. "_armor_multiplier", 1) - 1
 	multiplier = multiplier + self:upgrade_value("player", "chico_armor_multiplier", 1) - 1
+	multiplier = multiplier + self:upgrade_value("player", "infiltrator_max_armor_mul",0)
 
 	return multiplier
 end

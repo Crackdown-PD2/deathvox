@@ -2832,11 +2832,11 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		self.values.player.infiltrator_melee_stance_DR = {true}
 		self.values.player.infiltrator_melee_heal = {0.02}
 		self.values.player.infiltrator_flash_immunity = {true}
-		self.values.player.infiltrator_max_health_mul = {1.4}
+		self.values.player.infiltrator_max_health_mul = {0.4}
 		self.values.player.infiltrator_passive_DR = {0.9}
 		self.values.player.infiltrator_armor_restore = {0.02}
 		self.values.player.infiltrator_comeback_strike = {true} --this is used to make sure counters actually deal damage
-		self.values.player.infiltrator_max_armor_mul = {1.4}
+		self.values.player.infiltrator_max_armor_mul = {0.4}
 		self.values.player.infiltrator_taser_breakout = {true}
 		
 		self.definitions.infiltrator_1 = {
