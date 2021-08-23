@@ -8234,20 +8234,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_ppk.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			}
@@ -8304,20 +8304,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_g17.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			}
@@ -8382,20 +8382,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_legacy.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			}
@@ -8451,20 +8451,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.jowi.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			}
@@ -8527,20 +8527,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_shrew.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			}
@@ -8602,22 +8602,22 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_b92fs.kick = {
 			standing = {
-				3,
-				4.8,
+				1.5,
+				1.2,
 				-0.3,
-				0.3
+				0.3,
 			},
 			crouching = {
-				3,
-				4.8,
+				1.5,
+				1.2,
 				-0.3,
-				0.3
+				0.3,
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.5,
+				1.2,
 				-0.3,
-				0.3
+				0.3,
 			}
 		}
 -- todo mod 
@@ -8680,20 +8680,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_1911.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			}
@@ -8759,20 +8759,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_packrat.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			}
@@ -8833,20 +8833,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_p226.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			}
@@ -8908,20 +8908,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_c96.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			}
@@ -8991,20 +8991,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_usp.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			}
@@ -9071,20 +9071,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_hs2000.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			}
@@ -9146,23 +9146,23 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_g22c.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
-			}
+			} 
 		}
 
 -- todo mod
@@ -9227,20 +9227,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_deagle.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			}
@@ -9303,20 +9303,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_breech.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			}
@@ -9375,20 +9375,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_sparrow.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			}
@@ -9447,20 +9447,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_pl14.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			}
@@ -9529,20 +9529,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_2006m.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			}
@@ -9604,20 +9604,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_rage.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			}
@@ -9680,20 +9680,20 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.x_chinchilla.kick = {
 			standing = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			crouching = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			},
 			steelsight = {
-				3,
-				4.8,
+				1.6,
+				1.3,
 				-0.3,
 				0.3
 			}
@@ -11011,22 +11011,22 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.flamethrower_mk2.kick = {
 			standing = {
-				3,
-				4.8,
-				-0.3,
-				0.3
+				0,
+				0,
+				0,
+				0
 			},
 			crouching = {
-				3,
-				4.8,
-				-0.3,
-				0.3
+				0,
+				0,
+				0,
+				0
 			},
 			steelsight = {
-				3,
-				4.8,
-				-0.3,
-				0.3
+				0,
+				0,
+				0,
+				0
 			}
 		}
 
@@ -15337,22 +15337,22 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		}
 		self.system.kick = {
 			standing = {
-				3,
-				4.8,
-				-0.3,
-				0.3
+				0,
+				0,
+				0,
+				0
 			},
 			crouching = {
-				3,
-				4.8,
-				-0.3,
-				0.3
+				0,
+				0,
+				0,
+				0
 			},
 			steelsight = {
-				3,
-				4.8,
-				-0.3,
-				0.3
+				0,
+				0,
+				0,
+				0
 			}
 		}
 
