@@ -924,18 +924,18 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.runner,5,{ --Escape Plan
 			{
 				upgrades = {
-					"player_escape_plan_basic"
+					"player_run_speed_multiplier"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"player_escape_plan_aced"
+					"player_movement_speed_multiplier"
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_escape_plan",
-			desc_id = "menu_escape_plan_desc",
+			name_id = "menu_leg_day",
+			desc_id = "menu_leg_day_desc",
 			icon_xy = {
 				7,
 				4
@@ -944,19 +944,18 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.runner,6,{ --Leg Day Enthusiast
 			{
 				upgrades = {
-					"player_run_speed_multiplier",
-					"player_movement_speed_multiplier"
+					"player_wave_dash_basic"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"player_crouch_speed_penalty_removal"
+					"player_wave_dash_aced"
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_leg_day",
-			desc_id = "menu_leg_day_desc",
+			name_id = "menu_wave_dash",
+			desc_id = "menu_wave_dash_desc",
 			icon_xy = {
 				7,
 				5

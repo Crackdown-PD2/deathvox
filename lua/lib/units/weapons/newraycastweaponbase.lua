@@ -263,10 +263,15 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return self:weapon_tweak_data().fire_mode_data.fire_rate * multiplier
 	end
 
-	function NewRaycastWeaponBase:get_add_head_shot_mul()
-		if self:is_weapon_class("class_shotgun") and managers.player:has_category_upgrade("class_shotgun","tender_meat_bodyshots") then 
-			return managers.player:upgrade_value("class_shotgun","tender_meat_bodyshots",0)
+	function NewRaycastWeaponBase:get_add_head_shot_mul(special)
+		if not special then
+			if self:is_weapon_class("class_shotgun") and managers.player:has_category_upgrade("class_shotgun","tender_meat_bodyshots") then 
+				return managers.player:upgrade_value("class_shotgun","tender_meat_bodyshots",0)
+			end
+		else
+			log("hot")
 		end
+		
 		if self:is_category("smg", "lmg", "assault_rifle", "minigun") and self._fire_mode == ids_auto or self:is_category("bow", "saw") then
 			return managers.player:upgrade_value("weapon", "automatic_head_shot_add", nil)
 		end

@@ -67,6 +67,82 @@ function PlayerStandard:init(unit)
 	managers.menu:add_active_changed_callback(callback(self, self, "_on_menu_active_changed"))
 end
 
+function PlayerStandard:_check_action_jump(t, input)
+	local new_action = nil
+	local action_wanted = input.btn_jump_press
+
+	if action_wanted then
+		local action_forbidden = self._jump_t and t < self._jump_t + 0.55
+		
+		local cant_mid_air_jump = nil
+		local wave_dashing = nil
+		local skill = managers.player:has_category_upgrade("player", "wave_dash_basic")
+		local skill2 = managers.player:has_category_upgrade("player", "wave_dash_aced")
+		
+		if self._state_data.in_air then
+			cant_mid_air_jump = true
+			
+			if skill then			
+				if not self._wave_dash_t or self._wave_dash_t and self._wave_dash_t < t then
+					cant_mid_air_jump = nil
+					action_forbidden = nil
+					self._wave_dash_t = t + 5
+					wave_dashing = true
+				end
+			end
+		end
+			
+		
+		action_forbidden = action_forbidden or self._unit:base():stats_screen_visible() or cant_mid_air_jump or self:_interacting() or self:_on_zipline() or self:_does_deploying_limit_movement() or self:_is_using_bipod()
+
+		if not action_forbidden then
+			if self._state_data.ducking then
+				self:_interupt_action_ducking(t)
+			else
+				if self._state_data.on_ladder then
+					self:_interupt_action_ladder(t)
+				end
+
+				local action_start_data = {}
+				local jump_vel_z = tweak_data.player.movement_state.standard.movement.jump_velocity.z
+				
+				if wave_dashing then
+					if not self._move_dir or not skill2 then
+						if not self._move_dir then
+							self._move_dir = Vector3()
+						end
+						
+						if skill2 or not self._jump_vel_xy then
+							mvec3_set(self._move_dir, self._unit:movement()._m_head_rot:y())
+						else
+							mvec3_set(self._move_dir, self._jump_vel_xy)
+						end
+					end	
+					
+					jump_vel_z = 200
+				end
+				
+				action_start_data.jump_vel_z = jump_vel_z
+				
+				if self._move_dir then
+					local is_running = self._running and self._unit:movement():is_above_stamina_threshold() and t - self._start_running_t > 0.4
+					local jump_vel_xy = wave_dashing and 1000 or tweak_data.player.movement_state.standard.movement.jump_velocity.xy[is_running and "run" or "walk"]
+					
+					action_start_data.jump_vel_xy = jump_vel_xy
+
+					if is_running then
+						self._unit:movement():subtract_stamina(tweak_data.player.movement_state.stamina.JUMP_STAMINA_DRAIN)
+					end
+				end
+
+				new_action = self:_start_action_jump(t, action_start_data)
+			end
+		end
+	end
+
+	return new_action
+end
+
 function PlayerStandard:_update_fwd_ray()
 	local from = self._unit:movement():m_head_pos()
 	local range = alive(self._equipped_unit) and self._equipped_unit:base():has_range_distance_scope() and 20000 or 4000

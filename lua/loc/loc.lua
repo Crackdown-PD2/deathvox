@@ -254,14 +254,14 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_preventative_care_desc = "BASIC: ##$basic##\nYour First Aid Kits and Doctor Bags provide the user with a Damage Absorption shield equal to ##100%## of their Health and Armor.\n\nACE: ##$pro##\nPlayers become Invulnerable for ##2## seconds when their Damage Absorption shields are broken.\n\nNote: Shield does not decay over time. Shield absorbs damage on a 1:1 ratio of Shield Amount : Damage Taken.",
 
 			--chief
-				menu_protect_and_serve = "To Protect and to Serve",
+				menu_protect_and_serve = "Protect and Serve",
 				menu_protect_and_serve_desc = "BASIC: ##$basic##\nYou convert enemies into Jokers ##90%## faster.\n\nACE: ##$pro##\nIncreases your Friendship Collar supply to ##6##.",
 				menu_order_through_law = "Order through Law",
-				menu_order_through_law_desc = "BASIC: ##$basic##\nJokers no longer flinch from taking damage and cannot be knocked down.\n\nACE: ##$pro##\nJokers will melee enemies within range, dealing damage and causing them to stagger.",
+				menu_order_through_law_desc = "BASIC: ##$basic##\nJokers no longer flinch from taking damage and cannot be knocked down.\n\nACE: ##$pro##\nJokers will melee enemies within range, dealing high damage and inflicting stagger.",
 				menu_justice_with_mercy = "Justice with Mercy",
 				menu_justice_with_mercy_desc = "BASIC: ##$basic##\nJokers gain ##Armor Piercing##.\n\nACE: ##$pro##\nJokers gain ##+90%## Accuracy.",
 				menu_standard_of_excellence = "Standard of Excellence",
-				menu_standard_of_excellence_desc = "BASIC: ##$basic##\nIncreases Jokers' Damage Resistance from 50% to ##75%##.\n\nACE: ##$pro##\nJokers regenerate ##2.5%## of their Maximum Health per second.",
+				menu_standard_of_excellence_desc = "BASIC: ##$basic##\nIncreases Jokers' Damage Resistance from 50% to ##80%##.\n\nACE: ##$pro##\nJokers regenerate ##2.5%## of their Maximum Health per second.",
 				menu_maintaining_the_peace = "Maintaining the Peace",
 				menu_maintaining_the_peace_desc = "BASIC: ##$basic##\nYou automatically mark Special Enemies by ADSing at them.\nYour Jokers will focus attacks at Marked enemies that you ADS at.\n\nACE: ##$pro##\nYour Jokers deal ##+25%## Damage to Marked enemies.",
 				menu_service_above_self = "Service above Self",
@@ -269,15 +269,15 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 			
 			--enforcer
 				menu_tender_meat = "Tender Meat",
-				menu_tender_meat_desc = "BASIC: ##$basic##\n$ICN_SHO Shotguns deal ##50%## of their Headshot damage on Body Shots against Non-Dozer enemies.\n\nACE: ##$pro##\n$ICN_SHO Shotguns gain ##+40## Stability.",
+				menu_tender_meat_desc = "BASIC: ##$basic##\n$ICN_SHO Shotguns deal ##50%## of their Headshot damage on Body Shots against against ##Standard Enemies##.\n\nACE: ##$pro##\n$ICN_SHO Shotguns gain ##+40## Stability.\n\nNOTE: ##Standard Enemies## are non-Special enemies, aka Lights and Heavies but not Cloakers or Tasers.",
 				menu_heartbreaker = "Heartbreaker",
-				menu_heartbreaker_desc = "BASIC: ##$basic##\nDouble Barreled $ICN_SHO Shotguns can use the Fire Selector to switch to ##Double Barrel Mode##, causing them to fire twice per shot.\n\nACE: ##$pro##\nEach shot in ##Double Barrel Mode## deals ##+100%## Damage when firing both barrels.",
+				menu_heartbreaker_desc = "BASIC: ##$basic##\nDouble Barreled $ICN_SHO Shotguns can use the Fire Selector to switch to ##Double Barrel Mode##, causing them to fire twice per shot.\n\nACE: ##$pro##\nEach shot in ##Double Barrel Mode## deals ##+200%## Damage when firing both barrels.",
 				menu_shell_games = "Shell Games",
 				menu_shell_games_desc = "BASIC: ##$basic##\n$ICN_SHO Shotguns gain ##+20%## Reload Speed every time a shell is loaded.\nBonuses are lost upon finishing or cancelling the Reload.\n\nACE: ##$pro##\nSingle-Fire $ICN_SHO Shotguns have their Fire Rate increased by ##50%##.",
 				menu_rolling_thunder = "Rolling Thunder",
 				menu_rolling_thunder_desc = "BASIC: ##$basic##\nIncreases the Magazine Size of Automatic $ICN_SHO Shotguns by ##50%##.\n\nACE: ##$pro##\nMagazine Size bonus increased to ##100%##.",
 				menu_point_blank = "Point Blank",
-				menu_point_blank_desc = "BASIC: ##$basic##\n$ICN_SHO Shotguns gain ##Armor Piercing##, ##Shield Piercing##, and ##Body Piercing## against enemies within ##2.5## meters.\n\nACE: ##$pro##\n$ICN_SHO Shotguns deal ##+100%## Damage against enemies within ##2.5## meters.",
+				menu_point_blank_desc = "BASIC: ##$basic##\n$ICN_SHO Shotguns gain ##Armor Piercing##, ##Shield Piercing##, and ##Body Piercing## against enemies within ##3## meters.\n\nACE: ##$pro##\n$ICN_SHO Shotguns deal ##+100%## Damage against enemies within ##3## meters.",
 				menu_shotmaker = "Shotmaker",
 				menu_shotmaker_desc = "BASIC: ##$basic##\nIncreases $ICN_SHO Shotgun Headshot Damage by ##+50%##.\n\nACE: ##$pro##\n$ICN_SHO Shotgun Headshot Damage is increased by an additional ##+50%##, for a total of ##+100%##.",
 				
@@ -308,12 +308,14 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_escape_plan_desc = "BASIC: ##$basic##\nWhen your Armor breaks, you gain ##100%## of your Stamina and gain ##+25%## Sprint Speed for ##4## seconds.\n\nACE: ##$pro##\nYou also gain ##+20%## Movement Speed for ##4## seconds.",
 				menu_leg_day = "Leg Day Enthusiast",
 				menu_leg_day_desc = "BASIC: ##$basic##\nYou gain ##+10%## Movement Speed and ##+25%## Sprint Speed.\n\nACE: ##$pro##\nCrouching no longer reduces your Movement Speed.",
+				menu_wave_dash = "Wave Dash",
+				menu_wave_dash_desc = "BASIC: ##$basic##\nPressing your Jump key in mid-air causes you to dash in the direction you are currently moving. This ability has a ##5## second cooldown\n\nACE: ##$pro##\n##Wave Dash## can be used in any direction, allowing you to change direction in mid-air.\n\n##Mission Complete!##",
 				
 			--gunner
 				menu_spray_and_pray = "Spray & Pray",
-				menu_spray_and_pray_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons gain ##+10%## Critical Hit chance.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons can now pierce Body Armor.",
+				menu_spray_and_pray_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons gain a ##10%## chance to Critical Hit and deal double damage.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons can now pierce Body Armor.",
 				menu_money_shot = "Money Shot",
-				menu_money_shot_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons deal ##+100%## Damage in a ##2.5## meter radius on impact when firing the last bullet from a fully loaded magazine.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons gain ##+50%## faster Reload Speed when their Magazine is empty.",
+				menu_money_shot_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons gain a special explosive round at the end of every fully loaded Magazine that deals damage in a 2.5 meter radius on impact.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons gain ##+50%## faster Reload Speed when their Magazine is empty.",
 				menu_shot_grouping = "Shot Grouping",
 				menu_shot_grouping_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons ADS ##+90%## faster.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons gain ##+40 Accuracy and Stability while ADSing.##",
 				menu_making_miracles = "Making Miracles",
@@ -363,7 +365,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_professionals_choice = "Professional's Choice",
 				menu_professionals_choice_desc = "BASIC: ##$basic##\n$ICN_QUT Quiet Weapons gain a ##+2% Fire Rate bonus## for every ##3## points of Detection Risk under ##35##, up to ##+10%##.\n\nACE: ##$pro##\nThe Fire Rate bonus is increased to ##+4%## and the maximum bonus is increased to ##+20%##.",
 				menu_quiet_grave = "Quiet as the Grave",
-				menu_quiet_grave_desc = "BASIC: ##$basic##\n$ICN_QUT Quiet Weapons deal ##+10%## Damage when attacking an enemy from behind.\n\nACE: ##$pro##\n$ICN_QUT Quiet Weapons also deal ##+10%## Damage when attacking an enemy that is not currently targeting you.",
+				menu_quiet_grave_desc = "BASIC: ##$basic##\n$ICN_QUT Quiet Weapons deal ##+25%## Damage when attacking an enemy from behind.\n\nACE: ##$pro##\n$ICN_QUT Quiet Weapons also deal ##+25%## Damage when attacking an enemy that is not currently targeting you.",
 			
 			--sapper
 				menu_home_improvements = "Home Improvements",

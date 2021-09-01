@@ -509,7 +509,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		self.values.player.passive_convert_enemies_health_multiplier = {
 			0.5,
-			0.25
+			0.2
 		}
 		self.values.player.convert_enemies_interaction_speed_multiplier = {
 			0.1 --90% faster; modified vanilla upgrade
@@ -526,7 +526,6 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "friendship_collar"
 			}
 		}
-		
 		
 		self.values.player.convert_enemies_knockback_proof = {
 			true
@@ -679,7 +678,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 		self.values.class_shotgun.heartbreaker_damage = {
-			1
+			2
 		}
 		self.definitions.class_shotgun_doublebarrel_damage = {
 			name_id = "menu_heartbreaker_aced",
@@ -741,7 +740,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 		self.values.class_shotgun.point_blank_basic = {
-			250 --2.5m
+			300 --2.5m
 		}
 		self.values.class_shotgun.point_blank_aced = {
 			1
@@ -1013,6 +1012,28 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 2,
 				upgrade = "escape_plan",
+				category = "player"
+			}
+		}
+		
+		self.values.player.wave_dash_basic = {true}
+		self.values.player.wave_dash_aced = {true}
+		
+		self.definitions.player_wave_dash_basic = {
+			name_id = "menu_air_dash_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "wave_dash_basic",
+				category = "player"
+			}
+		}
+		self.definitions.player_wave_dash_aced = {
+			name_id = "menu_air_dash_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "wave_dash_aced",
 				category = "player"
 			}
 		}
@@ -1525,7 +1546,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		self.values.subclass_quiet.subclass_concealment_addend = { 2,4 }
 		
-		self.values.subclass_quiet.backstab_bullets = { 1.1 }
+		self.values.subclass_quiet.backstab_bullets = { 1.25 }
 		self.definitions.subclass_quiet_backstab_bullets = {
 			name_id = "menu_quiet_grave",
 			category = "feature",
@@ -1536,7 +1557,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
-		self.values.subclass_quiet.unnoticed_damage_bonus = { 1.1 }
+		self.values.subclass_quiet.unnoticed_damage_bonus = { 1.25 }
 		self.definitions.subclass_quiet_unnoticed_damage_bonus = {
 			name_id = "menu_quiet_grave",
 			category = "feature",

@@ -1,3 +1,4 @@
+local mvec3_dis = mvector3.distance
 local mvec3_set = mvector3.set
 local mvec3_set_stat = mvector3.set_static
 local mvec3_add = mvector3.add
