@@ -4442,6 +4442,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			--fak 80% faster deploy (tweaked vanilla)
 			"first_aid_kit_deploy_time_multiplier",
 			
+			"body_armor6", --ictv
+			"armor_kit", --armor bag deployable
 			"player_convert_enemies",
 			"sentry_gun_silent",
 			"player_passive_convert_enemies_health_multiplier_1" --50% damage resistance
