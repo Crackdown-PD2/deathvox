@@ -3,11 +3,14 @@ if deathvox and deathvox:IsTotalCrackdownEnabled() then
 	Hooks:PostHook(EquipmentsTweakData,"init","tcd_equipmentstweakdata_init",function(self, tweak_data)
 		self.armor_kit.dummy_unit = "units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag_dummy"
 		self.armor_kit.use_function_name = "use_armor_plates"
-
+		self.armor_kit.limit_movement = false
 		self.specials.cable_tie.quantity = 10
 		self.specials.cable_tie.max_quantity = 10
 		
-		self.armor_kit.limit_movement = false
+		self.max_amount.doctor_bag = 3
+		self.max_amount.first_aid_kit = 18
+		self.max_amount.trip_mine = math.huge
+		self.max_amount.ammo_bag = 3
 		
 		self.trip_mine.quantity = {
 			0,
