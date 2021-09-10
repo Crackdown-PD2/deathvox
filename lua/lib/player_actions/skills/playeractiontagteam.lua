@@ -7,7 +7,7 @@ PlayerAction.TagTeam = {
 		local health_regen_rate = pm:upgrade_value("player","tag_team_health_regen",0)
 		
 		local duration = base_values.duration + pm:upgrade_value("player","tag_team_duration_increase",0)
-		local cooldown_drain = pm:upgrade_value("player", "tag_team_cooldown_drain")
+		local cooldown_drain = pm:upgrade_value("player", "tag_team_cooldown_drain",false)
 		local move_speed_bonus = pm:upgrade_value("player","tag_team_movement_speed_bonus",0)
 		local damage_resistance_bonus = pm:upgrade_value("player","tag_team_damage_resistance",0)
 		local timer = TimerManager:game()
@@ -41,6 +41,7 @@ PlayerAction.TagTeam = {
 		local t = timer:time()
 		while alive(owner) and timer:time() < end_time do 
 			--coroutine.yield() in this context, inside of a playeraction coroutine, seems to return the tagged unit and the owner unit instead of dt
+			--(probably because player actions are a coroutine to begin with, and this defined function takes the tagged/owner from said coroutine)
 			--so, fine! we'll make our own dt! with blackjack! and hookers!
 			dt = timer:time() - t
 

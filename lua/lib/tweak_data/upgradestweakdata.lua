@@ -3649,9 +3649,18 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-		
-		self.values.player.tag_team_cooldown_drain[1].tagged = 1
-		self.values.player.tag_team_cooldown_drain[1].owner = 1
+
+		--tweaked vanilla values
+		self.values.player.tag_team_cooldown_drain = {
+			{ --only this first table is used now
+				tagged = 1,
+				owner = 1
+			},
+			{
+				tagged = 2,
+				owner = 2
+			}
+		}
 		
 		self.values.player.tag_team_duration_increase = {
 			5
