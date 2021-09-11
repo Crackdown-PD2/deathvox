@@ -602,7 +602,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				
 				--Sociopath
 				menu_deck9_1 = "Richard",
-				menu_deck9_1_desc = "Limits the amount of damage that you can take from any attack to ##1##, but reduces your Armor and Dodge by ##100%## and reduces your Health to ##4##. Taking damage ##renders you Invulnerable## for ##2## seconds.\n\nKilling an enemy within ##10## meters grants a stack of ##Combo## that lasts for ##5## seconds. Every ##5## stacks of ##Combo## restores ##1## Health. Every ##10## stacks of Combo reduces the amount of stacks required to restore Health by ##1##.\n\nNOTE: Sociopath negates Regeneration effects and Team Health bonuses.",
+				menu_deck9_1_desc = "Limits the amount of damage that you can take from any attack to ##1##, but reduces your Armor and Dodge by ##100%## and reduces your Health to ##4##. Taking damage ##renders you Invulnerable## for ##2## seconds.\n\nKilling an enemy within ##10## meters grants a stack of ##Combo## that lasts for ##10## seconds. Every ##5## stacks of ##Combo## restores ##1## Health. Every ##10## stacks of Combo reduces the amount of stacks required to restore Health by ##1##.\n\nNOTE: Sociopath receives reduced healing from First Aid Kits, gains fewer Shields from skills, and negates Regeneration effects and Team Health bonuses.",
 				menu_deck9_2 = "Graham",
 				menu_deck9_2_desc = "You gain ##+100%## Stamina.",
 				menu_deck9_3 = "Tony",
