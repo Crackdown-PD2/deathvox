@@ -1171,6 +1171,25 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		self._ext_camera:play_redirect(self:get_animation("melee_enter"), nil, offset)
 	end
+	
+	function PlayerStandard:_start_action_unequip_weapon(t, data)
+		local speed_multiplier = self:_get_swap_speed_multiplier()
+
+		self._equipped_unit:base():tweak_data_anim_stop("equip")
+		self._equipped_unit:base():tweak_data_anim_play("unequip", speed_multiplier)
+
+		local tweak_data = self._equipped_unit:base():weapon_tweak_data()
+		self._change_weapon_data = data
+		self._unequip_weapon_expire_t = t + (tweak_data.timers.unequip or 0.5) / speed_multiplier
+
+		self:_interupt_action_charging_weapon(t)
+
+		local result = self._ext_camera:play_redirect(self:get_animation("unequip"), speed_multiplier)
+
+		self:_interupt_action_reload(t)
+		self:_interupt_action_steelsight(t)
+		self._ext_network:send("switch_weapon", speed_multiplier, 1)
+	end
 
 	function PlayerStandard:_start_action_running(t)
 		if not self._move_dir then
@@ -1187,7 +1206,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			return
 		end
 
-		if self._shooting and not self._equipped_unit:base():run_and_shoot_allowed() or self:_changing_weapon() or self._use_item_expire_t or self._state_data.in_air or self:_is_throwing_projectile() or self:_is_charging_weapon() then
+		if self._shooting and not self._equipped_unit:base():run_and_shoot_allowed() or self._use_item_expire_t or self._state_data.in_air or self:_is_throwing_projectile() or self:_is_charging_weapon() then
 			self._running_wanted = true
 
 			return

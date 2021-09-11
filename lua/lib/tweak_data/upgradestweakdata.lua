@@ -2944,7 +2944,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		self.values.player.sociopath_i_frames_add = {0.5}
 		self.values.player.sociopath_combo_master = {true}
 		
-		self.values.player.sociopath_combo_duration = 5
+		self.values.player.sociopath_combo_duration = 10
 		
 		self.definitions.sociopath_1 = {
 			name_id = "menu_deck8_1",

@@ -1499,7 +1499,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 	function PlayerDamage:_update_regenerate_timer(t, dt)
 		local regen_speed = self._regenerate_speed or 1
 		regen_speed = regen_speed + self._expres_regenerate_speed - 1
-		local dt_mul = regen_speed * math.lerp(1, 0, self:effective_suppression_ratio())
+		local dt_mul = regen_speed * math.lerp(1, 0.25, self:effective_suppression_ratio())
 		self._regenerate_timer = math.max(self._regenerate_timer - dt * dt_mul, 0)
 
 		if self._regenerate_timer <= 0 then
@@ -1507,23 +1507,61 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	end
 	
-	function PlayerDamage:_activate_preventative_care(upgrade_level)
-		
-		local pm = managers.player
-		local ehp = self:_max_health() + self:_max_armor()
-		if upgrade_level > 0 then 
-			local upgrade_data = pm:upgrade_value_by_level("first_aid_kit","damage_overshield",upgrade_level,{0,0})
-			pm:set_damage_overshield("preventative_care_absorption",ehp * upgrade_data[1],
-				{
-					depleted_callback = function(damage_before_overshield,damage_blocked_by_overshield)
-						local duration = upgrade_data[2]
-						if duration > 0 then 
-							pm:activate_temporary_property("preventative_care_invuln_active",duration,true)
-						end
-					end
-				}
-			)
+	function PlayerDamage:band_aid_health()
+		if managers.platform:presence() == "Playing" and (self:arrested() or self:need_revive()) then
+			return
 		end
+		
+		local to_restore = nil
+		
+		if managers.player:has_category_upgrade("player", "sociopath_mode") then
+			to_restore = 2
+		else
+			to_restore = self:_max_health() * self._healing_reduction
+		end
+		
+		self:change_health(to_restore)
+
+		self._said_hurt = false
+
+		if math.rand(1) < managers.player:upgrade_value("first_aid_kit", "downs_restore_chance", 0) then
+			self._revives = Application:digest_value(math.min(self._lives_init + managers.player:upgrade_value("player", "additional_lives", 0), Application:digest_value(self._revives, false) + 1), true)
+			self._revive_health_i = math.max(self._revive_health_i - 1, 1)
+
+			managers.environment_controller:set_last_life(Application:digest_value(self._revives, false) <= 1)
+		end
+	end
+	
+	function PlayerDamage:_activate_preventative_care(upgrade_level)
+		if upgrade_level < 1 then
+			return
+		end
+
+		local pm = managers.player
+		local ehp = nil
+		local mul = nil
+		local upgrade_data = pm:upgrade_value_by_level("first_aid_kit","damage_overshield",upgrade_level,{0,0})
+		
+		if managers.player:has_category_upgrade("player", "sociopath_mode") then
+			ehp = 1
+			mul = 1
+		else
+			ehp = self:_max_health() + self:_max_armor()
+			mul = upgrade_data[1]
+		end
+		
+		local amount = ehp * mul
+		
+		pm:set_damage_overshield("preventative_care_absorption",amount,
+			{
+				depleted_callback = function(damage_before_overshield,damage_blocked_by_overshield)
+					local duration = upgrade_data[2]
+					if duration > 0 then 
+						pm:activate_temporary_property("preventative_care_invuln_active",duration,true)
+					end
+				end
+			}
+		)
 	end
 
 	function PlayerDamage:_check_bleed_out(can_activate_berserker, ignore_movement_state)

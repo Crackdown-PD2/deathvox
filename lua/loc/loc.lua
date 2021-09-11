@@ -618,7 +618,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck9_8 = "Earl",
 				menu_deck9_8_desc = "Your Invulnerability period lasts ##+0.5## seconds longer.",
 				menu_deck9_9 = "Rasmus",
-				menu_deck9_9_desc = "Increases ##Combo## radius to ##15## meters. All enemies within ##Combo## range are Highlighted.",
+				menu_deck9_9_desc = "Increases ##Combo## radius to ##15## meters. All enemies within ##Combo## range are Highlighted during Loud.",
 				
 				--Grinder
 				menu_deck11_1 = "Break Out",

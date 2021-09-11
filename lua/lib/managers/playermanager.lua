@@ -1917,8 +1917,10 @@ function PlayerManager:update(t, dt)
 			end
 		end
 		
-		if self._rasmus_check_t or self:has_category_upgrade("player", "sociopath_combo_master") then
-			self:_upd_sociopath_combo_master(player_unit, t)
+		if not managers.groupai:state()._whisper_mode then
+			if self._rasmus_check_t or self:has_category_upgrade("player", "sociopath_combo_master") then
+				self:_upd_sociopath_combo_master(player_unit, t)
+			end
 		end
 		
 		if self._combo_timer and self._combo_timer < t then

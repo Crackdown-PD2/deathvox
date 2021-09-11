@@ -268,8 +268,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 			if self:is_weapon_class("class_shotgun") and managers.player:has_category_upgrade("class_shotgun","tender_meat_bodyshots") then 
 				return managers.player:upgrade_value("class_shotgun","tender_meat_bodyshots",0)
 			end
-		else
-			log("hot")
 		end
 		
 		if self:is_category("smg", "lmg", "assault_rifle", "minigun") and self._fire_mode == ids_auto or self:is_category("bow", "saw") then
