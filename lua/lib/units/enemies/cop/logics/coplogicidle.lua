@@ -698,8 +698,13 @@ function CopLogicIdle.on_new_objective(data, old_objective)
 		end
 	end
 
-	if old_objective and old_objective.fail_clbk then
-		old_objective.fail_clbk(data.unit)
+	if old_objective then
+		local fail_clbk = old_objective.fail_clbk
+		old_objective.fail_clbk = nil
+
+		if fail_clbk then
+			fail_clbk(data.unit)
+		end
 	end
 end
 
@@ -1410,7 +1415,7 @@ function CopLogicIdle._chk_exit_non_walkable_area(data)
 		if not managers.navigation._nav_segments[nav_seg_id].disabled then
 			data.objective.in_place = nil
 
-			data.logic.on_new_objective(data, data.objective)
+			data.logic.on_new_objective(data)
 
 			return true
 		end

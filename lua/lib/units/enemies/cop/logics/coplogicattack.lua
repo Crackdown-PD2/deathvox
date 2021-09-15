@@ -2557,7 +2557,7 @@ function CopLogicAttack._chk_exit_non_walkable_area(data)
 		if not managers.navigation._nav_segments[nav_seg_id].disabled then
 			data.objective.in_place = nil
 
-			data.logic.on_new_objective(data, data.objective)
+			data.logic.on_new_objective(data)
 
 			return true
 		end
