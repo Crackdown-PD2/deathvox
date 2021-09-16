@@ -476,6 +476,16 @@ function CopActionTase:update(t)
 						end
 					end
 				end
+			elseif self._mod_enable_t < t then
+				if self._tase_effect then
+					World:effect_manager():fade_kill(self._tase_effect)
+				end
+
+				self._tase_effect = World:effect_manager():spawn({
+					force_synch = true,
+					effect = Idstring("effects/payday2/particles/character/taser_thread"),
+					parent = self._weapon_obj_fire
+				})
 			end
 		end
 	end

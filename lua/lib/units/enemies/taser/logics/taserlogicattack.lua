@@ -484,6 +484,7 @@ end
 
 function TaserLogicAttack._chk_reaction_to_attention_object(data, attention_data, stationary)
 	local reaction = CopLogicIdle._chk_reaction_to_attention_object(data, attention_data, stationary)
+	local my_data = data.internal_data
 	local tase_length = data.internal_data.tase_distance or 1500
 
 	if reaction < AIAttentionObject.REACT_SHOOT or not attention_data.criminal_record or not attention_data.is_person then
@@ -504,12 +505,19 @@ function TaserLogicAttack._chk_reaction_to_attention_object(data, attention_data
 		elseif attention_data.unit:movement():chk_action_forbidden("hurt") then
 			return AIAttentionObject.REACT_COMBAT
 		end
+		
+		if my_data.last_available_tase_t then
+			if data.t - my_data.last_available_tase_t < 2 then
+				return AIAttentionObject.REACT_SPECIAL_ATTACK
+			end
+		end
 
 		local obstructed = data.unit:raycast("ray", data.unit:movement():m_head_pos(), attention_data.m_head_pos, "slot_mask", managers.slot:get_mask("world_geometry", "vehicles", "enemy_shield_check"), "sphere_cast_radius", 30, "report")
 
 		if obstructed then
 			return AIAttentionObject.REACT_COMBAT
 		else
+			my_data.last_available_tase_t = data.t
 			return AIAttentionObject.REACT_SPECIAL_ATTACK
 		end
 	end

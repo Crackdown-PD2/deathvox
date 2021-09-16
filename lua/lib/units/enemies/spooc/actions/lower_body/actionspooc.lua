@@ -1952,10 +1952,6 @@ function ActionSpooc:anim_act_clbk(anim_act)
 		my_unit:sound():play(detect_stop_sound)
 	end
 
-	if Global.game_settings.difficulty == "sm_wish" then
-		MutatorCloakerEffect.effect_smoke(nil, my_unit)
-	end
-
 	managers.mutators:_run_func("OnPlayerCloakerKicked", my_unit)
 	managers.modifiers:run_func("OnPlayerCloakerKicked", my_unit)
 

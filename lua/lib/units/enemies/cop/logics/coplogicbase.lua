@@ -466,7 +466,7 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 		end
 	end
 
-	local delay = within_any_acquire_range and 0 or 2
+	local delay = within_any_acquire_range and 0 or 1
 
 	for u_key, attention_info in pairs_g(detected_obj) do
 		local can_detect = true
@@ -1309,7 +1309,7 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 		end
 	end
 	
-	if not objective.running then
+	if not objective.pos and not objective.action and not objective.running then
 		if attention and REACT_COMBAT <= attention.reaction then
 			local good_types = {
 				free = true,
@@ -1337,11 +1337,20 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 							local grp_objective = objective.grp_objective
 							local dis = data.unit:base()._engagement_range or data.internal_data.weapon_range and data.internal_data.weapon_range.optimal or 500
 							local my_data = data.internal_data
-							local soft_t = 3.5
+							local soft_t = 3
 							
-							if grp_objective and not grp_objective.open_fire then
-								dis = dis * 0.5
-								soft_t = 1 
+							if not data.internal_data.want_to_take_cover then
+								if not data.unit:base()._engagement_range then
+									if grp_objective and not grp_objective.open_fire then
+										dis = dis * 0.5
+									end
+								else
+									soft_t = 1
+								end
+								
+								if not attention.verified then
+									dis = dis * 0.5
+								end
 							end
 							
 							local visible_softer = data.internal_data.want_to_take_cover or attention.verified_t and data.t - attention.verified_t < soft_t
@@ -1353,7 +1362,7 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 					end
 				end
 			end
-		end	
+		end		
 	end
 	
 	if objective.interrupt_dis then

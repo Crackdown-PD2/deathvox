@@ -3253,6 +3253,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medicdozer = deep_clone(self.deathvox_tank)
 	--self.deathvox_medicdozer.tags = {"tank", "medic"} -- commented out as it was actually breaking the tags
 	table.insert(self.deathvox_medicdozer.tags, "medic")
+	table.insert(self.deathvox_medicdozer.tags, "backliner")
 	self.deathvox_medicdozer.use_factory = false -- Use a factory weapon
 	--self.deathvox_medicdozer.factory_weapon_id = {"wpn_deathvox_heavy_ar"} 
 	self.deathvox_medicdozer.dv_medic_heal = true -- don't touch, makes him use the death vox healing

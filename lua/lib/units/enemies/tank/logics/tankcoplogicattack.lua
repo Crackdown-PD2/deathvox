@@ -57,15 +57,23 @@ function TankCopLogicAttack.enter(data, new_logic_name, enter_params)
 
 	my_data.attitude = objective and objective.attitude or "avoid"
 	my_data.weapon_range = data.char_tweak.weapon[data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage].range
-
+	
 	if data.tactics and data.tactics.flank then
 		my_data.use_flank_pos_when_chasing = true
 	end
-
+	
+	if data.unit:base():has_tag("backliner") then
+		my_data.use_medic_positioning = true
+	end
+	
+	if data.unit:base():has_tag("no_run") then
+		my_data.no_running = true
+	end
+	
 	local key_str = tostring(data.key)
 	my_data.detection_task_key = "TankLogicAttack._upd_enemy_detection" .. key_str
 
-	CopLogicBase.queue_task(my_data, my_data.detection_task_key, TankCopLogicAttack._upd_enemy_detection, data, data.t, data.important and true)
+	CopLogicBase.queue_task(my_data, my_data.detection_task_key, TankCopLogicAttack._upd_enemy_detection, data, data.t, true)
 
 	CopLogicIdle._chk_has_old_action(data, my_data)
 
@@ -105,16 +113,9 @@ function TankCopLogicAttack.update(data)
 
 	if my_data.has_old_action then
 		CopLogicAttack._upd_stop_old_action(data, my_data)
+
 		
 		if my_data.has_old_action then
-			if not my_data.update_queue_id then
-				data.brain:set_update_enabled_state(false)
-
-				my_data.update_queue_id = "TankLogicAttack.queued_update" .. tostring(data.key)
-
-				TankCopLogicAttack.queue_update(data, my_data)
-			end
-
 			return
 		end
 	end
@@ -146,18 +147,10 @@ function TankCopLogicAttack.update(data)
 	TankCopLogicAttack._process_pathing_results(data, my_data)
 
 	if data.attention_obj and REACT_COMBAT <= data.attention_obj.reaction then
-		my_data.want_to_move_back = TankCopLogicAttack._chk_wants_to_take_cover(data, my_data)
+		--my_data.want_to_move_back = TankCopLogicAttack._chk_wants_to_take_cover(data, my_data)
 		TankCopLogicAttack._upd_combat_movement(data)
 	else
 		TankCopLogicAttack._cancel_chase_attempt(data, my_data)
-	end
-
-	if not my_data.update_queue_id then
-		data.brain:set_update_enabled_state(false)
-
-		my_data.update_queue_id = "TankLogicAttack.queued_update" .. tostring(data.key)
-
-		TankCopLogicAttack.queue_update(data, my_data)
 	end
 end
 
@@ -312,19 +305,22 @@ local math_random = math.random
 function TankCopLogicAttack._walk_around_menacingly(data, my_data) 
 	local my_pos = data.unit:movement():nav_tracker():field_position()
 	local dis = math_lerp(200, 600, math_random())
-	local menacing_pos = CopLogicTravel._get_pos_on_wall(my_pos, dis, nil, nil, data.pos_rsrv_id, 60)
+	local menacing_pos = CopLogicTravel._find_near_free_pos(my_pos, dis, nil, data.pos_rsrv_id)
 
 	if menacing_pos then
 		CopLogicAttack._cancel_cover_pathing(data, my_data)
-
+		local path = {
+			mvec3_cpy(data.m_pos),
+			menacing_pos
+		}
+		CopLogicAttack._correct_path_start_pos(data, path)
+		
+		
 		local new_action_data = {
 			variant = "walk",
 			body_part = 2,
 			type = "walk",
-			nav_path = {
-				from_pos = mvec3_cpy(data.m_pos),
-				menacing_pos
-			},
+			nav_path = path,
 			pose = "stand",
 			end_pose = "stand"
 		}
@@ -347,187 +343,99 @@ function TankCopLogicAttack._upd_combat_movement(data)
 	local enemy_visible = focus_enemy.verified
 	local action_taken = data.logic.action_taken(data, my_data)
 	local chase = nil
-	local want_to_move_back = my_data.want_to_move_back
+	local engage = not my_data.use_medic_positioning and my_data.attitude == "engage"
+	local no_run = my_data.no_running
 
 	if not action_taken then
-		local tactics = data.tactics
-		local charge = tactics and tactics.charge
-		local valid_harass = nil
+		local enemy_dis = focus_enemy.dis
+		local run_dist = enemy_visible and my_data.weapon_range.optimal or my_data.weapon_range.close
+		local should_try_chase = nil
+		local height_diff = math_abs(data.m_pos.z - focus_enemy.m_pos.z)
 		
-		if tactics and tactics.harass then		
-			if not data.unit:in_slot(16) and not data.is_converted and focus_enemy.is_person then
-				if focus_enemy.is_local_player then
-					local e_movement_state = focus_enemy.unit:movement():current_state()
-								
-					if e_movement_state:_is_reloading() then
-						valid_harass = true
-					end
-				else
-					local e_anim_data = focus_enemy.unit:anim_data()
-
-					if e_anim_data.reload then
-						valid_harass = true
+		if engage then
+			should_try_chase = height_diff > 300 or enemy_dis > run_dist
+		else
+			should_try_chase = enemy_visible or focus_enemy.verified_t and t - focus_enemy.verified_t > 4
+			
+			if should_try_chase then
+				if not no_run then
+					if not enemy_visible then
+						run_dist = run_dist * 0.5
 					end
 				end
-			end
-						
-			if valid_harass then
-				managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "reload")
+				
+				should_try_chase = height_diff < 300 and enemy_dis < 600
 			end
 		end
-		
-		local should_try_chase = not tactics or charge and not want_to_move_back or valid_harass or my_data.use_flank_pos_when_chasing and not want_to_move_back or focus_enemy.verified_t and t - focus_enemy.verified_t > 2
 		
 		if should_try_chase then
-			if not my_data.chase_path_failed_t or t - my_data.chase_path_failed_t > 1 then --helps not nuking performance if there's too many Dozers in attack logic
+			if data.important or not my_data.chase_path_failed_t or t - my_data.chase_path_failed_t > 1 then --helps not nuking performance if there's too many Dozers in attack logic
+				local speed = no_run and "walk" or enemy_dis < run_dist and "walk" or "run"
+				
 				if my_data.chase_path then
-					local enemy_dis = enemy_visible and focus_enemy.dis or focus_enemy.verified_dis
-					local run_dist = enemy_visible and 1500 or 800
-					local speed = enemy_dis < run_dist and "walk" or "run"
-
 					action_taken = TankCopLogicAttack._chk_request_action_walk_to_chase_pos(data, my_data, speed)
 				elseif not my_data.chase_path_search_id and focus_enemy.nav_tracker then
-					local height_diff = math_abs(data.m_pos.z - focus_enemy.m_pos.z)
+					my_data.chase_pos = nil
 
-					if height_diff < 300 then
-						chase = true
+					if my_data.use_flank_pos_when_chasing then
+						my_data.chase_pos = CopLogicAttack._find_flank_pos(data, my_data, focus_enemy.nav_tracker, 300)
 					else
-						local engage = my_data.attitude == "engage"
+						local chase_pos = focus_enemy.nav_tracker:field_position()
+						local pos_on_wall = CopLogicTravel._find_near_free_pos(chase_pos, 300, nil, data.pos_rsrv_id)
 
-						if enemy_visible then
-							if focus_enemy.dis > 2000 or engage and focus_enemy.dis > 500 then
-								chase = true
-							end
-						elseif focus_enemy.verified_dis > 2000 or engage and focus_enemy.verified_dis > 500 or focus_enemy.verified_t and t - focus_enemy.verified_t > 2 then
-							chase = true
+						if mvec3_not_equal(chase_pos, pos_on_wall) then
+							my_data.chase_pos = pos_on_wall
 						end
 					end
 
-					if chase then
-						my_data.chase_pos = nil
+					if my_data.chase_pos then
+						local my_pos = data.unit:movement():nav_tracker():field_position()
+						local unobstructed_line = nil
 
-						if my_data.use_flank_pos_when_chasing then
-							my_data.chase_pos = CopLogicAttack._find_flank_pos(data, my_data, focus_enemy.nav_tracker, 300)
-						else
-							local chase_pos = focus_enemy.nav_tracker:field_position()
-							local pos_on_wall = CopLogicTravel._get_pos_on_wall(chase_pos, 300, nil, nil, data.pos_rsrv_id)
+						if math_abs(my_pos.z - my_data.chase_pos.z) < 40 then
+							local ray_params = {
+								allow_entry = false,
+								pos_from = my_pos,
+								pos_to = my_data.chase_pos
+							}
 
-							if mvec3_not_equal(chase_pos, pos_on_wall) then
-								my_data.chase_pos = pos_on_wall
+							if not managers.navigation:raycast(ray_params) then
+								unobstructed_line = true
 							end
 						end
 
-						if my_data.chase_pos then
-							local my_pos = data.unit:movement():nav_tracker():field_position()
-							local unobstructed_line = nil
+						if unobstructed_line then
+							my_data.chase_path = {
+								mvec3_cpy(my_pos),
+								my_data.chase_pos
+							}
 
-							if math_abs(my_pos.z - my_data.chase_pos.z) < 40 then
-								local ray_params = {
-									allow_entry = false,
-									pos_from = my_pos,
-									pos_to = my_data.chase_pos
-								}
+							--[[local line = Draw:brush(Color.blue:with_alpha(0.5), 5)
+							line:cylinder(my_pos, my_data.chase_pos, 25)]]
 
-								if not managers.navigation:raycast(ray_params) then
-									unobstructed_line = true
-								end
-							end
-
-							if unobstructed_line then
-								my_data.chase_path = {
-									mvec3_cpy(my_pos),
-									my_data.chase_pos
-								}
-
-								--[[local line = Draw:brush(Color.blue:with_alpha(0.5), 5)
-								line:cylinder(my_pos, my_data.chase_pos, 25)]]
-
-								local enemy_dis = enemy_visible and focus_enemy.dis or focus_enemy.verified_dis
-								local run_dist = enemy_visible and 1500 or 800
-								local speed = enemy_dis < run_dist and "walk" or "run"
-
-								action_taken = TankCopLogicAttack._chk_request_action_walk_to_chase_pos(data, my_data, speed)
-							else
-								my_data.chase_path_search_id = tostring(data.unit:key()) .. "chase"
-								my_data.pathing_to_chase_pos = true
-
-								data.brain:add_pos_rsrv("path", {
-									radius = 60,
-									position = mvec3_cpy(my_data.chase_pos)
-								})
-								data.brain:search_for_path(my_data.chase_path_search_id, my_data.chase_pos)
-							end
+							action_taken = TankCopLogicAttack._chk_request_action_walk_to_chase_pos(data, my_data, speed)
 						else
-							my_data.chase_path_failed_t = t
+							my_data.chase_path_search_id = tostring(data.unit:key()) .. "chase"
+							my_data.pathing_to_chase_pos = true
+
+							data.brain:add_pos_rsrv("path", {
+								radius = 60,
+								position = mvec3_cpy(my_data.chase_pos)
+							})
+							data.brain:search_for_path(my_data.chase_path_search_id, my_data.chase_pos)
 						end
+					else
+						my_data.chase_path_failed_t = t
 					end
 				end
 			end
-		end
-		
-		if not action_taken and not my_data.pathing_to_chase_pos then
-			if want_to_move_back then
-				action_taken = TankCopLogicAttack._chk_start_action_move_back(data, my_data, focus_enemy)
-			else
-				if data.important or focus_enemy.aimed_at then
-					action_taken = TankCopLogicAttack._walk_around_menacingly(data, my_data)
-				end
+		elseif not action_taken then
+			if data.important or focus_enemy.aimed_at then
+				action_taken = TankCopLogicAttack._walk_around_menacingly(data, my_data)
 			end
 		end
 		 		
 		action_taken = action_taken or TankCopLogicAttack._chk_start_action_move_out_of_the_way(data, my_data)
-	elseif my_data.walking_to_chase_pos and not my_data.use_flank_pos_when_chasing then
-		--dozers are not supposed to use running start or stop animations, but if you make a unit use tankcoplogicattack, enable the stopping() check
-		local current_haste = my_data.advancing --[[and not my_data.advancing:stopping()]] and my_data.advancing:haste()
-
-		if current_haste then
-			local enemy_dis = enemy_visible and focus_enemy.dis or focus_enemy.verified_dis
-			local run_dist = enemy_visible and 1400 or 700
-			local change_speed = nil
-
-			if current_haste == "run" then
-				change_speed = enemy_dis < run_dist and "walk"
-			else
-				change_speed = enemy_dis >= run_dist and "run"
-			end
-
-			if change_speed then
-				local my_pos = data.unit:movement():nav_tracker():field_position()
-				local moving_to_pos = my_data.walking_to_chase_pos:get_walk_to_pos()
-				local unobstructed_line = nil
-
-				if math_abs(my_pos.z - moving_to_pos.z) < 40 then
-					local ray_params = {
-						allow_entry = false,
-						pos_from = my_pos,
-						pos_to = moving_to_pos
-					}
-
-					if not managers.navigation:raycast(ray_params) then
-						unobstructed_line = true
-					end
-				end
-
-				if unobstructed_line then
-					moving_to_pos = mvec3_cpy(moving_to_pos)
-
-					--[[local line = Draw:brush(Color.blue:with_alpha(0.5), 2)
-					line:cylinder(my_pos, moving_to_pos, 25)]]
-
-					TankCopLogicAttack._cancel_chase_attempt(data, my_data)
-
-					my_data.chase_path = {
-						mvec3_cpy(my_pos),
-						moving_to_pos
-					}
-
-					TankCopLogicAttack._chk_request_action_walk_to_chase_pos(data, my_data, change_speed)
-				--[[else
-					TankCopLogicAttack._cancel_chase_attempt(data, my_data)
-					TankCopLogicAttack._upd_combat_movement(data)]]
-				end
-			end
-		end
 	end
 end
 
@@ -655,7 +563,7 @@ function TankCopLogicAttack.action_taken(data, my_data)
 end
 
 function TankCopLogicAttack.queue_update(data, my_data)
-	local delay = data.important and 0 or 1.5
+	local delay = data.important and 0 or 0.2
 
 	CopLogicBase.queue_task(my_data, my_data.update_queue_id, TankCopLogicAttack.queued_update, data, data.t + delay, data.important and true)
 end
@@ -668,7 +576,7 @@ function TankCopLogicAttack._chk_request_action_walk_to_chase_pos(data, my_data,
 			type = "walk",
 			body_part = 2,
 			nav_path = my_data.chase_path,
-			variant = speed or "run"
+			variant = speed or "walk"
 		}
 		my_data.chase_path = nil
 		my_data.advancing = data.brain:action_request(new_action_data)
@@ -690,18 +598,20 @@ function TankCopLogicAttack._chk_start_action_move_out_of_the_way(data, my_data)
 	}
 
 	if not managers.navigation:is_pos_free(reservation) then
-		local to_pos = CopLogicTravel._get_pos_on_wall(data.m_pos, 500, nil, nil, data.pos_rsrv_id)
+		local to_pos = CopLogicTravel._find_near_free_pos(data.m_pos, 500, nil, data.pos_rsrv_id)
 
 		if to_pos then
 			local path = {
 				mvec3_cpy(data.m_pos),
 				to_pos
 			}
+			CopLogicAttack._correct_path_start_pos(data, path)
+			
 			local new_action_data = {
 				type = "walk",
 				body_part = 2,
 				nav_path = path,
-				variant = "run"
+				variant = "walk"
 			}
 			my_data.advancing = data.brain:action_request(new_action_data)
 
