@@ -1131,10 +1131,12 @@ function CopLogicIdle.action_complete_clbk(data, action)
 		if my_data.action_started == action then
 			local expired = action:expired()
 
-			if expired then
+			if expired or my_data.starting_idle_action_from_act then
 				if not my_data.action_timeout_clbk_id then
 					data.objective_complete_clbk(data.unit, data.objective)
 				end
+				
+				my_data.starting_idle_action_from_act = nil
 			elseif not my_data.action_expired then
 				data.objective_failed_clbk(data.unit, data.objective)
 			end
