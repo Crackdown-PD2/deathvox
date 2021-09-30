@@ -111,15 +111,40 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		SentryGunFireModeInteractionExt.super.super.interact(self, player)
 		
+		
 		SentryControlMenu:SelectSentryByUnit(self._sentry_gun_weapon._unit)
 		if SentryControlMenu.action_radial then 
+			self._sentry_gun_weapon:_set_weapon_heat(0)
 			SentryControlMenu.action_radial:Show()
+			
 			self:unselect() --remove the prompt upon opening the menu
 			
 			SentryControlMenu.interacted_radial_start_t = Application:time()
 			SentryControlMenu.button_held_state = nil
 		end
 	end
+	
+	function SentryGunInteractionExt:interact(player)
+		SentryGunInteractionExt.super.super.interact(self, player)
+		
+		
+		local sentry_weapon = self._unit:weapon()
+		local is_overheated = sentry_weapon:is_overheated()
+		if self.tweak_data == "sentry_gun_vent_weapon_heat" then 
+			
+--			SentryControlMenu.action_radial:Hide()
+--			SentryControlMenu.interacted_radial_start_t = nil
+--			SentryControlMenu.button_held_state = nil
+
+			sentry_weapon:_on_weapon_heat_vented()
+			return
+		end
+		
+		self._unit:base():on_interaction()
+
+		return true
+	end
+
 	
 	ArmorPlatesBaseInteractionExt = ArmorPlatesBaseInteractionExt or class(UseInteractionExt)
 	function ArmorPlatesBaseInteractionExt:_interact_blocked(player)

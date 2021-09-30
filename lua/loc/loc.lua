@@ -197,13 +197,14 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				bm_grenade_molotov_desc = "(CHANGES NOT YET IMPLEMENTED)\n\n$ICN_GRN Grenade that creates a 2.5m radius pool of flame for 15 seconds that deals 250 damage (50 vs allies) every 0.5 seconds.",
 				bm_grenade_fir_com_desc = "(CHANGES NOT YET IMPLEMENTED)\n\n$ICN_GRN Grenade that creates a 1m radius pool of flame for 30 seconds that deals 250 damage (50 vs allies) every 0.5 seconds.",
 				
-				bm_equipment_sentry_gun_desc = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Enemies will ignore Sentry Guns, making them excellent for fire support.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.",
-				bm_equipment_sentry_gun_silent_desc = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Enemies will ignore Sentry Guns, making them excellent for fire support.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.",
-				bm_equipment_sentry_gun_silent_desc_UNUSED = cursed_error,
+				bm_equipment_sentry_gun_desc = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Sentry Guns have infinite ammunition and will be ignored by enemies, but are prone to Overheating from extended combat.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.\n\nTo open the Radial Menu and configure a Sentry, hold $BTN_INTERACT to open the Radial Menu menu and release $BTN_INTERACT to choose an option. Opening the Radial Menu vents all current Heat.\n\nIf a Sentry Gun becomes Overheated, you can reset it by holding $BTN_INTERACT.",
+				bm_equipment_sentry_gun_silent_desc = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Sentry Guns have infinite ammunition and will be ignored by enemies, but are prone to Overheating from extended combat.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.\n\nTo open the Radial Menu and configure a Sentry, hold $BTN_INTERACT to open the Radial Menu menu and release $BTN_INTERACT to choose an option. Opening the Radial Menu vents all current Heat.\n\nIf a Sentry Gun becomes Overheated, you can reset it by holding $BTN_INTERACT.",
 				debug_trip_mine_throwable = "Trip Mine",
 				bm_grenade_tripmine = "Trip Mine Throwable",
 				bm_grenade_tripmine_desc = "Trip Mines are explosive booby traps with multiple functions and trigger types. To deploy, hold your Use Throwable button on a suitable surface. To modify a placed Trip Mine, press $BTN_INTERACT while looking at them to open the radial menu.", --needs macros
 				hud_deploying_tripmine_preview = "Ready to deploy $EQUIPMENT",
+				hud_sentry_gun_vent_heat = "Hold $BTN_INTERACT to vent sentrygun heat",
+				hud_action_sentry_gun_vent_heat = "Venting sentrygun...",
 				debug_trip_mine = "Shaped Charges",
 			--misc
 				hud_int_pick_electronic_lock = "Hold $BTN_INTERACT to hack the lock",

@@ -84,6 +84,14 @@ if deathvox:IsTotalCrackdownEnabled() then
 		}
 		self.sentry_gun_fire_mode.requires_upgrade = nil --remove ap skill requirement for toggling sentry firemode/ammotype
 		
+		self.sentry_gun_vent_weapon_heat = {
+			text_id = "hud_sentry_gun_vent_heat",
+			action_text_id = "hud_action_sentry_gun_vent_heat",
+			contour = "deployable",
+			timer = 2,
+			start_active = false
+		}
+		
 		self.armor_plates = {
 			icon = "equipment_armor_kit",
 			text_id = "debug_interact_armor_plates_take",

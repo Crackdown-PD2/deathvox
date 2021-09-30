@@ -72,6 +72,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self._default_alert_size = my_tweak_data.alert_size
 		self._from = Vector3()
 		self._to = Vector3()
+		
+		self._weapon_heat = 0
 	end
 	
 		
@@ -124,6 +126,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self._alert_events = {}
 		self._alert_fires = {}
 		self._suppression = my_tweak_data.SUPPRESSION
+		
+		self._weapon_heat = my_tweak_data.WEAPON_HEAT_INIT --setup doesn't seem to be called
 	end
 
 	function SentryGunWeapon:setup(setup_data)
@@ -576,7 +580,88 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	end
 
+	function SentryGunWeapon:_check_weapon_heat()
+		local my_tweak_data = self:_get_tweak_data()
+		local heat = self:_get_weapon_heat()
+		
+		if self:is_overheated() then 
+			if heat <= 0 then 
+				self:_on_weapon_heat_vented()
+			end
+		else
+			if heat >= my_tweak_data.WEAPON_HEAT_OVERHEAT_THRESHOLD then
+				self:_on_weapon_overheated()
+			end
+		end
+	end
 	
+	function SentryGunWeapon:is_overheated()
+		return self._is_weapon_overheated
+	end
+	
+	function SentryGunWeapon:_on_weapon_heat_vented()
+		self:_set_weapon_heat(0)
+		self._is_weapon_overheated = false
+		
+		if alive(self._fire_mode_unit) then 
+		
+--			local interaction = self._fire_mode_unit:interaction()
+			self._fire_mode_unit:interaction():set_active(true)
+--			interaction:set_dirty(true)
+		end
+		
+		local interaction = self._unit:interaction()
+		interaction:set_tweak_data("sentry_gun")
+		
+
+		if self._unit:brain() then 
+			self._unit:brain():switch_on()
+		end
+	end
+	
+	function SentryGunWeapon:_on_weapon_overheated()
+		self._is_weapon_overheated = true
+		if alive(self._fire_mode_unit) then 
+--			local interaction = self._fire_mode_unit:interaction()
+			self._fire_mode_unit:interaction():set_active(false)
+--			interaction:set_dirty(false)
+		end
+
+		local interaction = self._unit:interaction()
+		interaction:set_tweak_data("sentry_gun_vent_weapon_heat")
+
+		if self._unit:brain() then 
+			if self._unit:brain()._firing then 
+				self._unit:brain():stop_autofire()
+			end
+			self._unit:brain():switch_off()
+		end
+	end
+	
+	function SentryGunWeapon:_add_weapon_heat(amount)
+		self._weapon_heat = math.max(self._weapon_heat + amount,0)
+		self:_check_weapon_heat()
+	end
+
+	
+	function SentryGunWeapon:_set_weapon_heat(amount)
+		self._weapon_heat = amount
+	end
+	
+	function SentryGunWeapon:_get_weapon_heat()
+		return self._weapon_heat
+	end
+	
+	function SentryGunWeapon:get_weapon_heat_decay_rate(rate)
+		local my_tweak_data = self:_get_tweak_data()
+		return (rate or 1) * my_tweak_data.WEAPON_HEAT_DECAY_RATE
+	end
+	
+	function SentryGunWeapon:get_weapon_heat_gain_rate(rate)
+		local my_tweak_data = self:_get_tweak_data()
+		return (rate or 1) * my_tweak_data.WEAPON_HEAT_GAIN_RATE
+	end
+
 else 
 	function SentryGunWeapon:init(unit)
 		self._unit = unit

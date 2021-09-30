@@ -99,27 +99,15 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 	function SentryGunMovement:sync_fall_position(pos,rot) --spoofed network function;
 		self._sync_target_pos = pos
-		--[[
-		local r = rot:yaw()
-		local g = rot:pitch()
-		local b = rot:roll()
-		self._unit:weapon():set_laser_color(Color(r,g,b):with_alpha(0.3))
-	--]]
 	end
 
 	Hooks:PostHook(SentryGunMovement,"_upd_movement","tcdso_sentry_movement_init",function(self,dt)
 
 		if self._unit:base():is_owner() then 
+			--sync aim direction to other players
 			self._upd_sync_aim_t = self._upd_sync_aim_t + dt
 			if self._upd_sync_aim_t > SentryControlMenu.tweakdata._SYNC_AIM_INTERVAL then 
 				self._upd_sync_aim_t = self._upd_sync_aim_t - SentryControlMenu.tweakdata._SYNC_AIM_INTERVAL
-				--[[
-				local color_rot = self._unit:rotation()
-				local laser = self._unit:weapon()._laser_unit 
-				if laser then 
-					color_rot = Rotation(laser:r(),laser:g(),laser:b())
-				end
-				--]]
 				self._unit:network():send("sync_fall_position",self._m_head_fwd or self:_get_target_dir(),self._unit:rotation())
 			end
 			
