@@ -245,6 +245,7 @@
 	<unit path="units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer" load="true" />
 	<unit path="units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer_husk" load="true" />
 	<model path="units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer" />
+	<sequence_manager path="units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer" />
 	<object path="units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer" />
 	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer" />
 	<material_config path="units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer_contour" />	
@@ -265,7 +266,7 @@
 	<texture path="units/pd2_mod_federales/characters/shared_textures/ene_deathvox_blackdozer_df" />
 	<texture path="units/pd2_mod_federales/characters/shared_textures/ene_deathvox_lmgdozer_df" />
 	<texture path="units/pd2_mod_federales/characters/shared_textures/taser_body_df" />
-	<texture path="units/pd2_mod_federales/characters/shared_textures/taser_body_nm" />
+	<texture path="units/pd2_mod_sharks/characters/ene_deathvox_taser/taser_body_nm" />
 	<texture path="units/pd2_mod_federales/characters/shared_textures/tank_glass_df" />
 	<texture path="units/pd2_mod_federales/characters/shared_textures/tank_glass_op" />
 	<texture path="units/pd2_mod_federales/characters/shared_textures/ene_nypd_medic_head_df" />

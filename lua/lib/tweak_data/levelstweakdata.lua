@@ -111,7 +111,7 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 	  self.pex.package = {"packages/deathvoxfederales", "packages/job_pex"}	
 	  map_faction_override["pex"] = "federales"		
 	  
-	  self.pex.package = {"packages/deathvoxfederales", "packages/job_fex"}	
+	  self.fex.package = {"packages/deathvoxfederales", "packages/job_fex"}	
 	  map_faction_override["fex"] = "federales"		
 	  
 	--Halloween overrides begin here.
