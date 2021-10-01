@@ -48,14 +48,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		unit:base():setup(owner, ammo_multiplier, armor_multiplier, spread_multiplier, rot_speed_multiplier, has_shield, attached_data,fire_mode_index)
 
-		local owner_id = unit:base():get_owner_id()
-		if owner_id then --don't check for ap bullets; just create firemode unit for firemode toggle interaction
-		--(dirty firemode toggle interaction is now recycled for opening sentry control menu)
-			local fire_mode_unit = World:spawn_unit(Idstring("units/payday2/equipment/gen_equipment_sentry/gen_equipment_sentry_fire_mode"), unit:position(), unit:rotation())
-			unit:weapon():interaction_setup(fire_mode_unit, owner_id)
-			managers.network:session():send_to_peers_synched("sync_fire_mode_interaction", unit, fire_mode_unit, owner_id)
-		end
-		
+--		local owner_id = unit:base():get_owner_id()
 		local team = nil
 
 		if owner then
@@ -143,6 +136,24 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return true
 	end
 
+	function SentryGunBase:on_interaction()
+	
+		local sentry_weapon = self._unit:weapon()
+		local is_overheated = sentry_weapon:is_overheated()
+		if is_overheated then
+			sentry_weapon:_on_weapon_heat_vented()
+			return true
+		end
+		
+		SentryControlMenu.interacted_radial_start_t = Application:time()
+		SentryControlMenu.button_held_state = nil
+		
+		SentryControlMenu:SelectSentryByUnit(self._unit)
+		sentry_weapon:_set_weapon_heat(0)
+		SentryControlMenu:ShowMenu(self._unit)
+		self._unit:interaction():unselect()
+		return true
+	end
 
 	function SentryGunBase:remove()
 		self._removed = true
@@ -154,33 +165,4 @@ if deathvox:IsTotalCrackdownEnabled() then
 --		self._ws = nil	
 --	end)
 
-	function SentryGunBase:_create_ws() 
---deprecated
-		self._ws = SentryControlMenu:_create_panel(self._unit)
-		self._panel = self._ws:panel()
-		self._bitmap = self._panel:child("bitmap") or self._panel:bitmap({
-			name = "bitmap",
-			texture = "guis/textures/pd2/hud_health",
-	--		texture = tweak_data.hud_icons.wp_sentry.texture,
-	--		texture_rect = tweak_data.hud_icons.wp_sentry.texture_rect,
-			w = 64,
-			h = 64,
-			alpha = 1,
-			layer = 1,
-			visible = false
-		})
-		self._text = self._panel:child("text") or self._panel:text({ --not yet used for anything
-			name = "text",
-			text = tostring(self._owner_id),
-			font = tweak_data.hud.medium_font,
-			color = Color.red,
-			font_size = 36,
-			layer = 2,
-			alpha = 1,
-			align = "center",
-			vertical = "center",
-			visible = false
-		})
-		self._bitmap:set_center(self._panel:center())
-	end
 end

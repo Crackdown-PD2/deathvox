@@ -82,14 +82,22 @@ if deathvox:IsTotalCrackdownEnabled() then
 				category = "sentry_gun"
 			}
 		}
+		self.sentry_gun.text_id = "hud_interact_edit_sentry_gun"
+		self.sentry_gun.action_text_id = "hud_action_editing_sentry_gun"
+		
+		
 		self.sentry_gun_fire_mode.requires_upgrade = nil --remove ap skill requirement for toggling sentry firemode/ammotype
 		
 		self.sentry_gun_vent_weapon_heat = {
 			text_id = "hud_sentry_gun_vent_heat",
 			action_text_id = "hud_action_sentry_gun_vent_heat",
 			contour = "deployable",
+			sound_start = "bar_turret_ammo",
+			sound_interupt = "bar_turret_ammo_cancel",
+			sound_done = "bar_turret_ammo_finished",
 			timer = 2,
-			start_active = false
+			start_active = false,
+			no_contour = true
 		}
 		
 		self.armor_plates = {

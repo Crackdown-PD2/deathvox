@@ -1063,27 +1063,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		--also, conditionally select mode (same as left-clicking any option) if settings and holding allow
 		
 		if input.btn_interact_release then 
-			if SentryControlMenu.action_radial and SentryControlMenu.action_radial:active() and SentryControlMenu.interacted_radial_start_t then
-				if SentryControlMenu.interacted_radial_start_t + SentryControlMenu:GetMenuButtonHoldThreshold() < t then 
-				
-					--if flag is true, and user setting allows selecting sentry modes via press-and-hold, then select sentry mode on hide
-					local allow_selection = SentryControlMenu.button_held_state
-					SentryControlMenu.action_radial:Hide(nil,allow_selection)
-					
-					SentryControlMenu.interacted_radial_start_t = nil
-				else
-					-- _check_action_interact() is called with (input.btn_interact_release = true) some time after the SentryGunFireModeInteractionExt:interact() call,
-					--probably because RMM blocks normal keyboard input while active,
-					--so this weird flag to discard first input is necessary
-					if SentryControlMenu.button_held_state == nil then 
-						--"discard" first input, and set held flag to true
-						SentryControlMenu.button_held_state = true
-						return
-					elseif SentryControlMenu.button_held_state == true then 
-						SentryControlMenu.button_held_state = false
-					end
-				end
-			elseif TripmineControlMenu.action_radial and TripmineControlMenu.action_radial:active() and TripmineControlMenu.interacted_radial_start_t then
+			if TripmineControlMenu.action_radial and TripmineControlMenu.action_radial:active() and TripmineControlMenu.interacted_radial_start_t then
 				if TripmineControlMenu.interacted_radial_start_t + SentryControlMenu:GetMenuButtonHoldThreshold() < t then 
 					local allow_selection = TripmineControlMenu.button_held_state
 					TripmineControlMenu.action_radial:Hide(nil,allow_selection)

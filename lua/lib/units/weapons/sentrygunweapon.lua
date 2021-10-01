@@ -603,17 +603,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self:_set_weapon_heat(0)
 		self._is_weapon_overheated = false
 		
-		if alive(self._fire_mode_unit) then 
-		
---			local interaction = self._fire_mode_unit:interaction()
-			self._fire_mode_unit:interaction():set_active(true)
---			interaction:set_dirty(true)
-		end
-		
 		local interaction = self._unit:interaction()
 		interaction:set_tweak_data("sentry_gun")
 		
-
 		if self._unit:brain() then 
 			self._unit:brain():switch_on()
 		end
@@ -621,11 +613,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 	
 	function SentryGunWeapon:_on_weapon_overheated()
 		self._is_weapon_overheated = true
-		if alive(self._fire_mode_unit) then 
---			local interaction = self._fire_mode_unit:interaction()
-			self._fire_mode_unit:interaction():set_active(false)
---			interaction:set_dirty(false)
-		end
 
 		local interaction = self._unit:interaction()
 		interaction:set_tweak_data("sentry_gun_vent_weapon_heat")

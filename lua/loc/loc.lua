@@ -168,7 +168,10 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				sentry_ammo_he = "HE Ammo",
 				sentry_ammo_taser = "Taser Ammo",
 				sentry_ammo_standard = "Standard Ammo",
-			
+				sentry_retrieve = "Retrieve",
+				
+				hud_interact_edit_sentry_gun = "Hold $BTN_INTERACT to change Sentry mode",
+				hud_action_editing_sentry_gun = "Changing Sentry mode...", --not used
 				hud_interact_pickup_sentry_gun = "Hold $BTN_INTERACT to pick up sentry gun",
 				debug_interact_armor_plates_take = "Hold $BTN_INTERACT to take Armor Plates",
 				hud_equipment_equipping_armor_kit = "Deploying Armor Plates...",
