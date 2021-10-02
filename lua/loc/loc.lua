@@ -726,9 +726,9 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				
 				--Tag Team
 				menu_deck20_1 = "We Live In A Society",
-				menu_deck20_1_desc = "Unlocks the Tag Team Gas Dispenser, which can be equipped in the Throwable slot. The Gas Dispenser can be activated by pressing the Throwable key when looking at an allied unit with a clear line of sight up to 18 meters away.",
+				menu_deck20_1_desc = "Unlocks the Tag Team Gas Dispenser, which can be equipped in the Throwable slot. The Gas Dispenser can be activated by pressing the Throwable key when looking at an allied unit with a clear line of sight up to ##18## meters away.",
 				menu_deck20_2 = "Gamers Rise Up",
-				menu_deck20_2_desc = "When used on an incapacitated teammate, the Gas Dispenser will instantly Revive them with 10% of their Maximum Health but apply no other effects.",
+				menu_deck20_2_desc = "When used on an incapacitated teammate, the Gas Dispenser will instantly Revive them with ##10%## of their Maximum Health but apply no other effects.",
 				menu_deck20_3 = "Chasing Veronica",
 				menu_deck20_3_desc = "The Gas Dispenser's healing also grants ##+20%## Movement Speed.",
 				menu_deck20_4 = "Gang Weed",
@@ -809,7 +809,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				
 				--Sicario
 				menu_deck18_1 = "Vanishing Act",
-				menu_deck18_1_desc = "Unlocks the Sicario Smoke Bomb, which can be equipped in the Throwable slot and thrown by pressing the Throwable key. Deploying the Smoke Bomb creates a smoke screen for 10 seconds. Allies within the smoke screen Evade ##50## of all incoming attacks, and enemies within the smoke screen suffer from a ##50%## Accuracy penalty.\n\nThe Smoke Bomb has a ##60## second cooldown.\n\nMechanical Note: Evasion is separate from Dodge and rolls its chance to negate damage after Dodge's chance to negate damage is calculated.",
+				menu_deck18_1_desc = "Unlocks the Sicario Smoke Bomb, which can be equipped in the Throwable slot and thrown by pressing the Throwable key. Deploying the Smoke Bomb creates a smoke screen for ##10## seconds. Allies within the smoke screen Evade ##50## of all incoming attacks, and enemies within the smoke screen suffer from a ##50%## Accuracy penalty.\n\nThe Smoke Bomb has a ##60## second cooldown.\n\nMechanical Note: Evasion is separate from Dodge and rolls its chance to negate damage after Dodge's chance to negate damage is calculated.",
 				menu_deck18_2 = "Smoke Signals",
 				menu_deck18_2_desc = "Enemies within the smoke screen are Marked.",
 				menu_deck18_3 = "Wraith Walk",

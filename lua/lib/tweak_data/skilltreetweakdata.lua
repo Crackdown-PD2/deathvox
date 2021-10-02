@@ -2022,7 +2022,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"team_passive_stamina_regen_mul"
 				},
 				icon_xy = {
-					0,
+					1,
 					0
 				}
 			},
@@ -2034,7 +2034,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"team_passive_health_multiplier"
 				},
 				icon_xy = {
-					0,
+					2,
 					0
 				}
 			},
@@ -2046,7 +2046,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"team_passive_stamina_multiplier_1"
 				},
 				icon_xy = {
-					0,
+					3,
 					0
 				}
 			},
@@ -2058,7 +2058,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"team_passive_health_regen"
 				},
 				icon_xy = {
-					0,
+					4,
 					0
 				}
 			},
@@ -2070,7 +2070,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"team_passive_interaction_speed_multiplier"
 				},
 				icon_xy = {
-					0,
+					5,
 					0
 				}
 			},
@@ -2082,7 +2082,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"team_passive_armor_multiplier"
 				},
 				icon_xy = {
-					0,
+					6,
 					0
 				}
 			},
@@ -2094,7 +2094,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"team_passive_armor_regen_time_multiplier"
 				},
 				icon_xy = {
-					0,
+					7,
 					0
 				}
 			},
@@ -2106,7 +2106,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"cooldown_long_dis_revive"
 				},
 				icon_xy = {
-					0,
+					8,
 					0
 				}
 			},
@@ -2125,7 +2125,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				icon_xy = {
 					0,
-					0
+					1
 				}
 			},
 			{
@@ -2136,8 +2136,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"muscle_2"
 				},
 				icon_xy = {
-					0,
-					0
+					1,
+					1
 				}
 			},
 			{
@@ -2148,8 +2148,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"muscle_3"
 				},
 				icon_xy = {
-					0,
-					0
+					2,
+					1
 				}
 			},
 			{
@@ -2160,8 +2160,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"muscle_4"
 				},
 				icon_xy = {
-					0,
-					0
+					3,
+					1
 				}
 			},
 			{
@@ -2172,8 +2172,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"muscle_5"
 				},
 				icon_xy = {
-					0,
-					0
+					4,
+					1
 				}
 			},
 			{
@@ -2184,8 +2184,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"muscle_6"
 				},
 				icon_xy = {
-					0,
-					0
+					5,
+					1
 				}
 			},
 			{
@@ -2196,8 +2196,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"muscle_7"
 				},
 				icon_xy = {
-					0,
-					0
+					6,
+					1
 				}
 			},
 			{
@@ -2208,8 +2208,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"muscle_8"
 				},
 				icon_xy = {
-					0,
-					0
+					7,
+					1
 				}
 			},
 			{
@@ -2220,8 +2220,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"muscle_9"
 				},
 				icon_xy = {
-					0,
-					0
+					8,
+					1
 				}
 			},
 			desc_id = "menu_st_spec_2_desc",
@@ -2238,7 +2238,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				icon_xy = {
 					0,
-					0
+					2
 				}
 			},
 			{
@@ -2249,8 +2249,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"armorer_2"
 				},
 				icon_xy = {
-					0,
-					0
+					1,
+					2
 				}
 			},
 			{
@@ -2261,8 +2261,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"armorer_3"
 				},
 				icon_xy = {
-					0,
-					0
+					2,
+					2
 				}
 			},
 			{
@@ -2273,8 +2273,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"armorer_4"
 				},
 				icon_xy = {
-					0,
-					0
+					3,
+					2
 				}
 			},
 			{
@@ -2285,8 +2285,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"armorer_5"
 				},
 				icon_xy = {
-					0,
-					0
+					4,
+					2
 				}
 			},
 			{
@@ -2297,8 +2297,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"armorer_6"
 				},
 				icon_xy = {
-					0,
-					0
+					5,
+					2
 				}
 			},
 			{
@@ -2309,8 +2309,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"armorer_7"
 				},
 				icon_xy = {
-					0,
-					0
+					6,
+					2
 				}
 			},
 			{
@@ -2321,8 +2321,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"armorer_8"
 				},
 				icon_xy = {
-					0,
-					0
+					7,
+					2
 				}
 			},
 			{
@@ -2333,8 +2333,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"armorer_9"
 				},
 				icon_xy = {
-					0,
-					0
+					8,
+					2
 				}
 			},
 			desc_id = "menu_st_spec_3_desc",
@@ -2351,7 +2351,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				icon_xy = {
 					0,
-					0
+					3
 				}
 			},
 			{
@@ -2362,8 +2362,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"rogue_2"
 				},
 				icon_xy = {
-					0,
-					0
+					1,
+					3
 				}
 			},
 			{
@@ -2374,8 +2374,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"rogue_3"
 				},
 				icon_xy = {
-					0,
-					0
+					2,
+					3
 				}
 			},
 			{
@@ -2386,8 +2386,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"rogue_4"
 				},
 				icon_xy = {
-					0,
-					0
+					3,
+					3
 				}
 			},
 			{
@@ -2398,8 +2398,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"rogue_5"
 				},
 				icon_xy = {
-					0,
-					0
+					4,
+					3
 				}
 			},
 			{
@@ -2410,8 +2410,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"rogue_6"
 				},
 				icon_xy = {
-					0,
-					0
+					5,
+					3
 				}
 			},
 			{
@@ -2422,8 +2422,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"rogue_7"
 				},
 				icon_xy = {
-					0,
-					0
+					6,
+					3
 				}
 			},
 			{
@@ -2434,8 +2434,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"rogue_8"
 				},
 				icon_xy = {
-					0,
-					0
+					7,
+					3
 				}
 			},
 			{
@@ -2446,8 +2446,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"rogue_9"
 				},
 				icon_xy = {
-					0,
-					0	
+					8,
+					3	
 				}
 			},
 			desc_id = "menu_st_spec_4_desc",
@@ -2464,7 +2464,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				icon_xy = {
 					0,
-					0
+					4
 				}
 			},
 			{
@@ -2475,8 +2475,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"crook_2"
 				},
 				icon_xy = {
-					0,
-					0
+					1,
+					4
 				}
 			},
 			{
@@ -2487,8 +2487,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"crook_3"
 				},
 				icon_xy = {
-					0,
-					0
+					2,
+					4
 				}
 			},
 			{
@@ -2499,8 +2499,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"crook_4"
 				},
 				icon_xy = {
-					0,
-					0
+					3,
+					4
 				}
 			},
 			{
@@ -2511,8 +2511,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"crook_5"
 				},
 				icon_xy = {
-					0,
-					0
+					4,
+					4
 				}
 			},
 			{
@@ -2523,8 +2523,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"crook_6"
 				},
 				icon_xy = {
-					0,
-					0
+					5,
+					4
 				}
 			},
 			{
@@ -2535,8 +2535,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"crook_7"
 				},
 				icon_xy = {
-					0,
-					0
+					6,
+					4
 				}
 			},
 			{
@@ -2547,8 +2547,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"crook_8"
 				},
 				icon_xy = {
-					0,
-					0
+					7,
+					4
 				}
 			},
 			{
@@ -2559,8 +2559,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"crook_9"
 				},
 				icon_xy = {
-					0,
-					0
+					8,
+					4
 				}
 			},
 			desc_id = "menu_st_spec_5_desc",
@@ -2577,7 +2577,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				icon_xy = {
 					0,
-					0
+					5
 				}
 			},
 			{
@@ -2588,8 +2588,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"hitman_2",
 				},
 				icon_xy = {
-					0,
-					0
+					1,
+					5
 				}
 			},
 			{
@@ -2600,8 +2600,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"hitman_3",
 				},
 				icon_xy = {
-					0,
-					0
+					2,
+					5
 				}
 			},
 			{
@@ -2612,8 +2612,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"hitman_4",
 				},
 				icon_xy = {
-					0,
-					0
+					3,
+					5
 				}
 			},
 			{
@@ -2624,8 +2624,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"hitman_5",
 				},
 				icon_xy = {
-					0,
-					0
+					4,
+					5
 				}
 			},
 			{
@@ -2636,8 +2636,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"hitman_6",
 				},
 				icon_xy = {
-					0,
-					0
+					5,
+					5
 				}
 			},
 			{
@@ -2648,8 +2648,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"hitman_7",
 				},
 				icon_xy = {
-					0,
-					0
+					6,
+					5
 				}
 			},
 			{
@@ -2660,8 +2660,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"hitman_8",
 				},
 				icon_xy = {
-					0,
-					0
+					7,
+					5
 				}
 			},
 			{
@@ -2673,8 +2673,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"hitman_9_bleedout_invuln",
 				},
 				icon_xy = {
-					0,
-					0
+					8,
+					5
 				}
 			},
 			desc_id = "menu_st_spec_6_desc",
@@ -2691,7 +2691,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				icon_xy = {
 					0,
-					0
+					6
 				}
 			},
 			{
@@ -2702,8 +2702,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"burglar_2"
 				},
 				icon_xy = {
-					0,
-					0
+					1,
+					6
 				}
 			},
 			{
@@ -2714,8 +2714,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"burglar_3"
 				},
 				icon_xy = {
-					0,
-					0
+					2,
+					6
 				}
 			},
 			{
@@ -2726,8 +2726,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"burglar_4"
 				},
 				icon_xy = {
-					0,
-					0
+					3,
+					6
 				}
 			},
 			{
@@ -2738,8 +2738,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"burglar_5"
 				},
 				icon_xy = {
-					0,
-					0
+					4,
+					6
 				}
 			},
 			{
@@ -2751,8 +2751,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"carry_can_sprint_with_bag"
 				},
 				icon_xy = {
-					0,
-					0
+					5,
+					6
 				}
 			},
 			{
@@ -2763,8 +2763,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"burglar_7"
 				},
 				icon_xy = {
-					0,
-					0
+					6,
+					6
 				}
 			},
 			{
@@ -2775,8 +2775,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"burglar_8"
 				},
 				icon_xy = {
-					0,
-					0
+					7,
+					6
 				}
 			},
 			{
@@ -2787,8 +2787,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"burglar_9"
 				},
 				icon_xy = {
-					0,
-					0
+					8,
+					6
 				}
 			},
 			desc_id = "menu_st_spec_7_desc",
@@ -2805,7 +2805,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				icon_xy = {
 					0,
-					0
+					7
 				}
 			},
 			{
@@ -2816,8 +2816,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"infiltrator_2"
 				},
 				icon_xy = {
-					0,
-					0
+					1,
+					7
 				}
 			},
 			{
@@ -2828,8 +2828,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"infiltrator_3"
 				},
 				icon_xy = {
-					0,
-					0
+					2,
+					7
 				}
 			},
 			{
@@ -2840,8 +2840,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"infiltrator_4"
 				},
 				icon_xy = {
-					0,
-					0
+					3,
+					7
 				}
 			},
 			{
@@ -2852,8 +2852,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"infiltrator_5"
 				},
 				icon_xy = {
-					0,
-					0
+					4,
+					7
 				}
 			},
 			{
@@ -2864,8 +2864,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"infiltrator_6"
 				},
 				icon_xy = {
-					0,
-					0
+					5,
+					7
 				}
 			},
 			{
@@ -2878,8 +2878,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"player_counter_strike_spooc"
 				},
 				icon_xy = {
-					0,
-					0
+					6,
+					7
 				}
 			},
 			{
@@ -2890,8 +2890,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"infiltrator_8"
 				},
 				icon_xy = {
-					0,
-					0
+					7,
+					7
 				}
 			},
 			{
@@ -2902,8 +2902,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"infiltrator_9"
 				},
 				icon_xy = {
-					0,
-					0
+					8,
+					7
 				}
 			},
 			desc_id = "menu_st_spec_8_desc",
@@ -2920,7 +2920,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				icon_xy = {
 					0,
-					0
+					8
 				}
 			},
 			{
@@ -2931,8 +2931,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"sociopath_2"
 				},
 				icon_xy = {
-					0,
-					0
+					1,
+					8
 				}
 			},
 			{
@@ -2943,8 +2943,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"sociopath_3"
 				},
 				icon_xy = {
-					0,
-					0
+					2,
+					8
 				}
 			},
 			{
@@ -2955,8 +2955,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"sociopath_4"
 				},
 				icon_xy = {
-					0,
-					0
+					3,
+					8
 				}
 			},
 			{
@@ -2967,8 +2967,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"sociopath_5"
 				},
 				icon_xy = {
-					0,
-					0
+					4,
+					8
 				}
 			},
 			{
@@ -2979,8 +2979,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"sociopath_6"
 				},
 				icon_xy = {
-					0,
-					0
+					5,
+					8
 				}
 			},
 			{
@@ -2991,8 +2991,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"sociopath_7"
 				},
 				icon_xy = {
-					0,
-					0
+					6,
+					8
 				}
 			},
 			{
@@ -3003,8 +3003,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"sociopath_8"
 				},
 				icon_xy = {
-					0,
-					0
+					7,
+					8
 				}
 			},
 			{
@@ -3015,8 +3015,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"sociopath_9"
 				},
 				icon_xy = {
-					0,
-					0
+					8,
+					8
 				}
 			},
 			desc_id = "menu_st_spec_9_desc",
@@ -3033,7 +3033,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				icon_xy = {
 					0,
-					0
+					10
 				}
 			},
 			{
@@ -3044,8 +3044,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"grinder_2"
 				},
 				icon_xy = {
-					0,
-					0
+					1,
+					10
 				}
 			},
 			{
@@ -3056,8 +3056,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"grinder_3"
 				},
 				icon_xy = {
-					0,
-					0
+					2,
+					10
 				}
 			},
 			{
@@ -3068,8 +3068,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"grinder_4"
 				},
 				icon_xy = {
-					0,
-					0
+					3,
+					10
 				}
 			},
 			{
@@ -3080,8 +3080,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"grinder_5"
 				},
 				icon_xy = {
-					0,
-					0
+					4,
+					10
 				}
 			},
 			{
@@ -3092,8 +3092,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"grinder_6"
 				},
 				icon_xy = {
-					0,
-					0
+					5,
+					10
 				}
 			},
 			{
@@ -3104,8 +3104,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"grinder_7"
 				},
 				icon_xy = {
-					0,
-					0
+					6,
+					10
 				}
 			},
 			{
@@ -3116,8 +3116,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"grinder_8"
 				},
 				icon_xy = {
-					0,
-					0
+					7,
+					10
 				}
 			},
 			{
@@ -3128,8 +3128,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"grinder_9"
 				},
 				icon_xy = {
-					0,
-					0
+					8,
+					10
 				}
 			},
 			desc_id = "menu_st_spec_11_desc",
@@ -3146,7 +3146,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				icon_xy = {
 					0,
-					0
+					11
 				}
 			},
 			{
@@ -3157,8 +3157,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"yakuza_2"
 				},
 				icon_xy = {
-					0,
-					0
+					1,
+					11
 				}
 			},
 			{
@@ -3169,8 +3169,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"yakuza_3"
 				},
 				icon_xy = {
-					0,
-					0
+					2,
+					11
 				}
 			},
 			{
@@ -3181,8 +3181,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"yakuza_4"
 				},
 				icon_xy = {
-					0,
-					0
+					3,
+					11
 				}
 			},
 			{
@@ -3193,8 +3193,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"yakuza_5"
 				},
 				icon_xy = {
-					0,
-					0
+					4,
+					11
 				}
 			},
 			{
@@ -3205,8 +3205,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"yakuza_6"
 				},
 				icon_xy = {
-					0,
-					0
+					5,
+					11
 				}
 			},
 			{
@@ -3217,8 +3217,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"yakuza_7"
 				},
 				icon_xy = {
-					0,
-					0
+					6,
+					11
 				}
 			},
 			{
@@ -3229,8 +3229,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"yakuza_8"
 				},
 				icon_xy = {
-					0,
-					0
+					7,
+					11
 				}
 			},
 			{
@@ -3241,8 +3241,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"yakuza_9"
 				},
 				icon_xy = {
-					0,
-					0
+					8,
+					11
 				}
 			},
 			desc_id = "menu_st_spec_12_desc",
@@ -3259,7 +3259,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				icon_xy = {
 					0,
-					0
+					12
 				}
 			},
 			{
@@ -3270,8 +3270,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"expres_2"
 				},
 				icon_xy = {
-					0,
-					0
+					1,
+					12
 				}
 			},
 			{
@@ -3282,8 +3282,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"expres_3"
 				},
 				icon_xy = {
-					0,
-					0
+					2,
+					12
 				}
 			},
 			{
@@ -3294,8 +3294,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"expres_4"
 				},
 				icon_xy = {
-					0,
-					0
+					3,
+					12
 				}
 			},
 			{
@@ -3306,8 +3306,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"expres_5"
 				},
 				icon_xy = {
-					0,
-					0
+					4,
+					12
 				}
 			},
 			{
@@ -3318,8 +3318,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"expres_6"
 				},
 				icon_xy = {
-					0,
-					0
+					5,
+					12
 				}
 			},
 			{
@@ -3330,8 +3330,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"expres_7"
 				},
 				icon_xy = {
-					0,
-					0
+					6,
+					12
 				}
 			},
 			{
@@ -3342,8 +3342,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"expres_8"
 				},
 				icon_xy = {
-					0,
-					0
+					7,
+					12
 				}
 			},
 			{
@@ -3354,8 +3354,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"expres_9"
 				},
 				icon_xy = {
-					0,
-					0
+					8,
+					12
 				}
 			},
 			desc_id = "menu_st_spec_13_desc",
@@ -3373,7 +3373,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				icon_xy = {
 					0,
-					0
+					14
 				}
 			},
 			{
@@ -3384,8 +3384,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"anarch_2"
 				},
 				icon_xy = {
-					0,
-					0
+					1,
+					14
 				}
 			},
 			{
@@ -3396,8 +3396,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"anarch_3"
 				},
 				icon_xy = {
-					0,
-					0
+					2,
+					14
 				}
 			},
 			{
@@ -3408,8 +3408,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"anarch_4"
 				},
 				icon_xy = {
-					0,
-					0
+					3,
+					14
 				}
 			},
 			{
@@ -3420,8 +3420,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"anarch_5"
 				},
 				icon_xy = {
-					0,
-					0
+					4,
+					14
 				}
 			},
 			{
@@ -3432,8 +3432,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"anarch_6"
 				},
 				icon_xy = {
-					0,
-					0
+					5,
+					14
 				}
 			},
 			{
@@ -3444,8 +3444,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"anarch_7"
 				},
 				icon_xy = {
-					0,
-					0
+					6,
+					14
 				}
 			},
 			{
@@ -3456,8 +3456,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"anarch_8"
 				},
 				icon_xy = {
-					0,
-					0
+					7,
+					14
 				}
 			},
 			{
@@ -3468,8 +3468,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"anarch_9"
 				},
 				icon_xy = {
-					0,
-					0
+					8,
+					14
 				}
 			},
 			desc_id = "menu_st_spec_15_desc",
@@ -3487,7 +3487,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				icon_xy = {
 					0,
-					0
+					9
 				}
 			},
 			{
@@ -3498,8 +3498,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"gambler_range_1"
 				},
 				icon_xy = {
-					0,
-					0
+					1,
+					9
 				}
 			},
 			{
@@ -3510,8 +3510,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"gambler_threshold_2"
 				},
 				icon_xy = {
-					0,
-					0
+					2,
+					9
 				}
 			},
 			{
@@ -3522,8 +3522,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"gambler_range_2"
 				},
 				icon_xy = {
-					0,
-					0
+					3,
+					9
 				}
 			},
 			{
@@ -3534,8 +3534,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"gambler_threshold_3"
 				},
 				icon_xy = {
-					0,
-					0
+					4,
+					9
 				}
 			},
 			{
@@ -3546,8 +3546,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"gambler_range_3"
 				},
 				icon_xy = {
-					0,
-					0
+					5,
+					9
 				}
 			},
 			{
@@ -3558,8 +3558,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"gambler_threshold_4"
 				},
 				icon_xy = {
-					0,
-					0
+					6,
+					9
 				}
 			},
 			{
@@ -3570,8 +3570,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"gambler_range_4"
 				},
 				icon_xy = {
-					0,
-					0
+					7,
+					9
 				}
 			},
 			{
@@ -3582,8 +3582,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"gambler_healing_2"
 				},
 				icon_xy = {
-					0,
-					0
+					8,
+					9
 				}
 			},
 			desc_id = "menu_st_spec_10_desc",
@@ -3603,7 +3603,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				icon_xy = {
 					0,
-					0
+					19
 				}
 			},
 			{
@@ -3614,8 +3614,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"player_tag_team_long_distance_revive"
 				},
 				icon_xy = {
-					0,
-					0
+					1,
+					19
 				}
 			},
 			{
@@ -3626,8 +3626,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"player_tag_team_movement_speed_bonus"
 				},
 				icon_xy = {
-					0,
-					0
+					2,
+					19
 				}
 			},
 			{
@@ -3638,8 +3638,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"player_tag_team_effect_empathy"
 				},
 				icon_xy = {
-					0,
-					0
+					3,
+					19
 				}
 			},
 			{
@@ -3650,8 +3650,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"player_tag_team_damage_resistance"
 				},
 				icon_xy = {
-					0,
-					0
+					4,
+					19
 				}
 			},
 			{
@@ -3662,8 +3662,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"player_tag_team_health_regen_2"
 				},
 				icon_xy = {
-					0,
-					0
+					5,
+					19
 				}
 			},
 			{
@@ -3674,8 +3674,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"player_tag_team_cooldown_drain_1"
 				},
 				icon_xy = {
-					0,
-					0
+					6,
+					19
 				}
 			},
 			{
@@ -3686,8 +3686,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"player_tag_team_duration_increase_1"
 				},
 				icon_xy = {
-					0,
-					0
+					7,
+					19
 				}
 			},
 			{
@@ -3698,8 +3698,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"player_tag_team_long_distance_revive_full_effects"
 				},
 				icon_xy = {
-					0,
-					0
+					8,
+					19
 				}
 			},
 			desc_id = "menu_st_spec_20_desc",
@@ -3718,7 +3718,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					},
 					icon_xy = {
 						0,
-						0
+						13
 					}
 				},
 				{
@@ -3729,8 +3729,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						1,
+						13
 					}
 				},
 				{
@@ -3741,8 +3741,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						2,
+						13
 					}
 				},
 				{
@@ -3753,8 +3753,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						3,
+						13
 					}
 				},
 				{
@@ -3765,8 +3765,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						4,
+						13
 					}
 				},
 				{
@@ -3777,8 +3777,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						5,
+						13
 					}
 				},
 				{
@@ -3789,8 +3789,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						6,
+						13
 					}
 				},
 				{
@@ -3801,8 +3801,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						7,
+						13
 					}
 				},
 				{
@@ -3813,8 +3813,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						8,
+						13
 					}
 				},
 				desc_id = "menu_st_spec_14_desc",
@@ -3831,7 +3831,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					},
 					icon_xy = {
 						0,
-						0
+						15
 					}
 				},
 				{
@@ -3842,8 +3842,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						1,
+						15
 					}
 				},
 				{
@@ -3854,8 +3854,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						2,
+						15
 					}
 				},
 				{
@@ -3866,8 +3866,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						3,
+						15
 					}
 				},
 				{
@@ -3878,8 +3878,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						4,
+						15
 					}
 				},
 				{
@@ -3890,8 +3890,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						5,
+						15
 					}
 				},
 				{
@@ -3902,8 +3902,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						6,
+						15
 					}
 				},
 				{
@@ -3914,8 +3914,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						7,
+						15
 					}
 				},
 				{
@@ -3926,8 +3926,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						8,
+						15
 					}
 				},
 				desc_id = "menu_st_spec_16_desc",
@@ -3944,7 +3944,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					},
 					icon_xy = {
 						0,
-						0
+						16
 					}
 				},
 				{
@@ -3955,8 +3955,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						1,
+						16
 					}
 				},
 				{
@@ -3967,8 +3967,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						2,
+						16
 					}
 				},
 				{
@@ -3979,8 +3979,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						3,
+						16
 					}
 				},
 				{
@@ -3991,8 +3991,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						4,
+						16
 					}
 				},
 				{
@@ -4003,8 +4003,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						5,
+						16
 					}
 				},
 				{
@@ -4015,8 +4015,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						6,
+						16
 					}
 				},
 				{
@@ -4027,8 +4027,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						7,
+						16
 					}
 				},
 				{
@@ -4039,8 +4039,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						8,
+						16
 					}
 				},
 				desc_id = "menu_st_spec_17_desc",
@@ -4057,7 +4057,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					},
 					icon_xy = {
 						0,
-						0
+						17
 					}
 				},
 				{
@@ -4068,8 +4068,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						1,
+						17
 					}
 				},
 				{
@@ -4080,8 +4080,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						2,
+						17
 					}
 				},
 				{
@@ -4092,8 +4092,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						3,
+						17
 					}
 				},
 				{
@@ -4104,8 +4104,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						4,
+						17
 					}
 				},
 				{
@@ -4116,8 +4116,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						5,
+						17
 					}
 				},
 				{
@@ -4128,8 +4128,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						6,
+						17
 					}
 				},
 				{
@@ -4140,8 +4140,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						7,
+						17
 					}
 				},
 				{
@@ -4152,8 +4152,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						8,
+						17
 					}
 				},
 				desc_id = "menu_st_spec_18_desc",
@@ -4170,7 +4170,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					},
 					icon_xy = {
 						0,
-						0
+						18
 					}
 				},
 				{
@@ -4181,8 +4181,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						1,
+						18
 					}
 				},
 				{
@@ -4193,8 +4193,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						2,
+						18
 					}
 				},
 				{
@@ -4205,8 +4205,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						3,
+						18
 					}
 				},
 				{
@@ -4217,8 +4217,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						4,
+						18
 					}
 				},
 				{
@@ -4229,8 +4229,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						5,
+						18
 					}
 				},
 				{
@@ -4241,8 +4241,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						6,
+						18
 					}
 				},
 				{
@@ -4253,8 +4253,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						7,
+						18
 					}
 				},
 				{
@@ -4265,8 +4265,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						8,
+						18
 					}
 				},
 				desc_id = "menu_st_spec_19_desc",
@@ -4283,7 +4283,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					},
 					icon_xy = {
 						0,
-						0
+						20
 					}
 				},
 				{
@@ -4294,8 +4294,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						1,
+						20
 					}
 				},
 				{
@@ -4306,8 +4306,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						2,
+						20
 					}
 				},
 				{
@@ -4318,8 +4318,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						3,
+						20
 					}
 				},
 				{
@@ -4330,8 +4330,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						4,
+						20
 					}
 				},
 				{
@@ -4342,8 +4342,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						5,
+						20
 					}
 				},
 				{
@@ -4354,8 +4354,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						6,
+						20
 					}
 				},
 				{
@@ -4366,8 +4366,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						7,
+						20
 					}
 				},
 				{
@@ -4378,8 +4378,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						
 					},
 					icon_xy = {
-						0,
-						0
+						8,
+						20
 					}
 				},
 				desc_id = "menu_st_spec_21_desc",
