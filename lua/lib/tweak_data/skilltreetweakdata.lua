@@ -2911,6 +2911,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		}
 		
 		self.specializations[perkdeck_indices.sociopath] = {
+			shake = true,
 			{
 				name_id = "menu_deck9_1",
 				desc_id = "menu_deck9_1_desc",
