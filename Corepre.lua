@@ -133,6 +133,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 	--load tcd skill icons
 	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree/drillgui_icon_shocktrap"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/skilltree/drillgui_icon_shocktrap.texture")
 	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree_2/icons_atlas_2"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/skilltree_2/icons_atlas_2.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/specialization/icons_atlas"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/specialization/icons_atlas.texture")
 else
 	--load vanilla skill icons (in case user launched with tcd but toggled off tcd and reloaded game state)
 	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree_2/icons_atlas_2"),Idstring("texture"),"guis/textures/pd2/skilltree_2/icons_atlas_2.texture")
