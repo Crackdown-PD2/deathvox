@@ -1173,37 +1173,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 			self:set_property("gambler_team_ammo_pickups_grabbed",0)
 		end
 	end)
-	
-	--[[
-	function PlayerManager:verify_equipment(peer_id, equipment_id)
-		if peer_id == 0 then
-			local id = "asset_" .. tostring(equipment_id)
-			self._asset_equipment = self._asset_equipment or {}
-			local max_amount = tweak_data.equipments.max_amount[id]
-			if max_amount then 
-				max_amount = managers.modifiers:modify_value("PlayerManager:GetEquipmentMaxAmount", max_amount)
-				if self._asset_equipment[id] and max_amount < self._asset_equipment[id] + 1 then
-					local peer = managers.network:session():server_peer()
-
-					peer:mark_cheater(VoteManager.REASON.many_assets)
-
-					return false
-				end
-			end
-			self._asset_equipment[id] = (self._asset_equipment[id] or 0) + 1
-
-			return true
-		end
-
-		local peer = managers.network:session():peer(peer_id)
-
-		if not peer then
-			return false
-		end
-
-		return peer:verify_deployable(equipment_id)
-	end
--]]
 
 	function PlayerManager:movement_speed_multiplier(speed_state, bonus_multiplier, upgrade_level, health_ratio)
 		local multiplier = 1
