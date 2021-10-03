@@ -803,9 +803,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end
 		end
 		
+		BeardLib:RemoveUpdater("TCD_Sociopath_Update_Damage_Visual_Effect")
 		if self:has_category_upgrade("player","sociopath_mode") then 
-		
+			
 			Hooks:Add("TCD_Create_Stack_Tracker_HUD","TCD_CreateSociopathElement",function(hudtemp)
+			
+			
+			--create stack tracker combo counter element
 				local panel_name = "sociopath_combo_tracker"
 				if hudtemp and alive(hudtemp) then
 					if alive(hudtemp:child(panel_name)) then 
@@ -902,7 +906,267 @@ if deathvox:IsTotalCrackdownEnabled() then
 					end)
 					
 				end
+				
+				
+				
+			--create CRT hud effect for health/death
+				local crt_parent_panel = managers.hud._fullscreen_workspace:panel() -- managers.gui_data:create_fullscreen_workspace():panel() --hudtemp --managers.hud:script(PlayerBase.PLAYER_INFO_HUD_FULLSCREEN_PD2).panel
+				
+				local static_files = {
+					"guis/textures/pd2/damage_overlay_sociopath/static1",
+					"guis/textures/pd2/damage_overlay_sociopath/static2",
+					"guis/textures/pd2/damage_overlay_sociopath/static3",
+					"guis/textures/pd2/damage_overlay_sociopath/static4"
+				}
+				local SCANLINE_TEXTURE_FILE = "guis/textures/pd2/damage_overlay_sociopath/scanlines_overlay"
+				local SCANLINES_BLEND_MODE = "sub"
+				local SCANLINE_TEXTURE_X = 0
+				local SCANLINE_TEXTURE_Y = 0
+				local SCANLINE_TEXTURE_WIDTH = 1
+				local SCANLINE_TEXTURE_HEIGHT = 360
+				local SCANLINES_SPEED = 100
+				local STATIC_TEXTURE_WIDTH = 256
+				local STATIC_TEXTURE_HEIGHT = 256
+				local STATIC_ROTATION_STEP = 90
+				local STATIC_INTERVAL = 0.04
+				local STATIC_BLEND_MODE = "normal"
+				local STATIC_W = 256
+				local STATIC_H = 256
+				local MAX_STATIC_ALPHA = 0.85
+				local NUM_WHITESCREENS = 15
+				local MAX_WHITESCREEN_SIZE = 0.66
+				local WHITESCREEN_DELAY_TIME = 0.001
+				local WHITESCREEN_OFF_TIME = 0.5
+				local WHITESCREEN_SHINE_TIME = 0.25
+				local WHITESCREEN_SHINE_SCALE = 0.2
+				local DYING_LINE_W_SCALE = 4
+				local DYING_LINE_H_SCALE = 0.025
+				local BLACKSCREEN_TIMER = 0.25
+				local DEATH_SCREEN_FADEOUT_TIME = 1
+				
+				local crt_panel
+				if alive(crt_parent_panel:child("crt_panel")) then 
+--					crt_parent_panel:remove(crt_parent_panel:child("crt_panel"))
+				else
+					crt_panel = crt_parent_panel:panel({
+						name = "crt_panel",
+						alpha = 1,
+						layer = -9
+					})
+				end
+				
+				local death_panel = crt_panel:panel({
+					name = "death_panel",
+					visible = false
+				})
+				
+				local blackscreen = crt_panel:rect({
+					name = "blackscreen",
+					color = Color("000000"),
+					alpha = 0,
+					layer = 0
+				})
+				local vignette = crt_panel:bitmap({
+					name = "vignette",
+					texture = "guis/textures/pd2/damage_overlay_sociopath/vignette_overlay",
+					w = 0,
+					h = 0,
+					layer = 3
+				})
+				local static_panel = crt_panel:panel({
+					name = "static",
+					layer = 2
+				})
+				local scanlines = crt_panel:panel({
+					name = "scanlines",
+					h = crt_panel:h() * 2,
+					alpha = 0.2,
+					layer = 4,
+					visible = false
+				})
+				local scanline_1 = scanlines:bitmap({
+					name = "scanline_1",
+					texture = SCANLINE_TEXTURE_FILE,
+					texture_rect = {SCANLINE_TEXTURE_X,SCANLINE_TEXTURE_Y,SCANLINE_TEXTURE_WIDTH,SCANLINE_TEXTURE_HEIGHT},
+					blend_mode = SCANLINES_BLEND_MODE,
+					y = 0,
+					w = crt_panel:w(),
+					h = crt_panel:h()
+				})
+				local scanline_2 = scanlines:bitmap({
+					name = "scanline_2",
+					texture = SCANLINE_TEXTURE_FILE,
+					texture_rect = {SCANLINE_TEXTURE_X,SCANLINE_TEXTURE_Y,SCANLINE_TEXTURE_WIDTH,SCANLINE_TEXTURE_HEIGHT},
+					blend_mode = SCANLINES_BLEND_MODE,
+					y = crt_panel:h(),
+					w = crt_panel:w(),
+					h = crt_panel:h()
+				})
+				
+				
+				local statics_v = math.ceil(static_panel:h() / STATIC_H)
+				local statics_h = math.ceil(static_panel:w() / STATIC_W)
+				local NUM_STATICS = statics_v * statics_h
+				
+				for i=0,NUM_STATICS-1,1 do 
+					local row = math.floor(i/statics_h)
+					local column = (i % statics_h)
+					local x = STATIC_W * column
+					local y = STATIC_H * row			
+					
+					local static = static_panel:bitmap({
+						name = "static_" .. i,
+						texture = table.random(static_files),
+						blend_mode = STATIC_BLEND_MODE,
+						w = STATIC_W,
+						h = STATIC_H,
+						alpha = 0,
+						x = x,
+						y = y
+					})
+				end
+				
+				
+				local static_index = 1
+				local static_t = 0
+				local function update_crt_effect(t,dt)
+					
+					if alive(crt_panel) then 
+						--vignette
+						local player = managers.player:local_player()
+						if alive(player) then 
+							local dmg_ext = player:character_damage()
+							local progression = dmg_ext._downed_progression
+							if progression then 
+								local prog_dec = progression / 100
+								local vw,vh = crt_panel:size()
+								local scale = 2 - prog_dec
+								vignette:set_size(vw * scale,vh * scale)
+								vignette:set_center(crt_panel:center())
+								
+								--static
+								static_t = static_t + dt
+								if static_t >= STATIC_INTERVAL then 
+									static_t = static_t - STATIC_INTERVAL
+									static_index = (static_index + 1) % #static_files
+									for i,static in pairs(static_panel:children()) do 
+										static:set_image(table.random(static_files))
+										static:set_rotation(static_index * STATIC_ROTATION_STEP)
+										static:set_alpha((prog_dec * prog_dec) * MAX_STATIC_ALPHA)
+										--static:set_alpha((0.5 * math.sin(Application:time() * 180)) + 0.5)
+									end
+								end
+								
+								--scanlines
+								local scanline_y = scanlines:y() + (dt * SCANLINES_SPEED)
+								if scanline_y >= 0 then 
+									scanlines:set_y(-crt_panel:h())
+								else
+									scanlines:set_y(scanline_y)
+								end
+							end
+						end
+					
+						
+						
+					end
+					
+				end
+				
+				
+				Hooks:Add("deathvox_OnPlayerEnteredBleedout","TCD_Animate_Sociopath_Bleedout",function()
+					if alive(crt_panel) then 
+						BeardLib:AddUpdater("TCD_Sociopath_Update_Damage_Visual_Effect",update_crt_effect)
+						scanlines:show()
+					end
+				end)
+				Hooks:Add("deathvox_OnPlayerEnteredCustody","TCD_Animate_Sociopath_Death",function()
+					
+					BeardLib:RemoveUpdater("TCD_Sociopath_Update_Damage_Visual_Effect")
+					
+					if alive(crt_panel) then 
+						for i,static in pairs(static_panel:children()) do 
+							static:set_alpha(0)
+						end
+						scanlines:hide()
+						vignette:set_size(0,0)
+						blackscreen:set_alpha(1)
+						death_panel:show()
+						death_panel:animate(function(o)
+--							over(BLACKSCREEN_TIMER,function(prog)
+--								blackscreen:set_alpha(prog)
+--							end)
+							local function anim_fadeout(whs)
+								over(WHITESCREEN_OFF_TIME,function(elapsed_prog)
+									elapsed_prog = 1 - elapsed_prog
+									local ow,oh = whs:parent():size()
+									whs:set_size(MAX_WHITESCREEN_SIZE * ow * elapsed_prog,MAX_WHITESCREEN_SIZE * oh * elapsed_prog)
+									whs:set_center(whs:parent():center())
+								end)
+								whs:parent():remove(whs)
+							end
+							
+							for i=1,NUM_WHITESCREENS do 
+								local cw,ch = o:size()
+								local whitescreen_prog = i/NUM_WHITESCREENS
+								local ow = cw * MAX_WHITESCREEN_SIZE
+								local oh = ch * MAX_WHITESCREEN_SIZE
+								
+								local whitescreen = o:rect({
+									name = "whitescreen" .. tostring(i),
+									color = Color("ffffff"),
+									alpha = 0.1,
+									layer = 100,
+									blend_mode = "add",
+									w = ow,
+									h = oh
+								})
+								whitescreen:set_center(o:center())
+								wait(WHITESCREEN_DELAY_TIME)
+								whitescreen:animate(anim_fadeout)
+							end
+							local shine = o:bitmap({
+								name = "shine",
+								texture = "guis/textures/pd2/damage_overlay_sociopath/vignette_inverted_overlay",
+								color = Color.white,
+								w = 0,
+								h = 0,
+								layer = 101
+							})
+							local dying_line = o:bitmap({
+								name = "dying_line",
+								texture = "guis/textures/pd2/damage_overlay_sociopath/vignette_inverted_overlay",
+								w = 0,
+								layer = 100,
+								h = DYING_LINE_H
+							})
+							wait(WHITESCREEN_OFF_TIME)
+							
+							over(WHITESCREEN_SHINE_TIME,function(elapsed_prog)
+								local _t = (-math.cos(elapsed_prog * 360) + 1) * WHITESCREEN_SHINE_SCALE / 2
+								local sw,sh = o:size()
+								shine:set_size(sw * _t,sh * _t)
+								shine:set_center(o:center())
+								dying_line:set_alpha((-math.cos(elapsed_prog * 360) + 1) / 2)
+								dying_line:set_size(DYING_LINE_W_SCALE * o:w() * elapsed_prog,o:h() * DYING_LINE_H_SCALE * elapsed_prog)
+								dying_line:set_center(o:center())
+							end)
+							o:remove(shine)
+							over(DEATH_SCREEN_FADEOUT_TIME,function(prog)
+								o:set_alpha(1 - prog)
+							end)
+							for _,v in pairs(o:children()) do 
+								o:remove(v)
+							end
+							blackscreen:set_alpha(0)
+							o:hide()
+						end)
+						
+					end
+				end)
+				
 			end)
+			
 		end
 		
 		if Network:is_server() then 
@@ -910,6 +1174,37 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	end)
 	
+	--[[
+	function PlayerManager:verify_equipment(peer_id, equipment_id)
+		if peer_id == 0 then
+			local id = "asset_" .. tostring(equipment_id)
+			self._asset_equipment = self._asset_equipment or {}
+			local max_amount = tweak_data.equipments.max_amount[id]
+			if max_amount then 
+				max_amount = managers.modifiers:modify_value("PlayerManager:GetEquipmentMaxAmount", max_amount)
+				if self._asset_equipment[id] and max_amount < self._asset_equipment[id] + 1 then
+					local peer = managers.network:session():server_peer()
+
+					peer:mark_cheater(VoteManager.REASON.many_assets)
+
+					return false
+				end
+			end
+			self._asset_equipment[id] = (self._asset_equipment[id] or 0) + 1
+
+			return true
+		end
+
+		local peer = managers.network:session():peer(peer_id)
+
+		if not peer then
+			return false
+		end
+
+		return peer:verify_deployable(equipment_id)
+	end
+-]]
+
 	function PlayerManager:movement_speed_multiplier(speed_state, bonus_multiplier, upgrade_level, health_ratio)
 		local multiplier = 1
 		local armor_penalty = self:mod_movement_penalty(self:body_armor_value("movement", upgrade_level, 1))
@@ -1091,7 +1386,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				if tagged:movement():downed() then 
 					
 					local is_ai = not managers.criminals:character_peer_id_by_unit(tagged)
-					buttstack = tagged
+
 					managers.statistics:revived({
 						npc = is_ai,
 						reviving_unit = tagged
@@ -1131,6 +1426,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 	
 end
 
+
+Hooks:PostHook(PlayerManager,"on_enter_custody","tcd_on_player_enter_custody",function(self,player)
+	Hooks:Call("deathvox_OnPlayerEnteredCustody",player)
+end)
 
 		--The overshield mechanic is only used in Total Crackdown ((TCD), but its methods are present outside of TCD so that two versions of player damage for any given damage type (damage_bullet, damage_explosion, damage_melee, etc) aren't necessary for TCD and normal Crackdown
 

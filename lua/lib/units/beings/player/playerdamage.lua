@@ -1386,9 +1386,13 @@ function PlayerDamage:_on_damage_event()
 	end
 end
 
+Hooks:Register("deathvox_OnPlayerEnteredBleedout")
 Hooks:PostHook(PlayerDamage,"init","tcd_post_playerdamage_init",function(self,unit)
 	self._listener_holder:add("on_bleedout_remove_armor_plates_bonus",{"on_enter_bleedout"},callback(self,self,"remove_armor_plates_bonus"))
-	
+	self._listener_holder:add("on_bleedout_call_deathvox_listeners",{"on_enter_bleedout"},function()
+		Hooks:Call("deathvox_OnPlayerEnteredBleedout")
+	end)
+
 	if managers.player:has_category_upgrade("player", "muscle_beachyboys") then
 		self._listener_holder:add("on_bleedout_beach_health_point_removal",{"on_enter_bleedout"},callback(self,self,"blush_beach_hp"))
 	end
@@ -1847,4 +1851,5 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		return true
 	end
+
 end

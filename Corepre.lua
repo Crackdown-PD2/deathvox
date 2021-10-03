@@ -84,7 +84,7 @@ function deathvox:Load()
 	
 	self:check_for_updates()
 
-	log("Loaded menu settings")
+--	log("Loaded menu settings")
 	return self.Settings
 end
 
@@ -134,6 +134,14 @@ if deathvox:IsTotalCrackdownEnabled() then
 	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree/drillgui_icon_shocktrap"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/skilltree/drillgui_icon_shocktrap.texture")
 	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree_2/icons_atlas_2"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/skilltree_2/icons_atlas_2.texture")
 	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/specialization/icons_atlas"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/specialization/icons_atlas.texture")
+	
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static1"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/static1.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static2"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/static2.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static3"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/static3.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static4"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/static4.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/vignette_overlay"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/vignette_overlay.png")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/vignette_inverted_overlay"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/vignette_inverted_overlay.png")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/scanlines_overlay"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/scanlines_overlay.texture")
 else
 	--load vanilla skill icons (in case user launched with tcd but toggled off tcd and reloaded game state)
 	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree_2/icons_atlas_2"),Idstring("texture"),"guis/textures/pd2/skilltree_2/icons_atlas_2.texture")
