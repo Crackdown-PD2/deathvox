@@ -101,7 +101,7 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 	  map_faction_override["bph"] = "murkywater"
 	
 	--Reaper faction overrides begin here.
-	  map_faction_override["mad"] = "russia"	
+	  -- map_faction_override["mad"] = "russia"	
 	  
 	--Federales faction overrides begin here.
 	  self.bex.package = {"packages/deathvoxfederales", "packages/job_bex"}	
