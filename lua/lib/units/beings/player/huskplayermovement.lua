@@ -253,24 +253,6 @@ function HuskPlayerMovement:sync_action_change_pose(pose_code, pos)
 	self:_update_real_pos(pos, pose_code)
 end
 
-function HuskPlayerMovement:_update_air_time(t, dt)
-	if self._in_air then
-		self._air_time = self._air_time or 0
-		self._air_time = self._air_time + dt
-
-		if self._air_time > 1 then
-			local on_ground = self:_chk_ground_ray(self._m_pos)
-
-			if on_ground then
-				self._in_air = false
-				self._air_time = 0
-			end
-		end
-	else
-		self._air_time = 0
-	end
-end
-
 function HuskPlayerMovement:_update_zipline_sled(t, dt)
 	if self._zipline and self._zipline.attached then
 		local zipline = self._zipline and self._zipline.zipline_unit and self._zipline.zipline_unit:zipline()
@@ -385,6 +367,102 @@ function HuskPlayerMovement:anim_clbk_spawn_dropped_magazine()
 		end
 
 		managers.enemy:add_magazine(dropped_mag, dropped_col)
+	end
+end
+
+function HuskPlayerMovement:_get_max_move_speed(run)
+	local my_tweak = tweak_data.player.movement_state.standard
+	local move_speed = nil
+
+	if self._synced_max_speed then
+		move_speed = self._synced_max_speed
+	elseif self._pose_code == 2 then
+		move_speed = my_tweak.movement.speed.CROUCHING_MAX * (self._unit:base():upgrade_value("player", "crouch_speed_multiplier") or 1)
+	elseif run then
+		move_speed = my_tweak.movement.speed.RUNNING_MAX * (self._unit:base():upgrade_value("player", "run_speed_multiplier") or 1)
+	else
+		move_speed = my_tweak.movement.speed.STANDARD_MAX * (self._unit:base():upgrade_value("player", "walk_speed_multiplier") or 1)
+	end
+
+	if self._in_air then
+		local t = self._air_time or 0
+		local air_speed = math.exp(t * self:gravity() / self:terminal_velocity())
+		air_speed = air_speed * self:gravity()
+		air_speed = math.abs(air_speed)
+		move_speed = math.max(move_speed, air_speed)
+		move_speed = math.min(move_speed, math.abs(self:terminal_velocity()))
+	end
+
+	local zipline = self._zipline and self._zipline.enabled and self._zipline.zipline_unit and self._zipline.zipline_unit:zipline()
+
+	if zipline then
+		local step = 100
+		local t = math.clamp((self._zipline.t or 0) / zipline:total_time(), 0, 1)
+		local speed = 1.1 * zipline:speed_at_time(t, 1 / step) / step
+		move_speed = math.max(speed * zipline:speed(), move_speed)
+	end
+
+	local path_length = #self._movement_path - tweak_data.network.player_path_interpolation
+
+	if path_length > 0 then
+		local speed_boost = 1 + path_length / tweak_data.network.player_tick_rate
+		move_speed = move_speed * math.clamp(speed_boost, 1, 3)
+	end
+
+	return move_speed
+end
+
+function HuskPlayerMovement:_chk_ground_ray(check_pos, return_ray)
+	local up_pos = tmp_vec1
+
+	mvec3_set(up_pos, math.UP)
+	mvec3_mul(up_pos, 30)
+	mvec3_add(up_pos, check_pos or self._m_pos)
+
+	local down_pos = tmp_vec2
+
+	mvec3_set(down_pos, math.UP)
+	mvec3_mul(down_pos, -30)
+	mvec3_add(down_pos, check_pos or self._m_pos)
+
+	if return_ray then
+		return World:raycast("ray", up_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "sphere_cast_radius", 29, "ray_type", "walk")
+	else
+		return World:raycast("ray", up_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "sphere_cast_radius", 29, "ray_type", "walk", "report")
+	end
+end
+
+function HuskPlayerMovement:_update_air_time(t, dt)
+	if self._in_air then
+		self._check_air_time = 0
+		self._air_time = self._air_time or 0
+		self._air_time = self._air_time + dt
+
+		if self._air_time > 0.5 then
+			local on_ground = self:_chk_ground_ray(self:m_pos())
+
+			if on_ground then
+				self._in_air = false
+				self._air_time = 0
+			end
+		end
+	else
+		self._air_time = 0
+		
+		self._check_air_time = self._check_air_time or 0
+		self._check_air_time = self._check_air_time - dt
+		
+		if not self._check_air_time or self._check_air_time <= 0 then
+			self._check_air_time = 1 / tweak_data.network.player_tick_rate
+			
+			local on_ground = self:_chk_ground_ray(self:m_pos())
+
+			if not on_ground then
+				self:play_redirect("jump")
+				
+				self._in_air = true
+			end
+		end
 	end
 end
 
