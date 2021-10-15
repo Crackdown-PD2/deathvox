@@ -458,7 +458,9 @@ function HuskPlayerMovement:_update_air_time(t, dt)
 			local on_ground = self:_chk_ground_ray(self:m_pos())
 
 			if not on_ground then
-				self:play_redirect("jump")
+				if not self._bleedout then
+					self:play_redirect("jump")
+				end
 				
 				self._in_air = true
 			end
