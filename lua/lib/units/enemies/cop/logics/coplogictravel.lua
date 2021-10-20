@@ -390,9 +390,7 @@ function CopLogicTravel.upd_advance(data)
 			return
 		end
 
-		if data.cool or CopLogicTravel.chk_group_ready_to_move(data, my_data) then
-			CopLogicTravel._chk_begin_advance(data, my_data)
-		end
+		CopLogicTravel._chk_begin_advance(data, my_data)
 
 		if my_data.advancing and my_data.path_ahead then
 			CopLogicTravel._check_start_path_ahead(data)
@@ -411,9 +409,7 @@ function CopLogicTravel.upd_advance(data)
 						return
 					end
 
-					if data.cool or CopLogicTravel.chk_group_ready_to_move(data, my_data) then
-						CopLogicTravel._chk_begin_advance(data, my_data)
-					end
+					CopLogicTravel._chk_begin_advance(data, my_data)
 
 					if my_data.advancing and my_data.path_ahead then
 						CopLogicTravel._check_start_path_ahead(data)
@@ -781,9 +777,7 @@ function CopLogicTravel.action_complete_clbk(data, action)
 
 				data.t = TimerManager:game():time()
 
-				if data.cool or CopLogicTravel.chk_group_ready_to_move(data, my_data) then
-					CopLogicTravel._chk_begin_advance(data, my_data)
-				end
+				CopLogicTravel._chk_begin_advance(data, my_data)
 
 				if my_data.advancing and my_data.path_ahead then
 					CopLogicTravel._check_start_path_ahead(data)
@@ -2034,7 +2028,11 @@ end
 
 function CopLogicTravel.chk_group_ready_to_move(data, my_data)
 	local my_objective = data.objective
-
+	
+	if not my_objective.area then
+		return
+	end
+	
 	if not my_objective.grp_objective then
 		return true
 	end
@@ -2564,10 +2562,6 @@ function CopLogicTravel._on_revive_destination_reached_by_warp(data, my_data, wa
 end
 
 function CopLogicTravel._chk_start_pathing_to_next_nav_point(data, my_data)
-	if not CopLogicTravel.chk_group_ready_to_move(data, my_data) then
-		return
-	end
-
 	local my_pos = data.unit:movement():nav_tracker():field_position()
 	local to_pos = CopLogicTravel._get_exact_move_pos(data, my_data.coarse_path_index + 1)
 	local unobstructed_line = nil
@@ -2593,9 +2587,7 @@ function CopLogicTravel._chk_start_pathing_to_next_nav_point(data, my_data)
 		--[[local line = Draw:brush(Color.blue:with_alpha(0.5), 5)
 		line:cylinder(my_pos, to_pos, 25)]]
 
-		if data.cool or CopLogicTravel.chk_group_ready_to_move(data, my_data) then
-			CopLogicTravel._chk_begin_advance(data, my_data)
-		end
+		CopLogicTravel._chk_begin_advance(data, my_data)
 
 		if my_data.advancing and my_data.path_ahead then
 			CopLogicTravel._check_start_path_ahead(data)

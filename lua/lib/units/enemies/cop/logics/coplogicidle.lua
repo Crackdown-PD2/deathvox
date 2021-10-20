@@ -247,25 +247,15 @@ function CopLogicIdle.queued_update(data)
 
 	local objective = data.objective
 
-	if my_data.has_old_action then
-		CopLogicIdle._upd_stop_old_action(data, my_data, objective)
-		
+	if not my_data.action_started then
 		if my_data.has_old_action then
-			local asap = nil
+			CopLogicIdle._upd_stop_old_action(data, my_data, objective)
+			
+			if my_data.has_old_action then
+				CopLogicBase.queue_task(my_data, my_data.upd_task_key, CopLogicIdle.queued_update, data, data.t + delay, data.cool and true or data.important and true)
 
-			if data.cool then
-				delay = 0
-				asap = true
-			elseif data.is_converted then
-				delay = delay / 2
-				asap = true
-			elseif data.important then
-				asap = true
+				return
 			end
-
-			CopLogicBase.queue_task(my_data, my_data.upd_task_key, CopLogicIdle.queued_update, data, data.t + delay, asap and true)
-
-			return
 		end
 	end
 
@@ -2353,6 +2343,13 @@ end
 function CopLogicIdle._perform_objective_action(data, my_data, objective)
 	if objective and not my_data.action_started then
 		if data.unit:anim_data().act_idle or not data.unit:movement():chk_action_forbidden("action") then
+			if objective and objective.action and objective.action.variant then
+				local variant = objective.action.variant
+				if variant == "e_so_ntl_idle_look" or variant == "e_so_ntl_idle_look2" or variant == "e_so_ntl_idle_look3" then
+					objective.action_duration = math.lerp(2, 5, math.random())
+				end
+			end
+		
 			if objective.action then
 				my_data.action_started = data.brain:action_request(objective.action)
 			else
@@ -2360,6 +2357,9 @@ function CopLogicIdle._perform_objective_action(data, my_data, objective)
 			end
 
 			if my_data.action_started then
+				my_data.has_old_action = nil
+				my_data.advancing = nil
+				
 				if objective.action_duration or objective.action_timeout_t then
 					my_data.action_timeout_clbk_id = "CopLogicIdle_action_timeout" .. tostring(data.key)
 					local action_timeout_t = objective.action_timeout_t or data.t + objective.action_duration
@@ -2384,7 +2384,7 @@ function CopLogicIdle._upd_stop_old_action(data, my_data, objective)
 				type = "idle"
 			})
 		end
-	elseif data.unit:anim_data().act then
+	elseif data.unit:anim_data().act or data.unit:anim_data().act_idle or data.unit:anim_data().to_idle then
 		if not my_data.starting_idle_action_from_act then
 			my_data.starting_idle_action_from_act = true
 			CopLogicIdle._start_idle_action_from_act(data)

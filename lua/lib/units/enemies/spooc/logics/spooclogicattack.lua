@@ -1,3 +1,186 @@
+--local mvec3_x = mvector3.x
+--local mvec3_y = mvector3.y
+--local mvec3_z = mvector3.z
+local mvec3_set = mvector3.set
+local mvec3_set_z = mvector3.set_z
+local mvec3_sub = mvector3.subtract
+local mvec3_dir = mvector3.direction
+local mvec3_dot = mvector3.dot
+local mvec3_dis = mvector3.distance
+local mvec3_dis_sq = mvector3.distance_sq
+--local mvec3_lerp = mvector3.lerp
+local mvec3_norm = mvector3.normalize
+local mvec3_add = mvector3.add
+local mvec3_mul = mvector3.multiply
+--local mvec3_cross = mvector3.cross
+--local mvec3_rand_ortho = mvector3.random_orthogonal
+--local mvec3_negate = mvector3.negate
+--local mvec3_len = mvector3.length
+local mvec3_len_sq = mvector3.length_sq
+local mvec3_cpy = mvector3.copy
+--local mvec3_set_stat = mvector3.set_static
+local mvec3_set_length = mvector3.set_length
+--local mvec3_angle = mvector3.angle
+local mvec3_step = mvector3.step
+local mvec3_rotate_with = mvector3.rotate_with
+
+local temp_vec1 = Vector3()
+local temp_vec2 = Vector3()
+local temp_vec3 = Vector3()
+
+local math_lerp = math.lerp
+local math_random = math.random
+local math_up = math.UP
+local math_abs = math.abs
+local math_clamp = math.clamp
+local math_min = math.min
+local math_max = math.max
+local math_sign = math.sign
+
+local table_insert = table.insert
+
+local clone_g = clone
+
+local REACT_AIM = AIAttentionObject.REACT_AIM
+local REACT_COMBAT = AIAttentionObject.REACT_COMBAT
+local REACT_SHOOT = AIAttentionObject.REACT_SHOOT
+
+function SpoocLogicAttack.enter(data, new_logic_name, enter_params)
+	CopLogicBase.enter(data, new_logic_name, enter_params)
+	data.brain:cancel_all_pathing_searches()
+
+	local old_internal_data = data.internal_data
+	local my_data = {
+		unit = data.unit
+	}
+	my_data.detection = data.char_tweak.detection.combat
+
+	if old_internal_data then
+		my_data.turning = old_internal_data.turning
+		my_data.firing = old_internal_data.firing
+		my_data.shooting = old_internal_data.shooting
+		my_data.attention_unit = old_internal_data.attention_unit
+
+		CopLogicAttack._set_best_cover(data, my_data, old_internal_data.best_cover)
+	end
+
+	data.internal_data = my_data
+
+	if data.cool then
+		data.unit:movement():set_cool(false)
+
+		if my_data ~= data.internal_data then
+			return
+		end
+	end
+
+	local objective = data.objective
+
+	if not my_data.shooting then
+		local new_stance = objective and objective.stance ~= "ntl" and objective.stance or "hos"
+
+		if data.char_tweak.allowed_stances and not data.char_tweak.allowed_stances[new_stance] then
+			if new_stance ~= "hos" and data.char_tweak.allowed_stances.hos then
+				new_stance = "hos"
+			elseif new_stance ~= "cbt" and data.char_tweak.allowed_stances.cbt then
+				new_stance = "cbt"
+			else
+				new_stance = nil
+			end
+		end
+
+		if new_stance then
+			data.unit:movement():set_stance(new_stance)
+
+			if my_data ~= data.internal_data then
+				return
+			end
+		end
+	end
+
+	my_data.cover_test_step = 1
+
+	CopLogicIdle._chk_has_old_action(data, my_data)
+
+	local key_str = tostring(data.key)
+	my_data.detection_task_key = "CopLogicAttack._upd_enemy_detection" .. key_str
+
+	CopLogicBase.queue_task(my_data, my_data.detection_task_key, CopLogicAttack._upd_enemy_detection, data, data.t, data.important and true)
+
+	if objective then
+		if objective.action_duration or objective.action_timeout_t and data.t < objective.action_timeout_t then
+			my_data.action_timeout_clbk_id = "CopLogicIdle_action_timeout" .. key_str
+			local action_timeout_t = objective.action_timeout_t or data.t + objective.action_duration
+			objective.action_timeout_t = action_timeout_t
+
+			CopLogicBase.add_delayed_clbk(my_data, my_data.action_timeout_clbk_id, callback(CopLogicIdle, CopLogicIdle, "clbk_action_timeout", data), action_timeout_t)
+		end
+	end
+
+	my_data.attitude = objective and objective.attitude or "avoid"
+	my_data.weapon_range = data.char_tweak.weapon[data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage].range
+
+	data.brain:set_attention_settings({
+		cbt = true
+	})
+	data.brain:set_update_enabled_state(true)
+end
+
+function SpoocLogicAttack.update(data)
+	local t = TimerManager:game():time()
+	data.t = t
+	local t = data.t
+	local unit = data.unit
+	local my_data = data.internal_data
+
+	if my_data.spooc_attack then
+		if data.internal_data == my_data then
+			CopLogicBase._report_detections(data.detected_attention_objects)
+		end
+
+		return
+	end
+
+	if my_data.has_old_action then
+		CopLogicAttack._upd_stop_old_action(data, my_data)
+		
+		if my_data.has_old_action then
+			return
+		end		
+	end
+
+	if CopLogicIdle._chk_relocate(data) then
+		return
+	end
+
+	CopLogicAttack._process_pathing_results(data, my_data)
+
+	if not data.attention_obj or data.attention_obj.reaction < AIAttentionObject.REACT_AIM then
+		CopLogicAttack._upd_enemy_detection(data, true)
+
+		if my_data ~= data.internal_data or not data.attention_obj then
+			return
+		end
+	end
+
+	SpoocLogicAttack._upd_spooc_attack(data, my_data)
+
+	if my_data.spooc_attack then
+		return
+	end
+
+	if AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction then
+		my_data.want_to_take_cover = CopLogicAttack._chk_wants_to_take_cover(data, my_data)
+
+		CopLogicAttack._update_cover(data)
+		CopLogicAttack._upd_combat_movement(data)
+		
+		if not data.logic.action_taken(data, my_data) then
+			CopLogicAttack._chk_start_action_move_out_of_the_way(data, my_data)
+		end
+	end
+end
+
 function SpoocLogicAttack.queued_update(data)
 	local t = TimerManager:game():time()
 	data.t = t

@@ -1304,7 +1304,6 @@ function PlayerDamage:_set_health_effect()
 end
 
 function PlayerDamage:build_suppression(amount)
-
 	if not managers.player:has_category_upgrade("player", "sociopath_mode") then
 		if self:_chk_suppression_too_soon(amount) then
 			return
@@ -1322,7 +1321,7 @@ function PlayerDamage:build_suppression(amount)
 		data.value = math.min(tweak_data.player.suppression.max_value, (data.value or 0) + amount * tweak_data.player.suppression.receive_mul)
 		self._last_received_sup = amount
 		self._next_allowed_sup_t = managers.player:player_timer():time() + self._dmg_interval
-		data.decay_start_t = managers.player:player_timer():time() + tweak_data.player.suppression.decay_start_delay
+		data.decay_start_t = managers.player:player_timer():time()
 	end
 end
 
