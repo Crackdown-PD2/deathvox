@@ -6,6 +6,45 @@ local mvec3_add = mvector3.add
 local mvec3_mul = mvector3.multiply
 local mvec3_norm = mvector3.normalize
 
+local tmp_ground_from_vec = Vector3()
+local tmp_ground_to_vec = Vector3()
+local up_offset_vec = math.UP * 30
+local down_offset_vec = math.UP * -40
+
+function PlayerStandard:_update_ground_ray()
+	local hips_pos = tmp_ground_from_vec
+	local down_pos = tmp_ground_to_vec
+
+	mvec3_set(hips_pos, self._pos)
+	mvec3_add(hips_pos, up_offset_vec)
+	mvec3_set(down_pos, hips_pos)
+	mvec3_add(down_pos, down_offset_vec)
+
+	if self._unit:movement():ladder_unit() then
+		self._gnd_ray = self._unit:raycast("ray", hips_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "ignore_unit", self._unit:movement():ladder_unit(), "ray_type", "body mover", "sphere_cast_radius", 29, "bundle", 9, "report")
+	else
+		self._gnd_ray = self._unit:raycast("ray", hips_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "ray_type", "body mover", "sphere_cast_radius", 29, "bundle", 9, "report")
+	end
+
+	self._gnd_ray_chk = true
+end
+
+function PlayerStandard:_chk_floor_moving_pos(pos)
+	local hips_pos = tmp_ground_from_vec
+	local down_pos = tmp_ground_to_vec
+
+	mvec3_set(hips_pos, self._pos)
+	mvec3_add(hips_pos, up_offset_vec)
+	mvec3_set(down_pos, hips_pos)
+	mvec3_add(down_pos, down_offset_vec)
+
+	local ground_ray = self._unit:raycast("ray", hips_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "ray_type", "body mover", "sphere_cast_radius", 29, "bundle", 9)
+
+	if ground_ray and ground_ray.body and math.abs(ground_ray.body:velocity().z) > 0 then
+		return ground_ray.body:position().z
+	end
+end
+
 function PlayerStandard:init(unit)
 	PlayerMovementState.init(self, unit)
 

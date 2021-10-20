@@ -48,6 +48,7 @@
 		<post :script_path="medic/medicdamage.lua" :hook_id="medic/medicdamage"/>
 		<post :script_path="medic/actions/upper_body/medicactionheal.lua" :hook_id="medic/actions/upper_body/medicactionheal"/>
 		<post :script_path="cop/logics/coplogicattack.lua" :hook_id="cop/logics/coplogicattack"/>
+		<post :script_path="cop/logics/coplogicsniper.lua" :hook_id="cop/logics/coplogicsniper"/>
 		<post :script_path="cop/logics/coplogicinactive.lua" :hook_id="cop/logics/coplogicinactive"/>
 		<post :script_path="cop/logics/coplogictravel.lua" :hook_id="cop/logics/coplogictravel"/>
 		<post :script_path="cop/logics/coplogicarrest.lua" :hook_id="cop/logics/coplogicarrest"/>

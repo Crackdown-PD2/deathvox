@@ -65,7 +65,7 @@ function HuskPlayerMovement:sync_action_walk_nav_point(pos, speed, action, param
 
 	if not pos then
 		if path_len <= 0 or self._movement_path[path_len].pos then
-			pos = mvec3_cpy(self._m_pos)
+			pos = mvec3_cpy(self:m_pos())
 		end
 	end
 
@@ -413,6 +413,7 @@ function HuskPlayerMovement:_get_max_move_speed(run)
 end
 
 function HuskPlayerMovement:_chk_ground_ray(check_pos, return_ray)
+	local mover_radius = 60
 	local up_pos = tmp_vec1
 
 	mvec3_set(up_pos, math.UP)
@@ -422,15 +423,16 @@ function HuskPlayerMovement:_chk_ground_ray(check_pos, return_ray)
 	local down_pos = tmp_vec2
 
 	mvec3_set(down_pos, math.UP)
-	mvec3_mul(down_pos, -30)
+	mvec3_mul(down_pos, -40)
 	mvec3_add(down_pos, check_pos or self._m_pos)
 
 	if return_ray then
-		return World:raycast("ray", up_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "sphere_cast_radius", 29, "ray_type", "walk")
+		return World:raycast("ray", up_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "ray_type", "body mover", "sphere_cast_radius", 29, "bundle", 9)
 	else
-		return World:raycast("ray", up_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "sphere_cast_radius", 29, "ray_type", "walk", "report")
+		return World:raycast("ray", up_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "ray_type", "body mover", "sphere_cast_radius", 29, "bundle", 9, "report")
 	end
 end
+
 
 function HuskPlayerMovement:_update_air_time(t, dt)
 	if self._in_air then
@@ -439,7 +441,7 @@ function HuskPlayerMovement:_update_air_time(t, dt)
 		self._air_time = self._air_time + dt
 
 		if self._air_time > 0.5 then
-			local on_ground = self:_chk_ground_ray(self:m_pos())
+			local on_ground = self:_chk_ground_ray(self._m_pos)
 
 			if on_ground then
 				self._in_air = false
@@ -455,7 +457,7 @@ function HuskPlayerMovement:_update_air_time(t, dt)
 		if not self._check_air_time or self._check_air_time <= 0 then
 			self._check_air_time = 1 / tweak_data.network.player_tick_rate
 			
-			local on_ground = self:_chk_ground_ray(self:m_pos())
+			local on_ground = self:_chk_ground_ray(self._m_pos)
 
 			if not on_ground then
 				if not self._bleedout then
@@ -467,7 +469,6 @@ function HuskPlayerMovement:_update_air_time(t, dt)
 		end
 	end
 end
-
 --[[local draw_player_newest_pos = nil
 local draw_player_detect_pos = nil
 

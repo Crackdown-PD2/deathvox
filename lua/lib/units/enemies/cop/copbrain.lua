@@ -42,6 +42,7 @@ function CopBrain:post_init()
 	CopBrain._logic_variants.deathvox_heavyar = clone(security_variant)
 	CopBrain._logic_variants.deathvox_lightar = clone(security_variant)
 	CopBrain._logic_variants.deathvox_medic = clone(security_variant)
+	CopBrain._logic_variants.deathvox_medic.attack = MedicLogicAttack
 	CopBrain._logic_variants.deathvox_guard = clone(security_variant)
 	CopBrain._logic_variants.deathvox_gman = clone(security_variant)
 	CopBrain._logic_variants.deathvox_lightshot = clone(security_variant)
@@ -78,6 +79,8 @@ function CopBrain:post_init()
 
 	old_init(self)
 	CopBrain._logic_variants.taser = clone(security_variant)
+	CopBrain._logic_variants.medic = clone(security_variant)
+	CopBrain._logic_variants.medic.attack = MedicLogicAttack
 end
 
 CopBrain._NET_EVENTS = {
