@@ -2722,8 +2722,13 @@ function MedicLogicAttack._chk_wants_to_take_cover(data, my_data)
 	
 	if data.group then
 		for u_key, u_data in pairs_g(data.group.units) do
-			if u_key ~= data.key then
-				local dis = mvec3_dis_sq(data.m_pos, u_data.m_pos)
+			if u_key ~= data.key and u_data.unit:base().has_tag and not u_data.unit:base():has_tag("medic") then
+				local follow_unit = u_data.unit
+				local follow_tracker = follow_unit:movement():nav_tracker()
+				local advance_pos = follow_unit:brain() and follow_unit:brain():is_advancing()
+				local follow_unit_pos = advance_pos or follow_tracker:field_position()
+			
+				local dis = mvec3_dis_sq(data.m_pos, follow_unit_pos)
 
 				if dis < 160000 then
 					CopLogicAttack._cancel_charge(data, my_data)
@@ -2752,8 +2757,13 @@ function MedicLogicAttack._update_cover(data)
 		
 		if data.group then
 			for u_key, u_data in pairs_g(data.group.units) do
-				if u_key ~= data.key then
-					local dis = mvec3_dis_sq(my_pos, u_data.m_pos)
+				if u_key ~= data.key and u_data.unit:base().has_tag and not u_data.unit:base():has_tag("medic") then
+					local follow_unit = u_data.unit
+					local follow_tracker = follow_unit:movement():nav_tracker()
+					local advance_pos = follow_unit:brain() and follow_unit:brain():is_advancing()
+					local follow_unit_pos = advance_pos or follow_tracker:field_position()
+				
+					local dis = mvec3_dis_sq(data.m_pos, follow_unit_pos)
 
 					if dis < 160000 then
 						find_new_cover = nil
@@ -2762,9 +2772,9 @@ function MedicLogicAttack._update_cover(data)
 						CopLogicAttack._cancel_charge(data, my_data)
 						break
 					else
-						near_pos = u_data.unit:movement():nav_tracker():field_position()
+						near_pos = follow_unit_pos
 						my_data.charge_pos = near_pos
-						move_area = managers.groupai:state():get_area_from_nav_seg_id(u_data.unit:movement():nav_tracker():nav_segment())
+						move_area = managers.groupai:state():get_area_from_nav_seg_id(follow_tracker:nav_segment())
 					end
 				end
 			end
@@ -3089,7 +3099,7 @@ function MedicLogicAttack.update(data)
 	if my_data.has_old_action then
 		CopLogicAttack._upd_stop_old_action(data, my_data)
 
-		if not my_data.update_queue_id then
+		if not my_data.use_brain and not my_data.update_queue_id then
 			data.brain:set_update_enabled_state(false)
 
 			my_data.update_queue_id = "MedicLogicAttack.queued_update" .. tostring(data.key)
@@ -3161,7 +3171,7 @@ function MedicLogicAttack.update(data)
 		CopLogicAttack._chk_start_action_move_out_of_the_way(data, my_data)
 	end
 
-	if not my_data.update_queue_id then
+	if not my_data.use_brain and not my_data.update_queue_id then
 		data.brain:set_update_enabled_state(false)
 
 		my_data.update_queue_id = "MedicLogicAttack.queued_update" .. tostring(data.key)
