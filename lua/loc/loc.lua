@@ -188,7 +188,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				debug_silent_sentry_gun = "Friendship Collar",
 				hud_deploying_friendship_collar = "Converting $TARGET_UNIT...",
 				bm_equipment_sentry_gun_silent = "Friendship Collar",
-				bm_equipment_sentry_gun_silent_desc = "A \"compliance device\" that can convert a non-special enemy into a Joker to fight for you.\n(It's not actually dangerous, but don't tell the cops that.)\n\nTo convert an enemy, get within melee range and hold $BTN_INTERACT while targeting them. Subdued enemies that have cuffed themselves will be converted instantly. Jokers have 50% Damage Resistance and will follow you closely, fighting to protect you.\n\nYou can only have one Joker at a time. Jokers do not count as Hostages.",
+				bm_equipment_sentry_gun_silent_desc = "A \"compliance device\" that can convert a non-special enemy into a Joker to fight for you.\n(It's not actually dangerous, but don't tell the cops that.)\n\nTo convert an enemy, get within melee range and hold $BTN_USE_ITEM while targeting them. Subdued enemies that have cuffed themselves will be converted instantly. Jokers have 50% Damage Resistance and will follow you closely, fighting to protect you.\n\nYou can only have one Joker at a time. Jokers do not count as Hostages.",
 				
 				debug_trip_mine = "Shaped Charges",
 				bm_equipment_trip_mine = "Shaped Charges",
