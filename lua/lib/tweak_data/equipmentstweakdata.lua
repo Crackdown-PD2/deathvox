@@ -7,6 +7,37 @@ if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		self.specials.cable_tie.quantity = 10
 		self.specials.cable_tie.max_quantity = 10
 		
+		self.first_aid_kit.target_deploy_text = "hud_deploying_revive_fak"
+		self.first_aid_kit.target_type = "teammates"
+		
+		self.sentry_gun_silent = {
+			deploy_time = 3,
+			deploy_distance = 150,
+			deploying_text_id = "hud_deploying_friendship_collar",
+			target_deploy_text = "hud_deploying_friendship_collar",
+			target_type = "enemies",
+--			dummy_unit = "units/payday2/equipment/gen_equipment_sentry/gen_equipment_sentry_dummy",
+			text_id = "debug_silent_sentry_gun",
+			use_function_name = "use_friendship_collar",
+--			unit = 2,
+--			min_ammo_cost = 2,
+--			ammo_cost = math.huge,
+			visual_object = "g_toolbag",
+			icon = "mugshot_cuffed",
+			description_id = "des_sentry_gun",
+			quantity = {
+				3
+			},
+--			upgrade_deploy_time_multiplier = {
+--				upgrade = "sentry_gun_deploy_time_multiplier",
+--				category = "player"
+--			},
+--			upgrade_name = {
+--				"sentry_gun"
+--			}
+		}
+		
+		
 		self.max_amount.doctor_bag = 3
 		self.max_amount.first_aid_kit = 18
 		self.max_amount.trip_mine = math.huge

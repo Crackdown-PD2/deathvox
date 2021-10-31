@@ -58,6 +58,51 @@ local custom_find_params = {
 }
 
 if deathvox:IsTotalCrackdownEnabled() then
+	function PlayerEquipment:valid_target_enemy_placement(equipment_id,equipment_data,skip_preview)
+		local unit = self._unit
+		local mov_ext = unit:movement()
+		local rot = self:_m_deploy_rot()
+		local from = mov_ext:m_head_pos()
+		local to = tmp_vec1
+		
+		mrot_y(rot,to)
+		mvec3_mul(to,equipment_data.deploy_distance or 220)
+		mvec3_add(to, from)
+		
+		local slotmask = 22
+		
+		local ray = unit:raycast("ray",from,to,"slot_mask",slotmask)
+		
+		if ray and ray.unit then 
+			local target_unit = ray.unit
+			local is_enemy = managers.enemy:is_enemy(target_unit)
+			if is_enemy then
+				if not managers.groupai:state():is_enemy_converted_to_criminal(target_unit) then 
+					if not skip_preview then 
+						local head_pos = target_unit:movement():m_head_pos()
+						local radius = 10
+						Draw:brush(Color(0,1,1):with_alpha(0.66)):sphere(head_pos,radius)
+					end
+					return true,target_unit
+				end
+			end
+		end
+		
+	end
+	
+	function PlayerEquipment:use_friendship_collar()
+		local valid,target_unit = self:valid_target_enemy_placement("sentry_gun_silent",tweak_data.equipments.sentry_gun_silent,true)
+		if valid and alive(target_unit) then 
+			if Network:is_server() then
+				managers.groupai:state():convert_hostage_to_criminal(target_unit)
+				return true
+			else
+				managers.network:session():send_to_host("sync_interacted", target_unit, target_unit:id(), "hostage_convert", 1)
+				return true
+			end
+		end
+		return false
+	end
 
 	function PlayerEquipment:_check_unit_attach_segment(hit_unit, m_global_pos)
 		local damage_ext = hit_unit:character_damage()

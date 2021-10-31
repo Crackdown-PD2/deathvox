@@ -4445,7 +4445,6 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			
 			"body_armor6", --ictv
 			"armor_kit", --armor bag deployable
-			"player_convert_enemies",
 			"sentry_gun_silent",
 			"player_passive_convert_enemies_health_multiplier_1" --50% damage resistance
 		}

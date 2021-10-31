@@ -142,6 +142,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/vignette_overlay"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/vignette_overlay.png")
 	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/vignette_inverted_overlay"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/vignette_inverted_overlay.png")
 	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/scanlines_overlay"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/scanlines_overlay.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/blackmarket/icons/deployables/sentry_gun_silent"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/blackmarket/icons/tcd/sentry_gun_silent.texture")
 else
 	--load vanilla skill icons (in case user launched with tcd but toggled off tcd and reloaded game state)
 	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree_2/icons_atlas_2"),Idstring("texture"),"guis/textures/pd2/skilltree_2/icons_atlas_2.texture")

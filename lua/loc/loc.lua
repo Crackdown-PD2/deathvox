@@ -170,6 +170,8 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				sentry_ammo_standard = "Standard Ammo",
 				sentry_retrieve = "Retrieve",
 				
+				hud_deploy_valid_help = "Invalid aim location",
+				
 				hud_interact_edit_sentry_gun = "Hold $BTN_INTERACT to change Sentry mode",
 				hud_action_editing_sentry_gun = "Changing Sentry mode...", --not used
 				hud_interact_pickup_sentry_gun = "Hold $BTN_INTERACT to pick up sentry gun",
@@ -182,16 +184,25 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				bm_equipment_armor_kit_desc = "Advanced shock-resistant armor inserts that provide +15% Damage Resistance and allow the user to go down one additional time before instantly being taken into custody. To use, hold $BTN_USE_ITEM on a suitable surface and press $BTN_INTERACT to equip.\n\nOnce deployed, the Armor Plates Bag can be used 4 times before disappearing. Remaining uses are visible within the bag.",
 				bm_equipment_ammo_bag_desc = "Deployable ammunition container that refills expended ammunition and passively increases the holder's Ammunition Stock by 50%, even after using all charges. To use, hold $BTN_USE_ITEM on a suitable surface and press $BTN_INTERACT to refill ammunition.\n\nOnce deployed, the Ammo Bag can completely refill ammunition stocks 4 times before disappearing. Remaining uses are visible within the bag.",
 				bm_equipment_first_aid_kit_desc = "Single-use healing deployable that fully restores the user's health. To use, hold $BTN_USE_ITEM on a suitable surface and press $BTN_INTERACT to heal.\n\nFirst Aid Kits can also be used to instantly revive and fully heal an incapacitated teammate by deploying a First Aid Kit within 1.5 meters of them.",
+				
+				debug_silent_sentry_gun = "Friendship Collar",
+				hud_deploying_friendship_collar = "Converting $TARGET_UNIT...",
+				bm_equipment_sentry_gun_silent = "Friendship Collar",
+				bm_equipment_sentry_gun_silent_desc = "A \"compliance device\" that can convert a non-special enemy into a Joker to fight for you.\n(It's not actually dangerous, but don't tell the cops that.)\n\nTo convert an enemy, get within melee range and hold $BTN_INTERACT while targeting them. Subdued enemies that have cuffed themselves will be converted instantly. Jokers have 50% Damage Resistance and will follow you closely, fighting to protect you.\n\nYou can only have one Joker at a time. Jokers do not count as Hostages.",
+				
+				debug_trip_mine = "Shaped Charges",
 				bm_equipment_trip_mine = "Shaped Charges",
 				bm_equipment_trip_mine_desc = "Shaped Charges are explosive tools that can destroy specific obstacles or open containers. Hold $BTN_INTERACT on an object's displayed weak point to prime it with a Shaped Charge.\n\nWarning: Shaped Charges will only activate when all of an object's weak points are primed.",
-				hud_deploying_revive_fak = "Reviving $TEAMMATE_NAME...",
+				hud_deploying_revive_fak = "Reviving $TARGET_UNIT...",
+				
+				hud_enemy_generic = "Enemy",
+				hud_teammate_generic = "Teammate",
 				
 				bm_wpn_prj_four_desc = "$ICN_THR Throwing weapons coated in $ICN_POI Poison that deals 150 damage per 0.5 seconds for 3 seconds. $ICN_POI Poison damage can stack and can incapacitate targets.",
 				bm_wpn_prj_ace_desc = "$ICN_THR Throwing weapons disguised as playing cards that deal 200 damage. They can't penetrate body armor, but they come in large amounts.",
 				bm_wpn_prj_target_desc = "$ICN_THR Throwing weapons that deal 800 damage.",
 				bm_wpn_prj_hur_desc = "$ICN_THR Throwing weapons that deal 1400 damage and can punch through Body Armor.",
 				bm_wpn_prj_jav_desc = "$ICN_THR Throwing weapons that deal 4000 damage and can slice through Body Armor.",
-				
 				bm_grenade_frag_desc = "$ICN_GRN Grenade that deals 300 damage in a 10m radius.\nEach enemy hit has a 40% chance to take Critical damage from the explosion.",
 				bm_grenade_frag_com_desc = "$ICN_GRN Grenade that deals 1000 damage in a 5m radius.",
 				bm_dynamite_desc = "$ICN_GRN Grenade that deals 5000 damage in a 10m radius. Reduced stock.",
@@ -201,14 +212,14 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				bm_grenade_fir_com_desc = "(CHANGES NOT YET IMPLEMENTED)\n\n$ICN_GRN Grenade that creates a 1m radius pool of flame for 30 seconds that deals 250 damage (50 vs allies) every 0.5 seconds.",
 				
 				bm_equipment_sentry_gun_desc = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Sentry Guns have infinite ammunition and will be ignored by enemies, but are prone to Overheating from extended combat.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.\n\nTo open the Radial Menu and configure a Sentry, hold $BTN_INTERACT to open the Radial Menu menu and release $BTN_INTERACT to choose an option. Opening the Radial Menu vents all current Heat.\n\nIf a Sentry Gun becomes Overheated, you can reset it by holding $BTN_INTERACT.",
-				bm_equipment_sentry_gun_silent_desc = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Sentry Guns have infinite ammunition and will be ignored by enemies, but are prone to Overheating from extended combat.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.\n\nTo open the Radial Menu and configure a Sentry, hold $BTN_INTERACT to open the Radial Menu menu and release $BTN_INTERACT to choose an option. Opening the Radial Menu vents all current Heat.\n\nIf a Sentry Gun becomes Overheated, you can reset it by holding $BTN_INTERACT.",
+				
 				debug_trip_mine_throwable = "Trip Mine",
 				bm_grenade_tripmine = "Trip Mine Throwable",
 				bm_grenade_tripmine_desc = "Trip Mines are explosive booby traps with multiple functions and trigger types. To deploy, hold your Use Throwable button on a suitable surface. To modify a placed Trip Mine, press $BTN_INTERACT while looking at them to open the radial menu.", --needs macros
+				
 				hud_deploying_tripmine_preview = "Ready to deploy $EQUIPMENT",
 				hud_sentry_gun_vent_heat = "Hold $BTN_INTERACT to vent sentrygun heat",
 				hud_action_sentry_gun_vent_heat = "Venting sentrygun...",
-				debug_trip_mine = "Shaped Charges",
 			--misc
 				hud_int_pick_electronic_lock = "Hold $BTN_INTERACT to hack the lock",
 				hud_action_picking_electronic_lock = "Hacking the lock...",

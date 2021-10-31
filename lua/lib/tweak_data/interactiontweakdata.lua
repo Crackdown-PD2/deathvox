@@ -1,5 +1,12 @@
 if deathvox:IsTotalCrackdownEnabled() then
 	Hooks:PostHook(InteractionTweakData, "init", "tcd_interactiontweakdata_init", function(self, tweak_data)
+	
+	--these shouldn't be used but just in case they are
+		self.hostage_convert.required_deployable = "sentry_gun_silent"
+		self.hostage_convert.deployable_consume = true
+		self.hostage_convert.timer = 3
+		self.hostage_convert.interact_distance = 150
+		
 		self.take_pardons.timer = 0		
 		self.take_pardons.sound_start = "money_grab"	
 		self.take_pardons.sound_event = "money_grab"	

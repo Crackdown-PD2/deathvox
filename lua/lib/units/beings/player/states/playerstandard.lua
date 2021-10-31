@@ -1462,15 +1462,32 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 	function PlayerStandard:_update_use_item_timers(t, input)
 		if self._use_item_expire_t then
-			local valid,target_revive = managers.player:check_selected_equipment_placement_valid(self._unit)
-			if target_revive and alive(target_revive) then 
-				local teammate_name = "Teammate"
-				local teammate_peer_id = managers.criminals:character_peer_id_by_unit(target_revive)
-				local character_name = managers.criminals:character_name_by_unit(target_revive)
-				teammate_name = (teammate_peer_id and managers.network:session():peer(teammate_peer_id):name()) or (character_name and managers.localization:text("menu_" .. character_name)) or teammate_name
+			local valid,deploy_target_unit = managers.player:check_selected_equipment_placement_valid(self._unit)
+			local equipment_id = managers.player:selected_equipment_id()
+			local equipment_data = equipment_id and tweak_data.equipments[equipment_id]
+			
+			if deploy_target_unit and alive(deploy_target_unit) and equipment_data then 
+				local target_name
+				if equipment_data.target_type == "teammates" then
+					target_name = managers.localization:text("hud_teammate_generic")
+					local teammate_peer_id = managers.criminals:character_peer_id_by_unit(deploy_target_unit)
+					local character_name = managers.criminals:character_name_by_unit(deploy_target_unit)
+					target_name = (teammate_peer_id and managers.network:session():peer(teammate_peer_id):name()) or (character_name and managers.localization:text("menu_" .. character_name)) or target_name
+				elseif equipment_data.target_type == "enemies" then 
+					
+--					if HopLib then 
+--						local name_provider = HopLib:name_provider()
+--						target_name = name_provider:name_by_id(deploy_target_unit:base().tweak_table)
+--					else
+
+					target_name = managers.localization:text("hud_enemy_generic")
+					
+--					end
+
+				end
 				
 				managers.hud:show_progress_timer({
-					text = string.gsub(managers.localization:text("hud_deploying_revive_fak"),"$TEAMMATE_NAME",teammate_name)
+					text = string.gsub(managers.localization:text(equipment_data.target_deploy_text or equipment_data.deploying_text_id),"$TARGET_UNIT",target_name)
 				})
 			else
 				managers.hud:show_progress_timer({
