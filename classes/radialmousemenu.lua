@@ -1,22 +1,27 @@
---v1.03
+local this_version = 1.13
+if RadialMouseMenu and RadialMouseMenu.VERSION and RadialMouseMenu.VERSION > this_version then 
+	return
+end
 
 RadialMouseMenu = RadialMouseMenu or class()
+RadialMouseMenu.VERSION = this_version
 
-RadialMouseMenu.queued_items = {}
+RadialMouseMenu.MOUSE_ID = RadialMouseMenu.MOUSE_ID or "radial_menu_mouse"
+RadialMouseMenu.queued_items = RadialMouseMenu.queued_items or {}
 
 function RadialMouseMenu.CreateQueuedMenus()
-	for i,_data in pairs(RadialMouseMenu.queued_items) do
+	for i=#RadialMouseMenu.queued_items,1,-1 do
 		local data = table.remove(RadialMouseMenu.queued_items,i)
 		local result = RadialMouseMenu:new(data.params,data.callback)
-		if result and (type(data.callback) == "function") then 
-			data.callback(result)
-		end
+--		if result and (type(data.callback) == "function") then 
+--			data.callback(result)
+--		end
 	end
 end
 
 function RadialMouseMenu:init(params,callback) --create new instance of a radial selection menu; called from new()
 	if not managers.gui_data then 
-		table.insert(RadialMouseMenu.queued_items,{callback = callback,params = params})
+		table.insert(RadialMouseMenu.queued_items,1,{callback = callback,params = params})
 		--if RadialMouseMenu:new() is called after RMM loads but before the rest of the game,
 		--save the information for later and create it on game load
 		return
@@ -45,7 +50,35 @@ function RadialMouseMenu:init(params,callback) --create new instance of a radial
 	Hooks:Register("radialmenu_selected_" .. name) --this hook is called when you select a thing
 	Hooks:Register("radialmenu_released_" .. name) --this is called when you hide a thing	
 	
-	self.keep_mouse_position = params.keep_mouse_position or false
+	
+	if params.keep_mouse_position == nil then 
+		self.keep_mouse_position = false
+	else
+		self.keep_mouse_position = params.keep_mouse_position
+	end
+	
+	if params.allow_keyboard_input == nil then 
+		self.allow_keyboard_input = true
+	else
+		self.allow_keyboard_input = params.allow_keyboard_input
+	end
+	
+	if params.allow_camera_look == nil then 
+		self.allow_camera_look = false
+	else
+		self.allow_camera_look = params.allow_camera_look
+	end
+	
+	--this effectively (albeit indirectly) overrides allow_camera_look and allow_keyboard_input anyway
+	if params.block_all_input == nil then 
+		self.block_all_input = true
+	else
+		self.block_all_input = params.block_all_input
+	end
+	if self.block_all_input then 
+		self.allow_keyboard_input = false
+		self.allow_camera_look = false
+	end
 	
 	local radius = params.radius or 300 --size of radial, NOT the size of the parent panel
 	self._size = radius
@@ -147,6 +180,7 @@ function RadialMouseMenu:init(params,callback) --create new instance of a radial
 		layer = 1
 	}--]]
 	self:populate_items() --!
+
 	if type(callback) == "function" then 
 		callback(self)
 	end
@@ -229,13 +263,13 @@ end
 function RadialMouseMenu:on_item_clicked(item,skip_hide)
 --	item._body:set_visible(not item._body:visible())
 	local success,result
+	if not (item.stay_open or skip_hide) then 
+		self:Hide(nil,false)
+	end
 	if item.callback then 
 		success,result = pcall(item.callback)
 	end
 	Hooks:Call("radialmenu_selected_" .. self._name,self._selected,result)
-	if not (item.stay_open or skip_hide) then 
-		self:Hide(nil,false)
-	end
 end
 
 
@@ -287,11 +321,11 @@ end
 
 function RadialMouseMenu:Show()
 	if not self._init_items_done then 
-		self:populate_items()	
+		self:populate_items()
 		self._init_items_done = true
 	end
 	
-	if RadialMouseMenu.current_menu and RadialMouseMenu._name ~= self:name() then 
+	if RadialMouseMenu.current_menu and RadialMouseMenu._name ~= self:get_name() then 
 		RadialMouseMenu.current_menu:Hide(true) --hide any other active radial menus, since only one can take input at a time
 	end
 	RadialMouseMenu.current_menu = self
@@ -300,11 +334,13 @@ function RadialMouseMenu:Show()
 	local data = {
 		mouse_move = callback(self, self, "mouse_moved"),
 		mouse_click = callback(self, self, "mouse_clicked"),
-		id = "radial_menu_mouse"
+		id =  RadialMouseMenu.MOUSE_ID
 	}
 	if not self._active then 
 		managers.mouse_pointer:use_mouse(data)
-		game_state_machine:_set_controller_enabled(false)
+		if self.block_all_input then 
+			game_state_machine:_set_controller_enabled(false)
+		end
 	end
 	if not self.keep_mouse_position then 
 		managers.mouse_pointer:set_mouse_world_position(self._hud:w()/2,self._hud:h()/2) --todo use center() instead
@@ -326,20 +362,26 @@ function RadialMouseMenu:Hide(skip_reset,do_success_cb)
 	end
 	self._hud:hide()
 --	RadialMouseMenu._WS:disconnect_keyboard()
+	if self.block_all_input then 
+		game_state_machine:_set_controller_enabled(true)
+	end
+	local item = self._selected and self._items[self._selected]
+	self._selected = false
 	if self._active then 
+		self._active = false
 		self._selector:set_visible(false)
+		local player = managers.player and managers.player:local_player()
+		if alive(player) then 
+			player:movement():current_state()._menu_closed_fire_cooldown = player:movement():current_state()._menu_closed_fire_cooldown + 0.01
+		end
 		self:on_closed()
+		managers.mouse_pointer:_deactivate(RadialMouseMenu.MOUSE_ID)
 		if do_success_cb then 
-			local item = self._selected and self._items[self._selected]
 			if item then 
 				self:on_item_clicked(item,true) --already hiding here so skip_hide 
 			end
 		end
-		managers.mouse_pointer:remove_mouse("radial_menu_mouse")
-		game_state_machine:_set_controller_enabled(true)
 	end
-	self._selected = false
-	self._active = false
 end
 
 --[[ to destroy a radial menu object:
@@ -480,7 +522,6 @@ function RadialMouseMenu:populate_items()
 		new_segment:set_center(wo,ho)
 		data._panel = new_segment --save master panel reference to this item's data
 		
---		local angle = (360 * ((k + 1) / num_items) - 90) % 360
 		local angle = (360 * ((k - 1) / num_items) - 90) % 360
 
 		local body = data.bitmap or { --arc texture for this item
@@ -501,22 +542,24 @@ function RadialMouseMenu:populate_items()
 
 		local icon = data.icon or { --invisible icon if not specified
 			layer = 3,
-			alpha = 0.7,
+			visible = false,
 			color = tweak_data.chat_colors[1 + (k % #tweak_data.chat_colors)] or Color.white
 		}
---		Log(angle,{color = icon.color})
 		icon.name = name .. "_ICON"
 		icon.w = icon.w or 24
 		icon.h = icon.h or 24
 		
 		local x = (math.cos(angle) * (self._size * 0.314))
 		local y = ((math.sin(angle) * (self._size * 0.314)) + - (icon.h / 2)) + (self._size / 2)
-		icon.x = x + (self._size / 2) - (icon.w / 2)
+		icon.x = x + (self._size / 2) -- -(icon.w / 2)
 		icon.y = y
+		icon.halign = "center"
+		icon.valign = "center"
 		
 		
 		local segment_icon = new_segment:bitmap(icon)
-		data._icon = segment_icon		
+		segment_icon:set_center(icon.x,icon.y)
+		data._icon = segment_icon
 		
 		local text_panel = data.text_panel or { 
 			name = name .. "_TEXT_PANEL",
@@ -538,6 +581,7 @@ function RadialMouseMenu:populate_items()
 		
 		self._selector:set_color(Color(1/num_items,1,1))
 	end	
+	self._init_items_done = true
 end
 
 

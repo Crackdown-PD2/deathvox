@@ -217,10 +217,71 @@ function SentryControlMenu:SetActionMenu(menu)
 	for k,v in pairs(self.action_radial._items) do 
 		v._body:set_alpha(0.66)
 	end
-
+	menu._selector:set_image("guis/textures/pd2/radial_menu_assets/rmm_selector")
+--	menu._selector:set_alpha(0.31)
+	menu._bg:set_image("guis/textures/pd2/radial_menu_assets/rmm_bg")
+	menu._bg:set_alpha(0.31)
 	Hooks:Add("radialmenu_released_" .. self.action_radial:get_name(),"tcdso_menu_closed",function(num)
 		--not required
 	end)
+	
+	
+	
+	
+	menu.on_mouseover_item = function(self,index,...)
+		local item = self:get_item(index)
+		if not item then 
+			self._selected = false
+			return 
+		end
+		
+		if index ~= self._selected then 
+			local old_item = self:get_item(self._selected)
+			
+			local function animate_flare(o,w1,h1,w2,h2,x,y,duration)
+				over(duration,function(progress)
+					local progsq = progress * progress
+					local dw = w2 - w1
+					local dh = h2 - h1
+					o:set_size(w1 + (dw * progsq),h1 + (dh * progsq))
+					o:set_center(x,y)
+				end)
+			end
+			
+			item._icon:stop()
+			item._icon:animate(animate_flare,item._icon:w(),item._icon:h(),item.icon.w * 1.25,item.icon.h * 1.25,item.icon.x,item.icon.y,0.25)
+			
+			if old_item then
+				local icon_data = old_item.icon
+				old_item._icon:animate(animate_flare,old_item._icon:w(),old_item._icon:h(),icon_data.w,icon_data.h,old_item.icon.x,old_item.icon.y,0.33)
+			end
+			
+--			self._animate_in = item._panel:animate(animate_flare,false) --must be called from a hud panel
+			if old_item then 
+--				self._animate_out = old_item._panel:animate(animate_flare,true)
+			end
+		end
+		
+			--[[
+			local function animate_flare(o,down)
+				local text_panel = o._text_panel
+				local font_size = o.text_panel.font_size --this is not a typo, this is the default font size
+				local final_size = font_size * (down and 1 or 1.25)
+
+				local rate = down and 0.95 or 1.05
+				
+				repeat
+					local s = math[down and "max" or "min"](text_panel:font_size() * rate,final_size)
+					
+					text_panel:set_font_size(s)
+					
+					coroutine.yield()
+				until math.abs(text_panel:font_size() - final_size) <= 0.01
+			end--]]
+		
+		return RadialMouseMenu.on_mouseover_item(self,index,...)
+	end
+
 end
 	
 function SentryControlMenu:PickupSentry(unit)
@@ -242,7 +303,7 @@ Hooks:Add("BaseNetworkSessionOnLoadComplete","tcdso_sentry_onbaseloadcomplete",f
 	RadialMouseMenu:new({
 		name = managers.localization:text("tcdso_menu_title"),
 		radius = 200,
-		deadzone = 50,
+		deadzone = 40,
 		items = {
 			{
 				text = managers.localization:text("sentry_ammo_ap"),
