@@ -3707,7 +3707,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_st_spec_20"
 		}
 		
-		if false then --reamining perk decks will be added as time goes on; template data is here	
+		if false then --remaining perk decks will be added as time goes on; template data is here	
 					
 			self.specializations[perkdeck_indices.maniac] = {
 				{

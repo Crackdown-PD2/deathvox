@@ -1,8 +1,49 @@
 if deathvox:IsTotalCrackdownEnabled() then 
-	Hooks:PostHook(DoctorBagBase,"init","tcd_docbag_init",function(self,unit)
-		self.last_aoe_heal_t = 0
-	end)
+	
+	local mvec3_dis = mvector3.distance
+			
+	DoctorBagBase.List = {}
+	
+	function DoctorBagBase.Add(obj, pos, min_distance, upgrade_lvl)
+		table.insert(DoctorBagBase.List,{
+			obj = obj,
+			pos = pos,
+			min_distance = min_distance,
+			upgrade_lvl = upgrade_lvl
+		})
+	end
 
+	function DoctorBagBase.Remove(obj)
+		for i, o in pairs(DoctorBagBase.List) do
+			if obj == o.obj then
+				table.remove(DoctorBagBase.List,i)
+				return
+			end
+		end
+	end
+	
+	--since this includes a raycast LoS check, it is not recommended to call this every frame
+	function DoctorBagBase.GetDoctorBag(pos)
+		local best_bag
+		for i=#DoctorBagBase.List,1,-1 do 
+			local o = DoctorBagBase.List[i]
+			local dst = mvec3_dis(pos, o.pos)
+			local max_upgrade_lvl = 0
+			local t = managers.player:player_timer():time()
+			if alive(o.obj._unit) then 
+				if dst <= o.min_distance and o.upgrade_lvl > max_upgrade_lvl then
+					local raycast = World:raycast("ray",o.pos,pos,"slot_mask",managers.slot:get_mask("world_geometry"),"ignore_unit",o.obj._unit)
+					if not raycast then 
+						best_bag = o.obj
+						max_upgrade_lvl = o.upgrade_lvl
+					end
+				end
+			else
+				DoctorBagBase.Remove(obj)
+			end
+		end
+		return best_bag
+	end
 
 	function DoctorBagBase:setup(bits)
 		local amount_upgrade_lvl, dmg_reduction_lvl = self:_get_upgrade_levels(bits)
@@ -10,15 +51,18 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self._damage_overshield_upgrade = dmg_reduction_lvl
 		self._amount = tweak_data.upgrades.doctor_bag_base
 
-		if amount_upgrade_lvl == 0 then 
-			self._aoe_health_regen = false
-		else
-			self._aoe_health_regen = managers.player:upgrade_value_by_level("doctor_bag","aoe_health_regen",amount_upgrade_lvl,{0,0,math.huge})
+		self._aoe_health_regen_level = amount_upgrade_lvl
+		if amount_upgrade_lvl ~= 0 then 
+			local min_distance = managers.player:upgrade_value_by_level("doctor_bag","aoe_health_regen",amount_upgrade_lvl,{0,0,math.huge})[3]
+			DoctorBagBase.Add(self,
+				self._unit:oobb():center(),
+				min_distance,
+				amount_upgrade_lvl
+			)
 		end
 
 		self:_set_visual_stage()
-		local should_update = self._aoe_health_regen and true or false
-
+		
 		if Network:is_server() and self._is_attachable then
 			local from_pos = self._unit:position() + self._unit:rotation():z() * 10
 			local to_pos = self._unit:position() + self._unit:rotation():z() * -10
@@ -34,34 +78,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 				}
 			end
 			
-			should_update = true
+			self._unit:set_extension_update_enabled(Idstring("base"), true)
 		end
-		self._unit:set_extension_update_enabled(Idstring("base"), should_update)
 	end
 
-	local mvec3_dis = mvector3.distance
-	
 	function DoctorBagBase:update(unit, t, dt)
-		if self._aoe_health_regen then 
-			local rate,interval,range = unpack(self._aoe_health_regen)
-			if (t - self.last_aoe_heal_t) >= interval then 
-				self.last_aoe_heal_t = t
-				local player = managers.player:local_player()
-				if alive(player) then 
-					local docbag_pos = unit:position() + unit:rotation():z() * 10
-					local player_pos = player:movement():m_head_pos()
-					if mvec3_dis(docbag_pos,player_pos) <= range then 
-						local raycast = World:raycast("ray",docbag_pos,player_pos,"slot_mask",managers.slot:get_mask("world_geometry"),"ignore_unit",unit)
-						if not raycast then 
-							local dmg_ext = player:character_damage()
-							local max_health = dmg_ext:_max_health()
-							dmg_ext:change_health(rate * max_health)
-						end
-					end
-				end
-			end
-		end
-		if Network:is_server() and self._attached_data then 
+		if self._attached_data then 
 			self:_check_body()
 		end
 	end
@@ -97,4 +119,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		return taken > 0
 	end
+
+	Hooks:PreHook(DoctorBagBase,"destroy","tcd_docgbag_destroy",function(self)
+		DoctorBagBase.Remove(self)
+	end)
 end

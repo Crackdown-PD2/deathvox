@@ -232,16 +232,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		
 		return multiplier
 	end
-
-	local tcd_orig_health_regen = PlayerManager.health_regen
-	PlayerManager.tcd_orig_health_regen = tcd_orig_health_regen
-	function PlayerManager:health_regen(...)
-		local health_regen = self:tcd_orig_health_regen(...)
-		health_regen = health_regen + self:team_upgrade_value("crewchief","passive_health_regen",0)
-		health_regen = health_regen + self:upgrade_value("player", "muscle_health_regen", 0)
-		return health_regen 
-	end
-
+	
 	--same as vanilla but disabled HUD element in order to prevent conflicting with damage overshield mechanic
 	--if/when the actual absorption mechanic is overhauled, this function (and its accompanying HUD element) may also need to be revisited
 	function PlayerManager:set_damage_absorption(key, value)

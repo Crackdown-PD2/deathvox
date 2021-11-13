@@ -282,92 +282,6 @@ function PlayerDamage:update(unit, t, dt)
 	end
 end
 
-function PlayerDamage:_upd_health_regen(t, dt)
-	if self._health_regen_update_timer then
-		self._health_regen_update_timer = self._health_regen_update_timer - dt
-
-		if self._health_regen_update_timer <= 0 then
-			self._health_regen_update_timer = nil
-		end
-	end
-
-	local player_manager = managers.player
-	local current_health = self:get_real_health()
-	local max_health = self:_max_health()
-	local armor = self:get_real_armor()
-	
-	if not self._health_regen_update_timer then
-		if current_health < max_health then
-			local health_regen = player_manager:health_regen()
-			local fixed_health_regen = player_manager:fixed_health_regen(self:health_ratio())
-			
-			if health_regen > 0 then
-				self:restore_health(health_regen, false)
-			end
-			
-			if fixed_health_regen > 0 then
-				self:restore_health(fixed_health_regen, true)
-			end
-
-			self._health_regen_update_timer = 5
-		end
-	end
-	
-	if self._expres_election_stacks > 0 then
-		if current_health < max_health and not self._expres_can_insta_regen then
-			if player_manager:has_category_upgrade("player", "expres_hot_armorup") then
-				if self._expres_drain_t > 0 then
-					self._expres_drain_t = self._expres_drain_t - dt
-				else
-					self._expres_drain_t = player_manager:upgrade_value("player", "expres_hot_armorup", 5)
-		
-					local current_health_f = self.get_real_health
-					local regen_data = managers.player:upgrade_value("player", "expres_hot_election", {0, 0})
-					local stacks_to_consume = 0.5
-					
-					self._expres_election_stacks = self._expres_election_stacks - stacks_to_consume
-					self:restore_health(stacks_to_consume, true)
-					
-					if managers.hud then
-						local shown_stacks = self._expres_election_stacks
-						local max_stacks = regen_data[2]
-						
-						local stored_health_ratio = shown_stacks / max_stacks
-
-						managers.hud:set_stored_health(stored_health_ratio)
-					end
-					
-				end
-			end
-		end
-	end
-
-	if #self._damage_to_hot_stack > 0 then
-		repeat
-			local next_doh = self._damage_to_hot_stack[1]
-			local done = not next_doh or TimerManager:game():time() < next_doh.next_tick
-
-			if not done then
-				local regen_rate = player_manager:upgrade_value("player", "damage_to_hot", 0)
-
-				self:restore_health(regen_rate, true)
-
-				next_doh.ticks_left = next_doh.ticks_left - 1
-
-				if next_doh.ticks_left == 0 then
-					table.remove(self._damage_to_hot_stack, 1)
-				else
-					next_doh.next_tick = next_doh.next_tick + (self._doh_data.tick_time or 1)
-				end
-
-				table.sort(self._damage_to_hot_stack, function (x, y)
-					return x.next_tick < y.next_tick
-				end)
-			end
-		until done
-	end
-end
-
 function PlayerDamage:restore_armor_percent(armor_restored)
 	if self._dead or self._bleed_out or self._check_berserker_done then
 		return
@@ -1422,6 +1336,129 @@ function PlayerDamage:remove_armor_plates_bonus()
 end
 
 if deathvox:IsTotalCrackdownEnabled() then 
+
+	function PlayerDamage:_upd_health_regen(t, dt)
+		local player_manager = managers.player
+		local current_health_f = self.get_real_health
+		local max_health = self:_max_health()
+		local armor = self:get_real_armor()
+		
+		if self._health_regen_update_timer then
+			self._health_regen_update_timer = self._health_regen_update_timer - dt
+
+			if self._health_regen_update_timer <= 0 then
+				self._health_regen_update_timer = nil
+			end
+		end
+		
+			
+		--vanilla 5s interval passive hp regen over time
+		if not self._health_regen_update_timer then
+			--hp regen check is only performed on this interval
+			--timer continues to progress even when hp is full and regen check fails,
+			--unlike tcd's muscle/crewchief passive health regen over time
+			if current_health_f(self) < max_health then
+				local health_regen = player_manager:health_regen()
+				local fixed_health_regen = player_manager:fixed_health_regen(self:health_ratio())
+				
+				if health_regen > 0 then
+					self:restore_health(health_regen, false)
+				end
+				
+				if fixed_health_regen > 0 then
+					self:restore_health(fixed_health_regen, true)
+				end
+
+			end
+			self._health_regen_update_timer = 5
+		end
+		
+		--tcd 1s interval passive hp regen over time
+		if current_health_f(self) < max_health then
+			if not player_manager:has_active_temporary_property("generic_hot_cooldown") then 
+				local health_regen = 0
+				health_regen = health_regen + player_manager:team_upgrade_value("crewchief","passive_health_regen",0)
+				health_regen = health_regen + player_manager:upgrade_value("player", "muscle_health_regen", 0)
+				if health_regen > 0 then
+					self:restore_health(health_regen, false)
+					player_manager:activate_temporary_property("generic_hot_cooldown",1,1)
+				end
+			end
+			
+		--continuous hp over time (requires some backend networking tweaks in order to not clog the traffic; otherwise functional)
+--			local continuous_health_regen = 0
+--			continuous_health_regen = continuous_health_regen + player_manager:team_upgrade_value("crewchief","passive_health_regen",0)
+--			continuous_health_regen = continuous_health_regen + player_manager:upgrade_value("player", "muscle_health_regen", 0)
+--			if continuous_health_regen > 0 then 
+--				self:restore_health(continuous_health_regen * dt,false)
+--			end
+		end
+		
+		--Medic tree Checkup skill, docbag AoE hp regen over time (3s Basic/6s Aced interval)
+		if current_health_f(self) < max_health then
+			if not player_manager:has_active_temporary_property("docbag_hot_aoe_cooldown") then 
+				local found_docbag = DoctorBagBase.GetDoctorBag(player_manager:local_player():movement():m_head_pos())
+				if found_docbag then 
+					local rate,interval,range = unpack(managers.player:upgrade_value_by_level("doctor_bag","aoe_health_regen",found_docbag._aoe_health_regen_level,{0,0,math.huge}))
+					self:restore_health(rate,false)
+					player_manager:activate_temporary_property("docbag_hot_aoe_cooldown",interval,interval)
+				end
+			end
+		end
+		
+		if self._expres_election_stacks > 0 then
+			if current_health_f(self) < max_health and not self._expres_can_insta_regen then
+				if player_manager:has_category_upgrade("player", "expres_hot_armorup") then
+					if self._expres_drain_t > 0 then
+						self._expres_drain_t = self._expres_drain_t - dt
+					else
+						self._expres_drain_t = player_manager:upgrade_value("player", "expres_hot_armorup", 5)
+						
+						local regen_data = managers.player:upgrade_value("player", "expres_hot_election", {0, 0})
+						local stacks_to_consume = 0.5
+						
+						self._expres_election_stacks = self._expres_election_stacks - stacks_to_consume
+						self:restore_health(stacks_to_consume, true)
+						
+						if managers.hud then
+							local shown_stacks = self._expres_election_stacks
+							local max_stacks = regen_data[2]
+							
+							local stored_health_ratio = shown_stacks / max_stacks
+
+							managers.hud:set_stored_health(stored_health_ratio)
+						end
+						
+					end
+				end
+			end
+		end
+
+		if #self._damage_to_hot_stack > 0 then
+			repeat
+				local next_doh = self._damage_to_hot_stack[1]
+				local done = not next_doh or TimerManager:game():time() < next_doh.next_tick
+
+				if not done then
+					local regen_rate = player_manager:upgrade_value("player", "damage_to_hot", 0)
+
+					self:restore_health(regen_rate, true)
+
+					next_doh.ticks_left = next_doh.ticks_left - 1
+
+					if next_doh.ticks_left == 0 then
+						table.remove(self._damage_to_hot_stack, 1)
+					else
+						next_doh.next_tick = next_doh.next_tick + (self._doh_data.tick_time or 1)
+					end
+
+					table.sort(self._damage_to_hot_stack, function (x, y)
+						return x.next_tick < y.next_tick
+					end)
+				end
+			until done
+		end
+	end
 
 	function PlayerDamage:max_armor_stored_health()
 		local player_manager = managers.player
