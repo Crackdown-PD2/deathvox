@@ -375,7 +375,7 @@ function RadialMouseMenu:Hide(skip_reset,do_success_cb)
 			player:movement():current_state()._menu_closed_fire_cooldown = player:movement():current_state()._menu_closed_fire_cooldown + 0.01
 		end
 		self:on_closed()
-		managers.mouse_pointer:_deactivate(RadialMouseMenu.MOUSE_ID)
+		managers.mouse_pointer:remove_mouse(RadialMouseMenu.MOUSE_ID)
 		if do_success_cb then 
 			if item then 
 				self:on_item_clicked(item,true) --already hiding here so skip_hide 
