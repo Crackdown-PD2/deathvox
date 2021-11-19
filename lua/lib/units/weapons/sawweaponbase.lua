@@ -31,7 +31,7 @@ function SawWeaponBase:init(unit)
 
 	if is_total_cd then
 		self._rolling_cutter = managers.player:has_category_upgrade("saw", "enemy_cutter") --no ammo consumed on enemy hit
-		self._rolling_cutter_damage = managers.player:has_category_upgrade("saw","consecutive_damage_bonus") --stacking damage bonus on hit
+		self._rolling_cutter_damage = managers.player:has_category_upgrade("saw","consecutive_damage_bonus") and managers.player:upgrade_value("saw","consecutive_damage_bonus",{0,0})[1] --damage bonus per kill
 		self._extra_saw_range_mul = managers.player:upgrade_value("saw","range_mul",1) --basically what it says on the tin
 		self._saw_through_shields = managers.player:has_category_upgrade("saw", "ignore_shields") --also what it says on the tin + don't spend ammo when hitting shields
 		self._into_the_pit = managers.player:has_category_upgrade("saw","crit_first_strike") --see: tin
@@ -82,10 +82,6 @@ function SawWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spread_m
 
 	local user_unit = self._setup.user_unit
 	local ray_res, hit_something, drain_ammo, hit_an_enemy = self:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoot_player, spread_mul, autohit_mul, suppr_mul, target_unit)
-
-	if hit_an_enemy and is_total_cd and self._rolling_cutter_damage then 
-		Hooks:Call("OnProcRollingCutterBasic",1)
-	end
 
 	if hit_something then
 		self:_start_sawing_effect()
@@ -166,6 +162,14 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 	end
 
 	local damage = self:_get_current_damage(dmg_mul)
+	if self._rolling_cutter_damage then 
+		--log("stacks " .. tostring(managers.player:get_property("rolling_cutter_aced_stacks",0)) .. "")
+		local rolling_cutter_bonus = self._rolling_cutter_damage * managers.player:get_property("rolling_cutter_aced_stacks",0)
+		--log("damage_mul " .. tostring(rolling_cutter_bonus) .. "")
+		damage = damage * (1 + rolling_cutter_bonus)
+		--log("damage " .. tostring(damage) .. "")
+	end
+	
 	--raycast_all allows proper penetration by just using 1 ray, use it consistently instead of only when the player has the shield penetration upgrade
 	local ray_hits = world_g:raycast_all("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units, "ray_type", "body bullet lock")
 	local units_hit, actual_hits = {}, {}
@@ -201,16 +205,25 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 			end
 
 			local hit_result = SawHit:on_collision(hit, self._unit, user_unit, damage)
+			
+			if hit_result and is_total_cd and hit_an_enemy and hit_result.type and hit_result.type == "death" and hit_result.attack_data then
+				
+				--give rolling cutter basic damage bonus stacks here
+				if self._rolling_cutter_damage then 
+					Hooks:Call("OnProcRollingCutterBasic",1)
+				end
+				
+				--do bloody mess effect here
+				if self._bloody_mess_radius then 
+					do_bloody_mess = true
 
-			if hit_result and is_total_cd and hit_an_enemy and self._bloody_mess_radius and hit_result.type and hit_result.type == "death" and hit_result.attack_data then
-				do_bloody_mess = true
+					--raw_damage means the amount of damage dealt by a hit after all multipliers and reductions are applied, but before clamping the damage dealt to the maximum/current health of the unit
+					local new_bloody_damage = hit_result.attack_data.raw_damage or damage
 
-				--raw_damage means the amount of damage dealt by a hit after all multipliers and reductions are applied, but before clamping the damage dealt to the maximum/current health of the unit
-				local new_bloody_damage = hit_result.attack_data.raw_damage or damage
-
-				if not bloody_hit_damage or bloody_hit_damage < new_bloody_damage then
-					bloody_hit_damage = new_bloody_damage
-					bloody_hit_pos = hit.position
+					if not bloody_hit_damage or bloody_hit_damage < new_bloody_damage then
+						bloody_hit_damage = new_bloody_damage
+						bloody_hit_pos = hit.position
+					end
 				end
 			end
 
@@ -316,7 +329,7 @@ end
 function SawHit:on_collision(col_ray, weapon_unit, user_unit, damage)
 	local hit_unit = col_ray.unit
 	local unit_base_ext = hit_unit:base()
-	local is_crit = nil
+	local is_crit, unit_dmg_ext = nil
 
 	if is_total_cd then
 		if unit_base_ext and self._bonus_dozer_damage and unit_base_ext.has_tag and unit_base_ext:has_tag("tank") then
@@ -324,18 +337,22 @@ function SawHit:on_collision(col_ray, weapon_unit, user_unit, damage)
 		end
 
 		if self._into_the_pit then
-			local unit_dmg_ext = hit_unit:character_damage()
+			unit_dmg_ext = hit_unit:character_damage()
 
 			if unit_dmg_ext and not unit_dmg_ext._INTO_THE_PIT_PROC then
 				unit_dmg_ext._INTO_THE_PIT_PROC = true
 				is_crit = true
 			end
 		end
-	elseif unit_base_ext.has_tag and unit_base_ext:has_tag("tank") then --vanilla (but fixed), add 500 damage to the hit against all Dozers
+	elseif unit_base_ext and unit_base_ext.has_tag and unit_base_ext:has_tag("tank") then --vanilla (but fixed), add 500 damage to the hit against all Dozers
 		damage = damage + 50
 	end
 
 	local result = InstantBulletBase.on_collision(self, col_ray, weapon_unit, user_unit, damage, nil, nil, nil, is_crit)
+
+	if is_crit and alive(hit_unit) and unit_dmg_ext.build_suppression then
+		unit_dmg_ext:build_suppression("panic")
+	end
 
 	if hit_unit:damage() and col_ray.body:extension() and col_ray.body:extension().damage then
 		damage = math_clamp(damage * managers.player:upgrade_value("saw", "lock_damage_multiplier", 1) * 4, 0, 200)

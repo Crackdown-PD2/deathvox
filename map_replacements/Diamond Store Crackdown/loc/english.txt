@@ -1,10 +1,10 @@
 {
-	"heist_family_cd_name" : "Diamond Store Crackdown",
+	"heist_family_cd_name" : "Diamond Store: Cracked",
 	"heist_family_cd_brief" : "This is a high fashion jewelry store. Mostly diamonds in there. Bain wants a lot of bags. There is an alarm connected to the display cases. It will be a tough one.
 
 » Case the place carefully.
 » Check for guards, alarms and cameras
 » Fill your bags with diamond jewelry and get to the escape car",
-"heist_family_CD_name" : "Diamond Store Crackdown",
+"heist_family_CD_name" : "Diamond Store: Cracked",
 "heist_family_CD_brief" : "All the display cases in there are connected to an alarm. Disable the alarm and then steal the diamond jewelry. The escape driver is a bit jumpy so keep this quiet and methodical. Bag up everything. Let's get it all!"
 }

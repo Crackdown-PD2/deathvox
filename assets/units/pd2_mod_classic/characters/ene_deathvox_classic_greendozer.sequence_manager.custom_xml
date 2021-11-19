@@ -63,33 +63,17 @@
 			</endurance>
 		</body>
 		<body name="'body_armor_chest'">
-			<endurance lock="3">
+			<endurance explosion="200" lock="50">
 				<run_sequence name="'int_seq_armor_chest'"/>
 			</endurance>
 		</body>
-		<body name="'body_armor_stomache'">
-			<endurance lock="3">
-				<run_sequence name="'int_seq_armor_stomache'"/>
-			</endurance>
-		</body>
 		<body name="'body_armor_back'">
-			<endurance lock="3">
+			<endurance explosion="200" lock="50">
 				<run_sequence name="'int_seq_armor_back'"/>
-			</endurance>
-		</body>
-		<body name="'body_armor_throat'">
-			<endurance damage="25" lock="3" explosion="200">
-				<run_sequence name="'int_seq_armor_throat'"/>
-			</endurance>
-		</body>
-		<body name="'body_armor_neck'">
-			<endurance damage="25" lock="3" explosion="200">
-				<run_sequence name="'int_seq_armor_neck'"/>
 			</endurance>
 		</body>
 		<sequence editable_state="true" name="'leg_arm_hitbox'" triggable="true">
 			<body enabled="true" name="'body'"/>
-			<body enabled="true" name="'head'"/>
 			<body enabled="false" motion="'keyframed'" name="'rag_Hips'"/>
 			<body enabled="true" motion="'keyframed'" name="'rag_LeftUpLeg'"/>
 			<body enabled="true" motion="'keyframed'" name="'rag_RightUpLeg'"/>

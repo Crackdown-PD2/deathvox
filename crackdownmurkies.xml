@@ -133,6 +133,7 @@
 	<cooked_physics path="units/pd2_mod_sharks/characters/ene_deathvox_taser/ene_deathvox_taser" force="false"/>
 	<model path="units/pd2_mod_sharks/characters/ene_deathvox_taser/ene_deathvox_taser" force="false"/>
 	<unit path="units/pd2_mod_sharks/characters/ene_deathvox_taser/ene_deathvox_taser" force="false" load="true"/>
+	<sequence_manager path="units/pd2_mod_federales/characters/ene_deathvox_tazer/ene_deathvox_tazer" />
 	<material_config path="units/pd2_mod_sharks/characters/ene_deathvox_taser/ene_deathvox_taser" force="false"/>
 	<material_config path="units/pd2_mod_sharks/characters/ene_deathvox_taser/ene_deathvox_taser_contour" force="false"/>
 	<unit path="units/pd2_mod_sharks/characters/ene_deathvox_taser/ene_deathvox_taser_husk" force="false" load="true"/> 
@@ -220,31 +221,6 @@
 
 	<unit_obj path="units/pd2_mod_sharks/characters/ene_deathvox_greendozer/debris/ene_acc_bulldozer_stomache_murky_1/ene_acc_bulldozer_stomache_murky_1" load="false"/>
 	<cooked_physics path="units/pd2_mod_sharks/characters/ene_deathvox_greendozer/debris/ene_acc_bulldozer_stomache_murky_1/ene_acc_bulldozer_stomache_murky_1" force="false"/>
-	
-	<!--Murky Dozer 2 Armor Bits-->
-	<material_config path="units/pd2_mod_sharks/characters/ene_deathvox_blackdozer/debris/ene_acc_bulldozer_2_debris" force="false"/>
-	
-	<unit_obj path="units/pd2_mod_sharks/characters/ene_deathvox_blackdozer/debris/ene_acc_bulldozer_back_murky_2/ene_acc_bulldozer_back_murky_2" load="false"/>
-	<cooked_physics path="units/pd2_mod_sharks/characters/ene_deathvox_blackdozer/debris/ene_acc_bulldozer_back_murky_2/ene_acc_bulldozer_back_murky_2" force="false"/>
-	
-	<unit_obj path="units/pd2_mod_sharks/characters/ene_deathvox_blackdozer/debris/ene_acc_bulldozer_chest_murky_2/ene_acc_bulldozer_chest_murky_2" load="false"/>
-	<cooked_physics path="units/pd2_mod_sharks/characters/ene_deathvox_blackdozer/debris/ene_acc_bulldozer_chest_murky_2/ene_acc_bulldozer_chest_murky_2" force="false"/>
-
-	<unit_obj path="units/pd2_mod_sharks/characters/ene_deathvox_blackdozer/debris/ene_acc_bulldozer_stomache_murky_2/ene_acc_bulldozer_stomache_murky_2" load="false"/>
-	<cooked_physics path="units/pd2_mod_sharks/characters/ene_deathvox_blackdozer/debris/ene_acc_bulldozer_stomache_murky_2/ene_acc_bulldozer_stomache_murky_2" force="false"/>
-	
-	<!--Murky Dozer 3 Armor Bits-->
-	<material_config path="units/pd2_mod_sharks/characters/ene_deathvox_lmgdozer/debris/ene_acc_bulldozer_3_debris" force="false"/>
-	
-	<unit_obj path="units/pd2_mod_sharks/characters/ene_deathvox_lmgdozer/debris/ene_acc_bulldozer_back_murky_3/ene_acc_bulldozer_back_murky_3" load="false"/>
-	<cooked_physics path="units/pd2_mod_sharks/characters/ene_deathvox_lmgdozer/debris/ene_acc_bulldozer_back_murky_3/ene_acc_bulldozer_back_murky_3" force="false"/>
-	
-	<unit_obj path="units/pd2_mod_sharks/characters/ene_deathvox_lmgdozer/debris/ene_acc_bulldozer_chest_murky_3/ene_acc_bulldozer_chest_murky_3" load="false"/>
-	<cooked_physics path="units/pd2_mod_sharks/characters/ene_deathvox_lmgdozer/debris/ene_acc_bulldozer_chest_murky_3/ene_acc_bulldozer_chest_murky_3" force="false"/>
-
-	<unit_obj path="units/pd2_mod_sharks/characters/ene_deathvox_lmgdozer/debris/ene_acc_bulldozer_stomache_murky_3/ene_acc_bulldozer_stomache_murky_3" load="false"/>
-	<cooked_physics path="units/pd2_mod_sharks/characters/ene_deathvox_lmgdozer/debris/ene_acc_bulldozer_stomache_murky_3/ene_acc_bulldozer_stomache_murky_3" force="false"/>
-	<!--Murkdozer 3 Bits End-->	
 
 	<texture path="units/pd2_mod_sharks/characters/ene_deathvox_greendozer/bulldozer_df" force="false"/>
 	<texture path="units/pd2_mod_sharks/characters/ene_deathvox_blackdozer/bulldozer_saiga_df" force="false"/>
@@ -265,7 +241,7 @@
 	<cooked_physics path="units/pd2_mod_sharks/characters/ene_acc_murky_hat/ene_acc_murky_hat" />		
 	
 	<!--Murky Helmet-->	
-	<unit_mat_seq path="units/pd2_mod_sharks/characters/ene_acc_murky_helmet/ene_acc_murky_helmet" load="true"/>
+	<unit_obj path="units/pd2_mod_sharks/characters/ene_acc_murky_helmet/ene_acc_murky_helmet" load="true"/>
 	<cooked_physics path="units/pd2_mod_sharks/characters/ene_acc_murky_helmet/ene_acc_murky_helmet" />		
 
 	<!-- AR FBI Heavy SWAT -->
@@ -289,6 +265,7 @@
 	<!--Shared textures-->	
 	<texture path="units/pd2_mod_sharks/characters/shared_textures/city_heads_atlas_df" force="false"/>	
 	<texture path="units/pd2_mod_sharks/characters/shared_textures/city_heads_atlas_nm" force="false"/>	
+	<texture path="units/pd2_mod_sharks/characters/shared_textures/ene_murky_hrt_df" force="false"/>	
 	<texture path="units/pd2_mod_sharks/characters/shared_textures/fbi_heads_atlas_df" force="false"/>	
 	<texture path="units/pd2_mod_sharks/characters/shared_textures/fbi_heads_atlas_nm" force="false"/>	
 	<texture path="units/pd2_mod_sharks/characters/shared_textures/fbi_helmets_atlas_df" force="false"/>	

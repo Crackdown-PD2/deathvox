@@ -1,49 +1,51 @@
-local on_start_assault_original = SkirmishManager.on_start_assault
-function SkirmishManager:on_start_assault()
-	if not self._set_first_assault then
-		local diff = "normal"
-		local job_id_index = tweak_data.narrative:get_index_from_job_id(managers.job:current_job_id())
-		local level_id_index = tweak_data.levels:get_index_from_level_id(Global.game_settings.level_id)
-		local difficulty_index = tweak_data:difficulty_to_index(diff)
-		local one_down = Global.game_settings.one_down and true or false		
-		Global.game_settings.difficulty = diff
-		tweak_data:set_difficulty(diff)
+local cd_wave_difficulties = {
+	"normal", --1
+	"hard", --2
+	"overkill", --3
+	"overkill_145", --4
+	"overkill_145", --5
+	"easy_wish", --6
+	"overkill_290", --7
+	"overkill_290", --8
+	"sm_wish" --9
+}
 
-		if managers.network then
-			managers.network:session():send_to_peers("sync_game_settings", job_id_index, level_id_index, difficulty_index, one_down)
-		end
+function SkirmishManager:on_end_assault()
+	local wave_number = self:current_wave_number()
+	local new_ransom_amount = tweak_data.skirmish.ransom_amounts[wave_number]
+	self:set_ransom_amount(new_ransom_amount)
 
-		self._set_first_assault = true
+	wave_number = wave_number + 1
+	local new_difficulty = cd_wave_difficulties[wave_number]
+
+	if new_difficulty and new_difficulty ~= Global.game_settings.difficulty then
+		Global.game_settings.difficulty = new_difficulty
+		tweak_data:set_difficulty(new_difficulty)
 	end
 
-	on_start_assault_original(self)
+	if Network:is_server() then
+		managers.network:session():send_to_peers("sync_end_assault_skirmish")
+	end
 end
 
-Hooks:PreHook(SkirmishManager, "on_end_assault", "SkirmishMod_IncreaseDifficulty", function(self)
-	local wave_number = self:current_wave_number() + 1
-	local difficulty = {
-		"normal", --1
-		"hard", --2
-		"overkill", --3
-		"overkill_145", --4
-		"overkill_145", --5
-		"easy_wish", --6
-		"overkill_290", --7
-		"overkill_290", --8
-		"sm_wish", --9
-		"sm_wish"
-	}
-	if difficulty[wave_number] then
-		local duff = difficulty[wave_number]
-		local job_id_index = tweak_data.narrative:get_index_from_job_id(managers.job:current_job_id())
-		local level_id_index = tweak_data.levels:get_index_from_level_id(Global.game_settings.level_id)
-		local difficulty_index = tweak_data:difficulty_to_index(duff)
-		local one_down = Global.game_settings.one_down and true or false		
-		Global.game_settings.difficulty = duff
-		tweak_data:set_difficulty(duff)
+function SkirmishManager:sync_load(data)
+	local state = data.SkirmishManager
+	local wave_number = state.wave_number
 
-		if managers.network then
-			managers.network:session():send_to_peers("sync_game_settings", job_id_index, level_id_index, difficulty_index, one_down)
-		end
+	self:sync_start_assault(wave_number)
+
+	self._start_wave = wave_number
+
+	local new_ransom_amount = tweak_data.skirmish.ransom_amounts[wave_number]
+
+	if new_ransom_amount then
+		self:set_ransom_amount(new_ransom_amount)
 	end
-end)
+
+	local new_difficulty = cd_wave_difficulties[wave_number]
+
+	if new_difficulty and new_difficulty ~= Global.game_settings.difficulty then
+		Global.game_settings.difficulty = new_difficulty
+		tweak_data:set_difficulty(new_difficulty)
+	end
+end

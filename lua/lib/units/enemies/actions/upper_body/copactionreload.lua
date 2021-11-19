@@ -1,3 +1,4 @@
+local ids_upper_body = Idstring("upper_body")
 local mvec3_set = mvector3.set
 local mvec3_set_z = mvector3.set_z
 local mvec3_norm = mvector3.normalize
@@ -42,6 +43,24 @@ function CopActionReload:init(action_desc, common_data)
 	self._blocks = action_desc.blocks or {}
 	self._blocks.light_hurt = -1
 
+	if action_desc.start_data then
+		self._ext_movement._interrupted_reload_data = action_desc.start_data
+	end
+
+	if self._ext_movement._interrupted_reload_data then
+		if self._ext_anim.dodge or self._ext_anim.turn then
+			return
+		end
+
+		if self._ext_anim.upper_body_active and not self._ext_anim.upper_body_empty then --still not working properly if trying to reload immediately
+			self._ext_movement:play_redirect("up_idle")
+		end
+
+		self._anim_interrupt_t = self._ext_movement._interrupted_reload_data.anim_interrupt_t
+		self._rounds_left = self._ext_movement._interrupted_reload_data.rounds_left
+		self._ext_movement._interrupted_reload_data = nil
+	end
+
 	local weapon_unit = self._ext_inventory:equipped_unit()
 
 	if not weapon_unit then
@@ -51,11 +70,11 @@ function CopActionReload:init(action_desc, common_data)
 	self._weapon_unit = weapon_unit
 	self._weapon_base = self._weapon_unit:base()
 
-	local weap_tweak = self._weapon_unit:base():weapon_tweak_data()
-	local weapon_usage_tweak = common_data.char_tweak.weapon[weap_tweak.usage]
+	local weap_tweak = self._weapon_base:weapon_tweak_data()
 	self._weap_tweak = weap_tweak
-	self._w_usage_tweak = weapon_usage_tweak
 	self._is_looped = weap_tweak.reload == "looped" and true or nil
+
+	local weapon_usage_tweak = common_data.char_tweak.weapon[weap_tweak.usage]
 	self._reload_speed = weapon_usage_tweak.RELOAD_SPEED or 1
 
 	self._is_server = Network:is_server()
@@ -65,26 +84,30 @@ function CopActionReload:init(action_desc, common_data)
 	local reload_type = 0
 
 	if self._is_looped then
-		if self._weap_tweak.looped_reload_speed then
-			anim_multiplier = anim_multiplier * self._weap_tweak.looped_reload_speed
-		end
-
-		local sound_prefix = self._weap_tweak.sounds and self._weap_tweak.sounds.prefix
-		local single_reload = sound_prefix == "nagant_npc" or sound_prefix == "ching_npc" or sound_prefix == "ecp_npc" --using sounds because it's vanilla weapontweakdata friendly
-		local magazine_size, current_ammo_in_mag = self._weapon_base:ammo_info()
-
-		if action_desc.idle_reload then
-			if not self._is_server and action_desc.idle_reload ~= 0 then
-				magazine_size = action_desc.idle_reload
-			else
-				magazine_size = magazine_size - current_ammo_in_mag
-				reload_type = 1
+		if self._rounds_left then
+			self._loop_stop_t = t + self._rounds_left
+		else
+			if weap_tweak.looped_reload_speed then
+				anim_multiplier = anim_multiplier * weap_tweak.looped_reload_speed
 			end
+
+			local sound_prefix = weap_tweak.sounds and weap_tweak.sounds.prefix
+			local single_reload = sound_prefix == "nagant_npc" or sound_prefix == "ching_npc" or sound_prefix == "ecp_npc" --using sounds because it's vanilla weapontweakdata friendly
+			local magazine_size, current_ammo_in_mag = self._weapon_base:ammo_info()
+
+			if action_desc.idle_reload then
+				if not self._is_server and action_desc.idle_reload ~= 0 then
+					magazine_size = action_desc.idle_reload
+				else
+					magazine_size = magazine_size - current_ammo_in_mag
+					reload_type = 1
+				end
+			end
+
+			local loop_amount = single_reload and 1 or magazine_size
+
+			self._loop_stop_t = t + (1 * ((0.45 * loop_amount) / anim_multiplier))
 		end
-
-		local loop_amount = single_reload and 1 or magazine_size
-
-		self._loop_stop_t = t + (1 * ((0.45 * loop_amount) / anim_multiplier))
 	end
 
 	self._speed_mul = anim_multiplier
@@ -93,6 +116,7 @@ function CopActionReload:init(action_desc, common_data)
 	self._shoot_from_pos = shoot_from_pos
 
 	if self._is_server then
+		--self._ext_movement:set_stance_by_code(3)
 		common_data.ext_network:send("reload_weapon", reload_type, 1)
 	else
 		self._turn_allowed = true
@@ -108,7 +132,7 @@ function CopActionReload:init(action_desc, common_data)
 
 		CopActionAct._create_blocks_table(self, self._blocks)
 
-		self._skipped_frames = 1
+		--self._skipped_frames = 1
 
 		return true
 	else
@@ -117,20 +141,7 @@ function CopActionReload:init(action_desc, common_data)
 end
 
 function CopActionReload:update(t)
-	if self._is_looped then
-		if self._loop_stop_t and self._loop_stop_t < t then
-			self._weapon_base:on_reload()
-
-			self._expired = true
-			self._ext_movement:play_redirect("reload_looped_exit")
-		end
-	elseif not self._ext_anim.reload then
-		self._weapon_base:on_reload()
-
-		self._expired = true
-	end
-
-	local vis_state = self._ext_base:lod_stage()
+	--[[local vis_state = self._ext_base:lod_stage()
 	vis_state = vis_state or 4
 
 	if vis_state ~= 1 then
@@ -141,6 +152,30 @@ function CopActionReload:update(t)
 		else
 			self._skipped_frames = 1
 		end
+	end]]
+
+	if self._is_looped then
+		if self._loop_stop_t and self._loop_stop_t < t then
+			self._expired = true
+			self._ext_movement:play_redirect("reload_looped_exit")
+		elseif self._exiting_no_expire then
+			local interrupt_data = {
+				anim_interrupt_t = self._machine:segment_real_time(ids_upper_body)
+			}
+
+			interrupt_data.rounds_left = self._loop_stop_t - t
+
+			self._ext_movement._interrupted_reload_data = interrupt_data
+		end
+	elseif self._exiting_no_expire then
+		local interrupt_data = {
+			anim_interrupt_t = self._machine:segment_real_time(ids_upper_body)
+		}
+
+		self._ext_movement._interrupted_reload_data = interrupt_data
+	elseif not self._ext_anim.reload then
+		self._ext_movement._interrupted_reload_data = nil
+		self._expired = true
 	end
 
 	local target_pos, target_vec = nil
@@ -191,13 +226,47 @@ function CopActionReload:update(t)
 	end
 end
 
+function CopActionReload:_upd_empty(t)
+end
+
+function CopActionReload:get_hold_type(hold_type)
+	if not hold_type then
+		return
+	end
+
+	if type(hold_type) == "table" then
+		for _, hold in ipairs(hold_type) do
+			if HuskPlayerMovement.reload_times[hold] then
+				return hold
+			end
+		end
+
+		return
+	elseif HuskPlayerMovement.reload_times[hold_type] then
+		return hold_type
+	else
+		return
+	end
+end
+
 function CopActionReload:_play_reload()
-	local redir_name = self._is_looped and "reload_looped" or "reload"
-	local redir_res = self._ext_movement:play_redirect(redir_name)
+	local hold_type = CopActionReload.get_hold_type(self, self._weap_tweak.hold)
+	local redir_name = self._anim_interrupt_t and self._is_looped and "reload_looped" or self._is_looped and "reload_looped_start" or "reload"
+	local redir_res = nil
+
+	if self._anim_interrupt_t then
+		redir_res = self._ext_movement:play_redirect(redir_name, self._anim_interrupt_t)
+	else
+		redir_res = self._ext_movement:play_redirect(redir_name)
+	end
 
 	if redir_res then
 		if self._speed_mul then
 			self._machine:set_speed(redir_res, self._speed_mul)
+		end
+
+		if hold_type then
+			self._machine:set_parameter(redir_res, hold_type, 1)
 		end
 	else
 		--cat_print("george", "[CopActionReload:_play_reload] redirect failed in", self._machine:segment_state(Idstring("base")))
@@ -246,21 +315,43 @@ function CopActionReload:on_exit()
 		self[self._ik_preset.stop](self)
 	end
 
+	--[[if self._is_server then
+		if self._unit:brain() and self._unit:brain()._logic_data and self._unit:brain()._logic_data.internal_data then
+			if self._unit:brain()._logic_data.internal_data.shooting or self._unit:brain()._logic_data.internal_data.firing then
+				self._ext_movement:set_stance_by_code(3)
+			else
+				self._ext_movement:set_stance_by_code(2)
+			end
+		else
+			self._ext_movement:set_stance_by_code(2)
+		end
+	end]]
+
 	if self._expired then
-		if self._is_server then
+		if self._weapon_base then
+			self._weapon_base:on_reload()
+		end
+
+		--[[if self._is_server then
 			if self._attention and self._attention.reaction and self._attention.reaction >= AIAttentionObject.REACT_AIM then
 				self._ext_movement:set_stance_by_code(3)
 			else
 				self._ext_movement:set_stance_by_code(2)
 			end
-		end
-	else
-		self._expired = true
-		self._weapon_base:on_reload()
+		end]]
+	elseif self._weapon_unit then
+		self._exiting_no_expire = true
+
+		local interrupt_data = {
+			anim_interrupt_t = self._machine:segment_real_time(ids_upper_body)
+		}
 
 		if self._is_looped then
-			self._ext_movement:play_redirect("up_idle")
+			interrupt_data.rounds_left = self._loop_stop_t - TimerManager:game():time()
 		end
+
+		self._ext_movement._interrupted_reload_data = interrupt_data
+		self._ext_movement:play_redirect("up_idle")
 	end
 end
 
@@ -316,4 +407,43 @@ function CopActionReload:_get_target_pos(shoot_from_pos, attention)
 	mvec3_dir(target_vec, shoot_from_pos, target_pos)
 
 	return target_pos, target_vec
+end
+
+function CopActionReload:save(save_data)
+	if not self._ext_anim.reload then
+		return
+	end
+
+	save_data.type = "reload"
+	save_data.body_part = 3
+
+	local start_data = {
+		anim_interrupt_t = self._machine:segment_real_time(ids_upper_body)
+	}
+
+	if self._is_looped then
+		start_data.rounds_left = self._loop_stop_t - TimerManager:game():time()
+	end
+
+	save_data.start_data = start_data
+end
+
+function CopActionReload:on_inventory_event(event)
+	local new_weapon_unit = self._ext_inventory:equipped_unit()
+
+	if new_weapon_unit then
+		self._weapon_unit = new_weapon_unit
+		self._weapon_base = new_weapon_unit:base()
+		self._weap_tweak = self._weapon_base:weapon_tweak_data()
+	else
+		self._ext_movement:play_redirect("up_idle")
+
+		self._weapon_unit = nil
+		self._weapon_base = nil
+		self._weap_tweak = nil
+
+		self.update = self._upd_empty
+
+		self._expired = true
+	end
 end

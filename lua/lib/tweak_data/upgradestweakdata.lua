@@ -1,7 +1,32 @@
 
 
 Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_data)
-	if deathvox and deathvox:IsTotalCrackdownEnabled() then
+	--create the tcd upgrade tables in all cases so that upgrade checks won't crash when the overhaul is not enabled
+	
+--weapon classification categories
+	self.values.NO_WEAPON_CLASS = {} --addresses weapons whose weapon class has not been implemented
+	self.values.class_rapidfire = self.values.class_rapidfire or {}
+	self.values.class_shotgun = self.values.class_shotgun or {}
+	self.values.class_precision = self.values.class_precision or {}
+	self.values.class_heavy = self.values.class_heavy or {}
+	self.values.class_specialist = self.values.class_specialist or {}
+	self.values.class_saw = self.values.class_saw or {}
+	self.values.class_grenade = self.values.class_grenade or {}
+	self.values.class_throwing = self.values.class_throwing or {}
+	self.values.class_melee = self.values.class_melee or {} 
+--weapon subclass categories
+	self.values.subclass_poison = self.values.subclass_poison or {}
+	self.values.subclass_quiet = self.values.subclass_quiet or {}
+	self.values.subclass_areadenial = self.values.subclass_areadenial or {}
+	self.values.friendship_collar = self.values.friendship_collar or {}
+	
+	if deathvox:IsTotalCrackdownEnabled() then
+	
+		self.definitions.tripmine_throwable = {
+			category = "grenade"
+		}
+		table.insert(self.level_tree[0].upgrades,"tripmine_throwable")
+		
 		self.armor_plates_base = 4 --armor plates deployable
 		self.armor_plates_dmg_reduction = 0.85 -- damage_applied = kevlar_plates_dmg_reduction * incoming_damage, so eg. 0.9 = 10% damage reduction
 		
@@ -58,26 +83,154 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			0.44
 		}
 		--stamina is unchanged
-	
-	--weapon classification categories
-		self.values.NO_WEAPON_CLASS = {} --addresses weapons whose weapon class has not been implemented
-		self.values.rapidfire = self.values.rapidfire or {}
-		self.values.class_shotgun = self.values.class_shotgun or {}
-		self.values.precision = self.values.precision or {}
-		self.values.heavy = self.values.heavy or {}
-		self.values.specialist = self.values.specialist or {}
-		self.values.class_saw = self.values.class_saw or {}
-		self.values.class_grenade = self.values.class_grenade or {}
-		self.values.class_throwing = self.values.class_throwing or {}
-		self.values.class_melee = self.values.class_melee or {} 
-	--weapon subclass categories
-		self.values.subclass_poison = self.values.subclass_poison or {}
-		self.values.subclass_quiet = self.values.subclass_quiet or {}
-		self.values.subclass_areadenial = self.values.subclass_areadenial or {}
-		--todo make these consistent with the names in the converter script
+		
+		--Taskmaster
+		
+		self.values.cable_tie.quantity_1 = {
+			10 --10 default, 10 from skill, 20 total
+		}
+
+--				"player_intimidate_range_mul",
+--				"player_intimidate_aura",
+--				"player_civ_intimidation_mul"		
+		self.definitions.player_shout_intimidation_aoe = {
+			name_id = "menu_zip_it",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "shout_intimidation_aoe",
+				category = "player"
+			}
+		}
+		self.values.player.shout_intimidation_aoe = {1000}
+		
+		self.definitions.team_civilian_hostage_carry_bags = {
+			name_id = "menu_BLANK",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "civilian_hostage_carry_bags",
+				category = "player"
+			}
+		}
+		self.values.team.player.civilian_hostage_carry_bags  = {true}
+		
+		self.definitions.team_civilian_hostage_speed_bonus = {
+			name_id = "menu_BLANK",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "civilian_hostage_speed_bonus",
+				category = "player"
+			}
+		}
+		self.values.team.player.civilian_hostage_speed_bonus = {1.2} --20% speed bonus
 		
 		
-		--Boss
+		self.definitions.team_civilian_hostage_stationary_invuln = {
+			name_id = "menu_pack_mules",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "civilian_hostage_stationary_invuln",
+				category = "player"
+			}
+		}
+		self.values.team.player.civilian_hostage_stationary_invuln = {true}
+		
+		--this has to be written as a separate upgrade because apparently ovk checked for the same "super_syndrome" upgrade for both the no-fleeing mechanic, and the self-trading mechanic
+		self.definitions.team_civilian_hostage_no_fleeing = {
+			name_id = "menu_pack_mules",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "civilian_hostage_no_fleeing",
+				category = "player"
+			}
+		}
+		self.values.team.player.civilian_hostage_no_fleeing = {true}
+		
+		self.definitions.team_civilian_hostage_area_marking = {
+			name_id = "menu_BLANK",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "civilian_hostage_area_marking",
+				category = "player"
+			}
+		}
+		self.values.team.player.civilian_hostage_area_marking = {{1000,1},{1000,1.1}} --10m, 10% extra damage
+		self.values.team.player.civilian_hostage_area_marking_interval = 0.1 --referenced directly in civilianbrain
+		
+		self.definitions.team_civilian_hostage_aoe_damage_multiplier = {
+			name_id = "menu_BLANK",
+			category = "team",
+			upgrade = {
+				value = 2,
+				upgrade = "civilian_hostage_area_marking",
+				category = "player"
+			}
+		}
+		
+		--use this
+		self.definitions.team_civilian_hostage_aoe_damage_resistance_1 = {
+			name_id = "menu_BLANK",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "civilian_hostage_aoe_damage_resistance_1",
+				category = "player"
+			}
+		}
+		self.definitions.team_civilian_hostage_aoe_damage_resistance_2 = {
+			name_id = "menu_BLANK",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "civilian_hostage_aoe_damage_resistance_2",
+				category = "player"
+			}
+		
+		}
+		--10% damage resistance once, additive with second upgrade to a max of 20% from basic+aced
+		self.values.team.player.civilian_hostage_aoe_damage_resistance = {{25,0.1},{500,0.1}}
+		--looks like i'm gonna have to commit some sins to make the stacking upgrade work without additional unnecessary overhead from multiple vector distance checks
+		
+		self.definitions.team_civilian_hostage_vip_trade = {
+			name_id = "menu_false_idol",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "civilian_hostage_vip_trade",
+				category = "player"
+			}
+		}
+		self.values.team.player.civilian_hostage_vip_trade = {true}
+		
+		self.definitions.team_civilian_hostage_fakeout_trade = {
+			name_id = "menu_BLANK",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "civilian_hostage_fakeout_trade",
+				category = "player"
+			}
+		}
+		self.values.team.player.civilian_hostage_fakeout_trade = {true}
+		
+		self.values.player.falseidol_aced_followers = {
+			true
+		}
+		self.definitions.player_falseidol_aced_followers = {
+			name_id = "menu_falseidol_aced_followers",
+			category = "player",
+			upgrade = {
+				value = 1,
+				synced = true,
+				upgrade = "falseidol_aced_followers",
+				category = "player"
+			}
+		}
 		
 		--Marksman
 		
@@ -113,10 +266,10 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "enter_steelsight_speed_multiplier",
-				category = "precision"
+				category = "class_precision"
 			}
 		}
-		self.values.precision.enter_steelsight_speed_multiplier = { 
+		self.values.class_precision.enter_steelsight_speed_multiplier = { 
 			0.1 --was 2 for vanilla upgrade
 		}
 		
@@ -239,18 +392,256 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 	
-		
-		
 		--Medic
+		self.values.player.revive_interaction_speed_multiplier = { --vanilla upgrade, but tweaked values
+			0.7
+		}
+	
+		self.values.temporary.revive_damage_reduction = { --vanilla upgrade, but tweaked values
+			{
+				0.5, --1 - 0.5 = 0.5 -> 50% damage reduction
+				4	--for 4 seconds
+			}
+		}
+	
+		self.values.first_aid_kit.quantity = {
+			8, -- + 4 = 12 total
+			14 -- + 4 = 18 total
+		}
+	
+			--i didn't want to change the data type from a number to a table to hold the cooldown
+			--for many reasons, including stability and mod compatibility
+			--and the upgrade level index is used instead of the direct value for networking anyway,
+			--so we'll just get the cooldown time that way
+		self.values.first_aid_kit.first_aid_kit_auto_recovery = {
+			500,
+			500
+		}
+		self.values.first_aid_kit.auto_recovery_cooldown = {--this is referenced by the index of the above upgrade instead of having its own cooldown upgrade
+			20, --20 seconds cooldown
+			10 --10 seconds cooldown
+		}
+		self.definitions.first_aid_kit_auto_recovery_2 = {
+			name_id = "menu_life_insurance",
+			category = "equipment_upgrade",
+			upgrade = {
+				value = 2,
+				upgrade = "first_aid_kit_auto_recovery",
+				category = "first_aid_kit"
+			}
+		}
+		
+		self.values.doctor_bag.quantity = { --this is for the number of deployable docbags you have
+			1, --2 total
+			2 --3 total
+		}
+		self.definitions.doctor_bag_quantity_2 = {
+			name_id = "menu_doctor_bag_quantity",
+			category = "equipment_upgrade",
+			upgrade = {
+				value = 2,
+				upgrade = "quantity",
+				category = "doctor_bag"
+			}
+		}
+		
+		self.values.doctor_bag.aoe_health_regen = {
+			{
+				0.01, --regenerate 1% of max health
+				2, --every 2 seconds
+				150 --when within a 1.5 meter radius (3 meter diameter) of the docbag
+			},
+			{
+				0.01,
+				2,
+				300 --range increase to 3 meter radius (6 meter diameter)
+			}
+		}
+		self.definitions.doctor_bag_aoe_health_regen_1 = {
+			name_id = "menu_checkup",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "aoe_health_regen",
+				category = "doctor_bag"
+			}
+		}
+		self.definitions.doctor_bag_aoe_health_regen_2 = {
+			name_id = "menu_checkup",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "aoe_health_regen",
+				category = "doctor_bag"
+			}
+		}
+		
+		self.values.first_aid_kit.damage_overshield = {
+			{
+				1, --100% of the sum of health and armor is added as an absorption overshield
+				0
+			},
+			{
+				1,
+				2 --2 seconds of invuln applied when this overshield is broken
+			}
+		}
+		self.definitions.medic_damage_overshield = {
+			name_id = "menu_preventative_care",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "damage_overshield",
+				category = "first_aid_kit"
+			}
+		}
+		self.definitions.medic_overshield_break_invuln = {
+			name_id = "menu_preventative_care",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "damage_overshield",
+				category = "first_aid_kit"
+			}
+		}
 		
 		--Chief
+		
+		self.values.player.passive_convert_enemies_health_multiplier = {
+			0.5,
+			0.2
+		}
+		self.values.player.convert_enemies_interaction_speed_multiplier = {
+			0.1 --90% faster; modified vanilla upgrade
+		}
+		self.values.friendship_collar.quantity = {
+			3
+		}
+		self.definitions.friendship_collar_quantity = {
+			name = "menu_protect_and_serve",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "quantity",
+				category = "friendship_collar"
+			}
+		}
+		
+		self.values.player.convert_enemies_knockback_proof = {
+			true
+		}
+		self.definitions.player_convert_enemies_knockback_proof = {
+			name = "menu_order_through_law",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_knockback_proof",
+				synced = true,
+				category = "player"
+			}
+		}
+		self.values.player.convert_enemies_melee = {
+			true
+		}
+		self.definitions.player_convert_enemies_melee = {
+			name = "menu_order_through_law",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_melee",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.convert_enemies_piercing_bullets = {
+			true
+		}
+		self.definitions.player_convert_enemies_piercing_bullets = {
+			name = "menu_justice_with_mercy",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_piercing_bullets",
+				synced = true,
+				category = "player"
+			}
+		}
+		self.values.player.convert_enemies_accuracy_bonus = {
+			1.9
+		}
+		self.definitions.player_convert_enemies_accuracy_bonus = {
+			name = "menu_justice_with_mercy",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_accuracy_bonus",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.convert_enemies_health_regen = {
+			0.025
+		}
+		self.definitions.player_convert_enemies_health_regen = {
+			name = "menu_standard_of_excellence",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_health_regen",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.convert_enemies_target_marked = {
+			true
+		}
+		self.definitions.player_convert_enemies_target_marked = {
+			name = "menu_maintaining_the_peace",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_target_marked",
+				synced = true,
+				category = "player"
+			}
+		}
+		self.values.player.convert_enemies_marked_damage_bonus = {
+			1.25
+		}
+		self.definitions.player_convert_enemies_marked_damage_bonus = {
+			name = "menu_maintaining_the_peace",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_marked_damage_bonus",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.convert_enemies_tackle_specials = {
+			30
+		}
+		self.definitions.player_convert_enemies_tackle_specials = {
+			name_id = "menu_service_above_self",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_tackle_specials",
+				synced = true,
+				category = "player"
+			}
+		}
 		
 		--Enforcer
 		
 		self.values.class_shotgun.tender_meat_bodyshots = {
 			0.5
 		}
-		self.definitions.class_weapon_tender_meat_bodyshots = {
+		self.definitions.class_shotgun_tender_meat_bodyshots = {
 			name_id = "menu_tender_meat_basic",
 			category = "feature",
 			upgrade = {
@@ -267,8 +658,8 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			name_id = "menu_tender_meat_aced",
 			category = "feature",
 			upgrade = {
-			value = 1,
-			upgrade = "recoil_index_addend",
+				value = 1,
+				upgrade = "recoil_index_addend",
 				category = "class_shotgun"
 			}
 		}
@@ -280,14 +671,14 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			name_id = "menu_heartbreaker_basic",
 			category = "feature",
 			upgrade = {
-			value = 1,
-			upgrade = "heartbreaker_doublebarrel",
+				value = 1,
+				upgrade = "heartbreaker_doublebarrel",
 				category = "class_shotgun"
 			}
 		}
 		
 		self.values.class_shotgun.heartbreaker_damage = {
-			1
+			2
 		}
 		self.definitions.class_shotgun_doublebarrel_damage = {
 			name_id = "menu_heartbreaker_aced",
@@ -333,8 +724,8 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			name_id = "menu_rolling_thunder_basic",
 			category = "feature",
 			upgrade = {
-			value = 1,
-			upgrade = "rolling_thunder_magazine_capacity_bonus",
+				value = 1,
+				upgrade = "rolling_thunder_magazine_capacity_bonus",
 				category = "class_shotgun"
 			}
 		}
@@ -342,14 +733,14 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			name_id = "menu_rolling_thunder_aced",
 			category = "feature",
 			upgrade = {
-			value = 2,
-			upgrade = "rolling_thunder_magazine_capacity_bonus",
+				value = 2,
+				upgrade = "rolling_thunder_magazine_capacity_bonus",
 				category = "class_shotgun"
 			}
 		}
 		
 		self.values.class_shotgun.point_blank_basic = {
-			250 --2.5m
+			300 --2.5m
 		}
 		self.values.class_shotgun.point_blank_aced = {
 			1
@@ -400,76 +791,76 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		--Heavy
 		
-		self.values.heavy.collateral_damage = { --it's graze, but again
+		self.values.class_heavy.collateral_damage = { --it's graze, but again
 			{ 0.5,25 } --50% damage in 0.25m radius
 		}
-		self.values.heavy.enter_steelsight_speed_multiplier = {
+		self.values.class_heavy.enter_steelsight_speed_multiplier = {
 			0.1
 		}
-		self.definitions.heavy_collateral_damage = {
+		self.definitions.class_heavy_collateral_damage = {
 			name_id = "menu_collateral_damage_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "collateral_damage",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
-		self.definitions.heavy_steelsight_speed_multiplier = {
+		self.definitions.class_heavy_steelsight_speed_multiplier = {
 			name_id = "menu_collateral_damage_aced",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "enter_steelsight_speed_multiplier",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
 		
-		self.values.heavy.death_grips_stacks = {
+		self.values.class_heavy.death_grips_stacks = {
 			{8,10} --8s duration, 10 max stacks
 		}
-		self.values.heavy.death_grips_recoil_bonus = {
+		self.values.class_heavy.death_grips_recoil_bonus = {
 			1 -- +4 stability (per stack)
 		}
-		self.values.heavy.death_grips_spread_bonus = {
+		self.values.class_heavy.death_grips_spread_bonus = {
 			1, -- +4 accuracy (per stack)
 			2 -- +8
 		}
 		
-		self.definitions.heavy_death_grips_stacks = {
+		self.definitions.class_heavy_death_grips_stacks = {
 			name_id = "menu_death_grips_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "death_grips_stacks",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
-		self.definitions.heavy_death_grips_recoil_bonus = {
+		self.definitions.class_heavy_death_grips_recoil_bonus = {
 			name_id = "menu_death_grips_recoil_bonus",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "death_grips_recoil_bonus",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
-		self.definitions.heavy_death_grips_spread_bonus_1 = {
+		self.definitions.class_heavy_death_grips_spread_bonus_1 = {
 			name_id = "menu_death_grips_spread_bonus_1",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "death_grips_spread_bonus",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
-		self.definitions.heavy_death_grips_spread_bonus_2 = {
+		self.definitions.class_heavy_death_grips_spread_bonus_2 = {
 			name_id = "menu_death_grips_spread_bonus_2",
 			category = "feature",
 			upgrade = {
 				value = 2,
 				upgrade = "death_grips_spread_bonus",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
 		
@@ -496,30 +887,30 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
-		self.values.heavy.lead_farmer = {
+		self.values.class_heavy.lead_farmer = {
 			{0.01,0.5}, --1% per kill, 50% max
 			{0.02,1} --2% per kill, 100% max
 		}
-		self.definitions.heavy_lead_farmer_basic = {
+		self.definitions.class_heavy_lead_farmer_basic = {
 			name_id = "menu_lead_farmer_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "lead_farmer",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
-		self.definitions.heavy_lead_farmer_aced = {
+		self.definitions.class_heavy_lead_farmer_aced = {
 			name_id = "menu_lead_farmer_aced",
 			category = "feature",
 			upgrade = {
 				value = 2,
 				upgrade = "lead_farmer",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
 		
-		self.values.heavy.weapon_class_ammo_stock_bonus = {
+		self.values.class_heavy.weapon_class_ammo_stock_bonus = {
 			1,
 			2
 		}
@@ -529,7 +920,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "weapon_class_ammo_stock_bonus",
-				category = "heavy"
+				category = "class_heavy"
 			}
 		}
 		self.definitions.ammo_bag_war_machine_aced = {
@@ -538,7 +929,16 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 2,
 				upgrade = "weapon_class_ammo_stock_bonus",
-				category = "heavy"
+				category = "class_heavy"
+			}
+		}
+		self.definitions.ammo_bag_passive_ammo_stock_bonus_2 = {
+			name_id = "menu_ammo_bag_passive_ammo_stock_bonus",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "passive_ammo_stock_bonus",
+				category = "ammo_bag"
 			}
 		}
 		
@@ -574,12 +974,22 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			0.2
 		}
 		self.definitions.player_carry_movement_penalty_reduction = {
-			name_id = "menu_heave_ho_aced",
+			name_id = "menu_heave_ho",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "heave_ho",
 				category = "player"
+			}
+		}
+		self.values.carry.can_sprint_with_bag = {true}
+		self.definitions.carry_can_sprint_with_bag = {
+			name_id = "menu_heave_ho",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "can_sprint_with_bag",
+				category = "carry"
 			}
 		}
 		
@@ -606,6 +1016,28 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		self.values.player.wave_dash_basic = {true}
+		self.values.player.wave_dash_aced = {true}
+		
+		self.definitions.player_wave_dash_basic = {
+			name_id = "menu_air_dash_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "wave_dash_basic",
+				category = "player"
+			}
+		}
+		self.definitions.player_wave_dash_aced = {
+			name_id = "menu_air_dash_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "wave_dash_aced",
+				category = "player"
+			}
+		}
+		
 		self.values.player.leg_day_aced = {
 			true
 		}
@@ -621,17 +1053,16 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		--Gunner
 		
-		self.values.rapidfire.enter_steelsight_speed_multiplier = {
+		self.values.class_rapidfire.enter_steelsight_speed_multiplier = {
 			0.1
 		}
-		
 		self.definitions.weapon_spray_and_pray_basic = {
 			name_id = "menu_spray_and_pray_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "enter_steelsight_speed_multiplier",
-				category = "rapidfire"
+				category = "class_rapidfire"
 			}
 		}
 		
@@ -641,9 +1072,8 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				250 --over 2.5 meters
 			}
 		}
-		
 		self.values.weapon.money_shot_aced = {
-			1.5
+			0.5
 		}
 			
 		self.definitions.weapon_moneyshot_rapid_fire_basic = {
@@ -654,8 +1084,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				upgrade = "money_shot",
 				category = "weapon"
 			}
-		}
-					
+		}		
 		self.definitions.weapon_moneyshot_rapid_fire_aced = {
 			name_id = "menu_moneyshot_rapid_fire_aced",
 			category = "feature",
@@ -666,38 +1095,35 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
-		self.values.rapidfire.shotgrouping_aced = { 
+		self.values.class_rapidfire.shotgrouping_aced = { 
 			14 --accuracy/stability index addend
 		}
-		
-		self.values.rapidfire.enter_steelsight_speed_multiplier = { 
+		self.values.class_rapidfire.enter_steelsight_speed_multiplier = { 
 			0.1
 		}
 		
-		self.definitions.rapidfire_shotgrouping_basic = {
+		self.definitions.class_rapidfire_shotgrouping_basic = {
 			name_id = "menu_shotgrouping_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "enter_steelsight_speed_multiplier",
-				category = "rapidfire"
+				category = "class_rapidfire"
 			}
 		}
-					
-		self.definitions.rapidfire_shotgrouping_aced = {
+		self.definitions.class_rapidfire_shotgrouping_aced = {
 			name_id = "menu_shotgrouping_aced",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "shotgrouping_aced",
-				category = "rapidfire"
+				category = "class_rapidfire"
 			}
 		}
 	
 		self.values.player.ricochet_bullets = {
 			true
 		}
-			
 		self.values.player.ricochet_bullets_aced = {
 			true
 		}
@@ -711,7 +1137,6 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-					
 		self.definitions.player_ricochet_rapid_fire_aced = {
 			name_id = "menu_ricochet_rapid_fire_aced",
 			category = "feature",
@@ -722,25 +1147,19 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
-		
-		
-		
 		self.values.weapon.making_miracles_basic = {
 			{
 				0.01, --crit chance per stack
 				4 --duration
 			}
 		}
-		
 		self.values.weapon.making_miracles_crit_cap = {
 			0.1,
 			0.2
 		}
-		
 		self.values.weapon.making_miracles_aced = {
 			true
 		}
-		
 		self.definitions.weapon_making_miracles_basic = {
 			name_id = "menu_making_miracles_basic",
 			category = "feature",
@@ -750,7 +1169,6 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "weapon"
 			}
 		}
-		
 		self.definitions.weapon_making_miracles_aced = {
 			name_id = "menu_making_miracles_aced",
 			category = "feature",
@@ -760,7 +1178,6 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "weapon"
 			}
 		}
-		
 		self.definitions.weapon_making_miracles_crit_cap_1 = {
 			name_id = "menu_making_miracles_basic",
 			category = "feature",
@@ -770,7 +1187,6 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "weapon"
 			}
 		}
-		
 		self.definitions.weapon_making_miracles_crit_cap_2 = {
 			name_id = "menu_making_miracles_aced",
 			category = "feature",
@@ -781,14 +1197,10 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
-		
-		
-		
 		self.values.weapon.prayers_answered = {
 			0.1,
 			0.2
 		}
-		
 		self.definitions.weapon_prayers_answered_basic = {
 			name_id = "menu_prayers_answered_basic",
 			category = "feature",
@@ -798,7 +1210,6 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "weapon"
 			}
 		}
-		
 		self.definitions.weapon_prayers_answered_aced = {
 			name_id = "menu_prayers_answered_aced",
 			category = "feature",
@@ -986,16 +1397,24 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		self.values.player.omniscience_range = {
+			500,
+			1500
+		}
+		self.values.player.omniscience_timer = {
+			3
+		}
+		
 		self.values.player.tape_loop_duration = {
 			15,
 			25
 		}
-		self.values.player.tape_loop_amount_unlimited = {
+		self.values.team.player.tape_loop_amount_unlimited = {
 			true
 		}
-		self.definitions.player_tape_loop_amount_unlimited = {
+		self.definitions.team_player_tape_loop_amount_unlimited = {
 			name_id = "menu_player_tape_loop_amount_unlimited",
-			category = "feature",
+			category = "team",
 			upgrade = {
 				value = 1,
 				upgrade = "tape_loop_amount_unlimited",
@@ -1004,7 +1423,8 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 		--Assassin
-		self.values.player.professionalschoice = {
+		
+		self.values.subclass_quiet.subclass_detection_risk_rof_bonus = {
 			{
 				0.02,
 				3,
@@ -1021,28 +1441,310 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
-		self.definitions.player_professionalschoice_basic = {
-			name_id = "menu_player_professionalschoice_basic",
+		self.definitions.subclass_quiet_detection_risk_rof_bonus_1 = {
+			name_id = "menu_professionals_choice",
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "professionalschoice",
-				category = "player"
+				upgrade = "subclass_detection_risk_rof_bonus",
+				category = "subclass_quiet"
 			}
 		}
-		self.definitions.player_professionalschoice_aced = {
-			name_id = "menu_player_professionalschoice_aced",
+		self.definitions.subclass_quiet_detection_risk_rof_bonus_2 = {
+			name_id = "menu_professionals_choice",
 			category = "feature",
 			upgrade = {
 				value = 2,
-				upgrade = "professionalschoice",
-				category = "player"
+				upgrade = "subclass_detection_risk_rof_bonus",
+				category = "subclass_quiet"
+			}
+		}
+		
+		self.definitions.subclass_poison_damage_mul = { --not implemented
+			name_id = "menu_toxic_shock",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "weapon_subclass_damage_mul",
+				category = "subclass_poison"
+			}
+		}
+		self.values.subclass_poison.weapon_subclass_damage_mul = {2} --this should actually be a dot-specific damage bonus
+		
+		self.definitions.subclass_poison_dot_aoe = { --not implemented
+			name_id = "menu_toxic_shock",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "poison_dot_aoe",
+				category = "subclass_poison"
+			}
+		}
+		self.values.subclass_poison.poison_dot_aoe = { 300 }
+		
+		self.values.subclass_quiet.enter_steelsight_speed_multiplier = { 0.1 }
+		self.definitions.subclass_quiet_steelsight_speed_multiplier = {
+			name_id = "menu_killers_notebook",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "enter_steelsight_speed_multiplier",
+				category = "subclass_quiet"
+			}
+		}
+		
+		self.definitions.subclass_quiet_stability_addend = {
+			name_id = "menu_killers_notebook",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "subclass_stability_addend",
+				category = "subclass_quiet"
+			}
+		}
+		self.values.subclass_quiet.subclass_stability_addend = { 5 }
+		
+		self.values.weapon.xbow_headshot_instant_reload = {true}
+		self.definitions.weapon_crossbow_headshot_instant_reload = {
+			name_id = "menu_good_hunting",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "xbow_headshot_instant_reload",
+				category = "weapon"
+			}
+		}
+		
+		self.values.weapon.bow_instant_ready = {true}
+		self.definitions.weapon_bow_instant_ready = {
+			name_id = "menu_good_hunting",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "bow_instant_ready",
+				category = "weapon"
+			}
+		}
+		
+		self.definitions.subclass_quiet_concealment_addend_1 = {
+			name_id = "menu_comfortable_silence",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "subclass_concealment_addend",
+				category = "subclass_quiet"
+			}
+		}
+		self.definitions.subclass_quiet_concealment_addend_2 = {
+			name_id = "menu_comfortable_silence",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "subclass_concealment_addend",
+				category = "subclass_quiet"
+			}
+		}
+		self.values.subclass_quiet.subclass_concealment_addend = { 2,4 }
+		
+		self.values.subclass_quiet.backstab_bullets = { 1.25 }
+		self.definitions.subclass_quiet_backstab_bullets = {
+			name_id = "menu_quiet_grave",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "backstab_bullets",
+				category = "subclass_quiet"
+			}
+		}
+		
+		self.values.subclass_quiet.unnoticed_damage_bonus = { 1.25 }
+		self.definitions.subclass_quiet_unnoticed_damage_bonus = {
+			name_id = "menu_quiet_grave",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "unnoticed_damage_bonus",
+				category = "subclass_quiet"
 			}
 		}
 		
 		--Sapper
+		self.values.player.drill_place_interaction_speed_multiplier = { 0.25 } --75% faster 
+		self.definitions.player_drill_place_interaction_speed_multiplier = {
+			name_id = "menu_perfect_alignment",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "drill_place_interaction_speed_multiplier",
+				category = "player"
+			}
+		}
+		
+		self.values.player.drill_fix_interaction_speed_multiplier = { 0.5 } --vanilla value tweaked
+		
+		self.values.player.drill_upgrade_interaction_speed_multiplier = { 0.25 } --75% faster
+		self.definitions.player_drill_upgrade_interaction_speed_multiplier = {
+			name_id = "menu_perfect_alignment",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "drill_upgrade_interaction_speed_multiplier",
+				category = "player"
+			}
+		}
+		
+		self.values.player.drill_auto_repair_guaranteed = { 30,5 } --referenced directly by drill instead of changing autorepair chance values
+		
+		self.values.shape_charge.quantity = { 2, 4 } --vanilla value tweaked
+		
+		self.values.player.drill_shock_trap = {60,30} --cooldown
+		self.definitions.player_drill_shock_trap_1 = {
+			name_id = "menu_static_defense",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "drill_shock_trap",
+				category = "player"
+			}
+		}
+		self.definitions.player_drill_shock_trap_2 = {
+			name_id = "menu_static_defense",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "drill_shock_trap",
+				category = "player"
+			}
+		}
+		
+		self.values.player.drill_shock_tase_time = 5 --by direct reference only
 		
 		--Dealer
+		self.values.class_melee.weapon_class_damage_mul = {1.1}
+		self.definitions.class_melee_weapon_class_damage_mul = {
+			name_id = "menu_high_low",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "weapon_class_damage_mul",
+				category = "class_melee"
+			}
+		}
+		
+		self.values.class_throwing.weapon_class_damage_mul = {1.1}
+		self.definitions.class_throwing_weapon_class_damage_mul = {
+			name_id = "menu_high_low",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "weapon_class_damage_mul",
+				category = "class_throwing"
+			}
+		}
+		
+		self.values.class_melee.can_headshot = {true}
+		self.definitions.melee_can_headshot = {
+			name_id = "menu_wild_card",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "can_headshot",
+				category = "class_melee"
+			}
+		}	
+		
+		self.values.class_throwing.headshot_mul_addend = { 1 }
+		self.definitions.class_throwing_headshot_mul_addend = {
+			name_id = "menu_wild_card",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "headshot_mul_addend",
+				category = "class_throwing"
+			}
+		}
+		
+		self.values.class_throwing.projectile_charged_damage_mul = { {1,1} } -- after 1s charge, +100% damage
+		self.definitions.class_throwing_charged_damage = {
+			name_id = "menu_value_bet",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "projectile_charged_damage_mul",
+				category = "class_throwing"
+			}
+		}
+		self.values.class_melee.melee_charge_speed_mul = { 1 } --1 + 1 => double charge speed increase
+		self.definitions.class_melee_charge_speed_mul = {
+			name_id = "menu_value_bet",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "melee_charge_speed_mul",
+				category = "class_melee"
+			}
+		}
+		
+		self.values.class_melee.knockdown_tier_increase = { 1 }
+		self.definitions.class_melee_knockdown_tier_increase = {
+			name_id = "menu_face_value",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "knockdown_tier_increase",
+				category = "class_melee"
+			}
+		}
+		
+		self.values.class_throwing.throwing_amount_increase_mul = {1.5}
+		self.definitions.class_throwing_amount_increase_mul = {
+			name_id = "menu_stacking_deck",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "throwing_amount_increase_mul",
+				category = "class_throwing"
+			}
+		}
+		
+		self.values.class_throwing.projectile_velocity_mul = { 2 }
+		self.definitions.class_throwing_projectile_velocity_mul = {
+			name_id = "menu_stacking_deck",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "projectile_velocity_mul",
+				category = "class_throwing"
+			}
+		}
+		
+		--award this on throwing weapon hit
+		self.values.class_throwing.throwing_boosts_melee_loop = { {5,5} } --5s duration,+500% damage
+		self.definitions.class_throwing_melee_loop = {
+			name_id = "menu_shuffle_cut",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "throwing_boosts_melee_loop",
+				category = "class_throwing"
+			}
+		}
+		
+		--award this on melee hit
+		self.values.class_melee.melee_boosts_throwing_loop = { {5,5} } --5s duration,+500% damage
+		self.definitions.class_melee_throwing_loop = {
+			name_id = "menu_shuffle_cut",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "melee_boosts_throwing_loop",
+				category = "class_melee"
+			}
+		}
+		
+		
+		
+		
 		
 		--Fixer
 		
@@ -1057,10 +1759,12 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "saw"
 			}
 		}
-			--+10% damage per hit for 2 seconds, up to +500%
+		
+			--permanent +1% damage per kill, up to +500%
 		self.values.saw.consecutive_damage_bonus = {
-			{0.1,5,2}
+			{0.01,500}
 		}
+		
 		self.definitions.saw_consecutive_damage_bonus = {
 			name_id = "menu_saw_rolling_cutter_basic",
 			category = "feature",
@@ -1187,10 +1891,275 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		--Demolitions
 		
+			--Party Favors Basic
+		self.values.player.grenades_amount_increase_mul = {1.5}
+		self.definitions.player_grenades_amount_increase_mul = {
+			name_id = "menu_party_favors",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "grenades_amount_increase_mul",
+				category = "player"
+			}
+		}
+			--Party Favors Aced
+		self.values.trip_mine.extended_mark_duration = {1.5}
+		self.definitions.trip_mine_extended_mark_duration = {
+			name_id = "menu_party_favors",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "extended_mark_duration",
+				category = "trip_mine"
+			}
+		}
+		
+			--Special Toys Basic
+		self.values.class_specialist.weapon_class_ammo_stock_bonus = { 0.25 }
+		self.definitions.class_specialist_ammo_stock_increase = {
+			name_id = "menu_special_toys",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "weapon_class_ammo_stock_bonus",
+				category = "class_specialist"
+			}
+		}
+		
+			--Special Toys Aced
+		self.values.class_specialist.reload_speed_multiplier = {1 - 0.3} --30% faster reload speed
+		self.definitions.class_specialist_reload_speed_multiplier = {
+			name_id = "menu_special_toys",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "reload_speed_multiplier",
+				category = "class_specialist"
+			}
+		}
+		
+		--(basic is vanilla upgrade trip_mine_explosion_size_multiplier_1)
+			--Smart Bombs Aced
+		self.values.trip_mine.no_damaging_hostages = {true}
+		self.definitions.trip_mine_dont_damage_hostages = {
+			name_id = "menu_smart_bombs",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "no_damaging_hostages",
+				category = "trip_mine"
+			}
+		}
+		self.values.trip_mine.no_damaging_civilians = {true}
+		self.definitions.trip_mine_dont_damage_civilians = {
+			name_id = "menu_smart_bombs",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "no_damaging_civilians",
+				category = "trip_mine"
+			}
+		}
+		
+			--Third Degree Basic
+		self.values.subclass_areadenial.effect_duration_increase_mul = {1.5}
+		self.definitions.subclass_areadenial_effect_duration_increase_1 = {
+			name_id = "menu_third_degree",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "effect_duration_increase_mul",
+				synced = true,
+				category = "subclass_areadenial"
+			}
+		}
+			
+			--Third Degree Aced
+		self.values.subclass_areadenial.effect_doubleroasting_damage_increase_mul = {1.25}
+		self.definitions.subclass_areadenial_effect_doubleroasting_damage_increase_mul = {
+			name_id = "menu_third_degree",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "effect_doubleroasting_damage_increase_mul",
+				synced = true,
+				category = "subclass_areadenial"
+			}
+		}
+			 --Have a Blast basic
+		self.values.trip_mine.can_place_on_enemies = {true}
+		self.definitions.trip_mine_can_place_on_enemies = {
+			name_id = "menu_have_blast",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "can_place_on_enemies",
+				category = "trip_mine"
+			}
+		}
+		self.values.trip_mine.stuck_enemy_panic_radius = {1000}
+		self.definitions.trip_mine_stuck_enemy_panic = {
+			name_id = "menu_have_blast",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stuck_enemy_panic_radius",
+				category = "trip_mine"
+			}
+		}
+			--Have a Blast Aced
+		self.values.trip_mine.stuck_dozer_stun = {true}
+		self.definitions.trip_mine_stuck_dozer_stun = {
+			name = "menu_have_blast",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stuck_dozer_stun",
+				category = "trip_mine"
+			}
+		}
+		self.values.trip_mine.stuck_dozer_damage_vulnerability = { {1,10} } --100% damage vuln increase for 10s (relies on stuck_enemy_panic_radius for area)
+		self.definitions.trip_mine_stuck_dozer_damage_vulnerability = {
+			name_id = "menu_have_blast",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stuck_dozer_damage_vulnerability",
+				category = "trip_mine"
+			}
+		}
+		
+			--Improv Expert Basic
+		self.values.player.throwable_regen = {{50,1}}
+		self.definitions.player_throwable_regen = {
+			name_id = "menu_improv_expert",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "throwable_regen",
+				category = "player"
+			}
+		}
+			--Improv Expert Aced
+		self.values.weapon.rpg7_ammo_pickup_modifier = { {0.001,0.001} }
+		self.definitions.weapon_rpg7_ammo_pickup_modifier = {
+			name_id = "menu_improv_expert",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rpg7_ammo_pickup_modifier",
+				category = "weapon"
+			}
+		}
+		self.values.weapon.ray_ammo_pickup_modifier = { {0.001,0.001} }
+		self.definitions.weapon_ray_ammo_pickup_modifier = {
+			name_id = "menu_improv_expert",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "ray_ammo_pickup_modifier",
+				category = "weapon"
+			}
+		}
+		
+		self.values.weapon.grenade_launcher_ammo_pickup_increase = { 0.5 } --50% increase (additive)
+		self.definitions.weapon_grenade_launcher_ammo_pickup_increase = {
+			name_id = "menu_improv_expert_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "grenade_launcher_ammo_pickup_increase",
+				category = "weapon"
+			}
+		}
+		
+		self.values.weapon.flamethrower_ammo_pickup_modifier = { {1,1} }
+		self.definitions.weapon_flamethrower_ammo_pickup_modifier = {
+			name_id = "menu_improv_expert_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "flamethrower_ammo_pickup_modifier",
+				category = "weapon"
+			}
+		}
+		
+	--perk decks
+		self.values.team.crewchief = {}
 		
 		
-		--FAK auto revive radius on deploying
-			--(default upgrade)
+			--Crew Chief 1: +10% damage resistance
+		self.values.team.crewchief.passive_damage_resistance = {
+			0.1
+		}
+		self.definitions.team_passive_damage_resistance = {
+			name_id = "menu_deck1_1",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "passive_damage_resistance",
+				category = "crewchief"
+			}
+		}
+		
+			--Crew Chief 2: +10% stamina recovery rate
+		self.values.team.crewchief.passive_stamina_regen_mul = {
+			0.1
+		}
+		self.definitions.team_passive_stamina_regen_mul = {
+			name_id = "menu_deck1_2",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "passive_stamina_regen_mul",
+				category = "crewchief"
+			}
+		}
+
+			--Crew Chief 4: +10% maximum stamina
+		self.values.team.stamina.passive_multiplier = {
+			1.1,
+			1.3 --seems to be unused
+		}
+		
+			--Crew Chief 5: 1% health regen
+		self.values.team.crewchief.passive_health_regen = {
+			0.01
+		}
+		self.definitions.team_passive_health_regen = {
+			name_id = "menu_deck1_5",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "passive_health_regen",
+				category = "crewchief"
+			}
+		}
+
+		
+		
+			--Crew Chief 6: +10% interaction speed (does not apply to pagers)
+		self.values.team.crewchief.passive_interaction_speed_multiplier = {
+			0.9
+		}
+		self.definitions.team_passive_interaction_speed_multiplier = {
+			name_id = "menu_deck1_6",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "passive_interaction_speed_multiplier",
+				category = "crewchief"
+			}
+		}
+
+			--Crew Chief 7: +10% armor
+		self.values.team.armor.multiplier = {
+			1.1
+		}
+		
+
+		--General free skills (default upgrades)
+			--FAK auto revive radius on deploying
 		self.values.first_aid_kit.auto_revive = {
 			150 --1.5 meters
 		}
@@ -1204,8 +2173,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
-		--FAK Interaction Speed increased by 80% 
-			--(default upgrade)
+			--FAK Interaction Speed increased by 80% 
 		self.values.first_aid_kit.interaction_speed_multiplier = {
 			0.8
 		}
@@ -1219,20 +2187,20 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
-		--FAK Deploy Speed increased by 80% 
-			--(default upgrade, tweaked vanilla; "first_aid_kit_deploy_time_multiplier") 
+			--FAK Deploy Speed increased by 80% 
+				--(default upgrade, tweaked vanilla; "first_aid_kit_deploy_time_multiplier") 
 		self.values.first_aid_kit.deploy_time_multiplier = {
 			0.2
 		}
 		
-		--Health regained upon being revived by deploying FAK
+			--Health regained upon being revived by deploying FAK
 		self.revive_health_multiplier = {
 			1 --100% of max health
 		--see also: player.revived_health_regain		
 		}
 		
-		--Passively increases Ammo Stock for equipped weapons by 50% 
-			--(default upgrade)
+			--Passively increases Ammo Stock for equipped weapons by 50% 
+				--second tier is available through the War Machine Aced skill in the Heavy subtree
 		self.definitions.ammo_bag_passive_ammo_stock_bonus = {
 			name_id = "menu_ammo_bag_passive_ammo_stock_bonus",
 			category = "feature",
@@ -1243,7 +2211,1469 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		self.values.ammo_bag.passive_ammo_stock_bonus = {
-			0.5
+			0.5,
+			1
 		}
-	end	
-end)
+		
+		
+		--Muscle Perkdeck
+		self.values.player.muscle_aggro_weight_add = {true}
+		self.values.player.muscle_health_mul = {
+			1.25,
+			1.5,
+			1.75,
+			2
+		}
+		self.values.player.muscle_health_regen = {
+			0.005,
+			0.01,
+			0.015,
+			0.02
+		}
+		self.values.player.muscle_beachyboys = {
+			true
+		}
+		
+		self.definitions.muscle_1_health = {
+			name_id = "menu_deck2_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "muscle_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.muscle_1_aggro = {
+			name_id = "menu_deck2_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				synced = true,
+				upgrade = "muscle_aggro_weight_add",
+				category = "player"
+			}
+		}
+		self.definitions.muscle_2 = {
+			name_id = "menu_deck2_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "muscle_health_regen",
+				category = "player"
+			}
+		}
+		self.definitions.muscle_3 = {
+			name_id = "menu_deck2_3",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "muscle_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.muscle_4 = {
+			name_id = "menu_deck2_4",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "muscle_health_regen",
+				category = "player"
+			}
+		}
+		self.definitions.muscle_5 = {
+			name_id = "menu_deck2_5",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "muscle_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.muscle_6 = {
+			name_id = "menu_deck2_6",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "muscle_health_regen",
+				category = "player"
+			}
+		}
+		self.definitions.muscle_7 = {
+			name_id = "menu_deck2_7",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "muscle_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.muscle_8 = {
+			name_id = "menu_deck2_8",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "muscle_health_regen",
+				category = "player"
+			}
+		}
+		self.definitions.muscle_9 = {
+			name_id = "menu_deck2_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "muscle_beachyboys",
+				category = "player"
+			}
+		}
+		
+		--Armorer Perkdeck
+		self.values.temporary.armor_break_invulnerable = { --Armorer 1
+			{
+				2,
+				10
+			}
+		}
+		self.values.player.armorer_armor_mul = {
+			1.25,
+			1.5,
+			1.75,
+			2
+		}
+		self.values.player.armorer_shake_mul = {0.5}
+		self.values.player.armorer_armor_pen_mul = {0.5} --Armor Speed Penalty reducer
+		self.values.player.armorer_armor_regen_mul = {0.75}
+		self.values.player.armorer_ironclad = {0.9}
+		
+		--Armorer 1 is not defined here
+		self.definitions.armorer_2 = {
+			name_id = "menu_deck3_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_armor_mul",
+				category = "player"
+			}
+		}
+		self.definitions.armorer_3 = {
+			name_id = "menu_deck3_3",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_shake_mul",
+				category = "player"
+			}
+		}
+		self.definitions.armorer_4 = {
+			name_id = "menu_deck3_4",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "armorer_armor_mul",
+				category = "player"
+			}
+		}
+		self.definitions.armorer_5 = {
+			name_id = "menu_deck3_5",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_armor_pen_mul",
+				category = "player"
+			}
+		}
+		self.definitions.armorer_6 = {
+			name_id = "menu_deck3_6",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "armorer_armor_mul",
+				category = "player"
+			}
+		}
+		self.definitions.armorer_7 = {
+			name_id = "menu_deck3_7",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_armor_regen_mul",
+				category = "player"
+			}
+		}
+		self.definitions.armorer_8 = {
+			name_id = "menu_deck3_8",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "armorer_armor_mul",
+				category = "player"
+			}
+		}
+		self.definitions.armorer_9 = {
+			name_id = "menu_deck3_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_ironclad",
+				category = "player"
+			}
+		}
+		
+		--Rogue
+		self.values.player.rogue_dodge_add = {
+			0.1,
+			0.2,
+			0.3,
+			0.4
+		}
+		self.values.player.rogue_melee_dodge = {true}
+		self.values.player.rogue_sniper_dodge = {true}
+		self.values.player.rogue_cloaker_dodge = {true}
+		self.values.player.rogue_taser_dodge = {true}
+		self.values.player.detection_risk_add_dodge_chance = {
+			{
+				0.02,
+				2,
+				"below",
+				35,
+				0.2
+			},
+			{
+				0.01,
+				1,
+				"below",
+				35,
+				0.1
+			}
+		}
+		
+		self.definitions.rogue_1 = {
+			name_id = "menu_deck4_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_dodge_add",
+				category = "player"
+			}
+		}
+		self.definitions.rogue_2 = {
+			name_id = "menu_deck4_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_melee_dodge",
+				category = "player"
+			}
+		}
+		self.definitions.rogue_3 = {
+			name_id = "menu_deck4_3",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "rogue_dodge_add",
+				category = "player"
+			}
+		}
+		self.definitions.rogue_4 = {
+			name_id = "menu_deck4_4",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_sniper_dodge",
+				category = "player"
+			}
+		}
+		self.definitions.rogue_5 = {
+			name_id = "menu_deck4_5",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "rogue_dodge_add",
+				category = "player"
+			}
+		}
+		self.definitions.rogue_6 = {
+			name_id = "menu_deck4_6",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_cloaker_dodge",
+				category = "player"
+			}
+		}
+		self.definitions.rogue_7 = {
+			name_id = "menu_deck4_7",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "rogue_dodge_add",
+				category = "player"
+			}
+		}
+		self.definitions.rogue_8 = {
+			name_id = "menu_deck4_8",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "rogue_taser_dodge",
+				category = "player"
+			}
+		}
+		self.definitions.rogue_9 = {
+			name_id = "menu_deck4_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "detection_risk_add_dodge_chance",
+				category = "player"
+			}
+		}
+		
+		--Crook
+		self.values.player.crook_vest_dodge_addend = {
+			0.15,
+			0.3
+		}
+		self.values.player.crook_vest_armor_addend = {
+			1.5,
+			3,
+			4.5,
+			6
+		}
+		self.values.player.crook_vest_armor_regen = {
+			0.8,
+			0.6,
+			0.4
+		}
+		self.berserker_movement_speed_multiplier = 1
+		self.values.temporary.berserker_damage_multiplier = {
+			{
+				1,
+				4
+			},
+			{
+				1,
+				6
+			}
+		}
+		
+		self.definitions.crook_1 = {
+			name_id = "menu_deck5_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "crook_vest_armor_addend",
+				category = "player"
+			}
+		}
+		self.definitions.crook_2 = {
+			name_id = "menu_deck5_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "crook_vest_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.crook_3 = {
+			name_id = "menu_deck5_3",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "crook_vest_armor_addend",
+				category = "player"
+			}
+		}
+		self.definitions.crook_4 = {
+			name_id = "menu_deck5_4",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "crook_vest_dodge_addend",
+				category = "player"
+			}
+		}
+		self.definitions.crook_5 = {
+			name_id = "menu_deck5_5",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "crook_vest_armor_addend",
+				category = "player"
+			}
+		}
+		self.definitions.crook_6 = {
+			name_id = "menu_deck5_6",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "crook_vest_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.crook_7 = {
+			name_id = "menu_deck5_7",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "crook_vest_armor_addend",
+				category = "player"
+			}
+		}
+		self.definitions.crook_8 = {
+			name_id = "menu_deck5_8",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "crook_vest_dodge_addend",
+				category = "player"
+			}
+		}
+		self.definitions.crook_9 = {
+			name_id = "menu_deck5_9",
+			category = "temporary",
+			upgrade = {
+				value = 1,
+				upgrade = "berserker_damage_multiplier",
+				category = "temporary"
+			}
+		}
+		
+		--Hitman After All
+		self.values.player.hitman_armor_regen = {
+			0.9,
+			0.8,
+			0.7,
+			0.6
+		}
+		self.values.player.passive_always_regen_armor = {
+			2,
+			1.75,
+			1.5,
+			1.25
+		}
+		self.values.player.hitman_bleedout_invuln = {true}
+		
+		self.definitions.hitman_1 = {
+			name_id = "menu_deck6_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "hitman_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.hitman_2 = {
+			name_id = "menu_deck6_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "passive_always_regen_armor",
+				category = "player"
+			}
+		}
+		self.definitions.hitman_3 = {
+			name_id = "menu_deck6_3",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "hitman_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.hitman_4 = {
+			name_id = "menu_deck6_4",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "passive_always_regen_armor",
+				category = "player"
+			}
+		}
+		self.definitions.hitman_5 = {
+			name_id = "menu_deck6_5",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "hitman_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.hitman_6 = {
+			name_id = "menu_deck6_6",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "passive_always_regen_armor",
+				category = "player"
+			}
+		}
+		self.definitions.hitman_7 = {
+			name_id = "menu_deck6_7",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "hitman_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.hitman_8 = {
+			name_id = "menu_deck6_8",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "passive_always_regen_armor",
+				category = "player"
+			}
+		}
+		self.definitions.hitman_9_messiah = {
+			name_id = "menu_deck6_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "messiah_revive_from_bleed_out",
+				category = "player"
+			}
+		}
+		self.definitions.hitman_9_bleedout_invuln = {
+			name_id = "menu_deck6_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "hitman_bleedout_invuln",
+				category = "player"
+			}
+		}
+		
+		--Burglar
+		self.values.player.burglar_stealth_interaction_speed_mul = {
+			0.9,
+			0.8,
+			0.7,
+			0.6
+		}
+		self.values.player.burglar_max_concealment = {true}
+		self.values.player.burglar_fall_damage_resist = {true}
+		self.values.player.burglar_body_interaction_speed_mul = {0.8}
+		self.values.player.burglar_pager_interaction_speed_mul = {0.9}
+		self.values.player.burglar_camera_freeturn = {true}
+		
+		self.definitions.burglar_1 = {
+			name_id = "menu_deck7_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_stealth_interaction_speed_mul",
+				category = "player"
+			}
+		}
+		self.definitions.burglar_2 = {
+			name_id = "menu_deck7_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_max_concealment",
+				category = "player"
+			}
+		}
+		self.definitions.burglar_3 = {
+			name_id = "menu_deck7_3",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "burglar_stealth_interaction_speed_mul",
+				category = "player"
+			}
+		}
+		self.definitions.burglar_4 = {
+			name_id = "menu_deck7_4",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_fall_damage_resist",
+				category = "player"
+			}
+		}
+		self.definitions.burglar_5 = {
+			name_id = "menu_deck7_5",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "burglar_stealth_interaction_speed_mul",
+				category = "player"
+			}
+		}
+		self.definitions.burglar_6 = {
+			name_id = "menu_deck7_6",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_body_interaction_speed_mul",
+				category = "player"
+			}
+		}
+		self.definitions.burglar_7 = {
+			name_id = "menu_deck7_7",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "burglar_stealth_interaction_speed_mul",
+				category = "player"
+			}
+		}
+		self.definitions.burglar_8 = {
+			name_id = "menu_deck7_8",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_pager_interaction_speed_mul",
+				category = "player"
+			}
+		}
+		self.definitions.burglar_9 = {
+			name_id = "menu_deck7_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "burglar_camera_freeturn",
+				category = "player"
+			}
+		}
+		
+		
+		--Infiltrator aka the deck fug's gonna be using until the end of time
+		self.values.player.infiltrator_melee_stance_DR = {true}
+		self.values.player.infiltrator_melee_heal = {0.02}
+		self.values.player.infiltrator_flash_immunity = {true}
+		self.values.player.infiltrator_max_health_mul = {0.4}
+		self.values.player.infiltrator_passive_DR = {0.9}
+		self.values.player.infiltrator_armor_restore = {0.02}
+		self.values.player.infiltrator_comeback_strike = {true} --this is used to make sure counters actually deal damage
+		self.values.player.infiltrator_max_armor_mul = {0.4}
+		self.values.player.infiltrator_taser_breakout = {true}
+		
+		self.definitions.infiltrator_1 = {
+			name_id = "menu_deck8_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "infiltrator_melee_stance_DR",
+				category = "player"
+			}
+		}
+		self.definitions.infiltrator_2 = {
+			name_id = "menu_deck8_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "infiltrator_melee_heal",
+				category = "player"
+			}
+		}
+		self.definitions.infiltrator_3 = {
+			name_id = "menu_deck8_3",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "infiltrator_flash_immunity",
+				category = "player"
+			}
+		}
+		self.definitions.infiltrator_4 = {
+			name_id = "menu_deck8_4",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "infiltrator_max_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.infiltrator_5 = {
+			name_id = "menu_deck8_5",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "infiltrator_passive_DR",
+				category = "player"
+			}
+		}
+		self.definitions.infiltrator_6 = {
+			name_id = "menu_deck8_6",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "infiltrator_armor_restore",
+				category = "player"
+			}
+		}
+		self.definitions.infiltrator_7 = {
+			name_id = "menu_deck8_7",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "infiltrator_comeback_strike",
+				category = "player"
+			}
+		}
+		self.definitions.infiltrator_8 = {
+			name_id = "menu_deck8_8",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "infiltrator_max_armor_mul",
+				category = "player"
+			}
+		}
+		self.definitions.infiltrator_9 = {
+			name_id = "menu_deck8_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "infiltrator_taser_breakout",
+				category = "player"
+			}
+		}
+		
+		--Sociopath
+		self.values.player.sociopath_mode = {true}
+		self.values.player.sociopath_stamina_mul = {2}
+		self.values.player.sociopath_melee_combo = {true}
+		self.values.player.sociopath_health_addend = {1}
+		self.values.player.sociopath_throwing_combo = {true}
+		self.values.player.sociopath_speed_mul = {1.1}
+		self.values.player.sociopath_saw_combo = {true}
+		self.values.player.sociopath_i_frames_add = {0.5}
+		self.values.player.sociopath_combo_master = {true}
+		
+		self.values.player.sociopath_combo_duration = 10
+		
+		self.definitions.sociopath_1 = {
+			name_id = "menu_deck8_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "sociopath_mode",
+				category = "player"
+			}
+		}
+		self.definitions.sociopath_2 = {
+			name_id = "menu_deck8_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "sociopath_stamina_mul",
+				category = "player"
+			}
+		}
+		self.definitions.sociopath_3 = {
+			name_id = "menu_deck8_3",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "sociopath_melee_combo",
+				category = "player"
+			}
+		}
+		self.definitions.sociopath_4 = {
+			name_id = "menu_deck8_4",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "sociopath_health_addend",
+				category = "player"
+			}
+		}
+		self.definitions.sociopath_5 = {
+			name_id = "menu_deck8_5",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "sociopath_throwing_combo",
+				category = "player"
+			}
+		}
+		self.definitions.sociopath_6 = {
+			name_id = "menu_deck8_6",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "sociopath_speed_mul",
+				category = "player"
+			}
+		}
+		self.definitions.sociopath_7 = {
+			name_id = "menu_deck8_7",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "sociopath_saw_combo",
+				category = "player"
+			}
+		}
+		self.definitions.sociopath_8 = {
+			name_id = "menu_deck8_8",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "sociopath_i_frames_add",
+				category = "player"
+			}
+		}
+		self.definitions.sociopath_9 = {
+			name_id = "menu_deck8_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "sociopath_combo_master",
+				category = "player"
+			}
+		}
+		
+		--Grinder
+		self.values.player.grinder_dmgtohp = {
+			0.005,
+			0.01,
+			0.015,
+			0.02,
+			0.025
+		}
+		self.values.player.grinder_killtohp = {
+			0.005,
+			0.01
+		}
+		self.values.player.grinder_health_mul = {
+			1.2,
+			1.4
+		}
+		
+		self.definitions.grinder_1 = {
+			name_id = "menu_deck11_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "grinder_dmgtohp",
+				category = "player"
+			}
+		}
+		self.definitions.grinder_2 = {
+			name_id = "menu_deck11_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "grinder_killtohp",
+				category = "player"
+			}
+		}
+		self.definitions.grinder_3 = {
+			name_id = "menu_deck11_3",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "grinder_dmgtohp",
+				category = "player"
+			}
+		}
+		self.definitions.grinder_4 = {
+			name_id = "menu_deck11_4",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "grinder_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.grinder_5 = {
+			name_id = "menu_deck11_5",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "grinder_dmgtohp",
+				category = "player"
+			}
+		}
+		self.definitions.grinder_6 = {
+			name_id = "menu_deck11_6",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "grinder_killtohp",
+				category = "player"
+			}
+		}
+		self.definitions.grinder_7 = {
+			name_id = "menu_deck11_7",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "grinder_dmgtohp",
+				category = "player"
+			}
+		}
+		self.definitions.grinder_8 = {
+			name_id = "menu_deck11_8",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "grinder_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.grinder_9 = {
+			name_id = "menu_deck11_9",
+			category = "feature",
+			upgrade = {
+				value = 5,
+				upgrade = "grinder_dmgtohp",
+				category = "player"
+			}
+		}
+		
+		--Yakuza
+		
+		self.values.player.yakuza_frenzy_dr = {
+			--Damage Resistance gained, max DR, percentage steps, in that specific order
+			--Added the percentage steps as possible future-proofing
+			{0.02, 0.9, 0.1}, 
+			{0.04, 0.8, 0.1}, 
+			{0.06, 0.7, 0.1}, 
+			{0.08, 0.6, 0.1}
+		}
+		self.values.player.yakuza_on_damage_dr = {
+			0.1,
+			0.2,
+			0.3,
+			0.4
+		}
+		self.values.player.yakuza_on_damage_iframes = {true}
+		
+		self.definitions.yakuza_1 = {
+			name_id = "menu_deck12_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "yakuza_frenzy_dr",
+				category = "player"
+			}
+		}
+		self.definitions.yakuza_2 = {
+			name_id = "menu_deck12_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "yakuza_on_damage_dr",
+				category = "player"
+			}
+		}
+		self.definitions.yakuza_3 = {
+			name_id = "menu_deck12_3",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "yakuza_frenzy_dr",
+				category = "player"
+			}
+		}
+		self.definitions.yakuza_4 = {
+			name_id = "menu_deck12_4",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "yakuza_on_damage_dr",
+				category = "player"
+			}
+		}
+		self.definitions.yakuza_5 = {
+			name_id = "menu_deck12_5",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "yakuza_frenzy_dr",
+				category = "player"
+			}
+		}
+		self.definitions.yakuza_6 = {
+			name_id = "menu_deck12_6",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "yakuza_on_damage_dr",
+				category = "player"
+			}
+		}
+		self.definitions.yakuza_7 = {
+			name_id = "menu_deck12_7",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "yakuza_frenzy_dr",
+				category = "player"
+			}
+		}
+		self.definitions.yakuza_8 = {
+			name_id = "menu_deck12_8",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "yakuza_on_damage_dr",
+				category = "player"
+			}
+		}
+		self.definitions.yakuza_9 = {
+			name_id = "menu_deck12_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "yakuza_on_damage_iframes",
+				category = "player"
+			}
+		}
+		
+		--Ex-President
+		--this perkdeck was kind of a nightmare but i managed to pull it together 
+		--im really sorry for offy, who will probably look at this code later and feel nothing but disgust
+		
+		self.values.player.expres_hot_election = {
+			{0.5, 20}, --stacks generated per kill, max stacks
+			{1, 30}
+		}
+		self.values.player.expres_hot_armorup = { --cooldown timers for armor up regen
+			5,
+			4,
+			3,
+			2
+		}
+		self.values.player.expres_health_mul = {
+			1.3
+		}
+		self.values.player.expres_dodge_add = {
+			0.2
+		}
+		self.values.player.expres_approval_regenerate_time = {
+			1.6
+		}
+		
+		self.definitions.expres_1 = {
+			name_id = "menu_deck13_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "expres_hot_election",
+				category = "player"
+			}
+		}
+		self.definitions.expres_2 = {
+			name_id = "menu_deck13_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "expres_hot_armorup",
+				category = "player"
+			}
+		}
+		self.definitions.expres_3 = {
+			name_id = "menu_deck13_3",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "expres_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.expres_4 = {
+			name_id = "menu_deck13_4",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "expres_hot_armorup",
+				category = "player"
+			}
+		}
+		self.definitions.expres_5 = {
+			name_id = "menu_deck13_5",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "expres_dodge_add",
+				category = "player"
+			}
+		}
+		self.definitions.expres_6 = {
+			name_id = "menu_deck13_6",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "expres_hot_armorup",
+				category = "player"
+			}
+		}
+		self.definitions.expres_7 = {
+			name_id = "menu_deck13_7",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "expres_hot_election",
+				category = "player"
+			}
+		}
+		self.definitions.expres_8 = {
+			name_id = "menu_deck13_8",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "expres_hot_armorup",
+				category = "player"
+			}
+		}
+		self.definitions.expres_9 = {
+			name_id = "menu_deck13_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "expres_approval_regenerate_time",
+				category = "player"
+			}
+		}
+		
+		--Gambler
+		self.values.team.player.ammo_pickup_counter_thresholds = {
+			20,
+			15,
+			10,
+			5
+		}
+		self.values.team.player.ammo_pickup_range_mul = {
+			1,
+			1.25, --25%
+			1.50, --+50%
+			1.75, --+75%
+			2 --+100%
+		}
+		self.values.team.player.ammo_pickup_health_restore = {
+			0.01,
+			0.015
+		}
+		
+		self.definitions.gambler_range_1 = {
+			name_id = "menu_deck10_2",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "ammo_pickup_range_mul",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_range_2 = {
+			name_id = "menu_deck10_4",
+			category = "team",
+			upgrade = {
+				value = 2,
+				upgrade = "ammo_pickup_range_mul",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_range_3 = {
+			name_id = "menu_deck10_6",
+			category = "team",
+			upgrade = {
+				value = 3,
+				upgrade = "ammo_pickup_range_mul",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_range_4 = {
+			name_id = "menu_deck10_8",
+			category = "team",
+			upgrade = {
+				value = 4,
+				upgrade = "ammo_pickup_range_mul",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_threshold_1 = {
+			name_id = "menu_deck10_1_threshold",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "ammo_pickup_counter_thresholds",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_threshold_2 = {
+			name_id = "menu_deck10_3",
+			category = "team",
+			upgrade = {
+				value = 2,
+				upgrade = "ammo_pickup_counter_thresholds",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_threshold_3 = {
+			name_id = "menu_deck10_5",
+			category = "team",
+			upgrade = {
+				value = 3,
+				upgrade = "ammo_pickup_counter_thresholds",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_threshold_4 = {
+			name_id = "menu_deck10_7",
+			category = "team",
+			upgrade = {
+				value = 4,
+				upgrade = "ammo_pickup_counter_thresholds",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_healing_1 = {
+			name_id = "menu_deck10_1",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "ammo_pickup_health_restore",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_healing_2 = {
+			name_id = "menu_deck10_9",
+			category = "team",
+			upgrade = {
+				value = 2,
+				upgrade = "ammo_pickup_health_restore",
+				category = "player"
+			}
+		}
+		
+		
+		
+		--Anarchist
+		self.values.player.anarch_conversion = { --i...don't understand why the math turns out this way but you need to do it like this or the health doesnt apply properly
+			0.5,
+			0.6,
+			0.7,
+			0.8,
+			0.9
+		}
+		self.values.player.anarch_ondmg_armor_regen = {0.5}
+		self.values.player.anarch_onkill_armor_regen = {0.5}
+		self.values.player.anarch_onheadshotdmg_armor_regen = {1}
+		self.values.player.anarch_onheadshotkill_armor_regen = {1}
+		
+		self.definitions.anarch_1 = {
+			name_id = "menu_deck13_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "anarch_conversion",
+				category = "player"
+			}
+		}
+		self.definitions.anarch_2 = {
+			name_id = "menu_deck13_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "anarch_ondmg_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.anarch_3 = {
+			name_id = "menu_deck13_3",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "anarch_conversion",
+				category = "player"
+			}
+		}
+		self.definitions.anarch_4 = {
+			name_id = "menu_deck13_4",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "anarch_onkill_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.anarch_5 = {
+			name_id = "menu_deck13_5",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "anarch_conversion",
+				category = "player"
+			}
+		}
+		self.definitions.anarch_6 = {
+			name_id = "menu_deck13_6",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "anarch_onheadshotdmg_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.anarch_7 = {
+			name_id = "menu_deck13_7",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "anarch_conversion",
+				category = "player"
+			}
+		}
+		self.definitions.anarch_8 = {
+			name_id = "menu_deck13_8",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "anarch_onheadshotkill_armor_regen",
+				category = "player"
+			}
+		}
+		self.definitions.anarch_9 = {
+			name_id = "menu_deck13_9",
+			category = "feature",
+			upgrade = {
+				value = 5,
+				upgrade = "anarch_conversion",
+				category = "player"
+			}
+		}
+		
+		--Tag Team
+		self.values.player.tag_team_base_deathvox = {
+			{
+				distance = 1800,
+				duration = 5,
+				cooldown = 60,
+				max_angle = 30,
+--				radius = 0.6
+			}
+		}
+		self.definitions.player_tag_team_base_deathvox = {
+			name_id = "menu_deck20_0",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "tag_team_base_deathvox",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.tag_team_health_regen = {
+			0.05,
+			0.10
+		}
+		self.definitions.player_tag_team_health_regen_1 = {
+			name_id = "menu_deck20_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "tag_team_health_regen",
+				synced = true,
+				category = "player"
+			}
+		}
+		self.definitions.player_tag_team_health_regen_2 = {
+			name_id = "menu_deck20_6",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "tag_team_health_regen",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.tag_team_long_distance_revive = {	
+			0.1,
+			0.1
+		}
+		self.definitions.player_tag_team_long_distance_revive = { 
+			name_id = "menu_deck20_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "tag_team_long_distance_revive",
+				synced = true,
+				category = "player"
+			}
+		}
+		self.definitions.player_tag_team_long_distance_revive_full_effects = {
+			name_id = "menu_deck20_9",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "tag_team_long_distance_revive",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.tag_team_movement_speed_bonus = {
+			1.2
+		}
+		self.definitions.player_tag_team_movement_speed_bonus = {
+			name_id = "menu_deck20_3",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "tag_team_movement_speed_bonus",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.tag_team_effect_empathy = {true}
+		self.definitions.player_tag_team_effect_empathy = {
+			name_id = "menu_deck20_4",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "tag_team_effect_empathy",
+				category = "player"
+			}
+		}
+		
+		self.values.player.tag_team_damage_resistance = {
+			0.1
+		}
+		self.definitions.player_tag_team_damage_resistance = {
+			name_id = "menu_deck20_5",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "tag_team_damage_resistance",
+				synced = true,
+				category = "player"
+			}
+		}
+
+		--tweaked vanilla values
+		self.values.player.tag_team_cooldown_drain = {
+			{ --only this first table is used now
+				tagged = 1,
+				owner = 1
+			},
+			{
+				tagged = 2,
+				owner = 2
+			}
+		}
+		
+		self.values.player.tag_team_duration_increase = {
+			5
+		}
+		self.definitions.player_tag_team_duration_increase_1 = {
+			name_id = "menu_deck20_8",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "tag_team_duration_increase",
+				synced = true,
+				category = "player"
+			}
+		}
+	end
+end)	

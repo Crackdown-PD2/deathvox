@@ -6,6 +6,8 @@ DeathvoxMapFramework:new()
 
 _G.deathvox = deathvox or {}
 --deathvox.ModPath = ModPath
+deathvox.update_url = "https://raw.githubusercontent.com/Crackdown-PD2/deathvox/autoupdate/meta.json"
+deathvox.ModPath = deathvoxcore and deathvoxcore:GetPath() or deathvox.ModPath
 deathvox.SavePath = SavePath
 deathvox.SaveName = "crackdown.txt"
 deathvox.SavePathFull = deathvox.SavePath .. deathvox.SaveName
@@ -27,6 +29,29 @@ deathvox.blt_menu_id = "deathvox_menu_main" --main menu id; all other menu ids s
 --Else, if you want a menu option that should only apply on restart/reload, use Session_Settings.
 function deathvox:IsHoppipOverhaulEnabled()
 	return self.Session_Settings.useHoppipOverhaul 
+end
+
+function deathvox:set_update_data(json_data)
+	if json_data:is_nil_or_empty() then
+		log("im mad")
+		return
+	end
+	
+	local received_data = json.decode(json_data)
+	
+	for _, data in pairs(received_data) do
+		if data.version then
+			deathvox.received_version = data.version
+			log("deathvox update data received")
+			break
+		end
+	end
+end
+
+function deathvox:check_for_updates()
+	dohttpreq(self.update_url, function(json_data, http_id)
+		self:set_update_data(json_data)
+	end)
 end
 
 function deathvox:IsTotalCrackdownEnabled()
@@ -56,7 +81,10 @@ function deathvox:Load()
 	else
 		self:Save()
 	end
-	log("Loaded menu settings")
+	
+	self:check_for_updates()
+
+--	log("Loaded menu settings")
 	return self.Settings
 end
 
@@ -100,7 +128,28 @@ function deathvox:SyncOptionsToClient(peer_id) --single target client; for late 
 end
 
 --load contents now, as well as on menu load
-deathvox:Load()	
+deathvox:Load()
+if deathvox:IsTotalCrackdownEnabled() then 
+	--load tcd skill icons
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree/drillgui_icon_shocktrap"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/skilltree/drillgui_icon_shocktrap.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree_2/icons_atlas_2"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/skilltree_2/icons_atlas_2.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/specialization/icons_atlas"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/specialization/icons_atlas.texture")
+	
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static1"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/static1.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static2"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/static2.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static3"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/static3.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static4"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/static4.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/vignette_overlay"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/vignette_overlay.png")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/vignette_inverted_overlay"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/vignette_inverted_overlay.png")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/scanlines_overlay"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/scanlines_overlay.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/blackmarket/icons/deployables/sentry_gun_silent"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/blackmarket/icons/tcd/sentry_gun_silent.texture")
+	
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/radial_menu_assets/rmm_bg"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/radial_menu_assets/rmm_bg.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/radial_menu_assets/rmm_selector"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/radial_menu_assets/rmm_selector.texture")
+else
+	--load vanilla skill icons (in case user launched with tcd but toggled off tcd and reloaded game state)
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree_2/icons_atlas_2"),Idstring("texture"),"guis/textures/pd2/skilltree_2/icons_atlas_2.texture")
+end
 
 -- Voice Framework Setup
 local C = blt_class()

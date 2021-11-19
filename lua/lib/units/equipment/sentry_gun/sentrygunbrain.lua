@@ -100,7 +100,10 @@ function SentryGunBrain:_upd_flash_grenade(t)
 	end
 end
 
-function SentryGunBrain:_upd_fire(t)
+function SentryGunBrain:_upd_fire(t,dt)
+	local is_owner = self._unit:base():is_owner()
+	local sentryweapon = self._unit:weapon()
+
 	if self._ext_movement:is_activating() or self._ext_movement:is_inactivating() or self._idle then
 		if self._firing then
 			self:stop_autofire()
@@ -111,8 +114,8 @@ function SentryGunBrain:_upd_fire(t)
 
 	local attention = self._ext_movement:attention()
 
-	if self._unit:weapon():out_of_ammo() then
-		if self._unit:weapon():can_auto_reload() then
+	if sentryweapon:out_of_ammo() then
+		if sentryweapon:can_auto_reload() then
 			if self._firing then
 				self:stop_autofire()
 			end
@@ -154,11 +157,15 @@ function SentryGunBrain:_upd_fire(t)
 			return
 		end
 		
-		if self._unit:base():is_owner() then 
+		if is_owner then 
 			local mark_data = managers.player:upgrade_value("sentry_gun","targeting_matrix",false)
 			if mark_data and type(mark_data) == "table" then 
 				if attention.unit and attention.unit:contour() then 
 					local mark_type = mark_data[1]
+					if attention.unit:base() and attention.unit:base().sentry_gun then 
+						mark_type = "mark_unit_dangerous_damage_bonus"
+						--temp fix 
+					end
 					attention.unit:contour():add(mark_type, true, 1)
 --						managers.network:session():send_to_peers_synched("spot_enemy", attention.unit)
 				end
@@ -170,7 +177,7 @@ function SentryGunBrain:_upd_fire(t)
 		local damage_player = attention.unit:base() and attention.unit:base().is_local_player
 
 		if self._firing then
-			self._unit:weapon():trigger_held(false, expend_ammo, damage_player, attention.unit)
+			sentryweapon:trigger_held(false, expend_ammo, damage_player, attention.unit)
 		else
 			mvec3_dir(tmp_vec1, my_pos, target_pos)
 
@@ -179,8 +186,8 @@ function SentryGunBrain:_upd_fire(t)
 			max_dot = math_min(0.99, 1 - (1 - max_dot) * sharpness_mul)
 
 			if max_dot < mvec3_dot(tmp_vec1, self._ext_movement:m_head_fwd()) then
-				self._unit:weapon():start_autofire()
-				self._unit:weapon():trigger_held(false, expend_ammo, damage_player, attention.unit)
+				sentryweapon:start_autofire()
+				sentryweapon:trigger_held(false, expend_ammo, damage_player, attention.unit)
 
 				self._firing = true
 			end
@@ -188,6 +195,30 @@ function SentryGunBrain:_upd_fire(t)
 	elseif self._firing then
 		self:stop_autofire()
 	end
+	
+	if deathvox:IsTotalCrackdownEnabled() and is_owner and dt then 
+		if self._firing then 
+			sentryweapon:_add_weapon_heat(sentryweapon:get_weapon_heat_gain_rate(dt))
+			self._weapon_overheated_t = t
+			if sentryweapon:is_overheated() then 
+--				Console:SetTrackerValue("trackera",string.format("OVERHEATED/ACTIVE: %0.2f " .. string.format("t:%0.1f",Application:time()),sentryweapon:_get_weapon_heat()))
+			else
+--				Console:SetTrackerValue("trackera",string.format("NOMINAL/ACTIVE: %0.2f " .. string.format("t:%0.1f",Application:time()),sentryweapon:_get_weapon_heat()))
+			end
+		else
+			if not sentryweapon:is_overheated() then 
+				self._weapon_overheated_t = self._weapon_overheated_t or t
+				local td = self:_get_tweak_data()
+				if sentryweapon:_get_weapon_heat() > 0 and t - self._weapon_overheated_t > td.WEAPON_HEAT_DECAY_TIMER then 
+					sentryweapon:_add_weapon_heat(sentryweapon:get_weapon_heat_decay_rate(dt))
+				end
+--				Console:SetTrackerValue("trackera",string.format("NOMINAL/INACTIVE: %0.2f " .. string.format("t:%0.1f",Application:time()),sentryweapon:_get_weapon_heat()))
+			else
+--				Console:SetTrackerValue("trackera",string.format("OVERHEATED/INACTIVE: %0.2f " .. string.format("t:%0.1f",Application:time()),sentryweapon:_get_weapon_heat()))
+			end
+		end
+	end
+	
 end
 
 function SentryGunBrain:on_detected_attention_obj_modified(modified_u_key)
@@ -228,8 +259,6 @@ function SentryGunBrain:on_detected_attention_obj_modified(modified_u_key)
 		end
 	end
 end
-
-
 
 if deathvox:IsTotalCrackdownEnabled() then
 
@@ -277,15 +306,15 @@ if deathvox:IsTotalCrackdownEnabled() then
 			self:_upd_detection(t)
 			self:_select_focus_attention(t)
 		end
+		
 		if Network:is_server() then
 			self:_upd_flash_grenade(t)
 			self:_upd_go_idle(t)
 		end
 
-		self:_upd_fire(t)
+		self:_upd_fire(t,dt)
 	end
 
---[[
 	function SentryGunBrain:switch_on()
 		if self._active or self._unit:character_damage():dead() then
 			return
@@ -300,7 +329,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self._unit:set_slot(25)
 		self._unit:base():register()
 	end
---]]
 
 	function SentryGunBrain:_upd_detection(t)
 		if self._ext_movement:is_activating() or self._ext_movement:is_inactivating() then

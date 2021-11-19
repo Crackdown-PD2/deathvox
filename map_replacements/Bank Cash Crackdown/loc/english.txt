@@ -1,5 +1,5 @@
 {
-	"heist_branchbank_cash_cd_name" : "Bank Heist: Cash Crackdown",
+	"heist_branchbank_cash_cd_name" : "Bank Heist: Cash: Cracked",
 	"heist_branchbank_cash_cd_brief" : "Bain wants you to do a classic bank hit. This job is about the cash shipment the bank just received.
 
 » Locate the bank
@@ -7,6 +7,6 @@
 » Drill the vault
 » Keep the civilians in check
 » Escape with the money in the vault",
-"heist_branchbank_cash_CD_name" : "Bank Heist: Cash Crackdown",
+"heist_branchbank_cash_CD_name" : "Bank Heist: Cash: Cracked",
 "heist_branchbank_cash_CD_brief" : "This is a hit on a medium-sized bank but it doesn't mean it'll be easy. We're going for cash. You want to find the vault, get the thermal drill out, crack the door, bag up the cash and escape at our van. Oh - my guy stashed the thermal drill around the back of the bank. Good luck out there people..."
 }

@@ -1,5 +1,12 @@
-Hooks:PostHook(InteractionTweakData, "init", "cd_interact_timer_stuff", function(self, tweak_data)
-	if deathvox:IsTotalCrackdownEnabled() then
+if deathvox:IsTotalCrackdownEnabled() then
+	Hooks:PostHook(InteractionTweakData, "init", "tcd_interactiontweakdata_init", function(self, tweak_data)
+	
+	--these shouldn't be used but just in case they are
+		self.hostage_convert.required_deployable = "sentry_gun_silent"
+		self.hostage_convert.deployable_consume = true
+		self.hostage_convert.timer = 3
+		self.hostage_convert.interact_distance = 150
+		
 		self.take_pardons.timer = 0		
 		self.take_pardons.sound_start = "money_grab"	
 		self.take_pardons.sound_event = "money_grab"	
@@ -8,6 +15,66 @@ Hooks:PostHook(InteractionTweakData, "init", "cd_interact_timer_stuff", function
 		self.gage_assignment.sound_start = "money_grab"	
 		self.gage_assignment.sound_event = "money_grab"	
 		self.gage_assignment.sound_done = "money_grab"	
+		
+		self.drill.upgrade_timer_multiplier = {
+			upgrade = "drill_place_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.drill_upgrade.upgrade_timer_multiplier = {
+			upgrade = "drill_upgrade_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.suburbia_drill.upgrade_timer_multiplier = {
+			upgrade = "drill_place_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.suburbia_drill_jammed.upgrade_timer_multiplier = {
+			upgrade = "drill_fix_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.apartment_drill_jammed.upgrade_timer_multiplier = {
+			upgrade = "drill_fix_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.goldheist_drill.upgrade_timer_multiplier = {
+			upgrade = "drill_place_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.goldheist_drill_jammed.upgrade_timer_multiplier = {
+			upgrade = "drill_fix_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.huge_lance.upgrade_timer_multiplier = {
+			upgrade = "drill_place_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.huge_lance_jammed.upgrade_timer_multiplier = {
+			upgrade = "drill_fix_interaction_speed_multiplier",
+			category = "player"
+		}
+		
+		
+		self.gen_int_saw_upgrade.upgrade_timer_multiplier = {
+			upgrade = "drill_upgrade_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.secret_stash_saw.upgrade_timer_multiplier = {
+			upgrade = "drill_place_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.apartment_saw.upgrade_timer_multiplier = {
+			upgrade = "drill_place_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.hospital_saw.upgrade_timer_multiplier = {
+			upgrade = "drill_place_interaction_speed_multiplier",
+			category = "player"
+		}
+		self.gen_int_saw.upgrade_timer_multiplier = {
+			upgrade = "drill_place_interaction_speed_multiplier",
+			category = "player"
+		}
+		
 		
 		self.first_aid_kit.upgrade_timer_multipliers = {
 			{
@@ -22,7 +89,23 @@ Hooks:PostHook(InteractionTweakData, "init", "cd_interact_timer_stuff", function
 				category = "sentry_gun"
 			}
 		}
+		self.sentry_gun.text_id = "hud_interact_edit_sentry_gun"
+		self.sentry_gun.action_text_id = "hud_action_editing_sentry_gun"
+		
+		
 		self.sentry_gun_fire_mode.requires_upgrade = nil --remove ap skill requirement for toggling sentry firemode/ammotype
+		
+		self.sentry_gun_vent_weapon_heat = {
+			text_id = "hud_sentry_gun_vent_heat",
+			action_text_id = "hud_action_sentry_gun_vent_heat",
+			contour = "deployable",
+			sound_start = "bar_turret_ammo",
+			sound_interupt = "bar_turret_ammo_cancel",
+			sound_done = "bar_turret_ammo_finished",
+			timer = 2,
+			start_active = false,
+			no_contour = true
+		}
 		
 		self.armor_plates = {
 			icon = "equipment_armor_kit",
@@ -72,6 +155,21 @@ Hooks:PostHook(InteractionTweakData, "init", "cd_interact_timer_stuff", function
 			sound_done = "bar_keyboard_finished",
 			is_lockpicking = true
 		}
-	end
+		
+		self.trip_mine.requires_upgrade = nil
+		self.trip_mine.interact_distance = 2000
+		self.shaped_sharge.timer = 1
+		
+		self.hospital_security_cable.is_snip = true
+		self.hospital_security_cable_red.is_snip = true
+		self.hospital_security_cable_blue.is_snip = true
+		self.hospital_security_cable_green.is_snip = true
+		self.hospital_security_cable_yellow.is_snip = true
+		self.security_cable_grey.is_snip = true
+		self.cut_fence.is_snip = true
+		self.hold_cut_cable.is_snip = true
+		self.hold_cut_wires.is_snip = true
+		self.pex_cut_open_chains.is_snip = true
+	end)
+end
 	
-end)

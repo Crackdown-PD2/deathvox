@@ -7,12 +7,30 @@ local mvec3_l_sq = mvector3.length_sq
 local mvec3_set_l = mvector3.set_length
 local mvec3_add = mvector3.add
 local mvec3_rand_orth = mvector3.random_orthogonal
+local mvec3_cpy = mvector3.copy
+
+local math_ceil = math.ceil
+local math_floor = math.floor
+local math_random = math.random
+local math_pow = math.pow
+local math_clamp = math.clamp
+local math_lerp = math.lerp
+local math_DOWN = math.DOWN
+
+local table_remove = table.remove
+local table_size = table.size
+
+local pairs_g = pairs
+local next_g = next
+local tostring_g = tostring
+local alive_g = alive
 
 local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
 local old_group_misc_data = GroupAIStateBase._init_misc_data
 function GroupAIStateBase:_init_misc_data()
 	old_group_misc_data(self)
+	self._nr_important_cops = 8
 	self._special_unit_types = {
 		tank = true,
 		spooc = true,
@@ -28,6 +46,7 @@ end
 local old_group_base = GroupAIStateBase.on_simulation_started
 function GroupAIStateBase:on_simulation_started()
 	old_group_base(self)
+	self._nr_important_cops = 8
 	self._special_unit_types = {
 		tank = true,
 		spooc = true,
@@ -48,21 +67,100 @@ function GroupAIStateBase:_check_assault_panic_chatter()
 	return
 end
 
+function GroupAIStateBase:_determine_objective_for_criminal_AI(unit)
+	local objective, closest_dis, closest_player = nil
+	local ai_pos = unit:movement():m_pos()
+
+	for pl_key, player in pairs_g(self:all_player_criminals()) do
+		if player.status ~= "dead" then
+			local my_dis = mvec3_dis_sq(ai_pos, player.m_pos)
+
+			if not closest_dis or my_dis < closest_dis then
+				closest_dis = my_dis
+				closest_player = player
+			end
+		end
+	end
+
+	if closest_player then
+		objective = {
+			scan = true,
+			is_default = true,
+			type = "follow",
+			follow_unit = closest_player.unit
+		}
+	end
+
+	if not objective then
+		local mov_ext = unit:movement()
+
+		if mov_ext._should_stay then
+			mov_ext:set_should_stay(false)
+		end
+
+		if self:is_ai_trade_possible() then
+			local hostage = managers.trade:get_best_hostage(ai_pos)
+
+			if hostage and mvec3_dis_sq(ai_pos, hostage.m_pos) > 250000 then
+				objective = {
+					scan = true,
+					type = "free",
+					haste = "run",
+					nav_seg = hostage.tracker:nav_segment()
+				}
+			end
+		end
+	end
+
+	return objective
+end
+
+function GroupAIStateBase:chk_say_teamAI_combat_chatter(unit)
+	if not self._assault_mode or not self:is_detection_persistent() then
+		return
+	end
+
+	local t = self._t
+
+	local frequency_lerp = self._drama_data.amount
+	local delay_tweak = tweak_data.sound.criminal_sound.combat_callout_delay
+	local delay = math_lerp(delay_tweak[1], delay_tweak[2], frequency_lerp)
+	local delay_t = self._teamAI_last_combat_chatter_t + delay
+
+	if t < delay_t then
+		return
+	end
+
+	self._teamAI_last_combat_chatter_t = t
+
+	local frequency_lerp_clamp = math_clamp(frequency_lerp^2, 0, 1)
+	local chance_tweak = tweak_data.sound.criminal_sound.combat_callout_chance
+	local chance = math_lerp(chance_tweak[1], chance_tweak[2], frequency_lerp_clamp)
+
+	if chance < math_random() then
+		return
+	end
+
+	unit:sound():say("g90", true, true)
+end
+
 function GroupAIStateBase:update(t, dt)
 	self._t = t
 
 	self:_upd_criminal_suspicion_progress()
 	self:_claculate_drama_value()
 	--self:_draw_current_logics()
-	
-	if Network:is_server() then
-		local new_value = self._police_force * 0.15 * table.size(self:all_player_criminals())
 
-		self._nr_important_cops = new_value
-	end
-	
 	if self._draw_drama then
 		self:_debug_draw_drama(t)
+	end
+	
+	if not Global.game_settings.single_player then
+		if not Network:is_server() then
+			local new_value = 8 / table.size(self:all_player_criminals()) 
+
+			self._nr_important_cops = new_value
+		end
 	end
 
 	self:_upd_debug_draw_attentions()
@@ -152,15 +250,6 @@ function GroupAIStateBase:on_enemy_unregistered(unit)
 		return
 	end
 
-	local objective = unit:brain() and unit:brain():objective()
-
-	if objective and objective.fail_clbk then
-		local fail_clbk = objective.fail_clbk
-		objective.fail_clbk = nil
-
-		fail_clbk(unit)
-	end
-
 	local e_data = self._police[u_key]
 
 	if e_data.importance > 0 then
@@ -197,9 +286,9 @@ function GroupAIStateBase:on_enemy_unregistered(unit)
 
 	if e_data.group then
 		self:_remove_group_member(e_data.group, u_key, dead)
+		self._last_killed_cop_t = self._t
 		if dead and self._task_data and self._task_data.assault and self._task_data.assault.active then
-			self:_voice_friend_dead(e_data.group)
-			self._last_killed_cop_t = self._t
+			self:_voice_friend_dead(e_data.group)	
 		end
 	end
 
@@ -363,74 +452,155 @@ function GroupAIStateBase:propagate_alert(alert_data)
 	end
 end
 
+local invalid_player_bot_warp_states = {
+	jerry1 = true,
+	jerry2 = true,
+	driving = true
+}
+
+local teleport_SO_anims = {
+	e_so_teleport_var1 = true,
+	e_so_teleport_var2 = true,
+	e_so_teleport_var3 = true
+}
+
 function GroupAIStateBase:upd_team_AI_distance()
-	if Network:is_server() then
-		if self:team_ai_enabled() then
-			local far_away_distance = tweak_data.team_ai.stop_action.distance * tweak_data.team_ai.stop_action.distance
-			local teleport_distance = tweak_data.team_ai.stop_action.teleport_distance * tweak_data.team_ai.stop_action.teleport_distance
+	if not Network:is_server() then
+		return
+	end
 
-			for _, ai in pairs(self:all_AI_criminals()) do
-				local unit = ai.unit
+	local t = self._t
+	local check_t = self._team_ai_dist_t
 
-				--make sure the bot hasn't despawned first (I don't know if the table is safe against this so I'm just making sure here)
-				if alive(unit) and not unit:movement():cool() then
-					local unit_pos = unit:movement()._m_pos --position of the bot
-					local closest_distance = nil --distance to the closest player, to be used to compare with the distance limits
-					local closest_unit = nil
+	if check_t and t < check_t then
+		return
+	end
 
-					for _, player in pairs(self:all_player_criminals()) do
-						local player_unit = player.unit
+	self._team_ai_dist_t = t + 1
 
-						if alive(player_unit) then --make sure the player's unit hasn't despawned (by leaving the game or being in custody)
-							local distance = mvector3.distance_sq(unit_pos, player_unit:position()) --using player.pos is bad because it doesn't get updated in certain situations, like when driving a vehicle
+	if not self:team_ai_enabled() then
+		return
+	end
 
-							if not closest_distance or distance < closest_distance then
-								closest_distance = distance
-								closest_unit = player_unit
+	local ai_criminals = self:all_AI_criminals()
+
+	if not next_g(ai_criminals) then
+		return
+	end
+
+	local player_criminals = self:all_player_criminals()
+
+	if not next_g(player_criminals) then
+		return
+	end
+
+	local teleport_distance = tweak_data.team_ai.stop_action.teleport_distance * tweak_data.team_ai.stop_action.teleport_distance
+	local nav_manager = managers.navigation
+	local find_cover_f = nav_manager.find_cover_in_nav_seg_3
+	local search_coarse_f = nav_manager.search_coarse
+
+	for ai_key, ai in pairs_g(ai_criminals) do
+		local unit = ai.unit
+		local ai_mov_ext = unit:movement()
+
+		if not ai_mov_ext:cool() then
+			local objective = unit:brain():objective()
+			local has_warp_objective = nil
+
+			if objective then
+				if objective.path_style == "warp" or teleport_SO_anims[objective.action]then
+					has_warp_objective = true
+				else
+					local followup = objective.followup_objective
+
+					if followup then
+						if followup.path_style == "warp" or teleport_SO_anims[followup.action] then
+							has_warp_objective = true
+						end
+					end
+				end
+			end
+
+			if not has_warp_objective then
+				if not ai_mov_ext:chk_action_forbidden("walk") then
+					local bot_pos = ai.m_pos
+					local valid_players = {}
+
+					for _, player in pairs_g(self:all_player_criminals()) do
+						if player.status ~= "dead" then
+							local distance = mvec3_dis_sq(bot_pos, player.m_pos)
+
+							if distance > teleport_distance then
+								valid_players[#valid_players + 1] = {player, distance}
+							else
+								valid_players = {}
+
+								break
 							end
 						end
 					end
 
-					if closest_unit then
-						if unit:movement() and unit:movement()._should_stay and closest_distance > far_away_distance then
-							unit:movement():set_should_stay(false)
+					local closest_distance, closest_player, closest_tracker = nil
+					local ai_tracker, ai_access = ai.tracker, ai.so_access
 
-							print("[GroupAIStateBase:update] team ai is too far away, started moving again")
-						end
+					for i = 1, #valid_players do
+						local player = valid_players[i][1]
+						local tracker = player.tracker
 
-						if not unit:movement():chk_action_forbidden("warp") and not unit:movement():downed() and closest_distance > teleport_distance then
-							local allow_teleport = true
-							local using_zipline = closest_unit:movement():zipline_unit()
-							local state = closest_unit:movement():current_state_name()
-							local in_air = nil
+						if not tracker:obstructed() and not tracker:lost() then
+							local player_unit = player.unit
+							local player_mov_ext = player_unit:movement()
 
-							if closest_unit == managers.player:player_unit() then
-								in_air = closest_unit:movement():in_air()
-							else
-								in_air = closest_unit:movement()._in_air
-							end
+							if not player_mov_ext:zipline_unit() then
+								local player_state = player_mov_ext:current_state_name()
 
-							if using_zipline or state == "jerry1" or state == "jerry2" or state == "driving" or in_air then
-								allow_teleport = false
-							end
+								if not invalid_player_bot_warp_states[player_state] then
+									local in_air = nil
 
-							if allow_teleport then
-								local player_tracker = closest_unit:movement():nav_tracker()
-								local warp_destination = managers.groupai:state():get_area_from_nav_seg_id(player_tracker:nav_segment())
-								local near_cover_point = managers.navigation:find_cover_in_nav_seg_3(warp_destination.nav_segs, 400, player_tracker:field_position())
-								local position = near_cover_point and near_cover_point[1] or closest_unit:position()
+									if player_unit:base().is_local_player then
+										in_air = player_mov_ext:in_air() and true
+									else
+										in_air = player_mov_ext._in_air and true
+									end
 
-								local action_desc = {
-									body_part = 1,
-									type = "warp",
-									position = position
-								}
+									if not in_air then
+										local distance = valid_players[i][2]
 
-								if unit:movement():action_request(action_desc) then
-									print("[GroupAIStateBase:update] team ai is too far away, teleported to player")
+										if not closest_distance or distance < closest_distance then
+											local params = {
+												from_tracker = ai_tracker,
+												to_seg = tracker:nav_segment(),
+												access = {
+													"walk"
+												},
+												id = "warp_coarse_check" .. tostring_g(ai_key),
+												access_pos = ai_access
+											}
+
+											local can_path = search_coarse_f(nav_manager, params) and true
+
+											if can_path then
+												closest_distance = distance
+												closest_player = player
+												closest_tracker = tracker
+											end
+										end
+									end
 								end
 							end
 						end
+					end
+
+					if closest_player then
+						local near_cover_point = find_cover_f(nav_manager, closest_tracker:nav_segment(), 500, closest_tracker:field_position())
+						local position = near_cover_point and near_cover_point[1] or closest_player.m_pos
+						local action_desc = {
+							body_part = 1,
+							type = "warp",
+							position = mvec3_cpy(position)
+						}
+
+						ai_mov_ext:action_request(action_desc)
 					end
 				end
 			end
@@ -833,50 +1003,31 @@ function GroupAIStateBase:on_criminal_suspicion_progress(u_suspect, u_observer, 
 	end
 end
 
-function GroupAIStateBase:set_whisper_mode(state)
-	state = state and true or false
-
-	if state == self._whisper_mode then
-		return
-	end
-
-	self._whisper_mode = state
-	self._whisper_mode_change_t = TimerManager:game():time()
-
-	self:set_ambience_flag()
-
-	if Network:is_server() then
-		if state then
-			self:chk_register_removed_attention_objects()
-		else
-			self:chk_unregister_irrelevant_attention_objects()
-
-			if not self._switch_to_not_cool_clbk_id then
-				self._switch_to_not_cool_clbk_id = "GroupAI_delayed_not_cool"
-
-				managers.enemy:add_delayed_clbk(self._switch_to_not_cool_clbk_id, callback(self, self, "_clbk_switch_enemies_to_not_cool"), self._t + 1)
-			end
-		end
-	end
-
-	self:_call_listeners("whisper_mode", state)
-
-	if not state then
-		self:_clear_criminal_suspicion_data()
-	end
-end
-
 function GroupAIStateBase:register_AI_attention_object(unit, handler, nav_tracker, team, SO_access)
-	local store_instead = nil
+	local actually_remove_instead = nil
 
-	if Network:is_server() and not self:whisper_mode() then
+	if not self:whisper_mode() then
 		if not nav_tracker and not unit:vehicle_driving() or unit:in_slot(1) --[[or unit:in_slot(17) and unit:character_damage()]] then
-			store_instead = true
+			actually_remove_instead = true
 		end
 	end
 
-	if store_instead then
-		local attention_info = {
+	local u_key = unit:key()
+
+	if actually_remove_instead then
+		self._attention_objects.all[u_key] = {
+			handler = handler
+		}
+
+		local handler_data = deep_clone(handler:attention_data())
+
+		self:store_removed_attention_object(u_key, unit, handler, handler_data)
+
+		for attention_id, _ in pairs_g(handler_data) do
+			handler:remove_attention(attention_id)
+		end
+	else
+		self._attention_objects.all[u_key] = {
 			unit = unit,
 			handler = handler,
 			nav_tracker = nav_tracker,
@@ -884,20 +1035,67 @@ function GroupAIStateBase:register_AI_attention_object(unit, handler, nav_tracke
 			SO_access = SO_access
 		}
 
-		self:store_removed_attention_object(unit:key(), attention_info)
+		self:on_AI_attention_changed(u_key)
 
-		return
+		if handler._is_extension then
+			local att_obj_upd_state = true
+
+			if not nav_tracker and not unit:vehicle_driving() and not unit:carry_data() then
+				local base_ext = unit:base()
+
+				if not base_ext then
+					if unit:in_slot(1) then
+						att_obj_upd_state = false
+					end
+				elseif base_ext.is_security_camera then
+					if base_ext.is_friendly or base_ext:destroyed() then
+						att_obj_upd_state = false
+					end
+				elseif unit:in_slot(1) then
+					att_obj_upd_state = false
+				end
+			elseif unit:in_slot(1) then
+				att_obj_upd_state = false
+			end
+
+			handler:set_update_enabled(att_obj_upd_state)
+
+			if not att_obj_upd_state then
+				handler:update()
+
+				managers.enemy:add_delayed_clbk("_att_object_pos_upd" .. tostring(u_key), callback(handler, handler, "_do_late_update"), self._t + 0.5)
+			end
+		end
+	end
+end
+
+function GroupAIStateBase:unregister_AI_attention_object(unit_key)
+	local general_entry = self._attention_objects.all[unit_key]
+	local handler = general_entry and general_entry.handler
+
+	if handler and handler._is_extension then
+		handler:set_update_enabled(false)
 	end
 
-	self._attention_objects.all[unit:key()] = {
-		unit = unit,
-		handler = handler,
-		nav_tracker = nav_tracker,
-		team = team,
-		SO_access = SO_access
-	}
+	--[[if not handler then
+		local cam_pos = managers.viewport:get_current_camera_position()
 
-	self:on_AI_attention_changed(unit:key())
+		if cam_pos then
+			if general_entry and general_entry.unit then
+				local from_pos = cam_pos + math.DOWN * 50
+				local brush = Draw:brush(Color.red:with_alpha(0.5), 5)
+				brush:cylinder(from_pos, unit:position(), 25)
+			else
+				local from_pos = cam_pos + math.DOWN * 50
+				local brush = Draw:brush(Color.red:with_alpha(0.5), 5)
+				brush:sphere(from_pos, 25)
+			end
+		end
+	end]]
+
+	for cat_filter, list in pairs_g(self._attention_objects) do
+		list[unit_key] = nil
+	end
 end
 
 function GroupAIStateBase:chk_register_removed_attention_objects()
@@ -907,42 +1105,171 @@ function GroupAIStateBase:chk_register_removed_attention_objects()
 
 	local all_attention_objects = self:get_all_AI_attention_objects()
 
-	for u_key, att_info in pairs (self._removed_attention_objects) do
+	for u_key, removed_data in pairs_g(self._removed_attention_objects) do
 		if all_attention_objects[u_key] then
 			self._removed_attention_objects[u_key] = nil
-		elseif alive(att_info.unit) then
-			self:register_AI_attention_object(att_info.unit, att_info.handler, att_info.nav_tracker, att_info.team, att_info.SO_access)
+		else
+			local unit = removed_data[1]
+
+			if alive_g(unit) then
+				local handler = removed_data[2]
+				local saved_attention_data = removed_data[3]
+
+				for attention_id, attention_data in pairs_g(saved_attention_data) do
+					handler:add_attention(attention_data)
+				end
+			end
+
 			self._removed_attention_objects[u_key] = nil
 		end
 	end
 
-	self._removed_attention_objects = nil
+	self._removed_attention_objects = {}
 end
 
-function GroupAIStateBase:store_removed_attention_object(u_key, attention_info)
-	self._removed_attention_objects = self._removed_attention_objects or {}
+function GroupAIStateBase:store_removed_attention_object(u_key, unit, handler, attention_data)
+	local stored_data = self._removed_attention_objects or {}
 
-	self._removed_attention_objects[u_key] = attention_info
+	if stored_data[u_key] then
+		stored_data[u_key][1] = unit
+		stored_data[u_key][2] = handler
+		local stored_att_data = stored_data[u_key][3]
+
+		for id, data in pairs_g(attention_data) do
+			stored_att_data[id] = data
+		end
+	else
+		stored_data[u_key] = {unit, handler, attention_data}
+	end
+
+	self._removed_attention_objects = stored_data
 end
 
 function GroupAIStateBase:chk_unregister_irrelevant_attention_objects()
 	local all_attention_objects = self:get_all_AI_attention_objects()
 
-	for u_key, att_info in pairs (all_attention_objects) do
+	for u_key, att_info in pairs_g(all_attention_objects) do
 		if not att_info.nav_tracker and not att_info.unit:vehicle_driving() or att_info.unit:in_slot(1) --[[or att_info.unit:in_slot(17) and att_info.unit:character_damage()]] then
-			self:store_removed_attention_object(u_key, att_info)
-			att_info.handler:set_attention(nil)
+			local handler = att_info.handler
+			local handler_data = deep_clone(handler:attention_data())
+
+			self:store_removed_attention_object(u_key, att_info.unit, handler, handler_data)
+
+			for attention_id, _ in pairs_g(handler_data) do
+				handler:remove_attention(attention_id)
+			end
 		end
 	end
 end
 
-local _remove_group_member_ori = GroupAIStateBase._remove_group_member
-function GroupAIStateBase:_remove_group_member(group, u_key, is_casualty)
-	_remove_group_member_ori(self, group, u_key, is_casualty)
-	if is_casualty then
-		local unit_to_scream = group.units[math.random(#group.units)]
-		if unit_to_scream then
-			unit_to_scream:sound():say("buddy_died", true)
+function GroupAIStateBase:_set_rescue_state(state)
+end
+
+local get_sync_event_id_original = GroupAIStateBase.get_sync_event_id
+function GroupAIStateBase:get_sync_event_id(event_name)
+	if event_name == "cloaker_spawned" then
+		managers.hud:post_event("cloaker_spawn")
+	end
+
+	return get_sync_event_id_original(self, event_name)
+end
+
+function GroupAIStateBase:on_hostage_follow(owner, follower, state)
+	local mov_ext = follower:movement()
+	mov_ext:set_hostage_speed_modifier(state)
+
+	local follower_key = follower:key()
+
+	if state then
+		owner = alive_g(owner) and owner or nil
+
+		if owner then
+			local owner_data = self:criminal_record(owner:key())
+
+			if owner_data then
+				owner_data.following_hostages = owner_data.following_hostages or {}
+				owner_data.following_hostages[follower_key] = follower
+			end
+
+			local follower_data = managers.enemy:all_civilians()[follower_key]
+
+			if follower_data then
+				follower_data.hostage_following = owner
+			end
+		end
+
+		if Network:is_server() then
+			local peer = owner and managers.network:session():peer_by_unit(owner)
+
+			if peer then
+				local peer_id = peer:id()
+
+				if peer_id ~= managers.network:session():local_peer():id() then
+					peer:send_queued_sync("sync_unit_event_id_16", follower, "base", 1)
+
+					managers.network:session():send_to_peers_synched_except(peer_id, "sync_unit_event_id_16", follower, "base", 3)
+				else
+					managers.network:session():send_to_peers_synched("sync_unit_event_id_16", follower, "base", 3)
+				end
+			else
+				managers.network:session():send_to_peers_synched("sync_unit_event_id_16", follower, "base", 3)
+			end
+
+			if managers.player:has_team_category_upgrade("player", "civilian_hostage_carry_bags") then
+				CarryData._valid_civs[follower_key] = follower
+
+				local was_carrying_data = mov_ext:was_carrying_bag()
+				local bag_unit = was_carrying_data and was_carrying_data.unit
+
+				if alive_g(bag_unit) then
+					local distance = mvec3_dis_sq(mov_ext:m_pos(), bag_unit:position())
+					local max_distance = math_pow(tweak_data.ai_carry.revive_distance_autopickup, 2)
+
+					if distance <= max_distance then
+						bag_unit:carry_data():link_to(follower, false)
+
+						if mov_ext.set_carrying_bag then
+							mov_ext:set_carrying_bag(bag_unit)
+						end
+					end
+				end
+			end
+		end
+	else
+		local follower_data = managers.enemy:all_civilians()[follower_key]
+
+		owner = owner or follower_data and follower_data.hostage_following
+		owner = alive_g(owner) and owner or nil
+
+		local owner_data = owner and self:criminal_record(owner:key())
+
+		if owner_data and owner_data.following_hostages then
+			owner_data.following_hostages[follower_key] = nil
+
+			if not next_g(owner_data.following_hostages) then
+				owner_data.following_hostages = nil
+			end
+		end
+
+		if follower_data then
+			follower_data.hostage_following = nil
+		end
+
+		if Network:is_server() then
+			mov_ext:throw_bag()
+
+			if CarryData._valid_civs[follower_key] then
+				CarryData._valid_civs[follower_key] = nil
+
+				--reset the table to remove nil entries that still increase its size
+				if not next_g(CarryData._valid_civs) then
+					CarryData._valid_civs = {}
+				end
+			end
+
+			if follower:id() ~= 1 then
+				managers.network:session():send_to_peers_synched("sync_unit_event_id_16", follower, "base", 2)
+			end
 		end
 	end
-end 
+end

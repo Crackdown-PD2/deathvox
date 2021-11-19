@@ -4,15 +4,26 @@ local mvec3_z = mvector3.z
 local mvec3_cpy = mvector3.copy
 local mvec3_dist_sq = mvector3.distance_sq
 local mvec3_lerp = mvector3.lerp
+local mvec3_add = mvector3.add
+local mvec3_sub = mvector3.subtract
+local mvec3_mul = mvector3.multiply
+
+local tmp_vec1 = Vector3()
+local tmp_vec2 = Vector3()
 
 local mrot_look = mrotation.set_look_at
 
 local math_up = math.UP
 local math_clamp = math.clamp
 local math_point_on_line = math.point_on_line
+local math_lerp = math.lerp
+local math_random = math.random
 
 local table_insert = table.insert
 local table_remove = table.remove
+
+local left_hand_str = Idstring("LeftHandMiddle2")
+local right_hand_str = Idstring("RightHandMiddle2")
 
 local post_init_original = HuskPlayerMovement.post_init
 function HuskPlayerMovement:post_init()
@@ -54,7 +65,7 @@ function HuskPlayerMovement:sync_action_walk_nav_point(pos, speed, action, param
 
 	if not pos then
 		if path_len <= 0 or self._movement_path[path_len].pos then
-			pos = mvec3_cpy(self._m_pos)
+			pos = mvec3_cpy(self:m_pos())
 		end
 	end
 
@@ -146,8 +157,8 @@ function HuskPlayerMovement:sync_action_walk_nav_point(pos, speed, action, param
 	end
 end
 
-local draw_sync_player_newest_pos = nil
-local draw_sync_player_detect_pos = nil
+--local draw_sync_player_newest_pos = nil
+--local draw_sync_player_detect_pos = nil
 
 function HuskPlayerMovement:_update_real_pos(new_pos, new_pose_code)
 	local newest_pos = self._m_newest_pos
@@ -187,7 +198,7 @@ function HuskPlayerMovement:_update_real_pos(new_pos, new_pose_code)
 		end
 	end
 
-	if draw_sync_player_newest_pos then
+	--[[if draw_sync_player_newest_pos then
 		local m_brush = Draw:brush(Color.blue:with_alpha(0.5), 0.1)
 		m_brush:sphere(newest_pos, 15)
 	end
@@ -195,7 +206,41 @@ function HuskPlayerMovement:_update_real_pos(new_pos, new_pose_code)
 	if draw_sync_player_detect_pos then
 		local head_brush = Draw:brush(Color.yellow:with_alpha(0.5), 0.1)
 		head_brush:sphere(detect_pos, 15)
+	end]]
+end
+
+local _sync_movement_state_driving_original = HuskPlayerMovement._sync_movement_state_driving
+function HuskPlayerMovement:_sync_movement_state_driving(...)
+	_sync_movement_state_driving_original(self, ...)
+
+	local seat = self.seat_third
+
+	if not seat then
+		return
 	end
+
+	self:_update_real_pos(seat:position())
+end
+
+function HuskPlayerMovement:_upd_move_driving(t, dt)
+	local seat = self.seat_third
+	local seat_pos = seat:position()
+
+	self:set_position(seat_pos)
+	self:set_rotation(seat:rotation())
+
+	self:_update_real_pos(seat_pos)
+end
+
+local _upd_move_zipline_original = HuskPlayerMovement._upd_move_zipline
+function HuskPlayerMovement:_upd_move_zipline(t, dt)
+	_upd_move_zipline_original(self, t, dt)
+
+	if self._load_data then
+		return
+	end
+
+	self:_update_real_pos(self._unit:position())
 end
 
 function HuskPlayerMovement:set_position(pos)
@@ -206,24 +251,6 @@ end
 function HuskPlayerMovement:sync_action_change_pose(pose_code, pos)
 	self._desired_pose_code = pose_code
 	self:_update_real_pos(pos, pose_code)
-end
-
-function HuskPlayerMovement:_update_air_time(t, dt)
-	if self._in_air then
-		self._air_time = self._air_time or 0
-		self._air_time = self._air_time + dt
-
-		if self._air_time > 1 then
-			local on_ground = self:_chk_ground_ray(self._m_pos)
-
-			if on_ground then
-				self._in_air = false
-				self._air_time = 0
-			end
-		end
-	else
-		self._air_time = 0
-	end
 end
 
 function HuskPlayerMovement:_update_zipline_sled(t, dt)
@@ -241,6 +268,207 @@ function HuskPlayerMovement:_update_zipline_sled(t, dt)
 	end
 end
 
+function HuskPlayerMovement:anim_clbk_spawn_dropped_magazine()
+	if not self:allow_dropped_magazines() then
+		return
+	end
+
+	local equipped_weapon = self._unit:inventory():equipped_unit()
+
+	if alive(equipped_weapon) and not equipped_weapon:base()._assembly_complete then
+		return
+	end
+
+	local ref_unit = nil
+	local allow_throw = true
+
+	if not self._magazine_data then
+		local w_td_crew = self:_equipped_weapon_crew_tweak_data()
+
+		if not w_td_crew or not w_td_crew.pull_magazine_during_reload then
+			return
+		end
+
+		self:anim_clbk_show_magazine_in_hand()
+
+		if not self._magazine_data then
+			return
+		elseif not alive(self._magazine_data.unit) then
+			self._magazine_data = nil
+
+			return
+		end
+
+		local attach_bone = nil
+
+		if not self._primary_hand or self._primary_hand == 0 then
+			attach_bone = left_hand_str
+		else
+			attach_bone = right_hand_str
+		end
+
+		local bone_hand = self._unit:get_object(attach_bone)
+
+		if bone_hand then
+			mvec3_set(tmp_vec1, self._magazine_data.unit:position())
+			mvec3_sub(tmp_vec1, self._magazine_data.unit:oobb():center())
+			mvec3_add(tmp_vec1, bone_hand:position())
+			self._magazine_data.unit:set_position(tmp_vec1)
+		end
+
+		ref_unit = self._magazine_data.part_unit
+		allow_throw = false
+	end
+
+	if self._magazine_data and alive(self._magazine_data.unit) then
+		ref_unit = ref_unit or self._magazine_data.unit
+
+		self._magazine_data.unit:set_visible(false)
+
+		local pos = ref_unit:position()
+		local rot = ref_unit:rotation()
+		local dropped_mag = self:_spawn_magazine_unit(self._magazine_data.id, self._magazine_data.name, pos, rot)
+
+		self:_set_unit_bullet_objects_visible(dropped_mag, self._magazine_data.bullets, false)
+
+		local mag_size = self._magazine_data.weapon_data.pull_magazine_during_reload
+
+		if type(mag_size) ~= "string" then
+			mag_size = "medium"
+		end
+
+		mvec3_set(tmp_vec1, ref_unit:oobb():center())
+		mvec3_sub(tmp_vec1, pos)
+		mvec3_set(tmp_vec2, pos)
+		mvec3_add(tmp_vec2, tmp_vec1)
+
+		local dropped_col = World:spawn_unit(HuskPlayerMovement.magazine_collisions[mag_size][1], tmp_vec2, rot)
+
+		dropped_col:link(HuskPlayerMovement.magazine_collisions[mag_size][2], dropped_mag)
+
+		if allow_throw then
+			if self._left_hand_direction then
+				local throw_force = 10
+
+				mvec3_set(tmp_vec1, self._left_hand_direction)
+				mvec3_mul(tmp_vec1, self._left_hand_velocity or 3)
+				mvec3_mul(tmp_vec1, math_random(25, 45))
+				mvec3_mul(tmp_vec1, -1)
+				dropped_col:push(throw_force, tmp_vec1)
+			end
+		else
+			local throw_force = 10
+			local _t = (self._reload_speed_multiplier or 1) - 1
+
+			mvec3_set(tmp_vec1, equipped_weapon:rotation():z())
+			mvec3_mul(tmp_vec1, math_lerp(math_random(65, 80), math_random(140, 160), _t))
+			mvec3_mul(tmp_vec1, math_random() < 0.0005 and 10 or -1)
+			dropped_col:push(throw_force, tmp_vec1)
+		end
+
+		managers.enemy:add_magazine(dropped_mag, dropped_col)
+	end
+end
+
+function HuskPlayerMovement:_get_max_move_speed(run)
+	local my_tweak = tweak_data.player.movement_state.standard
+	local move_speed = nil
+
+	if self._synced_max_speed then
+		move_speed = self._synced_max_speed
+	elseif self._pose_code == 2 then
+		move_speed = my_tweak.movement.speed.CROUCHING_MAX * (self._unit:base():upgrade_value("player", "crouch_speed_multiplier") or 1)
+	elseif run then
+		move_speed = my_tweak.movement.speed.RUNNING_MAX * (self._unit:base():upgrade_value("player", "run_speed_multiplier") or 1)
+	else
+		move_speed = my_tweak.movement.speed.STANDARD_MAX * (self._unit:base():upgrade_value("player", "walk_speed_multiplier") or 1)
+	end
+
+	if self._in_air then
+		local t = self._air_time or 0
+		local air_speed = math.exp(t * self:gravity() / self:terminal_velocity())
+		air_speed = air_speed * self:gravity()
+		air_speed = math.abs(air_speed)
+		move_speed = math.max(move_speed, air_speed)
+		move_speed = math.min(move_speed, math.abs(self:terminal_velocity()))
+	end
+
+	local zipline = self._zipline and self._zipline.enabled and self._zipline.zipline_unit and self._zipline.zipline_unit:zipline()
+
+	if zipline then
+		local step = 100
+		local t = math.clamp((self._zipline.t or 0) / zipline:total_time(), 0, 1)
+		local speed = 1.1 * zipline:speed_at_time(t, 1 / step) / step
+		move_speed = math.max(speed * zipline:speed(), move_speed)
+	end
+
+	local path_length = #self._movement_path - tweak_data.network.player_path_interpolation
+
+	if path_length > 0 then
+		local speed_boost = 1 + path_length / tweak_data.network.player_tick_rate
+		move_speed = move_speed * math.clamp(speed_boost, 1, 3)
+	end
+
+	return move_speed
+end
+
+function HuskPlayerMovement:_chk_ground_ray(check_pos, return_ray)
+	local mover_radius = 60
+	local up_pos = tmp_vec1
+
+	mvec3_set(up_pos, math.UP)
+	mvec3_mul(up_pos, 30)
+	mvec3_add(up_pos, check_pos or self._m_pos)
+
+	local down_pos = tmp_vec2
+
+	mvec3_set(down_pos, math.UP)
+	mvec3_mul(down_pos, -40)
+	mvec3_add(down_pos, check_pos or self._m_pos)
+
+	if return_ray then
+		return World:raycast("ray", up_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "ray_type", "body mover", "sphere_cast_radius", 29, "bundle", 9)
+	else
+		return World:raycast("ray", up_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "ray_type", "body mover", "sphere_cast_radius", 29, "bundle", 9, "report")
+	end
+end
+
+
+function HuskPlayerMovement:_update_air_time(t, dt)
+	if self._in_air then
+		self._check_air_time = 0
+		self._air_time = self._air_time or 0
+		self._air_time = self._air_time + dt
+
+		if self._air_time > 0.5 then
+			local on_ground = self:_chk_ground_ray(self._m_pos)
+
+			if on_ground then
+				self._in_air = false
+				self._air_time = 0
+			end
+		end
+	else
+		self._air_time = 0
+		
+		self._check_air_time = self._check_air_time or 0
+		self._check_air_time = self._check_air_time - dt
+		
+		if not self._check_air_time or self._check_air_time <= 0 then
+			self._check_air_time = 1 / tweak_data.network.player_tick_rate
+			
+			local on_ground = self:_chk_ground_ray(self._m_pos)
+
+			if not on_ground then
+				if not self._bleedout then
+					self:play_redirect("jump")
+				end
+				
+				self._in_air = true
+			end
+		end
+	end
+end
 --[[local draw_player_newest_pos = nil
 local draw_player_detect_pos = nil
 

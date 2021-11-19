@@ -29,7 +29,8 @@ SentryControlMenu.tweakdata = {
 	color_mode_overwatch = Color(1,1,0)
 }
 
-SentryControlMenu._selections = {}
+SentryControlMenu._selections = {} --deprecated
+
 SentryControlMenu.button_held_state = nil
 SentryControlMenu._targeted_sentry = nil
 
@@ -95,44 +96,12 @@ function SentryControlMenu._button_held(key)
 	end
 end
 
---most of this is deprecated because of the change to interaction behavior precluding the need for the multiselection capability
---but not all of it!
-
-function SentryControlMenu:MenuShouldClickOnRelease() --deprecated
-	return self.settings.menu_click_on_release
-end
-
-function SentryControlMenu:SetMouseClickOnMenuClose(value) --deprecated
-	self.settings.menu_click_on_release = value
-end
-
-function SentryControlMenu:SetMenuBehavior(value) --deprecated
-	self.settings.menu_behavior = tonumber(value)
-end
-
-function SentryControlMenu:GetMenuBehavior() --deprecated
-	return self.settings.menu_behavior
-end
-
 function SentryControlMenu:SetTeammateSentryLaserAlpha(value)
 	self.settings.teammate_laser_alpha = tonumber(value)
 end
 
-
 function SentryControlMenu:GetTeammateSentryLaserAlpha()
 	return self.settings.teammate_laser_alpha
-end
-
-function SentryControlMenu:GetSelectSentryKeybind() --deprecated
-	return self.settings.keybind_select
-end
-
-function SentryControlMenu:GetDeselectSentryKeybind() --deprecated
-	return self.settings.keybind_deselect
-end
-
-function SentryControlMenu:GetOpenMenuKeybind() --deprecated
-	return self.settings.keybind_menu
 end
 
 function SentryControlMenu:GetMenuButtonHoldThreshold()
@@ -144,272 +113,82 @@ function SentryControlMenu:SetMenuButtonHoldThreshold(value)
 	self.settings.button_hold_threshold = tonumber(value)
 end
 
-function SentryControlMenu:SetSelectSentryKeybind(key) --deprecated
-	self.settings.keybind_select = key
+function SentryControlMenu:_create_panel(unit) --deprecated
 end
 
-function SentryControlMenu:SetDeselectSentryKeybind(key) --deprecated
-	self.settings.keybind_deselect = key
+function SentryControlMenu:_remove_ws(ws) --deprecated
 end
-
-function SentryControlMenu:SetOpenMenuKeybind(key) --deprecated
-	self.settings.keybind_menu = key
-end
-
-function SentryControlMenu:RefreshKeybinds() --deprecated
-	self:SetSelectSentryKeybind(self:GetBLTKeybind("tcdso_select_sentry") or "")
-	self:SetDeselectSentryKeybind(self:GetBLTKeybind("tcdso_deselect_sentry") or "")
-	self:SetOpenMenuKeybind(self:GetBLTKeybind("tcdso_open_menu") or "")
-end
-
-function SentryControlMenu:GetBLTKeybind(id,...) --deprecated
-	--method copied from holdthekey v1.35; if htk is present, use this newer-or-same version's method. else, use the version i copied
-	if HoldTheKey and HoldTheKey.Get_BLT_Keybind then 
-		return HoldTheKey:Get_BLT_Keybind(id,...)
-	else
-		for k,v in pairs(BLT.Keybinds._keybinds) do
-			if type(v) == "table" then
-				if v["_id"] == id then
-					if v["_key"] and v["_key"]["pc"] then
-						return tostring(v["_key"]["pc"])
-					else
-						return
-					end
-				end
-			end
-		end
-		
-		if BLT.Keybinds._potential_keybinds then
-			for k,v in pairs(BLT.Keybinds._potential_keybinds) do
-				if type(v) == "table" then
-					if v["id"] == id then
-						if v["pc"] then 
-							return tostring(v["pc"])
-						else
-							return
-						end
-					end
-				end
-			end
-		end
-	end
-end
-
-function SentryControlMenu:GetMaxPickDistance() --deprecated
-	return self.tweakdata.MAX_PICK_SENTRY_DISTANCE
-end
-
-function SentryControlMenu:GetMaxPickAngle() --deprecated
-	return self.tweakdata.MAX_PICK_SENTRY_ANGLE
-end
-
-function SentryControlMenu:_create_panel(unit)
-	local width = self.tweakdata.ws_w
-	local height = self.tweakdata.ws_h
-	local pos = unit:position()
-	local offset_vector = Vector3(0,0,0) + pos
-	local right_vector = Vector3(0, -width, 0)
-	local bottom_vector = Vector3(0, 0, -height)
-	
-	if self._gui then 
-		local new_ws = self._gui:create_world_workspace(width,height,offset_vector,right_vector,bottom_vector)
-		return new_ws
-	end
-end
-
-function SentryControlMenu:_remove_ws(ws)
-	if ws then 
-		self._gui:destroy_workspace(ws)
-	end
-end
-
-function SentryControlMenu:Update(t,dt) --deprecated
-	if managers.player then
-		local player = managers.player:local_player()
-		if player then 
-		
-		
-		
-			local action_radial = self.action_radial
-			if action_radial then 
-				if self._button_held(self:GetOpenMenuKeybind()) then 
-					if not action_radial:active() then 
-						action_radial:Show()
-					end
-				elseif action_radial:active() then --on released
-					if self:MenuShouldClickOnRelease() then
-						action_radial:mouse_clicked(action_radial._base,Idstring("0"),0,0)
-					end
-					action_radial:Hide()
-				end
-			end
-			
-			
-			
-		
-			local head_pos = player:movement():m_head_pos()
-			local head_rot = player:movement():m_head_rot()
-			local aim_direction = head_rot:yaw()
-			local best_pick = {
-				unit = nil,
-				distance = nil,
-				angle = 360
-			}
-			local deselect_held = self._button_held(self:GetDeselectSentryKeybind())
-			local select_held = self._button_held(self:GetSelectSentryKeybind())
-			local MAX_PICK_ANGLE = self:GetMaxPickAngle()
-
-			local all_sentries = World:find_units_quick("sphere",head_pos,self:GetMaxPickDistance(),managers.slot:get_mask("sentry_gun"))
-			for _,unit in pairs(all_sentries) do 
-				if unit and alive(unit) and unit:character_damage() and not (unit:character_damage():dead() or unit:movement()._switched_off) then 
-					if unit:base():is_owner() then 
-						if unit:base()._bitmap then 
-							unit:base()._bitmap:set_color(self.tweakdata.color_unselected)
-							if unit == self._targeted_sentry or self._selections[tostring(unit:key())] then 
-								unit:base()._bitmap:show()
-							else
-								unit:base()._bitmap:set_alpha(self.tweakdata.unselected_alpha)
-								unit:base()._bitmap:hide()
-							end
-						end
-						local angle = math.abs(mvector3.angle(unit:position() - head_pos,head_rot:y()))
-						if angle < MAX_PICK_ANGLE then 
-							if angle < best_pick.angle then 
-								best_pick = {
-									unit = unit,
-									distance = distance,
-									angle = angle
-								}
-							end					
-						end
-					end
-				end
-			end
-			
-			if best_pick.unit and alive(best_pick.unit) then 
-				local base = best_pick.unit:base()
-				if base then 
-					self._targeted_sentry = best_pick.unit
-					
-					if deselect_held then 
-						self:DeselectSentryByUnit(best_pick.unit)
-					elseif select_held then 
-						self:SelectSentryByUnit(best_pick.unit)
-					end
-					
-					if base._bitmap then 
-						base._bitmap:show()
-						base._bitmap:set_color(self.tweakdata.color_aimed_at)
-						
-						if self._selections[tostring(best_pick.unit:key())] then
-							base._bitmap:set_alpha(self.tweakdata.selected_alpha)
-						else
-							base._bitmap:set_alpha(self.tweakdata.unselected_alpha)
-						end
-					end
-				end
-			end
-		end
---[[		
-if selection and alive(selection) and (selection ~= self.SelectedSentry) then 
-	selection:base()._bitmap:set_color(Color.red)
-	if alive(self.SelectedSentry) then 
-		self.SelectedSentry:base()._bitmap:set_color(Color.white)
-		self.SelectedSentry = selection
-	end
-end
---]]
-	end
-end
-
-function SentryControlMenu:GetCastSelection() --deprecated
-	local player = managers.player:local_player()
-	if player then 
-		local head_pos = player:movement():m_head_pos()
-		local head_rot = player:movement():m_head_rot()
-		local aim_direction = head_rot:yaw()
-
-		local best_pick = {
-			unit = nil,
-			distance = nil,
-			angle = 360
-		}
-
-		local all_sentries = World:find_units_quick("sphere",head_pos,self:GetMaxPickDistance(),managers.slot:get_mask("sentry_gun"))
-		for _,unit in pairs(all_sentries) do 
-			if unit and alive(unit) and unit:character_damage() and not (unit:character_damage():dead() or unit:movement()._switched_off) then 
-				if unit:base()._owner then 
-					local angle = math.abs(mvector3.angle(unit:position() - head_pos,head_rot:y()))
---					if unit:base()._text then 
---						unit:base()._text:set_text(string.format("%.02f",angle))
---					end
-					if angle < self:GetMaxPickAngle() then 
-						if angle < best_pick.angle then 
-							best_pick = {
-								unit = unit,
-								distance = distance,
-								angle = angle
-							}
-						end					
-					end
-				end
-			end
-		end
-		
-		if best_pick.unit and alive(best_pick.unit) then 
-			return best_pick.unit
-		end
-	end
-end
-
+ 
 function SentryControlMenu:SetSentryMode(unit,mode)
 	if unit and alive(unit) then 
+	
+		if unit:weapon():_get_sentry_firemode() == mode then 
+			mode = "normal"
+		end
+		
 		unit:weapon():_set_sentry_firemode(mode,true)
 		if unit:network() then 
 			unit:network():send("sync_player_movement_state",mode,1,"")
 		end
+		self:RefreshMenu(unit)
 	end
---	unit:weapon()._firemode = mode
 end
 
 function SentryControlMenu:SetSentryAmmo(unit,ammo_type)
-	if unit and alive(unit) then 
 	
-		if unit:weapon()._ammo_type == ammo_type then 
-			--when selecting the same ammo type as current, selects "basic" ammo
-			ammo_type = "basic"
-		end
+	if unit and alive(unit) then 
 		
 		unit:weapon():_set_ammo_type(ammo_type,true)
 		if unit:network() then 
 			unit:network():send("sync_player_movement_state",ammo_type,2,"")
 		end
+		self:RefreshMenu(unit)
 	end
---	unit:weapon()._ammo_type = ammo_type
 end
 
 function SentryControlMenu:SelectSentryByUnit(unit)
 	if unit and alive(unit) then 
-		self._selections = {
-			[tostring(unit:key())] = {unit = unit}
-		}
-	--[[ --multiselect
-		if not self._selections[tostring(unit:key())] then 
-			self._selections[tostring(unit:key())] = {
-				unit = unit
-			}
-		end
-	--]]
+		self.selected_sentry = unit
 	end
 end
 
-function SentryControlMenu:DeselectSentryByUnit(unit,key)
---todo peform remove_cb if extant?
-	if key and self._selections[tostring(key)] then 
-		self._selections[tostring(key)] = nil
-	elseif unit and alive(unit) then 
-		self._selections[tostring(unit:key())] = nil
+function SentryControlMenu:DeselectSentryByUnit()
+	if self.selected_sentry == unit then 
+		self.selected_sentry = nil
 	end
+end
+
+function SentryControlMenu:ShowMenu(unit)
+	if self.action_radial then 
+		self:RefreshMenu(unit)
+		self.action_radial:Show()
+	end
+end
+
+function SentryControlMenu:HideMenu()
+	if self.action_radial then 
+		self.action_radial:Hide()
+	end
+end
+
+function SentryControlMenu:RefreshMenu(unit) --sets the visual toggle state of various ammo types based on the selected sentry's options
+	if alive(unit) then 
+		local sentryweapon = unit:weapon()
+		local mode = sentryweapon:_get_sentry_firemode()
+		local ammo_type = sentryweapon:_get_ammo_type()
+		
+		local items = self.action_radial._items
+		items[1]._body:set_visible(ammo_type == "ap")
+		items[2]._body:set_visible(ammo_type == "taser")
+		items[3]._body:set_visible(mode == "overwatch")
+		items[4]._body:set_visible(mode == "manual")
+		items[5]._body:set_visible(false)
+		items[6]._body:set_visible(ammo_type == "basic")
+	end
+end
+
+function SentryControlMenu:IsMenuActive()
+	return self.action_radial and self.action_radial:active()
 end
 
 function SentryControlMenu:SelectAmmo(ammo,selected_unit)
@@ -417,9 +196,7 @@ function SentryControlMenu:SelectAmmo(ammo,selected_unit)
 		if selected_unit then 
 			self:SetSentryAmmo(selected_unit,ammo)
 		else
-			for _,data in pairs(self._selections) do 
-				self:SetSentryAmmo(data.unit,ammo)
-			end
+			self:SetSentryAmmo(self.selected_sentry,ammo)
 		end
 	end
 end
@@ -429,54 +206,105 @@ function SentryControlMenu:SelectMode(mode,selected_unit)
 		if selected_unit then 
 			self:SetSentryMode(selected_unit,mode)
 		else
-			for _,data in pairs(self._selections) do 
-				self:SetSentryMode(data.unit,mode)
-			end
+			self:SetSentryMode(self.selected_sentry,mode)
 		end
 	end
 end
 
 function SentryControlMenu:SetActionMenu(menu)
-	if not managers.hud then 
-		return
-	end
 	self.action_radial = menu or self.action_radial
 
+	for k,v in pairs(self.action_radial._items) do 
+		v._body:set_alpha(0.66)
+	end
+	menu._selector:set_image("guis/textures/pd2/radial_menu_assets/rmm_selector")
+--	menu._selector:set_alpha(0.31)
+	menu._bg:set_image("guis/textures/pd2/radial_menu_assets/rmm_bg")
+	menu._bg:set_alpha(0.31)
 	Hooks:Add("radialmenu_released_" .. self.action_radial:get_name(),"tcdso_menu_closed",function(num)
-		
+		--not required
 	end)
 	
 	
---	managers.hud:add_updator("SentryControlMenu_Update",callback(self,self,"Update")) --no longer needed
-	self._gui = World:newgui()
+	
+	
+	menu.on_mouseover_item = function(self,index,...)
+		local item = self:get_item(index)
+		if not item then 
+			self._selected = false
+			return 
+		end
+		
+		if index ~= self._selected then 
+			local old_item = self:get_item(self._selected)
+			
+			local function animate_flare(o,w1,h1,w2,h2,x,y,duration)
+				over(duration,function(progress)
+					local progsq = progress * progress
+					local dw = w2 - w1
+					local dh = h2 - h1
+					o:set_size(w1 + (dw * progsq),h1 + (dh * progsq))
+					o:set_center(x,y)
+				end)
+			end
+			
+			item._icon:stop()
+			item._icon:animate(animate_flare,item._icon:w(),item._icon:h(),item.icon.w * 1.25,item.icon.h * 1.25,item.icon.x,item.icon.y,0.25)
+			
+			if old_item then
+				local icon_data = old_item.icon
+				old_item._icon:animate(animate_flare,old_item._icon:w(),old_item._icon:h(),icon_data.w,icon_data.h,old_item.icon.x,old_item.icon.y,0.33)
+			end
+			
+--			self._animate_in = item._panel:animate(animate_flare,false) --must be called from a hud panel
+			if old_item then 
+--				self._animate_out = old_item._panel:animate(animate_flare,true)
+			end
+		end
+		
+			--[[
+			local function animate_flare(o,down)
+				local text_panel = o._text_panel
+				local font_size = o.text_panel.font_size --this is not a typo, this is the default font size
+				local final_size = font_size * (down and 1 or 1.25)
+
+				local rate = down and 0.95 or 1.05
+				
+				repeat
+					local s = math[down and "max" or "min"](text_panel:font_size() * rate,final_size)
+					
+					text_panel:set_font_size(s)
+					
+					coroutine.yield()
+				until math.abs(text_panel:font_size() - final_size) <= 0.01
+			end--]]
+		
+		return RadialMouseMenu.on_mouseover_item(self,index,...)
+	end
+
 end
 	
+function SentryControlMenu:PickupSentry(unit)
+	unit = unit or self.selected_sentry
+	if alive(unit) then 
+		local sentrybase = unit:base()
+		if Network:is_server() then
+			SentryGunBase.on_picked_up(sentrybase:get_type(), unit:weapon():ammo_ratio(), unit:id())
+			sentrybase:remove()
+		else
+			managers.network:session():send_to_host("picked_up_sentry_gun", unit)
+		end
+	end
+end
 
 Hooks:Add("BaseNetworkSessionOnLoadComplete","tcdso_sentry_onbaseloadcomplete",function()
 	if not deathvox:IsTotalCrackdownEnabled() then return end
 	
---	managers.localization:add_localized_strings({hud_interact_sentry_gun_switch_fire_mode = string.gsub(managers.localization:text("deathvox_total_hud_interact_sentry_gun_switch_fire_mode"),"BTN_INTERACT","$BTN_INTERACT")})
---	"deathvox_total_hud_interact_sentry_gun_switch_fire_mode" : "Press BTN_INTERACT to change Sentry Mode.",	
 	RadialMouseMenu:new({
 		name = managers.localization:text("tcdso_menu_title"),
 		radius = 200,
-		deadzone = 50,
+		deadzone = 40,
 		items = {
-			{
-				text = managers.localization:text("sentry_ammo_he"),
-				icon = {
-					texture = tweak_data.hud_icons.pd2_fire.texture,
-					texture_rect = tweak_data.hud_icons.pd2_fire.texture_rect,
-					layer = 3,
-					w = 16,
-					h = 16,
-					alpha = 0.7,
-					color = Color(1,0.5,0) --orange
-				},
-				show_text = true,
-				stay_open = false,
-				callback =  callback(SentryControlMenu,SentryControlMenu,"SelectAmmo","he")
-			},
 			{
 				text = managers.localization:text("sentry_ammo_ap"),
 				icon = {
@@ -493,19 +321,19 @@ Hooks:Add("BaseNetworkSessionOnLoadComplete","tcdso_sentry_onbaseloadcomplete",f
 				callback =  callback(SentryControlMenu,SentryControlMenu,"SelectAmmo","ap")
 			},
 			{
-				text = managers.localization:text("sentry_mode_standard"),
+				text = managers.localization:text("sentry_ammo_taser"),
 				icon = {
-					texture = tweak_data.hud_icons.wp_sentry.texture,
-					texture_rect = tweak_data.hud_icons.wp_sentry.texture_rect,
+					texture = tweak_data.hud_icons.mugshot_electrified.texture,
+					texture_rect = tweak_data.hud_icons.mugshot_electrified.texture_rect,
 					layer = 3,
 					w = 16,
 					h = 16,
 					alpha = 0.7,
-					color = Color(0,0.5,1) --blue
+					color = Color(1,1,0) --yellow
 				},
 				show_text = true,
 				stay_open = false,
-				callback =  callback(SentryControlMenu,SentryControlMenu,"SelectMode","normal")
+				callback = callback(SentryControlMenu,SentryControlMenu,"SelectAmmo","taser")
 			},
 			{
 				text = managers.localization:text("sentry_mode_overwatch"),
@@ -538,19 +366,39 @@ Hooks:Add("BaseNetworkSessionOnLoadComplete","tcdso_sentry_onbaseloadcomplete",f
 				callback =  callback(SentryControlMenu,SentryControlMenu,"SelectMode","manual")
 			},
 			{
-				text = managers.localization:text("sentry_ammo_taser"),
+				text = managers.localization:text("sentry_retrieve"),
 				icon = {
-					texture = tweak_data.hud_icons.mugshot_electrified.texture,
-					texture_rect = tweak_data.hud_icons.mugshot_electrified.texture_rect,
+					texture = "guis/textures/hud_icons",
+					texture_rect = {
+						0,
+						192,
+						45,
+						50
+					},
 					layer = 3,
 					w = 16,
 					h = 16,
 					alpha = 0.7,
-					color = Color(1,1,0) --yellow
+					color = Color.white --the answer may shock you!
 				},
 				show_text = true,
 				stay_open = false,
-				callback = callback(SentryControlMenu,SentryControlMenu,"SelectAmmo","taser")
+				callback =  callback(SentryControlMenu,SentryControlMenu,"PickupSentry")
+			},
+			{
+				text = managers.localization:text("sentry_ammo_standard"),
+				icon = {
+					texture = tweak_data.hud_icons.r870_shotgun.texture,
+					texture_rect = tweak_data.hud_icons.r870_shotgun.texture_rect,
+					layer = 3,
+					w = 16,
+					h = 16,
+					alpha = 0.7,
+					color = Color(0,0.5,1) --blue
+				},
+				show_text = true,
+				stay_open = false,
+				callback =  callback(SentryControlMenu,SentryControlMenu,"SelectAmmo","basic")
 			}
 		}
 	},callback(SentryControlMenu,SentryControlMenu,"SetActionMenu"))

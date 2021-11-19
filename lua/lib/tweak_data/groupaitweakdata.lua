@@ -1,14 +1,358 @@
 function GroupAITweakData:_init_chatter_data()
 	self.enemy_chatter = {}
 	--[[
-		notes:
-		radius seems to do nothing no discernable difference between 10 and 90000000000000000000000000000000, game theory how many cops in a radius can say a certain chatter
-		max_nr probably how many chatters can go off at once
-		duration ??? longer ones i grabbed from v009/pdth
-		inerval is cooldown
-		group_min seems to be how many cops need to be in a group for the line to play
-		queue what call is used in chatter
+	notes:
+	radius seems to do nothing, game theory how many cops in a radius can say a certain chatter (should test this)
+	max_nr how many chatter calls can go off at once
+	duration ??? longer ones i grabbed from v009/pdth
+	interval is cooldown
+	group_min how many cops need to be in a group for the line to play
+	queue what call is used in chatter
 	]]--
+	self.enemy_chatter.clear = {
+		radius = 2000,
+	    max_nr = 1,
+	    duration = {60, 60},
+	    interval = {3, 8},
+	    group_min = 1,
+	    queue = "clr"
+	}
+	self.enemy_chatter.csalpha = {
+		radius = 6000,
+	    max_nr = 1,
+	    duration = {3, 4},
+		interval = {2, 4},
+		group_min = 0,
+	    queue = "gr2a"
+	}
+	self.enemy_chatter.csbravo = {
+		radius = 6000,
+	    max_nr = 1,
+	    duration = {3, 4},
+		interval = {2, 4},
+		group_min = 0,
+	    queue = "gr2b"
+	}
+	self.enemy_chatter.cscharlie = {
+		radius = 6000,
+	    max_nr = 1,
+	    duration = {3, 4},
+		interval = {2, 4},
+		group_min = 0,
+	    queue = "gr2c"
+	}
+	self.enemy_chatter.csdelta = {
+		radius = 6000,
+	    max_nr = 1,
+	    duration = {3, 4},
+		interval = {2, 4},
+		group_min = 0,
+	    queue = "gr2d"
+	}
+	self.enemy_chatter.hrtalpha = {
+		radius = 6000,
+	    max_nr = 1,
+	    duration = {3, 4},
+		interval = {2, 4},
+		group_min = 0,
+	    queue = "gr1a"
+	}
+	self.enemy_chatter.hrtbravo = {
+		radius = 6000,
+	    max_nr = 1,
+	    duration = {3, 4},
+		interval = {2, 4},
+		group_min = 0,
+	    queue = "gr1b"
+	}
+	self.enemy_chatter.hrtcharlie = {
+		radius = 6000,
+	    max_nr = 1,
+	    duration = {3, 4},
+		interval = {2, 4},
+		group_min = 0,
+	    queue = "gr1c"
+	}
+	self.enemy_chatter.hrtdelta = {
+		radius = 6000,
+	    max_nr = 1,
+	    duration = {3, 4},
+		interval = {2, 4},
+		group_min = 0,
+	    queue = "gr1d"
+	}
+	self.enemy_chatter.dodge = {
+		radius = 2000,
+	    max_nr = 1,
+	    duration = {0.5, 0.5},
+	    interval = {0.75, 1.5},
+	    group_min = 0,
+	    queue = "lk3b"
+	}
+	self.enemy_chatter.csalpha = {
+		radius = 6000,
+		max_nr = 1,
+		duration = {3, 4},
+		interval = {2, 4},
+		group_min = 0,
+		queue = "gr2a"
+	}
+	self.enemy_chatter.csbravo = {
+		radius = 6000,
+		max_nr = 1,
+		duration = {3, 4},
+		interval = {2, 4},
+		group_min = 0,
+		queue = "gr2b"
+	}
+	self.enemy_chatter.cscharlie = {
+		radius = 6000,
+		max_nr = 1,
+		duration = {3, 4},
+		interval = {2, 4},
+		group_min = 0,
+		queue = "gr2c"
+	}
+	self.enemy_chatter.csdelta = {
+		radius = 6000,
+		max_nr = 1,
+		duration = {3, 4},
+		interval = {2, 4},
+		group_min = 0,
+		queue = "gr2d"
+	}
+	self.enemy_chatter.hrtalpha = {
+		radius = 6000,
+		max_nr = 1,
+		duration = {3, 4},
+		interval = {2, 4},
+		group_min = 0,
+		queue = "gr1a"
+	}
+	self.enemy_chatter.hrtbravo = {
+		radius = 6000,
+		max_nr = 1,
+		duration = {3, 4},
+		interval = {2, 4},
+		group_min = 0,
+		queue = "gr1b"
+	}
+	self.enemy_chatter.hrtcharlie = {
+		radius = 6000,
+		max_nr = 1,
+		duration = {3, 4},
+		interval = {2, 4},
+		group_min = 0,
+		queue = "gr1c"
+	}
+	self.enemy_chatter.hrtdelta = {
+		radius = 6000,
+		max_nr = 1,
+		duration = {3, 4},
+		interval = {2, 4},
+		group_min = 0,
+		queue = "gr1d"
+	}
+	self.enemy_chatter.aggressive = {
+		radius = 700,
+		max_nr = 10,
+		duration = {3, 4},
+		interval = {1.5, 2},
+		group_min = 0,
+		queue = "g90"
+	}
+	self.enemy_chatter.aggressive_assault = {--cops use less idle chatter during assaults 
+		radius = 700,
+		max_nr = 10,
+		duration = {3, 4},
+		interval = {2, 2.5},
+		group_min = 0,
+		queue = "g90"
+	}
+	self.enemy_chatter.open_fire = {
+		radius = 1000,
+		max_nr = 10,
+		duration = {2, 4},
+		interval = {0.75, 1.5},
+		group_min = 0,
+		queue = "att"
+	}			
+	self.enemy_chatter.retreat = {
+		radius = 700,
+		max_nr = 10,
+		duration = {2, 4},
+		interval = {2, 4},
+		group_min = 0,
+		queue = "m01"
+	}		
+	self.enemy_chatter.deathguard = { --this isnt actually kill lines those are done in playerdamage
+		radius = 700,
+		max_nr = 5,
+		duration = {2, 4},
+		interval = {2, 3},
+		group_min = 0,
+		queue = "r01"
+	}
+	self.enemy_chatter.contact = {
+		radius = 700,
+		max_nr = 5,
+		duration = {1, 3},
+		interval = {0.75, 1.5},
+		group_min = 2,
+		queue = "c01"
+	}
+	self.enemy_chatter.clear = {
+		radius = 700,
+		max_nr = 3,
+		duration = {60, 60},
+		interval = {0.75, 1.5},
+		group_min = 3,
+		queue = "clr"
+	}
+	self.enemy_chatter.clear_whisper = {
+		radius = 700,
+		max_nr = 2,
+		duration = {60, 60},
+		interval = {5, 5},
+		group_min = 0,
+		queue = "a05"
+	}		
+	self.enemy_chatter.clear_whisper_2 = {
+		radius = 700,
+		max_nr = 2,
+		duration = {60, 60},
+		interval = {5, 5},
+		group_min = 0,
+		queue = "a06"
+	}		
+	self.enemy_chatter.go_go = {
+		radius =  1000,
+		max_nr = 20,
+		duration = {2, 2},
+		interval = {0.75, 1},
+		group_min = 0,
+		queue = "mov"
+	}
+	self.enemy_chatter.push = {
+		radius = 1000,
+		max_nr = 20,
+		duration = {2, 4},
+		interval = {0.75, 1.5},
+		group_min = 0,
+		queue = "pus"
+	}
+	self.enemy_chatter.reload = {
+		radius = 700,
+		max_nr = 4,
+		duration = {2, 4},
+		interval = {4, 5},
+		group_min = 0,
+		queue = "rrl"
+	}
+	self.enemy_chatter.look_for_angle = {
+		radius = 700,
+		max_nr = 20,
+		duration = {2, 4},
+		interval = {2, 4},
+		group_min = 0,
+		queue = "t01"
+	}
+	self.enemy_chatter.ready = {
+		radius = 1000,
+		max_nr = 20,
+		duration = {2, 4},
+		interval = {0.75, 1.5},
+		group_min = 0,
+		queue = "rdy"
+	}
+	self.enemy_chatter.smoke = {
+		radius = 1000,
+		max_nr = 3,
+		duration = {2, 2},
+		interval = {0.1, 0.1},
+		group_min = 0,
+		queue = "d01"
+	}
+	self.enemy_chatter.flash_grenade = {
+		radius = 1000,
+		max_nr = 3,
+		duration = {2, 2},
+		interval = {0.1, 0.1},
+		group_min = 0,
+		queue = "d02"
+	}
+	self.enemy_chatter.ecm = {
+		radius = 1000,
+		max_nr = 20,
+		duration = {2, 4},
+		interval = {0.75, 1.5},
+		group_min = 0,
+		queue = "ch3"
+	}
+	self.enemy_chatter.saw = {
+		radius = 1000,
+		max_nr = 20,
+		duration = {2, 4},
+		interval = {0.75, 1.5},
+		group_min = 0,
+		queue = "ch4"
+	}
+	self.enemy_chatter.trip_mines = {
+		radius = 1000,
+		max_nr = 20,
+		duration = {2, 4},
+		interval = {0.75, 1.5},
+		group_min = 0,
+		queue = "ch1"
+	}
+	self.enemy_chatter.sentry = {
+		radius = 1000,
+		max_nr = 20,
+		duration = {2, 4},
+		interval = {0.75, 1.5},
+		group_min = 0,
+		queue = "ch2"
+	}
+	self.enemy_chatter.incomming_tank = {
+		radius = 1500,
+		max_nr = 1,
+		duration = {10, 10},
+		interval = {0.5, 1},
+		group_min = 0,
+		queue = "lk3b"
+	}
+	self.enemy_chatter.incomming_spooc = {
+		radius = 1200,
+		max_nr = 1,
+		duration = {10, 10},
+		interval = {0.5, 1},
+		group_min = 0,
+		queue = "r01"
+	}
+	self.enemy_chatter.incomming_shield = {
+		radius = 1500,
+		max_nr = 1,
+		duration = {10, 10},
+		interval = {0.5, 1},
+		group_min = 0,
+		queue = "pos"
+	}
+	self.enemy_chatter.incomming_taser = {
+		radius = 1500,
+		max_nr = 1,
+		duration = {60, 60},
+		interval = {0.5, 1},
+		group_min = 0,
+		queue = "bak"
+	}
+	self.enemy_chatter.heal_chatter = {
+		radius = 700,
+		max_nr = 10,
+		duration = {2, 4},
+		interval = {1.5, 3.5},
+		group_min = 0,
+		queue = "heal"
+	}	
 	self.enemy_chatter.aggressive = {
 		radius = 2000,
 		max_nr = 40,
@@ -25,19 +369,11 @@ function GroupAITweakData:_init_chatter_data()
 		group_min = 0,
 		queue = "g90"
 	}
-	self.enemy_chatter.lotusapproach = {
-		radius = 4000,
-		max_nr = 40,
-		duration = {1, 1},
-		interval = {1, 4},
-		group_min = 0,
-		queue = "ch3"
-	}
 	self.enemy_chatter.aggressivecontrolsurprised1 = {
 		radius = 2000,
 	    max_nr = 4,
 	    duration = {0.5, 0.5},
-	    interval = {1.75, 2.5},
+	    interval = {4, 5},
 	    group_min = 0,
 	    queue = "lk3b"
 	}
@@ -45,7 +381,7 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 2000,
 	    max_nr = 4,
 	    duration = {0.5, 0.5},
-	    interval = {1.75, 2.5},
+	    interval = {4, 5},
 	    group_min = 0,
 	    queue = "hlp"
 	}
@@ -97,14 +433,6 @@ function GroupAITweakData:_init_chatter_data()
 		group_min = 0,
 		queue = "m01"
 	}		
-	self.enemy_chatter.deathguard = { --this isnt actually kill lines those are done in playerdamage
-		radius = 2000,
-		max_nr = 5,
-		duration = {2, 4},
-		interval = {2, 3},
-		group_min = 0,
-		queue = "rdy"
-	}
 	self.enemy_chatter.cuffed = {
 		radius = 1000,
 	    max_nr = 1,
@@ -216,231 +544,7 @@ function GroupAITweakData:_init_chatter_data()
 	    interval = {6, 8},
 	    group_min = 1,
 	    queue = "bak"
-	}
-	self.enemy_chatter.clear = {
-		radius = 2000,
-	    max_nr = 1,
-	    duration = {60, 60},
-	    interval = {3, 8},
-	    group_min = 1,
-	    queue = "clr"
-	}
-	self.enemy_chatter.csalpha = {
-		radius = 6000,
-	    max_nr = 1,
-	    duration = {3, 4},
-		interval = {2, 4},
-		group_min = 0,
-	    queue = "gr2a"
-	}
-	self.enemy_chatter.csbravo = {
-		radius = 6000,
-	    max_nr = 1,
-	    duration = {3, 4},
-		interval = {2, 4},
-		group_min = 0,
-	    queue = "gr2b"
-	}
-	self.enemy_chatter.cscharlie = {
-		radius = 6000,
-	    max_nr = 1,
-	    duration = {3, 4},
-		interval = {2, 4},
-		group_min = 0,
-	    queue = "gr2c"
-	}
-	self.enemy_chatter.csdelta = {
-		radius = 6000,
-	    max_nr = 1,
-	    duration = {3, 4},
-		interval = {2, 4},
-		group_min = 0,
-	    queue = "gr2d"
-	}
-	self.enemy_chatter.hrtalpha = {
-		radius = 6000,
-	    max_nr = 1,
-	    duration = {3, 4},
-		interval = {2, 4},
-		group_min = 0,
-	    queue = "gr1a"
-	}
-	self.enemy_chatter.hrtbravo = {
-		radius = 6000,
-	    max_nr = 1,
-	    duration = {3, 4},
-		interval = {2, 4},
-		group_min = 0,
-	    queue = "gr1b"
-	}
-	self.enemy_chatter.hrtcharlie = {
-		radius = 6000,
-	    max_nr = 1,
-	    duration = {3, 4},
-		interval = {2, 4},
-		group_min = 0,
-	    queue = "gr1c"
-	}
-	self.enemy_chatter.hrtdelta = {
-		radius = 6000,
-	    max_nr = 1,
-	    duration = {3, 4},
-		interval = {2, 4},
-		group_min = 0,
-	    queue = "gr1d"
-	}
-	self.enemy_chatter.dodge = {
-		radius = 2000,
-	    max_nr = 1,
-	    duration = {0.5, 0.5},
-	    interval = {0.75, 1.5},
-	    group_min = 0,
-	    queue = "lk3b"
-	}
-	self.enemy_chatter.clear_whisper = {
-		radius = 2000,
-		max_nr = 1,
-		duration = {60, 60},
-		interval = {10, 20},
-		group_min = 0,
-		queue = "a05"
-	}
-	self.enemy_chatter.go_go = {
-		radius = 2000,
-		max_nr = 40,
-		duration = {2, 2},
-		interval = {3, 6},
-		group_min = 0,
-		queue = "mov"
-	}
-	self.enemy_chatter.push = {
-		radius = 2000,
-		max_nr = 40,
-		duration = {2, 4},
-		interval = {3, 6},
-		group_min = 0,
-		queue = "pus"
-	}
-	self.enemy_chatter.reload = {
-		radius = 2000,
-		max_nr = 40,
-		duration = {2, 4},
-		interval = {2, 5},
-		group_min = 2,
-		queue = "rrl"
-	}
-	self.enemy_chatter.look_for_angle = {
-		radius = 2000,
-		max_nr = 40,
-		duration = {2, 4},
-		interval = {2, 3},
-		group_min = 0,
-		queue = "t01"
-	}
-	self.enemy_chatter.ready = {
-		radius = 2000,
-		max_nr = 16,
-		duration = {2, 4},
-		interval = {1, 3.5},
-		group_min = 1,
-		queue = "rdy"
-	}
-	self.enemy_chatter.affirmative = {
-		radius = 2000,
-		max_nr = 8,
-		duration = {2, 4},
-		interval = {0.75, 1.5},
-		group_min = 2,
-		queue = "r01"
-	}
-	self.enemy_chatter.inpos = {
-		radius = 2000,
-		max_nr = 16,
-		duration = {2, 4},
-		interval = {0.75, 1.5},
-		group_min = 0,
-		queue = "pos"
-	}
-	self.enemy_chatter.smoke = {
-		radius = 1000,
-		max_nr = 3,
-	    duration = {2, 2},
-		interval = {0.1, 0.1},
-		group_min = 0,
-		queue = "d01"
-	}
-	self.enemy_chatter.flash_grenade = {
-		radius = 1000,
-		max_nr = 3,
-		duration = {2, 2},
-	    interval = {0.1, 0.1},
-		group_min = 0,
-		queue = "d02"
-	}
-	self.enemy_chatter.ecm = {
-		radius = 1000,
-		max_nr = 20,
-		duration = {2, 4},
-		interval = {0.75, 1.5},
-		group_min = 0,
-		queue = "ch3"
-	}
-	self.enemy_chatter.saw = {
-		radius = 2000,
-		max_nr = 10,
-		duration = {2, 4},
-		interval = {4, 10},
-		group_min = 0,
-		queue = "ch4"
-	}
-	self.enemy_chatter.trip_mines = {
-		radius = 2000,
-		max_nr = 10,
-		duration = {2, 4},
-		interval = {0.75, 1.5},
-		group_min = 0,
-		queue = "ch1"
-	}
-	self.enemy_chatter.sentry = {
-		radius = 2000,
-		max_nr = 10,
-		duration = {2, 4},
-		interval = {4, 10},
-		group_min = 0,
-		queue = "ch2"
-	}
-	self.enemy_chatter.incomming_tank = {
-		radius = 1500,
-		max_nr = 0,
-		duration = {10, 10},
-		interval = {0.5, 1},
-		group_min = 0,
-		queue = "bdz"
-	}
-	self.enemy_chatter.incomming_spooc = {
-		radius = 1200,
-		max_nr = 0,
-		duration = {10, 10},
-		interval = {0.5, 1},
-		group_min = 0,
-		queue = "clk"
-	}
-	self.enemy_chatter.incomming_shield = {
-		radius = 1500,
-		max_nr = 0,
-		duration = {10, 10},
-		interval = {0.5, 1},
-		group_min = 0,
-		queue = "shd"
-	}
-	self.enemy_chatter.incomming_taser = {
-		radius = 1500,
-		max_nr = 0,
-		duration = {60, 60},
-		interval = {0.5, 1},
-		group_min = 0,
-		queue = "tsr"
-	}
+	}	
 end
 
 Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categories", function(self, difficulty_index)
@@ -1017,7 +1121,7 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 			gensec = "units/pd2_mod_gensec/characters/ene_deathvox_gensec_swat/ene_deathvox_gensec_swat",
 			zeal = "units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar",
 			murkywater = "units/pd2_mod_sharks/characters/ene_deathvox_swat/ene_deathvox_swat",			
-			classic = "units/pd2_mod_gageammo/characters/ene_deathvox_lightar/ene_deathvox_lightar"
+			classic = "units/pd2_mod_classic/characters/ene_deathvox_classic_swat/ene_deathvox_classic_swat"
 		},
 		access = access_type_all
 	}

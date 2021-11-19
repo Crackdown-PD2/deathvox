@@ -62,3 +62,22 @@ function PlayerTweakData:_set_sm_wish()
 	self.damage.MIN_DAMAGE_INTERVAL = 0.35
 	self.damage.REVIVE_HEALTH_STEPS = {0.1}
 end
+
+Hooks:PostHook(PlayerTweakData, "init", "DV_init", function(self)
+	if deathvox:IsTotalCrackdownEnabled() then
+		self.suppression = {
+			receive_mul = 1,
+			decay_start_delay = 1,
+			spread_mul = 1,
+			tolerance = 1,
+			max_value = 11,
+			autohit_chance_mul = 1
+		}
+	end
+end)
+
+function PlayerTweakData:_set_singleplayer()
+	if not deathvox:IsTotalCrackdownEnabled() then
+		self.damage.REGENERATE_TIME = 1.75
+	end
+end

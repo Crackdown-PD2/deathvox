@@ -2,6 +2,64 @@ local mvec1 = Vector3()
 local mvec2 = Vector3()
 local mrot1 = Rotation()
 
+
+Hooks:PreHook(ProjectileBase,"init","deathvox_projectilebase_init",function(self,unit)
+	self._primary_class = self._primary_class or "NO_WEAPON_CLASS"
+	self._subclasses = self._subclasses or {}
+end)
+
+function ProjectileBase:get_weapon_class()
+	return self._primary_class
+end
+function ProjectileBase:set_weapon_class(class)
+	self._primary_class = class
+end
+function ProjectileBase:set_weapon_subclass(subclass)
+	if not table.contains(self._subclasses,subclass) then 
+		table.insert(self._subclasses,subclass)
+	end
+end
+function ProjectileBase:remove_weapon_subclass(...) --can remove multiple simultaneously
+	local num_subclasses = #self._subclasses
+	if num_subclasses <= 0 then 
+		return
+	end
+	for _,subclass in pairs({...}) do 
+		for i = num_subclasses,1,-1 do 
+			if self._subclasses[i] == subclass then 
+				table.remove(self._subclasses,i)
+				break
+			end
+		end
+	end
+end
+function ProjectileBase:get_weapon_subclasses()
+	return self._subclasses
+end
+function ProjectileBase:is_weapon_class(class)
+	if not class then 
+		return false
+	end
+	return self._primary_class == class
+end
+function ProjectileBase:is_weapon_subclass(...)
+	local subclasses = self._weapon_subclasses
+
+	local matched
+	for _,category in pairs({...}) do 
+		if table.contains(subclasses or {},category) then 
+			--must not be missing match to any given parameters, and must positively match at least one parameter
+			--(therefore if own subclasses table is empty, this will return false)
+			matched = true
+		else
+			return false
+		end
+	end
+	return matched
+end
+
+
+
 function ProjectileBase:update(unit, t, dt)
 	if not self._simulated and not self._collided then
 		self._unit:m_position(mvec1)
@@ -126,4 +184,99 @@ function ProjectileBase.throw_projectile(projectile_type, pos, dir, owner_peer_i
 	end
 
 	return unit
+end
+
+
+if deathvox:IsTotalCrackdownEnabled() then 
+
+	function ProjectileBase:throw(params)
+		self._owner = params.owner
+		local velocity = params.dir
+		local adjust_z = 50
+		local launch_speed = 250
+		local push_at_body_index = nil
+
+		if params.projectile_entry then 
+			if tweak_data.projectiles[params.projectile_entry] then
+				adjust_z = tweak_data.projectiles[params.projectile_entry].adjust_z or adjust_z
+				launch_speed = tweak_data.projectiles[params.projectile_entry].launch_speed or launch_speed
+				push_at_body_index = tweak_data.projectiles[params.projectile_entry].push_at_body_index
+			end
+			if tweak_data.blackmarket.projectiles[params.projectile_entry] then 
+				self:set_projectile_entry(params.projectile_entry)
+			end
+		end
+		
+		if self._thrower_unit == managers.player:local_player() then 
+			launch_speed = launch_speed * managers.player:upgrade_value(self:get_weapon_class() or "NO_WEAPON_CLASS","projectile_velocity_mul",1)
+		end
+
+		velocity = velocity * launch_speed
+		velocity = Vector3(velocity.x, velocity.y, velocity.z + adjust_z)
+		local mass_look_up_modifier = self._mass_look_up_modifier or 2
+		local mass = math.max(mass_look_up_modifier * (1 + math.min(0, params.dir.z)), 1)
+
+		if self._simulated then
+			if push_at_body_index then
+				self._unit:push_at(mass, velocity, self._unit:body(push_at_body_index):center_of_mass())
+			else
+				self._unit:push_at(mass, velocity, self._unit:position())
+			end
+		else
+			self._velocity = velocity
+		end
+
+		if params.projectile_entry and tweak_data.blackmarket.projectiles[params.projectile_entry] then
+		
+			local tweak_entry = tweak_data.blackmarket.projectiles[params.projectile_entry]
+			local physic_effect = tweak_entry.physic_effect
+
+			if physic_effect then
+				World:play_physic_effect(physic_effect, self._unit)
+			end
+
+			if tweak_entry.add_trail_effect then
+				self:add_trail_effect(tweak_entry.add_trail_effect)
+			end
+
+			local unit_name = tweak_entry.sprint_unit
+
+			if unit_name then
+				local new_dir = Vector3(params.dir.y * -1, params.dir.x, params.dir.z)
+				local sprint = World:spawn_unit(Idstring(unit_name), self._unit:position() + new_dir * 50, self._unit:rotation())
+				local rot = Rotation(params.dir, math.UP)
+
+				mrotation.x(rot, mvec1)
+				mvector3.multiply(mvec1, 0.15)
+				mvector3.add(mvec1, new_dir)
+				mvector3.add(mvec1, math.UP / 2)
+				mvector3.multiply(mvec1, 100)
+				sprint:push_at(mass, mvec1, sprint:position())
+			end
+
+--			self:set_projectile_entry(params.projectile_entry)
+		end
+	end
+
+
+	Hooks:PostHook(ProjectileBase,"set_projectile_entry","deathvox_projectilebase_set_projectile_entry",function(self,projectile_entry)
+		local entry = self._tweak_projectile_entry or projectile_entry
+		local projectile_td = tweak_data.blackmarket.projectiles[entry]
+		if projectile_td then 
+			if projectile_td.throwable and not projectile_td.is_a_grenade then 
+				self:set_weapon_class("class_throwing")
+				if projectile_td.is_poison then	--this flag is added by tcd, not vanilla
+					self:set_weapon_subclass("subclass_poison")
+				end
+			end
+			if projectile_td.is_a_grenade then 
+				self:set_weapon_class("class_grenade")
+				--not really used but might as well have it there
+			end
+			self._use_armor_piercing = projectile_td.can_pierce_armor
+		else
+--			log("TOTAL CRACKDOWN: Error! ProjectileBase:set_projectile_entry(" .. tostring(projectile_entry) .. "): No tweak entry for ".. tostring(entry))
+		end
+		
+	end)
 end

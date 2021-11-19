@@ -221,7 +221,7 @@ function NPCRaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_
 		end
 	end
 
-	if self._suppression then
+	if not shoot_player and self._suppression then
 		local suppression_slot_mask = user_unit:in_slot(16) and managers.slot:get_mask("enemies") or managers.slot:get_mask("players", "criminals")
 
 		self:_suppress_units(mvector3.copy(from_pos), mvector3.copy(direction), ray_distance, suppression_slot_mask, user_unit, suppr_mul)

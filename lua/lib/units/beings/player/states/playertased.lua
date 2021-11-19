@@ -1,3 +1,13 @@
+function PlayerTased:_on_tased_event(taser_unit, tased_unit)
+	if self._unit == tased_unit then
+		self._taser_unit = taser_unit
+		
+		if managers.player:has_category_upgrade("player", "infiltrator_taser_breakout") then
+			managers.enemy:add_delayed_clbk("TCD:TASERFUCKERYEAAAAAAAH", callback(self, self, "give_shock_to_taser_no_damage"), TimerManager:game():time() + 1.5)
+		end
+	end
+end
+
 function PlayerTased:_update_check_actions(t, dt)
 	local input = self:_get_input(t, dt)
 	local difficulty_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)

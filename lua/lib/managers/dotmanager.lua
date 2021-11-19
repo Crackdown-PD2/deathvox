@@ -1,79 +1,138 @@
-local table_insert = table.insert
-local table_remove = table.remove
+local pairs_g = pairs
+
+local alive_g = alive
 
 function DOTManager:update(t, dt)
-	for index = #self._doted_enemies, 1, -1 do
-		local dot_info = self._doted_enemies[index]
+	local doted_enemies = self._doted_enemies
 
-		if dot_info.dot_counter >= 0.5 then
+	for index = #doted_enemies, 1, -1 do
+		local dot_info = doted_enemies[index]
+		local dot_counter = dot_info.dot_counter
+
+		dot_counter = dot_counter + dt
+
+		if dot_counter > 0.5 then
 			self:_damage_dot(dot_info)
 
-			dot_info.dot_counter = 0
+			dot_counter = dot_counter - 0.5
 		end
 
-		if t > dot_info.dot_damage_received_time + dot_info.dot_length then
-			table_remove(self._doted_enemies, index)
-		else
-			dot_info.dot_counter = dot_info.dot_counter + dt
+		dot_info.dot_counter = dot_counter
+
+		if t > dot_info.dot_length then
+			local new_doted_enemies = {}
+
+			for idx = 1, index - 1 do
+				new_doted_enemies[#new_doted_enemies + 1] = doted_enemies[idx]
+			end
+
+			for idx = index + 1, #doted_enemies do
+				new_doted_enemies[#new_doted_enemies + 1] = doted_enemies[idx]
+			end
+
+			doted_enemies = new_doted_enemies
+			self._doted_enemies = doted_enemies
 		end
 	end
 end
 
 function DOTManager:check_achievemnts(unit, t)
-	if not unit and not alive(unit) then
+	local achiev_data = tweak_data.achievement.dot_achievements
+
+	if not achiev_data then
 		return
 	end
 
-	if not unit:base() or not unit:base()._tweak_table then
+	local doted_enemies = self._doted_enemies
+
+	if not doted_enemies or not alive_g(unit) then
 		return
 	end
 
-	if CopDamage.is_civilian(unit:base()._tweak_table) then
+	local base_ext = unit:base()
+
+	if not base_ext then
 		return
 	end
 
-	if tweak_data.achievement.dot_achievements then
-		local dotted_enemies_by_variant = {}
+	local tweak_name = base_ext._tweak_table
 
-		for _, dot_info in ipairs(self._doted_enemies) do
-			dotted_enemies_by_variant[dot_info.variant] = dotted_enemies_by_variant[dot_info.variant] or {}
+	if not tweak_name or CopDamage.is_civilian(tweak_name) then
+		return
+	end
 
-			if dot_info.user_unit and dot_info.user_unit == managers.player:player_unit() then
-				table_insert(dotted_enemies_by_variant[dot_info.variant], dot_info)
-			end
+	local dotted_enemies_by_variant = {}
+	local local_player = managers.player:player_unit()
+
+	for index = 1, #doted_enemies do
+		local dot_info = doted_enemies[index]
+		local variant = dot_info.variant
+		dotted_enemies_by_variant[variant] = dotted_enemies_by_variant[variant] or {}
+
+		if dot_info.user_unit and dot_info.user_unit == local_player then
+			local tbl = dotted_enemies_by_variant[variant]
+			tbl[#tbl + 1] = dot_info
+
+			dotted_enemies_by_variant[variant] = tbl
 		end
+	end
 
-		local variant_count_pass, all_pass = nil
+	local variant_count_pass, all_pass = nil
 
-		for achievement, achievement_data in pairs(tweak_data.achievement.dot_achievements) do
-			variant_count_pass = not achievement_data.count or achievement_data.variant and dotted_enemies_by_variant[achievement_data.variant] and achievement_data.count <= #dotted_enemies_by_variant[achievement_data.variant]
-			all_pass = variant_count_pass
+	for achievement, achievement_data in pairs_g(tweak_data.achievement.dot_achievements) do
+		variant_count_pass = not achievement_data.count or achievement_data.variant and dotted_enemies_by_variant[achievement_data.variant] and achievement_data.count <= #dotted_enemies_by_variant[achievement_data.variant]
+		all_pass = variant_count_pass
 
-			if all_pass and not managers.achievment:award_data(achievement_data) then
-				Application:debug("[DOTManager] dot_achievements:", achievement)
-			end
+		if all_pass then
+			managers.achievment:award_data(achievement_data)
+
+			break
 		end
 	end
 end
 
-function DOTManager:add_doted_enemy(enemy_unit, dot_damage_received_time, weapon_unit, dot_length, dot_damage, hurt_animation, variant, weapon_id)
-	local dot_info = self:_add_doted_enemy(enemy_unit, dot_damage_received_time, weapon_unit, dot_length, dot_damage, hurt_animation, variant, weapon_id, managers.player:player_unit()) --add proper user_unit in raycastweaponbase
+if deathvox:IsTotalCrackdownEnabled() then
+	function DOTManager:add_doted_enemy(enemy_unit, dot_damage_received_time, weapon_unit, dot_length, dot_damage, hurt_animation, variant, weapon_id)
+		local local_player = managers.player:player_unit() or nil
+		local dot_dmg_mul = managers.player:upgrade_value("subclass_poison", "weapon_subclass_damage_mul", 1)
 
-	local weapon = weapon_unit
+		if dot_dmg_mul > 1 then
+			dot_damage = dot_damage * dot_dmg_mul
+		end
 
-	if variant == "poison" then
-		variant = 1
-	elseif variant == "dot" then
-		variant = 2
-	else
-		variant = nil
+		local add_doted_f = self._add_doted_enemy
+		local dot_info = add_doted_f(self, enemy_unit, dot_damage_received_time, weapon_unit, dot_length, dot_damage, hurt_animation, variant, weapon_id, local_player)
+
+		local sync_variant = variant == "poison" and 1 or variant == "dot" and 2 or nil
+		local weapon = weapon_id ~= nil and local_player or nil
+
+		local session = managers.network:session()
+		local send_to_peers_synched_f = session.send_to_peers_synched
+		send_to_peers_synched_f(session, "sync_add_doted_enemy", enemy_unit, variant, weapon, dot_length, dot_damage, local_player, hurt_animation)
+
+		local dot_range = managers.player:upgrade_value("subclass_poison", "poison_dot_aoe", 0)
+
+		if dot_range > 0 then
+			local nearby_enemies = enemy_unit:find_units_quick("sphere", enemy_unit:position(), dot_range, managers.slot:get_mask("enemies"))
+
+			for i = 1, #nearby_enemies do
+				local enemy = nearby_enemies[i]
+
+				add_doted_f(self, enemy, dot_damage_received_time, weapon_unit, dot_length, dot_damage, false, variant, weapon_id, local_player)
+				send_to_peers_synched_f(session, "sync_add_doted_enemy", enemy, sync_variant, weapon, dot_length, dot_damage, local_player, false)
+			end
+		end
 	end
+else
+	function DOTManager:add_doted_enemy(enemy_unit, dot_damage_received_time, weapon_unit, dot_length, dot_damage, hurt_animation, variant, weapon_id)
+		local local_player = managers.player:player_unit() or nil
+		local dot_info = self:_add_doted_enemy(enemy_unit, dot_damage_received_time, weapon_unit, dot_length, dot_damage, hurt_animation, variant, weapon_id, local_player)
 
-	if weapon_id ~= nil then
-		weapon = managers.player:player_unit()
+		local sync_variant = variant == "poison" and 1 or variant == "dot" and 2 or nil
+		local weapon = weapon_id ~= nil and local_player or nil
+
+		managers.network:session()send_to_peers_synched("sync_add_doted_enemy", enemy_unit, variant, weapon, dot_length, dot_damage, local_player, hurt_animation)
 	end
-
-	managers.network:session():send_to_peers_synched("sync_add_doted_enemy", enemy_unit, variant, weapon, dot_length, dot_damage, managers.player:player_unit(), hurt_animation)
 end
 
 function DOTManager:sync_add_dot_damage(enemy_unit, variant, weapon_unit, dot_length, dot_damage, user_unit, hurt_animation, variant, weapon_id)
@@ -85,50 +144,59 @@ function DOTManager:sync_add_dot_damage(enemy_unit, variant, weapon_unit, dot_le
 end
 
 function DOTManager:_add_doted_enemy(enemy_unit, dot_damage_received_time, weapon_unit, dot_length, dot_damage, hurt_animation, variant, weapon_id, user_unit)
-	local contains = false
+	local doted_enemies = self._doted_enemies
 
-	if self._doted_enemies then
-		for _, dot_info in ipairs(self._doted_enemies) do
-			if dot_info.enemy_unit == enemy_unit then
-				if dot_info.dot_damage_received_time + dot_info.dot_length < dot_damage_received_time + dot_length then
-					dot_info.dot_damage_received_time = dot_damage_received_time
-					dot_info.dot_length = dot_length
-					dot_info.dot_damage = dot_damage
-				else
-					if dot_info.dot_damage < dot_damage then
-						dot_info.dot_damage_received_time = dot_damage_received_time
-						dot_info.dot_length = dot_length
-						dot_info.dot_damage = dot_damage
-					end
-				end
+	if not doted_enemies then
+		return
+	end
 
-				dot_info.weapon_unit = weapon_unit
-				dot_info.hurt_animation = dot_info.hurt_animation or hurt_animation
-				dot_info.variant = variant
-				dot_info.weapon_id = weapon_id
-				dot_info.user_unit = user_unit
-				contains = true
+	local already_doted = false
+	local t = TimerManager:game():time()
+	local new_length = t + dot_length
+
+	for i = 1, #doted_enemies do
+		local dot_info = doted_enemies[i]
+
+		if dot_info.enemy_unit == enemy_unit then
+			already_doted = true
+
+			--previous timer should never be shortened, unless the new instance would deal more damage
+			if dot_info.dot_length < new_length or dot_info.dot_damage < dot_damage then
+				dot_info.dot_length = new_length
+				dot_info.dot_damage = dot_damage
 			end
-		end
 
-		if not contains then
-			local dot_info = {
-				dot_counter = 0,
-				enemy_unit = enemy_unit,
-				dot_damage_received_time = dot_damage_received_time,
-				weapon_unit = weapon_unit,
-				dot_length = dot_length,
-				dot_damage = dot_damage,
-				hurt_animation = hurt_animation,
-				variant = variant,
-				weapon_id = weapon_id,
-				user_unit = user_unit
-			}
+			--always override the rest of the info so that the latest attacker gets credited properly
+			--only exception being hurt_animation, so that it doesn't magically get removed
+			dot_info.weapon_unit = weapon_unit
+			dot_info.hurt_animation = dot_info.hurt_animation or hurt_animation
+			dot_info.variant = variant
+			dot_info.weapon_id = weapon_id
+			dot_info.user_unit = user_unit
 
-			table_insert(self._doted_enemies, dot_info)
-			self:check_achievemnts(enemy_unit, dot_damage_received_time)
+			break
 		end
 	end
+
+	if not already_doted then
+		local dot_info = {
+			dot_counter = 0,
+			enemy_unit = enemy_unit,
+			weapon_unit = weapon_unit,
+			dot_length = new_length,
+			dot_damage = dot_damage,
+			hurt_animation = hurt_animation,
+			variant = variant,
+			weapon_id = weapon_id,
+			user_unit = user_unit
+		}
+
+		doted_enemies[#doted_enemies + 1] = dot_info
+	end
+
+	self._doted_enemies = doted_enemies
+
+	self:check_achievemnts(enemy_unit, t)
 end
 
 function DOTManager:_damage_dot(dot_info)

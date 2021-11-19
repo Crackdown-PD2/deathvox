@@ -10,14 +10,14 @@ function TeamAILogicDisabled._upd_enemy_detection(data)
 	if data.unit:character_damage():bleed_out() and not data.unit:character_damage():fatal() or data.unit:character_damage():arrested() then
 		TeamAILogicIdle._upd_sneak_spotting(data, my_data)
 	elseif data.unit:movement():tased() then
-		if not data.unit:brain()._tase_mark_t or data.unit:brain()._tase_mark_t + 2 < data.t then
+		if not data.unit:brain()._tase_mark_t or data.unit:brain()._tase_mark_t + 3 < data.t then
 			for key, attention_info in pairs(data.detected_attention_objects) do
 				if attention_info.identified and attention_info.is_person and attention_info.unit:contour() then
 					if attention_info.unit:character_damage().dead and not attention_info.unit:character_damage():dead() then
 						if attention_info.unit:brain() and attention_info.unit:brain()._logic_data and attention_info.unit:brain()._logic_data.internal_data then
 							local tasing = attention_info.unit:brain()._logic_data.internal_data.tasing
 
-							if tasing and tasing.target_u_key == data.key then
+							if tasing and tasing.target_u_data.unit == data.unit then
 								data.unit:brain()._tase_mark_t = data.t
 								data.unit:sound():say("s07x_sin", true)
 								attention_info.unit:contour():add("mark_enemy", true)

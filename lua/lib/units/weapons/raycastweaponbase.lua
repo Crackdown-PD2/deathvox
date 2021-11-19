@@ -1,3 +1,4 @@
+local TCDEnabled = deathvox:IsTotalCrackdownEnabled()
 local mvec3_set = mvector3.set
 local mvec3_add = mvector3.add
 local mvec3_dot = mvector3.dot
@@ -27,8 +28,9 @@ RaycastWeaponBase.TRAIL_EFFECT = Idstring("effects/particles/weapons/weapon_trai
 
 Hooks:PostHook(RaycastWeaponBase,"init","deathvox_init_weapon_classes",function(self,unit)
 	self:set_weapon_class(tweak_data.weapon[self._name_id].primary_class)
-	--todo check blueprint for class-/subclass-modifying attachments
-	self._subclasses = tweak_data.weapon[self._name_id].subclasses and table.deep_map_copy(tweak_data.weapon[self._name_id].subclasses) or {}
+	local name_id = self._name_id
+	self._subclasses = tweak_data.weapon[self._name_id].subclasses and table.deep_map_copy(tweak_data.weapon[name_id].subclasses) or {}
+	--init; reset elsewhere
 end)
 
 function RaycastWeaponBase:get_weapon_class()
@@ -97,8 +99,6 @@ function RaycastWeaponBase:is_weapon_subclass(...)
 	end
 	return matched
 end
-
-
 
 function RaycastWeaponBase:check_autoaim(from_pos, direction, max_dist, use_aim_assist, autohit_override_data)
 	local autohit = use_aim_assist and self._aim_assist_data or self._autohit_data
@@ -175,8 +175,14 @@ function RaycastWeaponBase:check_autoaim(from_pos, direction, max_dist, use_aim_
 end
 
 function RaycastWeaponBase:setup(setup_data, damage_multiplier)
+	
+	local name_id = self._name_id
+	local blueprint = self._blueprint
+	self:set_weapon_class(managers.weapon_factory:get_primary_weapon_class_from_blueprint(name_id,blueprint))
+	self._subclasses = managers.weapon_factory:get_weapon_subclasses_from_blueprint(name_id,blueprint)
+
 	self._autoaim = setup_data.autoaim
-	local stats = tweak_data.weapon[self._name_id].stats
+	local stats = tweak_data.weapon[name_id].stats
 	self._alert_events = setup_data.alert_AI and {} or nil
 	self._alert_fires = {}
 	local weapon_stats = tweak_data.weapon.stats
@@ -198,11 +204,11 @@ function RaycastWeaponBase:setup(setup_data, damage_multiplier)
 			if not stat then
 				self["_" .. tostring(i)] = weapon_stats[i][5]
 
-				debug_pause("[RaycastWeaponBase] Weapon \"" .. tostring(self._name_id) .. "\" is missing stat \"" .. tostring(i) .. "\"!")
+				debug_pause("[RaycastWeaponBase] Weapon \"" .. tostring(name_id) .. "\" is missing stat \"" .. tostring(i) .. "\"!")
 			end
 		end
 	else
-		debug_pause("[RaycastWeaponBase] Weapon \"" .. tostring(self._name_id) .. "\" is missing stats block!")
+		debug_pause("[RaycastWeaponBase] Weapon \"" .. tostring(name_id) .. "\" is missing stats block!")
 
 		self._zoom = 60
 		self._alert_size = 5000
@@ -222,7 +228,7 @@ function RaycastWeaponBase:setup(setup_data, damage_multiplier)
 	end
 
 	self._setup = setup_data
-	self._fire_mode = self._fire_mode or tweak_data.weapon[self._name_id].FIRE_MODE or "single"
+	self._fire_mode = self._fire_mode or tweak_data.weapon[name_id].FIRE_MODE or "single"
 
 	if self._setup.timer then
 		self:set_timer(self._setup.timer)
@@ -310,6 +316,74 @@ function RaycastWeaponBase:_collect_hits(from, to)
 	return unique_hits, hit_enemy
 end
 
+
+--Original AutoFireSoundFix mod by 90e, uploaded by DarKobalt.
+--Reverb fixed by Doctor Mister Cool, aka Didn'tMeltCables, aka DinoMegaCool
+--New AFSF2 version (current 1.82) uploaded and maintained by Offyerrocker.
+_G.AutoFireSoundFixBlacklist = {
+	["saw"] = true,
+	["saw_secondary"] = true,
+	["flamethrower_mk2"] = true,
+	["m134"] = true,
+	["mg42"] = true,
+	["shuno"] = true,
+	["system"] = true,
+	["par"] = true
+}
+
+--Allows users/modders to easily edit this blacklist from outside of this mod
+Hooks:Register("AFSF2_OnWriteBlacklist")
+Hooks:Add("BaseNetworkSessionOnLoadComplete","AFSF2_OnLoadComplete",function()
+	Hooks:Call("AFSF2_OnWriteBlacklist",AutoFireSoundFixBlacklist)
+end)
+
+--Check for if AFSF's fix code should apply to this particular weapon
+function RaycastWeaponBase:_soundfix_should_play_normal()
+	local name_id = self:get_name_id() or "xX69dank420blazermachineXx" --if somehow get_name_id() returns nil, crashing won't be my fault. though i guess you'll have bigger problems in that case. also you'll look dank af B)
+	if not self._setup.user_unit == managers.player:player_unit() then
+		--don't apply fix for NPCs or other players
+		return true
+	elseif tweak_data.weapon[name_id].use_fix ~= nil then 
+		--for custom weapons
+		return tweak_data.weapon[name_id].use_fix
+	elseif AutoFireSoundFixBlacklist[name_id] then
+		--blacklisted sound
+		return true
+	elseif not self:weapon_tweak_data().sounds.fire_single then
+		--no singlefire sound; should play normal
+		return true
+	end
+	return false
+	--else, AFSF2 can apply fix to this weapon
+end
+--[[
+--Prevent playing sounds except for blacklisted weapons
+local orig_fire_sound = RaycastWeaponBase._fire_sound
+function RaycastWeaponBase:_fire_sound(...)
+	if self:_soundfix_should_play_normal() then
+		return orig_fire_sound(self,...)
+	end
+end
+--]]
+function RaycastWeaponBase:start_shooting()
+	if self:_soundfix_should_play_normal() then
+		self:_fire_sound()
+
+		self._bullets_fired = 0
+	end
+	self._shooting = true
+	self._next_fire_allowed = math.max(self._next_fire_allowed, self._unit:timer():time())
+end
+
+--stop_shooting is only used for fire sound loops, so playing individual single-fire sounds means it doesn't need to be called
+RaycastWeaponBase.orig_stop_shooting = RaycastWeaponBase.orig_stop_shooting or RaycastWeaponBase.stop_shooting
+function RaycastWeaponBase:stop_shooting(...)
+	if self:_soundfix_should_play_normal() then
+		return RaycastWeaponBase.orig_stop_shooting(self,...)
+	end
+end
+
+
 local mvec_to = Vector3()
 local mvec_spread_direction = Vector3()
 
@@ -322,13 +396,31 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 		end
 	end
 	
+	if not self:_soundfix_should_play_normal() then 
+		self._bullets_fired = 0
+		self:play_tweak_data_sound(self:weapon_tweak_data().sounds.fire_single,"fire_single")
+	elseif self._bullets_fired then
+	--the game plays starts the firesound when firing, in addition to calling _fire_sound()
+	--this causes some firesounds to play twice, while also not playing the correct fire sound.
+	--so U200 both broke AutoFireSoundFix, made the existing problem worse, and then added a new problem on top of that
+	
+		if self._bullets_fired == 1 and self:weapon_tweak_data().sounds.fire_single then
+			self:play_tweak_data_sound("stop_fire")
+			self:play_tweak_data_sound("fire_auto", "fire")
+		end
+		self:play_tweak_data_sound(self:weapon_tweak_data().sounds.fire_single,"fire_single")
+		
+		self._bullets_fired = self._bullets_fired + 1
+	end
+	
 	local is_player = self._setup.user_unit == managers.player:player_unit()
 	local consume_ammo = not managers.player:has_active_temporary_property("bullet_storm") and (not managers.player:has_activate_temporary_upgrade("temporary", "berserker_damage_multiplier") or not managers.player:has_category_upgrade("player", "berserker_no_ammo_cost")) or not is_player
 	local base = self:ammo_base()
 	local mag = base:get_ammo_remaining_in_clip()
 	
 
-	if consume_ammo and (is_player or Network:is_server()) then
+	--if consume_ammo and (is_player or Network:is_server()) then
+	if consume_ammo then
 
 		if base:get_ammo_remaining_in_clip() == 0 then
 			return
@@ -346,7 +438,7 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 					if roll < chance then
 						ammo_usage = 0
 
-						print("NO AMMO COST")
+--						print("NO AMMO COST")
 					end
 				end
 			end
@@ -375,7 +467,7 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 	end
 	local do_money_shot
 	if is_player then
-		if mag <= 1 and managers.player:has_category_upgrade("weapon", "money_shot") and self:is_weapon_class("rapidfire") then
+		if mag <= 1 and managers.player:has_category_upgrade("weapon", "money_shot") and self:is_weapon_class("class_rapidfire") then
 			do_money_shot = true
 			local money_trail = Idstring("effects/particles/weapons/trail_dv_sniper")
 			local money_muzzle = Idstring("effects/particles/weapons/money_muzzle_fps")
@@ -471,68 +563,6 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 		end
 	end
 	return ray_res
-end
-
-function RaycastWeaponBase:fire_rate_multiplier(rof_mul)
---the addition of the optional rof_mul argument is from cd
-	rof_mul = rof_mul or 1
-	if self:is_weapon_class("precision") then
-		local tap_the_trigger_data = managers.player:upgrade_value("point_and_click_rof_bonus",{0,0})
-		rof_mul = rof_mul * (1 + math.min(tap_the_trigger_data[1] * managers.player:get_property("current_point_and_click_stacks",0),tap_the_trigger_data[2]))
-	elseif self:is_weapon_class("class_shotgun") and self:fire_mode() == "single" then 
-		rof_mul = rof_mul + managers.player:upgrade_value("class_shotgun","shell_games_rof_bonus",0)
-	end
-	return rof_mul
-end
-
-function RaycastWeaponBase:reload_speed_multiplier(multiplier)
-	multiplier = multiplier or 1
---optional multiplier argument is added from cd here as well
-	local pm = managers.player
-
-	if self:is_weapon_class("precision") then
-		local this_machine_data = pm:upgrade_value("weapon","point_and_click_bonus_reload_speed",{0,0})
-		multiplier = multiplier * (1 + math.min(this_machine_data[1] * pm:get_property("current_point_and_click_stacks",0),this_machine_data[2]))
-	end
-	
-	for _, category in ipairs(self:weapon_tweak_data().categories) do
-		multiplier = multiplier * pm:upgrade_value(category, "reload_speed_multiplier", 1)
-	end
-
-	multiplier = multiplier * pm:upgrade_value("weapon", "passive_reload_speed_multiplier", 1)
-	multiplier = multiplier * pm:upgrade_value(self._name_id, "reload_speed_multiplier", 1)
-	
-	--clean this up once all weapons are tagged appropriately
-	if self:is_weapon_class("rapidfire") and self:ammo_base():clip_empty() then
-		multiplier = multiplier * pm:upgrade_value("weapon", "money_shot_aced", 1)
-	elseif self:is_weapon_class("heavy") then
-		local lead_farmer_data = pm:upgrade_value("heavy","lead_farmer",{0,0})
-		local lead_farmer_bonus = math.min(pm:get_property("current_lead_farmer_stacks",0) * lead_farmer_data[1],lead_farmer_data[2])
-		multiplier = multiplier + lead_farmer_bonus
-	end
-	
-	multiplier = managers.modifiers:modify_value("WeaponBase:GetReloadSpeedMultiplier", multiplier)
-
-	return multiplier
-end
-
-function RaycastWeaponBase:_get_current_damage(dmg_mul)
-	local point_and_click_data = managers.player:upgrade_value("weapon","point_and_click_damage_bonus",{0,0})
-	local damage = self._damage
-	damage = damage * (dmg_mul or 1)
-	damage = damage * managers.player:temporary_upgrade_value("temporary", "combat_medic_damage_multiplier", 1)
-	if self:is_weapon_class("precision") then 
-		damage = damage + math.min(point_and_click_data[1] * managers.player:get_property("current_point_and_click_stacks",0),point_and_click_data[2])
-	elseif self:is_weapon_class("class_shotgun") then 
-		if self:fire_mode() == "auto" and self:clip_full() then 
-			damage = damage * (1 + managers.player:upgrade_value("class_shotgun","heartbreaker_damage",0))
-		end
-	elseif self:is_weapon_class("class_saw") then 
-		local rolling_cutter_data = managers.player:upgrade_value("saw","consecutive_damage_bonus",{0,0,0})
-		local rolling_cutter_stacks = managers.player:get_property("rolling_cutter_aced_stacks",0)
-		damage = damage * (1 + math.min(rolling_cutter_stacks * rolling_cutter_data[1],rolling_cutter_data[3]))
-	end
-	return damage
 end
 
 function RaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoot_player, spread_mul, autohit_mul, suppr_mul)
@@ -907,94 +937,67 @@ function InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, 
 	end
 end
 
-function InstantBulletBase:calculate_crit(weapon_unit, user_unit)
-	if not user_unit or user_unit ~= managers.player:player_unit() then
-		return nil
-	end
-
-	local crit_value = managers.player:critical_hit_chance()
-	
-	local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
-	
-	if has_category and weapon_unit:base():is_weapon_class("rapidfire") then
-	
-		crit_value = crit_value + managers.player:upgrade_value("weapon", "spray_and_pray_basic", 0)
-		
-		crit_value = crit_value + managers.player:upgrade_value("weapon", "prayers_answered", 0)
-		
-		local making_miracles_stacks = managers.player:get_property("making_miracles_stacks",0) --num stacks
-		local making_miracles_crit_max = managers.player:upgrade_value("weapon","making_miracles_crit_cap",0) --max crit chance
-		local making_miracles_crit_chance = managers.player:upgrade_value("weapon","making_miracles_basic",{0,0})[1] --chance per stack
-		local making_miracles_crit_bonus = math.min(making_miracles_stacks * making_miracles_crit_chance,making_miracles_crit_max) --total applied bonus
-		crit_value = crit_value + making_miracles_crit_bonus
-		--log("new do? dead you.")
-	end
-	
-	--log("crit value is " .. crit_value .. "!")
-	
-	--if critical_hit then
-	--	log("BOOM")
-	--end
-	
-	return crit_value > math.random()
-end
-
 function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage, blank, no_sound, already_ricocheted, critical_hit)
-	if Network:is_client() and not blank and user_unit ~= managers.player:player_unit() then
+	if not blank and Network:is_client() and user_unit ~= managers.player:player_unit() then
 		blank = true
-	end
-
-	local enable_ricochets = managers.player:has_category_upgrade("player", "ricochet_bullets")
-	critical_hit = critical_hit or self:calculate_crit(weapon_unit, user_unit)
-	
-	local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
-	if enable_ricochets and not already_ricocheted and user_unit and user_unit == managers.player:player_unit() and col_ray.unit then
-
-		if has_category and weapon_unit:base():is_weapon_class("rapidfire") then
-			local can_bounce_off = false
-
-			--easier to understand and to add more conditions if desired
-			if not weapon_unit:base()._can_shoot_through_shield and col_ray.unit:in_slot(managers.slot:get_mask("enemy_shield_check")) then
-				can_bounce_off = true
-			elseif not weapon_unit:base()._can_shoot_through_wall and col_ray.unit:in_slot(managers.slot:get_mask("world_geometry", "vehicles")) and (col_ray.body:has_ray_type(Idstring("ai_vision")) or col_ray.body:has_ray_type(Idstring("bulletproof"))) then
-				can_bounce_off = true
-			end
-
-			if can_bounce_off then
-				InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, blank, no_sound, critical_hit)
-			end
-		end
 	end
 
 	local hit_unit = col_ray.unit
 	local is_shield = hit_unit:in_slot(managers.slot:get_mask("enemy_shield_check")) and alive(hit_unit:parent())
 
-	--more proper checks for knocking back a shield
-	if alive(weapon_unit) and is_shield and weapon_unit:base()._shield_knock then
-		local enemy_unit = hit_unit:parent()
+	local weap_unit = alive(weapon_unit) and weapon_unit or nil
+	local weapon_base = weap_unit and weap_unit:base()
 
-		if enemy_unit:character_damage() and enemy_unit:character_damage().dead and not enemy_unit:character_damage():dead() then
-			if enemy_unit:base():char_tweak() and not enemy_unit:base().is_phalanx and enemy_unit:base():char_tweak().damage.shield_knocked and not enemy_unit:character_damage():is_immune_to_shield_knockback() then
-				local MIN_KNOCK_BACK = 200
-				local KNOCK_BACK_CHANCE = 0.8
-				local dmg_ratio = math.min(damage, MIN_KNOCK_BACK)
-				dmg_ratio = dmg_ratio / MIN_KNOCK_BACK + 1
+	if not blank then
+		if TCDEnabled and weap_unit and not critical_hit then
+			critical_hit = self:calculate_crit(weap_unit, user_unit)
+		end
 
-				local rand = math.random() * dmg_ratio
+		local has_category = weapon_base and weapon_base.thrower_unit and weapon_base.is_category
 
-				if KNOCK_BACK_CHANCE < rand then
-					local damage_info = {
-						damage = 0,
-						type = "shield_knock",
-						variant = "melee",
-						col_ray = col_ray,
-						result = {
+		if not already_ricocheted and has_category and user_unit == managers.player:player_unit() and hit_unit and managers.player:has_category_upgrade("player", "ricochet_bullets") then
+			if weapon_base:is_weapon_class("class_rapidfire") then
+				local can_bounce_off = false
+
+				if not weapon_base._can_shoot_through_shield and hit_unit:in_slot(managers.slot:get_mask("enemy_shield_check")) then
+					can_bounce_off = true
+				elseif not weapon_base._can_shoot_through_wall and hit_unit:in_slot(managers.slot:get_mask("world_geometry", "vehicles")) and (col_ray.body:has_ray_type(Idstring("ai_vision")) or col_ray.body:has_ray_type(Idstring("bulletproof"))) then
+					can_bounce_off = true
+				end
+
+				if can_bounce_off then
+					InstantBulletBase:on_ricochet(col_ray, weap_unit, user_unit, damage, blank, no_sound, critical_hit)
+				end
+			end
+		end
+
+		--more proper checks for knocking back a shield
+		if is_shield and weapon_base and weapon_base._shield_knock then
+			local enemy_unit = hit_unit:parent()
+
+			if enemy_unit:character_damage() and enemy_unit:character_damage().dead and not enemy_unit:character_damage():dead() then
+				if enemy_unit:base():char_tweak() and not enemy_unit:base().is_phalanx and enemy_unit:base():char_tweak().damage.shield_knocked and not enemy_unit:character_damage():is_immune_to_shield_knockback() then
+					local MIN_KNOCK_BACK = 200
+					local KNOCK_BACK_CHANCE = 0.8
+					local dmg_ratio = math.min(damage, MIN_KNOCK_BACK)
+					dmg_ratio = dmg_ratio / MIN_KNOCK_BACK + 1
+
+					local rand = math.random() * dmg_ratio
+
+					if KNOCK_BACK_CHANCE < rand then
+						local damage_info = {
+							damage = 0,
+							type = "shield_knock",
 							variant = "melee",
-							type = "shield_knock"
+							col_ray = col_ray,
+							result = {
+								variant = "melee",
+								type = "shield_knock"
+							}
 						}
-					}
 
-					enemy_unit:character_damage():_call_listeners(damage_info)
+						enemy_unit:character_damage():_call_listeners(damage_info)
+					end
 				end
 			end
 		end
@@ -1035,8 +1038,8 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 				col_ray.body:extension().damage:damage_bullet(user_unit, col_ray.normal, col_ray.position, col_ray.ray, 1)
 				col_ray.body:extension().damage:damage_damage(user_unit, col_ray.normal, col_ray.position, col_ray.ray, damage)
 
-				if alive(weapon_unit) and weapon_unit:base().categories and weapon_unit:base():categories() then
-					for _, category in ipairs(weapon_unit:base():categories()) do
+				if weapon_base and weapon_base.categories and weapon_base:categories() then
+					for _, category in ipairs(weapon_base:categories()) do
 						col_ray.body:extension().damage:damage_bullet_type(category, user_unit, col_ray.normal, col_ray.position, col_ray.ray, 1)
 					end
 				end
@@ -1046,27 +1049,53 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 
 	local result = nil
 
-	if alive(weapon_unit) and hit_unit:character_damage() and hit_unit:character_damage().damage_bullet then
+	if weap_unit and hit_unit:character_damage() and hit_unit:character_damage().damage_bullet then
 		local is_alive = not hit_unit:character_damage():dead()
-		
-		local pierce_armor = false
-		if user_unit == managers.player:player_unit() then
-			if has_category and weapon_unit:base():is_weapon_class("class_shotgun") then 
-				local point_blank_range = managers.player:upgrade_value("class_shotgun","point_blank_basic",0)
-				if point_blank_range > 0 then  --right now, basic and aced have the same proc range, but if you want to change that, this is where you'd do it
-					if col_ray and col_ray.distance and (col_ray.distance <= point_blank_range) then 
-						pierce_armor = true
-						damage = damage * (1 + managers.player:upgrade_value("class_shotgun","point_blank_aced",0)) 
+
+		if not blank then
+			local pierce_armor = false
+
+			if user_unit == managers.player:player_unit() then
+				if has_category and weapon_base:is_weapon_class("class_shotgun") then 
+					local point_blank_range = managers.player:upgrade_value("class_shotgun","point_blank_basic",0)
+					if point_blank_range > 0 then  --right now, basic and aced have the same proc range, but if you want to change that, this is where you'd do it
+						if col_ray and col_ray.distance and (col_ray.distance <= point_blank_range) then 
+							pierce_armor = true
+							damage = damage * (1 + managers.player:upgrade_value("class_shotgun","point_blank_aced",0)) 
+						end
 					end
 				end
-			end
-		end
 
-		pierce_armor = pierce_armor or weapon_unit:base()._use_armor_piercing
-		
-		if not blank then
-			local knock_down = weapon_unit:base()._knock_down and weapon_unit:base()._knock_down > 0 and math.random() < weapon_unit:base()._knock_down
-			result = self:give_impact_damage(col_ray, weapon_unit, user_unit, damage, pierce_armor, false, knock_down, weapon_unit:base()._stagger, weapon_unit:base()._variant, critical_hit)
+				local projectile_td = nil
+
+				if weapon_base then
+					local projectile_entry = weapon_base._projectile_entry or weapon_base._tweak_projectile_entry
+					projectile_td = projectile_entry and tweak_data.blackmarket.projectiles[projectile_entry]
+				end
+
+				if projectile_td and projectile_td.throwable and not projectile_td.is_a_grenade then 
+					if managers.player:has_category_upgrade("class_throwing","throwing_boosts_melee_loop") then 
+						managers.player:set_property("shuffle_cut_melee_bonus_damage",managers.player:upgrade_value("class_throwing","throwing_boosts_melee_loop",0))
+					end
+
+					local throwing_weapon_add_mul = 1
+
+					if managers.player:has_category_upgrade("class_throwing","projectile_charged_damage_mul") then 
+						throwing_weapon_add_mul = throwing_weapon_add_mul + managers.player:get_property("charged_throwable_damage_bonus",0)
+						managers.player:set_property("charged_throwable_damage_bonus",0)
+					end
+					if managers.player:has_category_upgrade("class_melee","melee_boosts_throwing_loop") then 
+						throwing_weapon_add_mul = throwing_weapon_add_mul + managers.player:get_temporary_property("shuffle_cut_throwing_bonus_damage",0)
+					end
+					throwing_weapon_add_mul = throwing_weapon_add_mul + managers.player:upgrade_value("class_throwing","weapon_class_damage_mul",0)
+					damage = damage * throwing_weapon_add_mul
+				end
+			end
+
+			pierce_armor = pierce_armor or weapon_base and weapon_base._use_armor_piercing
+
+			local knock_down = weapon_base and weapon_base._knock_down and weapon_base._knock_down > 0 and math.random() < weapon_base._knock_down
+			result = self:give_impact_damage(col_ray, weap_unit, user_unit, damage, pierce_armor, false, knock_down, weapon_base._stagger, weapon_base._variant, critical_hit)
 		end
 
 		local is_dead = hit_unit:character_damage():dead()
@@ -1078,7 +1107,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 			end
 		end
 
-		local push_multiplier = self:_get_character_push_multiplier(weapon_unit, is_alive and is_dead)
+		local push_multiplier = self:_get_character_push_multiplier(weap_unit, is_alive and is_dead)
 
 		managers.game_play_central:physics_push(col_ray, push_multiplier)
 	else
@@ -1090,7 +1119,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 			col_ray = col_ray,
 			no_sound = no_sound
 		})
-		self:play_impact_sound_and_effects(weapon_unit, col_ray, no_sound)
+		self:play_impact_sound_and_effects(weap_unit, col_ray, no_sound)
 	end
 
 	return result
@@ -1115,37 +1144,14 @@ function InstantBulletBase:give_impact_damage(col_ray, weapon_unit, user_unit, d
 	return defense_data
 end
 
-function FlameBulletBase:calculate_crit(weapon_unit, user_unit)
-	if not user_unit or user_unit ~= managers.player:player_unit() then
-		return nil
-	end
-
-	local crit_value = managers.player:critical_hit_chance()
-	local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
-	
-	if has_category and weapon_unit:base():is_weapon_class("rapidfire") then
-		crit_value = crit_value + managers.player:upgrade_value("weapon", "spray_and_pray_basic", 0)
-		crit_value = crit_value + managers.player:upgrade_value("weapon", "prayers_answered", 0)
-		
-		local making_miracles_stacks = managers.player:get_property("making_miracles_stacks",0) --num stacks
-		local making_miracles_crit_max = managers.player:upgrade_value("weapon","making_miracles_crit_cap",0) --max crit chance
-		local making_miracles_crit_chance = managers.player:upgrade_value("weapon","making_miracles_basic",{0,0})[1] --chance per stack
-		local making_miracles_crit_bonus = math.min(making_miracles_stacks * making_miracles_crit_chance,making_miracles_crit_max) --total applied bonus
-		crit_value = crit_value + making_miracles_crit_bonus
-	end
-	
-	
-	--if critical_hit then
-		--log("BOOM")
-	--end
-	
-	return math.random() < crit_value
-end
-
 function FlameBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage, blank)
 	local hit_unit = col_ray.unit
 	local play_impact_flesh = false
-	local critical_hit = self:calculate_crit(weapon_unit, user_unit)
+	local critical_hit = nil
+	
+	if TCDEnabled then
+		critical_hit = self:calculate_crit(weapon_unit, user_unit)
+	end
 
 	if hit_unit:damage() and col_ray.body:extension() and col_ray.body:extension().damage then
 		local sync_damage = not blank and hit_unit:id() ~= -1
@@ -1493,11 +1499,54 @@ function ElectricBulletBase:give_impact_damage(col_ray, weapon_unit, user_unit, 
 end
 
 function RaycastWeaponBase:is_heavy_weapon() --deprecated, do not use
-	log("function RaycastWeaponBase:is_heavy_weapon() is deprecated! Please use RaycastWeaponBase:is_weapon_class(\"heavy\") instead!")
+	log("function RaycastWeaponBase:is_heavy_weapon() is deprecated! Please use RaycastWeaponBase:is_weapon_class(\"class_heavy\") instead!")
 	return false
 end
 
-if deathvox:IsTotalCrackdownEnabled() then
+if TCDEnabled then
+
+	DOTBulletBase.DOT_DATA = {
+		hurt_animation_chance = 0,
+		dot_damage = 15,
+		dot_length = 3,
+		dot_tick_period = 0.5
+	}
+
+	function RaycastWeaponBase:replenish()
+		local ammo_max_multiplier = managers.player:upgrade_value("player", "extra_ammo_multiplier", 1)
+
+		for _, category in ipairs(self:weapon_tweak_data().categories) do
+			ammo_max_multiplier = ammo_max_multiplier * managers.player:upgrade_value(category, "extra_ammo_multiplier", 1)
+		end
+
+		ammo_max_multiplier = ammo_max_multiplier + ammo_max_multiplier * (self._total_ammo_mod or 0)
+		ammo_max_multiplier = managers.modifiers:modify_value("WeaponBase:GetMaxAmmoMultiplier", ammo_max_multiplier)
+		local ammo_max_per_clip = self:calculate_ammo_max_per_clip()
+		local ammo_max = math.round((tweak_data.weapon[self._name_id].AMMO_MAX + managers.player:upgrade_value(self._name_id, "clip_amount_increase") * ammo_max_per_clip) * ammo_max_multiplier)
+		ammo_max_per_clip = math.min(ammo_max_per_clip, ammo_max)
+
+		self:set_ammo_max_per_clip(ammo_max_per_clip)
+		self:set_ammo_max(ammo_max)
+		self:set_ammo_total(ammo_max)
+		self:set_ammo_remaining_in_clip(ammo_max_per_clip)
+
+		self._ammo_pickup = tweak_data.weapon[self._name_id].AMMO_PICKUP
+		
+		--only change was this
+		local weapon_id = self:get_name_id()
+		if weapon_id == "ray" then
+			self._ammo_pickup = managers.player:upgrade_value("weapon","ray_ammo_pickup_modifier",self._ammo_pickup)
+		elseif weapon_id == "rpg7" then 
+			self._ammo_pickup = managers.player:upgrade_value("weapon","rpg7_ammo_pickup_modifier",self._ammo_pickup)
+		end
+		if self:is_category("flamethrower") then 
+			self._ammo_pickup = managers.player:upgrade_value("weapon","flamethrower_ammo_pickup_modifier",self._ammo_pickup)
+		end
+		
+		
+		self:update_damage()
+	end
+
 	function RaycastWeaponBase:add_ammo(ratio, add_amount_override)
 		local function _add_ammo(ammo_base, ratio, add_amount_override)
 			if ammo_base:get_ammo_max() == ammo_base:get_ammo_total() then
@@ -1522,9 +1571,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 				local ammo_mul_1 = managers.player:upgrade_value("player", "pick_up_ammo_multiplier", 1) - 1
 				local ammo_mul_2 = managers.player:upgrade_value("player", "pick_up_ammo_multiplier_2", 1) - 1
 				local team_ai_mul = managers.player:crew_ability_upgrade_value("crew_scavenge", 0)
-
-				multiplier_min = multiplier_min + ammo_mul_1 + ammo_mul_2 + team_ai_mul
-				multiplier_max = multiplier_max + ammo_mul_1 + ammo_mul_2 + team_ai_mul
+				local grenadelauncher_pickup_bonus = 0
+				if self:is_category("grenade_launcher") then 
+					grenadelauncher_pickup_bonus = managers.player:upgrade_value("weapon","grenade_launcher_ammo_pickup_increase",0)
+				end
+				
+				multiplier_min = multiplier_min + ammo_mul_1 + ammo_mul_2 + team_ai_mul + grenadelauncher_pickup_bonus
+				multiplier_max = multiplier_max + ammo_mul_1 + ammo_mul_2 + team_ai_mul + grenadelauncher_pickup_bonus
 
 				--log("pickup - min mult: " .. tostring(multiplier_min) .. "")
 				--log("pickup - max mult: " .. tostring(multiplier_max) .. "")
@@ -1621,4 +1674,142 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		return picked_up, add_amount
 	end
+	
+	function RaycastWeaponBase:recoil()
+		if self:is_weapon_class("class_heavy") then
+			local recoil_bonus = managers.player:get_property("current_death_grips_stacks",0) * managers.player:upgrade_value("class_heavy","death_grips_recoil_bonus",0) * -0.1
+			return math.max(0,self._recoil + recoil_bonus)
+		end
+		return self._recoil
+	end
+	
+	function RaycastWeaponBase:fire_rate_multiplier(rof_mul)
+	--the addition of the optional rof_mul argument is from tcd, not from vanilla
+		rof_mul = rof_mul or 1
+		if self:is_weapon_class("class_precision") then
+			local tap_the_trigger_data = managers.player:upgrade_value("weapon","point_and_click_rof_bonus",{0,0})
+			rof_mul = rof_mul * (1 + math.min(tap_the_trigger_data[1] * managers.player:get_property("current_point_and_click_stacks",0),tap_the_trigger_data[2]))
+		elseif self:is_weapon_class("class_shotgun") and self:fire_mode() == "single" then 
+			rof_mul = rof_mul + managers.player:upgrade_value("class_shotgun","shell_games_rof_bonus",0)
+		end
+		return rof_mul
+	end
+	
+	function RaycastWeaponBase:reload_speed_multiplier(multiplier)
+		multiplier = multiplier or 1
+	--optional multiplier argument is added from cd here as well
+		local pm = managers.player
+		
+		if pm:player_unit():character_damage().swansong then
+			return 99
+		end
+
+		if self:is_weapon_class("class_precision") then
+			local this_machine_data = pm:upgrade_value("weapon","point_and_click_bonus_reload_speed",{0,0})
+			multiplier = multiplier * (1 + math.min(this_machine_data[1] * pm:get_property("current_point_and_click_stacks",0),this_machine_data[2]))
+		end
+		
+		for _, category in ipairs(self:weapon_tweak_data().categories) do
+			multiplier = multiplier * pm:upgrade_value(category, "reload_speed_multiplier", 1)
+		end
+
+		multiplier = multiplier * pm:upgrade_value("weapon", "passive_reload_speed_multiplier", 1)
+		multiplier = multiplier * pm:upgrade_value(self._name_id, "reload_speed_multiplier", 1)
+		
+		if self:is_weapon_class("class_rapidfire") and self:clip_empty() then
+			multiplier = multiplier * (1 + pm:upgrade_value("weapon", "money_shot_aced", 0))
+		elseif self:is_weapon_class("class_heavy") then
+			local lead_farmer_data = pm:upgrade_value("class_heavy","lead_farmer",{0,0})
+			local lead_farmer_bonus = math.min(pm:get_property("current_lead_farmer_stacks",0) * lead_farmer_data[1],lead_farmer_data[2])
+			multiplier = multiplier + lead_farmer_bonus
+		end
+		
+		multiplier = managers.modifiers:modify_value("WeaponBase:GetReloadSpeedMultiplier", multiplier)
+
+		return multiplier
+	end
+
+	function RaycastWeaponBase:_get_current_damage(dmg_mul)
+		local point_and_click_data = managers.player:upgrade_value("weapon","point_and_click_damage_bonus",{0,0})
+		local damage = self._damage
+		damage = damage * (dmg_mul or 1)
+		damage = damage * managers.player:temporary_upgrade_value("temporary", "combat_medic_damage_multiplier", 1)
+		if self:is_weapon_class("class_precision") then 
+			damage = damage + math.min(point_and_click_data[1] * managers.player:get_property("current_point_and_click_stacks",0),point_and_click_data[2])
+		elseif self:is_weapon_class("class_shotgun") then 
+			if self:fire_mode() == "auto" and self:clip_full() then 
+				damage = damage * (1 + managers.player:upgrade_value("class_shotgun","heartbreaker_damage",0))
+			end
+		elseif self:is_weapon_class("class_saw") then 
+			local rolling_cutter_data = managers.player:upgrade_value("saw","consecutive_damage_bonus",{0,0})
+			
+			local rolling_cutter_stacks = managers.player:get_property("rolling_cutter_aced_stacks",0)
+			damage = damage * (1 + math.min(rolling_cutter_stacks * rolling_cutter_data[1],rolling_cutter_data[2]))
+		end
+		for _,subclass in pairs(self:get_weapon_subclasses()) do 
+			damage = damage * managers.player:upgrade_value(subclass,"weapon_subclass_damage_mul",1)
+		end
+		damage = damage * managers.player:upgrade_value(self:get_weapon_class() or "NO_WEAPON_CLASS","weapon_class_damage_mul",1)
+		return damage
+	end
+
+	function FlameBulletBase:calculate_crit(weapon_unit, user_unit)
+		if not user_unit or user_unit ~= managers.player:player_unit() then
+			return nil
+		end
+
+		local crit_value = managers.player:critical_hit_chance()
+		local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
+		
+		if has_category and weapon_unit:base():is_weapon_class("class_rapidfire") then
+			crit_value = crit_value + managers.player:upgrade_value("weapon", "spray_and_pray_basic", 0)
+			crit_value = crit_value + managers.player:upgrade_value("weapon", "prayers_answered", 0)
+			
+			local making_miracles_stacks = managers.player:get_property("making_miracles_stacks",0) --num stacks
+			local making_miracles_crit_max = managers.player:upgrade_value("weapon","making_miracles_crit_cap",0) --max crit chance
+			local making_miracles_crit_chance = managers.player:upgrade_value("weapon","making_miracles_basic",{0,0})[1] --chance per stack
+			local making_miracles_crit_bonus = math.min(making_miracles_stacks * making_miracles_crit_chance,making_miracles_crit_max) --total applied bonus
+			crit_value = crit_value + making_miracles_crit_bonus
+		end
+		
+		
+		--if critical_hit then
+			--log("BOOM")
+		--end
+		
+		return math.random() < crit_value
+	end
+		
+	function InstantBulletBase:calculate_crit(weapon_unit, user_unit)
+		if not user_unit or user_unit ~= managers.player:player_unit() then
+			return nil
+		end
+
+		local crit_value = managers.player:critical_hit_chance()
+		
+		local has_category = weapon_unit and alive(weapon_unit) and not weapon_unit:base().thrower_unit and weapon_unit:base().is_category
+		
+		if has_category and weapon_unit:base():is_weapon_class("class_rapidfire") then
+		
+			crit_value = crit_value + managers.player:upgrade_value("weapon", "spray_and_pray_basic", 0)
+			
+			crit_value = crit_value + managers.player:upgrade_value("weapon", "prayers_answered", 0)
+			
+			local making_miracles_stacks = managers.player:get_property("making_miracles_stacks",0) --num stacks
+			local making_miracles_crit_max = managers.player:upgrade_value("weapon","making_miracles_crit_cap",0) --max crit chance
+			local making_miracles_crit_chance = managers.player:upgrade_value("weapon","making_miracles_basic",{0,0})[1] --chance per stack
+			local making_miracles_crit_bonus = math.min(making_miracles_stacks * making_miracles_crit_chance,making_miracles_crit_max) --total applied bonus
+			crit_value = crit_value + making_miracles_crit_bonus
+			--log("new do? dead you.")
+		end
+		
+		--log("crit value is " .. crit_value .. "!")
+		
+		--if critical_hit then
+		--	log("BOOM")
+		--end
+		
+		return crit_value > math.random()
+	end
+
 end

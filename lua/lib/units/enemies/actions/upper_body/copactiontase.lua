@@ -1,12 +1,20 @@
 local mvec3_set = mvector3.set
 local mvec3_set_z = mvector3.set_z
 local mvec3_dot = mvector3.dot
-local mvec3_copy = mvector3.copy
+local mvec3_cpy = mvector3.copy
 local mvec3_norm = mvector3.normalize
+
+local temp_vec2 = Vector3()
+
 local math_min = math.min
 local math_lerp = math.lerp
 local math_up = math.UP
-local temp_vec2 = Vector3()
+
+local taser_thread_idstr = Idstring("effects/payday2/particles/character/taser_thread")
+local obj_fire_idstr = Idstring("fire")
+
+local pairs_g = pairs
+local world_g = World
 
 CopActionTase._ik_presets = CopActionShoot._ik_presets
 CopActionTase._get_transition_target_pos = CopActionShoot._get_transition_target_pos
@@ -35,6 +43,8 @@ function CopActionTase:init(action_desc, common_data)
 
 	if not attention or not attention.unit then
 		if self._is_server then
+			--debug_pause("[CopActionTase:init] no attention", inspect(action_desc))
+
 			return
 		end
 	end
@@ -50,8 +60,6 @@ function CopActionTase:init(action_desc, common_data)
 
 	local weap_tweak = weapon_unit:base():weapon_tweak_data()
 	local weapon_usage_tweak = common_data.char_tweak.weapon[weap_tweak.usage]
-	self._weap_tweak = weap_tweak
-	self._w_usage_tweak = weapon_usage_tweak
 	self._falloff = weapon_usage_tweak.FALLOFF or {
 		{
 			dmg_mul = 1,
@@ -75,10 +83,10 @@ function CopActionTase:init(action_desc, common_data)
 	self._tase_distance = weapon_usage_tweak.tase_distance or 1500
 	self._aim_delay_minmax = weapon_usage_tweak.aim_delay_tase or {1, 1}
 	self._sphere_radius = weapon_usage_tweak.tase_sphere_cast_radius or 30
-	self._line_of_fire_slotmask = managers.slot:get_mask("bullet_impact_targets")
-	self._weapon_obj_fire = weapon_unit:get_object(Idstring("fire"))
+	self._line_of_fire_slotmask = managers.slot:get_mask("bullet_impact_targets_no_criminals")
+	self._weapon_obj_fire = weapon_unit:get_object(obj_fire_idstr)
 	self._shield = alive(self._ext_inventory._shield_unit) and self._ext_inventory._shield_unit or nil
-	self._firing_at_husk = action_desc.firing_at_husk or nil
+	self._firing_at_husk = action_desc.firing_at_husk and true
 
 	local shoot_from_pos = self._ext_movement:m_head_pos()
 	self._shoot_from_pos = shoot_from_pos
@@ -94,12 +102,17 @@ function CopActionTase:init(action_desc, common_data)
 	self._ik_preset = preset_data
 	self[preset_data.start](self)
 
-	self:on_attention(attention)
+	if not action_desc.is_drop_in then
+		self:on_attention(attention)
+	end
 
 	CopActionAct._create_blocks_table(self, action_desc.block_desc)
 
 	self._skipped_frames = 1
-	common_data.unit:sound():play("taser_charge", nil)
+
+	if not action_desc.skip_charging_noise then
+		common_data.unit:sound():play("taser_charge", nil)
+	end
 
 	return true
 end
@@ -167,7 +180,7 @@ function CopActionTase:on_attention(attention)
 		self._aim_transition = {
 			duration = 0.333,
 			start_t = t,
-			start_vec = mvec3_copy(self._common_data.look_vec)
+			start_vec = mvec3_cpy(self._common_data.look_vec)
 		}
 		self._get_target_pos = self._get_transition_target_pos
 	else
@@ -202,10 +215,27 @@ function CopActionTase:on_attention(attention)
 	if self._is_server then
 		self._common_data.ext_network:send("action_tase_event", 1)
 
-		if not attention_unit:base().is_husk_player then
+		local att_base_ext = attention_unit:base()
+
+		if att_base_ext.is_husk_player then
+			local tackle_upgrade = att_base_ext:upgrade_value("player", "convert_enemies_tackle_specials")
+
+			if tackle_upgrade then
+				self._joker_cooldown = tackle_upgrade
+				self._joker_vis_mask = managers.slot:get_mask("AI_visibility")
+			end
+		else
+			if att_base_ext.is_local_player then
+				self._tasing_player = true
+
+				if managers.player:has_category_upgrade("player", "convert_enemies_tackle_specials") then
+					self._joker_cooldown = managers.player:upgrade_value("player", "convert_enemies_tackle_specials")
+					self._joker_vis_mask = managers.slot:get_mask("AI_visibility")
+				end
+			end
+
 			self._shoot_t = self._mod_enable_t + shoot_delay
 			self._tasing_local_unit = attention_unit
-			self._tasing_player = attention_unit:base().is_local_player and true or nil
 		end
 	elseif attention_unit:base().is_local_player then
 		self._shoot_t = self._mod_enable_t + shoot_delay
@@ -224,18 +254,15 @@ function CopActionTase:on_exit()
 	end
 
 	if self._tase_effect then
-		World:effect_manager():fade_kill(self._tase_effect)
+		world_g:effect_manager():fade_kill(self._tase_effect)
 	end
 
 	if self._discharging then
 		self._tasing_local_unit:movement():on_tase_ended()
 	end
 
-	self._discharging_on_husk = nil
-	self._firing_at_husk = nil
-
 	if self._is_server then
-		local exit_to_hos_stance = nil
+		--[[local exit_to_hos_stance = nil
 
 		if not self._attention or not self._attention.reaction or self._attention.reaction < AIAttentionObject.REACT_AIM then
 			exit_to_hos_stance = true
@@ -243,11 +270,13 @@ function CopActionTase:on_exit()
 
 		if exit_to_hos_stance then
 			self._ext_movement:set_stance_by_code(2)
-		end
+		end]]
+
+		self._ext_movement:set_stance_by_code(2)
 
 		self._unit:network():send("action_tase_event", 2)
 
-		if exit_to_hos_stance and self._expired then
+		if --[[exit_to_hos_stance and]] self._expired then
 			self._ext_movement:action_request({
 				body_part = 3,
 				type = "idle"
@@ -272,10 +301,6 @@ function CopActionTase:on_exit()
 end
 
 function CopActionTase:update(t)
-	if self._expired then
-		return
-	end
-
 	local vis_state = self._ext_base:lod_stage()
 	vis_state = vis_state or 4
 
@@ -332,20 +357,24 @@ function CopActionTase:update(t)
 
 	if not self._ext_anim.reload and not self._ext_anim.equip and not self._ext_anim.melee then
 		if self._firing_at_husk then
+			if self._joker_vis_mask and self:check_joker_counter(t) then
+				return
+			end
+
 			if self._attention.unit:movement():tased() then
 				if self._tase_effect then
-					World:effect_manager():fade_kill(self._tase_effect)
+					world_g:effect_manager():fade_kill(self._tase_effect)
 				end
 
-				self._tase_effect = World:effect_manager():spawn({
-					force_synch = true,
-					effect = Idstring("effects/payday2/particles/character/taser_thread"),
+				self._tase_effect = world_g:effect_manager():spawn({
+					force_synch = false,
+					effect = taser_thread_idstr,
 					parent = self._weapon_obj_fire
 				})
 
 				self._tasered_sound = self._unit:sound():play("tasered_3rd", nil)
 
-				if vis_state == 1 then
+				if self._ext_base:lod_stage() == 1 then
 					self._ext_movement:play_redirect("recoil_single")
 				end
 
@@ -355,27 +384,28 @@ function CopActionTase:update(t)
 		elseif self._discharging_on_husk then
 			if not self._attention.unit:movement():tased() then
 				self._discharging_on_husk = nil
+				self.update = self._upd_empty
 
 				if self._is_server then
 					self._expired = true
-				else
-					self.update = self._upd_empty
 				end
+			elseif self._joker_vis_mask and self:check_joker_counter(t) then
+				return
 			end
 		elseif self._discharging then
 			local cancel_tase = nil
 
 			if not self._tasing_local_unit:movement():tased() then
 				cancel_tase = true
+			elseif self._shield then
+				cancel_tase = self._unit:raycast("ray", self._shoot_from_pos, target_pos, "slot_mask", self._line_of_fire_slotmask, "sphere_cast_radius", self._sphere_radius, "ignore_unit", self._shield, "report")
 			else
-				if self._shield then
-					cancel_tase = self._unit:raycast("ray", self._shoot_from_pos, target_pos, "slot_mask", self._line_of_fire_slotmask, "sphere_cast_radius", self._sphere_radius, "ignore_unit", self._shield, "report")
-				else
-					cancel_tase = self._unit:raycast("ray", self._shoot_from_pos, target_pos, "slot_mask", self._line_of_fire_slotmask, "sphere_cast_radius", self._sphere_radius, "report")
-				end
+				cancel_tase = self._unit:raycast("ray", self._shoot_from_pos, target_pos, "slot_mask", self._line_of_fire_slotmask, "sphere_cast_radius", self._sphere_radius, "report")
 			end
 
 			if cancel_tase then
+				self.update = self._upd_empty
+
 				if self._is_server then
 					self._expired = true
 				else
@@ -385,37 +415,41 @@ function CopActionTase:update(t)
 					self._tasing_local_unit = nil
 
 					self._discharging = nil
-					self.update = self._upd_empty
 				end
+			elseif self._joker_vis_mask and	self:check_joker_counter(t) then
+				return
 			end
-		elseif target_vec and self._common_data.allow_fire then
-			if self._shoot_t and self._mod_enable_t < t and self._shoot_t < t then
+		elseif target_vec and self._shoot_t and self._common_data.allow_fire then
+			if self._mod_enable_t < t and self._shoot_t < t then
 				if self._tasing_local_unit and target_dis < self._tase_distance then
 					local record = managers.groupai:state():criminal_record(self._tasing_local_unit:key())
 
 					if not record or record.status or self._tasing_local_unit:movement():chk_action_forbidden("hurt") or self._tasing_local_unit:movement():zipline_unit() then
+						self.update = self._upd_empty
+
 						if self._is_server then
 							self._expired = true
 						end
 					else
 						local is_obstructed = nil
+						local sphere_radius = self._sphere_radius / 2
 
 						if self._shield then
-							is_obstructed = self._unit:raycast("ray", self._shoot_from_pos, target_pos, "slot_mask", self._line_of_fire_slotmask, "sphere_cast_radius", self._sphere_radius, "ignore_unit", self._shield, "report")
+							is_obstructed = self._unit:raycast("ray", self._shoot_from_pos, target_pos, "slot_mask", self._line_of_fire_slotmask, "sphere_cast_radius", sphere_radius, "ignore_unit", self._shield, "report")
 						else
-							is_obstructed = self._unit:raycast("ray", self._shoot_from_pos, target_pos, "slot_mask", self._line_of_fire_slotmask, "sphere_cast_radius", self._sphere_radius, "report")
+							is_obstructed = self._unit:raycast("ray", self._shoot_from_pos, target_pos, "slot_mask", self._line_of_fire_slotmask, "sphere_cast_radius", sphere_radius, "report")
 						end
 
 						if not is_obstructed then
 							self._line_of_fire_slotmask = managers.slot:get_mask("world_geometry", "vehicles", "enemy_shield_check")
 
 							if self._tase_effect then
-								World:effect_manager():fade_kill(self._tase_effect)
+								world_g:effect_manager():fade_kill(self._tase_effect)
 							end
 
-							self._tase_effect = World:effect_manager():spawn({
-								force_synch = true,
-								effect = Idstring("effects/payday2/particles/character/taser_thread"),
+							self._tase_effect = world_g:effect_manager():spawn({
+								force_synch = false,
+								effect = taser_thread_idstr,
 								parent = self._weapon_obj_fire
 							})
 
@@ -442,6 +476,16 @@ function CopActionTase:update(t)
 						end
 					end
 				end
+			elseif self._mod_enable_t < t then
+				if self._tase_effect then
+					World:effect_manager():fade_kill(self._tase_effect)
+				end
+
+				self._tase_effect = World:effect_manager():spawn({
+					force_synch = true,
+					effect = Idstring("effects/payday2/particles/character/taser_thread"),
+					parent = self._weapon_obj_fire
+				})
 			end
 		end
 	end
@@ -469,7 +513,82 @@ end
 function CopActionTase:save(save_data)
 	save_data.type = "tase"
 	save_data.body_part = self._body_part
-	save_data.firing_at_husk = self._discharging or self._firing_at_husk or self._discharging_on_husk
+	save_data.is_drop_in = true
+
+	local already_fired_taser = self._discharging or self._firing_at_husk or self._discharging_on_husk
+
+	if already_fired_taser then
+		save_data.firing_at_husk = true
+		save_data.skip_charging_noise = true
+	end
+end
+
+function CopActionTase:on_inventory_event(event)
+	local new_weapon_unit = self._ext_inventory:equipped_unit()
+
+	if new_weapon_unit then
+		local update_tase_effect = self._tase_effect and true
+
+		if update_tase_effect then
+			world_g:effect_manager():fade_kill(self._tase_effect)
+		end
+
+		self._weapon_unit = new_weapon_unit
+		self._weapon_base = new_weapon_unit:base()
+		self._weapon_obj_fire = new_weapon_unit:get_object(obj_fire_idstr)
+
+		if update_tase_effect then
+			self._tase_effect = world_g:effect_manager():spawn({
+				force_synch = false,
+				effect = taser_thread_idstr,
+				parent = self._weapon_obj_fire
+			})
+		end
+	else
+		if self._tase_effect then
+			world_g:effect_manager():fade_kill(self._tase_effect)
+
+			self._tase_effect = nil
+		end
+
+		if self._tasered_sound then
+			self._tasered_sound:stop()
+			self._unit:sound():play("tasered_3rd_stop", nil)
+
+			self._tasered_sound = nil
+		end
+
+		self._weapon_unit = nil
+		self._weapon_base = nil
+		self._weapon_obj_fire = nil
+
+		self.update = self._upd_empty
+
+		if self._is_server then
+			self._expired = true
+		end
+	end
+end
+
+function CopActionTase:on_destroy()
+	if self._tase_effect then
+		world_g:effect_manager():fade_kill(self._tase_effect)
+
+		self._tase_effect = nil
+	end
+
+	if self._tasered_sound then
+		self._tasered_sound:stop()
+		self._unit:sound():play("tasered_3rd_stop", nil)
+
+		self._tasered_sound = nil
+	end
+
+	if self._malfunction_clbk_id then
+		managers.enemy:remove_delayed_clbk(self._malfunction_clbk_id)
+
+		self._malfunction_clbk_id = nil
+	end
 end
 
 function CopActionTase:_upd_ik_spine(target_vec, fwd_dot, t)
@@ -523,4 +642,132 @@ function CopActionTase:_upd_ik_r_arm(target_vec, fwd_dot, t)
 
 		return nil
 	end
+end
+
+function CopActionTase:check_joker_counter(t)
+	local last_t_check = self._last_joker_counter_chk_t
+
+	if last_t_check and t < last_t_check then
+		return
+	end
+
+	self._last_joker_counter_chk_t = t + 0.5
+
+	local my_unit = self._unit
+	local closest_dis, closest_minion_data = 500, {}
+	local record = managers.groupai:state():criminal_record(self._attention.unit:key())
+	local minions = record and record.minions
+
+	if minions then
+		local ext_mov = self._ext_movement
+		local my_pos = ext_mov:m_pos()
+		local my_head_pos = ext_mov:m_head_pos()
+		local vis_mask = self._joker_vis_mask
+
+		--extra nav obstruction checks
+		--[[local nav_manager = managers.navigation
+		local nav_ray_f = nav_manager.raycast
+
+		local my_tracker = self._common_data.nav_tracker
+		local ray_params = {
+			allow_entry = false
+		}
+
+		if my_tracker:lost() then
+			ray_params.pos_to = my_tracker:field_position()
+		else
+			ray_params.tracker_to = my_tracker
+		end]]
+
+		for key, u_data in pairs_g(minions) do
+			local minion_unit = u_data.unit
+			local minion_mov_ext = minion_unit:movement()
+
+			if not minion_mov_ext:joker_counter_on_cooldown() and not minion_mov_ext:chk_action_forbidden("walk") then
+				local vec = my_pos - u_data.m_pos
+				local dis = vec:length()
+
+				if dis < closest_dis then
+					local obstructed = minion_unit:raycast("ray", minion_mov_ext:m_head_pos(), my_head_pos, "slot_mask", vis_mask, "ray_type", "ai_vision")
+
+					if not obstructed then
+						--[[local minion_tracker = minion_mov_ext:nav_tracker()
+
+						if minion_tracker:lost() then
+							ray_params.pos_from = minion_tracker:field_position()
+							ray_params.tracker_from = nil
+						else
+							ray_params.tracker_from = minion_tracker
+							ray_params.pos_from = nil
+						end
+
+						if not nav_ray_f(nav_manager, ray_params) then]]
+							closest_dis = dis
+							closest_minion_data.unit = minion_unit
+							closest_minion_data.vec = vec
+						--end
+					end
+				end
+			end
+		end
+	end
+
+	local found_minion = closest_minion_data.unit
+
+	if not found_minion then
+		return
+	end
+
+	local tackle_dir = closest_minion_data.vec:with_z(0):normalized()
+
+	return self:execute_tackle_counter(found_minion, tackle_dir)
+end
+
+function CopActionTase:execute_tackle_counter(minion_unit, direction)
+	local action_data = {
+		type = "dodge",
+		body_part = 1,
+		variation = "dive",
+		side = "fwd",
+		direction = mvec3_cpy(direction),
+		timeout = {0, 0},
+		speed = 2,
+		blocks = {
+			act = -1,
+			tase = -1,
+			bleedout = -1,
+			dodge = -1,
+			walk = -1,
+			action = -1,
+			aim = -1,
+			hurt = -1,
+			heavy_hurt = -1
+		}
+	}
+
+	local minion_mov_ext = minion_unit:movement()
+	local action = minion_mov_ext:action_request(action_data)
+
+	if not action then
+		return
+	end
+
+	minion_mov_ext:set_joker_cooldown(self._joker_cooldown)
+
+	local my_unit = self._unit
+	local action_data = {
+		damage_effect = 1,
+		damage = 0,
+		variant = "counter_spooc",
+		attacker_unit = minion_unit,
+		col_ray = {
+			body = my_unit:body("body"),
+			position = mvec3_cpy(self._ext_movement:m_com())
+		},
+		attack_dir = direction
+	}
+
+	my_unit:character_damage():damage_melee(action_data)
+
+	return true
 end

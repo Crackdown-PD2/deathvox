@@ -1,0 +1,8 @@
+<merged_font>
+	<font name="fonts/font_medium"/>
+	<font name="fonts/font_small_cyrillic"/>
+	<font name="fonts/font_small_buttons"/>
+
+	<font name="fonts/font_small_csicons"/>
+	<font name="fonts/tcd_weapon_class_icons"/>
+</merged_font>

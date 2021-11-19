@@ -5,13 +5,14 @@ local file = file
 
 if not (_G.deathvox and deathvox.HAS_LOADED_ASSETS) then
 	_G.deathvox = deathvox or {}
-	deathvox.ModPath = ModPath
-	deathvox.SavePath = SavePath --probably safe to comment this one out since it's also in corepre. not gonna mess with it now though
+	deathvox.ModPath = deathvox.ModPath or ModPath
+	deathvox.SavePath = deathvox.SavePath or SavePath
 	deathvox.HAS_LOADED_ASSETS = true
 
 --loads radialmousemenu and sentrycontrolmenu (they don't do anything unless total cd is enabled)
 	dofile(deathvox.ModPath .. "classes/radialmousemenu.lua")
 	dofile(deathvox.ModPath .. "classes/sentrycontrolmenu.lua")
+	dofile(deathvox.ModPath .. "classes/tripminecontrolmenu.lua")
 
 	--creates empty menu entries for the main menu and the overhauls submenu, to be populated with options later
 	local menu_id = deathvox.blt_menu_id

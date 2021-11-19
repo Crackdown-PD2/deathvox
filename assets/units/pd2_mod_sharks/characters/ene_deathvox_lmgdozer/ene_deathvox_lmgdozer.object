@@ -53,7 +53,7 @@
 			<object name="c_throat3" collision_type="convex"/>
 		</body>
 
-		<body name="body_armor_neck" enabled="true" template="character" friction="0.6" collision_class="ragdoll">
+		<body name="body_armor_neck" enabled="false" template="character" friction="0.6" collision_class="ragdoll">
 			<object name="Spine2"/>
 			<object name="c_neck1" collision_type="convex"/>
 			<object name="c_neck2" collision_type="convex"/>

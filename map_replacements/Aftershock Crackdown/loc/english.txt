@@ -1,5 +1,5 @@
 {
-	"heist_jolly_cd_name" : "Aftershock Crackdown",
+	"heist_jolly_cd_name" : "Aftershock: Cracked",
 	"heist_jolly_cd_brief" : "I've struck a deal with the biggest syndicate on the West coast, selling their safes on the East coast. Unfortunately, first shipment of safes ran unto a little trouble - a fucking earthquake! Can you believe that!? Get out there, ensure those safes are recovered. Fuck California.
 
 » Find Vlad's trucks
@@ -7,7 +7,7 @@
 » Get the safes out
 
 This heist currently will not function properly on difficulties below Crackdown.",
-	"heist_jolly_CD_name" : "Aftershock Crackdown",
+	"heist_jolly_CD_name" : "Aftershock: Cracked",
 	"heist_jolly_CD_brief" : "Hey, you guys see the news?! Big quake just hit the West coast! LA is completely messed up.And that's where you're headed. 
 
 Seems Vlad has set up some big deal to move some freight from Seattle to DC. The shippers he contracted were in LA when the quake hit - I guess they were going to ship out of Long Beach. Vlad wants his freight secured safely. No time for planning on this one. LA is wrecked, and the roads are messed up so we're going to drop you in by chopper.

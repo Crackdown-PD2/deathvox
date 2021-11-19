@@ -167,6 +167,7 @@ function CharacterTweakData:get_ai_group_type()
 	map_faction_override["bex"] = "federales"	
 	--map_faction_override["skm_bex"] = "federales"	--not sure about this yet.
 	map_faction_override["pex"] = "federales"		
+	map_faction_override["fex"] = "federales"		
 	  
 	--Halloween overrides begin here.
   
@@ -189,11 +190,56 @@ function CharacterTweakData:get_ai_group_type()
 	return group_to_use
 end
 
-
 function CharacterTweakData:_presets(tweak_data)
 	local presets = origin_presets(self, tweak_data)
 	
 	-- Fug's Notes: Consider creating custom hurt presets to compensate for the incredibly high survivability these enemies have, these guys don't stumble around enough, and heavies esp. have Terminator 2 syndrome, which actually technically makes it EASIER to hit them!
+	
+	presets.hurt_severities.no_hurts = { --due to overkill's recent updates, i have to do this now, apparently >:c
+		tase = true,
+		bullet = {
+			health_reference = 1,
+			zones = {
+				{
+					none = 1
+				}
+			}
+		},
+		explosion = {
+			health_reference = 1,
+			zones = {
+				{
+					none = 1
+				}
+			}
+		},
+		melee = {
+			health_reference = 1,
+			zones = {
+				{
+					none = 1
+				}
+			}
+		},
+		fire = {
+			health_reference = 1,
+			zones = {
+				{
+					none = 1
+				}
+			}
+		},
+		poison = {
+			health_reference = 1,
+			zones = {
+				{
+					none = 1
+				}
+			}
+		}
+	}
+	presets.hurt_severities.no_hurts_no_tase = deep_clone(presets.hurt_severities.no_hurts)
+	presets.hurt_severities.no_hurts_no_tase.tase = false
 	
 	presets.base.stealth_instant_kill = true
 	presets.enemy_chatter = {
@@ -3054,7 +3100,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_taser.access = "any"
 	self.deathvox_taser.no_retreat = false
 	table.insert(self._enemy_list, "deathvox_taser") 
-
+	
+	self.spooc.dodge_with_grenade = nil
 	self.deathvox_cloaker = deep_clone(self.spooc)
 	--self.deathvox_cloaker.tags = {"spooc"}-- commented out as it was actually breaking the tags
 	table.insert(self.deathvox_cloaker.tags, "takedown")
@@ -3079,6 +3126,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_cloaker.no_retreat = false
 	self.deathvox_cloaker.chatter = presets.enemy_chatter.spooc
 	self.deathvox_cloaker.spooc_attack_use_smoke_chance = 0
+	self.deathvox_cloaker.dodge_with_grenade = nil
 	self.deathvox_cloaker.special_deaths = {
 		melee = {
 			[("head"):id():key()] = {
@@ -3205,6 +3253,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medicdozer = deep_clone(self.deathvox_tank)
 	--self.deathvox_medicdozer.tags = {"tank", "medic"} -- commented out as it was actually breaking the tags
 	table.insert(self.deathvox_medicdozer.tags, "medic")
+	table.insert(self.deathvox_medicdozer.tags, "backliner")
 	self.deathvox_medicdozer.use_factory = false -- Use a factory weapon
 	--self.deathvox_medicdozer.factory_weapon_id = {"wpn_deathvox_heavy_ar"} 
 	self.deathvox_medicdozer.dv_medic_heal = true -- don't touch, makes him use the death vox healing
@@ -3216,7 +3265,46 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_grenadier = deep_clone(presets.base)
 	self.deathvox_grenadier.tags = {"law", "custom", "special"}
 	self.deathvox_grenadier.experience = {}
-	self.deathvox_grenadier.weapon = deep_clone(presets.weapon.normal)
+	self.deathvox_grenadier.weapon = deep_clone(presets.weapon.normal) --Make sure this idiot doesnt keep firing silent shots goddamnit
+	self.deathvox_grenadier.weapon.is_heavy_rifle = {
+		aim_delay = {
+			0,
+			0
+		},
+		focus_delay = 0,
+		focus_dis = 200,
+		spread = 3,
+		miss_dis = 20,
+		RELOAD_SPEED = 1.4,
+		melee_speed = 1,
+		melee_dmg = 20,
+		melee_retry_delay = presets.weapon.expert.is_rifle.melee_retry_delay,
+		range = {
+			optimal = 4000,
+			far = 6000,
+			close = 3000
+		},
+		FALLOFF = {
+			{
+				dmg_mul = 1,
+				r = 100,
+				acc = {
+					1,
+					1
+				},
+				recoil = {
+					0.7,
+					0.7
+				},
+				mode = {
+					1,
+					0,
+					0,
+					0
+				}
+			}
+		}
+	}
 	self.deathvox_grenadier.melee_weapon = "knife_1"
 	self.deathvox_grenadier.melee_weapon_dmg_multiplier = 1
 	self.deathvox_grenadier.weapon_safety_range = 1000
@@ -3500,10 +3588,9 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox
 	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
 	self.chavez_boss.HEALTH_INIT = 200
-	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
 	self.chavez_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
 	self.chavez_boss.damage.can_be_tased = false
-	self.chavez_boss.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.dodge = self.presets.dodge.deathvoxchavez
 	self.chavez_boss.ecm_vulnerability = 0
 	self.chavez_boss.weapon = self.presets.weapon.deathvox
 	self.drug_lord_boss.HEALTH_INIT = 200
@@ -3637,10 +3724,9 @@ function CharacterTweakData:_set_hard() -- HARD specific tweaks begin.
 	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox
 	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
 	self.chavez_boss.HEALTH_INIT = 200
-	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
 	self.chavez_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
 	self.chavez_boss.damage.can_be_tased = false
-	self.chavez_boss.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.dodge = self.presets.dodge.deathvoxchavez
 	self.chavez_boss.ecm_vulnerability = 0
 	self.chavez_boss.weapon = self.presets.weapon.deathvox
 	self.drug_lord_boss.HEALTH_INIT = 200
@@ -3769,13 +3855,12 @@ function CharacterTweakData:_set_overkill() -- VERY HARD specific tweaks begin.
 	self.hector_boss.ecm_vulnerability = 0
 	self.hector_boss.weapon = self.presets.weapon.deathvox	
 	self.hector_boss_no_armor.HEALTH_INIT = 15
-	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox.is_pistol
+	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox
 	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
 	self.chavez_boss.HEALTH_INIT = 500
-	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
 	self.chavez_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
 	self.chavez_boss.damage.can_be_tased = false
-	self.chavez_boss.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.dodge = self.presets.dodge.deathvoxchavez
 	self.chavez_boss.ecm_vulnerability = 0
 	self.chavez_boss.weapon = self.presets.weapon.deathvox
 	self.drug_lord_boss.HEALTH_INIT = 500
@@ -3905,13 +3990,12 @@ function CharacterTweakData:_set_overkill_145() -- OVERKILL specific tweaks begi
 	self.hector_boss.ecm_vulnerability = 0
 	self.hector_boss.weapon = self.presets.weapon.deathvox	
 	self.hector_boss_no_armor.HEALTH_INIT = 15
-	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox.is_pistol
+	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox
 	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
 	self.chavez_boss.HEALTH_INIT = 500
-	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
 	self.chavez_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
 	self.chavez_boss.damage.can_be_tased = false
-	self.chavez_boss.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.dodge = self.presets.dodge.deathvoxchavez
 	self.chavez_boss.ecm_vulnerability = 0
 	self.chavez_boss.weapon = self.presets.weapon.deathvox
 	self.drug_lord_boss.HEALTH_INIT = 500
@@ -4042,13 +4126,12 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	self.hector_boss.ecm_vulnerability = 0
 	self.hector_boss.weapon = self.presets.weapon.deathvox	
 	self.hector_boss_no_armor.HEALTH_INIT = 15
-	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox.is_pistol
+	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox
 	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
 	self.chavez_boss.HEALTH_INIT = 600
-	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
 	self.chavez_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
 	self.chavez_boss.damage.can_be_tased = false
-	self.chavez_boss.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.dodge = self.presets.dodge.deathvoxchavez
 	self.chavez_boss.ecm_vulnerability = 0
 	self.chavez_boss.weapon = self.presets.weapon.deathvox
 	self.drug_lord_boss.HEALTH_INIT = 600
@@ -4179,13 +4262,12 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	self.hector_boss.ecm_vulnerability = 0
 	self.hector_boss.weapon = self.presets.weapon.deathvox	
 	self.hector_boss_no_armor.HEALTH_INIT = 15
-	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox.is_pistol
+	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox
 	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
 	self.chavez_boss.HEALTH_INIT = 600
-	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
 	self.chavez_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
 	self.chavez_boss.damage.can_be_tased = false
-	self.chavez_boss.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.dodge = self.presets.dodge.deathvoxchavez
 	self.chavez_boss.ecm_vulnerability = 0
 	self.chavez_boss.weapon = self.presets.weapon.deathvox
 	self.drug_lord_boss.HEALTH_INIT = 600
@@ -4228,9 +4310,10 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	--self:_multiply_weapon_delay(self.presets.weapon.sniper, 0)
 	--self:_multiply_weapon_delay(self.presets.weapon.gang_member, 0)
 	
-	self.security = deep_clone(self.deathvox_guard) --  Requires further testing. May be fix for heist-specific crash tied to initial custom unit spawn.
+	self.security = deep_clone(self.deathvox_guard) --  Requires further testing. 
 	self.gensec = deep_clone(self.deathvox_guard)
 	self.security_mex = deep_clone(self.deathvox_guard)
+	self.security_mex_no_pager = deep_clone(self.deathvox_guard)
 	
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	self.sniper = deep_clone(self.deathvox_sniper)
@@ -4298,13 +4381,12 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.hector_boss.ecm_vulnerability = 0
 	self.hector_boss.weapon = self.presets.weapon.deathvox	
 	self.hector_boss_no_armor.HEALTH_INIT = 15
-	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox.is_pistol
+	self.hector_boss_no_armor.weapon = self.presets.weapon.deathvox
 	self.hector_boss_no_armor.dodge = self.presets.dodge.deathvoxninja
 	self.chavez_boss.HEALTH_INIT = 900
-	self.chavez_boss.move_speed = self.presets.move_speed.deathvoxchavez
 	self.chavez_boss.damage.hurt_severity = self.presets.hurt_severities.no_hurts_no_tase
 	self.chavez_boss.damage.can_be_tased = false
-	self.chavez_boss.dodge = self.presets.dodge.deathvoxninja
+	self.chavez_boss.dodge = self.presets.dodge.deathvoxchavez
 	self.chavez_boss.ecm_vulnerability = 0
 	self.chavez_boss.weapon = self.presets.weapon.deathvox
 	self.drug_lord_boss.HEALTH_INIT = 900
@@ -4472,8 +4554,7 @@ function CharacterTweakData:_set_characters_weapon_preset(preset)
 		"deathvox_greendozer",
 		"deathvox_blackdozer",
 		"deathvox_lmgdozer",
-		"deathvox_medicdozer",
-		"deathvox_grenadier"
+		"deathvox_medicdozer"
 	}
 	for _, name in ipairs(all_units) do
 		
@@ -4565,8 +4646,7 @@ function CharacterTweakData:_set_specials_weapon_preset(preset)
 		"deathvox_greendozer",
 		"deathvox_blackdozer",
 		"deathvox_lmgdozer",
-		"deathvox_medicdozer",
-		"deathvox_grenadier"
+		"deathvox_medicdozer"
 	}
 	for _, name in ipairs(all_units) do
 		self[name].weapon = deep_clone(self.presets.weapon[preset])
@@ -4833,29 +4913,6 @@ function CharacterTweakData:character_map()
 			"ene_deathvox_classic_swatshot",
 			"ene_deathvox_classic_taser",
 			"ene_deathvox_classic_veteran"
-		}
-	}
-	char_map.murkywater = {
-		path = "units/pd2_mod_gageammo/characters/",
-		list = {
-			"ene_deathvox_guard",
-			"ene_deathvox_heavyar",
-			"ene_deathvox_lightar",
-			"ene_deathvox_medic",
-			"ene_deathvox_shield",
-			"ene_deathvox_lightshot",
-			"ene_deathvox_heavyshot",
-			"ene_deathvox_taser",
-			"ene_deathvox_cloaker",
-			"ene_deathvox_sniper_assault",
-			"ene_deathvox_greendozer",
-			"ene_deathvox_blackdozer",
-			"ene_deathvox_lmgdozer",
-			"ene_deathvox_medicdozer",
-			"ene_deathvox_grenadier",
-			"ene_deathvox_gman",
-			"ene_deathvox_gman_noflashlight",
-			"ene_deathvox_guarddozer"
 		}
 	}
 	char_map.russia = {

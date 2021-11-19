@@ -71,30 +71,30 @@
 			<sound action="'play'" event="'bulldozer_collar_plate_shatter'" object="'Neck'"/>
 		</sequence>
 		<body name="'body_helmet_plate'">
-			<endurance damage="38" lock="3" explosion="100">
+			<endurance damage="38" lock="3">
 				<run_sequence name="'int_seq_helmet_plate'"/>
 			</endurance>
 		</body>
 		<body name="'body_helmet_glass'">
-			<endurance damage="19" lock="3" explosion="100">
+			<endurance damage="19" lock="3">
 				<run_sequence name="'int_seq_helmet_glass_01'"/>
 			</endurance>
-			<endurance damage="38" lock="3" explosion="100">
+			<endurance damage="38" lock="3">
 				<run_sequence name="'int_seq_helmet_glass_02'"/>
 			</endurance>
 		</body>
 		<body name="'body_armor_chest'">
-			<endurance lock="3">
+			<endurance damage="75" lock="50">
 				<run_sequence name="'int_seq_armor_chest'"/>
 			</endurance>
 		</body>
 		<body name="'body_armor_stomache'">
-			<endurance lock="3">
+			<endurance damage="75" lock="50">
 				<run_sequence name="'int_seq_armor_stomache'"/>
 			</endurance>
 		</body>
 		<body name="'body_armor_back'">
-			<endurance lock="3">
+			<endurance damage="75" lock="50">
 				<run_sequence name="'int_seq_armor_back'"/>
 			</endurance>
 		</body>
@@ -110,7 +110,6 @@
 		</body>
 		<sequence editable_state="true" name="'leg_arm_hitbox'" triggable="true">
 			<body enabled="true" name="'body'"/>
-			<body enabled="true" name="'head'"/>
 			<body enabled="false" motion="'keyframed'" name="'rag_Hips'"/>
 			<body enabled="true" motion="'keyframed'" name="'rag_LeftUpLeg'"/>
 			<body enabled="true" motion="'keyframed'" name="'rag_RightUpLeg'"/>
