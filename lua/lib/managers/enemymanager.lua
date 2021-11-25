@@ -951,7 +951,9 @@ function EnemyManager:on_enemy_died(dead_unit, damage_info)
 	local u_key = dead_unit:key()
 	local enemy_data = self._enemy_data
 	local u_data = enemy_data.unit_data[u_key]
-
+	
+	local t = self._timer:time()
+	
 	if not u_data then
 		u_data = {
 			unit = dead_unit
@@ -967,12 +969,12 @@ function EnemyManager:on_enemy_died(dead_unit, damage_info)
 	local corpse_disposal = self:is_corpse_disposal_enabled()
 
 	if corpse_disposal and enemy_data.nr_corpses >= 0 and not self:has_task("EnemyManager._upd_corpse_disposal") then
-		self:queue_task("EnemyManager._upd_corpse_disposal", EnemyManager._upd_corpse_disposal, self, self._t + self._corpse_disposal_upd_interval)
+		self:queue_task("EnemyManager._upd_corpse_disposal", EnemyManager._upd_corpse_disposal, self, t + self._corpse_disposal_upd_interval)
 	end
 
 	enemy_data.nr_corpses = enemy_data.nr_corpses + 1
 	enemy_data.corpses[u_key] = u_data
-	u_data.death_t = self._t
+	u_data.death_t = t
 
 	self:_destroy_unit_gfx_lod_data(u_key, corpse_disposal and 4 - managers.user:get_setting("video_animation_lod") or nil)
 
@@ -1019,15 +1021,15 @@ end
 
 function EnemyManager:register_shield(shield_unit)
 	local enemy_data = self._enemy_data
-
+	local t = self._timer:time()
 	if enemy_data.nr_shields >= 0 and self:is_corpse_disposal_enabled() and not self:has_task("EnemyManager._upd_shield_disposal") then
-		self:queue_task("EnemyManager._upd_shield_disposal", EnemyManager._upd_shield_disposal, self, self._t + self._shield_disposal_upd_interval)
+		self:queue_task("EnemyManager._upd_shield_disposal", EnemyManager._upd_shield_disposal, self, t + self._shield_disposal_upd_interval)
 	end
 
 	enemy_data.nr_shields = enemy_data.nr_shields + 1
 	enemy_data.shields[shield_unit:key()] = {
 		unit = shield_unit,
-		death_t = self._t
+		death_t = t
 	}
 end
 
@@ -1046,6 +1048,7 @@ function EnemyManager:on_civilian_died(dead_unit, damage_info)
 			unit = dead_unit
 		}
 	end
+	local t = self._timer:time()
 
 	managers.groupai:state():on_civilian_unregistered(dead_unit)
 
@@ -1057,12 +1060,12 @@ function EnemyManager:on_civilian_died(dead_unit, damage_info)
 	local enemy_data = self._enemy_data
 
 	if corpse_disposal and enemy_data.nr_corpses >= 0 and not self:has_task("EnemyManager._upd_corpse_disposal") then
-		self:queue_task("EnemyManager._upd_corpse_disposal", EnemyManager._upd_corpse_disposal, self, self._t + self._corpse_disposal_upd_interval)
+		self:queue_task("EnemyManager._upd_corpse_disposal", EnemyManager._upd_corpse_disposal, self, t + self._corpse_disposal_upd_interval)
 	end
 
 	enemy_data.nr_corpses = enemy_data.nr_corpses + 1
 	enemy_data.corpses[u_key] = u_data
-	u_data.death_t = self._t
+	u_data.death_t = t
 
 	self:_destroy_unit_gfx_lod_data(u_key, corpse_disposal and 4 - managers.user:get_setting("video_animation_lod") or nil)
 
@@ -1129,7 +1132,7 @@ function EnemyManager:_chk_detach_stored_units()
 end
 
 function EnemyManager:_upd_corpse_disposal()
-	local t = self._t
+	local t = self._timer:time()
 	local enemy_data = self._enemy_data
 	local nr_corpses = enemy_data.nr_corpses
 	local disposals_needed = nr_corpses - self:corpse_limit()
@@ -1218,7 +1221,7 @@ function EnemyManager:_upd_corpse_disposal()
 end
 
 function EnemyManager:_upd_shield_disposal()
-	local t = self._t
+	local t = self._timer:time()
 	local enemy_data = self._enemy_data
 	local nr_shields = enemy_data.nr_shields
 	local disposals_needed = nr_shields - self:shield_limit()
@@ -1313,6 +1316,7 @@ function EnemyManager:set_corpse_disposal_enabled(state)
 	local state_modifier = state and 1 or 0
 	self._corpse_disposal_enabled = self._corpse_disposal_enabled + state_modifier
 	local is_now_enabled = self:is_corpse_disposal_enabled()
+	local t = self._timer:time()
 
 	if was_enabled and not is_now_enabled then
 		self:unqueue_task("EnemyManager._upd_corpse_disposal")
@@ -1325,8 +1329,8 @@ function EnemyManager:set_corpse_disposal_enabled(state)
 		managers.groupai:state():chk_unregister_irrelevant_attention_objects()
 
 		if self._enemy_data.nr_corpses > 0 then
-			self:queue_task("EnemyManager._upd_corpse_disposal", EnemyManager._upd_corpse_disposal, self, self._t + self._corpse_disposal_upd_interval)
-			self:queue_task("EnemyManager._upd_shield_disposal", EnemyManager._upd_shield_disposal, self, self._t + self._shield_disposal_upd_interval)
+			self:queue_task("EnemyManager._upd_corpse_disposal", EnemyManager._upd_corpse_disposal, self, t + self._corpse_disposal_upd_interval)
+			self:queue_task("EnemyManager._upd_shield_disposal", EnemyManager._upd_shield_disposal, self, t + self._shield_disposal_upd_interval)
 		end
 	end
 end
