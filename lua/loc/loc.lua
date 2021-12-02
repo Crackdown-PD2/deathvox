@@ -304,7 +304,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_bulletstorm = "Bulletstorm",
 				menu_bulletstorm_desc = "BASIC: ##$basic##\nAmmo Bags placed by you grant players the ability to shoot without depleting their ammunition for up to ##5## seconds after interacting with it.\nThe more ammo players replenish, the longer the duration of the effect.\n\nACE: ##$pro##\nIncreases the base duration of the effect by up to ##15## seconds.",
 				menu_lead_farmer = "Lead Farmer",
-				menu_lead_farmer_desc = "BASIC: ##$basic##\n$ICN_HVY Heavy Weapons gain ##+1%## Reload Speed per kill on their next Reload, up to ##50%##.\n\nACE: ##$pro##\nIncreases the amount of Reload Speed per kill to ##2%## and the maximum amount of Reload Speed to ##100%##.",
+				menu_lead_farmer_desc = "BASIC: ##$basic##\n$ICN_HVY Heavy Weapons load ##20%## of their Magazine every ##2## seconds while stowed.\n\nACE: ##$pro##\n$ICN_HVY Heavy Weapons with a deployed Bipod load ##20%## of their Magazine every ##2## seconds.",
 				menu_armory_regular = "Armory Regular",
 				menu_armory_regular_desc = "BASIC: ##$basic##\nIncreases your Ammo Bag supply to ##2##.\n\nACE: ##$pro##\nIncreases your Ammo Bag supply to ##3##.",
 				menu_war_machine = "War Machine",

@@ -887,6 +887,29 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		self.values.class_heavy.lead_farmer_neo = {{0.2, 2}} --Percentage of ammo reloaded, time between ticks
+		self.values.class_heavy.lead_farmer_bipod_reload = {true}
+		
+		self.definitions.class_heavy_lead_farmer_neo_basic = {
+			name_id = "menu_lead_farmer_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "lead_farmer_neo",
+				category = "class_heavy"
+			}
+		}
+		self.definitions.class_heavy_lead_farmer_neo_aced = {
+			name_id = "menu_lead_farmer_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "lead_farmer_bipod_reload",
+				category = "class_heavy"
+			}
+		}
+		
+		--OLD REMOVE LATER
 		self.values.class_heavy.lead_farmer = {
 			{0.01,0.5}, --1% per kill, 50% max
 			{0.02,1} --2% per kill, 100% max
