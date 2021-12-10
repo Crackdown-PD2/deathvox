@@ -5,6 +5,8 @@ local mvec3_sub = mvector3.subtract
 local mvec3_add = mvector3.add
 local mvec3_mul = mvector3.multiply
 local mvec3_norm = mvector3.normalize
+local mvec3_cpy = mvector3.copy
+local mvec3_dir = mvector3.direction	
 
 local tmp_ground_from_vec = Vector3()
 local tmp_ground_to_vec = Vector3()
@@ -12,6 +14,12 @@ local up_offset_vec = math.UP * 30
 local down_offset_vec = math.UP * -40
 
 function PlayerStandard:_update_ground_ray()
+	if self._lunge_data then
+		self._gnd_ray = nil
+		
+		return
+	end
+
 	local hips_pos = tmp_ground_from_vec
 	local down_pos = tmp_ground_to_vec
 
@@ -30,6 +38,10 @@ function PlayerStandard:_update_ground_ray()
 end
 
 function PlayerStandard:_chk_floor_moving_pos(pos)
+	if self._lunge_data then
+		return
+	end
+
 	local hips_pos = tmp_ground_from_vec
 	local down_pos = tmp_ground_to_vec
 
@@ -44,6 +56,58 @@ function PlayerStandard:_chk_floor_moving_pos(pos)
 		return ground_ray.body:position().z
 	end
 end
+
+function PlayerStandard:_update_foley(t, input)
+	if self._state_data.on_zipline or self._lunge_data then
+		return
+	end
+
+	if not self._gnd_ray and not self._state_data.on_ladder then
+		if not self._state_data.in_air then
+			self._state_data.in_air = true
+			self._state_data.enter_air_pos_z = self._pos.z
+
+			self:_interupt_action_running(t)
+			self._unit:set_driving("orientation_object")
+		end
+	elseif self._state_data.in_air then
+		self._unit:set_driving("script")
+
+		self._state_data.in_air = false
+		local from = self._pos + math.UP * 10
+		local to = self._pos - math.UP * 60
+		local material_name, pos, norm = World:pick_decal_material(from, to, self._slotmask_bullet_impact_targets)
+
+		self._unit:sound():play_land(material_name)
+
+		if self._unit:character_damage():damage_fall({
+			height = self._state_data.enter_air_pos_z - self._pos.z
+		}) then
+			self._running_wanted = false
+
+			managers.rumble:play("hard_land")
+			self._ext_camera:play_shaker("player_fall_damage")
+			self:_start_action_ducking(t)
+		elseif input.btn_run_state then
+			self._running_wanted = true
+		end
+
+		self._jump_t = nil
+		self._jump_vel_xy = nil
+
+		self._ext_camera:play_shaker("player_land", 0.5)
+		managers.rumble:play("land")
+	elseif self._jump_vel_xy and t - self._jump_t > 0.3 then
+		self._jump_vel_xy = nil
+
+		if input.btn_run_state then
+			self._running_wanted = true
+		end
+	end
+
+	self:_check_step(t)
+end
+
 
 function PlayerStandard:init(unit)
 	PlayerMovementState.init(self, unit)
@@ -182,66 +246,108 @@ function PlayerStandard:_check_action_jump(t, input)
 	return new_action
 end
 
+local tmp_vec = Vector3()
+
+local world_g = World
+local alive_g = alive
+
+local ai_vision_ids = Idstring("ai_vision")
+
 function PlayerStandard:_update_fwd_ray()
-	local from = self._unit:movement():m_head_pos()
-	local range = alive(self._equipped_unit) and self._equipped_unit:base():has_range_distance_scope() and 20000 or 4000
-	local to = self._cam_fwd * range
+	--updated fwd_ray code with a more recent version of hoxicode (please dont hurt me)
 
-	mvector3.add(to, from)
+	local my_unit = self._unit
+	local from = my_unit:movement():m_head_pos()
+	local my_cam_fwd = self._cam_fwd
+	local equipped_unit = self._equipped_unit
+	equipped_unit = alive_g(equipped_unit) and equipped_unit or nil
 
-	self._fwd_ray = World:raycast("ray", from, to, "slot_mask", self._slotmask_fwd_ray)
+	local equipped_unit_base = equipped_unit and equipped_unit:base()
+	local ray_range = equipped_unit_base and equipped_unit_base:has_range_distance_scope() and 20000 or 4000
 
-	managers.environment_controller:set_dof_distance(math.max(0, math.min(self._fwd_ray and self._fwd_ray.distance or 4000, 4000) - 200), self._state_data.in_steelsight)
+	local to = tmp_vec
+	mvec3_set(to, my_cam_fwd)
+	mvec3_mul(to, ray_range)
+	mvec3_add(to, from)
 
-	if alive(self._equipped_unit) then
-		if self._state_data.in_steelsight and self._equipped_unit:base().check_highlight_unit then
-			--with this method, range for depth of field and scope distance isn't affected and marking works through glass (or to be more specific, through surfaces that the AI can see through)
-			local marking_from = self._unit:movement():m_head_pos()
-			local marking_to = self._cam_fwd * 20000
+	local fwd_ray_slotmask = self._slotmask_fwd_ray
+	local raycast_f = my_unit.raycast
+	local fwd_ray = raycast_f(my_unit, "ray", from, to, "slot_mask", fwd_ray_slotmask)
+	self._fwd_ray = fwd_ray
 
-			mvector3.add(marking_to, marking_from)
+	local ADS = self._state_data.in_steelsight
+	local dof_dis = nil
+	local bungielungie = managers.player:has_category_upgrade("player", "bungielungie") and managers.player._can_lunge
 
-			local ray_hits = nil
-			local hit_person_or_sentry = false
-			local person_mask = managers.slot:get_mask("persons")
-			local sentry_mask = managers.slot:get_mask("sentry_gun")
-			local wall_mask = managers.slot:get_mask("world_geometry", "vehicles")
-			local shield_mask = managers.slot:get_mask("enemy_shield_check")
-			local ai_vision_ids = Idstring("ai_vision")
-
-			ray_hits = World:raycast_all("ray", marking_from, marking_to, "slot_mask", self._slotmask_fwd_ray, "ignore_unit", self._equipped_unit:base()._setup.ignore_units)
-
-			local units_hit = {}
-			local unique_hits = {}
-
-			for i, hit in ipairs(ray_hits) do
-				if not units_hit[hit.unit:key()] then
-					units_hit[hit.unit:key()] = true
-					unique_hits[#unique_hits + 1] = hit
-					hit.hit_position = hit.position
-					hit_person_or_sentry = hit_person_or_sentry or hit.unit:in_slot(person_mask) or hit.unit:in_slot(sentry_mask)
-					local weak_body = hit.body:has_ray_type(ai_vision_ids)
-
-					if hit_person_or_sentry then
-						break
-					elseif hit.unit:in_slot(wall_mask) and weak_body then
-						break
-					elseif hit.unit:in_slot(shield_mask) then
-						break
-					end
-				end
+	if fwd_ray then
+		local dis = fwd_ray.distance
+		dof_dis = dis > 4000 and 3800 or dis - 200
+		dof_dis = dis < 0 and 0 or dis
+		
+		if bungielungie and not self._state_data.on_zipline then
+			if dis <= 500 then
+				local fwd_ray_unit = fwd_ray.unit
+				
+				self._has_lunge_target = fwd_ray_unit:in_slot(managers.slot:get_mask("enemies"))
+			else
+				self._has_lunge_target = nil
 			end
+		else
+			self._has_lunge_target = nil
+		end
+	else
+		self._has_lunge_target = nil
+		dof_dis = 3800
+	end
 
-			for _, hit in ipairs(unique_hits) do
-				if hit.unit then
-					self._equipped_unit:base():check_highlight_unit(hit.unit)
+	managers.environment_controller:set_dof_distance(dof_dis, ADS)
+	
+	if not equipped_unit_base then
+		return
+	end
+
+	if ADS and equipped_unit_base.check_highlight_unit then
+		ray_range = 20000
+		from = self:get_fire_weapon_position()
+		my_cam_fwd = self:get_fire_weapon_direction()
+
+		mvec3_set(to, my_cam_fwd)
+		mvec3_mul(to, ray_range)
+		mvec3_add(to, from)
+
+		local vis_mask = self._slotmask_AI_visibility
+		local vis_ray = raycast_f(my_unit, "ray", from, to, "slot_mask", vis_mask, "ray_type", "ai_vision")
+
+		if vis_ray then
+			mvec3_set(to, vis_ray.position)
+		end
+
+		local highlight_ray = world_g:raycast_all("ray", from, to, "slot_mask", fwd_ray_slotmask)
+		local units_hit, highlight_unit = {}
+
+		for i = 1, #highlight_ray do
+			local hit = highlight_ray[i]
+			local unit = hit.unit
+			local u_key = unit:key()
+
+			if not units_hit[u_key] then
+				units_hit[u_key] = true
+
+				if not unit:in_slot(vis_mask) and not hit.body:has_ray_type(ai_vision_ids) then
+					highlight_unit = unit
+
+					break
 				end
 			end
 		end
 
-		if self._equipped_unit:base().set_scope_range_distance then
-			self._equipped_unit:base():set_scope_range_distance(self._fwd_ray and self._fwd_ray.distance / 100 or false)
+		if highlight_unit then
+			equipped_unit_base:check_highlight_unit(highlight_unit)
 		end
+	end
+
+	if equipped_unit_base.set_scope_range_distance then
+		equipped_unit_base:set_scope_range_distance(fwd_ray and fwd_ray.distance / 100 or false)
 	end
 end
 
@@ -756,12 +862,43 @@ function PlayerStandard:_update_movement(t, dt)
 
 		self._ext_network:send("action_change_speed", WALK_SPEED_MAX)
 	end
+	
+	if self._lunge_data then
+		local lunge_data = self._lunge_data
+		
+		self._unit:camera():camera_unit():base():clbk_aim_assist({
+			ray = lunge_data.camera_dir
+		})
+		
+		local speed = 500 / lunge_data.travel_t
+		local traveled_dis = speed * dt
+		local achieved_vel = lunge_data.achieved_vel
+		
+		mvector3.set(achieved_vel, lunge_data.travel_dir)
+		mvector3.multiply(achieved_vel, speed)
+	
+		pos_new = mvec_pos_new
 
-	if self._state_data.on_zipline and self._state_data.zipline_data.position then
+		mvector3.set(pos_new, achieved_vel)
+		mvector3.multiply(pos_new, dt)
+		mvector3.add(pos_new, self._pos)
+		
+		lunge_data.traveled_dis = lunge_data.traveled_dis + traveled_dis
+		
+		if lunge_data.traveled_dis >= lunge_data.travel_dis then
+			if lunge_data.instant_hit then
+				self:_do_action_melee(t, input, nil, true)
+				
+				self._lunge_data = nil
+			end
+		
+			pos_new = nil
+		end
+	elseif self._state_data.on_zipline and self._state_data.zipline_data.position then
 		local speed = mvector3.length(self._state_data.zipline_data.position - self._pos) / dt / 500
 		pos_new = mvec_pos_new
 
-		mvector3.set(pos_new, self._state_data.zipline_data.position)
+		mvector3.set(pos_new, self._state_data. zipline_data.position)
 
 		if self._state_data.zipline_data.camera_shake then
 			self._ext_camera:shaker():set_parameter(self._state_data.zipline_data.camera_shake, "amplitude", speed)
@@ -891,6 +1028,7 @@ function PlayerStandard:_update_movement(t, dt)
 end
 
 Hooks:Register("OnPlayerMeleeHit")
+
 local melee_vars = {
 	"player_melee",
 	"player_melee_var2"
@@ -907,12 +1045,18 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 	local sphere_cast_radius = 20
 	local col_ray = nil
 
-	if melee_hit_ray then
+	if melee_hit_ray and not self._lunge_data then
 		col_ray = melee_hit_ray ~= true and melee_hit_ray or nil
 	else
+		if self._lunge_data then
+			--log("ugh.")
+		end
+	
 		col_ray = self:_calc_melee_hit_ray(t, sphere_cast_radius)
 	end
-
+	
+	self._lunge_data = nil
+	
 	if col_ray and alive(col_ray.unit) then
 		local damage, damage_effect = managers.blackmarket:equipped_melee_weapon_damage_info(charge_lerp_value)
 		local damage_effect_mul = math.max(managers.player:upgrade_value("player", "melee_knockdown_mul", 1), managers.player:upgrade_value(self._equipped_unit:base():weapon_tweak_data().categories and self._equipped_unit:base():weapon_tweak_data().categories[1], "melee_knockdown_mul", 1))
@@ -1118,7 +1262,33 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 		stack[2] = 0
 	end
 	
+	
+	
 	return col_ray
+end
+
+local lunge_vec1 = Vector3()
+local lunge_vec2 = Vector3()
+
+function PlayerStandard:_calc_melee_hit_ray(t, sphere_cast_radius)
+	local melee_entry = managers.blackmarket:equipped_melee_weapon()
+	local range = tweak_data.blackmarket.melee_weapons[melee_entry].stats.range or 175
+	local from, to = nil
+	
+	if self._lunge_data then
+		--log("argh.")
+		from = self._unit:movement():m_head_pos()
+		to = self._lunge_data.target_unit:body("head"):position()
+		mvec3_dir(to, from, to)
+		mvec3_mul(to, range + 50)
+		mvec3_add(to, from)
+
+	else
+		from = self._unit:movement():m_head_pos()
+		to = from + self._unit:movement():m_head_rot():y() * range
+	end
+
+	return self._unit:raycast("ray", from, to, "slot_mask", self._slotmask_bullet_impact_targets, "sphere_cast_radius", sphere_cast_radius, "ray_type", "body melee")
 end
 
 Hooks:PostHook(PlayerStandard,"_interupt_action_reload","totalcrackdown_interrupt_reload",function(self,t)
@@ -1205,7 +1375,227 @@ function PlayerStandard:_update_reload_timers(t, dt, input)
 	end
 end
 
+function PlayerStandard:_check_action_melee(t, input)
+	if self._lunge_data then
+		return
+	end
+	
+	if self._state_data.melee_attack_wanted then
+		if not self._state_data.melee_attack_allowed_t then
+			self._state_data.melee_attack_wanted = nil
+			
+			self:_do_action_melee(t, input)
+		end
+
+		return
+	end
+
+	local action_wanted = input.btn_melee_press or input.btn_melee_release or self._state_data.melee_charge_wanted
+
+	if not action_wanted then
+		return
+	end
+
+	if input.btn_melee_release then
+		if self._state_data.meleeing then
+			if self._state_data.melee_attack_allowed_t then
+				self._state_data.melee_attack_wanted = true
+
+				return
+			end
+
+			self:_do_action_melee(t, input)
+		end
+
+		return
+	end
+
+	local action_forbidden = not self:_melee_repeat_allowed() or self._use_item_expire_t or self:_changing_weapon() or self:_interacting() or self:_is_throwing_projectile() or self:_is_using_bipod() or self._melee_stunned
+
+	if action_forbidden then
+		return
+	end
+
+	local melee_entry = managers.blackmarket:equipped_melee_weapon()
+	local instant = tweak_data.blackmarket.melee_weapons[melee_entry].instant
+
+	self:_start_action_melee(t, input, instant)
+
+	return true
+end
+
 if deathvox:IsTotalCrackdownEnabled() then 
+
+	local melee_vars = {
+		"player_melee",
+		"player_melee_var2"
+	}
+
+	function PlayerStandard:_do_action_melee(t, input, skip_damage, ignore_lunge)
+		self._state_data.meleeing = nil
+		local melee_entry = managers.blackmarket:equipped_melee_weapon()
+		local instant_hit = tweak_data.blackmarket.melee_weapons[melee_entry].instant
+		local pre_calc_hit_ray = tweak_data.blackmarket.melee_weapons[melee_entry].hit_pre_calculation
+		local melee_damage_delay = tweak_data.blackmarket.melee_weapons[melee_entry].melee_damage_delay or 0
+		melee_damage_delay = math.min(melee_damage_delay, tweak_data.blackmarket.melee_weapons[melee_entry].repeat_expire_t)
+		local primary = managers.blackmarket:equipped_primary()
+		local primary_id = primary.weapon_id
+		local bayonet_id = managers.blackmarket:equipped_bayonet(primary_id)
+		local bayonet_melee = false
+
+		if bayonet_id and self._equipped_unit:base():selection_index() == 2 then
+			bayonet_melee = true
+		end
+
+		self._state_data.melee_expire_t = t + tweak_data.blackmarket.melee_weapons[melee_entry].expire_t
+		self._state_data.melee_repeat_expire_t = t + math.min(tweak_data.blackmarket.melee_weapons[melee_entry].repeat_expire_t, tweak_data.blackmarket.melee_weapons[melee_entry].expire_t)
+		
+		local anim_speed = 1
+
+		if not instant_hit and not skip_damage then
+			if self._has_lunge_target and not self._lunge_data then
+				local range = tweak_data.blackmarket.melee_weapons[melee_entry].stats.range or 175
+				local fwd_ray = self._fwd_ray
+				local travel_dis = fwd_ray.distance
+				
+				if travel_dis <= 0 then
+					--nothing
+				else
+					local travel_t = math.lerp(0.01, 0.15, travel_dis / 500)
+					local fwd_ray_unit = fwd_ray.unit
+					local player_pos = mvec3_cpy(self._unit:movement():m_pos())
+					local target_pos = mvec3_cpy(fwd_ray_unit:movement():m_pos())
+
+					mvec3_dir(lunge_vec1, player_pos, target_pos)
+					mvec3_dir(lunge_vec2, self._unit:movement():m_head_pos(), fwd_ray_unit:body("head"):position())
+					
+					self._lunge_data = {
+						travel_t = travel_t,
+						traveled_dis = 0,
+						travel_dir = mvec3_cpy(lunge_vec1),
+						achieved_vel = mvec3_cpy(lunge_vec1),
+						travel_dis = travel_dis,
+						target_unit = fwd_ray_unit,
+						positions = {
+							player_pos = player_pos,
+							target_pos = target_pos
+						},
+						camera_dir = mvec3_cpy(lunge_vec2),
+						instant_hit = nil
+					}
+					managers.player._can_lunge = nil
+					self._state_data.in_air = true
+					
+					anim_speed = melee_damage_delay / travel_t
+					
+					melee_damage_delay = travel_t
+					
+					self._unit:set_driving("script")
+				end
+			end
+		
+			self._state_data.melee_damage_delay_t = t + melee_damage_delay
+
+			if pre_calc_hit_ray then
+				self._state_data.melee_hit_ray = self:_calc_melee_hit_ray(t, 20) or true
+			else
+				self._state_data.melee_hit_ray = nil
+			end
+		elseif not skip_damage and not ignore_lunge then
+			if self._has_lunge_target and not self._lunge_data then
+				local range = tweak_data.blackmarket.melee_weapons[melee_entry].stats.range or 175
+				local fwd_ray = self._fwd_ray
+				local travel_dis = fwd_ray.distance
+				
+				if travel_dis <= 0 then
+					--nothing
+				else
+					local travel_t = math.lerp(0.01, 0.15, travel_dis / 500)
+					local fwd_ray_unit = fwd_ray.unit
+					local player_pos = mvec3_cpy(self._unit:movement():m_pos())
+					local target_pos = mvec3_cpy(fwd_ray_unit:movement():m_pos())
+
+					mvec3_dir(lunge_vec1, player_pos, target_pos)
+					mvec3_dir(lunge_vec2, self._unit:movement():m_head_pos(), fwd_ray_unit:body("head"):position())
+					
+					self._lunge_data = {
+						travel_t = travel_t,
+						traveled_dis = 0,
+						travel_dir = mvec3_cpy(lunge_vec1),
+						achieved_vel = mvec3_cpy(lunge_vec1),
+						travel_dis = travel_dis,
+						target_unit = fwd_ray_unit,
+						positions = {
+							player_pos = player_pos,
+							target_pos = target_pos
+						},
+						camera_dir = mvec3_cpy(lunge_vec2),
+						instant_hit = true
+					}
+					
+					managers.player._can_lunge = nil
+					self._state_data.in_air = true
+					self._unit:set_driving("script")
+					
+					return
+				end
+			end
+		end
+
+		local send_redirect = instant_hit and (bayonet_melee and "melee_bayonet" or "melee") or "melee_item"
+
+		if instant_hit then
+			managers.network:session():send_to_peers_synched("play_distance_interact_redirect", self._unit, send_redirect)
+		else
+			self._ext_network:send("sync_melee_discharge")
+		end
+
+		if self._state_data.melee_charge_shake then
+			self._ext_camera:shaker():stop(self._state_data.melee_charge_shake)
+
+			self._state_data.melee_charge_shake = nil
+		end
+
+		self._melee_attack_var = 0
+
+		if instant_hit then
+			local hit = skip_damage or self:_do_melee_damage(t, bayonet_melee)
+
+			if hit then
+				self._ext_camera:play_redirect(bayonet_melee and self:get_animation("melee_bayonet") or self:get_animation("melee"))
+			else
+				self._ext_camera:play_redirect(bayonet_melee and self:get_animation("melee_miss_bayonet") or self:get_animation("melee_miss"))
+			end
+		else
+			local state = self._ext_camera:play_redirect(self:get_animation("melee_attack"), anim_speed)
+			local anim_attack_vars = tweak_data.blackmarket.melee_weapons[melee_entry].anim_attack_vars
+			self._melee_attack_var = anim_attack_vars and math.random(#anim_attack_vars)
+
+			self:_play_melee_sound(melee_entry, "hit_air", self._melee_attack_var)
+
+			local melee_item_tweak_anim = "attack"
+			local melee_item_prefix = ""
+			local melee_item_suffix = ""
+			local anim_attack_param = anim_attack_vars and anim_attack_vars[self._melee_attack_var]
+
+			if anim_attack_param then
+				self._camera_unit:anim_state_machine():set_parameter(state, anim_attack_param, 1)
+
+				melee_item_prefix = anim_attack_param .. "_"
+			end
+
+			if self._state_data.melee_hit_ray and self._state_data.melee_hit_ray ~= true then
+				self._camera_unit:anim_state_machine():set_parameter(state, "hit", 1)
+
+				melee_item_suffix = "_hit"
+			end
+
+			melee_item_tweak_anim = melee_item_prefix .. melee_item_tweak_anim .. melee_item_suffix
+
+			self._camera_unit:base():play_anim_melee_item(melee_item_tweak_anim)
+		end
+	end
+
 
 	function PlayerStandard:_do_action_throw_projectile(t, input, drop_projectile)
 		local current_state_name = self._camera_unit:anim_state_machine():segment_state(self:get_animation("base"))

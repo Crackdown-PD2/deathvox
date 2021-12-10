@@ -980,6 +980,19 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		self.values.player.bungielungie = {
+			true
+		}
+		self.definitions.player_bungielungie = {
+			name_id = "menu_butterfly_bee_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "bungielungie",
+				category = "player"
+			}
+		}
+		
 		self.values.player.melee_hit_speed_boost = {
 			{4,0.1} -- +10% speed boost, 4s
 		}

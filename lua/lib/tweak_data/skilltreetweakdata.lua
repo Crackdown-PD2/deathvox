@@ -870,7 +870,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			},
 			{
 				upgrades = {
-					"player_melee_hit_speed_boost"
+					"player_bungielungie"
 				},
 				cost = self.costs.hightierpro
 			},

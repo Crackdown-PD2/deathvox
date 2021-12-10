@@ -69,6 +69,7 @@ end
 
 Hooks:PostHook(PlayerManager,"init","tcd_playermanager_init",function(self)
 	self._damage_overshield = {}
+	self._can_lunge = true
 end)
 
 if deathvox:IsTotalCrackdownEnabled() then
@@ -1844,6 +1845,11 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 		end
 	end
 	
+	if variant == "melee" then
+		 self._next_lunge_t = nil
+		 self._can_lunge = true
+	end
+	
 	local dist_sq = mvector3.distance_sq(player_unit:movement():m_pos(), killed_unit:movement():m_pos())
 	
 	if self:has_category_upgrade("player", "sociopath_mode") then
@@ -2109,10 +2115,24 @@ function PlayerManager:update(t, dt)
 
 		self:need_send_player_status()
 	end
-
+	
 	self._sent_player_status_this_frame = nil
 	
 	local player_unit = self:player_unit()
+	
+	if not self._can_lunge then
+		if not self._next_lunge_t then
+			self._next_lunge_t = 5
+		else
+			self._next_lunge_t = self._next_lunge_t - dt
+			
+			if self._next_lunge_t <= 0 then
+				self._can_lunge = true
+			end
+		end
+	end
+		
+	
 	
 	if player_unit then
 		if self:has_category_upgrade("player", "close_to_hostage_boost") and (not self._hostage_close_to_local_t or self._hostage_close_to_local_t <= t) then
