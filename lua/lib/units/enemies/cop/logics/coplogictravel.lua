@@ -159,6 +159,10 @@ function CopLogicTravel.enter(data, new_logic_name, enter_params)
 			my_data.weapon_range.optimal = my_data.weapon_range.optimal * 1.5
 		end
 	end
+	
+	if not data.team then
+		data.unit:movement():set_team(managers.groupai:state()._teams["law1"]) --yuck.
+	end
 
 	my_data.path_safely = not data.cool and data.objective and data.objective.grp_objective and data.objective.grp_objective.type == "recon_area"
 	my_data.path_ahead = data.cool or objective.path_ahead or data.is_converted or data.unit:in_slot(16) or data.team.id == tweak_data.levels:get_default_team_ID("player")
