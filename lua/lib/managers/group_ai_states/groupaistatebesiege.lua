@@ -1,4 +1,4 @@
-	local mvec3_set = mvector3.set
+local mvec3_set = mvector3.set
 local mvec3_set_z = mvector3.set_z
 local mvec3_set_zero = mvector3.set_zero
 local mvec3_step = mvector3.step
@@ -581,7 +581,6 @@ function GroupAIStateBesiege:_begin_new_tasks()
 		recon_candidates = nil
 	end
 end
-
 
 function GroupAIStateBesiege:update(t, dt)
 	GroupAIStateBesiege.super.update(self, t, dt)

@@ -411,7 +411,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 									unit = hit.unit,
 									damage = damage,
 									attacker_unit = player,
-									pos = mvec3_copy(from),
+									pos = mvec3_copy(to),
 									attack_dir = mvec3_copy(dir)
 								}
 							end

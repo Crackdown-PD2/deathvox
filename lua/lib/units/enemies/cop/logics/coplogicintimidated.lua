@@ -292,6 +292,8 @@ function CopLogicIntimidated.on_intimidated(data, amount, aggressor_unit)
 	if my_data.tied then
 		return
 	end
+	
+	managers.groupai:state():on_enemy_logic_intimidated(data.key)
 
 	local sur_break_time = data.char_tweak.surrender_break_time
 

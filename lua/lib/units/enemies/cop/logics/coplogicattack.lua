@@ -2731,6 +2731,7 @@ function MedicLogicAttack._chk_wants_to_take_cover(data, my_data)
 				local dis = mvec3_dis_sq(data.m_pos, follow_unit_pos)
 
 				if dis < 160000 then
+					my_data.go_for_team_t = nil
 					CopLogicAttack._cancel_charge(data, my_data)
 					return
 				end
@@ -2740,7 +2741,15 @@ function MedicLogicAttack._chk_wants_to_take_cover(data, my_data)
 		return
 	end
 	
-	return true
+	if not my_data.go_for_team_t then
+		my_data.go_for_team_t = data.t + 2
+	end
+	
+	if my_data.go_for_team_t > data.t then
+		return true
+	else
+		return
+	end
 end
 
 function MedicLogicAttack._update_cover(data)
