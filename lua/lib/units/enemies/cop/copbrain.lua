@@ -665,7 +665,6 @@ function CopBrain:on_nav_link_unregistered(element_id)
 	end
 end
 
-local clbk_pathing_results_original = CopBrain.clbk_pathing_results
 function CopBrain:clbk_pathing_results(search_id, path)
 	local dead_nav_links = self._nav_links_to_check
 
@@ -701,7 +700,7 @@ function CopBrain:clbk_pathing_results(search_id, path)
 		self._nav_links_to_check = dead_nav_links
 	end
 
-	clbk_pathing_results_original(self, search_id, path)
+	self:_add_pathing_result(search_id, path)
 end
 
 function CopBrain:abort_detailed_pathing(search_id)

@@ -812,6 +812,7 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 			mvec3_set(tmp_vec1, attention_info.m_head_pos)
 			mvec3_sub(tmp_vec1, my_pos)
 			
+			--importance weight is defined by distance + modifiers and then multiplied by player-facing direction 
 			local dis_weight = mvec3_len_sq(tmp_vec1)
 			mvec3_norm(tmp_vec1)
 
@@ -822,22 +823,22 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 			else
 				e_fwd = attention_info.unit:movement():m_head_rot():y()
 			end
+			
+			if data.unit:base():has_tag("special") then --special enemy, generally higher priority than commons
+				dis_weight = dis_weight * 0.9
+			end
+			
+			if data.internal_data.processing_cover_path then --needs cover, desperately most likely
+				dis_weight = dis_weight * 0.5
+			elseif next(data.active_searches) then --has active pathing searches, needs a fast update asap
+				dis_weight = dis_weight * 0.75
+			elseif data.internal_data.want_to_take_cover and data.internal_data.in_cover then --is going to stay still for a few updates, lower priority
+				dis_weight = dis_weight * 1.25
+			end
 
 			local dot = mvec3_dot(e_fwd, tmp_vec1)
 			local weight_mul = 1 + dot
 			local weight = dis_weight * weight_mul
-			
-			if data.unit:base():has_tag("special") then
-				weight = weight * 0.9
-			end
-			
-			if data.internal_data.processing_cover_path then
-				weight = weight * 0.5
-			elseif next(data.active_searches) then
-				weight = weight * 0.75
-			elseif data.internal_data.want_to_take_cover and data.internal_data.in_cover then
-				weight = weight * 1.25
-			end
 
 			table_insert(player_importance_wgt, u_key)
 			table_insert(player_importance_wgt, weight)
@@ -849,7 +850,9 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 		attention_info.visible_ray = nil
 	end
 
-	managers.groupai:state():set_importance_weight(data.key, player_importance_wgt)
+	if groupai_state_manager._police[data.key] then
+		managers.groupai:state():set_importance_weight(data.key, player_importance_wgt)
+	end
 
 	return delay
 end
