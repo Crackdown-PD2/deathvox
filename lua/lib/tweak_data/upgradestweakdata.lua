@@ -1540,6 +1540,17 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		self.values.subclass_quiet.subclass_stability_addend = { 5 }
 		
+		self.values.weapon.homing_bolts = {true}
+		self.definitions.weapon_homing_bolts = {
+			name_id = "menu_good_hunting",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "homing_bolts",
+				category = "weapon"
+			}
+		}
+		
 		self.values.weapon.xbow_headshot_instant_reload = {true}
 		self.definitions.weapon_crossbow_headshot_instant_reload = {
 			name_id = "menu_good_hunting",

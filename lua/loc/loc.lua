@@ -47,8 +47,6 @@ end)
 Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 	if deathvox then
 		if deathvox:IsTotalCrackdownEnabled() then
-		
-		
 			local weapon_class_icon_data = {
 				heavy = {
 					character = "─",
@@ -100,8 +98,6 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				}
 			}
 
-
-
 			--bit of extra overhead here for tcd icons
 			LocalizationManager._orig_text = LocalizationManager.text
 			function LocalizationManager:text(...)
@@ -120,6 +116,8 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 --apparently keybind macros aren't active in the throwables descriptions, but also controllermanager isn't initialized in time for this
 			
 			local cursed_error = "oopsie whoopsie!\nuwu\nwe made a fucky wucky!!1 a wittle fucko boingo! the code monkies at our headquarters are working VEWY HAWD to fix this!" --preliminary research suggests that using this as an localization error string will make users 4206.9% more likely to report normally insignificant minor localization errors. i apologize for nothing. -offy
+			--i did not spot this earlier and i can say with 100% certainty that you have nothing to apologize for, offy <3
+			
 			
 			loc:add_localized_strings({
 				cursed_error = cursed_error,
@@ -372,7 +370,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_killers_notebook = "Killer's Notebook",
 				menu_killers_notebook_desc = "BASIC: ##$basic##\n$ICN_QUT Quiet Weapons ADS ##90%## faster.\n\nACE: ##$pro##\n$ICN_QUT Quiet Weapons gain ##+20## Stability.",
 				menu_good_hunting = "Good Hunting",
-				menu_good_hunting_desc = "BASIC: ##$basic##\nBows have all of their Arrows readied instead of in reserve.\n\nACE: ##$pro##\nCrossbows instantly Reload themselves after a Headshot.",
+				menu_good_hunting_desc = "BASIC: ##$basic##\nArrows and Bolts will now curve towards enemies, angling to strike them in the head.\n\nACE: ##$pro##\nCrossbows instantly Reload themselves after a Headshot, and Bows have all of their Arrows readied instead of in reserve.",
 				menu_comfortable_silence = "Comfortable Silence",
 				menu_comfortable_silence_desc = "BASIC: ##$basic##\n$ICN_QUT Quiet Weapons gain ##+2## Concealment.\n\nACE: ##$pro##\n$ICN_QUT Quiet Weapons gain ##+4## Concealment.",
 				menu_toxic_shock = "Toxic Shock",
