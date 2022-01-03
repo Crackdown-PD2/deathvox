@@ -887,6 +887,29 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		self.values.class_heavy.lead_farmer_neo = {{0.2, 2}} --Percentage of ammo reloaded, time between ticks
+		self.values.class_heavy.lead_farmer_bipod_reload = {true}
+		
+		self.definitions.class_heavy_lead_farmer_neo_basic = {
+			name_id = "menu_lead_farmer_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "lead_farmer_neo",
+				category = "class_heavy"
+			}
+		}
+		self.definitions.class_heavy_lead_farmer_neo_aced = {
+			name_id = "menu_lead_farmer_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "lead_farmer_bipod_reload",
+				category = "class_heavy"
+			}
+		}
+		
+		--OLD REMOVE LATER
 		self.values.class_heavy.lead_farmer = {
 			{0.01,0.5}, --1% per kill, 50% max
 			{0.02,1} --2% per kill, 100% max
@@ -953,6 +976,19 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "can_melee_and_sprint",
+				category = "player"
+			}
+		}
+		
+		self.values.player.bungielungie = {
+			true
+		}
+		self.definitions.player_bungielungie = {
+			name_id = "menu_butterfly_bee_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "bungielungie",
 				category = "player"
 			}
 		}
@@ -1503,6 +1539,17 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		self.values.subclass_quiet.subclass_stability_addend = { 5 }
+		
+		self.values.weapon.homing_bolts = {true}
+		self.definitions.weapon_homing_bolts = {
+			name_id = "menu_good_hunting",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "homing_bolts",
+				category = "weapon"
+			}
+		}
 		
 		self.values.weapon.xbow_headshot_instant_reload = {true}
 		self.definitions.weapon_crossbow_headshot_instant_reload = {

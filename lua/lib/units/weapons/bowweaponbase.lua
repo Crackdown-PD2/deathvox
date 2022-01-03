@@ -3,6 +3,7 @@ function BowWeaponBase:init(unit)
 
 	self._client_authoritative = true
 	self._no_reload = managers.player:has_category_upgrade("weapon","bow_instant_ready")
+	self._homing_arrows = managers.player:has_category_upgrade("weapon","homing_bolts")
 	self._steelsight_speed = 0.5
 end
 
@@ -11,6 +12,7 @@ function CrossbowWeaponBase:init(unit)
 
 	self._client_authoritative = true
 	self._should_reload_immediately = true
+	self._homing_arrows = managers.player:has_category_upgrade("weapon","homing_bolts")
 	if managers.player:has_category_upgrade("weapon","xbow_headshot_instant_reload") then 
 		self._should_reload_immediately = false
 	end

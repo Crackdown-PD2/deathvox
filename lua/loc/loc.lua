@@ -47,8 +47,6 @@ end)
 Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 	if deathvox then
 		if deathvox:IsTotalCrackdownEnabled() then
-		
-		
 			local weapon_class_icon_data = {
 				heavy = {
 					character = "─",
@@ -100,8 +98,6 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				}
 			}
 
-
-
 			--bit of extra overhead here for tcd icons
 			LocalizationManager._orig_text = LocalizationManager.text
 			function LocalizationManager:text(...)
@@ -120,6 +116,8 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 --apparently keybind macros aren't active in the throwables descriptions, but also controllermanager isn't initialized in time for this
 			
 			local cursed_error = "oopsie whoopsie!\nuwu\nwe made a fucky wucky!!1 a wittle fucko boingo! the code monkies at our headquarters are working VEWY HAWD to fix this!" --preliminary research suggests that using this as an localization error string will make users 4206.9% more likely to report normally insignificant minor localization errors. i apologize for nothing. -offy
+			--i did not spot this earlier and i can say with 100% certainty that you have nothing to apologize for, offy <3
+			
 			
 			loc:add_localized_strings({
 				cursed_error = cursed_error,
@@ -304,7 +302,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_bulletstorm = "Bulletstorm",
 				menu_bulletstorm_desc = "BASIC: ##$basic##\nAmmo Bags placed by you grant players the ability to shoot without depleting their ammunition for up to ##5## seconds after interacting with it.\nThe more ammo players replenish, the longer the duration of the effect.\n\nACE: ##$pro##\nIncreases the base duration of the effect by up to ##15## seconds.",
 				menu_lead_farmer = "Lead Farmer",
-				menu_lead_farmer_desc = "BASIC: ##$basic##\n$ICN_HVY Heavy Weapons gain ##+1%## Reload Speed per kill on their next Reload, up to ##50%##.\n\nACE: ##$pro##\nIncreases the amount of Reload Speed per kill to ##2%## and the maximum amount of Reload Speed to ##100%##.",
+				menu_lead_farmer_desc = "BASIC: ##$basic##\n$ICN_HVY Heavy Weapons load ##20%## of their Magazine every ##2## seconds while stowed.\n\nACE: ##$pro##\n$ICN_HVY Heavy Weapons with a deployed Bipod load ##20%## of their Magazine every ##2## seconds.",
 				menu_armory_regular = "Armory Regular",
 				menu_armory_regular_desc = "BASIC: ##$basic##\nIncreases your Ammo Bag supply to ##2##.\n\nACE: ##$pro##\nIncreases your Ammo Bag supply to ##3##.",
 				menu_war_machine = "War Machine",
@@ -314,7 +312,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_hustle = "Hustle",
 				menu_hustle_desc = "BASIC: ##$basic##\nYou can Sprint in any direction.\n\nACE: ##$pro##\nYour Stamina starts regenerating ##25%## earlier and ##+25%## faster.",
 				menu_butterfly_bee = "Float Like A Butterfly",
-				menu_butterfly_bee_desc = "BASIC: ##$basic##\n$ICN_MEL Melee Weapons can be swung and charged while Sprinting.\n\nACE: ##$pro##\n$ICN_MEL Melee Weapon damage increases your Movement Speed by ##+10%## for ##4## seconds.",
+				menu_butterfly_bee_desc = "BASIC: ##$basic##\n$ICN_MEL Melee Weapons can be swung and charged while Sprinting.\n\nACE: ##$pro##\nSwinging your $ICN_MEL Melee Weapon when aiming at an enemy within ##5## meters causes you to lunge forward into striking range.\n\nThis ability has a ##5## second cooldown, but killing an enemy with a $ICN_MEL Melee Weapon refreshes the cooldown instantly.",
 				menu_heave_ho = "Heave-Ho",
 				menu_heave_ho_desc = "BASIC: ##$basic##\nYou throw Bags ##50%## farther.\n\nACE: ##$pro##\nYour Movement Speed Penalty for carrying a Bag is reduced by ##20%##, and you can ##Sprint while carrying a Bag##.",
 				menu_mobile_offense = "Mobile Offense",
@@ -372,7 +370,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_killers_notebook = "Killer's Notebook",
 				menu_killers_notebook_desc = "BASIC: ##$basic##\n$ICN_QUT Quiet Weapons ADS ##90%## faster.\n\nACE: ##$pro##\n$ICN_QUT Quiet Weapons gain ##+20## Stability.",
 				menu_good_hunting = "Good Hunting",
-				menu_good_hunting_desc = "BASIC: ##$basic##\nBows have all of their Arrows readied instead of in reserve.\n\nACE: ##$pro##\nCrossbows instantly Reload themselves after a Headshot.",
+				menu_good_hunting_desc = "BASIC: ##$basic##\nArrows and Bolts will now curve towards enemies, angling to strike them in the head.\n\nACE: ##$pro##\nCrossbows instantly Reload themselves after a Headshot, and Bows have all of their Arrows readied instead of in reserve.",
 				menu_comfortable_silence = "Comfortable Silence",
 				menu_comfortable_silence_desc = "BASIC: ##$basic##\n$ICN_QUT Quiet Weapons gain ##+2## Concealment.\n\nACE: ##$pro##\n$ICN_QUT Quiet Weapons gain ##+4## Concealment.",
 				menu_toxic_shock = "Toxic Shock",

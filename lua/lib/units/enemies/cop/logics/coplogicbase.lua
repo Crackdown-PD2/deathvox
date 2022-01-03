@@ -15,6 +15,7 @@ local mvec3_cross = mvector3.cross
 local mvec3_rand_ortho = mvector3.random_orthogonal
 local mvec3_negate = mvector3.negate
 local mvec3_len = mvector3.length
+local mvec3_len_sq = mvector3.length_sq
 local mvec3_cpy = mvector3.copy
 local mvec3_set_stat = mvector3.set_static
 local mvec3_set_length = mvector3.set_length
@@ -335,7 +336,15 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 	local vis_mask = data.visibility_slotmask
 	local is_cool = data.cool
 	local within_any_acquire_range = nil
-	local player_importance_wgt = data.unit:in_slot(managers.slot:get_mask("enemies")) and {}
+	local player_importance_wgt = nil
+	
+	if not data.brain_updating then
+		if data.internal_data and not data.internal_data.is_hostage then
+			if data.unit:in_slot(managers.slot:get_mask("enemies")) then
+				player_importance_wgt = {}
+			end
+		end
+	end
 
 	local groupai_state_manager = managers.groupai:state()
 	local is_stealth = use_metal_gear_detection and groupai_state_manager:whisper_mode()
@@ -431,33 +440,6 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 									visible_ray = vis_ray
 								}
 								detected_obj[u_key] = CopLogicBase._create_detected_attention_object_data(data.t, data.unit, u_key, attention_info, settings, nil, visible_data)
-							end
-						end
-
-						if not acquired and player_importance_wgt then
-							local is_human_player, is_local_player, is_husk_player = nil
-
-							if attention_info.unit:base() then
-								is_local_player = attention_info.unit:base().is_local_player
-								is_husk_player = attention_info.unit:base().is_husk_player
-								is_human_player = is_local_player or is_husk_player
-							end
-
-							if is_human_player then
-								local weight = mvec3_dir(tmp_vec1, attention_pos, my_pos)
-								local e_fwd = nil
-
-								if is_husk_player then
-									e_fwd = attention_info.unit:movement():detect_look_dir()
-								else
-									e_fwd = attention_info.unit:movement():m_head_rot():y()
-								end
-
-								local dot = mvec3_dot(e_fwd, tmp_vec1)
-								weight = weight * weight * (1 - dot)
-
-								table_insert(player_importance_wgt, u_key)
-								table_insert(player_importance_wgt, weight)
 							end
 						end
 					end
@@ -827,7 +809,13 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 		end
 
 		if player_importance_wgt and attention_info.is_human_player then
-			local weight = mvec3_dir(tmp_vec1, attention_info.m_head_pos, my_pos)
+			mvec3_set(tmp_vec1, attention_info.m_head_pos)
+			mvec3_sub(tmp_vec1, my_pos)
+			
+			--importance weight is defined by distance + modifiers and then multiplied by player-facing direction 
+			local dis_weight = mvec3_len_sq(tmp_vec1)
+			mvec3_norm(tmp_vec1)
+
 			local e_fwd = nil
 
 			if attention_info.is_husk_player then
@@ -835,11 +823,24 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 			else
 				e_fwd = attention_info.unit:movement():m_head_rot():y()
 			end
+			
+			if data.unit:base():has_tag("special") then --special enemy, generally higher priority than commons
+				dis_weight = dis_weight * 0.9
+			end
+			
+			if data.internal_data.processing_cover_path then --needs cover, desperately most likely
+				dis_weight = dis_weight * 0.5
+			elseif next(data.active_searches) then --has active pathing searches, needs a fast update asap
+				dis_weight = dis_weight * 0.75
+			elseif data.internal_data.want_to_take_cover and data.internal_data.in_cover then --is going to stay still for a few updates, lower priority
+				dis_weight = dis_weight * 1.25
+			end
 
 			local dot = mvec3_dot(e_fwd, tmp_vec1)
-			weight = weight * weight * (1 - dot)
+			local weight_mul = 1 + dot
+			local weight = dis_weight * weight_mul
 
-			table_insert(player_importance_wgt, attention_info.u_key)
+			table_insert(player_importance_wgt, u_key)
 			table_insert(player_importance_wgt, weight)
 		end
 
@@ -849,7 +850,7 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 		attention_info.visible_ray = nil
 	end
 
-	if player_importance_wgt then
+	if groupai_state_manager._police[data.key] then
 		managers.groupai:state():set_importance_weight(data.key, player_importance_wgt)
 	end
 

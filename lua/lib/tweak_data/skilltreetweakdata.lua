@@ -774,17 +774,18 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				6,
 				2
 			}
-		})		
-		replace_skill(tree_indices.heavy,4,{ --Lead Farmer
+		})	
+		--Lead Farmer, neo indicates revision as asked by Kith, old version is still stored in upgradestweakdata and checked in multiple files. Clean up later.
+		replace_skill(tree_indices.heavy,4,{ 
 			{
 				upgrades = {
-					"class_heavy_lead_farmer_basic"
+					"class_heavy_lead_farmer_neo_basic"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"class_heavy_lead_farmer_aced"
+					"class_heavy_lead_farmer_neo_aced"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -869,7 +870,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			},
 			{
 				upgrades = {
-					"player_melee_hit_speed_boost"
+					"player_bungielungie"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -1361,13 +1362,14 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.assassin,2,{ --Good Hunting
 			{
 				upgrades = {
-					"weapon_bow_instant_ready"
+					"weapon_homing_bolts"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"weapon_crossbow_headshot_instant_reload"
+					"weapon_crossbow_headshot_instant_reload",
+					"weapon_bow_instant_ready"
 				},
 				cost = self.costs.hightierpro
 			},

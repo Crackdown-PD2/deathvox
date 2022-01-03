@@ -69,6 +69,7 @@ end
 
 Hooks:PostHook(PlayerManager,"init","tcd_playermanager_init",function(self)
 	self._damage_overshield = {}
+	self._can_lunge = true
 end)
 
 if deathvox:IsTotalCrackdownEnabled() then
@@ -410,7 +411,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 									unit = hit.unit,
 									damage = damage,
 									attacker_unit = player,
-									pos = mvec3_copy(from),
+									pos = mvec3_copy(to),
 									attack_dir = mvec3_copy(dir)
 								}
 							end
@@ -1844,6 +1845,11 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 		end
 	end
 	
+	if variant == "melee" then
+		 self._next_lunge_t = nil
+		 self._can_lunge = true
+	end
+	
 	local dist_sq = mvector3.distance_sq(player_unit:movement():m_pos(), killed_unit:movement():m_pos())
 	
 	if self:has_category_upgrade("player", "sociopath_mode") then
@@ -2109,10 +2115,24 @@ function PlayerManager:update(t, dt)
 
 		self:need_send_player_status()
 	end
-
+	
 	self._sent_player_status_this_frame = nil
 	
 	local player_unit = self:player_unit()
+	
+	if not self._can_lunge then
+		if not self._next_lunge_t then
+			self._next_lunge_t = 5
+		else
+			self._next_lunge_t = self._next_lunge_t - dt
+			
+			if self._next_lunge_t <= 0 then
+				self._can_lunge = true
+			end
+		end
+	end
+		
+	
 	
 	if player_unit then
 		if self:has_category_upgrade("player", "close_to_hostage_boost") and (not self._hostage_close_to_local_t or self._hostage_close_to_local_t <= t) then
@@ -2123,6 +2143,61 @@ function PlayerManager:update(t, dt)
 		local current_state = self:get_current_state()
 		
 		if current_state then
+			if self:has_category_upgrade("class_heavy", "lead_farmer_neo") then		
+				local lead_farmer_data = self:upgrade_value("class_heavy", "lead_farmer_neo", {0.2, 2})
+				self._next_lead_farmer_t = not self._next_lead_farmer_t and lead_farmer_data[2] or self._next_lead_farmer_t - dt
+				
+				if self._next_lead_farmer_t <= 0 then
+					self._next_lead_farmer_t = lead_farmer_data[2]
+					
+					if player_unit:inventory() then
+						local was_ammo_updated = nil
+						local can_reload_from_bipod = self:current_state() == "bipod" and self:has_category_upgrade("class_heavy", "lead_farmer_bipod_reload")
+						
+						local inventory_available_selections = player_unit:inventory():available_selections()
+						local number_of_available_selections = table.size(inventory_available_selections)
+						local current_equipped_selection = player_unit:inventory()._equipped_selection
+						
+						for i = 1, number_of_available_selections do
+							if i ~= current_equipped_selection or can_reload_from_bipod then
+								local weapon_unit = inventory_available_selections[i].unit
+								
+								if alive(weapon_unit) then
+									local weapon_unit_base = weapon_unit:base()
+									local weapon_tweak_data = weapon_unit_base:weapon_tweak_data()
+									local primary_category = weapon_tweak_data.primary_class
+									
+									if primary_category and primary_category == "class_heavy" then
+										local ammo_total = weapon_unit_base:get_ammo_total()
+										local ammo_in_clip = weapon_unit_base:get_ammo_remaining_in_clip()
+										
+										if ammo_total > ammo_in_clip then
+											local ammo_max_per_clip = weapon_unit_base:get_ammo_max_per_clip()
+
+											if ammo_in_clip < ammo_max_per_clip then
+												local to_add = math.floor(ammo_max_per_clip * lead_farmer_data[1])
+												local new_amount = math.min(math.min(ammo_max_per_clip, ammo_in_clip + to_add), ammo_total)
+												
+												weapon_unit_base:set_ammo_remaining_in_clip(new_amount)
+												
+												was_ammo_updated = true
+											end
+										end
+									end
+								end
+							end
+						end
+
+						if was_ammo_updated then
+							for id, weapon in pairs(inventory_available_selections) do
+								local weapon_unit_base = weapon.unit:base()
+								managers.hud:set_ammo_amount(id, weapon_unit_base:ammo_info())
+							end
+						end
+					end
+				end
+			end
+
 			if current_state.in_melee and current_state:in_melee() then
 				if self:has_category_upgrade("player", "yakuza_frenzy_dr") then
 					local damage_ext = player_unit:character_damage()
