@@ -4,6 +4,8 @@
 	<pre script_path="Corepre.lua" :hook_id="entry"/>
 	<post script_path="Core.lua" :hook_id="entry"/>
 
+	<post script_path="lua/lib/managers/usermanager.lua" :hook_id="managers/usermanager"/>
+
 	<post script_path="lua/loc/loc.lua" :hook_id="managers/localizationmanager"/>
 	
 	<post script_path="lua/lib/managers/playermanager.lua" :hook_id="managers/playermanager"/>
