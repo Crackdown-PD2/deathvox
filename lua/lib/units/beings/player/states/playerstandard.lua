@@ -13,6 +13,10 @@ local tmp_ground_to_vec = Vector3()
 local up_offset_vec = math.UP * 30
 local down_offset_vec = math.UP * -40
 
+Hooks:PostHook(PlayerStandard, "_calculate_standard_variables", "CD_calculate_standard_variables", function(self, t, dt)
+	self._setting_hold_to_fire = managers.user:get_setting("holdtofire")
+end)
+
 function PlayerStandard:_update_ground_ray()
 	if self._lunge_data then
 		self._gnd_ray = nil
@@ -1929,10 +1933,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 							end
 
 							self._equipped_unit:base():tweak_data_anim_stop("fire")
-						elseif fire_mode == "single" then
-							if input.btn_primary_attack_press or self._equipped_unit:base().should_reload_immediately and self._equipped_unit:base():should_reload_immediately() then
-								self:_start_action_reload_enter(t)
-							end
 						else
 							new_action = true
 
@@ -1944,6 +1944,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 						if not self._shooting then
 							if weap_base:start_shooting_allowed() then
 								local start = fire_mode == "single" and input.btn_primary_attack_press
+								start = start or self._setting_hold_to_fire and input.btn_primary_attack_state
 								start = start or fire_mode ~= "single" and input.btn_primary_attack_state
 								start = start and not fire_on_release
 								start = start or fire_on_release and input.btn_primary_attack_release
@@ -1996,7 +1997,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 						local fired = nil
 
 						if fire_mode == "single" then
-							if input.btn_primary_attack_press and start_shooting then
+							if (input.btn_primary_attack_press or input.btn_primary_attack_state) and start_shooting then
 								fired = weap_base:trigger_pressed(self:get_fire_weapon_position(), self:get_fire_weapon_direction(), dmg_mul, nil, spread_mul, autohit_mul, suppression_mul)
 							elseif fire_on_release then
 								if input.btn_primary_attack_release then

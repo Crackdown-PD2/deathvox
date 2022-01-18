@@ -23,7 +23,12 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Localization", function(loc)
 		["hud_assault_zombie_assault"] = "I SEE YOU",
 		["hud_assault_zombie_cover"] = "NO ESCAPE NO ESCAPE NO ESCAPE",
 		["hud_assault_gsg9_assault"] = "POLIZEIVORSTOẞ IM GANGE",
-		["hud_assault_gsg9_cover"]	= "IN DECKUNG BLEIBEN"
+		["hud_assault_gsg9_cover"]	= "IN DECKUNG BLEIBEN",
+		
+		["cdmenu_staticrecoil"] = "Static Recoil",
+		["cdmenu_staticrecoil_help"] = "Disables the automatic recoil compensation, making you have to manually pull down on the mouse to adjust your aim after you stop firing.",
+		["cdmenu_holdtofire"] = "HOLD TO FIRE SINGLE-FIRE WEAPONS",
+		["cdmenu_holdtofire_help"] = "Allows players to fire single-fire weapons at their maximum firerate by Fire button.",
 	})
 	
 	local group_type = tweak_data.levels:get_ai_group_type()
