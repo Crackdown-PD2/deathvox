@@ -1489,6 +1489,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 					}
 					managers.player._can_lunge = nil
 					self._state_data.in_air = true
+					self._state_data.enter_air_pos_z = player_pos.z
 					
 					anim_speed = melee_damage_delay / travel_t
 					
@@ -1539,6 +1540,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 					
 					managers.player._can_lunge = nil
 					self._state_data.in_air = true
+					self._state_data.enter_air_pos_z = player_pos.z
 					self._unit:set_driving("script")
 					
 					return
