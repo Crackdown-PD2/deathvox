@@ -148,18 +148,6 @@ function CopLogicTravel.enter(data, new_logic_name, enter_params)
 	my_data.attitude = objective.attitude or "avoid"
 	my_data.weapon_range = clone_g(data.char_tweak.weapon[data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage].range)
 	
-	if data.tactics then
-		if data.tactics.ranged_fire or data.tactics.elite_ranged_fire then
-			
-			if my_data.weapon_range.aggressive then
-				my_data.weapon_range.aggressive = my_data.weapon_range.aggressive * 1.5
-			end
-			
-			my_data.weapon_range.close = my_data.weapon_range.close * 2
-			my_data.weapon_range.optimal = my_data.weapon_range.optimal * 1.5
-		end
-	end
-	
 	if not data.team then
 		data.unit:movement():set_team(managers.groupai:state()._teams["law1"]) --yuck.
 	end
@@ -2033,8 +2021,12 @@ end
 function CopLogicTravel.chk_group_ready_to_move(data, my_data)
 	local my_objective = data.objective
 	
+	if my_objective.type ~= "defend_area" then
+		return true
+	end
+	
 	if not my_objective.area then
-		return
+		return true
 	end
 	
 	if not my_objective.grp_objective then
@@ -2042,10 +2034,6 @@ function CopLogicTravel.chk_group_ready_to_move(data, my_data)
 	end
 
 	local my_dis = mvec3_dis(my_objective.area.pos, data.m_pos)
-
-	if my_dis > 1200 then
-		return true
-	end
 
 	my_dis = my_dis * 1.2
 
@@ -2057,7 +2045,7 @@ function CopLogicTravel.chk_group_ready_to_move(data, my_data)
 				local teammate_dis_to_obj = mvec3_dis(teammate_obj.area.pos, u_data.m_pos)
 
 				if my_dis < teammate_dis_to_obj then
-					return false
+					return
 				end
 			end
 		end
@@ -2566,6 +2554,10 @@ function CopLogicTravel._on_revive_destination_reached_by_warp(data, my_data, wa
 end
 
 function CopLogicTravel._chk_start_pathing_to_next_nav_point(data, my_data)
+	if not CopLogicTravel.chk_group_ready_to_move(data, my_data) then
+		return
+	end
+
 	local my_pos = data.unit:movement():nav_tracker():field_position()
 	local to_pos = CopLogicTravel._get_exact_move_pos(data, my_data.coarse_path_index + 1)
 	local unobstructed_line = nil

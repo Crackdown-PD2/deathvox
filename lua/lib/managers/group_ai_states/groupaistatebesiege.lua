@@ -2164,7 +2164,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		else
 			objective_area = obstructed_area
 			
-			if not group.in_place_t or group.in_place_t and self._t - group.in_place_t > 2 then --if we're in the destination and we have stayed still for longer than 2 seconds, if anyone is camping in a specific spot, try to path to them
+			if group.in_place_t and self._t - group.in_place_t > 20 then
 				push = true
 			elseif not current_objective.open_fire or not current_objective.area or current_objective.area.id ~= obstructed_area.id then --have to check for this here or open_fire might not get set
 				open_fire = true
@@ -2227,14 +2227,12 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			end
 		elseif phase_is_anticipation and current_objective.open_fire then --if we were aggressive one update ago, start backing up away from the current objective area
 			pull_back = true
-		elseif not phase_is_anticipation and group.in_place_t and self._t - group.in_place_t > 10 or not self._street and phase_is_sustain then
-			push = true --various checks for sustain, plus one to make sure that if we're a ranged fire team who refused to push due to street, we will eventually push anyways
 		elseif has_criminals_close then
 			if phase_is_anticipation then --stop early in our coarse path if theres criminals ahead
 				pull_back = true
 				objective_area = area_to_chk
 			elseif self._street then --street behavior, stay in place a bit before pushes 
-				if not group.in_place_t or group.in_place_t and self._t - group.in_place_t > 4 then 
+				if not group.in_place_t or group.in_place_t and self._t - group.in_place_t > 30 then 
 					if not tactics_map or not tactics_map.ranged_fire and not tactics_map.elite_ranged_fire then
 						objective_area = has_criminals_close
 						push = true
@@ -2247,7 +2245,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 					objective_area = area_to_chk
 				end
 			else
-				if not tactics_map or not tactics_map.ranged_fire and not tactics_map.elite_ranged_fire or #has_criminals_close.police.units < 8 or group.in_place_t and self._t - group.in_place_t > 5 then
+				if not tactics_map or not tactics_map.ranged_fire and not tactics_map.elite_ranged_fire or #has_criminals_close.police.units < 8 or group.in_place_t and self._t - group.in_place_t > 30 then
 					--all these checks are here to ensure a well-maintained input of cops once units approach these areas, prevents occasional stand-stills from happening
 					objective_area = has_criminals_close
 					push = true
@@ -2265,6 +2263,16 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 	
 	if not objective_area then
 		return
+	end
+	
+	local charge = nil
+	
+	if push then
+		if tactics_map and tactics_map.charge then
+			charge = group.in_place_t and self._t - group.in_place_t > 10 or self._drama_data.amount < 0.1
+		else
+			charge = self._drama_data.amount < 0.1
+		end
 	end
 	
 	if not current_objective.area then
@@ -2419,7 +2427,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 				moving_in = push,
 				open_fire = push,
 				pushed = push,
-				charge = push,
+				charge = charge,
 				interrupt_dis = nil
 			}
 			group.is_chasing = nil

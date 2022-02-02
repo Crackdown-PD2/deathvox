@@ -7,7 +7,6 @@ local mvec3_mul = mvector3.multiply
 local mvec3_norm = mvector3.normalize
 local mvec3_cpy = mvector3.copy
 local mvec3_dir = mvector3.direction	
-
 local tmp_ground_from_vec = Vector3()
 local tmp_ground_to_vec = Vector3()
 local up_offset_vec = math.UP * 30
@@ -23,19 +22,29 @@ function PlayerStandard:_update_ground_ray()
 		
 		return
 	end
+	
+	local vel_z = 1
 
-	local hips_pos = tmp_ground_from_vec
-	local down_pos = tmp_ground_to_vec
-
-	mvec3_set(hips_pos, self._pos)
-	mvec3_add(hips_pos, up_offset_vec)
-	mvec3_set(down_pos, hips_pos)
-	mvec3_add(down_pos, down_offset_vec)
-
-	if self._unit:movement():ladder_unit() then
-		self._gnd_ray = self._unit:raycast("ray", hips_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "ignore_unit", self._unit:movement():ladder_unit(), "ray_type", "body mover", "sphere_cast_radius", 29, "bundle", 9, "report")
+	if self._unit:mover() then
+		vel_z = math.clamp(math.abs(self._unit:mover():velocity().z + 100), 0.01, 1)
+	end
+	
+	if vel_z < 0.2 and not self._is_jumping then
+		self._gnd_ray = true
 	else
-		self._gnd_ray = self._unit:raycast("ray", hips_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "ray_type", "body mover", "sphere_cast_radius", 29, "bundle", 9, "report")
+		local hips_pos = tmp_ground_from_vec
+		local down_pos = tmp_ground_to_vec
+
+		mvector3.set(hips_pos, self._pos)
+		mvector3.add(hips_pos, up_offset_vec)
+		mvector3.set(down_pos, hips_pos)
+		mvector3.add(down_pos, down_offset_vec)
+
+		if self._unit:movement():ladder_unit() then
+			self._gnd_ray = World:raycast("ray", hips_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "ignore_unit", self._unit:movement():ladder_unit(), "ray_type", "body mover", "sphere_cast_radius", 29, "report")
+		else
+			self._gnd_ray = World:raycast("ray", hips_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "ray_type", "body mover", "sphere_cast_radius", 29, "report")
+		end
 	end
 
 	self._gnd_ray_chk = true
@@ -841,6 +850,14 @@ function PlayerStandard:_get_max_walk_speed(t, force_run)
 	end
 
 	local final_speed = movement_speed * multiplier
+	
+	self._cached_final_speed = self._cached_final_speed or 0
+
+	if final_speed ~= self._cached_final_speed then
+		self._cached_final_speed = final_speed
+
+		self._ext_network:send("action_change_speed", final_speed)
+	end
 
 	return final_speed
 end
@@ -856,16 +873,6 @@ function PlayerStandard:_update_movement(t, dt)
 	local pos_new = nil
 	self._target_headbob = self._target_headbob or 0
 	self._headbob = self._headbob or 0
-	
-	local WALK_SPEED_MAX = self:_get_max_walk_speed(t)
-	
-	self._cached_final_speed = self._cached_final_speed or 0
-
-	if WALK_SPEED_MAX ~= self._cached_final_speed then
-		self._cached_final_speed = WALK_SPEED_MAX
-
-		self._ext_network:send("action_change_speed", WALK_SPEED_MAX)
-	end
 	
 	if self._lunge_data then
 		local lunge_data = self._lunge_data
@@ -902,7 +909,7 @@ function PlayerStandard:_update_movement(t, dt)
 		local speed = mvector3.length(self._state_data.zipline_data.position - self._pos) / dt / 500
 		pos_new = mvec_pos_new
 
-		mvector3.set(pos_new, self._state_data. zipline_data.position)
+		mvector3.set(pos_new, self._state_data.zipline_data.position)
 
 		if self._state_data.zipline_data.camera_shake then
 			self._ext_camera:shaker():set_parameter(self._state_data.zipline_data.camera_shake, "amplitude", speed)
@@ -924,6 +931,8 @@ function PlayerStandard:_update_movement(t, dt)
 
 			self:_update_crosshair_offset()
 		end
+
+		local WALK_SPEED_MAX = self:_get_max_walk_speed(t)
 
 		mvector3.set(mvec_move_dir_normalized, self._move_dir)
 		mvector3.normalize(mvec_move_dir_normalized)
