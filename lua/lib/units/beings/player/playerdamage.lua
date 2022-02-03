@@ -1,3 +1,5 @@
+local mvec3_norm = mvector3.normalize
+
 --i hate my life
 PlayerDamage._expres_election_stacks = 0
 PlayerDamage._expres_regenerate_speed = 1
@@ -7,6 +9,10 @@ Hooks:PostHook(PlayerDamage, "init", "dv_post_init", function(self, unit)
 	
 	if player_manager:has_category_upgrade("player", "rogue_melee_dodge") then
 		self._next_melee_dodge_t = 0
+	end
+	
+	if player_manager:has_category_upgrade("player", "wcard_thorns") then
+		self._thorns = true
 	end
 	
 	if player_manager:has_category_upgrade("player", "rogue_sniper_dodge") then
@@ -348,7 +354,12 @@ function PlayerDamage:damage_bullet(attack_data)
 
 	local pm = managers.player
 	self._last_received_dmg = attack_data.damage
+	
 	self._next_allowed_dmg_t = Application:digest_value(pm:player_timer():time() + self._dmg_interval, true)
+	
+	if self._thorns then
+		self:do_thorns(attack_data.damage)
+	end
 	
 	if not managers.player:has_category_upgrade("player", "sociopath_mode") then
 		local dodge_roll = math.random()
@@ -714,7 +725,11 @@ function PlayerDamage:damage_melee(attack_data)
 
 	self._last_received_dmg = attack_data.damage
 	self._next_allowed_dmg_t = Application:digest_value(pm:player_timer():time() + self._dmg_interval, true)
-
+	
+	if self._thorns then
+		self:do_thorns(attack_data.damage)
+	end
+	
 	local allow_melee_dodge = self._next_melee_dodge_t and self._next_melee_dodge_t < pm:player_timer():time() --manual toggle, to be later replaced with a Rogue melee dodge perk check
 
 	if allow_melee_dodge and pm:current_state() ~= "bleed_out" and pm:current_state() ~= "bipod" and pm:current_state() ~= "tased" then --self._bleed_out and current_state() ~= "bleed_out" aren't the same thing
@@ -1192,6 +1207,39 @@ function PlayerDamage:damage_explosion(attack_data)
 
 	pm:send_message(Message.OnPlayerDamage, nil, attack_data)
 	self:_call_listeners(damage_info)
+end
+
+function PlayerDamage:do_thorns(damage)
+	local player_manager = managers.player
+	
+	local aced = player_manager:has_category_upgrade("player", "wcard_thorns_stagger")
+	
+	local m_head_pos = player_manager:local_player():movement():m_head_pos()
+	local weap_unit = player_manager:get_current_state()._equipped_unit
+	local enemies = World:find_units_quick(self._unit, "sphere", self._unit:position(), 200, managers.slot:get_mask("enemies"))
+	
+	for i = 1, #enemies do
+		local enemy = enemies[i]
+		local dmg_ext = enemy:character_damage()
+
+		if dmg_ext and dmg_ext.damage_simple then
+			local center_of_mass = enemy:movement():m_com()
+			local attack_dir = center_of_mass - m_head_pos
+			mvec3_norm(attack_dir)
+
+			local attack_data = {
+				damage = damage,
+				attacker_unit = self._unit,
+				no_weapon_stats = true,
+				stagger = aced,
+				pos = center_of_mass,
+				attack_dir = attack_dir,
+				weapon_unit = weap_unit
+			}
+
+			dmg_ext:damage_simple(attack_data)
+		end
+	end
 end
 
 Hooks:Register("OnPlayerShieldBroken")

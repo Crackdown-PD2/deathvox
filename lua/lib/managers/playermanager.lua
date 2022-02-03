@@ -1769,6 +1769,21 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 			end
 		end
 	end
+	
+	if weapon_unit and weapon_unit:base()._HS_panic then
+		local pos = killed_unit:position()
+		local area = 600
+		local amount = "panic"
+		local enemies = world_g:find_units_quick("sphere", pos, area, 12, 21)
+
+		for i = 1, #enemies do
+			local unit = enemies[i]
+			
+			if unit:character_damage() then
+				unit:character_damage():build_suppression(amount)
+			end
+		end
+	end
 
 	local t = Application:time()
 	local damage_ext = player_unit:character_damage()
@@ -2207,6 +2222,11 @@ function PlayerManager:update(t, dt)
 							if self._next_drain_damage_t <= 0 then
 								self._next_drain_damage_t = 1
 								local damage_to_take = damage_ext:_max_health() * 0.05
+								
+								if self:has_category_upgrade("player", "wcard_thorns") then
+									damage_ext:do_thorns(damage_to_take)
+								end
+								
 								local new_health = damage_ext:get_real_health() - damage_to_take
 								
 								damage_ext:set_health(new_health)

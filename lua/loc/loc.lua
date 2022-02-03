@@ -401,22 +401,22 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 		
 			--dealer
 				menu_high_low = "High-Low Split",
-				menu_high_low_desc = "BASIC: ##$basic##\nYou gain ##+80%## Swap Speed and Stow Speed with all weapon types.\n\nACE: ##$pro##\nYou deal ##+10%## with $ICN_MEL Melee Weapons and $ICN_THR Throwing Weapons.",
-			
-				menu_wild_card = "Wild Card",
-				menu_wild_card_desc = "BASIC: ##$basic##\n$ICN_MEL Melee Weapons can score Headshots.\n\nACE: ##$pro##\n$ICN_THR Throwing Weapons gain ##+100%## Headshot Damage.",
+				menu_high_low_desc = "BASIC: ##$basic##\n$ICN_MEL Melee Weapons gain the ability to score Headshots. $ICN_THR Throwing Weapons gain ##+100%## increased Velocity, increasing their speed and range.\n\nACE: ##$pro##\nYou gain ##+80%## Swap Speed and Stow Speed with all weapon types.",
+				
+				menu_face_value = "Face Value",
+				menu_face_value_desc = "BASIC: ##$basic##\n$ICN_MEL Melee Weapons gain ##+100%## Charge Speed.\n\nACE: ##$pro##\nAttacking a Shield with any $ICN_MEL Melee Weapon will stagger them.",
 			
 				menu_value_bet = "Value Bet",
-				menu_value_bet_desc = "BASIC: ##$basic##\n$ICN_THR Throwing Weapons can be charged, dealing ##+100%## Damage after being held for ##1## second.\n\nACE: ##$pro##\n$ICN_MEL Melee Weapons gain ##+100%## Charge Speed.",
+				menu_value_bet_desc = "BASIC: ##$basic##\n$ICN_THR Throwing Weapons gain ##+50%## ammunition.\n\nACE: ##$pro##\n$ICN_THR Throwing Weapons can be charged, dealing ##+100%## Damage after being held for ##1## second.",
 			
-				menu_face_value = "Face Value",
-				menu_face_value_desc = "BASIC: ##$basic##\nIncreases the Knockdown strength of your $ICN_MEL Melee Weapons by ##one stage##.\n\nACE: ##$pro##\nAttacking a Shield with any $ICN_MEL Melee Weapon will stagger them.",
+				menu_wild_card = "Wild Card",
+				menu_wild_card_desc = "BASIC: ##$basic##\nWhen you take damage, enemies within ##2## meters take ##100%## of that damage.\n\nACE: ##$pro##\nEnemies damaged by Wild Card are now staggered.",
 			
 				menu_stacking_deck = "Stacking the Deck",
-				menu_stacking_deck_desc = "BASIC: ##$basic##\n$ICN_THR Throwing Weapons gain ##+50%## Ammunition.\n\nACE: ##$pro##\n$ICN_THR Throwing Weapons gain ##+100%## increased Velocity, increasing their speed and range.",
+				menu_stacking_deck_desc = "BASIC: ##$basic##\n$ICN_THR Throwing Weapons will curve towards enemies, angling to strike them in the head.\n\nACE: ##$pro##\nHeadshot kills with $ICN_THR Throwing Weapons inflict Panic on most enemies within ##6## meters of the target, causing them to go into short bursts of uncontrollable fear.",
 			
 				menu_shuffle_and_cut = "Shuffle and Cut",
-				menu_shuffle_and_cut_desc = "BASIC: ##$basic##\nHitting an enemy with a $ICN_THR Throwing Weapon grants ##+500%## Damage to your $ICN_MEL Melee Weapons for ##5## seconds.\n\nACE: ##$pro##\nHitting an enemy with a $ICN_MEL Melee Weapon grants ##+500%## Damage to $ICN_THR Throwing Weapons for ##5## seconds.",
+				menu_shuffle_and_cut_desc = "BASIC: ##$basic##\nHitting an enemy with a $ICN_THR Throwing Weapon grants ##+500%## Damage to your next $ICN_MEL Melee Weapon attack and hitting an enemy with a $ICN_MEL Melee Weapon grants ##+500%## Damage to your next $ICN_THR Throwing Weapon attack.\n\nEach buff can stack up to ##5## times.\n\n##(NOT YET IMPLEMENTED)##\n\nACE: ##$pro##\nKilling an enemy with a $ICN_MEL Melee Weapon or $ICN_THR Throwing Weapon empowered by Shuffle and Cut refunds the stack.\n\n##(NOT YET IMPLEMENTED)##",
 			
 			
 			--fixer

@@ -1698,7 +1698,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				upgrade = "can_headshot",
 				category = "class_melee"
 			}
-		}	
+		}
 		
 		self.values.class_throwing.headshot_mul_addend = { 1 }
 		self.definitions.class_throwing_headshot_mul_addend = {
@@ -1707,6 +1707,50 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "headshot_mul_addend",
+				category = "class_throwing"
+			}
+		}
+		
+		self.values.player.wcard_thorns = {true}
+		self.definitions.player_wcard_thorns = {
+			name_id = "menu_wild_card",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "wcard_thorns",
+				category = "player"
+			}
+		}
+		
+		self.values.player.wcard_thorns_stagger = {true}
+		self.definitions.player_wcard_thorns_stagger = {
+			name_id = "menu_wild_card",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "wcard_thorns_stagger",
+				category = "player"
+			}
+		}
+		
+		self.values.class_throwing.deckstacker_homing = {true}
+		self.definitions.class_throwing_deckstacker_homing = {
+			name_id = "menu_stacking_deck",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "deckstacker_homing",
+				category = "class_throwing"
+			}
+		}
+		
+		self.values.class_throwing.deckstacker_HS_panic = {true}
+		self.definitions.class_throwing_deckstacker_HS_panic = {
+			name_id = "menu_stacking_deck",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "deckstacker_HS_panic",
 				category = "class_throwing"
 			}
 		}
