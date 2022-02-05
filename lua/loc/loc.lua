@@ -36,17 +36,17 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Localization", function(loc)
 	local level = Global.level_data and Global.level_data.level_id
 
 	if group_type == federales then
-			loc:load_localization_file(ModPath .. "loc/federalesnames.txt")
-		elseif level == "pex" or level == "skm_bex" or level == "bex" then --forcefully load beat cop and hrt names on these levels so that they dont get overridden by cd diff killfeed/hoplib/whatever
-			-- log("head keeps spinnin")
-			loc:load_localization_file(ModPath .. "loc/federalespersistentnames.txt")
-		end
-		
-		if group_type == murkywater then
-			loc:load_localization_file(ModPath .. "loc/murkynames.txt")
-		elseif level == "bph" or level == "vit" or level == "des" or level == "pbr" then 
-			loc:load_localization_file(ModPath .. "loc/murkypersistentnames.txt")
-		end	
+		loc:load_localization_file(ModPath .. "loc/federalesnames.txt")
+	elseif level == "pex" or level == "skm_bex" or level == "bex" then --forcefully load beat cop and hrt names on these levels so that they dont get overridden by cd diff killfeed/hoplib/whatever
+		-- log("head keeps spinnin")
+		loc:load_localization_file(ModPath .. "loc/federalespersistentnames.txt")
+	end
+	
+	if group_type == murkywater then
+		loc:load_localization_file(ModPath .. "loc/murkynames.txt")
+	elseif level == "bph" or level == "vit" or level == "des" or level == "pbr" then 
+		loc:load_localization_file(ModPath .. "loc/murkypersistentnames.txt")
+	end	
 end)
 
 Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
@@ -416,7 +416,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_stacking_deck_desc = "BASIC: ##$basic##\n$ICN_THR Throwing Weapons will curve towards enemies, angling to strike them in the head.\n\nACE: ##$pro##\nHeadshot kills with $ICN_THR Throwing Weapons inflict Panic on most enemies within ##6## meters of the target, causing them to go into short bursts of uncontrollable fear.",
 			
 				menu_shuffle_and_cut = "Shuffle and Cut",
-				menu_shuffle_and_cut_desc = "BASIC: ##$basic##\nHitting an enemy with a $ICN_THR Throwing Weapon grants ##+500%## Damage to your next $ICN_MEL Melee Weapon attack and hitting an enemy with a $ICN_MEL Melee Weapon grants ##+500%## Damage to your next $ICN_THR Throwing Weapon attack.\n\nEach buff can stack up to ##5## times.\n\n##(NOT YET IMPLEMENTED)##\n\nACE: ##$pro##\nKilling an enemy with a $ICN_MEL Melee Weapon or $ICN_THR Throwing Weapon empowered by Shuffle and Cut refunds the stack.\n\n##(NOT YET IMPLEMENTED)##",
+				menu_shuffle_and_cut_desc = "BASIC: ##$basic##\nHitting an enemy with a $ICN_THR Throwing Weapon grants ##+500%## Damage to your next $ICN_MEL Melee Weapon attack and hitting an enemy with a $ICN_MEL Melee Weapon grants ##+500%## Damage to your next $ICN_THR Throwing Weapon attack.\n\nEach buff can stack up to ##5## times.##\n\nACE: ##$pro##\nKilling an enemy with a $ICN_MEL Melee Weapon or $ICN_THR Throwing Weapon empowered by Shuffle and Cut refunds the stack.##",
 			
 			
 			--fixer
@@ -720,7 +720,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				
 				--Gambler
 				menu_deck10_1 = "Financial Wellness",
-				menu_deck10_1_desc = "Every ##20## Ammo Pickups that your team gathers heals your team for ##1## Maximum Health.",
+				menu_deck10_1_desc = "Every ##20## Ammo Pickups that your team gathers heals your team for ##1%## Maximum Health.",
 				menu_deck10_2 = "Scavenger",
 				menu_deck10_2_desc = "Your team's Ammo Box pickup range is increased by ##+25%##.",
 				menu_deck10_3 = "Healthy Investment",

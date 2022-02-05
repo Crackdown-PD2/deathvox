@@ -1151,12 +1151,20 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 		local target_is_civilian = managers.enemy:is_civilian(character_unit)
 
 		if character_unit:character_damage() and character_unit:character_damage().damage_melee then
+			local shuffle_cut_stacks = 0
+			
 			local dmg_multiplier = 1
 
 			dmg_multiplier = dmg_multiplier + managers.player:upgrade_value("class_melee","weapon_class_damage_mul",0)
-			local stacking_deck_add_mul = managers.player:get_temporary_property("shuffle_cut_melee_bonus_damage",0)
-
-			dmg_multiplier = dmg_multiplier + stacking_deck_add_mul
+			
+			if managers.player:has_category_upgrade("class_throwing","throwing_boosts_melee_loop") then 
+				shuffle_cut_stacks = managers.player:get_property("shuffle_cut_melee_bonus_damage",0)
+				if shuffle_cut_stacks > 0 then 
+					local shuffle_cut_data = managers.player:upgrade_value("class_throwing","throwing_boosts_melee_loop")
+					local shuffle_cut_bonus = shuffle_cut_data[2]
+					dmg_multiplier = dmg_multiplier + shuffle_cut_bonus
+				end
+			end
 			
 			if not target_is_civilian and not managers.groupai:state():is_enemy_special(character_unit) then
 				dmg_multiplier = dmg_multiplier * managers.player:upgrade_value("player", "non_special_melee_multiplier", 1)
@@ -1191,11 +1199,11 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			end
 
 			dmg_multiplier = dmg_multiplier * managers.player:temporary_upgrade_value("temporary", "berserker_damage_multiplier", 1)
-			local target_dead = character_unit:character_damage().dead and not character_unit:character_damage():dead()
+			local target_alive = character_unit:character_damage().dead and not character_unit:character_damage():dead()
 			local target_hostile = managers.enemy:is_enemy(character_unit) and not tweak_data.character[character_unit:base()._tweak_table].is_escort and character_unit:brain():is_hostile()
 			local life_leach_available = managers.player:has_category_upgrade("temporary", "melee_life_leech") and not managers.player:has_activate_temporary_upgrade("temporary", "melee_life_leech")
 
-			if target_dead and target_hostile and life_leach_available then
+			if target_alive and target_hostile and life_leach_available then
 				managers.player:activate_temporary_upgrade("temporary", "melee_life_leech")
 				self._unit:character_damage():restore_health(managers.player:temporary_upgrade_value("temporary", "melee_life_leech", 1))
 			end
@@ -1232,7 +1240,7 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 
 			action_data.name_id = melee_entry
 			action_data.charge_lerp_value = charge_lerp_value
-
+			
 			if managers.player:has_category_upgrade("melee", "stacking_hit_damage_multiplier") then
 				self._state_data.stacking_dmg_mul = self._state_data.stacking_dmg_mul or {}
 				self._state_data.stacking_dmg_mul.melee = self._state_data.stacking_dmg_mul.melee or {
@@ -1241,7 +1249,7 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 				}
 				local stack = self._state_data.stacking_dmg_mul.melee
 
-				if character_unit:character_damage().dead and not character_unit:character_damage():dead() then
+				if target_alive then
 					stack[1] = t + managers.player:upgrade_value("melee", "stacking_hit_expire_t", 1)
 					stack[2] = math.min(stack[2] + 1, tweak_data.upgrades.max_melee_weapon_dmg_mul_stacks or 5)
 				else
@@ -1249,10 +1257,28 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 					stack[2] = 0
 				end
 			end
-			if not character_unit:character_damage():dead() then 
-				Hooks:Call("OnPlayerMeleeHit",character_unit,col_ray,action_data,defense_data,t)
-			end
+			
 			local defense_data = character_unit:character_damage():damage_melee(action_data)
+			
+			local lethal_hit = target_alive and defense_data.type == "dead"
+			if shuffle_cut_stacks ~= 0 then 
+				if lethal_hit and managers.player:has_category_upgrade("class_melee","throwing_loop_refund") then 
+					--on melee kill with shuffle and cut aced, don't consume a shuffle cut throwing wepaon bonus stack
+				else
+					--else, consume one stack
+					managers.player:set_property("shuffle_cut_melee_bonus_damage",math.max(shuffle_cut_stacks - 1,0))
+				end
+			end
+			
+			
+			--on melee hit, grant throwing bonus
+			if managers.player:has_category_upgrade("class_melee","melee_boosts_throwing_loop") then 
+				local max_stacks = managers.player:upgrade_value("class_melee","melee_boosts_throwing_loop")[1]
+				local stacks = managers.player:get_property("shuffle_cut_throwing_bonus_damage",0)
+				managers.player:set_property("shuffle_cut_throwing_bonus_damage",math.min(stacks+1,max_stacks))
+			end
+			
+--			Hooks:Call("OnPlayerMeleeHit",character_unit,col_ray,action_data,defense_data,t,lethal_hit)
 
 			self:_check_melee_dot_damage(col_ray, defense_data, melee_entry)
 			self:_perform_sync_melee_damage(hit_unit, col_ray, action_data.damage)

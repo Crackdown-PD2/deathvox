@@ -1696,13 +1696,15 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.dealer,6,{ --Shuffle and Cut
 			{
 				upgrades = {
-					--WIP
+					"class_throwing_melee_loop",
+					"class_melee_throwing_loop"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					--WIP
+					"class_throwing_loop_refund",
+					"class_melee_loop_refund",
 				},
 				cost = self.costs.hightierpro
 			},
