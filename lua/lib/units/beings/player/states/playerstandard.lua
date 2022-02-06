@@ -1259,23 +1259,23 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			end
 			
 			local defense_data = character_unit:character_damage():damage_melee(action_data)
-			
-			local lethal_hit = target_alive and defense_data.type == "dead"
-			if shuffle_cut_stacks ~= 0 then 
-				if lethal_hit and managers.player:has_category_upgrade("class_melee","throwing_loop_refund") then 
-					--on melee kill with shuffle and cut aced, don't consume a shuffle cut throwing wepaon bonus stack
-				else
-					--else, consume one stack
-					managers.player:set_property("shuffle_cut_melee_bonus_damage",math.max(shuffle_cut_stacks - 1,0))
+			if defense_data then 
+				local lethal_hit = target_alive and defense_data.type == "dead"
+				if shuffle_cut_stacks ~= 0 then 
+					if lethal_hit and managers.player:has_category_upgrade("class_melee","throwing_loop_refund") then 
+						--on melee kill with shuffle and cut aced, don't consume a shuffle cut throwing wepaon bonus stack
+					else
+						--else, consume one stack
+						managers.player:set_property("shuffle_cut_melee_bonus_damage",math.max(shuffle_cut_stacks - 1,0))
+					end
 				end
-			end
-			
-			
-			--on melee hit, grant throwing bonus
-			if managers.player:has_category_upgrade("class_melee","melee_boosts_throwing_loop") then 
-				local max_stacks = managers.player:upgrade_value("class_melee","melee_boosts_throwing_loop")[1]
-				local stacks = managers.player:get_property("shuffle_cut_throwing_bonus_damage",0)
-				managers.player:set_property("shuffle_cut_throwing_bonus_damage",math.min(stacks+1,max_stacks))
+				
+				--on melee hit, grant throwing bonus
+				if managers.player:has_category_upgrade("class_melee","melee_boosts_throwing_loop") then 
+					local max_stacks = managers.player:upgrade_value("class_melee","melee_boosts_throwing_loop")[1]
+					local stacks = managers.player:get_property("shuffle_cut_throwing_bonus_damage",0)
+					managers.player:set_property("shuffle_cut_throwing_bonus_damage",math.min(stacks+1,max_stacks))
+				end
 			end
 			
 --			Hooks:Call("OnPlayerMeleeHit",character_unit,col_ray,action_data,defense_data,t,lethal_hit)

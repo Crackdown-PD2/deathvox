@@ -1109,7 +1109,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 		
 		local is_dead = hit_unit:character_damage():dead()
 		
-		if shuffle_cut_stacks ~= 0 then 
+		if result and shuffle_cut_stacks ~= 0 then 
 			if managers.player:has_category_upgrade("class_throwing","melee_loop_refund") and is_dead then 
 				--on throwing weapon kill with shuffle and cut aced, do not consume a throwing damage bonus stack
 			else
