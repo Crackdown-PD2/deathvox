@@ -1,4 +1,5 @@
 <table directory="assets">
+	<effect path="levels/mods/effects/elevatorsparks"/>
 	<material_config force="true" path="units/pd2_dlc_nmh/architecture/nmh_architecture_hospital_garage/nmh_architecture_hospital_garage"/>
 	<material_config force="true" path="units/pd2_dlc_nmh/architecture/nmh_ceiling_hole_office_300x300/nmh_ceiling_hole_office_300x300"/>
 	<material_config force="true" path="units/pd2_dlc_nmh/architecture/nmh_ceiling_venthole_office_300x300/nmh_ceiling_venthole_office_300x300"/>
