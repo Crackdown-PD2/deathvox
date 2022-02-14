@@ -993,7 +993,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
-		self.values.player.melee_hit_speed_boost = {
+		self.values.player.melee_hit_speed_boost = { --unused/old pre-rework runner skill
 			{4,0.1} -- +10% speed boost, 4s
 		}
 		self.definitions.player_melee_hit_speed_boost = {
@@ -1698,7 +1698,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				upgrade = "can_headshot",
 				category = "class_melee"
 			}
-		}	
+		}
 		
 		self.values.class_throwing.headshot_mul_addend = { 1 }
 		self.definitions.class_throwing_headshot_mul_addend = {
@@ -1707,6 +1707,50 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "headshot_mul_addend",
+				category = "class_throwing"
+			}
+		}
+		
+		self.values.player.wcard_thorns = {true}
+		self.definitions.player_wcard_thorns = {
+			name_id = "menu_wild_card",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "wcard_thorns",
+				category = "player"
+			}
+		}
+		
+		self.values.player.wcard_thorns_stagger = {true}
+		self.definitions.player_wcard_thorns_stagger = {
+			name_id = "menu_wild_card",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "wcard_thorns_stagger",
+				category = "player"
+			}
+		}
+		
+		self.values.class_throwing.deckstacker_homing = {true}
+		self.definitions.class_throwing_deckstacker_homing = {
+			name_id = "menu_stacking_deck",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "deckstacker_homing",
+				category = "class_throwing"
+			}
+		}
+		
+		self.values.class_throwing.deckstacker_HS_panic = {true}
+		self.definitions.class_throwing_deckstacker_HS_panic = {
+			name_id = "menu_stacking_deck",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "deckstacker_HS_panic",
 				category = "class_throwing"
 			}
 		}
@@ -1766,7 +1810,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 		--award this on throwing weapon hit
-		self.values.class_throwing.throwing_boosts_melee_loop = { {5,5} } --5s duration,+500% damage
+		self.values.class_throwing.throwing_boosts_melee_loop = { {5,5} } --5 stack max, +500% damage per stack
 		self.definitions.class_throwing_melee_loop = {
 			name_id = "menu_shuffle_cut",
 			category = "feature",
@@ -1778,13 +1822,35 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 		--award this on melee hit
-		self.values.class_melee.melee_boosts_throwing_loop = { {5,5} } --5s duration,+500% damage
+		self.values.class_melee.melee_boosts_throwing_loop = { {5,5} } --5 stack max, +500% damage per stack
 		self.definitions.class_melee_throwing_loop = {
 			name_id = "menu_shuffle_cut",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "melee_boosts_throwing_loop",
+				category = "class_melee"
+			}
+		}
+		
+		self.values.class_throwing.melee_loop_refund = { true }
+		self.definitions.class_throwing_loop_refund = {
+			name_id = "menu_shuffle_cut",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "melee_loop_refund",
+				category = "class_throwing"
+			}
+		}
+		
+		self.values.class_melee.throwing_loop_refund = { true }
+		self.definitions.class_melee_loop_refund = {
+			name_id = "menu_shuffle_cut",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "throwing_loop_refund",
 				category = "class_melee"
 			}
 		}

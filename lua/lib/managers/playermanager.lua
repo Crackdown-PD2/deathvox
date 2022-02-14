@@ -254,8 +254,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 			self:set_property("charged_throwable_damage_bonus",0)
 		end
 		
+		--[[ redundant; now handled in raycastweaponbase
 		if self:has_category_upgrade("class_throwing","throwing_boosts_melee_loop") then
-			local duration,value = unpack(self:upgrade_value("class_throwing","throwing_boosts_melee_loop",{0,0}))
+			local max_stacks = self:upgrade_value("class_throwing","throwing_boosts_melee_loop",{0,0})[1]
 			self._message_system:register(Message.OnEnemyShot,"proc_shuffle_cut_basic",function(unit,attack_data)
 				local player = self:local_player()
 				if not alive(player) then 
@@ -265,17 +266,11 @@ if deathvox:IsTotalCrackdownEnabled() then
 				if not (weapon_base and weapon_base.is_weapon_class and weapon_base:is_weapon_class("class_throwing") and weapon_base._thrower_unit and weapon_base._thrower_unit == player) then 
 					return
 				end
-				self:activate_temporary_property("shuffle_cut_melee_bonus_damage",duration,value)
+				local stacks = self:get_property("shuffle_cut_melee_bonus_damage",0)
+				self:set_property("shuffle_cut_melee_bonus_damage",math.min(stacks+1,max_stacks))
 			end)
 		end
-		
-		if self:has_category_upgrade("class_melee","melee_boosts_throwing_loop") then 
-			local duration,value = unpack(self:upgrade_value("class_melee","melee_boosts_throwing_loop",{0,0}))
-			Hooks:Add("OnPlayerMeleeHit","proc_shuffle_cut_aced",function(character_unit,col_ray,action_data,defense_data,t)
-				self:activate_temporary_property("shuffle_cut_throwing_bonus_damage",duration,value)
-			end)
-		end
-	
+		--]]
 		
 		if self:has_category_upgrade("weapon","xbow_headshot_instant_reload") then 
 		
@@ -303,8 +298,11 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 		
 	
+--			"OnPlayerMeleeHit" hook is no longer active; to re-implement this, the hook must be re-enabled in PlayerStandard:_do_melee_damage()
+--[[
 		if self:has_category_upgrade("player","melee_hit_speed_boost") then
-			Hooks:Add("OnPlayerMeleeHit","cd_proc_butterfly_bee_aced",
+			--float like a butterfly aced (unused, pre-rework)
+			Hooks:Add("OnPlayerMeleeHit","cd_proc_butterfly_bee",
 				function(hit_unit,col_ray,action_data,defense_data,t)
 					if hit_unit and not managers.enemy:is_civilian(hit_unit) then 
 						managers.player:activate_temporary_property("float_butterfly_movement_speed_multiplier",unpack(managers.player:upgrade_value("player","melee_hit_speed_boost",{0,0})))
@@ -312,6 +310,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				end
 			)
 		end
+--]]
 		
 		if self:has_category_upgrade("player","escape_plan") then 
 			Hooks:Add("OnPlayerShieldBroken","cd_proc_escape_plan",
@@ -1769,6 +1768,21 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 			end
 		end
 	end
+	
+	if weapon_unit and weapon_unit:base()._HS_panic then
+		local pos = killed_unit:position()
+		local area = 600
+		local amount = "panic"
+		local enemies = world_g:find_units_quick("sphere", pos, area, 12, 21)
+
+		for i = 1, #enemies do
+			local unit = enemies[i]
+			
+			if unit:character_damage() then
+				unit:character_damage():build_suppression(amount)
+			end
+		end
+	end
 
 	local t = Application:time()
 	local damage_ext = player_unit:character_damage()
@@ -2207,6 +2221,11 @@ function PlayerManager:update(t, dt)
 							if self._next_drain_damage_t <= 0 then
 								self._next_drain_damage_t = 1
 								local damage_to_take = damage_ext:_max_health() * 0.05
+								
+								if self:has_category_upgrade("player", "wcard_thorns") then
+									damage_ext:do_thorns(damage_to_take)
+								end
+								
 								local new_health = damage_ext:get_real_health() - damage_to_take
 								
 								damage_ext:set_health(new_health)

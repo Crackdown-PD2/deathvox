@@ -1586,20 +1586,19 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			}
 		})
 		
-		
-		
 		--Dealer
 		replace_skill(tree_indices.dealer,1,{ --High-Low Split
 			{
 				upgrades = {
-					"weapon_swap_speed_multiplier"
+					"melee_can_headshot",
+					"class_throwing_projectile_velocity_mul"
+					
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"class_throwing_weapon_class_damage_mul",
-					"class_melee_weapon_class_damage_mul"
+					"weapon_swap_speed_multiplier"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -1610,50 +1609,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				6
 			}
 		})
-		replace_skill(tree_indices.dealer,2,{ --Wild Card
-			{
-				upgrades = {
-					"melee_can_headshot"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"class_throwing_headshot_mul_addend"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_wild_card",
-			desc_id = "menu_wild_card_desc",
-			icon_xy = {
-				2,
-				7
-			}
-		})
-		replace_skill(tree_indices.dealer,3,{ --Value Bet
-			{
-				upgrades = {
-					"class_throwing_charged_damage"
-				},
-				cost = self.costs.hightier
-			},
+		replace_skill(tree_indices.dealer,2,{ --Face Value
 			{
 				upgrades = {
 					"class_melee_charge_speed_mul"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_value_bet",
-			desc_id = "menu_value_bet_desc",
-			icon_xy = {
-				2,
-				8
-			}
-		})
-		replace_skill(tree_indices.dealer,4,{ --Face Value
-			{
-				upgrades = {
-					"class_melee_knockdown_tier_increase"
 				},
 				cost = self.costs.hightier
 			},
@@ -1670,7 +1629,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				9
 			}
 		})
-		replace_skill(tree_indices.dealer,5,{ --Stacking the Deck
+		replace_skill(tree_indices.dealer,3,{ --Value Bet
 			{
 				upgrades = {
 					"class_throwing_amount_increase_mul"
@@ -1679,7 +1638,51 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			},
 			{
 				upgrades = {
-					"class_throwing_projectile_velocity_mul"
+					"class_throwing_charged_damage"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_value_bet",
+			desc_id = "menu_value_bet_desc",
+			icon_xy = {
+				2,
+				8
+			}
+		})
+		replace_skill(tree_indices.dealer,4,{ --Wild Card
+			{
+				upgrades = {
+					-- When you take damage, enemies within 2 meters take
+					"player_wcard_thorns"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					--Enemies damaged by Wild Card are Staggered.
+					"player_wcard_thorns_stagger"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_wild_card",
+			desc_id = "menu_wild_card_desc",
+			icon_xy = {
+				2,
+				7
+			}
+		})
+		replace_skill(tree_indices.dealer,5,{ --Stacking the Deck
+			{
+				upgrades = {
+					--Throwing Weapons will curve towards enemies, angling to strike them in the head.
+					"class_throwing_deckstacker_homing"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					--Headshot kills with Throwing Weapons inflict Panic on most enemies within 6 meters of the target, causing them to go into short bursts of uncontrollable fear.
+					"class_throwing_deckstacker_HS_panic"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -1693,13 +1696,15 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.dealer,6,{ --Shuffle and Cut
 			{
 				upgrades = {
-					"class_throwing_melee_loop"
+					"class_throwing_melee_loop",
+					"class_melee_throwing_loop"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"class_melee_throwing_loop"
+					"class_throwing_loop_refund",
+					"class_melee_loop_refund",
 				},
 				cost = self.costs.hightierpro
 			},

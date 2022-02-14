@@ -379,14 +379,14 @@ function CopLogicAttack._upd_combat_movement(data)
 						want_flank_cover = true
 					end
 				elseif not my_data.walking_to_cover_shoot_pos then
-					if my_data.at_cover_shoot_pos then
+					if my_data.at_cover_shoot_pos and focus_enemy.verified then
 						move_to_cover = true
 					else
 						move_to_cover = true
 						want_flank_cover = true
 					end
 				end
-			else
+			elseif my_data.at_cover_shoot_pos and focus_enemy.verified or not enemy_visible_soft then
 				move_to_cover = true
 			end
 		elseif not enemy_visible_soft then
@@ -543,14 +543,14 @@ function CopLogicAttack._upd_combat_movement(data)
 							want_flank_cover = true
 						end
 					elseif not my_data.walking_to_cover_shoot_pos then
-						if my_data.at_cover_shoot_pos then
+						if my_data.at_cover_shoot_pos and focus_enemy.verified then
 							move_to_cover = true
 						else
 							move_to_cover = true
 							want_flank_cover = true
 						end
 					end
-				else
+				elseif my_data.at_cover_shoot_pos and focus_enemy.verified or not enemy_visible_soft then
 					move_to_cover = true
 				end
 			end
@@ -629,7 +629,7 @@ function CopLogicAttack._upd_combat_movement(data)
 	end
 	
 	if not action_taken then
-		if want_to_take_cover and want_to_take_cover ~= true then
+		if want_to_take_cover then
 			action_taken = CopLogicAttack._chk_start_action_move_back(data, my_data, focus_enemy, my_data.attitude == "engage" and not data.is_suppressed)
 		end
 	end
@@ -964,11 +964,11 @@ function CopLogicAttack._chk_request_action_walk_to_cover(data, my_data)
 		end
 	until travel_dis > 800 or i >= #my_data.cover_path
 	
-	if travel_dis > 400 then
+	if travel_dis > 200 then
 		haste = "run"
 	end
 	
-	if travel_dis > 800 then
+	if travel_dis > 400 then
 		pose = "stand"
 	else
 		pose = data.unit:anim_data().crouch and "crouch"
@@ -2970,14 +2970,14 @@ function MedicLogicAttack._upd_combat_movement(data)
 						want_flank_cover = true
 					end
 				elseif not my_data.walking_to_cover_shoot_pos then
-					if my_data.at_cover_shoot_pos then
+					if my_data.at_cover_shoot_pos and focus_enemy.verified then
 						move_to_cover = true
 					else
 						move_to_cover = true
 						want_flank_cover = true
 					end
 				end
-			else
+			elseif my_data.at_cover_shoot_pos and focus_enemy.verified or not enemy_visible_soft then
 				move_to_cover = true
 			end
 		end

@@ -1051,10 +1051,12 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 
 	if weap_unit and hit_unit:character_damage() and hit_unit:character_damage().damage_bullet then
 		local is_alive = not hit_unit:character_damage():dead()
-
+		
+		local shuffle_cut_stacks = 0
+		
 		if not blank then
 			local pierce_armor = false
-
+			
 			if user_unit == managers.player:player_unit() then
 				if has_category and weapon_base:is_weapon_class("class_shotgun") then 
 					local point_blank_range = managers.player:upgrade_value("class_shotgun","point_blank_basic",0)
@@ -1074,8 +1076,11 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 				end
 
 				if projectile_td and projectile_td.throwable and not projectile_td.is_a_grenade then 
+				
 					if managers.player:has_category_upgrade("class_throwing","throwing_boosts_melee_loop") then 
-						managers.player:set_property("shuffle_cut_melee_bonus_damage",managers.player:upgrade_value("class_throwing","throwing_boosts_melee_loop",0))
+						local stacks = managers.player:get_property("shuffle_cut_melee_bonus_damage",0)
+						local max_stacks = managers.player:upgrade_value("class_throwing","throwing_boosts_melee_loop",0)[1]
+						managers.player:set_property("shuffle_cut_melee_bonus_damage",math.min(stacks+1,max_stacks))
 					end
 
 					local throwing_weapon_add_mul = 1
@@ -1085,7 +1090,11 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 						managers.player:set_property("charged_throwable_damage_bonus",0)
 					end
 					if managers.player:has_category_upgrade("class_melee","melee_boosts_throwing_loop") then 
-						throwing_weapon_add_mul = throwing_weapon_add_mul + managers.player:get_temporary_property("shuffle_cut_throwing_bonus_damage",0)
+						shuffle_cut_stacks = managers.player:get_property("shuffle_cut_throwing_bonus_damage",0)
+						if shuffle_cut_stacks > 0 then 
+							local shuffle_cut_bonus = managers.player:upgrade_value("class_melee","melee_boosts_throwing_loop")[2]
+							throwing_weapon_add_mul = throwing_weapon_add_mul + shuffle_cut_bonus
+						end
 					end
 					throwing_weapon_add_mul = throwing_weapon_add_mul + managers.player:upgrade_value("class_throwing","weapon_class_damage_mul",0)
 					damage = damage * throwing_weapon_add_mul
@@ -1097,8 +1106,18 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 			local knock_down = weapon_base and weapon_base._knock_down and weapon_base._knock_down > 0 and math.random() < weapon_base._knock_down
 			result = self:give_impact_damage(col_ray, weap_unit, user_unit, damage, pierce_armor, false, knock_down, weapon_base._stagger, weapon_base._variant, critical_hit)
 		end
-
+		
 		local is_dead = hit_unit:character_damage():dead()
+		
+		if result and shuffle_cut_stacks ~= 0 then 
+			if managers.player:has_category_upgrade("class_throwing","melee_loop_refund") and is_dead then 
+				--on throwing weapon kill with shuffle and cut aced, do not consume a throwing damage bonus stack
+			else
+				--if the hit was not lethal or shuffle and cut is not aced, then consume a stack
+				managers.player:set_property("shuffle_cut_throwing_bonus_damage",math.max(shuffle_cut_stacks - 1,0))
+			end
+		end
+
 
 		if not is_dead then
 			--if no damage is taken (blocked by grace period, script, mission stuff, etc). The less impact effects, the better
