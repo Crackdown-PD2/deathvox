@@ -1824,6 +1824,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if managers.player:has_inactivate_temporary_upgrade("temporary", "reload_weapon_faster") then
 			managers.player:activate_temporary_upgrade("temporary", "reload_weapon_faster")
 		end
+		
+		Hooks:Call("TCD_OnPlayerRevived")
 	end
 
 	local orig_chk_invuln = PlayerDamage._chk_can_take_dmg
