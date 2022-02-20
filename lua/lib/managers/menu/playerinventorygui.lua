@@ -36,7 +36,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 			local wtd = tweak_data.weapon[weapon_id]
 			
 			local item_class = wtd.primary_class
-			local item_subclasses = table.deep_map_copy(wtd.subclasses)
+			local item_subclasses = {}
+			insert_subclasses(item_subclasses,wtd.subclasses)
 			for _,part_id in ipairs(data.blueprint) do
 				local new_item_class,new_subclasses = find_archetypes_from_part(part_id)
 				item_class = new_item_class or item_class
