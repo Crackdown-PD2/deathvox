@@ -1989,8 +1989,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			muscle = 2,
 			armorer = 3,
 			rogue = 4,
-			crook = 5,
-			hitman = 6,
+			hitman = 5,
+			crook = 6,
 			burglar = 7,
 			infiltrator = 8,
 			sociopath = 9,
@@ -2461,123 +2461,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			name_id = "menu_st_spec_4"
 		}
 		
-		self.specializations[perkdeck_indices.crook] = {
+		self.specializations[perkdeck_indices.hitman] = {
 			{
 				name_id = "menu_deck5_1",
 				desc_id = "menu_deck5_1_desc",
-				cost = perkdeck_tier_costs[1],
-				upgrades = {
-					"crook_1"
-				},
-				icon_xy = {
-					0,
-					4
-				}
-			},
-			{
-				name_id = "menu_deck5_2",
-				desc_id = "menu_deck5_2_desc",
-				cost = perkdeck_tier_costs[2],
-				upgrades = {
-					"crook_2"
-				},
-				icon_xy = {
-					1,
-					4
-				}
-			},
-			{
-				name_id = "menu_deck5_3",
-				desc_id = "menu_deck5_3_desc",
-				cost = perkdeck_tier_costs[3],
-				upgrades = {
-					"crook_3"
-				},
-				icon_xy = {
-					2,
-					4
-				}
-			},
-			{
-				name_id = "menu_deck5_4",
-				desc_id = "menu_deck5_4_desc",
-				cost = perkdeck_tier_costs[4],
-				upgrades = {
-					"crook_4"
-				},
-				icon_xy = {
-					3,
-					4
-				}
-			},
-			{
-				name_id = "menu_deck5_5",
-				desc_id = "menu_deck5_5_desc",
-				cost = perkdeck_tier_costs[5],
-				upgrades = {
-					"crook_5"
-				},
-				icon_xy = {
-					4,
-					4
-				}
-			},
-			{
-				name_id = "menu_deck5_6",
-				desc_id = "menu_deck5_6_desc",
-				cost = perkdeck_tier_costs[6],
-				upgrades = {
-					"crook_6"
-				},
-				icon_xy = {
-					5,
-					4
-				}
-			},
-			{
-				name_id = "menu_deck5_7",
-				desc_id = "menu_deck5_7_desc",
-				cost = perkdeck_tier_costs[7],
-				upgrades = {
-					"crook_7"
-				},
-				icon_xy = {
-					6,
-					4
-				}
-			},
-			{
-				name_id = "menu_deck5_8",
-				desc_id = "menu_deck5_8_desc",
-				cost = perkdeck_tier_costs[8],
-				upgrades = {
-					"crook_8"
-				},
-				icon_xy = {
-					7,
-					4
-				}
-			},
-			{
-				name_id = "menu_deck5_9",
-				desc_id = "menu_deck5_9_desc",
-				cost = perkdeck_tier_costs[9],
-				upgrades = {
-					"crook_9"
-				},
-				icon_xy = {
-					8,
-					4
-				}
-			},
-			desc_id = "menu_st_spec_5_desc",
-			name_id = "menu_st_spec_5"
-		}
-		
-		self.specializations[perkdeck_indices.hitman] = {
-			{
-				name_id = "menu_deck6_1",
-				desc_id = "menu_deck6_1_desc",
 				cost = perkdeck_tier_costs[1],
 				upgrades = {
 					"hitman_1",
@@ -2588,8 +2475,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				}
 			},
 			{
-				name_id = "menu_deck6_2",
-				desc_id = "menu_deck6_2_desc",
+				name_id = "menu_deck5_2",
+				desc_id = "menu_deck5_2_desc",
 				cost = perkdeck_tier_costs[2],
 				upgrades = {
 					"hitman_2",
@@ -2600,8 +2487,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				}
 			},
 			{
-				name_id = "menu_deck6_3",
-				desc_id = "menu_deck6_3_desc",
+				name_id = "menu_deck5_3",
+				desc_id = "menu_deck5_3_desc",
 				cost = perkdeck_tier_costs[3],
 				upgrades = {
 					"hitman_3",
@@ -2612,8 +2499,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				}
 			},
 			{
-				name_id = "menu_deck6_4",
-				desc_id = "menu_deck6_4_desc",
+				name_id = "menu_deck5_4",
+				desc_id = "menu_deck5_4_desc",
 				cost = perkdeck_tier_costs[4],
 				upgrades = {
 					"hitman_4",
@@ -2624,8 +2511,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				}
 			},
 			{
-				name_id = "menu_deck6_5",
-				desc_id = "menu_deck6_5_desc",
+				name_id = "menu_deck5_5",
+				desc_id = "menu_deck5_5_desc",
 				cost = perkdeck_tier_costs[5],
 				upgrades = {
 					"hitman_5",
@@ -2636,8 +2523,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				}
 			},
 			{
-				name_id = "menu_deck6_6",
-				desc_id = "menu_deck6_6_desc",
+				name_id = "menu_deck5_6",
+				desc_id = "menu_deck5_6_desc",
 				cost = perkdeck_tier_costs[6],
 				upgrades = {
 					"hitman_6",
@@ -2648,8 +2535,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				}
 			},
 			{
-				name_id = "menu_deck6_7",
-				desc_id = "menu_deck6_7_desc",
+				name_id = "menu_deck5_7",
+				desc_id = "menu_deck5_7_desc",
 				cost = perkdeck_tier_costs[7],
 				upgrades = {
 					"hitman_7",
@@ -2660,8 +2547,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				}
 			},
 			{
-				name_id = "menu_deck6_8",
-				desc_id = "menu_deck6_8_desc",
+				name_id = "menu_deck5_8",
+				desc_id = "menu_deck5_8_desc",
 				cost = perkdeck_tier_costs[8],
 				upgrades = {
 					"hitman_8",
@@ -2672,8 +2559,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				}
 			},
 			{
-				name_id = "menu_deck6_9",
-				desc_id = "menu_deck6_9_desc",
+				name_id = "menu_deck5_9",
+				desc_id = "menu_deck5_9_desc",
 				cost = perkdeck_tier_costs[9],
 				upgrades = {
 					"hitman_9_messiah",
@@ -2682,6 +2569,119 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				icon_xy = {
 					8,
 					5
+				}
+			},
+			desc_id = "menu_st_spec_5_desc",
+			name_id = "menu_st_spec_5"
+		}
+		
+		self.specializations[perkdeck_indices.crook] = {
+			{
+				name_id = "menu_deck6_1",
+				desc_id = "menu_deck6_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					"crook_1"
+				},
+				icon_xy = {
+					0,
+					4
+				}
+			},
+			{
+				name_id = "menu_deck6_2",
+				desc_id = "menu_deck6_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					"crook_2"
+				},
+				icon_xy = {
+					1,
+					4
+				}
+			},
+			{
+				name_id = "menu_deck6_3",
+				desc_id = "menu_deck6_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					"crook_3"
+				},
+				icon_xy = {
+					2,
+					4
+				}
+			},
+			{
+				name_id = "menu_deck6_4",
+				desc_id = "menu_deck6_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					"crook_4"
+				},
+				icon_xy = {
+					3,
+					4
+				}
+			},
+			{
+				name_id = "menu_deck6_5",
+				desc_id = "menu_deck6_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					"crook_5"
+				},
+				icon_xy = {
+					4,
+					4
+				}
+			},
+			{
+				name_id = "menu_deck6_6",
+				desc_id = "menu_deck6_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					"crook_6"
+				},
+				icon_xy = {
+					5,
+					4
+				}
+			},
+			{
+				name_id = "menu_deck6_7",
+				desc_id = "menu_deck6_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					"crook_7"
+				},
+				icon_xy = {
+					6,
+					4
+				}
+			},
+			{
+				name_id = "menu_deck6_8",
+				desc_id = "menu_deck6_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					"crook_8"
+				},
+				icon_xy = {
+					7,
+					4
+				}
+			},
+			{
+				name_id = "menu_deck6_9",
+				desc_id = "menu_deck6_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					"crook_9"
+				},
+				icon_xy = {
+					8,
+					4
 				}
 			},
 			desc_id = "menu_st_spec_6_desc",
