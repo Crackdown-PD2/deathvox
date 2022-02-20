@@ -3567,9 +3567,9 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			0.9
 		}
 		self.values.player.anarch_ondmg_armor_regen = {0.5}
-		self.values.player.anarch_onkill_armor_regen = {0.5}
-		self.values.player.anarch_onheadshotdmg_armor_regen = {1}
-		self.values.player.anarch_onheadshotkill_armor_regen = {1}
+		self.values.player.anarch_onkill_armor_regen = {1}
+		self.values.player.anarch_onheadshotdmg_armor_regen = {1.5}
+		self.values.player.anarch_onheadshotkill_armor_regen = {2}
 		
 		self.definitions.anarch_1 = {
 			name_id = "menu_deck13_1",
