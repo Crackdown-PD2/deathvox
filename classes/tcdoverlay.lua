@@ -16,21 +16,22 @@ end
 
 
 
+
+
+
 ------------------------
 --sociopath combo counter
-
-
-
 
 TCDSociopathComboOverlay = class()
 
 function TCDSociopathComboOverlay:init(...)
 	self.name = "sociopath_combo"
 	self.params = {
-		y_pos = 200,
+		y_pos = 100,
 		stack_count_font = "fonts/font_justice_shadow_outline",
-		anim_pulse_duration = 0.5,
-		anim_timeout_fade_duration = 1,
+		anim_pulse_duration = 0.5, --pulse font size for 0.5 seconds (0.5 seconds total elapsed)
+		anim_timeout_hold_duration = 3.5, --wait for 3.5 seconds (4 seconds total elapsed)
+		anim_timeout_fade_duration = 3, --color change for 3 seconds (7 seconds total elapsed); remaining timeout is handled outside
 		font_size = 32,
 		font_halign = "center",
 		font_valign = "top",
@@ -58,6 +59,7 @@ function TCDSociopathComboOverlay:Create(parent_hud)
 		text = self.current_combo,
 		font = params.stack_count_font,
 		font_size = params.font_size,
+		y = params.y_pos,
 		align = params.font_halign,
 		vertical = params.font_valign,
 		color = params.font_color_primary,
@@ -71,12 +73,11 @@ function TCDSociopathComboOverlay:OnComboChanged(previous,current)
 	
 	local params = self.params
 	local anim_pulse_duration = params.anim_pulse_duration
+	local anim_timeout_hold_duration = params.anim_timeout_hold_duration
 	local anim_timeout_fade_duration = params.anim_timeout_fade_duration
-	local anim_timeout_hold_duration = tweak_data.upgrades.values.player.sociopath_combo_duration - (anim_timeout_fade_duration + anim_pulse_duration)
-	--combo duration is 10s
-	
-	
-	
+	--local base_combo_duration = tweak_data.upgrades.values.player.sociopath_combo_duration
+	--base_combo_duration - (anim_timeout_fade_duration + anim_pulse_duration + (base_combo_duration - anim_timeout_low_duration))
+--combo duration is 10s
 	
 	local font_scale = params.font_scale
 	local color_scale = math.min(current/10,1)
@@ -99,8 +100,18 @@ function TCDSociopathComboOverlay:OnComboChanged(previous,current)
 	if alive(stack_count_text) then
 		if current > 1 then 
 			stack_count_text:stop()
+--			local function _t()
+--				return string.format("%0.2f",Application:time())
+--			end
+--			local function _log(...)
+--				return OffyLib:c_log(...)
+--			end
+			
 			stack_count_text:animate(
 				function(o)
+				
+--					_log(_t() .. " started ")
+					
 					over(anim_pulse_duration,
 						function(t)
 							local from_color = font_color_pulse
@@ -109,17 +120,21 @@ function TCDSociopathComboOverlay:OnComboChanged(previous,current)
 							o:set_color(from_color + ((to_color - from_color) * t))
 						end
 					)
+
+--					_log(_t() .. " waiting")
+--					wait(anim_timeout_hold_duration)
 					
+--					_log(_t() .. " fading color")
 					local c = o:color()
-					
-					wait(anim_timeout_hold_duration)
-					
 					over(anim_timeout_fade_duration,
 						function(t)
 							local to_color = font_color_secondary
 							o:set_color(c + ((to_color - c) * t))
 						end
 					)
+--					_log(_t() .. " done, waiting...")
+--					wait(3)
+--					_log(_t() .. " done done?")
 				end
 			)
 		else
