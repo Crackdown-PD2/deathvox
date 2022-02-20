@@ -19,13 +19,21 @@ Hooks:PostHook(BlackMarketTweakData, "_init_projectiles", "cdgren", function(sel
 			max_amount = 6,
 			is_a_grenade = true,
 			instant_use = true,
-			override_equipment_id = "tripmine_throwable" --reference key for corresponding data in equipmentstweakdata
+			override_equipment_id = "tripmine_throwable", --reference key for corresponding data in equipmentstweakdata
+			primary_class = "class_grenade",
+			subclasses = {}
 		}
 
 		self.projectiles.wpn_prj_four.max_amount = 10
 		self.projectiles.wpn_prj_four.can_pierce_armor = false
 		self.projectiles.wpn_prj_four.no_cheat_count = true
+		self.projectiles.wpn_prj_four.primary_class = "class_throwing"
+		self.projectiles.wpn_prj_four.subclasses = {
+			"subclass_poison"
+		}
 		
+		self.projectiles.wpn_prj_ace.primary_class = "class_throwing"
+		self.projectiles.wpn_prj_ace.subclasses = {}
 		self.projectiles.wpn_prj_ace.max_amount = 20
 		self.projectiles.wpn_prj_ace.can_pierce_armor = false
 		self.projectiles.wpn_prj_ace.no_cheat_count = true
