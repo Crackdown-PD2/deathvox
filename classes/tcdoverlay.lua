@@ -25,14 +25,111 @@ end
 TCDSociopathComboOverlay = class()
 
 function TCDSociopathComboOverlay:init(...)
-
+	self.name = "sociopath_combo"
+	self.params = {
+		y_pos = 200,
+		stack_count_font = "fonts/font_justice_shadow_outline",
+		anim_pulse_duration = 0.5,
+		anim_timeout_fade_duration = 1,
+		font_size = 32,
+		font_halign = "center",
+		font_valign = "top",
+		font_color_primary = Color("f579ff"),
+		font_color_secondary = Color("43ebed"),
+		font_color_pulse = Color("ffffff"),
+		font_scale = 1.2
+	}
+	
+	self.current_combo = "" --init text value of the text object; not necessarily a number!
+	
 end
 
 function TCDSociopathComboOverlay:Create(parent_hud)
-
+	parent_hud = parent_hud or self._parent_hud
+	self._parent_hud = parent_hud
+	local params = self.params
+	local panel = parent_hud:panel({
+		name = self.name
+	})
+	self._panel = panel
+	
+	local stack_count_text = panel:text({
+		name = "stack_count_text",
+		text = self.current_combo,
+		font = params.stack_count_font,
+		font_size = params.font_size,
+		align = params.font_halign,
+		vertical = params.font_valign,
+		color = params.font_color_primary,
+		layer = 4
+	})
+	self._stack_count_text = stack_count_text
 end
 
+function TCDSociopathComboOverlay:OnComboChanged(previous,current)
+	self.current_combo = tostring(current)
+	
+	local params = self.params
+	local anim_pulse_duration = params.anim_pulse_duration
+	local anim_timeout_fade_duration = params.anim_timeout_fade_duration
+	local anim_timeout_hold_duration = tweak_data.upgrades.values.player.sociopath_combo_duration - (anim_timeout_fade_duration + anim_pulse_duration)
+	--combo duration is 10s
+	
+	
+	
+	
+	local font_scale = params.font_scale
+	local color_scale = math.min(current/10,1)
+	local to_font_size = params.font_size
+	local from_font_size = to_font_size * font_scale
+	local combo_text_string = managers.localization:text("hud_sociopath_combo_count")
+	
+	local stack_count_text = self._stack_count_text
+	
+	local font_color_pulse = params.font_color_pulse
+	local font_color_primary = params.font_color_primary
+	local font_color_secondary = params.font_color_secondary
+	
+	local s
+	if current > 1 then 
+		s = string.format(combo_text_string,current)
+	else
+		s = ""
+	end
+	if alive(stack_count_text) then
+		if current > 1 then 
+			stack_count_text:stop()
+			stack_count_text:animate(
+				function(o)
+					over(anim_pulse_duration,
+						function(t)
+							local from_color = font_color_pulse
+							local to_color = font_color_primary
+							o:set_font_size(from_font_size + ((to_font_size - from_font_size) * t))
+							o:set_color(from_color + ((to_color - from_color) * t))
+						end
+					)
+					
+					local c = o:color()
+					
+					wait(anim_timeout_hold_duration)
+					
+					over(anim_timeout_fade_duration,
+						function(t)
+							local to_color = font_color_secondary
+							o:set_color(c + ((to_color - c) * t))
+						end
+					)
+				end
+			)
+		else
+			stack_count_text:stop()
+		end
+		
+		stack_count_text:set_text(s)
+	end
 
+end
 
 
 

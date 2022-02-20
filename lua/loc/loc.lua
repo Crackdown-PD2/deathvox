@@ -226,7 +226,9 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 			--misc
 				hud_int_pick_electronic_lock = "Hold $BTN_INTERACT to hack the lock",
 				hud_action_picking_electronic_lock = "Hacking the lock...",
-			
+				
+				hud_sociopath_combo_count = "%ix combo", --sociopath hud combo counter; "%i" represents the number of kills in the combo
+				
 			--skills:
 				
 			--taskmaster

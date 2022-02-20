@@ -812,12 +812,18 @@ if deathvox:IsTotalCrackdownEnabled() then
 				self._sociopath_downed_overlay:StopDeathAnimation()
 			end)
 			
-			--[[
+			--[ [
 			--combo counter
 			self._sociopath_combo_overlay = TCDSociopathComboOverlay:new()
 			Hooks:Add("TCD_Create_Stack_Tracker_HUD","TCD_CreateSociopathComboOverlay",function(hudtemp)
 				self._sociopath_combo_overlay:Create(hudtemp)
 			end)
+			
+			
+			Hooks:Add("TCD_OnSociopathComboStacksChanged","TCD_SetSociopathComboStacksHUD",function(previous,current)
+				self._sociopath_combo_overlay:OnComboChanged(previous,current)
+			end)
+			
 			--]]
 			
 			
@@ -1946,7 +1952,7 @@ function PlayerManager:update(t, dt)
 			self._next_combo_hp = self._needed_combo_stacks_for_hp
 			self._next_combo_hp_stack_reduction = 10
 		end
-			
+		
 		if self._melee_stance_dr_t and self._melee_stance_dr_t < t then
 			self._melee_stance_dr_t = nil
 		end
