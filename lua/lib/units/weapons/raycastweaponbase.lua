@@ -1694,14 +1694,6 @@ if TCDEnabled then
 		return picked_up, add_amount
 	end
 	
-	function RaycastWeaponBase:recoil()
-		if self:is_weapon_class("class_heavy") then
-			local recoil_bonus = managers.player:get_property("current_death_grips_stacks",0) * managers.player:upgrade_value("class_heavy","death_grips_recoil_bonus",0) * -0.1
-			return math.max(0,self._recoil + recoil_bonus)
-		end
-		return self._recoil
-	end
-	
 	function RaycastWeaponBase:fire_rate_multiplier(rof_mul)
 	--the addition of the optional rof_mul argument is from tcd, not from vanilla
 		rof_mul = rof_mul or 1

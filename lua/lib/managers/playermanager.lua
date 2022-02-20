@@ -441,14 +441,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 		
 		if self:has_category_upgrade("class_heavy","death_grips_stacks") then
-			self:set_property("current_death_grips_stacks",0)
 			self._message_system:register(Message.OnEnemyKilled,"proc_death_grips",
 				function(weapon_unit,variant,killed_unit)
 					local player = self:local_player()
 					if not alive(player) then 
 						return
 					end
-					local weapon_base = weapon_unit and weapon_unit:base()
+					local weapon_base = alive(weapon_unit) and weapon_unit:base()
 					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_heavy") then 
 						if weapon_base._setup.user_unit ~= player then 
 							return
@@ -457,14 +456,11 @@ if deathvox:IsTotalCrackdownEnabled() then
 						return
 					end
 					local death_grips_data = self:upgrade_value("class_heavy","death_grips_stacks",{0,0})
-					self:set_property("current_death_grips_stacks",math.min(self:get_property("current_death_grips_stacks") + 1,death_grips_data[2]))
-					managers.enemy:remove_delayed_clbk("death_grips_stacks_expire",true)
-					managers.enemy:add_delayed_clbk("death_grips_stacks_expire",
-						function()
-							self:set_property("current_death_grips_stacks",0)
-						end,
-						Application:time() + death_grips_data[1]
-					)
+					local death_grips_stack_reset_timer = death_grips_data[1]
+					local death_grips_max_stacks = death_grips_data[2]
+					
+					local death_grips_stacks = math.min(self:get_temporary_property("current_death_grips_stacks",0) + 1,death_grips_max_stacks)
+					self:activate_temporary_property("current_death_grips_stacks",death_grips_stack_reset_timer,death_grips_stacks)
 				end
 			)
 		end
@@ -493,9 +489,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 				--Message.OnPlayerReload is called when reload STARTS, which is before the reload mul is calculated.
 				--so it's pretty useless to reset stacks from that message event.
 				function(weapon_unit)
-					local weapon_base = weapon_unit and weapon_unit:base()
+					local weapon_base = alive(weapon_unit) and weapon_unit:base()
 					if weapon_base and weapon_base:is_weapon_class("class_heavy") then 
-						managers.player:set_property("current_lead_farmer_stacks",0)
+						self:set_property("current_lead_farmer_stacks",0)
 					end
 				end
 			)
