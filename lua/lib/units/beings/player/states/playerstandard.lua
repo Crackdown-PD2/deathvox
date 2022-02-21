@@ -7,7 +7,6 @@ local mvec3_mul = mvector3.multiply
 local mvec3_norm = mvector3.normalize
 local mvec3_cpy = mvector3.copy
 local mvec3_dir = mvector3.direction	
-
 local tmp_ground_from_vec = Vector3()
 local tmp_ground_to_vec = Vector3()
 local up_offset_vec = math.UP * 30
@@ -23,19 +22,29 @@ function PlayerStandard:_update_ground_ray()
 		
 		return
 	end
+	
+	local vel_z = 1
 
-	local hips_pos = tmp_ground_from_vec
-	local down_pos = tmp_ground_to_vec
-
-	mvec3_set(hips_pos, self._pos)
-	mvec3_add(hips_pos, up_offset_vec)
-	mvec3_set(down_pos, hips_pos)
-	mvec3_add(down_pos, down_offset_vec)
-
-	if self._unit:movement():ladder_unit() then
-		self._gnd_ray = self._unit:raycast("ray", hips_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "ignore_unit", self._unit:movement():ladder_unit(), "ray_type", "body mover", "sphere_cast_radius", 29, "bundle", 9, "report")
+	if self._unit:mover() then
+		vel_z = math.clamp(math.abs(self._unit:mover():velocity().z + 100), 0.01, 1)
+	end
+	
+	if vel_z < 0.2 and not self._is_jumping then
+		self._gnd_ray = true
 	else
-		self._gnd_ray = self._unit:raycast("ray", hips_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "ray_type", "body mover", "sphere_cast_radius", 29, "bundle", 9, "report")
+		local hips_pos = tmp_ground_from_vec
+		local down_pos = tmp_ground_to_vec
+
+		mvector3.set(hips_pos, self._pos)
+		mvector3.add(hips_pos, up_offset_vec)
+		mvector3.set(down_pos, hips_pos)
+		mvector3.add(down_pos, down_offset_vec)
+
+		if self._unit:movement():ladder_unit() then
+			self._gnd_ray = World:raycast("ray", hips_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "ignore_unit", self._unit:movement():ladder_unit(), "ray_type", "body mover", "sphere_cast_radius", 29, "report")
+		else
+			self._gnd_ray = World:raycast("ray", hips_pos, down_pos, "slot_mask", self._slotmask_gnd_ray, "ray_type", "body mover", "sphere_cast_radius", 29, "report")
+		end
 	end
 
 	self._gnd_ray_chk = true
@@ -841,6 +850,14 @@ function PlayerStandard:_get_max_walk_speed(t, force_run)
 	end
 
 	local final_speed = movement_speed * multiplier
+	
+	self._cached_final_speed = self._cached_final_speed or 0
+
+	if final_speed ~= self._cached_final_speed then
+		self._cached_final_speed = final_speed
+
+		self._ext_network:send("action_change_speed", final_speed)
+	end
 
 	return final_speed
 end
@@ -856,16 +873,6 @@ function PlayerStandard:_update_movement(t, dt)
 	local pos_new = nil
 	self._target_headbob = self._target_headbob or 0
 	self._headbob = self._headbob or 0
-	
-	local WALK_SPEED_MAX = self:_get_max_walk_speed(t)
-	
-	self._cached_final_speed = self._cached_final_speed or 0
-
-	if WALK_SPEED_MAX ~= self._cached_final_speed then
-		self._cached_final_speed = WALK_SPEED_MAX
-
-		self._ext_network:send("action_change_speed", WALK_SPEED_MAX)
-	end
 	
 	if self._lunge_data then
 		local lunge_data = self._lunge_data
@@ -902,7 +909,7 @@ function PlayerStandard:_update_movement(t, dt)
 		local speed = mvector3.length(self._state_data.zipline_data.position - self._pos) / dt / 500
 		pos_new = mvec_pos_new
 
-		mvector3.set(pos_new, self._state_data. zipline_data.position)
+		mvector3.set(pos_new, self._state_data.zipline_data.position)
 
 		if self._state_data.zipline_data.camera_shake then
 			self._ext_camera:shaker():set_parameter(self._state_data.zipline_data.camera_shake, "amplitude", speed)
@@ -924,6 +931,8 @@ function PlayerStandard:_update_movement(t, dt)
 
 			self:_update_crosshair_offset()
 		end
+
+		local WALK_SPEED_MAX = self:_get_max_walk_speed(t)
 
 		mvector3.set(mvec_move_dir_normalized, self._move_dir)
 		mvector3.normalize(mvec_move_dir_normalized)
@@ -1142,12 +1151,20 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 		local target_is_civilian = managers.enemy:is_civilian(character_unit)
 
 		if character_unit:character_damage() and character_unit:character_damage().damage_melee then
+			local shuffle_cut_stacks = 0
+			
 			local dmg_multiplier = 1
 
 			dmg_multiplier = dmg_multiplier + managers.player:upgrade_value("class_melee","weapon_class_damage_mul",0)
-			local stacking_deck_add_mul = managers.player:get_temporary_property("shuffle_cut_melee_bonus_damage",0)
-
-			dmg_multiplier = dmg_multiplier + stacking_deck_add_mul
+			
+			if managers.player:has_category_upgrade("class_throwing","throwing_boosts_melee_loop") then 
+				shuffle_cut_stacks = managers.player:get_property("shuffle_cut_melee_bonus_damage",0)
+				if shuffle_cut_stacks > 0 then 
+					local shuffle_cut_data = managers.player:upgrade_value("class_throwing","throwing_boosts_melee_loop")
+					local shuffle_cut_bonus = shuffle_cut_data[2]
+					dmg_multiplier = dmg_multiplier + shuffle_cut_bonus
+				end
+			end
 			
 			if not target_is_civilian and not managers.groupai:state():is_enemy_special(character_unit) then
 				dmg_multiplier = dmg_multiplier * managers.player:upgrade_value("player", "non_special_melee_multiplier", 1)
@@ -1182,11 +1199,11 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			end
 
 			dmg_multiplier = dmg_multiplier * managers.player:temporary_upgrade_value("temporary", "berserker_damage_multiplier", 1)
-			local target_dead = character_unit:character_damage().dead and not character_unit:character_damage():dead()
+			local target_alive = character_unit:character_damage().dead and not character_unit:character_damage():dead()
 			local target_hostile = managers.enemy:is_enemy(character_unit) and not tweak_data.character[character_unit:base()._tweak_table].is_escort and character_unit:brain():is_hostile()
 			local life_leach_available = managers.player:has_category_upgrade("temporary", "melee_life_leech") and not managers.player:has_activate_temporary_upgrade("temporary", "melee_life_leech")
 
-			if target_dead and target_hostile and life_leach_available then
+			if target_alive and target_hostile and life_leach_available then
 				managers.player:activate_temporary_upgrade("temporary", "melee_life_leech")
 				self._unit:character_damage():restore_health(managers.player:temporary_upgrade_value("temporary", "melee_life_leech", 1))
 			end
@@ -1223,7 +1240,7 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 
 			action_data.name_id = melee_entry
 			action_data.charge_lerp_value = charge_lerp_value
-
+			
 			if managers.player:has_category_upgrade("melee", "stacking_hit_damage_multiplier") then
 				self._state_data.stacking_dmg_mul = self._state_data.stacking_dmg_mul or {}
 				self._state_data.stacking_dmg_mul.melee = self._state_data.stacking_dmg_mul.melee or {
@@ -1232,7 +1249,7 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 				}
 				local stack = self._state_data.stacking_dmg_mul.melee
 
-				if character_unit:character_damage().dead and not character_unit:character_damage():dead() then
+				if target_alive then
 					stack[1] = t + managers.player:upgrade_value("melee", "stacking_hit_expire_t", 1)
 					stack[2] = math.min(stack[2] + 1, tweak_data.upgrades.max_melee_weapon_dmg_mul_stacks or 5)
 				else
@@ -1240,10 +1257,28 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 					stack[2] = 0
 				end
 			end
-			if not character_unit:character_damage():dead() then 
-				Hooks:Call("OnPlayerMeleeHit",character_unit,col_ray,action_data,defense_data,t)
-			end
+			
 			local defense_data = character_unit:character_damage():damage_melee(action_data)
+			if defense_data then 
+				local lethal_hit = target_alive and defense_data.type == "dead"
+				if shuffle_cut_stacks ~= 0 then 
+					if lethal_hit and managers.player:has_category_upgrade("class_melee","throwing_loop_refund") then 
+						--on melee kill with shuffle and cut aced, don't consume a shuffle cut throwing wepaon bonus stack
+					else
+						--else, consume one stack
+						managers.player:set_property("shuffle_cut_melee_bonus_damage",math.max(shuffle_cut_stacks - 1,0))
+					end
+				end
+				
+				--on melee hit, grant throwing bonus
+				if managers.player:has_category_upgrade("class_melee","melee_boosts_throwing_loop") then 
+					local max_stacks = managers.player:upgrade_value("class_melee","melee_boosts_throwing_loop")[1]
+					local stacks = managers.player:get_property("shuffle_cut_throwing_bonus_damage",0)
+					managers.player:set_property("shuffle_cut_throwing_bonus_damage",math.min(stacks+1,max_stacks))
+				end
+			end
+			
+--			Hooks:Call("OnPlayerMeleeHit",character_unit,col_ray,action_data,defense_data,t,lethal_hit)
 
 			self:_check_melee_dot_damage(col_ray, defense_data, melee_entry)
 			self:_perform_sync_melee_damage(hit_unit, col_ray, action_data.damage)
@@ -1329,18 +1364,13 @@ function PlayerStandard:_update_reload_timers(t, dt, input)
 
 			if self._equipped_unit:base():reload_exit_expire_t() then
 				local speed_multiplier = self._equipped_unit:base():reload_speed_multiplier()
+				local is_reload_not_empty = not self._equipped_unit:base():started_reload_empty()
+				local animation_name = is_reload_not_empty and "reload_not_empty_exit" or "reload_exit"
+				local animation = self:get_animation(animation_name)
+				self._state_data.reload_exit_expire_t = t + self._equipped_unit:base():reload_exit_expire_t(is_reload_not_empty) / speed_multiplier
+				local result = self._ext_camera:play_redirect(animation, speed_multiplier)
 
-				if self._equipped_unit:base():started_reload_empty() then
-					self._state_data.reload_exit_expire_t = t + self._equipped_unit:base():reload_exit_expire_t() / speed_multiplier
-
-					self._ext_camera:play_redirect(self:get_animation("reload_exit"), speed_multiplier)
-					self._equipped_unit:base():tweak_data_anim_play("reload_exit", speed_multiplier)
-				else
-					self._state_data.reload_exit_expire_t = t + self._equipped_unit:base():reload_not_empty_exit_expire_t() / speed_multiplier
-
-					self._ext_camera:play_redirect(self:get_animation("reload_not_empty_exit"), speed_multiplier)
-					self._equipped_unit:base():tweak_data_anim_play("reload_not_empty_exit", speed_multiplier)
-				end
+				self._equipped_unit:base():tweak_data_anim_play(animation_name, speed_multiplier)
 			elseif self._equipped_unit then
 				if not interupt then
 					self._equipped_unit:base():on_reload()

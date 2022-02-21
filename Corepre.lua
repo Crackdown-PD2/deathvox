@@ -146,6 +146,28 @@ if deathvox:IsTotalCrackdownEnabled() then
 	
 	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/radial_menu_assets/rmm_bg"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/radial_menu_assets/rmm_bg.texture")
 	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/radial_menu_assets/rmm_selector"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/radial_menu_assets/rmm_selector.texture")
+	
+	deathvox.tcd_gui_data = { --for reference in projectilestweakdata and playerinventorygui, for item class preview icons
+		weapons = {
+			class = {
+				class_grenade = "guis/textures/pd2/blackmarket/icons/tcd/class_grenade",
+				class_heavy = "guis/textures/pd2/blackmarket/icons/tcd/class_heavy",
+				class_melee = "guis/textures/pd2/blackmarket/icons/tcd/class_melee",
+				class_precision = "guis/textures/pd2/blackmarket/icons/tcd/class_precision",
+				class_rapidfire = "guis/textures/pd2/blackmarket/icons/tcd/class_rapidfire",
+				class_saw = "guis/textures/pd2/blackmarket/icons/tcd/class_saw",
+				class_shotgun = "guis/textures/pd2/blackmarket/icons/tcd/class_shotgun",
+				class_specialist = "guis/textures/pd2/blackmarket/icons/tcd/class_specialist",
+				class_throwing = "guis/textures/pd2/blackmarket/icons/tcd/class_throwing"
+			},
+			subclass = {
+				subclass_areadenial = "guis/textures/pd2/blackmarket/icons/tcd/subclass_areadenial",
+				subclass_poison = "guis/textures/pd2/blackmarket/icons/tcd/subclass_poison",
+				subclass_quiet = "guis/textures/pd2/blackmarket/icons/tcd/subclass_quiet"
+			}
+		}
+	}
+	
 else
 	--load vanilla skill icons (in case user launched with tcd but toggled off tcd and reloaded game state)
 	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree_2/icons_atlas_2"),Idstring("texture"),"guis/textures/pd2/skilltree_2/icons_atlas_2.texture")

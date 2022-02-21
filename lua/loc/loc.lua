@@ -36,17 +36,17 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Localization", function(loc)
 	local level = Global.level_data and Global.level_data.level_id
 
 	if group_type == federales then
-			loc:load_localization_file(ModPath .. "loc/federalesnames.txt")
-		elseif level == "pex" or level == "skm_bex" or level == "bex" then --forcefully load beat cop and hrt names on these levels so that they dont get overridden by cd diff killfeed/hoplib/whatever
-			-- log("head keeps spinnin")
-			loc:load_localization_file(ModPath .. "loc/federalespersistentnames.txt")
-		end
-		
-		if group_type == murkywater then
-			loc:load_localization_file(ModPath .. "loc/murkynames.txt")
-		elseif level == "bph" or level == "vit" or level == "des" or level == "pbr" then 
-			loc:load_localization_file(ModPath .. "loc/murkypersistentnames.txt")
-		end	
+		loc:load_localization_file(ModPath .. "loc/federalesnames.txt")
+	elseif level == "pex" or level == "skm_bex" or level == "bex" then --forcefully load beat cop and hrt names on these levels so that they dont get overridden by cd diff killfeed/hoplib/whatever
+		-- log("head keeps spinnin")
+		loc:load_localization_file(ModPath .. "loc/federalespersistentnames.txt")
+	end
+	
+	if group_type == murkywater then
+		loc:load_localization_file(ModPath .. "loc/murkynames.txt")
+	elseif level == "bph" or level == "vit" or level == "des" or level == "pbr" then 
+		loc:load_localization_file(ModPath .. "loc/murkypersistentnames.txt")
+	end	
 end)
 
 Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
@@ -226,7 +226,9 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 			--misc
 				hud_int_pick_electronic_lock = "Hold $BTN_INTERACT to hack the lock",
 				hud_action_picking_electronic_lock = "Hacking the lock...",
-			
+				
+				hud_sociopath_combo_count = "%ix combo", --sociopath hud combo counter; "%i" represents the number of kills in the combo
+				
 			--skills:
 				
 			--taskmaster
@@ -401,22 +403,22 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 		
 			--dealer
 				menu_high_low = "High-Low Split",
-				menu_high_low_desc = "BASIC: ##$basic##\nYou gain ##+80%## Swap Speed and Stow Speed with all weapon types.\n\nACE: ##$pro##\nYou deal ##+10%## with $ICN_MEL Melee Weapons and $ICN_THR Throwing Weapons.",
-			
-				menu_wild_card = "Wild Card",
-				menu_wild_card_desc = "BASIC: ##$basic##\n$ICN_MEL Melee Weapons can score Headshots.\n\nACE: ##$pro##\n$ICN_THR Throwing Weapons gain ##+100%## Headshot Damage.",
+				menu_high_low_desc = "BASIC: ##$basic##\n$ICN_MEL Melee Weapons gain the ability to score Headshots. $ICN_THR Throwing Weapons gain ##+100%## increased Velocity, increasing their speed and range.\n\nACE: ##$pro##\nYou gain ##+80%## Swap Speed and Stow Speed with all weapon types.",
+				
+				menu_face_value = "Face Value",
+				menu_face_value_desc = "BASIC: ##$basic##\n$ICN_MEL Melee Weapons gain ##+100%## Charge Speed.\n\nACE: ##$pro##\nAttacking a Shield with any $ICN_MEL Melee Weapon will stagger them.",
 			
 				menu_value_bet = "Value Bet",
-				menu_value_bet_desc = "BASIC: ##$basic##\n$ICN_THR Throwing Weapons can be charged, dealing ##+100%## Damage after being held for ##1## second.\n\nACE: ##$pro##\n$ICN_MEL Melee Weapons gain ##+100%## Charge Speed.",
+				menu_value_bet_desc = "BASIC: ##$basic##\n$ICN_THR Throwing Weapons gain ##+50%## ammunition.\n\nACE: ##$pro##\n$ICN_THR Throwing Weapons can be charged, dealing ##+100%## Damage after being held for ##1## second.",
 			
-				menu_face_value = "Face Value",
-				menu_face_value_desc = "BASIC: ##$basic##\nIncreases the Knockdown strength of your $ICN_MEL Melee Weapons by ##one stage##.\n\nACE: ##$pro##\nAttacking a Shield with any $ICN_MEL Melee Weapon will stagger them.",
+				menu_wild_card = "Wild Card",
+				menu_wild_card_desc = "BASIC: ##$basic##\nWhen you take damage, enemies within ##2## meters take ##100%## of that damage.\n\nACE: ##$pro##\nEnemies damaged by Wild Card are now staggered.",
 			
 				menu_stacking_deck = "Stacking the Deck",
-				menu_stacking_deck_desc = "BASIC: ##$basic##\n$ICN_THR Throwing Weapons gain ##+50%## Ammunition.\n\nACE: ##$pro##\n$ICN_THR Throwing Weapons gain ##+100%## increased Velocity, increasing their speed and range.",
+				menu_stacking_deck_desc = "BASIC: ##$basic##\n$ICN_THR Throwing Weapons will curve towards enemies, angling to strike them in the head.\n\nACE: ##$pro##\nHeadshot kills with $ICN_THR Throwing Weapons inflict Panic on most enemies within ##6## meters of the target, causing them to go into short bursts of uncontrollable fear.",
 			
 				menu_shuffle_and_cut = "Shuffle and Cut",
-				menu_shuffle_and_cut_desc = "BASIC: ##$basic##\nHitting an enemy with a $ICN_THR Throwing Weapon grants ##+500%## Damage to your $ICN_MEL Melee Weapons for ##5## seconds.\n\nACE: ##$pro##\nHitting an enemy with a $ICN_MEL Melee Weapon grants ##+500%## Damage to $ICN_THR Throwing Weapons for ##5## seconds.",
+				menu_shuffle_and_cut_desc = "BASIC: ##$basic##\nHitting an enemy with a $ICN_THR Throwing Weapon grants ##+500%## Damage to your next $ICN_MEL Melee Weapon attack and hitting an enemy with a $ICN_MEL Melee Weapon grants ##+500%## Damage to your next $ICN_THR Throwing Weapon attack.\n\nEach buff can stack up to ##5## times.##\n\nACE: ##$pro##\nKilling an enemy with a $ICN_MEL Melee Weapon or $ICN_THR Throwing Weapon empowered by Shuffle and Cut refunds the stack.##",
 			
 			
 			--fixer
@@ -536,47 +538,48 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck4_9 = "Smooth Criminal",
 				menu_deck4_9_desc = "You gain a bonus ##+2%## Dodge Chance for every ##2## points of Detection Risk under ##35##, up to ##+20%##.",
 				
-				--Crook
-				menu_st_spec_5 = "Crook",
-				menu_deck5_1 = "Extra Padding",
-				menu_deck5_1_desc = "Ballistic Vests gain ##+15## Maximum Armor.",
-				menu_deck5_2 = "Bounce Back",
-				menu_deck5_2_desc = "Ballistic Vests gain ##+20%## Armor Recovery Rate.",
-				menu_deck5_3 = "Vital Protection",
-				menu_deck5_3_desc = "Increases the Maximum Armor bonus for Ballistic Vests to ##+30##.",
-				menu_deck5_4 = "Basic Tailoring",
-				menu_deck5_4_desc = "When wearing a Ballistic Vest, you gain ##+15%## Dodge Chance.",
-				menu_deck5_5 = "Custom Weave",
-				menu_deck5_5_desc = "Increases the Maximum Armor bonus for Ballistic Vests to ##+45##.",
-				menu_deck5_6 = "Keeping Cool",
-				menu_deck5_6_desc = "Increases the Ballistic Vest Armor Recovery Rate bonus to ##+40%##.",
-				menu_deck5_7 = "Prototype Material",
-				menu_deck5_7_desc = "Increases the Maximum Armor bonus for Ballistic Vests to ##+60##.",
-				menu_deck5_8 = "Perfect Fit",
-				menu_deck5_8_desc = "Your Dodge Chance bonus for Ballistic Vests increases to ##+30%##.",
-				menu_deck5_9 = "Borrowed Time",
-				menu_deck5_9_desc = "Instead of being incapacitated when you lose all of your health, you will enter a grace period where you can continue to act for ##4## seconds before falling. During this grace period, you are ##invulnerable## and your weapons ##instantly reload##. Borrowed Time cannot be triggered by fall damage or fire damage.",
 				
 				--Hitman
-				menu_st_spec_6 = "Hitman",
-				menu_deck6_1 = "Aerodynamic",
-				menu_deck6_1_desc = "You gain ##+10%## Armor Recovery Rate.",
-				menu_deck6_2 = "Revolution 909",
-				menu_deck6_2_desc = "Your Armor will Recover ##2## seconds after being broken, no matter the situation. ",
-				menu_deck6_3 = "High Fidelity",
-				menu_deck6_3_desc = "Your Armor Recovery Rate bonus increases to ##+20%##.",
-				menu_deck6_4 = "Rollin & Scratchin",
-				menu_deck6_4_desc = "Revolution 909 now activates after ##1.75## seconds.",
-				menu_deck6_5 = "Fresh",
-				menu_deck6_5_desc = "Your Armor Recovery Rate bonus increases to ##+30%##.",
-				menu_deck6_6 = "Steam Machine",
-				menu_deck6_6_desc = "Revolution 909 now activates after ##1.5## seconds.",
-				menu_deck6_7 = "Face to Face",
-				menu_deck6_7_desc = "Your Armor Recovery Rate bonus increases to ##+40%##.",
-				menu_deck6_8 = "Hitmen After All",
-				menu_deck6_8_desc = "Revolution 909 now activates after ##1.25## seconds.",
-				menu_deck6_9 = "One More Time",
-				menu_deck6_9_desc = "You become ##Invulnerable while in bleedout##. While in bleedout, you can ##Revive yourself by killing an enemy and then pressing Jump##.",
+				menu_st_spec_5 = "Hitman",
+				menu_deck5_1 = "Aerodynamic",
+				menu_deck5_1_desc = "You gain ##+10%## Armor Recovery Rate.",
+				menu_deck5_2 = "Revolution 909",
+				menu_deck5_2_desc = "Your Armor will Recover ##2## seconds after being broken, no matter the situation. ",
+				menu_deck5_3 = "High Fidelity",
+				menu_deck5_3_desc = "Your Armor Recovery Rate bonus increases to ##+20%##.",
+				menu_deck5_4 = "Rollin & Scratchin",
+				menu_deck5_4_desc = "Revolution 909 now activates after ##1.75## seconds.",
+				menu_deck5_5 = "Fresh",
+				menu_deck5_5_desc = "Your Armor Recovery Rate bonus increases to ##+30%##.",
+				menu_deck5_6 = "Steam Machine",
+				menu_deck5_6_desc = "Revolution 909 now activates after ##1.5## seconds.",
+				menu_deck5_7 = "Face to Face",
+				menu_deck5_7_desc = "Your Armor Recovery Rate bonus increases to ##+40%##.",
+				menu_deck5_8 = "Hitmen After All",
+				menu_deck5_8_desc = "Revolution 909 now activates after ##1.25## seconds.",
+				menu_deck5_9 = "One More Time",
+				menu_deck5_9_desc = "You become ##Invulnerable while in bleedout##. While in bleedout, you can ##Revive yourself by killing an enemy and then pressing Jump##.",
+				
+				--Crook
+				menu_st_spec_6 = "Crook",
+				menu_deck6_1 = "Extra Padding",
+				menu_deck6_1_desc = "Ballistic Vests gain ##+15## Maximum Armor.",
+				menu_deck6_2 = "Bounce Back",
+				menu_deck6_2_desc = "Ballistic Vests gain ##+20%## Armor Recovery Rate.",
+				menu_deck6_3 = "Vital Protection",
+				menu_deck6_3_desc = "Increases the Maximum Armor bonus for Ballistic Vests to ##+30##.",
+				menu_deck6_4 = "Basic Tailoring",
+				menu_deck6_4_desc = "When wearing a Ballistic Vest, you gain ##+15%## Dodge Chance.",
+				menu_deck6_5 = "Custom Weave",
+				menu_deck6_5_desc = "Increases the Maximum Armor bonus for Ballistic Vests to ##+45##.",
+				menu_deck6_6 = "Keeping Cool",
+				menu_deck6_6_desc = "Increases the Ballistic Vest Armor Recovery Rate bonus to ##+40%##.",
+				menu_deck6_7 = "Prototype Material",
+				menu_deck6_7_desc = "Increases the Maximum Armor bonus for Ballistic Vests to ##+60##.",
+				menu_deck6_8 = "Perfect Fit",
+				menu_deck6_8_desc = "Your Dodge Chance bonus for Ballistic Vests increases to ##+30%##.",
+				menu_deck6_9 = "Borrowed Time",
+				menu_deck6_9_desc = "Instead of being incapacitated when you lose all of your health, you will enter a grace period where you can continue to act for ##4## seconds before falling. During this grace period, you are ##invulnerable## and your weapons ##instantly reload##. Borrowed Time cannot be triggered by fall damage or fire damage.",
 				
 				--Burglar
 				menu_deck7_1 = "Hands in the Dark",
@@ -720,7 +723,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				
 				--Gambler
 				menu_deck10_1 = "Financial Wellness",
-				menu_deck10_1_desc = "Every ##20## Ammo Pickups that your team gathers heals your team for ##1## Maximum Health.",
+				menu_deck10_1_desc = "Every ##20## Ammo Pickups that your team gathers heals your team for ##1%## Maximum Health.",
 				menu_deck10_2 = "Scavenger",
 				menu_deck10_2_desc = "Your team's Ammo Box pickup range is increased by ##+25%##.",
 				menu_deck10_3 = "Healthy Investment",

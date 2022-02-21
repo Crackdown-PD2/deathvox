@@ -1,8 +1,9 @@
 function BlackMarketManager:recoil_addend(name, categories, recoil_index, silencer, blueprint, current_state, is_single_shot)
 	local addend = 0
-	local factory_id = managers.weapon_factory:get_factory_id_by_weapon_id(name)
-	
-	local subclasses = managers.weapon_factory:get_weapon_subclasses_from_blueprint(name,blueprint)
+	local wfm = managers.weapon_factory
+	local factory_id = wfm:get_factory_id_by_weapon_id(name)
+	local primary_class = wfm:get_primary_weapon_class_from_blueprint(name,blueprint)
+	local subclasses = wfm:get_weapon_subclasses_from_blueprint(name,blueprint)
 	
 	--WHY, WHY WHY WHY WHY, WHY IS THIS HANDLED HERE, BUT SPREAD IS IN NEWRAYCASTWEAPONBASE, AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA its ok its just i spent like 10 mins trying to figure out where it was handled and i think this is dumb. 
 	--^ yeah same. -offy
@@ -13,7 +14,11 @@ function BlackMarketManager:recoil_addend(name, categories, recoil_index, silenc
 		index = index + managers.player:upgrade_value("player", "stability_increase_bonus_2", 0)
 		index = index + managers.player:upgrade_value(name, "recoil_index_addend", 0)
 
-	
+		
+		if primary_class == "class_heavy" then
+			index = index + managers.player:get_temporary_property("current_death_grips_stacks",0) * managers.player:upgrade_value("class_heavy","death_grips_recoil_bonus",0)
+		end
+		
 		for _, category in ipairs(categories) do
 			index = index + managers.player:upgrade_value(category, "recoil_index_addend", 0)
 		end

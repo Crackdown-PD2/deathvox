@@ -13,6 +13,7 @@ if not (_G.deathvox and deathvox.HAS_LOADED_ASSETS) then
 	dofile(deathvox.ModPath .. "classes/radialmousemenu.lua")
 	dofile(deathvox.ModPath .. "classes/sentrycontrolmenu.lua")
 	dofile(deathvox.ModPath .. "classes/tripminecontrolmenu.lua")
+	dofile(deathvox.ModPath .. "classes/tcdoverlay.lua")
 
 	--creates empty menu entries for the main menu and the overhauls submenu, to be populated with options later
 	local menu_id = deathvox.blt_menu_id

@@ -2,6 +2,8 @@ local mvec1 = Vector3()
 local mvec2 = Vector3()
 local mrot1 = Rotation()
 
+local anti_gravitate_idstr = Idstring("physic_effects/anti_gravitate")
+
 
 Hooks:PreHook(ProjectileBase,"init","deathvox_projectilebase_init",function(self,unit)
 	self._primary_class = self._primary_class or "NO_WEAPON_CLASS"
@@ -202,13 +204,23 @@ if deathvox:IsTotalCrackdownEnabled() then
 				launch_speed = tweak_data.projectiles[params.projectile_entry].launch_speed or launch_speed
 				push_at_body_index = tweak_data.projectiles[params.projectile_entry].push_at_body_index
 			end
+			
 			if tweak_data.blackmarket.projectiles[params.projectile_entry] then 
 				self:set_projectile_entry(params.projectile_entry)
 			end
 		end
 		
 		if self._thrower_unit == managers.player:local_player() then 
-			launch_speed = launch_speed * managers.player:upgrade_value(self:get_weapon_class() or "NO_WEAPON_CLASS","projectile_velocity_mul",1)
+			local class = self:get_weapon_class() or "NO_WEAPON_CLASS"
+			launch_speed = launch_speed * managers.player:upgrade_value(class, "projectile_velocity_mul",1)
+			
+			if managers.player:has_category_upgrade(class, "deckstacker_homing") then
+				self._homing = World:play_physic_effect(anti_gravitate_idstr, self._unit)
+			end
+			
+			if managers.player:has_category_upgrade(class, "deckstacker_HS_panic") then
+				self._HS_panic = true
+			end
 		end
 
 		velocity = velocity * launch_speed

@@ -34,7 +34,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 		
 		if self:is_weapon_class("class_heavy") then 
-			local bonus = (pm:get_property("current_death_grips_stacks",0) * pm:upgrade_value("class_heavy","death_grips_spread_bonus",0))
+			local bonus = pm:get_temporary_property("current_death_grips_stacks",0) * pm:upgrade_value("class_heavy","death_grips_spread_bonus",0)
 			index = index + bonus
 		end
 		

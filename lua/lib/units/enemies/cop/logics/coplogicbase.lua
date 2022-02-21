@@ -1334,10 +1334,11 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 					end
 					
 					if REACT_COMBAT <= attention.reaction then
-						if not data.tactics or not data.tactics.charge or objective.area and next(objective.area.police.units) then
+						local my_data = data.internal_data
+						
+						if not data.tactics or not data.tactics.charge or objective.area and next(objective.area.police.units) or my_data.want_to_take_cover then
 							local grp_objective = objective.grp_objective
-							local dis = data.unit:base()._engagement_range or data.internal_data.weapon_range and data.internal_data.weapon_range.optimal or 500
-							local my_data = data.internal_data
+							local dis = data.unit:base()._engagement_range or my_data.weapon_range and my_data.weapon_range.optimal or 500
 							local soft_t = 3
 							
 							if not data.internal_data.want_to_take_cover then
@@ -1347,10 +1348,6 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 									end
 								else
 									soft_t = 1
-								end
-								
-								if not attention.verified then
-									dis = dis * 0.5
 								end
 							end
 

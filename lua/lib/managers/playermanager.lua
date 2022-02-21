@@ -254,8 +254,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 			self:set_property("charged_throwable_damage_bonus",0)
 		end
 		
+		--[[ redundant; now handled in raycastweaponbase
 		if self:has_category_upgrade("class_throwing","throwing_boosts_melee_loop") then
-			local duration,value = unpack(self:upgrade_value("class_throwing","throwing_boosts_melee_loop",{0,0}))
+			local max_stacks = self:upgrade_value("class_throwing","throwing_boosts_melee_loop",{0,0})[1]
 			self._message_system:register(Message.OnEnemyShot,"proc_shuffle_cut_basic",function(unit,attack_data)
 				local player = self:local_player()
 				if not alive(player) then 
@@ -265,17 +266,11 @@ if deathvox:IsTotalCrackdownEnabled() then
 				if not (weapon_base and weapon_base.is_weapon_class and weapon_base:is_weapon_class("class_throwing") and weapon_base._thrower_unit and weapon_base._thrower_unit == player) then 
 					return
 				end
-				self:activate_temporary_property("shuffle_cut_melee_bonus_damage",duration,value)
+				local stacks = self:get_property("shuffle_cut_melee_bonus_damage",0)
+				self:set_property("shuffle_cut_melee_bonus_damage",math.min(stacks+1,max_stacks))
 			end)
 		end
-		
-		if self:has_category_upgrade("class_melee","melee_boosts_throwing_loop") then 
-			local duration,value = unpack(self:upgrade_value("class_melee","melee_boosts_throwing_loop",{0,0}))
-			Hooks:Add("OnPlayerMeleeHit","proc_shuffle_cut_aced",function(character_unit,col_ray,action_data,defense_data,t)
-				self:activate_temporary_property("shuffle_cut_throwing_bonus_damage",duration,value)
-			end)
-		end
-	
+		--]]
 		
 		if self:has_category_upgrade("weapon","xbow_headshot_instant_reload") then 
 		
@@ -303,8 +298,11 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 		
 	
+--			"OnPlayerMeleeHit" hook is no longer active; to re-implement this, the hook must be re-enabled in PlayerStandard:_do_melee_damage()
+--[[
 		if self:has_category_upgrade("player","melee_hit_speed_boost") then
-			Hooks:Add("OnPlayerMeleeHit","cd_proc_butterfly_bee_aced",
+			--float like a butterfly aced (unused, pre-rework)
+			Hooks:Add("OnPlayerMeleeHit","cd_proc_butterfly_bee",
 				function(hit_unit,col_ray,action_data,defense_data,t)
 					if hit_unit and not managers.enemy:is_civilian(hit_unit) then 
 						managers.player:activate_temporary_property("float_butterfly_movement_speed_multiplier",unpack(managers.player:upgrade_value("player","melee_hit_speed_boost",{0,0})))
@@ -312,6 +310,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				end
 			)
 		end
+--]]
 		
 		if self:has_category_upgrade("player","escape_plan") then 
 			Hooks:Add("OnPlayerShieldBroken","cd_proc_escape_plan",
@@ -442,14 +441,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 		
 		if self:has_category_upgrade("class_heavy","death_grips_stacks") then
-			self:set_property("current_death_grips_stacks",0)
 			self._message_system:register(Message.OnEnemyKilled,"proc_death_grips",
 				function(weapon_unit,variant,killed_unit)
 					local player = self:local_player()
 					if not alive(player) then 
 						return
 					end
-					local weapon_base = weapon_unit and weapon_unit:base()
+					local weapon_base = alive(weapon_unit) and weapon_unit:base()
 					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_heavy") then 
 						if weapon_base._setup.user_unit ~= player then 
 							return
@@ -458,14 +456,11 @@ if deathvox:IsTotalCrackdownEnabled() then
 						return
 					end
 					local death_grips_data = self:upgrade_value("class_heavy","death_grips_stacks",{0,0})
-					self:set_property("current_death_grips_stacks",math.min(self:get_property("current_death_grips_stacks") + 1,death_grips_data[2]))
-					managers.enemy:remove_delayed_clbk("death_grips_stacks_expire",true)
-					managers.enemy:add_delayed_clbk("death_grips_stacks_expire",
-						function()
-							self:set_property("current_death_grips_stacks",0)
-						end,
-						Application:time() + death_grips_data[1]
-					)
+					local death_grips_stack_reset_timer = death_grips_data[1]
+					local death_grips_max_stacks = death_grips_data[2]
+					
+					local death_grips_stacks = math.min(self:get_temporary_property("current_death_grips_stacks",0) + 1,death_grips_max_stacks)
+					self:activate_temporary_property("current_death_grips_stacks",death_grips_stack_reset_timer,death_grips_stacks)
 				end
 			)
 		end
@@ -494,9 +489,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 				--Message.OnPlayerReload is called when reload STARTS, which is before the reload mul is calculated.
 				--so it's pretty useless to reset stacks from that message event.
 				function(weapon_unit)
-					local weapon_base = weapon_unit and weapon_unit:base()
+					local weapon_base = alive(weapon_unit) and weapon_unit:base()
 					if weapon_base and weapon_base:is_weapon_class("class_heavy") then 
-						managers.player:set_property("current_lead_farmer_stacks",0)
+						self:set_property("current_lead_farmer_stacks",0)
 					end
 				end
 			)
@@ -797,372 +792,43 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end
 		end
 		
-		BeardLib:RemoveUpdater("TCD_Sociopath_Update_Damage_Visual_Effect")
 		if self:has_category_upgrade("player","sociopath_mode") then 
-			
-			Hooks:Add("TCD_Create_Stack_Tracker_HUD","TCD_CreateSociopathElement",function(hudtemp)
-			
-			
-			--create stack tracker combo counter element
-				local panel_name = "sociopath_combo_tracker"
-				if hudtemp and alive(hudtemp) then
-					if alive(hudtemp:child(panel_name)) then 
-						hudtemp:remove(hudtemp:child(panel_name))
-					end
-					local trackerhud = hudtemp:panel({
-						name = panel_name
-					})
-					trackerhud:set_position((hudtemp:w() - trackerhud:w()) / 2,100)
-					local debug_trackerhud = trackerhud:rect({
-						name = "debug",
-						color = Color.red,
-						visible = false,
-						alpha = 0.1
-					})
-					local anim_pulse_duration = 0.5
-					local anim_timeout_fade_duration = 1
-					local anim_timeout_hold_duration = tweak_data.upgrades.values.player.sociopath_combo_duration - (anim_timeout_fade_duration + anim_pulse_duration)
-					--these must add up to tweak_data.upgrades.values.player.sociopath_combo_duration,
-						--which is 5
-					
-					local font_size = 32
---					local font_color_primary = Color("db72e3")
-					local font_color_primary = Color("f579ff")
-					local font_color_secondary = Color("43ebed")
-					local font_color_pulse = Color("ffffff")
---					local font_color_pulse = Color("d90a0a")
---					local font_color_pulse = Color("43ebed")
-					
-					local stack_count = trackerhud:text({
-						name = "stack_count",
-						text = "",
-						font = "fonts/font_justice_shadow_outline",
-						font_size = font_size,
-						align = "center",
-						color = font_color_primary,
-						layer = 4,
-						vertical = "top"
-					})
-					
-					Hooks:Add("TCD_OnSociopathComboStacksChanged","TCD_SetSociopathComboStacksHUD",function(previous,current)
-						local font_scale = 1.2
-						local color_scale = math.min(current/10,1)
-						local to_font_size = font_size
-						local from_font_size = to_font_size * font_scale
-						local s
-						if current > 1 then 
-							s = string.format("%ix combo",current)
-						else
-							s = ""
-						end
-						if alive(stack_count) then 
-							if current > 1 then 
-								stack_count:stop()
-								stack_count:animate(
-									function (o)
-										over(anim_pulse_duration,
-											function (t)
-												local from_color = font_color_pulse
-												local to_color = font_color_primary
-												o:set_font_size(from_font_size + ((to_font_size - from_font_size) * t))
-												o:set_color(from_color + ((to_color - from_color) * t))
-											end
-										)
-										
-										local c = o:color()
-										--[[
-										local t = 0
-										while t < anim_timeout_fade_duration do 
-											local dt = coroutine.yield()
-											t = t + dt
-											local interp = (anim_timeout_fade_duration - math.sqrt(t)) / anim_timeout_fade_duration
-											local to_color = font_color_secondary
-											o:set_color(c + ((to_color - c) * t))
-											
-										end
-										--]]
-										wait(anim_timeout_hold_duration)
-										local c = o:color()
-										over(anim_timeout_fade_duration,
-											function(t)
-												local to_color = font_color_secondary
-												o:set_color(c + ((to_color - c) * t))
-											end
-										)
-									end
-								)
-							else
-								stack_count:stop()
-							end
-							
-							stack_count:set_text(s)
-						end
-					end)
-					
-				end
-				
-				
-				
-			--create CRT hud effect for health/death
-				local crt_parent_panel = managers.hud._fullscreen_workspace:panel() -- managers.gui_data:create_fullscreen_workspace():panel() --hudtemp --managers.hud:script(PlayerBase.PLAYER_INFO_HUD_FULLSCREEN_PD2).panel
-				
-				local static_files = {
-					"guis/textures/pd2/damage_overlay_sociopath/static1",
-					"guis/textures/pd2/damage_overlay_sociopath/static2",
-					"guis/textures/pd2/damage_overlay_sociopath/static3",
-					"guis/textures/pd2/damage_overlay_sociopath/static4"
-				}
-				local SCANLINE_TEXTURE_FILE = "guis/textures/pd2/damage_overlay_sociopath/scanlines_overlay"
-				local SCANLINES_BLEND_MODE = "sub"
-				local SCANLINE_TEXTURE_X = 0
-				local SCANLINE_TEXTURE_Y = 0
-				local SCANLINE_TEXTURE_WIDTH = 1
-				local SCANLINE_TEXTURE_HEIGHT = 360
-				local SCANLINES_SPEED = 100
-				local STATIC_TEXTURE_WIDTH = 256
-				local STATIC_TEXTURE_HEIGHT = 256
-				local STATIC_ROTATION_STEP = 90
-				local STATIC_INTERVAL = 0.04
-				local STATIC_BLEND_MODE = "normal"
-				local STATIC_W = 256
-				local STATIC_H = 256
-				local MAX_STATIC_ALPHA = 0.85
-				local NUM_WHITESCREENS = 15
-				local MAX_WHITESCREEN_SIZE = 0.66
-				local WHITESCREEN_DELAY_TIME = 0.001
-				local WHITESCREEN_OFF_TIME = 0.5
-				local WHITESCREEN_SHINE_TIME = 0.25
-				local WHITESCREEN_SHINE_SCALE = 0.2
-				local DYING_LINE_W_SCALE = 4
-				local DYING_LINE_H_SCALE = 0.025
-				local BLACKSCREEN_TIMER = 0.25
-				local DEATH_SCREEN_FADEOUT_TIME = 1
-				
-				local crt_panel
-				if alive(crt_parent_panel:child("crt_panel")) then 
---					crt_parent_panel:remove(crt_parent_panel:child("crt_panel"))
-				else
-					crt_panel = crt_parent_panel:panel({
-						name = "crt_panel",
-						alpha = 1,
-						layer = -9
-					})
-				end
-				
-				local death_panel = crt_panel:panel({
-					name = "death_panel",
-					visible = false
-				})
-				
-				local blackscreen = crt_panel:rect({
-					name = "blackscreen",
-					color = Color("000000"),
-					alpha = 0,
-					layer = 0
-				})
-				local vignette = crt_panel:bitmap({
-					name = "vignette",
-					texture = "guis/textures/pd2/damage_overlay_sociopath/vignette_overlay",
-					w = 0,
-					h = 0,
-					layer = 3
-				})
-				local static_panel = crt_panel:panel({
-					name = "static",
-					layer = 2
-				})
-				local scanlines = crt_panel:panel({
-					name = "scanlines",
-					h = crt_panel:h() * 2,
-					alpha = 0.2,
-					layer = 4,
-					visible = false
-				})
-				local scanline_1 = scanlines:bitmap({
-					name = "scanline_1",
-					texture = SCANLINE_TEXTURE_FILE,
-					texture_rect = {SCANLINE_TEXTURE_X,SCANLINE_TEXTURE_Y,SCANLINE_TEXTURE_WIDTH,SCANLINE_TEXTURE_HEIGHT},
-					blend_mode = SCANLINES_BLEND_MODE,
-					y = 0,
-					w = crt_panel:w(),
-					h = crt_panel:h()
-				})
-				local scanline_2 = scanlines:bitmap({
-					name = "scanline_2",
-					texture = SCANLINE_TEXTURE_FILE,
-					texture_rect = {SCANLINE_TEXTURE_X,SCANLINE_TEXTURE_Y,SCANLINE_TEXTURE_WIDTH,SCANLINE_TEXTURE_HEIGHT},
-					blend_mode = SCANLINES_BLEND_MODE,
-					y = crt_panel:h(),
-					w = crt_panel:w(),
-					h = crt_panel:h()
-				})
-				
-				
-				local statics_v = math.ceil(static_panel:h() / STATIC_H)
-				local statics_h = math.ceil(static_panel:w() / STATIC_W)
-				local NUM_STATICS = statics_v * statics_h
-				
-				for i=0,NUM_STATICS-1,1 do 
-					local row = math.floor(i/statics_h)
-					local column = (i % statics_h)
-					local x = STATIC_W * column
-					local y = STATIC_H * row			
-					
-					local static = static_panel:bitmap({
-						name = "static_" .. i,
-						texture = table.random(static_files),
-						blend_mode = STATIC_BLEND_MODE,
-						w = STATIC_W,
-						h = STATIC_H,
-						alpha = 0,
-						x = x,
-						y = y
-					})
-				end
-				
-				
-				local static_index = 1
-				local static_t = 0
-				local function update_crt_effect(t,dt)
-					
-					if alive(crt_panel) then 
-						--vignette
-						local player = managers.player:local_player()
-						if alive(player) then 
-							local dmg_ext = player:character_damage()
-							local progression = dmg_ext._downed_progression
-							if progression then 
-								local prog_dec = progression / 100
-								local vw,vh = crt_panel:size()
-								local scale = 2 - prog_dec
-								vignette:set_size(vw * scale,vh * scale)
-								vignette:set_center(crt_panel:center())
-								
-								--static
-								static_t = static_t + dt
-								if static_t >= STATIC_INTERVAL then 
-									static_t = static_t - STATIC_INTERVAL
-									static_index = (static_index + 1) % #static_files
-									for i,static in pairs(static_panel:children()) do 
-										static:set_image(table.random(static_files))
-										static:set_rotation(static_index * STATIC_ROTATION_STEP)
-										static:set_alpha((prog_dec * prog_dec) * MAX_STATIC_ALPHA)
-										--static:set_alpha((0.5 * math.sin(Application:time() * 180)) + 0.5)
-									end
-								end
-								
-								--scanlines
-								local scanline_y = scanlines:y() + (dt * SCANLINES_SPEED)
-								if scanline_y >= 0 then 
-									scanlines:set_y(-crt_panel:h())
-								else
-									scanlines:set_y(scanline_y)
-								end
-							end
-						end
-					
-						
-						
-					end
-					
-				end
-				
-				
-				Hooks:Add("deathvox_OnPlayerEnteredBleedout","TCD_Animate_Sociopath_Bleedout",function()
-					if alive(crt_panel) then 
-						BeardLib:AddUpdater("TCD_Sociopath_Update_Damage_Visual_Effect",update_crt_effect)
-						scanlines:show()
-					end
-				end)
-				Hooks:Add("deathvox_OnPlayerEnteredCustody","TCD_Animate_Sociopath_Death",function()
-					
-					BeardLib:RemoveUpdater("TCD_Sociopath_Update_Damage_Visual_Effect")
-					
-					if alive(crt_panel) then 
-						for i,static in pairs(static_panel:children()) do 
-							static:set_alpha(0)
-						end
-						scanlines:hide()
-						vignette:set_size(0,0)
-						blackscreen:set_alpha(1)
-						death_panel:show()
-						death_panel:animate(function(o)
---							over(BLACKSCREEN_TIMER,function(prog)
---								blackscreen:set_alpha(prog)
---							end)
-							local function anim_fadeout(whs)
-								over(WHITESCREEN_OFF_TIME,function(elapsed_prog)
-									elapsed_prog = 1 - elapsed_prog
-									local ow,oh = whs:parent():size()
-									whs:set_size(MAX_WHITESCREEN_SIZE * ow * elapsed_prog,MAX_WHITESCREEN_SIZE * oh * elapsed_prog)
-									whs:set_center(whs:parent():center())
-								end)
-								whs:parent():remove(whs)
-							end
-							
-							for i=1,NUM_WHITESCREENS do 
-								local cw,ch = o:size()
-								local whitescreen_prog = i/NUM_WHITESCREENS
-								local ow = cw * MAX_WHITESCREEN_SIZE
-								local oh = ch * MAX_WHITESCREEN_SIZE
-								
-								local whitescreen = o:rect({
-									name = "whitescreen" .. tostring(i),
-									color = Color("ffffff"),
-									alpha = 0.1,
-									layer = 100,
-									blend_mode = "add",
-									w = ow,
-									h = oh
-								})
-								whitescreen:set_center(o:center())
-								wait(WHITESCREEN_DELAY_TIME)
-								whitescreen:animate(anim_fadeout)
-							end
-							local shine = o:bitmap({
-								name = "shine",
-								texture = "guis/textures/pd2/damage_overlay_sociopath/vignette_inverted_overlay",
-								color = Color.white,
-								w = 0,
-								h = 0,
-								layer = 101
-							})
-							local dying_line = o:bitmap({
-								name = "dying_line",
-								texture = "guis/textures/pd2/damage_overlay_sociopath/vignette_inverted_overlay",
-								w = 0,
-								layer = 100,
-								h = DYING_LINE_H
-							})
-							wait(WHITESCREEN_OFF_TIME)
-							
-							over(WHITESCREEN_SHINE_TIME,function(elapsed_prog)
-								local _t = (-math.cos(elapsed_prog * 360) + 1) * WHITESCREEN_SHINE_SCALE / 2
-								local sw,sh = o:size()
-								shine:set_size(sw * _t,sh * _t)
-								shine:set_center(o:center())
-								dying_line:set_alpha((-math.cos(elapsed_prog * 360) + 1) / 2)
-								dying_line:set_size(DYING_LINE_W_SCALE * o:w() * elapsed_prog,o:h() * DYING_LINE_H_SCALE * elapsed_prog)
-								dying_line:set_center(o:center())
-							end)
-							o:remove(shine)
-							over(DEATH_SCREEN_FADEOUT_TIME,function(prog)
-								o:set_alpha(1 - prog)
-							end)
-							for _,v in pairs(o:children()) do 
-								o:remove(v)
-							end
-							blackscreen:set_alpha(0)
-							o:hide()
-						end)
-						
-					end
-				end)
-				
+			--downed effect
+			self._sociopath_downed_overlay = TCDSociopathDownedOverlay:new()
+			Hooks:Add("TCD_Create_Stack_Tracker_HUD","TCD_CreateSociopathDownedOverlay",function(hudtemp)
+				self._sociopath_downed_overlay:Create(managers.hud._fullscreen_workspace:panel())
 			end)
 			
+			Hooks:Add("deathvox_OnPlayerEnteredBleedout","TCD_Animate_Sociopath_Bleedout",function()
+				self._sociopath_downed_overlay:StartDownedAnimation()
+			end)
+			
+			Hooks:Add("deathvox_OnPlayerEnteredCustody","TCD_Animate_Sociopath_Death",function()
+				self._sociopath_downed_overlay:StartDeathAnimation()
+			end)
+			
+			Hooks:Add("TCD_OnPlayerRevived","TCD_Animate_Sociopath_End",function()
+				self._sociopath_downed_overlay:StopDownedAnimation()
+				self._sociopath_downed_overlay:StopDeathAnimation()
+			end)
+			
+			--[ [
+			--combo counter
+			self._sociopath_combo_overlay = TCDSociopathComboOverlay:new()
+			Hooks:Add("TCD_Create_Stack_Tracker_HUD","TCD_CreateSociopathComboOverlay",function(hudtemp)
+				self._sociopath_combo_overlay:Create(hudtemp)
+			end)
+			
+			
+			Hooks:Add("TCD_OnSociopathComboStacksChanged","TCD_SetSociopathComboStacksHUD",function(previous,current)
+				self._sociopath_combo_overlay:OnComboChanged(previous,current)
+			end)
+			
+			--]]
+			
+			
+			
 		end
-		
 		if Network:is_server() then 
 			self:set_property("gambler_team_ammo_pickups_grabbed",0)
 		end
@@ -1769,6 +1435,21 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 			end
 		end
 	end
+	
+	if weapon_unit and weapon_unit:base()._HS_panic then
+		local pos = killed_unit:position()
+		local area = 600
+		local amount = "panic"
+		local enemies = world_g:find_units_quick("sphere", pos, area, 12, 21)
+
+		for i = 1, #enemies do
+			local unit = enemies[i]
+			
+			if unit:character_damage() then
+				unit:character_damage():build_suppression(amount)
+			end
+		end
+	end
 
 	local t = Application:time()
 	local damage_ext = player_unit:character_damage()
@@ -2207,6 +1888,11 @@ function PlayerManager:update(t, dt)
 							if self._next_drain_damage_t <= 0 then
 								self._next_drain_damage_t = 1
 								local damage_to_take = damage_ext:_max_health() * 0.05
+								
+								if self:has_category_upgrade("player", "wcard_thorns") then
+									damage_ext:do_thorns(damage_to_take)
+								end
+								
 								local new_health = damage_ext:get_real_health() - damage_to_take
 								
 								damage_ext:set_health(new_health)
@@ -2266,7 +1952,7 @@ function PlayerManager:update(t, dt)
 			self._next_combo_hp = self._needed_combo_stacks_for_hp
 			self._next_combo_hp_stack_reduction = 10
 		end
-			
+		
 		if self._melee_stance_dr_t and self._melee_stance_dr_t < t then
 			self._melee_stance_dr_t = nil
 		end

@@ -3189,19 +3189,23 @@ function CopDamage:damage_simple(attack_data)
 
 		--allowing knock_down and stagger, explanation at the end of the function
 		if not self._char_tweak.immune_to_knock_down then
-			local weapon_base = attack_data.attacker_unit and attack_data.attacker_unit:inventory() and attack_data.attacker_unit:inventory():equipped_unit() and attack_data.attacker_unit:inventory():equipped_unit():base()
+			result_type = attack_data.stagger and "stagger" or attack_data.knock_down and "knock_down" or nil 
+			
+			if not result_type and not attack_data.no_weapon_stats then
+				local weapon_base = attack_data.attacker_unit and attack_data.attacker_unit:inventory() and attack_data.attacker_unit:inventory():equipped_unit() and attack_data.attacker_unit:inventory():equipped_unit():base()
 
-			if weapon_base then
-				local knock_down = weapon_base._knock_down and weapon_base._knock_down > 0 and math_random() < weapon_base._knock_down
+				if weapon_base then
+					local knock_down = weapon_base._knock_down and weapon_base._knock_down > 0 and math_random() < weapon_base._knock_down
 
-				if knock_down then
-					result_type = "knock_down"
-				else
-					local stagger = weapon_base._stagger and not self._has_been_staggered
+					if knock_down then
+						result_type = "knock_down"
+					else
+						local stagger = weapon_base._stagger and not self._has_been_staggered
 
-					if stagger then
-						result_type = "stagger"
-						self._has_been_staggered = true
+						if stagger then
+							result_type = "stagger"
+							self._has_been_staggered = true
+						end
 					end
 				end
 			end

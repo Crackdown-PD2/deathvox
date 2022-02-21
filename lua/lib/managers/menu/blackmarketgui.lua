@@ -27,52 +27,41 @@ if deathvox:IsTotalCrackdownEnabled() then
 	local small_font_size = tweak_data.menu.pd2_small_font_size
 	local tiny_font_size = tweak_data.menu.pd2_tiny_font_size
 
-	local tcd_gui_data = {
-		allowed_categories = {
-			primaries = true,
-			secondaries = true,
-			masks = false
-		},
-		weapons = {
-			class = {
-				class_grenade = "guis/textures/pd2/blackmarket/icons/tcd/class_grenade",
-				class_heavy = "guis/textures/pd2/blackmarket/icons/tcd/class_heavy",
-				class_melee = "guis/textures/pd2/blackmarket/icons/tcd/class_melee",
-				class_precision = "guis/textures/pd2/blackmarket/icons/tcd/class_precision",
-				class_rapidfire = "guis/textures/pd2/blackmarket/icons/tcd/class_rapidfire",
-				class_saw = "guis/textures/pd2/blackmarket/icons/tcd/class_saw",
-				class_shotgun = "guis/textures/pd2/blackmarket/icons/tcd/class_shotgun",
-				class_specialist = "guis/textures/pd2/blackmarket/icons/tcd/class_specialist",
-				class_throwing = "guis/textures/pd2/blackmarket/icons/tcd/class_throwing"
-			},
-			subclass = {
-				subclass_areadenial = "guis/textures/pd2/blackmarket/icons/tcd/subclass_areadenial",
-				subclass_poison = "guis/textures/pd2/blackmarket/icons/tcd/subclass_poison",
-				subclass_quiet = "guis/textures/pd2/blackmarket/icons/tcd/subclass_quiet"
-			}
-		}
-	}
-	
-
 	Hooks:PostHook(BlackMarketGuiSlotItem,"init","tcd_bmgui_slotitem_init",function(self, main_panel, data, x, y, w, h)
-		
+		local tcd_gui_data = deathvox.tcd_gui_data
+
 		local item_class
 		local item_name = data.name
 		local item_slot = data.slot
 		local item_subclasses = {}
-		local item_category = data.category
-		local wtd = tweak_data.weapon
-		local wftd = wtd.factory
+		local item_category = data.category or "none"
+
+		if not item_name then
+			return
+		end
+		
+		local wtd = tweak_data.weapon[item_name]
+		local wftd = tweak_data.weapon.factory
+		
+		local function insert_subclasses(new_subclasses)
+			if type(new_subclasses) == "table" then 
+				for _,subclass_name in pairs(new_subclasses) do 
+					if not table.contains(item_subclasses,subclass_name) then 
+						table.insert(item_subclasses,subclass_name)
+					end
+				end
+			elseif new_subclasses then
+				if not table.contains(item_subclasses,subclass_name) then 
+					table.insert(item_subclasses,subclass_name)
+				end
+			end
+		end
 		
 		local function find_archetypes_from_part(partname)
 			local partdata = wftd.parts[partname]
 			if partdata then
-				if partdata.subclass_modifiers then 
-					for _,subclass_name in pairs(partdata.subclass_modifiers) do
-						if not table.contains(item_subclasses,subclass_name) then 
-							table.insert(item_subclasses,subclass_name)
-						end
-					end
+				if partdata.subclass_modifiers then
+					insert_subclasses(partdata.subclass_modifiers)
 				end
 				if partdata.class_modifier then 
 					item_class = partdata.class_modifier
@@ -80,17 +69,34 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end
 		end
 		
-		if wftd.parts[item_name] then --is weapon attachment
-			find_archetypes_from_part(item_name)
-		elseif wtd[item_name] then --is weapon
-			if not (item_name and wtd[item_name]) then 
-				return
+		
+		if item_category == "characters" then 
+			--nothing!
+			if item_name == "jowi" then 
+				item_class = "class_precision"
+				insert_subclasses("subclass_quiet")
 			end
-			item_class = wtd[item_name].primary_class
-			if wtd[item_name].subclasses then 
-				item_subclasses = table.deep_map_copy(wtd[item_name].subclasses)
+		elseif item_category == "grenades" then 
+			local proj_td = tweak_data.blackmarket.projectiles[item_name]
+			if proj_td then 
+				item_class = proj_td.primary_class
+				insert_subclasses(proj_td.subclasses)
 			end
-			if item_category and tcd_gui_data.allowed_categories[item_category] then
+		elseif item_category == "primaries" or item_category == "secondaries" then
+
+			if wtd then 
+				item_class = wtd.primary_class
+				if wtd.subclasses then 
+					insert_subclasses(wtd.subclasses)
+				end
+			end
+			
+			if wftd.parts[item_name] then --is weapon attachment
+				find_archetypes_from_part(item_name)
+			end
+			
+			--currently, only weapons (primary/secondary) can have attachments, but if this changes, this should be copied and applied to other item categories accordingly
+			if wtd then 
 				if managers.blackmarket._global.crafted_items[item_category] then 
 					local owned_item_data = item_slot and managers.blackmarket._global.crafted_items[item_category][item_slot]
 					if owned_item_data then 
@@ -103,8 +109,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 						end
 					end
 				end
-			end
-			--todo check skin blueprints
+			end			
 		end
 		
 		local icon_size = 24
@@ -116,6 +121,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 		
 		if item_class then 
+
 			local texture_name = tcd_gui_data.weapons.class[item_class]
 			if texture_name then 
 				local weapon_class_icon = self._panel:bitmap({
@@ -134,7 +140,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 				log("TOTAL CRACKDOWN: ERROR! No icon data found for class " .. tostring(item_class))
 			end
 		end
-		
 		
 		table.sort(item_subclasses)
 		for i,subclass_name in ipairs(item_subclasses) do 
