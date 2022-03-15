@@ -418,7 +418,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_stacking_deck_desc = "BASIC: ##$basic##\n$ICN_THR Throwing Weapons will curve towards enemies, angling to strike them in the head.\n\nACE: ##$pro##\nHeadshot kills with $ICN_THR Throwing Weapons inflict Panic on most enemies within ##6## meters of the target, causing them to go into short bursts of uncontrollable fear.",
 			
 				menu_shuffle_and_cut = "Shuffle and Cut",
-				menu_shuffle_and_cut_desc = "BASIC: ##$basic##\nHitting an enemy with a $ICN_THR Throwing Weapon grants ##+500%## Damage to your next $ICN_MEL Melee Weapon attack and hitting an enemy with a $ICN_MEL Melee Weapon grants ##+500%## Damage to your next $ICN_THR Throwing Weapon attack.\n\nEach buff can stack up to ##5## times.##\n\nACE: ##$pro##\nKilling an enemy with a $ICN_MEL Melee Weapon or $ICN_THR Throwing Weapon empowered by Shuffle and Cut refunds the stack.##",
+				menu_shuffle_and_cut_desc = "BASIC: ##$basic##\nHitting an enemy with a $ICN_THR Throwing Weapon grants ##+500%## Damage to your next $ICN_MEL Melee Weapon attack and hitting an enemy with a $ICN_MEL Melee Weapon grants ##+500%## Damage to your next $ICN_THR Throwing Weapon attack.\n\nEach buff can stack up to ##5## times.\n\nACE: ##$pro##\nKilling an enemy with a $ICN_MEL Melee Weapon or $ICN_THR Throwing Weapon empowered by Shuffle and Cut refunds the stack.",
 			
 			
 			--fixer
