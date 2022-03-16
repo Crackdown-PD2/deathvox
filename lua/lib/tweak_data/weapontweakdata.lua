@@ -14360,7 +14360,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Threat: 20
 	--Pickup: 4, 6
 	--Notes: 
-
+	
 		self.m45.primary_class = "class_rapidfire"
 		self.m45.subclasses = {}
 		self.m45.FIRE_MODE = "auto"
@@ -14377,12 +14377,12 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 			equip = 0.6
 		}
 		
-		self.m45.CLIP_AMMO_MAX = 40
+		self.m45.CLIP_AMMO_MAX = 36
 		self.m45.NR_CLIPS_MAX = 2
 		self.m45.AMMO_MAX = self.m45.CLIP_AMMO_MAX * self.m45.NR_CLIPS_MAX
 		self.m45.AMMO_PICKUP = {
-			0.80,
-			2.80
+			4,
+			6
 		}
 		
 		self.m45.spread = {
@@ -14400,18 +14400,18 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 		self.m45.kick.steelsight = self.m45.kick.standing
 		
 		self.m45.stats = {
-			zoom = 1,
-			total_ammo_mod = 21,
-			damage = 99,
-			alert_size = 7,
-			spread = 18,
-			spread_moving = 18,
-			recoil = 12,
-			value = 5,
-			extra_ammo = 101,
+			concealment = 20,
+			suppression = 0,
 			reload = 11,
-			suppression = 14,
-			concealment = 24
+			extra_ammo = 101,
+			spread_moving = 1,
+			spread = 26,
+			recoil = 21,
+			value = 1,
+			alert_size = 7,
+			damage = 100,
+			total_ammo_mod = 21,
+			zoom = 1
 		}
 		self.m45.stats_modifiers = {
 			damage = 1
