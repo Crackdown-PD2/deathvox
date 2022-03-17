@@ -29,6 +29,12 @@
 			</mod>
 		</script_data_mods>
 	</level>
+	<Achievements id="nmh_290_cd" icon="">
+        <achievement id="crack" rank="2" name_id="nmh_290_ach_1" desc_id="nmh_290_ach_1_desc" objective_id="nmh_290_ach_1_obj" icon=""/>
+        <achievement id="l4d_guns" rank="3" name_id="nmh_290_ach_2" desc_id="nmh_290_ach_2_desc" objective_id="nmh_290_ach_2_obj" icon=""/>
+        <achievement id="shadows" rank="2" name_id="nmh_290_ach_3" desc_id="nmh_290_ach_3_desc" objective_id="nmh_290_ach_3_obj" icon=""/>
+		<achievement id="lastman" rank="4" name_id="nmh_290_ach_4" desc_id="nmh_290_ach_4_desc" objective_id="nmh_290_ach_4_obj" icon=""/>
+	</Achievements>
 	<narrative briefing_event="Play_rb1_nmh_cbf_01" contact="classic" icon="guis/textures/crackdown" id="no_mercy_ranted_290" jc="30" region="street">
 		<chain>
 			<table level_id="nmh_290" type="d" type_id="heist_type_assault"/>
