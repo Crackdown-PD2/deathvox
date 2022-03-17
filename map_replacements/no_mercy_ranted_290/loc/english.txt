@@ -15,11 +15,11 @@
 	"nmh_290_ach_3":"In the Shadows"
 	"nmh_290_ach_4":"Last Man on Earth"
 	"nmh_290_ach_1_desc":"Complete No Mercy heist on CRACKDOWN difficulty."
-	"nmh_290_ach_2_desc":""
+	"nmh_290_ach_2_desc":"Complete No Mercy heist on CRACKDOWN difficulty, only using weapon from Left 4 Dead 1 and 2. To complete this challenge, you will have to have played the heist from the start."
 	"nmh_290_ach_3_desc":""
 	"nmh_290_ach_4_desc":"Complete No Mercy heist on CRACKDOWN difficulty, with no teammates."
 	"nmh_290_ach_1_obj":"Complete No Mercy heist on CRACKDOWN difficulty. To complete this challenge, you will have to have played the heist from the start."
-	"nmh_290_ach_2_obj":""
+	"nmh_290_ach_2_obj":"Complete No Mercy heist on CRACKDOWN difficulty, only using weapon from Left 4 Dead 1 and 2. To complete this challenge, you will have to have played the heist from the start."
 	"nmh_290_ach_3_obj":""
 	"nmh_290_ach_4_obj":"Complete No Mercy heist on CRACKDOWN difficulty, with no teammates. To complete this challenge, you will have to have played the heist from the start."
 }
