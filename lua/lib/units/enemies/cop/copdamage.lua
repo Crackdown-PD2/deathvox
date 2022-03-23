@@ -790,6 +790,23 @@ function CopDamage:damage_bullet(attack_data)
 	if self:is_friendly_fire(attack_data.attacker_unit) then
 		return "friendly_fire"
 	end
+	
+	if self:chk_immune_to_attacker(attack_data.attacker_unit) then
+		return
+	end
+	
+	if self._char_tweak.bullet_damage_only_from_front then
+		mvector3.set(mvec_1, attack_data.col_ray.ray)
+		mvector3.set_z(mvec_1, 0)
+		mrotation.y(self._unit:rotation(), mvec_2)
+		mvector3.set_z(mvec_2, 0)
+
+		local not_from_the_front = mvector3.dot(mvec_1, mvec_2) > 0.3
+
+		if not_from_the_front then
+			return
+		end
+	end
 
 	if alive(attack_data.attacker_unit) and attack_data.attacker_unit:in_slot(16) then
 		local has_surrendered = self._unit:brain().surrendered and self._unit:brain():surrendered() or self._unit:anim_data().surrender or self._unit:anim_data().hands_back or self._unit:anim_data().hands_tied
@@ -1342,6 +1359,10 @@ function CopDamage:damage_tase(attack_data)
 	if self._dead or self._invulnerable then
 		return
 	end
+	
+	if self:chk_immune_to_attacker(attack_data.attacker_unit) then
+		return
+	end
 
 	local attacker_unit = attack_data.attacker_unit
 	local weap_unit = attack_data.weapon_unit
@@ -1612,6 +1633,10 @@ function CopDamage:stun_hit(attack_data)
 			return
 		end
 	end
+	
+	if self:chk_immune_to_attacker(attack_data.attacker_unit) then
+		return
+	end
 
 	local is_civilian = CopDamage.is_civilian(self._unit:base()._tweak_table)
 	local attacker_unit = attack_data.attacker_unit
@@ -1738,11 +1763,18 @@ end
 
 function CopDamage:_on_damage_received(damage_info)
 	--self:build_suppression("max", nil) --yes let's make threat completely pointless
+	self:chk_health_sequences()
 	self:_call_listeners(damage_info)
 	CopDamage._notify_listeners("on_damage", damage_info)
 
 	if damage_info.result.type == "death" then
 		managers.enemy:on_enemy_died(self._unit, damage_info)
+		
+		self:chk_disable_aoe_damage()
+	end
+	
+	if not self._dead then
+		self:_chk_unique_death_requirements(damage_info, false)
 	end
 
 	local attacker_unit = damage_info.attacker_unit
@@ -2001,6 +2033,10 @@ end
 
 function CopDamage:damage_melee(attack_data)
 	if self._dead or self._invulnerable then
+		return
+	end
+	
+	if self:chk_immune_to_attacker(attack_data.attacker_unit) then
 		return
 	end
 
@@ -2695,7 +2731,11 @@ function CopDamage:damage_fire(attack_data)
 	if self._dead or self._invulnerable then
 		return
 	end
-
+	
+	if self:chk_immune_to_attacker(attack_data.attacker_unit) then
+		return
+	end
+	
 	local attacker_unit = attack_data.attacker_unit
 	local weap_unit = attack_data.weapon_unit
 
@@ -3110,6 +3150,10 @@ function CopDamage:damage_simple(attack_data)
 		return
 	end
 
+	if self:chk_immune_to_attacker(attack_data.attacker_unit) then
+		return
+	end
+
 	if attack_data.variant == "graze" then
 		local has_surrendered = self._unit:brain().surrendered and self._unit:brain():surrendered() or self._unit:anim_data().surrender or self._unit:anim_data().hands_back or self._unit:anim_data().hands_tied
 
@@ -3389,6 +3433,10 @@ end
 
 function CopDamage:damage_dot(attack_data)
 	if self._dead or self._invulnerable then
+		return
+	end
+	
+	if self:chk_immune_to_attacker(attack_data.attacker_unit) then
 		return
 	end
 

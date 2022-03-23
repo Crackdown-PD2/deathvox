@@ -1,7 +1,10 @@
 local draw_debug_spheres = false
 local mvec3_set = mvector3.set
-local mvec3_mul = mvector3.multiply
 local mvec3_add = mvector3.add
+local mvec3_mul = mvector3.multiply
+local mvec3_dis_sq = mvector3.distance_sq
+local mvec3_lerp = mvector3.lerp
+local mvec3_dir = mvector3.direction
 local mvec3_cpy = mvector3.copy
 local mvec_to = Vector3()
 local mvec_to2 = Vector3()
@@ -11,150 +14,231 @@ local dozer_visor = Idstring("body_helmet_glass")
 local world_g = World
 
 function NewFlamethrowerBase:setup_default()
-	self._rays = tweak_data.weapon[self._name_id].rays or 6
-	self._range = tweak_data.weapon[self._name_id].flame_max_range or 1000
-	self._flame_max_range = tweak_data.weapon[self._name_id].flame_max_range
-	self._single_flame_effect_duration = tweak_data.weapon[self._name_id].single_flame_effect_duration
-	self._bullet_class = FlameBulletBase
-	self._bullet_slotmask = self._bullet_class:bullet_slotmask()
+	self:kill_effects()
 
+	local unit = self._unit
+	local nozzle_obj = unit:get_object(Idstring("fire"))
+	self._nozzle_obj = nozzle_obj
+	local name_id = self._name_id
+	local weap_tweak = tweak_data.weapon[name_id]
+	local flame_effect_range = weap_tweak.flame_max_range
+	self._range = flame_effect_range
+	self._flame_max_range = flame_effect_range
+	self._flame_radius = weap_tweak.flame_radius or 40
+	local flame_effect = weap_tweak.flame_effect
+
+	if flame_effect then
+		self._last_effect_t = -100
+		self._flame_effect_collection = {}
+		self._flame_effect_ids = Idstring(flame_effect)
+		self._flame_max_range_sq = flame_effect_range * flame_effect_range
+		local effect_duration = weap_tweak.single_flame_effect_duration
+		self._single_flame_effect_duration = effect_duration
+		self._single_flame_effect_cooldown = effect_duration * 0.1
+	else
+		self._last_effect_t = nil
+		self._flame_effect_collection = nil
+		self._flame_effect_ids = nil
+		self._flame_max_range_sq = nil
+		self._single_flame_effect_duration = nil
+		self._single_flame_effect_cooldown = nil
+
+		print("[NewFlamethrowerBase:setup_default] No flame effect defined for tweak data ID ", name_id)
+	end
+
+	local effect_manager = self._effect_manager
+	local pilot_effect = weap_tweak.pilot_effect
+
+	if pilot_effect then
+		local parent_obj = nil
+		local parent_name = weap_tweak.pilot_parent_name
+
+		if parent_name then
+			parent_obj = unit:get_object(Idstring(parent_name))
+
+			if not parent_obj then
+				print("[NewFlamethrowerBase:setup_default] No pilot parent object found with name ", parent_name, "in unit ", unit)
+			end
+		end
+
+		parent_obj = parent_obj or nozzle_obj
+		local force_synch = self.is_npc and not self:is_npc()
+		local pilot_offset = weap_tweak.pilot_offset or nil
+		local normal = weap_tweak.pilot_normal or Vector3(0, 0, 1)
+		local pilot_effect_id = effect_manager:spawn({
+			effect = Idstring(pilot_effect),
+			parent = parent_obj,
+			force_synch = force_synch,
+			position = pilot_offset,
+			normal = normal
+		})
+		self._pilot_effect = pilot_effect_id
+		local state = (not self._enabled or not self._visible) and true or false
+
+		effect_manager:set_hidden(pilot_effect_id, state)
+		effect_manager:set_frozen(pilot_effect_id, state)
+	else
+		self._pilot_effect = nil
+	end
+
+	local nozzle_effect = weap_tweak.nozzle_effect
+
+	if nozzle_effect then
+		self._last_fire_t = -100
+		self._nozzle_expire_t = weap_tweak.nozzle_expire_time or 0.2
+		local force_synch = self.is_npc and not self:is_npc()
+		local normal = weap_tweak.nozzle_normal or Vector3(0, 1, 0)
+		local nozzle_effect_id = effect_manager:spawn({
+			effect = Idstring(nozzle_effect),
+			parent = nozzle_obj,
+			force_synch = force_synch,
+			normal = normal
+		})
+		self._nozzle_effect = nozzle_effect_id
+
+		effect_manager:set_hidden(nozzle_effect_id, true)
+		effect_manager:set_frozen(nozzle_effect_id, true)
+
+		self._showing_nozzle_effect = false
+	else
+		self._last_fire_t = nil
+		self._nozzle_expire_t = nil
+		self._nozzle_effect = nil
+		self._showing_nozzle_effect = nil
+	end
+
+	local bullet_class = weap_tweak.bullet_class
+
+	if bullet_class ~= nil then
+		bullet_class = CoreSerialize.string_to_classtable(bullet_class)
+
+		if not bullet_class then
+			print("[NewFlamethrowerBase:setup_default] Unexisting class for bullet_class string ", weap_tweak.bullet_class, "defined for tweak data ID ", name_id)
+
+			bullet_class = FlameBulletBase
+		end
+	else
+		bullet_class = FlameBulletBase
+	end
+
+	self._bullet_class = bullet_class
+	self._bullet_slotmask = bullet_class:bullet_slotmask()
+	self._blank_slotmask = bullet_class:blank_slotmask()
+	
 	if managers.mutators:is_mutator_active(MutatorFriendlyFire) then --add friendly fire against player husks only for players (prevents NPCs from hitting player husks and dealing unintended non-local damage)
 		self._bullet_slotmask = self._bullet_slotmask + world_g:make_slot_mask(3)
 	end
-
-	self._blank_slotmask = self._bullet_class:blank_slotmask()
-	self._col_slotmask = managers.slot:get_mask("bullet_impact_targets_no_criminals")
-	self._col_slotmask = self._col_slotmask - 8
 end
 
+local mvec_to = Vector3()
+local mvec_direction = Vector3()
+local mvec_spread_direction = Vector3()
+
 function NewFlamethrowerBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoot_player, spread_mul, autohit_mul, suppr_mul, shoot_through_data)
-	local damage_range = self._flame_max_range
+	local result = {}
+	local damage = self:_get_current_damage(dmg_mul)
+	local damage_range = self._flame_max_range or self._range
 
 	mvec3_set(mvec_to, direction)
 	mvec3_mul(mvec_to, damage_range)
 	mvec3_add(mvec_to, from_pos)
-
+	
 	--use a smaller sphere ray to limit the range of the actual damaging sphere ray
-	local col_sphere_ray = world_g:raycast("ray", from_pos, mvec_to, "sphere_cast_radius", 20, "disable_inner_ray", "slot_mask", self._col_slotmask, "ignore_unit", self._setup.ignore_units)
+	local col_ray = World:raycast("ray", mvector3.copy(from_pos), mvec_to, "sphere_cast_radius", 20, "disable_inner_ray", "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
+	
+	if col_ray then
+		local col_dis = col_ray.distance
 
-	if col_sphere_ray then --limit the range of the damage sphere if something was hit by the initial sphere ray
-		damage_range = math_min(damage_range, col_sphere_ray.distance)
-	end
-
-	mvec3_set(mvec_to2, direction)
-	mvec3_mul(mvec_to2, damage_range)
-	mvec3_add(mvec_to2, from_pos)
-
-	local sphere_hits = world_g:raycast_all("ray", from_pos, mvec_to2, "sphere_cast_radius", 35, "disable_inner_ray", "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
-	local units_hit, unique_hits = {}, {}
-
-	for _, hit in ipairs(sphere_hits) do
-		hit.hit_position = hit.position
-
-		if not units_hit[hit.unit:key()] then --not already hit
-			units_hit[hit.unit:key()] = true
-
-			if not hit.unit:character_damage() then
-				hit.is_object = true
-			end
-
-			unique_hits[#unique_hits + 1] = hit
-		elseif not hit.unit:character_damage() then
-			local previous_hit = unique_hits[#unique_hits]
-
-			if not previous_hit.body:extension() or not previous_hit.body:extension().damage then
-				if hit.body:extension() and hit.body:extension().damage then
-					hit.is_object = true
-					unique_hits[#unique_hits] = hit
-				end
-			end
-		else
-			local previous_hit = unique_hits[#unique_hits]
-
-			if hit.unit:character_damage().is_head then --has is_head function
-				local prioritize_body_with_damage_extension = nil
-
-				if previous_hit.body:name() == dozer_faceplate or previous_hit.body:name() == dozer_visor or previous_hit.body:extension() and previous_hit.body:extension().damage then --prioritize bodies with damage extensions over others
-					prioritize_body_with_damage_extension = true
-				elseif hit.body:extension() and hit.body:extension().damage then
-					unique_hits[#unique_hits] = hit
-
-					prioritize_body_with_damage_extension = true
-				end
-
-				if not prioritize_body_with_damage_extension and hit.unit:character_damage():is_head(hit.body) then --prioritize the head (you never know, it changes nothing since flamethrowers aren't supposed to no headshot damage)
-					unique_hits[#unique_hits] = hit
-				end
-			else
-				--[[local turret_shield = hit.unit:character_damage()._shield_body_name_ids
-				local turret_weak_spot = hit.unit:character_damage()._bag_body_name_ids
-
-				if turret_shield and hit.body:name() == turret_shield or turret_weak_spot and hit.body:name() == turret_weak_spot then --prioritize the shield or weak spot of a turret over other parts of its body
-					unique_hits[#unique_hits] = hit
-				end]]
-
-				local invulnerable_bodies = hit.unit:character_damage()._invulnerable_bodies
-
-				if invulnerable_bodies and invulnerable_bodies[previous_hit.body:key()] and not invulnerable_bodies[hit.body:key()] then --replace hits that deal no damage with ones that do (with my other changes, Turrets take shield damage and 
-					unique_hits[#unique_hits] = hit
-				end
-			end
+		if col_dis < damage_range then
+			damage_range = col_dis or damage_range
 		end
+
+		mvec3_set(mvec_to, direction)
+		mvec3_mul(mvec_to, damage_range)
+		mvec3_add(mvec_to, from_pos)
 	end
 
-	local damage = self:_get_current_damage(dmg_mul)
+	self:_spawn_flame_effect(mvec_to, direction)
+	
+	
+	local hit_bodies = World:find_bodies("intersect", "capsule", from_pos, mvec_to, 35, self._bullet_slotmask)
+	local weap_unit = self._unit
 	local hit_enemies = 0
+	local hit_body, hit_unit, hit_u_key = nil
+	local units_hit = {}
+	local valid_hit_bodies = {}
+	local ignore_units = self._setup.ignore_units
+	local t_contains = table.contains
 
-	for _, col_ray in ipairs(unique_hits) do
-		self._bullet_class:on_collision(col_ray, self._unit, user_unit, damage)
+	for i = 1, #hit_bodies do
+		hit_body = hit_bodies[i]
+		hit_unit = hit_body:unit()
 
-		if col_ray.is_object then
-			col_ray.is_object = nil
+		if not t_contains(ignore_units, hit_unit) then
+			hit_u_key = hit_unit:key()
 
-			if draw_debug_spheres then
-				local draw_duration = 1
-				local new_brush = Draw:brush(Color.white:with_alpha(0.5), draw_duration)
-				new_brush:sphere(col_ray.position, 5)
-			end
-		else
-			hit_enemies = hit_enemies + 1
+			if not units_hit[hit_u_key] then
+				units_hit[hit_u_key] = true
+				valid_hit_bodies[#valid_hit_bodies + 1] = hit_body
 
-			if draw_debug_spheres then
-				local draw_duration = 1
-				local new_brush = Draw:brush(Color.red:with_alpha(0.5), draw_duration)
-				new_brush:sphere(col_ray.position, 5)
+				if hit_unit:character_damage() then
+					hit_enemies = hit_enemies + 1
+				end
 			end
 		end
 	end
 
-	--rework suppression in general, once again
-	if self._suppression then --using a bigger cone here due to the flamethrower's short range and wider area of effect
+	local bullet_class = self._bullet_class
+	local fake_ray_dir, fake_ray_dis = nil
+
+	for i = 1, #valid_hit_bodies do
+		hit_body = valid_hit_bodies[i]
+		fake_ray_dir = hit_body:center_of_mass()
+		fake_ray_dis = mvec3_dir(fake_ray_dir, from_pos, fake_ray_dir)
+		local hit_pos = hit_body:position()
+		local fake_ray = {
+			body = hit_body,
+			unit = hit_body:unit(),
+			ray = fake_ray_dir,
+			normal = fake_ray_dir,
+			distance = fake_ray_dis,
+			position = hit_pos,
+			hit_position = hit_pos
+		}
+
+		bullet_class:on_collision(fake_ray, weap_unit, user_unit, damage)
+	end
+
+	local suppression = self._suppression
+
+	if suppression then
 		local max_suppression_range = self._flame_max_range * 1.5
-
-		self:_suppress_units(mvec3_cpy(from_pos), mvec3_cpy(direction), max_suppression_range, managers.slot:get_mask("enemies"), user_unit, suppr_mul)
+	
+		self:_suppress_units(mvector3.copy(from_pos), mvector3.copy(direction), max_suppression_range, managers.slot:get_mask("enemies"), user_unit, suppr_mul)
 	end
-
-	if alive(self._obj_fire) then
-		self._unit:flamethrower_effect_extension():_spawn_muzzle_effect(from_pos, direction, true, col_sphere_ray)
-	end
-
-	local result = {}
-	result.hit_enemy = hit_enemies > 0 and true or false
 
 	if self._alert_events then
-		result.rays = {{position = from_pos}} --flamethrowers normally cause alerts only from where they're fired, keeping it that way since it makes sense
+		result.rays = {
+			{
+				position = from_pos
+			}
+		}
 	end
 
-	managers.statistics:shot_fired({
-		hit = false,
-		weapon_unit = self._unit
-	})
+	if hit_enemies > 0 then
+		result.hit_enemy = true
 
-	for i = 1, hit_enemies do
 		managers.statistics:shot_fired({
-			skip_bullet_count = true,
 			hit = true,
-			weapon_unit = self._unit
+			hit_count = hit_enemies,
+			weapon_unit = weap_unit
+		})
+	else
+		result.hit_enemy = false
+
+		managers.statistics:shot_fired({
+			hit = false,
+			weapon_unit = weap_unit
 		})
 	end
 

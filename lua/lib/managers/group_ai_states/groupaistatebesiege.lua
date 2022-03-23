@@ -2413,10 +2413,6 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 				table_remove(assault_path)
 			end
 			
-			if approach then
-				table_remove(assault_path)
-			end
-			
 			local grp_objective = {
 				type = "assault_area",
 				stance = "hos",
