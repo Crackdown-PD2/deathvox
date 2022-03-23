@@ -66,7 +66,7 @@ function FPCameraPlayerBase:_vertical_recoil_kick(t, dt)
 	end
 
 	if self._recoil_kick.current and self._episilon < self._recoil_kick.accumulated - self._recoil_kick.current then
-		local n = math.step(self._recoil_kick.current, self._recoil_kick.accumulated, 40 * dt_with_mul)
+		local n = math.step(self._recoil_kick.current, self._recoil_kick.accumulated, 40 * dt)
 		r_value = n - self._recoil_kick.current
 		self._recoil_kick.current = n
 	elseif self._recoil_kick.to_reduce then
