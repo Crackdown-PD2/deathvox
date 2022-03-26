@@ -448,7 +448,7 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 		end
 	end
 
-	local delay = within_any_acquire_range and 0 or 1
+	local delay = within_any_acquire_range and 0 or data.important and 0.5 or data.brain_updating and 0.2 or 1
 
 	for u_key, attention_info in pairs_g(detected_obj) do
 		local can_detect = true
@@ -721,8 +721,10 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 							if is_detection_persistent and attention_info.criminal_record then
 								attention_info.release_t = nil
 
-								delay = math_min(0.2, delay)
-								attention_info.next_verify_t = math_min(0.2, attention_info.next_verify_t)
+								if attention_info.verified_t and t - attention_info.verified_t < 7 then
+									delay = math_min(0.2, delay)
+									attention_info.next_verify_t = t + math_min(0.2, settings.verification_interval)
+								end
 
 								mvec3_set(attention_info.verified_pos, attention_pos)
 

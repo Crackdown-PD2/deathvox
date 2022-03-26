@@ -408,7 +408,7 @@ function NavigationManager:_find_cover_through_lua(threat_pos, threat_vis_pos, n
 	min_dis = min_dis and min_dis * min_dis
 	optimal_dis = optimal_dis and optimal_dis * optimal_dis
 	
-	local function _f_check_optimal_dis(cover, near_pos, optimal_dis)
+	local function _f_check_optimal_dis(cover, near_pos, optimal_dis) --if the cover is an optimal distance from our near position, the lower, the more optimal the cover.
 		local dis_sq = v3_dis_sq
 		local cover_dis = dis_sq(cover[1], near_pos)
 		
@@ -419,7 +419,7 @@ function NavigationManager:_find_cover_through_lua(threat_pos, threat_vis_pos, n
 		end
 	end
 	
-	local function _f_check_max_dis(cover, near_pos, max_dis)
+	local function _f_check_max_dis(cover, near_pos, max_dis) --checking if the cover is further than our max search distance.
 		local dis_sq = v3_dis_sq
 		local cover_dis = dis_sq(cover[1], near_pos)
 		
@@ -430,7 +430,11 @@ function NavigationManager:_find_cover_through_lua(threat_pos, threat_vis_pos, n
 		end
 	end
 	
-	local function _f_check_min_dis(cover, threat_pos, min_dis)
+	local function _f_check_min_dis(cover, threat_pos, min_dis) --minimum distance from threat.
+		if not threat_pos then
+			return
+		end
+	
 		local dis_sq = v3_dis_sq
 		local cover_dis = dis_sq(cover[1], threat_pos)
 		
@@ -441,7 +445,7 @@ function NavigationManager:_find_cover_through_lua(threat_pos, threat_vis_pos, n
 		end
 	end
 	
-	local function _f_check_cover_rays(cover, threat_vis_pos, slotmask)
+	local function _f_check_cover_rays(cover, threat_vis_pos, slotmask) --this is a visibility check. first checking for crouching positions, then standing.
 		local cover_pos = cover[1]
 		local ray_from = temp_vec1
 
@@ -470,19 +474,28 @@ function NavigationManager:_find_cover_through_lua(threat_pos, threat_vis_pos, n
 
 	for i = 1, #self._covers do
 		local cover = self._covers[i]
-
+		
+		--is this cover already reserved by someone else?
 		if not cover[self.COVER_RESERVED] then
+			--the priority is as follows:
+			--the cover is further than the minimum distance of the threat.
+			--the cover is optimally distanced, and close to our optimal position.
+			--the cover would cover up our head if we crouched.
+			--the cover would cover up our head if we stood up.
 			
-			local coarse_params = {
-				access_pos = access_pos or "swat",
-				from_tracker = unit_nav_tracker,
-				to_tracker = cover[3],
-				id = "cover" .. tostring(i)
-			}
-			local path = self:search_coarse(coarse_params)
+			--the only actual REQUIREMENTS for the cover is for it to be within the maximum search distance and to be something we can path to, everything else is fluff.
 			
-			if path then
-				if _f_check_max_dis(cover, near_pos, max_dis) then
+			if _f_check_max_dis(cover, near_pos, max_dis) then
+				--can we path to this cover?
+				local coarse_params = {
+					access_pos = access_pos or "swat",
+					from_tracker = unit_nav_tracker,
+					to_tracker = cover[3],
+					id = "cover" .. tostring(i)
+				}
+				local path = self:search_coarse(coarse_params)
+				
+				if path then
 					local cover_optimal_dis, cover_min_dis, cover_low_ray, cover_high_ray
 					
 					cover_min_dis = min_dis and _f_check_min_dis(cover, threat_pos, min_dis)
@@ -491,7 +504,9 @@ function NavigationManager:_find_cover_through_lua(threat_pos, threat_vis_pos, n
 						cover_optimal_dis = optimal_dis and _f_check_optimal_dis(cover, near_pos, optimal_dis)
 						
 						if not best_cover_optimal_dis or cover_optimal_dis and cover_optimal_dis < best_cover_optimal_dis then
-							cover_low_ray, cover_high_ray = _f_check_cover_rays(cover, threat_vis_pos, slotmask)
+							if threat_vis_pos then
+								cover_low_ray, cover_high_ray = _f_check_cover_rays(cover, threat_vis_pos, slotmask)
+							end
 							
 							if not best_cover_low_ray or cover_low_ray then
 								if not best_cover_high_ray or cover_high_ray then
@@ -510,7 +525,7 @@ function NavigationManager:_find_cover_through_lua(threat_pos, threat_vis_pos, n
 	end
 	
 	return best_cover
-end 
+end
 
 function NavigationManager:_sort_nav_segs_after_pos(to_pos, i_seg, ignore_seg, verify_clbk, access_pos, access_neg, long_path)
 	local all_segs = self._nav_segments

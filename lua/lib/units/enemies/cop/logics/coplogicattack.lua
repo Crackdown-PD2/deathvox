@@ -1093,7 +1093,7 @@ function CopLogicAttack._chk_request_action_walk_to_cover(data, my_data)
 	haste = haste or "walk"
 	pose = pose or data.is_suppressed and "crouch" or "stand"
 
-	local end_pose = my_data.moving_to_cover and "crouch" or "stand"
+	local end_pose = not my_data.best_cover[4] and "crouch" or "stand"
 
 	if pose == "crouch" and not data.char_tweak.crouch_move then
 		pose = "stand"
@@ -1338,18 +1338,52 @@ function CopLogicAttack._update_cover(data)
 				local min_dis = range * dis_mul
 				long_range = long_range * dis_mul
 
-				min_dis = want_to_take_cover and math_min(min_dis, mvec3_dis(my_pos, threat_pos)) or min_dis
+				min_dis = want_to_take_cover and math_min(min_dis, mvec3_dis(my_pos, threat_pos)) or mvec3_dis(my_pos, threat_pos)
+				
+				if not want_to_take_cover then
+					min_dis = math.max(1, math.min(min_dis - 100, min_dis * 0.5)) --when not being defensive, try to close the gap, or at least, do not make too much distance
+				end
+				
+				max_dis = min_dis and math_max(min_dis * 2, long_range) or long_range
 				
 				local best_cover_bad_dis = nil
 				
 				if want_to_take_cover and best_cover then
-					best_cover_bad_dis = not CopLogicAttack._verify_cover(best_cover[1], threat_pos, min_dis, max_dis) and mvec3_dis(best_cover[1][1], threat_pos)
+					best_cover_bad_dis = mvec3_dis(best_cover[1][1], threat_pos) < min_dis
+					best_cover_bad_dis = mvec3_dis(my_pos, best_cover[1][1]) > max_dis
 				end
 				
 				local look_for_cover = not best_cover or best_cover_bad_dis or math_random() > 0.75
 
 				if look_for_cover or flank_cover then
-					max_dis = min_dis and math_max(min_dis * 2, long_range) or long_range
+					local furthest_side_pos = temp_vec1
+					local near_pos = nil
+
+					if not want_to_take_cover and my_data.attitude == "engage" then --this essentially forces the enemy to take cover around a specific radius of the threat_pos more or less in order to make them be more aggressive.
+						near_pos = temp_vec2
+						mvec3_dir(near_pos, my_pos, threat_pos)
+						mvec3_mul(near_pos, min_dis)
+						mvec3_add(near_pos, my_pos)
+					
+						mvec3_dir(furthest_side_pos, my_pos, threat_pos)
+						mvec3_mul(furthest_side_pos, max_dis)
+						mvec3_add(furthest_side_pos, my_pos)
+					else
+						--if we AREN'T wanting to be aggressive, make distance away from the enemy, try to get cover as close to ourselves, and moving back.
+						mvec3_dir(furthest_side_pos, threat_pos, my_pos)
+						mvec3_mul(furthest_side_pos, max_dis)
+						mvec3_add(furthest_side_pos, my_pos)
+						
+						near_pos = mvec3_cpy(my_pos)
+					end
+					
+					--[[if want_to_take_cover then
+						local line = Draw:brush(Color.blue:with_alpha(0.5), 0.2)
+						line:cylinder(near_pos, furthest_side_pos, 25)
+					else
+						local line = Draw:brush(Color.green:with_alpha(0.5), 0.2)
+						line:cylinder(near_pos, furthest_side_pos, 25)
+					end]]
 					
 					optimal_dis = max_dis * 0.75
 					
@@ -1377,17 +1411,39 @@ function CopLogicAttack._update_cover(data)
 					end
 
 					local search_nav_seg = nil
+
+					--[[if data.objective and data.objective.type == "defend_area" then
+						local all_nav_segs = managers.navigation._nav_segments
+						local nav_seg_id = data.unit:movement():nav_tracker():nav_segment()
+						local my_nav_seg = all_nav_segs[nav_seg_id]
+						
+						if data.objective.area and data.objective.area.nav_segs[nav_seg_id] then
+							search_nav_seg = data.objective.area and data.objective.area.nav_segs
+						elseif data.objective.nav_seg == nav_seg_id or my_nav_seg.neighbours[data.objective.nav_seg] then
+							search_nav_seg = data.objective.nav_seg
+						else
+							search_nav_seg = nav_seg_id
+						end
+					end]]
 					
-					local access_pos = data.char_tweak.access
-					local found_cover = managers.navigation:_find_cover_through_lua(threat_pos, data.attention_obj.m_head_pos, my_pos, max_dis, min_dis, optimal_dis, data.visibility_slotmask, access_pos, data.unit:movement():nav_tracker())
+					local found_cover = managers.navigation:find_cover_in_cone_from_threat_pos_1(threat_pos, furthest_side_pos, near_pos, cone_angle, cone_angle, nil, nil, nil, data.pos_rsrv_id)
 					
+					--if we failed to find cover through the engine, run a check through lua ONCE,
+					--if we don't find cover, don't test again until we do, it means the map is stacked against us.
+					--this is a performance-saving measure more than anything, hyper heisting has 50+ enemies at all times,
+					--it'd be unwise to run this check multiple times for tons of cops per update if any cover isn't found.
+					if not found_cover and not my_data.failed_to_find_cover then 
+						local access_pos = data.char_tweak.access
+						found_cover = managers.navigation:_find_cover_through_lua(threat_pos, data.attention_obj.m_head_pos, near_pos, max_dis, min_dis, optimal_dis, data.visibility_slotmask, access_pos, data.unit:movement():nav_tracker())
+					end
+
 					--log(tostring(i))
 					
 					if found_cover then
-						--log("this shouldn't work")
-						local found_cover_threat_dis = mvec3_dis(found_cover[1], threat_pos)
+						my_data.failed_to_find_cover = nil --we have found cover, the map is no longer stacked against us.
+						local approved = true
 					
-						if not best_cover or best_cover_bad_dis and best_cover_bad_dis < found_cover_threat_dis or not best_cover[3] or CopLogicAttack._verify_cover(found_cover, threat_pos, min_dis, max_dis) then
+						if approved then
 							local better_cover = {
 								found_cover
 							}
@@ -1410,6 +1466,8 @@ function CopLogicAttack._update_cover(data)
 							satisfied = false
 							--log("cock")
 						end
+					else
+						my_data.failed_to_find_cover = true
 					end
 				else
 					satisfied = false
@@ -1434,6 +1492,25 @@ function CopLogicAttack._update_cover(data)
 			CopLogicAttack._set_best_cover(data, my_data, nil)
 		elseif not my_data.in_cover then
 			my_data.best_cover[3], my_data.best_cover[4] = CopLogicAttack._chk_covered(data, my_data.best_cover[1][1], data.attention_obj.m_head_pos, data.visibility_slotmask)
+		end
+	end
+	
+	if my_data.in_cover then
+		local cover_release_dis = 100
+		local check_pos = nil
+
+		if my_data.advancing then
+			if data.pos_rsrv.move_dest then
+				check_pos = data.pos_rsrv.move_dest.position
+			else
+				check_pos = my_data.advancing:get_walk_to_pos()
+			end
+		else
+			check_pos = my_pos
+		end
+
+		if cover_release_dis < mvec3_dis(my_data.in_cover[1][1], check_pos) then
+			my_data.in_cover = nil
 		end
 	end
 end
@@ -3025,9 +3102,9 @@ function MedicLogicAttack._upd_combat_movement(data)
 						local height = nil
 
 						if in_cover[4] then --has obstructed high_ray
-							height = 150
+							height = 185
 						else
-							height = 80
+							height = 92.5
 						end
 
 						local my_tracker = unit:movement():nav_tracker()
