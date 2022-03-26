@@ -32,6 +32,18 @@ Hooks:PostHook(PlayerDamage, "init", "dv_post_init", function(self, unit)
 	end
 end)
 
+function PlayerDamage:clbk_kill_taunt(taunt_data)
+	local attacker = taunt_data.attacker_unit
+
+	if not alive(attacker) or attacker:character_damage():dead() then
+		return
+	end
+	
+	if taunt_data.taunt_line then
+		attacker:sound():say(taunt_data.taunt_line, true)
+	end
+end
+
 function PlayerDamage:_raw_max_health()
 	if managers.player:has_category_upgrade("player", "sociopath_mode") then
 		local hp = 4
