@@ -3185,6 +3185,7 @@ function CharacterTweakData:_init_deathvox(presets)
 
 	self.deathvox_tank = deep_clone(self.tank)
 	--self.deathvox_tank.tags = {"tank"} -- commented out as it was actually breaking the tags
+	self.deathvox_tank.kill_taunt = "post_kill_taunt"
 	self.deathvox_tank.chatter = presets.enemy_chatter.bulldozer
 	self.deathvox_tank.detection = presets.detection.deathvox
 	self.deathvox_tank.ignore_medic_revive_animation = false  -- revive animation.
