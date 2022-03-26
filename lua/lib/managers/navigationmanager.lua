@@ -2,6 +2,7 @@ local mvec3_n_equal = mvector3.not_equal
 local mvec3_set = mvector3.set
 local mvec3_set_st = mvector3.set_static
 local mvec3_set_z = mvector3.set_z
+local mvec3_step = mvector3.step
 local mvec3_sub = mvector3.subtract
 local mvec3_norm = mvector3.normalize
 local mvec3_dir = mvector3.direction
@@ -23,6 +24,7 @@ local math_ceil = math.ceil
 local math_floor = math.floor
 local temp_vec1 = Vector3()
 local temp_vec2 = Vector3()
+local math_up = math.UP
 NavigationManager = NavigationManager or class()
 NavigationManager.nav_states = {
 	"allow_access",
@@ -69,6 +71,97 @@ NavigationManager.ACCESS_FLAGS = {
 	"climb"
 }
 NavigationManager.ACCESS_FLAGS_OLD = {}
+
+function NavigationManager:update(t, dt)
+	
+	if #self._covers == 0 then
+		self:register_cover_units(true)
+	end
+	
+	self:_commence_coarce_searches(t)
+end
+
+function NavigationManager:register_cover_units(please)
+	if not please and not self:is_data_ready() then
+		return
+	end
+
+	local rooms = self._rooms
+	local covers = {}
+	local cover_data = managers.worlddefinition:get_cover_data()
+	local t_ins = table.insert
+
+	if cover_data then
+		local function _register_cover(pos, fwd)
+			local nav_tracker = self._quad_field:create_nav_tracker(pos, true)
+			local cover = {
+				nav_tracker:field_position(),
+				fwd,
+				nav_tracker
+			}
+
+			if please or self._debug then
+				t_ins(covers, cover)
+			end
+
+			local location_script_data = self._quad_field:get_script_data(nav_tracker, true)
+
+			if not location_script_data.covers then
+				location_script_data.covers = {}
+			end
+
+			t_ins(location_script_data.covers, cover)
+		end
+
+		local tmp_rot = Rotation(0, 0, 0)
+
+		if cover_data.rotations then
+			local rotations = cover_data.rotations
+
+			for i, yaw in ipairs(cover_data.rotations) do
+				mrotation.set_yaw_pitch_roll(tmp_rot, yaw, 0, 0)
+				mrotation.y(tmp_rot, temp_vec1)
+				_register_cover(cover_data.positions[i], mvector3.copy(temp_vec1))
+			end
+		else
+			for _, cover_desc in ipairs(cover_data) do
+				mrotation.set_yaw_pitch_roll(tmp_rot, cover_desc[2], 0, 0)
+				mrotation.y(tmp_rot, temp_vec1)
+				_register_cover(cover_desc[1], mvector3.copy(temp_vec1))
+			end
+		end
+	else
+		local all_cover_units = World:find_units_quick("all", managers.slot:get_mask("cover"))
+
+		for i, unit in ipairs(all_cover_units) do
+			local pos = unit:position()
+			local fwd = unit:rotation():y()
+			local nav_tracker = self._quad_field:create_nav_tracker(pos, true)
+			local cover = {
+				nav_tracker:field_position(),
+				fwd,
+				nav_tracker,
+				true
+			}
+
+			if please or self._debug then
+				t_ins(covers, cover)
+			end
+
+			local location_script_data = self._quad_field:get_script_data(nav_tracker)
+
+			if not location_script_data.covers then
+				location_script_data.covers = {}
+			end
+
+			t_ins(location_script_data.covers, cover)
+			self:_safe_remove_unit(unit)
+		end
+	end
+
+	self._covers = covers
+end
+
 
 --long_path stuff, long_path reverses the pathing distance priority to make paths as long as possible, letting flank groups approach from extremely wide and weird angles 
 
@@ -267,6 +360,157 @@ function NavigationManager:_execute_coarce_search(search_data)
 		end
 	end
 end
+
+function NavigationManager:_strip_nav_field_for_gameplay()
+	local all_doors = self._room_doors
+	local all_rooms = self._rooms
+	local i_door = #all_doors
+
+	while i_door ~= 0 do
+		local door = all_doors[i_door]
+		local seg_1 = self:get_nav_seg_from_i_room(door.rooms[1])
+		local seg_2 = self:get_nav_seg_from_i_room(door.rooms[2])
+
+		if seg_1 == seg_2 then
+			all_doors[i_door] = nil
+		else
+			local stripped_door = {
+				center = door.pos
+			}
+
+			mvector3.lerp(stripped_door.center, door.pos, door.pos1, 0.5)
+
+			all_doors[i_door] = stripped_door
+		end
+
+		i_door = i_door - 1
+	end
+
+	for nav_seg_id, nav_seg in pairs(self._nav_segments) do
+		nav_seg.rooms = nil
+		nav_seg.vis_groups = nil
+	end
+
+	self._rooms = {}
+	self._geog_segments = {}
+	self._geog_segment_offset = nil
+	self._visibility_groups = {}
+	self._helper_blockers = nil
+	self._builder = nil
+end
+
+function NavigationManager:_find_cover_through_lua(threat_pos, threat_vis_pos, near_pos, max_dis, min_dis, optimal_dis, slotmask, access_pos, unit_nav_tracker)
+	local v3_dis_sq = mvec3_dis_sq
+	local world_g = World
+	
+	--log(tostring(max_dis) .. ":" .. tostring(min_dis) .. ":" .. tostring(optimal_dis))
+	max_dis = max_dis and max_dis * max_dis or 490000
+	min_dis = min_dis and min_dis * min_dis
+	optimal_dis = optimal_dis and optimal_dis * optimal_dis
+	
+	local function _f_check_optimal_dis(cover, near_pos, optimal_dis)
+		local dis_sq = v3_dis_sq
+		local cover_dis = dis_sq(cover[1], near_pos)
+		
+		if cover_dis > optimal_dis then
+			return
+		else
+			return cover_dis
+		end
+	end
+	
+	local function _f_check_max_dis(cover, near_pos, max_dis)
+		local dis_sq = v3_dis_sq
+		local cover_dis = dis_sq(cover[1], near_pos)
+		
+		if cover_dis > max_dis then
+			return
+		else
+			return true
+		end
+	end
+	
+	local function _f_check_min_dis(cover, threat_pos, min_dis)
+		local dis_sq = v3_dis_sq
+		local cover_dis = dis_sq(cover[1], threat_pos)
+		
+		if cover_dis < min_dis then
+			return
+		else
+			return cover_dis
+		end
+	end
+	
+	local function _f_check_cover_rays(cover, threat_vis_pos, slotmask)
+		local cover_pos = cover[1]
+		local ray_from = temp_vec1
+
+		mvec3_set(ray_from, math_up)
+		mvec3_mul(ray_from, 92.5)
+		mvec3_add(ray_from, cover_pos)
+
+		local ray_to_pos = temp_vec2
+
+		mvec3_step(ray_to_pos, ray_from, threat_vis_pos, 300)
+
+		local low_ray = world_g:raycast("ray", ray_from, ray_to_pos, "slot_mask", slotmask, "ray_type", "ai_vision", "report")
+		local high_ray = nil
+
+		if low_ray then
+			mvec3_set_z(ray_from, ray_from.z + 80)
+			mvec3_step(ray_to_pos, ray_from, threat_vis_pos, 300)
+
+			high_ray = world_g:raycast("ray", ray_from, ray_to_pos, "slot_mask", slotmask, "ray_type", "ai_vision", "report")
+		end
+
+		return low_ray, high_ray
+	end
+	
+	local best_cover, best_cover_optimal_dis, best_cover_min_dis, best_cover_low_ray, best_cover_high_ray
+
+	for i = 1, #self._covers do
+		local cover = self._covers[i]
+
+		if not cover[self.COVER_RESERVED] then
+			
+			local coarse_params = {
+				access_pos = access_pos or "swat",
+				from_tracker = unit_nav_tracker,
+				to_tracker = cover[3],
+				id = "cover" .. tostring(i)
+			}
+			local path = self:search_coarse(coarse_params)
+			
+			if path then
+				if _f_check_max_dis(cover, near_pos, max_dis) then
+					local cover_optimal_dis, cover_min_dis, cover_low_ray, cover_high_ray
+					
+					cover_min_dis = min_dis and _f_check_min_dis(cover, threat_pos, min_dis)
+					
+					if not best_cover_min_dis or cover_min_dis and cover_min_dis > best_cover_min_dis then
+						cover_optimal_dis = optimal_dis and _f_check_optimal_dis(cover, near_pos, optimal_dis)
+						
+						if not best_cover_optimal_dis or cover_optimal_dis and cover_optimal_dis < best_cover_optimal_dis then
+							cover_low_ray, cover_high_ray = _f_check_cover_rays(cover, threat_vis_pos, slotmask)
+							
+							if not best_cover_low_ray or cover_low_ray then
+								if not best_cover_high_ray or cover_high_ray then
+									best_cover = cover
+									best_cover_optimal_dis = cover_optimal_dis
+									best_cover_min_dis = cover_min_dis
+									best_cover_low_ray = cover_low_ray
+									best_cover_high_ray = cover_high_ray
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+	
+	return best_cover
+end 
 
 function NavigationManager:_sort_nav_segs_after_pos(to_pos, i_seg, ignore_seg, verify_clbk, access_pos, access_neg, long_path)
 	local all_segs = self._nav_segments

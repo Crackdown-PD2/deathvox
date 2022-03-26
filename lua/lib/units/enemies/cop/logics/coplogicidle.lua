@@ -318,6 +318,11 @@ function CopLogicIdle._upd_enemy_detection(data)
 		local allow_trans, obj_failed = CopLogicBase.is_obstructed(data, objective, nil, new_attention)
 
 		if allow_trans then
+			if objective and objective.stop_on_trans then
+				objective.pos = nil
+				objective.in_place = true
+			end
+		
 			local wanted_state = CopLogicBase._get_logic_state_from_reaction(data)
 
 			if wanted_state and wanted_state ~= data.name then
@@ -628,6 +633,15 @@ function CopLogicIdle.on_new_objective(data, old_objective)
 	local my_data = data.internal_data
 
 	if new_objective then
+		local allow_trans, obj_failed = CopLogicBase.is_obstructed(data, new_objective, nil, data.attention_obj)
+		
+		if allow_trans then
+			if new_objective.stop_on_trans then
+				new_objective.pos = nil
+				new_objective.in_place = true
+			end
+		end
+	
 		local objective_type = new_objective.type
 
 		if CopLogicIdle._chk_objective_needs_travel(data, new_objective) then

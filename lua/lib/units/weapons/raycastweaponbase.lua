@@ -1365,6 +1365,11 @@ function RaycastWeaponBase:_suppress_units(from_pos, direction, distance, slotma
 			for _, enemy in ipairs(enemies_to_suppress) do
 				local enemy_distance = mvector3.distance(from_pos, enemy:movement():m_head_pos())
 				local dis_lerp_value = math.clamp(enemy_distance, 0, distance) / distance
+				
+				if dis_lerp_value > 0.5 then
+					dis_lerp_value = 0.5
+				end
+
 				local total_suppression = self._suppression
 
 				if suppr_mul then
