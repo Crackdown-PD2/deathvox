@@ -197,7 +197,7 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 700,
 		max_nr = 5,
 		duration = {1, 3},
-		interval = {0.75, 1.5},
+		interval = {4, 8},
 		group_min = 2,
 		queue = "c01"
 	}
@@ -226,18 +226,18 @@ function GroupAITweakData:_init_chatter_data()
 		queue = "a06"
 	}		
 	self.enemy_chatter.go_go = {
-		radius =  1000,
-		max_nr = 20,
+		radius = 600,
+		max_nr = 1,
 		duration = {2, 2},
-		interval = {0.75, 1},
+		interval = {8, 16},
 		group_min = 0,
 		queue = "mov"
 	}
 	self.enemy_chatter.push = {
-		radius = 1000,
-		max_nr = 20,
+		radius = 600,
+		max_nr = 1,
 		duration = {2, 4},
-		interval = {0.75, 1.5},
+		interval = {10, 15},
 		group_min = 0,
 		queue = "pus"
 	}
@@ -251,17 +251,17 @@ function GroupAITweakData:_init_chatter_data()
 	}
 	self.enemy_chatter.look_for_angle = {
 		radius = 700,
-		max_nr = 20,
+		max_nr = 1,
 		duration = {2, 4},
-		interval = {2, 4},
+		interval = {8, 12},
 		group_min = 0,
 		queue = "t01"
 	}
 	self.enemy_chatter.ready = {
-		radius = 1000,
-		max_nr = 20,
+		radius = 800,
+		max_nr = 1,
 		duration = {2, 4},
-		interval = {0.75, 1.5},
+		interval = {10, 15},
 		group_min = 0,
 		queue = "rdy"
 	}
@@ -419,9 +419,9 @@ function GroupAITweakData:_init_chatter_data()
 	}
 	self.enemy_chatter.open_fire = {
 		radius = 2000,
-		max_nr = 40,
+		max_nr = 1,
 		duration = {2, 4},
-		interval = {2, 4},
+		interval = {8, 16},
 		group_min = 0,
 		queue = "att"
 	}		
@@ -443,9 +443,9 @@ function GroupAITweakData:_init_chatter_data()
 	}
 	self.enemy_chatter.contact = {
 		radius = 2000,
-		max_nr = 20,
+		max_nr = 1,
 		duration = {1, 3},
-		interval = {4, 6},
+		interval = {4, 8},
 		group_min = 0,
 		queue = "c01"
 	}

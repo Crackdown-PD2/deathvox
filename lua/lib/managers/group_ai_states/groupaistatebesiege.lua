@@ -2178,7 +2178,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		--if one of the group members walk into a criminal then, if the phase is anticipation, they'll retreat backwards, otherwise, stand their ground and start shooting.
 		--this will most likely always instantly kick in if the group has finished charging into an area.
 	
-		if phase_is_anticipation then 
+		if phase_is_anticipation or table.size(obstructed_area.police.units) > 16 then 
 			pull_back = true
 		else
 			if charge then
@@ -2193,11 +2193,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		if phase_is_anticipation then
 			pull_back = true
 		elseif not current_objective.area or not next(current_objective.area.criminal.units) then --if theres suddenly no criminals in the area, start approaching instead
-			if self._street then
-				pull_back = true
-			else
-				push = true
-			end
+			pull_back = true
 		end
 	elseif group.in_place_t or not current_objective.area then
 		local obstructed_path_index = nil
@@ -2240,7 +2236,9 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		end
 
 		if has_criminals_closer then --open fire when enemies are in the current area we are in
-			if phase_is_anticipation then
+			if table.size(area_to_chk.police.units) > 16 then
+				pull_back = true
+			elseif phase_is_anticipation then
 				pull_back = true
 			else
 				if charge then					
@@ -2252,7 +2250,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		elseif phase_is_anticipation and current_objective.open_fire then --if we were aggressive one update ago, start backing up away from the current objective area
 			pull_back = true
 		elseif has_criminals_close then
-			if not phase_is_anticipation then			
+			if not phase_is_anticipation and group.in_place_t and self._t - group.in_place_t > math_lerp(2, 7, math_random()) then			
 				if self._street then --street behavior, stay in place a bit before pushes 
 					if charge then 
 						objective_area = has_criminals_close
@@ -2261,17 +2259,15 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 						open_fire = true
 						objective_area = area_to_chk
 					end
-				else
+				elseif table.size(has_criminals_close.police.units) < 16 then
 					objective_area = has_criminals_close
 					push = true
+				elseif current_objective.area and current_objective.area.id == has_criminals_close.id then
+					pull_back = true
 				end
 			end
 		elseif group.in_place or not current_objective.area then
-			if phase_is_anticipation then
-				approach = true
-			else
-				push = true
-			end
+			approach = true
 		end
 	end
 	
@@ -2319,7 +2315,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 	elseif approach or push then
 		local assault_area, alternate_assault_area, alternate_assault_area_from, assault_path, alternate_assault_path = nil
 		
-		if tactics_map and tactics_map.flank then
+		if tactics_map and tactics_map.flank or math_random() > 0.5 then
 			local all_nav_segs = managers.navigation._nav_segments
 			local assault_to_seg = all_nav_segs[objective_area.pos_nav_seg]
 			
@@ -2440,7 +2436,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			
 			if push and not current_objective.moving_in then
 				self:_voice_push_in(group)
-			elseif approach then
+			elseif approach and group.in_place then
 				if tactics_map and tactics_map.flank then
 					self:_voice_looking_for_angle(group)
 				else
