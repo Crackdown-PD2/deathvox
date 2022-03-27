@@ -36,6 +36,33 @@ function GroupAIStateBesiege:init(group_ai_state)
 	--self:set_debug_draw_state(true) --Uncomment to debug AI stuff.
 end
 
+function GroupAIStateBesiege:_queue_police_upd_task()
+	if not self._police_upd_task_queued then
+		self._police_upd_task_queued = true
+		
+		managers.enemy:add_delayed_clbk("GroupAIStateBesiege._upd_police_activity", callback(self, self, "_upd_police_activity"), self._t + (next(self._spawning_groups) and 0.2 or 1))
+	end
+end
+
+function GroupAIStateBesiege:force_end_assault_phase(force_regroup)
+	local task_data = self._task_data.assault
+
+	if task_data.active then
+		--print("GroupAIStateBesiege:force_end_assault_phase()")
+
+		task_data.phase = "fade"
+		task_data.force_end = true
+
+		if force_regroup then
+			task_data.force_regroup = true
+
+			managers.enemy:reschedule_delayed_clbk("GroupAIStateBesiege._upd_police_activity", self._t)
+		end
+	end
+
+	self:set_assault_endless(false)
+end
+
 function GroupAIStateBesiege:_draw_enemy_activity(t)
 	local camera = managers.viewport:get_current_camera()
 
@@ -1944,10 +1971,16 @@ function GroupAIStateBesiege:_assign_enemy_groups_to_assault(phase)
 					if objective then
 						if objective.grp_objective ~= group.objective then
 							-- Nothing
-						elseif objective.in_place then
-							done_moving = true
-							
-							break
+						else
+							local nav_seg = u_data.tracker:nav_segment()
+							local my_area = self:get_area_from_nav_seg_id(nav_seg)
+
+							if my_area == grp_objective.area then
+								--log("bingus")
+								done_moving = true	
+							else
+								done_moving = false
+							end
 						end
 					end
 				end
@@ -1974,6 +2007,44 @@ function GroupAIStateBesiege:_assign_enemy_groups_to_assault(phase)
 			self:_set_assault_objective_to_group(group, phase)
 		end
 	end
+end
+
+function GroupAIStateBesiege:_chk_group_engaging_area(group, tactics_map)
+	local objective = group.objective
+	local ranged_fire = nil
+	
+	if tactics_map then
+		ranged_fire = tactics_map.ranged_fire or tactics_map.elite_ranged_fire
+	end
+	
+	local best_dis, best_area
+
+	for u_key, u_data in pairs(group.units) do
+		local brain = u_data.unit:brain()
+
+		if brain then
+			local logic_data = brain._logic_data
+			
+			if logic_data.name == "attack" then
+				local unit_obj = brain:objective()
+				
+				if unit_obj and unit_obj.grp_objective == objective then
+					if unit_obj.in_place then
+						local objective_pos = objective.pos or objective.area.pos
+						local m_dis_sq = mvec3_dis_sq(u_data.m_pos, objective_pos)
+							
+						if not best_dis or ranged_fire and m_dis_sq > best_dis or m_dis_sq < best_dis then
+							local nav_seg = u_data.tracker:nav_segment()
+							best_area = self:get_area_from_nav_seg_id(nav_seg)
+							best_dis = m_dis_sq
+						end
+					end
+				end
+			end
+		end
+	end
+	
+	return best_area
 end
 
 function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
@@ -2171,6 +2242,14 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 	if current_objective.tactic then
 		return
 	end
+	
+	local member_stuck_engaging_area = not obstructed_area and not charge
+	
+	if member_stuck_engaging_area then
+		member_stuck_engaging_area = group.in_place_t and self._t - group.in_place_t < 15 or current_objective.area and table.size(current_objective.area.criminal.units) > 16
+	end
+	
+	member_stuck_engaging_area = member_stuck_engaging_area and self:_chk_group_engaging_area(group, tactics_map) or nil
 
 	local objective_area = nil
 	
@@ -2189,6 +2268,16 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		
 			objective_area = obstructed_area
 		end
+	elseif member_stuck_engaging_area then
+		objective_area = member_stuck_engaging_area
+		
+		if not phase_is_anticipation then
+			open_fire = true
+		else
+			pull_back = true
+		end
+		
+		--log("get ready to move")
 	elseif current_objective.moving_in then
 		if phase_is_anticipation then
 			pull_back = true
@@ -2936,7 +3025,7 @@ function GroupAIStateBesiege._create_objective_from_group_objective(grp_objectiv
 		objective.scan = true
 		objective.interrupt_dis = nil
 		objective.interrupt_suppression = nil
-		objective.stop_on_trans = not grp_objective.running
+		--objective.stop_on_trans = not grp_objective.running
 	elseif grp_objective.type == "create_phalanx" then
 		objective.type = "phalanx"
 		objective.stance = "hos"
@@ -3379,16 +3468,29 @@ function GroupAIStateBesiege:_assign_group_to_retire(group)
 
 		return
 	end
+	
+	local coarse_path = {
+		{
+			retire_area.pos_nav_seg,
+			retire_area.pos
+		}
+	}
+	
+	if retire_area then
+		local search_params = {
+			id = "GroupAI_retiring",
+			from_seg = start_area.pos_nav_seg,
+			to_seg = retire_area.pos_nav_seg,
+			access_pos = self._get_group_acces_mask(group),
+			verify_clbk = callback(self, self, "is_nav_seg_safe")
+		}
+		coarse_path = managers.navigation:search_coarse(search_params)
+	end
 
 	local grp_objective = {
 		type = "retire",
 		area = retire_area or group.objective.area,
-		coarse_path = {
-			{
-				retire_area.pos_nav_seg,
-				retire_area.pos
-			}
-		},
+		coarse_path = coarse_path,
 		pos = retire_pos
 	}
 

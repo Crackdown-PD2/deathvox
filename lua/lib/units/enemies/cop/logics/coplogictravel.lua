@@ -494,13 +494,14 @@ function CopLogicTravel._upd_enemy_detection(data)
 	
 	if not objective or objective.type ~= "follow" then		
 		if allow_trans then
-			if objective and objective.stop_on_trans then
-				objective.pos = nil
-				objective.in_place = true
-			end
-		
 			local wanted_state = CopLogicBase._get_logic_state_from_reaction(data, new_reaction)
-
+			
+			if objective and objective.stop_on_trans and wanted_state == "attack" then
+				local my_tracker = data.unit:movement():nav_tracker()
+				objective.pos = nil
+				objective.in_place = not my_tracker:obstructed()
+			end
+			
 			if wanted_state and wanted_state ~= data.name then
 				if obj_failed then
 					data.objective_failed_clbk(data.unit, data.objective)

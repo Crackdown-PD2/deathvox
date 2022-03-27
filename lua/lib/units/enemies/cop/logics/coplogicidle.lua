@@ -633,12 +633,16 @@ function CopLogicIdle.on_new_objective(data, old_objective)
 	local my_data = data.internal_data
 
 	if new_objective then
-		local allow_trans, obj_failed = CopLogicBase.is_obstructed(data, new_objective, nil, data.attention_obj)
-		
-		if allow_trans then
-			if new_objective.stop_on_trans then
+		if new_objective and new_objective.stop_on_trans then
+			local allow_trans, obj_failed = CopLogicBase.is_obstructed(data, new_objective, nil, data.attention_obj)
+			
+			if allow_trans then
+				local my_tracker = data.unit:movement():nav_tracker()
 				new_objective.pos = nil
-				new_objective.in_place = true
+				new_objective.in_place = not my_tracker:obstructed()
+			else
+				new_objective.pos = new_objective.grp_objective.pos
+				new_objective.in_place = nil
 			end
 		end
 	
@@ -686,7 +690,7 @@ function CopLogicIdle.on_new_objective(data, old_objective)
 				end
 			elseif REACT_ARREST == data.attention_obj.reaction and CopLogicBase._can_arrest(data) then
 				CopLogicBase._exit(data.unit, "arrest")
-			else
+			elseif data.name ~= "attack" then
 				CopLogicBase._exit(data.unit, "attack")
 			end
 		end

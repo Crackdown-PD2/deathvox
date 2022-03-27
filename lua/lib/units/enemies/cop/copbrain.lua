@@ -42,7 +42,6 @@ function CopBrain:post_init()
 	CopBrain._logic_variants.deathvox_heavyar = clone(security_variant)
 	CopBrain._logic_variants.deathvox_lightar = clone(security_variant)
 	CopBrain._logic_variants.deathvox_medic = clone(security_variant)
-	CopBrain._logic_variants.deathvox_medic.attack = MedicLogicAttack
 	CopBrain._logic_variants.deathvox_guard = clone(security_variant)
 	CopBrain._logic_variants.deathvox_gman = clone(security_variant)
 	CopBrain._logic_variants.deathvox_lightshot = clone(security_variant)

@@ -89,7 +89,20 @@ function TeamAILogicTravel.enter(data, new_logic_name, enter_params)
 		end
 	end
 
+	--[[local w_td = alive(data.unit) and data.unit:inventory():equipped_unit() and data.unit:inventory():equipped_unit():base():weapon_tweak_data()
+
+	if w_td then
+		local cw_td = data.char_tweak.weapon[w_td.usage]
+
+		if cw_td and cw_td.range then
+			my_data.weapon_range = cw_td.range
+		else
+			my_data.weapon_range = 5000
+		end
+	end]]
+
 	my_data.weapon_range = data.char_tweak.weapon[data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage].range
+	--my_data.path_ahead = objective and objective.path_ahead or data.is_converted or data.unit:in_slot(16) or data.team.id == tweak_data.levels:get_default_team_ID("player")
 	my_data.path_ahead = true
 
 	local key_str = tostring(data.key)
@@ -138,6 +151,24 @@ function TeamAILogicTravel.enter(data, new_logic_name, enter_params)
 		if objective.type == "revive" and objective.action == "revive" and managers.player:has_category_upgrade("team", "crew_inspire") then
 			my_data.can_inspire = true
 		end
+
+		--[[if objective.type == "revive" then
+			local revive_unit = objective.follow_unit
+
+			if managers.player:has_category_upgrade("team", "crew_inspire") then
+				if revive_unit:base().is_husk_player then
+					if revive_unit:movement():need_revive() and revive_unit:movement():current_state_name() ~= "arrested" then
+						my_data.can_inspire = true
+					end
+				else
+					local dmg_ext = revive_unit:character_damage()
+
+					if dmg_ext:need_revive() and not dmg_ext:arrested() then
+						my_data.can_inspire = true
+					end
+				end
+			end
+		end]]
 
 		local path_style = objective.path_style
 
@@ -240,27 +271,18 @@ function TeamAILogicTravel.check_inspire(data, my_data, revive_unit)
 	end
 
 	local allow_inspire = nil
-	local no_players_standing = true
+	local is_last_standing = true
 
-	for u_key, u_data in pairs_g(managers.groupai:state():all_player_criminals()) do
+	for u_key, u_data in pairs_g(managers.groupai:state():all_char_criminals()) do
 		if not u_data.status and data.key ~= u_key then
-			no_players_standing = false
+			is_last_standing = false
 
 			break
 		end
 	end
 
-	if no_players_standing then
+	if is_last_standing then
 		allow_inspire = true
-	else
-		local rev_base_ext = revive_unit:base()
-
-		--if not going to revive a player and there's still a player standing, just don't use inspire
-		if not rev_base_ext.is_local_player and not rev_base_ext.is_husk_player then
-			my_data.inspire_chk_t = data.t + 0.5
-
-			return
-		end
 	end
 
 	if not allow_inspire then
@@ -300,7 +322,7 @@ function TeamAILogicTravel.check_inspire(data, my_data, revive_unit)
 			end
 		end
 
-		--more than 3 enemies damaged the bot in the last 1.2 seconds
+		--more than 4 enemies damaged the bot in the last 1.2 seconds
 		if under_multiple_fire then
 			allow_inspire = true
 		end
