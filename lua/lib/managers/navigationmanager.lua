@@ -450,19 +450,16 @@ function NavigationManager:_find_cover_through_lua(threat_pos, threat_vis_pos, n
 		local ray_from = temp_vec1
 
 		mvec3_set(ray_from, math_up)
-		mvec3_mul(ray_from, 92.5)
+		mvec3_mul(ray_from, 82)
 		mvec3_add(ray_from, cover_pos)
 
-		local ray_to_pos = temp_vec2
-
-		mvec3_step(ray_to_pos, ray_from, threat_vis_pos, 300)
+		local ray_to_pos = threat_vis_pos
 
 		local low_ray = world_g:raycast("ray", ray_from, ray_to_pos, "slot_mask", slotmask, "ray_type", "ai_vision", "report")
 		local high_ray = nil
 
 		if low_ray then
-			mvec3_set_z(ray_from, ray_from.z + 80)
-			mvec3_step(ray_to_pos, ray_from, threat_vis_pos, 300)
+			mvec3_set_z(ray_from, ray_from.z + 82)
 
 			high_ray = world_g:raycast("ray", ray_from, ray_to_pos, "slot_mask", slotmask, "ray_type", "ai_vision", "report")
 		end

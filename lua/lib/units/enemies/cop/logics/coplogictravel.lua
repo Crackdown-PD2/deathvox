@@ -2448,7 +2448,7 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index)
 	else
 		local nav_seg = coarse_path[nav_index][1]
 		local area = managers.groupai:state():get_area_from_nav_seg_id(nav_seg)
-		local cover = CopLogicTravel._needs_cover_at_destination(data, area) and managers.navigation:find_cover_in_nav_seg_1(area.nav_segs)
+		local cover = CopLogicTravel._needs_cover_at_destination(data, area) and CopLogicTravel._find_cover(data, nav_seg)
 
 		if my_data.moving_to_cover then
 			managers.navigation:release_cover(my_data.moving_to_cover[1])
@@ -2469,7 +2469,7 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index)
 				cover
 			}
 		else
-			to_pos = coarse_path[nav_index][2]
+			to_pos = managers.navigation:find_random_position_in_segment(nav_seg)
 			local pos_rsrv_id = data.pos_rsrv_id
 			local rsrv_desc = {
 				position = to_pos,
@@ -2498,6 +2498,10 @@ end
 function CopLogicTravel._needs_cover_at_destination(data, dest_area)
 	if data.cool then
 		return false
+	end
+	
+	if data.internal_data.want_to_take_cover then
+		return true
 	end
 
 	local verify_u_key = nil

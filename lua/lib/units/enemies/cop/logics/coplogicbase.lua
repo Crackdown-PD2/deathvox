@@ -1315,26 +1315,30 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 	if not objective.action and not objective.running and not data.internal_data.action_started and not data.buddypalchum then
 		if not objective.pos or objective.pos_optional then
 			if attention and REACT_COMBAT <= attention.reaction then
-				local good_types = {
-					free = true,
-					defend_area = true,
-					follow = true
-				}
-						
-				if good_types[objective.type] then
-					local good_grp_types = {
-						recon_area = true,
-						assault_area = true,
-						reenforce_area = true,
-						defend_area = true
+				local coarse_path_index = data.name == "travel" and data.internal_data.coarse_path_index
+
+				if not coarse_path_index or coarse_path_index > 1 or attention.dis < 500 and math_abs(data.m_pos.z - attention.m_pos.z) < 250 then
+					local good_types = {
+						free = true,
+						defend_area = true,
+						follow = true
 					}
-						
-					if not objective.grp_objective or good_grp_types[objective.grp_objective.type] then 
-						if data.internal_data.want_to_take_cover or attention.verified_t and data.t - attention.verified_t < 2 then
-							local dis = data.internal_data.weapon_range and data.internal_data.weapon_range.close or 500
 							
-							if attention.dis <= dis then
-								return true, false
+					if good_types[objective.type] then
+						local good_grp_types = {
+							recon_area = true,
+							assault_area = true,
+							reenforce_area = true,
+							defend_area = true
+						}
+							
+						if not objective.grp_objective or good_grp_types[objective.grp_objective.type] then 
+							if data.internal_data.want_to_take_cover or attention.verified_t and data.t - attention.verified_t < 2 then
+								local dis = data.internal_data.weapon_range and data.internal_data.weapon_range.optimal or 500
+								
+								if attention.dis <= dis then
+									return true, false
+								end
 							end
 						end
 					end
