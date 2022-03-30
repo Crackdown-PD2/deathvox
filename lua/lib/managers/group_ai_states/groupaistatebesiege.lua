@@ -2281,7 +2281,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 	elseif current_objective.moving_in then
 		if phase_is_anticipation then
 			pull_back = true
-		elseif not current_objective.area or not next(current_objective.area.criminal.units) then --if theres suddenly no criminals in the area, start approaching instead
+		elseif not current_objective.area or not next(current_objective.area.criminal.units) or table.size(current_objective.area.police.units) > 16 then --if theres suddenly no criminals in the area, start approaching instead
 			pull_back = true
 		end
 	elseif group.in_place_t or not current_objective.area then
