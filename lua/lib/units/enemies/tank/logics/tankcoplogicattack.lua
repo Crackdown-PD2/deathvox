@@ -496,6 +496,27 @@ function TankCopLogicAttack.queued_update(data)
 	end
 end
 
+function TankCopLogicAttack._pathing_complete_clbk(data)
+	local my_data = data.internal_data
+	
+	if my_data.exiting then
+		return
+	end
+	
+	data.logic._process_pathing_results(data, my_data)
+	
+	if data.attention_obj and REACT_COMBAT <= data.attention_obj.reaction then
+		if data.unit:base():has_tag("law") then
+			my_data.attitude = data.objective and data.objective.attitude or "avoid"
+		end
+		
+		my_data.want_to_take_cover = CopLogicAttack._chk_wants_to_take_cover(data, my_data)
+		TankCopLogicAttack._upd_combat_movement(data)
+	else
+		TankCopLogicAttack._cancel_chase_attempt(data, my_data)
+	end
+end
+
 function TankCopLogicAttack._process_pathing_results(data, my_data)
 	if data.pathing_results then
 		local pathing_results = data.pathing_results

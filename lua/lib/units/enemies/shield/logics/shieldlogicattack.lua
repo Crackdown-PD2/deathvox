@@ -313,6 +313,28 @@ function ShieldLogicAttack._upd_enemy_detection(data, is_synchronous)
 	CopLogicBase._report_detections(data.detected_attention_objects)
 end
 
+function ShieldLogicAttack._pathing_complete_clbk(data)
+	local my_data = data.internal_data
+	
+	if my_data.exiting then
+		return
+	end
+	
+	if not my_data.pathing_to_optimal_pos then
+		return
+	end
+	
+	local t = TimerManager:game():time()
+	data.t = t
+	local unit = data.unit
+	
+	data.logic._process_pathing_results(data, my_data)
+		
+	if my_data.optimal_path then
+		ShieldLogicAttack._chk_request_action_walk_to_optimal_pos(data, my_data)
+	end
+end
+
 function ShieldLogicAttack.update(data)
 	local t = TimerManager:game():time()
 	data.t = t
@@ -349,6 +371,11 @@ function ShieldLogicAttack.update(data)
 	ShieldLogicAttack._process_pathing_results(data, my_data)
 
 	local enemy_visible = focus_enemy and focus_enemy.verified
+	
+	if data.unit:base():has_tag("law") then
+		my_data.attitude = data.objective and data.objective.attitude or "avoid"
+	end
+	
 	local engage = my_data.attitude == "engage"
 	local action_taken = my_data.turning or data.unit:movement():chk_action_forbidden("walk") or my_data.walking_to_optimal_pos
 

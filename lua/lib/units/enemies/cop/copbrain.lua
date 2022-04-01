@@ -702,6 +702,16 @@ function CopBrain:clbk_pathing_results(search_id, path)
 	self:_add_pathing_result(search_id, path)
 end
 
+function CopBrain:_add_pathing_result(search_id, path)
+	self._logic_data.active_searches[search_id] = nil
+	self._logic_data.pathing_results = self._logic_data.pathing_results or {}
+	self._logic_data.pathing_results[search_id] = path or "failed"
+	
+	if path and self._current_logic._pathing_complete_clbk then
+		self._current_logic._pathing_complete_clbk(self._logic_data)
+	end
+end
+
 function CopBrain:abort_detailed_pathing(search_id)
 	if not self._logic_data.active_searches[search_id] then
 		return

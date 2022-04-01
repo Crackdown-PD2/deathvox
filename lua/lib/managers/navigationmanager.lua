@@ -399,6 +399,20 @@ function NavigationManager:_strip_nav_field_for_gameplay()
 	self._builder = nil
 end
 
+function NavigationManager:_clamp_pos_to_field(pos, allow_disabled)
+	if not pos then
+		return
+	end
+	
+	local pos_tracker = self:create_nav_tracker(pos, allow_disabled)
+	
+	local clamped_pos = mvec3_cpy(pos_tracker:field_position())
+	
+	self:destroy_nav_tracker(pos_tracker)
+	
+	return clamped_pos
+end
+
 function NavigationManager:_find_cover_through_lua(threat_pos, threat_vis_pos, near_pos, max_dis, min_dis, optimal_dis, slotmask, access_pos, unit_nav_tracker)
 	local v3_dis_sq = mvec3_dis_sq
 	local world_g = World

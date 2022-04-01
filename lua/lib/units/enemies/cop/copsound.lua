@@ -5,41 +5,6 @@ function CopSound:chk_voice_prefix()
 end
 
 function CopSound:say(sound_name, sync, skip_prefix, important, callback)
-	if self._unit:character_damage():dead() then
-		return
-	end
-
-	if self._last_speech then
-		self._last_speech:stop()
-	end
-
-	local full_sound = nil
-	
-	if self._prefix == "l5d_" then
-		if sound_name == "c01" or sound_name == "att" then
-			sound_name = "g90"
-		elseif sound_name == "rrl" then
-			sound_name = "pus"
-		elseif sound_name == "t01" then
-			sound_name = "prm"
-		elseif sound_name == "h01" then
-			sound_name = "h10"
-		end
-	end
-	
-	local fixed_sound = nil
-	
-	if self._prefix == "l1n_" or self._prefix == "l2n_" or self._prefix == "l3n_" or self._prefix == "l4n_" then
-		if sound_name == "x02a_any_3p" then
-			sound_name = "x01a_any_3p"
-			--log("help")
-			fixed_sound = true
-		elseif sound_name == "x01a_any_3p" and not fixed_sound and not self._prefix == "l4n_" then
-			sound_name = "x02a_any_3p"
-			--log("fuckinghell")
-		end
-	end
-
 	local line_array = { 
 		c01 = "contact",
 		c01x = "contact",
@@ -124,6 +89,37 @@ function CopSound:say(sound_name, sync, skip_prefix, important, callback)
 				self._unit:base():play_voiceline(line_to_use, important)
 				return
 			end
+		end
+	end
+	
+	if self._last_speech then
+		self._last_speech:stop()
+	end
+	
+	local full_sound = nil
+	
+	if self._prefix == "l5d_" then
+		if sound_name == "c01" or sound_name == "att" then
+			sound_name = "g90"
+		elseif sound_name == "rrl" then
+			sound_name = "pus"
+		elseif sound_name == "t01" then
+			sound_name = "prm"
+		elseif sound_name == "h01" then
+			sound_name = "h10"
+		end
+	end
+	
+	local fixed_sound = nil
+	
+	if self._prefix == "l1n_" or self._prefix == "l2n_" or self._prefix == "l3n_" or self._prefix == "l4n_" then
+		if sound_name == "x02a_any_3p" then
+			sound_name = "x01a_any_3p"
+			--log("help")
+			fixed_sound = true
+		elseif sound_name == "x01a_any_3p" and not fixed_sound and not self._prefix == "l4n_" then
+			sound_name = "x02a_any_3p"
+			--log("fuckinghell")
 		end
 	end
 	

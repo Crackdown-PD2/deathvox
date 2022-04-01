@@ -18,6 +18,34 @@ function SentryGunWeapon:switch_fire_mode()
 	self._unit:event_listener():call("on_switch_fire_mode", self._use_armor_piercing)
 end
 
+function SentryGunWeapon:_apply_dmg_mul(damage, col_ray, from_pos)
+	if self._unit:base():is_owner() then 
+		damage = damage + managers.player:upgrade_value("sentry_gun","killer_machines_bonus_damage",0)
+	end
+
+	local damage_out = damage * self._current_damage_mul
+	
+	local td = self:_get_tweak_data()
+
+	if td.DAMAGE_MUL_RANGE then
+		local ray_dis = col_ray.distance or mvector3.distance(from_pos, col_ray.position)
+		local ranges = td.DAMAGE_MUL_RANGE
+		local i_range = nil
+
+		for test_i_range, range_data in ipairs(ranges) do
+			if ray_dis < range_data[1] or test_i_range == #ranges then
+				i_range = test_i_range
+
+				break
+			end
+		end
+
+		damage_out = damage_out * ranges[i_range][2]
+	end
+
+	return damage_out
+end
+
 if deathvox:IsTotalCrackdownEnabled() then 
 
 	function SentryGunWeapon:init(unit)
@@ -431,40 +459,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 		else
 			return self._fire_stop_snd_event
 		end
-	end
-
-
-	function SentryGunWeapon:_apply_dmg_mul(damage, col_ray, from_pos)
-		if self._unit:base():is_owner() then 
-			damage = damage + managers.player:upgrade_value("sentry_gun","killer_machines_bonus_damage",0)
-		end
-		local damage_out = damage * self._current_damage_mul
-		
-		local td = self:_get_tweak_data()
-		
-		
-		if td.DAMAGE_MUL_RANGE then
-			local ray_dis = col_ray.distance or mvector3.distance(from_pos, col_ray.position)
-			local ranges = td.DAMAGE_MUL_RANGE
-			local i_range = nil
-
-			for test_i_range, range_data in ipairs(ranges) do
-				if ray_dis < range_data[1] or test_i_range == #ranges then
-					i_range = test_i_range
-
-					break
-				end
-			end
-
-			if i_range == 1 or ranges[i_range][1] < ray_dis then
-				damage_out = damage_out * ranges[i_range][2]
-			else
-				local dis_lerp = (ray_dis - ranges[i_range - 1][1]) / (ranges[i_range][1] - ranges[i_range - 1][1])
-				damage_out = damage_out * math.lerp(ranges[i_range - 1][2], ranges[i_range][2], dis_lerp)
-			end
-		end
-
-		return damage_out
 	end
 
 	local orig_update = SentryGunWeapon.update_laser

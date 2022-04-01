@@ -563,6 +563,16 @@ function CopLogicTravel._upd_enemy_detection(data)
 	return delay
 end
 
+function CopLogicTravel._pathing_complete_clbk(data)
+	local my_data = data.internal_data
+
+	if not my_data.exiting then
+		if my_data.processing_advance_path or my_data.processing_coarse_path then
+			CopLogicTravel.upd_advance(data)
+		end
+	end
+end
+
 function CopLogicTravel._upd_pathing(data, my_data)
 	if data.pathing_results then
 		local pathing_results = data.pathing_results
@@ -1928,6 +1938,10 @@ function CopLogicTravel.chk_group_ready_to_move(data, my_data)
 	if not my_objective.grp_objective then
 		return true
 	end
+	
+	if not my_objective.area then
+		return true
+	end
 
 	local my_dis = mvec3_dis_sq(my_objective.area.pos, data.m_pos)
 	
@@ -1957,7 +1971,16 @@ end
 function CopLogicTravel.apply_wall_offset_to_cover(data, my_data, cover, wall_fwd_offset)
 	local to_pos_fwd = tmp_vec1
 
-	mvec3_set(to_pos_fwd, cover[2])
+	if data.attention_obj and REACT_COMBAT <= data.attention_obj.reaction then
+		local threat_dir = tmp_vec3
+		mvec3_set(threat_dir, data.m_pos, data.attention_obj.m_pos)
+		
+		mvec3_set(to_pos_fwd, threat_dir)
+	else
+		mvec3_set(to_pos_fwd, cover[2])
+	end
+	
+	
 	mvec3_mul(to_pos_fwd, wall_fwd_offset)
 	mvec3_add(to_pos_fwd, cover[1])
 
