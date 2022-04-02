@@ -385,7 +385,7 @@ function TankCopLogicAttack._upd_combat_movement(data)
 	local enemy_visible = focus_enemy.verified
 	local action_taken = data.logic.action_taken(data, my_data)
 	local chase = nil
-	local engage = not my_data.use_medic_positioning and my_data.attitude == "engage"
+	local engage = my_data.attitude == "engage"
 	local no_run = my_data.no_running
 
 	if not action_taken then

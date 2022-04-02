@@ -110,18 +110,6 @@ function CopLogicAttack.enter(data, new_logic_name, enter_params)
 	my_data.attitude = objective and objective.attitude or "avoid"
 	my_data.weapon_range = clone_g(data.char_tweak.weapon[data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage].range)
 	
-	if data.tactics then
-		if data.tactics.ranged_fire or data.tactics.elite_ranged_fire then
-			
-			if my_data.weapon_range.aggressive then
-				my_data.weapon_range.aggressive = my_data.weapon_range.aggressive * 1.5
-			end
-			
-			my_data.weapon_range.close = my_data.weapon_range.close * 2
-			my_data.weapon_range.optimal = my_data.weapon_range.optimal * 1.5
-		end
-	end
-	
 	CopLogicAttack._upd_enemy_detection(data)
 	
 	if my_data ~= data.internal_data then
@@ -398,6 +386,52 @@ function CopLogicAttack._find_friend_pos(data, focus_enemy)
 	return friend_pos
 end
 
+function CopLogicAttack._upd_combat_movement_no_searches(data)
+	local my_data = data.internal_data
+	local t = data.t
+	local unit = data.unit
+	local action_taken = nil
+	local want_to_take_cover = my_data.want_to_take_cover
+
+	local move_to_cover = nil
+	local valid_harass = nil
+
+	local in_cover = my_data.in_cover
+	local best_cover = my_data.best_cover
+	local want_flank_cover = my_data.flank_cover and not my_data.flank_cover.failed
+
+	if not action_taken then
+		if my_data.attitude == "engage" and my_data.charge_path then
+			local path = my_data.charge_path
+			my_data.charge_path = nil
+			my_data.charging = not tactics or not tactics.hitnrun
+			my_data.flank_cover = nil
+
+			action_taken = CopLogicAttack._chk_request_action_walk_to_cover_shoot_pos(data, my_data, path, "run")
+		end
+		
+		if not action_taken then 
+			if my_data.attitude ~= "engage" and not in_cover then
+				move_to_cover = true
+			elseif not my_data.flank_cover or not my_data.flank_cover.failed then
+				if my_data.at_cover_shoot_pos then
+					if not my_data.stay_out_time or my_data.stay_out_time < t then
+						move_to_cover = true
+					end
+				elseif best_cover and not in_cover then
+					move_to_cover = true
+				end
+			end
+		end
+		
+		if not action_taken and not in_cover and move_to_cover and my_data.cover_path then
+			action_taken = CopLogicAttack._chk_request_action_walk_to_cover(data, my_data)
+		end
+	end
+
+	return action_taken
+end
+
 function CopLogicAttack._upd_combat_movement(data)
 	local my_data = data.internal_data
 	local t = data.t
@@ -525,7 +559,7 @@ function CopLogicAttack._upd_combat_movement(data)
 	local want_flank_cover = my_data.flank_cover and not my_data.flank_cover.failed
 
 	if not action_taken then
-		if not action_taken and not want_to_take_cover and my_data.attitude == "engage" then
+		if not action_taken and my_data.attitude == "engage" then
 			if my_data.charge_path then
 				local path = my_data.charge_path
 				my_data.charge_path = nil
@@ -642,51 +676,49 @@ function CopLogicAttack._upd_combat_movement(data)
 				end
 			end
 			
-			if not my_data.flank_cover then
-				local can_charge = not tactics or not tactics.ranged_fire and not tactics.elite_ranged_fire
+			local can_charge = not tactics or not tactics.ranged_fire and not tactics.elite_ranged_fire
 			
-				if can_charge or valid_harass then
-					if data.important or not my_data.charge_path_failed_t or t - my_data.charge_path_failed_t > 2 then
-						if not my_data.charge_path_search_id and focus_enemy.nav_tracker then
-							if not tactics or tactics.flank then
-								my_data.charge_pos = CopLogicAttack._find_flank_pos(data, my_data, focus_enemy.nav_tracker, engage_range) --charge to a position that would put the unit in a flanking position, not a flanking path
+			if can_charge or valid_harass then
+				if data.important or not my_data.charge_path_failed_t or t - my_data.charge_path_failed_t > 2 then
+					if not my_data.charge_path_search_id and focus_enemy.nav_tracker then
+						if not tactics or tactics.flank then
+							my_data.charge_pos = CopLogicAttack._find_flank_pos(data, my_data, focus_enemy.nav_tracker, engage_range) --charge to a position that would put the unit in a flanking position, not a flanking path
+						else
+							my_data.charge_pos = CopLogicTravel._get_pos_on_wall(focus_enemy.nav_tracker:field_position(), engage_range, 45, nil, data.pos_rsrv_id)
+						end
+
+						--my_data.charge_pos = CopLogicTravel._get_pos_on_wall(focus_enemy.nav_tracker:field_position(), my_data.weapon_range.optimal, 45, nil, data.pos_rsrv_id)
+
+						if my_data.charge_pos then
+							local my_pos = data.unit:movement():nav_tracker():field_position()
+							local unobstructed_line = CopLogicTravel._check_path_is_straight_line(my_pos, my_data.charge_pos, data)
+
+							if unobstructed_line then
+								local path = {
+									mvec3_cpy(my_pos),
+									my_data.charge_pos
+								}
+								
+								my_data.charging = not tactics or not tactics.hitnrun
+								
+								--[[local line = Draw:brush(Color.blue:with_alpha(0.5), 5)
+								line:cylinder(my_pos, my_data.charge_pos, 25)]]
+
+								action_taken = CopLogicAttack._chk_request_action_walk_to_cover_shoot_pos(data, my_data, path, "run")
 							else
-								my_data.charge_pos = CopLogicTravel._get_pos_on_wall(focus_enemy.nav_tracker:field_position(), engage_range, 45, nil, data.pos_rsrv_id)
+								data.brain:add_pos_rsrv("path", {
+									radius = 60,
+									position = mvec3_cpy(my_data.charge_pos)
+								})
+
+								my_data.charge_path_search_id = "charge" .. tostring(data.key)
+
+								data.brain:search_for_path(my_data.charge_path_search_id, my_data.charge_pos, nil, nil, nil)
 							end
+						else
+							--debug_pause_unit(unit, "failed to find charge_pos", unit)
 
-							--my_data.charge_pos = CopLogicTravel._get_pos_on_wall(focus_enemy.nav_tracker:field_position(), my_data.weapon_range.optimal, 45, nil, data.pos_rsrv_id)
-
-							if my_data.charge_pos then
-								local my_pos = data.unit:movement():nav_tracker():field_position()
-								local unobstructed_line = CopLogicTravel._check_path_is_straight_line(my_pos, my_data.charge_pos, data)
-
-								if unobstructed_line then
-									local path = {
-										mvec3_cpy(my_pos),
-										my_data.charge_pos
-									}
-									
-									my_data.charging = not tactics or not tactics.hitnrun
-									
-									--[[local line = Draw:brush(Color.blue:with_alpha(0.5), 5)
-									line:cylinder(my_pos, my_data.charge_pos, 25)]]
-
-									action_taken = CopLogicAttack._chk_request_action_walk_to_cover_shoot_pos(data, my_data, path, "run")
-								else
-									data.brain:add_pos_rsrv("path", {
-										radius = 60,
-										position = mvec3_cpy(my_data.charge_pos)
-									})
-
-									my_data.charge_path_search_id = "charge" .. tostring(data.key)
-
-									data.brain:search_for_path(my_data.charge_path_search_id, my_data.charge_pos, nil, nil, nil)
-								end
-							else
-								--debug_pause_unit(unit, "failed to find charge_pos", unit)
-
-								my_data.charge_path_failed_t = t
-							end
+							my_data.charge_path_failed_t = t
 						end
 					end
 				end
@@ -1729,11 +1761,9 @@ function CopLogicAttack._pathing_complete_clbk(data)
 			my_data.attitude = data.objective and data.objective.attitude or "avoid"
 			
 			my_data.want_to_take_cover = data.logic._chk_wants_to_take_cover(data, my_data)
-	
-			data.logic._update_cover(data)
-
+			
 			if not action_taken then
-				action_taken = data.logic._upd_combat_movement(data)
+				CopLogicAttack._upd_combat_movement_no_searches(data)
 			end
 		end
 	end
