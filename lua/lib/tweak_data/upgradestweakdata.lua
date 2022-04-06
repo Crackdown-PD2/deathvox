@@ -178,7 +178,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			category = "team",
 			upgrade = {
 				value = 1,
-				upgrade = "civilian_hostage_aoe_damage_resistance_1",
+				upgrade = "civilian_hostage_aoe_damage_resistance",
 				category = "player"
 			}
 		}
@@ -186,8 +186,8 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			name_id = "menu_BLANK",
 			category = "team",
 			upgrade = {
-				value = 1,
-				upgrade = "civilian_hostage_aoe_damage_resistance_2",
+				value = 2,
+				upgrade = "civilian_hostage_aoe_damage_resistance",
 				category = "player"
 			}
 		
