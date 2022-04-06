@@ -495,7 +495,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		elseif self._ammo_type == "he" then 
 			return tweak_data.weapon.sentry_he
 		else
-			return (self._name_id and tweak_data.weapon[self._name_id]) or tweak_data.weapon.sentry_gun
+			return self._name_id and tweak_data.weapon[self._name_id] or tweak_data.weapon.sentry_gun
 		end
 	end
 
@@ -835,4 +835,7 @@ else
 		return result
 	end
 	
+	function SentryGunWeapon:_get_tweak_data() --custom method
+		return self._name_id and tweak_data.weapon[self._name_id] or tweak_data.weapon.sentry_gun
+	end
 end
