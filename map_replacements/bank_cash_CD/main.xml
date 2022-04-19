@@ -1,0 +1,91 @@
+<table name="bank_cash_CD">
+	<AddFiles directory="assets">
+		<texture load="true" path="guis/textures/crackdown"/>
+	</AddFiles>
+	<Localization default="english.txt" directory="loc"/>
+	<level ai_group_type="america" briefing_dialog="Play_pln_branchbank_random_stage1_brief" cube="cube_apply_heist_bank" ghost_bonus="0.1" id="branchbank_cash_CD" max_bags="24" music="heist" outro_event="Play_pln_branchbank_stage1_end">
+		<add file="levels/branchbank_cash_CD/add.xml"/>
+		<assets/>
+		<intro_event>
+			<value_node value="Play_pln_branchbank_random_a_intro_a"/>
+			<value_node value="Play_pln_branchbank_gold_a_intro_a"/>
+			<value_node value="Play_pln_branchbank_depositbox_a_intro_a"/>
+			<value_node value="Play_pln_branchbank_cash_stage1_intro_a"/>
+		</intro_event>
+		<mission_data>
+			<table mission="standalone"/>
+		</mission_data>
+		<packages>
+			<value_node value="packages/narr_firestarter3"/>
+			<value_node value="packages/job_branchbank_cash"/>
+			<value_node value="levels/narratives/h_firestarter/stage_3/world"/>
+			<value_node value="levels/narratives/h_firestarter/stage_3/world_sounds"/>
+			<value_node value="levels/narratives/h_firestarter/stage_3/pc_only/pc_only"/>
+			<value_node value="levels/narratives/h_firestarter/stage_3/world/world"/>
+			<value_node value="levels/narratives/h_firestarter/stage_3/editor_only/editor_only"/>
+		</packages>
+		<script_data_mods directory="scriptdata"/>
+	</level>
+	<narrative briefing_event="pln_branchbank_cash_brf_speak" contact="bain" icon="guis/textures/crackdown" id="branchbank_cash_cd" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_branchbank" region="street">
+		<chain>
+			<table briefing_dialog="Play_pln_branchbank_cash_stage1_brief" briefing_id="heist_branchbank_cash_briefing" level_id="branchbank_cash_CD" mission="standalone" type="d" type_id="heist_type_assault">
+				<mission_filter>
+					<value_node value="2"/>
+				</mission_filter>
+			</table>
+		</chain>
+		<contract_cost>
+			<value_node value="16000"/>
+			<value_node value="32000"/>
+			<value_node value="80000"/>
+			<value_node value="160000"/>
+			<value_node value="200000"/>
+			<value_node value="200000"/>
+			<value_node value="200000"/>
+		</contract_cost>
+		<crimenet_callouts>
+			<value_node value="pln_branchbank_cash_cnc_01"/>
+		</crimenet_callouts>
+		<crimenet_videos>
+			<value_node value="cn_branchbank1"/>
+			<value_node value="cn_branchbank2"/>
+			<value_node value="cn_branchbank3"/>
+		</crimenet_videos>
+		<experience_mul>
+			<value_node value="1"/>
+			<value_node value="1"/>
+			<value_node value="1"/>
+			<value_node value="1"/>
+			<value_node value="3"/>
+			<value_node value="3"/>
+			<value_node value="3"/>
+		</experience_mul>
+		<max_mission_xp>
+			<value_node value="12000"/>
+			<value_node value="12000"/>
+			<value_node value="12000"/>
+			<value_node value="12000"/>
+			<value_node value="12000"/>
+			<value_node value="12000"/>
+			<value_node value="12000"/>
+		</max_mission_xp>
+		<min_mission_xp>
+			<value_node value="12000"/>
+			<value_node value="12000"/>
+			<value_node value="12000"/>
+			<value_node value="12000"/>
+			<value_node value="12000"/>
+			<value_node value="12000"/>
+			<value_node value="12000"/>
+		</min_mission_xp>
+		<payout>
+			<value_node value="10000"/>
+			<value_node value="15000"/>
+			<value_node value="40000"/>
+			<value_node value="60000"/>
+			<value_node value="75000"/>
+			<value_node value="75000"/>
+			<value_node value="75000"/>
+		</payout>
+	</narrative>
+</table>

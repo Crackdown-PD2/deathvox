@@ -1,0 +1,92 @@
+<table name="jolly_290">
+	<AddFiles directory="assets">
+		<texture load="true" path="guis/textures/crackdown"/>
+	</AddFiles>
+	<Localization default="english.txt" directory="loc"/>
+	<level ai_group_type="america" briefing_dialog="Play_pln_as1_brf_01" cube="cube_apply_heist_bank" id="jolly_CD" intro_event="Play_plt_as1_intro_01" max_bags="15" music="heist">
+		<add file="levels/jolly_CD/add.xml"/>
+		<assets/>
+		<outro_event>
+			<value_node value="vld_as1_17"/>
+			<value_node value="vld_as1_17"/>
+		</outro_event>
+		<packages>
+			<value_node value="packages/jolly"/>
+			<value_node value="packages/jolly"/>
+			<value_node value="levels/narratives/vlad/jolly/world"/>
+			<value_node value="levels/narratives/vlad/jolly/world_sounds"/>
+			<value_node value="levels/narratives/vlad/jolly/collision_2/collision_2"/>
+			<value_node value="levels/narratives/vlad/jolly/veh_collision/veh_collision"/>
+			<value_node value="levels/narratives/vlad/jolly/backdrop/backdrop"/>
+			<value_node value="levels/narratives/vlad/jolly/editor_only/editor_only"/>
+			<value_node value="levels/narratives/vlad/jolly/graffiti_2/graffiti_2"/>
+			<value_node value="levels/narratives/vlad/jolly/lights/lights"/>
+			<value_node value="levels/narratives/vlad/jolly/jason_mkp/jason_mkp"/>
+			<value_node value="levels/narratives/vlad/jolly/world/world"/>
+			<value_node value="levels/narratives/vlad/jolly/rob_geo/rob_geo"/>
+		</packages>
+		<script_data_mods directory="scriptdata">
+			<mod replacement="objectives.objective" replacement_type="custom_xml" target_ext="objective" target_path="gamedata/objectives">
+				<options merge_mode="add" mode="add"/>
+			</mod>
+		</script_data_mods>
+	</level>
+	<narrative briefing_event="vld_as1_cbf_01" contact="vlad" debrief_event="vld_as1_17" icon="guis/textures/crackdown" id="jolly_cd" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_aftershock" region="street">
+		<chain>
+			<table level_id="jolly_CD" type="d" type_id="heist_type_assault"/>
+		</chain>
+		<contract_cost>
+			<value_node value="105000"/>
+			<value_node value="150000"/>
+			<value_node value="550000"/>
+			<value_node value="1.05e+006"/>
+			<value_node value="1.4e+006"/>
+			<value_node value="1.4e+006"/>
+			<value_node value="1.4e+006"/>
+		</contract_cost>
+		<crimenet_callouts>
+			<value_node value="vld_as1_cnc_01"/>
+		</crimenet_callouts>
+		<crimenet_videos>
+			<value_node value="cn_ukr1"/>
+			<value_node value="cn_ukr2"/>
+			<value_node value="cn_ukr3"/>
+		</crimenet_videos>
+		<experience_mul>
+			<value_node value="1"/>
+			<value_node value="1"/>
+			<value_node value="1"/>
+			<value_node value="1"/>
+			<value_node value="3"/>
+			<value_node value="3"/>
+			<value_node value="3"/>
+		</experience_mul>
+		<max_mission_xp>
+			<value_node value="34000"/>
+			<value_node value="34000"/>
+			<value_node value="34000"/>
+			<value_node value="34000"/>
+			<value_node value="34000"/>
+			<value_node value="34000"/>
+			<value_node value="34000"/>
+		</max_mission_xp>
+		<min_mission_xp>
+			<value_node value="30000"/>
+			<value_node value="30000"/>
+			<value_node value="30000"/>
+			<value_node value="30000"/>
+			<value_node value="30000"/>
+			<value_node value="30000"/>
+			<value_node value="30000"/>
+		</min_mission_xp>
+		<payout>
+			<value_node value="124000"/>
+			<value_node value="248000"/>
+			<value_node value="620000"/>
+			<value_node value="1.15e+006"/>
+			<value_node value="1.6e+006"/>
+			<value_node value="1.6e+006"/>
+			<value_node value="1.6e+006"/>
+		</payout>
+	</narrative>
+</table>
