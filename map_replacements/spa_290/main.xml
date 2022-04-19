@@ -1,0 +1,82 @@
+<table name="spa_290">
+	<AddFiles directory="assets">
+		<texture load="true" path="guis/textures/crackdown"/>
+	</AddFiles>
+	<Localization default="english.txt" directory="loc"/>
+	<level ai_group_type="america" briefing_dialog="Play_rb6_spa_brf_01" cube="cube_apply_heist_bank" id="spa_CD" intro_event="Play_pln_spa_intro" max_bags="9999" outro_event="Play_cha_spa_end">
+		<add file="levels/spa_CD/add.xml"/>
+		<assets/>
+		<packages>
+			<value_node value="packages/job_spa"/>
+			<value_node value="packages/job_spa"/>
+			<value_node value="levels/narratives/continental/spa/world"/>
+			<value_node value="levels/narratives/continental/spa/world_sounds"/>
+			<value_node value="levels/narratives/continental/spa/vis_blockers/vis_blockers"/>
+			<value_node value="levels/narratives/continental/spa/regin_art/regin_art"/>
+			<value_node value="levels/narratives/continental/spa/world/world"/>
+			<value_node value="levels/narratives/continental/spa/light_cones/light_cones"/>
+			<value_node value="levels/narratives/continental/spa/editor_only/editor_only"/>
+		</packages>
+		<script_data_mods directory="scriptdata">
+			<mod replacement="objectives.objective" replacement_type="custom_xml" target_ext="objective" target_path="gamedata/objectives">
+				<options merge_mode="add" mode="add"/>
+			</mod>
+		</script_data_mods>
+	</level>
+	<narrative briefing_dialog="Play_pln_bb1_brf_01" briefing_event="pln_spa_cbf_01" contact="the_continental" cube="cube_apply_heist_bank" dlc="spa" ghost_bonus="0.15" icon="guis/textures/crackdown" id="spa_cd" jc="30" load_screen="guis/dlcs/pic/textures/loading/job_brooklyn1010" max_bags="28" region="street">
+		<chain>
+			<table dlc="spa" level_id="spa_CD" type="d" type_id="heist_type_assault"/>
+		</chain>
+		<contract_cost>
+			<value_node value="105000"/>
+			<value_node value="150000"/>
+			<value_node value="550000"/>
+			<value_node value="1.05e+006"/>
+			<value_node value="1.4e+006"/>
+			<value_node value="1.4e+006"/>
+			<value_node value="1.4e+006"/>
+		</contract_cost>
+		<crimenet_callouts>
+			<value_node value="pln_spa_cnc_01"/>
+		</crimenet_callouts>
+		<crimenet_videos>
+			<value_node value="contact_continental1"/>
+		</crimenet_videos>
+		<experience_mul>
+			<value_node value="1"/>
+			<value_node value="1"/>
+			<value_node value="1"/>
+			<value_node value="1"/>
+			<value_node value="3"/>
+			<value_node value="3"/>
+			<value_node value="3"/>
+		</experience_mul>
+		<max_mission_xp>
+			<value_node value="30000"/>
+			<value_node value="30000"/>
+			<value_node value="30000"/>
+			<value_node value="30000"/>
+			<value_node value="30000"/>
+			<value_node value="30000"/>
+			<value_node value="30000"/>
+		</max_mission_xp>
+		<min_mission_xp>
+			<value_node value="26000"/>
+			<value_node value="26000"/>
+			<value_node value="26000"/>
+			<value_node value="26000"/>
+			<value_node value="26000"/>
+			<value_node value="26000"/>
+			<value_node value="26000"/>
+		</min_mission_xp>
+		<payout>
+			<value_node value="124000"/>
+			<value_node value="248000"/>
+			<value_node value="620000"/>
+			<value_node value="1.15e+006"/>
+			<value_node value="1.6e+006"/>
+			<value_node value="1.6e+006"/>
+			<value_node value="1.6e+006"/>
+		</payout>
+	</narrative>
+</table>
