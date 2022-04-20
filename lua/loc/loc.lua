@@ -293,7 +293,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_heartbreaker = "Heartbreaker",
 				menu_heartbreaker_desc = "BASIC: ##$basic##\nDouble Barreled $ICN_SHO Shotguns can use the Fire Selector to switch to ##Double Barrel Mode##, causing them to fire twice per shot.\n\nACE: ##$pro##\nEach shot in ##Double Barrel Mode## deals ##+200%## Damage when firing both barrels.",
 				menu_shell_games = "Shell Games",
-				menu_shell_games_desc = "BASIC: ##$basic##\n$ICN_SHO Shotguns gain ##+20%## Reload Speed every time a shell is loaded.\nBonuses are lost upon finishing or cancelling the Reload.\n\nACE: ##$pro##\nSingle-Fire $ICN_SHO Shotguns have their Fire Rate increased by ##50%##.",
+				menu_shell_games_desc = "BASIC: ##$basic##\n$ICN_SHO Shotguns gain ##+20%## Reload Speed and gain an additional ##+20%## Reload Speed for every shell loaded into the Magazine.\nBonuses are lost upon finishing or cancelling the Reload.\n\nACE: ##$pro##\nSingle-Fire $ICN_SHO Shotguns have their Fire Rate increased by ##50%##.",
 				menu_rolling_thunder = "Rolling Thunder",
 				menu_rolling_thunder_desc = "BASIC: ##$basic##\nIncreases the Magazine Size of Automatic $ICN_SHO Shotguns by ##50%##.\n\nACE: ##$pro##\nMagazine Size bonus increased to ##100%##.",
 				menu_point_blank = "Point Blank",
@@ -319,7 +319,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_hustle = "Hustle",
 				menu_hustle_desc = "BASIC: ##$basic##\nYou can Sprint in any direction.\n\nACE: ##$pro##\nYour Stamina starts regenerating ##25%## earlier and ##+25%## faster.",
 				menu_butterfly_bee = "Float Like A Butterfly",
-				menu_butterfly_bee_desc = "BASIC: ##$basic##\n$ICN_MEL Melee Weapons can be swung and charged while Sprinting.\n\nACE: ##$pro##\nSwinging your $ICN_MEL Melee Weapon when aiming at an enemy within ##5## meters causes you to lunge forward into striking range.\n\nThis ability has a ##5## second cooldown, but killing an enemy with a $ICN_MEL Melee Weapon refreshes the cooldown instantly.",
+				menu_butterfly_bee_desc = "BASIC: ##$basic##\n$ICN_MEL Melee Weapons can be swung and charged while Sprinting.\n\nACE: ##$pro##\nSwinging your $ICN_MEL Melee Weapon when aiming at an enemy within ##5## meters causes you to lunge forward into striking range.\n\nThis ability has a ##5## second cooldown, but $ICN_MEL Melee Weapon kills refresh the cooldown instantly.",
 				menu_heave_ho = "Heave-Ho",
 				menu_heave_ho_desc = "BASIC: ##$basic##\nYou throw Bags ##50%## farther.\n\nACE: ##$pro##\nYour Movement Speed Penalty for carrying a Bag is reduced by ##20%##, and you can ##Sprint while carrying a Bag##.",
 				menu_mobile_offense = "Mobile Offense",
@@ -329,7 +329,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_leg_day = "Leg Day Enthusiast",
 				menu_leg_day_desc = "BASIC: ##$basic##\nYou gain ##+10%## Movement Speed and ##+25%## Sprint Speed.\n\nACE: ##$pro##\nCrouching no longer reduces your Movement Speed.",
 				menu_wave_dash = "Wave Dash",
-				menu_wave_dash_desc = "BASIC: ##$basic##\nPressing your Jump key in mid-air causes you to dash in the direction you are currently moving. This ability has a ##5## second cooldown\n\nACE: ##$pro##\n##Wave Dash## can be used in any direction, allowing you to change direction in mid-air.\n\n##Mission Complete!##",
+				menu_wave_dash_desc = "BASIC: ##$basic##\nWhile in midair, pressing your ##Jump## button will cause you to dash in the direction you are currently moving and holding your ##Crouch## button causes you to dive to the ground and avoid Fall Damage from non-lethal heights. These actions cost ##5%## of your maximum Stamina.\n\nACE: ##$pro##\nYou can now dash in any direction. Diving no longer costs Stamina\n\n##Mission Complete!##",
 				
 			--gunner
 				menu_spray_and_pray = "Spray & Pray",
@@ -418,7 +418,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_stacking_deck_desc = "BASIC: ##$basic##\n$ICN_THR Throwing Weapons will curve towards enemies, angling to strike them in the head.\n\nACE: ##$pro##\nHeadshot kills with $ICN_THR Throwing Weapons inflict Panic on most enemies within ##6## meters of the target, causing them to go into short bursts of uncontrollable fear.",
 			
 				menu_shuffle_and_cut = "Shuffle and Cut",
-				menu_shuffle_and_cut_desc = "BASIC: ##$basic##\nHitting an enemy with a $ICN_THR Throwing Weapon grants ##+500%## Damage to your next $ICN_MEL Melee Weapon attack and hitting an enemy with a $ICN_MEL Melee Weapon grants ##+500%## Damage to your next $ICN_THR Throwing Weapon attack.\n\nEach buff can stack up to ##5## times.\n\nACE: ##$pro##\nKilling an enemy with a $ICN_MEL Melee Weapon or $ICN_THR Throwing Weapon empowered by Shuffle and Cut refunds the stack.",
+				menu_shuffle_and_cut_desc = "BASIC: ##$basic##\nHitting an enemy with a $ICN_THR Throwing Weapon empowers your next $ICN_MEL Melee Attack with ##+500%## Damage. Hitting an enemy with a $ICN_MEL Melee Weapon empowers your next $ICN_THR Throwing Weapon attack with ##+500%## Damage.\n\nYou can hold up to ##5## empowered attacks of each type at a time.\n\nACE: ##$pro##\nKilling an enemy with an empowered $ICN_MEL Melee Weapon or $ICN_THR Throwing Weapon refunds the buff.",
 			
 			
 			--fixer
