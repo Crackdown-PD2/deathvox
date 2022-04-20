@@ -107,7 +107,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			multiplier = multiplier + 1 - pm:upgrade_value(category, "reload_speed_multiplier", 1)
 		end
 		
-		if self:is_weapon_class("class_shotgun") and self:has_category_upgrade("class_shotgun", "shell_games_reload_bonus") then
+		if self:is_weapon_class("class_shotgun") and managers.player:has_category_upgrade("class_shotgun", "shell_games_reload_bonus") then
 			multipler = multipler + 0.2
 		end
 
