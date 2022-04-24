@@ -131,7 +131,7 @@ else
 		local sync_variant = variant == "poison" and 1 or variant == "dot" and 2 or nil
 		local weapon = weapon_id ~= nil and local_player or nil
 
-		managers.network:session()send_to_peers_synched("sync_add_doted_enemy", enemy_unit, variant, weapon, dot_length, dot_damage, local_player, hurt_animation)
+		managers.network:session():send_to_peers_synched("sync_add_doted_enemy", enemy_unit, variant, weapon, dot_length, dot_damage, local_player, hurt_animation)
 	end
 end
 
