@@ -3112,6 +3112,8 @@ function GroupAIStateBesiege._create_objective_from_group_objective(grp_objectiv
 		objective.path_style = "coarse_complete"
 		objective.path_data = grp_objective.coarse_path
 	end
+	
+	objective.no_arrest = objective.attitude == "engage"
 
 	return objective
 end
