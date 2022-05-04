@@ -156,13 +156,6 @@ function CopLogicIdle.enter(data, new_logic_name, enter_params)
 	end
 
 	my_data.weapon_range = clone_g(data.char_tweak.weapon[data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage].range)
-	
-	if data.tactics then
-		if data.tactics.ranged_fire or data.tactics.elite_ranged_fire then
-			my_data.weapon_range.close = my_data.weapon_range.close * 2
-			my_data.weapon_range.optimal = my_data.weapon_range.optimal * 1.5
-		end
-	end
 
 	local key_str = tostring(data.key)
 
@@ -259,7 +252,7 @@ function CopLogicIdle.queued_update(data)
 		end
 	end
 
-	if data.is_converted then
+	if data.is_converted or data.check_crim_jobless or data.team.id == "criminal1" then
 		if not data.objective or data.objective.type == "free" then
 			if not data.path_fail_t or data.t - data.path_fail_t > 6 then
 				managers.groupai:state():on_criminal_jobless(data.unit)
