@@ -31,10 +31,10 @@ if deathvox and deathvox:IsTotalCrackdownEnabled() then
 --			upgrade_deploy_time_multiplier = {
 --				upgrade = "sentry_gun_deploy_time_multiplier",
 --				category = "player"
---			},
---			upgrade_name = {
---				"sentry_gun"
 --			}
+			upgrade_name = {
+				"friendship_collar"
+			}
 		}
 		
 		
