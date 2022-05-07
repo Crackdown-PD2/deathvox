@@ -1053,6 +1053,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return true
 	end
 	
+	function PlayerManager:verify_equipment(peer_id, equipment_id,...)
+		return true
+	end
 end
 
 
