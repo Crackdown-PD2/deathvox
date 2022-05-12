@@ -18,34 +18,6 @@ function SentryGunWeapon:switch_fire_mode()
 	self._unit:event_listener():call("on_switch_fire_mode", self._use_armor_piercing)
 end
 
-function SentryGunWeapon:_apply_dmg_mul(damage, col_ray, from_pos)
-	if self._unit:base():is_owner() then 
-		damage = damage + managers.player:upgrade_value("sentry_gun","killer_machines_bonus_damage",0)
-	end
-
-	local damage_out = damage * self._current_damage_mul
-	
-	local td = self:_get_tweak_data()
-
-	if td.DAMAGE_MUL_RANGE then
-		local ray_dis = col_ray.distance or mvector3.distance(from_pos, col_ray.position)
-		local ranges = td.DAMAGE_MUL_RANGE
-		local i_range = nil
-
-		for test_i_range, range_data in ipairs(ranges) do
-			if ray_dis < range_data[1] or test_i_range == #ranges then
-				i_range = test_i_range
-
-				break
-			end
-		end
-
-		damage_out = damage_out * ranges[i_range][2]
-	end
-
-	return damage_out
-end
-
 if deathvox:IsTotalCrackdownEnabled() then 
 
 	function SentryGunWeapon:init(unit)
@@ -574,7 +546,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	end
 
-	function SentryGunWeapon:_check_weapon_heat()
+	function SentryGunWeapon:_check_weapon_heat() --not used
 		local my_tweak_data = self:_get_tweak_data()
 		local heat = self:_get_weapon_heat()
 		
@@ -593,19 +565,18 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return self._is_weapon_overheated
 	end
 	
-	function SentryGunWeapon:_on_weapon_heat_vented()
+	function SentryGunWeapon:_on_weapon_heat_vented() --not used
 		self:_set_weapon_heat(0)
 		self._is_weapon_overheated = false
 		
 		local interaction = self._unit:interaction()
 		interaction:set_tweak_data("sentry_gun")
-		
 		if self._unit:brain() then 
 			self._unit:brain():switch_on()
 		end
 	end
 	
-	function SentryGunWeapon:_on_weapon_overheated()
+	function SentryGunWeapon:_on_weapon_overheated() --not used
 		self._is_weapon_overheated = true
 
 		local interaction = self._unit:interaction()
@@ -620,8 +591,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 	
 	function SentryGunWeapon:_add_weapon_heat(amount)
-		self._weapon_heat = math.max(self._weapon_heat + amount,0)
-		self:_check_weapon_heat()
+		local my_tweak_data = self:_get_tweak_data()
+		local max_weapon_heat = my_tweak_data.WEAPON_HEAT_MAX or 75
+		self._weapon_heat = math.clamp(self._weapon_heat + amount,0,max_weapon_heat)
+--		self:_check_weapon_heat()
 	end
 
 	
@@ -643,7 +616,69 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return (rate or 1) * my_tweak_data.WEAPON_HEAT_GAIN_RATE
 	end
 
+	function SentryGunWeapon:_apply_dmg_mul(damage, col_ray, from_pos)
+		if self._unit:base():is_owner() then 
+			damage = damage + managers.player:upgrade_value("sentry_gun","killer_machines_bonus_damage",0)
+		end
+
+		local damage_out = damage * self._current_damage_mul
+		
+		local td = self:_get_tweak_data()
+
+		if td.DAMAGE_MUL_RANGE then
+			local ray_dis = col_ray.distance or mvector3.distance(from_pos, col_ray.position)
+			local ranges = td.DAMAGE_MUL_RANGE
+			local i_range = nil
+
+			for test_i_range, range_data in ipairs(ranges) do
+				if ray_dis < range_data[1] or test_i_range == #ranges then
+					i_range = test_i_range
+
+					break
+				end
+			end
+
+			damage_out = damage_out * ranges[i_range][2]
+		end
+		
+		local damage_penalty_rate = td.WEAPON_HEAT_DAMAGE_PENALTY
+		local heat = self:_get_weapon_heat()
+		local heat_penalty = heat * damage_penalty_rate
+
+		damage_out = damage_out + heat_penalty
+		
+		return damage_out
+	end
 else 
+	
+	function SentryGunWeapon:_apply_dmg_mul(damage, col_ray, from_pos)
+		if self._unit:base():is_owner() then 
+			damage = damage + managers.player:upgrade_value("sentry_gun","killer_machines_bonus_damage",0)
+		end
+
+		local damage_out = damage * self._current_damage_mul
+		
+		local td = self:_get_tweak_data()
+
+		if td.DAMAGE_MUL_RANGE then
+			local ray_dis = col_ray.distance or mvector3.distance(from_pos, col_ray.position)
+			local ranges = td.DAMAGE_MUL_RANGE
+			local i_range = nil
+
+			for test_i_range, range_data in ipairs(ranges) do
+				if ray_dis < range_data[1] or test_i_range == #ranges then
+					i_range = test_i_range
+
+					break
+				end
+			end
+
+			damage_out = damage_out * ranges[i_range][2]
+		end
+
+		return damage_out
+	end
+	
 	function SentryGunWeapon:init(unit)
 		self._unit = unit
 		self._current_damage_mul = 1

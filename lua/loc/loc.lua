@@ -214,7 +214,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				bm_grenade_molotov_desc = "(CHANGES NOT YET IMPLEMENTED)\n\n$ICN_GRN Grenade that creates a 2.5m radius pool of flame for 15 seconds that deals 250 damage (50 vs allies) every 0.5 seconds.",
 				bm_grenade_fir_com_desc = "(CHANGES NOT YET IMPLEMENTED)\n\n$ICN_GRN Grenade that creates a 1m radius pool of flame for 30 seconds that deals 250 damage (50 vs allies) every 0.5 seconds.",
 				
-				bm_equipment_sentry_gun_desc = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Sentry Guns have infinite ammunition and will be ignored by enemies, but are prone to Overheating from extended combat.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.\n\nTo open the Radial Menu and configure a Sentry, hold $BTN_INTERACT to open the Radial Menu menu and release $BTN_INTERACT to choose an option. Opening the Radial Menu vents all current Heat.\n\nIf a Sentry Gun becomes Overheated, you can reset it by holding $BTN_INTERACT.",
+				bm_equipment_sentry_gun_desc = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Sentry Guns have infinite ammunition and will be ignored by enemies, but extended use will build Heat and reduce the Sentry Gun's damage.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.\n\nTo open the Radial Menu and configure a Sentry, hold $BTN_INTERACT to open the Radial Menu. To choose an option, highlight over your desired choice and release $BTN_INTERACT to activate it.\n\nOpening the Radial Menu vents all current Heat.",
 				
 				debug_trip_mine_throwable = "Trip Mine",
 				bm_grenade_tripmine = "Trip Mine Throwable",
