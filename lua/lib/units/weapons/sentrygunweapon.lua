@@ -636,7 +636,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 
 	function SentryGunWeapon:_apply_dmg_mul(damage, col_ray, from_pos)
-		if self._unit:base():is_owner() then 
+		local is_owner = self._unit:base():is_owner()
+		if is_owner then 
 			damage = damage + managers.player:upgrade_value("sentry_gun","killer_machines_bonus_damage",0)
 			
 			if self:_get_sentry_firemode() == "manual" then 
@@ -665,11 +666,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 			damage_out = damage_out * ranges[i_range][2]
 		end
 		
-		local damage_penalty_rate = td.WEAPON_HEAT_DAMAGE_PENALTY
-		local heat = self:_get_weapon_heat()
-		local heat_penalty = heat * damage_penalty_rate
-		heat_penalty = heat_penalty + 1
-		damage_out = damage_out * heat_penalty
+		if is_owner then
+			local damage_penalty_rate = td.WEAPON_HEAT_DAMAGE_PENALTY
+			local heat = self:_get_weapon_heat()
+			local heat_penalty = heat * damage_penalty_rate
+			heat_penalty = heat_penalty + 1
+			damage_out = damage_out * heat_penalty
+		end
 		
 		return damage_out
 	end
