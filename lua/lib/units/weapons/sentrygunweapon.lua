@@ -370,8 +370,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 				local damage = self:_apply_dmg_mul(self._damage, hit, from_pos)
 				if alive(hit.unit) and self._unit:base():is_owner() then  
 					if hit.unit:contour() then
-						local mark_data = pm:upgrade_value("sentry_gun","automatic_highlight_enemies",false)
-						if mark_data then 
+						if managers.player:has_category_upgrade("sentry_gun","automatic_highlight_enemies") then
+							local mark_data = pm:upgrade_value("sentry_gun","automatic_highlight_enemies")
 							if mark_data[1] and hit.unit:contour()._contour_list and hit.unit:contour():has_id(mark_data[1]) then 
 								damage = damage * (1 + mark_data[2])
 							end

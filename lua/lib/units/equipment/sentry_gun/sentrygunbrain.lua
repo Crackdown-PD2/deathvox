@@ -206,8 +206,8 @@ function SentryGunBrain:_upd_fire(t,dt)
 			end
 			
 			if is_owner then 
-				local mark_data = managers.player:upgrade_value("sentry_gun","automatic_highlight_enemies",false)
-				if mark_data then 
+				if managers.player:has_category_upgrade("sentry_gun","automatic_highlight_enemies") then
+					local mark_data = managers.player:upgrade_value("sentry_gun","automatic_highlight_enemies")
 					if attention.unit and attention.unit:contour() then 
 						local mark_type = mark_data[1]
 						if attention.unit:base() and attention.unit:base().sentry_gun then 
