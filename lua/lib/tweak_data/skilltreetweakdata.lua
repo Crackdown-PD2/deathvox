@@ -1109,10 +1109,11 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				0
 			}
 		})
-		replace_skill(tree_indices.engineer,2,{ --Advanced Rangefinder
+		replace_skill(tree_indices.engineer,2,{ --Advanced Targeting
 			{
 				upgrades = {
-					"sentry_gun_advanced_rangefinder_basic"
+					"sentry_gun_targeting_range_increase",
+					"sentry_gun_targeting_accuracy_increase"
 				},
 				cost = self.costs.hightier
 			},
@@ -1129,36 +1130,16 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				1
 			}
 		})
-		replace_skill(tree_indices.engineer,3,{ --Targeting Matrix
+		replace_skill(tree_indices.engineer,3,{ --Wrangler
 			{
 				upgrades = {
-					"sentry_gun_targeting_matrix_basic"
+					"sentry_gun_wrangler_heatsink"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"sentry_gun_targeting_matrix_aced"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_targeting_matrix",
-			desc_id = "menu_targeting_matrix_desc",
-			icon_xy = {
-				9,
-				2
-			}
-		})
-		replace_skill(tree_indices.engineer,4,{ --Wrangler
-			{
-				upgrades = {
-					"sentry_gun_wrangler_basic"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"sentry_gun_wrangler_aced"
+					"sentry_gun_wrangler_headshot_damage_bonus"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -1167,6 +1148,27 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			icon_xy = {
 				9,
 				3
+			}
+		})
+		replace_skill(tree_indices.engineer,4,{ --Little Helpers
+			{
+				upgrades = {
+					"sentry_gun_manual_damage_bonus",
+					"sentry_gun_highlight_enemies_1"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"sentry_gun_highlight_enemies_2"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_targeting_matrix",
+			desc_id = "menu_targeting_matrix_desc",
+			icon_xy = {
+				9,
+				2
 			}
 		})
 		replace_skill(tree_indices.engineer,5,{ --Hobart's Funnies

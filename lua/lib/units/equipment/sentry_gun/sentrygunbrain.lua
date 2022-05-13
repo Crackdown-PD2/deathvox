@@ -49,6 +49,8 @@ local REACT_SUSPICIOUS = AIAttentionObject.REACT_SUSPICIOUS
 
 local is_local_vr = _G.IS_VR
 
+local is_total_crackdown_enabled = deathvox:IsTotalCrackdownEnabled()
+
 function SentryGunBrain:_upd_flash_grenade(t)
 	if not self._tweak_data.FLASH_GRENADE then
 		return
@@ -111,7 +113,8 @@ function SentryGunBrain:_upd_fire(t,dt)
 
 		return
 	end
-
+	
+	local expend_ammo = Network:is_server()
 	local attention = self._ext_movement:attention()
 
 	if sentryweapon:out_of_ammo() then
@@ -128,77 +131,126 @@ function SentryGunBrain:_upd_fire(t,dt)
 		end
 	elseif self._ext_movement:rearming() then
 		self._ext_movement:complete_rearming()
-	elseif attention and attention.reaction and REACT_SHOOT <= attention.reaction and not self._ext_movement:warming_up(t) then
-		local target_pos = self:get_target_base_pos(attention)
-
-		if not target_pos then
-			if self._firing then
-				self:stop_autofire()
-			end
-
-			return
-		end
-
-		local my_pos = self._ext_movement:m_head_pos()
-
-		if attention.unit and not self:_ignore_shield(my_pos, target_pos) then
-			if self._firing then
-				self:stop_autofire()
-			end
-
-			return
-		end
-
-		if not self:is_target_on_sight(my_pos, target_pos, attention.unit) then
-			if self._firing then
-				self:stop_autofire()
-			end
-
-			return
+	else
+		local is_firemode_manual
+		local is_ammo_ap
+		if is_total_crackdown_enabled then 
+			local firemode = sentryweapon:_get_sentry_firemode()
+			is_firemode_manual = firemode == "manual"
+			is_ammo_ap = sentryweapon:_get_ammo_type() == "ap"
 		end
 		
-		if is_owner then 
-			local mark_data = managers.player:upgrade_value("sentry_gun","targeting_matrix",false)
-			if mark_data and type(mark_data) == "table" then 
-				if attention.unit and attention.unit:contour() then 
-					local mark_type = mark_data[1]
-					if attention.unit:base() and attention.unit:base().sentry_gun then 
-						mark_type = "mark_unit_dangerous_damage_bonus"
-						--temp fix 
+		if is_owner and is_firemode_manual and not self._ext_movement:warming_up(t) then 
+			local target
+			local fire_obj = sentryweapon._effect_align[sentryweapon._interleaving_fire or ""]
+			if alive(fire_obj) then 
+				local my_pos = fire_obj:position()
+				local direction = fire_obj:rotation():y()
+				
+				local td = self:_get_tweak_data()
+				local fire_range = td.FIRE_RANGE
+				
+				local aim_pos = my_pos + (direction * fire_range)
+				
+				local bullet_slotmask = sentryweapon._bullet_slotmask
+				
+				if is_ammo_ap then
+					bullet_slotmask = bullet_slotmask - self._shield_check
+				end
+				local manual_ray = World:raycast("ray",my_pos,aim_pos,"slot_mask",bullet_slotmask)
+				
+				local aim_unit = manual_ray and manual_ray.unit
+				if aim_unit and managers.enemy:is_enemy(aim_unit) then 
+					target = true
+					
+					if not self._firing then 
+						sentryweapon:start_autofire()
+						self._firing = true
 					end
-					attention.unit:contour():add(mark_type, true, 1)
---						managers.network:session():send_to_peers_synched("spot_enemy", attention.unit)
+					
+					sentryweapon:trigger_held(false, expend_ammo, false, aim_unit)
+					
+				end
+				
+			end
+			if self._firing and not target then 
+				self:stop_autofire()
+			end
+		elseif attention and attention.reaction and REACT_SHOOT <= attention.reaction and not self._ext_movement:warming_up(t) then
+			local target_pos = self:get_target_base_pos(attention)
+
+			if not target_pos then
+				if self._firing then
+					self:stop_autofire()
+				end
+
+				return
+			end
+
+			local my_pos = self._ext_movement:m_head_pos()
+
+			if attention.unit and not self:_ignore_shield(my_pos, target_pos) then
+				if self._firing then
+					self:stop_autofire()
+				end
+
+				return
+			end
+
+			if not self:is_target_on_sight(my_pos, target_pos, attention.unit) then
+				if self._firing then
+					self:stop_autofire()
+				end
+
+				return
+			end
+			
+			if is_owner then 
+				local mark_data = managers.player:upgrade_value("sentry_gun","automatic_highlight_enemies",false)
+				if mark_data then 
+					if attention.unit and attention.unit:contour() then 
+						local mark_type = mark_data[1]
+						if attention.unit:base() and attention.unit:base().sentry_gun then 
+							mark_type = "mark_unit_dangerous_damage_bonus"
+							--temp fix 
+						end
+						attention.unit:contour():add(mark_type, true, 1)
+	--						managers.network:session():send_to_peers_synched("spot_enemy", attention.unit)
+					end
+				end
+				
+			end
+			
+
+
+			local damage_player = attention.unit:base() and attention.unit:base().is_local_player
+
+			if self._firing then
+				sentryweapon:trigger_held(false, expend_ammo, damage_player, attention.unit)
+			else
+				mvec3_dir(tmp_vec1, my_pos, target_pos)
+
+				local max_dot = self._tweak_data.KEEP_FIRE_ANGLE
+				local sharpness_mul = self._shaprness_mul or 1
+				max_dot = math_min(0.99, 1 - (1 - max_dot) * sharpness_mul)
+
+				if max_dot < mvec3_dot(tmp_vec1, self._ext_movement:m_head_fwd()) then
+					sentryweapon:start_autofire()
+					sentryweapon:trigger_held(false, expend_ammo, damage_player, attention.unit)
+
+					self._firing = true
 				end
 			end
+		elseif self._firing then
+			self:stop_autofire()
 		end
-		
-
-		local expend_ammo = Network:is_server()
-		local damage_player = attention.unit:base() and attention.unit:base().is_local_player
-
-		if self._firing then
-			sentryweapon:trigger_held(false, expend_ammo, damage_player, attention.unit)
-		else
-			mvec3_dir(tmp_vec1, my_pos, target_pos)
-
-			local max_dot = self._tweak_data.KEEP_FIRE_ANGLE
-			local sharpness_mul = self._shaprness_mul or 1
-			max_dot = math_min(0.99, 1 - (1 - max_dot) * sharpness_mul)
-
-			if max_dot < mvec3_dot(tmp_vec1, self._ext_movement:m_head_fwd()) then
-				sentryweapon:start_autofire()
-				sentryweapon:trigger_held(false, expend_ammo, damage_player, attention.unit)
-
-				self._firing = true
-			end
-		end
-	elseif self._firing then
-		self:stop_autofire()
 	end
 	
-	if deathvox:IsTotalCrackdownEnabled() and is_owner and dt then 
+	if is_total_crackdown_enabled and is_owner and dt then 
 		if self._firing then 
-			sentryweapon:_add_weapon_heat(sentryweapon:get_weapon_heat_gain_rate(dt))
+			if not managers.player:has_category_upgrade("sentry_gun","wrangler_heatsink") or not is_firemode_manual then 
+				sentryweapon:_add_weapon_heat(sentryweapon:get_weapon_heat_gain_rate(dt))
+			end
 			self._weapon_overheated_t = t
 			if sentryweapon:is_overheated() then 
 --				Console:SetTrackerValue("trackera",string.format("OVERHEATED/ACTIVE: %0.2f " .. string.format("t:%0.1f",Application:time()),sentryweapon:_get_weapon_heat()))
@@ -260,7 +312,7 @@ function SentryGunBrain:on_detected_attention_obj_modified(modified_u_key)
 	end
 end
 
-if deathvox:IsTotalCrackdownEnabled() then
+if is_total_crackdown_enabled then
 
 	local _setup_attention_handler_original = SentryGunBrain._setup_attention_handler
 	function SentryGunBrain:_setup_attention_handler()
@@ -362,10 +414,16 @@ if deathvox:IsTotalCrackdownEnabled() then
 			max_detection_range = SentryControlMenu.tweakdata.OVERWATCH_DETECTION_RANGE
 		end
 		
+		local target_any_specials
+
 		if self._unit:base():is_owner() then 
-			local advanced_rangefinder_data = managers.player:upgrade_value("sentry_gun","advanced_rangefinder",{0,0})
-			firing_range = firing_range * (1 + advanced_rangefinder_data[1])
-			max_detection_range = max_detection_range * (1 + advanced_rangefinder_data[1])
+			if managers.player:has_category_upgrade("sentry_gun","targeting_range_increase") then 
+				local range_increase = managers.player:upgrade_value("sentry_gun","targeting_range_increase")
+				firing_range = firing_range * (1 + range_increase)
+				max_detection_range = max_detection_range * (1 + range_increase)
+			end
+			
+			target_any_specials = managers.player:has_category_upgrade("sentry_gun","overwatch_targets_all_specials")
 		end
 		
 
@@ -377,9 +435,16 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 				if firemode == "overwatch" then
 					local att_base_ext = attention_info.unit:base()
-
 					--if overwatch firemode, targeted enemy must be a sniper in order to notice them
-					if not att_base_ext or att_base_ext._tweak_table ~= "sniper" and att_base_ext._tweak_table ~= "deathvox_sniper" then
+					if att_base_ext and att_base_ext.has_tag then 
+						if target_any_specials then
+							if not att_base_ext:has_tag("special") then 
+								skip = true
+							end
+						elseif not att_base_ext:has_tag("sniper") then
+							skip = true
+						end
+					else
 						skip = true
 					end
 				end
@@ -474,9 +539,16 @@ if deathvox:IsTotalCrackdownEnabled() then
 				else
 					if firemode == "overwatch" then
 						local att_base_ext = attention_info.unit:base()
-
 						--if overwatch firemode, targeted enemy must be a sniper in order to notice them
-						if not att_base_ext or att_base_ext._tweak_table ~= "sniper" and att_base_ext._tweak_table ~= "deathvox_sniper" then
+						if att_base_ext and att_base_ext.has_tag then 
+							if target_any_specials then
+								if not att_base_ext:has_tag("special") then 
+									skip = true
+								end
+							elseif not att_base_ext:has_tag("sniper") then
+								skip = true
+							end
+						else
 							skip = true
 						end
 					end
@@ -781,9 +853,17 @@ if deathvox:IsTotalCrackdownEnabled() then
 				else
 					if firemode == "overwatch" then
 						local att_base_ext = attention_info.unit:base()
-
 						--if overwatch firemode, targeted enemy must be a sniper in order to notice them
-						if not att_base_ext or att_base_ext._tweak_table ~= "sniper" and att_base_ext._tweak_table ~= "deathvox_sniper" then
+						if att_base_ext and att_base_ext.has_tag then 
+							if target_any_specials then
+								--or, must be any special enemy, with the relevant upgrade
+								if not att_base_ext:has_tag("special") then 
+									skip = true
+								end
+							elseif not att_base_ext:has_tag("sniper") then
+								skip = true
+							end
+						else
 							skip = true
 						end
 					end
@@ -940,15 +1020,15 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 
 		local td = self:_get_tweak_data()
-		local fire_range_sq = td.FIRE_RANGE * td.FIRE_RANGE
+		local fire_range = td.FIRE_RANGE
+		local fire_range_sq = fire_range * fire_range
 
-		local firemode = self._unit:weapon():_get_sentry_firemode()
+		local sentrygun_weapon = self._unit:weapon()
+		local firemode = sentrygun_weapon:_get_sentry_firemode()
 
-		if firemode ~= "overwatch" then
-			if firemode == "manual" then
-				fire_range_sq = fire_range_sq * 4
-			end
-
+		if firemode ~= "overwatch" then 
+			fire_range_sq = fire_range_sq * 4
+			--not used for manual mode
 			if fire_range_sq < mvec3_dist_sq(my_pos, target_base_pos) then
 				return false
 			end
