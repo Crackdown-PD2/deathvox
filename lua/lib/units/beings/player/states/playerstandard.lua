@@ -87,22 +87,42 @@ function PlayerStandard:_update_foley(t, input)
 		self._unit:set_driving("script")
 
 		self._state_data.in_air = false
+		self._has_wave_dashed = nil
+		
 		local from = self._pos + math.UP * 10
 		local to = self._pos - math.UP * 60
 		local material_name, pos, norm = World:pick_decal_material(from, to, self._slotmask_bullet_impact_targets)
 
 		self._unit:sound():play_land(material_name)
-
-		if self._unit:character_damage():damage_fall({
-			height = self._state_data.enter_air_pos_z - self._pos.z
+		
+		local check_fall_damage = not self._state_data.diving
+		local height = self._state_data.enter_air_pos_z - self._pos.z
+		
+		if not check_fall_damage and height > 631 then
+			check_fall_damage = true
+		end
+		
+		if check_fall_damage and self._unit:character_damage():damage_fall({
+			height = height
 		}) then
 			self._running_wanted = false
 
 			managers.rumble:play("hard_land")
 			self._ext_camera:play_shaker("player_fall_damage")
 			self:_start_action_ducking(t)
-		elseif input.btn_run_state then
-			self._running_wanted = true
+		else
+			if self._state_data.diving then					
+				--self._fall_damage_slow_t = t + 0.4
+				managers.rumble:play("hard_land")
+				self._ext_camera:play_shaker("player_fall_damage", 1)
+				self._ext_camera:play_shaker("player_land", 1)
+				
+				self._state_data.diving = nil
+			end
+			
+			if input.btn_run_state then
+				self._running_wanted = true
+			end
 		end
 
 		self._jump_t = nil
@@ -183,6 +203,51 @@ function PlayerStandard:init(unit)
 	managers.menu:add_active_changed_callback(callback(self, self, "_on_menu_active_changed"))
 end
 
+function PlayerStandard:_check_action_duck(t, input)
+	if self:_is_using_bipod() then
+		return
+	end
+	
+	if input.btn_duck_release then
+		self._t_holding_duck = nil
+	elseif input.btn_duck_press then
+		self._t_holding_duck = t + 0.2
+	elseif self._t_holding_duck then
+	
+	end
+
+	if self._setting_hold_to_duck and input.btn_duck_release then
+		if self._state_data.ducking then
+			self:_end_action_ducking(t)
+		end
+	elseif input.btn_duck_press and not self._unit:base():stats_screen_visible() then
+		if not self._state_data.ducking then
+			self:_start_action_ducking(t)
+		elseif self._state_data.ducking then
+			self:_end_action_ducking(t)
+		end
+	end
+	
+	
+		
+	if self._state_data.in_air  then
+		local skill = managers.player:has_category_upgrade("player", "wave_dash_basic")
+		
+		if skill then
+			if self._t_holding_duck and t > self._t_holding_duck then
+				--log("hm")
+				self._unit:mover():set_velocity(Vector3(0, 0, -1400))
+				mvector3.set_static(self._last_velocity_xy, 0, 0, 0)
+				self._state_data.diving = true
+				
+				if not managers.player:has_category_upgrade("player", "wave_dash_aced") then
+					self._unit:movement():subtract_stamina(0.05, true)
+				end
+			end
+		end
+	end
+end
+
 function PlayerStandard:_check_action_jump(t, input)
 	local new_action = nil
 	local action_wanted = input.btn_jump_press
@@ -198,11 +263,11 @@ function PlayerStandard:_check_action_jump(t, input)
 		if self._state_data.in_air then
 			cant_mid_air_jump = true
 			
-			if skill then			
-				if not self._wave_dash_t or self._wave_dash_t and self._wave_dash_t < t then
+			if skill and self._unit:movement():is_above_stamina_threshold() then			
+				if not self._has_wave_dashed then
 					cant_mid_air_jump = nil
 					action_forbidden = nil
-					self._wave_dash_t = t + 5
+					self._has_wave_dashed = true
 					wave_dashing = true
 				end
 			end
@@ -248,6 +313,10 @@ function PlayerStandard:_check_action_jump(t, input)
 
 					if is_running then
 						self._unit:movement():subtract_stamina(tweak_data.player.movement_state.stamina.JUMP_STAMINA_DRAIN)
+					end
+					
+					if wave_dashing then
+						self._unit:movement():subtract_stamina(0.05, true) --5% of stamina consumed on dash
 					end
 				end
 

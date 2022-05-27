@@ -129,6 +129,52 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	end
 
+	function PlayerMovement:subtract_stamina(value, ratio)
+		if ratio then
+			value = self:_max_stamina() * value
+		end
+	
+		if managers.player:has_category_upgrade("player", "stamina_ammo_refill_single") then
+			self._subtracted_stamina_single = (self._subtracted_stamina_single or 0) + math.abs(value)
+			local stamina_needed, ammo_refill = unpack(managers.player:upgrade_value("player", "stamina_ammo_refill_single"))
+
+			if stamina_needed < self._subtracted_stamina_single then
+				for i = 1, 2 do
+					local weapon = self._unit:inventory():unit_by_selection(i):base()
+
+					if weapon:fire_mode() == "single" then
+						local ammo = math.ceil(weapon:get_ammo_max() * ammo_refill)
+
+						weapon:add_ammo_to_pool(ammo, i)
+					end
+				end
+
+				self._subtracted_stamina_single = self._subtracted_stamina_single - stamina_needed
+			end
+		end
+
+		if managers.player:has_category_upgrade("player", "stamina_ammo_refill_auto") then
+			self._subtracted_stamina_auto = (self._subtracted_stamina_auto or 0) + math.abs(value)
+			local stamina_needed, ammo_refill = unpack(managers.player:upgrade_value("player", "stamina_ammo_refill_auto"))
+
+			if stamina_needed < self._subtracted_stamina_auto then
+				for i = 1, 2 do
+					local weapon = self._unit:inventory():unit_by_selection(i):base()
+
+					if weapon:fire_mode() == "auto" then
+						local ammo = math.ceil(weapon:get_ammo_max() * ammo_refill)
+
+						weapon:add_ammo_to_pool(ammo, i)
+					end
+				end
+
+				self._subtracted_stamina_auto = self._subtracted_stamina_auto - stamina_needed
+			end
+		end
+
+		self:_change_stamina(-math.abs(value))
+	end
+
 end
 
 function PlayerMovement:on_SPOOCed(enemy_unit)

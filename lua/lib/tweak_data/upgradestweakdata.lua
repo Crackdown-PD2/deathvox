@@ -1282,67 +1282,96 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		self.values.sentry_gun.interaction_speed_multiplier = {
 			0.1
 		}
-		
-		self.definitions.sentry_gun_advanced_rangefinder_basic = {
+		--wrangler_damage_bonus
+		self.definitions.sentry_gun_targeting_range_increase = {
 			name_id = "menu_advanced_rangefinder_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "advanced_rangefinder",
+				upgrade = "targeting_range_increase",
 				category = "sentry_gun"
 			}
 		}
+		self.definitions.sentry_gun_targeting_accuracy_increase = {
+			name_id = "menu_advanced_rangefinder_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "targeting_accuracy_increase",
+				category = "sentry_gun"
+			}
+		}
+		
 		self.definitions.sentry_gun_advanced_rangefinder_aced = {
 			name_id = "menu_advanced_rangefinder_aced",
 			category = "feature",
 			upgrade = {
-				value = 2,
-				upgrade = "advanced_rangefinder",
+				value = 1,
+				upgrade = "overwatch_targets_all_specials",
 				category = "sentry_gun"
 			}
 		}
-		self.values.sentry_gun.advanced_rangefinder = {
-			{0.5,0.5}, -- range mul, accuracy mul (1 + n)
-			{1,1}
+		self.values.sentry_gun.targeting_range_increase = {
+			1 -- +100% range (1 + n)
+		}
+		self.values.sentry_gun.targeting_accuracy_increase = {
+			1 -- +100% accuracy (1 + n)
+		}
+		self.values.sentry_gun.overwatch_targets_all_specials = {
+			true
 		}
 		
-		self.definitions.sentry_gun_targeting_matrix_basic = {
+		self.values.sentry_gun.wrangler_damage_bonus = {
+			1.25
+		}
+		self.definitions.sentry_gun_manual_damage_bonus = {
 			name_id = "menu_targeting_matrix_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "targeting_matrix",
+				upgrade = "wrangler_damage_bonus",
 				category = "sentry_gun"
 			}
 		}
-		self.definitions.sentry_gun_targeting_matrix_aced = {
+		
+		
+		self.definitions.sentry_gun_highlight_enemies_1 = {
+			name_id = "menu_targeting_matrix_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "automatic_highlight_enemies",
+				category = "sentry_gun"
+			}
+		}
+		self.definitions.sentry_gun_highlight_enemies_2 = {
 			name_id = "menu_targeting_matrix_aced",
 			category = "feature",
 			upgrade = {
 				value = 2,
-				upgrade = "targeting_matrix",
+				upgrade = "automatic_highlight_enemies",
 				category = "sentry_gun"
 			}
 		}
-		self.values.sentry_gun.targeting_matrix = {
+		self.values.sentry_gun.automatic_highlight_enemies = {
 			{"mark_enemy_damage_bonus",0},
-			{"mark_enemy_damage_bonus",0.25},
+			{"mark_enemy_damage_bonus",0.25}
 		}
 		
-		self.definitions.sentry_gun_wrangler_basic = {
+		self.definitions.sentry_gun_wrangler_heatsink = {
 			name_id = "menu_wrangler_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "wrangler_accuracy",
+				upgrade = "wrangler_heatsink",
 				category = "sentry_gun"
 			}
 		}
-		self.values.sentry_gun.wrangler_accuracy = {
+		self.values.sentry_gun.wrangler_heatsink = {
 			true
 		}
 		
-		self.definitions.sentry_gun_wrangler_aced = {
+		self.definitions.sentry_gun_wrangler_headshot_damage_bonus = {
 			name_id = "menu_wrangler_aced",
 			category = "feature",
 			upgrade = {

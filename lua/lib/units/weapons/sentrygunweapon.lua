@@ -1,6 +1,7 @@
 local tmp_rot1 = Rotation()
 
 local mvec_to = Vector3()
+local mvec_copy = mvector3.copy
 
 function SentryGunWeapon:switch_fire_mode()
 	self:_set_fire_mode(not self._use_armor_piercing)
@@ -16,34 +17,6 @@ function SentryGunWeapon:switch_fire_mode()
 	self._unit:network():send("sentrygun_sync_armor_piercing", self._use_armor_piercing)
 	self._unit:sound_source():post_event("wp_sentrygun_swap_ammo")
 	self._unit:event_listener():call("on_switch_fire_mode", self._use_armor_piercing)
-end
-
-function SentryGunWeapon:_apply_dmg_mul(damage, col_ray, from_pos)
-	if self._unit:base():is_owner() then 
-		damage = damage + managers.player:upgrade_value("sentry_gun","killer_machines_bonus_damage",0)
-	end
-
-	local damage_out = damage * self._current_damage_mul
-	
-	local td = self:_get_tweak_data()
-
-	if td.DAMAGE_MUL_RANGE then
-		local ray_dis = col_ray.distance or mvector3.distance(from_pos, col_ray.position)
-		local ranges = td.DAMAGE_MUL_RANGE
-		local i_range = nil
-
-		for test_i_range, range_data in ipairs(ranges) do
-			if ray_dis < range_data[1] or test_i_range == #ranges then
-				i_range = test_i_range
-
-				break
-			end
-		end
-
-		damage_out = damage_out * ranges[i_range][2]
-	end
-
-	return damage_out
 end
 
 if deathvox:IsTotalCrackdownEnabled() then 
@@ -203,7 +176,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 			if fired then
 				local fire_rate = td.auto.fire_rate * self._fire_rate_reduction
 				if self._unit:base():is_owner() then 
-					if self:_get_ammo_type() ~= "basic" then 
+					local ammo_type = self:_get_ammo_type()
+					if ammo_type == "taser" or ammo_type == "ap" then 
 					--turns out this fire-rate value is seconds per bullet, not bullets per second. 5HEAD
 						fire_rate = fire_rate * managers.player:upgrade_value("sentry_gun","hobarts_funnies",1)
 					end
@@ -217,6 +191,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 
 	function SentryGunWeapon:fire(blanks, expend_ammo, shoot_player, target_unit)
+
 		if expend_ammo then
 			if self._ammo_total <= 0 then
 				return
@@ -231,17 +206,26 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local td = self:_get_tweak_data()
 		
 		local SPREAD = td.SPREAD
+		local spread_mul = self._spread_mul
 		local td = self:_get_tweak_data()
+		
+		if self._unit:base():is_owner() then 
+			local pm = managers.player
+			if pm:has_category_upgrade("sentry_gun","targeting_accuracy_increase") then 
+				local accuracy_increase = pm:upgrade_value("sentry_gun","targeting_accuracy_increase",0)
+				spread_mul = math.max(0,spread_mul - accuracy_increase)
+			end
+		end
+		
+		if firemode == "manual" or firemode == "overwatch" then
+			--overwatch mode has innate perfect accuracy
+		else
+			mvector3.spread(direction, SPREAD * spread_mul)
+		end
 		
 		local firemode = self:_get_sentry_firemode()
 		local ammotype = self:_get_ammo_type()
-		
-		if firemode ~= "overwatch" then 
-			if (firemode ~= "manual") or not managers.player:has_category_upgrade("sentry","wrangler_accuracy") then
-				--for wrangler mode + wrangler basic skill, skip spread calculations and use perfect accuracy instead
-				mvector3.spread(direction, SPREAD * self._spread_mul)
-			end
-		end
+
 		World:effect_manager():spawn(self._muzzle_effect_table[self._interleaving_fire])
 
 		if self._use_shell_ejection_effect then
@@ -269,11 +253,14 @@ if deathvox:IsTotalCrackdownEnabled() then
 			return
 		end
 		
+		local pm = managers.player
+		local player_unit = pm:local_player()
 		local td = self:_get_tweak_data()
 		local ray_distance = td.FIRE_RANGE or 20000
-		
+		local is_owner = self._unit:base():is_owner()
 		local firemode = self:_get_sentry_firemode()
 		local ammotype = self:_get_ammo_type()
+		
 		
 		local bullet_base = InstantBulletBase
 		if ammotype == "taser" then 
@@ -285,9 +272,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if firemode == "overwatch" then 
 			ray_distance = 100000
 		end
-		if self._unit:base():is_owner() then 
-			local advanced_rangefinder_data = managers.player:upgrade_value("sentry_gun","advanced_rangefinder",{0,0})
-			ray_distance = ray_distance * (1 + advanced_rangefinder_data[1])
+		
+		if is_owner then 
+			if pm:has_category_upgrade("sentry_gun","targeting_range_increase") then 
+				local range_increase = pm:upgrade_value("sentry_gun","targeting_range_increase")
+				ray_distance = ray_distance * (1 + range_increase)
+			end
+			
 		end
 
 		local hit_unit = nil
@@ -362,11 +353,11 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 						if damaged_player then
 							if not self._use_armor_piercing then
-								hit.unit = managers.player:player_unit()
+								hit.unit = player_unit
 								hit.body = hit.unit:body("inflict_reciever")
-								hit.position = mvector3.copy(hit.body:position())
+								hit.position = mvec_copy(hit.body:position())
 								hit.hit_position = hit.position
-								hit.distance = mvector3.direction(hit.ray, mvector3.copy(from_pos), mvector3.copy(hit.position))
+								hit.distance = mvector3.direction(hit.ray, mvec_copy(from_pos), mvec_copy(hit.position))
 								hit.normal = -hit.ray
 								furthest_hit = hit
 
@@ -379,15 +370,15 @@ if deathvox:IsTotalCrackdownEnabled() then
 				local damage = self:_apply_dmg_mul(self._damage, hit, from_pos)
 				if alive(hit.unit) and self._unit:base():is_owner() then  
 					if hit.unit:contour() then
-						local mark_data = managers.player:upgrade_value("sentry_gun","targeting_matrix",false)
-						if mark_data and type(mark_data) == "table" then 
+						if managers.player:has_category_upgrade("sentry_gun","automatic_highlight_enemies") then
+							local mark_data = pm:upgrade_value("sentry_gun","automatic_highlight_enemies")
 							if mark_data[1] and hit.unit:contour()._contour_list and hit.unit:contour():has_id(mark_data[1]) then 
 								damage = damage * (1 + mark_data[2])
 							end
 						end
 					end
 					if hit.body == hit.unit:body("Head") then 
-						damage = damage * (1 + managers.player:upgrade_value("sentry_gun","wrangler_headshot_damage_bonus",0))
+						damage = damage * (1 + pm:upgrade_value("sentry_gun","wrangler_headshot_damage_bonus",0))
 					end
 					
 				end
@@ -407,11 +398,11 @@ if deathvox:IsTotalCrackdownEnabled() then
 						char_hit = true
 
 						if not self._use_armor_piercing then
-							player_ray_data.unit = managers.player:player_unit()
+							player_ray_data.unit = player_unit
 							player_ray_data.body = player_ray_data.unit:body("inflict_reciever")
-							player_ray_data.position = mvector3.copy(player_ray_data.body:position())
+							player_ray_data.position = mvec_copy(player_ray_data.body:position())
 							player_ray_data.hit_position = player_ray_data.position
-							player_ray_data.distance = mvector3.direction(player_ray_data.ray, mvector3.copy(from_pos), mvector3.copy(player_ray_data.position))
+							player_ray_data.distance = mvector3.direction(player_ray_data.ray, mvec_copy(from_pos), mvec_copy(player_ray_data.position))
 							player_ray_data.normal = -player_ray_data.ray
 							furthest_hit = player_ray_data
 						end
@@ -433,7 +424,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if self._suppression then
 			local suppression_slot_mask = self._unit:in_slot(25) and managers.slot:get_mask("enemies") or managers.slot:get_mask("players", "criminals")
 
-			RaycastWeaponBase._suppress_units(self, mvector3.copy(from_pos), mvector3.copy(direction), ray_distance, suppression_slot_mask, self._unit, nil)
+			RaycastWeaponBase._suppress_units(self, mvec_copy(from_pos), mvec_copy(direction), ray_distance, suppression_slot_mask, self._unit, nil)
 		end
 
 		if self._alert_events then
@@ -574,7 +565,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	end
 
-	function SentryGunWeapon:_check_weapon_heat()
+	function SentryGunWeapon:_check_weapon_heat() --not used
 		local my_tweak_data = self:_get_tweak_data()
 		local heat = self:_get_weapon_heat()
 		
@@ -593,19 +584,18 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return self._is_weapon_overheated
 	end
 	
-	function SentryGunWeapon:_on_weapon_heat_vented()
+	function SentryGunWeapon:_on_weapon_heat_vented() --not used
 		self:_set_weapon_heat(0)
 		self._is_weapon_overheated = false
 		
 		local interaction = self._unit:interaction()
 		interaction:set_tweak_data("sentry_gun")
-		
 		if self._unit:brain() then 
 			self._unit:brain():switch_on()
 		end
 	end
 	
-	function SentryGunWeapon:_on_weapon_overheated()
+	function SentryGunWeapon:_on_weapon_overheated() --not used
 		self._is_weapon_overheated = true
 
 		local interaction = self._unit:interaction()
@@ -620,8 +610,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 	
 	function SentryGunWeapon:_add_weapon_heat(amount)
-		self._weapon_heat = math.max(self._weapon_heat + amount,0)
-		self:_check_weapon_heat()
+		local my_tweak_data = self:_get_tweak_data()
+		local max_weapon_heat = my_tweak_data.WEAPON_HEAT_MAX or 75
+		self._weapon_heat = math.clamp(self._weapon_heat + amount,0,max_weapon_heat)
+--		self:_check_weapon_heat()
 	end
 
 	
@@ -643,7 +635,73 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return (rate or 1) * my_tweak_data.WEAPON_HEAT_GAIN_RATE
 	end
 
+	function SentryGunWeapon:_apply_dmg_mul(damage, col_ray, from_pos)
+		local is_owner = self._unit:base():is_owner()
+		if is_owner then 
+			damage = damage + managers.player:upgrade_value("sentry_gun","killer_machines_bonus_damage",0)
+			
+			if self:_get_sentry_firemode() == "manual" then 
+				damage = damage * managers.player:upgrade_value("sentry_gun","wrangler_damage_bonus",0)
+			end
+			
+		end
+
+		local damage_out = damage * self._current_damage_mul
+		
+		local td = self:_get_tweak_data()
+
+		if td.DAMAGE_MUL_RANGE then
+			local ray_dis = col_ray.distance or mvector3.distance(from_pos, col_ray.position)
+			local ranges = td.DAMAGE_MUL_RANGE
+			local i_range = nil
+
+			for test_i_range, range_data in ipairs(ranges) do
+				if ray_dis < range_data[1] or test_i_range == #ranges then
+					i_range = test_i_range
+
+					break
+				end
+			end
+
+			damage_out = damage_out * ranges[i_range][2]
+		end
+		
+		if is_owner then
+			local damage_penalty_rate = td.WEAPON_HEAT_DAMAGE_PENALTY
+			local heat = self:_get_weapon_heat()
+			local heat_penalty = heat * damage_penalty_rate
+			heat_penalty = heat_penalty + 1
+			damage_out = damage_out * heat_penalty
+		end
+		
+		return damage_out
+	end
 else 
+	
+	function SentryGunWeapon:_apply_dmg_mul(damage, col_ray, from_pos)
+		local damage_out = damage * self._current_damage_mul
+		
+		local td = self:_get_tweak_data()
+
+		if td.DAMAGE_MUL_RANGE then
+			local ray_dis = col_ray.distance or mvector3.distance(from_pos, col_ray.position)
+			local ranges = td.DAMAGE_MUL_RANGE
+			local i_range = nil
+
+			for test_i_range, range_data in ipairs(ranges) do
+				if ray_dis < range_data[1] or test_i_range == #ranges then
+					i_range = test_i_range
+
+					break
+				end
+			end
+
+			damage_out = damage_out * ranges[i_range][2]
+		end
+
+		return damage_out
+	end
+	
 	function SentryGunWeapon:init(unit)
 		self._unit = unit
 		self._current_damage_mul = 1

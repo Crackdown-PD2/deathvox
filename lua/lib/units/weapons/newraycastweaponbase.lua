@@ -89,6 +89,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if self._use_shotgun_reload then 
 			shell_games_bonus = pm:upgrade_value("class_shotgun","shell_games_reload_bonus",0) * pm:get_property("shell_games_rounds_loaded",0)
 		end
+		
 		if self._current_reload_speed_multiplier then
 			return self._current_reload_speed_multiplier + shell_games_bonus
 		end
@@ -104,6 +105,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 		
 		for _, category in ipairs(self:weapon_tweak_data().categories) do
 			multiplier = multiplier + 1 - pm:upgrade_value(category, "reload_speed_multiplier", 1)
+		end
+		
+		if self:is_weapon_class("class_shotgun") and managers.player:has_category_upgrade("class_shotgun", "shell_games_reload_bonus") then
+			multiplier = multiplier + 0.2
 		end
 
 		multiplier = multiplier + 1 - pm:upgrade_value("weapon", "passive_reload_speed_multiplier", 1)

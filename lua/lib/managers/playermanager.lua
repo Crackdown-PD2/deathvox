@@ -117,7 +117,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		multiplier = multiplier * self:get_hostage_bonus_multiplier("damage_dampener")
 		multiplier = multiplier * self._properties:get_property("revive_damage_reduction", 1)
 		multiplier = multiplier * self._temporary_properties:get_property("revived_damage_reduction", 1)
-		multiplier = multiplier + self:team_upgrade_value("crewchief","passive_damage_resistance",1)
+		multiplier = multiplier - self:team_upgrade_value("crewchief","passive_damage_resistance",0)
 		
 		if self:get_property("armor_plates_active") then 
 			multiplier = multiplier * tweak_data.upgrades.armor_plates_dmg_reduction
@@ -1053,6 +1053,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return true
 	end
 	
+	function PlayerManager:verify_equipment(peer_id, equipment_id,...)
+		return true
+	end
 end
 
 

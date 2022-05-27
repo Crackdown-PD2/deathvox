@@ -2513,7 +2513,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 				area = assault_area,
 				coarse_path = assault_path or nil,
 				pose = "stand",
-				attitude = phase_is_anticipation and "avoid" or "push",
+				attitude = phase_is_anticipation and "avoid" or "engage",
 				moving_in = push,
 				open_fire = push,
 				pushed = push,
@@ -2984,6 +2984,29 @@ function GroupAIStateBesiege:_upd_recon_tasks()
 	end
 end
 
+function GroupAIStateBesiege:on_defend_travel_end(unit, objective)
+	local seg = objective.nav_seg
+	local area = self:get_area_from_nav_seg_id(seg)
+
+	if not area.is_safe then
+		area.is_safe = true
+
+		self:_on_area_safety_status(area, {
+			reason = "guard",
+			unit = unit
+		})
+	end
+	
+	local u_key = unit:key()
+	local unit_data = self._police[u_key]
+	
+	if unit_data and objective.grp_objective and objective.grp_objective.attitude == "avoid" and objective.grp_objective.type ~= "retire" then
+		if unit_data.char_tweak.chatter.ready then
+			self:chk_say_enemy_chatter(unit_data.unit, unit_data.m_pos, "in_pos")
+		end
+	end
+end
+
 function GroupAIStateBesiege._create_objective_from_group_objective(grp_objective, receiving_unit)
 	local objective = {
 		grp_objective = grp_objective
@@ -3043,6 +3066,10 @@ function GroupAIStateBesiege._create_objective_from_group_objective(grp_objectiv
 		objective.scan = true
 		objective.interrupt_dis = 200
 	end
+	
+	if objective.type == "defend_area" then
+		objective.interrupt_on_contact = true
+	end
 
 	objective.stance = grp_objective.stance or objective.stance
 	objective.pose = grp_objective.pose or objective.pose
@@ -3085,6 +3112,8 @@ function GroupAIStateBesiege._create_objective_from_group_objective(grp_objectiv
 		objective.path_style = "coarse_complete"
 		objective.path_data = grp_objective.coarse_path
 	end
+	
+	objective.no_arrest = objective.attitude == "engage"
 
 	return objective
 end

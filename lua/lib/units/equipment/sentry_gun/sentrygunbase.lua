@@ -139,11 +139,11 @@ if deathvox:IsTotalCrackdownEnabled() then
 	function SentryGunBase:on_interaction()
 	
 		local sentry_weapon = self._unit:weapon()
-		local is_overheated = sentry_weapon:is_overheated()
-		if is_overheated then
-			sentry_weapon:_on_weapon_heat_vented()
-			return true
-		end
+--		local is_overheated = sentry_weapon:is_overheated()
+--		if is_overheated then
+--			sentry_weapon:_on_weapon_heat_vented()
+--			return true
+--		end
 		
 		SentryControlMenu.interacted_radial_start_t = Application:time()
 		SentryControlMenu.button_held_state = nil

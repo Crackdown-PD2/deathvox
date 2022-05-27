@@ -1,14 +1,6 @@
 function GroupAITweakData:_init_chatter_data()
 	self.enemy_chatter = {}
-	--[[
-	notes:
-	radius seems to do nothing, game theory how many cops in a radius can say a certain chatter (should test this)
-	max_nr how many chatter calls can go off at once
-	duration ??? longer ones i grabbed from v009/pdth
-	interval is cooldown
-	group_min how many cops need to be in a group for the line to play
-	queue what call is used in chatter
-	]]--
+
 	self.enemy_chatter.clear = {
 		radius = 2000,
 	    max_nr = 1,
@@ -544,7 +536,35 @@ function GroupAITweakData:_init_chatter_data()
 	    interval = {6, 8},
 	    group_min = 1,
 	    queue = "bak"
-	}	
+	}
+	self.enemy_chatter.follow_me = {
+		radius = 700,
+		max_nr = 2,
+		queue = "prm",
+		group_min = 2,
+		duration = {
+			5,
+			10
+		},
+		interval = {
+			1,
+			3
+		}
+	}
+	self.enemy_chatter.in_pos = {
+		radius = 700,
+		max_nr = 1,
+		queue = "pos",
+		group_min = 2,
+		duration = {
+			5,
+			10
+		},
+		interval = {
+			0.75,
+			1.2
+		}
+	}
 end
 
 Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categories", function(self, difficulty_index)

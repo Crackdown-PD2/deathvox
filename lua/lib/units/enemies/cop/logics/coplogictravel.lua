@@ -145,15 +145,20 @@ function CopLogicTravel.enter(data, new_logic_name, enter_params)
 		end
 	end
 
-	my_data.attitude = objective.attitude or "avoid"
+	if data.unit:base():has_tag("medic") then
+		my_data.attitude = "avoid"
+	else
+		my_data.attitude = objective and objective.attitude or "avoid"
+	end
+
 	my_data.weapon_range = clone_g(data.char_tweak.weapon[data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage].range)
 	
 	if not data.team then
 		data.unit:movement():set_team(managers.groupai:state()._teams["law1"]) --yuck.
 	end
 
-	my_data.path_safely = not data.cool and data.objective and data.objective.grp_objective and data.objective.grp_objective.type == "recon_area"
-	my_data.path_ahead = data.cool or objective.path_ahead or data.is_converted or data.unit:in_slot(16) or data.team.id == tweak_data.levels:get_default_team_ID("player")
+	my_data.path_safely = not data.cool and not allied_with_criminals and (not objective or objective.attitude ~= "engage")
+	my_data.path_ahead = true
 	local key_str = tostring(data.key)
 	
 	local allied_with_criminals = data.is_converted or data.unit:in_slot(16) or data.team.id == tweak_data.levels:get_default_team_ID("player") or data.team.friends[tweak_data.levels:get_default_team_ID("player")] or data.buddypalchum
@@ -278,6 +283,44 @@ function CopLogicTravel.enter(data, new_logic_name, enter_params)
 	end
 end
 
+function CopLogicTravel._optimize_path(path, data)
+	if #path <= 2 then
+		return path
+	end
+
+	local opt_path = {}
+	local nav_path = {}
+	
+	for i = 1, #path do
+		local nav_point = path[i]
+
+		if nav_point.x then
+			nav_path[#nav_path + 1] = nav_point
+		elseif alive(nav_point) then
+			nav_path[#nav_path + 1] = {
+				element = nav_point:script_data().element,
+				c_class = nav_point
+			}
+		else
+			return path
+		end
+	end
+	
+	nav_path = CopActionWalk._calculate_simplified_path(path[1], nav_path, 2, true, true)
+	
+	for i = 1, #nav_path do
+		local nav_point = nav_path[i]
+		
+		if nav_point.c_class then
+			opt_path[#opt_path + 1] = nav_point.c_class
+		else
+			opt_path[#opt_path + 1] = nav_point
+		end
+	end
+
+	return opt_path
+end
+
 function CopLogicTravel.exit(data, new_logic_name, enter_params)
 	CopLogicBase.exit(data, new_logic_name, enter_params)
 
@@ -380,6 +423,14 @@ function CopLogicTravel.upd_advance(data)
 		if not my_data.old_action_advancing and my_data.coarse_path then
 			CopLogicTravel._chk_stop_for_follow_unit(data, my_data)
 
+			if my_data ~= data.internal_data then
+				return
+			end
+			
+			if my_data.processing_advance_path then
+				CopLogicTravel._upd_pathing(data, my_data)
+			end
+			
 			if my_data ~= data.internal_data then
 				return
 			end
@@ -1352,9 +1403,11 @@ function CopLogicTravel._determine_destination_occupation(data, objective)
 
 			if my_data.called then
 				max_dist = 450
+			else
+				max_dist = 600
 			end
 
-			cover = managers.navigation:find_cover_in_nav_seg_3(dest_area.nav_segs, max_dist, follow_pos, threat_pos)
+			cover = CopLogicTravel._find_cover(data, dest_nav_seg_id, follow_pos)
 		end
 
 		if cover then
@@ -1934,38 +1987,54 @@ end
 
 function CopLogicTravel.chk_group_ready_to_move(data, my_data)
 	local my_objective = data.objective
-
-	if not my_objective.grp_objective then
-		return true
-	end
 	
-	if not my_objective.area then
+	if not my_objective then
 		return true
 	end
 
-	local my_dis = mvec3_dis_sq(my_objective.area.pos, data.m_pos)
-	
-	if my_dis > 2000 * 2000 then --this should really only matter in maps like Goat Sim or whatever
+	if not my_objective.grp_objective or not my_objective.area then
+		return true
+	end
+
+	local my_dis = mvector3.distance_sq(my_objective.area.pos, data.m_pos)
+
+	if my_dis > 4000000 then
 		return true
 	end
 
 	my_dis = my_dis * 1.15 * 1.15
 
-	for u_key, u_data in pairs_g(data.group.units) do
+	local can_continue = true
+
+	for u_key, u_data in pairs(data.group.units) do
 		if u_key ~= data.key then
-			local teammate_obj = u_data.unit:brain():objective()
+			local his_objective = u_data.unit:brain():objective()
 
-			if teammate_obj and teammate_obj.grp_objective == my_objective.grp_objective and not teammate_obj.in_place then
-				local teammate_dis_to_obj = mvec3_dis_sq(teammate_obj.area.pos, u_data.m_pos)
+			if his_objective and his_objective.grp_objective == my_objective.grp_objective and not his_objective.in_place then
+				if his_objective.is_default then
+					can_continue = nil
+					
+					break
+				else
+					local his_dis = mvector3.distance_sq(his_objective.area.pos, u_data.m_pos)
 
-				if my_dis < teammate_dis_to_obj then
-					return false
+					if my_dis < his_dis then
+						can_continue = nil
+						
+						break
+					end
 				end
 			end
 		end
 	end
+	
+	if not can_continue then
+		if data.char_tweak.chatter.ready then
+			managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "follow_me")
+		end
+	end
 
-	return true
+	return can_continue
 end
 
 function CopLogicTravel.apply_wall_offset_to_cover(data, my_data, cover, wall_fwd_offset)
@@ -2018,56 +2087,19 @@ function CopLogicTravel._find_cover(data, search_nav_seg, near_pos)
 		return
 	end
 
-	local allied_with_criminals = data.is_converted or data.unit:in_slot(16) or data.team.id == tweak_data.levels:get_default_team_ID("player") or data.team.friends[tweak_data.levels:get_default_team_ID("player")] or data.buddypalchum
-
-	if not allied_with_criminals then
-		local player_team = tweak_data.levels:get_default_team_ID("player")
-
-		if data.team.id == player_team or data.team.friends[player_team] then
-			allied_with_criminals = true
+	local search_area = managers.groupai:state():get_area_from_nav_seg_id(search_nav_seg)
+	local threat_vis_pos = nil
+	
+	if data.important then
+		if data.attention_obj and REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.verified_t and data.t - data.attention_obj.verified_t < 7 then
+			threat_vis_pos = data.attention_obj.m_head_pos
 		end
 	end
-
-	local search_area = managers.groupai:state():get_area_from_nav_seg_id(search_nav_seg)
-	local optimal_threat_dis, threat_pos = nil
-
-	if data.objective and data.objective.attitude == "engage" then
-		optimal_threat_dis = data.internal_data.weapon_range.aggressive or data.internal_data.weapon_range.close
-	else
-		optimal_threat_dis = data.internal_data.weapon_range.optimal
-	end
-
+	
 	near_pos = near_pos or data.m_pos
 
-	if not allied_with_criminals then
-		local groupai_manager = managers.groupai:state()
-		local all_criminals = groupai_manager:all_char_criminals()
-		local get_area_func = groupai_manager.get_area_from_nav_seg_id
-		local closest_crim_u_data, closest_crim_dis = nil
-
-		for u_key, u_data in pairs_g(all_criminals) do
-			local crim_area = get_area_func(groupai_manager, u_data.tracker:nav_segment())
-
-			if crim_area == search_area then
-				threat_pos = u_data.m_pos
-
-				break
-			else
-				local crim_dis = mvec3_dis_sq(near_pos, u_data.m_pos)
-
-				if not closest_crim_dis or crim_dis < closest_crim_dis then
-					threat_pos = u_data.m_pos
-					closest_crim_dis = crim_dis
-				end
-			end
-		end
-	end
-	
-	local cover = managers.navigation:find_cover_from_threat(search_area.nav_segs, nil, near_pos, threat_pos)
-	
-	if not cover then
-		cover = managers.navigation:find_cover_from_threat(search_area.nav_segs, nil, nil, threat_pos)
-	end
+	local access_pos = data.char_tweak.access
+	local cover = managers.navigation:_find_cover_in_seg_through_lua(threat_vis_pos, near_pos, data.visibility_slotmask, access_pos, search_area.nav_segs, data.pos_rsrv_id)
 
 	return cover
 end
@@ -2651,31 +2683,29 @@ function CopLogicTravel._chk_begin_advance(data, my_data)
 	CopLogicTravel._chk_request_action_walk_to_advance_pos(data, my_data, haste, end_rot, no_strafe, pose, end_pose)
 end
 
-function CopLogicTravel._check_path_is_straight_line(pos_from, to_pos, u_data)
-	if math_abs(pos_from.z - to_pos.z) < 40 then
-		local ray_params = {
-			allow_entry = false,
-			pos_from = pos_from,
-			pos_to = to_pos
-		}
+function CopLogicTravel._check_path_is_straight_line(pos_from, pos_to, u_data)
+	local ray_params = {
+		allow_entry = false,
+		pos_from = pos_from,
+		pos_to = pos_to
+	}
 
-		if not managers.navigation:raycast(ray_params) then
-			local slotmask = managers.slot:get_mask("world_geometry")
-			local ray_from = pos_from:with_z(pos_from.z + 30)
-			local ray_to = to_pos:with_z(to_pos.z + 30)
-			
-			if u_data then
-				if not u_data.unit:raycast("ray", ray_to, ray_from, "slot_mask", slotmask, "report") then					
-					return true
-				else
-					return
-				end
+	if not managers.navigation:raycast(ray_params) then
+		local slotmask = managers.slot:get_mask("world_geometry")
+		local ray_from = pos_from:with_z(pos_from.z + 31)
+		local ray_to = pos_to:with_z(pos_to.z + 31)
+		
+		if u_data then
+			if not u_data.unit:raycast("ray", ray_to, ray_from, "slot_mask", slotmask, "ray_type", "body mover", "sphere_cast_radius", 30, "bundle", 9, "report") then
+				return true
 			else
-				if not World:raycast("ray", ray_to, ray_from, "slot_mask", slotmask, "ray_type", "ai_vision", "report") then
-					return true
-				else
-					return
-				end
+				return
+			end
+		else
+			if not World:raycast("ray", ray_to, ray_from, "slot_mask", slotmask, "ray_type", "body mover", "sphere_cast_radius", 30, "bundle", 9, "report") then
+				return true
+			else
+				return
 			end
 		end
 	end

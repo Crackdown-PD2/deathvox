@@ -227,7 +227,58 @@ function GroupAIStateBase:on_wgt_report_empty(u_key)
 			e_data.unit:brain():set_important(nil)
 		end
 	end
-end 
+end
+
+function GroupAIStateBase:on_objective_failed(unit, objective)
+	if not unit:brain() then
+		debug_pause_unit(unit, "[GroupAIStateBase:on_objective_failed] error in extension order", unit)
+
+		local fail_clbk = objective.fail_clbk
+		objective.fail_clbk = nil
+
+		unit:brain():set_objective(nil)
+
+		if fail_clbk then
+			fail_clbk(unit)
+		end
+
+		return
+	end
+
+	local new_objective = nil
+
+	if unit:brain():objective() == objective then
+		local u_key = unit:key()
+		local u_data = self._police[u_key]
+
+		if u_data and unit:brain():is_active() and not unit:character_damage():dead() then
+			new_objective = {
+				is_default = true,
+				scan = true,
+				type = "free",
+				attitude = objective.attitude,
+				grp_objective = grp_objective
+			}
+
+			if u_data.assigned_area then
+				local seg = unit:movement():nav_tracker():nav_segment()
+
+				self:set_enemy_assigned(self:get_area_from_nav_seg_id(seg), u_key)
+			end
+		end
+	end
+
+	local fail_clbk = objective.fail_clbk
+	objective.fail_clbk = nil
+
+	if new_objective then
+		unit:brain():set_objective(new_objective)
+	end
+
+	if fail_clbk then
+		fail_clbk(unit)
+	end
+end
 
 function GroupAIStateBase:on_enemy_logic_intimidated(u_key)
 	if u_key then
