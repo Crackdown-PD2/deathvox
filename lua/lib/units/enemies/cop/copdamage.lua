@@ -318,7 +318,7 @@ function CopDamage:roll_critical_hit(attack_data)
 	local critical_hit = attack_data.critical_hit or nil
 
 	if critical_hit then
-		damage = damage * 2
+		damage = damage * managers.player:upgrade_value("player","critical_hit_multiplier",2)
 	end
 
 	return critical_hit, damage

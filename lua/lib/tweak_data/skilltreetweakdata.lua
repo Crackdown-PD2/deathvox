@@ -967,7 +967,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.gunner,1,{ --Spray and Pray
 			{
 				upgrades = {
-					"weapon_spray_and_pray_basic"
+					"class_rapidfire_critical_hit_chance_increase_1"
 				},
 				cost = self.costs.hightier
 			},
@@ -987,13 +987,13 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.gunner,2,{ --Money Shot
 			{
 				upgrades = {
-					"weapon_moneyshot_rapid_fire_basic"
+					"class_rapidfire_moneyshot"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"weapon_moneyshot_rapid_fire_aced"
+					"class_rapidfire_empty_magazine_reload_speed_bonus"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -1007,13 +1007,14 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.gunner,3,{ --Shot Grouping
 			{
 				upgrades = {
-					"class_rapidfire_shotgrouping_basic"
+					"class_rapidfire_steelsight_speed_multiplier",
+					"class_rapidfire_steelsight_accstab_bonus"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"class_rapidfire_shotgrouping_aced"
+					"class_rapidfire_critical_hit_chance_on_headshot"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -1024,38 +1025,36 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				2
 			}
 		})
-		replace_skill(tree_indices.gunner,4,{ --Close Enough
+		replace_skill(tree_indices.gunner,4,{ --Prayers Answered
 			{
 				upgrades = {
-					"player_ricochet_rapid_fire_basic"
+					"class_rapidfire_critical_hit_chance_increase_2"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"player_ricochet_rapid_fire_aced"
+					"class_rapidfire_critical_hit_chance_increase_3"
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_close_enough",
-			desc_id = "menu_close_enough_desc",
+			name_id = "menu_prayers_answered",
+			desc_id = "menu_prayers_answered_desc",
 			icon_xy = {
 				8,
-				3
+				5
 			}
 		})
-		replace_skill(tree_indices.gunner,5,{ --Making Miracles
+		replace_skill(tree_indices.gunner,5,{ --Find the Crit
 			{
 				upgrades = {
-					"weapon_making_miracles_basic",
-					"weapon_making_miracles_crit_cap_1"
+					"player_critical_hit_multiplier_2",
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"weapon_making_miracles_aced",
-					"weapon_making_miracles_crit_cap_2"
+					"player_critical_hit_multiplier_3"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -1066,24 +1065,26 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				4
 			}
 		})
-		replace_skill(tree_indices.gunner,6,{ --Prayers Answered
+		replace_skill(tree_indices.gunner,6,{ --Close Enough
 			{
 				upgrades = {
-					"weapon_prayers_answered_basic"
+					"class_rapidfire_ricochet_bullets",
+					"class_rapidfire_guaranteed_hit_ricochet_bullets",
+					"class_rapidfire_ricochet_damage_penalty_1"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"weapon_prayers_answered_aced"
+					"player_crit_ricochet_no_damage_penalty"
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_prayers_answered",
-			desc_id = "menu_prayers_answered_desc",
+			name_id = "menu_close_enough",
+			desc_id = "menu_close_enough_desc",
 			icon_xy = {
 				8,
-				5
+				3
 			}
 		})
 		
@@ -4455,7 +4456,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			"body_armor6", --ictv
 			"armor_kit", --armor bag deployable
 			"sentry_gun_silent",
-			"player_passive_convert_enemies_health_multiplier_1" --50% damage resistance
+			"player_passive_convert_enemies_health_multiplier_1", --50% damage resistance
+			"player_critical_hit_multiplier_1" --2x crit multiplier (same as default)
 		}
 		
 		for _,upgrade_name in pairs(more_default_upgrades) do 

@@ -333,17 +333,17 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				
 			--gunner
 				menu_spray_and_pray = "Spray & Pray",
-				menu_spray_and_pray_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons gain a ##10%## chance to Critical Hit and deal double damage.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons can now pierce Body Armor.",
+				menu_spray_and_pray_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons gain a ##10%## chance to ##Critical Hit and deal 2x damage##.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons now pierce Body Armor.",
 				menu_money_shot = "Money Shot",
-				menu_money_shot_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons gain a special explosive round at the end of every fully loaded Magazine that deals damage in a 2.5 meter radius on impact.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons gain ##+50%## faster Reload Speed when their Magazine is empty.",
+				menu_money_shot_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons gain a special overpressure round at the end of every fully loaded Magazine that has ##Armor Piercing##, ##Shield Piercing##, and ##Body Penetrating## properties.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons gain ##+50%## faster Reload Speed when their Magazine is empty.",
 				menu_shot_grouping = "Shot Grouping",
-				menu_shot_grouping_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons ADS ##+90%## faster.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons gain ##+40 Accuracy and Stability while ADSing.##",
-				menu_making_miracles = "Making Miracles",
-				menu_making_miracles_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons gain ##+1%## Critical Hit chance for ##4## seconds when hitting an enemy with a Headshot, stacking up to ##+10%##.\n\nACE: ##$pro##\nKilling an enemy with a Headshot generates an additional stack. Maximum bonus increased to ##+20%##.",
-				menu_close_enough = "Close Enough",
-				menu_close_enough_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire bullets that strike hard surfaces ##ricochet once##.\n\nACE: ##$pro##\nCritical Hits cause ricochets to ##angle towards the closest enemy##.",
+				menu_shot_grouping_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons ADS ##+90%## faster and gain ##+40## Accuracy and Stability while ADSing.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons gain ##+1%## Critical Hit chance for ##4## seconds when hitting an enemy with a Headshot, stacking up to ##+10%##.",
 				menu_prayers_answered = "Prayers Answered",
-				menu_prayers_answered_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons have their Critical Hit chance increased by ##+10%##, for a total of ##+20%##.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons have their Critical Hit chance further increased by ##+10%##, for a total of ##+30%##.",
+				menu_prayers_answered_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons have their Critical Hit chance increased by ##+5%##, for a total of ##+15%##.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons have their Critical Hit chance further increased by ##+10%##, for a total of ##+25%##.",
+				menu_making_miracles = "Find the Crit",
+				menu_making_miracles_desc = "BASIC: ##$basic##\nIncreases the Critical Hit damage multiplier to ##2.5x##.\n\nACE: ##$pro##\nFurther increases the Critical Hit damage multiplier to ##3x##.",
+				menu_close_enough = "Close Enough",
+				menu_close_enough_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire bullets that strike hard surfaces ##ricochet## towards the closest enemy, dealing ##50%## damage.\n\nACE: ##$pro##\nCritical Hits that ricochet do not have a damage penalty.",
 				
 			--engineer
 				menu_digging_in = "Digging In",
