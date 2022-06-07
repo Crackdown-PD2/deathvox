@@ -448,7 +448,7 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 		end
 	end
 
-	local delay = within_any_acquire_range and 0 or 1
+	local delay = within_any_acquire_range and 0 or data.important and 0.5 or data.brain_updating and 0.2 or 1
 
 	for u_key, attention_info in pairs_g(detected_obj) do
 		local can_detect = true
@@ -721,8 +721,10 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 							if is_detection_persistent and attention_info.criminal_record then
 								attention_info.release_t = nil
 
-								delay = math_min(0.2, delay)
-								attention_info.next_verify_t = math_min(0.2, attention_info.next_verify_t)
+								if attention_info.verified_t and t - attention_info.verified_t < 7 then
+									delay = math_min(0.2, delay)
+									attention_info.next_verify_t = t + math_min(0.2, settings.verification_interval)
+								end
 
 								mvec3_set(attention_info.verified_pos, attention_pos)
 
@@ -1310,59 +1312,31 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 		end
 	end
 	
-	if not objective.pos and not objective.action and not objective.running then
-		if attention and REACT_COMBAT <= attention.reaction then
-			local good_types = {
-				free = true,
-				defend_area = true
-			}
-				
-			if good_types[objective.type] then
-				local good_grp_types = {
-					recon_area = true,
-					assault_area = true,
-					reenforce_area = true,
-					defend_area = true
-				}
-				
-				if not objective.grp_objective or good_grp_types[objective.grp_objective.type] then 
-					local my_nav_seg = data.unit:movement():nav_tracker():nav_segment()
-					local my_area = managers.groupai:state():get_area_from_nav_seg_id(data.unit:movement():nav_tracker():nav_segment())
-					
-					if objective.area and objective.area.nav_segs[my_nav_seg] and next(objective.area.criminal.units) then
-						return true, false
-					end
-					
-					if REACT_COMBAT <= attention.reaction then
-						local my_data = data.internal_data
-						
-						if not data.tactics or not data.tactics.charge or objective.area and next(objective.area.police.units) or my_data.want_to_take_cover then
-							local grp_objective = objective.grp_objective
-							local dis = data.unit:base()._engagement_range or my_data.weapon_range and my_data.weapon_range.optimal or 500
-							local soft_t = 3
-							
-							if not data.internal_data.want_to_take_cover then
-								if not data.unit:base()._engagement_range then
-									if grp_objective and not grp_objective.open_fire then
-										dis = dis * 0.5
-									end
-								else
-									soft_t = 1
-								end
-							end
-
-							local visible_softer = data.internal_data.want_to_take_cover or attention.verified_t and data.t - attention.verified_t < soft_t
-							
-							if visible_softer and attention.dis <= dis then
-								return true, false
-							end
-						end
-					end
-				end
+	if objective.interrupt_on_contact then
+		if attention and AIAttentionObject.REACT_COMBAT <= attention.reaction then
+			local z_diff = math.abs(attention.m_pos.z - data.m_pos.z)
+			local enemy_dis = attention.dis
+			
+			local interrupt_dis = data.internal_data.weapon_range and data.internal_data.weapon_range.close or 2000
+			
+			interrupt_dis = strictness_mul and interrupt_dis * strictness_mul or interrupt_dis
+			
+			if not attention.verified_t or data.t - attention.verified_t > 5 then
+				interrupt_dis = interrupt_dis * 0.5
 			end
-		end		
+			
+			if objective.grp_objective and objective.grp_objective.push then
+				interrupt_dis = interrupt_dis * 0.5
+			end
+			
+			interrupt_dis = math.lerp(interrupt_dis, 0, z_diff / 400)
+
+			if enemy_dis < interrupt_dis then
+				return true, true
+			end
+		end
 	end
-	
+
 	if objective.interrupt_dis then
 		attention = attention or data.attention_obj
 
@@ -1969,4 +1943,196 @@ end
 
 
 function CopLogicBase.on_long_dis_interacted(data, other_unit, secondary)
+end
+
+function CopLogicBase.chk_start_action_dodge(data, reason)
+	if not data.char_tweak.dodge or not data.char_tweak.dodge.occasions[reason] then
+		return
+	end
+
+	if data.dodge_timeout_t and data.t < data.dodge_timeout_t or data.dodge_chk_timeout_t and data.t < data.dodge_chk_timeout_t or data.unit:movement():chk_action_forbidden("walk") then
+		return
+	end
+
+	local dodge_tweak = data.char_tweak.dodge.occasions[reason]
+	data.dodge_chk_timeout_t = TimerManager:game():time() + math.lerp(dodge_tweak.check_timeout[1], dodge_tweak.check_timeout[2], math.random())
+
+	if dodge_tweak.chance == 0 or dodge_tweak.chance < math.random() then
+		return
+	end
+
+	local rand_nr = math.random()
+	local total_chance = 0
+	local variation, variation_data = nil
+
+	for test_variation, test_variation_data in pairs(dodge_tweak.variations) do
+		total_chance = total_chance + test_variation_data.chance
+
+		if test_variation_data.chance > 0 and rand_nr <= total_chance then
+			variation = test_variation
+			variation_data = test_variation_data
+
+			break
+		end
+	end
+
+	local dodge_dir = Vector3()
+	local face_attention = nil
+	local valid_directions_forward_and_back = nil
+
+	if data.attention_obj and AIAttentionObject.REACT_COMBAT <= data.attention_obj.reaction then
+		mvec3_set(dodge_dir, data.attention_obj.m_pos)
+		mvec3_sub(dodge_dir, data.m_pos)
+		mvector3.set_z(dodge_dir, 0)
+		mvector3.normalize(dodge_dir)
+
+		mvector3.cross(dodge_dir, dodge_dir, math.UP)	
+	else
+		mvector3.random_orthogonal(dodge_dir, math.UP)
+	end
+
+	local dodge_dir_reversed = false
+
+	if math.random() < 0.5 then
+		mvector3.negate(dodge_dir)
+
+		dodge_dir_reversed = not dodge_dir_reversed
+	end
+
+	local prefered_space = 130
+	local min_space = 90
+	local ray_to_pos = tmp_vec1
+
+	mvec3_set(ray_to_pos, dodge_dir)
+	mvector3.multiply(ray_to_pos, 130)
+	mvector3.add(ray_to_pos, data.m_pos)
+
+	local ray_params = {
+		trace = true,
+		tracker_from = data.unit:movement():nav_tracker(),
+		pos_to = ray_to_pos
+	}
+	local ray_hit1 = managers.navigation:raycast(ray_params)
+	local dis = nil
+
+	if ray_hit1 then
+		local hit_vec = tmp_vec2
+
+		mvec3_set(hit_vec, ray_params.trace[1])
+		mvec3_sub(hit_vec, data.m_pos)
+		mvec3_set_z(hit_vec, 0)
+
+		dis = mvector3.length(hit_vec)
+
+		mvec3_set(ray_to_pos, dodge_dir)
+		mvector3.multiply(ray_to_pos, -130)
+		mvector3.add(ray_to_pos, data.m_pos)
+
+		ray_params.pos_to = ray_to_pos
+		local ray_hit2 = managers.navigation:raycast(ray_params)
+
+		if ray_hit2 then
+			mvec3_set(hit_vec, ray_params.trace[1])
+			mvec3_sub(hit_vec, data.m_pos)
+			mvec3_set_z(hit_vec, 0)
+
+			local prev_dis = dis
+			dis = mvector3.length(hit_vec)
+
+			if prev_dis < dis and min_space < dis then
+				mvector3.negate(dodge_dir)
+
+				dodge_dir_reversed = not dodge_dir_reversed
+			end
+		else
+			mvector3.negate(dodge_dir)
+
+			dis = nil
+			dodge_dir_reversed = not dodge_dir_reversed
+		end
+	end
+
+	if ray_hit1 and dis and dis < min_space then
+		return
+	end
+
+	local dodge_side = nil
+
+	if face_attention then
+		if valid_directions_forward_and_back then
+			if dodge_dir_reversed then
+				dodge_side = "bwd"
+			else
+				dodge_side = "fwd"
+			end
+		elseif dodge_dir_reversed then
+			dodge_side = "l"
+		else
+			dodge_side = "r"
+		end
+	else
+		local fwd_dot = mvec3_dot(dodge_dir, data.unit:movement():m_fwd())
+		local my_right = tmp_vec1
+
+		mrotation.x(data.unit:movement():m_rot(), my_right)
+
+		local right_dot = mvec3_dot(dodge_dir, my_right)
+
+		if math.abs(fwd_dot) > 0.7071067690849 then
+			if fwd_dot > 0 then
+				dodge_side = "fwd"
+			else
+				dodge_side = "bwd"
+			end
+		elseif right_dot > 0 then
+			dodge_side = "r"
+		else
+			dodge_side = "l"
+		end
+	end
+
+	local body_part = 1
+	local shoot_chance = variation_data.shoot_chance
+
+	if shoot_chance and shoot_chance > 0 and math.random() < shoot_chance then
+		body_part = 2
+	end
+
+	local action_data = {
+		type = "dodge",
+		body_part = body_part,
+		variation = variation,
+		side = dodge_side,
+		direction = dodge_dir,
+		timeout = variation_data.timeout,
+		speed = data.char_tweak.dodge.speed,
+		shoot_accuracy = variation_data.shoot_accuracy,
+		blocks = {
+			act = -1,
+			tase = -1,
+			bleedout = -1,
+			dodge = -1,
+			walk = -1,
+			action = body_part == 1 and -1 or nil,
+			aim = body_part == 1 and -1 or nil
+		}
+	}
+
+	if variation ~= "side_step" then
+		action_data.blocks.hurt = -1
+		action_data.blocks.heavy_hurt = -1
+	end
+
+	local action = data.unit:movement():action_request(action_data)
+
+	if action then
+		local my_data = data.internal_data
+
+		CopLogicAttack._cancel_cover_pathing(data, my_data)
+		CopLogicAttack._cancel_charge(data, my_data)
+		CopLogicAttack._cancel_expected_pos_path(data, my_data)
+		CopLogicAttack._cancel_walking_to_cover(data, my_data, true)
+	end
+
+	return action
 end

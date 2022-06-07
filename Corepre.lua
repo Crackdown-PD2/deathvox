@@ -2,7 +2,8 @@ DeathvoxMapFramework = DeathvoxMapFramework or class(MapFramework)
 DeathvoxMapFramework._directory = ModPath .. "map_replacements"
 DeathvoxMapFramework.type_name = "deathvox"
 
-DeathvoxMapFramework:new()
+DeathvoxMapFramework:init()
+DeathvoxMapFramework:InitMods()
 
 _G.deathvox = deathvox or {}
 --deathvox.ModPath = ModPath

@@ -1,14 +1,6 @@
 function GroupAITweakData:_init_chatter_data()
 	self.enemy_chatter = {}
-	--[[
-	notes:
-	radius seems to do nothing, game theory how many cops in a radius can say a certain chatter (should test this)
-	max_nr how many chatter calls can go off at once
-	duration ??? longer ones i grabbed from v009/pdth
-	interval is cooldown
-	group_min how many cops need to be in a group for the line to play
-	queue what call is used in chatter
-	]]--
+
 	self.enemy_chatter.clear = {
 		radius = 2000,
 	    max_nr = 1,
@@ -197,7 +189,7 @@ function GroupAITweakData:_init_chatter_data()
 		radius = 700,
 		max_nr = 5,
 		duration = {1, 3},
-		interval = {0.75, 1.5},
+		interval = {4, 8},
 		group_min = 2,
 		queue = "c01"
 	}
@@ -226,18 +218,18 @@ function GroupAITweakData:_init_chatter_data()
 		queue = "a06"
 	}		
 	self.enemy_chatter.go_go = {
-		radius =  1000,
-		max_nr = 20,
+		radius = 600,
+		max_nr = 1,
 		duration = {2, 2},
-		interval = {0.75, 1},
+		interval = {8, 16},
 		group_min = 0,
 		queue = "mov"
 	}
 	self.enemy_chatter.push = {
-		radius = 1000,
-		max_nr = 20,
+		radius = 600,
+		max_nr = 1,
 		duration = {2, 4},
-		interval = {0.75, 1.5},
+		interval = {10, 15},
 		group_min = 0,
 		queue = "pus"
 	}
@@ -251,17 +243,17 @@ function GroupAITweakData:_init_chatter_data()
 	}
 	self.enemy_chatter.look_for_angle = {
 		radius = 700,
-		max_nr = 20,
+		max_nr = 1,
 		duration = {2, 4},
-		interval = {2, 4},
+		interval = {8, 12},
 		group_min = 0,
 		queue = "t01"
 	}
 	self.enemy_chatter.ready = {
-		radius = 1000,
-		max_nr = 20,
+		radius = 800,
+		max_nr = 1,
 		duration = {2, 4},
-		interval = {0.75, 1.5},
+		interval = {10, 15},
 		group_min = 0,
 		queue = "rdy"
 	}
@@ -419,9 +411,9 @@ function GroupAITweakData:_init_chatter_data()
 	}
 	self.enemy_chatter.open_fire = {
 		radius = 2000,
-		max_nr = 40,
+		max_nr = 1,
 		duration = {2, 4},
-		interval = {2, 4},
+		interval = {8, 16},
 		group_min = 0,
 		queue = "att"
 	}		
@@ -443,9 +435,9 @@ function GroupAITweakData:_init_chatter_data()
 	}
 	self.enemy_chatter.contact = {
 		radius = 2000,
-		max_nr = 20,
+		max_nr = 1,
 		duration = {1, 3},
-		interval = {4, 6},
+		interval = {4, 8},
 		group_min = 0,
 		queue = "c01"
 	}
@@ -544,7 +536,35 @@ function GroupAITweakData:_init_chatter_data()
 	    interval = {6, 8},
 	    group_min = 1,
 	    queue = "bak"
-	}	
+	}
+	self.enemy_chatter.follow_me = {
+		radius = 700,
+		max_nr = 2,
+		queue = "prm",
+		group_min = 2,
+		duration = {
+			5,
+			10
+		},
+		interval = {
+			1,
+			3
+		}
+	}
+	self.enemy_chatter.in_pos = {
+		radius = 700,
+		max_nr = 1,
+		queue = "pos",
+		group_min = 2,
+		duration = {
+			5,
+			10
+		},
+		interval = {
+			0.75,
+			1.2
+		}
+	}
 end
 
 Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categories", function(self, difficulty_index)

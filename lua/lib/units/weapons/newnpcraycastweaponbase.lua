@@ -35,6 +35,7 @@ function NewNPCRaycastWeaponBase:init(unit)
 		parent = self._obj_fire
 	}
 	self._use_shell_ejection_effect = SystemInfo:platform() == Idstring("WIN32")
+	self._active_animation_effects = self._active_animation_effects or {}
 
 	if self:weapon_tweak_data().armor_piercing then
 		self._use_armor_piercing = true

@@ -56,6 +56,11 @@ function TankCopLogicAttack.enter(data, new_logic_name, enter_params)
 	local objective = data.objective
 
 	my_data.attitude = objective and objective.attitude or "avoid"
+	
+	if not data.unit:base():has_tag("law") then
+		my_data.attitude = "engage"
+	end
+	
 	my_data.weapon_range = data.char_tweak.weapon[data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage].range
 	
 	if data.tactics and data.tactics.flank then
@@ -71,9 +76,12 @@ function TankCopLogicAttack.enter(data, new_logic_name, enter_params)
 	end
 	
 	local key_str = tostring(data.key)
-	my_data.detection_task_key = "TankLogicAttack._upd_enemy_detection" .. key_str
+	
+	if not data.extreme_ai_priority then
+		my_data.detection_task_key = "TankLogicAttack._upd_enemy_detection" .. key_str
 
-	CopLogicBase.queue_task(my_data, my_data.detection_task_key, TankCopLogicAttack._upd_enemy_detection, data, data.t, true)
+		CopLogicBase.queue_task(my_data, my_data.detection_task_key, TankCopLogicAttack._upd_enemy_detection, data, data.t, true)
+	end
 
 	CopLogicIdle._chk_has_old_action(data, my_data)
 
@@ -147,11 +155,45 @@ function TankCopLogicAttack.update(data)
 	TankCopLogicAttack._process_pathing_results(data, my_data)
 
 	if data.attention_obj and REACT_COMBAT <= data.attention_obj.reaction then
-		--my_data.want_to_move_back = TankCopLogicAttack._chk_wants_to_take_cover(data, my_data)
+		if data.unit:base():has_tag("law") then
+			my_data.attitude = data.objective and data.objective.attitude or "avoid"
+		end
+		
+		my_data.want_to_take_cover = CopLogicAttack._chk_wants_to_take_cover(data, my_data)
 		TankCopLogicAttack._upd_combat_movement(data)
 	else
 		TankCopLogicAttack._cancel_chase_attempt(data, my_data)
 	end
+end
+
+function TankCopLogicAttack._upd_enemy_detection_high_def(data, is_synchronous)
+	data.t = TimerManager:game():time()
+	local my_data = data.internal_data
+	local min_reaction = REACT_AIM
+	local delay = CopLogicBase._upd_attention_obj_detection(data, min_reaction, nil)
+	local new_attention, new_prio_slot, new_reaction = CopLogicIdle._get_priority_attention(data, data.detected_attention_objects, nil)
+	local old_att_obj = data.attention_obj
+
+	CopLogicBase._set_attention_obj(data, new_attention, new_reaction)
+	data.logic._chk_exit_attack_logic(data, new_reaction)
+
+	if my_data ~= data.internal_data then
+		return
+	end
+
+	if not new_attention and old_att_obj then
+		TankCopLogicAttack._cancel_chase_attempt(data, my_data)
+	end
+
+	CopLogicBase._chk_call_the_police(data)
+
+	if my_data ~= data.internal_data then
+		return
+	end
+
+	CopLogicAttack._upd_aim(data, my_data)
+
+	CopLogicBase._report_detections(data.detected_attention_objects)
 end
 
 function TankCopLogicAttack._upd_enemy_detection(data, is_synchronous)
@@ -183,7 +225,7 @@ function TankCopLogicAttack._upd_enemy_detection(data, is_synchronous)
 
 	CopLogicAttack._upd_aim(data, my_data)
 
-	if not is_synchronous then
+	if not is_synchronous and my_data.detection_task_key then
 		CopLogicBase.queue_task(my_data, my_data.detection_task_key, TankCopLogicAttack._upd_enemy_detection, data, data.t + delay, data.important and true)
 	end
 
@@ -343,19 +385,19 @@ function TankCopLogicAttack._upd_combat_movement(data)
 	local enemy_visible = focus_enemy.verified
 	local action_taken = data.logic.action_taken(data, my_data)
 	local chase = nil
-	local engage = not my_data.use_medic_positioning and my_data.attitude == "engage"
+	local engage = my_data.attitude == "engage"
 	local no_run = my_data.no_running
 
 	if not action_taken then
 		local enemy_dis = focus_enemy.dis
-		local run_dist = enemy_visible and my_data.weapon_range.optimal or my_data.weapon_range.close
+		local run_dist = enemy_visible and 800 or 600
 		local should_try_chase = nil
 		local height_diff = math_abs(data.m_pos.z - focus_enemy.m_pos.z)
 		
 		if engage then
-			should_try_chase = height_diff > 300 or enemy_dis > run_dist or focus_enemy.verified_t and t - focus_enemy.verified_t > 4
+			should_try_chase = height_diff > 300 or not enemy_visible or enemy_dis > 300
 		else
-			should_try_chase = enemy_visible or focus_enemy.verified_t and t - focus_enemy.verified_t > 4
+			should_try_chase = enemy_visible or focus_enemy.verified_t and t - focus_enemy.verified_t < 4
 			
 			if should_try_chase then
 				if not no_run then
@@ -365,12 +407,16 @@ function TankCopLogicAttack._upd_combat_movement(data)
 				end
 				
 				should_try_chase = height_diff < 300 and enemy_dis < 600
+			else
+				should_try_chase = nil
 			end
 		end
 		
 		if should_try_chase then
 			if data.important or not my_data.chase_path_failed_t or t - my_data.chase_path_failed_t > 1 then --helps not nuking performance if there's too many Dozers in attack logic
 				local speed = no_run and "walk" or enemy_dis < run_dist and "walk" or "run"
+				
+				--log(speed)
 				
 				if my_data.chase_path then
 					action_taken = TankCopLogicAttack._chk_request_action_walk_to_chase_pos(data, my_data, speed)
@@ -430,7 +476,7 @@ function TankCopLogicAttack._upd_combat_movement(data)
 				end
 			end
 		elseif not action_taken then
-			if data.important or focus_enemy.aimed_at then
+			if focus_enemy.aimed_at then
 				action_taken = TankCopLogicAttack._walk_around_menacingly(data, my_data)
 			end
 		end
@@ -447,6 +493,27 @@ function TankCopLogicAttack.queued_update(data)
 
 	if my_data == data.internal_data then
 		TankCopLogicAttack.queue_update(data, data.internal_data)
+	end
+end
+
+function TankCopLogicAttack._pathing_complete_clbk(data)
+	local my_data = data.internal_data
+	
+	if my_data.exiting then
+		return
+	end
+	
+	data.logic._process_pathing_results(data, my_data)
+	
+	if data.attention_obj and REACT_COMBAT <= data.attention_obj.reaction then
+		if data.unit:base():has_tag("law") then
+			my_data.attitude = data.objective and data.objective.attitude or "avoid"
+		end
+		
+		my_data.want_to_take_cover = CopLogicAttack._chk_wants_to_take_cover(data, my_data)
+		TankCopLogicAttack._upd_combat_movement(data)
+	else
+		TankCopLogicAttack._cancel_chase_attempt(data, my_data)
 	end
 end
 
@@ -525,10 +592,11 @@ function TankCopLogicAttack.action_complete_clbk(data, action)
 
 		if my_data.menacing then
 			my_data.menacing = nil
-			if action:expired() then
-				if data.important and data.attention_obj and REACT_COMBAT <= data.attention_obj.reaction then
-					TankCopLogicAttack._upd_combat_movement(data)
-				end
+		end
+		
+		if action:expired() then
+			if data.attention_obj and REACT_COMBAT <= data.attention_obj.reaction then
+				TankCopLogicAttack._upd_combat_movement(data)
 			end
 		end
 	elseif action_type == "shoot" then

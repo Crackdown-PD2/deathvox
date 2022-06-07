@@ -658,7 +658,7 @@ function CopActionShoot:update(t)
 						local fire_line_is_obstructed = self._unit:raycast("ray", shoot_from_pos, target_pos, "slot_mask", self._fire_line_slotmask, "ray_type", "ai_vision")
 
 						if fire_line_is_obstructed then
-							if not self._line_of_sight_t or t - self._line_of_sight_t > 3 then
+							if not self._line_of_sight_t or t - self._line_of_sight_t > 5 then
 								if draw_aim_delay_vis_proc then
 									local draw_duration = shooting_husk and 4 or 2
 
@@ -702,7 +702,7 @@ function CopActionShoot:update(t)
 								shoot = true
 							end
 
-							if not self._line_of_sight_t or t - self._line_of_sight_t > 1 then
+							if not self._line_of_sight_t or t - self._line_of_sight_t > 2 then
 								if draw_focus_delay_vis_reset then
 									local draw_duration = shooting_husk and 4 or 2
 

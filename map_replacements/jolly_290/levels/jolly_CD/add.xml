@@ -1,0 +1,6 @@
+<table directory="assets">
+	<add from_db="true" path="core/environments/skies/default/default" type="scene">
+		<scene path="core/environments/skies/default/default"/>
+		<material_config path="core/environments/skies/sky_cloudy_blue/sky_cloudy_blue"/>
+	</add>
+</table>

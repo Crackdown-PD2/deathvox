@@ -14,6 +14,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 	self.values.class_grenade = self.values.class_grenade or {}
 	self.values.class_throwing = self.values.class_throwing or {}
 	self.values.class_melee = self.values.class_melee or {} 
+	
 --weapon subclass categories
 	self.values.subclass_poison = self.values.subclass_poison or {}
 	self.values.subclass_quiet = self.values.subclass_quiet or {}
@@ -178,7 +179,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			category = "team",
 			upgrade = {
 				value = 1,
-				upgrade = "civilian_hostage_aoe_damage_resistance_1",
+				upgrade = "civilian_hostage_aoe_damage_resistance",
 				category = "player"
 			}
 		}
@@ -186,8 +187,8 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			name_id = "menu_BLANK",
 			category = "team",
 			upgrade = {
-				value = 1,
-				upgrade = "civilian_hostage_aoe_damage_resistance_2",
+				value = 2,
+				upgrade = "civilian_hostage_aoe_damage_resistance",
 				category = "player"
 			}
 		
@@ -1089,56 +1090,42 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		--Gunner
 		
-		self.values.class_rapidfire.enter_steelsight_speed_multiplier = {
-			0.1
-		}
-		self.definitions.weapon_spray_and_pray_basic = {
-			name_id = "menu_spray_and_pray_basic",
-			category = "feature",
-			upgrade = {
-				value = 1,
-				upgrade = "enter_steelsight_speed_multiplier",
-				category = "class_rapidfire"
-			}
+		self.values.class_rapidfire.money_shot = {
+			true
 		}
 		
-		self.values.weapon.money_shot = {
-			{
-				1, --100% damage
-				250 --over 2.5 meters
-			}
-		}
-		self.values.weapon.money_shot_aced = {
+		self.values.class_rapidfire.empty_magazine_reload_speed_bonus = {
 			0.5
 		}
-			
-		self.definitions.weapon_moneyshot_rapid_fire_basic = {
+		
+		self.definitions.class_rapidfire_moneyshot = {
 			name_id = "menu_moneyshot_rapid_fire_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "money_shot",
-				category = "weapon"
+				category = "class_rapidfire"
 			}
-		}		
-		self.definitions.weapon_moneyshot_rapid_fire_aced = {
+		}
+		
+		self.definitions.class_rapidfire_empty_magazine_reload_speed_bonus = {
 			name_id = "menu_moneyshot_rapid_fire_aced",
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "money_shot_aced",
-				category = "weapon"
+				upgrade = "empty_magazine_reload_speed_bonus",
+				category = "class_rapidfire"
 			}
 		}
 		
-		self.values.class_rapidfire.shotgrouping_aced = { 
-			14 --accuracy/stability index addend
+		self.values.class_rapidfire.steelsight_accstab_bonus = { 
+			14 --accuracy/stability index addend (used for both)
 		}
 		self.values.class_rapidfire.enter_steelsight_speed_multiplier = { 
 			0.1
 		}
 		
-		self.definitions.class_rapidfire_shotgrouping_basic = {
+		self.definitions.class_rapidfire_steelsight_speed_multiplier = {
 			name_id = "menu_shotgrouping_basic",
 			category = "feature",
 			upgrade = {
@@ -1147,112 +1134,148 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "class_rapidfire"
 			}
 		}
-		self.definitions.class_rapidfire_shotgrouping_aced = {
-			name_id = "menu_shotgrouping_aced",
+		self.definitions.class_rapidfire_steelsight_accstab_bonus = {
+			name_id = "menu_shotgrouping_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "shotgrouping_aced",
+				upgrade = "steelsight_accstab_bonus",
 				category = "class_rapidfire"
 			}
 		}
 	
-		self.values.player.ricochet_bullets = {
-			true
+		self.values.class_rapidfire.critical_hit_chance_on_headshot = {
+			{
+				0.01, --crit chance per stack
+				4, --duration
+				10 --max stacks
+			}
 		}
-		self.values.player.ricochet_bullets_aced = {
+		self.definitions.class_rapidfire_critical_hit_chance_on_headshot = {
+			name_id = "menu_shotgrouping_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "critical_hit_chance_on_headshot",
+				category = "class_rapidfire"
+			}
+		}
+		
+		self.values.player.critical_hit_multiplier = {
+			2,
+			2.5,
+			3
+		}
+		self.definitions.player_critical_hit_multiplier_1 = { --default upgrade
+			name_id = "",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "critical_hit_multiplier",
+				category = "player"
+			}
+		}
+		self.definitions.player_critical_hit_multiplier_2 = {
+			name_id = "menu_making_miracles_basic",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "critical_hit_multiplier",
+				category = "player"
+			}
+		}
+		self.definitions.player_critical_hit_multiplier_3 = {
+			name_id = "menu_making_miracles_aced",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "critical_hit_multiplier",
+				category = "player"
+			}
+		}
+		
+		self.values.class_rapidfire.ricochet_bullets = {
+			true --can ricochet
+		}
+
+		self.values.class_rapidfire.guaranteed_hit_ricochet_bullets = {
+			true --guaranteed ricochet
+		}
+
+		self.values.player.crit_ricochet_no_damage_penalty = {
 			true
 		}
 		
-		self.definitions.player_ricochet_rapid_fire_basic = {
+		self.values.class_rapidfire.ricochet_damage_penalty = { 0.5 } --deal only 0.5x of normal damage on ricochet
+	
+		self.definitions.class_rapidfire_ricochet_bullets = {
 			name_id = "menu_ricochet_rapid_fire_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "ricochet_bullets",
-				category = "player"
+				category = "class_rapidfire"
 			}
 		}
-		self.definitions.player_ricochet_rapid_fire_aced = {
+		
+		self.definitions.class_rapidfire_ricochet_damage_penalty_1 = {
+			name_id = "menu_ricochet_rapid_fire_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "ricochet_damage_penalty",
+				category = "class_rapidfire"
+			}
+		}
+		self.definitions.class_rapidfire_guaranteed_hit_ricochet_bullets = {
+			name_id = "menu_ricochet_rapid_fire_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "guaranteed_hit_ricochet_bullets",
+				category = "class_rapidfire"
+			}
+		}
+		self.definitions.player_crit_ricochet_no_damage_penalty = {
 			name_id = "menu_ricochet_rapid_fire_aced",
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "ricochet_bullets_aced",
+				upgrade = "crit_ricochet_no_damage_penalty",
 				category = "player"
 			}
 		}
 		
-		self.values.weapon.making_miracles_basic = {
-			{
-				0.01, --crit chance per stack
-				4 --duration
-			}
-		}
-		self.values.weapon.making_miracles_crit_cap = {
+		self.values.class_rapidfire.primary_class_critical_hit_chance_increase = {
 			0.1,
-			0.2
+			0.15,
+			0.25
 		}
-		self.values.weapon.making_miracles_aced = {
-			true
-		}
-		self.definitions.weapon_making_miracles_basic = {
-			name_id = "menu_making_miracles_basic",
-			category = "feature",
-			upgrade = {
-				value = 1,
-				upgrade = "making_miracles_basic",
-				category = "weapon"
-			}
-		}
-		self.definitions.weapon_making_miracles_aced = {
-			name_id = "menu_making_miracles_aced",
-			category = "feature",
-			upgrade = {
-				value = 1,
-				upgrade = "making_miracles_aced",
-				category = "weapon"
-			}
-		}
-		self.definitions.weapon_making_miracles_crit_cap_1 = {
-			name_id = "menu_making_miracles_basic",
-			category = "feature",
-			upgrade = {
-				value = 1,
-				upgrade = "making_miracles_crit_cap",
-				category = "weapon"
-			}
-		}
-		self.definitions.weapon_making_miracles_crit_cap_2 = {
-			name_id = "menu_making_miracles_aced",
-			category = "feature",
-			upgrade = {
-				value = 2,
-				upgrade = "making_miracles_crit_cap",
-				category = "weapon"
-			}
-		}
-		
-		self.values.weapon.prayers_answered = {
-			0.1,
-			0.2
-		}
-		self.definitions.weapon_prayers_answered_basic = {
+		self.definitions.class_rapidfire_critical_hit_chance_increase_1 = {
 			name_id = "menu_prayers_answered_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "prayers_answered",
-				category = "weapon"
+				upgrade = "primary_class_critical_hit_chance_increase",
+				category = "class_rapidfire"
 			}
 		}
-		self.definitions.weapon_prayers_answered_aced = {
-			name_id = "menu_prayers_answered_aced",
+		self.definitions.class_rapidfire_critical_hit_chance_increase_2 = {
+			name_id = "menu_prayers_answered_basic",
 			category = "feature",
 			upgrade = {
 				value = 2,
-				upgrade = "prayers_answered",
-				category = "weapon"
+				upgrade = "primary_class_critical_hit_chance_increase",
+				category = "class_rapidfire"
+			}
+		}
+		self.definitions.class_rapidfire_critical_hit_chance_increase_3 = {
+			name_id = "menu_prayers_answered_basic",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "primary_class_critical_hit_chance_increase",
+				category = "class_rapidfire"
 			}
 		}
 		
@@ -1282,67 +1305,96 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		self.values.sentry_gun.interaction_speed_multiplier = {
 			0.1
 		}
-		
-		self.definitions.sentry_gun_advanced_rangefinder_basic = {
+		--wrangler_damage_bonus
+		self.definitions.sentry_gun_targeting_range_increase = {
 			name_id = "menu_advanced_rangefinder_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "advanced_rangefinder",
+				upgrade = "targeting_range_increase",
 				category = "sentry_gun"
 			}
 		}
+		self.definitions.sentry_gun_targeting_accuracy_increase = {
+			name_id = "menu_advanced_rangefinder_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "targeting_accuracy_increase",
+				category = "sentry_gun"
+			}
+		}
+		
 		self.definitions.sentry_gun_advanced_rangefinder_aced = {
 			name_id = "menu_advanced_rangefinder_aced",
 			category = "feature",
 			upgrade = {
-				value = 2,
-				upgrade = "advanced_rangefinder",
+				value = 1,
+				upgrade = "overwatch_targets_all_specials",
 				category = "sentry_gun"
 			}
 		}
-		self.values.sentry_gun.advanced_rangefinder = {
-			{0.5,0.5}, -- range mul, accuracy mul (1 + n)
-			{1,1}
+		self.values.sentry_gun.targeting_range_increase = {
+			1 -- +100% range (1 + n)
+		}
+		self.values.sentry_gun.targeting_accuracy_increase = {
+			1 -- +100% accuracy (1 + n)
+		}
+		self.values.sentry_gun.overwatch_targets_all_specials = {
+			true
 		}
 		
-		self.definitions.sentry_gun_targeting_matrix_basic = {
+		self.values.sentry_gun.wrangler_damage_bonus = {
+			1.25
+		}
+		self.definitions.sentry_gun_manual_damage_bonus = {
 			name_id = "menu_targeting_matrix_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "targeting_matrix",
+				upgrade = "wrangler_damage_bonus",
 				category = "sentry_gun"
 			}
 		}
-		self.definitions.sentry_gun_targeting_matrix_aced = {
+		
+		
+		self.definitions.sentry_gun_highlight_enemies_1 = {
+			name_id = "menu_targeting_matrix_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "automatic_highlight_enemies",
+				category = "sentry_gun"
+			}
+		}
+		self.definitions.sentry_gun_highlight_enemies_2 = {
 			name_id = "menu_targeting_matrix_aced",
 			category = "feature",
 			upgrade = {
 				value = 2,
-				upgrade = "targeting_matrix",
+				upgrade = "automatic_highlight_enemies",
 				category = "sentry_gun"
 			}
 		}
-		self.values.sentry_gun.targeting_matrix = {
+		self.values.sentry_gun.automatic_highlight_enemies = {
 			{"mark_enemy_damage_bonus",0},
-			{"mark_enemy_damage_bonus",0.25},
+			{"mark_enemy_damage_bonus",0.25}
 		}
 		
-		self.definitions.sentry_gun_wrangler_basic = {
+		self.definitions.sentry_gun_wrangler_heatsink = {
 			name_id = "menu_wrangler_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "wrangler_accuracy",
+				upgrade = "wrangler_heatsink",
 				category = "sentry_gun"
 			}
 		}
-		self.values.sentry_gun.wrangler_accuracy = {
+		self.values.sentry_gun.wrangler_heatsink = {
 			true
 		}
 		
-		self.definitions.sentry_gun_wrangler_aced = {
+		self.definitions.sentry_gun_wrangler_headshot_damage_bonus = {
 			name_id = "menu_wrangler_aced",
 			category = "feature",
 			upgrade = {

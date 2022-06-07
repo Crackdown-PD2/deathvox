@@ -117,7 +117,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		multiplier = multiplier * self:get_hostage_bonus_multiplier("damage_dampener")
 		multiplier = multiplier * self._properties:get_property("revive_damage_reduction", 1)
 		multiplier = multiplier * self._temporary_properties:get_property("revived_damage_reduction", 1)
-		multiplier = multiplier + self:team_upgrade_value("crewchief","passive_damage_resistance",1)
+		multiplier = multiplier - self:team_upgrade_value("crewchief","passive_damage_resistance",0)
 		
 		if self:get_property("armor_plates_active") then 
 			multiplier = multiplier * tweak_data.upgrades.armor_plates_dmg_reduction
@@ -297,7 +297,31 @@ if deathvox:IsTotalCrackdownEnabled() then
 			)
 		end
 		
-	
+		if self:has_category_upgrade("class_rapidfire","critical_hit_chance_on_headshot") then 
+			local skill_data = self:upgrade_value("class_rapidfire","critical_hit_chance_on_headshot")
+		
+			local duration = skill_data[2]
+			local max_stacks = skill_data[3]
+			
+			self._message_system:register(Message.OnHeadShot,"proc_shotgrouping_aced",
+				function()
+					local player = self:local_player()
+					if not alive(player) then 
+						return
+					end
+					local weapon = player:inventory():equipped_unit():base()
+					if not weapon:is_weapon_class("class_rapidfire") then 
+						return
+					end
+					
+					local stacks = math.min(self:get_temporary_property("shotgrouping_aced_stacks",0) + 1,max_stacks)
+					self:activate_temporary_property("shotgrouping_aced_stacks",duration,stacks)
+				end
+			)
+		else
+			self._message_system:unregister(Message.OnHeadShot,"proc_shotgrouping_aced")
+		end
+		
 --			"OnPlayerMeleeHit" hook is no longer active; to re-implement this, the hook must be re-enabled in PlayerStandard:_do_melee_damage()
 --[[
 		if self:has_category_upgrade("player","melee_hit_speed_boost") then
@@ -500,8 +524,14 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if self:has_category_upgrade("class_shotgun","shell_games_reload_bonus") then
 			self:set_property("shell_games_rounds_loaded",0)
 		end
-		if self:has_category_upgrade("weapon", "making_miracles_basic") then
-			self:set_property("making_miracles_stacks",0)
+		
+		--shotgrouping aced, previously known as making miracles basic
+		if self:has_category_upgrade("class_rapidfire", "making_miracles_basic") then
+			local skill_data = self:upgrade_value("class_rapidfire","making_miracles_basic")
+			local duration = skill_data[2]
+			local max_stacks = skill_data[3]
+			
+			
 			self._message_system:register(Message.OnHeadShot,"proc_making_miracles_basic",
 				function()
 					local player = self:local_player()
@@ -513,18 +543,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 						return
 					end
 					
-					self:add_to_property("making_miracles_stacks",1) --add one stack
-					managers.enemy:remove_delayed_clbk("making_miracles_stack_expire",true) --reset timer if active
-					managers.enemy:add_delayed_clbk("making_miracles_stack_expire", --add 4-second removal timer for stacks
-						function()
-							self:set_property("making_miracles_stacks",0)
-						end,
-						Application:time() + self:upgrade_value("weapon","making_miracles_basic",{0,0})[2]
-					)
+					local stacks = math.min(self:get_temporary_property("making_miracles_stacks",0) + 1,max_stacks)
+					self:activate_temporary_property("making_miracles_stacks",duration,stacks)
 				end
 			)
 		else
-			self._message_system:unregister(Message.OnLethalHeadShot,"proc_making_miracles_basic")
+			self._message_system:unregister(Message.OnHeadShot,"proc_making_miracles_basic")
 		end
 		
 		if self:has_category_upgrade("weapon","making_miracles_aced") then 
@@ -1053,6 +1077,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return true
 	end
 	
+	function PlayerManager:verify_equipment(peer_id, equipment_id,...)
+		return true
+	end
+
 end
 
 

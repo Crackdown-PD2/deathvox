@@ -32,6 +32,18 @@ Hooks:PostHook(PlayerDamage, "init", "dv_post_init", function(self, unit)
 	end
 end)
 
+function PlayerDamage:clbk_kill_taunt(taunt_data)
+	local attacker = taunt_data.attacker_unit
+
+	if not alive(attacker) or attacker:character_damage():dead() then
+		return
+	end
+	
+	if taunt_data.taunt_line then
+		attacker:sound():say(taunt_data.taunt_line, true)
+	end
+end
+
 function PlayerDamage:_raw_max_health()
 	if managers.player:has_category_upgrade("player", "sociopath_mode") then
 		local hp = 4
@@ -473,22 +485,7 @@ function PlayerDamage:damage_bullet(attack_data)
 			self:_send_damage_drama(attack_data, health_subtracted)
 		end
 	else
-		local attacker = attack_data.attacker_unit
-
-		if attacker:character_damage() and attacker:character_damage().dead and not attacker:character_damage():dead() then
-			if attacker:base().has_tag then
-				if attacker:base():has_tag("tank") then
-					self._kill_taunt_clbk_id = "kill_taunt" .. tostring(self._unit:key())
-					managers.enemy:add_delayed_clbk(self._kill_taunt_clbk_id, callback(self, self, "clbk_kill_taunt", attack_data), TimerManager:game():time() + 0.5)
-				elseif attacker:base():has_tag("taser") then
-					self._kill_taunt_clbk_id = "kill_taunt" .. tostring(self._unit:key())
-					managers.enemy:add_delayed_clbk(self._kill_taunt_clbk_id, callback(self, self, "clbk_kill_taunt_tase", attack_data), TimerManager:game():time() + 0.5)
-				elseif attacker:base():has_tag("law") and not attacker:base():has_tag("special") then
-					self._kill_taunt_clbk_id = "kill_taunt" .. tostring(self._unit:key())
-					managers.enemy:add_delayed_clbk(self._kill_taunt_clbk_id, callback(self, self, "clbk_kill_taunt_common", attack_data), TimerManager:game():time() + 0.5)
-				end
-			end
-		end
+		self:chk_queue_taunt_line(attack_data)
 	end
 
 	pm:send_message(Message.OnPlayerDamage, nil, attack_data)
@@ -496,26 +493,6 @@ function PlayerDamage:damage_bullet(attack_data)
 
 	return true
 end
-
-function PlayerDamage:clbk_kill_taunt(attack_data)
-	local attacker = attack_data.attacker_unit
-
-	if attacker and alive(attacker) and attacker:character_damage() and attacker:character_damage().dead and not attacker:character_damage():dead() then
-		attacker:sound():say("post_kill_taunt")
-	end
-
-	self._kill_taunt_clbk_id = nil
-end
-
-function PlayerDamage:clbk_kill_taunt_tase(attack_data)
-	local attacker = attack_data.attacker_unit
-
-	if attacker and alive(attacker) and attacker:character_damage() and attacker:character_damage().dead and not attacker:character_damage():dead() then
-		attacker:sound():say("post_tasing_taunt")
-	end
-
-	self._kill_taunt_clbk_id = nil
-end	
 
 function PlayerDamage:clbk_kill_taunt_common(attack_data)
 	local attacker = attack_data.attacker_unit
@@ -1003,6 +980,10 @@ function PlayerDamage:damage_tase(attack_data)
 end
 
 function PlayerDamage:damage_fire(attack_data)
+	if attack_data.is_hit then
+		return self:damage_fire_hit(attack_data)
+	end
+
 	if not self:_chk_can_take_dmg() or self:incapacitated() then
 		return
 	end
@@ -1718,7 +1699,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 					managers.player:remove_property("armor_plates_free_revive")
 				else
 					self._revives = Application:digest_value(Application:digest_value(self._revives, false) - 1, true)
+					
+					self:_send_set_revives()
 				end
+				
 				self._check_berserker_done = nil
 
 				managers.environment_controller:set_last_life(Application:digest_value(self._revives, false) <= 1)

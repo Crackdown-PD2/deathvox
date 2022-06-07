@@ -2,7 +2,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 	function NewRaycastWeaponBase:conditional_accuracy_addend(current_state)
 		local index = 0
-
+		local primary_class = self:get_weapon_class()
+		
 		if not current_state then
 			return index
 		end
@@ -13,8 +14,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 		
 		if not current_state:in_steelsight() then
 			index = index + pm:upgrade_value("player", "hip_fire_accuracy_inc", 0)
-		elseif has_category and self:is_weapon_class("class_rapidfire") and pm:player_unit() then 
-			index = index + pm:upgrade_value("class_rapidfire","shotgrouping_aced",0)
+		elseif has_category and pm:player_unit() then 
+			index = index + pm:upgrade_value(primary_class,"steelsight_accstab_bonus",0)
 		end
 
 		if self:is_single_shot() and self:is_category("assault_rifle", "smg", "snp") then
@@ -38,8 +39,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 			index = index + bonus
 		end
 		
-		--log("we gunnin':" .. index .. "")
-
 		return index
 	end
 	
@@ -89,21 +88,22 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if self._use_shotgun_reload then 
 			shell_games_bonus = pm:upgrade_value("class_shotgun","shell_games_reload_bonus",0) * pm:get_property("shell_games_rounds_loaded",0)
 		end
+		
 		if self._current_reload_speed_multiplier then
 			return self._current_reload_speed_multiplier + shell_games_bonus
+		end
+		
+		for _, category in ipairs(self:weapon_tweak_data().categories) do
+			multiplier = multiplier + 1 - pm:upgrade_value(category, "reload_speed_multiplier", 1)
 		end
 		
 		if self:is_weapon_class("class_precision") then
 			local this_machine_data = pm:upgrade_value("weapon","point_and_click_bonus_reload_speed",{0,0})
 			multiplier = multiplier * (1 - math.min(this_machine_data[1] * pm:get_property("current_point_and_click_stacks",0),this_machine_data[2]))
-		end
-		
-		if self:is_weapon_class("class_rapidfire") and self:clip_empty() then
-			multiplier = multiplier * (1 - pm:upgrade_value("weapon", "money_shot_aced", 1))
-		end
-		
-		for _, category in ipairs(self:weapon_tweak_data().categories) do
-			multiplier = multiplier + 1 - pm:upgrade_value(category, "reload_speed_multiplier", 1)
+		elseif self:is_weapon_class("class_shotgun") then 
+			if managers.player:has_category_upgrade("class_shotgun", "shell_games_reload_bonus") then
+				multiplier = multiplier + 0.2
+			end
 		end
 
 		multiplier = multiplier + 1 - pm:upgrade_value("weapon", "passive_reload_speed_multiplier", 1)
@@ -140,9 +140,16 @@ if deathvox:IsTotalCrackdownEnabled() then
 			multiplier = multiplier + lead_farmer_bonus
 		end
 		
-		multiplier = multiplier * self:reload_speed_stat()
-		multiplier = managers.modifiers:modify_value("WeaponBase:GetReloadSpeedMultiplier", multiplier)
 		multiplier = multiplier + shell_games_bonus
+		if self:clip_empty() then
+			--money shot aced reload speed
+			multiplier = multiplier + pm:upgrade_value(self:get_weapon_class(), "empty_magazine_reload_speed_bonus", 0)
+		end
+		
+		multiplier = multiplier * self:reload_speed_stat()
+		
+		multiplier = managers.modifiers:modify_value("WeaponBase:GetReloadSpeedMultiplier", multiplier)
+		
 		return multiplier
 	end
 

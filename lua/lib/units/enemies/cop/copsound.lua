@@ -4,35 +4,7 @@ function CopSound:chk_voice_prefix()
 	end
 end
 
-Hooks:PostHook(CopSound, "say", "vox_say", function(self, sound_name, sync, skip_prefix, important, callback)
-
-	local full_sound = nil
-	
-	if self._prefix == "l5d_" then
-		if sound_name == "c01" or sound_name == "att" then
-			sound_name = "g90"
-		elseif sound_name == "rrl" then
-			sound_name = "pus"
-		elseif sound_name == "t01" then
-			sound_name = "prm"
-		elseif sound_name == "h01" then
-			sound_name = "h10"
-		end
-	end
-	
-	local fixed_sound = nil
-	
-	if self._prefix == "l1n_" or self._prefix == "l2n_" or self._prefix == "l3n_" or self._prefix == "l4n_" then
-		if sound_name == "x02a_any_3p" then
-			sound_name = "x01a_any_3p"
-			--log("help")
-			fixed_sound = true
-		elseif sound_name == "x01a_any_3p" and not fixed_sound and not self._prefix == "l4n_" then
-			sound_name = "x02a_any_3p"
-			--log("fuckinghell")
-		end
-	end
-
+function CopSound:say(sound_name, sync, skip_prefix, important, callback)
 	local line_array = { 
 		c01 = "contact",
 		c01x = "contact",
@@ -117,6 +89,37 @@ Hooks:PostHook(CopSound, "say", "vox_say", function(self, sound_name, sync, skip
 				self._unit:base():play_voiceline(line_to_use, important)
 				return
 			end
+		end
+	end
+	
+	if self._last_speech then
+		self._last_speech:stop()
+	end
+	
+	local full_sound = nil
+	
+	if self._prefix == "l5d_" then
+		if sound_name == "c01" or sound_name == "att" then
+			sound_name = "g90"
+		elseif sound_name == "rrl" then
+			sound_name = "pus"
+		elseif sound_name == "t01" then
+			sound_name = "prm"
+		elseif sound_name == "h01" then
+			sound_name = "h10"
+		end
+	end
+	
+	local fixed_sound = nil
+	
+	if self._prefix == "l1n_" or self._prefix == "l2n_" or self._prefix == "l3n_" or self._prefix == "l4n_" then
+		if sound_name == "x02a_any_3p" then
+			sound_name = "x01a_any_3p"
+			--log("help")
+			fixed_sound = true
+		elseif sound_name == "x01a_any_3p" and not fixed_sound and not self._prefix == "l4n_" then
+			sound_name = "x02a_any_3p"
+			--log("fuckinghell")
 		end
 	end
 	
@@ -243,4 +246,24 @@ Hooks:PostHook(CopSound, "say", "vox_say", function(self, sound_name, sync, skip
 		end
 	end
 
-end)
+	local event_id = nil
+
+	if type(full_sound) == "number" then
+		event_id = full_sound
+		full_sound = nil
+	end
+
+	if sync then
+		event_id = event_id or SoundDevice:string_to_id(full_sound)
+
+		self._unit:network():send("say", event_id)
+	end
+
+	self._last_speech = self:_play(full_sound or event_id)
+
+	if not self._last_speech then
+		return
+	end
+
+	self._speak_expire_t = TimerManager:game():time() + 2
+end

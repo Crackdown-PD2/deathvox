@@ -56,7 +56,8 @@ function CharacterTweakData:_create_table_structure()
 		"deathvox_cop_smg",
 		"deathvox_guard_pistol",
 		"deathvox_grenadier",
-		"deathvox_sniper"
+		"deathvox_sniper",
+		"flamethrower"
 	}
 	self.weap_unit_names = {
 		Idstring("units/payday2/weapons/wpn_npc_beretta92/wpn_npc_beretta92"),
@@ -105,7 +106,8 @@ function CharacterTweakData:_create_table_structure()
 		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_mp5/wpn_npc_mp5"),
 		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_npc_beretta92/wpn_npc_beretta92"),
 		Idstring("units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_grenadier"),
-		Idstring("units/payday2/weapons/wpn_npc_sniper/wpn_npc_sniper")	
+		Idstring("units/payday2/weapons/wpn_npc_sniper/wpn_npc_sniper"),
+		Idstring("units/pd2_dlc_pent/weapons/wpn_npc_flamethrower/wpn_npc_flamethrower")
 	}
 end
 
@@ -3183,6 +3185,7 @@ function CharacterTweakData:_init_deathvox(presets)
 
 	self.deathvox_tank = deep_clone(self.tank)
 	--self.deathvox_tank.tags = {"tank"} -- commented out as it was actually breaking the tags
+	self.deathvox_tank.kill_taunt = "post_kill_taunt"
 	self.deathvox_tank.chatter = presets.enemy_chatter.bulldozer
 	self.deathvox_tank.detection = presets.detection.deathvox
 	self.deathvox_tank.ignore_medic_revive_animation = false  -- revive animation.

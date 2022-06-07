@@ -1,21 +1,5 @@
-require("lib/units/enemies/cop/logics/CopLogicBase")
-require("lib/units/enemies/cop/logics/CopLogicInactive")
-require("lib/units/enemies/cop/logics/CopLogicIdle")
-require("lib/units/enemies/cop/logics/CopLogicAttack")
-require("lib/units/enemies/cop/logics/CopLogicIntimidated")
-require("lib/units/enemies/cop/logics/CopLogicTravel")
-require("lib/units/enemies/cop/logics/CopLogicArrest")
-require("lib/units/enemies/cop/logics/CopLogicGuard")
-require("lib/units/enemies/cop/logics/CopLogicFlee")
-require("lib/units/enemies/cop/logics/CopLogicSniper")
-require("lib/units/enemies/cop/logics/CopLogicTrade")
-require("lib/units/enemies/cop/logics/CopLogicPhalanxMinion")
-require("lib/units/enemies/cop/logics/CopLogicPhalanxVip")
-require("lib/units/enemies/tank/logics/TankCopLogicAttack")
-require("lib/units/enemies/shield/logics/ShieldLogicAttack")
-require("lib/units/enemies/spooc/logics/SpoocLogicIdle")
-require("lib/units/enemies/spooc/logics/SpoocLogicAttack")
-require("lib/units/enemies/taser/logics/TaserLogicAttack")
+local mvec3_cpy = mvector3.copy
+
 local old_init = CopBrain.post_init
 local logic_variants = {
 	security = {
@@ -42,7 +26,6 @@ function CopBrain:post_init()
 	CopBrain._logic_variants.deathvox_heavyar = clone(security_variant)
 	CopBrain._logic_variants.deathvox_lightar = clone(security_variant)
 	CopBrain._logic_variants.deathvox_medic = clone(security_variant)
-	CopBrain._logic_variants.deathvox_medic.attack = MedicLogicAttack
 	CopBrain._logic_variants.deathvox_guard = clone(security_variant)
 	CopBrain._logic_variants.deathvox_gman = clone(security_variant)
 	CopBrain._logic_variants.deathvox_lightshot = clone(security_variant)
@@ -703,6 +686,16 @@ function CopBrain:clbk_pathing_results(search_id, path)
 	self:_add_pathing_result(search_id, path)
 end
 
+function CopBrain:_add_pathing_result(search_id, path)
+	self._logic_data.active_searches[search_id] = nil
+	self._logic_data.pathing_results = self._logic_data.pathing_results or {}
+	self._logic_data.pathing_results[search_id] = path or "failed"
+	
+	if path and self._current_logic._pathing_complete_clbk then
+		self._current_logic._pathing_complete_clbk(self._logic_data)
+	end
+end
+
 function CopBrain:abort_detailed_pathing(search_id)
 	if not self._logic_data.active_searches[search_id] then
 		return
@@ -811,4 +804,152 @@ function CopBrain:on_suppressed(state)
 			end
 		end
 	end
+end
+
+function CopBrain:search_for_path_to_unit(search_id, other_unit, access_neg)
+	local enemy_tracker = other_unit:movement():nav_tracker()
+	local pos_to = enemy_tracker:field_position()
+	local params = {
+		tracker_from = self._unit:movement():nav_tracker(),
+		tracker_to = enemy_tracker,
+		result_clbk = callback(self, self, "clbk_pathing_results", search_id),
+		id = search_id,
+		access_pos = self._SO_access,
+		access_neg = access_neg
+	}
+	params.prio = self:get_pathing_prio(self._logic_data)
+	
+	if CopLogicTravel._check_path_is_straight_line(params.tracker_from:field_position(), pos_to, self._logic_data) then
+		local path = {
+			mvec3_cpy(params.tracker_from:field_position()),
+			mvec3_cpy(pos_to)
+		}
+		self:clbk_pathing_results(search_id, path)
+	else
+		self._logic_data.active_searches[search_id] = true
+
+		managers.navigation:search_pos_to_pos(params)
+	end
+
+	return true
+end
+
+function CopBrain:search_for_path_to_cover(search_id, cover, offset_pos, access_neg)
+	local params = {
+		tracker_from = self._unit:movement():nav_tracker(),
+		tracker_to = cover[3],
+		result_clbk = callback(self, self, "clbk_pathing_results", search_id),
+		id = search_id,
+		access_pos = self._SO_access,
+		access_neg = access_neg
+	}
+	params.prio = self:get_pathing_prio(self._logic_data)
+	
+	if CopLogicTravel._check_path_is_straight_line(params.tracker_from:field_position(), cover[3]:field_position(), self._logic_data) then
+		local path = {
+			mvec3_cpy(params.tracker_from:field_position()),
+			mvec3_cpy(cover[3]:field_position())
+		}
+	
+		self:clbk_pathing_results(search_id, path)
+	else
+		self._logic_data.active_searches[search_id] = true
+
+		managers.navigation:search_pos_to_pos(params)
+	end
+
+	return true
+end
+
+function CopBrain:search_for_path(search_id, to_pos, prio, access_neg, nav_segs)
+	local params = {
+		tracker_from = self._unit:movement():nav_tracker(),
+		pos_to = to_pos,
+		result_clbk = callback(self, self, "clbk_pathing_results", search_id),
+		id = search_id,
+		prio = prio,
+		access_pos = self._SO_access,
+		access_neg = access_neg,
+		nav_segs = nav_segs
+	}
+	params.prio = params.prio or self:get_pathing_prio(self._logic_data)
+	
+	if CopLogicTravel._check_path_is_straight_line(params.tracker_from:field_position(), to_pos, self._logic_data) then
+		local path = {
+			mvec3_cpy(params.tracker_from:field_position()),
+			mvec3_cpy(to_pos)
+		}
+		
+		self:clbk_pathing_results(search_id, path)
+	else
+		self._logic_data.active_searches[search_id] = true
+
+		managers.navigation:search_pos_to_pos(params)
+	end
+
+	return true
+end
+
+function CopBrain:search_for_path_from_pos(search_id, from_pos, to_pos, prio, access_neg, nav_segs)
+	local params = {
+		pos_from = from_pos,
+		pos_to = to_pos,
+		result_clbk = callback(self, self, "clbk_pathing_results", search_id),
+		id = search_id,
+		prio = prio,
+		access_pos = self._SO_access,
+		access_neg = access_neg,
+		nav_segs = nav_segs
+	}
+	params.prio = params.prio or self:get_pathing_prio(self._logic_data)
+	
+	if CopLogicTravel._check_path_is_straight_line(from_pos, to_pos, self._logic_data) then
+		local path = {
+			mvec3_cpy(from_pos),
+			mvec3_cpy(pos_to)
+		}
+	
+		self:clbk_pathing_results(search_id, path)
+	else
+		self._logic_data.active_searches[search_id] = true
+
+		managers.navigation:search_pos_to_pos(params)
+	end
+
+	return true
+end
+
+function CopBrain:get_pathing_prio(data)
+	local prio = nil
+	local objective = data.objective
+
+	if objective then
+		prio = 0 --disable if it ends up hindering performance (since it makes the search faster, but without being prioritized over the other ones below)
+
+		if objective.type == "phalanx" then
+			prio = 4
+		elseif objective.follow_unit then
+			if objective.follow_unit:base().is_local_player or objective.follow_unit:base().is_husk_player or managers.groupai:state():is_unit_team_AI(objective.follow_unit) then
+				prio = 4
+			end
+		elseif self._logic_data.name == "attack" then
+			prio = 1
+		end
+	end
+
+	if data.is_converted or data.unit:in_slot(16) or data.internal_data.criminal then
+		prio = prio or 0
+
+		prio = prio + 3
+	elseif data.team.id == tweak_data.levels:get_default_team_ID("player") then
+		prio = prio or 0
+
+		prio = prio + 2
+	elseif data.important then
+		prio = prio or 0
+
+		prio = prio + 1
+	end
+
+	return prio
 end
