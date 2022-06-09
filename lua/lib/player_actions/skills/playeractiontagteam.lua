@@ -8,7 +8,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			local health_regen_rate = pm:upgrade_value("player","tag_team_health_regen",0)
 			
 			local duration = base_values.duration + pm:upgrade_value("player","tag_team_duration_increase",0)
-			local cooldown_drain = pm:upgrade_value("player", "tag_team_cooldown_drain",false)
+			local cooldown_drain = pm:upgrade_value("player", "tag_team_cooldown_drain",0)
 			local move_speed_bonus = pm:upgrade_value("player","tag_team_movement_speed_bonus",0)
 			local damage_resistance_bonus = pm:upgrade_value("player","tag_team_damage_resistance",0)
 			local timer = TimerManager:game()
@@ -17,7 +17,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			
 			
 			local function on_hit_cb(damage_info)
-				if cooldown_drain then 
+				if cooldown_drain ~= 0 then 
 					local was_killed = damage_info.result.type == "death"
 					local valid_player = damage_info.attacker_unit == owner or damage_info.attacker_unit == tagged
 
