@@ -1306,8 +1306,18 @@ function CopActionWalk:update(t)
 			face_fwd = common_data.fwd
 		else
 			local att_pos = self._attention_pos
+			local can_look = true
+			local needs_aim = managers.groupai:state():enemy_weapons_hot()
 
-			if att_pos then --prioritize facing the current attention
+			if needs_aim then
+				local shoot_action = self._unit:movement()._active_actions[3]
+
+				if not shoot_action or type(shoot_action) == "boolean" or not shoot_action._mod_enable_t then
+					can_look = nil
+				end
+			end
+
+			if att_pos and can_look then --prioritize facing the current attention
 				face_fwd = att_pos - cur_pos
 
 				turning_to_face_attention = true

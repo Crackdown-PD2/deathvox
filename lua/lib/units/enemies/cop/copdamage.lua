@@ -3829,6 +3829,40 @@ if deathvox:IsTotalCrackdownEnabled() then
 			self._health_regen_clbk_id = nil
 		end
 	end
+	
+	function CopDamage:increase_dmg_clbk()
+		local queued = nil
+	
+		if self._cur_increase < tweak_data.upgrades._joker_dmg_increase_data.increase_max then
+			if self._unit:inventory():equipped_unit() then
+				local increase_data = tweak_data.upgrades._joker_dmg_increase_data
+				self._cur_increase = self._cur_increase + increase_data.increase_per_t
+				local increase_mul = 1 + increase_data.increase_per_t
+				
+				self._unit:inventory():equipped_unit():base():add_damage_multiplier(increase_mul)
+
+				managers.enemy:add_delayed_clbk(self._dmg_increase_clbk_id, callback(self, self, "increase_dmg_clbk"), TimerManager:game():time() + 30)
+				
+				queued = true
+			end
+		end
+		
+		if not queued then
+			self._dmg_increase_clbk_id = nil
+		end
+	end
+	
+	function CopDamage:begin_increase_dmg_clbks()
+		self._cur_increase = 0
+		self._dmg_increase_clbk_id = "dmg_increase" .. tostring_g(self._unit:key())
+		
+		managers.enemy:add_delayed_clbk(self._dmg_increase_clbk_id, callback(self, self, "increase_dmg_clbk"), TimerManager:game():time() + 30)
+	end
+	
+	function CopDamage:stop_increase_dmg_clbks()
+		managers.enemy:remove_delayed_clbk(self._dmg_increase_clbk_id)
+		self._dmg_increase_clbk_id = nil
+	end
 
 	function CopDamage:clbk_regen()
 		local init_health = self._HEALTH_INIT
@@ -3864,6 +3898,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 
 		self:set_health_regen()
+		self:stop_increase_dmg_clbks()
 	end
 else
 	local destroy_original = CopDamage.destroy

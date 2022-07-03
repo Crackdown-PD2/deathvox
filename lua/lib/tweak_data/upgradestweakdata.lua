@@ -509,14 +509,14 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		--Chief
 		
 		self.values.player.passive_convert_enemies_health_multiplier = {
-			0.5,
-			0.2
+			0.2,
+			0.1
 		}
 		self.values.player.convert_enemies_interaction_speed_multiplier = {
 			0.1 --90% faster; modified vanilla upgrade
 		}
 		self.values.friendship_collar.quantity = {
-			3
+			6
 		}
 		self.definitions.friendship_collar_quantity = {
 			name = "menu_protect_and_serve",
@@ -632,6 +632,68 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "convert_enemies_tackle_specials",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.convert_enemies_range_bonus = {
+			2
+		}
+		self.definitions.player_convert_enemies_range_bonus = {
+			name = "menu_order_through_law",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_range_bonus",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.convert_enemies_always_stagger = {
+			true
+		}
+		self.definitions.player_convert_enemies_always_stagger = {
+			name = "menu_bleh",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_always_stagger",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.convert_enemy_instant = {
+			true
+		}
+		self.definitions.player_convert_enemy_instant = {
+			name = "menu_maintaining_the_peace",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemy_instant",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self._joker_dmg_increase_data = {
+			increase_max = 0.25,
+			increase_t = 30,
+			increase_per_t = 0.01
+		}
+		
+		self.values.player.convert_enemy_gains_dmg_over_t = {
+			true
+		}
+		self.definitions.player_convert_convert_enemy_gains_dmg_over_t = {
+			name = "menu_maintaining_the_peace",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemy_gains_dmg_over_t",
 				synced = true,
 				category = "player"
 			}

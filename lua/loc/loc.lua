@@ -275,17 +275,22 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 
 			--chief
 				menu_protect_and_serve = "Protect and Serve",
-				menu_protect_and_serve_desc = "BASIC: ##$basic##\nYou convert enemies into Jokers ##90%## faster.\n\nACE: ##$pro##\nIncreases your Friendship Collar supply to ##6##.",
-				menu_order_through_law = "Order through Law",
-				menu_order_through_law_desc = "BASIC: ##$basic##\nJokers no longer flinch from taking damage and cannot be knocked down.\n\nACE: ##$pro##\nJokers will melee enemies within range, dealing high damage and inflicting stagger.",
-				menu_justice_with_mercy = "Justice with Mercy",
-				menu_justice_with_mercy_desc = "BASIC: ##$basic##\nJokers gain ##Armor Piercing##.\n\nACE: ##$pro##\nJokers gain ##+90%## Accuracy.",
+				menu_protect_and_serve_desc = "BASIC: ##$basic##\nIf one of your Jokers is nearby and you are targeted by a Cloaker or shocked by a Taser, your Joker will tackle the Special Enemy and knock them down. This can only occur once every ##30## seconds.\n\nACE: ##$pro##\nIncreases your Friendship Collar supply to ##12##.",
+				
 				menu_standard_of_excellence = "Standard of Excellence",
-				menu_standard_of_excellence_desc = "BASIC: ##$basic##\nIncreases Jokers' Damage Resistance from 50% to ##80%##.\n\nACE: ##$pro##\nJokers regenerate ##2.5%## of their Maximum Health per second.",
+				menu_standard_of_excellence_desc = "BASIC: ##$basic##\nJokers regenerate ##2.5%## of their Maximum Health per second and their Damage Resistance increases from ##80%## to ##90%##.\n\nACE: ##$pro##\nJokers no longer flinch from taking damage and cannot be knocked down.",
+				
 				menu_maintaining_the_peace = "Maintaining the Peace",
-				menu_maintaining_the_peace_desc = "BASIC: ##$basic##\nYou automatically mark Special Enemies by ADSing at them.\nYour Jokers will focus attacks at Marked enemies that you ADS at.\n\nACE: ##$pro##\nYour Jokers deal ##+25%## Damage to Marked enemies.",
+				menu_maintaining_the_peace_desc = "BASIC: ##$basic##\nShouting at a Special Enemy causes your Jokers to focus them as a priority target.\n\nACE: ##$pro##\nIf you have an open Joker slot, shouting at a Standard Enemy will force them to instantly surrender. You can only have ##one## instantly surrendered enemy at a time.",
+				
+				menu_order_through_law = "Order through Law",
+				menu_order_through_law_desc = "BASIC: ##$basic##\nJokers equipped with Shotguns will use melee attacks on enemies within range, dealing high damage and staggering Shields.\n\nACE: ##$pro##\nJokers equipped with Shotguns will knock down enemies with every shot.",
+				
+				menu_justice_with_mercy = "Justice with Mercy",
+				menu_justice_with_mercy_desc = "BASIC: ##$basic##\nJokers equipped with Assault Rifles gain ##+90%## Accuracy and ##Armor Piercing##.\n\nACE: ##$pro##\nJokers equipped with Assault Rifles gain ##+100%## range.",
+				
 				menu_service_above_self = "Service above Self",
-				menu_service_above_self_desc = "BASIC: ##$basic##\nIncreases the maximum number of Jokers you can have active at one time to ##2##.\n\nACE: ##$pro##\nIf one of your Jokers is nearby and you are targeted by a Cloaker or shocked by a Taser, your Joker will tackle the Special Enemy and knock them down. This can only occur once every ##30## seconds.",
+				menu_service_above_self_desc = "BASIC: ##$basic##\nIncreases the maximum number of Jokers you can have active at one time to ##2##.\n\nACE: ##$pro##\nEach Joker gains ##+1%## damage every 30 seconds they're active, up to ##+25%##.",
 			
 			--enforcer
 				menu_tender_meat = "Tender Meat",

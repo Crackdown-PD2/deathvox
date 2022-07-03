@@ -466,17 +466,17 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			}
 		})
 
-		--Chief (not yet implemented)
+		--Chief
 		replace_skill(tree_indices.chief,1,{ --Protect and Serve
 			{
 				upgrades = {
-					"player_convert_enemies_interaction_speed_multiplier"
+					"player_convert_enemies_tackle_specials"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					 "friendship_collar_quantity" --not yet connected
+					 "friendship_collar_quantity"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -487,56 +487,17 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				0
 			}
 		})
-		replace_skill(tree_indices.chief,2,{ --Order through Law
+		replace_skill(tree_indices.chief,2,{ --Standard of Excellence
 			{
 				upgrades = {
-					"player_convert_enemies_knockback_proof" --not yet connected
+					"player_passive_convert_enemies_health_multiplier_2",
+					"player_convert_enemies_health_regen"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"player_convert_enemies_melee" --not yet connected
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_order_through_law",
-			desc_id = "menu_order_through_law_desc",
-			icon_xy = {
-				4,
-				1
-			}
-		})
-		replace_skill(tree_indices.chief,3,{ --Justice with Mercy
-			{
-				upgrades = {
-					"player_convert_enemies_piercing_bullets" --not yet connected
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"player_convert_enemies_accuracy_bonus" --not yet connected
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_justice_with_mercy",
-			desc_id = "menu_justice_with_mercy_desc",
-			icon_xy = {
-				4,
-				2
-			}
-		})
-		replace_skill(tree_indices.chief,4,{ --Standard of Excellence
-			{
-				upgrades = {
-					"player_passive_convert_enemies_health_multiplier_2"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"player_convert_enemies_health_regen" --not yet connected
+					"player_convert_enemies_knockback_proof"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -547,17 +508,16 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				3
 			}
 		})
-		replace_skill(tree_indices.chief,5,{ --Maintaining the Peace
+		replace_skill(tree_indices.chief,3,{ --Maintaining the Peace
 			{
 				upgrades = {
-					"player_convert_enemies_target_marked", --not yet connected
-					"weapon_steelsight_highlight_specials"
+					"player_convert_enemies_target_marked"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"player_convert_enemies_marked_damage_bonus" --not yet connected
+					"player_convert_enemy_instant"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -568,6 +528,48 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				4
 			}
 		})
+		replace_skill(tree_indices.chief,4,{ --Order through Law
+			{
+				upgrades = {
+					"player_convert_enemies_melee"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_convert_enemies_always_stagger"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_order_through_law",
+			desc_id = "menu_order_through_law_desc",
+			icon_xy = {
+				4,
+				1
+			}
+		})
+		replace_skill(tree_indices.chief,5,{ --Justice with Mercy
+			{
+				upgrades = {
+					"player_convert_enemies_piercing_bullets",
+					"player_convert_enemies_accuracy_bonus"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_convert_enemies_range_bonus"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_justice_with_mercy",
+			desc_id = "menu_justice_with_mercy_desc",
+			icon_xy = {
+				4,
+				2
+			}
+		})
+		
 		replace_skill(tree_indices.chief,6,{ --Service above Self
 			{
 				upgrades = {
@@ -578,7 +580,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			},
 			{
 				upgrades = {
-					"player_convert_enemies_tackle_specials" --not yet connected
+					"player_convert_convert_enemy_gains_dmg_over_t"
 				},
 				cost = self.costs.hightierpro
 			},

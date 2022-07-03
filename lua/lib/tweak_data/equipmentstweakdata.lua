@@ -29,7 +29,7 @@ if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		self.first_aid_kit.target_type = "teammates"
 		
 		self.sentry_gun_silent = {
-			deploy_time = 3,
+			deploy_time = 1,
 			deploy_distance = 150,
 			deploying_text_id = "hud_deploying_friendship_collar",
 			target_deploy_text = "hud_deploying_friendship_collar",
@@ -44,7 +44,7 @@ if deathvox and deathvox:IsTotalCrackdownEnabled() then
 			icon = "mugshot_cuffed",
 			description_id = "des_sentry_gun",
 			quantity = {
-				3
+				6
 			},
 --			upgrade_deploy_time_multiplier = {
 --				upgrade = "sentry_gun_deploy_time_multiplier",

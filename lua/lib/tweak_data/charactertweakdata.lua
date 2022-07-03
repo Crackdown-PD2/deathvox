@@ -1044,8 +1044,8 @@ function CharacterTweakData:_presets(tweak_data)
 		melee_speed = 1,
 		melee_dmg = 8,
 		melee_retry_delay = {
-		1,
-		2
+			1,
+			2
 		},
 		range = { --validated, unchanged, consider adjustment to increase engage range.
 			optimal = 2000,
