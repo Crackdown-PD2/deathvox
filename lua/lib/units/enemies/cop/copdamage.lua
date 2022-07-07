@@ -304,21 +304,36 @@ function CopDamage:_AI_comment_death(attacker, killed_unit, special_comment)
 	end
 end
 
-function CopDamage:roll_critical_hit(attack_data)
+function CopDamage:roll_critical_hit(attack_data,damage)
 	local damage = attack_data.damage
-	if attack_data.critical_hit then
-		--log("well, yes")
-	end
 	if not self:can_be_critical(attack_data) then
-		--log("but actually, no")
 		return false, damage
 	end
 
 	local critical_hits = self._char_tweak.critical_hits or {}
-	local critical_hit = attack_data.critical_hit or nil
+	local critical_hit = attack_data.critical_hit
+	if critical_hit == nil then 
+		--if the attack has not had its crit chance rolled already (eg. guaranteed crit from a skill), 
+		--then roll crit chance
+		local crit_chance = (critical_hits.base_chance or 0) + managers.player:critical_hit_chance() * (critical_hits.player_chance_multiplier or 1)
+		
+		if crit_chance > 0 then 
+			local critical_roll = math.rand(1)
+			critical_hit = critical_roll < crit_chance
+		end
+		
+	end	
 
 	if critical_hit then
-		damage = damage * managers.player:upgrade_value("player","critical_hit_multiplier",2)
+		local critical_damage_mul = critical_hits.damage_mul or self._char_tweak.headshot_dmg_mul
+		if critical_damage_mul then 
+			if deathvox:IsTotalCrackdownEnabled() then 
+				critical_damage_mul = critical_damage_mul * managers.player:upgrade_value("player","critical_hit_multiplier",2)
+			end
+			damage = damage * critical_damage_mul
+		else
+			damage = self._health * 10
+		end
 	end
 
 	return critical_hit, damage
@@ -462,7 +477,7 @@ function CopDamage:damage_explosion(attack_data)
 	local is_civilian = CopDamage.is_civilian(self._unit:base()._tweak_table)
 	local damage = attack_data.damage
 	
-	local critical_hit, crit_damage = self:roll_critical_hit(attack_data)
+	local critical_hit, crit_damage = self:roll_critical_hit(attack_data,damage)
 	if critical_hit then
 		managers.hud:on_crit_confirmed()
 		damage = crit_damage
@@ -989,7 +1004,7 @@ function CopDamage:damage_bullet(attack_data)
 
 		headshot_mul_addend = managers.player:upgrade_value(weapon_class, "headshot_mul_addend", 0)
 
-		local critical_hit, crit_damage = self:roll_critical_hit(attack_data)
+		local critical_hit, crit_damage = self:roll_critical_hit(attack_data,damage)
 
 		if critical_hit then
 			damage = crit_damage
@@ -2074,7 +2089,7 @@ function CopDamage:damage_melee(attack_data)
 	local can_headshot = false
 	if attacker_is_main_player then
 		can_headshot = managers.player:has_category_upgrade("class_melee","can_headshot") and not self._char_tweak.ignore_headshot
-		local critical_hit, crit_damage = self:roll_critical_hit(attack_data)
+		local critical_hit, crit_damage = self:roll_critical_hit(attack_data,damage)
 
 		if critical_hit then
 			damage = crit_damage
