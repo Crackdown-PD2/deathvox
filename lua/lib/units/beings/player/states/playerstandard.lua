@@ -1115,6 +1115,7 @@ local melee_vars = {
 	"player_melee",
 	"player_melee_var2"
 }
+--not to be confused with _do_action_melee()
 function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_entry, hand_id, force_max_charge)
 	melee_entry = melee_entry or managers.blackmarket:equipped_melee_weapon()
 	local melee_td = tweak_data.blackmarket.melee_weapons[melee_entry]
@@ -1279,7 +1280,7 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 
 			local special_weapon = melee_td.special_weapon
 			local action_data = {
-				variant = "melee",
+				variant = "melee"
 			}
 			if melee_td.stats.knockback_tier then 
 				local knockback_tier = melee_td.stats.knockback_tier
@@ -1348,6 +1349,31 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			end
 			
 --			Hooks:Call("OnPlayerMeleeHit",character_unit,col_ray,action_data,defense_data,t,lethal_hit)
+
+			if not deathvox:IsTotalCrackdownEnabled() then 
+				if tweak_data.blackmarket.melee_weapons[melee_entry].tase_data and character_unit:character_damage().damage_tase then
+					local action_data = {
+						variant = tweak_data.blackmarket.melee_weapons[melee_entry].tase_data.tase_strength,
+						damage = 0,
+						attacker_unit = self._unit,
+						col_ray = col_ray
+					}
+
+					character_unit:character_damage():damage_tase(action_data)
+				end
+
+				if tweak_data.blackmarket.melee_weapons[melee_entry].fire_dot_data and character_unit:character_damage().damage_fire then
+					local action_data = {
+						variant = "fire",
+						damage = 0,
+						attacker_unit = self._unit,
+						col_ray = col_ray,
+						fire_dot_data = tweak_data.blackmarket.melee_weapons[melee_entry].fire_dot_data
+					}
+
+					character_unit:character_damage():damage_fire(action_data)
+				end
+			end
 
 			self:_check_melee_dot_damage(col_ray, defense_data, melee_entry)
 			self:_perform_sync_melee_damage(hit_unit, col_ray, action_data.damage)
@@ -1528,11 +1554,6 @@ function PlayerStandard:_check_action_melee(t, input)
 end
 
 if deathvox:IsTotalCrackdownEnabled() then 
-
-	local melee_vars = {
-		"player_melee",
-		"player_melee_var2"
-	}
 
 	function PlayerStandard:_do_action_melee(t, input, skip_damage, ignore_lunge)
 		self._state_data.meleeing = nil
