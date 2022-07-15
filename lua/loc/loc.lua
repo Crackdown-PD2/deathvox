@@ -340,7 +340,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_spray_and_pray = "Spray & Pray",
 				menu_spray_and_pray_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons gain a ##10%## chance to ##Critical Hit and deal 2x damage##.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons now pierce Body Armor.",
 				menu_money_shot = "Money Shot",
-				menu_money_shot_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons gain a special overpressure round at the end of every fully loaded Magazine that has ##Armor Piercing##, ##Shield Piercing##, and ##Body Penetrating## properties.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons gain ##+50%## faster Reload Speed when their Magazine is empty.",
+				menu_money_shot_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons gain a special overpressure round at the end of every fully loaded Magazine that is guaranteed to be a ##Critical Hit## and increases the Reload Speed of empty Magazines by ##+50%##.\n\nACE: ##$pro##\nThe overpressure round gains ##Armor Piercing, Shield Piercing, and Body Piercing## properties.",
 				menu_shot_grouping = "Shot Grouping",
 				menu_shot_grouping_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons ADS ##+90%## faster and gain ##+40## Accuracy and Stability while ADSing.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons gain ##+1%## Critical Hit chance for ##4## seconds when hitting an enemy with a Headshot, stacking up to ##+10%##.",
 				menu_prayers_answered = "Prayers Answered",

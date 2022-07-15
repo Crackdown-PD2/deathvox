@@ -989,13 +989,14 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.gunner,2,{ --Money Shot
 			{
 				upgrades = {
-					"class_rapidfire_moneyshot"
+					"class_rapidfire_moneyshot",
+					"class_rapidfire_empty_magazine_reload_speed_bonus"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"class_rapidfire_empty_magazine_reload_speed_bonus"
+					"class_rapidfire_moneyshot_pierce"
 				},
 				cost = self.costs.hightierpro
 			},

@@ -103,21 +103,19 @@ end
 --custom functions added in cd
 function RaycastWeaponBase:can_shoot_through_walls() --return true if raycasts can overpenetrate thin walls (40cm)
 	local penetration_distance = 40
-	local can_shoot_through = self._can_shoot_through_walls or self._money_shot_ready
+	local can_shoot_through = self._can_shoot_through_walls or self._money_shot_pierce
 	
 	return can_shoot_through,penetration_distance
 end
 function RaycastWeaponBase:can_shoot_through_shields() --return true if raycasts can overpenetrate shields
-	local can_shoot_through = self._can_shoot_through_shield or self._money_shot_ready
+	local can_shoot_through = self._can_shoot_through_shield or self._money_shot_pierce
 	return can_shoot_through
 end
 
 function RaycastWeaponBase:can_shoot_through_enemies() --return true if raycasts can overpenetrate enemies
-	local can_shoot_through = self._can_shoot_through_enemy or self._money_shot_ready
+	local can_shoot_through = self._can_shoot_through_enemy or self._money_shot_pierce
 	return can_shoot_through
 end
-
-
 
 function RaycastWeaponBase:check_autoaim(from_pos, direction, max_dist, use_aim_assist, autohit_override_data)
 	local autohit = use_aim_assist and self._aim_assist_data or self._autohit_data
@@ -489,11 +487,9 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 	
 	local do_money_shot
 	if is_player and pm:has_category_upgrade(self:get_weapon_class(),"money_shot") then
-		if mag == 1 and self._reloaded_to_full then
-			
-			do_money_shot = true
-			
+		if mag == 1 then
 			self._money_shot_ready = true
+			self._money_shot_pierce = pm:has_category_upgrade(self:get_weapon_class(),"money_shot_pierce")
 			
 			local money_trail = Idstring("effects/particles/weapons/trail_dv_sniper")
 			local money_muzzle = Idstring("effects/particles/weapons/money_muzzle_fps")
@@ -513,6 +509,7 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 --			self:play_sound("c4_explode_metal")
 		else
 			self._money_shot_ready = false
+			self._money_shot_pierce = false
 			
 			self._trail_effect_table = {
 				effect = self.TRAIL_EFFECT,
@@ -618,7 +615,7 @@ function RaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul
 
 	for _, hit in ipairs(ray_hits) do
 		damage = self:get_damage_falloff(damage, hit, user_unit)
-		hit_result = self._bullet_class:on_collision(hit, self._unit, user_unit, damage)
+		hit_result = self._bullet_class:on_collision(hit, self._unit, user_unit, damage, nil, nil, nil, self._money_shot_ready)
 
 		if hit_result and hit_result.type == "death" then
 			local unit_type = hit.unit:base() and hit.unit:base()._tweak_table
@@ -1123,7 +1120,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 				end
 			end
 
-			pierce_armor = pierce_armor or weapon_base and weapon_base._use_armor_piercing
+			pierce_armor = pierce_armor or weapon_base and weapon_base._use_armor_piercing or weapon_base and weapon_base._money_shot_pierce
 
 			local knock_down = weapon_base and weapon_base._knock_down and weapon_base._knock_down > 0 and math.random() < weapon_base._knock_down
 			result = self:give_impact_damage(col_ray, weap_unit, user_unit, damage, pierce_armor, false, knock_down, weapon_base._stagger, weapon_base._variant, critical_hit)

@@ -1160,6 +1160,20 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			0.5
 		}
 		
+		self.values.class_rapidfire.money_shot_pierce = {
+			true
+		}
+		
+		self.definitions.class_rapidfire_moneyshot_pierce = {
+			name_id = "menu_moneyshot_rapid_fire_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "money_shot_pierce",
+				category = "class_rapidfire"
+			}
+		}
+		
 		self.definitions.class_rapidfire_moneyshot = {
 			name_id = "menu_moneyshot_rapid_fire_basic",
 			category = "feature",
