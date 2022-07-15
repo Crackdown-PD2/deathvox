@@ -1801,7 +1801,9 @@ if TCDEnabled then
 		damage = damage * (dmg_mul or 1)
 		damage = damage * managers.player:temporary_upgrade_value("temporary", "combat_medic_damage_multiplier", 1)
 		if self:is_weapon_class("class_precision") then 
-			damage = damage + math.min(point_and_click_data[1] * managers.player:get_property("current_point_and_click_stacks",0),point_and_click_data[2])
+			local mul = math.max(1, math.min(point_and_click_data[1] * managers.player:get_property("current_point_and_click_stacks",0), point_and_click_data[2]))
+			
+			damage = damage * mul
 		elseif self:is_weapon_class("class_shotgun") then 
 			if self:fire_mode() == "auto" and self:clip_full() then 
 				damage = damage * (1 + managers.player:upgrade_value("class_shotgun","heartbreaker_damage",0))

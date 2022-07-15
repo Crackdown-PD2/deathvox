@@ -263,24 +263,24 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				1
 			}
 		})
-		replace_skill(tree_indices.marksman,3,{ --Investment Returns
+		replace_skill(tree_indices.marksman,3,{ --Potential Exponential
 			{
 				upgrades = {
-					"player_investment_returns_basic"
+					"player_point_and_click_never_miss"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"player_investment_returns_aced"
+					"player_point_and_click_deadshot_mul"
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_investment_returns",
-			desc_id = "menu_investment_returns_desc",
+			name_id = "menu_potential_exponential",
+			desc_id = "menu_potential_exponential_desc",
 			icon_xy = {
 				2,
-				2
+				4
 			}
 		})
 		replace_skill(tree_indices.marksman,4,{ --This Machine
@@ -303,27 +303,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				3
 			}
 		})
-		replace_skill(tree_indices.marksman,5,{ --Mulligan
-			{
-				upgrades = {
-					"player_mulligan_basic"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"player_mulligan_aced"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_mulligan",
-			desc_id = "menu_mulligan_desc",
-			icon_xy = {
-				2,
-				4
-			}
-		})
-		replace_skill(tree_indices.marksman,6,{ --Magic Bullet
+		
+		replace_skill(tree_indices.marksman,5,{ --Magic Bullet
 			{
 				upgrades = {
 					"weapon_magic_bullet_basic"
@@ -341,6 +322,26 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			icon_xy = {
 				2,
 				5
+			}
+		})
+		replace_skill(tree_indices.marksman,6,{ --Investment Returns
+			{
+				upgrades = {
+					"player_point_and_click_stack_from_headshot_kill"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"weapon_point_and_click_damage_bonus_2"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_investment_returns",
+			desc_id = "menu_investment_returns_desc",
+			icon_xy = {
+				2,
+				2
 			}
 		})
 		

@@ -247,17 +247,25 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				
 			--marksman
 				menu_point_and_click = "Point and Click",
-				menu_point_and_click_desc = "BASIC: ##$basic##\n$ICN_PRE Precision Weapons gain ##+1%## Damage per hit, up to ##500%##. All stacks are lost upon missing.\n\nACE: ##$pro##\n$ICN_PRE Precision Weapons ADS ##90%## faster.",
+				menu_point_and_click_desc = "BASIC: ##$basic##\n$ICN_PRE Precision Weapons gain ##+0.5%## Damage per kill, up to ##250%##. All stacks are lost upon missing.\n\nACE: ##$pro##\n$ICN_PRE Precision Weapons ADS ##90%## faster.",
 				menu_tap_the_trigger = "Tap the Trigger",
 				menu_tap_the_trigger_desc = "BASIC: ##$basic##\n$ICN_PRE Precision Weapons also gain ##+1%## Rate of Fire per stack of Point and Click, up to ##+50%##.\n\nACE: ##$pro##\nMaximum Rate of Fire Bonus increased to ##+100%##.",
-				menu_investment_returns = "Investment Returns",
-				menu_investment_returns_desc = "BASIC: ##$basic##\nYou gain ##an extra stack## of Point and Click when you kill an enemy.\n\nACE: ##$pro##\nYou gain ##another extra stack## of Point and Click when you kill an enemy with a Headshot.",
+				menu_potential_exponential = "Potential Exponential",
+				menu_potential_exponential_desc = "BASIC: ##$basic##\nYou generate an additional stack of Point And Click per kill if you haven't missed a shot between kills.\n\nACE: ##$pro##\nThe additional stack of Point And Click is multiplied by how many kills you've made without missing.",
+				
 				menu_this_machine = "This Machine",
 				menu_this_machine_desc = "BASIC: ##$basic##\n$ICN_PRE Precision Weapons also gain ##+0.5%## Reload Speed per stack of Point and Click, up to ##+25%##.\n\nACE: ##$pro##\nMaximum Reload Speed Bonus increased to ##+50%##.",
+				
+				menu_magic_bullet = "Magic Bullet",
+				menu_magic_bullet_desc = "BASIC: ##$basic##\nKilling an enemy with a Headshot from a $ICN_PRE Precision Weapon adds ##1## bullet to your reserve ammunition. This effect does not activate for Bows or Crossbows.\n\nACE: ##$pro##\nThe bullet is added to your current Magazine instead of your reserves.",
+				
+				menu_investment_returns = "Investment Returns",
+				menu_investment_returns_desc = "BASIC: ##$basic##\nHeadshots with $ICN_PRE Precision Weapons generate an additional stack of Point And Click.\n\nACE: ##$pro##\nPoint And Click's maximum bonus increases to ##+500%##.",
+			
+				--unused--
 				menu_mulligan = "Mulligan",
 				menu_mulligan_desc = "BASIC: ##$basic##\nAfter missing, you gain a ##1-second## grace period where you still benefit from your Point and Click stacks. Killing an enemy during the grace period will prevent your stacks from being lost.\n\nACE: ##$pro##\nThe grace period is extended to ##1.5 seconds##.",
-				menu_magic_bullet = "Magic Bullet",
-				menu_magic_bullet_desc = "BASIC: ##$basic##\nKilling an enemy with a Headshot from a $ICN_PRE Precision Weapon adds ##1## bullet to your reserve ammunition.\n\nACE: ##$pro##\nThe bullet is added to your current Magazine instead of your reserves.",
+				--unused--
 			
 			--medic
 				menu_doctors_orders = "Doctor's Orders",

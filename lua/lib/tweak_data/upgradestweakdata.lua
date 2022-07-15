@@ -257,8 +257,20 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "weapon"
 			}
 		}
+		self.definitions.weapon_point_and_click_damage_bonus_2 = {
+			name_id = "menu_weapon_point_and_click_damage_bonus",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "point_and_click_damage_bonus",
+				category = "weapon"
+			}
+		}
+		
+		--% bonus damage per stack, max bonus damage
 		self.values.weapon.point_and_click_damage_bonus = {
-			{0.01,5} --% bonus damage per stack, max bonus damage
+			{0.005, 2.5},
+			{0.005, 5},
 		}
 		
 		self.definitions.weapon_marksman_steelsight_speed_multiplier = {
@@ -298,7 +310,29 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			{0.01,1}
 		}
 		
-		self.definitions.player_investment_returns_basic = {
+		self.definitions.player_point_and_click_never_miss = {
+			name_id = "menu_point_and_click_never_miss",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "point_and_click_never_miss",
+				category = "player"
+			}
+		}
+		self.values.player.point_and_click_never_miss = {true}
+		
+		self.definitions.player_point_and_click_deadshot_mul = {
+			name_id = "menu_point_and_click_deadshot_mul",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "point_and_click_deadshot_mul",
+				category = "player"
+			}
+		}
+		self.values.player.point_and_click_deadshot_mul = {true}
+		
+		self.definitions.player_point_and_click_stack_from_kill = {
 			name_id = "menu_investment_returns_basic",
 			category = "feature",
 			upgrade = {
@@ -311,7 +345,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			1 --on kill
 		}
 		
-		self.definitions.player_investment_returns_aced = {
+		self.definitions.player_point_and_click_stack_from_headshot_kill = {
 			name_id = "menu_investment_returns_aced",
 			category = "feature",
 			upgrade = {
