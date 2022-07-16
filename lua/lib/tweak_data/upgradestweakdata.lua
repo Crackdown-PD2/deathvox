@@ -885,6 +885,20 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		self.values.class_shotgun.grand_brachial_bodyshots = {
+			true
+		}
+		self.definitions.class_shotgun_grand_brachial_bodyshots = {
+			name_id = "menu_grand_brachial_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "grand_brachial_bodyshots",
+				category = "class_shotgun"
+			}
+		}
+		
+		
 		
 		--Heavy
 		

@@ -1061,9 +1061,14 @@ function CopDamage:damage_bullet(attack_data)
 		end
 	end
 
-	if not head and attack_data.weapon_unit:base().get_add_head_shot_mul and not self._unit:base():has_tag("tank") then
+	if not head and attack_data.weapon_unit:base().get_add_head_shot_mul then
 		if self._char_tweak and self._char_tweak.headshot_dmg_mul and not self._char_tweak.ignore_headshot then
 			local special = self._unit:base():has_tag("special")
+			
+			if special then
+				special = self._unit:base():has_tag("tank") and "tank" or special
+			end
+			
 			local add_head_shot_mul = attack_data.weapon_unit:base():get_add_head_shot_mul(special)
 
 			if add_head_shot_mul then

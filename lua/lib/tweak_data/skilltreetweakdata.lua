@@ -697,13 +697,14 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.enforcer,6,{ --Shotmaker
 			{
 				upgrades = {
-					"class_shotgun_shotmaker_headshot_damage_bonus_1"
+					"class_shotgun_shotmaker_headshot_damage_bonus_1",
+					"class_shotgun_shotmaker_headshot_damage_bonus_2"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"class_shotgun_shotmaker_headshot_damage_bonus_2"
+					"class_shotgun_grand_brachial_bodyshots"
 				},
 				cost = self.costs.hightierpro
 			},

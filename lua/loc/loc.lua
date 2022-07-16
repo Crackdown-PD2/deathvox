@@ -311,8 +311,8 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_rolling_thunder_desc = "BASIC: ##$basic##\nIncreases the Magazine Size of Automatic $ICN_SHO Shotguns by ##50%##.\n\nACE: ##$pro##\nMagazine Size bonus increased to ##100%##.",
 				menu_point_blank = "Point Blank",
 				menu_point_blank_desc = "BASIC: ##$basic##\n$ICN_SHO Shotguns gain ##Armor Piercing##, ##Shield Piercing##, and ##Body Piercing## against enemies within ##3## meters.\n\nACE: ##$pro##\n$ICN_SHO Shotguns deal ##+100%## Damage against enemies within ##3## meters.",
-				menu_shotmaker = "Shotmaker",
-				menu_shotmaker_desc = "BASIC: ##$basic##\nIncreases $ICN_SHO Shotgun Headshot Damage by ##+50%##.\n\nACE: ##$pro##\n$ICN_SHO Shotgun Headshot Damage is increased by an additional ##+50%##, for a total of ##+100%##.",
+				menu_shotmaker = "Grand Brachial",
+				menu_shotmaker_desc = "BASIC: ##$basic##\nIncreases $ICN_SHO Shotguns deal ##+100%## Headshot damage.\n\nACE: ##$pro##\n$ICN_SHO Shotguns deal ##50%## of their Headshot Damage on Body Shots against ##Shields, Medics, Tasers, Grenadiers and Cloakers##.",
 				
 			--heavy
 				menu_collateral_damage = "Collateral Damage",
