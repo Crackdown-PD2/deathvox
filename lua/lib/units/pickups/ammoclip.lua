@@ -258,8 +258,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 				return
 			end
 
-			local nr_alive_players = managers.groupai:state():num_alive_players()
-			local add_ratio = 1 / nr_alive_players
+			local nr_alive_players = table.size(managers.groupai:state()._player_criminals)
+			local add_ratio = 1 / math.max(1,nr_alive_players)
 
 			local hud_manager = managers.hud
 			local hud_set_ammo_f = hud_manager.set_ammo_amount
