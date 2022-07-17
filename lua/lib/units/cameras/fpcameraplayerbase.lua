@@ -1,12 +1,10 @@
 function FPCameraPlayerBase:recoil_kick(up, down, left, right)
-
 	if managers.user:get_setting("staticrecoil") then
 		local v = math.lerp(up, down, math.random())
 		self._recoil_kick.accumulated = ((self._recoil_kick.accumulated or 0) + v)
 		local h = math.lerp(left, right, math.random())
 		self._recoil_kick.h.accumulated = ((self._recoil_kick.h.accumulated or 0) + h)
 	else
-	
 		local max_recoil = 10
 		local equipped_weapon = self._parent_unit:inventory():equipped_unit()
 
@@ -69,12 +67,6 @@ function FPCameraPlayerBase:_vertical_recoil_kick(t, dt)
 		local n = math.step(self._recoil_kick.current, self._recoil_kick.accumulated, 80 * dt)
 		r_value = n - self._recoil_kick.current
 		self._recoil_kick.current = n
-	elseif self._recoil_wait then
-		self._recoil_wait = self._recoil_wait - dt_with_mul
-
-		if self._recoil_wait < 0 then
-			self._recoil_wait = nil
-		end
 	elseif self._recoil_kick.to_reduce then
 		self._recoil_kick.current = nil
 		local n = math.lerp(self._recoil_kick.to_reduce, 0, 9 * dt_with_mul)
@@ -110,12 +102,6 @@ function FPCameraPlayerBase:_horizonatal_recoil_kick(t, dt)
 		local n = math.step(self._recoil_kick.h.current, self._recoil_kick.h.accumulated, 80 * dt_with_mul)
 		r_value = n - self._recoil_kick.h.current
 		self._recoil_kick.h.current = n
-	elseif self._recoil_wait then
-		self._recoil_wait = self._recoil_wait - dt
-
-		if self._recoil_wait < 0 then
-			self._recoil_wait = nil
-		end
 	elseif self._recoil_kick.h.to_reduce then
 		self._recoil_kick.h.current = nil
 		local n = math.lerp(self._recoil_kick.h.to_reduce, 0, 18 * dt_with_mul)

@@ -302,8 +302,12 @@ function ShieldLogicAttack._upd_enemy_detection(data, is_synchronous)
 
 	ShieldLogicAttack._upd_aim(data, my_data)
 
-	if my_data.optimal_pos and focus_enemy then
-		mvector3.set_z(my_data.optimal_pos, focus_enemy.m_pos.z)
+	if my_data.optimal_pos then
+		my_data.optimal_pos = managers.navigation:pad_out_position(my_data.optimal_pos, 4, data.char_tweak.wall_fwd_offset)
+	
+		if focus_enemy then
+			mvector3.set_z(my_data.optimal_pos, focus_enemy.m_pos.z)
+		end
 	end
 	
 	if not is_synchronous then

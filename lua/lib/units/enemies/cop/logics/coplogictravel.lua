@@ -2285,9 +2285,7 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index)
 				if new_occupation.cover then
 					to_pos = new_occupation.cover[1][1]
 
-					if data.char_tweak.wall_fwd_offset then
-						to_pos = CopLogicTravel.apply_wall_offset_to_cover(data, my_data, new_occupation.cover[1], data.char_tweak.wall_fwd_offset)
-					end
+					to_pos = managers.navigation:pad_out_position(to_pos, 4, data.char_tweak.wall_fwd_offset)
 
 					local new_cover = new_occupation.cover
 
@@ -2307,6 +2305,7 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index)
 
 						if not managers.navigation:is_pos_free(rsrv_desc) then
 							to_pos = CopLogicTravel._find_near_free_pos(to_pos, 700, nil, pos_rsrv_id)
+							to_pos = managers.navigation:pad_out_position(to_pos, 4, data.char_tweak.wall_fwd_offset)
 						end
 					end
 				end
@@ -2333,6 +2332,7 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index)
 
 					if not managers.navigation:is_pos_free(rsrv_desc) then
 						to_pos = CopLogicTravel._find_near_free_pos(to_pos, 700, nil, pos_rsrv_id)
+						to_pos = managers.navigation:pad_out_position(to_pos, 4, data.char_tweak.wall_fwd_offset)
 					end
 				end
 			end
@@ -2349,6 +2349,7 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index)
 
 			if not managers.navigation:is_pos_free(rsrv_desc) then
 				to_pos = CopLogicTravel._find_near_free_pos(to_pos, nil, nil, pos_rsrv_id)
+				to_pos = managers.navigation:pad_out_position(to_pos, 4, data.char_tweak.wall_fwd_offset)
 			end
 
 			wants_reservation = true
@@ -2374,9 +2375,7 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index)
 			--log("nice cock")
 			to_pos = cover[1]
 
-			if data.char_tweak.wall_fwd_offset then
-				to_pos = CopLogicTravel.apply_wall_offset_to_cover(data, my_data, cover, data.char_tweak.wall_fwd_offset)
-			end
+			to_pos = managers.navigation:pad_out_position(to_pos, 4, data.char_tweak.wall_fwd_offset)
 
 			managers.navigation:reserve_cover(cover, data.pos_rsrv_id)
 
@@ -2394,6 +2393,7 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index)
 
 			if not managers.navigation:is_pos_free(rsrv_desc) then
 				to_pos = CopLogicTravel._find_near_free_pos(to_pos, 700, nil, pos_rsrv_id)
+				to_pos = managers.navigation:pad_out_position(to_pos, 4, data.char_tweak.wall_fwd_offset)
 			end
 		end
 

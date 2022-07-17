@@ -655,6 +655,8 @@ function CopLogicAttack._upd_combat_movement(data)
 						my_data.charge_pos = CopLogicAttack._find_flank_pos(data, my_data, focus_enemy.nav_tracker, my_data.weapon_range.optimal) --charge to a position that would put the unit in a flanking position, not really a flanking path
 
 						if my_data.charge_pos then
+							my_data.charge_pos = managers.navigation:pad_out_position(my_data.charge_pos, 4, data.char_tweak.wall_fwd_offset)
+							
 							local my_pos = data.unit:movement():nav_tracker():field_position()
 							local unobstructed_line = CopLogicTravel._check_path_is_straight_line(my_pos, my_data.charge_pos, data)
 
@@ -705,6 +707,7 @@ function CopLogicAttack._upd_combat_movement(data)
 						--my_data.charge_pos = CopLogicTravel._get_pos_on_wall(focus_enemy.nav_tracker:field_position(), my_data.weapon_range.optimal, 45, nil, data.pos_rsrv_id)
 
 						if my_data.charge_pos then
+							my_data.charge_pos = managers.navigation:pad_out_position(my_data.charge_pos, 4, data.char_tweak.wall_fwd_offset)
 							local my_pos = data.unit:movement():nav_tracker():field_position()
 							local unobstructed_line = CopLogicTravel._check_path_is_straight_line(my_pos, my_data.charge_pos, data)
 
@@ -754,7 +757,7 @@ function CopLogicAttack._upd_combat_movement(data)
 					CopLogicAttack._cancel_cover_pathing(data, my_data)
 
 					local my_pos = data.unit:movement():nav_tracker():field_position()
-					local to_cover_pos = my_data.best_cover[1][1]
+					local to_cover_pos = best_cover[5] and best_cover[5] or best_cover[1][1]
 					local unobstructed_line = CopLogicTravel._check_path_is_straight_line(my_pos, to_cover_pos, data)
 
 					if unobstructed_line then
@@ -771,13 +774,13 @@ function CopLogicAttack._upd_combat_movement(data)
 					else
 						data.brain:add_pos_rsrv("path", {
 							radius = 60,
-							position = mvec3_cpy(my_data.best_cover[1][1])
+							position = mvec3_cpy(to_cover_pos)
 						})
 
 						my_data.cover_path_search_id = tostring(data.key) .. "cover"
 						my_data.processing_cover_path = best_cover
 
-						data.brain:search_for_path_to_cover(my_data.cover_path_search_id, best_cover[1])
+						data.brain:search_for_path_to_cover(my_data.cover_path_search_id, best_cover[1], best_cover[5])
 					end
 				end
 			end
@@ -844,6 +847,7 @@ function CopLogicAttack._chk_start_action_move_back(data, my_data, focus_enemy, 
 	local retreat_to = CopLogicAttack._find_retreat_position(data, from_pos, focus_enemy.m_pos, threat_head_pos, threat_tracker, max_walk_dis, vis_required, end_pose)
 
 	if retreat_to and mvec3_dis_sq(from_pos, retreat_to) > 10000 then
+		retreat_to = managers.navigation:pad_out_position(retreat_to, 4, data.char_tweak.wall_fwd_offset)
 		CopLogicAttack._cancel_cover_pathing(data, my_data)
 
 		local new_action_data = {
@@ -1478,11 +1482,10 @@ function CopLogicAttack._update_cover(data)
 
 						CopLogicAttack._set_best_cover(data, my_data, better_cover)
 
-						local offset_pos, yaw = CopLogicAttack._get_cover_offset_pos(data, better_cover, threat_pos)
+						local offset_pos = managers.navigation:pad_out_position(better_cover[1][1], 4, data.char_tweak.wall_fwd_offset)
 
 						if offset_pos then
 							better_cover[5] = offset_pos
-							better_cover[6] = yaw
 						end
 					end
 				end
@@ -1569,11 +1572,10 @@ function CopLogicAttack._update_cover(data)
 
 						CopLogicAttack._set_best_cover(data, my_data, better_cover)
 
-						local offset_pos, yaw = CopLogicAttack._get_cover_offset_pos(data, better_cover, threat_pos)
+						local offset_pos = managers.navigation:pad_out_position(better_cover[1][1], 4, data.char_tweak.wall_fwd_offset)
 
 						if offset_pos then
 							better_cover[5] = offset_pos
-							better_cover[6] = yaw
 						end
 						
 						flank_cover = nil

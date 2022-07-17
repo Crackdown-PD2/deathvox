@@ -769,3 +769,51 @@ function NavigationManager:find_cover_in_nav_seg_3(nav_seg_id, max_near_dis, nea
 		return best_cover
 	end
 end
+
+function NavigationManager:pad_out_position(position, nr_rays, dis)
+	nr_rays = math.max(2, nr_rays or 4)
+	dis = dis or 46.5
+	local angle = 360
+	local rot_step = angle / nr_rays
+	local rot_offset = 1 * angle * 0.5
+	local ray_rot = Rotation(-angle * 0.5 + rot_offset - rot_step)
+	local vec_to = Vector3(dis, 0, 0)
+
+	mvec3_rot(vec_to, ray_rot)
+
+	local pos_to = Vector3()
+
+	mrotation.set_yaw_pitch_roll(ray_rot, rot_step, 0, 0)
+
+	local ray_params = {
+		trace = true,
+		pos_from = position,
+		pos_to = pos_to
+	}
+	local ray_results = {}
+	local i_ray = 1
+	local tmp_vec = temp_vec1
+	local altered_pos = mvec3_cpy(position)
+	
+	while nr_rays >= i_ray do
+		mvec3_rot(vec_to, ray_rot)
+		mvec3_set(pos_to, vec_to)
+		mvec3_add(pos_to, altered_pos)
+		local hit = self:raycast(ray_params)
+
+		if hit then
+			mvec3_dir(tmp_vec, ray_params.trace[1], position)
+			mvec3_mul(tmp_vec, dis)
+			mvec3_add(altered_pos, tmp_vec)
+		end
+
+		i_ray = i_ray + 1
+	end
+	
+	local position_tracker = self._quad_field:create_nav_tracker(altered_pos, true)
+	altered_pos = mvec3_cpy(position_tracker:field_position())
+
+	self._quad_field:destroy_nav_tracker(position_tracker)
+	
+	return altered_pos
+end
