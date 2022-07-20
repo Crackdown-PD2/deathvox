@@ -1370,14 +1370,15 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.assassin,2,{ --Good Hunting
 			{
 				upgrades = {
-					"weapon_homing_bolts"
+					"weapon_homing_bolts",
+					"weapon_bow_instant_ready"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
 					"weapon_crossbow_headshot_instant_reload",
-					"weapon_bow_instant_ready"
+					"weapon_crossbow_piercer"
 				},
 				cost = self.costs.hightierpro
 			},

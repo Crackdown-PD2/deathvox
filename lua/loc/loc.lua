@@ -312,7 +312,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_point_blank = "Point Blank",
 				menu_point_blank_desc = "BASIC: ##$basic##\n$ICN_SHO Shotguns gain ##Armor Piercing##, ##Shield Piercing##, and ##Body Piercing## against enemies within ##3## meters.\n\nACE: ##$pro##\n$ICN_SHO Shotguns deal ##+100%## Damage against enemies within ##3## meters.",
 				menu_shotmaker = "Grand Brachial",
-				menu_shotmaker_desc = "BASIC: ##$basic##\nIncreases $ICN_SHO Shotguns deal ##+100%## Headshot damage.\n\nACE: ##$pro##\n$ICN_SHO Shotguns deal ##50%## of their Headshot Damage on Body Shots against ##Shields, Medics, Tasers, Grenadiers and Cloakers##.",
+				menu_shotmaker_desc = "BASIC: ##$basic##\n$ICN_SHO Shotguns deal ##+100%## Headshot damage.\n\nACE: ##$pro##\n$ICN_SHO Shotguns deal ##50%## of their Headshot Damage on Body Shots against ##Shields, Medics, Tasers, Grenadiers and Cloakers##.",
 				
 			--heavy
 				menu_collateral_damage = "Collateral Damage",
@@ -390,7 +390,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_killers_notebook = "Killer's Notebook",
 				menu_killers_notebook_desc = "BASIC: ##$basic##\n$ICN_QUT Quiet Weapons ADS ##90%## faster.\n\nACE: ##$pro##\n$ICN_QUT Quiet Weapons gain ##+20## Stability.",
 				menu_good_hunting = "Good Hunting",
-				menu_good_hunting_desc = "BASIC: ##$basic##\nArrows and Bolts will now curve towards enemies, angling to strike them in the head.\n\nACE: ##$pro##\nCrossbows instantly Reload themselves after a Headshot, and Bows have all of their Arrows readied instead of in reserve.",
+				menu_good_hunting_desc = "BASIC: ##$basic##\nBows have all of their Arrows readied instead of in reserve. Arrows will curve towards enemies, angling to strike them in the head.\n\nACE: ##$pro##\nCrossbows instantly Reload themselves after a Headshot. Bolts that kill an enemy gain ##Body Piercing##, punching through the target and through any other enemies in its path.",
 				menu_comfortable_silence = "Comfortable Silence",
 				menu_comfortable_silence_desc = "BASIC: ##$basic##\n$ICN_QUT Quiet Weapons gain ##+2## Concealment.\n\nACE: ##$pro##\n$ICN_QUT Quiet Weapons gain ##+4## Concealment.",
 				menu_toxic_shock = "Toxic Shock",
