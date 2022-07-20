@@ -126,4 +126,147 @@
         </target>
     </tweak>
 	
+		
+	<tweak version="2" name="anims/units/enemies/cop/std" extension="animation_states">
+		<search>
+				<xml/>
+				<state name="std/crouch/still/idle"/>
+				<from name="std/dodge"/>
+		</search>
+		<target mode="attributes">
+				<attr name="blend" value="7"/>
+		</target>
+	</tweak>
+	
+	<tweak version="2" name="anims/units/enemies/cop/std" extension="animation_states">
+		<search>
+				<xml/>
+		</search>
+		<target>
+			<state name="std/stun/concussion" type="mix" segment="base">
+				<default blend="9" />
+
+				<param name="var1" value="0"/>
+				<param name="var2" value="0"/>
+				<param name="var3" value="0"/>
+				<param name="var4" value="0"/>
+				<param name="var5" value="0"/>
+				<param name="var6" value="0"/>
+				<param name="var7" value="0"/>
+				<param name="var8" value="0"/>
+				<param name="var9" value="0"/>
+
+				<param name="shield_var1" value="0"/>
+				<param name="shield_var2" value="0"/>
+				<param name="shield_var3" value="0"/>
+				<param name="shield_var4" value="0"/>
+
+				<anim name="gen_stun_conc_bwd" weight="var1"/>
+				<anim name="gen_stun_conc_fwd" weight="var2"/>
+				<anim name="gen_stun_conc_left" weight="var3"/>
+				<anim name="gen_stun_conc_right" weight="var4"/>
+				
+				<anim name="gen_stun_conc_var1" weight="var5"/>
+				<anim name="gen_stun_conc_var2" weight="var6"/>
+				<anim name="gen_stun_conc_var3" weight="var7"/>
+				<anim name="gen_stun_conc_var4" weight="var8"/>
+				<anim name="gen_stun_conc_var5" weight="var9"/>
+
+				<anim name="gen_stun_conc_shield_var1" weight="shield_var1"/>
+				<anim name="gen_stun_conc_shield_var2" weight="shield_var2"/>
+				<anim name="gen_stun_conc_shield_var3" weight="shield_var3"/>
+				<anim name="gen_stun_conc_shield_var4" weight="shield_var4"/>
+
+				<exit name="std/stand/still/idle/look" weight="1 - shield"/>
+				<exit name="std/crouch/still/idle" weight="shield"/>
+			</state>
+
+			<state name="std/hurt/shield_knock" type="template_state" segment="base">
+				<default blend="3" />
+			
+				<param name="high" value="0"/>
+				<param name="low" value="0"/>
+				<param name="fwd" value="0"/>
+				<param name="bwd" value="0"/>
+				<param name="l" value="0"/>
+				<param name="r" value="0"/>
+
+				<keys timebase="relative">
+					<key at="trigger" trigger="enable_ragdoll" set_extension="anim_data" extension_key="ragdoll" extension_value="true"/>
+					<key at="exit" set_extension="anim_data" extension_key="ragdoll" extension_value="false"/>
+					<key at="enter" set_extension="anim_data" extension_key="hurt" extension_value="true"/>
+					<key at="exit" set_extension="anim_data" extension_key="hurt" extension_value="false"/>
+					<key at="0.7" set_extension="anim_data" extension_key="hurt_exit" extension_value="true"/>
+					<key at="exit" set_extension="anim_data" extension_key="hurt_exit" extension_value="false"/>
+				</keys>
+				<exit name="std/crouch/still/idle" />
+			</state>
+			
+			<state name="std/hurt/shield_knock/var1" type="once" segment="base">
+				<anim name="cbt_crh_surprised_fwd"/>
+				<keys timebase="relative">
+					<key at="trigger" trigger="enable_ragdoll" set_extension="anim_data" extension_key="ragdoll" extension_value="true"/>
+					<key at="exit" set_extension="anim_data" extension_key="ragdoll" extension_value="false"/>
+					<key at="enter" set_extension="anim_data" extension_key="hurt" extension_value="true"/>
+					<key at="exit" set_extension="anim_data" extension_key="hurt" extension_value="false"/>
+					<key at="0.7" set_extension="anim_data" extension_key="hurt_exit" extension_value="true"/>
+					<key at="exit" set_extension="anim_data" extension_key="hurt_exit" extension_value="false"/>
+				</keys>
+				<exit name="std/crouch/still/idle" />
+			</state>
+			
+			<state name="std/hurt/shield_knock/var2" type="once" segment="base">
+				<anim name="cbt_crh_surprised_fwd2"/>
+				<keys timebase="relative">
+					<key at="trigger" trigger="enable_ragdoll" set_extension="anim_data" extension_key="ragdoll" extension_value="true"/>
+					<key at="exit" set_extension="anim_data" extension_key="ragdoll" extension_value="false"/>
+					<key at="enter" set_extension="anim_data" extension_key="hurt" extension_value="true"/>
+					<key at="exit" set_extension="anim_data" extension_key="hurt" extension_value="false"/>
+					<key at="0.7" set_extension="anim_data" extension_key="hurt_exit" extension_value="true"/>
+					<key at="exit" set_extension="anim_data" extension_key="hurt_exit" extension_value="false"/>
+				</keys>
+				<exit name="std/crouch/still/idle" />
+			</state>
+
+			<state name="std/hurt/shield_knock/var3" type="once" segment="base">
+				<anim name="cbt_crh_surprised_fwd3"/>
+				<keys timebase="relative">
+					<key at="trigger" trigger="enable_ragdoll" set_extension="anim_data" extension_key="ragdoll" extension_value="true"/>
+					<key at="exit" set_extension="anim_data" extension_key="ragdoll" extension_value="false"/>
+					<key at="enter" set_extension="anim_data" extension_key="hurt" extension_value="true"/>
+					<key at="exit" set_extension="anim_data" extension_key="hurt" extension_value="false"/>
+					<key at="0.7" set_extension="anim_data" extension_key="hurt_exit" extension_value="true"/>
+					<key at="exit" set_extension="anim_data" extension_key="hurt_exit" extension_value="false"/>
+				</keys>
+				<exit name="std/crouch/still/idle" />
+			</state>
+
+			<state name="std/hurt/shield_knock/var4" type="once" segment="base">
+				<anim name="cbt_crh_surprised_fwd4"/>
+				<keys timebase="relative">
+					<key at="trigger" trigger="enable_ragdoll" set_extension="anim_data" extension_key="ragdoll" extension_value="true"/>
+					<key at="exit" set_extension="anim_data" extension_key="ragdoll" extension_value="false"/>
+					<key at="enter" set_extension="anim_data" extension_key="hurt" extension_value="true"/>
+					<key at="exit" set_extension="anim_data" extension_key="hurt" extension_value="false"/>
+					<key at="0.7" set_extension="anim_data" extension_key="hurt_exit" extension_value="true"/>
+					<key at="exit" set_extension="anim_data" extension_key="hurt_exit" extension_value="false"/>
+				</keys>
+				<exit name="std/crouch/still/idle" />
+			</state>
+
+			<state name="std/hurt/shield_knock/var5" type="once" segment="base">
+				<anim name="cbt_crh_surprised_fwd5"/>
+				<keys timebase="relative">
+					<key at="trigger" trigger="enable_ragdoll" set_extension="anim_data" extension_key="ragdoll" extension_value="true"/>
+					<key at="exit" set_extension="anim_data" extension_key="ragdoll" extension_value="false"/>
+					<key at="enter" set_extension="anim_data" extension_key="hurt" extension_value="true"/>
+					<key at="exit" set_extension="anim_data" extension_key="hurt" extension_value="false"/>
+					<key at="0.7" set_extension="anim_data" extension_key="hurt_exit" extension_value="true"/>
+					<key at="exit" set_extension="anim_data" extension_key="hurt_exit" extension_value="false"/>
+				</keys>
+				<exit name="std/crouch/still/idle" />
+			</state>
+		</target>
+	</tweak>
+	
 </tweaks>
