@@ -232,9 +232,13 @@ end
 function GroupAIStateBase:on_objective_failed(unit, objective)
 	if not unit:brain() then
 		debug_pause_unit(unit, "[GroupAIStateBase:on_objective_failed] error in extension order", unit)
-
-		local fail_clbk = objective.fail_clbk
-		objective.fail_clbk = nil
+		
+		local fail_clbk = nil
+		
+		if objective then
+			fail_clbk = objective.fail_clbk
+			objective.fail_clbk = nil
+		end
 
 		unit:brain():set_objective(nil)
 
@@ -256,8 +260,8 @@ function GroupAIStateBase:on_objective_failed(unit, objective)
 				is_default = true,
 				scan = true,
 				type = "free",
-				attitude = objective.attitude,
-				grp_objective = grp_objective
+				attitude = objective and objective.attitude,
+				grp_objective = objective and objective.grp_objective
 			}
 
 			if u_data.assigned_area then
@@ -267,9 +271,13 @@ function GroupAIStateBase:on_objective_failed(unit, objective)
 			end
 		end
 	end
-
-	local fail_clbk = objective.fail_clbk
-	objective.fail_clbk = nil
+	
+	local fail_clbk = nil
+	
+	if objective then
+		fail_clbk = objective.fail_clbk
+		objective.fail_clbk = nil
+	end
 
 	if new_objective then
 		unit:brain():set_objective(new_objective)
