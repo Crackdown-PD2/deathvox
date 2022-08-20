@@ -1021,6 +1021,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 				--Stainless Steel Syringe--
 		self.melee_weapons.fear.subclasses = {
+			"subclass_poison"
 		}
 		self.melee_weapons.fear.primary_class = "class_melee"
 		self.melee_weapons.fear.stats.charge_time = 2

@@ -342,7 +342,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_leg_day = "Leg Day Enthusiast",
 				menu_leg_day_desc = "BASIC: ##$basic##\nYou gain ##+10%## Movement Speed and ##+25%## Sprint Speed.\n\nACE: ##$pro##\nCrouching no longer reduces your Movement Speed.",
 				menu_wave_dash = "Wave Dash",
-				menu_wave_dash_desc = "BASIC: ##$basic##\nWhile in midair, pressing your ##Jump## button will cause you to dash in the direction you are currently moving and holding your ##Crouch## button causes you to dive to the ground and avoid Fall Damage from non-lethal heights. These actions cost ##5%## of your maximum Stamina.\n\nACE: ##$pro##\nYou can now dash in any direction. Diving no longer costs Stamina\n\n##Mission Complete!##",
+				menu_wave_dash_desc = "BASIC: ##$basic##\nWhile in midair, pressing your ##Jump## button will cause you to dash in the direction you are currently moving and holding your ##Crouch## button causes you to dive to the ground and avoid Fall Damage from non-lethal heights. These actions cost ##5%## of your maximum Stamina.\n\nACE: ##$pro##\nYou can now dash in any direction. Diving no longer costs Stamina.\n\n##Mission Complete!##",
 				
 			--gunner
 				menu_spray_and_pray = "Spray & Pray",
