@@ -29,6 +29,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 	Hooks:PostHook(BlackMarketGuiSlotItem,"init","tcd_bmgui_slotitem_init",function(self, main_panel, data, x, y, w, h)
 		local tcd_gui_data = deathvox.tcd_gui_data
+		local wftd = tweak_data.weapon.factory
 
 		local item_class
 		local item_name = data.name
@@ -83,7 +84,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 		elseif item_category == "primaries" or item_category == "secondaries" then
 		
 			local wtd = tweak_data.weapon[item_name]
-			local wftd = tweak_data.weapon.factory
 			
 			if wtd then 
 				item_class = wtd.primary_class
