@@ -1666,7 +1666,21 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 		special_type = "spooc"
 	}
 	
-	self.unit_categories.marshal_marksman.unit_types.fbi = Idstring("units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1")
+	self.unit_categories.marshal_marksman.unit_types.cop = {
+		Idstring("units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1")
+	}
+	self.unit_categories.marshal_marksman.unit_types.fbi = {
+		Idstring("units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1")
+	}
+	self.unit_categories.marshal_marksman.unit_types.gensec = {
+		Idstring("units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1")
+	}
+	self.unit_categories.marshal_marksman.unit_types.zeal = {
+		Idstring("units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1")
+	}
+	self.unit_categories.marshal_marksman.unit_types.classic = {
+		Idstring("units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1")
+	}
 	self.unit_categories.marshal_marksman.unit_type_spawner = {
 		cop = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1",
 		fbi = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1",
@@ -5128,57 +5142,6 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cd_init_enemy_spaw
 			}
 		}
 	}
-	
-	if Global.game_settings and Global.game_settings.level_id == "ranc" then
-		self.enemy_spawn_groups.marshal_squad = {
-			spawn_cooldown = 60,
-			max_nr_simultaneous_groups = 1,
-			initial_spawn_delay = 90,
-			amount = {
-				2,
-				2
-			},
-			spawn = {
-				{
-					respawn_cooldown = 30,
-					amount_min = 2,
-					rank = 1,
-					freq = 1,
-					unit = "marshal_marksman",
-					tactics = self._tactics.marshal_marksman
-				}
-			},
-			spawn_point_chk_ref = table.list_to_set({
-				"tac_swat_rifle_flank",
-				"tac_swat_rifle"
-			})
-		}
-	else
-		self.enemy_spawn_groups.marshal_squad = {
-			spawn_cooldown = 60,
-			max_nr_simultaneous_groups = 1,
-			initial_spawn_delay = 600,
-			amount = {
-				2,
-				2
-			},
-			spawn = {
-				{
-					respawn_cooldown = 30,
-					amount_min = 2,
-					rank = 1,
-					freq = 1,
-					unit = "marshal_marksman",
-					tactics = self._tactics.marshal_marksman
-				}
-			},
-			spawn_point_chk_ref = table.list_to_set({
-				"tac_swat_rifle_flank",
-				"tac_swat_rifle"
-			})
-		}
-	end
-	
 end)
 
 DIFF_NORMAL = 2
