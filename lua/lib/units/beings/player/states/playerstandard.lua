@@ -2180,7 +2180,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 								weap_base:tweak_data_anim_play("fire", weap_base:fire_rate_multiplier())
 							end
 
-							if (fire_mode == "single" or fire_mode == "burst") and weap_base:get_name_id() ~= "saw" then
+							if fire_mode ~= "auto" and weap_base:get_name_id() ~= "saw" then
 								if not self._state_data.in_steelsight then
 									self._ext_camera:play_redirect(self:get_animation("recoil"), weap_base:fire_rate_multiplier())
 								elseif weap_tweak_data.animations.recoil_steelsight then
@@ -2192,7 +2192,11 @@ if deathvox:IsTotalCrackdownEnabled() then
 --							Console:SetTrackerValue("trackera",string.format("recoil_multiplier %0.2f",recoil_multiplier))
 	--						cat_print("jansve", "[PlayerStandard] Weapon Recoil Multiplier: " .. tostring(recoil_multiplier))
 
-							local up, down, left, right = unpack(weap_tweak_data.kick[self._state_data.in_steelsight and "steelsight" or self._state_data.ducking and "crouching" or "standing"])
+							local kick_tweak_data = weap_tweak_data.kick[fire_mode] or weap_tweak_data.kick
+							local up, down, left, right = unpack(kick_tweak_data[self._state_data.in_steelsight and "steelsight" or self._state_data.ducking and "crouching" or "standing"])
+
+
+
 
 							self._camera_unit:base():recoil_kick(up * recoil_multiplier, down * recoil_multiplier, left * recoil_multiplier, right * recoil_multiplier)
 
@@ -2234,7 +2238,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 							if weap_base.third_person_important and weap_base:third_person_important() then
 								self._ext_network:send("shot_blank_reliable", impact, 0)
-							elseif weap_base.akimbo and not weap_base:weapon_tweak_data().allow_akimbo_autofire or fire_mode == "single" then
+							elseif fire_mode ~= "auto" or weap_base.akimbo and not weap_base:weapon_tweak_data().allow_akimbo_autofire then
 								self._ext_network:send("shot_blank", impact, 0)
 							end
 						elseif fire_mode == "single" then
