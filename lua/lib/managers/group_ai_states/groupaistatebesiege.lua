@@ -2009,42 +2009,23 @@ function GroupAIStateBesiege:_assign_enemy_groups_to_assault(phase)
 	end
 end
 
-function GroupAIStateBesiege:_chk_group_engaging_area(group, tactics_map)
-	local objective = group.objective
-	local ranged_fire = nil
-	
-	if tactics_map then
-		ranged_fire = tactics_map.ranged_fire or tactics_map.elite_ranged_fire
-	end
-	
-	local best_dis, best_area
-
-	for u_key, u_data in pairs(group.units) do
-		local brain = u_data.unit:brain()
-
-		if brain then
-			local logic_data = brain._logic_data
+function GroupAIStateBesiege:_chk_group_engaging_area(group)
+	for u_key, u_data in pairs(group.units) do 
+		if u_data.unit and alive(u_data.unit) then
+			local brain = u_data.unit:brain()
+			local objective = brain:objective()
 			
-			if logic_data.name == "attack" then
-				local unit_obj = brain:objective()
+			if brain._current_logic_name == "attack" and objective and objective.type == "free" then
+				local logic_data = brain._logic_data
 				
-				if unit_obj and unit_obj.grp_objective == objective then
-					if unit_obj.in_place then
-						local objective_pos = objective.pos or objective.area.pos
-						local m_dis_sq = mvec3_dis_sq(u_data.m_pos, objective_pos)
-							
-						if not best_dis or ranged_fire and m_dis_sq > best_dis or m_dis_sq < best_dis then
-							local nav_seg = u_data.tracker:nav_segment()
-							best_area = self:get_area_from_nav_seg_id(nav_seg)
-							best_dis = m_dis_sq
-						end
-					end
+				if logic_data.attention_obj and AIAttentionObject.REACT_COMBAT <= logic_data.attention_obj.reaction then
+					local nav_seg = managers.navigation:get_nav_seg_from_pos(u_data.unit:movement():m_pos())
+					
+					return nav_seg
 				end
 			end
 		end
 	end
-	
-	return best_area
 end
 
 function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
@@ -2061,7 +2042,6 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 	local current_objective = group.objective
 	
 	local approach, open_fire, push, pull_back, charge, has_found_position = nil
-	local obstructed_area = self:_chk_group_areas_tresspassed(group)
 	local group_leader_u_key, group_leader_u_data = self._determine_group_leader(group.units)
 	local tactics_map = nil
 	
@@ -2243,14 +2223,15 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 		return
 	end
 	
+	local obstructed_area = self:_chk_group_areas_tresspassed(group)
+	
 	local member_stuck_engaging_area = not obstructed_area and not charge
 	
 	if member_stuck_engaging_area then
-		member_stuck_engaging_area = group.in_place_t and self._t - group.in_place_t < 15 or current_objective.area and table.size(current_objective.area.police.units) > 16
+		local engage_nav = self:_chk_group_engaging_area(group)
+		member_stuck_engaging_area = self:get_area_from_nav_seg_id(engage_nav) or nil
 	end
 	
-	member_stuck_engaging_area = member_stuck_engaging_area and self:_chk_group_engaging_area(group, tactics_map) or nil
-
 	local objective_area = nil
 	
 	if obstructed_area then
