@@ -192,7 +192,7 @@ function ProjectileBase:destroy(...)
 	ProjectileBase.super.destroy(self, ...)
 
 	if self._ignore_units then
-		local destroy_key = self._ignore_destroy_listener_key
+		local destroy_key = self._thrower_destroy_listener_key
 
 		for _, ig_unit in pairs(self._ignore_units) do
 			if alive(ig_unit) then
@@ -233,7 +233,7 @@ function ProjectileBase:destroy(...)
 		end
 
 		if has_destroy_listener then
-			listener_class:remove_destroy_listener(self._ignore_destroy_listener_key)
+			listener_class:remove_destroy_listener(self._thrower_destroy_listener_key)
 		end
 
 		self._thrower_unit = nil
@@ -336,7 +336,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end
 			if projectile_td.is_a_grenade then 
 				self:set_weapon_class("class_grenade")
-				--not really used but might as well have it there
 			end
 			self._use_armor_piercing = projectile_td.can_pierce_armor
 		else

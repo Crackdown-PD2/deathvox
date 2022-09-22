@@ -2030,6 +2030,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local new_action = nil
 		local action_wanted = input.btn_primary_attack_state or input.btn_primary_attack_release
 		action_wanted = action_wanted or self:is_shooting_count()
+		action_wanted = action_wanted or self:_is_charging_weapon()
 		
 		if action_wanted then
 			local action_forbidden = self:_is_reloading() or self:_changing_weapon() or self:_is_meleeing() or self._use_item_expire_t or self:_interacting() or self:_is_throwing_projectile() or self:_is_deploying_bipod() or self._menu_closed_fire_cooldown > 0 or self:is_switching_stances()
@@ -2075,7 +2076,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 								start = start or fire_mode ~= "single" and input.btn_primary_attack_state
 								start = start and not fire_on_release
 								start = start or fire_on_release and input.btn_primary_attack_release
-
+								start = start or fire_mode == "volley" and input.btn_primary_attack_press
+								
 								if start then
 									weap_base:start_shooting()
 									self._camera_unit:base():start_shooting()
@@ -2145,6 +2147,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 							end
 						elseif fire_mode == "burst" then
 							fired = weap_base:trigger_held(self:get_fire_weapon_position(), self:get_fire_weapon_direction(), dmg_mul, nil, spread_mul, autohit_mul, suppression_mul)
+						elseif fire_mode == "volley" then
+							fired = weap_base:trigger_held(self:get_fire_weapon_position(), self:get_fire_weapon_direction(), dmg_mul, nil, spread_mul, autohit_mul, suppression_mul)
 						end
 
 						if weap_base.manages_steelsight and weap_base:manages_steelsight() then
@@ -2155,7 +2159,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 							end
 						end
 
-						local charging_weapon = fire_on_release and weap_base:charging()
+						local charging_weapon = weap_base:charging()
 
 						if not self._state_data.charging_weapon and charging_weapon then
 							self:_start_action_charging_weapon(t)
@@ -2243,8 +2247,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 							end
 						elseif fire_mode == "single" then
 							new_action = false
-						elseif fire_mode == "burst" and weap_base:shooting_count() == 0 then
-							new_action = false
+						elseif fire_mode == "burst" then
+							if weap_base:shooting_count() == 0 then
+								new_action = false
+							end
+						elseif fire_mode == "volley" then
+							new_action = self:_is_charging_weapon()
 						end
 					end
 				end
