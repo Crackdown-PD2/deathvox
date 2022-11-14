@@ -1116,15 +1116,15 @@ local melee_vars = {
 	"player_melee_var2"
 }
 --not to be confused with _do_action_melee()
-function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_entry, hand_id, force_max_charge)
+function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_entry, hand_id, force_max_charge,skip_shaker)
 	melee_entry = melee_entry or managers.blackmarket:equipped_melee_weapon()
 	local melee_td = tweak_data.blackmarket.melee_weapons[melee_entry]
 	local instant_hit = melee_td.instant
 	local melee_damage_delay = melee_td.melee_damage_delay or 0
 	local charge_lerp_value = instant_hit and 0 or force_max_charge and 1 or self:_get_melee_charge_lerp_value(t, melee_damage_delay)
-
-	self._ext_camera:play_shaker(melee_vars[math.random(#melee_vars)], math.max(0.3, charge_lerp_value))
-
+	if not skip_shaker then
+		self._ext_camera:play_shaker(melee_vars[math.random(#melee_vars)], math.max(0.3, charge_lerp_value))
+	end
 	local sphere_cast_radius = 20
 	local col_ray = nil
 
@@ -1546,8 +1546,9 @@ function PlayerStandard:_check_action_melee(t, input)
 	end
 
 	local melee_entry = managers.blackmarket:equipped_melee_weapon()
-	local instant = tweak_data.blackmarket.melee_weapons[melee_entry].instant
-
+	local mtd = tweak_data.blackmarket.melee_weapons[melee_entry]
+	local instant = mtd.instant
+	
 	self:_start_action_melee(t, input, instant)
 
 	return true
@@ -1570,7 +1571,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if bayonet_id and self._equipped_unit:base():selection_index() == 2 then
 			bayonet_melee = true
 		end
-
+		self._state_data.melee_hit_while_charging_t = nil
 		self._state_data.melee_expire_t = t + tweak_data.blackmarket.melee_weapons[melee_entry].expire_t
 		self._state_data.melee_repeat_expire_t = t + math.min(tweak_data.blackmarket.melee_weapons[melee_entry].repeat_expire_t, tweak_data.blackmarket.melee_weapons[melee_entry].expire_t)
 		
@@ -1722,7 +1723,82 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	end
 
+	function PlayerStandard:_update_melee_timers(t, input)
+		local melee_entry = managers.blackmarket:equipped_melee_weapon()
+		local mtd = tweak_data.blackmarket.melee_weapons[melee_entry]
+		if self._state_data.meleeing then
+			local lerp_value = self:_get_melee_charge_lerp_value(t)
 
+			self._camera_unit:anim_state_machine():set_parameter(self:get_animation("melee_charge_state"), "charge_lerp", math.bezier({
+				0,
+				0,
+				1,
+				1
+			}, lerp_value))
+
+			if self._state_data.melee_charge_shake then
+				self._ext_camera:shaker():set_parameter(self._state_data.melee_charge_shake, "amplitude", math.bezier({
+					0,
+					0,
+					1,
+					1
+				}, lerp_value))
+			end
+			local hit_while_charging_data = mtd.hit_while_charging
+			if hit_while_charging_data then
+				if self._state_data.melee_hit_while_charging_t then
+					if self._state_data.melee_hit_while_charging_t <= t then 
+						--do damage
+						self._state_data.melee_hit_while_charging_t = t + hit_while_charging_data.swing_delay_repeat
+						self:_do_melee_damage(t,nil,nil,melee_entry,nil,nil,true)
+					end
+				else
+					self._state_data.melee_hit_while_charging_t = t + hit_while_charging_data.swing_delay_initial
+				end
+			end
+		end
+
+		if self._state_data.melee_damage_delay_t and self._state_data.melee_damage_delay_t <= t then
+			self:_do_melee_damage(t, nil, self._state_data.melee_hit_ray)
+
+			self._state_data.melee_damage_delay_t = nil
+			self._state_data.melee_hit_ray = nil
+		end
+
+		if self._state_data.melee_attack_allowed_t and self._state_data.melee_attack_allowed_t <= t then
+			self._state_data.melee_start_t = t
+			local melee_entry = managers.blackmarket:equipped_melee_weapon()
+			local melee_charge_shaker = tweak_data.blackmarket.melee_weapons[melee_entry].melee_charge_shaker or "player_melee_charge"
+			self._state_data.melee_charge_shake = self._ext_camera:play_shaker(melee_charge_shaker, 0)
+			self._state_data.melee_attack_allowed_t = nil
+		end
+
+		if self._state_data.melee_repeat_expire_t and self._state_data.melee_repeat_expire_t <= t then
+			self._state_data.melee_repeat_expire_t = nil
+
+			if input.btn_meleet_state then
+				local melee_entry = managers.blackmarket:equipped_melee_weapon()
+				local instant_hit = tweak_data.blackmarket.melee_weapons[melee_entry].instant
+				self._state_data.melee_charge_wanted = not instant_hit and true
+			end
+		end
+
+		if self._state_data.melee_expire_t and self._state_data.melee_expire_t <= t then
+			self._state_data.melee_expire_t = nil
+			self._state_data.melee_repeat_expire_t = nil
+
+			self:_stance_entered()
+
+			if self._equipped_unit and input.btn_steelsight_state then
+				self._steelsight_wanted = true
+			end
+		end
+	end
+	
+	Hooks:PostHook(PlayerStandard,"_interrupt_action_melee","tcd_melee_stop",function(self,t)
+		self._state_data.melee_hit_while_charging_t = nil
+	end)
+	
 	function PlayerStandard:_do_action_throw_projectile(t, input, drop_projectile)
 		local current_state_name = self._camera_unit:anim_state_machine():segment_state(self:get_animation("base"))
 		self._state_data.throwing_projectile = nil
@@ -1823,14 +1899,15 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 
 		local melee_entry = managers.blackmarket:equipped_melee_weapon()
-		self._state_data.melee_global_value = tweak_data.blackmarket.melee_weapons[melee_entry].anim_global_param
+		local mtd = tweak_data.blackmarket.melee_weapons[melee_entry]
+		self._state_data.melee_global_value = mtd.anim_global_param
 
 		self._camera_unit:anim_state_machine():set_global(self._state_data.melee_global_value, 1)
 
 		local current_state_name = self._camera_unit:anim_state_machine():segment_state(self:get_animation("base"))
-		local attack_allowed_expire_t = tweak_data.blackmarket.melee_weapons[melee_entry].attack_allowed_expire_t or 0.15
+		local attack_allowed_expire_t = mtd.attack_allowed_expire_t or 0.15
 		self._state_data.melee_attack_allowed_t = t + (current_state_name ~= self:get_animation("melee_attack_state") and attack_allowed_expire_t or 0)
-		local instant_hit = tweak_data.blackmarket.melee_weapons[melee_entry].instant
+		local instant_hit = mtd.instant
 
 		if not instant_hit then
 			self._ext_network:send("sync_melee_start", 0)

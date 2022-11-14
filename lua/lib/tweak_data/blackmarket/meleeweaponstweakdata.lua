@@ -1018,7 +1018,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.cs.stats.range = 200
 		self.melee_weapons.cs.stats.min_damage = 40
 
-
 				--Stainless Steel Syringe--
 		self.melee_weapons.fear.subclasses = {
 			"subclass_poison"
@@ -1223,6 +1222,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.road.stats.max_damage = 30
 		self.melee_weapons.road.stats.range = 200
 		self.melee_weapons.road.stats.min_damage = 30
+		self.melee_weapons.road.hit_while_charging = {
+			swing_delay_initial = 0.7,
+			swing_delay_repeat = 0.33
+		}
 
 
 
