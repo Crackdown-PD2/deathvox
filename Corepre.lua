@@ -9,6 +9,7 @@ _G.deathvox = deathvox or {}
 --deathvox.ModPath = ModPath
 deathvox.update_url = "https://raw.githubusercontent.com/Crackdown-PD2/deathvox/autoupdate/meta.json"
 deathvox.ModPath = deathvoxcore and deathvoxcore:GetPath() or deathvox.ModPath
+
 deathvox.SavePath = SavePath
 deathvox.SaveName = "crackdown.txt"
 deathvox.SavePathFull = deathvox.SavePath .. deathvox.SaveName
@@ -24,6 +25,8 @@ deathvox.NetworkIDs = { --string ids for network syncing stuff
 	Overhauls = "overhauls"
 }
 deathvox.blt_menu_id = "deathvox_menu_main" --main menu id; all other menu ids should be in their menu's .txt files
+
+dofile(deathvox.ModPath .. "classes/csvstats.lua") --since this is used to replace/edit tweakdata, it must be loaded even earlier (Core.lua is not early enough)
 
 --checks whether or not hoppip's overhaul is enabled;
 --If you are creating a menu option that should apply instantly, use Settings; 

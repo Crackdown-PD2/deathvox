@@ -4,13 +4,14 @@
 --requres utf8.to_lower() from PAYDAY 2's utf8 util library
 
 _G.CSVStatReader = {
+	debug_attachments = {}, --store read data results for exploration and debugging via console
+	
 	DAMAGE_CAP = 210, --damage is technically on a lookup table from 0 to 210
 	IGNORED_HEADERS = 2,
 	INPUT_DIRECTORY = deathvox.ModPath .. "csv/",
 	WEAPONS_SUBDIR = "weapons/",
 	ATTACHMENTS_SUBDIR = "attachments/",
 	MELEES_SUBDIR = "melees/",
-	
 	WIPE_PREVIOUS_STATS = true,
 	PRIMARY_CLASS_NAME_LOOKUP = {
 	--yes i wrote it this way on purpose
@@ -102,7 +103,7 @@ _G.CSVStatReader = {
 	ATTACHMENT_CSV_ORDER = {
 		"id", --"Attachment ID"
 		"name", --"Attachment/Weapon Name" (ignored)
-		"bm_weapon_id", --"Weapon Override"
+		"weapon_override", --"Weapon Override"
 		"primary_class", --"Weapon Class"
 		"subclasses", --"Subclasses"
 		"extra_ammo", --"Magazine Size"
@@ -211,7 +212,7 @@ for i = 1,41 do
 end
 
 function CSVStatReader.log(s)
-	log("\tTCD csv Parser: " .. s)
+	Console:Log("TCD csv Parser: " .. s)
 end
 
 function CSVStatReader.table_concat(tbl,div)
@@ -304,8 +305,8 @@ end
 
 function CSVStatReader.convert_extra_ammo(target_mag_bonus)
 	local extra_ammo = 101
-	if CSVStatReader.EXTRA_AMMO_LOOKUP[target_mag_bonus] then 
-		extra_ammo = CSVStatReader.EXTRA_AMMO_LOOKUP[target_mag_bonus]
+	if target_mag_bonus then 
+		extra_ammo = table.index_of(CSVStatReader.EXTRA_AMMO_LOOKUP,target_mag_bonus)
 	else
 		CSVStatReader.log("ERROR: convert_extra_ammo failed! target: " .. tostring(target_mag_bonus))
 	end
@@ -313,9 +314,13 @@ function CSVStatReader.convert_extra_ammo(target_mag_bonus)
 end
 
 function CSVStatReader.convert_total_ammo_mul(target_ammo_mul)
-	local total_ammo = 21
-	if CSVStatReader.TOTAL_AMMO_LOOKUP[target_ammo_mul] then 
-		total_ammo = CSVStatReader.TOTAL_AMMO_LOOKUP[target_ammo_mul]
+	local total_ammo -- = 21 --default (1x mul)
+	if target_ammo_mul then 
+		if table.index_of(CSVStatReader.TOTAL_AMMO_LOOKUP,target_ammo_mul) then
+			return target_ammo_mul * 20
+		else
+			CSVStatReader.log("ERROR: convert_total_ammo_mul: Target amount " .. tostring(target_ammo_mul) .. " is out of bounds")
+		end
 	else
 		CSVStatReader.log("ERROR: convert_total_ammo_mul failed! target: " .. tostring(target_ammo_mul))
 	end
@@ -356,11 +361,11 @@ function CSVStatReader.remove_extra_spaces(s)
 	return s
 end
 
-function CSVStatReader:read_files(mode)
+function CSVStatReader:read_files(mode,wtd,wftd)
 	if mode == "weapon" then 
 		return self:read_firearms()
 	elseif mode == "attachment" then 
-		return self:read_attachments()
+		return self:read_attachments(wftd)
 	elseif mode == "melee" then
 		return self:read_melees()
 	end
@@ -824,7 +829,7 @@ function CSVStatReader:read_melees()
 	local input_directory = self.INPUT_DIRECTORY
 end
 
-function CSVStatReader:read_attachments()
+function CSVStatReader:read_attachments(wftd)
 	local file_util = _G.FileIO
 	local path_util = BeardLib.Utils.Path
 	
@@ -836,14 +841,13 @@ function CSVStatReader:read_attachments()
 	local convert_total_ammo_mul = self.convert_total_ammo_mul
 	local remove_extra_spaces = self.remove_extra_spaces
 	local not_empty = self.not_empty
+	local not_null = self.not_null_or_na
 	local table_concat = self.table_concat
 	
 	local olog = self.log
 --	local DAMAGE_CAP = self.DAMAGE_CAP
 	local IGNORED_HEADERS = self.IGNORED_HEADERS
 	local input_directory = self.INPUT_DIRECTORY
-	
-	
 	
 	local target_subdir = input_directory .. self.ATTACHMENTS_SUBDIR
 	
@@ -862,20 +866,24 @@ function CSVStatReader:read_attachments()
 					local attachment_id = raw_csv_values[STAT_INDICES.id]
 					
 					if not_empty(attachment_id) and not_null(attachment_id) then 
-						local ptd = tweak_data.weapon.factory.parts[attachment_id]
+						local ptd = wftd.parts[attachment_id]
 						if ptd then 
-							olog("Processing attachment id " .. tostring(attachment_id) .. " (line " .. tostring(line_num) .. ")")
 							
+							local base_stats = ptd.stats
+							local base_custom_stats = ptd.custom_stats
+							
+							olog("Processing attachment id " .. tostring(attachment_id) .. " (line " .. tostring(line_num) .. ")")
 							
 							--Weapon (for weapon-specific attachment stat balancing)
 							local bm_weapon_id
-							local _bm_weapon_id = utf8.to_lower(raw_csv_values[STAT_INDICES.bm_weapon_id])
-							if not_null(_bm_weapon_id) and not_empty(_bm_weapon_id) then 
-								if tweak_data.weapon.factory[_bm_weapon_id] then 
+							local weapon_override_id = utf8.to_lower(raw_csv_values[STAT_INDICES.weapon_override])
+							if not_null(weapon_override_id) and not_empty(weapon_override_id) then 
+								local _bm_weapon_id = weapon_override_id
+								if _bm_weapon_id then 
 									--is valid weapon
-									bm_weapon_id = _bm_weapon_id
+									bm_weapon_id = _bm_weapon_id 
 								else
-									olog("Error: bad bm_weapon_id: " .. tostring(raw_csv_values[STAT_INDICES.bm_weapon_id]))
+									olog("Error: bad bm_weapon_id: " .. tostring(raw_csv_values[STAT_INDICES.weapon_override]))
 								end
 							end
 							
@@ -922,7 +930,9 @@ function CSVStatReader:read_attachments()
 							local extra_ammo
 							local _extra_ammo = raw_csv_values[STAT_INDICES.extra_ammo]
 							if not_empty(_extra_ammo) then
-								extra_ammo = convert_extra_ammo(tonumber(_extra_ammo))
+								extra_ammo = _extra_ammo
+								--so apparently this is just. a 1:1 direct additive bonus.
+--								extra_ammo = convert_extra_ammo(tonumber(_extra_ammo))
 							end
 							
 							
@@ -930,15 +940,14 @@ function CSVStatReader:read_attachments()
 							local total_ammo_add
 							local _total_ammo_add = raw_csv_values[STAT_INDICES.total_ammo_add]
 							if not_empty(_total_ammo_add) then 
-								total_ammo_add = tonumber(_total_ammo_add)
+								total_ammo_add = tonumber(_total_ammo_add) / 10
 							end
 							
 							--Total Ammo Mul Bonus (multiplicative bonus to Reserve Ammo)
 							local total_ammo_mul
-							local _total_ammo_mul = raw_csv_values[STAT_INDICES.total_ammo_internal]
+							local _total_ammo_mul = raw_csv_values[STAT_INDICES.total_ammo]
 							if not_empty(_total_ammo_mul) then 
-								--pre-converted
-								total_ammo_mul = tonumber(_total_ammo_mul)
+								total_ammo_mul = convert_total_ammo_mul(tonumber(_total_ammo_mul))
 							end
 							
 							--Fire Rate bonus
@@ -1002,21 +1011,21 @@ function CSVStatReader:read_attachments()
 							end
 							
 							--Zoom (inherited)
-							local zoom
+							local zoom = base_stats.zoom
 							local _zoom = raw_csv_values[STAT_INDICES.zoom]
 							if not_empty(_zoom) then 
 								zoom = tonumber(_zoom)
 							end
 							
 							--Alert Size (inherited)
-							local alert_size
+							local alert_size = base_stats.alert_size
 							local _alert_size = raw_csv_values[STAT_INDICES.alert_size]
 							if not_empty(_alert_size) then 
 								alert_size = tonumber(_alert_size)
 							end
 							
 							--Value (inherited)
-							local value
+							local value = base_stats.value
 							local _value = raw_csv_values[STAT_INDICES.value]
 							if not_empty(_value) then 
 								value = tonumber(_value)
@@ -1043,19 +1052,95 @@ function CSVStatReader:read_attachments()
 							
 							--TODO
 							
-						
-							--inherited values:
-							--value (unchanged from vanilla)
-							--zoom (unchanged from vanilla)
-							--perks (unchanged from vanilla)
+							local target_data = ptd
+							if bm_weapon_id and true then
+								ptd.override = ptd.override or {}
+								target_data = {}
+								ptd.override[bm_weapon_id] = target_data
+--								if not target_data then 
+--									olog("Error: [" .. tostring(attachment_id) .. "] has bad blackmarket weaponid override: [" .. tostring(bm_weapon_id) .. "]. This data will overwrite the main attachment data instead.")
+--								end
+							else
+								--in the specific case where we are removing/skipping weapon-specific stat changes on a particular weapon,
+								--we should instead try to manually remove override data on a per-weapon basis
+--								ptd.override = {} 
+							end
+							
+							
+							local stats = {
+								extra_ammo = extra_ammo, --additive mag size bonus index
+								total_ammo_mod = total_ammo_mul, --reserve ammo multiplicative bonus index modifier
+								fire_rate = fire_rate,
+								damage = damage,
+								spread = spread,
+								spread_moving = nil, --not used
+								recoil = recoil,
+								concealment = concealment,
+								suppression = suppression,
+								reload = reload_mul,
+								zoom = zoom,
+								value = value
+							}
+--							base_custom_stats
+							local custom_stats = { --basegame stat table, not custom stats, ironically
+							
+							
+							--[[
+						ammo_pickup_max_mul = 0,
+						ammo_pickup_min_mul = 0,
+						ignore_statistic = true,
+						bullet_class = "InstantExplosiveBulletBase",
+						damage_far_mul = 2,
+						damage_near_mul = 10,
+						rays = 1,
+						exp_multiplier = 1.03,
+						money_multiplier = 1.03,
+						muzzleflash = "effects/payday2/particles/weapons/shotgun/sho_muzzleflash_dragons_breath",
+						fire_dot_data = {
+							dot_trigger_chance = "100",
+							dot_damage = "10",
+							dot_length = "3.1",
+							dot_trigger_max_distance = "1400",
+							dot_tick_period = "0.5"
+						}
+						launcher_grenade = "launcher_incendiary"
+						fire_rate_multiplier = 1.2
+						ammo_offset = -1,
+						burst_count = 2,
+						volley_spread_mul
+						volley_damage_mul
+						volley_ammo_usage
+						volley_rays
+						--]]
+								total_ammo_add = total_ammo_add, --custom stat from tcd (additive reserve ammo bonus)
+								ammo_pickup_max_add = pickup_low, --custom stat
+								ammo_pickup_min_add = pickup_high, --custom stat
+								armor_piercing_add = armor_piercing_chance,
+								can_shoot_through_shield = can_shoot_through_shield,
+								can_shoot_through_wall = can_shoot_through_wall,
+								can_shoot_through_enemy = can_shoot_through_enemy,
+							}
+							
+							target_data.custom_stats = target_data.custom_stats or {}
+							for stat_id,stat_value in pairs(custom_stats) do 
+								target_data.custom_stats[stat_id] = stat_value
+								--inherit other values
+							end
+							
+							ptd.supported = true
+--							target_data.supported = true --temp while we transition to the new csv based stat implementation
+							
+							target_data.stats = stats
+							ptd.class_modifier = primary_class
+							ptd.subclass_modifiers = secondary_classes
+							
+							--[[
 							
 --								local new_data = table.deep_map_copy(ptd.parts[id])
 							local new_data = {
 								supported = true
 							}
 							
-							new_data.primary_class = primary_class
-							new_data.subclasses = secondary_classes
 							new_data.parts[id] = new_data
 							
 							if bm_weapon_id then 
@@ -1064,13 +1149,18 @@ function CSVStatReader:read_attachments()
 								ptd.parts[id] = new_data
 							end
 							
-						
-							
+							--]]
+							target_data.part_id = attachment_id
+							target_data.bm_weapon_id = bm_weapon_id
+							self.debug_attachments[line_num] = target_data
 						end
 					end
 					
 					
 				end
+			end
+			if input_file then 
+				input_file:close()
 			end
 		end
 	end	
