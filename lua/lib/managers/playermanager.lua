@@ -5,6 +5,7 @@ local pairs_g = pairs
 local alive_g = alive
 local world_g = World
 
+local tcd_enabled = deathvox:IsTotalCrackdownEnabled()
 
 Hooks:PostHook(PlayerManager,"_internal_load","deathvox_on_internal_load",function(self)
 --this will send whenever the player respawns, so... hm. 
@@ -15,7 +16,7 @@ Hooks:PostHook(PlayerManager,"_internal_load","deathvox_on_internal_load",functi
 	end
 --	Hooks:Call("TCD_OnGameStarted")
 
-	if deathvox:IsTotalCrackdownEnabled() then 
+	if tcd_enabled then 
 		local grenade = managers.blackmarket:equipped_grenade()
 		self:_set_grenade({
 			grenade = grenade,
@@ -72,7 +73,7 @@ Hooks:PostHook(PlayerManager,"init","tcd_playermanager_init",function(self)
 	self._can_lunge = true
 end)
 
-if deathvox:IsTotalCrackdownEnabled() then
+if tcd_enabled then
 	function PlayerManager:use_messiah_charge()
 		--nothing
 	end
@@ -1342,9 +1343,11 @@ end
 function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, override_armor, detection_risk)
 	local chance = self:upgrade_value("player", "passive_dodge_chance", 0)
 	local dodge_shot_gain = self:_dodge_shot_gain()
+	
+	local player_unit = self:local_player()
 
 	for _, smoke_screen in ipairs(self._smoke_screen_effects or {}) do
-		if smoke_screen:is_in_smoke(self:player_unit()) then
+		if smoke_screen:is_in_smoke(player_unit) then
 			if smoke_screen:mine() then
 				chance = chance * self:upgrade_value("player", "sicario_multiplier", 1)
 				dodge_shot_gain = dodge_shot_gain * self:upgrade_value("player", "sicario_multiplier", 1)
@@ -1385,6 +1388,19 @@ function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, overri
 	chance = chance + self:upgrade_value("player", tostring(override_armor or managers.blackmarket:equipped_armor(true, true)) .. "_dodge_addend", 0)
 	chance = chance + self:upgrade_value("team", "crew_add_dodge", 0)
 	chance = chance + self:temporary_upgrade_value("temporary", "pocket_ecm_kill_dodge", 0)
+
+	if tcd_enabled then 
+		if alive(player_unit) then
+			local state = player_unit:movement():current_state()
+			if state._state_data.meleeing then
+				local melee_entry = managers.blackmarket:equipped_melee_weapon()
+				local mtd = tweak_data.blackmarket.melee_weapons[melee_entry]
+				if mtd.dodge_chance_bonus_while_charging then 
+					chance = chance + mtd.dodge_chance_bonus_while_charging
+				end
+			end
+		end
+	end
 
 	return chance
 end

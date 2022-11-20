@@ -1058,8 +1058,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.whiskey.stats.max_damage = 10
 		self.melee_weapons.whiskey.stats.range = 185
 		self.melee_weapons.whiskey.stats.min_damage = 5
-		self.melee_weapons.whiskey.bonus_dodge_while_held = 0.1
-
+		self.melee_weapons.whiskey.dodge_chance_bonus_while_charging = 0.1
+		
 
 				--Jackpot--
 		self.melee_weapons.slot_lever.subclasses = {
