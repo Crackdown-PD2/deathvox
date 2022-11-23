@@ -4463,7 +4463,9 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			"armor_kit", --armor bag deployable
 			"sentry_gun_silent",
 			"player_passive_convert_enemies_health_multiplier_1", --50% damage resistance
-			"player_critical_hit_multiplier_1" --2x crit multiplier (same as default)
+			"player_critical_hit_multiplier_1", --2x crit multiplier (same as default)
+			
+			"player_convert_enemies_max_minions_1" --1 joker allowed per player; the actual requirement is the friendship collar deployable
 		}
 		
 		for _,upgrade_name in pairs(more_default_upgrades) do 

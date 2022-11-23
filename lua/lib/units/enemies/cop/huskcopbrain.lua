@@ -18,6 +18,8 @@ local brain_idstr = Idstring("brain")
 HuskCopBrain._ENABLE_LASER_TIME = 0.5
 HuskCopBrain._NET_EVENTS.surrender_tied = 3
 
+local tcd_enabled = deathvox:IsTotalCrackdownEnabled()
+
 local sync_net_event_original = HuskCopBrain.sync_net_event
 function HuskCopBrain:sync_net_event(event_id, peer)
 	if event_id ~= self._NET_EVENTS.surrender_tied then
@@ -209,6 +211,10 @@ function HuskCopBrain:sync_converted()
 	self._unit:character_damage()._char_tweak = char_tweaks
 	self._unit:movement()._tweak_data = char_tweaks
 	self._unit:movement()._action_common_data.char_tweak = char_tweaks
+	
+	if tcd_enabled then
+		self:on_converted_callback()
+	end
 end
 
 function HuskCopBrain:update(unit, t, dt)
@@ -915,4 +921,19 @@ end
 
 function HuskCopBrain:_send_client_detection_net_event(event_id)
 	managers.network:session():send_to_peer_synched(managers.network:session():peer(1), "sync_unit_event_id_16", self._unit, "brain", event_id)
+end
+
+if tcd_enabled then
+	function HuskCopBrain:set_on_converted_callback(cb,timeout)
+		self._on_sync_converted_callback = cb
+		self._on_sync_converted_callback_t = Application:time() + (timeout or 1)
+	end
+
+	function HuskCopBrain:on_converted_callback()
+		if self._on_sync_converted_callback then
+			if self._on_sync_converted_callback_t > Application:time() then
+				self._on_sync_converted_callback(self)
+			end
+		end
+	end
 end

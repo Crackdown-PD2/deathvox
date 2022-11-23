@@ -94,11 +94,29 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local valid,target_unit = self:valid_target_enemy_placement("sentry_gun_silent",tweak_data.equipments.sentry_gun_silent,true)
 		if valid and alive(target_unit) then 
 			if Network:is_server() then
-				managers.groupai:state():convert_hostage_to_criminal(target_unit)
-				return true
+				local success = managers.groupai:state():convert_hostage_to_criminal(target_unit)
+				--if host/offline, return bool success to deduct the required equipment amount
+				return success
 			else
+				--in all other cases, we must wait for the server's response before assuming consuming the equipment
+				
 				managers.network:session():send_to_host("sync_interacted", target_unit, target_unit:id(), "hostage_convert", 1)
-				return true
+				
+				--mark the unit as pending conversion with a local listener;
+				--if the unit is converted within n seconds of the request, the callback is run locally and the equipment is consumed
+				--Note: the instigating player is not verified by clients, so in cases of extreme latency, this may result in anti-duping deployable equipment
+				--(ie. if two players attempt to convert the same enemy: if the conversion is successful, both players' friendship collars are consumed)
+				--the underlying netcode should be changed to something more like the sentrygun system in the future, to avoid this issue
+				local ext_huskbrain = target_unit:brain()
+				if ext_huskbrain and ext_huskbrain.set_on_converted_callback then 
+					local pm = managers.player
+					local equipment = pm._equipment.selections[pm._equipment.selected_index]
+					local cb = function(_ext_huskbrain)
+						managers.player:remove_equipment(equipment.equipment,nil)
+					end
+					ext_huskbrain:set_on_converted_callback(cb,2)
+				end
+				return false
 			end
 		end
 		return false
