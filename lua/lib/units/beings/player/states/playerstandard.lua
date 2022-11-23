@@ -12,6 +12,8 @@ local tmp_ground_to_vec = Vector3()
 local up_offset_vec = math.UP * 30
 local down_offset_vec = math.UP * -40
 
+local tcd_enabled = deathvox:IsTotalCrackdownEnabled()
+
 Hooks:PostHook(PlayerStandard, "_calculate_standard_variables", "CD_calculate_standard_variables", function(self, t, dt)
 	self._setting_hold_to_fire = managers.user:get_setting("holdtofire")
 end)
@@ -1350,7 +1352,7 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			
 --			Hooks:Call("OnPlayerMeleeHit",character_unit,col_ray,action_data,defense_data,t,lethal_hit)
 
-			if not deathvox:IsTotalCrackdownEnabled() then 
+			if not tcd_enabled then 
 				if tweak_data.blackmarket.melee_weapons[melee_entry].tase_data and character_unit:character_damage().damage_tase then
 					local action_data = {
 						variant = tweak_data.blackmarket.melee_weapons[melee_entry].tase_data.tase_strength,
@@ -1399,30 +1401,6 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 	
 	
 	return col_ray
-end
-
-local lunge_vec1 = Vector3()
-local lunge_vec2 = Vector3()
-
-function PlayerStandard:_calc_melee_hit_ray(t, sphere_cast_radius)
-	local melee_entry = managers.blackmarket:equipped_melee_weapon()
-	local range = tweak_data.blackmarket.melee_weapons[melee_entry].stats.range or 175
-	local from, to = nil
-	
-	if self._lunge_data then
-		--log("argh.")
-		from = self._unit:movement():m_head_pos()
-		to = self._lunge_data.target_unit:body("head"):position()
-		mvec3_dir(to, from, to)
-		mvec3_mul(to, range + 50)
-		mvec3_add(to, from)
-
-	else
-		from = self._unit:movement():m_head_pos()
-		to = from + self._unit:movement():m_head_rot():y() * range
-	end
-
-	return self._unit:raycast("ray", from, to, "slot_mask", self._slotmask_bullet_impact_targets, "sphere_cast_radius", sphere_cast_radius, "ray_type", "body melee")
 end
 
 Hooks:PostHook(PlayerStandard,"_interupt_action_reload","totalcrackdown_interrupt_reload",function(self,t)
@@ -1554,8 +1532,33 @@ function PlayerStandard:_check_action_melee(t, input)
 	return true
 end
 
-if deathvox:IsTotalCrackdownEnabled() then 
+if tcd_enabled then 
 
+	local lunge_vec1 = Vector3()
+	local lunge_vec2 = Vector3()
+
+	function PlayerStandard:_calc_melee_hit_ray(t, sphere_cast_radius)
+		local melee_entry = managers.blackmarket:equipped_melee_weapon()
+		local mtd = tweak_data.blackmarket.melee_weapons[melee_entry]
+		local range = mtd.stats.range or 175
+		local from, to = nil
+		
+		if self._lunge_data then
+			--log("argh.")
+			from = self._unit:movement():m_head_pos()
+			to = self._lunge_data.target_unit:body("head"):position()
+			mvec3_dir(to, from, to)
+			mvec3_mul(to, range + 50)
+			mvec3_add(to, from)
+
+		else
+			from = self._unit:movement():m_head_pos()
+			to = from + self._unit:movement():m_head_rot():y() * range
+		end
+		
+		return self._unit:raycast("ray", from, to, "slot_mask", self._slotmask_bullet_impact_targets, "sphere_cast_radius", sphere_cast_radius, "ray_type", "body melee")
+	end
+	
 	function PlayerStandard:_do_action_melee(t, input, skip_damage, ignore_lunge)
 		self._state_data.meleeing = nil
 		local melee_entry = managers.blackmarket:equipped_melee_weapon()

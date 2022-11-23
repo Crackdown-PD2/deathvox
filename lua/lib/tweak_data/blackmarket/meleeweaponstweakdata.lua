@@ -1147,6 +1147,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.ostry.stats.range = 200
 		self.melee_weapons.ostry.stats.min_damage = 50
 
+		self.melee_weapons.ostry.hit_while_charging = {
+			swing_delay_initial = 0.1,
+			swing_delay_repeat = 0.1
+		}
 
 				--Bolt Cutters--
 		self.melee_weapons.cutters.subclasses = {
