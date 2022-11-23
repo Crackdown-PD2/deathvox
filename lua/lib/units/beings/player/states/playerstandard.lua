@@ -1353,28 +1353,30 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 --			Hooks:Call("OnPlayerMeleeHit",character_unit,col_ray,action_data,defense_data,t,lethal_hit)
 
 			if not tcd_enabled then 
-				if tweak_data.blackmarket.melee_weapons[melee_entry].tase_data and character_unit:character_damage().damage_tase then
-					local action_data = {
-						variant = tweak_data.blackmarket.melee_weapons[melee_entry].tase_data.tase_strength,
+				if melee_td.tase_data and character_unit:character_damage().damage_tase then
+					local _action_data = {
+						variant = melee_td.tase_data.tase_strength,
 						damage = 0,
 						attacker_unit = self._unit,
 						col_ray = col_ray
 					}
 
-					character_unit:character_damage():damage_tase(action_data)
+					character_unit:character_damage():damage_tase(_action_data)
 				end
 
-				if tweak_data.blackmarket.melee_weapons[melee_entry].fire_dot_data and character_unit:character_damage().damage_fire then
-					local action_data = {
+				if melee_td.fire_dot_data and character_unit:character_damage().damage_fire then
+					local _action_data = {
 						variant = "fire",
 						damage = 0,
 						attacker_unit = self._unit,
 						col_ray = col_ray,
-						fire_dot_data = tweak_data.blackmarket.melee_weapons[melee_entry].fire_dot_data
+						fire_dot_data = melee_td.fire_dot_data
 					}
 
-					character_unit:character_damage():damage_fire(action_data)
+					character_unit:character_damage():damage_fire(_action_data)
 				end
+			else
+				action_data.armor_piercing = melee_td.pierce_body_armor
 			end
 
 			self:_check_melee_dot_damage(col_ray, defense_data, melee_entry)
@@ -1555,17 +1557,23 @@ if tcd_enabled then
 			from = self._unit:movement():m_head_pos()
 			to = from + self._unit:movement():m_head_rot():y() * range
 		end
-		
-		return self._unit:raycast("ray", from, to, "slot_mask", self._slotmask_bullet_impact_targets, "sphere_cast_radius", sphere_cast_radius, "ray_type", "body melee")
+		local slot_mask = self._slotmask_bullet_impact_targets
+		if tcd_enabled then
+			if mtd.pierce_shields then
+				slot_mask = slot_mask - managers.slot:get_mask("enemy_shield_check")
+			end
+		end
+		return self._unit:raycast("ray", from, to, "slot_mask", slot_mask, "sphere_cast_radius", sphere_cast_radius, "ray_type", "body melee")
 	end
 	
 	function PlayerStandard:_do_action_melee(t, input, skip_damage, ignore_lunge)
 		self._state_data.meleeing = nil
 		local melee_entry = managers.blackmarket:equipped_melee_weapon()
-		local instant_hit = tweak_data.blackmarket.melee_weapons[melee_entry].instant
-		local pre_calc_hit_ray = tweak_data.blackmarket.melee_weapons[melee_entry].hit_pre_calculation
-		local melee_damage_delay = tweak_data.blackmarket.melee_weapons[melee_entry].melee_damage_delay or 0
-		melee_damage_delay = math.min(melee_damage_delay, tweak_data.blackmarket.melee_weapons[melee_entry].repeat_expire_t)
+		local mtd = tweak_data.blackmarket.melee_weapons[melee_entry]
+		local instant_hit = mtd.instant
+		local pre_calc_hit_ray = mtd.hit_pre_calculation
+		local melee_damage_delay = mtd.melee_damage_delay or 0
+		melee_damage_delay = math.min(melee_damage_delay, mtd.repeat_expire_t)
 		local primary = managers.blackmarket:equipped_primary()
 		local primary_id = primary.weapon_id
 		local bayonet_id = managers.blackmarket:equipped_bayonet(primary_id)
@@ -1575,14 +1583,14 @@ if tcd_enabled then
 			bayonet_melee = true
 		end
 		self._state_data.melee_hit_while_charging_t = nil
-		self._state_data.melee_expire_t = t + tweak_data.blackmarket.melee_weapons[melee_entry].expire_t
-		self._state_data.melee_repeat_expire_t = t + math.min(tweak_data.blackmarket.melee_weapons[melee_entry].repeat_expire_t, tweak_data.blackmarket.melee_weapons[melee_entry].expire_t)
+		self._state_data.melee_expire_t = t + mtd.expire_t
+		self._state_data.melee_repeat_expire_t = t + math.min(mtd.repeat_expire_t, tweak_data.blackmarket.melee_weapons[melee_entry].expire_t)
 		
 		local anim_speed = 1
 
 		if not instant_hit and not skip_damage then
 			if self._has_lunge_target and not self._lunge_data then
-				local range = tweak_data.blackmarket.melee_weapons[melee_entry].stats.range or 175
+				local range = mtd.stats.range or 175
 				local fwd_ray = self._fwd_ray
 				local travel_dis = fwd_ray.distance
 				
@@ -1632,7 +1640,7 @@ if tcd_enabled then
 			end
 		elseif not skip_damage and not ignore_lunge then
 			if self._has_lunge_target and not self._lunge_data then
-				local range = tweak_data.blackmarket.melee_weapons[melee_entry].stats.range or 175
+				local range = mtd.stats.range or 175
 				local fwd_ray = self._fwd_ray
 				local travel_dis = fwd_ray.distance
 				
