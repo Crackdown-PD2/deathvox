@@ -134,22 +134,26 @@ end
 --load contents now, as well as on menu load
 deathvox:Load()
 if deathvox:IsTotalCrackdownEnabled() then 
+	local texture_ids = Idstring("texture")
+	local deathvox_modpath = deathvoxcore:GetPath()
+	
 	--load tcd skill icons
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree/drillgui_icon_shocktrap"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/skilltree/drillgui_icon_shocktrap.texture")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree_2/icons_atlas_2"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/skilltree_2/icons_atlas_2.texture")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/specialization/icons_atlas"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/specialization/icons_atlas.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree/drillgui_icon_shocktrap"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/skilltree/drillgui_icon_shocktrap.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree_2/icons_atlas_2"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/skilltree_2/icons_atlas_2.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/specialization/icons_atlas"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/specialization/icons_atlas.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/hud_sentry_radial_icons_atlas"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/hud_sentry_radial_icons_atlas.texture")
 	
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static1"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/static1.texture")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static2"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/static2.texture")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static3"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/static3.texture")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static4"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/static4.texture")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/vignette_overlay"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/vignette_overlay.png")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/vignette_inverted_overlay"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/vignette_inverted_overlay.png")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/scanlines_overlay"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/damage_overlay_sociopath/scanlines_overlay.texture")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/blackmarket/icons/deployables/sentry_gun_silent"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/blackmarket/icons/tcd/sentry_gun_silent.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static1"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/damage_overlay_sociopath/static1.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static2"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/damage_overlay_sociopath/static2.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static3"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/damage_overlay_sociopath/static3.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static4"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/damage_overlay_sociopath/static4.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/vignette_overlay"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/damage_overlay_sociopath/vignette_overlay.png")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/vignette_inverted_overlay"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/damage_overlay_sociopath/vignette_inverted_overlay.png")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/scanlines_overlay"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/damage_overlay_sociopath/scanlines_overlay.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/blackmarket/icons/deployables/sentry_gun_silent"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/blackmarket/icons/tcd/sentry_gun_silent.texture")
 	
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/radial_menu_assets/rmm_bg"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/radial_menu_assets/rmm_bg.texture")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/radial_menu_assets/rmm_selector"),Idstring("texture"),deathvoxcore:GetPath() .. "assets/guis/textures/pd2/radial_menu_assets/rmm_selector.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/radial_menu_assets/rmm_bg"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/radial_menu_assets/rmm_bg.texture")
+	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/radial_menu_assets/rmm_selector"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/radial_menu_assets/rmm_selector.texture")
 	
 	deathvox.tcd_gui_data = { --for reference in projectilestweakdata and playerinventorygui, for item class preview icons
 		weapons = {

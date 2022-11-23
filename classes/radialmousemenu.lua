@@ -1,4 +1,4 @@
-local this_version = 1.13
+local this_version = 1.14
 if RadialMouseMenu and RadialMouseMenu.VERSION and RadialMouseMenu.VERSION > this_version then 
 	return
 end
@@ -129,7 +129,7 @@ function RadialMouseMenu:init(params,callback) --create new instance of a radial
 	local center_text = params.center_text or {
 		name = name .. "_CENTER_TEXT",
 		text = "",
-		layer = 1,
+		layer = 3,
 		font_size = 16,
 		align = "center",
 		vertical = "center",
@@ -140,10 +140,10 @@ function RadialMouseMenu:init(params,callback) --create new instance of a radial
 		name = name .. "_SELECTOR",
 		texture = "guis/textures/pd2/hud_shield",
 		render_template = "VertexColorTexturedRadial",
-		layer = 1,
+		layer = 2,
 		color = Color(1 / #self._items,1,1),
 		w = radius,
-		h = radius
+		h = radius	
 	}
 	local arrow = params.arrow or {
 		name = name .. "_ARROW",
@@ -151,7 +151,7 @@ function RadialMouseMenu:init(params,callback) --create new instance of a radial
 		h = 16,
 		texture = tweak_data.hud_icons.wp_arrow.texture,
 		texture_rect = tweak_data.hud_icons.wp_arrow.texture_rect,
-		layer = 1
+		layer = 5
 	}
 	
 	self._selected = false
@@ -416,7 +416,8 @@ function RadialMouseMenu:create_item(data,skip_refresh) --the slightly easier wa
 		w = _body.w or 16,
 		h = _body.h or 16,
 		alpha = _body.alpha or 0.7,
-		color = _body.color or Color.white
+		color = _body.color or Color.white,
+		layer = 3
 	}
 	item.icon = {
 		name = name .. "_ICON",
@@ -425,7 +426,8 @@ function RadialMouseMenu:create_item(data,skip_refresh) --the slightly easier wa
 		w = _icon.w or 16,
 		h = _icon.h or 16,
 		alpha = _icon.alpha or 0.7,
-		color = _icon.color or Color.white
+		color = _icon.color or Color.white,
+		layer = 4
 	}
 	
 	
@@ -436,7 +438,8 @@ function RadialMouseMenu:create_item(data,skip_refresh) --the slightly easier wa
 		font_size = _text.font_size or 16,
 		alpha = _text.alpha or 1,
 		layer = _text.layer or 1,
-		color = _text.color or Color.white
+		color = _text.color or Color.white,
+		layer = 5
 	}
 	
 	item.stay_open = data.stay_open or false
