@@ -1086,6 +1086,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.buck.stats.max_damage = 50
 		self.melee_weapons.buck.stats.range = 175
 		self.melee_weapons.buck.stats.min_damage = 30
+		
+		self.melee_weapons.buck.melee_damage_resistance = 0.75
+		self.melee_weapons.buck.all_damage_resistance = 0.1
 
 
 				--Pounder--
@@ -1099,6 +1102,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.nin.stats.max_damage = 80
 		self.melee_weapons.nin.stats.range = 185
 		self.melee_weapons.nin.stats.min_damage = 50
+		
 		self.melee_weapons.nin.pierce_body_armor = true
 		self.melee_weapons.nin.pierce_shields = true
 

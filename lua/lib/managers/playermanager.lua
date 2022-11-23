@@ -100,6 +100,8 @@ if tcd_enabled then
 	end
 	
 	function PlayerManager:damage_reduction_skill_multiplier(damage_type)
+		local is_melee = damage_type == "melee"
+		local player_unit = self:local_player()
 		local multiplier = 1
 		
 		if self._melee_stance_dr_t then
@@ -210,7 +212,7 @@ if tcd_enabled then
 		end
 		
 		if self:has_category_upgrade("player", "passive_damage_reduction") then
-			local health_ratio = self:player_unit():character_damage():health_ratio()
+			local health_ratio = player_unit:character_damage():health_ratio()
 			local min_ratio = self:upgrade_value("player", "passive_damage_reduction")
 
 			if health_ratio < min_ratio then
@@ -220,7 +222,7 @@ if tcd_enabled then
 
 		multiplier = multiplier * dmg_red_mul
 
-		if damage_type == "melee" then
+		if is_melee then
 			multiplier = multiplier * managers.player:upgrade_value("player", "melee_damage_dampener", 1)
 		end
 
@@ -230,7 +232,19 @@ if tcd_enabled then
 			multiplier = multiplier * managers.player:upgrade_value("player", "interacting_damage_multiplier", 1)
 		end
 
-		multiplier = multiplier + self:get_temporary_property("deathvox_tag_team_bonus_damage_resistance",0)
+		multiplier = multiplier - self:get_temporary_property("deathvox_tag_team_bonus_damage_resistance",0)
+		
+		local state = player_unit:movement():current_state()
+		if state._state_data.meleeing then
+			local melee_entry = managers.blackmarket:equipped_melee_weapon()
+			local mtd = tweak_data.blackmarket.melee_weapons[melee_entry]
+			if is_melee and mtd.melee_damage_resistance then 
+				multiplier = multiplier - mtd.melee_damage_resistance
+			end
+			if mtd.all_damage_resistance then
+				multiplier = multiplier - mtd.all_damage_resistance
+			end
+		end
 		
 		return multiplier
 	end
