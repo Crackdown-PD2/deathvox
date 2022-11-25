@@ -5,6 +5,7 @@ local pairs_g = pairs
 local alive_g = alive
 local world_g = World
 
+local tcd_enabled = deathvox:IsTotalCrackdownEnabled()
 
 Hooks:PostHook(PlayerManager,"_internal_load","deathvox_on_internal_load",function(self)
 --this will send whenever the player respawns, so... hm. 
@@ -15,7 +16,7 @@ Hooks:PostHook(PlayerManager,"_internal_load","deathvox_on_internal_load",functi
 	end
 --	Hooks:Call("TCD_OnGameStarted")
 
-	if deathvox:IsTotalCrackdownEnabled() then 
+	if tcd_enabled then 
 		local grenade = managers.blackmarket:equipped_grenade()
 		self:_set_grenade({
 			grenade = grenade,
@@ -72,7 +73,7 @@ Hooks:PostHook(PlayerManager,"init","tcd_playermanager_init",function(self)
 	self._can_lunge = true
 end)
 
-if deathvox:IsTotalCrackdownEnabled() then
+if tcd_enabled then
 	function PlayerManager:use_messiah_charge()
 		--nothing
 	end
@@ -99,6 +100,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 	
 	function PlayerManager:damage_reduction_skill_multiplier(damage_type)
+		local is_melee = damage_type == "melee"
+		local player_unit = self:local_player()
 		local multiplier = 1
 		
 		if self._melee_stance_dr_t then
@@ -209,7 +212,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 		
 		if self:has_category_upgrade("player", "passive_damage_reduction") then
-			local health_ratio = self:player_unit():character_damage():health_ratio()
+			local health_ratio = player_unit:character_damage():health_ratio()
 			local min_ratio = self:upgrade_value("player", "passive_damage_reduction")
 
 			if health_ratio < min_ratio then
@@ -219,7 +222,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		multiplier = multiplier * dmg_red_mul
 
-		if damage_type == "melee" then
+		if is_melee then
 			multiplier = multiplier * managers.player:upgrade_value("player", "melee_damage_dampener", 1)
 		end
 
@@ -229,7 +232,19 @@ if deathvox:IsTotalCrackdownEnabled() then
 			multiplier = multiplier * managers.player:upgrade_value("player", "interacting_damage_multiplier", 1)
 		end
 
-		multiplier = multiplier + self:get_temporary_property("deathvox_tag_team_bonus_damage_resistance",0)
+		multiplier = multiplier - self:get_temporary_property("deathvox_tag_team_bonus_damage_resistance",0)
+		
+		local state = player_unit:movement():current_state()
+		if state._state_data.meleeing then
+			local melee_entry = managers.blackmarket:equipped_melee_weapon()
+			local mtd = tweak_data.blackmarket.melee_weapons[melee_entry]
+			if is_melee and mtd.melee_damage_resistance then 
+				multiplier = multiplier - mtd.melee_damage_resistance
+			end
+			if mtd.all_damage_resistance then
+				multiplier = multiplier - mtd.all_damage_resistance
+			end
+		end
 		
 		return multiplier
 	end
@@ -573,7 +588,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 		else
 			self._message_system:unregister(Message.OnLethalHeadShot,"proc_making_miracles_aced")
 		end
+		
 		self:set_property("current_point_and_click_stacks",0)
+		self:set_property("point_and_click_stacks_add", 0)
+		
 		if self:has_category_upgrade("player","point_and_click_stacks") then 
 			Hooks:Add("TCD_Create_Stack_Tracker_HUD","TCD_CreatePACElement",function(hudtemp)
 			 --check_skills() is called before the hud is created so it must instead call on an event
@@ -641,12 +659,20 @@ if deathvox:IsTotalCrackdownEnabled() then
 				end
 			end)
 			
-			self._message_system:register(Message.OnEnemyShot,"proc_point_and_click",function(unit,attack_data)
+			
+			self._p_and_c_potential = self:has_category_upgrade("player", "point_and_click_never_miss")
+			self._p_and_c_exponential = self:has_category_upgrade("player", "point_and_click_deadshot_mul")
+			
+			--this adds a stack on kill
+			self._message_system:register(Message.OnEnemyKilled, "point_and_click_stack_on_kill", function(weapon_unit, variant, killed_unit)
 				local player = self:local_player()
+				
 				if not alive(player) then 
 					return
 				end
-				local weapon_base = attack_data and attack_data.weapon_unit and attack_data.weapon_unit:base()
+				
+				local weapon_base = weapon_unit and weapon_unit:base()
+				
 				if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_precision") then 
 					if weapon_base._setup.user_unit ~= player then 
 						return
@@ -654,55 +680,39 @@ if deathvox:IsTotalCrackdownEnabled() then
 				else
 					return
 				end
-				self:add_to_property("current_point_and_click_stacks",self:upgrade_value("player","point_and_click_stacks",0))
+				
+				
+				if self:get_property("point_and_click_stacks_add", 0) > 0 then					
+					self:add_to_property("current_point_and_click_stacks", 1)
+					self:add_to_property("current_point_and_click_stacks", self:get_property("point_and_click_stacks_add", 0))
+					
+					if self._p_and_c_exponential then
+						local to_add = 1
+						self:add_to_property("point_and_click_stacks_add", to_add)
+					end
+				else	
+					self:add_to_property("current_point_and_click_stacks", 1)
+					
+					if self._p_and_c_potential then
+						self:set_property("point_and_click_stacks_add", 1)
+					end
+				end	
 			end)
-			if self:has_category_upgrade("player","point_and_click_stack_from_kill") then 
-				self._message_system:register(Message.OnEnemyKilled,"proc_investment_returns_basic",function(weapon_unit,variant,killed_unit)
-					local player = self:local_player()
-					if not alive(player) then 
-						return
-					end
-					local weapon_base = weapon_unit and weapon_unit:base()
-					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_precision") then 
-						if weapon_base._setup.user_unit ~= player then 
-							return
-						end
-					else
-						return
-					end
-					self:add_to_property("current_point_and_click_stacks",self:upgrade_value("player","point_and_click_stack_from_kill",0))
-				end)
-			else
-				self._message_system:unregister(Message.OnEnemyKilled,"proc_investment_returns_basic")
-			end
 			
-			if self:has_category_upgrade("player","point_and_click_stack_from_headshot_kill") then 
-				self._message_system:register(Message.OnLethalHeadShot,"proc_investment_returns_aced",function(attack_data)
+			if self._p_and_c_potential then
+				self._message_system:register(Message.OnWeaponFired, "point_and_click_on_miss", function(weapon_unit, result)
+					if result and result.hit_enemy then
+						return
+					end
+					
 					local player = self:local_player()
+					
 					if not alive(player) then 
 						return
 					end
-					local weapon_base = attack_data and attack_data.weapon_unit and attack_data.weapon_unit:base()
-					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_precision") then 
-						if weapon_base._setup.user_unit ~= player then 
-							return
-						end
-					else
-						return
-					end
-					self:add_to_property("current_point_and_click_stacks",self:upgrade_value("player","point_and_click_stack_from_headshot_kill",0))
-				end)
-			else
-				self._message_system:unregister(Message.OnLethalHeadShot,"proc_investment_returns_aced")
-			end
-			
-			if self:has_category_upgrade("player","point_and_click_stack_mulligan") then 
-				self._message_system:register(Message.OnEnemyKilled,"proc_mulligan_reprieve",function(weapon_unit,variant,killed_unit)
-					local player = self:local_player()
-					if not alive(player) then 
-						return
-					end
+					
 					local weapon_base = weapon_unit and weapon_unit:base()
+					
 					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_precision") then 
 						if weapon_base._setup.user_unit ~= player then 
 							return
@@ -711,49 +721,49 @@ if deathvox:IsTotalCrackdownEnabled() then
 						return
 					end
 					
-					managers.enemy:remove_delayed_clbk("point_and_click_on_shot_missed",true)
+					self:set_property("point_and_click_stacks_add", 0)
 				end)
 			else
-				self._message_system:unregister(Message.OnEnemyKilled,"proc_mulligan_reprieve")
+				self._message_system:unregister(Message.OnWeaponFired, "point_and_click_on_miss")
 			end
 			
-			self._message_system:register(Message.OnWeaponFired,"clear_point_and_click_stacks",function(weapon_unit,result)
-				if result and result.hit_enemy then
-					return
-				end
-				
-				local player = self:local_player()
-				if not alive(player) then 
-					return
-				end
-				
-				local weapon_base = weapon_unit and weapon_unit:base()
-				if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_precision") then 
-					if weapon_base._setup.user_unit ~= player then 
+			if self:has_category_upgrade("player", "point_and_click_stack_from_headshot_kill") then
+				self._message_system:register(Message.OnLethalHeadShot, "point_and_click_stack_from_headshot_kill", function(attack_data)
+					local player = self:local_player()
+					
+					if not alive(player) then 
 						return
 					end
-				else
-					return
-				end
-				
-				if (self:get_property("current_point_and_click_stacks",0) > 0) and not managers.enemy:is_clbk_registered("point_and_click_on_shot_missed") then 
-					managers.enemy:add_delayed_clbk("point_and_click_on_shot_missed",callback(self,self,"set_property","current_point_and_click_stacks",0),
-						Application:time() + self:upgrade_value("player","point_and_click_stack_mulligan",0)
-					)
-				end
-			end)
+					
+					local weapon_base = attack_data and attack_data.weapon_unit and attack_data.weapon_unit:base()
+					
+					if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_precision") then 
+						if weapon_base._setup.user_unit ~= player then 
+							return
+						end
+					else
+						return
+					end
+					
+					self:add_to_property("current_point_and_click_stacks",self:upgrade_value("player","point_and_click_stack_from_headshot_kill",0))
+				end)
+			else
+				self._message_system:unregister(Message.OnLethalHeadShot, "point_and_click_stack_from_headshot_kill")
+			end
 		else
-			self._message_system:unregister(Message.OnEnemyShot,"proc_point_and_click")
-			self._message_system:unregister(Message.OnWeaponFired,"clear_point_and_click_stacks")
+			self._message_system:unregister(Message.OnEnemyShot,"point_and_click_stack_on_kill")
 		end
 		
 		if self:has_category_upgrade("weapon","magic_bullet") then 
-			self._message_system:register(Message.OnLethalHeadShot,"proc_magic_bullet",function(attack_data)
+			self._message_system:register(Message.OnLethalHeadShot, "proc_magic_bullet", function(attack_data)
 				local player = self:local_player()
+				
 				if not alive(player) then 
 					return
 				end
+				
 				local weapon_base = attack_data.weapon_unit and attack_data.weapon_unit:base()
+				
 				if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_class("class_precision") then 
 					if weapon_base._setup.user_unit ~= player then 
 						return
@@ -767,9 +777,11 @@ if deathvox:IsTotalCrackdownEnabled() then
 					local clip_current = weapon_base:get_ammo_remaining_in_clip()
 					local clip_max = weapon_base:get_ammo_max_per_clip()
 					local weapon_index = self:equipped_weapon_index()
+					
 					if (magic_bullet_level == 2) and (clip_current < clip_max) then
 						weapon_base:set_ammo_remaining_in_clip(math.min(clip_max,clip_current + self:upgrade_value("weapon","magic_bullet",0)))
 					end
+					
 					weapon_base:add_ammo_to_pool(self:upgrade_value("weapon","magic_bullet",0),self:equipped_weapon_index())
 					managers.hud:set_ammo_amount(weapon_index, weapon_base:ammo_info())
 					player:sound():play("pickup_ammo")
@@ -1345,9 +1357,11 @@ end
 function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, override_armor, detection_risk)
 	local chance = self:upgrade_value("player", "passive_dodge_chance", 0)
 	local dodge_shot_gain = self:_dodge_shot_gain()
+	
+	local player_unit = self:local_player()
 
 	for _, smoke_screen in ipairs(self._smoke_screen_effects or {}) do
-		if smoke_screen:is_in_smoke(self:player_unit()) then
+		if smoke_screen:is_in_smoke(player_unit) then
 			if smoke_screen:mine() then
 				chance = chance * self:upgrade_value("player", "sicario_multiplier", 1)
 				dodge_shot_gain = dodge_shot_gain * self:upgrade_value("player", "sicario_multiplier", 1)
@@ -1388,6 +1402,19 @@ function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, overri
 	chance = chance + self:upgrade_value("player", tostring(override_armor or managers.blackmarket:equipped_armor(true, true)) .. "_dodge_addend", 0)
 	chance = chance + self:upgrade_value("team", "crew_add_dodge", 0)
 	chance = chance + self:temporary_upgrade_value("temporary", "pocket_ecm_kill_dodge", 0)
+
+	if tcd_enabled then 
+		if alive(player_unit) then
+			local state = player_unit:movement():current_state()
+			if state._state_data.meleeing then
+				local melee_entry = managers.blackmarket:equipped_melee_weapon()
+				local mtd = tweak_data.blackmarket.melee_weapons[melee_entry]
+				if mtd.dodge_chance_bonus_while_charging then 
+					chance = chance + mtd.dodge_chance_bonus_while_charging
+				end
+			end
+		end
+	end
 
 	return chance
 end

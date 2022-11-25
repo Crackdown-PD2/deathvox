@@ -1403,6 +1403,8 @@ function CopLogicTravel._determine_destination_occupation(data, objective)
 
 			if my_data.called then
 				max_dist = 450
+			elseif data.is_converted then
+				max_dist = 300
 			else
 				max_dist = 600
 			end
@@ -1424,6 +1426,8 @@ function CopLogicTravel._determine_destination_occupation(data, objective)
 
 			if my_data.called then
 				max_dist = 400
+			elseif data.is_converted then
+				max_dist = 300
 			else
 				max_dist = 500
 			end
@@ -2082,28 +2086,6 @@ function CopLogicTravel.apply_wall_offset_to_cover(data, my_data, cover, wall_fw
 	return collision and ray_params.trace[1] or mvec3_cpy(to_pos_bwd)
 end
 
-function CopLogicTravel._find_cover(data, search_nav_seg, near_pos)
-	if data.cool then
-		return
-	end
-
-	local search_area = managers.groupai:state():get_area_from_nav_seg_id(search_nav_seg)
-	local threat_vis_pos = nil
-	
-	if data.important then
-		if data.attention_obj and REACT_COMBAT <= data.attention_obj.reaction and data.attention_obj.verified_t and data.t - data.attention_obj.verified_t < 7 then
-			threat_vis_pos = data.attention_obj.m_head_pos
-		end
-	end
-	
-	near_pos = near_pos or data.m_pos
-
-	local access_pos = data.char_tweak.access
-	local cover = managers.navigation:_find_cover_in_seg_through_lua(threat_vis_pos, near_pos, data.visibility_slotmask, access_pos, search_area.nav_segs, data.pos_rsrv_id)
-
-	return cover
-end
-
 function CopLogicTravel._get_allowed_travel_nav_segs(data, my_data, to_pos)
 	local nav_segs = {}
 	local added_segs = {}
@@ -2303,9 +2285,7 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index)
 				if new_occupation.cover then
 					to_pos = new_occupation.cover[1][1]
 
-					if data.char_tweak.wall_fwd_offset then
-						to_pos = CopLogicTravel.apply_wall_offset_to_cover(data, my_data, new_occupation.cover[1], data.char_tweak.wall_fwd_offset)
-					end
+					to_pos = managers.navigation:pad_out_position(to_pos, 4, data.char_tweak.wall_fwd_offset)
 
 					local new_cover = new_occupation.cover
 
@@ -2325,6 +2305,7 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index)
 
 						if not managers.navigation:is_pos_free(rsrv_desc) then
 							to_pos = CopLogicTravel._find_near_free_pos(to_pos, 700, nil, pos_rsrv_id)
+							to_pos = managers.navigation:pad_out_position(to_pos, 4, data.char_tweak.wall_fwd_offset)
 						end
 					end
 				end
@@ -2351,6 +2332,7 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index)
 
 					if not managers.navigation:is_pos_free(rsrv_desc) then
 						to_pos = CopLogicTravel._find_near_free_pos(to_pos, 700, nil, pos_rsrv_id)
+						to_pos = managers.navigation:pad_out_position(to_pos, 4, data.char_tweak.wall_fwd_offset)
 					end
 				end
 			end
@@ -2367,6 +2349,7 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index)
 
 			if not managers.navigation:is_pos_free(rsrv_desc) then
 				to_pos = CopLogicTravel._find_near_free_pos(to_pos, nil, nil, pos_rsrv_id)
+				to_pos = managers.navigation:pad_out_position(to_pos, 4, data.char_tweak.wall_fwd_offset)
 			end
 
 			wants_reservation = true
@@ -2392,9 +2375,7 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index)
 			--log("nice cock")
 			to_pos = cover[1]
 
-			if data.char_tweak.wall_fwd_offset then
-				to_pos = CopLogicTravel.apply_wall_offset_to_cover(data, my_data, cover, data.char_tweak.wall_fwd_offset)
-			end
+			to_pos = managers.navigation:pad_out_position(to_pos, 4, data.char_tweak.wall_fwd_offset)
 
 			managers.navigation:reserve_cover(cover, data.pos_rsrv_id)
 
@@ -2412,6 +2393,7 @@ function CopLogicTravel._get_exact_move_pos(data, nav_index)
 
 			if not managers.navigation:is_pos_free(rsrv_desc) then
 				to_pos = CopLogicTravel._find_near_free_pos(to_pos, 700, nil, pos_rsrv_id)
+				to_pos = managers.navigation:pad_out_position(to_pos, 4, data.char_tweak.wall_fwd_offset)
 			end
 		end
 
@@ -2718,7 +2700,7 @@ function CopLogicTravel._chk_stop_for_follow_unit(data, my_data)
 		return
 	end
 
-	if not my_data.coarse_path_index then
+	if not my_data.coarse_path_index or my_data.coarse_path and #my_data.coarse_path - 1 == 1 then
 		--debug_pause_unit(data.unit, "[CopLogicTravel._chk_stop_for_follow_unit]", data.unit, inspect(data), inspect(my_data))
 
 		return

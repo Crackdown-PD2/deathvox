@@ -12,6 +12,8 @@ local tmp_ground_to_vec = Vector3()
 local up_offset_vec = math.UP * 30
 local down_offset_vec = math.UP * -40
 
+local tcd_enabled = deathvox:IsTotalCrackdownEnabled()
+
 Hooks:PostHook(PlayerStandard, "_calculate_standard_variables", "CD_calculate_standard_variables", function(self, t, dt)
 	self._setting_hold_to_fire = managers.user:get_setting("holdtofire")
 end)
@@ -1115,15 +1117,16 @@ local melee_vars = {
 	"player_melee",
 	"player_melee_var2"
 }
-function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_entry, hand_id, force_max_charge)
+--not to be confused with _do_action_melee()
+function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_entry, hand_id, force_max_charge,skip_shaker)
 	melee_entry = melee_entry or managers.blackmarket:equipped_melee_weapon()
 	local melee_td = tweak_data.blackmarket.melee_weapons[melee_entry]
 	local instant_hit = melee_td.instant
 	local melee_damage_delay = melee_td.melee_damage_delay or 0
 	local charge_lerp_value = instant_hit and 0 or force_max_charge and 1 or self:_get_melee_charge_lerp_value(t, melee_damage_delay)
-
-	self._ext_camera:play_shaker(melee_vars[math.random(#melee_vars)], math.max(0.3, charge_lerp_value))
-
+	if not skip_shaker then
+		self._ext_camera:play_shaker(melee_vars[math.random(#melee_vars)], math.max(0.3, charge_lerp_value))
+	end
 	local sphere_cast_radius = 20
 	local col_ray = nil
 
@@ -1279,7 +1282,7 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 
 			local special_weapon = melee_td.special_weapon
 			local action_data = {
-				variant = "melee",
+				variant = "melee"
 			}
 			if melee_td.stats.knockback_tier then 
 				local knockback_tier = melee_td.stats.knockback_tier
@@ -1349,6 +1352,33 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			
 --			Hooks:Call("OnPlayerMeleeHit",character_unit,col_ray,action_data,defense_data,t,lethal_hit)
 
+			if not tcd_enabled then 
+				if melee_td.tase_data and character_unit:character_damage().damage_tase then
+					local _action_data = {
+						variant = melee_td.tase_data.tase_strength,
+						damage = 0,
+						attacker_unit = self._unit,
+						col_ray = col_ray
+					}
+
+					character_unit:character_damage():damage_tase(_action_data)
+				end
+
+				if melee_td.fire_dot_data and character_unit:character_damage().damage_fire then
+					local _action_data = {
+						variant = "fire",
+						damage = 0,
+						attacker_unit = self._unit,
+						col_ray = col_ray,
+						fire_dot_data = melee_td.fire_dot_data
+					}
+
+					character_unit:character_damage():damage_fire(_action_data)
+				end
+			else
+				action_data.armor_piercing = melee_td.pierce_body_armor
+			end
+
 			self:_check_melee_dot_damage(col_ray, defense_data, melee_entry)
 			self:_perform_sync_melee_damage(hit_unit, col_ray, action_data.damage)
 			
@@ -1373,30 +1403,6 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 	
 	
 	return col_ray
-end
-
-local lunge_vec1 = Vector3()
-local lunge_vec2 = Vector3()
-
-function PlayerStandard:_calc_melee_hit_ray(t, sphere_cast_radius)
-	local melee_entry = managers.blackmarket:equipped_melee_weapon()
-	local range = tweak_data.blackmarket.melee_weapons[melee_entry].stats.range or 175
-	local from, to = nil
-	
-	if self._lunge_data then
-		--log("argh.")
-		from = self._unit:movement():m_head_pos()
-		to = self._lunge_data.target_unit:body("head"):position()
-		mvec3_dir(to, from, to)
-		mvec3_mul(to, range + 50)
-		mvec3_add(to, from)
-
-	else
-		from = self._unit:movement():m_head_pos()
-		to = from + self._unit:movement():m_head_rot():y() * range
-	end
-
-	return self._unit:raycast("ray", from, to, "slot_mask", self._slotmask_bullet_impact_targets, "sphere_cast_radius", sphere_cast_radius, "ray_type", "body melee")
 end
 
 Hooks:PostHook(PlayerStandard,"_interupt_action_reload","totalcrackdown_interrupt_reload",function(self,t)
@@ -1520,27 +1526,54 @@ function PlayerStandard:_check_action_melee(t, input)
 	end
 
 	local melee_entry = managers.blackmarket:equipped_melee_weapon()
-	local instant = tweak_data.blackmarket.melee_weapons[melee_entry].instant
-
+	local mtd = tweak_data.blackmarket.melee_weapons[melee_entry]
+	local instant = mtd.instant
+	
 	self:_start_action_melee(t, input, instant)
 
 	return true
 end
 
-if deathvox:IsTotalCrackdownEnabled() then 
+if tcd_enabled then 
 
-	local melee_vars = {
-		"player_melee",
-		"player_melee_var2"
-	}
+	local lunge_vec1 = Vector3()
+	local lunge_vec2 = Vector3()
 
+	function PlayerStandard:_calc_melee_hit_ray(t, sphere_cast_radius)
+		local melee_entry = managers.blackmarket:equipped_melee_weapon()
+		local mtd = tweak_data.blackmarket.melee_weapons[melee_entry]
+		local range = mtd.stats.range or 175
+		local from, to = nil
+		
+		if self._lunge_data then
+			--log("argh.")
+			from = self._unit:movement():m_head_pos()
+			to = self._lunge_data.target_unit:body("head"):position()
+			mvec3_dir(to, from, to)
+			mvec3_mul(to, range + 50)
+			mvec3_add(to, from)
+
+		else
+			from = self._unit:movement():m_head_pos()
+			to = from + self._unit:movement():m_head_rot():y() * range
+		end
+		local slot_mask = self._slotmask_bullet_impact_targets
+		if tcd_enabled then
+			if mtd.pierce_shields then
+				slot_mask = slot_mask - managers.slot:get_mask("enemy_shield_check")
+			end
+		end
+		return self._unit:raycast("ray", from, to, "slot_mask", slot_mask, "sphere_cast_radius", sphere_cast_radius, "ray_type", "body melee")
+	end
+	
 	function PlayerStandard:_do_action_melee(t, input, skip_damage, ignore_lunge)
 		self._state_data.meleeing = nil
 		local melee_entry = managers.blackmarket:equipped_melee_weapon()
-		local instant_hit = tweak_data.blackmarket.melee_weapons[melee_entry].instant
-		local pre_calc_hit_ray = tweak_data.blackmarket.melee_weapons[melee_entry].hit_pre_calculation
-		local melee_damage_delay = tweak_data.blackmarket.melee_weapons[melee_entry].melee_damage_delay or 0
-		melee_damage_delay = math.min(melee_damage_delay, tweak_data.blackmarket.melee_weapons[melee_entry].repeat_expire_t)
+		local mtd = tweak_data.blackmarket.melee_weapons[melee_entry]
+		local instant_hit = mtd.instant
+		local pre_calc_hit_ray = mtd.hit_pre_calculation
+		local melee_damage_delay = mtd.melee_damage_delay or 0
+		melee_damage_delay = math.min(melee_damage_delay, mtd.repeat_expire_t)
 		local primary = managers.blackmarket:equipped_primary()
 		local primary_id = primary.weapon_id
 		local bayonet_id = managers.blackmarket:equipped_bayonet(primary_id)
@@ -1549,15 +1582,15 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if bayonet_id and self._equipped_unit:base():selection_index() == 2 then
 			bayonet_melee = true
 		end
-
-		self._state_data.melee_expire_t = t + tweak_data.blackmarket.melee_weapons[melee_entry].expire_t
-		self._state_data.melee_repeat_expire_t = t + math.min(tweak_data.blackmarket.melee_weapons[melee_entry].repeat_expire_t, tweak_data.blackmarket.melee_weapons[melee_entry].expire_t)
+		self._state_data.melee_hit_while_charging_t = nil
+		self._state_data.melee_expire_t = t + mtd.expire_t
+		self._state_data.melee_repeat_expire_t = t + math.min(mtd.repeat_expire_t, tweak_data.blackmarket.melee_weapons[melee_entry].expire_t)
 		
 		local anim_speed = 1
 
 		if not instant_hit and not skip_damage then
 			if self._has_lunge_target and not self._lunge_data then
-				local range = tweak_data.blackmarket.melee_weapons[melee_entry].stats.range or 175
+				local range = mtd.stats.range or 175
 				local fwd_ray = self._fwd_ray
 				local travel_dis = fwd_ray.distance
 				
@@ -1607,7 +1640,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end
 		elseif not skip_damage and not ignore_lunge then
 			if self._has_lunge_target and not self._lunge_data then
-				local range = tweak_data.blackmarket.melee_weapons[melee_entry].stats.range or 175
+				local range = mtd.stats.range or 175
 				local fwd_ray = self._fwd_ray
 				local travel_dis = fwd_ray.distance
 				
@@ -1701,7 +1734,82 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	end
 
+	function PlayerStandard:_update_melee_timers(t, input)
+		local melee_entry = managers.blackmarket:equipped_melee_weapon()
+		local mtd = tweak_data.blackmarket.melee_weapons[melee_entry]
+		if self._state_data.meleeing then
+			local lerp_value = self:_get_melee_charge_lerp_value(t)
 
+			self._camera_unit:anim_state_machine():set_parameter(self:get_animation("melee_charge_state"), "charge_lerp", math.bezier({
+				0,
+				0,
+				1,
+				1
+			}, lerp_value))
+
+			if self._state_data.melee_charge_shake then
+				self._ext_camera:shaker():set_parameter(self._state_data.melee_charge_shake, "amplitude", math.bezier({
+					0,
+					0,
+					1,
+					1
+				}, lerp_value))
+			end
+			local hit_while_charging_data = mtd.hit_while_charging
+			if hit_while_charging_data then
+				if self._state_data.melee_hit_while_charging_t then
+					if self._state_data.melee_hit_while_charging_t <= t then 
+						--do damage
+						self._state_data.melee_hit_while_charging_t = t + hit_while_charging_data.swing_delay_repeat
+						self:_do_melee_damage(t,nil,nil,melee_entry,nil,nil,true)
+					end
+				else
+					self._state_data.melee_hit_while_charging_t = t + hit_while_charging_data.swing_delay_initial
+				end
+			end
+		end
+
+		if self._state_data.melee_damage_delay_t and self._state_data.melee_damage_delay_t <= t then
+			self:_do_melee_damage(t, nil, self._state_data.melee_hit_ray)
+
+			self._state_data.melee_damage_delay_t = nil
+			self._state_data.melee_hit_ray = nil
+		end
+
+		if self._state_data.melee_attack_allowed_t and self._state_data.melee_attack_allowed_t <= t then
+			self._state_data.melee_start_t = t
+			local melee_entry = managers.blackmarket:equipped_melee_weapon()
+			local melee_charge_shaker = tweak_data.blackmarket.melee_weapons[melee_entry].melee_charge_shaker or "player_melee_charge"
+			self._state_data.melee_charge_shake = self._ext_camera:play_shaker(melee_charge_shaker, 0)
+			self._state_data.melee_attack_allowed_t = nil
+		end
+
+		if self._state_data.melee_repeat_expire_t and self._state_data.melee_repeat_expire_t <= t then
+			self._state_data.melee_repeat_expire_t = nil
+
+			if input.btn_meleet_state then
+				local melee_entry = managers.blackmarket:equipped_melee_weapon()
+				local instant_hit = tweak_data.blackmarket.melee_weapons[melee_entry].instant
+				self._state_data.melee_charge_wanted = not instant_hit and true
+			end
+		end
+
+		if self._state_data.melee_expire_t and self._state_data.melee_expire_t <= t then
+			self._state_data.melee_expire_t = nil
+			self._state_data.melee_repeat_expire_t = nil
+
+			self:_stance_entered()
+
+			if self._equipped_unit and input.btn_steelsight_state then
+				self._steelsight_wanted = true
+			end
+		end
+	end
+	
+	Hooks:PostHook(PlayerStandard,"_interrupt_action_melee","tcd_melee_stop",function(self,t)
+		self._state_data.melee_hit_while_charging_t = nil
+	end)
+	
 	function PlayerStandard:_do_action_throw_projectile(t, input, drop_projectile)
 		local current_state_name = self._camera_unit:anim_state_machine():segment_state(self:get_animation("base"))
 		self._state_data.throwing_projectile = nil
@@ -1802,14 +1910,15 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 
 		local melee_entry = managers.blackmarket:equipped_melee_weapon()
-		self._state_data.melee_global_value = tweak_data.blackmarket.melee_weapons[melee_entry].anim_global_param
+		local mtd = tweak_data.blackmarket.melee_weapons[melee_entry]
+		self._state_data.melee_global_value = mtd.anim_global_param
 
 		self._camera_unit:anim_state_machine():set_global(self._state_data.melee_global_value, 1)
 
 		local current_state_name = self._camera_unit:anim_state_machine():segment_state(self:get_animation("base"))
-		local attack_allowed_expire_t = tweak_data.blackmarket.melee_weapons[melee_entry].attack_allowed_expire_t or 0.15
+		local attack_allowed_expire_t = mtd.attack_allowed_expire_t or 0.15
 		self._state_data.melee_attack_allowed_t = t + (current_state_name ~= self:get_animation("melee_attack_state") and attack_allowed_expire_t or 0)
-		local instant_hit = tweak_data.blackmarket.melee_weapons[melee_entry].instant
+		local instant_hit = mtd.instant
 
 		if not instant_hit then
 			self._ext_network:send("sync_melee_start", 0)
@@ -2005,10 +2114,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	end
 
-	function PlayerStandard:_check_action_primary_attack(t, input) --TEMPORARY FIX, REMOVE WHEN CLAIRE AUTO ANIMS ARE ADDED
+	function PlayerStandard:_check_action_primary_attack(t, input)
 		local new_action = nil
 		local action_wanted = input.btn_primary_attack_state or input.btn_primary_attack_release
-
+		action_wanted = action_wanted or self:is_shooting_count()
+		action_wanted = action_wanted or self:_is_charging_weapon()
+		
 		if action_wanted then
 			local action_forbidden = self:_is_reloading() or self:_changing_weapon() or self:_is_meleeing() or self._use_item_expire_t or self:_interacting() or self:_is_throwing_projectile() or self:_is_deploying_bipod() or self._menu_closed_fire_cooldown > 0 or self:is_switching_stances()
 
@@ -2034,6 +2145,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 							end
 
 							self._equipped_unit:base():tweak_data_anim_stop("fire")
+						elseif fire_mode == "single" then
+							if input.btn_primary_attack_press or self._equipped_unit:base().should_reload_immediately and self._equipped_unit:base():should_reload_immediately() then
+								self:_start_action_reload_enter(t)
+							end
 						else
 							new_action = true
 
@@ -2049,7 +2164,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 								start = start or fire_mode ~= "single" and input.btn_primary_attack_state
 								start = start and not fire_on_release
 								start = start or fire_on_release and input.btn_primary_attack_release
-
+								start = start or fire_mode == "volley" and input.btn_primary_attack_press
+								
 								if start then
 									weap_base:start_shooting()
 									self._camera_unit:base():start_shooting()
@@ -2077,28 +2193,34 @@ if deathvox:IsTotalCrackdownEnabled() then
 						local spread_mul = math.lerp(1, tweak_data.player.suppression.spread_mul, suppression_ratio)
 						local autohit_mul = math.lerp(1, tweak_data.player.suppression.autohit_chance_mul, suppression_ratio)
 						local suppression_mul = managers.blackmarket:threat_multiplier()
-						local dmg_mul = managers.player:temporary_upgrade_value("temporary", "dmg_multiplier_outnumbered", 1)
+						local dmg_mul = 1
+						local weapon_tweak_data = weap_base:weapon_tweak_data()
+						local primary_category = weapon_tweak_data.categories[1]
 
-						if managers.player:has_category_upgrade("player", "overkill_all_weapons") or weap_base:is_category("shotgun", "saw") then
-							dmg_mul = dmg_mul * managers.player:temporary_upgrade_value("temporary", "overkill_damage_multiplier", 1)
+						if not weapon_tweak_data.ignore_damage_multipliers then
+							dmg_mul = dmg_mul * managers.player:temporary_upgrade_value("temporary", "dmg_multiplier_outnumbered", 1)
+
+							if managers.player:has_category_upgrade("player", "overkill_all_weapons") or weap_base:is_category("shotgun", "saw") then
+								dmg_mul = dmg_mul * managers.player:temporary_upgrade_value("temporary", "overkill_damage_multiplier", 1)
+							end
+
+							local health_ratio = self._ext_damage:health_ratio()
+							local damage_health_ratio = managers.player:get_damage_health_ratio(health_ratio, primary_category)
+
+							if damage_health_ratio > 0 then
+								local upgrade_name = weap_base:is_category("saw") and "melee_damage_health_ratio_multiplier" or "damage_health_ratio_multiplier"
+								local damage_ratio = damage_health_ratio
+								dmg_mul = dmg_mul * (1 + managers.player:upgrade_value("player", upgrade_name, 0) * damage_ratio)
+							end
+
+							dmg_mul = dmg_mul * managers.player:temporary_upgrade_value("temporary", "berserker_damage_multiplier", 1)
+							dmg_mul = dmg_mul * managers.player:get_property("trigger_happy", 1)
 						end
 
-						local health_ratio = self._ext_damage:health_ratio()
-						local primary_category = weap_base:weapon_tweak_data().categories[1]
-						local damage_health_ratio = managers.player:get_damage_health_ratio(health_ratio, primary_category)
-
-						if damage_health_ratio > 0 then
-							local upgrade_name = weap_base:is_category("saw") and "melee_damage_health_ratio_multiplier" or "damage_health_ratio_multiplier"
-							local damage_ratio = damage_health_ratio
-							dmg_mul = dmg_mul * (1 + managers.player:upgrade_value("player", upgrade_name, 0) * damage_ratio)
-						end
-
-						dmg_mul = dmg_mul * managers.player:temporary_upgrade_value("temporary", "berserker_damage_multiplier", 1)
-						dmg_mul = dmg_mul * managers.player:get_property("trigger_happy", 1)
 						local fired = nil
 
 						if fire_mode == "single" then
-							if (input.btn_primary_attack_press or input.btn_primary_attack_state) and start_shooting then
+							if input.btn_primary_attack_press and start_shooting then
 								fired = weap_base:trigger_pressed(self:get_fire_weapon_position(), self:get_fire_weapon_direction(), dmg_mul, nil, spread_mul, autohit_mul, suppression_mul)
 							elseif fire_on_release then
 								if input.btn_primary_attack_release then
@@ -2107,7 +2229,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 									weap_base:trigger_held(self:get_fire_weapon_position(), self:get_fire_weapon_direction(), dmg_mul, nil, spread_mul, autohit_mul, suppression_mul)
 								end
 							end
-						elseif input.btn_primary_attack_state then
+						elseif fire_mode == "auto" then
+							if input.btn_primary_attack_state then
+								fired = weap_base:trigger_held(self:get_fire_weapon_position(), self:get_fire_weapon_direction(), dmg_mul, nil, spread_mul, autohit_mul, suppression_mul)
+							end
+						elseif fire_mode == "burst" then
+							fired = weap_base:trigger_held(self:get_fire_weapon_position(), self:get_fire_weapon_direction(), dmg_mul, nil, spread_mul, autohit_mul, suppression_mul)
+						elseif fire_mode == "volley" then
 							fired = weap_base:trigger_held(self:get_fire_weapon_position(), self:get_fire_weapon_direction(), dmg_mul, nil, spread_mul, autohit_mul, suppression_mul)
 						end
 
@@ -2119,7 +2247,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 							end
 						end
 
-						local charging_weapon = fire_on_release and weap_base:charging()
+						local charging_weapon = weap_base:charging()
 
 						if not self._state_data.charging_weapon and charging_weapon then
 							self:_start_action_charging_weapon(t)
@@ -2144,7 +2272,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 								weap_base:tweak_data_anim_play("fire", weap_base:fire_rate_multiplier())
 							end
 
-							if fire_mode == "single" and weap_base:get_name_id() ~= "saw" then
+							if fire_mode ~= "auto" and weap_base:get_name_id() ~= "saw" then
 								if not self._state_data.in_steelsight then
 									self._ext_camera:play_redirect(self:get_animation("recoil"), weap_base:fire_rate_multiplier())
 								elseif weap_tweak_data.animations.recoil_steelsight then
@@ -2152,11 +2280,15 @@ if deathvox:IsTotalCrackdownEnabled() then
 								end
 							end
 
-							local recoil_multiplier = (weap_base:recoil() + weap_base:recoil_addend()) * weap_base:recoil_multiplier()
-
+							local recoil_multiplier = (weap_base:recoil() + weap_base:recoil_addend()) * weap_base:recoil_multiplier() --instead of [0.5-3], in tcd this should be replaced by a scalar (0-1]
+--							Console:SetTrackerValue("trackera",string.format("recoil_multiplier %0.2f",recoil_multiplier))
 	--						cat_print("jansve", "[PlayerStandard] Weapon Recoil Multiplier: " .. tostring(recoil_multiplier))
 
-							local up, down, left, right = unpack(weap_tweak_data.kick[self._state_data.in_steelsight and "steelsight" or self._state_data.ducking and "crouching" or "standing"])
+							local kick_tweak_data = weap_tweak_data.kick[fire_mode] or weap_tweak_data.kick
+							local up, down, left, right = unpack(kick_tweak_data[self._state_data.in_steelsight and "steelsight" or self._state_data.ducking and "crouching" or "standing"])
+
+
+
 
 							self._camera_unit:base():recoil_kick(up * recoil_multiplier, down * recoil_multiplier, left * recoil_multiplier, right * recoil_multiplier)
 
@@ -2198,11 +2330,17 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 							if weap_base.third_person_important and weap_base:third_person_important() then
 								self._ext_network:send("shot_blank_reliable", impact, 0)
-							elseif weap_base.akimbo and not weap_base:weapon_tweak_data().allow_akimbo_autofire or fire_mode == "single" then
+							elseif fire_mode ~= "auto" or weap_base.akimbo and not weap_base:weapon_tweak_data().allow_akimbo_autofire then
 								self._ext_network:send("shot_blank", impact, 0)
 							end
 						elseif fire_mode == "single" then
 							new_action = false
+						elseif fire_mode == "burst" then
+							if weap_base:shooting_count() == 0 then
+								new_action = false
+							end
+						elseif fire_mode == "volley" then
+							new_action = self:_is_charging_weapon()
 						end
 					end
 				end

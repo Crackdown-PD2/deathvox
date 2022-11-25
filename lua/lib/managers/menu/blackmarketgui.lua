@@ -29,6 +29,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 	Hooks:PostHook(BlackMarketGuiSlotItem,"init","tcd_bmgui_slotitem_init",function(self, main_panel, data, x, y, w, h)
 		local tcd_gui_data = deathvox.tcd_gui_data
+		local wftd = tweak_data.weapon.factory
 
 		local item_class
 		local item_name = data.name
@@ -40,9 +41,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			return
 		end
 		
-		local wtd = tweak_data.weapon[item_name]
-		local wftd = tweak_data.weapon.factory
-		
+
 		local function insert_subclasses(new_subclasses)
 			if type(new_subclasses) == "table" then 
 				for _,subclass_name in pairs(new_subclasses) do 
@@ -83,12 +82,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 				insert_subclasses(proj_td.subclasses)
 			end
 		elseif item_category == "primaries" or item_category == "secondaries" then
-
+		
+			local wtd = tweak_data.weapon[item_name]
+			
 			if wtd then 
 				item_class = wtd.primary_class
-				if wtd.subclasses then 
-					insert_subclasses(wtd.subclasses)
-				end
+				insert_subclasses(wtd.subclasses)
 			end
 			
 			if wftd.parts[item_name] then --is weapon attachment
@@ -109,7 +108,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 						end
 					end
 				end
-			end			
+			end
+		elseif item_category == "melee_weapons" then
+			local melee_td = item_name and tweak_data.blackmarket.melee_weapons[item_name]
+			if melee_td then 
+--				item_class = melee_td.primary_class --unless we ever have a melee weapon that isn't of the Melee weapon class, this icon is just visual clutter
+				insert_subclasses(melee_td.subclasses)
+			end
 		end
 		
 		local icon_size = 24

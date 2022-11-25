@@ -257,8 +257,20 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "weapon"
 			}
 		}
+		self.definitions.weapon_point_and_click_damage_bonus_2 = {
+			name_id = "menu_weapon_point_and_click_damage_bonus",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "point_and_click_damage_bonus",
+				category = "weapon"
+			}
+		}
+		
+		--% bonus damage per stack, max bonus damage
 		self.values.weapon.point_and_click_damage_bonus = {
-			{0.01,5} --% bonus damage per stack, max bonus damage
+			{0.005, 2.5},
+			{0.005, 5},
 		}
 		
 		self.definitions.weapon_marksman_steelsight_speed_multiplier = {
@@ -298,7 +310,29 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			{0.01,1}
 		}
 		
-		self.definitions.player_investment_returns_basic = {
+		self.definitions.player_point_and_click_never_miss = {
+			name_id = "menu_point_and_click_never_miss",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "point_and_click_never_miss",
+				category = "player"
+			}
+		}
+		self.values.player.point_and_click_never_miss = {true}
+		
+		self.definitions.player_point_and_click_deadshot_mul = {
+			name_id = "menu_point_and_click_deadshot_mul",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "point_and_click_deadshot_mul",
+				category = "player"
+			}
+		}
+		self.values.player.point_and_click_deadshot_mul = {true}
+		
+		self.definitions.player_point_and_click_stack_from_kill = {
 			name_id = "menu_investment_returns_basic",
 			category = "feature",
 			upgrade = {
@@ -311,7 +345,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			1 --on kill
 		}
 		
-		self.definitions.player_investment_returns_aced = {
+		self.definitions.player_point_and_click_stack_from_headshot_kill = {
 			name_id = "menu_investment_returns_aced",
 			category = "feature",
 			upgrade = {
@@ -509,14 +543,14 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		--Chief
 		
 		self.values.player.passive_convert_enemies_health_multiplier = {
-			0.5,
-			0.2
+			0.2,
+			0.1
 		}
 		self.values.player.convert_enemies_interaction_speed_multiplier = {
 			0.1 --90% faster; modified vanilla upgrade
 		}
 		self.values.friendship_collar.quantity = {
-			3
+			6
 		}
 		self.definitions.friendship_collar_quantity = {
 			name = "menu_protect_and_serve",
@@ -632,6 +666,68 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "convert_enemies_tackle_specials",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.convert_enemies_range_bonus = {
+			2
+		}
+		self.definitions.player_convert_enemies_range_bonus = {
+			name = "menu_order_through_law",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_range_bonus",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.convert_enemies_always_stagger = {
+			true
+		}
+		self.definitions.player_convert_enemies_always_stagger = {
+			name = "menu_bleh",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemies_always_stagger",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self.values.player.convert_enemy_instant = {
+			true
+		}
+		self.definitions.player_convert_enemy_instant = {
+			name = "menu_maintaining_the_peace",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemy_instant",
+				synced = true,
+				category = "player"
+			}
+		}
+		
+		self._joker_dmg_increase_data = {
+			increase_max = 0.25,
+			increase_t = 30,
+			increase_per_t = 0.01
+		}
+		
+		self.values.player.convert_enemy_gains_dmg_over_t = {
+			true
+		}
+		self.definitions.player_convert_convert_enemy_gains_dmg_over_t = {
+			name = "menu_maintaining_the_peace",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "convert_enemy_gains_dmg_over_t",
 				synced = true,
 				category = "player"
 			}
@@ -788,6 +884,20 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "class_shotgun"
 			}
 		}
+		
+		self.values.class_shotgun.grand_brachial_bodyshots = {
+			true
+		}
+		self.definitions.class_shotgun_grand_brachial_bodyshots = {
+			name_id = "menu_grand_brachial_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "grand_brachial_bodyshots",
+				category = "class_shotgun"
+			}
+		}
+		
 		
 		
 		--Heavy
@@ -1096,6 +1206,20 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		self.values.class_rapidfire.empty_magazine_reload_speed_bonus = {
 			0.5
+		}
+		
+		self.values.class_rapidfire.money_shot_pierce = {
+			true
+		}
+		
+		self.definitions.class_rapidfire_moneyshot_pierce = {
+			name_id = "menu_moneyshot_rapid_fire_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "money_shot_pierce",
+				category = "class_rapidfire"
+			}
 		}
 		
 		self.definitions.class_rapidfire_moneyshot = {
@@ -1599,6 +1723,17 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "homing_bolts",
+				category = "weapon"
+			}
+		}
+		
+		self.values.weapon.crossbow_piercer = {true}
+		self.definitions.weapon_crossbow_piercer = {
+			name_id = "menu_good_hunting",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "crossbow_piercer",
 				category = "weapon"
 			}
 		}

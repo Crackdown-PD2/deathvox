@@ -175,6 +175,12 @@ function CopLogicIntimidated.exit(data, new_logic_name, enter_params)
 	if my_data.is_hostage then
 		managers.groupai:state():on_hostage_state(false, data.key, true)
 	end
+	
+	if my_data.instant_surrender then
+		if alive(my_data.instant_surrender) then
+			my_data.instant_surrender:base().instant_surrender_target = nil
+		end
+	end
 
 	managers.network:session():send_to_peers_synched("sync_unit_surrendered", data.unit, false)
 end
@@ -813,7 +819,13 @@ end
 
 function CopLogicIntimidated._start_action_hands_up(data)
 	local my_data = data.internal_data
-	local anim_name = managers.groupai:state():whisper_mode() and "tied_all_in_one" or "hands_up"
+	local instant_surrender = managers.groupai:state():whisper_mode() 
+	
+	if not instant_surrender and my_data.aggressor_unit then
+		instant_surrender = CopLogicIntimidated._should_instant_surrender(data, my_data)
+	end
+	
+	local anim_name = instant_surrender and "tied_all_in_one" or "hands_up"
 	local action_data = {
 		clamp_to_graph = true,
 		align_sync = true,
@@ -833,6 +845,27 @@ function CopLogicIntimidated._start_action_hands_up(data)
 
 	if my_data.act_action and data.unit:anim_data().hands_tied then
 		CopLogicIntimidated._do_tied(data, my_data.aggressor_unit)
+	end
+end
+
+function CopLogicIntimidated._should_instant_surrender(data, my_data)
+	if my_data.aggressor_unit then
+		local m_agg_unit = my_data.aggressor_unit
+		local agg_unit_base = m_agg_unit:base()
+		
+		if not agg_unit_base.instant_surrender_target and agg_unit_base.upgrade_value and agg_unit_base:upgrade_value("player", "convert_enemy_instant") then
+			local agg_key = m_agg_unit:key()
+			local groupaistate = managers.groupai:state()
+			
+			local max_minions = agg_unit_base:upgrade_value("player", "convert_enemies_max_minions") or 1
+			
+			if max_minions > 0 and groupaistate._criminals[agg_key] and (not groupaistate._criminals[agg_key].minions or table.size(groupaistate._criminals[agg_key].minions) < max_minions) then
+				agg_unit_base.instant_surrender_target = data.key
+				my_data.instant_surrender = m_agg_unit
+				
+				return true
+			end
+		end
 	end
 end
 

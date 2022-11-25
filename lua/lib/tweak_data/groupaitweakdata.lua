@@ -1665,6 +1665,32 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 		access = access_type_all,
 		special_type = "spooc"
 	}
+	
+	self.unit_categories.marshal_marksman.unit_types.cop = {
+		Idstring("units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1")
+	}
+	self.unit_categories.marshal_marksman.unit_types.fbi = {
+		Idstring("units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1")
+	}
+	self.unit_categories.marshal_marksman.unit_types.gensec = {
+		Idstring("units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1")
+	}
+	self.unit_categories.marshal_marksman.unit_types.zeal = {
+		Idstring("units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1")
+	}
+	self.unit_categories.marshal_marksman.unit_types.classic = {
+		Idstring("units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1")
+	}
+	self.unit_categories.marshal_marksman.unit_type_spawner = {
+		cop = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1",
+		fbi = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1",
+		federales = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_2/ene_male_marshal_marksman_2",
+		gensec = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1",
+		zeal = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_2/ene_male_marshal_marksman_2",
+		murkywater = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_2/ene_male_marshal_marksman_2",
+		classic = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1",
+		russia = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_2/ene_male_marshal_marksman_2"
+	}
 end)
 
 Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cd_init_enemy_spawn_groups", function(self, difficulty_index)
@@ -1976,75 +2002,79 @@ Hooks:PostHook(GroupAITweakData, "_init_enemy_spawn_groups", "cd_init_enemy_spaw
 				"provide_support",
 				"deathguard",
 				"flash_grenade"
-				},
+			},
 			swat_shotgun_flank = {
 				"charge",
 				"provide_coverfire",
 				"provide_support",
 				"flank",
 				"deathguard"
-				},
+			},
 			swat_rifle = {
 				"ranged_fire",
 				"provide_coverfire",
 				"provide_support"
-				},
+			},
 			swat_rifle_flank = {
 				"ranged_fire",
 				"provide_coverfire",
 				"provide_support",
 				"flank"
-				},
+			},
 			shield_wall_ranged = {
 				"shield",
 				"ranged_fire",
 				"provide_support "
-				},
+			},
 			shield_support_ranged = {
 				"shield_cover",
 				"ranged_fire",
 				"provide_coverfire"
-				},
+			},
 			shield_wall_charge = {
 				"shield",
 				"charge",
 				"provide_support"
-				},
+			},
 			shield_support_charge = {
 				"shield_cover",
 				"charge",
 				"provide_coverfire",
 				"flash_grenade"
-				},
+			},
 			shield_wall = {
 				"shield",
 				"ranged_fire",
 				"provide_support",
 				"murder",
 				"deathguard"
-				},
+			},
 			tazer_flanking = {
 				"flank",
 				"charge",
 				"provide_coverfire",
 				"smoke_grenade",
 				"murder"
-				},
+			},
 			tazer_charge = {
 				"charge",
 				"provide_coverfire",
 				"murder"
-				},
+			},
 			tank_rush = {
 				"charge",
 				"provide_coverfire",
 				"murder"
-				},
+			},
 			spooc = {
 				"charge",
 				"shield_cover",
 				"smoke_grenade"
-				}
+			},
+			marshal_marksman = {
+				"ranged_fire",
+				"flank"
+			}
 	}
 -- Normal spawngroups
 --Introductory difficulty.

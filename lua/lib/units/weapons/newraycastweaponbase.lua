@@ -271,7 +271,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 
 	function NewRaycastWeaponBase:get_add_head_shot_mul(special)
-		if not special then
+		if not special or managers.player:has_category_upgrade("class_shotgun", "grand_brachial_bodyshots") and special ~= "tank" then
 			if self:is_weapon_class("class_shotgun") and managers.player:has_category_upgrade("class_shotgun","tender_meat_bodyshots") then 
 				return managers.player:upgrade_value("class_shotgun","tender_meat_bodyshots",0)
 			end

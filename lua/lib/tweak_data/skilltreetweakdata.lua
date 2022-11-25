@@ -263,24 +263,24 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				1
 			}
 		})
-		replace_skill(tree_indices.marksman,3,{ --Investment Returns
+		replace_skill(tree_indices.marksman,3,{ --Potential Exponential
 			{
 				upgrades = {
-					"player_investment_returns_basic"
+					"player_point_and_click_never_miss"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"player_investment_returns_aced"
+					"player_point_and_click_deadshot_mul"
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_investment_returns",
-			desc_id = "menu_investment_returns_desc",
+			name_id = "menu_potential_exponential",
+			desc_id = "menu_potential_exponential_desc",
 			icon_xy = {
 				2,
-				2
+				4
 			}
 		})
 		replace_skill(tree_indices.marksman,4,{ --This Machine
@@ -303,27 +303,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				3
 			}
 		})
-		replace_skill(tree_indices.marksman,5,{ --Mulligan
-			{
-				upgrades = {
-					"player_mulligan_basic"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"player_mulligan_aced"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_mulligan",
-			desc_id = "menu_mulligan_desc",
-			icon_xy = {
-				2,
-				4
-			}
-		})
-		replace_skill(tree_indices.marksman,6,{ --Magic Bullet
+		
+		replace_skill(tree_indices.marksman,5,{ --Magic Bullet
 			{
 				upgrades = {
 					"weapon_magic_bullet_basic"
@@ -341,6 +322,26 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			icon_xy = {
 				2,
 				5
+			}
+		})
+		replace_skill(tree_indices.marksman,6,{ --Investment Returns
+			{
+				upgrades = {
+					"player_point_and_click_stack_from_headshot_kill"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"weapon_point_and_click_damage_bonus_2"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_investment_returns",
+			desc_id = "menu_investment_returns_desc",
+			icon_xy = {
+				2,
+				2
 			}
 		})
 		
@@ -466,17 +467,17 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			}
 		})
 
-		--Chief (not yet implemented)
+		--Chief
 		replace_skill(tree_indices.chief,1,{ --Protect and Serve
 			{
 				upgrades = {
-					"player_convert_enemies_interaction_speed_multiplier"
+					"player_convert_enemies_tackle_specials"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					 "friendship_collar_quantity" --not yet connected
+					 "friendship_collar_quantity"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -487,56 +488,17 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				0
 			}
 		})
-		replace_skill(tree_indices.chief,2,{ --Order through Law
+		replace_skill(tree_indices.chief,2,{ --Standard of Excellence
 			{
 				upgrades = {
-					"player_convert_enemies_knockback_proof" --not yet connected
+					"player_passive_convert_enemies_health_multiplier_2",
+					"player_convert_enemies_health_regen"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"player_convert_enemies_melee" --not yet connected
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_order_through_law",
-			desc_id = "menu_order_through_law_desc",
-			icon_xy = {
-				4,
-				1
-			}
-		})
-		replace_skill(tree_indices.chief,3,{ --Justice with Mercy
-			{
-				upgrades = {
-					"player_convert_enemies_piercing_bullets" --not yet connected
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"player_convert_enemies_accuracy_bonus" --not yet connected
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_justice_with_mercy",
-			desc_id = "menu_justice_with_mercy_desc",
-			icon_xy = {
-				4,
-				2
-			}
-		})
-		replace_skill(tree_indices.chief,4,{ --Standard of Excellence
-			{
-				upgrades = {
-					"player_passive_convert_enemies_health_multiplier_2"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"player_convert_enemies_health_regen" --not yet connected
+					"player_convert_enemies_knockback_proof"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -547,17 +509,16 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				3
 			}
 		})
-		replace_skill(tree_indices.chief,5,{ --Maintaining the Peace
+		replace_skill(tree_indices.chief,3,{ --Maintaining the Peace
 			{
 				upgrades = {
-					"player_convert_enemies_target_marked", --not yet connected
-					"weapon_steelsight_highlight_specials"
+					"player_convert_enemies_target_marked"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"player_convert_enemies_marked_damage_bonus" --not yet connected
+					"player_convert_enemy_instant"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -568,6 +529,48 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				4
 			}
 		})
+		replace_skill(tree_indices.chief,4,{ --Order through Law
+			{
+				upgrades = {
+					"player_convert_enemies_melee"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_convert_enemies_always_stagger"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_order_through_law",
+			desc_id = "menu_order_through_law_desc",
+			icon_xy = {
+				4,
+				1
+			}
+		})
+		replace_skill(tree_indices.chief,5,{ --Justice with Mercy
+			{
+				upgrades = {
+					"player_convert_enemies_piercing_bullets",
+					"player_convert_enemies_accuracy_bonus"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_convert_enemies_range_bonus"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_justice_with_mercy",
+			desc_id = "menu_justice_with_mercy_desc",
+			icon_xy = {
+				4,
+				2
+			}
+		})
+		
 		replace_skill(tree_indices.chief,6,{ --Service above Self
 			{
 				upgrades = {
@@ -578,7 +581,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			},
 			{
 				upgrades = {
-					"player_convert_enemies_tackle_specials" --not yet connected
+					"player_convert_convert_enemy_gains_dmg_over_t"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -694,13 +697,14 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.enforcer,6,{ --Shotmaker
 			{
 				upgrades = {
-					"class_shotgun_shotmaker_headshot_damage_bonus_1"
+					"class_shotgun_shotmaker_headshot_damage_bonus_1",
+					"class_shotgun_shotmaker_headshot_damage_bonus_2"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"class_shotgun_shotmaker_headshot_damage_bonus_2"
+					"class_shotgun_grand_brachial_bodyshots"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -987,13 +991,14 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.gunner,2,{ --Money Shot
 			{
 				upgrades = {
-					"class_rapidfire_moneyshot"
+					"class_rapidfire_moneyshot",
+					"class_rapidfire_empty_magazine_reload_speed_bonus"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"class_rapidfire_empty_magazine_reload_speed_bonus"
+					"class_rapidfire_moneyshot_pierce"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -1365,14 +1370,15 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.assassin,2,{ --Good Hunting
 			{
 				upgrades = {
-					"weapon_homing_bolts"
+					"weapon_homing_bolts",
+					"weapon_bow_instant_ready"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
 					"weapon_crossbow_headshot_instant_reload",
-					"weapon_bow_instant_ready"
+					"weapon_crossbow_piercer"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -4457,7 +4463,9 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			"armor_kit", --armor bag deployable
 			"sentry_gun_silent",
 			"player_passive_convert_enemies_health_multiplier_1", --50% damage resistance
-			"player_critical_hit_multiplier_1" --2x crit multiplier (same as default)
+			"player_critical_hit_multiplier_1", --2x crit multiplier (same as default)
+			
+			"player_convert_enemies_max_minions_1" --1 joker allowed per player; the actual requirement is the friendship collar deployable
 		}
 		
 		for _,upgrade_name in pairs(more_default_upgrades) do 

@@ -11,6 +11,8 @@ function NPCRaycastWeaponBase:init(...)
 
 	if weapon_tweak and weapon_tweak.sniper_trail then
 		trail = Idstring("effects/particles/weapons/trail_dv_sniper")
+	elseif self.TRAIL_EFFECT then 
+		trail = self.TRAIL_EFFECT
 	end
 
 	self._trail_effect_table = {

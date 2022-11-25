@@ -247,17 +247,25 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				
 			--marksman
 				menu_point_and_click = "Point and Click",
-				menu_point_and_click_desc = "BASIC: ##$basic##\n$ICN_PRE Precision Weapons gain ##+1%## Damage per hit, up to ##500%##. All stacks are lost upon missing.\n\nACE: ##$pro##\n$ICN_PRE Precision Weapons ADS ##90%## faster.",
+				menu_point_and_click_desc = "BASIC: ##$basic##\n$ICN_PRE Precision Weapons gain ##+0.5%## Damage per kill, up to ##250%##. All stacks are lost upon missing.\n\nACE: ##$pro##\n$ICN_PRE Precision Weapons ADS ##90%## faster.",
 				menu_tap_the_trigger = "Tap the Trigger",
 				menu_tap_the_trigger_desc = "BASIC: ##$basic##\n$ICN_PRE Precision Weapons also gain ##+1%## Rate of Fire per stack of Point and Click, up to ##+50%##.\n\nACE: ##$pro##\nMaximum Rate of Fire Bonus increased to ##+100%##.",
-				menu_investment_returns = "Investment Returns",
-				menu_investment_returns_desc = "BASIC: ##$basic##\nYou gain ##an extra stack## of Point and Click when you kill an enemy.\n\nACE: ##$pro##\nYou gain ##another extra stack## of Point and Click when you kill an enemy with a Headshot.",
+				menu_potential_exponential = "Potential Exponential",
+				menu_potential_exponential_desc = "BASIC: ##$basic##\nYou generate an additional stack of Point And Click per kill if you haven't missed a shot between kills.\n\nACE: ##$pro##\nThe additional stack of Point And Click is multiplied by how many kills you've made without missing.",
+				
 				menu_this_machine = "This Machine",
 				menu_this_machine_desc = "BASIC: ##$basic##\n$ICN_PRE Precision Weapons also gain ##+0.5%## Reload Speed per stack of Point and Click, up to ##+25%##.\n\nACE: ##$pro##\nMaximum Reload Speed Bonus increased to ##+50%##.",
+				
+				menu_magic_bullet = "Magic Bullet",
+				menu_magic_bullet_desc = "BASIC: ##$basic##\nKilling an enemy with a Headshot from a $ICN_PRE Precision Weapon adds ##1## bullet to your reserve ammunition. This effect does not activate for Bows or Crossbows.\n\nACE: ##$pro##\nThe bullet is added to your current Magazine instead of your reserves.",
+				
+				menu_investment_returns = "Investment Returns",
+				menu_investment_returns_desc = "BASIC: ##$basic##\nHeadshots with $ICN_PRE Precision Weapons generate an additional stack of Point And Click.\n\nACE: ##$pro##\nPoint And Click's maximum bonus increases to ##+500%##.",
+			
+				--unused--
 				menu_mulligan = "Mulligan",
 				menu_mulligan_desc = "BASIC: ##$basic##\nAfter missing, you gain a ##1-second## grace period where you still benefit from your Point and Click stacks. Killing an enemy during the grace period will prevent your stacks from being lost.\n\nACE: ##$pro##\nThe grace period is extended to ##1.5 seconds##.",
-				menu_magic_bullet = "Magic Bullet",
-				menu_magic_bullet_desc = "BASIC: ##$basic##\nKilling an enemy with a Headshot from a $ICN_PRE Precision Weapon adds ##1## bullet to your reserve ammunition.\n\nACE: ##$pro##\nThe bullet is added to your current Magazine instead of your reserves.",
+				--unused--
 			
 			--medic
 				menu_doctors_orders = "Doctor's Orders",
@@ -275,17 +283,22 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 
 			--chief
 				menu_protect_and_serve = "Protect and Serve",
-				menu_protect_and_serve_desc = "BASIC: ##$basic##\nYou convert enemies into Jokers ##90%## faster.\n\nACE: ##$pro##\nIncreases your Friendship Collar supply to ##6##.",
-				menu_order_through_law = "Order through Law",
-				menu_order_through_law_desc = "BASIC: ##$basic##\nJokers no longer flinch from taking damage and cannot be knocked down.\n\nACE: ##$pro##\nJokers will melee enemies within range, dealing high damage and inflicting stagger.",
-				menu_justice_with_mercy = "Justice with Mercy",
-				menu_justice_with_mercy_desc = "BASIC: ##$basic##\nJokers gain ##Armor Piercing##.\n\nACE: ##$pro##\nJokers gain ##+90%## Accuracy.",
+				menu_protect_and_serve_desc = "BASIC: ##$basic##\nIf one of your Jokers is nearby and you are targeted by a Cloaker or shocked by a Taser, your Joker will tackle the Special Enemy and knock them down. This can only occur once every ##30## seconds.\n\nACE: ##$pro##\nIncreases your Friendship Collar supply to ##12##.",
+				
 				menu_standard_of_excellence = "Standard of Excellence",
-				menu_standard_of_excellence_desc = "BASIC: ##$basic##\nIncreases Jokers' Damage Resistance from 50% to ##80%##.\n\nACE: ##$pro##\nJokers regenerate ##2.5%## of their Maximum Health per second.",
+				menu_standard_of_excellence_desc = "BASIC: ##$basic##\nJokers regenerate ##2.5%## of their Maximum Health per second and their Damage Resistance increases from ##80%## to ##90%##.\n\nACE: ##$pro##\nJokers no longer flinch from taking damage and cannot be knocked down.",
+				
 				menu_maintaining_the_peace = "Maintaining the Peace",
-				menu_maintaining_the_peace_desc = "BASIC: ##$basic##\nYou automatically mark Special Enemies by ADSing at them.\nYour Jokers will focus attacks at Marked enemies that you ADS at.\n\nACE: ##$pro##\nYour Jokers deal ##+25%## Damage to Marked enemies.",
+				menu_maintaining_the_peace_desc = "BASIC: ##$basic##\nShouting at a Special Enemy causes your Jokers to focus them as a priority target.\n\nACE: ##$pro##\nIf you have an open Joker slot, shouting at a Standard Enemy will force them to instantly surrender. You can only have ##one## instantly surrendered enemy at a time.",
+				
+				menu_order_through_law = "Order through Law",
+				menu_order_through_law_desc = "BASIC: ##$basic##\nJokers equipped with Shotguns will use melee attacks on enemies within range, dealing high damage and staggering Shields.\n\nACE: ##$pro##\nJokers equipped with Shotguns will knock down enemies with every shot.",
+				
+				menu_justice_with_mercy = "Justice with Mercy",
+				menu_justice_with_mercy_desc = "BASIC: ##$basic##\nJokers equipped with Assault Rifles gain ##+90%## Accuracy and ##Armor Piercing##.\n\nACE: ##$pro##\nJokers equipped with Assault Rifles gain ##+100%## range.",
+				
 				menu_service_above_self = "Service above Self",
-				menu_service_above_self_desc = "BASIC: ##$basic##\nIncreases the maximum number of Jokers you can have active at one time to ##2##.\n\nACE: ##$pro##\nIf one of your Jokers is nearby and you are targeted by a Cloaker or shocked by a Taser, your Joker will tackle the Special Enemy and knock them down. This can only occur once every ##30## seconds.",
+				menu_service_above_self_desc = "BASIC: ##$basic##\nIncreases the maximum number of Jokers you can have active at one time to ##2##.\n\nACE: ##$pro##\nEach Joker gains ##+1%## damage every 30 seconds they're active, up to ##+25%##.",
 			
 			--enforcer
 				menu_tender_meat = "Tender Meat",
@@ -298,8 +311,8 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_rolling_thunder_desc = "BASIC: ##$basic##\nIncreases the Magazine Size of Automatic $ICN_SHO Shotguns by ##50%##.\n\nACE: ##$pro##\nMagazine Size bonus increased to ##100%##.",
 				menu_point_blank = "Point Blank",
 				menu_point_blank_desc = "BASIC: ##$basic##\n$ICN_SHO Shotguns gain ##Armor Piercing##, ##Shield Piercing##, and ##Body Piercing## against enemies within ##3## meters.\n\nACE: ##$pro##\n$ICN_SHO Shotguns deal ##+100%## Damage against enemies within ##3## meters.",
-				menu_shotmaker = "Shotmaker",
-				menu_shotmaker_desc = "BASIC: ##$basic##\nIncreases $ICN_SHO Shotgun Headshot Damage by ##+50%##.\n\nACE: ##$pro##\n$ICN_SHO Shotgun Headshot Damage is increased by an additional ##+50%##, for a total of ##+100%##.",
+				menu_shotmaker = "Grand Brachial",
+				menu_shotmaker_desc = "BASIC: ##$basic##\n$ICN_SHO Shotguns deal ##+100%## Headshot damage.\n\nACE: ##$pro##\n$ICN_SHO Shotguns deal ##50%## of their Headshot Damage on Body Shots against ##Shields, Medics, Tasers, Grenadiers and Cloakers##.",
 				
 			--heavy
 				menu_collateral_damage = "Collateral Damage",
@@ -329,13 +342,13 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_leg_day = "Leg Day Enthusiast",
 				menu_leg_day_desc = "BASIC: ##$basic##\nYou gain ##+10%## Movement Speed and ##+25%## Sprint Speed.\n\nACE: ##$pro##\nCrouching no longer reduces your Movement Speed.",
 				menu_wave_dash = "Wave Dash",
-				menu_wave_dash_desc = "BASIC: ##$basic##\nWhile in midair, pressing your ##Jump## button will cause you to dash in the direction you are currently moving and holding your ##Crouch## button causes you to dive to the ground and avoid Fall Damage from non-lethal heights. These actions cost ##5%## of your maximum Stamina.\n\nACE: ##$pro##\nYou can now dash in any direction. Diving no longer costs Stamina\n\n##Mission Complete!##",
+				menu_wave_dash_desc = "BASIC: ##$basic##\nWhile in midair, pressing your ##Jump## button will cause you to dash in the direction you are currently moving and holding your ##Crouch## button causes you to dive to the ground and avoid Fall Damage from non-lethal heights. These actions cost ##5%## of your maximum Stamina.\n\nACE: ##$pro##\nYou can now dash in any direction. Diving no longer costs Stamina.\n\n##Mission Complete!##",
 				
 			--gunner
 				menu_spray_and_pray = "Spray & Pray",
 				menu_spray_and_pray_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons gain a ##10%## chance to ##Critical Hit and deal 2x damage##.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons now pierce Body Armor.",
 				menu_money_shot = "Money Shot",
-				menu_money_shot_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons gain a special overpressure round at the end of every fully loaded Magazine that has ##Armor Piercing##, ##Shield Piercing##, and ##Body Penetrating## properties.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons gain ##+50%## faster Reload Speed when their Magazine is empty.",
+				menu_money_shot_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons gain a special overpressure round at the end of every fully loaded Magazine that is guaranteed to be a ##Critical Hit## and increases the Reload Speed of empty Magazines by ##+50%##.\n\nACE: ##$pro##\nThe overpressure round gains ##Armor Piercing, Shield Piercing, and Body Piercing## properties.",
 				menu_shot_grouping = "Shot Grouping",
 				menu_shot_grouping_desc = "BASIC: ##$basic##\n$ICN_RPF Rapid Fire weapons ADS ##+90%## faster and gain ##+40## Accuracy and Stability while ADSing.\n\nACE: ##$pro##\n$ICN_RPF Rapid Fire weapons gain ##+1%## Critical Hit chance for ##4## seconds when hitting an enemy with a Headshot, stacking up to ##+10%##.",
 				menu_prayers_answered = "Prayers Answered",
@@ -377,7 +390,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_killers_notebook = "Killer's Notebook",
 				menu_killers_notebook_desc = "BASIC: ##$basic##\n$ICN_QUT Quiet Weapons ADS ##90%## faster.\n\nACE: ##$pro##\n$ICN_QUT Quiet Weapons gain ##+20## Stability.",
 				menu_good_hunting = "Good Hunting",
-				menu_good_hunting_desc = "BASIC: ##$basic##\nArrows and Bolts will now curve towards enemies, angling to strike them in the head.\n\nACE: ##$pro##\nCrossbows instantly Reload themselves after a Headshot, and Bows have all of their Arrows readied instead of in reserve.",
+				menu_good_hunting_desc = "BASIC: ##$basic##\nBows have all of their Arrows readied instead of in reserve. Arrows will curve towards enemies, angling to strike them in the head.\n\nACE: ##$pro##\nCrossbows instantly Reload themselves after a Headshot. Bolts that kill an enemy gain ##Body Piercing##, punching through the target and through any other enemies in its path.",
 				menu_comfortable_silence = "Comfortable Silence",
 				menu_comfortable_silence_desc = "BASIC: ##$basic##\n$ICN_QUT Quiet Weapons gain ##+2## Concealment.\n\nACE: ##$pro##\n$ICN_QUT Quiet Weapons gain ##+4## Concealment.",
 				menu_toxic_shock = "Toxic Shock",

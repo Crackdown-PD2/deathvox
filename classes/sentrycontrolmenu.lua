@@ -3,6 +3,58 @@ _G.SentryControlMenu = {}
 SentryControlMenu._path = deathvox.ModPath or deathvox:GetPath()
 SentryControlMenu._save_path = SavePath .. "SentryControlMenuSettings.txt"
 
+SentryControlMenu.ICONS_ATLAS_NAME = "guis/textures/pd2/hud_sentry_radial_icons_atlas"
+SentryControlMenu.ICONS_ATLAS_LOOKUP = {
+	mode_manual_on = {
+		0 * 64,
+		0 * 64,
+		64,
+		64
+	},
+	ammo_standard = {
+		1 * 64,
+		0 * 64,
+		64,
+		64
+	},
+	mode_manual_off = {
+		2 * 64,
+		0 * 64,
+		64,
+		64
+	},
+	mode_overwatch = {
+		0 * 64,
+		1 * 64,
+		64,
+		64
+	},
+	retrieve = {
+		1 * 64,
+		1 * 64,
+		64,
+		64
+	},
+	mode_standard = {
+		2 * 64,
+		1 * 64,
+		64,
+		64
+	},
+	ammo_taser = {
+		0 * 64,
+		2 * 64,
+		64,
+		64
+	},
+	ammo_ap = {
+		1 * 64,
+		2 * 64,
+		64,
+		64
+	}
+}
+
 SentryControlMenu.settings = {
 	menu_behavior = 1,
 	teammate_laser_alpha = 0.05,
@@ -161,7 +213,9 @@ end
 function SentryControlMenu:ShowMenu(unit)
 	if self.action_radial then 
 		self:RefreshMenu(unit)
-		self.action_radial:Show()
+		self.action_radial:Show(
+--			self:GetRadialOptions(unit) --it doesn't currently work like this but it should
+		)
 	end
 end
 
@@ -178,12 +232,14 @@ function SentryControlMenu:RefreshMenu(unit) --sets the visual toggle state of v
 		local ammo_type = sentryweapon:_get_ammo_type()
 		
 		local items = self.action_radial._items
-		items[1]._body:set_visible(ammo_type == "ap")
-		items[2]._body:set_visible(ammo_type == "taser")
-		items[3]._body:set_visible(mode == "overwatch")
-		items[4]._body:set_visible(mode == "manual")
-		items[5]._body:set_visible(false)
-		items[6]._body:set_visible(ammo_type == "basic")
+		local color_on = Color.white
+		local color_off = Color(0.3,0.3,0.3)
+		items[1]._icon:set_color(ammo_type == "ap" and color_on or color_off)
+		items[2]._icon:set_color(ammo_type == "taser" and color_on or color_off)
+		items[3]._icon:set_color(mode == "overwatch" and color_on or color_off)
+		items[4]._icon:set_color(mode == "manual" and color_on or color_off)
+--		items[5]._body:set_visible(false)
+		items[6]._icon:set_color(ammo_type == "basic" and color_on or color_off)
 	end
 end
 
@@ -215,12 +271,15 @@ function SentryControlMenu:SetActionMenu(menu)
 	self.action_radial = menu or self.action_radial
 
 	for k,v in pairs(self.action_radial._items) do 
-		v._body:set_alpha(0.66)
+--		v._body:set_image("guis/textures/pd2/radial_menu_assets/rmm_selector")
+		v._body:hide()
 	end
 	menu._selector:set_image("guis/textures/pd2/radial_menu_assets/rmm_selector")
---	menu._selector:set_alpha(0.31)
+--	menu._selector:set_color(Color.black)
+	menu._selector:set_alpha(0.9)
 	menu._bg:set_image("guis/textures/pd2/radial_menu_assets/rmm_bg")
-	menu._bg:set_alpha(0.31)
+	menu._bg:set_color(Color.black)
+	menu._bg:set_alpha(0.66)
 	Hooks:Add("radialmenu_released_" .. self.action_radial:get_name(),"tcdso_menu_closed",function(num)
 		--not required
 	end)
@@ -297,6 +356,10 @@ function SentryControlMenu:PickupSentry(unit)
 	end
 end
 
+function SentryControlMenu:GetIconRect(name)
+	return self.ICONS_ATLAS_LOOKUP[name]
+end
+
 Hooks:Add("BaseNetworkSessionOnLoadComplete","tcdso_sentry_onbaseloadcomplete",function()
 	if not deathvox:IsTotalCrackdownEnabled() then return end
 	
@@ -308,13 +371,13 @@ Hooks:Add("BaseNetworkSessionOnLoadComplete","tcdso_sentry_onbaseloadcomplete",f
 			{
 				text = managers.localization:text("sentry_ammo_ap"),
 				icon = {
-					texture = tweak_data.hud_icons.r870_shotgun.texture,
-					texture_rect = tweak_data.hud_icons.r870_shotgun.texture_rect,
+					texture = SentryControlMenu.ICONS_ATLAS_NAME,
+					texture_rect = SentryControlMenu:GetIconRect("ammo_ap"),
 					layer = 3,
 					w = 16,
 					h = 16,
 					alpha = 0.7,
-					color = Color(0.5,1,0) --green
+					color = Color.white
 				},
 				show_text = true,
 				stay_open = false,
@@ -323,13 +386,13 @@ Hooks:Add("BaseNetworkSessionOnLoadComplete","tcdso_sentry_onbaseloadcomplete",f
 			{
 				text = managers.localization:text("sentry_ammo_taser"),
 				icon = {
-					texture = tweak_data.hud_icons.mugshot_electrified.texture,
-					texture_rect = tweak_data.hud_icons.mugshot_electrified.texture_rect,
+					texture = SentryControlMenu.ICONS_ATLAS_NAME,
+					texture_rect = SentryControlMenu:GetIconRect("ammo_taser"),
 					layer = 3,
 					w = 16,
 					h = 16,
 					alpha = 0.7,
-					color = Color(1,1,0) --yellow
+					color = Color.white
 				},
 				show_text = true,
 				stay_open = false,
@@ -338,13 +401,13 @@ Hooks:Add("BaseNetworkSessionOnLoadComplete","tcdso_sentry_onbaseloadcomplete",f
 			{
 				text = managers.localization:text("sentry_mode_overwatch"),
 				icon = {
-					texture = tweak_data.hud_icons.wp_sentry.texture,
-					texture_rect = tweak_data.hud_icons.wp_sentry.texture_rect,
+					texture = SentryControlMenu.ICONS_ATLAS_NAME,
+					texture_rect = SentryControlMenu:GetIconRect("mode_overwatch"),
 					layer = 3,
 					w = 16,
 					h = 16,
 					alpha = 0.7,
-					color = Color(0.5,1,0) --green
+					color = Color.white
 				},
 				show_text = true,
 				stay_open = false,
@@ -353,13 +416,13 @@ Hooks:Add("BaseNetworkSessionOnLoadComplete","tcdso_sentry_onbaseloadcomplete",f
 			{
 				text = managers.localization:text("sentry_mode_manual"),
 				icon = {
-					texture = tweak_data.hud_icons.wp_sentry.texture,
-					texture_rect = tweak_data.hud_icons.wp_sentry.texture_rect,
+					texture = SentryControlMenu.ICONS_ATLAS_NAME,
+					texture_rect = SentryControlMenu:GetIconRect("mode_manual_on"),
 					layer = 3,
 					w = 16,
 					h = 16,
 					alpha = 0.7,
-					color = Color(1,0.7,0) --orange-yellow
+					color = Color.white
 				},
 				show_text = true,
 				stay_open = false,
@@ -368,18 +431,13 @@ Hooks:Add("BaseNetworkSessionOnLoadComplete","tcdso_sentry_onbaseloadcomplete",f
 			{
 				text = managers.localization:text("sentry_retrieve"),
 				icon = {
-					texture = "guis/textures/hud_icons",
-					texture_rect = {
-						0,
-						192,
-						45,
-						50
-					},
+					texture = SentryControlMenu.ICONS_ATLAS_NAME,
+					texture_rect = SentryControlMenu:GetIconRect("retrieve"),
 					layer = 3,
 					w = 16,
 					h = 16,
 					alpha = 0.7,
-					color = Color.white --the answer may shock you!
+					color = Color.red
 				},
 				show_text = true,
 				stay_open = false,
@@ -388,13 +446,13 @@ Hooks:Add("BaseNetworkSessionOnLoadComplete","tcdso_sentry_onbaseloadcomplete",f
 			{
 				text = managers.localization:text("sentry_ammo_standard"),
 				icon = {
-					texture = tweak_data.hud_icons.r870_shotgun.texture,
-					texture_rect = tweak_data.hud_icons.r870_shotgun.texture_rect,
+					texture = SentryControlMenu.ICONS_ATLAS_NAME,
+					texture_rect = SentryControlMenu:GetIconRect("ammo_standard"),
 					layer = 3,
 					w = 16,
 					h = 16,
 					alpha = 0.7,
-					color = Color(0,0.5,1) --blue
+					color = Color.white
 				},
 				show_text = true,
 				stay_open = false,

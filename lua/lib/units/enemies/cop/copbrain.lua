@@ -281,38 +281,42 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		self._attention_handler:override_attention("enemy_team_cbt", attention_preset)
 
-		local health_multiplier, damage_multiplier, accuracy_multiplier = 1, 1
-		local add_armor_piercing, no_hurt_animations, melee_stagger, health_regen, highlight_prioritizing, marked_enemy_bonus = nil
+		local health_multiplier, damage_multiplier, accuracy_multiplier, range_multiplier = 0.2, 1, 1, 1
+		local add_armor_piercing, no_hurt_animations, melee_stagger, health_regen, highlight_prioritizing, marked_enemy_bonus, gun_stagger, gain_dmg_over_t = nil
 
 		if alive(mastermind_criminal) then
 			local base_ext = mastermind_criminal:base()
 
-			health_multiplier = health_multiplier * (base_ext:upgrade_value("player", "convert_enemies_health_multiplier") or 1)
-			health_multiplier = health_multiplier * (base_ext:upgrade_value("player", "passive_convert_enemies_health_multiplier") or 1)
+			health_multiplier = base_ext:upgrade_value("player", "passive_convert_enemies_health_multiplier") or 0.2
 			damage_multiplier = damage_multiplier * (base_ext:upgrade_value("player", "convert_enemies_damage_multiplier") or 1)
 			damage_multiplier = damage_multiplier * (base_ext:upgrade_value("player", "passive_convert_enemies_damage_multiplier") or 1)
 
 			--TCD skills
+			range_multiplier = base_ext:upgrade_value("player", "convert_enemies_range_bonus", 1) or 1
 			accuracy_multiplier = base_ext:upgrade_value("player", "convert_enemies_accuracy_bonus") or 1
 			add_armor_piercing = base_ext:upgrade_value("player", "convert_enemies_piercing_bullets")
-			no_hurt_animations = base_ext:upgrade_value("player", "convert_enemies_knockback_proof ")
+			no_hurt_animations = base_ext:upgrade_value("player", "convert_enemies_knockback_proof")
 			melee_stagger = base_ext:upgrade_value("player", "convert_enemies_melee")
+			gun_stagger = base_ext:upgrade_value("player", "convert_enemies_always_stagger")
+			gain_dmg_over_t = base_ext:upgrade_value("player", "convert_enemy_gains_dmg_over_t")
 			health_regen = base_ext:upgrade_value("player", "convert_enemies_health_regen") or 0
 			highlight_prioritizing = base_ext:upgrade_value("player", "convert_enemies_target_marked")
 			marked_enemy_bonus = base_ext:upgrade_value("player", "convert_enemies_marked_damage_bonus") or 1
 		else
 			local player_manager = managers.player
 
-			health_multiplier = health_multiplier * player_manager:upgrade_value("player", "convert_enemies_health_multiplier", 1)
-			health_multiplier = health_multiplier * player_manager:upgrade_value("player", "passive_convert_enemies_health_multiplier", 1)
+			health_multiplier = player_manager:upgrade_value("player", "passive_convert_enemies_health_multiplier", 0.2)
 			damage_multiplier = damage_multiplier * player_manager:upgrade_value("player", "convert_enemies_damage_multiplier", 1)
 			damage_multiplier = damage_multiplier * player_manager:upgrade_value("player", "passive_convert_enemies_damage_multiplier", 1)
 
 			--TCD skills
+			range_multiplier = player_manager:upgrade_value("player", "convert_enemies_range_bonus", 1)
 			accuracy_multiplier = player_manager:upgrade_value("player", "convert_enemies_accuracy_bonus", 1)
 			add_armor_piercing = player_manager:upgrade_value("player", "convert_enemies_piercing_bullets")
-			no_hurt_animations = player_manager:upgrade_value("player", "convert_enemies_knockback_proof ")
+			no_hurt_animations = player_manager:upgrade_value("player", "convert_enemies_knockback_proof")
 			melee_stagger = player_manager:upgrade_value("player", "convert_enemies_melee")
+			gun_stagger = player_manager:upgrade_value("player", "convert_enemies_always_stagger")
+			gain_dmg_over_t = player_manager:upgrade_value("player", "convert_enemy_gains_dmg_over_t")
 			health_regen = player_manager:upgrade_value("player", "convert_enemies_health_regen", 0)
 			highlight_prioritizing = player_manager:upgrade_value("player", "convert_enemies_target_marked")
 			marked_enemy_bonus = player_manager:upgrade_value("player", "convert_enemies_marked_damage_bonus", 1)
@@ -327,16 +331,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		if marked_enemy_bonus and marked_enemy_bonus ~= 1 then
 			ext_dmg._joker_mark_dmg_bonus = marked_enemy_bonus
-		end
-
-		if accuracy_multiplier ~= 1 then
-			if ext_dmg._original_acc_mul then
-				ext_dmg._original_acc_mul = accuracy_multiplier
-
-				ext_dmg:set_accuracy_multiplier(ext_dmg._ON_STUN_ACCURACY_DECREASE * accuracy_multiplier)
-			else
-				ext_dmg:set_accuracy_multiplier(accuracy_multiplier)
-			end
 		end
 
 		if self._logic_data.attention_obj then
@@ -371,10 +365,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 			managers.network:session():send_to_peers_synched("sync_unit_event_id_16", self._unit, "character_damage", HuskCopDamage._NET_EVENTS.set_joker_no_hurts)
 		end
 
-		if melee_stagger then
-			self._unit:movement()._joker_melee_stagger = true
-		end
-
 		if highlight_prioritizing then
 			if alive(mastermind_criminal) then
 				local peer = managers.network:session():peer_by_unit(mastermind_criminal)
@@ -392,6 +382,97 @@ if deathvox:IsTotalCrackdownEnabled() then
 		char_tweaks.allowed_poses = {stand = true}
 		char_tweaks.access = team_ai_so_access
 		char_tweaks.no_run_stop = true
+		
+		local rifle_user = {
+			deathvox_lightar = true,
+			deathvox_heavyar = true
+		}
+		
+		local shotgun_user = {
+			deathvox_lightshot = true,
+			deathvox_heavyshot = true
+		}
+		
+		if rifle_user[self._unit:base()._tweak_table] then
+			gun_stagger = nil
+					
+			if accuracy_multiplier ~= 1 then
+				if ext_dmg._original_acc_mul then
+					ext_dmg._original_acc_mul = accuracy_multiplier
+
+					ext_dmg:set_accuracy_multiplier(ext_dmg._ON_STUN_ACCURACY_DECREASE * accuracy_multiplier)
+				else
+					ext_dmg:set_accuracy_multiplier(accuracy_multiplier)
+				end
+			end
+			
+			if range_multiplier ~= 1 then
+				local falloff_table = char_tweaks.weapon[w_usage].FALLOFF
+				
+				for i = 1, #falloff_table do
+					local t = falloff_table[i]
+					
+					t.r = t.r * range_multiplier
+				end
+			end
+		elseif shotgun_user[self._unit:base()._tweak_table] then
+			add_armor_piercing = nil
+				
+			if melee_stagger then
+				self._unit:movement()._joker_melee_stagger = true
+			end	
+		else
+			local w_usage = self._unit:inventory():equipped_unit() and self._unit:inventory():equipped_unit():base():weapon_tweak_data() and self._unit:inventory():equipped_unit():base():weapon_tweak_data().usage
+			
+			local rifle_usages = {
+				is_rifle = true,
+				is_light_rifle = true,
+				is_heavy_rifle = true,
+				is_bullpup
+			}
+			
+			local shotgun_usages = {
+				is_shotgun_pump = true,
+				is_shotgun_mag = true,
+				is_light_shotgun = true,
+				is_heavy_shotgun = true
+			}
+			
+			if w_usage then
+				if rifle_usages[w_usage] then
+					gun_stagger = nil
+					
+					if accuracy_multiplier ~= 1 then
+						if ext_dmg._original_acc_mul then
+							ext_dmg._original_acc_mul = accuracy_multiplier
+
+							ext_dmg:set_accuracy_multiplier(ext_dmg._ON_STUN_ACCURACY_DECREASE * accuracy_multiplier)
+						else
+							ext_dmg:set_accuracy_multiplier(accuracy_multiplier)
+						end
+					end
+					
+					if range_multiplier ~= 1 then
+						local falloff_table = char_tweaks.weapon[w_usage].FALLOFF
+						
+						for i = 1, #falloff_table do
+							local t = falloff_table[i]
+							
+							t.r = t.r * range_multiplier
+						end
+					end
+				elseif shotgun_usages[w_usage] then	
+					add_armor_piercing = nil
+				
+					if melee_stagger then
+						self._unit:movement()._joker_melee_stagger = true
+					end	
+				else
+					add_armor_piercing = nil
+					gun_stagger = nil
+				end
+			end
+		end
 
 		self._logic_data.char_tweak = char_tweaks
 		self._unit:base()._char_tweak = char_tweaks
@@ -412,9 +493,17 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local weapon_unit = self._unit:inventory():equipped_unit()
 
 		weapon_unit:base():add_damage_multiplier(damage_multiplier)
+		
+		if gain_dmg_over_t then
+			ext_dmg:begin_increase_dmg_clbks()
+		end
 
 		if add_armor_piercing then
 			weapon_unit:base()._use_armor_piercing = true
+		end
+		
+		if gun_stagger then
+			weapon_unit:base()._knock_down = 2
 		end
 
 		self._logic_data.important = true

@@ -100,24 +100,21 @@ function RaycastWeaponBase:is_weapon_subclass(...)
 	return matched
 end
 
---custom functions added in cd
-function RaycastWeaponBase:can_shoot_through_walls() --return true if raycasts can overpenetrate thin walls (40cm)
+function RaycastWeaponBase:can_shoot_through_wall() --return true if raycasts can overpenetrate thin walls (40cm)
 	local penetration_distance = 40
-	local can_shoot_through = self._can_shoot_through_walls or self._money_shot_ready
+	local can_shoot_through = self._can_shoot_through_walls or self._money_shot_pierce
 	
 	return can_shoot_through,penetration_distance
 end
-function RaycastWeaponBase:can_shoot_through_shields() --return true if raycasts can overpenetrate shields
-	local can_shoot_through = self._can_shoot_through_shield or self._money_shot_ready
+function RaycastWeaponBase:can_shoot_through_shield() --return true if raycasts can overpenetrate shields
+	local can_shoot_through = self._can_shoot_through_shield or self._money_shot_pierce
 	return can_shoot_through
 end
 
-function RaycastWeaponBase:can_shoot_through_enemies() --return true if raycasts can overpenetrate enemies
-	local can_shoot_through = self._can_shoot_through_enemy or self._money_shot_ready
+function RaycastWeaponBase:can_shoot_through_enemy() --return true if raycasts can overpenetrate enemies
+	local can_shoot_through = self._can_shoot_through_enemy or self._money_shot_pierce
 	return can_shoot_through
 end
-
-
 
 function RaycastWeaponBase:check_autoaim(from_pos, direction, max_dist, use_aim_assist, autohit_override_data)
 	local autohit = use_aim_assist and self._aim_assist_data or self._autohit_data
@@ -130,7 +127,7 @@ function RaycastWeaponBase:check_autoaim(from_pos, direction, max_dist, use_aim_
 	local ignore_units = self._setup.ignore_units
 	local obstruction_slotmask = self._bullet_slotmask
 
-	if self:can_shoot_through_shields() then
+	if self:can_shoot_through_shield() then
 		obstruction_slotmask = obstruction_slotmask - 8
 	end
 
@@ -294,7 +291,7 @@ function RaycastWeaponBase:_collect_hits(from, to)
 	local ai_vision_ids = Idstring("ai_vision")
 	local bulletproof_ids = Idstring("bulletproof")
 
-	if self:can_shoot_through_walls() then
+	if self:can_shoot_through_wall() then
 		ray_hits = world_g:raycast_wall("ray", from, to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units, "thickness", 40, "thickness_mask", wall_mask)
 	else
 		ray_hits = world_g:raycast_all("ray", from, to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
@@ -312,7 +309,7 @@ function RaycastWeaponBase:_collect_hits(from, to)
 			local weak_body = hit.body:has_ray_type(ai_vision_ids)
 			weak_body = weak_body or hit.body:has_ray_type(bulletproof_ids)
 
-			if not self:can_shoot_through_enemies() and hit_enemy then
+			if not self:can_shoot_through_enemy() and hit_enemy then
 				break
 			elseif hit.unit:in_slot(wall_mask) then
 				if weak_body then --actually this means it's not glass/similar, why they choose to call it this way I don' know. These surfaces (glass/similar) get penetrated with no restriction or requirement
@@ -326,7 +323,7 @@ function RaycastWeaponBase:_collect_hits(from, to)
 						break
 					end
 				end
-			elseif not self:can_shoot_through_shields() and hit.unit:in_slot(shield_mask) then
+			elseif not self:can_shoot_through_shield() and hit.unit:in_slot(shield_mask) then
 				break
 			end
 		end
@@ -436,8 +433,11 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 	local user_unit = self._setup.user_unit
 	local is_player = user_unit == pm:player_unit()
 	local consume_ammo = not pm:has_active_temporary_property("bullet_storm") and (not pm:has_activate_temporary_upgrade("temporary", "berserker_damage_multiplier") or not pm:has_category_upgrade("player", "berserker_no_ammo_cost")) or not is_player
+	local ammo_usage = self:ammo_usage()	
 	local base = self:ammo_base()
 	local mag = base:get_ammo_remaining_in_clip()
+	
+
 	
 
 	--if consume_ammo and (is_player or Network:is_server()) then
@@ -447,9 +447,12 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 			return
 		end
 
-		local ammo_usage = 1
 		local remaining_ammo = mag - ammo_usage
-
+		if remaining_ammo < 0 then
+			ammo_usage = ammo_usage + remaining_ammo
+			remaining_ammo = 0
+		end
+		
 		if is_player then
 			for _, category in ipairs(self:weapon_tweak_data().categories) do
 				if pm:has_category_upgrade(category, "consume_no_ammo_chance") then
@@ -489,11 +492,9 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 	
 	local do_money_shot
 	if is_player and pm:has_category_upgrade(self:get_weapon_class(),"money_shot") then
-		if mag == 1 and self._reloaded_to_full then
-			
-			do_money_shot = true
-			
+		if mag == 1 then
 			self._money_shot_ready = true
+			self._money_shot_pierce = pm:has_category_upgrade(self:get_weapon_class(),"money_shot_pierce")
 			
 			local money_trail = Idstring("effects/particles/weapons/trail_dv_sniper")
 			local money_muzzle = Idstring("effects/particles/weapons/money_muzzle_fps")
@@ -513,6 +514,7 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 --			self:play_sound("c4_explode_metal")
 		else
 			self._money_shot_ready = false
+			self._money_shot_pierce = false
 			
 			self._trail_effect_table = {
 				effect = self.TRAIL_EFFECT,
@@ -537,7 +539,7 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 
 	self:_spawn_shell_eject_effect()
 
-	local ray_res = self:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoot_player, spread_mul, autohit_mul, suppr_mul, target_unit)
+	local ray_res = self:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoot_player, spread_mul, autohit_mul, suppr_mul, target_unit, ammo_usage)
 	
 	if self._alert_events and ray_res.rays then
 		self:_check_alert(ray_res.rays, from_pos, direction, user_unit)
@@ -618,7 +620,7 @@ function RaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul
 
 	for _, hit in ipairs(ray_hits) do
 		damage = self:get_damage_falloff(damage, hit, user_unit)
-		hit_result = self._bullet_class:on_collision(hit, self._unit, user_unit, damage)
+		hit_result = self._bullet_class:on_collision(hit, self._unit, user_unit, damage, nil, nil, nil, self._money_shot_ready)
 
 		if hit_result and hit_result.type == "death" then
 			local unit_type = hit.unit:base() and hit.unit:base()._tweak_table
@@ -743,20 +745,6 @@ function RaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul
 	return result
 end
 
-function RaycastWeaponBase:update_next_shooting_time()
-	if self:is_weapon_class("class_shotgun") and self:fire_mode() == "auto" then 
-		if tweak_data.weapon[self._name_id].CLIP_AMMO_MAX == 2 then 
-			if managers.player:has_category_upgrade("class_shotgun","heartbreaker_doublebarrel") then 
---				self._next_fire_allowed = 0
-				return
-			end
-		end
-	end
-
-	local next_fire = (tweak_data.weapon[self._name_id].fire_mode_data and tweak_data.weapon[self._name_id].fire_mode_data.fire_rate or 0) / self:fire_rate_multiplier()
-	self._next_fire_allowed = self._next_fire_allowed + next_fire
-end
-
 local reflect_result = Vector3()
 
 function InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, blank, no_sound, guaranteed_hit, restrictive_angles)
@@ -769,16 +757,9 @@ function InstantBulletBase:on_ricochet(col_ray, weapon_unit, user_unit, damage, 
 	if weapon_unit and alive(weapon_unit) then
 		local weapon_base = weapon_unit:base()
 		--shoot-through checks that will avoid crashing if the weapon somehow ceases to exist
-		if weapon_base.can_shoot_through_shields then 
-			can_shoot_through_shield = weapon_base:can_shoot_through_shields()
-		else
-			can_shoot_through_shield = weapon_base._can_shoot_through_shield
-		end
-		if weapon_base.can_shoot_through_enemies then 
-			can_shoot_through_enemy = weapon_base:can_shoot_through_enemies()
-		else
-			can_shoot_through_enemy = weapon_base._can_shoot_through_enemy
-		end
+		
+		can_shoot_through_shield = weapon_base:can_shoot_through_shield()
+		can_shoot_through_enemy = weapon_base:can_shoot_through_enemy()
 
 		--usually a weapon has itself and its user ignored to avoid unnecessary collisions. These checks are here in case we want player husks to shoot visible ricochets (pretty sure other players can't see the ricochet if only local players can trigger them)
 		if weapon_unit:base()._setup and weapon_unit:base()._setup.ignore_units then
@@ -968,18 +949,8 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 			elseif managers.player:has_category_upgrade(primary_class, "ricochet_bullets") then
 				local can_bounce_off = false
 				
-				local can_shoot_through_shield,can_shoot_through_wall
-				if weapon_base.can_shoot_through_shields then 
-					can_shoot_through_shield = weapon_base:can_shoot_through_shields()
-				else
-					can_shoot_through_shield = weapon_base._can_shoot_through_shield
-				end
-				if weapon_base.can_shoot_through_walls then 
-					can_shoot_through_wall = weapon_base:can_shoot_through_walls()
-				else
-					can_shoot_through_wall = weapon_base._can_shoot_through_wall 
-				end
-				
+				local can_shoot_through_wall = weapon_base:can_shoot_through_wall()
+				local can_shoot_through_shield = weapon_base:can_shoot_through_shield()
 				
 				if not can_shoot_through_shield and hit_unit:in_slot(managers.slot:get_mask("enemy_shield_check")) then
 					can_bounce_off = true
@@ -1123,7 +1094,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 				end
 			end
 
-			pierce_armor = pierce_armor or weapon_base and weapon_base._use_armor_piercing
+			pierce_armor = pierce_armor or weapon_base and weapon_base._use_armor_piercing or weapon_base and weapon_base._money_shot_pierce
 
 			local knock_down = weapon_base and weapon_base._knock_down and weapon_base._knock_down > 0 and math.random() < weapon_base._knock_down
 			result = self:give_impact_damage(col_ray, weap_unit, user_unit, damage, pierce_armor, false, knock_down, weapon_base._stagger, weapon_base._variant, critical_hit)
@@ -1558,6 +1529,20 @@ if TCDEnabled then
 		dot_tick_period = 0.5
 	}
 
+	function RaycastWeaponBase:update_next_shooting_time()
+		if self:is_weapon_class("class_shotgun") and self:fire_mode() == "auto" then 
+			if tweak_data.weapon[self._name_id].CLIP_AMMO_MAX == 2 then 
+				if managers.player:has_category_upgrade("class_shotgun","heartbreaker_doublebarrel") then 
+	--				self._next_fire_allowed = 0
+					return
+				end
+			end
+		end
+
+		local next_fire = self:weapon_fire_rate() / self:fire_rate_multiplier()
+		self._next_fire_allowed = self._next_fire_allowed + next_fire
+	end
+
 	function RaycastWeaponBase:replenish()
 		local pm = managers.player
 		local ammo_max_multiplier = pm:upgrade_value("player", "extra_ammo_multiplier", 1)
@@ -1804,7 +1789,9 @@ if TCDEnabled then
 		damage = damage * (dmg_mul or 1)
 		damage = damage * managers.player:temporary_upgrade_value("temporary", "combat_medic_damage_multiplier", 1)
 		if self:is_weapon_class("class_precision") then 
-			damage = damage + math.min(point_and_click_data[1] * managers.player:get_property("current_point_and_click_stacks",0),point_and_click_data[2])
+			local mul = math.max(1, math.min(point_and_click_data[1] * managers.player:get_property("current_point_and_click_stacks",0), point_and_click_data[2]))
+			
+			damage = damage * mul
 		elseif self:is_weapon_class("class_shotgun") then 
 			if self:fire_mode() == "auto" and self:clip_full() then 
 				damage = damage * (1 + managers.player:upgrade_value("class_shotgun","heartbreaker_damage",0))

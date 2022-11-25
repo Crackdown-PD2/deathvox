@@ -1044,8 +1044,8 @@ function CharacterTweakData:_presets(tweak_data)
 		melee_speed = 1,
 		melee_dmg = 8,
 		melee_retry_delay = {
-		1,
-		2
+			1,
+			2
 		},
 		range = { --validated, unchanged, consider adjustment to increase engage range.
 			optimal = 2000,
@@ -3266,7 +3266,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	table.insert(self._enemy_list, "deathvox_medicdozer")
 
 	self.deathvox_grenadier = deep_clone(presets.base)
-	self.deathvox_grenadier.tags = {"law", "custom", "special"}
+	self.deathvox_grenadier.tags = {"law", "custom", "special", "boom"}
 	self.deathvox_grenadier.experience = {}
 	self.deathvox_grenadier.weapon = deep_clone(presets.weapon.normal) --Make sure this idiot doesnt keep firing silent shots goddamnit
 	self.deathvox_grenadier.weapon.is_heavy_rifle = {

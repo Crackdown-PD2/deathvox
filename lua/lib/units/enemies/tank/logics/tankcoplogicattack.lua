@@ -350,6 +350,8 @@ function TankCopLogicAttack._walk_around_menacingly(data, my_data)
 	local menacing_pos = CopLogicTravel._find_near_free_pos(my_pos, dis, nil, data.pos_rsrv_id)
 
 	if menacing_pos then
+		menacing_pos = managers.navigation:pad_out_position(menacing_pos, 4, data.char_tweak.wall_fwd_offset)
+		
 		CopLogicAttack._cancel_cover_pathing(data, my_data)
 		local path = {
 			mvec3_cpy(data.m_pos),
@@ -435,6 +437,7 @@ function TankCopLogicAttack._upd_combat_movement(data)
 					end
 
 					if my_data.chase_pos then
+						my_data.chase_pos = managers.navigation:pad_out_position(my_data.chase_pos, 4, data.char_tweak.wall_fwd_offset)
 						local my_pos = data.unit:movement():nav_tracker():field_position()
 						local unobstructed_line = nil
 

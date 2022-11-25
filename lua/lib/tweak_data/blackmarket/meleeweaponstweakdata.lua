@@ -1018,9 +1018,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.cs.stats.range = 200
 		self.melee_weapons.cs.stats.min_damage = 40
 
-
 				--Stainless Steel Syringe--
 		self.melee_weapons.fear.subclasses = {
+			"subclass_poison"
 		}
 		self.melee_weapons.fear.primary_class = "class_melee"
 		self.melee_weapons.fear.stats.charge_time = 2
@@ -1058,8 +1058,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.whiskey.stats.max_damage = 10
 		self.melee_weapons.whiskey.stats.range = 185
 		self.melee_weapons.whiskey.stats.min_damage = 5
-		self.melee_weapons.whiskey.bonus_dodge_while_held = 0.1
-
+		self.melee_weapons.whiskey.dodge_chance_bonus_while_charging = 0.1
+		
 
 				--Jackpot--
 		self.melee_weapons.slot_lever.subclasses = {
@@ -1086,6 +1086,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.buck.stats.max_damage = 50
 		self.melee_weapons.buck.stats.range = 175
 		self.melee_weapons.buck.stats.min_damage = 30
+		
+		self.melee_weapons.buck.melee_damage_resistance = 0.75
+		self.melee_weapons.buck.all_damage_resistance = 0.1
 
 
 				--Pounder--
@@ -1099,6 +1102,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.nin.stats.max_damage = 80
 		self.melee_weapons.nin.stats.range = 185
 		self.melee_weapons.nin.stats.min_damage = 50
+		
 		self.melee_weapons.nin.pierce_body_armor = true
 		self.melee_weapons.nin.pierce_shields = true
 
@@ -1143,6 +1147,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.ostry.stats.range = 200
 		self.melee_weapons.ostry.stats.min_damage = 50
 
+		self.melee_weapons.ostry.hit_while_charging = {
+			swing_delay_initial = 0.1,
+			swing_delay_repeat = 0.1
+		}
 
 				--Bolt Cutters--
 		self.melee_weapons.cutters.subclasses = {
@@ -1222,6 +1230,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 		self.melee_weapons.road.stats.max_damage = 30
 		self.melee_weapons.road.stats.range = 200
 		self.melee_weapons.road.stats.min_damage = 30
+		self.melee_weapons.road.hit_while_charging = {
+			swing_delay_initial = 0.7,
+			swing_delay_repeat = 0.33
+		}
 
 
 

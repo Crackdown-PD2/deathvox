@@ -127,10 +127,17 @@ if deathvox:IsTotalCrackdownEnabled() then
 			create_archetype_icons("throwable",weapon_class,weapon_subclasses)
 		end
 		if self._boxes_by_name.melee then 
-	--		local melee_id = managers.blackmarket:equipped_melee_weapon()
+			local melee_id = managers.blackmarket:equipped_melee_weapon()
 			
-			--MELEE WEAPONS ARE MELEE WEAPONS
-			create_archetype_icons("melee","class_melee",{})
+			local melee_td = tweak_data.blackmarket.melee_weapons[melee_id]
+			local weapon_class
+			local weapon_subclasses = {}
+			if melee_id then 
+				weapon_class = melee_td.primary_class
+				insert_subclasses(weapon_subclasses,melee_td.subclasses)
+			end
+			
+			create_archetype_icons("melee",weapon_class,weapon_subclasses)
 		end
 		
 		if self._boxes_by_name.character then 

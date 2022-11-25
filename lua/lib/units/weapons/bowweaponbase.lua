@@ -12,7 +12,8 @@ function CrossbowWeaponBase:init(unit)
 
 	self._client_authoritative = true
 	self._should_reload_immediately = true
-	self._homing_arrows = managers.player:has_category_upgrade("weapon","homing_bolts")
+	self._piercer_bolts = managers.player:has_category_upgrade("weapon", "crossbow_piercer")
+	
 	if managers.player:has_category_upgrade("weapon","xbow_headshot_instant_reload") then 
 		self._should_reload_immediately = false
 	end

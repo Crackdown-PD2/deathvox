@@ -1,25 +1,25 @@
 if deathvox:IsTotalCrackdownEnabled() then 
 
-local color_ranges = {}
-local function is_weapon_category(weapon_tweak, ...)
-	local arg = {
-		...
-	}
-	local categories = weapon_tweak.categories
+	local color_ranges = {}
+	local function is_weapon_category(weapon_tweak, ...)
+		local arg = {
+			...
+		}
+		local categories = weapon_tweak.categories
 
-	for i = 1, #arg do
-		if table.contains(categories, arg[i]) then
-			return true
+		for i = 1, #arg do
+			if table.contains(categories, arg[i]) then
+				return true
+			end
 		end
+
+		return false
 	end
 
-	return false
-end
-
-local func_hex_color = InventoryDescription._create_hex_color
-local func_color_text = InventoryDescription._add_color_to_text
-local func_add_lb = InventoryDescription._add_line_break
-local func_create_list = InventoryDescription._create_list
+	local func_hex_color = InventoryDescription._create_hex_color
+	local func_color_text = InventoryDescription._add_color_to_text
+	local func_add_lb = InventoryDescription._add_line_break
+	local func_create_list = InventoryDescription._create_list
 
 
 
