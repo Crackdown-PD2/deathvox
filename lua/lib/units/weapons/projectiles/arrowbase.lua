@@ -248,10 +248,11 @@ function ArrowBase:_on_collision(col_ray)
 				end
 
 				if has_destroy_listener then
+					self._ignore_destroy_listener_key = self._ignore_destroy_listener_key or ("ArrowBase" .. tostring(self._unit:key()))
 					listener_class:add_destroy_listener(self._ignore_destroy_listener_key, callback(self, self, "_clbk_ignore_unit_destroyed"))
 					table.insert(self._ignore_units, col_ray.unit)
 				else
-					log("i am inside your home :)")
+--					log("i am inside your home :)")
 				end
 			end
 		end
