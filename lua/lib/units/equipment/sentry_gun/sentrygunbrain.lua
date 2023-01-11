@@ -49,7 +49,7 @@ local REACT_SUSPICIOUS = AIAttentionObject.REACT_SUSPICIOUS
 
 local is_local_vr = _G.IS_VR
 
-local is_total_crackdown_enabled = deathvox:IsTotalCrackdownEnabled()
+local IS_TOTAL_CRACKDOWN_ENABLED = deathvox:IsTotalCrackdownEnabled()
 
 function SentryGunBrain:_upd_flash_grenade(t)
 	if not self._tweak_data.FLASH_GRENADE then
@@ -134,7 +134,7 @@ function SentryGunBrain:_upd_fire(t,dt)
 	else
 		local is_firemode_manual
 		local is_ammo_ap
-		if is_total_crackdown_enabled then 
+		if IS_TOTAL_CRACKDOWN_ENABLED then 
 			local firemode = sentryweapon:_get_sentry_firemode()
 			is_firemode_manual = firemode == "manual"
 			is_ammo_ap = sentryweapon:_get_ammo_type() == "ap"
@@ -245,32 +245,6 @@ function SentryGunBrain:_upd_fire(t,dt)
 			self:stop_autofire()
 		end
 	end
-	
-	if is_total_crackdown_enabled and is_owner and dt then 
-		if self._firing then 
-			if not managers.player:has_category_upgrade("sentry_gun","wrangler_heatsink") or not is_firemode_manual then 
-				sentryweapon:_add_weapon_heat(sentryweapon:get_weapon_heat_gain_rate(dt))
-			end
-			self._weapon_overheated_t = t
-			if sentryweapon:is_overheated() then 
---				Console:SetTrackerValue("trackera",string.format("OVERHEATED/ACTIVE: %0.2f " .. string.format("t:%0.1f",Application:time()),sentryweapon:_get_weapon_heat()))
-			else
---				Console:SetTrackerValue("trackera",string.format("NOMINAL/ACTIVE: %0.2f " .. string.format("t:%0.1f",Application:time()),sentryweapon:_get_weapon_heat()))
-			end
-		else
-			if not sentryweapon:is_overheated() then 
-				self._weapon_overheated_t = self._weapon_overheated_t or t
-				local td = self:_get_tweak_data()
-				if sentryweapon:_get_weapon_heat() > 0 and t - self._weapon_overheated_t > td.WEAPON_HEAT_DECAY_TIMER then 
-					sentryweapon:_add_weapon_heat(sentryweapon:get_weapon_heat_decay_rate(dt))
-				end
---				Console:SetTrackerValue("trackera",string.format("NOMINAL/INACTIVE: %0.2f " .. string.format("t:%0.1f",Application:time()),sentryweapon:_get_weapon_heat()))
-			else
---				Console:SetTrackerValue("trackera",string.format("OVERHEATED/INACTIVE: %0.2f " .. string.format("t:%0.1f",Application:time()),sentryweapon:_get_weapon_heat()))
-			end
-		end
-	end
-	
 end
 
 function SentryGunBrain:on_detected_attention_obj_modified(modified_u_key)
@@ -312,7 +286,7 @@ function SentryGunBrain:on_detected_attention_obj_modified(modified_u_key)
 	end
 end
 
-if is_total_crackdown_enabled then
+if IS_TOTAL_CRACKDOWN_ENABLED then
 
 	local _setup_attention_handler_original = SentryGunBrain._setup_attention_handler
 	function SentryGunBrain:_setup_attention_handler()

@@ -1097,8 +1097,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.engineer,1,{ --Digging In
 			{
 				upgrades = {
-					"player_digging_in_deploy_time",
-					"sentry_gun_digging_in_retrieve_time"
+					"sentry_gun_auto_heat_decay_1"
 				},
 				cost = self.costs.hightier
 			},
@@ -4465,7 +4464,12 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			"player_passive_convert_enemies_health_multiplier_1", --50% damage resistance
 			"player_critical_hit_multiplier_1", --2x crit multiplier (same as default)
 			
-			"player_convert_enemies_max_minions_1" --1 joker allowed per player; the actual requirement is the friendship collar deployable
+			"player_convert_enemies_max_minions_1", --1 joker allowed per player; the actual requirement is the friendship collar deployable
+			
+			--old digging in deploy/retrieve mul
+			"player_digging_in_deploy_time",
+			"sentry_gun_digging_in_retrieve_time"
+			
 		}
 		
 		for _,upgrade_name in pairs(more_default_upgrades) do 

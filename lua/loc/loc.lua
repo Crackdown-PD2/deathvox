@@ -156,14 +156,15 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				hud_int_equipment_sensor_mode_trip_mine = "Press $BTN_INTERACT to edit Trip Mine",
 				hud_int_equipment_normal_mode_trip_mine = "Press $BTN_INTERACT to edit Trip Mine",
 				debug_interact_trip_mine = cursed_error,
-				tripmine_payload_explosive = "Explosive",
-				tripmine_payload_incendiary = "Incendiary",
-				tripmine_payload_concussive = "Concussive",
+				tripmine_payload_explosive = "Explosive Mode",
+				tripmine_payload_incendiary = "Incendiary Mode",
+				tripmine_payload_concussive = "Concussive Mode",
 				tripmine_payload_sensor = "Sensor Mode",
 				tripmine_trigger_detonate = "Detonate Now",
-				tripmine_trigger_special = "Special Enemies Only",
-				tripmine_trigger_default = "Detect All",
-				tripmine_payload_recover = "Recover Tripmine",
+				tripmine_trigger_special = "Special Targeting",
+				tripmine_trigger_default = "Default Targeting",
+				tripmine_payload_recover = "Retrieve",
+				tripmine_menu_exit = "Exit",
 				sentry_mode_standard = "Standard Mode",
 				sentry_mode_overwatch = "Overwatch Mode",
 				sentry_mode_manual = "Manual Mode",
@@ -214,11 +215,10 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				bm_grenade_molotov_desc = "(CHANGES NOT YET IMPLEMENTED)\n\n$ICN_GRN Grenade that creates a 2.5m radius pool of flame for 15 seconds that deals 250 damage (50 vs allies) every 0.5 seconds.",
 				bm_grenade_fir_com_desc = "(CHANGES NOT YET IMPLEMENTED)\n\n$ICN_GRN Grenade that creates a 1m radius pool of flame for 30 seconds that deals 250 damage (50 vs allies) every 0.5 seconds.",
 				
-				bm_equipment_sentry_gun_desc = "Deployable weapon with multiple firing modes that will automatically attack enemies within range. Sentry Guns have infinite ammunition and will be ignored by enemies, but extended use will build Heat and reduce the Sentry Gun's damage.\n\nTo deploy, hold $BTN_USE_ITEM on a suitable surface.\n\nTo open the Radial Menu and configure a Sentry, hold $BTN_INTERACT to open the Radial Menu. To choose an option, highlight over your desired choice and release $BTN_INTERACT to activate it.\n\nOpening the Radial Menu vents all current Heat.",
-				
+				bm_equipment_sentry_gun_desc = "Deployable weapon that will automatically attack nearby targets. Sentry Guns have infinite ammunition, will be ignored by enemies, and have a Radial Menu with the following options:\nBasic Ammo has excellent damage output, but no special properties.\nAP Ammo has good damage output and punches through Body Armor and Shields.\nTaser Ammo deals little damage, but electrocutes enemies.\nManual Mode causes the Sentry Gun to aim where you do.\nOverwatch Mode can only target Snipers, but has infinite Range and perfect Accuracy.\nRetrieve returns the Sentry Gun to your Inventory.\n\nSentry Guns generate Heat during combat, inflicting -1% Damage Reduction per second, up to -75%. Heat can be vented by opening a Sentry Gun's Radial Menu.\n\nTo deploy a Sentry Gun, hold $BTN_USE_ITEM on a suitable surface.\n\nTo configure a deployed Sentry Gun, approach it and hold $BTN_INTERACT to open the Radial Menu. To choose an option in a Radial Menu, highlight an option via aiming and release $BTN_INTERACT.\n\nYou can also open the Radial Menu to configure your Sentry Guns while they're still in your inventory by holding $BTN_USE_ITEM and $BTN_INTERACT at the same time.",
 				debug_trip_mine_throwable = "Trip Mine",
 				bm_grenade_tripmine = "Trip Mine Throwable",
-				bm_grenade_tripmine_desc = "Trip Mines are explosive booby traps with multiple functions and trigger types. To deploy, hold your Use Throwable button on a suitable surface. To modify a placed Trip Mine, press $BTN_INTERACT while looking at them to open the radial menu.", --needs macros
+				bm_grenade_tripmine_desc = "Static trap that can be configured for a variety of purposes and effects. In their default setting, Trip Mines deal 1500 explosive damage in an area when any enemy passes by.\n\nPress [$BTN_GRENADE] to place a Trip Mine on a suitable surface.\n\nTo configure a placed Trip Mine, hold [$BTN_INTERACT] to access a Radial Menu with the following options:\n\nExplosive Mode deals 1500 explosive damage in an area.\n\nIncendiary Mode creates a 2.5m radius pool of flame for 15 seconds that deals 250 damage (50 vs allies) every 0.5 seconds.\nConcussive Mode stuns enemies for 4 seconds. Non-lethal.\nSensor Mode Marks enemies instead of detonating. Marking enemies does not consume the Trip Mine.\nDefault Targeting will trigger the Trip Mine on any enemy.\nSpecial Targeting will only trigger the Trip Mine on Special Enemies.\nRetrieve returns the Trip Mine to your inventory.\n\nYou can also open the Radial Menu to configure your Trip Mines while they're still in your Inventory by holding [BTN_GRENADE] and [$BTN_INTERACT] at the same time.", --needs macros
 				
 				hud_deploying_tripmine_preview = "Ready to deploy $EQUIPMENT",
 				hud_sentry_gun_vent_heat = "Hold $BTN_INTERACT to vent sentrygun heat",
@@ -360,7 +360,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				
 			--engineer
 				menu_digging_in = "Digging In",
-				menu_digging_in_desc = "BASIC: ##$basic##\nYou deploy and retrieve Sentry Guns ##90%## faster.\n\nACE: ##$pro##\nYour Sentry Guns become armored, rendering them almost completely invulnerable and making them good for use as cover.",
+				menu_digging_in_desc = "BASIC: ##$basic##\nYour Sentry Guns vent ##1## Heat every ##6## seconds.\n\nACE: ##$pro##\nYour Sentry Guns become armored, rendering them almost completely invulnerable and making them good for use as cover.",
 				menu_advanced_rangefinder = "Advanced Targeting",
 				menu_advanced_rangefinder_desc = "BASIC: ##$basic##\nSentry Guns gain ##+100%## Range and Accuracy.\n\nACE: ##$pro##\nOverwatch Mode will target all Special Enemy types in addition to Snipers.",
 				menu_targeting_matrix = "Little Helpers",

@@ -1429,6 +1429,23 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		self.values.sentry_gun.interaction_speed_multiplier = {
 			0.1
 		}
+		
+		self.definitions.sentry_gun_auto_heat_decay_1 = {
+			name_id = "menu_digging_in_decay_heat",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "auto_heat_decay",
+				category = "sentry_gun"
+			}
+		}
+		self.values.sentry_gun.auto_heat_decay = {
+			{
+				interval = 6, --every n seconds, perform heat decay
+				amount = -1 --amount of heat removed per interval
+			}
+		}
+		
 		--wrangler_damage_bonus
 		self.definitions.sentry_gun_targeting_range_increase = {
 			name_id = "menu_advanced_rangefinder_basic",

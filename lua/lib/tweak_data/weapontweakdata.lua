@@ -553,13 +553,11 @@ function WeaponTweakData:init(tweak_data)
 			self.sentry_gun.DETECTION_RANGE = 2000
 			
 			self.sentry_gun.WEAPON_HEAT_INIT = 0
-			self.sentry_gun.WEAPON_HEAT_GAIN_RATE = 1 --heat per second gained while firing
+			self.sentry_gun.WEAPON_HEAT_GAIN_RATE = 1 --heat gained per kill
 			self.sentry_gun.WEAPON_HEAT_MAX = 75 
 			self.sentry_gun.WEAPON_HEAT_DAMAGE_PENALTY = -0.01 -- -1% damage penalty per heat point
 			
-			self.sentry_gun.WEAPON_HEAT_OVERHEAT_THRESHOLD = 50 --threshold at which the heat value causes the sentry gun to overheat and shut down
-			self.sentry_gun.WEAPON_HEAT_DECAY_TIMER = 5 --number of seconds required to be inactive (not firing) before cooling down can begin
-			self.sentry_gun.WEAPON_HEAT_DECAY_RATE = -1 --heat removed per second while cooling down 
+			self.sentry_gun.WEAPON_HEAT_OVERHEAT_THRESHOLD = 50 --threshold at which the heat value causes the sentry gun to overheat and shut down (not used) 
 			
 			
 			--AP
