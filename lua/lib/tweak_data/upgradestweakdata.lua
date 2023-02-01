@@ -1404,7 +1404,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 		--Engineer
-		self.definitions.player_digging_in_deploy_time = {
+		self.definitions.player_digging_in_deploy_time = { -- not used
 			name_id = "menu_digging_in_deploy",
 			category = "feature",
 			upgrade = {
@@ -1417,7 +1417,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			0.5, --base-game
 			0.1  --total cd
 		}
-		self.definitions.sentry_gun_digging_in_retrieve_time = {
+		self.definitions.sentry_gun_digging_in_retrieve_time = { --not used
 			name_id = "menu_digging_in_retrieve",
 			category = "feature",
 			upgrade = {
@@ -2065,6 +2065,62 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		--Fixer
 		
+		self.values.saw.damage_multiplier = {
+			10 --10x
+		}
+		self.definitions.saw_damage_multiplier_1 = {
+			name_id = "menu_saw_into_the_pit_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "damage_multiplier",
+				category = "saw"
+			}
+		}
+		self.values.saw.damage_multiplier_to_specials = {
+			2
+		}
+		self.definitions.saw_damage_multiplier_to_specials = {
+			name_id = "menu_saw_not_safe_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "damage_multiplier_to_specials",
+				category = "saw"
+			}
+		}
+		
+		self.values.saw.panic_on_hit = {
+			true
+		}
+		self.definitions.saw_panic_on_hit = {
+			name_id = "menu_saw_rolling_cutter_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "panic_on_hit",
+				category = "saw"
+			}
+		}
+		
+		
+		self.values.saw.stagger_on_kill = {
+			{
+				severity = "heavy_hurt",
+				range = 600
+			}
+		}
+		self.definitions.saw_stagger_on_kill = {
+			name_id = "menu_saw_bloody_mess_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stagger_on_kill",
+				category = "saw"
+			}
+		}
+		
+		
 			--no ammo consumed on enemy hit
 		self.values.saw.enemy_cutter = { true }
 		self.definitions.saw_enemy_cutter = {
@@ -2145,7 +2201,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 		self.values.saw.killing_blow_radius = {
-			250
+			300
 		}
 		self.definitions.saw_killing_blow_radius = {
 			name_id = "menu_saw_bloody_mess_aced",
@@ -2157,7 +2213,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
-		self.values.saw.killing_blow_chain = {
+		self.values.saw.killing_blow_chain = { --not used
 			true
 		}
 		self.definitions.saw_killing_blow_chain = {

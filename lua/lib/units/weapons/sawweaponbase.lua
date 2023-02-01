@@ -39,7 +39,20 @@ function SawWeaponBase:init(unit)
 		self._bloody_mess_radius = managers.player:upgrade_value("saw","killing_blow_radius") --saw kills damage nearby enemies)
 		self._bloody_mess_do_extra_proc = managers.player:has_category_upgrade("saw","killing_blow_chain") --enemies killed by bloody mess basic can proc bloody mess one more time
 		self._enemy_cutter_ammo_usage = managers.player:upgrade_value("saw", "durability_increase", 10)
-
+		self._special_enemy_bonus_damage_mul = managers.player:upgrade_value("saw","damage_multiplier_to_specials",1)
+		self._inflict_panic_on_hit = managers.player:has_category_upgrade("saw","panic_on_hit")
+		
+		local stagger_radius,stagger_severity
+		
+		if managers.player:has_category_upgrade("saw","stagger_on_kill") then
+			local stagger_data = managers.player:upgrade_value("saw","stagger_on_kill",{})
+			stagger_radius = stagger_data.range
+			stagger_severity = stagger_data.severity
+		end
+		
+		self._stagger_on_kill_radius = stagger_radius
+		self._stagger_on_kill_severity = stagger_severity
+		
 		if self._extra_saw_range_mul == 1 then
 			self._extra_saw_range_mul = nil
 		end
@@ -174,6 +187,7 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 	local ray_hits = world_g:raycast_all("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units, "ray_type", "body bullet lock")
 	local units_hit, actual_hits = {}, {}
 	local hit_an_enemy, drain_ammo, do_bloody_mess, bloody_hit_damage, bloody_hit_pos = nil
+	local do_stagger_on_kill
 
 	for i, hit in ipairs(ray_hits) do
 		local unit = hit.unit
@@ -208,6 +222,10 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 			
 			if hit_result and is_total_cd and hit_an_enemy and hit_result.type and hit_result.type == "death" and hit_result.attack_data then
 				
+				if self._stagger_on_kill_radius then
+					do_stagger_on_kill = true
+				end
+				
 				--give rolling cutter basic damage bonus stacks here
 				if self._rolling_cutter_damage then 
 					Hooks:Call("OnProcRollingCutterBasic",1)
@@ -232,8 +250,42 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 			end
 		end
 	end
+	
+	if do_stagger_on_kill then --adapted from old 'bloody mess' code
+		local radius = self._stagger_on_kill_radius
+		local severity = self._stagger_on_kill_severity
+		local ray = ray_hits[1] 
+		
+		local bodies_hit = world_g:find_bodies("intersect", "sphere", ray.position, radius, self._enemy_slotmask)
+		local enemies_hit = {}
 
-	if do_bloody_mess ~= nil then
+		for _, body in ipairs(bodies_hit) do
+			local enemy = body:unit()
+
+			if not enemies_hit[enemy:key()] then
+				
+				enemies_hit[enemy:key()] = true
+				
+				if unit_base_ext and unit_base_ext.has_tag and not unit_base_ext:has_tag("tank") then
+					local dmg_ext = enemy:character_damage()
+					if dmg_ext and dmg_ext._call_listeners then
+						dmg_ext:_call_listeners({
+							variant = "bullet",
+							damage = 0,
+							type = "hurt",
+							col_ray = ray,
+							result = {
+								variant = "bullet",
+								type = severity
+							}
+						})
+					end	
+				end
+			end
+		end
+	end
+	
+	if do_bloody_mess ~= nil then --not used
 		local radius = self._bloody_mess_radius
 		local bodies_hit = world_g:find_bodies("intersect", "sphere", bloody_hit_pos, radius, self._enemy_slotmask)
 		local enemies_hit = {}
@@ -335,7 +387,9 @@ function SawHit:on_collision(col_ray, weapon_unit, user_unit, damage)
 		if unit_base_ext and self._bonus_dozer_damage and unit_base_ext.has_tag and unit_base_ext:has_tag("tank") then
 			damage = damage * self._bonus_dozer_damage
 		end
-
+		if managers.groupai:state():is_enemy_special(hit_unit) then
+			damage = damage * self._special_enemy_bonus_damage_mul
+		end
 		if self._into_the_pit then
 			unit_dmg_ext = hit_unit:character_damage()
 
@@ -343,6 +397,9 @@ function SawHit:on_collision(col_ray, weapon_unit, user_unit, damage)
 				unit_dmg_ext._INTO_THE_PIT_PROC = true
 				is_crit = true
 			end
+		end
+		if self._inflict_panic_on_hit and unit_dmg_ext.build_suppression then
+			unit_dmg_ext:build_suppression("panic")
 		end
 	elseif unit_base_ext and unit_base_ext.has_tag and unit_base_ext:has_tag("tank") then --vanilla (but fixed), add 500 damage to the hit against all Dozers
 		damage = damage + 50
