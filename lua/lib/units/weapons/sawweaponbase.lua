@@ -6,6 +6,7 @@ local mvec3_norm = mvector3.normalize
 
 local mvec_to = Vector3()
 
+local math_floor = math.floor
 local math_ceil = math.ceil
 local math_random = math.random
 local math_clamp = math.clamp
@@ -39,15 +40,23 @@ function SawWeaponBase:init(unit)
 	self._use_armor_piercing = true --this not being a thing normally is just silly
 
 	if is_total_cd then
-		self._rolling_cutter = managers.player:has_category_upgrade("saw", "enemy_cutter") --no ammo consumed on enemy hit
-		self._rolling_cutter_damage = managers.player:has_category_upgrade("saw","consecutive_damage_bonus") and managers.player:upgrade_value("saw","consecutive_damage_bonus",{0,0})[1] --damage bonus per kill
+		self._saw_enemies_free = managers.player:has_category_upgrade("saw", "enemy_cutter") --no ammo consumed on enemy hit
 		self._extra_saw_range_mul = managers.player:upgrade_value("saw","range_mul",1) --basically what it says on the tin
 		self._saw_through_shields = managers.player:has_category_upgrade("saw", "ignore_shields") --also what it says on the tin + don't spend ammo when hitting shields
 		self._bonus_dozer_damage = managers.player:upgrade_value("saw","dozer_bonus_damage_mul",1) --fig a. tin label
 		self._bloody_mess_radius = managers.player:upgrade_value("saw","killing_blow_radius") --saw kills damage nearby enemies)
 		self._bloody_mess_do_extra_proc = managers.player:has_category_upgrade("saw","killing_blow_chain") --enemies killed by bloody mess basic can proc bloody mess one more time
-		self._enemy_cutter_ammo_usage = managers.player:upgrade_value("saw", "durability_increase", 10)
+		self._reduced_ammo_usage = math_floor(self._HIT_DEFAULT_AMMO_USAGE * managers.player:upgrade_value("saw", "durability_increase", 10))
 		
+		if managers.player:has_category_upgrade("saw","consecutive_damage_bonus") then
+			self._has_consecutive_damage_bonus = true
+			local consecutive_damage_bonus_data = self:upgrade_value("saw","consecutive_damage_bonus",{0,0})
+			self._consecutive_damage_bonus_rate = consecutive_damage_bonus_data[1]
+			self._max_consecutive_damage_stacks = consecutive_damage_bonus_data[2]
+		end
+		self._enemy_damage_multiplier = managers.player:upgrade_value("saw","enemy_damage_multiplier",1)
+					
+					
 		local stagger_radius,stagger_severity
 		
 		if managers.player:has_category_upgrade("saw","stagger_on_kill") then
@@ -68,7 +77,7 @@ function SawWeaponBase:init(unit)
 		end
 	else
 		self._consume_no_ammo_chance = managers.player:has_category_upgrade("saw", "consume_no_ammo_chance") and managers.player:upgrade_value("saw", "consume_no_ammo_chance", 0)
-		self._enemy_cutter_ammo_usage = managers.player:has_category_upgrade("saw", "enemy_slicer") and managers.player:upgrade_value("saw", "enemy_slicer", 10)
+		self._reduced_ammo_usage = managers.player:has_category_upgrade("saw", "enemy_slicer") and managers.player:upgrade_value("saw", "enemy_slicer", 10) --vanilla
 
 		if self._consume_no_ammo_chance == 0 then
 			self._consume_no_ammo_chance = nil
@@ -107,11 +116,10 @@ function SawWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spread_m
 
 		if drain_ammo and not managers.player:has_active_temporary_property("bullet_storm") then --check if the hit will drain ammo (not a helmet, corpse or similar entities that are can get in the way and waste ammo)
 			if is_total_cd then
-				if not hit_an_enemy or not self._rolling_cutter then
-					local ammo_usage = self._HIT_DEFAULT_AMMO_USAGE
+				if not hit_an_enemy or not self._saw_enemies_free then
+					local ammo_usage = self._reduced_ammo_usage or self._HIT_DEFAULT_AMMO_USAGE
 					ammo_usage = ammo_usage + math_ceil(math_random() * 10)
 					ammo_usage = math_min(ammo_usage, ammo_in_mag)
-
 					self:set_ammo_remaining_in_clip(math_max(ammo_in_mag - ammo_usage, 0))
 					self:set_ammo_total(math_max(self:get_ammo_total() - ammo_usage, 0))
 					self:_check_ammo_total(user_unit)
@@ -128,7 +136,7 @@ function SawWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spread_m
 					local ammo_usage = nil
 
 					if hit_an_enemy then
-						ammo_usage = self._enemy_cutter_ammo_usage or self._HIT_ENEMY_AMMO_USAGE
+						ammo_usage = self._reduced_ammo_usage or self._HIT_ENEMY_AMMO_USAGE
 					else
 						ammo_usage = self._HIT_DEFAULT_AMMO_USAGE
 					end
@@ -180,11 +188,6 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 		mvec3_add(mvec_to, from_pos)
 	end
 
-	local damage = self:_get_current_damage(dmg_mul)
-	if self._rolling_cutter_damage then 
-		local rolling_cutter_bonus = self._rolling_cutter_damage * managers.player:get_property("rolling_cutter_aced_stacks",0)
-		damage = damage * (1 + rolling_cutter_bonus)
-	end
 	
 	--raycast_all allows proper penetration by just using 1 ray, use it consistently instead of only when the player has the shield penetration upgrade
 	local ray_hits = world_g:raycast_all("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units, "ray_type", "body bullet lock")
@@ -220,18 +223,33 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 			elseif hit_in_slot_func(unit, self._civilian_slotmask) then --civilians won't stop you from hitting something else, but they will still drain ammo (does not stack if hitting other things)
 				drain_ammo = true
 			end
+			
+			if is_total_cd and hit_result and hit_an_enemy then
+				--damage mul should only apply to enemies, not saw-able objects like deposit boxes
+				local enemy_damage_multiplier = self._enemy_damage_multiplier
+				if self._has_consecutive_damage_bonus then
+					enemy_damage_multiplier = enemy_damage_multiplier + (self._consecutive_damage_bonus_rate * managers.player:get_property("saw_consecutive_damage_stacks",0))
+				end
+				dmg_mul = dmg_mul + enemy_damage_multiplier
 
+			end
+			
+			local damage = self:_get_current_damage(dmg_mul)
+			
 			local hit_result = SawHit:on_collision(hit, self._unit, user_unit, damage)
 			
-			if hit_result and is_total_cd and hit_an_enemy and hit_result.type and hit_result.type == "death" and hit_result.attack_data then
-
+			if is_total_cd and hit_result and hit_an_enemy and hit_result.type and hit_result.type == "death" and hit_result.attack_data then
+				
 				if self._stagger_on_kill_radius then
 					do_stagger_on_kill = true
 				end
 				
+				
+				
 				--give rolling cutter basic damage bonus stacks here
-				if self._rolling_cutter_damage then 
-					Hooks:Call("OnProcRollingCutterBasic",1)
+				if self._has_consecutive_damage_bonus then 
+					local consecutive_damage_stacks = math.clamp(managers.player:get_property("saw_consecutive_damage_stacks",0) + 1,0,self._max_consecutive_damage_stacks)
+					managers.player:set_property("saw_consecutive_damage_stacks",consecutive_damage_stacks)
 				end
 				
 				--do bloody mess effect here
@@ -387,32 +405,37 @@ function SawHit:on_collision(col_ray, weapon_unit, user_unit, damage)
 	local is_crit, unit_dmg_ext = nil
 
 	if is_total_cd then
+		unit_dmg_ext = hit_unit:character_damage()
+		
 		if unit_base_ext and self._bonus_dozer_damage and unit_base_ext.has_tag and unit_base_ext:has_tag("tank") then
 			damage = damage * self._bonus_dozer_damage
 		end
 		if managers.groupai:state():is_enemy_special(hit_unit) then
 			damage = damage * managers.player:upgrade_value("saw","damage_multiplier_to_specials",1)
 		end
-		if managers.player:has_category_upgrade("saw","crit_first_strike") then
-			unit_dmg_ext = hit_unit:character_damage()
+		if unit_dmg_ext then 
+			
+			if managers.player:has_category_upgrade("saw","crit_first_strike") then
 
-			if unit_dmg_ext and not unit_dmg_ext._INTO_THE_PIT_PROC then
-				unit_dmg_ext._INTO_THE_PIT_PROC = true
-				is_crit = true
+				if unit_dmg_ext and not unit_dmg_ext._INTO_THE_PIT_PROC then
+					unit_dmg_ext._INTO_THE_PIT_PROC = true
+					is_crit = true
+				end
+			end
+			
+			if managers.player:has_category_upgrade("saw","panic_on_hit") and unit_dmg_ext.build_suppression then
+				unit_dmg_ext:build_suppression("panic")
+			end
+
+			if unit_dmg_ext.build_suppression then
+				unit_dmg_ext:build_suppression("panic")
 			end
 		end
-		if managers.player:has_category_upgrade("saw","panic_on_hit") and unit_dmg_ext.build_suppression then
-			unit_dmg_ext:build_suppression("panic")
-		end
+		
 	elseif unit_base_ext and unit_base_ext.has_tag and unit_base_ext:has_tag("tank") then --vanilla (but fixed), add 500 damage to the hit against all Dozers
 		damage = damage + 50
 	end
-
 	local result = InstantBulletBase.on_collision(self, col_ray, weapon_unit, user_unit, damage, nil, nil, nil, is_crit)
-
-	if is_crit and alive(hit_unit) and unit_dmg_ext.build_suppression then
-		unit_dmg_ext:build_suppression("panic")
-	end
 
 	if hit_unit:damage() and col_ray.body:extension() and col_ray.body:extension().damage then
 		damage = math_clamp(damage * managers.player:upgrade_value("saw", "lock_damage_multiplier", 1) * 4, 0, 200)

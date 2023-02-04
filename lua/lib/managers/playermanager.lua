@@ -369,22 +369,6 @@ if tcd_enabled then
 			)
 		end
 		
-		if self:has_category_upgrade("saw","consecutive_damage_bonus") then 
-			self:set_property("rolling_cutter_aced_stacks",0)
-			
-			Hooks:Register("OnProcRollingCutterBasic")
-			Hooks:Add("OnProcRollingCutterBasic","AddToRollingCutterStacks",
-				function(stack_add)
-					stack_add = stack_add or 1
-
-					local max_stacks = self:upgrade_value("saw","consecutive_damage_bonus",{0,0})[2]
-					local new_stacks = self:get_property("rolling_cutter_aced_stacks",0) + stack_add
-				
-					self:set_property("rolling_cutter_aced_stacks", math.min(new_stacks,max_stacks))
-				end
-			)
-		end
-	
 		if self:has_category_upgrade("class_heavy","collateral_damage") then 
 			local slot_mask = managers.slot:get_mask("enemies")
 			

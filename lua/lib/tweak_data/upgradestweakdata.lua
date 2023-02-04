@@ -2065,15 +2065,15 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		--Fixer
 		
-		self.values.saw.damage_multiplier = {
+		self.values.saw.enemy_damage_multiplier = {
 			10 --10x
 		}
-		self.definitions.saw_damage_multiplier_1 = {
+		self.definitions.saw_enemy_damage_multiplier_1 = {
 			name_id = "menu_saw_into_the_pit_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "damage_multiplier",
+				upgrade = "enemy_damage_multiplier",
 				category = "saw"
 			}
 		}

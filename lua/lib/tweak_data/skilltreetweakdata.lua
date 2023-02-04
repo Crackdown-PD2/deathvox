@@ -1725,11 +1725,11 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		})
 		
 		--Fixer
-		replace_skill(tree_indices.fixer,1,{ --Rolling Cutter
+		replace_skill(tree_indices.fixer,1,{ --Into The Pit
 			{
 				upgrades = {
 					"saw_enemy_cutter",
-					"saw_damage_multiplier_1"
+					"saw_enemy_damage_multiplier_1"
 				},
 				cost = self.costs.hightier
 			},
@@ -1829,7 +1829,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				10
 			}
 		})
-		replace_skill(tree_indices.fixer,6,{ --Into The Pit
+		replace_skill(tree_indices.fixer,6,{ --Rolling Cutter
 			{
 				upgrades = {
 --					"saw_crit_first_strike"
