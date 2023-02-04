@@ -18,6 +18,15 @@ local world_g = World
 
 local is_total_cd = deathvox:IsTotalCrackdownEnabled()
 
+local instapeel_bodies = {}
+if is_total_cd then
+	--list of Idstrings for bodies that take maxed damage from saws (currently just dozer faceplate "body_helmet_plate" but could also be "body_helmet_glass")
+	for _,body_name in pairs(tweak_data.upgrades.values.saw.dozer_instant_armor_peel_bodies) do 
+		instapeel_bodies[Idstring(body_name)] = true
+	end
+end
+
+
 local original_init = SawWeaponBase.init
 function SawWeaponBase:init(unit)
 	original_init(self, unit)
@@ -34,13 +43,10 @@ function SawWeaponBase:init(unit)
 		self._rolling_cutter_damage = managers.player:has_category_upgrade("saw","consecutive_damage_bonus") and managers.player:upgrade_value("saw","consecutive_damage_bonus",{0,0})[1] --damage bonus per kill
 		self._extra_saw_range_mul = managers.player:upgrade_value("saw","range_mul",1) --basically what it says on the tin
 		self._saw_through_shields = managers.player:has_category_upgrade("saw", "ignore_shields") --also what it says on the tin + don't spend ammo when hitting shields
-		self._into_the_pit = managers.player:has_category_upgrade("saw","crit_first_strike") --see: tin
 		self._bonus_dozer_damage = managers.player:upgrade_value("saw","dozer_bonus_damage_mul",1) --fig a. tin label
 		self._bloody_mess_radius = managers.player:upgrade_value("saw","killing_blow_radius") --saw kills damage nearby enemies)
 		self._bloody_mess_do_extra_proc = managers.player:has_category_upgrade("saw","killing_blow_chain") --enemies killed by bloody mess basic can proc bloody mess one more time
 		self._enemy_cutter_ammo_usage = managers.player:upgrade_value("saw", "durability_increase", 10)
-		self._special_enemy_bonus_damage_mul = managers.player:upgrade_value("saw","damage_multiplier_to_specials",1)
-		self._inflict_panic_on_hit = managers.player:has_category_upgrade("saw","panic_on_hit")
 		
 		local stagger_radius,stagger_severity
 		
@@ -176,11 +182,8 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 
 	local damage = self:_get_current_damage(dmg_mul)
 	if self._rolling_cutter_damage then 
-		--log("stacks " .. tostring(managers.player:get_property("rolling_cutter_aced_stacks",0)) .. "")
 		local rolling_cutter_bonus = self._rolling_cutter_damage * managers.player:get_property("rolling_cutter_aced_stacks",0)
-		--log("damage_mul " .. tostring(rolling_cutter_bonus) .. "")
 		damage = damage * (1 + rolling_cutter_bonus)
-		--log("damage " .. tostring(damage) .. "")
 	end
 	
 	--raycast_all allows proper penetration by just using 1 ray, use it consistently instead of only when the player has the shield penetration upgrade
@@ -221,7 +224,7 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 			local hit_result = SawHit:on_collision(hit, self._unit, user_unit, damage)
 			
 			if hit_result and is_total_cd and hit_an_enemy and hit_result.type and hit_result.type == "death" and hit_result.attack_data then
-				
+
 				if self._stagger_on_kill_radius then
 					do_stagger_on_kill = true
 				end
@@ -388,9 +391,9 @@ function SawHit:on_collision(col_ray, weapon_unit, user_unit, damage)
 			damage = damage * self._bonus_dozer_damage
 		end
 		if managers.groupai:state():is_enemy_special(hit_unit) then
-			damage = damage * self._special_enemy_bonus_damage_mul
+			damage = damage * managers.player:upgrade_value("saw","damage_multiplier_to_specials",1)
 		end
-		if self._into_the_pit then
+		if managers.player:has_category_upgrade("saw","crit_first_strike") then
 			unit_dmg_ext = hit_unit:character_damage()
 
 			if unit_dmg_ext and not unit_dmg_ext._INTO_THE_PIT_PROC then
@@ -398,7 +401,7 @@ function SawHit:on_collision(col_ray, weapon_unit, user_unit, damage)
 				is_crit = true
 			end
 		end
-		if self._inflict_panic_on_hit and unit_dmg_ext.build_suppression then
+		if managers.player:has_category_upgrade("saw","panic_on_hit") and unit_dmg_ext.build_suppression then
 			unit_dmg_ext:build_suppression("panic")
 		end
 	elseif unit_base_ext and unit_base_ext.has_tag and unit_base_ext:has_tag("tank") then --vanilla (but fixed), add 500 damage to the hit against all Dozers
@@ -414,8 +417,11 @@ function SawHit:on_collision(col_ray, weapon_unit, user_unit, damage)
 	if hit_unit:damage() and col_ray.body:extension() and col_ray.body:extension().damage then
 		damage = math_clamp(damage * managers.player:upgrade_value("saw", "lock_damage_multiplier", 1) * 4, 0, 200)
 
+		if managers.player:has_category_upgrade("saw","destroys_dozer_armor") and instapeel_bodies[col_ray.body:name()] then
+			damage = 200 --max out damage to the plate body
+		end
 		col_ray.body:extension().damage:damage_lock(user_unit, col_ray.normal, col_ray.position, col_ray.direction, damage)
-
+		
 		if hit_unit:id() ~= -1 then
 			managers.network:session():send_to_peers_synched("sync_body_damage_lock", col_ray.body, damage)
 		end

@@ -1811,8 +1811,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			{
 				upgrades = {
 					"saw_ignore_shields_1",
-					"saw_bonus_dozer_damage_mul"
---					"saw_destroys_dozer_armor"
+--					"saw_bonus_dozer_damage_mul"
+					"saw_destroys_dozer_armor"
 				},
 				cost = self.costs.hightier
 			},

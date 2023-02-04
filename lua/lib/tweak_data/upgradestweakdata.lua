@@ -2226,6 +2226,23 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		
+		self.values.saw.destroys_dozer_armor = {
+			true
+		}
+		self.values.saw.dozer_instant_armor_peel_bodies = { --manually referenced in SawWeaponBase bc weapon base code is a heck
+			"body_helmet_plate"
+		}
+		self.definitions.saw_destroys_dozer_armor = {
+			name_id = "menu_saw_not_safe_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "destroys_dozer_armor",
+				category = "saw"
+			}
+		}
+		
 		self.values.saw.dozer_bonus_damage_mul = {
 			2
 		}
