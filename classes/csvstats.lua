@@ -37,9 +37,9 @@ _G.CSVStatReader = {
 		["class_melee"] = true
 	},
 	SUBCLASS_NAME_LOOKUP = {
-		["Quiet"] = "subclass_quiet",
-		["Poison"] = "subclass_poison",
-		["Area Denial"] = "subclass_areadenial"
+		[utf8.to_lower("Quiet")] = "subclass_quiet",
+		[utf8.to_lower("Poison")] = "subclass_poison",
+		[utf8.to_lower("Area Denial")] = "subclass_areadenial"
 	},
 	VALID_SUBCLASSES = {
 		["subclass_quiet"] = true,
@@ -116,7 +116,7 @@ _G.CSVStatReader = {
 		"accuracy", --"Accuracy"
 		"spread_internal", --"Spread" (pre-calculated)
 		"stability", --"Stability",
-		"recoil", --"Recoil" (pre-calculated"
+		"recoil_internal", --"Recoil Mod" (pre-calculated"
 		"concealment", --"Conceal. Mod"
 		"threat", --"Threat Mod"
 		"suppression_internal", --"Supp. Index" (pre-calculated)
@@ -158,7 +158,7 @@ _G.CSVStatReader = {
 		6,  -- 17
 		4,  -- 18
 		2,  -- 19
-		0   -- 20 (floor)
+		0	-- 20 (floor)
 	},
 	WEAPON_STAT_INDICES = {}, --generated post load
 	ATTACHMENT_STAT_INDICES = {} --generated post load
@@ -287,7 +287,6 @@ end
 
 function CSVStatReader.convert_threat(target_threat)
 	local threat_suppression_reverse_lookup = CSVStatReader.SUPPRESSION_THREAT_LOOKUP 
-	
 	for threat_index,suppression in ipairs(threat_suppression_reverse_lookup) do 
 		if suppression == target_threat then 
 			return threat_index
@@ -300,7 +299,7 @@ function CSVStatReader.convert_threat(target_threat)
 		end
 	end
 	
-	return 0
+	return 20
 end
 
 function CSVStatReader.convert_extra_ammo(target_mag_bonus)
@@ -361,17 +360,17 @@ function CSVStatReader.remove_extra_spaces(s)
 	return s
 end
 
-function CSVStatReader:read_files(mode,wtd,wftd)
+function CSVStatReader:read_files(mode,parent_tweak_data)
 	if mode == "weapon" then 
-		return self:read_firearms()
+		return self:read_firearms(parent_tweak_data)
 	elseif mode == "attachment" then 
-		return self:read_attachments(wftd)
+		return self:read_attachments(parent_tweak_data)
 	elseif mode == "melee" then
-		return self:read_melees()
+		return self:read_melees(parent_tweak_data)
 	end
 end
 
-function CSVStatReader:read_firearms()
+function CSVStatReader:read_firearms(parent_tweak_data)
 	local file_util = _G.FileIO
 	local path_util = BeardLib.Utils.Path
 	
@@ -410,7 +409,7 @@ function CSVStatReader:read_firearms()
 					--weapon_id
 					local weapon_id = raw_csv_values[STAT_INDICES.id]
 					if not_empty(weapon_id) and not_null(weapon_id) then 
-						local wtd = tweak_data.weapon[weapon_id]
+						local wtd = parent_tweak_data[weapon_id]
 						if wtd then --found valid weapon data to edit
 							olog("Processing weapon id " .. tostring(weapon_id) .. " (line " .. tostring(line_num) .. ")")
 							
@@ -434,7 +433,7 @@ function CSVStatReader:read_firearms()
 							local secondary_classes = {}
 							
 							local _secondary_classes = remove_extra_spaces(utf8.to_lower(raw_csv_values[STAT_INDICES.subclasses]))
-							if _secondary_classes and _secondary_classes ~= "" then 
+							if _secondary_classes and not_empty(_secondary_classes) then 
 								for _,_secondary_class in pairs(string.split(_secondary_classes,";") or {}) do 
 									_secondary_class = remove_extra_spaces(_secondary_class)
 									local secondary_class
@@ -442,6 +441,8 @@ function CSVStatReader:read_firearms()
 										secondary_class = _secondary_class
 									elseif self.SUBCLASS_NAME_LOOKUP[_secondary_class] then
 										secondary_class = self.SUBCLASS_NAME_LOOKUP[_secondary_class]
+									else
+										olog("Unknown secondary class " .. tostring(_secondary_class))
 									end
 									
 									if secondary_class then 
@@ -804,6 +805,7 @@ function CSVStatReader:read_firearms()
 			end
 			
 			input_file:close()
+			olog("Stat reading complete.")
 		else
 			olog("Error! Bad file type: " .. tostring(extension))
 		end
@@ -829,7 +831,7 @@ function CSVStatReader:read_melees()
 	local input_directory = self.INPUT_DIRECTORY
 end
 
-function CSVStatReader:read_attachments(wftd)
+function CSVStatReader:read_attachments(parent_tweak_data)
 	local file_util = _G.FileIO
 	local path_util = BeardLib.Utils.Path
 	
@@ -866,7 +868,7 @@ function CSVStatReader:read_attachments(wftd)
 					local attachment_id = raw_csv_values[STAT_INDICES.id]
 					
 					if not_empty(attachment_id) and not_null(attachment_id) then 
-						local ptd = wftd.parts[attachment_id]
+						local ptd = parent_tweak_data.parts[attachment_id]
 						if ptd then 
 							
 							local base_stats = ptd.stats
@@ -930,7 +932,7 @@ function CSVStatReader:read_attachments(wftd)
 							local extra_ammo
 							local _extra_ammo = raw_csv_values[STAT_INDICES.extra_ammo]
 							if not_empty(_extra_ammo) then
-								extra_ammo = _extra_ammo
+								extra_ammo = tonumber(_extra_ammo)
 								--so apparently this is just. a 1:1 direct additive bonus.
 --								extra_ammo = convert_extra_ammo(tonumber(_extra_ammo))
 							end
@@ -940,7 +942,7 @@ function CSVStatReader:read_attachments(wftd)
 							local total_ammo_add
 							local _total_ammo_add = raw_csv_values[STAT_INDICES.total_ammo_add]
 							if not_empty(_total_ammo_add) then 
-								total_ammo_add = tonumber(_total_ammo_add) / 10
+								total_ammo_add = tonumber(_total_ammo_add)
 							end
 							
 							--Total Ammo Mul Bonus (multiplicative bonus to Reserve Ammo)
@@ -985,7 +987,6 @@ function CSVStatReader:read_attachments(wftd)
 								recoil = tonumber(_recoil)
 							end
 							
-							
 							--Concealment
 							local concealment
 							local _concealment = raw_csv_values[STAT_INDICES.concealment]
@@ -996,11 +997,18 @@ function CSVStatReader:read_attachments(wftd)
 							
 							--Threat/Suppression bonus
 							local suppression
+							local _threat = raw_csv_values[STAT_INDICES.threat]
+							if not_empty(_threat) then
+								suppression = convert_threat(tonumber(_threat))
+							end
+							--[[
+							local suppression
 							local _suppression = raw_csv_values[STAT_INDICES.suppression_internal]
 							if not_empty(_suppression) then 
 								--pre-converted
 								suppression = tonumber(_suppression)
 							end
+							--]]
 							
 							--Reload Multiplier
 							local reload_mul
@@ -1053,19 +1061,21 @@ function CSVStatReader:read_attachments(wftd)
 							--TODO
 							
 							local target_data = ptd
+--							ptd.tcd_stats = target_data
+							-- [ [
 							if bm_weapon_id and true then
-								ptd.override = ptd.override or {}
+								ptd.tcd_stats = ptd.tcd_stats or {}
 								target_data = {}
-								ptd.override[bm_weapon_id] = target_data
+								ptd.tcd_stats[bm_weapon_id] = target_data
 --								if not target_data then 
---									olog("Error: [" .. tostring(attachment_id) .. "] has bad blackmarket weaponid override: [" .. tostring(bm_weapon_id) .. "]. This data will overwrite the main attachment data instead.")
+--									olog("Error: [" .. tostring(attachment_id) .. "] has bad blackmarket weaponid tcd_stats: [" .. tostring(bm_weapon_id) .. "]. This data will overwrite the main attachment data instead.")
 --								end
 							else
 								--in the specific case where we are removing/skipping weapon-specific stat changes on a particular weapon,
 								--we should instead try to manually remove override data on a per-weapon basis
---								ptd.override = {} 
+--								ptd.tcd_stats = {} 
 							end
-							
+							-- ] ]
 							
 							local stats = {
 								extra_ammo = extra_ammo, --additive mag size bonus index
@@ -1126,8 +1136,13 @@ function CSVStatReader:read_attachments(wftd)
 								target_data.custom_stats[stat_id] = stat_value
 								--inherit other values
 							end
-							
-							ptd.supported = true
+							if not ptd.supported then 
+								ptd.stats = {value = base_stats.value}
+--								if ptd.custom_stats then
+--									ptd.custom_stats = {}
+--								end
+								ptd.supported = true
+							end
 --							target_data.supported = true --temp while we transition to the new csv based stat implementation
 							
 							target_data.stats = stats
@@ -1144,7 +1159,7 @@ function CSVStatReader:read_attachments(wftd)
 							new_data.parts[id] = new_data
 							
 							if bm_weapon_id then 
-								ptd.override[bm_weapon_id] = new_data
+								ptd.tcd_stats[bm_weapon_id] = new_data
 							else
 								ptd.parts[id] = new_data
 							end

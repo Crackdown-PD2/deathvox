@@ -21,10 +21,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 	local func_add_lb = InventoryDescription._add_line_break
 	local func_create_list = InventoryDescription._create_list
 
-
-
-
-	function WeaponDescription.get_weapon_ammo_info(weapon_id, extra_ammo, total_ammo_mod)
+	function WeaponDescription.get_weapon_ammo_info(weapon_id, extra_ammo, total_ammo_mod, total_ammo_add)
 		local weapon_tweak_data = tweak_data.weapon[weapon_id]
 		local ammo_max_multiplier = managers.player:upgrade_value("player", "extra_ammo_multiplier", 1)
 		local primary_category = weapon_tweak_data.categories[1]
@@ -44,6 +41,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 			ammo_stock_bonus = ammo_stock_bonus + managers.player:upgrade_value("ammo_bag","passive_ammo_stock_bonus",0)
 		end
 		
+		--check for weapon class skill bonuses
 		ammo_stock_bonus = math.max(ammo_stock_bonus,managers.player:upgrade_value(weapon_class,"weapon_class_ammo_stock_bonus",0))
 		category_skill_in_effect = category_skill_in_effect or (ammo_stock_bonus > 0)
 		ammo_max_multiplier = ammo_max_multiplier + ammo_stock_bonus
@@ -87,8 +85,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 		
 		category_skill_in_effect = category_skill_in_effect or (bonus_from_weapon_class > 0)
 		local ammo_max_per_clip = get_ammo_max_per_clip(weapon_id)
+		local _total_ammo_add = total_ammo_add or 0
 		local ammo_max = tweak_data.weapon[weapon_id].AMMO_MAX
-		local ammo_from_mods = ammo_max * (total_ammo_mod and tweak_data.weapon.stats.total_ammo_mod[total_ammo_mod] or 0)
+		local _total_ammo_mod = total_ammo_mod and tweak_data.weapon.stats.total_ammo_mod[total_ammo_mod] or 0
+		local ammo_from_mods = (ammo_max * _total_ammo_mod) + (_total_ammo_add * (1 + _total_ammo_mod))
 		ammo_max = ammo_max + ammo_from_mods + managers.player:upgrade_value(weapon_id, "clip_amount_increase") * ammo_max_per_clip * ammo_max_multiplier
 		ammo_max_per_clip = math.min(ammo_max_per_clip, ammo_max)
 		local ammo_data = {
@@ -99,11 +99,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		ammo_data.skill_in_effect = managers.player:has_category_upgrade("player", "extra_ammo_multiplier") or category_skill_in_effect or managers.player:has_category_upgrade("player", "add_armor_stat_skill_ammo_mul")
 		return ammo_max_per_clip, ammo_max, ammo_data
 	end
-
-
-
-
-
+	
 	function WeaponDescription._get_skill_stats(name, category, slot, base_stats, mods_stats, silencer, single_mod, auto_mod, blueprint)
 
 		local primary_class = managers.weapon_factory:get_primary_weapon_class_from_blueprint(name,blueprint)
@@ -197,34 +193,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 					
 				elseif stat.name == "totalammo" then
 					--nothing (does nothing?) i guess i'll keep this calculation in the function above
-					--[[
-					
-						local skill_in_effect = false
-						local add_modifier_value = weapon_tweak.AMMO_MAX
-						multiplier = 0
-						if mod_stats.total_ammo_mod then 
-							add_modifier_value = add_modifier_value + mod_stats.total_ammo_mod
-						end
-						
-						if managers.blackmarket:equipped_deployable_slot("ammo_bag") then 
-						
-							if managers.player:has_category_upgrade("ammo_bag","passive_ammo_stock_bonus") then 
-								local passive_ammo_stock_bonus = managers.player:upgrade_value("ammo_bag","passive_ammo_stock_bonus",0)
-								if passive_ammo_stock_bonus ~= 0 then 
-									skill_in_effect = true
-								end
-								if managers.player:has_category_upgrade(primary_class,"weapon_class_ammo_stock_bonus") then 
-									--war machine overrides passive default passive upgrade value
-									passive_ammo_stock_bonus = math.max(managers.player:upgrade_value(primary_class,"weapon_class_ammo_stock_bonus",0),passive_ammo_stock_bonus)
-									skill_in_effect = true
-								end
-								multiplier = multiplier + passive_ammo_stock_bonus
-							end
-						end
-						skill_stats[stat.name].value = (skill_stats[stat.name].value * (multiplier + 1)) + (add_modifier_value * multiplier)
-						skill_stats[stat.name].skill_in_effect = skill_in_effect
-			
-					--]]
 				elseif stat.name == "reload" then
 					local skill_in_effect = false
 					local mult = 1
@@ -328,4 +296,68 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return skill_stats
 	end
 	
+	function WeaponDescription._get_stats(name, category, slot, blueprint)
+		local equipped_mods = nil
+		local silencer = false
+		local single_mod = false
+		local auto_mod = false
+		local factory_id = managers.weapon_factory:get_factory_id_by_weapon_id(name)
+		local blueprint = blueprint or slot and managers.blackmarket:get_weapon_blueprint(category, slot) or managers.weapon_factory:get_default_blueprint_by_factory_id(factory_id)
+		local cosmetics = managers.blackmarket:get_weapon_cosmetics(category, slot)
+		local bonus_stats = {}
+
+		if cosmetics and cosmetics.id and cosmetics.bonus and not managers.job:is_current_job_competitive() and not managers.weapon_factory:has_perk("bonus", factory_id, blueprint) then
+			bonus_stats = tweak_data:get_raw_value("economy", "bonuses", tweak_data.blackmarket.weapon_skins[cosmetics.id].bonus, "stats") or {}
+		end
+
+		if blueprint then
+			equipped_mods = deep_clone(blueprint)
+			local factory_id = managers.weapon_factory:get_factory_id_by_weapon_id(name)
+			local default_blueprint = managers.weapon_factory:get_default_blueprint_by_factory_id(factory_id)
+
+			if equipped_mods then
+				silencer = managers.weapon_factory:has_perk("silencer", factory_id, equipped_mods)
+				single_mod = managers.weapon_factory:has_perk("fire_mode_single", factory_id, equipped_mods)
+				auto_mod = managers.weapon_factory:has_perk("fire_mode_auto", factory_id, equipped_mods)
+			end
+		end
+
+		local base_stats = WeaponDescription._get_base_stats(name)
+		local mods_stats = WeaponDescription._get_mods_stats(name, base_stats, equipped_mods, bonus_stats)
+		local skill_stats = WeaponDescription._get_skill_stats(name, category, slot, base_stats, mods_stats, silencer, single_mod, auto_mod, blueprint)
+		local total_ammo_add = 0
+		for _,part_id in pairs(equipped_mods) do 
+			local part_data = managers.weapon_factory:get_part_data_by_part_id_from_weapon(part_id,factory_id,equipped_mods)
+			if part_data then
+				local custom_stats = part_data.custom_stats
+				if custom_stats and custom_stats.total_ammo_add then
+					total_ammo_add = total_ammo_add + custom_stats.total_ammo_add
+				end
+			end
+		end
+		
+		local clip_ammo, max_ammo, ammo_data = WeaponDescription.get_weapon_ammo_info(name, tweak_data.weapon[name].stats.extra_ammo, base_stats.totalammo.index + mods_stats.totalammo.index,total_ammo_add)
+		base_stats.totalammo.value = ammo_data.base
+		mods_stats.totalammo.value = ammo_data.mod
+		
+		--DISPLAY VALUE
+		
+		
+		--this total_ammo_add value is actual
+		--current system doesn't allow for simple additive bonuses to total ammo,
+		--and instead relies on multipliers with index lookup tables
+		
+--		mods_stats.totalammo.value = mods_stats.totalammo.value + total_ammo_add
+--		ammo_data.mod = ammo_data.mod + total_ammo_add
+		
+		skill_stats.totalammo.value = ammo_data.skill
+		skill_stats.totalammo.skill_in_effect = ammo_data.skill_in_effect
+		local my_clip = base_stats.magazine.value + mods_stats.magazine.value + skill_stats.magazine.value
+
+		if max_ammo < my_clip then
+			mods_stats.magazine.value = mods_stats.magazine.value + max_ammo - my_clip
+		end
+
+		return base_stats, mods_stats, skill_stats
+	end
 end

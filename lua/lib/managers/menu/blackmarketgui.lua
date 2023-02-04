@@ -56,14 +56,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end
 		end
 		
-		local function find_archetypes_from_part(partname)
-			local partdata = wftd.parts[partname]
-			if partdata then
-				if partdata.subclass_modifiers then
-					insert_subclasses(partdata.subclass_modifiers)
+		local function find_archetypes_from_part(part_data)
+			if part_data then
+				if part_data.subclass_modifiers then
+					insert_subclasses(part_data.subclass_modifiers)
 				end
-				if partdata.class_modifier then 
-					item_class = partdata.class_modifier
+				if part_data.class_modifier then 
+					item_class = part_data.class_modifier
 				end
 			end
 		end
@@ -71,10 +70,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 		
 		if item_category == "characters" then 
 			--nothing!
+			--[[
+			--sorry wick you've been demoted
 			if item_name == "jowi" then 
 				item_class = "class_precision"
 				insert_subclasses("subclass_quiet")
 			end
+			--]]
 		elseif item_category == "grenades" then 
 			local proj_td = tweak_data.blackmarket.projectiles[item_name]
 			if proj_td then 
@@ -82,16 +84,16 @@ if deathvox:IsTotalCrackdownEnabled() then
 				insert_subclasses(proj_td.subclasses)
 			end
 		elseif item_category == "primaries" or item_category == "secondaries" then
-		
+			
 			local wtd = tweak_data.weapon[item_name]
 			
 			if wtd then 
 				item_class = wtd.primary_class
 				insert_subclasses(wtd.subclasses)
 			end
-			
+
 			if wftd.parts[item_name] then --is weapon attachment
-				find_archetypes_from_part(item_name)
+				find_archetypes_from_part(wftd.parts[item_name])
 			end
 			
 			--currently, only weapons (primary/secondary) can have attachments, but if this changes, this should be copied and applied to other item categories accordingly
@@ -99,11 +101,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 				if managers.blackmarket._global.crafted_items[item_category] then 
 					local owned_item_data = item_slot and managers.blackmarket._global.crafted_items[item_category][item_slot]
 					if owned_item_data then 
+						local factory_id = owned_item_data.factory_id
 	--					item_name = owned_item_data.weapon_id --redundant
 						local blueprint = owned_item_data.blueprint 
 						if blueprint then 
-							for _,partname in pairs(blueprint) do 
-								find_archetypes_from_part(partname)
+							for _,part_id in pairs(blueprint) do 
+								local part_data = managers.weapon_factory:get_part_data_by_part_id_from_weapon(part_id,factory_id,blueprint)
+								find_archetypes_from_part(part_data)
 							end
 						end
 					end

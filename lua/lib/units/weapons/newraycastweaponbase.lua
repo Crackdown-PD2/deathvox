@@ -305,7 +305,16 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		ammo_max_multiplier = managers.modifiers:modify_value("WeaponBase:GetMaxAmmoMultiplier", ammo_max_multiplier)
 		local ammo_max_per_clip = self:calculate_ammo_max_per_clip()
-		local ammo_max = math.round((tweak_data.weapon[self._name_id].AMMO_MAX + (managers.player:upgrade_value(self._name_id, "clip_amount_increase",0) + managers.player:upgrade_value(self:get_weapon_class() or "","clip_amount_increase",0)) * ammo_max_per_clip) * ammo_max_multiplier)
+		local ammo_max_base = 
+			(self._total_ammo_add or 0)
+			+ tweak_data.weapon[self._name_id].AMMO_MAX
+			+ (managers.player:upgrade_value(self._name_id, "clip_amount_increase",0)
+			+ managers.player:upgrade_value(self:get_weapon_class() or "","clip_amount_increase",0))
+			* ammo_max_per_clip
+			
+			
+			
+		local ammo_max = math.round(ammo_max_base * ammo_max_multiplier)
 		ammo_max_per_clip = math.min(ammo_max_per_clip, ammo_max)
 
 		self:set_ammo_max_per_clip(ammo_max_per_clip)
@@ -345,5 +354,18 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 		return rof_mul
 	end
+	
+	Hooks:PostHook(NewRaycastWeaponBase,"_update_stats_values","tcd_newraycastweaponbase_update_custom_stats",function(self,disallow_replenish,ammo_data)
+		local factory_id = self._factory_id
+		local wftd = tweak_data.weapon.factory.parts
+		local total_ammo_add = 0
+		for _,part_id in pairs(self._blueprint) do 
+			local part_data = managers.weapon_factory:get_part_data_by_part_id_from_weapon(part_id, factory_id, self._blueprint)
+			if part_data.custom_stats and part_data.custom_stats.total_ammo_add then
+				total_ammo_add = part_data.custom_stats.total_ammo_add + total_ammo_add
+			end
+		end
+		self._total_ammo_add = total_ammo_add
+	end)
 	
 end
