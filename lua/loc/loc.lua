@@ -181,7 +181,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				hud_interact_pickup_sentry_gun = "Hold $BTN_INTERACT to pick up sentry gun",
 				debug_interact_armor_plates_take = "Hold $BTN_INTERACT to take Armor Plates",
 				hud_equipment_equipping_armor_kit = "Deploying Armor Plates...",
-				hint_hud_already_has_armor_plates = "You already have Armor Plates!",
+				hud_hint_already_has_armor_plates = "You already have Armor Plates!",
 				hud_action_taking_armor_plates = "Taking Armor Plates...",
 				menu_equipment_armor_kit = "Armor Plates",
 				bm_equipment_armor_kit = "Armor Plates Bag",
@@ -193,6 +193,9 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				hud_deploying_friendship_collar = "Converting $TARGET_UNIT...",
 				bm_equipment_sentry_gun_silent = "Friendship Collar",
 				bm_equipment_sentry_gun_silent_desc = "A \"compliance device\" that can convert a non-special enemy into a Joker to fight for you.\n(It's not actually dangerous, but don't tell the cops that.)\n\nTo convert an enemy, get within melee range and hold $BTN_USE_ITEM while targeting them. Subdued enemies that have cuffed themselves will be converted instantly. Jokers have 50% Damage Resistance and will follow you closely, fighting to protect you.\n\nYou can only have one Joker at a time. Jokers do not count as Hostages.",
+				hud_hint_convert_enemy_failed_no_slots_count = "Too many converts! ($CURRENT/$MAX)",
+				hud_hint_convert_enemy_failed_no_slots_generic = "You have too many converts!",
+				hud_hint_convert_enemy_failed_already_converted = "Already converted!",
 				
 				debug_trip_mine = "Shaped Charges",
 				bm_equipment_trip_mine = "Shaped Charges",

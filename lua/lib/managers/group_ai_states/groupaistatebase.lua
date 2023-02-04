@@ -27,19 +27,26 @@ function GroupAIStateBase:convert_hostage_to_criminal(unit, peer_unit)
 		max_minions = managers.player:upgrade_value("player", "convert_enemies_max_minions", 0)
 	end
 
-	Application:debug("GroupAIStateBase:convert_hostage_to_criminal", "Player", player_unit, "Minions: ", table.size(minions) .. "/" .. max_minions)
+--	Application:debug("GroupAIStateBase:convert_hostage_to_criminal", "Player", player_unit, "Minions: ", table.size(minions) .. "/" .. max_minions)
 
-	if alive(self._converted_police[u_key]) or max_minions <= table.size(minions) then
-		local peer = managers.network:session():peer_by_unit(player_unit)
-
+	local peer = managers.network:session():peer_by_unit(player_unit)
+	if alive(self._converted_police[u_key]) then
 		if peer then
 			if peer:id() == managers.network:session():local_peer():id() then
-				managers.hint:show_hint("convert_enemy_failed")
+				managers.hint:show_hint("hud_hint_convert_enemy_failed_already_converted")
 			else
-				managers.network:session():send_to_peer(peer, "sync_show_hint", "convert_enemy_failed")
+				managers.network:session():send_to_peer(peer, "sync_show_hint", "hud_hint_convert_enemy_failed_already_converted")
 			end
 		end
-
+		return
+	elseif max_minions <= table.size(minions) then
+		if peer then
+			if peer:id() == managers.network:session():local_peer():id() then
+				managers.hint:show_hint("convert_enemy_failed_no_slots_count",nil,nil,{CURRENT = string.format("%i",table.size(minions)),MAX = string.format("%i",max_minions)})
+			else
+				managers.network:session():send_to_peer(peer, "sync_show_hint", "convert_enemy_failed_no_slots_generic")
+			end
+		end
 		return
 	end
 
