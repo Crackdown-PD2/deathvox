@@ -50,7 +50,7 @@ function SawWeaponBase:init(unit)
 		
 		if managers.player:has_category_upgrade("saw","consecutive_damage_bonus") then
 			self._has_consecutive_damage_bonus = true
-			local consecutive_damage_bonus_data = self:upgrade_value("saw","consecutive_damage_bonus",{0,0})
+			local consecutive_damage_bonus_data = managers.player:upgrade_value("saw","consecutive_damage_bonus",{0,0})
 			self._consecutive_damage_bonus_rate = consecutive_damage_bonus_data[1]
 			self._max_consecutive_damage_stacks = consecutive_damage_bonus_data[2]
 		end
@@ -224,27 +224,22 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 				drain_ammo = true
 			end
 			
-			if is_total_cd and hit_result and hit_an_enemy then
+			if is_total_cd and hit_an_enemy then
 				--damage mul should only apply to enemies, not saw-able objects like deposit boxes
 				local enemy_damage_multiplier = self._enemy_damage_multiplier
 				if self._has_consecutive_damage_bonus then
 					enemy_damage_multiplier = enemy_damage_multiplier + (self._consecutive_damage_bonus_rate * managers.player:get_property("saw_consecutive_damage_stacks",0))
 				end
 				dmg_mul = dmg_mul + enemy_damage_multiplier
-
 			end
 			
 			local damage = self:_get_current_damage(dmg_mul)
 			
-			local hit_result = SawHit:on_collision(hit, self._unit, user_unit, damage)
-			
-			if is_total_cd and hit_result and hit_an_enemy and hit_result.type and hit_result.type == "death" and hit_result.attack_data then
-				
-				if self._stagger_on_kill_radius then
-					do_stagger_on_kill = true
-				end
-				
-				
+			local hit_result,is_breachable_object = SawHit:on_collision(hit, self._unit, user_unit, damage)
+			if self._saw_enemies_free and not is_breachable_object then 
+				drain_ammo = false
+			end
+			if is_total_cd and hit_result and hit_an_enemy and hit_result.attack_data then
 				
 				--give rolling cutter basic damage bonus stacks here
 				if self._has_consecutive_damage_bonus then 
@@ -252,16 +247,22 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 					managers.player:set_property("saw_consecutive_damage_stacks",consecutive_damage_stacks)
 				end
 				
-				--do bloody mess effect here
-				if self._bloody_mess_radius then 
-					do_bloody_mess = true
+				if hit_result.type and hit_result.type == "death" then 
+				
+					if self._stagger_on_kill_radius then
+						do_stagger_on_kill = true
+					end
+					--do bloody mess effect here
+					if self._bloody_mess_radius then 
+						do_bloody_mess = true
+						
+						--raw_damage means the amount of damage dealt by a hit after all multipliers and reductions are applied, but before clamping the damage dealt to the maximum/current health of the unit
+						local new_bloody_damage = hit_result.attack_data.raw_damage or damage
 
-					--raw_damage means the amount of damage dealt by a hit after all multipliers and reductions are applied, but before clamping the damage dealt to the maximum/current health of the unit
-					local new_bloody_damage = hit_result.attack_data.raw_damage or damage
-
-					if not bloody_hit_damage or bloody_hit_damage < new_bloody_damage then
-						bloody_hit_damage = new_bloody_damage
-						bloody_hit_pos = hit.position
+						if not bloody_hit_damage or bloody_hit_damage < new_bloody_damage then
+							bloody_hit_damage = new_bloody_damage
+							bloody_hit_pos = hit.position
+						end
 					end
 				end
 			end
@@ -402,7 +403,7 @@ end
 function SawHit:on_collision(col_ray, weapon_unit, user_unit, damage)
 	local hit_unit = col_ray.unit
 	local unit_base_ext = hit_unit:base()
-	local is_crit, unit_dmg_ext = nil
+	local is_crit, unit_dmg_ext, is_breachable_object = nil
 
 	if is_total_cd then
 		unit_dmg_ext = hit_unit:character_damage()
@@ -438,6 +439,7 @@ function SawHit:on_collision(col_ray, weapon_unit, user_unit, damage)
 	local result = InstantBulletBase.on_collision(self, col_ray, weapon_unit, user_unit, damage, nil, nil, nil, is_crit)
 
 	if hit_unit:damage() and col_ray.body:extension() and col_ray.body:extension().damage then
+		is_breachable_object = true
 		damage = math_clamp(damage * managers.player:upgrade_value("saw", "lock_damage_multiplier", 1) * 4, 0, 200)
 
 		if managers.player:has_category_upgrade("saw","destroys_dozer_armor") and instapeel_bodies[col_ray.body:name()] then
@@ -450,7 +452,7 @@ function SawHit:on_collision(col_ray, weapon_unit, user_unit, damage)
 		end
 	end
 
-	return result
+	return result,is_breachable_object
 end
 
 function SawHit:play_impact_sound_and_effects(weapon_unit, col_ray)
