@@ -1739,11 +1739,11 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_rolling_cutter",
-			desc_id = "menu_rolling_cutter_desc",
+			name_id = "menu_into_the_pit",
+			desc_id = "menu_into_the_pit_desc",
 			icon_xy = {
 				3,
-				6
+				11
 			}
 		})
 		replace_skill(tree_indices.fixer,2,{ --Walking Toolshed
@@ -1843,11 +1843,11 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_into_the_pit",
-			desc_id = "menu_into_the_pit_desc",
+			name_id = "menu_rolling_cutter",
+			desc_id = "menu_rolling_cutter_desc",
 			icon_xy = {
 				3,
-				11
+				6
 			}
 		})
 		
