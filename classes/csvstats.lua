@@ -212,7 +212,7 @@ for i = 1,41 do
 end
 
 function CSVStatReader.log(s)
-	Console:Log("TCD csv Parser: " .. s)
+--	Console:Log("TCD csv Parser: " .. s)
 end
 
 function CSVStatReader.table_concat(tbl,div)
