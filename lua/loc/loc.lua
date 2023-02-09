@@ -235,18 +235,18 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 			--skills:
 				
 			--taskmaster
-				menu_zip_it = "Zip It",
-				menu_zip_it_desc = "BASIC: ##$basic##\nCivilians are ##intimidated by the noise you make##. Shouting intimidates all Civilians within ##10## meters of the target.\n\nACE: ##$pro##\nIncreases your supply of Cable Ties to ##20##.",
-				menu_pack_mules = "Pack Mules",
-				menu_pack_mules_desc = "BASIC: ##$basic##\nYour team's Civilian Hostages ##can carry Bags##.\n\nACE: ##$pro##\nYour team's Civilian Hostages move ##+20% faster##.",
-				menu_stay_down = "Stay Down",
-				menu_stay_down_desc = "BASIC: ##$basic##\nYour team's Civilians are ##invulnerable while stationary##.\n\nACE: ##$pro##\nYour team's Civilian Hostages ##will not flee## when rescued.",
-				menu_lookout_duty = "Lookout Duty",
-				menu_lookout_duty_desc = "BASIC: ##$basic##\nEnemies within ##10## Meters of your team's Hostages are automatically Marked.\n\nACE: ##$pro##\nEnemies within ##10## meters of your team's Hostages take ##+10%## damage from all sources.",
-				menu_leverage = "Leverage",
-				menu_leverage_desc = "BASIC: ##$basic##\nYour team's Hostages grant ##+10%## Damage Resistance to teammates within ##0.25## meters.\n\nACE: ##$pro##\nYour team's Hostages also grant ##+10%## Damage Resistance to teammates within ##5## meters, and can stack up to ##+20%## when a teammate is within ##0.25## meters.",
 				menu_false_idol = "False Idol",
-				menu_false_idol_desc = "BASIC: ##$basic##\nYour team's Hostages ##release all teammates in custody## when traded.\n\nYou can have up to ##2## Civilian Hostages following you at once.\n\nACE: ##$pro##\nEach of your team's Hostages will ##fake surrendering once## upon being traded, releasing your teammates from custody without turning themselves in.\n\nYou can have up to ##3## Civilian Hostages following you at once.",
+				menu_false_idol_desc = "BASIC: ##$basic##\nYour team's Civilian Hostages are invulnerable while prone.\nAdditionally, you can now restore a lost Down by striking a prone Civilian Hostage with a $ICN_MEL Melee Attack to release them early (NOT YET IMPLEMENTED).\n\nACE: ##$pro##\nYour team's Hostages release all teammates in custody when traded.",
+				menu_leverage = "Pied Piper",
+				menu_leverage_desc = "BASIC: ##$basic##\nYou can now have up to ##two## Hostages following you at once.\n\nACE: ##$pro##\nYou can have up to ##three## Hostages following you at once.",
+				menu_zip_it = "Zip It",
+				menu_zip_it_desc = "BASIC: ##$basic##\nIncreases your supply of Cable Ties to ##20##. Civilians will not immediately flee upon being untied.\n\nACE: ##$pro##\nCivilians are Intimidated by the noise you make. Shouting Intimidates all Civilians within ##10## meters of the target.",
+				menu_stay_down = "Stay Down",
+				menu_stay_down_desc = "BASIC: ##$basic##\nYour team's Hostages grant ##+25%## Damage Resistance to teammates within ##5## meters.\n\nACE: ##$pro##\nEach of your team's Hostages will fake surrendering ##once## upon being traded for a teammate, releasing the teammate from custody without turning themselves in (NOT YET IMPLEMENTED).",
+				menu_pack_mules = "Pack Mules",
+				menu_pack_mules_desc = "BASIC: ##$basic##\nYour team's Civilian Hostages ##can carry Bags##.\n\nACE: ##$pro##\nYour team's Civilian Hostages move ##+50% faster##.",
+				menu_lookout_duty = "Lookout Duty",
+				menu_lookout_duty_desc = "BASIC: ##$basic##\nYour team's Hostages will automatically Mark any Special Enemies within ##10## meters.\n\nACE: ##$pro##\nYour team's Hostages will also automatically Mark any Standard Enemies within 10 meters and cause all enemies within range to take ##+10%## damage from all sources.",
 				
 			--marksman
 				menu_point_and_click = "Point and Click",

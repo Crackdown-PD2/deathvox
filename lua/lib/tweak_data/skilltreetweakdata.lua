@@ -97,17 +97,59 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		
 		
 		--Taskmaster
-		replace_skill(tree_indices.taskmaster,1,{ --Zip It
+		replace_skill(tree_indices.taskmaster,1,{ --False Idol
 			{
 				upgrades = {
-					"player_civ_calming_alerts",
-					"player_shout_intimidation_aoe"
+					"team_civilian_hostage_stationary_invuln",
+					"player_civilian_early_trade_restores_down"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"cable_tie_quantity"
+					"team_civilian_hostage_vip_trade" --req fewer than max incaps
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_false_idol",
+			desc_id = "menu_false_idol_desc",
+			icon_xy = {
+				1,
+				5
+			}
+		})
+		replace_skill(tree_indices.taskmaster,2,{ --Pied Piper (formerly Leverage)
+			{
+				upgrades = {
+					"player_max_civ_hostage_followers_1"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_max_civ_hostage_followers_2"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_leverage",
+			desc_id = "menu_leverage_desc",
+			icon_xy = {
+				1,
+				4
+			}
+		})
+		replace_skill(tree_indices.taskmaster,3,{ --Zip It
+			{
+				upgrades = {
+					"cable_tie_quantity",
+					"team_civilian_hostage_no_fleeing"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_civ_calming_alerts",
+					"player_shout_intimidation_aoe"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -118,7 +160,27 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				0
 			}
 		})
-		replace_skill(tree_indices.taskmaster,2,{ --Pack Mules
+		replace_skill(tree_indices.taskmaster,4,{ --Stay Down
+			{
+				upgrades = {
+					"team_civilian_hostage_aoe_damage_resistance_1"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"team_civilian_hostage_fakeout_trade"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_stay_down",
+			desc_id = "menu_stay_down_desc",
+			icon_xy = {
+				1,
+				2
+			}
+		})
+		replace_skill(tree_indices.taskmaster,5,{ --Pack Mules
 			{
 				upgrades = {
 					"team_civilian_hostage_carry_bags"
@@ -138,36 +200,16 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				1
 			}
 		})
-		replace_skill(tree_indices.taskmaster,3,{ --Stay Down
+		replace_skill(tree_indices.taskmaster,6,{ --Lookout Duty
 			{
 				upgrades = {
-					"team_civilian_hostage_stationary_invuln"
+					"team_civilian_hostage_area_marking_1" --mark special enemies
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"team_civilian_hostage_no_fleeing"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_stay_down",
-			desc_id = "menu_stay_down_desc",
-			icon_xy = {
-				1,
-				2
-			}
-		})
-		replace_skill(tree_indices.taskmaster,4,{ --Lookout Duty
-			{
-				upgrades = {
-					"team_civilian_hostage_area_marking"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"team_civilian_hostage_aoe_damage_multiplier"
+					"team_civilian_hostage_area_marking_2" --also mark standard enemies + give damage bonus
 				},
 				cost = self.costs.hightierpro
 			},
@@ -176,47 +218,6 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			icon_xy = {
 				1,
 				3
-			}
-		})
-		replace_skill(tree_indices.taskmaster,5,{ --Leverage
-			{
-				upgrades = {
-					"team_civilian_hostage_aoe_damage_resistance_1"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"team_civilian_hostage_aoe_damage_resistance_2"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_leverage",
-			desc_id = "menu_leverage_desc",
-			icon_xy = {
-				1,
-				4
-			}
-		})
-		replace_skill(tree_indices.taskmaster,6,{ --False Idol
-			{
-				upgrades = {
-					"team_civilian_hostage_vip_trade"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"team_civilian_hostage_fakeout_trade",
-					"player_falseidol_aced_followers"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_false_idol",
-			desc_id = "menu_false_idol_desc",
-			icon_xy = {
-				1,
-				5
 			}
 		})
 		

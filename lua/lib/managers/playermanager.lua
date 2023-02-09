@@ -5,7 +5,7 @@ local pairs_g = pairs
 local alive_g = alive
 local world_g = World
 
-local tcd_enabled = deathvox:IsTotalCrackdownEnabled()
+local TCD_ENABLED = deathvox:IsTotalCrackdownEnabled()
 
 Hooks:PostHook(PlayerManager,"_internal_load","deathvox_on_internal_load",function(self)
 --this will send whenever the player respawns, so... hm. 
@@ -16,7 +16,7 @@ Hooks:PostHook(PlayerManager,"_internal_load","deathvox_on_internal_load",functi
 	end
 --	Hooks:Call("TCD_OnGameStarted")
 
-	if tcd_enabled then 
+	if TCD_ENABLED then 
 		local grenade = managers.blackmarket:equipped_grenade()
 		self:_set_grenade({
 			grenade = grenade,
@@ -73,7 +73,7 @@ Hooks:PostHook(PlayerManager,"init","tcd_playermanager_init",function(self)
 	self._can_lunge = true
 end)
 
-if tcd_enabled then
+if TCD_ENABLED then
 	function PlayerManager:use_messiah_charge()
 		--nothing
 	end
@@ -164,51 +164,16 @@ if tcd_enabled then
 		
 		local team_upgrade_level = self:team_upgrade_level("player","civilian_hostage_aoe_damage_resistance")
 		if team_upgrade_level > 0 then 
-			--this whole mess is for the Leverage skill in Taskmaster
+			--damage resist for being near a civilian with the Stay Down basic skill
 			local player_pos = player:movement():m_pos()
+			local upgrade_data = self:team_upgrade_value("player","civilian_hostage_aoe_damage_resistance")
 			
-			local hostage_range_close,hostage_dmg_resist_1 = unpack(self:team_upgrade_value_by_level("player","civilian_hostage_aoe_damage_resistance",1,{}))
-			local hostage_range_far,hostage_dmg_resist_2
+			local range = upgrade_data[1]
+			local civ_near_dmg_resist_bonus = upgrade_data[2]
 			
-			if team_upgrade_level == 2 then 
-				hostage_range_far,hostage_dmg_resist_2 = unpack(self:team_upgrade_value_by_level("player","civilian_hostage_aoe_damage_resistance",2,{}))
+			if CivilianBase.get_nearby_civ(player_pos,range,true) then
+				multiplier = multiplier * civ_near_dmg_resist_bonus
 			end
-			
-			local near_hostage_close,near_hostage_far
-			for _,hostage_unit in pairs(world_g:find_units_quick("sphere",player_pos,hostage_range_far or hostage_range_close,21,22)) do --managers.slot:get_mask("civilians") fails because tied civs are moved out of slot 22 and back into slot upon being moved
-				if managers.enemy:is_civilian(hostage_unit) and hostage_unit:brain():is_tied() then 
-					
-					if team_upgrade_level == 2 then 
-						local hostage_pos = hostage_unit:movement():m_pos()
-						local hostage_distance = mvec3_dis(player_pos,hostage_pos)
-						if hostage_distance <= hostage_range_close then 
-							--within close distance is, by definition, also within far distance
-							near_hostage_close = true
-							near_hostage_far = true
-							break
-						elseif not near_hostage_far and hostage_distance <= hostage_range_far then 
-							--if hasn't already done far hostage check
-							near_hostage_far = true
-						end
-					elseif team_upgrade_level == 1 then 
-						near_hostage_close = true
-						--only one possible range for basic skill,
-						--so we can stop checking hostages now
-						break
-					end
-				end
-			end
-			
-			local hostage_dmg_resist = 1
-			
-			if near_hostage_far then 
-				hostage_dmg_resist = hostage_dmg_resist + hostage_dmg_resist_2
-			end
-			if near_hostage_close then 
-				hostage_dmg_resist = hostage_dmg_resist + hostage_dmg_resist_1
-			end
-			
-			multiplier = multiplier * hostage_dmg_resist
 		end
 		
 		if self:has_category_upgrade("player", "passive_damage_reduction") then
@@ -223,13 +188,13 @@ if tcd_enabled then
 		multiplier = multiplier * dmg_red_mul
 
 		if is_melee then
-			multiplier = multiplier * managers.player:upgrade_value("player", "melee_damage_dampener", 1)
+			multiplier = multiplier * self:upgrade_value("player", "melee_damage_dampener", 1)
 		end
 
 		local current_state = self:get_current_state()
 
 		if current_state and current_state:_interacting() then
-			multiplier = multiplier * managers.player:upgrade_value("player", "interacting_damage_multiplier", 1)
+			multiplier = multiplier * self:upgrade_value("player", "interacting_damage_multiplier", 1)
 		end
 
 		multiplier = multiplier - self:get_temporary_property("deathvox_tag_team_bonus_damage_resistance",0)
@@ -1387,7 +1352,7 @@ function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, overri
 	chance = chance + self:upgrade_value("team", "crew_add_dodge", 0)
 	chance = chance + self:temporary_upgrade_value("temporary", "pocket_ecm_kill_dodge", 0)
 
-	if tcd_enabled then 
+	if TCD_ENABLED then 
 		if alive(player_unit) then
 			local state = player_unit:movement():current_state()
 			if state._state_data.meleeing then

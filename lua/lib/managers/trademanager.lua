@@ -58,8 +58,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 		
 		self._hostage_to_trade = hostage
 		
-		if managers.player:has_team_category_upgrade("player","civilian_hostage_fakeout_trade") and not hostage.unit:brain()._HAS_DONE_FAKEOUT_TRADE then 
-			hostage.unit:brain()._HAS_DONE_FAKEOUT_TRADE = true
+		if managers.player:has_team_category_upgrade("player","civilian_hostage_fakeout_trade") and not hostage.unit:brain()._has_done_fakeout_trade then 
+			hostage.unit:brain()._has_done_fakeout_trade = true
 			hostage.initialized = false
 		else
 			hostage.unit:brain():set_logic("trade", {

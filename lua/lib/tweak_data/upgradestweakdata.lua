@@ -125,7 +125,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-		self.values.team.player.civilian_hostage_speed_bonus = {1.2} --20% speed bonus
+		self.values.team.player.civilian_hostage_speed_bonus = {1.5} --50% speed bonus
 		
 		
 		self.definitions.team_civilian_hostage_stationary_invuln = {
@@ -151,7 +151,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		self.values.team.player.civilian_hostage_no_fleeing = {true}
 		
-		self.definitions.team_civilian_hostage_area_marking = {
+		self.definitions.team_civilian_hostage_area_marking_1 = {
 			name_id = "menu_BLANK",
 			category = "team",
 			upgrade = {
@@ -160,10 +160,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-		self.values.team.player.civilian_hostage_area_marking = {{1000,1},{1000,1.1}} --10m, 10% extra damage
-		self.values.team.player.civilian_hostage_area_marking_interval = 0.1 --referenced directly in civilianbrain
-		
-		self.definitions.team_civilian_hostage_aoe_damage_multiplier = {
+		self.definitions.team_civilian_hostage_area_marking_2 = {
 			name_id = "menu_BLANK",
 			category = "team",
 			upgrade = {
@@ -172,6 +169,11 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
+		self.values.team.player.civilian_hostage_area_marking_distance = 1000 --10m
+		self.values.team.player.civilian_hostage_area_marking_damage_mul = 1.1 --10% extra damage
+		self.values.team.player.civilian_hostage_area_marking_interval = 0.1 --check every 0.1 seconds
+		
+		self.values.team.player.civilian_hostage_area_marking = {true,true}
 		
 		--use this
 		self.definitions.team_civilian_hostage_aoe_damage_resistance_1 = {
@@ -183,19 +185,8 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-		self.definitions.team_civilian_hostage_aoe_damage_resistance_2 = {
-			name_id = "menu_BLANK",
-			category = "team",
-			upgrade = {
-				value = 2,
-				upgrade = "civilian_hostage_aoe_damage_resistance",
-				category = "player"
-			}
-		
-		}
-		--10% damage resistance once, additive with second upgrade to a max of 20% from basic+aced
-		self.values.team.player.civilian_hostage_aoe_damage_resistance = {{25,0.1},{500,0.1}}
-		--looks like i'm gonna have to commit some sins to make the stacking upgrade work without additional unnecessary overhead from multiple vector distance checks
+
+		self.values.team.player.civilian_hostage_aoe_damage_resistance = {{500,0.75}} --5m range, 25% damage resistance
 		
 		self.definitions.team_civilian_hostage_vip_trade = {
 			name_id = "menu_false_idol",
@@ -219,16 +210,38 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		self.values.team.player.civilian_hostage_fakeout_trade = {true}
 		
-		self.values.player.falseidol_aced_followers = {
-			true
+		self.values.player.max_civ_hostage_followers = {
+			2,
+			3
 		}
-		self.definitions.player_falseidol_aced_followers = {
+		self.definitions.player_max_civ_hostage_followers_1 = {
 			name_id = "menu_falseidol_aced_followers",
 			category = "player",
 			upgrade = {
 				value = 1,
 				synced = true,
-				upgrade = "falseidol_aced_followers",
+				upgrade = "max_civ_hostage_followers",
+				category = "player"
+			}
+		}
+		self.definitions.player_max_civ_hostage_followers_2 = {
+			name_id = "menu_falseidol_aced_followers",
+			category = "player",
+			upgrade = {
+				value = 2,
+				synced = true,
+				upgrade = "max_civ_hostage_followers",
+				category = "player"
+			}
+		}
+		
+		self.definitions.player_civilian_early_trade_restores_down = {
+			name_id = "menu_civilian_early_trade_restores_down",
+			category = "player",
+			upgrade = {
+				value = 1,
+				synced = true,
+				upgrade = "civilian_early_trade_restores_down",
 				category = "player"
 			}
 		}
