@@ -43,6 +43,7 @@ local ids_char_dmg = idstr_func("character_damage")
 local idstr_bullet_hit_blood = idstr_func("effects/payday2/particles/impacts/blood/blood_impact_a")
 local ids_bullet_hit_glass_effect = idstr_func("effects/particles/bullet_hit/glass_breakable/bullet_hit_glass_breakable")
 local table_contains = table.contains
+local TCD_ENABLED = deathvox:IsTotalCrackdownEnabled()
 
 --this is now responsible for the glass shattering effects. insert/remove anything in this table to add and remove shattering, respectively
 local big_enemy_visor_shattering_table = {
@@ -329,7 +330,7 @@ function CopDamage:roll_critical_hit(attack_data,damage)
 	if critical_hit then
 		local critical_damage_mul = critical_hits.damage_mul or self._char_tweak.headshot_dmg_mul
 		if critical_damage_mul then 
-			if deathvox:IsTotalCrackdownEnabled() then 
+			if TCD_ENABLED then 
 				critical_damage_mul = critical_damage_mul * managers.player:upgrade_value("player","critical_hit_multiplier",2)
 			end
 			damage = damage * critical_damage_mul
@@ -486,8 +487,18 @@ function CopDamage:damage_explosion(attack_data)
 		attack_data.critical_hit = true
 	end	
 
-	if self._char_tweak.damage.explosion_damage_mul then
-		damage = damage * self._char_tweak.damage.explosion_damage_mul
+	local explosion_damage_mul = self._char_tweak.damage.explosion_damage_mul
+	local has_negate_explosive_resistance
+	local wpn_class = not thrower_unit and attack_data.weapon_unit and attack_data.weapon_unit:base() and attack_data.weapon_unit:base().get_weapon_class and attack_data.weapon_unit:base():get_weapon_class()
+	if explosion_damage_mul then
+		if wpn_class and managers.player:has_category_upgrade(wpn_class,"negate_enemy_explosive_resistance") then
+			has_negate_explosive_resistance = true
+			local explosion_resist_override = managers.player:upgrade_value(wpn_class,"negate_enemy_explosive_resistance",0)
+			if explosion_damage_mul < explosion_resist_override then
+				explosion_damage_mul = explosion_resist_override
+			end
+			damage = damage * explosion_damage_mul
+		end
 	end
 
 	if self._marked_dmg_mul then
@@ -503,7 +514,7 @@ function CopDamage:damage_explosion(attack_data)
 		end
 	end
 
-	if managers.fire:is_set_on_fire(self._unit) then
+	if TCD_ENABLED and managers.fire:is_set_on_fire(self._unit) then
 		local third_degree_dmg_mul = 1
 		local attacker_base_ext = alive(attacker_unit) and attacker_unit:base()
 
@@ -535,7 +546,7 @@ function CopDamage:damage_explosion(attack_data)
 		--end
 	end
 
-	if self._char_tweak.DAMAGE_CLAMP_EXPLOSION then
+	if self._char_tweak.DAMAGE_CLAMP_EXPLOSION and not has_negate_explosive_resistance then
 		damage = math_min(damage, self._char_tweak.DAMAGE_CLAMP_EXPLOSION)
 	end
 
@@ -852,7 +863,7 @@ function CopDamage:damage_bullet(attack_data)
 
 	local from_behind = mvec3_dot(mvec_1, mvec_2) >= 0
 	if self._has_plate and attack_data.col_ray.body and attack_data.col_ray.body:name() == self._ids_plate_name then
-		if attack_data.armor_piercing or (attack_data.weapon_unit:base().thrower_unit and deathvox:IsTotalCrackdownEnabled()) then --icky
+		if attack_data.armor_piercing or (attack_data.weapon_unit:base().thrower_unit and TCD_ENABLED) then --icky
 		else
 			local armor_pierce_roll = math_random()
 			local armor_pierce_value = 0
@@ -2876,7 +2887,7 @@ function CopDamage:damage_fire(attack_data)
 
 		local result_type = "dmg_rcv"
 
-		if not attack_data.is_fire_dot_damage and not deathvox:IsTotalCrackdownEnabled() then
+		if not attack_data.is_fire_dot_damage and not TCD_ENABLED then
 			result_type = self:get_damage_type(damage_percent, "fire")
 		end
 
@@ -2986,7 +2997,7 @@ function CopDamage:damage_fire(attack_data)
 
 					managers.fire:add_doted_enemy(self._unit, t, weap_unit, fire_dot_data.dot_length, dot_damage, attacker_unit, attack_data.is_molotov)
 
-					if result.type ~= "healed" and not deathvox:IsTotalCrackdownEnabled() then
+					if result.type ~= "healed" and not TCD_ENABLED then
 						local use_animation_on_fire_damage = nil
 
 						if self._char_tweak.use_animation_on_fire_damage == nil then
@@ -3829,7 +3840,7 @@ function CopDamage:_spawn_head_gadget(params)
 	sound_ext:play("swat_heavy_visor_shatter", nil, nil)
 end
 
-if deathvox:IsTotalCrackdownEnabled() then
+if TCD_ENABLED then
 	function CopDamage:set_health_regen(regen)
 		self._regen_percent = regen or nil
 

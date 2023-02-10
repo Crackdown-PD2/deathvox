@@ -52,58 +52,11 @@ end)
 Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 	if deathvox then
 		if deathvox:IsTotalCrackdownEnabled() then
-			local weapon_class_icon_data = {
-				heavy = {
-					character = "─",
-					macro = "$ICN_HVY",
-				},
-				grenade = {
-					character = "┼",
-					macro = "$ICN_GRN"
-				},
-				area_denial = {
-					character = "═",
-					macro = "$ICN_ARD"
-				},
-				throwing = {
-					character = "╤",
-					macro = "$ICN_THR"
-				},
-				specialist = {
-					character = "╥",
-					macro = "$ICN_SPC"
-				},
-				shotgun = {
-					character = "╦",
-					macro = "$ICN_SHO"
-				},
-				saw = {
-					character = "╧",
-					macro = "$ICN_SAW"
-				},
-				rapidfire = {
-					character = "╨",
-					macro = "$ICN_RPF"
-				},
-				quiet = {
-					character = "╩",
-					macro = "$ICN_QUT"
-				},
-				precision = {
-					character = "╪",
-					macro = "$ICN_PRE"
-				},
-				poison = {
-					character = "╫",
-					macro = "$ICN_POI"
-				},
-				melee = {
-					character = "╬",
-					macro = "$ICN_MEL"
-				}
-			}
+			local weapon_class_icon_data = deathvox.tcd_icon_chars 
 
+			--[[
 			--bit of extra overhead here for tcd icons
+			--todo: instead, add these as actual macros wherever in the ui they're added
 			LocalizationManager._orig_text = LocalizationManager.text
 			function LocalizationManager:text(...)
 				local result = {self:_orig_text(...)}
@@ -114,7 +67,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				end
 				return unpack(result)
 			end
-			
+			--]]
 			
 --			local interact_keybind = utf8.to_upper(loc:btn_macro("use_item")) 
 --			local grenade_keybind = utf8.to_upper(loc:btn_macro("throw_grenade")) 
@@ -221,7 +174,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				bm_equipment_sentry_gun_desc = "Deployable weapon that will automatically attack nearby targets. Sentry Guns have infinite ammunition, will be ignored by enemies, and have a Radial Menu with the following options:\nBasic Ammo has excellent damage output, but no special properties.\nAP Ammo has good damage output and punches through Body Armor and Shields.\nTaser Ammo deals little damage, but electrocutes enemies.\nManual Mode causes the Sentry Gun to aim where you do.\nOverwatch Mode can only target Snipers, but has infinite Range and perfect Accuracy.\nRetrieve returns the Sentry Gun to your Inventory.\n\nSentry Guns generate Heat during combat, inflicting -1% Damage Reduction per second, up to -75%. Heat can be vented by opening a Sentry Gun's Radial Menu.\n\nTo deploy a Sentry Gun, hold $BTN_USE_ITEM on a suitable surface.\n\nTo configure a deployed Sentry Gun, approach it and hold $BTN_INTERACT to open the Radial Menu. To choose an option in a Radial Menu, highlight an option via aiming and release $BTN_INTERACT.\n\nYou can also open the Radial Menu to configure your Sentry Guns while they're still in your inventory by holding $BTN_USE_ITEM and $BTN_INTERACT at the same time.",
 				debug_trip_mine_throwable = "Trip Mine",
 				bm_grenade_tripmine = "Trip Mine Throwable",
-				bm_grenade_tripmine_desc = "Static trap that can be configured for a variety of purposes and effects. In their default setting, Trip Mines deal 1500 explosive damage in an area when any enemy passes by.\n\nPress [$BTN_GRENADE] to place a Trip Mine on a suitable surface.\n\nTo configure a placed Trip Mine, hold [$BTN_INTERACT] to access a Radial Menu with the following options:\n\nExplosive Mode deals 1500 explosive damage in an area.\n\nIncendiary Mode creates a 2.5m radius pool of flame for 15 seconds that deals 250 damage (50 vs allies) every 0.5 seconds.\nConcussive Mode stuns enemies for 4 seconds. Non-lethal.\nSensor Mode Marks enemies instead of detonating. Marking enemies does not consume the Trip Mine.\nDefault Targeting will trigger the Trip Mine on any enemy.\nSpecial Targeting will only trigger the Trip Mine on Special Enemies.\nRetrieve returns the Trip Mine to your inventory.\n\nYou can also open the Radial Menu to configure your Trip Mines while they're still in your Inventory by holding [BTN_GRENADE] and [$BTN_INTERACT] at the same time.", --needs macros
+				bm_grenade_tripmine_desc = "Static trap that can be configured for a variety of purposes and effects. In their default setting, Trip Mines deal 1500 explosive damage in an area when any enemy passes by.\n\nPress $BTN_THROW_GRENADE to place a Trip Mine on a suitable surface.\n\nTo configure a placed Trip Mine, hold $BTN_INTERACT to access a Radial Menu with the following options:\n\nExplosive Mode deals 1500 explosive damage in an area.\n\nIncendiary Mode creates a 2.5m radius pool of flame for 15 seconds that deals 250 damage (50 vs allies) every 0.5 seconds.\nConcussive Mode stuns enemies for 4 seconds. Non-lethal.\nSensor Mode Marks enemies instead of detonating. Marking enemies does not consume the Trip Mine.\nDefault Targeting will trigger the Trip Mine on any enemy.\nSpecial Targeting will only trigger the Trip Mine on Special Enemies.\nRetrieve returns the Trip Mine to your inventory.\n\nYou can also open the Radial Menu to configure your Trip Mines while they're still in your Inventory by holding $BTN_GRENADE and $BTN_INTERACT at the same time.", --needs macros
 				
 				hud_deploying_tripmine_preview = "Ready to deploy $EQUIPMENT",
 				hud_sentry_gun_vent_heat = "Hold $BTN_INTERACT to vent sentrygun heat",
@@ -454,23 +407,23 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				
 			--demolitions
 			
-				menu_party_favors = "Party Favors",
-				menu_party_favors_desc = "BASIC: ##$basic##\n$ICN_GRN Grenades gain ##+33%## Ammunition.\n\nACE: ##$pro##\nTrip Mines in Sensor Mode will Mark targets for ##50%## longer.",
-			
-				menu_special_toys = "Special Toys",
-				menu_special_toys_desc = "BASIC: ##$basic##\n$ICN_SPC Specialist Weapons gain ##+25%## more Ammunition.\n\nACE: ##$pro##\n$ICN_SPC Specialist Weapons gain ##+30%## Reload Speed.",
-			
-				menu_smart_bombs = "Smart Bombs",
-				menu_smart_bombs_desc = "BASIC: ##$basic##\nYour Trip Mines gain ##+30%## explosion radius.\n\nACE: ##$pro##\nYour Trip Mines can no longer damage Civilians or Hostages.",
-			
+				menu_have_blast = "Have A Blast",
+				menu_have_blast_desc = "BASIC: ##$basic##\nTrip Mines can be stuck directly to an enemy, causing them to instantly panic and take ##3x## damage from the explosion.\n\nACE: ##$pro##\n$ICN_GRN Grenade throwables gain ##+33%## Ammunition.",
 				menu_third_degree = "Third Degree",
 				menu_third_degree_desc = "BASIC: ##$basic##\nYour $ICN_ARD Area Denial effects last ##+50%## longer.\n\nACE: ##$pro##\nYou and your $ICN_ARD Area Denial effects deal ##+25%## more damage to enemies that are on fire.",
-			
-				menu_have_blast = "Have A Blast",
-				menu_have_blast_desc = "BASIC: ##$basic##\nYou gain the ability to deploy a Trip Mine directly on an enemy.\nDoing so will cause the target and all enemies within ##10## meters to Panic until it detonates.\n\nACE: ##$pro##\nDeploying a Trip Mine on a Dozer stuns them and inflicts a ##+100%## Damage Vulnerability on all enemies within ##10## meters for ##10## seconds.",
-			
+				menu_cheap_trick = "Cheap Trick",
+				menu_cheap_trick_desc = "BASIC: ##$basic##\nYou gain the ability to throw Trip Mines. To throw a Trip Mine, release $BTN_THROW_GRENADE while aiming the Trip Mine outside of its placement range (NOT YET IMPLEMENTED).\n\nACE: ##$pro##\nEvery ##50## Ammo Boxes grants you ##+1## $ICN_GRN Grenade.",
+				menu_special_toys = "Special Toys",
+				menu_special_toys_desc = "BASIC: ##$basic##\n$ICN_SPC Specialist Weapons gain ##+25%## more Ammunition and ##+30%## Reload Speed.\n\nACE: ##$pro##\nAllows $ICN_SPC Specialist Weapons to gain Ammunition from gathered Ammo Boxes.",
+				menu_smart_bombs = "Smart Bombs",
+				menu_smart_bombs_desc = "BASIC: ##$basic##\n$ICN_GRN Grenades and explosive $ICN_SPC Specialist Weapons gain ##+33%## blast radius.\n\nACE: ##$pro##\nYour $ICN_SPC Specialist Weapons, $ICN_GRN Grenades, and $ICN_ARD Area Denial effects can no longer harm You, Allies, Civilians, or Hostages (NOT YET IMPLEMENTED).",
 				menu_improv_expert = "Improv Expert",
-				menu_improv_expert_desc = "BASIC: ##$basic##\nEvery ##50## Ammo Boxes grants ##+1## $ICN_GRN Grenade. \n\nACE: ##$pro##\n Rocket Launchers and Flamethrowers can gain Ammunition from Ammo Boxes. Grenade Launchers gain ##+50%## Ammunition from Ammo Boxes.\n\nNote: This applies to both Ammo Boxes picked up by yourself and by teammates.",
+				menu_improv_expert_desc = "BASIC: ##$basic##\n$ICN_SPC Specialist Weapons gain ##+25%## Ammunition and ##+30%## Reload Speed.\n\nACE: ##$pro##\nExplosive $ICN_GRN Grenades and $ICN_SPC Specialist Weapons deal ##2x## damage against enemies with Explosive Resistance.",
+			
+			
+			
+			
+			
 			
 		--perk decks
 				--crew chief
@@ -619,9 +572,9 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				
 				--Infiltrator
 				menu_deck8_1 = "Frontliner",
-				menu_deck8_1_desc = "Charging your $ICN_MELMelee Weapon, holding the $ICN_SAW##OVE9000 Saw##, or hitting an enemy with a $ICN_MELMelee Weapon grants you ##+20%## Damage Resistance for ##5## seconds.",
+				menu_deck8_1_desc = "Charging your $ICN_MEL Melee Weapon, holding the $ICN_SAW ##OVE9000 Saw##, or hitting an enemy with a $ICN_MEL Melee Weapon grants you ##+20%## Damage Resistance for ##5## seconds.",
 				menu_deck8_2 = "Man Opener",
-				menu_deck8_2_desc = "Killing an enemy with a $ICN_MELMelee Weapon or the $ICN_SAW##OVE9000 Saw## restores ##2%## of your Maximum Health.",
+				menu_deck8_2_desc = "Killing an enemy with a $ICN_MEL Melee Weapon or the $ICN_SAW ##OVE9000 Saw## restores ##2%## of your Maximum Health.",
 				menu_deck8_3 = "Eye of The Tiger",
 				menu_deck8_3_desc = "You become ##immune to the visual effect of Flashbangs##.",
 				menu_deck8_4 = "Bulk Up",
@@ -629,9 +582,9 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck8_5 = "Grit",
 				menu_deck8_5_desc = "You gain ##+10%## Damage Resistance.",
 				menu_deck8_6 = "Playing Rough",
-				menu_deck8_6_desc = "Killing an enemy with a $ICN_MELMelee Weapon or the $ICN_SAW##OVE9000 Saw## restores ##2%## of your Maximum Armor.",
+				menu_deck8_6_desc = "Killing an enemy with a $ICN_MEL Melee Weapon or the $ICN_SAW ##OVE9000 Saw## restores ##2%## of your Maximum Armor.",
 				menu_deck8_7 = "Cross-Counter",
-				menu_deck8_7_desc = "If you are struck by an enemy melee attack or Cloaker kick while Charging your $ICN_MELMelee Weapon, you will ##automatically counter-attack##, avoiding the attack and performing a fully Charged $ICN_MELMelee Attack in return.",
+				menu_deck8_7_desc = "If you are struck by an enemy melee attack or Cloaker kick while Charging your $ICN_MEL Melee Weapon, you will ##automatically counter-attack##, avoiding the attack and performing a fully Charged $ICN_MEL Melee Attack in return.",
 				menu_deck8_8 = "Scar Tissue",
 				menu_deck8_8_desc = "You gain ##+40%## Maximum Armor.",
 				menu_deck8_9 = "Insulated",
@@ -643,15 +596,15 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				menu_deck9_2 = "Graham",
 				menu_deck9_2_desc = "You gain ##+100%## Stamina.",
 				menu_deck9_3 = "Tony",
-				menu_deck9_3_desc = "Killing an enemy with a $ICN_MELMelee Weapon generates an additional ##Combo## stack.",
+				menu_deck9_3_desc = "Killing an enemy with a $ICN_MEL Melee Weapon generates an additional ##Combo## stack.",
 				menu_deck9_4 = "Rufus",
 				menu_deck9_4_desc = "You gain ##+1## Maximum Health.",
 				menu_deck9_5 = "Jake",
-				menu_deck9_5_desc = "Killing an enemy with a $ICN_THRThrowing Weapon generates ##2## stacks of ##Combo##, regardless of range.",
+				menu_deck9_5_desc = "Killing an enemy with a $ICN_THR Throwing Weapon generates ##2## stacks of ##Combo##, regardless of range.",
 				menu_deck9_6 = "Brandon",
 				menu_deck9_6_desc = "You gain ##+10%## Movement Speed.",
 				menu_deck9_7 = "Carl",
-				menu_deck9_7_desc = "Killing an enemy with the $ICN_SAWOVE9000 Saw generates an additional ##Combo## stack.",
+				menu_deck9_7_desc = "Killing an enemy with the $ICN_SAW OVE9000 Saw generates an additional ##Combo## stack.",
 				menu_deck9_8 = "Earl",
 				menu_deck9_8_desc = "Your Invulnerability period lasts ##+0.5## seconds longer.",
 				menu_deck9_9 = "Rasmus",
@@ -679,7 +632,7 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Overhaul", function(loc)
 				
 				--Yakuza
 				menu_deck12_1 = "Fujin Irezumi",
-				menu_deck12_1_desc = "You gain ##+2%## Damage Resistance per ##10%## of Missing Health, up to ##+10%## Damage Resistance.\n\nCharging your $ICN_MELMelee Weapon for ##5## seconds causes you to ##lose 5%## Maximum Health per second spent Charging afterwards, up to ##50%##.\n\n##Yakuza negates Regeneration effects while equipped.##",
+				menu_deck12_1_desc = "You gain ##+2%## Damage Resistance per ##10%## of Missing Health, up to ##+10%## Damage Resistance.\n\nCharging your $ICN_MEL Melee Weapon for ##5## seconds causes you to ##lose 5%## Maximum Health per second spent Charging afterwards, up to ##50%##.\n\n##Yakuza negates Regeneration effects while equipped.##",
 				menu_deck12_2 = "Raijin Irezumi",
 				menu_deck12_2_desc = "Taking damage grants ##+10%## Damage Resistance for ##5## seconds.",
 				menu_deck12_3 = "Taubushi",

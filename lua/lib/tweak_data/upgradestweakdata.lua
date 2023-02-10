@@ -2294,10 +2294,32 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		--Demolitions
 		
-			--Party Favors Basic
-		self.values.player.grenades_amount_increase_mul = {1.5}
+			 --Have a Blast basic
+		self.values.trip_mine.can_place_on_enemies = {true}
+		self.definitions.trip_mine_can_place_on_enemies = {
+			name_id = "menu_have_blast_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "can_place_on_enemies",
+				category = "trip_mine"
+			}
+		}
+		self.definitions.trip_mine_stuck_damage_mul = {
+			name_id = "menu_have_blast_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stuck_enemy_damage_mul",
+				category = "trip_mine"
+			}
+		}
+		self.values.trip_mine.stuck_enemy_damage_mul = {3}
+
+			--Have a Blast Aced
+		self.values.player.grenades_amount_increase_mul = {1.33}
 		self.definitions.player_grenades_amount_increase_mul = {
-			name_id = "menu_party_favors",
+			name_id = "menu_have_blast_aced",
 			category = "feature",
 			upgrade = {
 				value = 1,
@@ -2305,64 +2327,29 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-			--Party Favors Aced
-		self.values.trip_mine.extended_mark_duration = {1.5}
-		self.definitions.trip_mine_extended_mark_duration = {
-			name_id = "menu_party_favors",
+		
+			--not used
+		self.values.trip_mine.stuck_enemy_panic_radius = {1000}
+		self.definitions.trip_mine_stuck_enemy_panic = {
+			name_id = "menu_have_blast_basic",
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "extended_mark_duration",
+				upgrade = "stuck_enemy_panic_radius",
+				category = "trip_mine"
+			}
+		}
+		self.values.trip_mine.stuck_dozer_damage_vulnerability = { {1,10} } --100% damage vuln increase for 10s (relies on stuck_enemy_panic_radius for area)
+		self.definitions.trip_mine_stuck_dozer_damage_vulnerability = {
+			name_id = "menu_have_blast_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stuck_dozer_damage_vulnerability",
 				category = "trip_mine"
 			}
 		}
 		
-			--Special Toys Basic
-		self.values.class_specialist.weapon_class_ammo_stock_bonus = { 0.25 }
-		self.definitions.class_specialist_ammo_stock_increase = {
-			name_id = "menu_special_toys",
-			category = "feature",
-			upgrade = {
-				value = 1,
-				upgrade = "weapon_class_ammo_stock_bonus",
-				category = "class_specialist"
-			}
-		}
-		
-			--Special Toys Aced
-		self.values.class_specialist.reload_speed_multiplier = {1 - 0.3} --30% faster reload speed
-		self.definitions.class_specialist_reload_speed_multiplier = {
-			name_id = "menu_special_toys",
-			category = "feature",
-			upgrade = {
-				value = 1,
-				upgrade = "reload_speed_multiplier",
-				category = "class_specialist"
-			}
-		}
-		
-		--(basic is vanilla upgrade trip_mine_explosion_size_multiplier_1)
-			--Smart Bombs Aced
-		self.values.trip_mine.no_damaging_hostages = {true}
-		self.definitions.trip_mine_dont_damage_hostages = {
-			name_id = "menu_smart_bombs",
-			category = "feature",
-			upgrade = {
-				value = 1,
-				upgrade = "no_damaging_hostages",
-				category = "trip_mine"
-			}
-		}
-		self.values.trip_mine.no_damaging_civilians = {true}
-		self.definitions.trip_mine_dont_damage_civilians = {
-			name_id = "menu_smart_bombs",
-			category = "feature",
-			upgrade = {
-				value = 1,
-				upgrade = "no_damaging_civilians",
-				category = "trip_mine"
-			}
-		}
 		
 			--Third Degree Basic
 		self.values.subclass_areadenial.effect_duration_increase_mul = {1.5}
@@ -2372,8 +2359,8 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "effect_duration_increase_mul",
-				synced = true,
-				category = "subclass_areadenial"
+				category = "subclass_areadenial",
+				synced = true
 			}
 		}
 			
@@ -2385,57 +2372,27 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			upgrade = {
 				value = 1,
 				upgrade = "effect_doubleroasting_damage_increase_mul",
-				synced = true,
-				category = "subclass_areadenial"
-			}
-		}
-			 --Have a Blast basic
-		self.values.trip_mine.can_place_on_enemies = {true}
-		self.definitions.trip_mine_can_place_on_enemies = {
-			name_id = "menu_have_blast",
-			category = "feature",
-			upgrade = {
-				value = 1,
-				upgrade = "can_place_on_enemies",
-				category = "trip_mine"
-			}
-		}
-		self.values.trip_mine.stuck_enemy_panic_radius = {1000}
-		self.definitions.trip_mine_stuck_enemy_panic = {
-			name_id = "menu_have_blast",
-			category = "feature",
-			upgrade = {
-				value = 1,
-				upgrade = "stuck_enemy_panic_radius",
-				category = "trip_mine"
-			}
-		}
-			--Have a Blast Aced
-		self.values.trip_mine.stuck_dozer_stun = {true}
-		self.definitions.trip_mine_stuck_dozer_stun = {
-			name = "menu_have_blast",
-			category = "feature",
-			upgrade = {
-				value = 1,
-				upgrade = "stuck_dozer_stun",
-				category = "trip_mine"
-			}
-		}
-		self.values.trip_mine.stuck_dozer_damage_vulnerability = { {1,10} } --100% damage vuln increase for 10s (relies on stuck_enemy_panic_radius for area)
-		self.definitions.trip_mine_stuck_dozer_damage_vulnerability = {
-			name_id = "menu_have_blast",
-			category = "feature",
-			upgrade = {
-				value = 1,
-				upgrade = "stuck_dozer_damage_vulnerability",
-				category = "trip_mine"
+				category = "subclass_areadenial",
+				synced = true
 			}
 		}
 		
-			--Improv Expert Basic
-		self.values.player.throwable_regen = {{50,1}}
+		
+			--Cheap Trick Basic
+		self.values.trip_mine.can_throw = {true}
+		self.definitions.trip_mine_can_throw = {
+			name_id = "menu_cheap_trick_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "can_throw",
+				category = "trip_mine"
+			}
+		}
+			--Cheap Trick Aced
+		self.values.player.throwable_regen = {{50,1}} --50 kills grants 1 grenade
 		self.definitions.player_throwable_regen = {
-			name_id = "menu_improv_expert",
+			name_id = "menu_cheap_trick_aced",
 			category = "feature",
 			upgrade = {
 				value = 1,
@@ -2443,10 +2400,35 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-			--Improv Expert Aced
+		
+		
+			--Special Toys Basic
+		self.values.class_specialist.weapon_class_ammo_stock_bonus = { 0.25 } --25% more ammo for specialist class weapons
+		self.definitions.class_specialist_ammo_stock_increase = {
+			name_id = "menu_special_toys_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "weapon_class_ammo_stock_bonus",
+				category = "class_specialist"
+			}
+		}
+		
+		self.values.class_specialist.reload_speed_multiplier = {0.7} --30% faster reload speed
+		self.definitions.class_specialist_reload_speed_multiplier = {
+			name_id = "menu_special_toys_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "reload_speed_multiplier",
+				category = "class_specialist"
+			}
+		}
+		
+			--Special Toys Aced
 		self.values.weapon.rpg7_ammo_pickup_modifier = { {0.001,0.001} }
 		self.definitions.weapon_rpg7_ammo_pickup_modifier = {
-			name_id = "menu_improv_expert",
+			name_id = "menu_improv_expert_aced",
 			category = "feature",
 			upgrade = {
 				value = 1,
@@ -2456,7 +2438,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		self.values.weapon.ray_ammo_pickup_modifier = { {0.001,0.001} }
 		self.definitions.weapon_ray_ammo_pickup_modifier = {
-			name_id = "menu_improv_expert",
+			name_id = "menu_improv_expert_aced",
 			category = "feature",
 			upgrade = {
 				value = 1,
@@ -2464,7 +2446,6 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "weapon"
 			}
 		}
-		
 		self.values.weapon.grenade_launcher_ammo_pickup_increase = { 0.5 } --50% increase (additive)
 		self.definitions.weapon_grenade_launcher_ammo_pickup_increase = {
 			name_id = "menu_improv_expert_aced",
@@ -2475,7 +2456,6 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "weapon"
 			}
 		}
-		
 		self.values.weapon.flamethrower_ammo_pickup_modifier = { {1,1} }
 		self.definitions.weapon_flamethrower_ammo_pickup_modifier = {
 			name_id = "menu_improv_expert_aced",
@@ -2486,6 +2466,69 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "weapon"
 			}
 		}
+		
+		
+			--not used
+		self.values.trip_mine.extended_mark_duration = {1.5}
+		self.definitions.trip_mine_extended_mark_duration = {
+			name_id = "menu_party_favors",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "extended_mark_duration",
+				category = "trip_mine"
+			}
+		}
+		
+		
+			--Smart Bombs Aced
+		self.values.class_specialist.blast_radius_mul_increase = {1.3}
+		self.definitions.class_specialist_blast_radius_mul_increase_1 = {
+			name_id = "menu_smart_bombs_aced",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "blast_radius_mul_increase",
+				category = "class_specialist",
+				synced = true
+			}
+		}
+		self.values.class_specialist.no_friendly_fire = {true}
+		self.definitions.class_specialist_no_friendly_fire = {
+			name_id = "menu_smart_bombs",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "no_friendly_fire",
+				category = "class_specialist",
+				synced = true
+			}
+		}
+		
+		
+			--Tankbuster 
+		self.values.class_specialist.negate_enemy_explosive_resistance = {1,2} --overrides character's explosive damage resistance
+		self.definitions.class_specialist_negate_enemy_explosive_resistance_1 = {
+			name_id = "menu_tankbuster_basic",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "negate_enemy_explosive_resistance",
+				category = "class_specialist"
+			}
+		}
+		self.definitions.class_specialist_negate_enemy_explosive_resistance_2 = {
+			name_id = "menu_tankbuster_aced",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "negate_enemy_explosive_resistance",
+				category = "class_specialist"
+			}
+		}
+		
+		
+		
 		
 	--perk decks
 		self.values.team.crewchief = {}
@@ -4080,3 +4123,11 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 	end
 end)	
+
+Hooks:PostHook(UpgradesTweakData,"_init_pd2_values","tcd_upgradestweakdata_btnmacros",function(self)
+	if self.skill_btns then 
+		self.skill_btns.steroids = self.skill_btns.steroids or {}
+		self.skill_btns.steroids.BTN_THROW_GRENADE = self.skill_btns.steroids.BTN_ABILITY or function() return utf8.to_upper(managers.localization:btn_macro("throw_grenade")) end
+		--BTN_ABILITY should be separate
+	end
+end)

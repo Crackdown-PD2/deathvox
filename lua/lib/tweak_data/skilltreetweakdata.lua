@@ -1853,70 +1853,32 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		})
 		
 		
-		--Demolitions (not fully implemented)
-		
-		replace_skill(tree_indices.demolitions,1,{ --Party Favors
+		--Demolitions
+		replace_skill(tree_indices.demolitions,1,{ --Have a Blast
+			{
+				upgrades = {
+					"trip_mine_can_place_on_enemies",
+					"trip_mine_stuck_damage_mul"
+--,					"trip_mine_stuck_enemy_panic" --aoe panic
+				},
+				cost = self.costs.hightier
+			},
 			{
 				upgrades = {
 					"player_grenades_amount_increase_mul"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"trip_mine_extended_mark_duration"
+--					"trip_mine_stuck_dozer_stun",
+--					"trip_mine_stuck_dozer_damage_vulnerability"
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_party_favors",
-			desc_id = "menu_party_favors_desc",
+			name_id = "menu_have_blast",
+			desc_id = "menu_have_blast_desc",
 			icon_xy = {
 				4,
-				6
+				10
 			}
 		})
-		replace_skill(tree_indices.demolitions,2,{ --Special Toys
-			{
-				upgrades = {
-					"class_specialist_ammo_stock_increase"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"class_specialist_reload_speed_multiplier"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_special_toys",
-			desc_id = "menu_special_toys_desc",
-			icon_xy = {
-				4,
-				7
-			}
-		})
-		replace_skill(tree_indices.demolitions,3,{ --Smart Bombs
-			{
-				upgrades = {
-					"trip_mine_explosion_size_multiplier_1"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"trip_mine_dont_damage_hostages",
-					"trip_mine_dont_damage_civilians"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_smart_bombs",
-			desc_id = "menu_smart_bombs_desc",
-			icon_xy = {
-				4,
-				8
-			}
-		})
-		replace_skill(tree_indices.demolitions,4,{ --Third Degree
+		replace_skill(tree_indices.demolitions,2,{ --Third Degree
 			{
 				upgrades = {
 					"subclass_areadenial_effect_duration_increase_1"
@@ -1936,32 +1898,31 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				9
 			}
 		})
-		replace_skill(tree_indices.demolitions,5,{ --Have a Blast
+		replace_skill(tree_indices.demolitions,3,{ --Cheap Trick
 			{
 				upgrades = {
-					"trip_mine_can_place_on_enemies",
-					"trip_mine_stuck_enemy_panic"
+					"trip_mine_can_throw"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"trip_mine_stuck_dozer_stun",
-					"trip_mine_stuck_dozer_damage_vulnerability"
+					"player_throwable_regen"
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_have_blast",
-			desc_id = "menu_have_blast_desc",
+			name_id = "menu_cheap_trick",
+			desc_id = "menu_cheap_trick_desc",
 			icon_xy = {
 				4,
-				10
+				6
 			}
 		})
-		replace_skill(tree_indices.demolitions,6,{ --Improv Expert
+		replace_skill(tree_indices.demolitions,4,{ --Special Toys
 			{
 				upgrades = {
-					"player_throwable_regen"
+					"class_specialist_ammo_stock_increase",
+					"class_specialist_reload_speed_multiplier"
 				},
 				cost = self.costs.hightier
 			},
@@ -1971,6 +1932,48 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"weapon_ray_ammo_pickup_modifier",
 					"weapon_flamethrower_ammo_pickup_modifier",
 					"weapon_grenade_launcher_ammo_pickup_increase"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_special_toys",
+			desc_id = "menu_special_toys_desc",
+			icon_xy = {
+				4,
+				7
+			}
+		})
+		replace_skill(tree_indices.demolitions,5,{ --Smart Bombs
+			{
+				upgrades = {
+--					"trip_mine_explosion_size_multiplier_1"
+					"class_specialist_blast_radius_mul_increase_1"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"class_specialist_no_friendly_fire"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_smart_bombs",
+			desc_id = "menu_smart_bombs_desc",
+			icon_xy = {
+				4,
+				8
+			}
+		})
+		replace_skill(tree_indices.demolitions,6,{ --Tankbuster (formerly Improv Expert)
+			{
+				upgrades = {
+					"class_specialist_negate_enemy_explosive_resistance_1"
+--					"player_throwable_regen"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"class_specialist_negate_enemy_explosive_resistance_2"
 				},
 				cost = self.costs.hightierpro
 			},
