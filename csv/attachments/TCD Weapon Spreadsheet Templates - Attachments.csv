@@ -230,7 +230,7 @@ wpn_fps_upg_a_grenade_launcher_incendiary,Incendiary Round,wpn_fps_gre_m79,,Area
 ,[Piglet Grenade Launcher],m32,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 wpn_fps_upg_a_grenade_launcher_incendiary,Incendiary Round,wpn_fps_gre_m32,,Area Denial,,,,,,,-1000,,,,,,,,,,,,,,,,,,,,,
 ,[OVE9000 Saw],saw,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-wpn_fps_saw_body_silent,Silent Motor,wpn_fps_saw,,,,,,,-200,-0.3,,,,,,10,,,,,,,,,,,,,,,,
+wpn_fps_saw_body_silent,Silent Motor,wpn_fps_saw,,,,,,,-200,-0.3,,,,,,10,,,,,,9,,,,,,,,,,
 wpn_fps_saw_body_speed,Fast Motor,wpn_fps_saw,,,,,,,400,0.15,,,,,,-20,,,,,,,,,,,,,,,,
 wpn_fps_saw_m_blade_durable,Durable Blade,wpn_fps_saw,,,100,,,,,,-5,,,,,,,,,,,,,,,,,,,,,
 wpn_fps_saw_m_blade_sharp,Sharp Blade,wpn_fps_saw,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
