@@ -1027,7 +1027,9 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 		self.unit_categories.deathvox_fbi_hrt.unit_types.zeal = {Idstring("units/pd2_mod_federales/characters/ene_deathvox_fbi_hrt/ene_deathvox_fbi_hrt")}
 		
 		self.unit_categories.deathvox_fbi_veteran.unit_type_spawner.zeal = "units/pd2_mod_federales/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran"	
-		self.unit_categories.deathvox_fbi_veteran.unit_types.zeal = {Idstring("units/pd2_mod_federales/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")}			
+		self.unit_categories.deathvox_fbi_veteran.unit_types.zeal = {Idstring("units/pd2_mod_federales/characters/ene_deathvox_fbi_veteran/ene_deathvox_fbi_veteran")}
+	elseif level == "ranc" then
+--		self.unit_categories
 	end
 	
 	self.unit_categories.deathvox_guard = {
@@ -1665,7 +1667,17 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 		access = access_type_all,
 		special_type = "spooc"
 	}
-	
+		
+	self.unit_categories.marshal_marksman.unit_type_spawner = {
+		cop = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1",
+		fbi = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1",
+		federales = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_2/ene_male_marshal_marksman_2",
+		gensec = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1",
+		zeal = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_2/ene_male_marshal_marksman_2",
+		murkywater = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_2/ene_male_marshal_marksman_2",
+		classic = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1",
+		russia = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_2/ene_male_marshal_marksman_2"
+	}
 	self.unit_categories.marshal_marksman.unit_types.cop = {
 		Idstring("units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1")
 	}
@@ -1681,15 +1693,76 @@ Hooks:PostHook(GroupAITweakData, "_init_unit_categories", "cd_init_unit_categori
 	self.unit_categories.marshal_marksman.unit_types.classic = {
 		Idstring("units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1")
 	}
-	self.unit_categories.marshal_marksman.unit_type_spawner = {
-		cop = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1",
-		fbi = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1",
-		federales = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_2/ene_male_marshal_marksman_2",
-		gensec = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1",
-		zeal = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_2/ene_male_marshal_marksman_2",
-		murkywater = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_2/ene_male_marshal_marksman_2",
-		classic = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_1/ene_male_marshal_marksman_1",
-		russia = "units/pd2_dlc_usm1/characters/ene_male_marshal_marksman_2/ene_male_marshal_marksman_2"
+
+	
+	self.unit_categories.marshal_shield.unit_type_spawner = {
+		cop = "units/pd2_dlc_usm2/characters/ene_male_marshal_shield_1/ene_male_marshal_shield_1",
+		fbi = "units/pd2_dlc_usm2/characters/ene_male_marshal_shield_1/ene_male_marshal_shield_1",
+		federales = "units/pd2_dlc_usm2/characters/ene_male_marshal_shield_2/ene_male_marshal_shield_2",
+		gensec = "units/pd2_dlc_usm2/characters/ene_male_marshal_shield_1/ene_male_marshal_shield_1",
+		zeal = "units/pd2_dlc_usm2/characters/ene_male_marshal_shield_2/ene_male_marshal_shield_2",
+		murkywater = "units/pd2_dlc_usm2/characters/ene_male_marshal_shield_2/ene_male_marshal_shield_2",
+		classic = "units/pd2_dlc_usm2/characters/ene_male_marshal_shield_1/ene_male_marshal_shield_1",
+		russia = "units/pd2_dlc_usm2/characters/ene_male_marshal_shield_2/ene_male_marshal_shield_2"
+	}
+	self.unit_categories.marshal_shield.unit_types.cop = {
+		"units/pd2_dlc_usm2/characters/ene_male_marshal_shield_1/ene_male_marshal_shield_1"
+	}
+	self.unit_categories.marshal_shield.unit_types.fbi = {
+		"units/pd2_dlc_usm2/characters/ene_male_marshal_shield_1/ene_male_marshal_shield_1"
+	}
+	self.unit_categories.marshal_shield.unit_types.federales = {
+		"units/pd2_dlc_usm2/characters/ene_male_marshal_shield_2/ene_male_marshal_shield_2"
+	}
+	self.unit_categories.marshal_shield.unit_types.gensec = { 
+		"units/pd2_dlc_usm2/characters/ene_male_marshal_shield_1/ene_male_marshal_shield_1"
+	}
+	self.unit_categories.marshal_shield.unit_types.zeal = {
+		"units/pd2_dlc_usm2/characters/ene_male_marshal_shield_2/ene_male_marshal_shield_2"
+	}
+	self.unit_categories.marshal_shield.unit_types.murkywater = {
+		"units/pd2_dlc_usm2/characters/ene_male_marshal_shield_2/ene_male_marshal_shield_2"
+	}
+	self.unit_categories.marshal_shield.unit_types.classic = {
+		"units/pd2_dlc_usm2/characters/ene_male_marshal_shield_1/ene_male_marshal_shield_1"
+	}
+	self.unit_categories.marshal_shield.unit_types.russia = {
+		"units/pd2_dlc_usm2/characters/ene_male_marshal_shield_2/ene_male_marshal_shield_2"
+	}
+	
+	self.unit_categories.snowman_boss.unit_type_spawner = {
+		cop = "units/pd2_dlc_cg22/characters/ene_snowman_boss/ene_snowman_boss",
+		fbi = "units/pd2_dlc_cg22/characters/ene_snowman_boss/ene_snowman_boss",
+		federales = "units/pd2_dlc_cg22/characters/ene_snowman_boss/ene_snowman_boss",
+		gensec = "units/pd2_dlc_cg22/characters/ene_snowman_boss/ene_snowman_boss",
+		zeal = "units/pd2_dlc_cg22/characters/ene_snowman_boss/ene_snowman_boss",
+		murkywater = "units/pd2_dlc_cg22/characters/ene_snowman_boss/ene_snowman_boss",
+		classic = "units/pd2_dlc_cg22/characters/ene_snowman_boss/ene_snowman_boss",
+		russia = "units/pd2_dlc_cg22/characters/ene_snowman_boss/ene_snowman_boss"
+	}
+	self.unit_categories.snowman_boss.unit_types.cop = {
+		"units/pd2_dlc_cg22/characters/ene_snowman_boss/ene_snowman_boss"
+	}
+	self.unit_categories.snowman_boss.unit_types.fbi = {
+		"units/pd2_dlc_cg22/characters/ene_snowman_boss/ene_snowman_boss"
+	}
+	self.unit_categories.snowman_boss.unit_types.federales = {
+		"units/pd2_dlc_cg22/characters/ene_snowman_boss/ene_snowman_boss"
+	}
+	self.unit_categories.snowman_boss.unit_types.gensec = { 
+		"units/pd2_dlc_cg22/characters/ene_snowman_boss/ene_snowman_boss"
+	}
+	self.unit_categories.snowman_boss.unit_types.zeal = {
+		"units/pd2_dlc_cg22/characters/ene_snowman_boss/ene_snowman_boss"
+	}
+	self.unit_categories.snowman_boss.unit_types.murkywater = {
+		"units/pd2_dlc_cg22/characters/ene_snowman_boss/ene_snowman_boss"
+	}
+	self.unit_categories.snowman_boss.unit_types.classic = {
+		"units/pd2_dlc_cg22/characters/ene_snowman_boss/ene_snowman_boss"
+	}
+	self.unit_categories.snowman_boss.unit_types.russia = {
+		"units/pd2_dlc_cg22/characters/ene_snowman_boss/ene_snowman_boss"
 	}
 end)
 
