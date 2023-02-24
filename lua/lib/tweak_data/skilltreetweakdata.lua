@@ -575,7 +575,6 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.chief,6,{ --Service above Self
 			{
 				upgrades = {
-					"player_convert_enemies_max_minions_1",
 					"player_convert_enemies_max_minions_2"
 				},
 				cost = self.costs.hightier
@@ -4471,7 +4470,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			"sentry_gun_silent",
 			"player_passive_convert_enemies_health_multiplier_1", --50% damage resistance
 			"player_critical_hit_multiplier_1", --2x crit multiplier (same as default)
-			
+--			"player_convert_enemies", --this shouldn't be necessary since it just allows the interaction in basegame but isn't used in tcd
 			"player_convert_enemies_max_minions_1" --1 joker allowed per player; the actual requirement is the friendship collar deployable
 		}
 		
