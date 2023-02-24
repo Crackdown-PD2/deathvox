@@ -1043,10 +1043,13 @@ function CSVStatReader:read_attachments(parent_tweak_data)
 							local pickup_low,pickup_high
 							
 							local _pickup_low = raw_csv_values[STAT_INDICES.pickup_low]
-							pickup_low = not_empty(_pickup_low) and tonumber(_pickup_low)
+							if not_empty(_pickup_low) then
+								pickup_low = tonumber(_pickup_low)
+							end
 							local _pickup_high = raw_csv_values[STAT_INDICES.pickup_high]
-							pickup_high = not_empty(_pickup_high) and tonumber(_pickup_high)
-							
+							if not_empty(_pickup_high) then
+								pickup_high = tonumber(_pickup_high)
+							end
 							--assorted piercing stats
 							local _can_shoot_through_enemy = raw_csv_values[STAT_INDICES.can_pierce_enemy]
 							local can_shoot_through_enemy = not_empty(_can_shoot_through_enemy) and convert_boolean(_can_shoot_through_enemy)
@@ -1055,7 +1058,10 @@ function CSVStatReader:read_attachments(parent_tweak_data)
 							local _can_shoot_through_wall = raw_csv_values[STAT_INDICES.can_pierce_wall]
 							local can_shoot_through_wall = not_empty(_can_shoot_through_wall) and convert_boolean(_can_shoot_through_wall)
 							local _armor_piercing_chance = raw_csv_values[STAT_INDICES.armor_piercing_chance]
-							local armor_piercing_chance = not_empty(_armor_piercing_chance) and tonumber(_armor_piercing_chance)
+							local armor_piercing_chance
+							if not_empty(_armor_piercing_chance) then
+								armor_piercing_chance = tonumber(_armor_piercing_chance)
+							end
 							
 							
 							--TODO
