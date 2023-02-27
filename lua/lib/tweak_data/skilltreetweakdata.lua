@@ -60,7 +60,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			end
 			self.skills[skill_name] = data
 		end
-	
+		
 		local tree_indices = { --these are the positions of the skilltrees; if you want to change the positions, here is the place
 			taskmaster = 1,
 			marksman = 2,
@@ -2813,8 +2813,13 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					6
 				}
 			},
+			name_id = "menu_st_spec_7",
 			desc_id = "menu_st_spec_7_desc",
-			name_id = "menu_st_spec_7"
+			dlc = "character_pack_clover",
+			category = {
+				"covert",
+				"stealth"
+			}
 		}
 		
 		self.specializations[perkdeck_indices.infiltrator] = {
@@ -2928,8 +2933,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					7
 				}
 			},
+			name_id = "menu_st_spec_8",
 			desc_id = "menu_st_spec_8_desc",
-			name_id = "menu_st_spec_8"
+			dlc = "character_pack_dragan",
+			category = "defensive"
 		}
 		
 		self.specializations[perkdeck_indices.sociopath] = {
@@ -3042,8 +3049,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					8
 				}
 			},
+			name_id = "menu_st_spec_9",
 			desc_id = "menu_st_spec_9_desc",
-			name_id = "menu_st_spec_9"
+			dlc = "hlm2_deluxe",
+			category = "offensive"
 		}
 			
 		self.specializations[perkdeck_indices.grinder] = {
@@ -3155,8 +3164,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					10
 				}
 			},
+			name_id = "menu_st_spec_11",
 			desc_id = "menu_st_spec_11_desc",
-			name_id = "menu_st_spec_11"
+			dlc = "character_pack_sokol",
+			category = "offensive"
 		}
 		
 		self.specializations[perkdeck_indices.yakuza] = {
@@ -3268,8 +3279,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					11
 				}
 			},
+			name_id = "menu_st_spec_12",
 			desc_id = "menu_st_spec_12_desc",
-			name_id = "menu_st_spec_12"
+			dlc = "dragon",
+			category = "defensive"
 		}
 		
 		self.specializations[perkdeck_indices.expresident] = {
@@ -3381,8 +3394,9 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					12
 				}
 			},
+			name_id = "menu_st_spec_13",
 			desc_id = "menu_st_spec_13_desc",
-			name_id = "menu_st_spec_13"
+			category = "defensive"
 		}
 		
 		self.specializations[perkdeck_indices.anarchist] = {
@@ -3495,8 +3509,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					14
 				}
 			},
+			name_id = "menu_st_spec_15",
 			desc_id = "menu_st_spec_15_desc",
-			name_id = "menu_st_spec_15"
+			dlc = "opera",
+			category = "offensive"
 		}
 
 		self.specializations[perkdeck_indices.gambler] = {
@@ -3953,8 +3969,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						15
 					}
 				},
+				name_id = "menu_st_spec_16",
 				desc_id = "menu_st_spec_16_desc",
-				name_id = "menu_st_spec_16"
+				dlc = "wild",
+				category = "defensive"
 			}
 			
 			self.specializations[perkdeck_indices.kingpin] = {
@@ -4066,8 +4084,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						16
 					}
 				},
+				name_id = "menu_st_spec_17",
 				desc_id = "menu_st_spec_17_desc",
-				name_id = "menu_st_spec_17"
+				dlc = "chico",
+				category = "offensive"
 			}
 			
 			self.specializations[perkdeck_indices.sicario] = {
@@ -4408,6 +4428,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_st_spec_21_desc",
 				name_id = "menu_st_spec_21"
 			}
+			
 			
 		end
 		
