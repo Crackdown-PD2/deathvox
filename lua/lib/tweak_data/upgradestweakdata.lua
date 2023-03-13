@@ -173,7 +173,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		self.values.team.player.civilian_hostage_area_marking_damage_mul = 1.1 --10% extra damage
 		self.values.team.player.civilian_hostage_area_marking_interval = 0.1 --check every 0.1 seconds
 		
-		self.values.team.player.civilian_hostage_area_marking = {true,true}
+		self.values.team.player.civilian_hostage_area_marking = {1,2} --values only used as a "tier" shortcut
 		
 		--use this
 		self.definitions.team_civilian_hostage_aoe_damage_resistance_1 = {
