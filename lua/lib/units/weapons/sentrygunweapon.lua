@@ -134,6 +134,19 @@ if deathvox:IsTotalCrackdownEnabled() then
 	function SentryGunWeapon:setup(setup_data)
 		if self._unit:base():is_owner() then 
 --			self._unit:base():_create_ws()
+			
+			if managers.player:has_category_upgrade("sentry_gun","auto_heat_decay") then
+				local decay_heat_values = managers.player:upgrade_value("sentry_gun","auto_heat_decay")
+				self._decay_heat_amount = decay_heat_values.amount
+				self._decay_heat_interval = decay_heat_values.interval
+				self._decay_heat_t = decay_heat_values.interval
+			else
+				--just here for reference
+				self._decay_heat_amount = nil
+				self._decay_heat_interval = nil
+				self._decay_heat_t = nil
+			end
+			
 		end
 		self:_init()
 		
@@ -259,6 +272,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local ray_distance = td.FIRE_RANGE or 20000
 		local is_owner = self._unit:base():is_owner()
 		local firemode = self:_get_sentry_firemode()
+		local is_firemode_manual = firemode == "manual"
 		local ammotype = self:_get_ammo_type()
 		
 		
@@ -366,9 +380,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 						end	
 					end
 				end
-
+				
 				local damage = self:_apply_dmg_mul(self._damage, hit, from_pos)
+				local hit_unit_was_alive
 				if alive(hit.unit) and self._unit:base():is_owner() then  
+					
+					hit_unit_was_alive = hit.unit:character_damage() and not hit.unit:character_damage():dead()
+					
 					if hit.unit:contour() then
 						if managers.player:has_category_upgrade("sentry_gun","automatic_highlight_enemies") then
 							local mark_data = pm:upgrade_value("sentry_gun","automatic_highlight_enemies")
@@ -384,6 +402,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 				end
 				if bullet_base:on_collision(hit, self._unit, self._unit, damage) then
 					char_hit = true
+					
+					if hit_unit_was_alive and hit.unit:character_damage() and hit.unit:character_damage():dead() then 
+						--if killed the hit unit then
+						if not managers.player:has_category_upgrade("sentry_gun","wrangler_heatsink") or not is_firemode_manual then 
+							self:_add_weapon_heat(td.WEAPON_HEAT_GAIN_RATE)
+						end
+					end
 				end
 			end
 		else
@@ -476,7 +501,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 	end
 	
-	
  --(below are all custom functions)
 	function SentryGunWeapon:_get_tweak_data() --custom method
 		if self._ammo_type == "taser" then 
@@ -564,7 +588,23 @@ if deathvox:IsTotalCrackdownEnabled() then
 			self._laser_unit:base():set_color(color)
 		end
 	end
-
+	
+	local orig_sentryweap_upd = SentryGunWeapon.update
+	function SentryGunWeapon:update(unit,t,dt,...)
+		if self._decay_heat_t then
+			local decay_heat_t = self._decay_heat_t - dt
+			
+			if decay_heat_t <= 0 then
+				decay_heat_t = decay_heat_t + self._decay_heat_interval
+				
+				self:_add_weapon_heat(self._decay_heat_amount)
+			end
+			
+			self._decay_heat_t = decay_heat_t
+		end
+		return orig_sentryweap_upd(self,unit,t,dt,...)
+	end
+	
 	function SentryGunWeapon:_check_weapon_heat() --not used
 		local my_tweak_data = self:_get_tweak_data()
 		local heat = self:_get_weapon_heat()

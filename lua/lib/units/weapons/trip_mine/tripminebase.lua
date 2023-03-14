@@ -1011,14 +1011,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 			local slot_manager = managers.slot
 			local slotmask = slot_manager:get_mask("explosion_targets")
-			local cant_hit_civilians = player_manager:has_category_upgrade("trip_mine", "no_damaging_civilians")
-			local cant_hit_hostages = player_manager:has_category_upgrade("trip_mine", "no_damaging_hostages")
+			local no_friendly_fire = player_manager:has_category_upgrade("class_specialist","no_friendly_fire")
 
-			if cant_hit_civilians then
+			if no_friendly_fire then
 				slotmask = slotmask - slot_manager:get_mask("civilians")
-			end
-
-			if cant_hit_hostages then
 				slotmask = slotmask - 22 --hostages slotmask
 			end
 

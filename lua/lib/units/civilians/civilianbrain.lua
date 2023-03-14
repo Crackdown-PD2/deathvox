@@ -1,28 +1,36 @@
 if deathvox:IsTotalCrackdownEnabled() then 
 
 	Hooks:PostHook(CivilianBrain,"init","cd_civilianbrain_init",function(self,unit)
-		self._HOSTAGE_AREA_MARKING_T = Application:time()
-		self._HAS_DONE_FAKEOUT_TRADE = false
+		self._hostage_area_marking_t = Application:time()
+		self._has_done_fakeout_trade = false
 	end)
 
 	Hooks:PostHook(CivilianBrain,"update","cd_civilianbrain_update",function(self,unit, t, dt)
-		if self:is_tied() then --and Network:is_server()
+		--marking and damage are both clientside
 		
-			if self._HOSTAGE_AREA_MARKING_T + tweak_data.upgrades.values.team.player.civilian_hostage_area_marking_interval < t then 
+		if self:is_tied() then --and Network:is_server()
+			if managers.player:has_team_category_upgrade("player","civilian_hostage_area_marking") then
+				local interval = tweak_data.upgrades.values.team.player.civilian_hostage_area_marking_interval
+				if self._hostage_area_marking_t + interval < t then 
 
-				self._HOSTAGE_AREA_MARKING_T = t
-				
-				local distance,incoming_damage_mul = unpack(managers.player:team_upgrade_value("player","civilian_hostage_area_marking",{}))
-				if distance and distance > 0 then 
-				
+					self._hostage_area_marking_t = self._hostage_area_marking_t + interval
+					
+					local distance = tweak_data.upgrades.values.team.player.civilian_hostage_area_marking_distance
 					local pos = unit:movement() and unit:movement():m_pos() or unit:position()
 					
 					for _,enemy_unit in pairs(World:find_units_quick("sphere",pos,distance,managers.slot:get_mask("enemies"))) do
-						if enemy_unit:contour() then 
-							if enemy_unit:base() and enemy_unit:base().sentry_gun then 
-								enemy_unit:contour():add("mark_unit_dangerous",false)
-							else
-								enemy_unit:contour():add("mark_enemy",false)
+						local ubase = enemy_unit:base()
+						if ubase then
+							if enemy_unit:contour() then 
+								if ubase.sentry_gun then 
+									enemy_unit:contour():add("mark_enemy",false)
+								else
+									if ubase.has_tag and ubase:has_tag("special") and managers.player:team_upgrade_value("player","civilian_hostage_area_marking") > 1 then
+										enemy_unit:contour():add("civilian_mark_special",false)
+									else
+										enemy_unit:contour():add("civilian_mark_standard",false)
+									end
+								end
 							end
 						end
 					end
@@ -38,7 +46,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		if command == "move" then
 			local following_hostages = managers.groupai:state():get_following_hostages(interacting_unit)
-			local max_nr = interacting_unit:base():upgrade_level("player", "falseidol_aced_followers") and 3 or 1
+			local max_nr = interacting_unit:base():upgrade_value("player","max_civ_hostage_followers",1)
 
 			if following_hostages and max_nr <= table.size(following_hostages) then
 				return

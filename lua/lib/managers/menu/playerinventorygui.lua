@@ -16,8 +16,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				end
 			end
 		end
-		local function find_archetypes_from_part(partname)
-			local partdata = wftd.parts[partname]
+		local function find_archetypes_from_part(partdata)
 			local item_class,item_subclasses
 			if partdata then
 				if partdata.subclass_modifiers then
@@ -39,7 +38,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 			local item_subclasses = {}
 			insert_subclasses(item_subclasses,wtd.subclasses)
 			for _,part_id in ipairs(data.blueprint) do
-				local new_item_class,new_subclasses = find_archetypes_from_part(part_id)
+				local part_data = managers.weapon_factory:get_part_data_by_part_id_from_weapon(part_id,data.factory_id,data.blueprint)
+				local new_item_class,new_subclasses = find_archetypes_from_part(part_data)
 				item_class = new_item_class or item_class
 				insert_subclasses(item_subclasses,new_subclasses)
 			end

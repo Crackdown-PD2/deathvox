@@ -60,7 +60,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			end
 			self.skills[skill_name] = data
 		end
-	
+		
 		local tree_indices = { --these are the positions of the skilltrees; if you want to change the positions, here is the place
 			taskmaster = 1,
 			marksman = 2,
@@ -97,17 +97,59 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		
 		
 		--Taskmaster
-		replace_skill(tree_indices.taskmaster,1,{ --Zip It
+		replace_skill(tree_indices.taskmaster,1,{ --False Idol
 			{
 				upgrades = {
-					"player_civ_calming_alerts",
-					"player_shout_intimidation_aoe"
+					"team_civilian_hostage_stationary_invuln",
+					"player_civilian_early_trade_restores_down"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"cable_tie_quantity"
+					"team_civilian_hostage_vip_trade" --req fewer than max incaps
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_false_idol",
+			desc_id = "menu_false_idol_desc",
+			icon_xy = {
+				1,
+				5
+			}
+		})
+		replace_skill(tree_indices.taskmaster,2,{ --Pied Piper (formerly Leverage)
+			{
+				upgrades = {
+					"player_max_civ_hostage_followers_1"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_max_civ_hostage_followers_2"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_leverage",
+			desc_id = "menu_leverage_desc",
+			icon_xy = {
+				1,
+				4
+			}
+		})
+		replace_skill(tree_indices.taskmaster,3,{ --Zip It
+			{
+				upgrades = {
+					"cable_tie_quantity",
+					"team_civilian_hostage_no_fleeing"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"player_civ_calming_alerts",
+					"player_shout_intimidation_aoe"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -118,7 +160,27 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				0
 			}
 		})
-		replace_skill(tree_indices.taskmaster,2,{ --Pack Mules
+		replace_skill(tree_indices.taskmaster,4,{ --Stay Down
+			{
+				upgrades = {
+					"team_civilian_hostage_aoe_damage_resistance_1"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"team_civilian_hostage_fakeout_trade"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_stay_down",
+			desc_id = "menu_stay_down_desc",
+			icon_xy = {
+				1,
+				2
+			}
+		})
+		replace_skill(tree_indices.taskmaster,5,{ --Pack Mules
 			{
 				upgrades = {
 					"team_civilian_hostage_carry_bags"
@@ -138,36 +200,16 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				1
 			}
 		})
-		replace_skill(tree_indices.taskmaster,3,{ --Stay Down
+		replace_skill(tree_indices.taskmaster,6,{ --Lookout Duty
 			{
 				upgrades = {
-					"team_civilian_hostage_stationary_invuln"
+					"team_civilian_hostage_area_marking_1" --mark special enemies
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"team_civilian_hostage_no_fleeing"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_stay_down",
-			desc_id = "menu_stay_down_desc",
-			icon_xy = {
-				1,
-				2
-			}
-		})
-		replace_skill(tree_indices.taskmaster,4,{ --Lookout Duty
-			{
-				upgrades = {
-					"team_civilian_hostage_area_marking"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"team_civilian_hostage_aoe_damage_multiplier"
+					"team_civilian_hostage_area_marking_2" --also mark standard enemies + give damage bonus
 				},
 				cost = self.costs.hightierpro
 			},
@@ -176,47 +218,6 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			icon_xy = {
 				1,
 				3
-			}
-		})
-		replace_skill(tree_indices.taskmaster,5,{ --Leverage
-			{
-				upgrades = {
-					"team_civilian_hostage_aoe_damage_resistance_1"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"team_civilian_hostage_aoe_damage_resistance_2"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_leverage",
-			desc_id = "menu_leverage_desc",
-			icon_xy = {
-				1,
-				4
-			}
-		})
-		replace_skill(tree_indices.taskmaster,6,{ --False Idol
-			{
-				upgrades = {
-					"team_civilian_hostage_vip_trade"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"team_civilian_hostage_fakeout_trade",
-					"player_falseidol_aced_followers"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_false_idol",
-			desc_id = "menu_false_idol_desc",
-			icon_xy = {
-				1,
-				5
 			}
 		})
 		
@@ -574,7 +575,6 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.chief,6,{ --Service above Self
 			{
 				upgrades = {
-					"player_convert_enemies_max_minions_1",
 					"player_convert_enemies_max_minions_2"
 				},
 				cost = self.costs.hightier
@@ -1097,8 +1097,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.engineer,1,{ --Digging In
 			{
 				upgrades = {
-					"player_digging_in_deploy_time",
-					"sentry_gun_digging_in_retrieve_time"
+					"sentry_gun_auto_heat_decay_1"
 				},
 				cost = self.costs.hightier
 			},
@@ -1726,25 +1725,25 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		})
 		
 		--Fixer
-		replace_skill(tree_indices.fixer,1,{ --Rolling Cutter
+		replace_skill(tree_indices.fixer,1,{ --Into The Pit
 			{
 				upgrades = {
 					"saw_enemy_cutter",
-					"saw_consecutive_damage_bonus"
+					"saw_enemy_damage_multiplier_1"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"saw_durability_increase"
+					"saw_secondary"
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_rolling_cutter",
-			desc_id = "menu_rolling_cutter_desc",
+			name_id = "menu_into_the_pit",
+			desc_id = "menu_into_the_pit_desc",
 			icon_xy = {
 				3,
-				6
+				11
 			}
 		})
 		replace_skill(tree_indices.fixer,2,{ --Walking Toolshed
@@ -1770,13 +1769,13 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.fixer,3,{ --Handyman
 			{
 				upgrades = {
-					"saw_secondary"
+					"saw_range_increase"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"saw_range_increase"
+					"saw_durability_increase"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -1796,7 +1795,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			},
 			{
 				upgrades = {
-					"saw_killing_blow_chain"
+					"saw_stagger_on_kill"
+--					"saw_killing_blow_chain"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -1810,13 +1810,15 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.fixer,5,{ --Not Safe
 			{
 				upgrades = {
-					"saw_ignore_shields_1"
+					"saw_ignore_shields_1",
+--					"saw_bonus_dozer_damage_mul"
+					"saw_destroys_dozer_armor"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"saw_bonus_dozer_damage_mul"
+					"saw_damage_multiplier_to_specials"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -1827,10 +1829,11 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				10
 			}
 		})
-		replace_skill(tree_indices.fixer,6,{ --Into The Pit
+		replace_skill(tree_indices.fixer,6,{ --Rolling Cutter
 			{
 				upgrades = {
-					"saw_crit_first_strike"
+--					"saw_crit_first_strike"
+					"saw_consecutive_damage_bonus"
 				},
 				cost = self.costs.hightier
 			},
@@ -1840,79 +1843,41 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_into_the_pit",
-			desc_id = "menu_into_the_pit_desc",
+			name_id = "menu_rolling_cutter",
+			desc_id = "menu_rolling_cutter_desc",
 			icon_xy = {
 				3,
-				11
-			}
-		})
-		
-		
-		--Demolitions (not fully implemented)
-		
-		replace_skill(tree_indices.demolitions,1,{ --Party Favors
-			{
-				upgrades = {
-					"player_grenades_amount_increase_mul"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"trip_mine_extended_mark_duration"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_party_favors",
-			desc_id = "menu_party_favors_desc",
-			icon_xy = {
-				4,
 				6
 			}
 		})
-		replace_skill(tree_indices.demolitions,2,{ --Special Toys
+		
+		
+		--Demolitions
+		replace_skill(tree_indices.demolitions,1,{ --Have a Blast
 			{
 				upgrades = {
-					"class_specialist_ammo_stock_increase"
+					"trip_mine_can_place_on_enemies",
+					"trip_mine_stuck_damage_mul"
+--,					"trip_mine_stuck_enemy_panic" --aoe panic
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"class_specialist_reload_speed_multiplier"
+					"player_grenades_amount_increase_mul"
+--					"trip_mine_stuck_dozer_stun",
+--					"trip_mine_stuck_dozer_damage_vulnerability"
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_special_toys",
-			desc_id = "menu_special_toys_desc",
+			name_id = "menu_have_blast",
+			desc_id = "menu_have_blast_desc",
 			icon_xy = {
 				4,
-				7
+				10
 			}
 		})
-		replace_skill(tree_indices.demolitions,3,{ --Smart Bombs
-			{
-				upgrades = {
-					"trip_mine_explosion_size_multiplier_1"
-				},
-				cost = self.costs.hightier
-			},
-			{
-				upgrades = {
-					"trip_mine_dont_damage_hostages",
-					"trip_mine_dont_damage_civilians"
-				},
-				cost = self.costs.hightierpro
-			},
-			name_id = "menu_smart_bombs",
-			desc_id = "menu_smart_bombs_desc",
-			icon_xy = {
-				4,
-				8
-			}
-		})
-		replace_skill(tree_indices.demolitions,4,{ --Third Degree
+		replace_skill(tree_indices.demolitions,2,{ --Third Degree
 			{
 				upgrades = {
 					"subclass_areadenial_effect_duration_increase_1"
@@ -1932,32 +1897,31 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				9
 			}
 		})
-		replace_skill(tree_indices.demolitions,5,{ --Have a Blast
+		replace_skill(tree_indices.demolitions,3,{ --Cheap Trick
 			{
 				upgrades = {
-					"trip_mine_can_place_on_enemies",
-					"trip_mine_stuck_enemy_panic"
+					"trip_mine_can_throw"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"trip_mine_stuck_dozer_stun",
-					"trip_mine_stuck_dozer_damage_vulnerability"
+					"player_throwable_regen"
 				},
 				cost = self.costs.hightierpro
 			},
-			name_id = "menu_have_blast",
-			desc_id = "menu_have_blast_desc",
+			name_id = "menu_cheap_trick",
+			desc_id = "menu_cheap_trick_desc",
 			icon_xy = {
 				4,
-				10
+				6
 			}
 		})
-		replace_skill(tree_indices.demolitions,6,{ --Improv Expert
+		replace_skill(tree_indices.demolitions,4,{ --Special Toys
 			{
 				upgrades = {
-					"player_throwable_regen"
+					"class_specialist_ammo_stock_increase",
+					"class_specialist_reload_speed_multiplier"
 				},
 				cost = self.costs.hightier
 			},
@@ -1967,6 +1931,48 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					"weapon_ray_ammo_pickup_modifier",
 					"weapon_flamethrower_ammo_pickup_modifier",
 					"weapon_grenade_launcher_ammo_pickup_increase"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_special_toys",
+			desc_id = "menu_special_toys_desc",
+			icon_xy = {
+				4,
+				7
+			}
+		})
+		replace_skill(tree_indices.demolitions,5,{ --Smart Bombs
+			{
+				upgrades = {
+--					"trip_mine_explosion_size_multiplier_1"
+					"class_specialist_blast_radius_mul_increase_1"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"class_specialist_no_friendly_fire"
+				},
+				cost = self.costs.hightierpro
+			},
+			name_id = "menu_smart_bombs",
+			desc_id = "menu_smart_bombs_desc",
+			icon_xy = {
+				4,
+				8
+			}
+		})
+		replace_skill(tree_indices.demolitions,6,{ --Tankbuster (formerly Improv Expert)
+			{
+				upgrades = {
+					"class_specialist_negate_enemy_explosive_resistance_1"
+--					"player_throwable_regen"
+				},
+				cost = self.costs.hightier
+			},
+			{
+				upgrades = {
+					"class_specialist_negate_enemy_explosive_resistance_2"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -2807,8 +2813,13 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					6
 				}
 			},
+			name_id = "menu_st_spec_7",
 			desc_id = "menu_st_spec_7_desc",
-			name_id = "menu_st_spec_7"
+			dlc = "character_pack_clover",
+			category = {
+				"covert",
+				"stealth"
+			}
 		}
 		
 		self.specializations[perkdeck_indices.infiltrator] = {
@@ -2922,8 +2933,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					7
 				}
 			},
+			name_id = "menu_st_spec_8",
 			desc_id = "menu_st_spec_8_desc",
-			name_id = "menu_st_spec_8"
+			dlc = "character_pack_dragan",
+			category = "defensive"
 		}
 		
 		self.specializations[perkdeck_indices.sociopath] = {
@@ -3036,8 +3049,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					8
 				}
 			},
+			name_id = "menu_st_spec_9",
 			desc_id = "menu_st_spec_9_desc",
-			name_id = "menu_st_spec_9"
+			dlc = "hlm2_deluxe",
+			category = "offensive"
 		}
 			
 		self.specializations[perkdeck_indices.grinder] = {
@@ -3149,8 +3164,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					10
 				}
 			},
+			name_id = "menu_st_spec_11",
 			desc_id = "menu_st_spec_11_desc",
-			name_id = "menu_st_spec_11"
+			dlc = "character_pack_sokol",
+			category = "offensive"
 		}
 		
 		self.specializations[perkdeck_indices.yakuza] = {
@@ -3262,8 +3279,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					11
 				}
 			},
+			name_id = "menu_st_spec_12",
 			desc_id = "menu_st_spec_12_desc",
-			name_id = "menu_st_spec_12"
+			dlc = "dragon",
+			category = "defensive"
 		}
 		
 		self.specializations[perkdeck_indices.expresident] = {
@@ -3375,8 +3394,9 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					12
 				}
 			},
+			name_id = "menu_st_spec_13",
 			desc_id = "menu_st_spec_13_desc",
-			name_id = "menu_st_spec_13"
+			category = "defensive"
 		}
 		
 		self.specializations[perkdeck_indices.anarchist] = {
@@ -3489,8 +3509,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					14
 				}
 			},
+			name_id = "menu_st_spec_15",
 			desc_id = "menu_st_spec_15_desc",
-			name_id = "menu_st_spec_15"
+			dlc = "opera",
+			category = "offensive"
 		}
 
 		self.specializations[perkdeck_indices.gambler] = {
@@ -3947,8 +3969,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						15
 					}
 				},
+				name_id = "menu_st_spec_16",
 				desc_id = "menu_st_spec_16_desc",
-				name_id = "menu_st_spec_16"
+				dlc = "wild",
+				category = "defensive"
 			}
 			
 			self.specializations[perkdeck_indices.kingpin] = {
@@ -4060,8 +4084,10 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 						16
 					}
 				},
+				name_id = "menu_st_spec_17",
 				desc_id = "menu_st_spec_17_desc",
-				name_id = "menu_st_spec_17"
+				dlc = "chico",
+				category = "offensive"
 			}
 			
 			self.specializations[perkdeck_indices.sicario] = {
@@ -4403,6 +4429,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				name_id = "menu_st_spec_21"
 			}
 			
+			
 		end
 		
 	
@@ -4464,7 +4491,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			"sentry_gun_silent",
 			"player_passive_convert_enemies_health_multiplier_1", --50% damage resistance
 			"player_critical_hit_multiplier_1", --2x crit multiplier (same as default)
-			
+--			"player_convert_enemies", --this shouldn't be necessary since it just allows the interaction in basegame but isn't used in tcd
 			"player_convert_enemies_max_minions_1" --1 joker allowed per player; the actual requirement is the friendship collar deployable
 		}
 		

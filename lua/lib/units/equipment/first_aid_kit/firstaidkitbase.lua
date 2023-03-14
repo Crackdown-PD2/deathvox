@@ -45,7 +45,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		unit:character_damage():band_aid_health()
 
-		if self._damage_overshield_upgrade > 1 then 
+		if self._damage_overshield_upgrade > 0 then 
 			unit:character_damage():_activate_preventative_care(self._damage_overshield_upgrade)
 		end
 

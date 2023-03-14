@@ -393,6 +393,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 			deathvox_heavyshot = true
 		}
 		
+			
+		local w_usage = self._unit:inventory():equipped_unit() and self._unit:inventory():equipped_unit():base():weapon_tweak_data() and self._unit:inventory():equipped_unit():base():weapon_tweak_data().usage
 		if rifle_user[self._unit:base()._tweak_table] then
 			gun_stagger = nil
 					
@@ -407,12 +409,14 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end
 			
 			if range_multiplier ~= 1 then
-				local falloff_table = char_tweaks.weapon[w_usage].FALLOFF
-				
-				for i = 1, #falloff_table do
-					local t = falloff_table[i]
+				if w_usage then
+					local falloff_table = char_tweaks.weapon[w_usage].FALLOFF
 					
-					t.r = t.r * range_multiplier
+					for i = 1, #falloff_table do
+						local t = falloff_table[i]
+						
+						t.r = t.r * range_multiplier
+					end
 				end
 			end
 		elseif shotgun_user[self._unit:base()._tweak_table] then
@@ -422,8 +426,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 				self._unit:movement()._joker_melee_stagger = true
 			end	
 		else
-			local w_usage = self._unit:inventory():equipped_unit() and self._unit:inventory():equipped_unit():base():weapon_tweak_data() and self._unit:inventory():equipped_unit():base():weapon_tweak_data().usage
-			
 			local rifle_usages = {
 				is_rifle = true,
 				is_light_rifle = true,

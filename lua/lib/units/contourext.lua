@@ -27,6 +27,37 @@ if deathvox:IsTotalCrackdownEnabled() then
 	ContourExt._types.mark_enemy_damage_bonus.fadeout_silent = 60
 	ContourExt._types.mark_enemy_damage_bonus_distance.fadeout = 60
 	ContourExt._types.mark_enemy_damage_bonus_distance.fadeout_silent = 60
+	
+	--damage bonuses, and contour/marking itself (for these two) are handled clientside, since there's no easy way to tweak the damage bonus from marking
+	local new_types = {
+		civilian_mark_standard = {
+			fadeout = 2,
+			fadeout_silent = 15,
+			priority = 2,
+			material_swap_required = true,
+--			damage_bonus = false,
+			trigger_marked_event = true,
+			color = tweak_data.contour.character.civilian_mark_standard_color
+		},
+		civilian_mark_special = {
+			fadeout = 2,
+			fadeout_silent = 15,
+			priority = 2,
+			material_swap_required = true,
+--			damage_bonus = true,
+			trigger_marked_event = true,
+			color = tweak_data.contour.character.civilian_mark_special_color
+		}
+	}
+	
+	for name, preset in pairs(new_types) do
+		ContourExt._types[name] = preset
+		table.insert(ContourExt.indexed_types, name)
+	end
+
+	table.sort(ContourExt.indexed_types)
+	
+	
 end
 
 local init_original = ContourExt.init
@@ -35,6 +66,7 @@ function ContourExt:init(...)
 
 	init_original(self, ...)
 end
+
 
 function ContourExt:apply_to_linked(func_name, ...)
 	local spawn_manager = self._unit:spawn_manager()
@@ -69,9 +101,9 @@ function ContourExt:apply_to_linked(func_name, ...)
 end
 
 function ContourExt:add(type, sync, multiplier, override_color, add_as_child, mark_peer_id)
-	--[[if Global.debug_contour_enabled then
-		return
-	end]]
+--	if Global.debug_contour_enabled then
+--		return
+--	end
 
 	local unit = self._unit
 	local data = self._types[type]
@@ -576,15 +608,13 @@ function ContourExt:update(u_unit, t, dt)
 					if turn_off or not flash then
 						----add support in general to change and display the color of other contours when one is flashing or gets turned off
 						--make use of a separate table of "active" contours
-						--[[for i = index, #contour_list do
-							local other_setup = contour_list[i]
-
-							if other_setup then
-								
-							else]]
+--						for i = index, #contour_list do
+--							local other_setup = contour_list[i]
+--							if other_setup then
+--							else
 								self:_upd_opacity(0)
-							--end
-						--end
+--							end
+--						end
 					elseif fadeout_t and lerp_opacity then
 						local opacity_lerp = math_lerp(1, 0, t / fadeout_t)
 
@@ -613,11 +643,10 @@ function ContourExt:_upd_opacity(opacity, is_retry)
 		return
 	end
 
-	--[[if Global.debug_contour_enabled and opacity == 1 then
-		self._last_opacity = 1
-
-		return
-	end]]
+--	if Global.debug_contour_enabled and opacity == 1 then
+--		self._last_opacity = 1
+--		return
+--	end
 
 	local materials = self._materials or self._unit:get_objects_by_type(idstr_material)
 	self._materials = materials

@@ -8,13 +8,71 @@ if not (_G.deathvox and deathvox.HAS_LOADED_ASSETS) then
 	deathvox.ModPath = deathvox.ModPath or ModPath
 	deathvox.SavePath = deathvox.SavePath or SavePath
 	deathvox.HAS_LOADED_ASSETS = true
-
+	
 --loads radialmousemenu and sentrycontrolmenu (they don't do anything unless total cd is enabled)
 	dofile(deathvox.ModPath .. "classes/radialmousemenu.lua")
 	dofile(deathvox.ModPath .. "classes/sentrycontrolmenu.lua")
 	dofile(deathvox.ModPath .. "classes/tripminecontrolmenu.lua")
 	dofile(deathvox.ModPath .. "classes/tcdoverlay.lua")
-
+	deathvox.tcd_icon_chars = {
+		heavy = {
+			character = "─",
+			macro = "ICN_HVY",
+		},
+		grenade = {
+			character = "┼",
+			macro = "ICN_GRN"
+		},
+		area_denial = {
+			character = "═",
+			macro = "ICN_ARD"
+		},
+		throwing = {
+			character = "╤",
+			macro = "ICN_THR"
+		},
+		specialist = {
+			character = "╥",
+			macro = "ICN_SPC"
+		},
+		shotgun = {
+			character = "╦",
+			macro = "ICN_SHO"
+		},
+		saw = {
+			character = "╧",
+			macro = "ICN_SAW"
+		},
+		rapidfire = {
+			character = "╨",
+			macro = "ICN_RPF"
+		},
+		quiet = {
+			character = "╩",
+			macro = "ICN_QUT"
+		},
+		precision = {
+			character = "╪",
+			macro = "ICN_PRE"
+		},
+		poison = {
+			character = "╫",
+			macro = "ICN_POI"
+		},
+		melee = {
+			character = "╬",
+			macro = "ICN_MEL"
+		}
+	}
+	
+	function deathvox:insert_tcd_macros(macros)
+		for _,v in pairs(deathvox.tcd_icon_chars) do  --just adds wpn class/subclass icon macros
+			if v.macro and v.character then
+				macros[v.macro] = v.character
+			end
+		end
+	end
+	
 	--creates empty menu entries for the main menu and the overhauls submenu, to be populated with options later
 	local menu_id = deathvox.blt_menu_id
 	Hooks:Add("MenuManagerSetupCustomMenus", "MenuManagerSetupCustomMenus_deathvox", function(menu_manager, nodes)
