@@ -521,6 +521,6 @@ Hooks:Add( "MenuManagerInitialize", "MenuManagerInitialize_tcdso", function(menu
 --		SentryControlMenu:Save()
 	end
 	SentryControlMenu:Load()
-	MenuHelper:LoadFromJsonFile(SentryControlMenu._path .. "menu/menu_sentry_control.txt", SentryControlMenu, SentryControlMenu.settings)
+--	MenuHelper:LoadFromJsonFile(SentryControlMenu._path .. "menu/menu_sentry_control.txt", SentryControlMenu, SentryControlMenu.settings)
 	
 end)

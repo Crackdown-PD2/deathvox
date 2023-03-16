@@ -302,7 +302,7 @@ function NavigationManager:_execute_coarce_search(search_data)
 
 	while true do
 		if i == 500 then
-			log("endless")
+--			log("endless")
 
 			return false
 		else

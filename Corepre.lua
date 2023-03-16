@@ -56,7 +56,7 @@ end
 
 function deathvox:set_update_data(json_data)
 	if json_data:is_nil_or_empty() then
-		log("im mad")
+		log("deathvox: received nil update data")
 		return
 	end
 	
