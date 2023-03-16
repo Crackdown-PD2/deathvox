@@ -110,7 +110,7 @@ end
 
 function ShotgunBase:_spawn_muzzle_effect(from_pos,direction,...)
 --	Draw:brush(Color.red,5):line(from_pos,from_pos + (direction * 1000))
-	ShotgunBase.super._spawn_muzzle_effect(self,to_pos,direction,...)
+	ShotgunBase.super._spawn_muzzle_effect(self,from_pos,direction,...)
 	
 	if self._flame_effect_ext then
 		self._flame_effect_ext:_spawn_muzzle_effect(from_pos,direction,...)
