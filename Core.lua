@@ -9,11 +9,6 @@ if not (_G.deathvox and deathvox.HAS_LOADED_ASSETS) then
 	deathvox.SavePath = deathvox.SavePath or SavePath
 	deathvox.HAS_LOADED_ASSETS = true
 	
---loads radialmousemenu and sentrycontrolmenu (they don't do anything unless total cd is enabled)
-	dofile(deathvox.ModPath .. "classes/radialmousemenu.lua")
-	dofile(deathvox.ModPath .. "classes/sentrycontrolmenu.lua")
-	dofile(deathvox.ModPath .. "classes/tripminecontrolmenu.lua")
-	dofile(deathvox.ModPath .. "classes/tcdoverlay.lua")
 	deathvox.tcd_icon_chars = {
 		heavy = {
 			character = "─",

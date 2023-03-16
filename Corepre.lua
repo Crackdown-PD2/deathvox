@@ -8,7 +8,7 @@ DeathvoxMapFramework:InitMods()
 _G.deathvox = deathvox or {}
 --deathvox.ModPath = ModPath
 deathvox.update_url = "https://raw.githubusercontent.com/Crackdown-PD2/deathvox/autoupdate/meta.json"
-deathvox.ModPath = deathvoxcore and deathvoxcore:GetPath() or deathvox.ModPath
+deathvox.ModPath = deathvox.ModPath or deathvoxcore:GetPath()
 
 deathvox.SavePath = SavePath
 deathvox.SaveName = "crackdown.txt"
@@ -26,7 +26,26 @@ deathvox.NetworkIDs = { --string ids for network syncing stuff
 }
 deathvox.blt_menu_id = "deathvox_menu_main" --main menu id; all other menu ids should be in their menu's .txt files
 
-dofile(deathvox.ModPath .. "classes/csvstats.lua") --since this is used to replace/edit tweakdata, it must be loaded even earlier (Core.lua is not early enough)
+deathvox.tcd_gui_data = { --for reference in projectilestweakdata and playerinventorygui, for item class preview icons
+	weapons = {
+		class = {
+			class_grenade = "guis/textures/pd2/blackmarket/icons/tcd/class_grenade",
+			class_heavy = "guis/textures/pd2/blackmarket/icons/tcd/class_heavy",
+			class_melee = "guis/textures/pd2/blackmarket/icons/tcd/class_melee",
+			class_precision = "guis/textures/pd2/blackmarket/icons/tcd/class_precision",
+			class_rapidfire = "guis/textures/pd2/blackmarket/icons/tcd/class_rapidfire",
+			class_saw = "guis/textures/pd2/blackmarket/icons/tcd/class_saw",
+			class_shotgun = "guis/textures/pd2/blackmarket/icons/tcd/class_shotgun",
+			class_specialist = "guis/textures/pd2/blackmarket/icons/tcd/class_specialist",
+			class_throwing = "guis/textures/pd2/blackmarket/icons/tcd/class_throwing"
+		},
+		subclass = {
+			subclass_areadenial = "guis/textures/pd2/blackmarket/icons/tcd/subclass_areadenial",
+			subclass_poison = "guis/textures/pd2/blackmarket/icons/tcd/subclass_poison",
+			subclass_quiet = "guis/textures/pd2/blackmarket/icons/tcd/subclass_quiet"
+		}
+	}
+}
 
 --checks whether or not hoppip's overhaul is enabled;
 --If you are creating a menu option that should apply instantly, use Settings; 
@@ -133,53 +152,6 @@ end
 
 --load contents now, as well as on menu load
 deathvox:Load()
-if deathvox:IsTotalCrackdownEnabled() then 
-	local texture_ids = Idstring("texture")
-	local deathvox_modpath = deathvoxcore:GetPath()
-	
-	--load tcd skill icons
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree/drillgui_icon_shocktrap"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/skilltree/drillgui_icon_shocktrap.texture")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree_2/icons_atlas_2"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/skilltree_2/icons_atlas_2.texture")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/specialization/icons_atlas"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/specialization/icons_atlas.texture")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/hud_sentry_radial_icons_atlas"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/hud_sentry_radial_icons_atlas.texture")
-	
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static1"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/damage_overlay_sociopath/static1.texture")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static2"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/damage_overlay_sociopath/static2.texture")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static3"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/damage_overlay_sociopath/static3.texture")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/static4"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/damage_overlay_sociopath/static4.texture")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/vignette_overlay"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/damage_overlay_sociopath/vignette_overlay.png")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/vignette_inverted_overlay"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/damage_overlay_sociopath/vignette_inverted_overlay.png")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/damage_overlay_sociopath/scanlines_overlay"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/damage_overlay_sociopath/scanlines_overlay.texture")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/blackmarket/icons/deployables/sentry_gun_silent"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/blackmarket/icons/tcd/sentry_gun_silent.texture")
-	
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/radial_menu_assets/rmm_bg"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/radial_menu_assets/rmm_bg.texture")
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/radial_menu_assets/rmm_selector"),texture_ids,deathvox_modpath .. "assets/guis/textures/pd2/radial_menu_assets/rmm_selector.texture")
-	
-	deathvox.tcd_gui_data = { --for reference in projectilestweakdata and playerinventorygui, for item class preview icons
-		weapons = {
-			class = {
-				class_grenade = "guis/textures/pd2/blackmarket/icons/tcd/class_grenade",
-				class_heavy = "guis/textures/pd2/blackmarket/icons/tcd/class_heavy",
-				class_melee = "guis/textures/pd2/blackmarket/icons/tcd/class_melee",
-				class_precision = "guis/textures/pd2/blackmarket/icons/tcd/class_precision",
-				class_rapidfire = "guis/textures/pd2/blackmarket/icons/tcd/class_rapidfire",
-				class_saw = "guis/textures/pd2/blackmarket/icons/tcd/class_saw",
-				class_shotgun = "guis/textures/pd2/blackmarket/icons/tcd/class_shotgun",
-				class_specialist = "guis/textures/pd2/blackmarket/icons/tcd/class_specialist",
-				class_throwing = "guis/textures/pd2/blackmarket/icons/tcd/class_throwing"
-			},
-			subclass = {
-				subclass_areadenial = "guis/textures/pd2/blackmarket/icons/tcd/subclass_areadenial",
-				subclass_poison = "guis/textures/pd2/blackmarket/icons/tcd/subclass_poison",
-				subclass_quiet = "guis/textures/pd2/blackmarket/icons/tcd/subclass_quiet"
-			}
-		}
-	}
-	
-else
-	--load vanilla skill icons (in case user launched with tcd but toggled off tcd and reloaded game state)
-	BLT.AssetManager:CreateEntry(Idstring("guis/textures/pd2/skilltree_2/icons_atlas_2"),Idstring("texture"),"guis/textures/pd2/skilltree_2/icons_atlas_2.texture")
-end
 
 -- Voice Framework Setup
 local C = blt_class()
