@@ -7,8 +7,18 @@ Hooks:Add("LocalizationManagerPostInit", "TotalCrackdown_LocalizationManagerPost
 		debug_interact_gage_assignment_take = "PRESS $BTN_INTERACT TO PICK UP THE PACKAGE",
 		--weapon stuff
 		menu_l_global_value_tcd = "This is a TOTAL CRACKDOWN item!",
-		--shotgun ammo
-		bm_menu_choke = "Chokes",
+		
+		--shotgun attachments
+		bm_wp_upg_a_rip = "Tombstone Slug",
+		bm_menu_choke = "Chokes", --category name
+
+		bm_wp_upg_a_explosive_desc = "Fires one explosive charge that kills or stuns targets. -50% Ammo Pickup with no Damage Falloff.",
+		bm_wp_upg_a_slug_desc = "Fires a single projectile that can pierce shields, body armor, and objects, with no Damage Falloff.",
+		bm_wp_upg_a_piercing_desc = "Long range shotgun ammunition. -50% pellet count with no Damage Falloff.",
+		bm_wp_upg_a_dragons_breath_desc = "Fires pellets that go up in sparks and flames. Burns through shields and body armor, and overpenetrates. Drastically reduced range. Can score headshots.",
+
+		bm_wp_upg_a_custom = "Iron Hand Buckshot",
+		bm_wp_upg_a_custom_desc = "Makes all pellets that hit enemies deal individual damage, allowing for damage to stack. Halves pellet count.",
 		bm_wp_upg_a_custom_free = "Iron Hand Buckshot",
 		bm_wp_upg_a_custom_free_desc = "Makes all pellets that hit enemies deal individual damage, allowing for damage to stack. Halves pellet count.",
 		bm_wp_wpn_fps_sho_choke_a = "Standard Choke",

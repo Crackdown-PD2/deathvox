@@ -71,54 +71,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 			}
 		}
 		self.parts.car_dmr_kit_ammo_type.supported = true
-
-		self.wpn_fps_sho_aa12.override = {
-			wpn_fps_upg_a_slug = {
-				stats = {
-					value = 5, 
-					spread = 5, 
-					damage = 30
-				},
-				custom_stats = {				
-					damage_near_mul = 999999999,
-					damage_far_mul = 999999999, 
-					rays = 1,				
-					armor_piercing_add = 1,
-					can_shoot_through_enemy = false,
-					can_shoot_through_shield = true,
-					can_shoot_through_wall = true,
-					}
-				},
-			wpn_fps_upg_a_custom = {
-				stats = {
-					value = 3, 
-					spread = -5
-					}
-				},
-			wpn_fps_upg_a_custom_free = {
-				stats = {
-					value = 3
-				},
-				custom_stats = {				
-					rays = 6		
-				}			
-			},						
-			wpn_fps_upg_a_explosive = {
-				stats = {
-					value = 5, 
-					spread = 5
-				},
-				custom_stats = {
-					ignore_statistic = true,
-					damage_far_mul = 999999999,	--as shit as this is this should theoretically work
-					damage_near_mul = 999999999,
-					ammo_pickup_max_mul = 4,
-					ammo_pickup_min_mul = 2.5,				
-					bullet_class = "InstantExplosiveBulletBase",
-					rays = 1
-				}
-			}
-		}
+		
 		
 		--Nagant Bayonet [wpn_fps_snp_mosin_ns_bayonet] [Replaces Weapon Butt melee weapon with Nagant Bayonet melee weapon] Value: 1
 		self.parts.wpn_fps_snp_mosin_ns_bayonet.supported = true
@@ -172,67 +125,86 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_upg_i_autofire.supported = true
 		
 		
+		--donald's horizontal leveller 
+		self.parts.wpn_fps_upg_ns_duck.forbids = {
+			"wpn_fps_upg_a_dragons_breath",
+			"wpn_fps_upg_a_slug",
+			"wpn_fps_upg_a_explosive"
+		}
 		
 		
 	--Shotgun ammo type stat changes begin here.
-		-- flechette rounds
-		self.parts.wpn_fps_upg_a_piercing.stats = {value = 5, spread = 5}	
-		self.parts.wpn_fps_upg_a_piercing.custom_stats = {
-				damage_near_mul = 1.2 --not sure about these. might need to modify shotgunbase
+		
+		
+		-- 000 Buckshot Shells
+		self.parts.wpn_fps_upg_a_custom.custom_stats = {
+			single_damage_instance = true,
+			rays_mul = 0.5 --halves number of pellets (custom tcd stat; shotguns only)
 		}
-		self.parts.wpn_fps_upg_a_piercing.supported = true
-		-- dragon's breath rounds (muzzleflash and actual hitbox/cone stuff ain't done)
-		self.parts.wpn_fps_upg_a_dragons_breath.stats = {value = 5}			
+		-- 000 Buckshot Shells (Community)
+		self.parts.wpn_fps_upg_a_custom_free.custom_stats = {
+			single_damage_instance = true,
+			rays_mul = 0.5
+		}
+		
+--		self.parts.wpn_fps_upg_a_custom_free.name_id = "bm_wp_upg_a_custom_free"
+--		self.parts.wpn_fps_upg_a_custom_free.desc_id = "bm_wp_upg_a_custom_free_desc"
+		
+		-- Flechette Rounds
+		self.parts.wpn_fps_upg_a_piercing.custom_stats = {
+			damage_far = 20000,
+			damage_near = 20000,
+			no_falloff = true, --custom tcd perk
+			rays_mul = 0.5
+		}
+		
+		-- HE Slugs
+		self.parts.wpn_fps_upg_a_explosive.custom_stats = {
+			ignore_statistic = true,
+			damage_far = 20000,
+			damage_near = 20000,
+			ammo_pickup_max_mul = 0.5,
+			ammo_pickup_min_mul = 0.5,
+			bullet_class = "InstantExplosiveBulletBase",
+			no_falloff = true,
+			rays = 1
+		}
+		
+		-- AP Slugs
+		self.parts.wpn_fps_upg_a_slug.custom_stats = {
+			base_stats_modifiers = {
+				damage = 2
+			},
+			damage_far = 20000,
+			damage_near = 20000,
+			no_falloff = true,
+			rays = 1
+		}
+		
+		-- Dragon's Breath Rounds (muzzleflash and actual hitbox/cone stuff ain't done)
 		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats = {
 			ignore_statistic = true,
 			muzzleflash = "effects/payday2/particles/weapons/shotgun/sho_muzzleflash_dragons_breath",
 			can_shoot_through_shield = true,
 			can_shoot_through_enemy = true,
 			armor_piercing_add = 1,			
-			damage_far_mul = 0.1333333333333333,
-			damage_near_mul = 0.2,
+			damage_far = 400,
+			damage_near = 400,
 			bullet_class = "FlameBulletBase",
-			rays = 12,
+			no_falloff = true,
+			rays = 1,
 			fire_dot_data = {
 				dot_trigger_chance = "100",
-				dot_damage = "10",
+				dot_damage = "0",
 				dot_length = "3.1",
 				dot_trigger_max_distance = "400",
 				dot_tick_period = "0.5"
 			}
 		}
-		self.parts.wpn_fps_upg_a_dragons_breath.supported = true
-		-- he slugs
-		self.parts.wpn_fps_upg_a_explosive.stats = {value = 5, spread = 5}			
-		self.parts.wpn_fps_upg_a_explosive.custom_stats = {
-				ignore_statistic = true,
-				damage_far_mul = 999999999,	--as shit as this is this should theoretically work
-				damage_near_mul = 999999999,
-				bullet_class = "InstantExplosiveBulletBase",
-				rays = 1
-		}
-		self.parts.wpn_fps_upg_a_explosive.supported = true
-		-- ap slugs
-		self.parts.wpn_fps_upg_a_slug.stats = {value = 5, spread = 5, damage = 30}	
-		self.parts.wpn_fps_upg_a_slug.custom_stats = {
-				damage_near_mul = 999999999,
-				damage_far_mul = 999999999, 
-				rays = 1,				
-				armor_piercing_add = 1,
-				can_shoot_through_enemy = false,
-				can_shoot_through_shield = true,
-				can_shoot_through_wall = true,
-		}
-		self.parts.wpn_fps_upg_a_slug.supported = true
-		-- 000 buck
-		self.parts.wpn_fps_upg_a_custom.stats = {value = 3, spread = -5}	
-		self.parts.wpn_fps_upg_a_custom.supported = true
-		-- community 000 buck
-		self.parts.wpn_fps_upg_a_custom_free.stats = {value = 3}	
-		self.parts.wpn_fps_upg_a_custom_free.custom_stats = {rays = 6}	
-		self.parts.wpn_fps_upg_a_custom_free.name_id = "bm_wp_upg_a_custom_free"	
-		self.parts.wpn_fps_upg_a_custom_free.desc_id = "bm_wp_upg_a_custom_free_desc"	
-		self.parts.wpn_fps_upg_a_custom_free.supported = true
+		
+		
+		--Tombstone Slug goes here
+		-- self.parts.wpn_fps_upg_a_rip.custom_stats = {}
 		
 	end
 end)

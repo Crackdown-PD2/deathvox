@@ -1,5 +1,8 @@
 if deathvox:IsTotalCrackdownEnabled() then 
-
+	
+	local mvec3_distance = mvector3.distance
+	local math_map_range_clamped = math.map_range_clamped
+	
 	function NewRaycastWeaponBase:conditional_accuracy_addend(current_state)
 		local index = 0
 		local primary_class = self:get_weapon_class()
@@ -355,17 +358,66 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return rof_mul
 	end
 	
+	function NewRaycastWeaponBase:get_damage_falloff(damage, col_ray, user_unit)
+		if self._optimal_distance + self._optimal_range == 0 then
+			return damage
+		end
+		
+		local ammo_data = self._ammo_data
+		if ammo_data and ammo_data.no_falloff then
+			return damage
+		end
+		
+		local distance = col_ray.distance or mvec3_distance(col_ray.unit:position(), user_unit:position())
+		local near_dist = self._optimal_distance - self._near_falloff
+		local optimal_start = self._optimal_distance
+		local optimal_end = self._optimal_distance + self._optimal_range
+		local far_dist = optimal_end + self._far_falloff
+		local near_mul = self._near_mul
+		local optimal_mul = 1
+		local far_mul = self._far_mul
+		local primary_category = self:weapon_tweak_data().categories and self:weapon_tweak_data().categories[1]
+		local current_state = user_unit and user_unit:movement() and user_unit:movement()._current_state
+
+		if current_state and current_state:in_steelsight() then
+			local mul = managers.player:upgrade_value(primary_category, "steelsight_range_inc", 1)
+			optimal_end = optimal_end * mul
+			far_dist = far_dist * mul
+		end
+
+		local damage_mul = 1
+
+		if distance < self._optimal_distance then
+			if self._near_falloff > 0 then
+				damage_mul = math_map_range_clamped(distance, near_dist, optimal_start, near_mul, optimal_mul)
+			else
+				damage_mul = near_mul
+			end
+		elseif distance < optimal_end then
+			damage_mul = optimal_mul
+		elseif self._far_falloff > 0 then
+			damage_mul = math_map_range_clamped(distance, optimal_end, far_dist, optimal_mul, far_mul)
+		else
+			damage_mul = far_mul
+		end
+
+		return damage * damage_mul
+	end
+
 	Hooks:PostHook(NewRaycastWeaponBase,"_update_stats_values","tcd_newraycastweaponbase_update_custom_stats",function(self,disallow_replenish,ammo_data)
 		local factory_id = self._factory_id
 		local wftd = tweak_data.weapon.factory.parts
 		local total_ammo_add = 0
 		for _,part_id in pairs(self._blueprint) do 
 			local part_data = managers.weapon_factory:get_part_data_by_part_id_from_weapon(part_id, factory_id, self._blueprint)
-			if part_data.custom_stats and part_data.custom_stats.total_ammo_add then
-				total_ammo_add = part_data.custom_stats.total_ammo_add + total_ammo_add
+			if part_data.custom_stats then 
+				if part_data.custom_stats.total_ammo_add then
+					total_ammo_add = part_data.custom_stats.total_ammo_add + total_ammo_add
+				end
 			end
 		end
 		self._total_ammo_add = total_ammo_add
+		
 	end)
 	
 end

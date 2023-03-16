@@ -2769,6 +2769,7 @@ function CopDamage:damage_fire(attack_data)
 		return
 	end
 	
+	
 	local attacker_unit = attack_data.attacker_unit
 	local weap_unit = attack_data.weapon_unit
 
@@ -2785,6 +2786,10 @@ function CopDamage:damage_fire(attack_data)
 
 	local is_civilian = CopDamage.is_civilian(self._unit:base()._tweak_table)
 	local damage = attack_data.damage
+	local head
+	local headshot_by_player
+	local headshot_multiplier = 1
+	local headshot_mul_addend = 0
 
 	if attacker_unit == managers.player:player_unit() and damage > 0 and weap_unit and alive(weap_unit) and attack_data.variant ~= "stun" and not attack_data.is_fire_dot_damage then
 		local weap_base = weap_unit:base()
@@ -2798,6 +2803,10 @@ function CopDamage:damage_fire(attack_data)
 
 		if not is_grenade_or_ground_fire then
 			managers.hud:on_hit_confirmed()
+		end
+		
+		if TCD_ENABLED then
+			head = self._head_body_name and not self._unit:in_slot(16) and not self._char_tweak.ignore_headshot and attack_data.col_ray.body and attack_data.col_ray.body:name() == self._ids_head_body_name
 		end
 	end
 
@@ -2845,13 +2854,35 @@ function CopDamage:damage_fire(attack_data)
 			end
 		end
 	end
-
+	
+	
+	
+	
+	if head then --tcd only
+		local weap_base = alive(attack_data.weapon_unit) and attack_data.weapon_unit:base()
+		local weapon_class = weap_base and weap_base.get_weapon_class and weap_base:get_weapon_class() or "NO_WEAPON_CLASS"
+		managers.player:on_headshot_dealt()
+		attack_data.headshot = head
+		headshot_by_player = true
+		headshot_multiplier = headshot_multiplier * (managers.player:upgrade_value("weapon", "passive_headshot_damage_multiplier", 1) + managers.player:upgrade_value(weapon_class, "headshot_mul_addend", 0))
+		
+		if not self._damage_reduction_multiplier then
+			if self._char_tweak.headshot_dmg_mul then
+				damage = damage * self._char_tweak.headshot_dmg_mul * headshot_multiplier
+			else
+				damage = self._health * 10
+			end
+		end
+		
+	end
+	
 	damage = self:_apply_damage_reduction(damage)
 
 	if self._char_tweak.DAMAGE_CLAMP_FIRE then
 		damage = math_min(damage, self._char_tweak.DAMAGE_CLAMP_FIRE)
 	end
-
+	
+	
 	attack_data.raw_damage = damage
 
 	damage = math_clamp(damage, 0, self._HEALTH_INIT)
@@ -2880,7 +2911,7 @@ function CopDamage:damage_fire(attack_data)
 			}
 
 			self:die(attack_data)
-			self:chk_killshot(attacker_unit, "fire")
+			self:chk_killshot(attacker_unit, "fire", headshot_by_player)
 		end
 	else
 		attack_data.damage = damage
@@ -2944,7 +2975,7 @@ function CopDamage:damage_fire(attack_data)
 
 			self:_show_death_hint(self._unit:base()._tweak_table)
 			managers.statistics:killed(data)
-
+			
 			self:_check_damage_achievements(attack_data, false)
 		else
 			if attacker_unit and alive(attacker_unit) and managers.groupai:state():is_unit_team_AI(attacker_unit) then
