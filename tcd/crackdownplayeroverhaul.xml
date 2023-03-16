@@ -13,7 +13,7 @@
 		<hook file="classes/tripminecontrolmenu.lua" source_file="lib/managers/menumanager"/>
 		
 		<!-- tcd specific localization -->
-		<post script_path="loc/loc.lua" source_file="lib/managers/localizationmanager"/>
+		<hook file="loc/loc.lua" source_file="lib/managers/localizationmanager"/>
 	</Hooks>
 	
 	<AddFiles directory="tcd/assets">
@@ -96,7 +96,7 @@
 	
 	<GlobalValue id="tcd" color="Color(1, 0, 1)"/>
 	
-	<WeaponMod id="wpn_fps_sho_choke_st" type="choke" allow_vanilla_sync="false" has_description="true" depends_on="nil" sub_type="nil" inherit_weapons="nil" inherit_adds="nil" inherit_override="nil" inherit_parts_override="nil" inherit_parts_forbids="nil" third_unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" global_value="tcd" ver="2">
+	<WeaponMod id="wpn_fps_sho_choke_a" type="choke" allow_vanilla_sync="false" has_description="true" depends_on="nil" sub_type="nil" inherit_weapons="nil" inherit_adds="nil" inherit_override="nil" inherit_parts_override="nil" inherit_parts_forbids="nil" third_unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" global_value="tcd" ver="2">
 		<stats/>
 		<perks/>
 		<weapons>
@@ -127,7 +127,7 @@
 		</weapons>
 	</WeaponMod>
 	
-	<WeaponMod id="wpn_fps_sho_choke_cy" type="choke" allow_vanilla_sync="false" has_description="false" depends_on="nil" sub_type="nil" inherit_weapons="nil" inherit_adds="nil" inherit_override="nil" inherit_parts_override="nil" inherit_parts_forbids="nil" third_unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" global_value="tcd" ver="2">
+	<WeaponMod id="wpn_fps_sho_choke_b" type="choke" allow_vanilla_sync="false" has_description="false" depends_on="nil" sub_type="nil" inherit_weapons="nil" inherit_adds="nil" inherit_override="nil" inherit_parts_override="nil" inherit_parts_forbids="nil" third_unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" global_value="tcd" ver="2">
 		<stats/>
 		<perks/>
 		<weapons>
@@ -158,7 +158,7 @@
 		</weapons>
 	</WeaponMod >
 	
-	<WeaponMod id="wpn_fps_sho_choke_sk" type="choke" allow_vanilla_sync="false" has_description="false" depends_on="nil" sub_type="nil" inherit_weapons="nil" inherit_adds="nil" inherit_override="nil" inherit_parts_override="nil" inherit_parts_forbids="nil" third_unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" global_value="tcd" ver="2">
+	<WeaponMod id="wpn_fps_sho_choke_c" type="choke" allow_vanilla_sync="false" has_description="false" depends_on="nil" sub_type="nil" inherit_weapons="nil" inherit_adds="nil" inherit_override="nil" inherit_parts_override="nil" inherit_parts_forbids="nil" third_unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" global_value="tcd" ver="2">
 		<stats/>
 		<perks/>
 		<weapons>
@@ -189,7 +189,7 @@
 		</weapons>
 	</WeaponMod>
 	
-	<WeaponMod id="wpn_fps_sho_choke_mo" type="choke" allow_vanilla_sync="false" has_description="false" depends_on="nil" sub_type="nil" inherit_weapons="false" inherit_adds="false" inherit_override="false" inherit_parts_override="false" inherit_parts_forbids="false" third_unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" global_value="tcd" ver="2">
+	<WeaponMod id="wpn_fps_sho_choke_d" type="choke" allow_vanilla_sync="false" has_description="false" depends_on="nil" sub_type="nil" inherit_weapons="false" inherit_adds="false" inherit_override="false" inherit_parts_override="false" inherit_parts_forbids="false" third_unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" global_value="tcd" ver="2">
 		<stats/>
 		<perks/>
 		<weapons>
@@ -220,7 +220,7 @@
 		</weapons>
 	</WeaponMod>
 	
-	<WeaponMod id="wpn_fps_sho_choke_fu" type="choke" allow_vanilla_sync="false" has_description="false" depends_on="nil" sub_type="nil" inherit_weapons="nil" inherit_adds="nil" inherit_override="nil" inherit_parts_override="nil" inherit_parts_forbids="nil" third_unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" global_value="tcd" ver="2">
+	<WeaponMod id="wpn_fps_sho_choke_e" type="choke" allow_vanilla_sync="false" has_description="false" depends_on="nil" sub_type="nil" inherit_weapons="nil" inherit_adds="nil" inherit_override="nil" inherit_parts_override="nil" inherit_parts_forbids="nil" third_unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" unit="units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy" global_value="tcd" ver="2">
 		<stats/>
 		<perks/>
 		<weapons>

@@ -6,7 +6,7 @@
 
 	<post script_path="lua/lib/managers/usermanager.lua" :hook_id="managers/usermanager"/>
 
-	<post script_path="lua/loc/loc.lua" :hook_id="managers/localizationmanager"/>
+	<post script_path="loc/loc.lua" :hook_id="managers/localizationmanager"/>
 	<!-- this loc file forcefully loads beat cop and hrt names for certain levels so that they dont get overridden by cd diff killfeed/hoplib/whatever;
 		main localization is still handled in json files in the loc directory
 	-->
