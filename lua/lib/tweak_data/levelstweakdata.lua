@@ -1,5 +1,5 @@
 function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap visuals for "factions" based on difficulty.
-	local group_to_use = "zeal" 			 
+	local group_to_use = "zeal"
 	-- Instead of if statements, we can just instead change what faction it's looking for.
 	-- This makes swapping difficulties on the fly much, much easier, along with maintaining a clean codebase.
 	local level_id
@@ -11,10 +11,10 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 		return group_to_use
 	end
 	
-    -- draft implementation of asset swapping between waves for Holdout mode. Courtesy of iamgoofball.
-    if managers and managers.skirmish and managers.skirmish:is_skirmish() then
-        local current_wave = managers.skirmish:current_wave_number()
-        local wave_table = {
+	-- draft implementation of asset swapping between waves for Holdout mode. Courtesy of iamgoofball.
+	if managers and managers.skirmish and managers.skirmish:is_skirmish() then
+		local current_wave = managers.skirmish:current_wave_number()
+		local wave_table = {
 			"cop", -- wave 1
 			"cop",
 			"fbi",
@@ -24,15 +24,15 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 			"gensec",
 			"classic",
 			"zeal" --wave 9
-        }
-	   if current_wave == 0 or not current_wave then
+		}
+		if current_wave == 0 or not current_wave then
 			return "cop"
-       elseif current_wave > 0 and current_wave <= #wave_table then
-            return wave_table[current_wave]
-       else
-            return "zeal"
-       end
-    end
+		elseif current_wave > 0 and current_wave <= #wave_table then
+			return wave_table[current_wave]
+		else
+			return "zeal"
+		end
+	end
 	
 	local difficulties = {
 		"easy",
@@ -47,21 +47,21 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 	local map_faction_override = {}
 	--map_faction_override["Enemy_Spawner"] = "classic"
 	map_faction_override["pal"] = "classic"
-	self.pal.package = {"packages/narr_pal", "packages/narr_rvd", "packages/deathvoxclassics"}	
+	self.pal.package = {"packages/narr_pal", "packages/narr_rvd", "packages/deathvoxclassics"}
 	map_faction_override["dah"] = "classic"
 	self.dah.package = {"packages/lvl_dah", "packages/deathvoxclassics"}
 	map_faction_override["red2"] = "classic"
 	self.red2.package = {"packages/narr_red2", "packages/deathvoxclassics"}
 	map_faction_override["glace"] = "classic"
-	self.glace.package = {"packages/narr_glace", "packages/deathvoxclassics"}	
+	self.glace.package = {"packages/narr_glace", "packages/deathvoxclassics"}
 	map_faction_override["run"] = "classic"
-	self.run.package = {"packages/narr_run", "packages/deathvoxclassics"}	
+	self.run.package = {"packages/narr_run", "packages/deathvoxclassics"}
 	map_faction_override["flat"] = "classic"
-	self.flat.package = {"packages/narr_flat", "packages/deathvoxclassics"}	
+	self.flat.package = {"packages/narr_flat", "packages/deathvoxclassics"}
 	map_faction_override["dinner"] = "classic"
-	self.dinner.package = {"packages/narr_dinner", "packages/deathvoxclassics"}	
+	self.dinner.package = {"packages/narr_dinner", "packages/deathvoxclassics"}
 	map_faction_override["man"] = "classic"
-	self.man.package = {"packages/narr_man", "packages/deathvoxclassics"}	
+	self.man.package = {"packages/narr_man", "packages/deathvoxclassics"}
 	map_faction_override["nmh"] = "classic"
 	self.nmh.package = {"packages/dlcs/nmh/job_nmh", "packages/deathvoxclassics"}
 	--gangster voice stuff from fuglore that was originally from rino that was originally from resmod
@@ -84,36 +84,36 @@ function LevelsTweakData:get_ai_group_type() -- We can use this to easily swap v
 	self.skm_bex.package = {"packages/dlcs/skm/job_skm", "packages/deathvoxclassics"} --fuck
 	self.skm_mus.package = {"packages/dlcs/skm/job_skm", "packages/deathvoxclassics"}
 	self.skm_red2.package = {"packages/dlcs/skm/job_skm", "packages/deathvoxclassics"}
-		
+	
 	map_faction_override["bank"] = "classic"
 	
 	--Murky faction overrides begin here. Uncomment to apply the Murkywater faction on the Whitehouse, Henry's Rock, Hell's Island, and Beneath the Mountain heists.
-	  self.pbr.package = {"packages/deathvoxmurkies", "packages/narr_jerry1"}		
-	  map_faction_override["pbr"] = "murkywater"
-	  
-	  self.vit.package = {"packages/deathvoxmurkies", "packages/dlcs/vit/job_vit"}			  
-	  map_faction_override["vit"] = "murkywater"
-	  
-	  self.des.package = {"packages/deathvoxmurkies", "packages/job_des"}			  	  
-	  map_faction_override["des"] = "murkywater"
-	  
-	  self.bph.package = {"packages/deathvoxmurkies", "packages/dlcs/bph/job_bph"}			  	  
-	  map_faction_override["bph"] = "murkywater"
+	self.pbr.package = {"packages/deathvoxmurkies", "packages/narr_jerry1"}
+	map_faction_override["pbr"] = "murkywater"
+	
+	self.vit.package = {"packages/deathvoxmurkies", "packages/dlcs/vit/job_vit"}
+	map_faction_override["vit"] = "murkywater"
+	
+	self.des.package = {"packages/deathvoxmurkies", "packages/job_des"}
+	map_faction_override["des"] = "murkywater"
+	
+	self.bph.package = {"packages/deathvoxmurkies", "packages/dlcs/bph/job_bph"}
+	map_faction_override["bph"] = "murkywater"
 	
 	--Reaper faction overrides begin here.
-	  -- map_faction_override["mad"] = "russia"	
-	  
+	--map_faction_override["mad"] = "russia"
+	
 	--Federales faction overrides begin here.
-	  self.bex.package = {"packages/deathvoxfederales", "packages/job_bex"}	
-	  map_faction_override["bex"] = "federales"	
+	self.bex.package = {"packages/deathvoxfederales", "packages/job_bex"}
+	map_faction_override["bex"] = "federales"
 	--map_faction_override["skm_bex"] = "federales"
 	
-	  self.pex.package = {"packages/deathvoxfederales", "packages/job_pex"}	
-	  map_faction_override["pex"] = "federales"		
-	  
-	  self.fex.package = {"packages/deathvoxfederales", "packages/job_fex"}	
-	  map_faction_override["fex"] = "federales"		
-	  
+	self.pex.package = {"packages/deathvoxfederales", "packages/job_pex"}
+	map_faction_override["pex"] = "federales"
+	
+	self.fex.package = {"packages/deathvoxfederales", "packages/job_fex"}
+	map_faction_override["fex"] = "federales"
+	
 	--Halloween overrides begin here.
 	
 	local diff_index = table.index_of(difficulties, Global.game_settings.difficulty)
