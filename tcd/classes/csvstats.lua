@@ -1,6 +1,6 @@
 --requires string.split() from PAYDAY 2's string util library
 --requires table.deep_map_copy() from PAYDAY 2's table util library
---requires tweak_data.weapon table (WeaponTweakData) from PAYDAY 2 ( lib/tweak_data/weapontweakdata )
+--requires table.index_of() from PAYDAY 2's table util library
 --requres utf8.to_lower() from PAYDAY 2's utf8 util library
 
 _G.CSVStatReader = {
@@ -65,29 +65,22 @@ _G.CSVStatReader = {
 		"subclasses", --"Subclasses"
 		"magazine", --"Mag" (magazine size)
 		"total_ammo", --"Total Ammo"
-	--	"total_ammo_mod",
-	--	"extra_ammo",
 		"fire_rate", --ROF"
-		"fire_rate_internal", --"s/R"
-	--	"firemode",
-	--	"is_firemode_toggleable",
 		"damage", --"DMG"
 		"accuracy", --"ACC"
-		"spread_internal", --"Spread"
 	--	"spread_moving",
 		"stability", --"STB"
-		"recoil_internal", --"Recoil"
 		"concealment", --"Conceal"
-		"threat", --"Threat"
-		"suppression_internal", --"Supp. Index"
+		"suppression", --"Supp. Index"
+		"threat_display", --"Threat" (display only)
 		"reload_partial", --"Partial Reload"
 		"reload_full", --"Full Reload"
 		"equip", --"Equip"
+		"use_shotgun_reload", --"Shotgun Reload"
 	--	"unequip", 
-	--	"reload",
 		"zoom", --"Zoom" (inherited)
-		"value", --"Value" (inherited)
-		"price_internal", --"Price"
+		"pc_value", --"Value" (inherited)
+		"price_display", --"Price" (display only)
 		"pickup_low", --"Pick. Low"
 		"pickup_high", --"Pick. High"
 	--	"alert_size",
@@ -212,7 +205,11 @@ for i = 1,41 do
 end
 
 function CSVStatReader.log(s)
---	Console:Log("TCD csv Parser: " .. s)
+--[[
+	if Console and Console.Log then
+		Console:Log("TCD csv Parser: " .. s)
+	end
+--]]
 end
 
 function CSVStatReader.table_concat(tbl,div)
@@ -510,7 +507,6 @@ function CSVStatReader:read_firearms(parent_tweak_data)
 							--Accuracy/Spread
 							local spread
 							
---								spread = tonumber(raw_csv_values[STAT_INDICES.spread_internal])
 							local _accuracy = raw_csv_values[STAT_INDICES.accuracy]
 							local accuracy = not_empty(_accuracy) and tonumber(_accuracy)
 							if accuracy then 
@@ -524,7 +520,6 @@ function CSVStatReader:read_firearms(parent_tweak_data)
 							--Stability/Recoil
 							local recoil 
 							
---								recoil = tonumber(raw_csv_values[STAT_INDICES.recoil_internal])
 							local _stability = raw_csv_values[STAT_INDICES.stability]
 							local stability = not_empty(_stability) and tonumber(_stability)
 							if stability then
@@ -547,9 +542,12 @@ function CSVStatReader:read_firearms(parent_tweak_data)
 							
 							
 							--Threat/Suppression
-							local suppression
 							
---								suppression = tonumber(raw_csv_values[STAT_INDICES.suppression_internal])
+							local suppression = tonumber(raw_csv_values[STAT_INDICES.suppression])
+							--data validation for this field is done on the spreadsheet input side
+							
+							--[[
+							local suppression
 							local _threat = raw_csv_values[STAT_INDICES.threat]
 							local threat = not_empty(_threat) and tonumber(_threat)
 							if threat then 
@@ -559,7 +557,7 @@ function CSVStatReader:read_firearms(parent_tweak_data)
 								olog("Error: bad suppression: " .. tostring(_concealment))
 								return
 							end
-							
+							--]]
 							
 							--[[
 							--Firemode Toggle
@@ -587,9 +585,26 @@ function CSVStatReader:read_firearms(parent_tweak_data)
 							--]]
 							
 							
-							--timers subsection
-							local timers = {}
+						--timers subsection
+							--inherit from base game weapon timers data
+							local timers = table.deep_map_copy(wtd.timers)
 							
+							local _use_shotgun_reload = raw_csv_values[STAT_INDICES.use_shotgun_reload]
+							local use_shotgun_reload
+							if not_empty(_use_shotgun_reload) then 
+								use_shotgun_reload = convert_boolean(_use_shotgun_reload)
+							else
+								use_shotgun_reload = wtd.use_shotgun_reload
+								--inherit from base
+								--NOTE: inheritance for this stat should be avoided if possible-
+								--in the base game, this stat is normally only defined for 
+								--the exceptional non-shotgun weapons which use shotgun reloads,
+								--like the piglet/m32 grenade launcher, or the repeater sniper rifle.
+								--for shotgun category weapons, this is mostly defined by the weapon base;
+								--SaigaWeaponBase defaults to using normal reloads, and ShotgunWeaponBase defaults to shotgun reloads.
+								--...essentially, the explicit definition is reliable, but the assumed case is not.
+							end
+						
 							--Partial Reload timer
 							local reload_partial 
 							
@@ -599,7 +614,6 @@ function CSVStatReader:read_firearms(parent_tweak_data)
 								olog("Error: bad reload_partial: " .. tostring(_reload_partial))
 								return
 							end
-							
 							
 							--Full Reload timer
 							local reload_full
@@ -621,18 +635,30 @@ function CSVStatReader:read_firearms(parent_tweak_data)
 								return
 							end
 							unequip = equip
-							--[[
-							local _unequip = raw_csv_values[STAT_INDICES.unequip]
-							local unequip = not_empty(_unequip) and tonumber(_unequip)
-							if not unequip then 
-								olog("Error: bad unequip timer: " .. tostring(_unequip))
-								return
+							if use_shotgun_reload then
+								timers.shotgun_reload_exit_empty = reload_full
+								timers.shotgun_reload_exit_not_empty = reload_partial
+							else
+								--[[
+								local _unequip = raw_csv_values[STAT_INDICES.unequip]
+								local unequip = not_empty(_unequip) and tonumber(_unequip)
+								if not unequip then 
+									olog("Error: bad unequip timer: " .. tostring(_unequip))
+									return
+								end
+								--]]
+								
+								timers.reload_not_empty = reload_partial
+								timers.reload_empty = reload_full
+								
+								--only used for the Aran G2 Sniper Rifle
+								if timers.reload_steelsight then
+									timers.reload_steelsight = timers.reload_empty
+								end
+								if timers.reload_steelsight_not_empty then
+									timers.reload_steelsight = timers.reload_not_empty
+								end
 							end
-							--]]
-							
-							
-							timers.reload_not_empty = reload_partial
-							timers.reload_empty = reload_full
 							timers.equip = equip
 							timers.unequip = unequip
 							--timers subsection end
@@ -650,8 +676,8 @@ function CSVStatReader:read_firearms(parent_tweak_data)
 							local zoom = not_empty(_zoom) and tonumber(_zoom)
 							
 							
-							--value aka Price (optional/inherited)
-							local _price = raw_csv_values[STAT_INDICES.value]
+							--value aka pc_value aka Price (optional/inherited)
+							local _price = raw_csv_values[STAT_INDICES.pc_value]
 							local price = not_empty(_price) and tonumber(_price)
 							
 							
@@ -727,11 +753,7 @@ function CSVStatReader:read_firearms(parent_tweak_data)
 							wtd.primary_class = primary_class
 							wtd.subclasses = secondary_classes
 							
-							for timer_stat_name,timer_stat_value in pairs(timers) do 
-								if timer_stat_value then 
-									wtd.timers[timer_stat_name] = timer_stat_value
-								end
-							end
+							wtd.timers = timers
 							
 							wtd.CLIP_AMMO_MAX = magazine
 							wtd.AMMO_MAX = total_ammo

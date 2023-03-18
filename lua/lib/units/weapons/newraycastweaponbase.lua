@@ -157,14 +157,38 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 
 	function NewRaycastWeaponBase:update_reloading(t, dt, time_left)
+		local full = self:clip_full()
 		if self._use_shotgun_reload and self._next_shell_reloded_t and self._next_shell_reloded_t < t then
+			managers.player:add_to_property("shell_games_rounds_loaded",1) --tcd- register shell loaded
 			local speed_multiplier = self:reload_speed_multiplier()
-			managers.player:add_to_property("shell_games_rounds_loaded",1)
-			self._next_shell_reloded_t = self._next_shell_reloded_t + self:reload_shell_expire_t() / speed_multiplier
-			self:set_ammo_remaining_in_clip(math.min(self:get_ammo_max_per_clip(), self:get_ammo_remaining_in_clip() + 1))
+			local shotgun_reload_tweak = self:_get_shotgun_reload_tweak_data(not self._started_reload_empty)
+			local ammo_to_reload = 1
+			local next_queue_data = nil
+
+			if shotgun_reload_tweak and shotgun_reload_tweak.reload_queue then
+				self._shotgun_queue_index = self._shotgun_queue_index % #shotgun_reload_tweak.reload_queue + 1
+
+				if self._shotgun_queue_index == #shotgun_reload_tweak.reload_queue then
+					self._next_shell_reloded_t = self._next_shell_reloded_t + (shotgun_reload_tweak.reload_queue_wrap or 0)
+				end
+
+				local queue_data = shotgun_reload_tweak.reload_queue[self._shotgun_queue_index]
+				ammo_to_reload = queue_data and queue_data.reload_num or 1
+				next_queue_data = shotgun_reload_tweak.reload_queue[self._shotgun_queue_index + 1]
+				self._next_shell_reloded_t = self._next_shell_reloded_t + (next_queue_data and next_queue_data.expire_t or 0.5666666666666667) / speed_multiplier
+			else
+				self._next_shell_reloded_t = self._next_shell_reloded_t + self:reload_shell_expire_t(not self._started_reload_empty) / speed_multiplier
+				ammo_to_reload = shotgun_reload_tweak and shotgun_reload_tweak.reload_num or 1
+			end
+
+			self:set_ammo_remaining_in_clip(math.min(self:get_ammo_total(), self:get_ammo_max_per_clip(), self:get_ammo_remaining_in_clip() + ammo_to_reload))
 			managers.job:set_memory("kill_count_no_reload_" .. tostring(self._name_id), nil, true)
 
-			return true,self:clip_full()
+			if not next_queue_data or not next_queue_data.skip_update_ammo then
+				self:update_ammo_objects()
+			end
+
+			return true,full
 		end
 	end
 
