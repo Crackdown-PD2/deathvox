@@ -48,31 +48,6 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 --      value - from table. Inconsistently reported/documented. Copy from decompile.
 
 
-
-
-
-	--------------------------------------
-				--CAR-4 (DMR Kit)--
-	--------------------------------------
-	--Note: Conversion kit entries are not actual weapons and are only listed for referential purposes.
-	--INCOMPLETE - see active mod description under CAR-4 instead.
-		
-		self.parts.car_dmr_kit_ammo_type = { --Dummy ammo type for DMR kit, needed for armor piercing and pickup multipliers to work properly.
-			a_obj = "a_m",
-			type = "ammo",
-			unit = "units/payday2/weapons/wpn_upg_dummy/wpn_upg_dummy",
-			stats = {
-				value = 1
-			},
-			custom_stats = {
-				armor_piercing_add = 1,
-				ammo_pickup_max_mul = 4,
-				ammo_pickup_min_mul = 2.5
-			}
-		}
-		self.parts.car_dmr_kit_ammo_type.supported = true
-		
-		
 		--Nagant Bayonet [wpn_fps_snp_mosin_ns_bayonet] [Replaces Weapon Butt melee weapon with Nagant Bayonet melee weapon] Value: 1
 		self.parts.wpn_fps_snp_mosin_ns_bayonet.supported = true
 		self.parts.wpn_fps_snp_mosin_ns_bayonet.stats = {

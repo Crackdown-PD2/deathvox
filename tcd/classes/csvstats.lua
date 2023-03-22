@@ -4,7 +4,7 @@
 --requres utf8.to_lower() from PAYDAY 2's utf8 util library
 
 _G.CSVStatReader = {
-	debug_attachments = {}, --store read data results for exploration and debugging via console
+	debug_attachments = {}, --store read data results for exploration and debugging via console (disabled in live; reenable on line 1193)
 	
 	DAMAGE_CAP = 210, --damage is technically on a lookup table from 0 to 210
 	IGNORED_HEADERS = 2,
@@ -101,24 +101,22 @@ _G.CSVStatReader = {
 		"subclasses", --"Subclasses"
 		"extra_ammo", --"Magazine Size"
 		"total_ammo_add", --"Total Ammo Add Bonus" (TCD stat only)
-		"total_ammo", --"Total Ammo Mul Bonus"
-		"total_ammo_internal", --"Total Ammo Mul Index" (pre-calculated)
+		"total_ammo", --"Total Ammo Mul Index"
+		"total_ammo_display", --"Total Ammo Mul Bonus"
 		"fire_rate", --"Fire Rate"
-		"fire_rate_internal", --"SpR" (pre-calulated)
 		"damage", --"Damage"
+		"damage_mul", --"Damage Mul" (TCD stat only)
 		"accuracy", --"Accuracy"
-		"spread_internal", --"Spread" (pre-calculated)
 		"stability", --"Stability",
-		"recoil_internal", --"Recoil Mod" (pre-calculated"
 		"concealment", --"Conceal. Mod"
-		"threat", --"Threat Mod"
-		"suppression_internal", --"Supp. Index" (pre-calculated)
-		"reload", --"Reload Multiplier"
-		"reload_internal", --"Reload Index" (pre-calculated)
+		"suppression", --"Supp. Index"
+		"threat_display", --"Threat Mod" (display only)
+		"reload", --"Reload Index"
+		"reload_display", --"Reload Multiplier" (display only)
 		"zoom", --"Zoom"
 		"alert_size", --"Alert Size"
-		"value", --"Value"
-		"value_external", --"Price" (pre-calculated)
+		"pc_value", --"Value" (blackmarket cost index)
+		"price_display", --"Price" (display only)
 		"pickup_low", --"Pick. Low"
 		"pickup_high", --"Pick. High"
 		"can_pierce_wall", --"Wall Piercing"
@@ -205,7 +203,7 @@ for i = 1,41 do
 end
 
 function CSVStatReader.log(s)
---[[
+-- [[
 	if Console and Console.Log then
 		Console:Log("TCD csv Parser: " .. s)
 	end
@@ -968,18 +966,24 @@ function CSVStatReader:read_attachments(parent_tweak_data)
 							end
 							
 							--Total Ammo Mul Bonus (multiplicative bonus to Reserve Ammo)
-							local total_ammo_mul
 							local _total_ammo_mul = raw_csv_values[STAT_INDICES.total_ammo]
+							local total_ammo_mul
+							if not_empty(_total_ammo_mul) then 
+								total_ammo_mul = tonumber(_total_ammo_mul)
+							end
+							--[[
+							local total_ammo_mul
 							if not_empty(_total_ammo_mul) then 
 								total_ammo_mul = convert_total_ammo_mul(tonumber(_total_ammo_mul))
 							end
+							--]]
 							
 							--Fire Rate bonus
 							local fire_rate
-							local _fire_rate = raw_csv_values[STAT_INDICES.fire_rate_internal]
+							local _fire_rate = raw_csv_values[STAT_INDICES.fire_rate]
 							if not_empty(_fire_rate) then
 								--pre-converted
-								fire_rate = tonumber(_fire_rate)
+								fire_rate = convert_rof(tonumber(_fire_rate))
 							end
 							
 							
@@ -994,19 +998,18 @@ function CSVStatReader:read_attachments(parent_tweak_data)
 							
 							--Accuracy/Spread bonus
 							local spread
-							local _spread = raw_csv_values[STAT_INDICES.spread_internal]
+							local _spread = raw_csv_values[STAT_INDICES.accuracy]
 							if not_empty(_spread) then 
 								--pre-converted
-								spread = tonumber(_spread)
+								spread = convert_accstab(tonumber(_spread))
 							end
 							
 							
 							--Stability/Recoil bonus
 							local recoil 
-							local _recoil = raw_csv_values[STAT_INDICES.recoil_internal]
+							local _recoil = raw_csv_values[STAT_INDICES.stability]
 							if not_empty(_recoil) then
-								--pre-converted
-								recoil = tonumber(_recoil)
+								recoil = convert_accstab(tonumber(_recoil))
 							end
 							
 							--Concealment
@@ -1019,18 +1022,10 @@ function CSVStatReader:read_attachments(parent_tweak_data)
 							
 							--Threat/Suppression bonus
 							local suppression
-							local _threat = raw_csv_values[STAT_INDICES.threat]
-							if not_empty(_threat) then
-								suppression = convert_threat(tonumber(_threat))
-							end
-							--[[
-							local suppression
-							local _suppression = raw_csv_values[STAT_INDICES.suppression_internal]
-							if not_empty(_suppression) then 
-								--pre-converted
+							local _suppression = raw_csv_values[STAT_INDICES.suppression]
+							if not_empty(_suppression) then
 								suppression = tonumber(_suppression)
 							end
-							--]]
 							
 							--Reload Multiplier
 							local reload_mul
@@ -1056,7 +1051,7 @@ function CSVStatReader:read_attachments(parent_tweak_data)
 							
 							--Value (inherited)
 							local value = base_stats.value
-							local _value = raw_csv_values[STAT_INDICES.value]
+							local _value = raw_csv_values[STAT_INDICES.pc_value]
 							if not_empty(_value) then 
 								value = tonumber(_value)
 							end
@@ -1195,7 +1190,7 @@ function CSVStatReader:read_attachments(parent_tweak_data)
 							--]]
 							target_data.part_id = attachment_id
 							target_data.bm_weapon_id = bm_weapon_id
-							self.debug_attachments[line_num] = target_data
+--							self.debug_attachments[line_num] = target_data
 						end
 					end
 					
