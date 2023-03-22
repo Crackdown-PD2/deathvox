@@ -11,7 +11,7 @@ Hooks:Add("LocalizationManagerPostInit", "TotalCrackdown_LocalizationManagerPost
 		--shotgun attachments
 		bm_wp_upg_a_rip = "Tombstone Slug",
 		bm_menu_choke = "Chokes", --category name
-
+		
 		bm_wp_upg_a_explosive_desc = "Fires one explosive charge that kills or stuns targets. -50% Ammo Pickup with no Damage Falloff.",
 		bm_wp_upg_a_slug_desc = "Fires a single projectile that can pierce shields, body armor, and objects, with no Damage Falloff.",
 		bm_wp_upg_a_piercing_desc = "Long range shotgun ammunition. -50% pellet count with no Damage Falloff.",
@@ -21,16 +21,17 @@ Hooks:Add("LocalizationManagerPostInit", "TotalCrackdown_LocalizationManagerPost
 		bm_wp_upg_a_custom_desc = "Makes all pellets that hit enemies deal individual damage, allowing for damage to stack. Halves pellet count.",
 		bm_wp_upg_a_custom_free = "Iron Hand Buckshot",
 		bm_wp_upg_a_custom_free_desc = "Makes all pellets that hit enemies deal individual damage, allowing for damage to stack. Halves pellet count.",
+		bm_wp_wpn_fps_upg_ns_duck_desc = "Adjusts pellet groupings into a horizontal spread.",
 		bm_wp_wpn_fps_sho_choke_a = "Standard Choke",
 		bm_wp_wpn_fps_sho_choke_a_desc = "Standard shotgun choke. No effect on stats; provided for convenience since some users have issues removing attachments.",
 		bm_wp_wpn_fps_sho_choke_b = "Cylinder Choke",
-		bm_wp_wpn_fps_sho_choke_b_desc = "-40 Accuracy",
+		bm_wp_wpn_fps_sho_choke_b_desc = "-40 Accuracy", --unused
 		bm_wp_wpn_fps_sho_choke_c = "Skeet Choke",
-		bm_wp_wpn_fps_sho_choke_c_desc = "-20 Accuracy",
+		bm_wp_wpn_fps_sho_choke_c_desc = "-20 Accuracy", --unused
 		bm_wp_wpn_fps_sho_choke_d = "Modified Choke",
-		bm_wp_wpn_fps_sho_choke_d_desc = "+20 Accuracy",
+		bm_wp_wpn_fps_sho_choke_d_desc = "+20 Accuracy", --unused
 		bm_wp_wpn_fps_sho_choke_e = "Full Choke",
-		bm_wp_wpn_fps_sho_choke_e_desc = "+40 Accuracy",
+		bm_wp_wpn_fps_sho_choke_e_desc = "+40 Accuracy", --unused
 		
 		bm_wp_striker_b_long_achievment = "Kill ##$progress## more Bulldozers with any shotgun using the 000 Buck or Iron Hand Buckshot ammo types.", --not sure if this actually will display progress 
 	

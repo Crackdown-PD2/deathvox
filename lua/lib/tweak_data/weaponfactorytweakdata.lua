@@ -47,7 +47,6 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 	--Threat value = suppression * 2
 --      value - from table. Inconsistently reported/documented. Copy from decompile.
 
-
 		--Nagant Bayonet [wpn_fps_snp_mosin_ns_bayonet] [Replaces Weapon Butt melee weapon with Nagant Bayonet melee weapon] Value: 1
 		self.parts.wpn_fps_snp_mosin_ns_bayonet.supported = true
 		self.parts.wpn_fps_snp_mosin_ns_bayonet.stats = {
@@ -61,6 +60,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 			max_damage = 80
 		}
 
+		--todo transfer these into the sheet exclusively
 		self.parts.wpn_fps_bow_ecp_m_arrows_poison.subclass_modifiers = { --airbow
 			"subclass_poison"
 		}
@@ -88,6 +88,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_upg_a_grenade_launcher_incendiary_arbiter.subclass_modifiers = {
 			"subclass_areadenial"
 		}
+		
 		--------------------------------------
 		--Shared Attachments--
 		--------------------------------------
@@ -101,6 +102,8 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		
 		
 		--donald's horizontal leveller 
+		self.parts.wpn_fps_upg_ns_duck.has_description = true
+		self.parts.wpn_fps_upg_ns_duck.desc_id = "bm_wp_wpn_fps_upg_ns_duck_desc"
 		self.parts.wpn_fps_upg_ns_duck.forbids = {
 			"wpn_fps_upg_a_dragons_breath",
 			"wpn_fps_upg_a_slug",
