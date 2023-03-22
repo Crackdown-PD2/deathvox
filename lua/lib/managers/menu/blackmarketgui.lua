@@ -91,17 +91,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 				item_class = wtd.primary_class
 				insert_subclasses(wtd.subclasses)
 			end
-
-			if wftd.parts[item_name] then --is weapon attachment
-				find_archetypes_from_part(wftd.parts[item_name])
-			end
 			
 			--currently, only weapons (primary/secondary) can have attachments, but if this changes, this should be copied and applied to other item categories accordingly
-			if wtd then 
-				if managers.blackmarket._global.crafted_items[item_category] then 
-					local owned_item_data = item_slot and managers.blackmarket._global.crafted_items[item_category][item_slot]
-					if owned_item_data then 
-						local factory_id = owned_item_data.factory_id
+			if managers.blackmarket._global.crafted_items[item_category] then
+				local owned_item_data = item_slot and managers.blackmarket._global.crafted_items[item_category][item_slot]
+				if owned_item_data then 
+					local factory_id = owned_item_data.factory_id
+					if wtd then --is weapon
 	--					item_name = owned_item_data.weapon_id --redundant
 						local blueprint = owned_item_data.blueprint 
 						if blueprint then 
@@ -110,6 +106,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 								find_archetypes_from_part(part_data)
 							end
 						end
+						
+					elseif wftd.parts[item_name] then --is weapon attachment
+						local part_id = item_name
+						local part_data = managers.weapon_factory:_part_data(part_id,factory_id,nil)
+						
+						find_archetypes_from_part(part_data)
 					end
 				end
 			end

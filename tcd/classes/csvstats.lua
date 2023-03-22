@@ -4,7 +4,7 @@
 --requres utf8.to_lower() from PAYDAY 2's utf8 util library
 
 _G.CSVStatReader = {
-	debug_attachments = {}, --store read data results for exploration and debugging via console (disabled in live; reenable on line 1193)
+	debug_mode_enabled = true, 
 	
 	DAMAGE_CAP = 210, --damage is technically on a lookup table from 0 to 210
 	IGNORED_HEADERS = 2,
@@ -117,6 +117,7 @@ _G.CSVStatReader = {
 		"alert_size", --"Alert Size"
 		"pc_value", --"Value" (blackmarket cost index)
 		"price_display", --"Price" (display only)
+		"meta_skip_inherit_custom", --"Wipe custom_stats" (not an actual attachment stat)
 		"pickup_low", --"Pick. Low"
 		"pickup_high", --"Pick. High"
 		"can_pierce_wall", --"Wall Piercing"
@@ -154,6 +155,19 @@ _G.CSVStatReader = {
 	WEAPON_STAT_INDICES = {}, --generated post load
 	ATTACHMENT_STAT_INDICES = {} --generated post load
 }
+if CSVStatReader.debug_mode_enabled then
+	CSVStatReader.debug_data = {
+		weapons = {
+			out = nil
+		}, --not implemented
+		attachments = {
+			out = nil
+		},
+		melees = {
+			out = nil
+		} --not implemented
+	} --store read data results for exploration and debugging via console (disabled in live; reenable on line 1193)
+end
 
 --[[
 local attachment_stat_indices = {
@@ -817,6 +831,9 @@ function CSVStatReader:read_firearms(parent_tweak_data)
 							wtd.stats_modifiers = wtd.stats_modifiers or {}
 							wtd.stats_modifiers.damage = damage_mul
 							
+							if self.debug_mode_enabled then
+								self.debug_data.weapons[line_num] = new_stats
+							end
 						else
 							olog("Error! No weapon stats exist for weapon with id: [" .. tostring(weapon_id) .. "]") 
 						end
@@ -875,6 +892,8 @@ function CSVStatReader:read_attachments(parent_tweak_data)
 	
 	local STAT_INDICES = self.ATTACHMENT_STAT_INDICES
 	
+	local output_data = {}
+	
 	for _,filename in pairs(file_util:GetFiles(target_subdir)) do
 		local extension = utf8.to_lower(path_util:GetFileExtension(filename))
 		if extension == "csv" then 
@@ -893,6 +912,12 @@ function CSVStatReader:read_attachments(parent_tweak_data)
 							
 							local base_stats = ptd.stats
 							local base_custom_stats = ptd.custom_stats
+							
+							local skip_inherit_custom_stats = false
+							local _meta_skip_inherit_custom = raw_csv_values[STAT_INDICES.meta_skip_inherit_custom]
+							if not_null(_meta_skip_inherit_custom) and not_empty(_meta_skip_inherit_custom) then 
+								skip_inherit_custom_stats = convert_boolean(_meta_skip_inherit_custom)
+							end
 							
 							olog("Processing attachment id " .. tostring(attachment_id) .. " (line " .. tostring(line_num) .. ")")
 							
@@ -1081,24 +1106,13 @@ function CSVStatReader:read_attachments(parent_tweak_data)
 							end
 							
 							
-							--TODO
-							
-							local target_data = ptd
---							ptd.tcd_stats = target_data
-							-- [ [
-							if bm_weapon_id and true then
-								ptd.tcd_stats = ptd.tcd_stats or {}
-								target_data = {}
-								ptd.tcd_stats[bm_weapon_id] = target_data
---								if not target_data then 
---									olog("Error: [" .. tostring(attachment_id) .. "] has bad blackmarket weaponid tcd_stats: [" .. tostring(bm_weapon_id) .. "]. This data will overwrite the main attachment data instead.")
---								end
-							else
-								--in the specific case where we are removing/skipping weapon-specific stat changes on a particular weapon,
-								--we should instead try to manually remove override data on a per-weapon basis
---								ptd.tcd_stats = {} 
-							end
-							-- ] ]
+							--all final stats and data for this attachment entry
+							--saving to game tweakdata is done outside of the file read loop
+							--so that each attachment can inherit stats from the base game's stats
+							--instead of overwriting the base stats immediately and then using that as the template for the next attachments
+							local part_data = {
+								part_id = attachment_id
+							}
 							
 							local stats = {
 								extra_ammo = extra_ammo, --additive mag size bonus index
@@ -1114,83 +1128,56 @@ function CSVStatReader:read_attachments(parent_tweak_data)
 								zoom = zoom,
 								value = value
 							}
---							base_custom_stats
-							local custom_stats = { --basegame stat table, not custom stats, ironically
+							part_data.stats = stats
 							
+							local custom_stats
+							if base_custom_stats and not skip_inherit_custom_stats then
+								--inherit custom_stats from base game
+								
+								if attachment_id == "wpn_fps_upg_a_grenade_launcher_incendiary" then
+									logall(base_custom_stats)
+								end
+								
+								custom_stats = table.deep_map_copy(base_custom_stats)
+							else
+								--do not inherit custom_stats from base game;
+								--start fresh
+								custom_stats = {}
+							end
 							
-							--[[
-						ammo_pickup_max_mul = 0,
-						ammo_pickup_min_mul = 0,
-						ignore_statistic = true,
-						bullet_class = "InstantExplosiveBulletBase",
-						damage_far_mul = 2,
-						damage_near_mul = 10,
-						rays = 1,
-						exp_multiplier = 1.03,
-						money_multiplier = 1.03,
-						muzzleflash = "effects/payday2/particles/weapons/shotgun/sho_muzzleflash_dragons_breath",
-						fire_dot_data = {
-							dot_trigger_chance = "100",
-							dot_damage = "10",
-							dot_length = "3.1",
-							dot_trigger_max_distance = "1400",
-							dot_tick_period = "0.5"
-						}
-						launcher_grenade = "launcher_incendiary"
-						fire_rate_multiplier = 1.2
-						ammo_offset = -1,
-						burst_count = 2,
-						volley_spread_mul
-						volley_damage_mul
-						volley_ammo_usage
-						volley_rays
-						--]]
+							local new_custom_stats = {
 								total_ammo_add = total_ammo_add, --custom stat from tcd (additive reserve ammo bonus)
 								ammo_pickup_max_add = pickup_low, --custom stat
 								ammo_pickup_min_add = pickup_high, --custom stat
 								armor_piercing_add = armor_piercing_chance,
 								can_shoot_through_shield = can_shoot_through_shield,
 								can_shoot_through_wall = can_shoot_through_wall,
-								can_shoot_through_enemy = can_shoot_through_enemy,
+								can_shoot_through_enemy = can_shoot_through_enemy
 							}
 							
-							target_data.custom_stats = target_data.custom_stats or {}
-							for stat_id,stat_value in pairs(custom_stats) do 
-								target_data.custom_stats[stat_id] = stat_value
-								--inherit other values
+							--merge new custom_stats from csv over base custom_stats
+							for custom_stat_key,custom_stat_value in pairs(new_custom_stats) do 
+								custom_stats[custom_stat_key] = custom_stat_value
 							end
-							if not ptd.supported then 
-								ptd.stats = {value = base_stats.value}
---								if ptd.custom_stats then
---									ptd.custom_stats = {}
---								end
-								ptd.supported = true
-							end
---							target_data.supported = true --temp while we transition to the new csv based stat implementation
 							
-							target_data.stats = stats
-							ptd.class_modifier = primary_class
-							ptd.subclass_modifiers = secondary_classes
+							part_data.custom_stats = custom_stats
 							
-							--[[
+							part_data.class_modifier = primary_class
+							part_data.subclass_modifiers = secondary_classes
 							
---								local new_data = table.deep_map_copy(ptd.parts[id])
-							local new_data = {
-								supported = true
-							}
+							--add part data to output table
+							--this will be merged with game data after loop
+							output_data[attachment_id] = output_data[attachment_id] or {bm_override = {}}
 							
-							new_data.parts[id] = new_data
-							
-							if bm_weapon_id then 
-								ptd.tcd_stats[bm_weapon_id] = new_data
+							if bm_weapon_id then
+								output_data[attachment_id].bm_override[bm_weapon_id] = part_data
 							else
-								ptd.parts[id] = new_data
+								output_data[attachment_id].part_data = part_data
 							end
 							
-							--]]
-							target_data.part_id = attachment_id
-							target_data.bm_weapon_id = bm_weapon_id
---							self.debug_attachments[line_num] = target_data
+							if self.debug_mode_enabled then
+								self.debug_data.attachments[line_num] = part_data
+							end
 						end
 					end
 					
@@ -1202,8 +1189,44 @@ function CSVStatReader:read_attachments(parent_tweak_data)
 			end
 		end
 	end	
+	
+	if self.debug_mode_enabled then 
+		self.debug_data.attachments.out = output_data
+	end
+	
+	for attachment_id,attachment_data in pairs(output_data) do 
+		local ptd = parent_tweak_data.parts[attachment_id]
+		if ptd then
+			ptd.tcd_stats = ptd.tcd_stats or {}
+			
+			if attachment_data.part_data then
+			
+				--global attachment stat changes
+				for k,v in pairs(attachment_data.part_data) do 
+					ptd[k] = v
+				end
+			end
+			
+			--IMPORTANT:
+			--fields must be manually selected in WeaponFactoryManager:_part_data()
+			for bm_weapon_id,part_data in pairs(attachment_data.bm_override) do 
+				ptd.tcd_stats[bm_weapon_id] = part_data
+			end
+			
+			--eventually this should be phased out
+			--and after this loop,
+			--any remaining 'unsupported' parts should instead have their stats converted to tcd's stat system
+			if not ptd.supported then 
+				ptd.stats = {value = ptd.stats.value} --strip stats
+				ptd.supported = true
+			end
+		else
+			olog("Error: Tried to add data to nonexistent/unknown part: " .. tostring(attachment_id) .. "!")
+		end
 		
+	end
 	
 	
 	
 end
+
