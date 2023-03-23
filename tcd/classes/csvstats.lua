@@ -1133,11 +1133,6 @@ function CSVStatReader:read_attachments(parent_tweak_data)
 							local custom_stats
 							if base_custom_stats and not skip_inherit_custom_stats then
 								--inherit custom_stats from base game
-								
-								if attachment_id == "wpn_fps_upg_a_grenade_launcher_incendiary" then
-									logall(base_custom_stats)
-								end
-								
 								custom_stats = table.deep_map_copy(base_custom_stats)
 							else
 								--do not inherit custom_stats from base game;
