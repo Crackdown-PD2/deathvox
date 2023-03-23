@@ -259,52 +259,9 @@ function CopDamage:is_immune_to_shield_knockback()
 	return false
 end
 
-function CopDamage:_comment_death(attacker, killed_unit, special_comment)
-	if special_comment then
-		PlayerStandard.say_line(attacker:sound(), special_comment)
-	else
-		local victim_base = killed_unit:base()
-
-		if victim_base:has_tag("tank") then
-			PlayerStandard.say_line(attacker:sound(), "g30x_any")
-		elseif victim_base:has_tag("spooc") then
-			PlayerStandard.say_line(attacker:sound(), "g33x_any")
-		elseif victim_base:has_tag("taser") then
-			PlayerStandard.say_line(attacker:sound(), "g32x_any")
-		elseif victim_base:has_tag("shield") then
-			PlayerStandard.say_line(attacker:sound(), "g31x_any")
-		elseif victim_base:has_tag("sniper") then
-			PlayerStandard.say_line(attacker:sound(), "g35x_any")
-		elseif victim_base:has_tag("medic") then
-			PlayerStandard.say_line(attacker:sound(), "g36x_any")
-		elseif victim_base:has_tag("custom") then
-			PlayerStandard.say_line(attacker:sound(), "g92")
-		end
-	end
-end
-
-function CopDamage:_AI_comment_death(attacker, killed_unit, special_comment)
-	if special_comment then
-		attacker:sound():say(special_comment, true)
-	else
-		local victim_base = killed_unit:base()
-
-		if victim_base:has_tag("tank") then
-			attacker:sound():say("g30x_any", true)
-		elseif victim_base:has_tag("spooc") then
-			attacker:sound():say("g33x_any", true)
-		elseif victim_base:has_tag("taser") then
-			attacker:sound():say("g32x_any", true)
-		elseif victim_base:has_tag("shield") then
-			attacker:sound():say("g31x_any", true)
-		elseif victim_base:has_tag("sniper") then
-			attacker:sound():say("g35x_any", true)
-		elseif victim_base:has_tag("medic") then
-			attacker:sound():say("g36x_any", true)
-		elseif victim_base:has_tag("custom") then
-			attacker:sound():say("g92", true)
-		end
-	end
+if CopDamage.death_comments_lookup and not CopDamage.death_comments_lookup.custom then
+	CopDamage.death_comments_lookup.custom = "g92"
+	table.insert(CopDamage.death_comments_priority,#CopDamage.death_comments_priority + 1,"custom")
 end
 
 function CopDamage:roll_critical_hit(attack_data,damage)
@@ -1239,7 +1196,7 @@ function CopDamage:damage_bullet(attack_data)
 		elseif alive(attack_data.attacker_unit) and managers.groupai:state():is_unit_team_AI(attack_data.attacker_unit) then
 			local special_comment = self:_check_special_death_conditions(attack_data.variant, attack_data.col_ray.body, attack_data.attacker_unit, attack_data.weapon_unit)
 
-			self:_AI_comment_death(attack_data.attacker_unit, self._unit, special_comment)
+			self:_comment_death(attack_data.attacker_unit, self._unit, special_comment)
 		end
 	end
 
