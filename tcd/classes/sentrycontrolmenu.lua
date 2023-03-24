@@ -1,6 +1,6 @@
 _G.SentryControlMenu = {}
 
-SentryControlMenu._path = deathvox.ModPath or deathvox:GetPath()
+--SentryControlMenu._path = deathvox.ModPath or deathvox:GetPath()
 SentryControlMenu._save_path = SavePath .. "SentryControlMenuSettings.txt"
 
 SentryControlMenu.ICONS_ATLAS_NAME = "guis/textures/pd2/hud_sentry_radial_icons_atlas"

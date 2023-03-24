@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
-<table>
+<table name="tcd_modules" >
 	
-	<Hooks directory="tcd/">
-		
-	
-	<!-- since csvstats is used to replace/edit tweakdata, it must be loaded even earlier -->
+	<Hooks name="tcd_hooks" directory="tcd/">
+	<!-- since csvstats is used to replace/edit tweakdata, it must be loaded even earlier than the classes module is able to -->
 		<hook pre="true" file="classes/csvstats.lua" source_file="lib/entry"/>
-		
-		<hook file="classes/radialmousemenu.lua" source_file="lib/managers/menumanager"/>
-		<hook file="classes/sentrycontrolmenu.lua" source_file="lib/managers/menumanager"/>
-		<hook file="classes/tcdoverlay.lua" source_file="lib/managers/menumanager"/>
-		<hook file="classes/tripminecontrolmenu.lua" source_file="lib/managers/menumanager"/>
 		
 		<!-- tcd specific localization -->
 		<hook file="loc/loc.lua" source_file="lib/managers/localizationmanager"/>
 	</Hooks>
 	
-	<AddFiles directory="tcd/assets">
+	<Classes name="tcd_classes" directory="tcd/">
+		<class file="classes/radialmousemenu.lua"/>
+		<class file="classes/sentrycontrolmenu.lua"/>
+		<class file="classes/tcdoverlay.lua"/>
+		<class file="classes/tripminecontrolmenu.lua"/>
+	</Classes>
+	
+	<AddFiles name="tcd_addfiles" directory="tcd/assets">
 	
 	<!-- Shotgun Choke attachment assets -->
 		<texture path="guis/textures/pd2/blackmarket/inv_mod_choke"/>
