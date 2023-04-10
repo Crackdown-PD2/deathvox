@@ -1,6 +1,0 @@
-<table name="Crackdown Music By Rainbowmaker" id="rb_dead_end" directory="music/rb_dead_end">
-	<event name="setup" start_source="stealth_intro.ogg" source="stealth.ogg"/>
-	<event name="anticipation" start_source="anticipation_intro.ogg" source="anticipation.ogg"/>
-	<event name="assault" start_source="transition.ogg" source="assault.ogg"/>
-	<event name="control" start_source="control_intro.ogg" source="control.ogg"/>
-</table>

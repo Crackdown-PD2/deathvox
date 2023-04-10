@@ -17,3 +17,9 @@ Hooks:Add("LocalizationManagerPostInit", "DeathVox_Localization", function(loc)
 		loc:load_localization_file(loc_path .. "murkypersistentnames.txt")
 	end	
 end)
+
+Hooks:Add("LocalizationManagerPostInit","tcd_load_localization",function(self)
+	if deathvox:IsTotalCrackdownEnabled() then
+		self:load_localization_file(deathvox.ModPath .. "loc/tcd_en.txt")
+	end
+end)

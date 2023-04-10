@@ -6,7 +6,7 @@
 	"version" : "E2",
 	"priority" : 48,
 	"blt_version" : 2,
-	"image" : "res.png",
+	"image" : "icon.png",
 	"undisablable" : false,
 	"disable_safe_mode" : false
 }

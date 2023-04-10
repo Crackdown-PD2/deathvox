@@ -1,10 +1,3 @@
-DeathvoxMapFramework = DeathvoxMapFramework or class(MapFramework)
-DeathvoxMapFramework._directory = ModPath .. "map_replacements"
-DeathvoxMapFramework.type_name = "deathvox"
-
-DeathvoxMapFramework:init()
-DeathvoxMapFramework:InitMods()
-
 _G.deathvox = deathvox or {}
 --deathvox.ModPath = ModPath
 deathvox.update_url = "https://raw.githubusercontent.com/Crackdown-PD2/deathvox/autoupdate/meta.json"
@@ -14,11 +7,11 @@ deathvox.SavePath = SavePath
 deathvox.SaveName = "crackdown.txt"
 deathvox.SavePathFull = deathvox.SavePath .. deathvox.SaveName
 deathvox.Settings = { --options as saved to your BLT save file 
-	useHoppipOverhaul = true,
+--	useHoppipOverhaul = true, --deprecated; left as an example to others
 	useTotalCDOverhaul = true
 }
 deathvox.syncable_options = { --whitelist: options on this list will be accepted by other clients; if options are not on this list, clients will ignore them and not apply these synced options (from host) on the client's end
-	useHoppipOverhaul = true
+--	useHoppipOverhaul = true --deprecated; left as an example to others
 }
 deathvox.Session_Settings = {} --populated only on load, not on changed menu. keep this empty
 deathvox.NetworkIDs = { --string ids for network syncing stuff
@@ -47,12 +40,8 @@ deathvox.tcd_gui_data = { --for reference in projectilestweakdata and playerinve
 	}
 }
 
---checks whether or not hoppip's overhaul is enabled;
 --If you are creating a menu option that should apply instantly, use Settings; 
 --Else, if you want a menu option that should only apply on restart/reload, use Session_Settings.
-function deathvox:IsHoppipOverhaulEnabled()
-	return self.Session_Settings.useHoppipOverhaul 
-end
 
 function deathvox:set_update_data(json_data)
 	if json_data:is_nil_or_empty() then
@@ -105,7 +94,7 @@ function deathvox:Load()
 		self:Save()
 	end
 	
-	self:check_for_updates()
+--	self:check_for_updates()
 
 --	log("Loaded menu settings")
 	return self.Settings
@@ -160,34 +149,36 @@ VoicelineFramework.BufferedSounds = {}
 
 function C:register_unit(unit_name)
 	--log("VF: Registering Unit, " .. unit_name)
-	if _G.voiceline_framework then
-		_G.voiceline_framework.BufferedSounds[unit_name] = {}
+	if deathvox._voiceline_framework then
+		deathvox._voiceline_framework.BufferedSounds[unit_name] = {}
 	end
 end
 
 function C:register_line_type(unit_name, line_type)
-	if _G.voiceline_framework then
-		if _G.voiceline_framework.BufferedSounds[unit_name] then
+	if deathvox._voiceline_framework then
+		if deathvox._voiceline_framework.BufferedSounds[unit_name] then
 			--log("VF: Registering Type, " .. line_type .. " for Unit " .. unit_name)
-			local fuck = _G.voiceline_framework.BufferedSounds[unit_name]
+			local fuck = deathvox._voiceline_framework.BufferedSounds[unit_name]
 			fuck[line_type] = {}
 		end
 	end
 end
 
 function C:register_voiceline(unit_name, line_type, path)
-	if _G.voiceline_framework then
-		if _G.voiceline_framework.BufferedSounds[unit_name] then
-			local fuck = _G.voiceline_framework.BufferedSounds[unit_name]
-			if fuck[line_type] then
+	if deathvox._voiceline_framework then
+		if deathvox._voiceline_framework.BufferedSounds[unit_name] then
+			local buffered_sounds = deathvox._voiceline_framework.BufferedSounds[unit_name]
+			if buffered_sounds[line_type] then
 				--log("VF: Registering Path, " .. path .. " for Unit " .. unit_name)
-				table.insert(fuck[line_type], XAudio.Buffer:new(path))
+				table.insert(buffered_sounds[line_type], XAudio.Buffer:new(path))
 			end
 		end
 	end
 end
-
-if not _G.voiceline_framework then
+Hooks:Register("crackdown_on_setup_voiceline_framework")
+if not deathvox._voiceline_framework then
 	blt.xaudio.setup()
-	_G.voiceline_framework = VoicelineFramework:new()
+	local voiceline_framework = VoicelineFramework:new()
+	deathvox._voiceline_framework = voiceline_framework
+	Hooks:Call("crackdown_on_setup_voiceline_framework",voiceline_framework)
 end  

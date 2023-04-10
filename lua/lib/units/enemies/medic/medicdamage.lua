@@ -18,7 +18,7 @@ function MedicDamage:heal_unit(unit_to_heal, no_cooldown)
 		local custom_vo = base_ext and base_ext:char_tweak().custom_voicework
 
 		if custom_vo then
-			local voicelines = _G.voiceline_framework.BufferedSounds[custom_vo]
+			local voicelines = deathvox._voiceline_framework.BufferedSounds[custom_vo]
 
 			if voicelines and voicelines["heal"] then
 				local line_to_use = voicelines.heal[math_random(#voicelines.heal)]

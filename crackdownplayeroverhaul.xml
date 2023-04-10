@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<table name="tcd_localization_module">
+	<!-- tcd localization packaged in with main installation for convenience -->
+	<!--
+	<Localization name="crackdown_overhaul_localization" directory="loc" default="tcd_en.txt"/>
+	-->
+</table>

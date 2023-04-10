@@ -159,7 +159,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 			rays = 1
 		}
 		
-		-- Dragon's Breath Rounds (muzzleflash and actual hitbox/cone stuff ain't done)
+		-- Dragon's Breath Rounds
 		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats = {
 			ignore_statistic = true,
 			muzzleflash = "effects/payday2/particles/weapons/shotgun/sho_muzzleflash_dragons_breath",

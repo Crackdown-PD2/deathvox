@@ -506,10 +506,6 @@ end
 
 --local _chk_dmg_too_soon_orig = PlayerDamage._chk_dmg_too_soon
 function PlayerDamage:_chk_dmg_too_soon(damage, ...)
-	--[[if not deathvox:IsHoppipOverhaulEnabled() then
-		return _chk_dmg_too_soon_orig(self, damage, ...)
-   	end]]
-
 	local next_allowed_dmg_t = type(self._next_allowed_dmg_t) == "number" and self._next_allowed_dmg_t or Application:digest_value(self._next_allowed_dmg_t, false)
 	local t = managers.player:player_timer():time()
 
@@ -603,10 +599,6 @@ end
 
 local _calc_armor_damage_original = PlayerDamage._calc_armor_damage
 function PlayerDamage:_calc_armor_damage(attack_data, ...)
-	--[[if not deathvox:IsHoppipOverhaulEnabled() then
-		return _calc_armor_damage_original(self, attack_data, ...)
-   	end]]
-	
 	if self:get_real_armor() > 0 then
 		if self._old_last_received_dmg then
 			attack_data.damage = attack_data.damage - self._old_last_received_dmg
@@ -622,10 +614,6 @@ end
 
 local _calc_health_damage_original = PlayerDamage._calc_health_damage
 function PlayerDamage:_calc_health_damage(attack_data, ...)
-	--[[if not deathvox:IsHoppipOverhaulEnabled() then
-		return _calc_health_damage_original(self, attack_data, ...)
-   	end]]
-
 	if self._old_last_received_dmg then
 		attack_data.damage = attack_data.damage - self._old_last_received_dmg
 	end
