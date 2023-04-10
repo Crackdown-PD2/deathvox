@@ -17,6 +17,11 @@ deathvox.Session_Settings = {} --populated only on load, not on changed menu. ke
 deathvox.NetworkIDs = { --string ids for network syncing stuff
 	Overhauls = "overhauls"
 }
+
+--matchmaking keys to lock lobbies to others using crackdown or crackdown overhaul
+deathvox.mm_key_default = "crackdown-release-1-92222"
+deathvox.mm_key_overhaul = "crackdown-total-experimental-1-02032023"
+
 deathvox.blt_menu_id = "deathvox_menu_main" --main menu id; all other menu ids should be in their menu's .txt files
 
 deathvox.tcd_gui_data = { --for reference in projectilestweakdata and playerinventorygui, for item class preview icons
@@ -94,6 +99,12 @@ function deathvox:Load()
 		self:Save()
 	end
 	
+	--if overhaul content is not installed,
+	--then force disable overhaul setting to avoid crashes
+	if not _G.deathvox_overhaul then
+		self:ChangeSetting("useTotalCDOverhaul",false)
+	end
+	
 --	self:check_for_updates()
 
 --	log("Loaded menu settings")
@@ -141,7 +152,7 @@ end
 
 --load contents now, as well as on menu load
 deathvox:Load()
-
+		
 -- Voice Framework Setup
 local C = blt_class()
 VoicelineFramework = C
@@ -175,7 +186,8 @@ function C:register_voiceline(unit_name, line_type, path)
 		end
 	end
 end
-Hooks:Register("crackdown_on_setup_voiceline_framework")
+--Hooks:Register("crackdown_on_setup_voiceline_framework")
+
 if not deathvox._voiceline_framework then
 	blt.xaudio.setup()
 	local voiceline_framework = VoicelineFramework:new()

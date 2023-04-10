@@ -78,12 +78,27 @@ if not (_G.deathvox and deathvox.HAS_LOADED_ASSETS) then
 	--populates the menu with data from the json file; this data should have a menu id matching one you created in the above MenuManagerSetupCustomMenus hook
 	Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_deathvox", function(menu_manager, nodes)
 		MenuHelper:LoadFromJsonFile(deathvox.ModPath .. "menu/menu_overhauls.txt", deathvox, deathvox.Settings)
+
+		local overhaul_is_installed = not not _G.deathvox_overhaul
+		MenuHelper:AddToggle({
+			id = "deathvox_toggle_totalcd",
+			title = "deathvox_toggle_totalcd_title",
+			desc = "deathvox_toggle_totalcd_desc",
+			callback = "callback_deathvox_toggle_totalcd",
+			value = deathvox:IsTotalCrackdownEnabled(),
+			disabled = not overhaul_is_installed,
+			menu_id = "deathvox_menu_overhauls",
+			priority = 1
+		})	
+		
 	end)
 
 	--i just used this to create the main crackdown menu; you probably don't need to change/add to this if you just want more submenus
 	Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenus_deathvox", function(menu_manager, nodes)
 		nodes[menu_id] = MenuHelper:BuildMenu( menu_id )
-		MenuHelper:AddMenuItem( nodes.options, menu_id, "deathvox_menu_main_title", "deathvox_menu_main_desc","blt_options","before") --creates the 
+		
+		--place the crackdown menu in the main menu instead of the mod options menu
+		MenuHelper:AddMenuItem( nodes.options, menu_id, "deathvox_menu_main_title", "deathvox_menu_main_desc","blt_options","before")
 		
 	end)
 
@@ -104,9 +119,9 @@ if not (_G.deathvox and deathvox.HAS_LOADED_ASSETS) then
 			--quick and dirty fix
 			--alternatively, close game immediately after to force a restart + apply game settings change?
 			if enabled then 
-				NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY = "crackdown-total-experimental-1"
+				NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY = deathvox.mm_key_overhaul
 			else
-				NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY = "crackdown-release-1"
+				NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY = deathvox.mm_key_default
 			end
 			
 			deathvox:Save()
@@ -115,7 +130,7 @@ if not (_G.deathvox and deathvox.HAS_LOADED_ASSETS) then
 		MenuCallbackHandler.callback_deathvox_close_overhauls = function(self)
 	--			deathvox:Save()
 		end
-		deathvox:Load()		
+		deathvox:Load()
 	end)
 
 	Hooks:Add("NetworkReceivedData", "NetworkReceivedData_deathvox", function(sender, message, data)

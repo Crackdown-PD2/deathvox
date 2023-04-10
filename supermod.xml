@@ -1,6 +1,4 @@
 <?xml version="1.0"?>
 <mod name="DeathVox" global_key="deathvox">
-	<:include src="hooks.xml" />
-	<:include src="hooks2.xml" />
 	<tweak definition="damagesyncing.xml" />
 </mod>
