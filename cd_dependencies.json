@@ -24,6 +24,7 @@
 		},
 		{
 			"Name" : "Crackdown",
+			"Description" : "An extensive difficulty and overhaul mod.",
 			"DirectoryType" : "blt",
 			"DirectoryName" : "Crackdown/",
 			"Provider" : "github",
