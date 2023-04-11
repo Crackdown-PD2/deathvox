@@ -1,0 +1,105 @@
+{
+	"Response" : [
+		{
+			"Name" : "SuperBLT",
+			"Description" : "Lua basemod for SuperBLT modloader.",
+			"DirectoryType" : "blt",
+			"DirectoryName" : "base/",
+			"Provider" : "gitlab",
+			"Uri" : "znixian/payday2-superblt-lua",
+			"Branch" : "master",
+			"Release" : false,
+			"Optional" : false
+		},
+		{
+			"Name" : "BeardLib",
+			"Description" : "A large library that assists in mod creation.",
+			"DirectoryType" : "blt",
+			"DirectoryName" : "BeardLib/",
+			"Provider" : "github",
+			"Uri" : "simon-wh/PAYDAY-2-BeardLib",
+			"Branch" : "master",
+			"Release" : true,
+			"Optional" : false
+		},
+		{
+			"Name" : "Crackdown",
+			"DirectoryType" : "blt",
+			"DirectoryName" : "Crackdown/",
+			"Provider" : "github",
+			"Uri" : "Crackdown-PD2/deathvox",
+			"Branch" : "master",
+			"Release" : false,
+			"Optional" : false
+		},
+		{
+			"Name" : "Crackdown Assets - Classics Faction",
+			"Description" : "Assets used by the Classics enemy faction in Crackdown.",
+			"DirectoryType" : "blt",
+			"DirectoryName" : "Crackdown-Assets-Faction-Classics/",
+			"Provider" : "github",
+			"Uri" : "Crackdown-PD2/Crackdown-Assets-Faction-Classics",
+			"Branch" : "main",
+			"Release" : false,
+			"Optional" : false
+		},
+		{
+			"Name" : "Crackdown Assets - Murkies Faction",
+			"Description" : "Assets used by the Murkies enemy faction in Crackdown.",
+			"DirectoryType" : "blt",
+			"DirectoryName" : "Crackdown-Assets-Faction-Murkies/",
+			"Provider" : "github",
+			"Uri" : "Crackdown-PD2/Crackdown-Assets-Faction-Murkies",
+			"Branch" : "main",
+			"Release" : false,
+			"Optional" : false
+		},
+		{
+			"Name" : "Crackdown Assets - Federales Faction",
+			"Description" : "Assets used by the Federales enemy faction in Crackdown.",
+			"DirectoryType" : "blt",
+			"DirectoryName" : "Crackdown-Assets-Faction-Federales/",
+			"Provider" : "github",
+			"Uri" : "Crackdown-PD2/Crackdown-Assets-Faction-Federales",
+			"Branch" : "main",
+			"Release" : false,
+			"Optional" : false
+		},
+		{
+			"Name" : "Crackdown Assets - Overhaul",
+			"Description" : "Assets used by TOTAL CRACKDOWN, the player-side overhaul for Crackdown.",
+			"DirectoryType" : "blt",
+			"DirectoryName" : "Crackdown-Assets-Overhaul/",
+			"Provider" : "github",
+			"Uri" : "Crackdown-PD2/Crackdown-Assets-Overhaul",
+			"Branch" : "main",
+			"Release" : false,
+			"Optional" : true
+		},
+		{
+			"Name" : "Crackdown Assets - Music",
+			"Description" : "Custom heist tracks for Crackdown. Includes:\n\"-Dead End\" by Rainbowmaker",
+			"DirectoryType" : "blt",
+			"DirectoryName" : "Crackdown-Assets-Music/",
+			"Provider" : "github",
+			"Uri" : "Crackdown-PD2/Crackdown-Assets-Music",
+			"Branch" : "main",
+			"Release" : false,
+			"Optional" : true
+		},
+		{
+			"Name" : "Crackdown Assets - Maps",
+			"Description" : "A wide variety of custom maps and map replacements. ",
+			"DirectoryType" : "blt",
+			"DirectoryName" : "Crackdown-Assets-Maps/",
+			"Provider" : "github",
+			"Uri" : "Crackdown-PD2/Crackdown-Assets-Maps",
+			"Branch" : "main",
+			"Release" : false,
+			"Optional" : true
+		}
+	],
+	"MetaResponse" : {
+		"Version" : "1"
+	}
+}
