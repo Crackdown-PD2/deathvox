@@ -67,7 +67,7 @@
 			"Optional" : false
 		},
 		{
-			"Name" : "Crackdown Assets - Overhaul",
+			"Name" : "Crackdown Assets - Player Overhaul",
 			"Description" : "Assets used by TOTAL CRACKDOWN, the player-side overhaul for Crackdown.",
 			"DirectoryType" : "beardlib",
 			"DirectoryName" : "Crackdown-Assets-Overhaul/",
