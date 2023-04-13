@@ -6,7 +6,7 @@
 			"DirectoryType" : "blt",
 			"DirectoryName" : "base/",
 			"Provider" : "gitlab",
-			"Uri" : "znixian/payday2-superblt-lua",
+			"Uri" : "4797104",
 			"Branch" : "master",
 			"Release" : false,
 			"Optional" : false
@@ -25,7 +25,7 @@
 		{
 			"Name" : "Crackdown",
 			"Description" : "An extensive difficulty and overhaul mod.",
-			"DirectoryType" : "blt",
+			"DirectoryType" : "beardlib",
 			"DirectoryName" : "Crackdown/",
 			"Provider" : "github",
 			"Uri" : "Crackdown-PD2/deathvox",
@@ -36,7 +36,7 @@
 		{
 			"Name" : "Crackdown Assets - Classics Faction",
 			"Description" : "Assets used by the Classics enemy faction in Crackdown.",
-			"DirectoryType" : "blt",
+			"DirectoryType" : "beardlib",
 			"DirectoryName" : "Crackdown-Assets-Faction-Classics/",
 			"Provider" : "github",
 			"Uri" : "Crackdown-PD2/Crackdown-Assets-Faction-Classics",
@@ -47,7 +47,7 @@
 		{
 			"Name" : "Crackdown Assets - Murkies Faction",
 			"Description" : "Assets used by the Murkies enemy faction in Crackdown.",
-			"DirectoryType" : "blt",
+			"DirectoryType" : "beardlib",
 			"DirectoryName" : "Crackdown-Assets-Faction-Murkies/",
 			"Provider" : "github",
 			"Uri" : "Crackdown-PD2/Crackdown-Assets-Faction-Murkies",
@@ -58,7 +58,7 @@
 		{
 			"Name" : "Crackdown Assets - Federales Faction",
 			"Description" : "Assets used by the Federales enemy faction in Crackdown.",
-			"DirectoryType" : "blt",
+			"DirectoryType" : "beardlib",
 			"DirectoryName" : "Crackdown-Assets-Faction-Federales/",
 			"Provider" : "github",
 			"Uri" : "Crackdown-PD2/Crackdown-Assets-Faction-Federales",
@@ -69,7 +69,7 @@
 		{
 			"Name" : "Crackdown Assets - Overhaul",
 			"Description" : "Assets used by TOTAL CRACKDOWN, the player-side overhaul for Crackdown.",
-			"DirectoryType" : "blt",
+			"DirectoryType" : "beardlib",
 			"DirectoryName" : "Crackdown-Assets-Overhaul/",
 			"Provider" : "github",
 			"Uri" : "Crackdown-PD2/Crackdown-Assets-Overhaul",
@@ -79,8 +79,8 @@
 		},
 		{
 			"Name" : "Crackdown Assets - Music",
-			"Description" : "Custom heist tracks for Crackdown. Includes:\n\"-Dead End\" by Rainbowmaker",
-			"DirectoryType" : "blt",
+			"Description" : "Custom heist tracks for Crackdown.",
+			"DirectoryType" : "beardlib",
 			"DirectoryName" : "Crackdown-Assets-Music/",
 			"Provider" : "github",
 			"Uri" : "Crackdown-PD2/Crackdown-Assets-Music",
@@ -91,7 +91,7 @@
 		{
 			"Name" : "Crackdown Assets - Maps",
 			"Description" : "A wide variety of custom maps and map replacements. ",
-			"DirectoryType" : "blt",
+			"DirectoryType" : "beardlib",
 			"DirectoryName" : "Crackdown-Assets-Maps/",
 			"Provider" : "github",
 			"Uri" : "Crackdown-PD2/Crackdown-Assets-Maps",
