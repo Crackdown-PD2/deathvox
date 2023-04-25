@@ -1,221 +1,224 @@
 <?xml version="1.0"?>
 
-<hooks script_path="lua/lib/" hook_id="lib/">
-	<pre script_path="Corepre.lua" :hook_id="entry"/>
-	<post script_path="Core.lua" :hook_id="entry"/>
+<hooks>
 
-	<post script_path="lua/lib/managers/usermanager.lua" :hook_id="managers/usermanager"/>
+<!--
+	<hook post="true" file="lua/lib/entry.lua" source_file="lib/entry"/>
+-->
+	
+	<hook post="true" file="lua/lib/managers/usermanager.lua" source_file="lib/managers/usermanager"/>
 
-	<post script_path="loc/loc.lua" :hook_id="managers/localizationmanager"/>
+	<hook post="true" file="loc/loc.lua" source_file="lib/managers/localizationmanager"/>
 	<!-- this loc file forcefully loads beat cop and hrt names for certain levels so that they dont get overridden by cd diff killfeed/hoplib/whatever;
 		main localization is still handled in json files in the loc directory
 	-->
 	
-	<post script_path="lua/lib/managers/playermanager.lua" :hook_id="managers/playermanager"/>
+	<hook post="true" file="lua/lib/managers/playermanager.lua" source_file="lib/managers/playermanager"/>
 	
-	<post script_path="lua/lib/tweak_data/tweakdata.lua" hook_id="lib/tweak_data/tweakdata"/>
+	<hook post="true" file="lua/lib/tweak_data/tweakdata.lua" source_file="lib/tweak_data/tweakdata"/>
 
-	<post :script_path="tweak_data/networktweakdata.lua" :hook_id="tweak_data/networktweakdata"/>
+	<hook post="true" file="lua/lib/tweak_data/networktweakdata.lua" source_file="lib/tweak_data/networktweakdata"/>
 
-	<post :script_path="tweak_data/attentiontweakdata.lua" :hook_id="tweak_data/attentiontweakdata"/>
-	<post :script_path="tweak_data/charactertweakdata.lua" :hook_id="tweak_data/charactertweakdata"/>
-	<post :script_path="tweak_data/groupaitweakdata.lua" :hook_id="tweak_data/groupaitweakdata"/>
-	<post :script_path="tweak_data/skirmishtweakdata.lua" :hook_id="tweak_data/skirmishtweakdata"/>
-	<post :script_path="tweak_data/firetweakdata.lua" :hook_id="tweak_data/firetweakdata"/>
-	<post :script_path="tweak_data/levelstweakdata.lua" :hook_id="tweak_data/levelstweakdata"/>
+	<hook post="true" file="lua/lib/tweak_data/attentiontweakdata.lua" source_file="lib/tweak_data/attentiontweakdata"/>
+	<hook post="true" file="lua/lib/tweak_data/charactertweakdata.lua" source_file="lib/tweak_data/charactertweakdata"/>
+	<hook post="true" file="lua/lib/tweak_data/groupaitweakdata.lua" source_file="lib/tweak_data/groupaitweakdata"/>
+	<hook post="true" file="lua/lib/tweak_data/skirmishtweakdata.lua" source_file="lib/tweak_data/skirmishtweakdata"/>
+	<hook post="true" file="lua/lib/tweak_data/firetweakdata.lua" source_file="lib/tweak_data/firetweakdata"/>
+	<hook post="true" file="lua/lib/tweak_data/levelstweakdata.lua" source_file="lib/tweak_data/levelstweakdata"/>
 
-	<post :script_path="tweak_data/weapontweakdata.lua" :hook_id="tweak_data/weapontweakdata"/>
-	<post :script_path="tweak_data/blackmarket/projectilestweakdata.lua" :hook_id="tweak_data/blackmarket/projectilestweakdata"/>
-	<post :script_path="tweak_data/blackmarket/meleeweaponstweakdata.lua" :hook_id="tweak_data/blackmarket/meleeweaponstweakdata"/>
-	<post :script_path="tweak_data/weaponfactorytweakdata.lua" :hook_id="tweak_data/weaponfactorytweakdata"/>
-	<post :script_path="tweak_data/playertweakdata.lua" :hook_id="tweak_data/playertweakdata"/>
-	<post :script_path="tweak_data/enveffecttweakdata.lua" :hook_id="tweak_data/enveffecttweakdata"/>
+	<hook post="true" file="lua/lib/tweak_data/weapontweakdata.lua" source_file="lib/tweak_data/weapontweakdata"/>
+	<hook post="true" file="lua/lib/tweak_data/blackmarket/projectilestweakdata.lua" source_file="lib/tweak_data/blackmarket/projectilestweakdata"/>
+	<hook post="true" file="lua/lib/tweak_data/blackmarket/meleeweaponstweakdata.lua" source_file="lib/tweak_data/blackmarket/meleeweaponstweakdata"/>
+	<hook post="true" file="lua/lib/tweak_data/weaponfactorytweakdata.lua" source_file="lib/tweak_data/weaponfactorytweakdata"/>
+	<hook post="true" file="lua/lib/tweak_data/playertweakdata.lua" source_file="lib/tweak_data/playertweakdata"/>
+	<hook post="true" file="lua/lib/tweak_data/enveffecttweakdata.lua" source_file="lib/tweak_data/enveffecttweakdata"/>
 	
-	<post :script_path="tweak_data/upgradestweakdata.lua" :hook_id="tweak_data/upgradestweakdata"/>
-	<post :script_path="tweak_data/skilltreetweakdata.lua" :hook_id="tweak_data/skilltreetweakdata"/>
+	<hook post="true" file="lua/lib/tweak_data/upgradestweakdata.lua" source_file="lib/tweak_data/upgradestweakdata"/>
+	<hook post="true" file="lua/lib/tweak_data/skilltreetweakdata.lua" source_file="lib/tweak_data/skilltreetweakdata"/>
 
-	<post :script_path="modifiers/modifiernohurtanims.lua" :hook_id="modifiers/modifiernohurtanims"/>
-	<post :script_path="modifiers/modifiershieldphalanx.lua" :hook_id="modifiers/modifiershieldphalanx"/>
+	<hook post="true" file="lua/lib/modifiers/modifiernohurtanims.lua" source_file="lib/modifiers/modifiernohurtanims"/>
+	<hook post="true" file="lua/lib/modifiers/modifiershieldphalanx.lua" source_file="lib/modifiers/modifiershieldphalanx"/>
 
-	<post :script_path="mutators/mutatorfriendlyfire.lua" :hook_id="mutators/mutatorfriendlyfire"/>
+	<hook post="true" file="lua/lib/mutators/mutatorfriendlyfire.lua" source_file="lib/mutators/mutatorfriendlyfire"/>
 
-	<group :script_path="units/enemies/" :hook_id="units/enemies/">
-		<post :script_path="cop/copbase.lua" :hook_id="cop/copbase"/>
-		<post :script_path="cop/copbrain.lua" :hook_id="cop/copbrain"/>
-		<post :script_path="cop/copdamage.lua" :hook_id="cop/copdamage"/>
-		<post :script_path="cop/copinventory.lua" :hook_id="cop/copinventory"/>
-		<post :script_path="cop/copmovement.lua" :hook_id="cop/copmovement"/>
-		<post :script_path="cop/copsound.lua" :hook_id="cop/copsound"/>
-		<post :script_path="cop/huskcopbase.lua" :hook_id="cop/huskcopbase"/>
-		<post :script_path="cop/huskcopbrain.lua" :hook_id="cop/huskcopbrain"/>
-		<post :script_path="cop/huskcopdamage.lua" :hook_id="cop/huskcopdamage"/>
-		<post :script_path="cop/huskcopinventory.lua" :hook_id="cop/huskcopinventory"/>
-		<post :script_path="medic/medicdamage.lua" :hook_id="medic/medicdamage"/>
-		<post :script_path="medic/actions/upper_body/medicactionheal.lua" :hook_id="medic/actions/upper_body/medicactionheal"/>
-		<post :script_path="cop/logics/coplogicattack.lua" :hook_id="cop/logics/coplogicattack"/>
-		<post :script_path="cop/logics/coplogicsniper.lua" :hook_id="cop/logics/coplogicsniper"/>
-		<post :script_path="cop/logics/coplogicinactive.lua" :hook_id="cop/logics/coplogicinactive"/>
-		<post :script_path="cop/logics/coplogictravel.lua" :hook_id="cop/logics/coplogictravel"/>
-		<post :script_path="cop/logics/coplogicarrest.lua" :hook_id="cop/logics/coplogicarrest"/>
-		<post :script_path="cop/logics/coplogicintimidated.lua" :hook_id="cop/logics/coplogicintimidated"/>
-		<post :script_path="cop/logics/coplogicbase.lua" :hook_id="cop/logics/coplogicbase"/>
-		<post :script_path="cop/logics/coplogicidle.lua" :hook_id="cop/logics/coplogicidle"/>
-		<post :script_path="cop/logics/coplogicphalanxminion.lua" :hook_id="cop/logics/coplogicphalanxminion"/>
-		<post :script_path="tank/logics/tankcoplogicattack.lua" :hook_id="tank/logics/tankcoplogicattack"/>
-		<post :script_path="spooc/logics/spooclogicattack.lua" :hook_id="spooc/logics/spooclogicattack"/>
-		<post :script_path="shield/logics/shieldlogicattack.lua" :hook_id="shield/logics/shieldlogicattack"/>
-		<post :script_path="spooc/actions/lower_body/actionspooc.lua" :hook_id="spooc/actions/lower_body/actionspooc"/>
-		<post :script_path="actions/upper_body/copactionshoot.lua" :hook_id="cop/actions/upper_body/copactionshoot"/>
-		<post :script_path="actions/upper_body/copactiontase.lua" :hook_id="cop/actions/upper_body/copactiontase"/>
-		<post :script_path="actions/upper_body/copactionhealed.lua" :hook_id="cop/actions/upper_body/copactionhealed"/>
-		<post :script_path="actions/upper_body/copactionreload.lua" :hook_id="cop/actions/upper_body/copactionreload"/>
-		<post :script_path="actions/full_body/copactionhurt.lua" :hook_id="cop/actions/full_body/copactionhurt"/>
-		<post :script_path="actions/full_body/copactionact.lua" :hook_id="cop/actions/full_body/copactionact"/>
-		<post :script_path="actions/full_body/copactiondodge.lua" :hook_id="cop/actions/full_body/copactiondodge"/>
-		<post :script_path="actions/full_body/copactionwarp.lua" :hook_id="cop/actions/full_body/copactionwarp"/>
-		<post :script_path="actions/lower_body/copactionwalk.lua" :hook_id="cop/actions/lower_body/copactionwalk"/>
-		<post :script_path="actions/lower_body/copactionturn.lua" :hook_id="cop/actions/lower_body/copactionturn"/>
-		<post :script_path="actions/lower_body/copactionstand.lua" :hook_id="cop/actions/lower_body/copactionstand"/>
-		<post :script_path="actions/lower_body/copactionidle.lua" :hook_id="cop/actions/lower_body/copactionidle"/>
-		<post :script_path="actions/lower_body/copactioncrouch.lua" :hook_id="cop/actions/lower_body/copactioncrouch"/>
-		<post :script_path="taser/logics/taserlogicattack.lua" :hook_id="taser/logics/taserlogicattack"/>
-	</group>
+	<!--  <group file="lua/lib/units/enemies/" source_file="lib/units/enemies/"> -->
+		<hook post="true" file="lua/lib/units/enemies/cop/copbase.lua" source_file="lib/units/enemies/cop/copbase"/>
+		<hook post="true" file="lua/lib/units/enemies/cop/copbrain.lua" source_file="lib/units/enemies/cop/copbrain"/>
+		<hook post="true" file="lua/lib/units/enemies/cop/copdamage.lua" source_file="lib/units/enemies/cop/copdamage"/>
+		<hook post="true" file="lua/lib/units/enemies/cop/copinventory.lua" source_file="lib/units/enemies/cop/copinventory"/>
+		<hook post="true" file="lua/lib/units/enemies/cop/copmovement.lua" source_file="lib/units/enemies/cop/copmovement"/>
+		<hook post="true" file="lua/lib/units/enemies/cop/copsound.lua" source_file="lib/units/enemies/cop/copsound"/>
+		<hook post="true" file="lua/lib/units/enemies/cop/huskcopbase.lua" source_file="lib/units/enemies/cop/huskcopbase"/>
+		<hook post="true" file="lua/lib/units/enemies/cop/huskcopbrain.lua" source_file="lib/units/enemies/cop/huskcopbrain"/>
+		<hook post="true" file="lua/lib/units/enemies/cop/huskcopdamage.lua" source_file="lib/units/enemies/cop/huskcopdamage"/>
+		<hook post="true" file="lua/lib/units/enemies/cop/huskcopinventory.lua" source_file="lib/units/enemies/cop/huskcopinventory"/>
+		<hook post="true" file="lua/lib/units/enemies/medic/medicdamage.lua" source_file="lib/units/enemies/medic/medicdamage"/>
+		<hook post="true" file="lua/lib/units/enemies/medic/actions/upper_body/medicactionheal.lua" source_file="lib/units/enemies/medic/actions/upper_body/medicactionheal"/>
+		<hook post="true" file="lua/lib/units/enemies/cop/logics/coplogicattack.lua" source_file="lib/units/enemies/cop/logics/coplogicattack"/>
+		<hook post="true" file="lua/lib/units/enemies/cop/logics/coplogicsniper.lua" source_file="lib/units/enemies/cop/logics/coplogicsniper"/>
+		<hook post="true" file="lua/lib/units/enemies/cop/logics/coplogicinactive.lua" source_file="lib/units/enemies/cop/logics/coplogicinactive"/>
+		<hook post="true" file="lua/lib/units/enemies/cop/logics/coplogictravel.lua" source_file="lib/units/enemies/cop/logics/coplogictravel"/>
+		<hook post="true" file="lua/lib/units/enemies/cop/logics/coplogicarrest.lua" source_file="lib/units/enemies/cop/logics/coplogicarrest"/>
+		<hook post="true" file="lua/lib/units/enemies/cop/logics/coplogicintimidated.lua" source_file="lib/units/enemies/cop/logics/coplogicintimidated"/>
+		<hook post="true" file="lua/lib/units/enemies/cop/logics/coplogicbase.lua" source_file="lib/units/enemies/cop/logics/coplogicbase"/>
+		<hook post="true" file="lua/lib/units/enemies/cop/logics/coplogicidle.lua" source_file="lib/units/enemies/cop/logics/coplogicidle"/>
+		<hook post="true" file="lua/lib/units/enemies/cop/logics/coplogicphalanxminion.lua" source_file="lib/units/enemies/cop/logics/coplogicphalanxminion"/>
+		<hook post="true" file="lua/lib/units/enemies/tank/logics/tankcoplogicattack.lua" source_file="lib/units/enemies/tank/logics/tankcoplogicattack"/>
+		<hook post="true" file="lua/lib/units/enemies/spooc/logics/spooclogicattack.lua" source_file="lib/units/enemies/spooc/logics/spooclogicattack"/>
+		<hook post="true" file="lua/lib/units/enemies/shield/logics/shieldlogicattack.lua" source_file="lib/units/enemies/shield/logics/shieldlogicattack"/>
+		<hook post="true" file="lua/lib/units/enemies/spooc/actions/lower_body/actionspooc.lua" source_file="lib/units/enemies/spooc/actions/lower_body/actionspooc"/>
+		<hook post="true" file="lua/lib/units/enemies/actions/upper_body/copactionshoot.lua" source_file="lib/units/enemies/cop/actions/upper_body/copactionshoot"/>
+		<hook post="true" file="lua/lib/units/enemies/actions/upper_body/copactiontase.lua" source_file="lib/units/enemies/cop/actions/upper_body/copactiontase"/>
+		<hook post="true" file="lua/lib/units/enemies/actions/upper_body/copactionhealed.lua" source_file="lib/units/enemies/cop/actions/upper_body/copactionhealed"/>
+		<hook post="true" file="lua/lib/units/enemies/actions/upper_body/copactionreload.lua" source_file="lib/units/enemies/cop/actions/upper_body/copactionreload"/>
+		<hook post="true" file="lua/lib/units/enemies/actions/full_body/copactionhurt.lua" source_file="lib/units/enemies/cop/actions/full_body/copactionhurt"/>
+		<hook post="true" file="lua/lib/units/enemies/actions/full_body/copactionact.lua" source_file="lib/units/enemies/cop/actions/full_body/copactionact"/>
+		<hook post="true" file="lua/lib/units/enemies/actions/full_body/copactiondodge.lua" source_file="lib/units/enemies/cop/actions/full_body/copactiondodge"/>
+		<hook post="true" file="lua/lib/units/enemies/actions/full_body/copactionwarp.lua" source_file="lib/units/enemies/cop/actions/full_body/copactionwarp"/>
+		<hook post="true" file="lua/lib/units/enemies/actions/lower_body/copactionwalk.lua" source_file="lib/units/enemies/cop/actions/lower_body/copactionwalk"/>
+		<hook post="true" file="lua/lib/units/enemies/actions/lower_body/copactionturn.lua" source_file="lib/units/enemies/cop/actions/lower_body/copactionturn"/>
+		<hook post="true" file="lua/lib/units/enemies/actions/lower_body/copactionstand.lua" source_file="lib/units/enemies/cop/actions/lower_body/copactionstand"/>
+		<hook post="true" file="lua/lib/units/enemies/actions/lower_body/copactionidle.lua" source_file="lib/units/enemies/cop/actions/lower_body/copactionidle"/>
+		<hook post="true" file="lua/lib/units/enemies/actions/lower_body/copactioncrouch.lua" source_file="lib/units/enemies/cop/actions/lower_body/copactioncrouch"/>
+		<hook post="true" file="lua/lib/units/enemies/taser/logics/taserlogicattack.lua" source_file="lib/units/enemies/taser/logics/taserlogicattack"/>
+	<!-- </group> -->
 	
-	<post :script_path="units/cameras/fpcameraplayerbase.lua" :hook_id="units/cameras/fpcameraplayerbase"/>
+	<hook post="true" file="lua/lib/units/cameras/fpcameraplayerbase.lua" source_file="lib/units/cameras/fpcameraplayerbase"/>
 	
-	<post :script_path="units/civilians/civilianbase.lua" :hook_id="units/civilians/civilianbase"/>
-	<post :script_path="units/civilians/civilianbrain.lua" :hook_id="units/civilians/civilianbrain"/>
-	<post :script_path="units/civilians/civiliandamage.lua" :hook_id="units/civilians/civiliandamage"/>
-	<post :script_path="units/civilians/huskcivilianbase.lua" :hook_id="units/civilians/huskcivilianbase"/>
-	<post :script_path="units/civilians/logics/civilianlogicsurrender.lua" :hook_id="units/civilians/logics/civilianlogicsurrender"/>
-	<post :script_path="units/civilians/logics/civilianlogicidle.lua" :hook_id="units/civilians/logics/civilianlogicidle"/>
-	<post :script_path="units/civilians/logics/civilianlogicflee.lua" :hook_id="units/civilians/logics/civilianlogicflee"/>
+	<hook post="true" file="lua/lib/units/civilians/civilianbase.lua" source_file="lib/units/civilians/civilianbase"/>
+	<hook post="true" file="lua/lib/units/civilians/civilianbrain.lua" source_file="lib/units/civilians/civilianbrain"/>
+	<hook post="true" file="lua/lib/units/civilians/civiliandamage.lua" source_file="lib/units/civilians/civiliandamage"/>
+	<hook post="true" file="lua/lib/units/civilians/huskcivilianbase.lua" source_file="lib/units/civilians/huskcivilianbase"/>
+	<hook post="true" file="lua/lib/units/civilians/logics/civilianlogicsurrender.lua" source_file="lib/units/civilians/logics/civilianlogicsurrender"/>
+	<hook post="true" file="lua/lib/units/civilians/logics/civilianlogicidle.lua" source_file="lib/units/civilians/logics/civilianlogicidle"/>
+	<hook post="true" file="lua/lib/units/civilians/logics/civilianlogicflee.lua" source_file="lib/units/civilians/logics/civilianlogicflee"/>
 
 	 <!-- Hoxi's Crew Bots Fixes  -->
-	<post :script_path="units/player_team/huskteamaibase.lua" :hook_id="units/player_team/huskteamaibase"/>
-	<post :script_path="units/player_team/huskteamaidamage.lua" :hook_id="units/player_team/huskteamaidamage"/>
-	<post :script_path="units/player_team/huskteamaiinventory.lua" :hook_id="units/player_team/huskteamaiinventory"/>
-	<post :script_path="units/player_team/huskteamaimovement.lua" :hook_id="units/player_team/huskteamaimovement"/>
-	<post :script_path="units/player_team/teamaibase.lua" :hook_id="units/player_team/teamaibase"/>
-	<post :script_path="units/player_team/teamaibrain.lua" :hook_id="units/player_team/teamaibrain"/>
-	<post :script_path="units/player_team/teamaiinventory.lua" :hook_id="units/player_team/teamaiinventory"/>
-	<post :script_path="units/player_team/teamaimovement.lua" :hook_id="units/player_team/teamaimovement"/>
-	<post :script_path="units/player_team/actions/lower_body/criminalactionwalk.lua" :hook_id="units/player_team/actions/lower_body/criminalactionwalk"/>
-	<post :script_path="units/player_team/logics/teamailogicassault.lua" :hook_id="units/player_team/logics/teamailogicassault"/>
-	<post :script_path="units/player_team/logics/teamailogicdisabled.lua" :hook_id="units/player_team/logics/teamailogicdisabled"/>
-	<post :script_path="units/player_team/logics/teamailogicidle.lua" :hook_id="units/player_team/logics/teamailogicidle"/>
-	<post :script_path="units/player_team/logics/teamailogictravel.lua" :hook_id="units/player_team/logics/teamailogictravel"/>
+	<hook post="true" file="lua/lib/units/player_team/huskteamaibase.lua" source_file="lib/units/player_team/huskteamaibase"/>
+	<hook post="true" file="lua/lib/units/player_team/huskteamaidamage.lua" source_file="lib/units/player_team/huskteamaidamage"/>
+	<hook post="true" file="lua/lib/units/player_team/huskteamaiinventory.lua" source_file="lib/units/player_team/huskteamaiinventory"/>
+	<hook post="true" file="lua/lib/units/player_team/huskteamaimovement.lua" source_file="lib/units/player_team/huskteamaimovement"/>
+	<hook post="true" file="lua/lib/units/player_team/teamaibase.lua" source_file="lib/units/player_team/teamaibase"/>
+	<hook post="true" file="lua/lib/units/player_team/teamaibrain.lua" source_file="lib/units/player_team/teamaibrain"/>
+	<hook post="true" file="lua/lib/units/player_team/teamaiinventory.lua" source_file="lib/units/player_team/teamaiinventory"/>
+	<hook post="true" file="lua/lib/units/player_team/teamaimovement.lua" source_file="lib/units/player_team/teamaimovement"/>
+	<hook post="true" file="lua/lib/units/player_team/actions/lower_body/criminalactionwalk.lua" source_file="lib/units/player_team/actions/lower_body/criminalactionwalk"/>
+	<hook post="true" file="lua/lib/units/player_team/logics/teamailogicassault.lua" source_file="lib/units/player_team/logics/teamailogicassault"/>
+	<hook post="true" file="lua/lib/units/player_team/logics/teamailogicdisabled.lua" source_file="lib/units/player_team/logics/teamailogicdisabled"/>
+	<hook post="true" file="lua/lib/units/player_team/logics/teamailogicidle.lua" source_file="lib/units/player_team/logics/teamailogicidle"/>
+	<hook post="true" file="lua/lib/units/player_team/logics/teamailogictravel.lua" source_file="lib/units/player_team/logics/teamailogictravel"/>
 	
-	<post :script_path="tweak_data/equipmentstweakdata.lua" :hook_id="tweak_data/equipmentstweakdata"/>	
-	<post :script_path="tweak_data/interactiontweakdata.lua" :hook_id="tweak_data/interactiontweakdata"/>
-	<post :script_path="units/beings/player/states/playerstandard.lua" :hook_id="units/beings/player/states/playerstandard"/>
-	<post :script_path="units/beings/player/states/playercarry.lua" :hook_id="units/beings/player/states/playercarry"/>
-	<post :script_path="units/beings/player/states/playerbleedout.lua" :hook_id="units/beings/player/states/playerbleedout"/>
-	<post :script_path="units/beings/player/states/playertased.lua" :hook_id="units/beings/player/states/playertased"/>
-	<post :script_path="units/beings/player/playerdamage.lua" :hook_id="units/beings/player/playerdamage"/>
-	<post :script_path="units/beings/player/huskplayerdamage.lua" :hook_id="units/beings/player/huskplayerdamage"/>
-	<post :script_path="units/beings/player/playermovement.lua" :hook_id="units/beings/player/playermovement"/>
-	<post :script_path="units/beings/player/huskplayermovement.lua" :hook_id="units/beings/player/huskplayermovement"/>
-	<post :script_path="units/beings/player/playerequipment.lua" :hook_id="units/beings/player/playerequipment"/>
-	<post :script_path="units/beings/player/playerinventory.lua" :hook_id="units/beings/player/playerinventory"/>
-	<post :script_path="units/beings/player/playersound.lua" :hook_id="units/beings/player/playersound"/>
+	<hook post="true" file="lua/lib/tweak_data/equipmentstweakdata.lua" source_file="lib/tweak_data/equipmentstweakdata"/>	
+	<hook post="true" file="lua/lib/tweak_data/interactiontweakdata.lua" source_file="lib/tweak_data/interactiontweakdata"/>
+	<hook post="true" file="lua/lib/units/beings/player/states/playerstandard.lua" source_file="lib/units/beings/player/states/playerstandard"/>
+	<hook post="true" file="lua/lib/units/beings/player/states/playercarry.lua" source_file="lib/units/beings/player/states/playercarry"/>
+	<hook post="true" file="lua/lib/units/beings/player/states/playerbleedout.lua" source_file="lib/units/beings/player/states/playerbleedout"/>
+	<hook post="true" file="lua/lib/units/beings/player/states/playertased.lua" source_file="lib/units/beings/player/states/playertased"/>
+	<hook post="true" file="lua/lib/units/beings/player/playerdamage.lua" source_file="lib/units/beings/player/playerdamage"/>
+	<hook post="true" file="lua/lib/units/beings/player/huskplayerdamage.lua" source_file="lib/units/beings/player/huskplayerdamage"/>
+	<hook post="true" file="lua/lib/units/beings/player/playermovement.lua" source_file="lib/units/beings/player/playermovement"/>
+	<hook post="true" file="lua/lib/units/beings/player/huskplayermovement.lua" source_file="lib/units/beings/player/huskplayermovement"/>
+	<hook post="true" file="lua/lib/units/beings/player/playerequipment.lua" source_file="lib/units/beings/player/playerequipment"/>
+	<hook post="true" file="lua/lib/units/beings/player/playerinventory.lua" source_file="lib/units/beings/player/playerinventory"/>
+	<hook post="true" file="lua/lib/units/beings/player/playersound.lua" source_file="lib/units/beings/player/playersound"/>
 
-	<post :script_path="units/weapons/bowweaponbase.lua" :hook_id="units/weapons/bowweaponbase"/>
-	<post :script_path="units/weapons/concussiongrenade.lua" :hook_id="units/weapons/grenades/concussiongrenade"/>
-	<post :script_path="units/weapons/incendiaryburstgrenade.lua" :hook_id="units/weapons/grenades/incendiaryburstgrenade"/>
-	<post :script_path="units/weapons/fraggrenade.lua" :hook_id="units/weapons/grenades/fraggrenade"/>
-	<post :script_path="units/weapons/quickcsgrenade.lua" :hook_id="units/weapons/grenades/quickcsgrenade"/>
-	<post :script_path="units/weapons/quickflashgrenade.lua" :hook_id="units/weapons/grenades/quickflashgrenade"/>
-	<post :script_path="units/weapons/quicksmokegrenade.lua" :hook_id="units/weapons/grenades/quicksmokegrenade"/>
-	<post :script_path="units/weapons/teargasgrenade.lua" :hook_id="units/weapons/grenades/teargasgrenade"/>
-	<post :script_path="units/weapons/dvgrenade.lua" :hook_id="units/weapons/grenades/fraggrenade"/>
-	<post :script_path="units/weapons/projectiles/projectilebase.lua" :hook_id="units/weapons/projectiles/projectilebase"/>
-	<post :script_path="units/weapons/projectiles/arrowbase.lua" :hook_id="units/weapons/projectiles/arrowbase"/>
-	<post :script_path="units/weapons/sentrygunweapon.lua" :hook_id="units/weapons/sentrygunweapon"/>
-	<post :script_path="units/weapons/sawweaponbase.lua" :hook_id="units/weapons/sawweaponbase"/>
-	<post :script_path="units/equipment/sentry_gun/sentrygunbase.lua" :hook_id="units/equipment/sentry_gun/sentrygunbase"/>
-	<post :script_path="units/equipment/sentry_gun/sentrygunbrain.lua" :hook_id="units/equipment/sentry_gun/sentrygunbrain"/>
-	<post :script_path="units/equipment/sentry_gun/sentrygundamage.lua" :hook_id="units/equipment/sentry_gun/sentrygundamage"/>
-	<post :script_path="units/equipment/sentry_gun/sentrygunequipment.lua" :hook_id="units/equipment/sentry_gun/sentrygunequipment"/>
-	<post :script_path="units/equipment/sentry_gun/sentrygunmovement.lua" :hook_id="units/equipment/sentry_gun/sentrygunmovement"/>
-	<post :script_path="units/interactions/interactionext.lua" :hook_id="units/interactions/interactionext"/>
+	<hook post="true" file="lua/lib/units/weapons/bowweaponbase.lua" source_file="lib/units/weapons/bowweaponbase"/>
+	<hook post="true" file="lua/lib/units/weapons/concussiongrenade.lua" source_file="lib/units/weapons/grenades/concussiongrenade"/>
+	<hook post="true" file="lua/lib/units/weapons/incendiaryburstgrenade.lua" source_file="lib/units/weapons/grenades/incendiaryburstgrenade"/>
+	<hook post="true" file="lua/lib/units/weapons/fraggrenade.lua" source_file="lib/units/weapons/grenades/fraggrenade"/>
+	<hook post="true" file="lua/lib/units/weapons/quickcsgrenade.lua" source_file="lib/units/weapons/grenades/quickcsgrenade"/>
+	<hook post="true" file="lua/lib/units/weapons/quickflashgrenade.lua" source_file="lib/units/weapons/grenades/quickflashgrenade"/>
+	<hook post="true" file="lua/lib/units/weapons/quicksmokegrenade.lua" source_file="lib/units/weapons/grenades/quicksmokegrenade"/>
+	<hook post="true" file="lua/lib/units/weapons/teargasgrenade.lua" source_file="lib/units/weapons/grenades/teargasgrenade"/>
+	<hook post="true" file="lua/lib/units/weapons/dvgrenade.lua" source_file="lib/units/weapons/grenades/fraggrenade"/>
+	<hook post="true" file="lua/lib/units/weapons/projectiles/projectilebase.lua" source_file="lib/units/weapons/projectiles/projectilebase"/>
+	<hook post="true" file="lua/lib/units/weapons/projectiles/arrowbase.lua" source_file="lib/units/weapons/projectiles/arrowbase"/>
+	<hook post="true" file="lua/lib/units/weapons/sentrygunweapon.lua" source_file="lib/units/weapons/sentrygunweapon"/>
+	<hook post="true" file="lua/lib/units/weapons/sawweaponbase.lua" source_file="lib/units/weapons/sawweaponbase"/>
+	<hook post="true" file="lua/lib/units/equipment/sentry_gun/sentrygunbase.lua" source_file="lib/units/equipment/sentry_gun/sentrygunbase"/>
+	<hook post="true" file="lua/lib/units/equipment/sentry_gun/sentrygunbrain.lua" source_file="lib/units/equipment/sentry_gun/sentrygunbrain"/>
+	<hook post="true" file="lua/lib/units/equipment/sentry_gun/sentrygundamage.lua" source_file="lib/units/equipment/sentry_gun/sentrygundamage"/>
+	<hook post="true" file="lua/lib/units/equipment/sentry_gun/sentrygunequipment.lua" source_file="lib/units/equipment/sentry_gun/sentrygunequipment"/>
+	<hook post="true" file="lua/lib/units/equipment/sentry_gun/sentrygunmovement.lua" source_file="lib/units/equipment/sentry_gun/sentrygunmovement"/>
+	<hook post="true" file="lua/lib/units/interactions/interactionext.lua" source_file="lib/units/interactions/interactionext"/>
 	
-	<post :script_path="units/environment/environmentfire.lua" :hook_id="units/environment/environmentfire"/>
+	<hook post="true" file="lua/lib/units/environment/environmentfire.lua" source_file="lib/units/environment/environmentfire"/>
 	
-	<post :script_path="units/props/aiattentionobject.lua" :hook_id="units/props/aiattentionobject"/>
-	<post :script_path="units/props/carrydata.lua" :hook_id="units/props/carrydata"/>
-	<post :script_path="units/props/drill.lua" :hook_id="units/props/drill"/>
-	<post :script_path="units/props/missiondoor.lua" :hook_id="units/props/missiondoor"/>
-	<post :script_path="units/props/securitycamera.lua" :hook_id="units/props/securitycamera"/>
-	<post :script_path="units/props/smalllootbase.lua" :hook_id="units/props/smalllootbase"/>
-	<post :script_path="units/props/zipline.lua" :hook_id="units/props/zipline"/>
+	<hook post="true" file="lua/lib/units/props/aiattentionobject.lua" source_file="lib/units/props/aiattentionobject"/>
+	<hook post="true" file="lua/lib/units/props/carrydata.lua" source_file="lib/units/props/carrydata"/>
+	<hook post="true" file="lua/lib/units/props/drill.lua" source_file="lib/units/props/drill"/>
+	<hook post="true" file="lua/lib/units/props/missiondoor.lua" source_file="lib/units/props/missiondoor"/>
+	<hook post="true" file="lua/lib/units/props/securitycamera.lua" source_file="lib/units/props/securitycamera"/>
+	<hook post="true" file="lua/lib/units/props/smalllootbase.lua" source_file="lib/units/props/smalllootbase"/>
+	<hook post="true" file="lua/lib/units/props/zipline.lua" source_file="lib/units/props/zipline"/>
 	
-	<post :script_path="units/vehicles/animatedvehiclebase.lua" :hook_id="units/vehicles/animatedvehiclebase"/>
-	<post :script_path="units/vehicles/vehicledrivingext.lua" :hook_id="units/vehicles/vehicledrivingext"/>
+	<hook post="true" file="lua/lib/units/vehicles/animatedvehiclebase.lua" source_file="lib/units/vehicles/animatedvehiclebase"/>
+	<hook post="true" file="lua/lib/units/vehicles/vehicledrivingext.lua" source_file="lib/units/vehicles/vehicledrivingext"/>
 	
-	<post :script_path="utils/inventorydescription.lua" :hook_id="utils/inventorydescription" />
+	<hook post="true" file="lua/lib/utils/inventorydescription.lua" source_file="lib/utils/inventorydescription" />
 	
-	<post :script_path="units/contourext.lua" :hook_id="units/contourext"/>
-	<post :script_path="units/pickups/ammoclip.lua" :hook_id="units/pickups/ammoclip"/>
-	<post :script_path="units/pickups/gageassignmentbase.lua" :hook_id="units/pickups/gageassignmentbase"/>
-	<post :script_path="units/pickups/pickup.lua" :hook_id="units/pickups/pickup"/>
-	<post :script_path="units/equipment/armor_plates/armorplatesbase.lua" :hook_id="units/equipment/doctor_bag/doctorbagbase"/>
-	<post :script_path="units/equipment/doctor_bag/doctorbagbase.lua" :hook_id="units/equipment/doctor_bag/doctorbagbase"/>
-	<post :script_path="units/equipment/first_aid_kit/firstaidkitbase.lua" :hook_id="units/equipment/first_aid_kit/firstaidkitbase"/>
-	<post :script_path="units/equipment/ecm_jammer/ecmjammerbase.lua" :hook_id="units/equipment/ecm_jammer/ecmjammerbase"/>
-	<post :script_path="units/weapons/newflamethrowerbase.lua" :hook_id="units/weapons/newflamethrowerbase"/>
-	<post :script_path="units/weapons/raycastweaponbase.lua" :hook_id="units/weapons/raycastweaponbase"/>
-	<post :script_path="units/weapons/newraycastweaponbase.lua" :hook_id="units/weapons/newraycastweaponbase"/>
-	<post :script_path="units/weapons/newnpcraycastweaponbase.lua" :hook_id="units/weapons/newnpcraycastweaponbase"/>
-	<post :script_path="units/weapons/npcraycastweaponbase.lua" :hook_id="units/weapons/npcraycastweaponbase"/>
-	<post :script_path="units/weapons/shotgunbase.lua" :hook_id="units/weapons/shotgun/shotgunbase"/>
-	<post :script_path="units/weapons/trip_mine/tripminebase.lua" :hook_id="units/weapons/trip_mine/tripminebase"/>
+	<hook post="true" file="lua/lib/units/contourext.lua" source_file="lib/units/contourext"/>
+	<hook post="true" file="lua/lib/units/pickups/ammoclip.lua" source_file="lib/units/pickups/ammoclip"/>
+	<hook post="true" file="lua/lib/units/pickups/gageassignmentbase.lua" source_file="lib/units/pickups/gageassignmentbase"/>
+	<hook post="true" file="lua/lib/units/pickups/pickup.lua" source_file="lib/units/pickups/pickup"/>
+	<hook post="true" file="lua/lib/units/equipment/armor_plates/armorplatesbase.lua" source_file="lib/units/equipment/doctor_bag/doctorbagbase"/>
+	<hook post="true" file="lua/lib/units/equipment/doctor_bag/doctorbagbase.lua" source_file="lib/units/equipment/doctor_bag/doctorbagbase"/>
+	<hook post="true" file="lua/lib/units/equipment/first_aid_kit/firstaidkitbase.lua" source_file="lib/units/equipment/first_aid_kit/firstaidkitbase"/>
+	<hook post="true" file="lua/lib/units/equipment/ecm_jammer/ecmjammerbase.lua" source_file="lib/units/equipment/ecm_jammer/ecmjammerbase"/>
+	<hook post="true" file="lua/lib/units/weapons/newflamethrowerbase.lua" source_file="lib/units/weapons/newflamethrowerbase"/>
+	<hook post="true" file="lua/lib/units/weapons/raycastweaponbase.lua" source_file="lib/units/weapons/raycastweaponbase"/>
+	<hook post="true" file="lua/lib/units/weapons/newraycastweaponbase.lua" source_file="lib/units/weapons/newraycastweaponbase"/>
+	<hook post="true" file="lua/lib/units/weapons/newnpcraycastweaponbase.lua" source_file="lib/units/weapons/newnpcraycastweaponbase"/>
+	<hook post="true" file="lua/lib/units/weapons/npcraycastweaponbase.lua" source_file="lib/units/weapons/npcraycastweaponbase"/>
+	<hook post="true" file="lua/lib/units/weapons/shotgunbase.lua" source_file="lib/units/weapons/shotgun/shotgunbase"/>
+	<hook post="true" file="lua/lib/units/weapons/trip_mine/tripminebase.lua" source_file="lib/units/weapons/trip_mine/tripminebase"/>
 
-	<post :script_path="managers/hintmanager.lua" :hook_id="managers/hintmanager"/>
-	<post :script_path="managers/blackmarketmanager.lua" :hook_id="managers/blackmarketmanager"/>
-	<post :script_path="managers/weaponfactorymanager.lua" :hook_id="managers/weaponfactorymanager"/>
+	<hook post="true" file="lua/lib/managers/hintmanager.lua" source_file="lib/managers/hintmanager"/>
+	<hook post="true" file="lua/lib/managers/blackmarketmanager.lua" source_file="lib/managers/blackmarketmanager"/>
+	<hook post="true" file="lua/lib/managers/weaponfactorymanager.lua" source_file="lib/managers/weaponfactorymanager"/>
 	
-	<post :script_path="managers/groupaistatebase.lua" :hook_id="managers/group_ai_states/groupaistatebase"/>
+	<hook post="true" file="lua/lib/managers/groupaistatebase.lua" source_file="lib/managers/group_ai_states/groupaistatebase"/>
 	<!--sadly have to include this here due to some fucky bullshit with cancelling update callback ids not wanting to work right for me, i cant figure it out, either, so until hoxi's code is around, this will HAVE to do...there are thankfully no side-effects -->
-	<post :script_path="managers/navigationmanager.lua" :hook_id="managers/navigationmanager"/> 
+	<hook post="true" file="lua/lib/managers/navigationmanager.lua" source_file="lib/managers/navigationmanager"/> 
 	
-	<post :script_path="managers/achievmentmanager.lua" :hook_id="managers/achievmentmanager"/>
-	<post :script_path="managers/gameplaycentralmanager.lua" :hook_id="managers/gameplaycentralmanager"/>
-	<post :script_path="managers/enemymanager.lua" :hook_id="managers/enemymanager"/>
-	<post :script_path="managers/menumanager.lua" :hook_id="managers/menumanager"/>
-	<post :script_path="managers/trademanager.lua" :hook_id="managers/trademanager"/>
-	<post :script_path="managers/skirmishmanager.lua" :hook_id="managers/skirmishmanager"/>
-	<post :script_path="managers/dotmanager.lua" :hook_id="managers/dotmanager"/>
-	<post :script_path="managers/explosionmanager.lua" :hook_id="managers/explosionmanager"/>
-	<post :script_path="managers/firemanager.lua" :hook_id="managers/firemanager"/>
-	<post :script_path="managers/menu/skirmishcontractboxgui.lua" :hook_id="managers/menu/skirmishcontractboxgui"/>
-	<post :script_path="managers/menu/menunodegui.lua" :hook_id="managers/menu/menunodegui"/>
-	<post :script_path="managers/menu/blackmarketgui.lua" :hook_id="managers/menu/blackmarketgui"/>
-	<post :script_path="managers/menu/skilltreeguinew.lua" :hook_id="managers/menu/skilltreeguinew"/>
-	<post :script_path="managers/menu/playerinventorygui.lua" :hook_id="managers/menu/playerinventorygui"/>
-	<post :script_path="managers/menu/skilltreegui.lua" :hook_id="managers/menu/skilltreegui"/>
-	<post :script_path="managers/menu/specializationguinew.lua" :hook_id="managers/menu/specializationguinew"/>
-	<!-- <post :script_path="managers/menu/missionbriefinggui.lua" :hook_id="managers/menu/missionbriefinggui"/> -->
-	<post :script_path="managers/group_ai_states/groupaistatebase.lua" :hook_id="managers/group_ai_states/groupaistatebase"/>
-	<post :script_path="managers/group_ai_states/groupaistatebesiege.lua" :hook_id="managers/group_ai_states/groupaistatebesiege"/>
-	<post :script_path="managers/player/snipergrazedamage.lua" :hook_id="managers/player/snipergrazedamage"/>
-	<post :script_path="managers/dialogmanager.lua" :hook_id="managers/dialogmanager"/>
-	<post :script_path="managers/hud/hudassaultcorner.lua" :hook_id="managers/hud/hudassaultcorner"/>
-	<post :script_path="managers/hud/hudtemp.lua" :hook_id="managers/hud/hudtemp"/>
-	<post :script_path="managers/hud/hudteammate.lua" :hook_id="managers/hud/hudteammate"/>
+	<hook post="true" file="lua/lib/managers/achievmentmanager.lua" source_file="lib/managers/achievmentmanager"/>
+	<hook post="true" file="lua/lib/managers/gameplaycentralmanager.lua" source_file="lib/managers/gameplaycentralmanager"/>
+	<hook post="true" file="lua/lib/managers/enemymanager.lua" source_file="lib/managers/enemymanager"/>
+	<hook post="true" file="lua/lib/managers/menumanager.lua" source_file="lib/managers/menumanager"/>
+	<hook post="true" file="lua/lib/managers/trademanager.lua" source_file="lib/managers/trademanager"/>
+	<hook post="true" file="lua/lib/managers/skirmishmanager.lua" source_file="lib/managers/skirmishmanager"/>
+	<hook post="true" file="lua/lib/managers/dotmanager.lua" source_file="lib/managers/dotmanager"/>
+	<hook post="true" file="lua/lib/managers/explosionmanager.lua" source_file="lib/managers/explosionmanager"/>
+	<hook post="true" file="lua/lib/managers/firemanager.lua" source_file="lib/managers/firemanager"/>
+	<hook post="true" file="lua/lib/managers/menu/skirmishcontractboxgui.lua" source_file="lib/managers/menu/skirmishcontractboxgui"/>
+	<hook post="true" file="lua/lib/managers/menu/menunodegui.lua" source_file="lib/managers/menu/menunodegui"/>
+	<hook post="true" file="lua/lib/managers/menu/blackmarketgui.lua" source_file="lib/managers/menu/blackmarketgui"/>
+	<hook post="true" file="lua/lib/managers/menu/skilltreeguinew.lua" source_file="lib/managers/menu/skilltreeguinew"/>
+	<hook post="true" file="lua/lib/managers/menu/playerinventorygui.lua" source_file="lib/managers/menu/playerinventorygui"/>
+	<hook post="true" file="lua/lib/managers/menu/skilltreegui.lua" source_file="lib/managers/menu/skilltreegui"/>
+	<hook post="true" file="lua/lib/managers/menu/specializationguinew.lua" source_file="lib/managers/menu/specializationguinew"/>
+	<!-- <hook post="true" file="lua/lib/managers/menu/missionbriefinggui.lua" source_file="lib/managers/menu/missionbriefinggui"/> -->
+	<hook post="true" file="lua/lib/managers/group_ai_states/groupaistatebase.lua" source_file="lib/managers/group_ai_states/groupaistatebase"/>
+	<hook post="true" file="lua/lib/managers/group_ai_states/groupaistatebesiege.lua" source_file="lib/managers/group_ai_states/groupaistatebesiege"/>
+	<hook post="true" file="lua/lib/managers/player/snipergrazedamage.lua" source_file="lib/managers/player/snipergrazedamage"/>
+	<hook post="true" file="lua/lib/managers/dialogmanager.lua" source_file="lib/managers/dialogmanager"/>
+	<hook post="true" file="lua/lib/managers/hud/hudassaultcorner.lua" source_file="lib/managers/hud/hudassaultcorner"/>
+	<hook post="true" file="lua/lib/managers/hud/hudtemp.lua" source_file="lib/managers/hud/hudtemp"/>
+	<hook post="true" file="lua/lib/managers/hud/hudteammate.lua" source_file="lib/managers/hud/hudteammate"/>
 
-	<post :script_path="managers/musicmanager.lua" :hook_id="managers/musicmanager"/>
+	<hook post="true" file="lua/lib/managers/musicmanager.lua" source_file="lib/managers/musicmanager"/>
 
-	<post :script_path="managers/mission/elementspawnenemygroup.lua" :hook_id="managers/mission/elementspawnenemygroup"/>
-	<post :script_path="managers/mission/elementspawnenemydummy.lua" :hook_id="managers/mission/elementspawnenemydummy"/>
-	<!-- <post :script_path="managers/mission/elementspecialobjective.lua" :hook_id="managers/mission/elementspecialobjective"/> -->
-	<post :script_path="managers/mission/elementsmokegrenade.lua" :hook_id="managers/mission/elementsmokegrenade"/>
+	<hook post="true" file="lua/lib/managers/mission/elementspawnenemygroup.lua" source_file="lib/managers/mission/elementspawnenemygroup"/>
+	<hook post="true" file="lua/lib/managers/mission/elementspawnenemydummy.lua" source_file="lib/managers/mission/elementspawnenemydummy"/>
+	<!-- <hook post="true" file="lua/lib/managers/mission/elementspecialobjective.lua" source_file="lib/managers/mission/elementspecialobjective"/> -->
+	<hook post="true" file="lua/lib/managers/mission/elementsmokegrenade.lua" source_file="lib/managers/mission/elementsmokegrenade"/>
 	
+	<hook post="true" file="lua/lib/network/base/clientnetworksession.lua" source_file="lib/network/base/clientnetworksession"/>
+	<hook post="true" file="lua/lib/network/base/hostnetworksession.lua" source_file="lib/network/base/hostnetworksession"/>
+	<hook post="true" file="lua/lib/network/handlers/unitnetworkhandler.lua" source_file="lib/network/handlers/unitnetworkhandler"/>
+	<hook post="true" file="lua/lib/network/matchmaking/networkmatchmakingsteam.lua" source_file="lib/network/matchmaking/networkmatchmakingsteam"/>
 	
-	<post :script_path="network/base/clientnetworksession.lua" :hook_id="network/base/clientnetworksession"/>
-	<post :script_path="network/base/hostnetworksession.lua" :hook_id="network/base/hostnetworksession"/>
-	<post :script_path="network/handlers/unitnetworkhandler.lua" :hook_id="network/handlers/unitnetworkhandler"/>
-	<post :script_path="network/matchmaking/networkmatchmakingsteam.lua" :hook_id="network/matchmaking/networkmatchmakingsteam"/>
+	<hook post="true" file="lua/lib/player_actions/skills/playeractiontagteam.lua" source_file="lib/player_actions/skills/playeractiontagteam"/>
 	
-	<post :script_path="player_actions/skills/playeractiontagteam.lua" :hook_id="player_actions/skills/playeractiontagteam"/>
+	<hook post="true" file="lua/lib/managers/coreenvironmentcontrollermanager.lua" source_file="core/lib/managers/coreenvironmentcontrollermanager"/>
 </hooks>

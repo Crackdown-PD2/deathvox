@@ -1,6 +1,6 @@
 core:module("UserManager")
 
-Hooks:PostHook(GenericUserManager, "setup_setting_map", "cd_init", function(self)
+Hooks:PostHook(GenericUserManager, "setup_setting_map", "cd_insert_qol_settings", function(self)
 	self:setup_setting(400, "hold_to_jump", false) --keep this here, it won't do anything, but will add compatibility with hh
 	self:setup_setting(401, "staticrecoil", false)
 	self:setup_setting(402, "holdtofire", false)

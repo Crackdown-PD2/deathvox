@@ -7,6 +7,6 @@
 	"priority" : 48,
 	"blt_version" : 2,
 	"image" : "icon.png",
-	"undisablable" : false,
+	"undisablable" : true,
 	"disable_safe_mode" : false
 }

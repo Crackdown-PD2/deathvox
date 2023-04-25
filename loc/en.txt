@@ -112,5 +112,18 @@
 	"cdmenu_staticrecoil" : "Static Recoil",
 	"cdmenu_staticrecoil_help" : "Disables the automatic recoil compensation, making you have to manually pull down on the mouse to adjust your aim after you stop firing.",
 	"cdmenu_holdtofire" : "HOLD TO FIRE SINGLE-FIRE WEAPONS",
-	"cdmenu_holdtofire_help" : "Allows players to fire single-fire weapons at their maximum firerate by Fire button."
+	"cdmenu_holdtofire_help" : "Allows players to fire single-fire weapons at their maximum firerate by Fire button.",
+	
+	"menu_l_global_value_tcd" : "This is a TOTAL CRACKDOWN item!",
+	"bm_menu_choke" : "Chokes", 
+	"bm_wp_wpn_fps_sho_choke_a" : "Standard Choke",
+	"bm_wp_wpn_fps_sho_choke_a_desc" : "This attachment does not provide stats unless Total Crackdown is enabled.",
+	"bm_wp_wpn_fps_sho_choke_b" : "Cylinder Choke",
+	"bm_wp_wpn_fps_sho_choke_b_desc" : "This attachment does not provide stats unless Total Crackdown is enabled.", 
+	"bm_wp_wpn_fps_sho_choke_c" : "Skeet Choke",
+	"bm_wp_wpn_fps_sho_choke_c_desc" : "This attachment does not provide stats unless Total Crackdown is enabled.", 
+	"bm_wp_wpn_fps_sho_choke_d" : "Modified Choke",
+	"bm_wp_wpn_fps_sho_choke_d_desc" : "This attachment does not provide stats unless Total Crackdown is enabled.", 
+	"bm_wp_wpn_fps_sho_choke_e" : "Full Choke",
+	"bm_wp_wpn_fps_sho_choke_e_desc" : "This attachment does not provide stats unless Total Crackdown is enabled."
 }
