@@ -1,9 +1,3 @@
-local clone_g = clone
-local mvec3_cpy = mvector3.copy
-local REACT_AIM = AIAttentionObject.REACT_AIM
-local REACT_COMBAT = AIAttentionObject.REACT_COMBAT
-local REACT_SHOOT = AIAttentionObject.REACT_SHOOT
-
 function ShieldLogicAttack.enter(data, new_logic_name, enter_params)
 	local old_internal_data = data.internal_data
 	local my_data = {
@@ -26,6 +20,8 @@ function ShieldLogicAttack.enter(data, new_logic_name, enter_params)
 
 	my_data.attitude = data.objective and data.objective.attitude or "avoid"
 
+	data.unit:brain():set_update_enabled_state(false)
+
 	if not data.attack_sound_t or data.t - data.attack_sound_t > 40 then
 		data.attack_sound_t = data.t
 
@@ -41,28 +37,29 @@ function ShieldLogicAttack.enter(data, new_logic_name, enter_params)
 	data.unit:brain():set_attention_settings({
 		cbt = true
 	})
-
-	my_data.weapon_range = clone_g(data.char_tweak.weapon[data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage].range)
 	
-	if data.tactics then
-		if data.tactics.ranged_fire or data.tactics.elite_ranged_fire then
-			
-			if my_data.weapon_range.aggressive then
-				my_data.weapon_range.aggressive = my_data.weapon_range.aggressive * 1.5
-			end
-			
-			my_data.weapon_range.close = my_data.weapon_range.close * 2
-			my_data.weapon_range.optimal = my_data.weapon_range.optimal * 1.5
+	if data.unit:inventory():shield_unit() then
+		local shield_base = data.unit:inventory():shield_unit():base()
+		local use_data = shield_base and shield_base.get_use_data and shield_base:get_use_data()
+		
+		if use_data then
+			my_data.shield_unit = data.unit:inventory():shield_unit()
+			my_data.shield_use_range = use_data.range
+			my_data.shield_use_cooldown = use_data.cooldown
 		end
 	end
 	
-	my_data.detection_task_key = "ShieldLogicAttack._upd_enemy_detection" .. key_str
-	ShieldLogicAttack._upd_enemy_detection(data)
+	my_data.weapon_range = data.char_tweak.weapon[data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage].range
+	my_data.update_queue_id = "ShieldLogicAttack.queued_update" .. key_str
 
-	--ShieldLogicAttack.queue_update(data, my_data)
+	ShieldLogicAttack.queue_update(data, my_data)
 end
 
-function ShieldLogicAttack._upd_enemy_detection(data, is_synchronous)
+function ShieldLogicAttack.chk_should_turn(data, my_data)
+	return not my_data.turning and not data.unit:movement():chk_action_forbidden("walk") and not my_data.walking_to_optimal_pos
+end
+
+function ShieldLogicAttack._upd_enemy_detection(data)
 	managers.groupai:state():on_unit_detection_updated(data.unit)
 
 	data.t = TimerManager:game():time()
@@ -87,11 +84,16 @@ function ShieldLogicAttack._upd_enemy_detection(data, is_synchronous)
 
 	for key, enemy_data in pairs(enemies) do
 		threat_epicenter = threat_epicenter or Vector3()
-
-		mvector3.add(threat_epicenter, enemy_data.m_pos)
+		local enemy_pos = enemy_data.last_verified_m_pos or enemy_data.m_pos
+		mvector3.add(threat_epicenter, enemy_pos)
 
 		nr_threats = nr_threats + 1
-		enemy_data.aimed_at = CopLogicIdle.chk_am_i_aimed_at(data, enemy_data, enemy_data.aimed_at and 0.95 or 0.985)
+		
+		if not enemy_data.verified then
+			enemy_data.aimed_at = nil
+		else
+			enemy_data.aimed_at = CopLogicIdle.chk_am_i_aimed_at(data, enemy_data, enemy_data.aimed_at and 0.95 or 0.985)
+		end
 	end
 
 	if threat_epicenter then
@@ -222,7 +224,16 @@ function ShieldLogicAttack._upd_enemy_detection(data, is_synchronous)
 			optimal_direction = mvector3.copy(out)
 
 			mvector3.multiply(optimal_direction, -1)
-			mvector3.multiply(out, mvector3.dot(out, PA) + 600)
+			
+			if my_data.shield_use_range and my_data.shield_unit:base():is_charging() then
+				local dis = my_data.shield_use_range * 0.7
+				
+				mvector3.multiply(out, mvector3.dot(out, PA) + dis)
+			elseif my_data.attitude == "engage" then
+				mvector3.multiply(out, mvector3.dot(out, PA) + 600)
+			else
+				mvector3.multiply(out, mvector3.dot(out, PA) + 900)
+			end
 
 			my_data.optimal_pos = mvector3.copy(data.m_pos)
 
@@ -245,8 +256,17 @@ function ShieldLogicAttack._upd_enemy_detection(data, is_synchronous)
 			end
 
 			local optimal_pos = mvector3.copy(optimal_direction)
+			
+			if my_data.shield_use_range and my_data.shield_unit:base():is_charging() then
+				local dis = my_data.shield_use_range * 0.7
+				
+				mvector3.multiply(optimal_pos, -(optimal_length + dis))
+			elseif my_data.attitude == "engage" then
+				mvector3.multiply(optimal_pos, -(optimal_length + 600))
+			else
+				mvector3.multiply(optimal_pos, -(optimal_length + 900))
+			end
 
-			mvector3.multiply(optimal_pos, -(optimal_length + 600))
 			mvector3.add(optimal_pos, threat_epicenter)
 
 			my_data.optimal_pos = optimal_pos
@@ -289,197 +309,53 @@ function ShieldLogicAttack._upd_enemy_detection(data, is_synchronous)
 					ShieldLogicAttack._cancel_optimal_attempt(data, my_data)
 				end
 			end
+
+			if AIAttentionObject.REACT_COMBAT <= new_reaction and new_attention.nav_tracker and my_data.attitude == "engage" then
+				my_data.optimal_pos = CopLogicAttack._find_flank_pos(data, my_data, new_attention.nav_tracker)
+			end
 		elseif old_att_obj and not data.unit:movement():chk_action_forbidden("walk") then
 			ShieldLogicAttack._cancel_optimal_attempt(data, my_data)
 		end
 	end
 
-	data.logic._chk_exit_attack_logic(data, new_reaction)
-	
+	CopLogicAttack._chk_exit_attack_logic(data, data.attention_obj and data.attention_obj.reaction)
+
 	if my_data ~= data.internal_data then
 		return
 	end
 
 	ShieldLogicAttack._upd_aim(data, my_data)
 
-	if my_data.optimal_pos then
-		my_data.optimal_pos = managers.navigation:pad_out_position(my_data.optimal_pos, 4, data.char_tweak.wall_fwd_offset)
-	
-		if focus_enemy then
-			mvector3.set_z(my_data.optimal_pos, focus_enemy.m_pos.z)
-		end
+	if my_data.optimal_pos and focus_enemy then
+		mvector3.set_z(my_data.optimal_pos, focus_enemy.m_pos.z)
+		my_data.optimal_pos = managers.navigation:clamp_position_to_field(my_data.optimal_pos)
 	end
-	
-	if not is_synchronous then
-		CopLogicBase.queue_task(my_data, my_data.detection_task_key, ShieldLogicAttack._upd_enemy_detection, data, data.t + delay, data.important and true)
-	end
-	
-	CopLogicBase._report_detections(data.detected_attention_objects)
 end
 
 function ShieldLogicAttack._pathing_complete_clbk(data)
 	local my_data = data.internal_data
+
+	if my_data.pathing_to_optimal_pos then
+		ShieldLogicAttack._process_pathing_results(data, my_data)
 	
-	if my_data.exiting then
-		return
-	end
-	
-	if not my_data.pathing_to_optimal_pos then
-		return
-	end
-	
-	local t = TimerManager:game():time()
-	data.t = t
-	local unit = data.unit
-	
-	data.logic._process_pathing_results(data, my_data)
-		
-	if my_data.optimal_path then
-		ShieldLogicAttack._chk_request_action_walk_to_optimal_pos(data, my_data)
+		if my_data.optimal_path then
+			local action_taken = my_data.turning or data.unit:movement():chk_action_forbidden("walk") or my_data.walking_to_optimal_pos
+
+			if not action_taken and data.unit:anim_data().stand then
+				action_taken = CopLogicAttack._chk_request_action_crouch(data)
+			else
+				action_taken = data.unit:movement():chk_action_forbidden("walk") or my_data.walking_to_optimal_pos
+			end
+			
+			if not action_taken then
+				ShieldLogicAttack._chk_request_action_walk_to_optimal_pos(data, my_data)
+			end
+		end
 	end
 end
 
-function ShieldLogicAttack.update(data)
-	local t = TimerManager:game():time()
-	data.t = t
-	local unit = data.unit
-	local my_data = data.internal_data
-
-	if my_data.has_old_action then
-		CopLogicAttack._upd_stop_old_action(data, my_data)
-		
-		if my_data.has_old_action then
-			return
-		end
-	end
-	
-	if CopLogicIdle._chk_relocate(data) or CopLogicAttack._chk_exit_non_walkable_area(data) then
-		return
-	end
-
-	if not data.attention_obj or data.attention_obj.reaction < REACT_AIM then
-		ShieldLogicAttack._upd_enemy_detection(data, true)
-
-		if my_data ~= data.internal_data then
-			return
-		end
-	end
-
-	local focus_enemy = data.attention_obj
-	local action_taken = my_data.turning or data.unit:movement():chk_action_forbidden("walk") or my_data.walking_to_shoot_pos
-
-	if not action_taken and unit:anim_data().stand then
-		action_taken = CopLogicAttack._chk_request_action_crouch(data)
-	end
-
-	ShieldLogicAttack._process_pathing_results(data, my_data)
-
-	local enemy_visible = focus_enemy and focus_enemy.verified
-	
-	if data.unit:base():has_tag("law") then
-		my_data.attitude = data.objective and data.objective.attitude or "avoid"
-	end
-	
-	local engage = my_data.attitude == "engage"
-	local action_taken = my_data.turning or data.unit:movement():chk_action_forbidden("walk") or my_data.walking_to_optimal_pos
-
-	if not action_taken then
-		if unit:anim_data().stand then
-			action_taken = CopLogicAttack._chk_request_action_crouch(data)
-		end
-
-		if not action_taken then
-			if my_data.pathing_to_optimal_pos then
-				-- Nothing
-			elseif my_data.optimal_path then
-				ShieldLogicAttack._chk_request_action_walk_to_optimal_pos(data, my_data)
-			elseif my_data.optimal_pos and focus_enemy and focus_enemy.nav_tracker then
-				local to_pos = my_data.optimal_pos
-				my_data.optimal_pos = nil
-				local ray_params = {
-					trace = true,
-					tracker_from = unit:movement():nav_tracker(),
-					pos_to = to_pos
-				}
-				local ray_res = managers.navigation:raycast(ray_params)
-				to_pos = ray_params.trace[1]
-
-				if ray_res then
-					local vec = data.m_pos - to_pos
-
-					mvector3.normalize(vec)
-
-					local fwd = unit:movement():m_fwd()
-					local fwd_dot = fwd:dot(vec)
-
-					if fwd_dot > 0 then
-						local enemy_tracker = focus_enemy.nav_tracker
-
-						if enemy_tracker:lost() then
-							ray_params.tracker_from = nil
-							ray_params.pos_from = enemy_tracker:field_position()
-						else
-							ray_params.tracker_from = enemy_tracker
-						end
-
-						ray_res = managers.navigation:raycast(ray_params)
-						to_pos = ray_params.trace[1]
-					end
-				end
-
-				local fwd_bump = nil
-				to_pos, fwd_bump = ShieldLogicAttack.chk_wall_distance(data, my_data, to_pos)
-				local do_move = mvector3.distance_sq(to_pos, data.m_pos) > 10000
-
-				if not do_move then
-					local to_pos_current, fwd_bump_current = ShieldLogicAttack.chk_wall_distance(data, my_data, data.m_pos)
-
-					if fwd_bump_current then
-						do_move = true
-					end
-				end
-
-				if do_move then
-					local my_pos = data.unit:movement():nav_tracker():field_position()
-					local unobstructed_line = CopLogicTravel._check_path_is_straight_line(my_pos, to_pos, data)
-					
-					if unobstructed_line then
-						my_data.optimal_path = {
-							mvec3_cpy(my_pos),
-							to_pos
-						}
-						
-						ShieldLogicAttack._chk_request_action_walk_to_optimal_pos(data, my_data)
-					else
-						my_data.pathing_to_optimal_pos = true
-						my_data.optimal_path_search_id = tostring(unit:key()) .. "optimal"
-						local reservation = managers.navigation:reserve_pos(nil, nil, to_pos, callback(ShieldLogicAttack, ShieldLogicAttack, "_reserve_pos_step_clbk", {
-							unit_pos = data.m_pos
-						}), 70, data.pos_rsrv_id)
-
-						if reservation then
-							to_pos = reservation.position
-						else
-							reservation = {
-								radius = 60,
-								position = mvector3.copy(to_pos),
-								filter = data.pos_rsrv_id
-							}
-
-							managers.navigation:add_pos_reservation(reservation)
-						end
-
-						data.brain:set_pos_rsrv("path", reservation)
-						data.brain:search_for_path(my_data.optimal_path_search_id, to_pos)
-					end
-				end
-			end
-		end
-		
-		if not action_taken then
-			ShieldLogicAttack._chk_start_action_move_out_of_the_way(data, my_data)
-		end
-	end
+function ShieldLogicAttack.queue_update(data, my_data)
+	CopLogicBase.queue_task(my_data, my_data.update_queue_id, ShieldLogicAttack.queued_update, data, data.t + (data.important and 0.2 or 0.7), data.important and true)
 end
 
 function ShieldLogicAttack.queued_update(data)
@@ -487,6 +363,12 @@ function ShieldLogicAttack.queued_update(data)
 	data.t = t
 	local unit = data.unit
 	local my_data = data.internal_data
+
+	ShieldLogicAttack._upd_enemy_detection(data)
+
+	if my_data ~= data.internal_data then
+		return
+	end
 
 	if my_data.has_old_action then
 		CopLogicAttack._upd_stop_old_action(data, my_data)
@@ -506,20 +388,25 @@ function ShieldLogicAttack.queued_update(data)
 	end
 
 	local focus_enemy = data.attention_obj
-	local action_taken = my_data.turning or data.unit:movement():chk_action_forbidden("walk") or my_data.walking_to_shoot_pos
+	
+	my_data.want_to_take_cover = CopLogicAttack._chk_wants_to_take_cover(data, my_data)
+	
+	local action_taken = my_data.turning or data.unit:movement():chk_action_forbidden("walk") or my_data.walking_to_optimal_pos
+
+	if not action_taken and unit:anim_data().stand then
+		action_taken = CopLogicAttack._chk_request_action_crouch(data)
+	else
+		--turning has less priority if they wanna move, shields turn faster when moving anyways
+		action_taken = data.unit:movement():chk_action_forbidden("walk") or my_data.walking_to_optimal_pos
+	end
 
 	ShieldLogicAttack._process_pathing_results(data, my_data)
 
 	local enemy_visible = focus_enemy.verified
 	local engage = my_data.attitude == "engage"
-	local action_taken = my_data.turning or data.unit:movement():chk_action_forbidden("walk") or my_data.walking_to_optimal_pos
 
 	if not action_taken then
-		if unit:anim_data().stand then
-			action_taken = CopLogicAttack._chk_request_action_crouch(data)
-		end
-
-		if not action_taken then
+		if not data.next_mov_time or data.next_mov_time < data.t then
 			if my_data.pathing_to_optimal_pos then
 				-- Nothing
 			elseif my_data.optimal_path then
@@ -527,35 +414,24 @@ function ShieldLogicAttack.queued_update(data)
 			elseif my_data.optimal_pos and focus_enemy.nav_tracker then
 				local to_pos = my_data.optimal_pos
 				my_data.optimal_pos = nil
-				local ray_params = {
-					trace = true,
-					tracker_from = unit:movement():nav_tracker(),
-					pos_to = to_pos
-				}
-				local ray_res = managers.navigation:raycast(ray_params)
-				to_pos = ray_params.trace[1]
-
-				if ray_res then
-					local vec = data.m_pos - to_pos
-
-					mvector3.normalize(vec)
-
-					local fwd = unit:movement():m_fwd()
-					local fwd_dot = fwd:dot(vec)
-
-					if fwd_dot > 0 then
-						local enemy_tracker = focus_enemy.nav_tracker
-
-						if enemy_tracker:lost() then
-							ray_params.tracker_from = nil
-							ray_params.pos_from = enemy_tracker:field_position()
-						else
-							ray_params.tracker_from = enemy_tracker
-						end
-
-						ray_res = managers.navigation:raycast(ray_params)
-						to_pos = ray_params.trace[1]
+				
+				if my_data.attitude == "engage" and (not focus_enemy.verified_t or t - focus_enemy.verified_t > 15) or my_data.shield_unit and my_data.shield_unit:base():is_charging() then
+					local ray_params = {
+						pos_to = to_pos,
+						trace = true
+					}
+				
+					local enemy_tracker = focus_enemy.unit:movement():nav_tracker()
+					
+					if enemy_tracker:lost() then
+						ray_params.tracker_from = nil
+						ray_params.pos_from = enemy_tracker:field_position()
+					else
+						ray_params.tracker_from = enemy_tracker
 					end
+					
+					local ray_res = managers.navigation:raycast(ray_params)
+					to_pos = ray_params.trace[1]
 				end
 
 				local fwd_bump = nil
@@ -565,7 +441,7 @@ function ShieldLogicAttack.queued_update(data)
 				if not do_move then
 					local to_pos_current, fwd_bump_current = ShieldLogicAttack.chk_wall_distance(data, my_data, data.m_pos)
 
-					if fwd_bump_current then
+					if fwd_bump_current and mvector3.distance_sq(to_pos_current, data.m_pos) > 10000 then
 						do_move = true
 					end
 				end
@@ -573,6 +449,7 @@ function ShieldLogicAttack.queued_update(data)
 				if do_move then
 					my_data.pathing_to_optimal_pos = true
 					my_data.optimal_path_search_id = tostring(unit:key()) .. "optimal"
+					to_pos = managers.navigation:pad_out_position(to_pos, 4, data.char_tweak.wall_fwd_offset)
 					local reservation = managers.navigation:reserve_pos(nil, nil, to_pos, callback(ShieldLogicAttack, ShieldLogicAttack, "_reserve_pos_step_clbk", {
 						unit_pos = data.m_pos
 					}), 70, data.pos_rsrv_id)
@@ -594,120 +471,8 @@ function ShieldLogicAttack.queued_update(data)
 				end
 			end
 		end
-		
-		if not action_taken then
-			ShieldLogicAttack._chk_start_action_move_out_of_the_way(data, my_data)
-		end
 	end
 
 	ShieldLogicAttack.queue_update(data, my_data)
 	CopLogicBase._report_detections(data.detected_attention_objects)
-end
-
-function ShieldLogicAttack._chk_start_action_move_out_of_the_way(data, my_data)
-	local reservation = {
-		radius = 30,
-		position = data.m_pos,
-		filter = data.pos_rsrv_id
-	}
-
-	if not managers.navigation:is_pos_free(reservation) then
-		local to_pos = CopLogicTravel._find_near_free_pos(data.m_pos, 500, nil, data.pos_rsrv_id)
-
-		if to_pos then
-			local path = {
-				mvec3_cpy(data.m_pos),
-				to_pos
-			}
-			
-			my_data.optimal_path = path
-			my_data.optimal_pos = to_pos
-			my_data.pathing_to_optimal_pos = nil
-			
-			return ShieldLogicAttack._chk_request_action_walk_to_optimal_pos(data, my_data)
-		end
-	end
-end
-
-function ShieldLogicAttack.queue_update(data, my_data)
-	local delay = data.important and 0 or 0.2
-	CopLogicBase.queue_task(my_data, my_data.update_queue_id, ShieldLogicAttack.queued_update, data, data.t + delay, data.important and true)
-end
-
-function ShieldLogicAttack._cancel_optimal_attempt(data, my_data)
-	my_data.optimal_pos = nil
-	
-	if my_data.optimal_path then
-		my_data.optimal_path = nil
-	elseif my_data.pathing_to_optimal_pos then
-		if data.active_searches[my_data.optimal_path_search_id] then
-			data.unit:brain():abort_detailed_pathing(my_data.optimal_path_search_id)
-		elseif data.pathing_results then
-			data.pathing_results[my_data.optimal_path_search_id] = nil
-		end
-
-		my_data.optimal_path_search_id = nil
-		my_data.pathing_to_optimal_pos = nil
-	end
-end
-
-function ShieldLogicAttack._chk_request_action_walk_to_optimal_pos(data, my_data, end_rot)
-	if not data.unit:movement():chk_action_forbidden("walk") then
-		CopLogicAttack._correct_path_start_pos(data, my_data.optimal_path)
-	
-		local new_action_data = {
-			type = "walk",
-			body_part = 2,
-			variant = "walk",
-			pose = "crouch",
-			end_pose = "crouch",
-			nav_path = my_data.optimal_path,
-			end_rot = end_rot
-		}
-		my_data.optimal_path = nil
-		my_data.walking_to_optimal_pos = data.unit:brain():action_request(new_action_data)
-
-		if my_data.walking_to_optimal_pos then
-			data.brain:rem_pos_rsrv("path")
-		end
-	end
-end
-
-function ShieldLogicAttack.action_complete_clbk(data, action)
-	local my_data = data.internal_data
-	local action_type = action:type()
-
-	if action_type == "walk" then
-		my_data.advancing = nil
-
-		if my_data.walking_to_optimal_pos then
-			my_data.walking_to_optimal_pos = nil
-		end
-		
-		if action:expired() then
-			if data.unit:anim_data().stand then
-				CopLogicAttack._chk_request_action_crouch(data)
-			end
-		end
-	elseif action_type == "shoot" then
-		my_data.shooting = nil
-	elseif action_type == "turn" then
-		my_data.turning = nil
-	elseif action_type == "act" then
-		if my_data.gesture_arrest then
-			my_data.gesture_arrest = nil
-		elseif my_data.starting_idle_action_from_act or action:expired() then
-			ShieldLogicAttack._upd_aim(data, my_data)
-		
-			if data.unit:anim_data().stand then
-				CopLogicAttack._chk_request_action_crouch(data)
-			end
-		end
-	elseif action_type == "hurt" and action:expired() then
-		ShieldLogicAttack._upd_aim(data, my_data)
-		
-		if data.unit:anim_data().stand then
-			CopLogicAttack._chk_request_action_crouch(data)
-		end
-	end
 end

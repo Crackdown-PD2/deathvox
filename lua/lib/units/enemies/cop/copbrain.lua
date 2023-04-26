@@ -1,70 +1,44 @@
 local mvec3_cpy = mvector3.copy
 
-local old_init = CopBrain.post_init
-local logic_variants = {
-	security = {
-		idle = CopLogicIdle,
-		attack = CopLogicAttack,
-		travel = CopLogicTravel,
-		inactive = CopLogicInactive,
-		intimidated = CopLogicIntimidated,
-		arrest = CopLogicArrest,
-		guard = CopLogicGuard,
-		flee = CopLogicFlee,
-		sniper = CopLogicSniper,
-		trade = CopLogicTrade,
-		phalanx = CopLogicPhalanxMinion
-	}
-}
-local security_variant = logic_variants.security
-function CopBrain:post_init()
-	CopBrain._logic_variants.deathvox_shield = clone(security_variant)
-	CopBrain._logic_variants.deathvox_shield.attack = ShieldLogicAttack
-	CopBrain._logic_variants.deathvox_shield.intimidated = nil
-	CopBrain._logic_variants.deathvox_shield.flee = nil
-	
-	CopBrain._logic_variants.deathvox_heavyar = clone(security_variant)
-	CopBrain._logic_variants.deathvox_lightar = clone(security_variant)
-	CopBrain._logic_variants.deathvox_medic = clone(security_variant)
-	CopBrain._logic_variants.deathvox_guard = clone(security_variant)
-	CopBrain._logic_variants.deathvox_gman = clone(security_variant)
-	CopBrain._logic_variants.deathvox_lightshot = clone(security_variant)
-	CopBrain._logic_variants.deathvox_heavyshot = clone(security_variant)
-	
-	CopBrain._logic_variants.deathvox_guarddozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_taser = clone(security_variant)
-	-- CopBrain._logic_variants.deathvox_taser.travel = TaserLogicTravel
-	CopBrain._logic_variants.deathvox_sniper_assault = clone(security_variant)
-	CopBrain._logic_variants.deathvox_sniper = clone(security_variant)
-	CopBrain._logic_variants.deathvox_cloaker = clone(security_variant)
-	CopBrain._logic_variants.deathvox_cloaker.idle = SpoocLogicIdle
-	CopBrain._logic_variants.deathvox_cloaker.attack = SpoocLogicAttack
-	-- CopBrain._logic_variants.deathvox_cloaker.travel = SpoocLogicTravel
-	CopBrain._logic_variants.deathvox_grenadier = clone(security_variant)
-	
-	CopBrain._logic_variants.deathvox_greendozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_greendozer.attack = TankCopLogicAttack
-	CopBrain._logic_variants.deathvox_blackdozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_blackdozer.attack = TankCopLogicAttack
-	CopBrain._logic_variants.deathvox_lmgdozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_lmgdozer.attack = TankCopLogicAttack
-	CopBrain._logic_variants.deathvox_medicdozer = clone(security_variant)
-	CopBrain._logic_variants.deathvox_medicdozer.attack = TankCopLogicAttack
+Hooks:PostHook(CopBrain, "init", "CD_init", function(self, unit)
+	CopBrain._logic_variants.tank.attack = BossLogicAttack
+	CopBrain._logic_variants.tank_medic.attack = BossLogicAttack
+	CopBrain._logic_variants.tank_mini.attack = BossLogicAttack
+	CopBrain._logic_variants.mobster_boss = CopBrain._logic_variants.tank
+	CopBrain._logic_variants.biker_boss = CopBrain._logic_variants.tank
+	CopBrain._logic_variants.drug_lord_boss = CopBrain._logic_variants.tank
 
-	CopBrain._logic_variants.deathvox_cop_pistol = clone(security_variant)
-	CopBrain._logic_variants.deathvox_cop_revolver = clone(security_variant)
-	CopBrain._logic_variants.deathvox_cop_shotgun = clone(security_variant)
-	CopBrain._logic_variants.deathvox_cop_smg = clone(security_variant)
+	CopBrain._logic_variants.deathvox_shield = CopBrain._logic_variants.shield
 	
-	CopBrain._logic_variants.deathvox_fbi_hrt = clone(security_variant)
-	CopBrain._logic_variants.deathvox_fbi_veteran = clone(security_variant)
-	CopBrain._logic_variants.deathvox_fbi_rookie = clone(security_variant)
+	CopBrain._logic_variants.deathvox_heavyar = CopBrain._logic_variants.swat
+	CopBrain._logic_variants.deathvox_lightar = CopBrain._logic_variants.swat
+	CopBrain._logic_variants.deathvox_medic = CopBrain._logic_variants.swat
+	CopBrain._logic_variants.deathvox_guard = CopBrain._logic_variants.swat
+	CopBrain._logic_variants.deathvox_gman = CopBrain._logic_variants.swat
+	CopBrain._logic_variants.deathvox_lightshot = CopBrain._logic_variants.swat
+	CopBrain._logic_variants.deathvox_heavyshot = CopBrain._logic_variants.swat
+	
+	CopBrain._logic_variants.deathvox_guarddozer = CopBrain._logic_variants.tank
+	CopBrain._logic_variants.deathvox_taser = CopBrain._logic_variants.taser
+	CopBrain._logic_variants.deathvox_sniper_assault = CopBrain._logic_variants.swat
+	CopBrain._logic_variants.deathvox_sniper = CopBrain._logic_variants.sniper
+	CopBrain._logic_variants.deathvox_cloaker = CopBrain._logic_variants.spooc
+	CopBrain._logic_variants.deathvox_grenadier = CopBrain._logic_variants.swat
+	
+	CopBrain._logic_variants.deathvox_greendozer = CopBrain._logic_variants.tank
+	CopBrain._logic_variants.deathvox_blackdozer = CopBrain._logic_variants.tank
+	CopBrain._logic_variants.deathvox_lmgdozer = CopBrain._logic_variants.tank
+	CopBrain._logic_variants.deathvox_medicdozer = CopBrain._logic_variants.tank
 
-	old_init(self)
-	CopBrain._logic_variants.taser = clone(security_variant)
-	CopBrain._logic_variants.medic = clone(security_variant)
-	CopBrain._logic_variants.medic.attack = MedicLogicAttack
-end
+	CopBrain._logic_variants.deathvox_cop_pistol = CopBrain._logic_variants.cop
+	CopBrain._logic_variants.deathvox_cop_revolver = CopBrain._logic_variants.cop
+	CopBrain._logic_variants.deathvox_cop_shotgun = CopBrain._logic_variants.cop
+	CopBrain._logic_variants.deathvox_cop_smg = CopBrain._logic_variants.cop
+	
+	CopBrain._logic_variants.deathvox_fbi_hrt = CopBrain._logic_variants.fbi
+	CopBrain._logic_variants.deathvox_fbi_veteran = CopBrain._logic_variants.fbi
+	CopBrain._logic_variants.deathvox_fbi_rookie = CopBrain._logic_variants.fbi
+end)
 
 CopBrain._NET_EVENTS = {
 	stopped_seeing_client_peaceful = 11,
@@ -897,62 +871,27 @@ function CopBrain:on_suppressed(state)
 	end
 end
 
-function CopBrain:search_for_path_to_unit(search_id, other_unit, access_neg)
-	local enemy_tracker = other_unit:movement():nav_tracker()
-	local pos_to = enemy_tracker:field_position()
+function CopBrain:search_for_coarse_immediate(search_id, to_seg, verify_clbk, access_neg)
 	local params = {
-		tracker_from = self._unit:movement():nav_tracker(),
-		tracker_to = enemy_tracker,
-		result_clbk = callback(self, self, "clbk_pathing_results", search_id),
+		from_tracker = self._unit:movement():nav_tracker(),
+		to_seg = to_seg,
+		access = {
+			"walk"
+		},
 		id = search_id,
-		access_pos = self._SO_access,
+		verify_clbk = verify_clbk,
+		access_pos = self._logic_data.char_tweak.access,
 		access_neg = access_neg
 	}
-	params.prio = self:get_pathing_prio(self._logic_data)
-	
-	if CopLogicTravel._check_path_is_straight_line(params.tracker_from:field_position(), pos_to, self._logic_data) then
-		local path = {
-			mvec3_cpy(params.tracker_from:field_position()),
-			mvec3_cpy(pos_to)
-		}
-		self:clbk_pathing_results(search_id, path)
-	else
-		self._logic_data.active_searches[search_id] = true
 
-		managers.navigation:search_pos_to_pos(params)
-	end
-
-	return true
-end
-
-function CopBrain:search_for_path_to_cover(search_id, cover, offset_pos, access_neg)
-	local params = {
-		tracker_from = self._unit:movement():nav_tracker(),
-		tracker_to = cover[3],
-		result_clbk = callback(self, self, "clbk_pathing_results", search_id),
-		id = search_id,
-		access_pos = self._SO_access,
-		access_neg = access_neg
-	}
-	params.prio = self:get_pathing_prio(self._logic_data)
-	
-	if CopLogicTravel._check_path_is_straight_line(params.tracker_from:field_position(), cover[3]:field_position(), self._logic_data) then
-		local path = {
-			mvec3_cpy(params.tracker_from:field_position()),
-			mvec3_cpy(cover[3]:field_position())
-		}
-	
-		self:clbk_pathing_results(search_id, path)
-	else
-		self._logic_data.active_searches[search_id] = true
-
-		managers.navigation:search_pos_to_pos(params)
-	end
-
-	return true
+	return managers.navigation:search_coarse(params)
 end
 
 function CopBrain:search_for_path(search_id, to_pos, prio, access_neg, nav_segs)
+	if not prio then
+		prio = CopLogicTravel.get_pathing_prio(self._logic_data)
+	end
+
 	local params = {
 		tracker_from = self._unit:movement():nav_tracker(),
 		pos_to = to_pos,
@@ -963,25 +902,19 @@ function CopBrain:search_for_path(search_id, to_pos, prio, access_neg, nav_segs)
 		access_neg = access_neg,
 		nav_segs = nav_segs
 	}
-	params.prio = params.prio or self:get_pathing_prio(self._logic_data)
 	
-	if CopLogicTravel._check_path_is_straight_line(params.tracker_from:field_position(), to_pos, self._logic_data) then
-		local path = {
-			mvec3_cpy(params.tracker_from:field_position()),
-			mvec3_cpy(to_pos)
-		}
-		
-		self:clbk_pathing_results(search_id, path)
-	else
-		self._logic_data.active_searches[search_id] = true
+	self._logic_data.active_searches[search_id] = true
 
-		managers.navigation:search_pos_to_pos(params)
-	end
+	managers.navigation:search_pos_to_pos(params)
 
 	return true
 end
 
 function CopBrain:search_for_path_from_pos(search_id, from_pos, to_pos, prio, access_neg, nav_segs)
+	if not prio then
+		prio = CopLogicTravel.get_pathing_prio(self._logic_data)
+	end
+
 	local params = {
 		pos_from = from_pos,
 		pos_to = to_pos,
@@ -992,55 +925,42 @@ function CopBrain:search_for_path_from_pos(search_id, from_pos, to_pos, prio, ac
 		access_neg = access_neg,
 		nav_segs = nav_segs
 	}
-	params.prio = params.prio or self:get_pathing_prio(self._logic_data)
 	
-	if CopLogicTravel._check_path_is_straight_line(from_pos, to_pos, self._logic_data) then
-		local path = {
-			mvec3_cpy(from_pos),
-			mvec3_cpy(pos_to)
-		}
-	
-		self:clbk_pathing_results(search_id, path)
-	else
-		self._logic_data.active_searches[search_id] = true
-
-		managers.navigation:search_pos_to_pos(params)
-	end
+	self._logic_data.active_searches[search_id] = true
+	managers.navigation:search_pos_to_pos(params)
 
 	return true
 end
 
-function CopBrain:get_pathing_prio(data)
-	local prio = nil
-	local objective = data.objective
-
-	if objective then
-		prio = 0 --disable if it ends up hindering performance (since it makes the search faster, but without being prioritized over the other ones below)
-
-		if objective.type == "phalanx" then
-			prio = 4
-		elseif objective.follow_unit then
-			if objective.follow_unit:base().is_local_player or objective.follow_unit:base().is_husk_player or managers.groupai:state():is_unit_team_AI(objective.follow_unit) then
-				prio = 4
-			end
-		elseif self._logic_data.name == "attack" then
-			prio = 1
-		end
+function CopBrain:search_for_path_to_cover(search_id, cover, offset_pos, access_neg)
+	if not prio then
+		prio = CopLogicTravel.get_pathing_prio(self._logic_data)
+		--log("Waaaah")
 	end
 
-	if data.is_converted or data.unit:in_slot(16) or data.internal_data.criminal then
-		prio = prio or 0
-
-		prio = prio + 3
-	elseif data.team.id == tweak_data.levels:get_default_team_ID("player") then
-		prio = prio or 0
-
-		prio = prio + 2
-	elseif data.important then
-		prio = prio or 0
-
-		prio = prio + 1
+	local params = {
+		tracker_from = self._unit:movement():nav_tracker(),
+		tracker_to = cover[3],
+		prio = prio,
+		result_clbk = callback(self, self, "clbk_pathing_results", search_id),
+		id = search_id,
+		access_pos = self._SO_access,
+		access_neg = access_neg
+	}
+	
+	if offset_pos then
+		params.pos_to = mvector3.copy(offset_pos)
+		params.tracker_to = nil
 	end
 
-	return prio
+	self._logic_data.active_searches[search_id] = true
+	managers.navigation:search_pos_to_pos(params)
+
+	return true
+end
+
+function CopBrain:is_criminal()
+	if self._unit:in_slot(16) or self._logic_data.team.id == tweak_data.levels:get_default_team_ID("player") or self._logic_data.team.friends[tweak_data.levels:get_default_team_ID("player")] then
+		return true
+	end
 end
