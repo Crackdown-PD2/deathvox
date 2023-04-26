@@ -479,6 +479,12 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 						else
 							attention_info.last_verified_pos = mvec3_cpy(attention_pos)
 						end
+						
+						if attention_info.last_verified_m_pos then
+							mvec3_set(attention_info.last_verified_m_pos, attention_info.m_pos)
+						else
+							attention_info.last_verified_m_pos = mvec3_cpy(attention_info.m_pos)
+						end
 					end
 				end
 			end
@@ -715,6 +721,12 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 							else
 								attention_info.last_verified_pos = mvec3_cpy(attention_pos)
 							end
+							
+							if attention_info.last_verified_m_pos then
+								mvec3_set(attention_info.last_verified_m_pos, attention_info.m_pos)
+							else
+								attention_info.last_verified_m_pos = mvec3_cpy(attention_info.m_pos)
+							end
 						elseif not is_cool and REACT_COMBAT <= settings.reaction and data.enemy_slotmask and attention_info.unit:in_slot(data.enemy_slotmask) then
 							local destroyed_att_data = nil
 
@@ -726,8 +738,8 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 									attention_info.next_verify_t = t + math_min(0.2, settings.verification_interval)
 								end
 
-								mvec3_set(attention_info.verified_pos, attention_pos)
-
+								attention_info.verified_pos = attention_info.criminal_record.pos:with_z(attention_pos.z)
+								
 								attention_info.verified_dis = dis
 							elseif attention_info.release_t and attention_info.release_t < t then
 								CopLogicBase._destroy_detected_attention_object_data(data, attention_info)
@@ -794,9 +806,11 @@ function CopLogicBase._upd_attention_obj_detection(data, min_reaction, max_react
 									attention_info.release_t = nil
 
 									if attention_info.last_verified_pos then
-										mvec3_set(attention_info.last_verified_pos, attention_pos)
+										mvec3_set(attention_info.last_verified_pos, near_pos)
+										attention_info.last_verified_m_pos = near_pos:with_z(attention_info.m_pos.z)
 									else
-										attention_info.last_verified_pos = mvec3_cpy(attention_pos)
+										attention_info.last_verified_pos = mvec3_cpy(near_pos)
+										attention_info.last_verified_m_pos = near_pos:with_z(attention_info.m_pos.z)
 									end
 								end
 							end
@@ -1235,19 +1249,7 @@ function CopLogicBase._set_attention_obj(data, new_att_obj, new_reaction)
 end
 
 function CopLogicBase.should_duck_on_alert(data, alert_data)
-	--[[if data.char_tweak.allowed_poses and not data.char_tweak.allowed_poses.crouch or data.unit:anim_data().crouch or data.unit:movement():chk_action_forbidden("walk") then
-		return
-	end
-
-	if not data.char_tweak.crouch_move then
-		local lower_body_action = data.unit:movement()._active_actions[2]
-
-		if lower_body_action and lower_body_action:type() == "walk" then
-			return
-		end
-	end
-
-	return true]]
+	return --let other things tell to crouch
 end
 
 --allows nearly_visible checks to work more consistently while still saving perfomance
@@ -1312,27 +1314,29 @@ function CopLogicBase.is_obstructed(data, objective, strictness, attention)
 		end
 	end
 	
-	if objective.interrupt_on_contact then
+	if objective.interrupt_on_contact and not objective.in_place then
 		if attention and AIAttentionObject.REACT_COMBAT <= attention.reaction then
-			local z_diff = math.abs(attention.m_pos.z - data.m_pos.z)
-			local enemy_dis = attention.dis
-			
-			local interrupt_dis = data.internal_data.weapon_range and data.internal_data.weapon_range.close or 2000
-			
-			interrupt_dis = strictness_mul and interrupt_dis * strictness_mul or interrupt_dis
-			
-			if not attention.verified_t or data.t - attention.verified_t > 5 then
-				interrupt_dis = interrupt_dis * 0.5
-			end
-			
-			if objective.grp_objective and objective.grp_objective.push then
-				interrupt_dis = interrupt_dis * 0.5
-			end
-			
-			interrupt_dis = math.lerp(interrupt_dis, 0, z_diff / 400)
+			if attention.verified_t and data.t - attention.verified_t <= 15 then
+				local z_diff = 0
+				
+				if not data.tactics or not data.tactics.sniper or attention.m_pos.z - data.m_pos.z > -250 then
+					z_diff = math.abs(attention.m_pos.z - data.m_pos.z)
+				end
+				
+				local enemy_dis = attention.dis
+				local interrupt_dis = data.tactics and data.tactics.ranged_fire and 3000 or data.tactics and data.tactics.sniper and 4000 or 1500
+				
+				interrupt_dis = interrupt_dis
+				
+				if z_diff > 250 then
+					z_diff = z_diff - 250
+					
+					interrupt_dis = math.lerp(interrupt_dis, interrupt_dis * 0.25, z_diff / 250)
+				end
 
-			if enemy_dis < interrupt_dis then
-				return true, true
+				if enemy_dis < interrupt_dis then
+					return true, true
+				end
 			end
 		end
 	end

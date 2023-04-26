@@ -54,6 +54,7 @@
 		<hook post="true" file="lua/lib/units/enemies/cop/huskcopinventory.lua" source_file="lib/units/enemies/cop/huskcopinventory"/>
 		<hook post="true" file="lua/lib/units/enemies/medic/medicdamage.lua" source_file="lib/units/enemies/medic/medicdamage"/>
 		<hook post="true" file="lua/lib/units/enemies/medic/actions/upper_body/medicactionheal.lua" source_file="lib/units/enemies/medic/actions/upper_body/medicactionheal"/>
+		<hook post="true" file="lua/lib/units/enemies/boss/logics/coplogicattack.lua" source_file="lib/units/enemies/boss/logics/bosslogicattack"/>
 		<hook post="true" file="lua/lib/units/enemies/cop/logics/coplogicattack.lua" source_file="lib/units/enemies/cop/logics/coplogicattack"/>
 		<hook post="true" file="lua/lib/units/enemies/cop/logics/coplogicsniper.lua" source_file="lib/units/enemies/cop/logics/coplogicsniper"/>
 		<hook post="true" file="lua/lib/units/enemies/cop/logics/coplogicinactive.lua" source_file="lib/units/enemies/cop/logics/coplogicinactive"/>
@@ -65,6 +66,7 @@
 		<hook post="true" file="lua/lib/units/enemies/cop/logics/coplogicphalanxminion.lua" source_file="lib/units/enemies/cop/logics/coplogicphalanxminion"/>
 		<hook post="true" file="lua/lib/units/enemies/tank/logics/tankcoplogicattack.lua" source_file="lib/units/enemies/tank/logics/tankcoplogicattack"/>
 		<hook post="true" file="lua/lib/units/enemies/spooc/logics/spooclogicattack.lua" source_file="lib/units/enemies/spooc/logics/spooclogicattack"/>
+		<hook post="true" file="lua/lib/units/enemies/spooc/logics/spooclogicidle.lua" source_file="lib/units/enemies/spooc/logics/spooclogicidle"/>
 		<hook post="true" file="lua/lib/units/enemies/shield/logics/shieldlogicattack.lua" source_file="lib/units/enemies/shield/logics/shieldlogicattack"/>
 		<hook post="true" file="lua/lib/units/enemies/spooc/actions/lower_body/actionspooc.lua" source_file="lib/units/enemies/spooc/actions/lower_body/actionspooc"/>
 		<hook post="true" file="lua/lib/units/enemies/actions/upper_body/copactionshoot.lua" source_file="lib/units/enemies/cop/actions/upper_body/copactionshoot"/>
@@ -104,6 +106,7 @@
 	<hook post="true" file="lua/lib/units/player_team/teamaimovement.lua" source_file="lib/units/player_team/teamaimovement"/>
 	<hook post="true" file="lua/lib/units/player_team/actions/lower_body/criminalactionwalk.lua" source_file="lib/units/player_team/actions/lower_body/criminalactionwalk"/>
 	<hook post="true" file="lua/lib/units/player_team/logics/teamailogicassault.lua" source_file="lib/units/player_team/logics/teamailogicassault"/>
+	<hook post="true" file="lua/lib/units/player_team/logics/teamailogicbase.lua" source_file="lib/units/player_team/logics/teamailogicbase"/>
 	<hook post="true" file="lua/lib/units/player_team/logics/teamailogicdisabled.lua" source_file="lib/units/player_team/logics/teamailogicdisabled"/>
 	<hook post="true" file="lua/lib/units/player_team/logics/teamailogicidle.lua" source_file="lib/units/player_team/logics/teamailogicidle"/>
 	<hook post="true" file="lua/lib/units/player_team/logics/teamailogictravel.lua" source_file="lib/units/player_team/logics/teamailogictravel"/>

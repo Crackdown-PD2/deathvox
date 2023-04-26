@@ -70,6 +70,33 @@ function GroupAIStateBase:_check_assault_panic_chatter()
 end
 
 function GroupAIStateBase:_determine_objective_for_criminal_AI(unit)
+	if self._converted_police[unit:key()] then --ensure jokers always follow owners when possible
+		local objective, closest_dis, closest_record = nil
+		local m_key = unit:key()
+		local owner
+		
+		for pl_key, pl_record in pairs(self._player_criminals) do
+			if alive(pl_record.unit) and pl_record.minions then
+				if pl_record.minions[m_key] then
+					owner = pl_record.unit
+					break
+				end
+			end
+		end
+		
+		if owner then
+			objective = {
+				scan = true,
+				is_default = true,
+				type = "follow",
+				follow_unit = owner
+			}
+			
+			return objective
+		end
+	end
+
+
 	local objective, closest_dis, closest_player = nil
 	local ai_pos = unit:movement():m_pos()
 
@@ -232,13 +259,9 @@ end
 function GroupAIStateBase:on_objective_failed(unit, objective)
 	if not unit:brain() then
 		debug_pause_unit(unit, "[GroupAIStateBase:on_objective_failed] error in extension order", unit)
-		
-		local fail_clbk = nil
-		
-		if objective then
-			fail_clbk = objective.fail_clbk
-			objective.fail_clbk = nil
-		end
+
+		local fail_clbk = objective.fail_clbk
+		objective.fail_clbk = nil
 
 		unit:brain():set_objective(nil)
 
@@ -250,18 +273,19 @@ function GroupAIStateBase:on_objective_failed(unit, objective)
 	end
 
 	local new_objective = nil
+	local u_key = unit:key()
+	local u_data = self._police[u_key]
+	local valid_and_alive = u_data and unit:brain():is_active() and not unit:character_damage():dead()
 
 	if unit:brain():objective() == objective then
-		local u_key = unit:key()
-		local u_data = self._police[u_key]
-
-		if u_data and unit:brain():is_active() and not unit:character_damage():dead() then
+		if valid_and_alive then
 			new_objective = {
 				is_default = true,
 				scan = true,
 				type = "free",
-				attitude = objective and objective.attitude,
-				grp_objective = objective and objective.grp_objective
+				no_arrest = objective.no_arrest,
+				grp_objective = objective.grp_objective,
+				attitude = objective.attitude or objective.grp_objective and objective.grp_objective.attitude,
 			}
 
 			if u_data.assigned_area then
@@ -271,13 +295,9 @@ function GroupAIStateBase:on_objective_failed(unit, objective)
 			end
 		end
 	end
-	
-	local fail_clbk = nil
-	
-	if objective then
-		fail_clbk = objective.fail_clbk
-		objective.fail_clbk = nil
-	end
+
+	local fail_clbk = objective.fail_clbk
+	objective.fail_clbk = nil
 
 	if new_objective then
 		unit:brain():set_objective(new_objective)
@@ -541,9 +561,6 @@ function GroupAIStateBase:on_enemy_unregistered(unit)
 	if e_data.group then
 		self:_remove_group_member(e_data.group, u_key, dead)
 		self._last_killed_cop_t = self._t
-		if dead and self._task_data and self._task_data.assault and self._task_data.assault.active then
-			self:_voice_friend_dead(e_data.group)	
-		end
 	end
 
 	if e_data.assigned_area and dead then
@@ -1026,35 +1043,7 @@ function GroupAIStateBase:criminal_spotted(unit)
 end
 
 function GroupAIStateBase:on_criminal_nav_seg_change(unit, nav_seg_id)
-	local u_key = unit:key()
-	local u_sighting = self._criminals[u_key]
-
-	if not u_sighting then
-		return
-	end
-
-	local seg = nav_seg_id
-
-	u_sighting.seg = seg
-
-	local prev_area = u_sighting.area
-	local area = nil
-
-	if prev_area and prev_area.nav_segs[seg] then
-		area = prev_area
-	else
-		area = self:get_area_from_nav_seg_id(seg)
-	end
-
-	if prev_area ~= area then
-		u_sighting.area = area
-
-		if prev_area then
-			prev_area.criminal.units[u_key] = nil
-		end
-
-		area.criminal.units[u_key] = u_sighting
-	end
+	--no
 end
 
 function GroupAIStateBase:on_criminal_suspicion_progress(u_suspect, u_observer, status, client_id)
@@ -1417,15 +1406,6 @@ function GroupAIStateBase:chk_unregister_irrelevant_attention_objects()
 end
 
 function GroupAIStateBase:_set_rescue_state(state)
-end
-
-local get_sync_event_id_original = GroupAIStateBase.get_sync_event_id
-function GroupAIStateBase:get_sync_event_id(event_name)
-	if event_name == "cloaker_spawned" then
-		managers.hud:post_event("cloaker_spawn")
-	end
-
-	return get_sync_event_id_original(self, event_name)
 end
 
 function GroupAIStateBase:on_hostage_follow(owner, follower, state)

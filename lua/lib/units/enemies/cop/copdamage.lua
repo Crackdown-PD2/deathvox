@@ -2296,10 +2296,6 @@ function CopDamage:damage_melee(attack_data)
 					self._unit:unit_data().has_alarm_pager = false
 				end
 			end
-		elseif managers.groupai:state():is_unit_team_AI(attack_data.attacker_unit) then
-			local special_comment = self:_check_special_death_conditions("melee", attack_data.col_ray.body, attack_data.attacker_unit, attack_data.name_id)
-
-			self:_AI_comment_death(attack_data.attacker_unit, self._unit, special_comment)
 		end
 	end
 
