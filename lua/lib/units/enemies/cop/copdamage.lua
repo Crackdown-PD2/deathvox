@@ -594,7 +594,7 @@ function CopDamage:damage_explosion(attack_data)
 
 			self:_check_damage_achievements(attack_data, false)
 		elseif alive(attacker_unit) and managers.groupai:state():is_unit_team_AI(attacker_unit) then
-			self:_AI_comment_death(attacker_unit, self._unit)
+			self:_comment_death(attacker_unit, self._unit)
 		end
 	end
 
@@ -1487,7 +1487,7 @@ function CopDamage:damage_tase(attack_data)
 
 			self:_check_damage_achievements(attack_data, false)
 		elseif alive(attacker_unit) and managers.groupai:state():is_unit_team_AI(attacker_unit) then
-			self:_AI_comment_death(attacker_unit, self._unit)
+			self:_comment_death(attacker_unit, self._unit)
 		end
 	end
 
@@ -2932,7 +2932,7 @@ function CopDamage:damage_fire(attack_data)
 			self:_check_damage_achievements(attack_data, false)
 		else
 			if attacker_unit and alive(attacker_unit) and managers.groupai:state():is_unit_team_AI(attacker_unit) then
-				self:_AI_comment_death(attacker_unit, self._unit)
+				self:_comment_death(attacker_unit, self._unit)
 			end
 		end
 	end
@@ -3324,7 +3324,7 @@ function CopDamage:damage_simple(attack_data)
 
 			self:_check_damage_achievements(attack_data, false)
 		elseif alive(attacker_unit) and managers.groupai:state():is_unit_team_AI(attacker_unit) then
-			self:_AI_comment_death(attacker_unit, self._unit)
+			self:_comment_death(attacker_unit, self._unit)
 		end
 	end
 
