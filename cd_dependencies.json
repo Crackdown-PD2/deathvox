@@ -115,7 +115,7 @@
 			"DirectoryName" : "Crackdown-Assets-Maps/",
 			"Provider" : "github",
 			"Uri" : "Crackdown-PD2/Crackdown-Assets-Maps",
-			"Branch" : "main
+			"Branch" : "main",
 			"Release" : false,
 			"Optional" : true
 		}
