@@ -6,11 +6,11 @@
 			"Name" : "SuperBLT",
 			"Description" : "Lua basemod for SuperBLT modloader.",
 			"VersionType" : "json",
-			"VersionId" : "1.3.6",
+			"VersionId" : "1.3.8",
 			"DefinitionType" : "json",
 			"DirectoryName" : "base/",
 			"Provider" : "gitlab",
-			"Uri" : "4797104",
+			"Uri" : "4801747",
 			"Branch" : "master",
 			"Release" : false,
 			"Optional" : false
