@@ -37,7 +37,7 @@
 			"DirectoryName" : "Crackdown/",
 			"Provider" : "github",
 			"Uri" : "Crackdown-PD2/deathvox",
-			"Branch" : "master",
+			"Branch" : "experimental",
 			"Release" : false,
 			"Optional" : false
 		},
