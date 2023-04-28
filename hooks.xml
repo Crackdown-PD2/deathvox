@@ -91,6 +91,8 @@
 	<hook post="true" file="lua/lib/units/civilians/civilianbrain.lua" source_file="lib/units/civilians/civilianbrain"/>
 	<hook post="true" file="lua/lib/units/civilians/civiliandamage.lua" source_file="lib/units/civilians/civiliandamage"/>
 	<hook post="true" file="lua/lib/units/civilians/huskcivilianbase.lua" source_file="lib/units/civilians/huskcivilianbase"/>
+	<hook post="true" file="lua/lib/units/civilians/logics/civilianlogictravel.lua" source_file="lib/units/civilians/logics/civilianlogictravel"/>
+	<hook post="true" file="lua/lib/units/civilians/logics/civilianlogicescort.lua" source_file="lib/units/civilians/logics/civilianlogicescort"/>
 	<hook post="true" file="lua/lib/units/civilians/logics/civilianlogicsurrender.lua" source_file="lib/units/civilians/logics/civilianlogicsurrender"/>
 	<hook post="true" file="lua/lib/units/civilians/logics/civilianlogicidle.lua" source_file="lib/units/civilians/logics/civilianlogicidle"/>
 	<hook post="true" file="lua/lib/units/civilians/logics/civilianlogicflee.lua" source_file="lib/units/civilians/logics/civilianlogicflee"/>
