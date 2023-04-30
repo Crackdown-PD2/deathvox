@@ -54,7 +54,7 @@
 		<hook post="true" file="lua/lib/units/enemies/cop/huskcopinventory.lua" source_file="lib/units/enemies/cop/huskcopinventory"/>
 		<hook post="true" file="lua/lib/units/enemies/medic/medicdamage.lua" source_file="lib/units/enemies/medic/medicdamage"/>
 		<hook post="true" file="lua/lib/units/enemies/medic/actions/upper_body/medicactionheal.lua" source_file="lib/units/enemies/medic/actions/upper_body/medicactionheal"/>
-		<hook post="true" file="lua/lib/units/enemies/boss/logics/coplogicattack.lua" source_file="lib/units/enemies/boss/logics/bosslogicattack"/>
+		<hook post="true" file="lua/lib/units/enemies/boss/logics/bosslogicattack.lua" source_file="lib/units/enemies/boss/logics/bosslogicattack"/>
 		<hook post="true" file="lua/lib/units/enemies/cop/logics/coplogicattack.lua" source_file="lib/units/enemies/cop/logics/coplogicattack"/>
 		<hook post="true" file="lua/lib/units/enemies/cop/logics/coplogicsniper.lua" source_file="lib/units/enemies/cop/logics/coplogicsniper"/>
 		<hook post="true" file="lua/lib/units/enemies/cop/logics/coplogicinactive.lua" source_file="lib/units/enemies/cop/logics/coplogicinactive"/>
