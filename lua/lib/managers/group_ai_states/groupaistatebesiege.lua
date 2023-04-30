@@ -1907,6 +1907,27 @@ function GroupAIStateBesiege:_chk_crimin_proximity_to_unit(unit)
 	return nearby
 end
 
+function GroupAIStateBesiege:_get_group_area(group)
+	local best_distance, best_area 
+
+	for u_key, u_data in pairs(group.units) do 
+		if u_data.unit and alive(u_data.unit) then
+			local nav_seg = managers.navigation:get_nav_seg_from_pos(u_data.unit:movement():m_pos())
+			local my_dis = mvector3.distance_sq(u_data.unit:movement():m_pos(), group.objective.area.pos)
+			local mine_is_better = not best_distance or my_dis < best_distance
+
+			if mine_is_better then
+				local my_area = self:get_area_from_nav_seg_id(nav_seg)
+					
+				best_distance = my_dis
+				best_area = my_area
+			end
+		end
+	end
+	
+	return best_area
+end
+
 local temp_vec1 = Vector3()
 
 function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
