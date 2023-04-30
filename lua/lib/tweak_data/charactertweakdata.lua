@@ -2752,10 +2752,7 @@ function CharacterTweakData:_presets(tweak_data)
 	presets.weapon.deathvox.is_sniper = deep_clone(presets.weapon.deathvox.is_light_rifle)
 	presets.weapon.deathvox.is_rifle = deep_clone(presets.weapon.deathvox.is_light_rifle)
 	presets.weapon.deathvox.mossberg = deep_clone(presets.weapon.deathvox.is_light_shotgun)
-	presets.weapon.normal = deep_clone(presets.weapon.deathvox)
-	presets.weapon.good = deep_clone(presets.weapon.deathvox)
-	presets.weapon.expert = deep_clone(presets.weapon.deathvox)
-	presets.weapon.deathwish = deep_clone(presets.weapon.deathvox)
+
 	presets.detection.deathvox = { -- Correct angles for cops so they can actually see you during loud.
 		idle = {},
 		combat = {},
@@ -4536,6 +4533,9 @@ function CharacterTweakData:_set_characters_weapon_preset(preset)
 		"cop_female",
 		"gensec",
 		"fbi",
+		"fbi_swat",
+		"city_swat",
+		"fbi_heavy_swat",
 		"swat",
 		"gangster",
 		"hector_boss_no_armor",

@@ -155,7 +155,16 @@ function CopLogicIdle.enter(data, new_logic_name, enter_params)
 		my_data.scan = true
 	end
 
-	my_data.weapon_range = clone_g(data.char_tweak.weapon[data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage].range)
+	local usage = data.unit:inventory():equipped_unit() and alive(data.unit:inventory():equipped_unit()) and data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage
+	my_data.weapon_range = usage and (data.char_tweak.weapon[usage] or {}).range
+	
+	if not my_data.weapon_range then
+		my_data.weapon_range = {
+			optimal = 2000,
+			far = 5000,
+			close = 1000
+		}
+	end
 
 	local key_str = tostring(data.key)
 
