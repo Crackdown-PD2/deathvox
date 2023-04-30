@@ -6,6 +6,7 @@ function CharacterTweakData:init(tweak_data)
 	local presets = self:_presets(tweak_data)
 	origin_init(self, tweak_data)
 	self:_init_deathvox(presets)
+	self:_process_weapon_usage_table() --just in case
 end
 
 function CharacterTweakData:_create_table_structure()
@@ -1030,7 +1031,7 @@ function CharacterTweakData:_presets(tweak_data)
 		is_sniper = {}, -- initializing sniper.
 		is_assault_sniper = {} -- initializing assault sniper preset. Not in use.
 	}]]--
-	presets.weapon.deathvox = deep_clone(presets.weapon.deathwish)
+	presets.weapon.deathvox = deep_clone(presets.weapon.normal)
 	presets.weapon.deathvox.is_revolver = { -- used by medics.
 		aim_delay = { -- mark 3 values.
 			1.2,
@@ -2872,7 +2873,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_guard.use_factory = false
 	self.deathvox_guard.HEALTH_INIT = 15
 	self.deathvox_guard.headshot_dmg_mul = 3
-	self.deathvox_guard.weapon = deep_clone(presets.weapon.deathvox)
+	self.deathvox_guard.weapon = presets.weapon.deathvox
 	self.deathvox_guard.access = "security" --fixes SO problem
 	self.deathvox_guard.chatter = presets.enemy_chatter.cop
 	self.deathvox_guard.die_sound_event = "x01a_any_3p" -- pain lines are death lines for these units.
@@ -2921,7 +2922,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightar.no_arrest = true
 	self.deathvox_lightar.steal_loot = true
 	self.deathvox_lightar.rescue_hostages = true
-	self.deathvox_lightar.weapon = deep_clone(presets.weapon.deathvox)
+	self.deathvox_lightar.weapon = presets.weapon.deathvox
 	--self.deathvox_lightar.factory_weapon_id = {"wpn_deathvox_light_ar"}
 	self.deathvox_lightar.use_factory = false
 	self.deathvox_lightar.HEALTH_INIT = 48
@@ -2948,7 +2949,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_lightshot.no_arrest = true
 	self.deathvox_lightshot.steal_loot = true
 	self.deathvox_lightshot.rescue_hostages = true
-	self.deathvox_lightshot.weapon = deep_clone(presets.weapon.deathvox)
+	self.deathvox_lightshot.weapon = presets.weapon.deathvox
 	--self.deathvox_lightshot.factory_weapon_id = {"wpn_deathvox_shotgun_light"}
 	self.deathvox_lightshot.use_factory = false
 	self.deathvox_lightshot.HEALTH_INIT = 48
@@ -2976,7 +2977,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyar.no_arrest = true
 	self.deathvox_heavyar.steal_loot = true
 	self.deathvox_heavyar.rescue_hostages = true
-	self.deathvox_heavyar.weapon = deep_clone(presets.weapon.deathvox)
+	self.deathvox_heavyar.weapon = presets.weapon.deathvox
 	--self.deathvox_heavyar.factory_weapon_id = {"wpn_deathvox_heavy_ar"}
 	self.deathvox_heavyar.use_factory = false
 	self.deathvox_heavyar.HEALTH_INIT = 101 -- new with final 2017 pass.
@@ -3005,7 +3006,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_heavyshot.no_arrest = true
 	self.deathvox_heavyshot.steal_loot = true
 	self.deathvox_heavyshot.rescue_hostages = true
-	self.deathvox_heavyshot.weapon = deep_clone(presets.weapon.deathvox)
+	self.deathvox_heavyshot.weapon = presets.weapon.deathvox
 	--self.deathvox_heavyshot.factory_weapon_id = {"wpn_deathvox_shotgun_heavy"}
 	self.deathvox_heavyshot.use_factory = false
 	self.deathvox_heavyshot.HEALTH_INIT = 101 -- new with final 2017 pass.
@@ -3034,7 +3035,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_shield.no_arrest = true
 	self.deathvox_shield.steal_loot = nil -- setting this true harmed gameplay.
 	self.deathvox_shield.rescue_hostages = false
-	self.deathvox_shield.weapon = deep_clone(presets.weapon.deathvox) -- should be pistol on N,H.
+	self.deathvox_shield.weapon = presets.weapon.deathvox -- should be pistol on N,H.
 	self.deathvox_shield.HEALTH_INIT = 72
 	self.deathvox_shield.headshot_dmg_mul = 3
 	self.deathvox_shield.is_special_unit = "shield"	
@@ -3060,7 +3061,7 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_medic.no_arrest = true 
 	self.deathvox_medic.steal_loot = nil
 	self.deathvox_medic.rescue_hostages = false
-	self.deathvox_medic.weapon = deep_clone(presets.weapon.deathvox)
+	self.deathvox_medic.weapon = presets.weapon.deathvox
 	self.deathvox_medic.use_factory = false
 	self.deathvox_medic.dv_medic_heal = true -- dont touch, makes him use the death vox healing. Note should be disabled for lower diffs.
 	--self.deathvox_medic.factory_weapon_id = {"wpn_deathvox_medic_pistol"} -- Should be light AR for diffs below CD.
@@ -3597,7 +3598,7 @@ function CharacterTweakData:_set_normal() -- NORMAL specific tweaks begin.
 	self.drug_lord_boss.damage.hurt_severity = self.presets.hurt_severities.only_light_hurt_no_stuns
 	self.drug_lord_boss.damage.can_be_tased = false
 	self.drug_lord_boss.ecm_vulnerability = 0
-	self.drug_lord_boss.weapon = deep_clone(self.presets.weapon.deathvox)	
+	self.drug_lord_boss.weapon = self.presets.weapon.deathvox
 	self.drug_lord_boss_stealth.HEALTH_INIT = 15
 	self.drug_lord_boss_stealth.weapon = self.presets.weapon.deathvox
 	
@@ -4079,7 +4080,7 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 --	sniper - MAYHEM
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	self.sniper = deep_clone(self.deathvox_sniper)
-	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	self.sniper.weapon = dself.presets.weapon.deathvox_sniper
 	--sniper weapon BS pls dont touch - Evilbobarino
 	--self.weap_unit_names[13] = Idstring("units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd")
     --seriously please dont it will make me sad :<
@@ -4213,9 +4214,9 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	self.deathvox_cloaker.dodge = deep_clone(self.presets.dodge.ninja) -- dodge to ninja (all below CD)
 	
 --	sniper - DEATH WISH
-	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	self.deathvox_sniper_assault.weapon = self.presets.weapon.deathvox_sniper
 	self.sniper = deep_clone(self.deathvox_sniper)
-	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	self.sniper.weapon = self.presets.weapon.deathvox_sniper
 	--sniper weapon BS pls dont touch - Evilbobarino
 	--self.weap_unit_names[13] = Idstring("units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd")
     --seriously please dont it will make me sad :<
@@ -4315,9 +4316,9 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self.security_mex = deep_clone(self.deathvox_guard)
 	self.security_mex_no_pager = deep_clone(self.deathvox_guard)
 	
-	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	self.deathvox_sniper_assault.weapon = self.presets.weapon.deathvox_sniper
 	self.sniper = deep_clone(self.deathvox_sniper)
-	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	self.sniper.weapon = self.presets.weapon.deathvox_sniper
 	--sniper weapon BS pls dont touch - Evilbobarino
 	--self.weap_unit_names[13] = Idstring("units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd")
     --seriously please dont it will make me sad :<
@@ -4411,7 +4412,7 @@ end  -- end CRACKDOWN specific tweaks.
 function CharacterTweakData:_multiply_all_hp(hp_mul, hs_mul)
 	self:crackdown_health_setup()
 	self.sniper = deep_clone(self.deathvox_sniper)
-	self.sniper.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
+	self.sniper.weapon = self.presets.weapon.deathvox_sniper
 end
 
 function CharacterTweakData:_multiply_all_speeds(walk_mul, run_mul)
