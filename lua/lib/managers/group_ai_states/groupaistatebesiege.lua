@@ -2198,17 +2198,6 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 							return
 						end
 					end
-				elseif tactic_name == "charge" and not phase_is_anticipation and not LIES.settings.interruptoncontact then
-					if aggression_level > 3 then
-						charge = true
-					elseif aggression_level > 1 then
-						if group.in_place_t and self._t - group.in_place_t > 4 then
-							charge = true
-						end
-					elseif group.in_place_t and (self._t - group.in_place_t > 15 or self._t - group.in_place_t > 4 and self._drama_data.amount <= tweak_data.drama.low) then
-						--units can now charge preemptively if they're not moving in, saving some wasted updates and allowing for aggressive movement earlier
-						charge = true
-					end
 				end
 			end
 		end
@@ -2305,15 +2294,6 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 			local has_criminals_close 
 			local engaging
 			
-			if not LIES.settings.interruptoncontact then
-				for area_id, neighbour_area in pairs(current_objective.area.neighbours) do
-					if next(neighbour_area.criminal.units) then
-						has_criminals_close = true
-						target_area = neighbour_area
-					end
-				end
-			end
-		
 			if not has_criminals_close then
 				local dis = tactics_map and tactics_map.ranged_fire and 2000 or tactics_map and tactics_map.sniper and 4000 or 1250
 				local impatient
@@ -2338,7 +2318,7 @@ function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)
 				has_criminals_close = engaging and true
 			end
 			
-			if not engaging and LIES.settings.interruptoncontact then
+			if not engaging then
 				for area_id, neighbour_area in pairs(current_objective.area.neighbours) do
 					if next(neighbour_area.criminal.units) then
 						has_criminals_close = true

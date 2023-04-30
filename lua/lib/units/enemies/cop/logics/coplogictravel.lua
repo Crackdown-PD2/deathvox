@@ -440,26 +440,40 @@ function CopLogicTravel.chk_group_ready_to_move(data, my_data)
 	if not my_objective.grp_objective or my_objective.grp_objective.type == "retire" then
 		return true
 	end
-
-	local my_dis = mvector3.distance_sq(my_objective.area.pos, data.m_pos)
 	
-	if my_dis > 9000000 then
+	local mvec3_dis = mvector3.distance_sq
+
+	local my_dis = mvec3_dis(my_objective.area.pos, data.m_pos)
+	
+	if my_dis > 16000000 then
 		return true
 	end
-
-	local can_continue = true
 	
-	my_dis = my_dis * 1.15 * 1.15
+	my_dis = my_dis * 1.1 * 1.1
+	
+	local can_continue = true	
+	local my_tracker = data.unit:movement():nav_tracker()
+	local m_tracker_pos = my_tracker:field_position()
 
 	for u_key, u_data in pairs(data.group.units) do
 		if u_key ~= data.key then
 			local his_objective = u_data.unit:brain():objective()
 
 			if his_objective and his_objective.grp_objective == my_objective.grp_objective and his_objective.area and not his_objective.in_place then
-				local his_dis = mvector3.distance_sq(his_objective.area.pos, u_data.m_pos)
+				local his_pos = u_data.unit:movement():nav_tracker():field_position()
+				local dis_to_me = mvec3_dis(his_pos, m_tracker_pos) 
+				local z_dis = math.abs(his_pos.z - m_tracker_pos.z)
 				
-				if my_dis < his_dis then
-					can_continue = nil
+				if dis_to_me > 640000 or z_dis >= 250 then
+					local advance_pos = u_data.unit:brain() and u_data.unit:brain():is_advancing()
+					his_pos = advance_pos or his_pos
+					local his_dis = mvec3_dis(his_objective.area.pos, his_pos)
+					
+					if my_dis < his_dis then
+						can_continue = nil
+						
+						break
+					end
 				end
 			end
 		end
