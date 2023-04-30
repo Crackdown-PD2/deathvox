@@ -1,13 +1,8 @@
-local origin_init = CharacterTweakData.init
-local origin_presets = CharacterTweakData._presets
 local origin_charmap = CharacterTweakData.character_map
 
-function CharacterTweakData:init(tweak_data)
-	local presets = self:_presets(tweak_data)
-	origin_init(self, tweak_data)
-	self:_init_deathvox(presets)
-	self:_process_weapon_usage_table() --just in case
-end
+Hooks:PostHook(CharacterTweakData, "init", "CD_init", function(self, tweak_data)
+	self:_init_deathvox()
+end)
 
 function CharacterTweakData:_create_table_structure()
 	self.weap_ids = {
@@ -193,10 +188,62 @@ function CharacterTweakData:get_ai_group_type()
 	return group_to_use
 end
 
-function CharacterTweakData:_presets(tweak_data)
-	local presets = origin_presets(self, tweak_data)
-	
-	-- Fug's Notes: Consider creating custom hurt presets to compensate for the incredibly high survivability these enemies have, these guys don't stumble around enough, and heavies esp. have Terminator 2 syndrome, which actually technically makes it EASIER to hit them!
+Hooks:PostHook(CharacterTweakData, "_init_biker", "dv_bikerchatter", function(self, presets)
+	self.biker.chatter = {
+		aggressive = true,
+		retreat = true,
+		contact = true,
+		go_go = true,
+		suppress = true,
+		enemyidlepanic = true
+	}
+	local job = Global.level_data and Global.level_data.level_id
+	if job == "mex" or job == "mex_cooking" then
+		self.biker.access = "security"
+	else
+		self.biker.access = "gangster"
+	end
+end)
+
+Hooks:PostHook(CharacterTweakData, "_init_gangster", "dv_gangsterchatter", function(self, presets)
+	local job = Global.level_data and Global.level_data.level_id
+	if job == "nightclub" or job == "short2_stage1" or job == "jolly" or job == "spa" then
+		self.gangster.speech_prefix_p1 = "rt"
+		self.gangster.speech_prefix_p2 = nil
+		self.gangster.speech_prefix_count = 2
+	elseif job == "alex_2" then
+		self.gangster.speech_prefix_p1 = "ict"
+		self.gangster.speech_prefix_p2 = nil
+		self.gangster.speech_prefix_count = 2
+	elseif job == "man" then	
+		self.gangster.speech_prefix_p1 = self._prefix_data_p1.cop()
+		self.gangster.speech_prefix_p2 = "n"
+		self.gangster.speech_prefix_count = 4	
+		self.gangster.no_arrest = false
+		self.gangster.rescue_hostages = true
+		self.gangster.use_radio = self._default_chatter
+	elseif job == "welcome_to_the_jungle_1" then
+		self.gangster.speech_prefix_p1 = "bik"
+		self.gangster.speech_prefix_p2 = nil
+		self.gangster.speech_prefix_count = 2		
+	else
+		self.gangster.speech_prefix_p1 = "lt"
+		self.gangster.speech_prefix_p2 = nil
+		self.gangster.speech_prefix_count = 2
+	end
+	self.gangster.chatter = {
+		aggressive = true,
+		retreat = true,
+		contact = true,
+		go_go = true,
+		suppress = true,
+		enemyidlepanic = true
+	}
+end)
+
+function CharacterTweakData:_init_dv_presets()
+	local presets = self.presets
+	local presets = self.presets 
 	
 	presets.hurt_severities.no_hurts = { --due to overkill's recent updates, i have to do this now, apparently >:c
 		tase = true,
@@ -2794,64 +2841,13 @@ function CharacterTweakData:_presets(tweak_data)
 		0.2,
 		2
 	}
-	
-	return presets
 end
 
-Hooks:PostHook(CharacterTweakData, "_init_biker", "dv_bikerchatter", function(self, presets)
-	self.biker.chatter = {
-		aggressive = true,
-		retreat = true,
-		contact = true,
-		go_go = true,
-		suppress = true,
-		enemyidlepanic = true
-	}
-	local job = Global.level_data and Global.level_data.level_id
-	if job == "mex" or job == "mex_cooking" then
-		self.biker.access = "security"
-	else
-		self.biker.access = "gangster"
-	end
-end)
-
-Hooks:PostHook(CharacterTweakData, "_init_gangster", "dv_gangsterchatter", function(self, presets)
-	local job = Global.level_data and Global.level_data.level_id
-	if job == "nightclub" or job == "short2_stage1" or job == "jolly" or job == "spa" then
-		self.gangster.speech_prefix_p1 = "rt"
-		self.gangster.speech_prefix_p2 = nil
-		self.gangster.speech_prefix_count = 2
-	elseif job == "alex_2" then
-		self.gangster.speech_prefix_p1 = "ict"
-		self.gangster.speech_prefix_p2 = nil
-		self.gangster.speech_prefix_count = 2
-	elseif job == "man" then	
-		self.gangster.speech_prefix_p1 = self._prefix_data_p1.cop()
-		self.gangster.speech_prefix_p2 = "n"
-		self.gangster.speech_prefix_count = 4	
-		self.gangster.no_arrest = false
-		self.gangster.rescue_hostages = true
-		self.gangster.use_radio = self._default_chatter
-	elseif job == "welcome_to_the_jungle_1" then
-		self.gangster.speech_prefix_p1 = "bik"
-		self.gangster.speech_prefix_p2 = nil
-		self.gangster.speech_prefix_count = 2		
-	else
-		self.gangster.speech_prefix_p1 = "lt"
-		self.gangster.speech_prefix_p2 = nil
-		self.gangster.speech_prefix_count = 2
-	end
-	self.gangster.chatter = {
-		aggressive = true,
-		retreat = true,
-		contact = true,
-		go_go = true,
-		suppress = true,
-		enemyidlepanic = true
-	}
-end)
+function CharacterTweakData:_init_deathvox()
+	self:_init_dv_presets()
 	
-function CharacterTweakData:_init_deathvox(presets)
+	local presets = self.presets
+
 	self.deathvox_guard = deep_clone(self.security)
 	self.deathvox_guard.detection = presets.detection.guard
 	self.deathvox_guard.ignore_medic_revive_animation = true --no revive animation. may require curving on lower diffs.
@@ -3420,9 +3416,8 @@ function CharacterTweakData:_init_deathvox(presets)
 	self.deathvox_fbi_veteran.chatter = presets.enemy_chatter.swat
 	--self.deathvox_fbi_veteran.factory_weapon_id = {"wpn_deathvox_heavy_ar"}
  	table.insert(self._enemy_list, "deathvox_fbi_veteran")
-	
-	self.fbi = deep_clone(self.deathvox_fbi_veteran)
-	
+
+	self:_process_weapon_usage_table() --new enemies were added so we run this again
 end
 
 function CharacterTweakData:crackdown_health_setup()
@@ -4529,6 +4524,8 @@ end
 function CharacterTweakData:_set_characters_weapon_preset(preset)
 	local all_units = {
 		"security",
+		"security_mex",
+		"security_mex_no_pager",
 		"cop",
 		"cop_scared",
 		"cop_female",
