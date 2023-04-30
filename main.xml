@@ -1,7 +1,7 @@
 <mod name="Crackdown" min_lib_ver="4.3" priority="7" global_key="deathvox" core_class="coredeathvox.lua">
-	<AssetUpdates id="Crackdown-PD2/deathvox" branch="master" provider="github" release="false" important="true" dont_delete="false" version="1.0.0">
+	<AssetUpdates id="Crackdown-PD2/deathvox" branch="master" provider="github" release="false" important="true" dont_delete="false" version="1.0.1">
 		<optional_versions>
-			<experimental id="Crackdown-PD2/deathvox" branch="experimental" provider="github" release="false" important="true" dont_delete="false" version="1.0.0"/>
+			<experimental id="Crackdown-PD2/deathvox" branch="experimental" provider="github" release="false" important="true" dont_delete="false" version="1.0.1"/>
 		</optional_versions>
 	</AssetUpdates>
 	<Dependencies>
