@@ -67,28 +67,40 @@ CopLogicBase._DANGEROUS_ALERT_TYPES = {
 }
 
 function CopLogicBase.on_importance(data) ----distribute in each logic, do not modify timers, or if it's done, store previous ones in case the unit is no longer important
-	if not data.important or not data.internal_data then
-		return
+end
+
+function CopLogicBase.on_new_objective(data, old_objective)
+	if old_objective and old_objective.follow_unit and alive(old_objective.follow_unit) then
+		if old_objective.destroy_clbk_key then
+			old_objective.follow_unit:base():remove_destroy_listener(old_objective.destroy_clbk_key)
+
+			old_objective.destroy_clbk_key = nil
+		end
+
+		if old_objective.death_clbk_key then
+			old_objective.follow_unit:character_damage():remove_listener(old_objective.death_clbk_key)
+
+			old_objective.death_clbk_key = nil
+		end
 	end
 
-	local internal_data = data.internal_data
-	local detection_id = internal_data.detection_task_key
-	local update_func_id = internal_data.update_queue_id
-	local update_func2_id = internal_data.upd_task_key
+	local new_objective = data.objective
 
-	local e_manager = managers.enemy
-	local update_task = e_manager.update_queue_task
+	if new_objective and new_objective.follow_unit and not new_objective.destroy_clbk_key then
+		local ext_brain = data.unit:brain()
+		local destroy_clbk_key = "objective_" .. new_objective.type .. tostring(data.unit:key())
+		new_objective.destroy_clbk_key = destroy_clbk_key
 
-	if detection_id then
-		update_task(e_manager, detection_id, nil, nil, data.t, nil, true)
-	end
+		new_objective.follow_unit:base():add_destroy_listener(destroy_clbk_key, callback(ext_brain, ext_brain, "on_objective_unit_destroyed"))
 
-	if update_func_id then
-		update_task(e_manager, update_func_id, nil, nil, data.t, nil, true)
-	end
+		if new_objective.follow_unit:character_damage() then
+			new_objective.death_clbk_key = destroy_clbk_key
 
-	if update_func2_id then
-		update_task(e_manager, update_func2_id, nil, nil, data.t, nil, true)
+			new_objective.follow_unit:character_damage():add_listener(destroy_clbk_key, {
+				"death",
+				"hurt"
+			}, callback(ext_brain, ext_brain, "on_objective_unit_damaged"))
+		end
 	end
 end
 
