@@ -631,6 +631,7 @@ function ExplosionManager:units_to_push(units_to_push, from_pos, range)
 	end
 end
 
+--[[ temp disabled 4/30 testing if this resolves crashing from throwing grenades
 function ExplosionManager:_apply_body_damage(is_local_attack, hit_body, user_unit, dir, damage)
 	local hit_unit = hit_body:unit()
 	local detached_from_network = hit_unit:id() == -1
@@ -678,6 +679,7 @@ function ExplosionManager:_apply_body_damage(is_local_attack, hit_body, user_uni
 		session:send_to_peers_synched("sync_body_damage_explosion_no_attacker", hit_body, normal, hit_pos, dir, network_damage)
 	end
 end
+--]]
 
 function ExplosionManager:client_damage_and_push(from_pos, normal, user_unit, dmg, range, curve_pow)
 	if draw_sync_explosion_sphere then
