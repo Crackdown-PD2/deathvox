@@ -195,12 +195,12 @@
 	<hook post="true" file="lua/lib/managers/dotmanager.lua" source_file="lib/managers/dotmanager"/>
 	<hook post="true" file="lua/lib/managers/explosionmanager.lua" source_file="lib/managers/explosionmanager"/>
 	<hook post="true" file="lua/lib/managers/firemanager.lua" source_file="lib/managers/firemanager"/>
-	<hook post="true" file="lua/lib/managers/menu/skirmishcontractboxgui.lua" source_file="lib/managers/menu/skirmishcontractboxgui"/>
-	<hook post="true" file="lua/lib/managers/menu/menunodegui.lua" source_file="lib/managers/menu/menunodegui"/>
 	<hook post="true" file="lua/lib/managers/menu/blackmarketgui.lua" source_file="lib/managers/menu/blackmarketgui"/>
-	<hook post="true" file="lua/lib/managers/menu/skilltreeguinew.lua" source_file="lib/managers/menu/skilltreeguinew"/>
+	<hook post="true" file="lua/lib/managers/menu/menunodegui.lua" source_file="lib/managers/menu/menunodegui"/>
 	<hook post="true" file="lua/lib/managers/menu/playerinventorygui.lua" source_file="lib/managers/menu/playerinventorygui"/>
 	<hook post="true" file="lua/lib/managers/menu/skilltreegui.lua" source_file="lib/managers/menu/skilltreegui"/>
+	<hook post="true" file="lua/lib/managers/menu/skilltreeguinew.lua" source_file="lib/managers/menu/skilltreeguinew"/>
+	<hook post="true" file="lua/lib/managers/menu/skirmishcontractboxgui.lua" source_file="lib/managers/menu/skirmishcontractboxgui"/>
 	<hook post="true" file="lua/lib/managers/menu/specializationguinew.lua" source_file="lib/managers/menu/specializationguinew"/>
 	<!-- <hook post="true" file="lua/lib/managers/menu/missionbriefinggui.lua" source_file="lib/managers/menu/missionbriefinggui"/> -->
 	<hook post="true" file="lua/lib/managers/group_ai_states/groupaistatebase.lua" source_file="lib/managers/group_ai_states/groupaistatebase"/>
