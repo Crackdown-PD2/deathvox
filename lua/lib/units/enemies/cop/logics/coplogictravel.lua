@@ -781,9 +781,9 @@ function CopLogicTravel._chk_say_clear(data)
 				
 				data.last_calm_chatter_t = data.t
 			end
-		end
 		--]]
-		data.last_calm_chatter_t = data.t --temp; remove this when this voiceline proc is reenabled
+			data.last_calm_chatter_t = data.t --temp; remove this when this voiceline proc is reenabled
+		end
 	end
 end
 
