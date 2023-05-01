@@ -4075,7 +4075,7 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 --	sniper - MAYHEM
 	self.deathvox_sniper_assault.weapon = deep_clone(self.presets.weapon.deathvox_sniper)
 	self.sniper = deep_clone(self.deathvox_sniper)
-	self.sniper.weapon = dself.presets.weapon.deathvox_sniper
+	self.sniper.weapon = self.presets.weapon.deathvox_sniper
 	--sniper weapon BS pls dont touch - Evilbobarino
 	--self.weap_unit_names[13] = Idstring("units/payday2/weapons/wpn_npc_sniper_cd/wpn_npc_sniper_cd")
     --seriously please dont it will make me sad :<
