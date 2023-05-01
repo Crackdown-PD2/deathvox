@@ -232,7 +232,8 @@ function PlayerDamage:update(unit, t, dt)
 		self._tinnitus_data.intensity = (self._tinnitus_data.end_t - t) / self._tinnitus_data.duration
 
 		if self._tinnitus_data.intensity <= 0 then
-			self:_stop_tinnitus()
+			SoundDevice:set_rtpc("downed_state_progression", math.max(self._downed_progression or 0, 0))
+			self:_stop_tinnitus(true)
 		else
 			SoundDevice:set_rtpc("downed_state_progression", math.max(self._downed_progression or 0, self._tinnitus_data.intensity * 100))
 		end
@@ -242,7 +243,8 @@ function PlayerDamage:update(unit, t, dt)
 		self._concussion_data.intensity = (self._concussion_data.end_t - t) / self._concussion_data.duration
 
 		if self._concussion_data.intensity <= 0 then
-			self:_stop_concussion()
+			SoundDevice:set_rtpc("concussion_effect", 0)
+			self:_stop_concussion(true)
 		else
 			SoundDevice:set_rtpc("concussion_effect", self._concussion_data.intensity * 100)
 		end
