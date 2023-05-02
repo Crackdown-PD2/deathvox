@@ -1,7 +1,6 @@
-local old_init = WeaponFactoryTweakData.init
-function WeaponFactoryTweakData:init(...)
-	old_init(self, ...)
-    
+
+Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
+	
 	self.wpn_deathvox_grenadier = deep_clone(self.wpn_fps_gre_m32_npc)
 	self.wpn_deathvox_grenadier.default_blueprint = {
 		"wpn_fps_gre_m32_barrel",
@@ -12,14 +11,10 @@ function WeaponFactoryTweakData:init(...)
 		"wpn_fps_upg_m4_s_standard_vanilla"
 	}
 	self.wpn_deathvox_grenadier.unit = "units/pd2_mod_gageammo/pew_pew_lasers/wpn_deathvox_grenadier"
-
-end
-
--- Begin Total Crackdown Weapon Attachment materials
-Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
-	--BEGIN THE NEW INSANITY! (OR SOMETHING LIKE THAT!)
+	
 	if deathvox:IsTotalCrackdownEnabled() then
-
+		-- Begin Total Crackdown Weapon Attachment materials
+		
 		local enabled = true
 		if enabled then
 			CSVStatReader:read_files("attachment",self)
@@ -46,7 +41,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 --      suppression - Base suppression value.
 	--Threat value = suppression * 2
 --      value - from table. Inconsistently reported/documented. Copy from decompile.
-
+		
 		--Nagant Bayonet [wpn_fps_snp_mosin_ns_bayonet] [Replaces Weapon Butt melee weapon with Nagant Bayonet melee weapon] Value: 1
 		self.parts.wpn_fps_snp_mosin_ns_bayonet.supported = true
 		self.parts.wpn_fps_snp_mosin_ns_bayonet.stats = {
