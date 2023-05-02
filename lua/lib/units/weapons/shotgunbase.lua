@@ -1,27 +1,91 @@
+local TCD_ENABLED = deathvox:IsTotalCrackdownEnabled()
 function ShotgunBase:setup_default()
-	self._damage_near = tweak_data.weapon[self._name_id].damage_near
-	self._damage_far = tweak_data.weapon[self._name_id].damage_far
-	self._rays = tweak_data.weapon[self._name_id].rays or self._ammo_data.rays or 6
-	self._range = self._damage_far
-
-	if tweak_data.weapon[self._name_id].use_shotgun_reload == nil then
-		self._use_shotgun_reload = self._use_shotgun_reload or self._use_shotgun_reload == nil
-	else
-		self._use_shotgun_reload = tweak_data.weapon[self._name_id].use_shotgun_reload
-	end
-
+	local weapontweakdata = tweak_data.weapon[self._name_id]
+	local ammo_data = self._ammo_data
+	self._rays = weapontweakdata.rays or ammo_data and ammo_data.rays or 6
 	self._single_damage_instance = true --basically a toggle option between vanilla (with proper priorization and rays) and the damage-per-pellet feature
 
-	--if the shotgun has the free buckshot ammo type equipped, use damage-per-pellet
-	if alive(self._unit) and self._unit:base()._parts then
-		for part_id, part in pairs(self._unit:base()._parts) do
-			if part_id == "wpn_fps_upg_a_custom_free" then
-				self._single_damage_instance = false
+	if ammo_data and TCD_ENABLED then
+		--use damage-per-pellet if the shotgun has the proper ammo type equipped
+		if ammo_data.single_damage_instance then
+			self._single_damage_instance = false
+		end
+		if ammo_data.bullet_class == "FlameBulletBase" then
+			local flame_effect_ext = self._flame_effect_ext
+			if not flame_effect_ext then
+				flame_effect_ext = FlamethrowerEffectExtension:new(self._unit)
+				--this needs to be replaced actually
+				--this is meant to be an actual unit extension
+				--and also it raycasts for flame particle collision
+				--even though dragon's breath rounds are piercing/overpenetrating
+				flame_effect_ext._name_id = self._name_id
+				
+				flame_effect_ext._flame_effect = {
+					effect = Idstring("effects/payday2/particles/explosions/flamethrower")
+				}
+				
+				flame_effect_ext._nozzle_effect = {
+					effect = Idstring("effects/payday2/particles/explosions/flamethrower_nosel")
+				}
+				flame_effect_ext._pilot_light = {
+					effect = Idstring("effects/payday2/particles/explosions/flamethrower_pilot")
+				}
+				self._flame_effect_ext = flame_effect_ext
+				flame_effect_ext._single_flame_effect_duration = 1
+				flame_effect_ext._distance_to_gun_tip = 50
+				flame_effect_ext._flamethrower_effect_collection = {}
+				local upd_name = "upd_flamethrower_" .. tostring(self._unit:key())
+				self._flame_effect_upd_name = upd_name
+				BeardLib:AddUpdater(upd_name,callback(flame_effect_ext,flame_effect_ext,"update",self._unit))
 			end
+			flame_effect_ext._flame_max_range = self._range or 400
 		end
 	end
+	
+	self._damage_near = weapontweakdata.damage_near
+	self._damage_far = weapontweakdata.damage_far
+	self._range = self._damage_far
 
-	self._hip_fire_rate_inc = managers.player:upgrade_value("shotgun", "hip_rate_of_fire", 0) --allow Close By's ace rate of fire bonus to apply to all shotguns
+	if weapontweakdata.use_shotgun_reload == nil then
+		self._use_shotgun_reload = self._use_shotgun_reload or self._use_shotgun_reload == nil
+	else
+		self._use_shotgun_reload = weapontweakdata.use_shotgun_reload
+	end
+	
+	
+	self._hip_fire_rate_inc = managers.player:upgrade_value("shotgun", "hip_rate_of_fire", 0) --allow Close By aced's rate of fire bonus to apply to all shotguns
+end
+
+function ShotgunBase:_update_stats_values(disallow_replenish, ammo_data)
+	ShotgunBase.super._update_stats_values(self, disallow_replenish, ammo_data)
+	self:setup_default()
+
+	if self._ammo_data then
+		if self._ammo_data.rays ~= nil then
+			self._rays = self._ammo_data.rays
+		end
+		if self._ammo_data.rays_mul then
+			self._rays = math.ceil(self._rays * self._ammo_data.rays_mul)
+		end
+
+		if self._ammo_data.damage_near ~= nil then
+			self._damage_near = self._ammo_data.damage_near
+		end
+
+		if self._ammo_data.damage_near_mul ~= nil then
+			self._damage_near = self._damage_near * self._ammo_data.damage_near_mul
+		end
+
+		if self._ammo_data.damage_far ~= nil then
+			self._damage_far = self._ammo_data.damage_far
+		end
+
+		if self._ammo_data.damage_far_mul ~= nil then
+			self._damage_far = self._damage_far * self._ammo_data.damage_far_mul
+		end
+
+		self._range = self._damage_far
+	end
 end
 
 function ShotgunBase:fire_rate_multiplier()
@@ -37,10 +101,27 @@ function ShotgunBase:fire_rate_multiplier()
 			end
 		end
 		if self:is_weapon_class("class_shotgun") then --i don't think there's any shotgun weapons that aren't crackdown weapon class "class_shotgun", but just to be safe 
+		--UPDATE: UNDERBARREL SHOTGUNS EXIST NOW BAYBEEEE
 			fire_rate_mul = fire_rate_mul + managers.player:upgrade_value("class_shotgun","shell_games_rof_bonus",0)
 		end
 	end
 	return fire_rate_mul
+end
+
+function ShotgunBase:_spawn_muzzle_effect(from_pos,direction,...)
+--	Draw:brush(Color.red,5):line(from_pos,from_pos + (direction * 1000))
+	ShotgunBase.super._spawn_muzzle_effect(self,from_pos,direction,...)
+	
+	if self._flame_effect_ext then
+		self._flame_effect_ext:_spawn_muzzle_effect(from_pos,direction,...)
+	end
+end
+
+function ShotgunBase:destroy(unit,...)
+	if self._flame_effect_upd_name then
+		BeardLib:RemoveUpdater(self._flame_effect_upd_name)
+	end
+	ShotgunBase.super.destroy(self,unit,...)
 end
 
 local mvec_temp = Vector3()
@@ -108,7 +189,13 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 		local bulletproof_ids = Idstring("bulletproof")
 
 		--proper penetration using one ray, against walls and things like corpses, bots, etc (like other weapons have). HE rounds obviously still stop at the first thing they hit
-		if he_round then
+		if dragons_breath and TCD_ENABLED then
+			ray_hits = World:raycast_all("ray", from_pos, mvec_to, "sphere_cast_radius", 40, "disable_inner_ray", "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
+--			local angle = 15
+--			local radius = self._range * math.tan(angle)
+--			ray_hits = World:find_units("cone",from_pos,mvec_to,radius,"slot_mask", enemy_mask, "ignore_unit", self._setup.ignore_units)
+			--todo search for bodies in cone instead so that headshots are enabled
+		elseif he_round then
 			ray_hits = World:raycast("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units)
 		elseif wall_piercing then
 			ray_hits = World:raycast_wall("ray", from_pos, mvec_to, "slot_mask", self._bullet_slotmask, "ignore_unit", self._setup.ignore_units, "thickness", 40, "thickness_mask", wall_mask)
@@ -120,9 +207,9 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 		local unique_hits = {} --table for collected hits
 		
 		if he_round then
-			if hit_an_enemy then --once an enemy gets hit, this is always true until another shot is fired
-				hit_an_enemy = hit_an_enemy
-			end
+--			if hit_an_enemy then --once an enemy gets hit, this is always true until another shot is fired
+--				hit_an_enemy = hit_an_enemy
+--			end
 
 			if ray_hits then
 				if not hit_an_enemy and ray_hits.unit and ray_hits.unit:in_slot(enemy_mask) then

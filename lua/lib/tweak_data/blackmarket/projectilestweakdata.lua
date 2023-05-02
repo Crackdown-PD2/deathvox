@@ -127,6 +127,10 @@ Hooks:PostHook(BlackMarketTweakData, "_init_projectiles", "cdgren", function(sel
 		self.projectiles.fir_com.subclasses = {"subclass_areadenial"}
 		self.projectiles.fir_com.no_cheat_count = true
 		
+		self.projectiles.wpn_gre_electric.primary_class = "class_grenade"
+		self.projectiles.poison_gas_grenade.primary_class = "class_grenade"
+		self.projectiles.sticky_grenade.primary_class = "class_grenade"
+		
 		
 		self.projectiles.bow_poison_arrow.is_poison = true
 		self.projectiles.crossbow_poison_arrow.is_poison = true

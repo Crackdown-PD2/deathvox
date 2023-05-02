@@ -259,52 +259,9 @@ function CopDamage:is_immune_to_shield_knockback()
 	return false
 end
 
-function CopDamage:_comment_death(attacker, killed_unit, special_comment)
-	if special_comment then
-		PlayerStandard.say_line(attacker:sound(), special_comment)
-	else
-		local victim_base = killed_unit:base()
-
-		if victim_base:has_tag("tank") then
-			PlayerStandard.say_line(attacker:sound(), "g30x_any")
-		elseif victim_base:has_tag("spooc") then
-			PlayerStandard.say_line(attacker:sound(), "g33x_any")
-		elseif victim_base:has_tag("taser") then
-			PlayerStandard.say_line(attacker:sound(), "g32x_any")
-		elseif victim_base:has_tag("shield") then
-			PlayerStandard.say_line(attacker:sound(), "g31x_any")
-		elseif victim_base:has_tag("sniper") then
-			PlayerStandard.say_line(attacker:sound(), "g35x_any")
-		elseif victim_base:has_tag("medic") then
-			PlayerStandard.say_line(attacker:sound(), "g36x_any")
-		elseif victim_base:has_tag("custom") then
-			PlayerStandard.say_line(attacker:sound(), "g92")
-		end
-	end
-end
-
-function CopDamage:_AI_comment_death(attacker, killed_unit, special_comment)
-	if special_comment then
-		attacker:sound():say(special_comment, true)
-	else
-		local victim_base = killed_unit:base()
-
-		if victim_base:has_tag("tank") then
-			attacker:sound():say("g30x_any", true)
-		elseif victim_base:has_tag("spooc") then
-			attacker:sound():say("g33x_any", true)
-		elseif victim_base:has_tag("taser") then
-			attacker:sound():say("g32x_any", true)
-		elseif victim_base:has_tag("shield") then
-			attacker:sound():say("g31x_any", true)
-		elseif victim_base:has_tag("sniper") then
-			attacker:sound():say("g35x_any", true)
-		elseif victim_base:has_tag("medic") then
-			attacker:sound():say("g36x_any", true)
-		elseif victim_base:has_tag("custom") then
-			attacker:sound():say("g92", true)
-		end
-	end
+if CopDamage.death_comments_lookup and not CopDamage.death_comments_lookup.custom then
+	CopDamage.death_comments_lookup.custom = "g92"
+	table.insert(CopDamage.death_comments_priority,#CopDamage.death_comments_priority + 1,"custom")
 end
 
 function CopDamage:roll_critical_hit(attack_data,damage)
@@ -637,7 +594,7 @@ function CopDamage:damage_explosion(attack_data)
 
 			self:_check_damage_achievements(attack_data, false)
 		elseif alive(attacker_unit) and managers.groupai:state():is_unit_team_AI(attacker_unit) then
-			self:_AI_comment_death(attacker_unit, self._unit)
+			self:_comment_death(attacker_unit, self._unit)
 		end
 	end
 
@@ -1239,7 +1196,7 @@ function CopDamage:damage_bullet(attack_data)
 		elseif alive(attack_data.attacker_unit) and managers.groupai:state():is_unit_team_AI(attack_data.attacker_unit) then
 			local special_comment = self:_check_special_death_conditions(attack_data.variant, attack_data.col_ray.body, attack_data.attacker_unit, attack_data.weapon_unit)
 
-			self:_AI_comment_death(attack_data.attacker_unit, self._unit, special_comment)
+			self:_comment_death(attack_data.attacker_unit, self._unit, special_comment)
 		end
 	end
 
@@ -1530,7 +1487,7 @@ function CopDamage:damage_tase(attack_data)
 
 			self:_check_damage_achievements(attack_data, false)
 		elseif alive(attacker_unit) and managers.groupai:state():is_unit_team_AI(attacker_unit) then
-			self:_AI_comment_death(attacker_unit, self._unit)
+			self:_comment_death(attacker_unit, self._unit)
 		end
 	end
 
@@ -2339,10 +2296,6 @@ function CopDamage:damage_melee(attack_data)
 					self._unit:unit_data().has_alarm_pager = false
 				end
 			end
-		elseif managers.groupai:state():is_unit_team_AI(attack_data.attacker_unit) then
-			local special_comment = self:_check_special_death_conditions("melee", attack_data.col_ray.body, attack_data.attacker_unit, attack_data.name_id)
-
-			self:_AI_comment_death(attack_data.attacker_unit, self._unit, special_comment)
 		end
 	end
 
@@ -2769,6 +2722,7 @@ function CopDamage:damage_fire(attack_data)
 		return
 	end
 	
+	
 	local attacker_unit = attack_data.attacker_unit
 	local weap_unit = attack_data.weapon_unit
 
@@ -2785,6 +2739,10 @@ function CopDamage:damage_fire(attack_data)
 
 	local is_civilian = CopDamage.is_civilian(self._unit:base()._tweak_table)
 	local damage = attack_data.damage
+	local head
+	local headshot_by_player
+	local headshot_multiplier = 1
+	local headshot_mul_addend = 0
 
 	if attacker_unit == managers.player:player_unit() and damage > 0 and weap_unit and alive(weap_unit) and attack_data.variant ~= "stun" and not attack_data.is_fire_dot_damage then
 		local weap_base = weap_unit:base()
@@ -2798,6 +2756,10 @@ function CopDamage:damage_fire(attack_data)
 
 		if not is_grenade_or_ground_fire then
 			managers.hud:on_hit_confirmed()
+		end
+		
+		if TCD_ENABLED then
+			head = self._head_body_name and not self._unit:in_slot(16) and not self._char_tweak.ignore_headshot and attack_data.col_ray.body and attack_data.col_ray.body:name() == self._ids_head_body_name
 		end
 	end
 
@@ -2845,13 +2807,35 @@ function CopDamage:damage_fire(attack_data)
 			end
 		end
 	end
-
+	
+	
+	
+	
+	if head then --tcd only
+		local weap_base = alive(attack_data.weapon_unit) and attack_data.weapon_unit:base()
+		local weapon_class = weap_base and weap_base.get_weapon_class and weap_base:get_weapon_class() or "NO_WEAPON_CLASS"
+		managers.player:on_headshot_dealt()
+		attack_data.headshot = head
+		headshot_by_player = true
+		headshot_multiplier = headshot_multiplier * (managers.player:upgrade_value("weapon", "passive_headshot_damage_multiplier", 1) + managers.player:upgrade_value(weapon_class, "headshot_mul_addend", 0))
+		
+		if not self._damage_reduction_multiplier then
+			if self._char_tweak.headshot_dmg_mul then
+				damage = damage * self._char_tweak.headshot_dmg_mul * headshot_multiplier
+			else
+				damage = self._health * 10
+			end
+		end
+		
+	end
+	
 	damage = self:_apply_damage_reduction(damage)
 
 	if self._char_tweak.DAMAGE_CLAMP_FIRE then
 		damage = math_min(damage, self._char_tweak.DAMAGE_CLAMP_FIRE)
 	end
-
+	
+	
 	attack_data.raw_damage = damage
 
 	damage = math_clamp(damage, 0, self._HEALTH_INIT)
@@ -2880,7 +2864,7 @@ function CopDamage:damage_fire(attack_data)
 			}
 
 			self:die(attack_data)
-			self:chk_killshot(attacker_unit, "fire")
+			self:chk_killshot(attacker_unit, "fire", headshot_by_player)
 		end
 	else
 		attack_data.damage = damage
@@ -2944,11 +2928,11 @@ function CopDamage:damage_fire(attack_data)
 
 			self:_show_death_hint(self._unit:base()._tweak_table)
 			managers.statistics:killed(data)
-
+			
 			self:_check_damage_achievements(attack_data, false)
 		else
 			if attacker_unit and alive(attacker_unit) and managers.groupai:state():is_unit_team_AI(attacker_unit) then
-				self:_AI_comment_death(attacker_unit, self._unit)
+				self:_comment_death(attacker_unit, self._unit)
 			end
 		end
 	end
@@ -3340,7 +3324,7 @@ function CopDamage:damage_simple(attack_data)
 
 			self:_check_damage_achievements(attack_data, false)
 		elseif alive(attacker_unit) and managers.groupai:state():is_unit_team_AI(attacker_unit) then
-			self:_AI_comment_death(attacker_unit, self._unit)
+			self:_comment_death(attacker_unit, self._unit)
 		end
 	end
 

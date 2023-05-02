@@ -1,10 +1,5 @@
 local orig_graze = SniperGrazeDamage.on_weapon_fired
 function SniperGrazeDamage:on_weapon_fired(weapon_unit, result,...)
-	--re-enable later when needed
-	--[[if not deathvox:IsHoppipOverhaulEnabled() then 
-		return orig_graze(self,weapon_unit,result,...)
-	end]]
-
 	if not alive(weapon_unit) then
 		return
 	end

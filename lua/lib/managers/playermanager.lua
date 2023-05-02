@@ -1406,6 +1406,52 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 		self:_on_enter_shock_and_awe_event()
 	end
 	
+	--vanilla copycat stuff
+	local selection_index = equipped_unit and equipped_unit:base() and equipped_unit:base():selection_index() or 0
+	local update_secondary_reload_primary = selection_index == 1 and self._has_secondary_reload_primary
+	local update_primary_reload_secondary = selection_index == 2 and self._has_primary_reload_secondary
+	
+	if update_secondary_reload_primary then
+		local kills_to_reload = self:upgrade_value("player", "secondary_reload_primary", 10)
+		local secondary_kills = self:get_property("secondary_reload_primary_kills", 0) + 1
+
+		if kills_to_reload <= secondary_kills then
+			local primary_unit = player_unit:inventory():unit_by_selection(2)
+			local primary_base = alive(primary_unit) and primary_unit:base()
+			local can_reload = primary_base and primary_base.can_reload and primary_base:can_reload()
+
+			if can_reload then
+				primary_base:on_reload()
+				managers.statistics:reloaded()
+				managers.hud:set_ammo_amount(primary_base:selection_index(), primary_base:ammo_info())
+			end
+
+			secondary_kills = 0
+		end
+
+		self:set_property("secondary_reload_primary_kills", secondary_kills)
+	elseif update_primary_reload_secondary then
+		local kills_to_reload = self:upgrade_value("player", "primary_reload_secondary", 10)
+		local primary_kills = self:get_property("primary_reload_secondary_kills", 0) + 1
+
+		if kills_to_reload <= primary_kills then
+			local secondary_unit = player_unit:inventory():unit_by_selection(1)
+			local secondary_base = alive(secondary_unit) and secondary_unit:base()
+			local can_reload = secondary_base and secondary_base.can_reload and secondary_base:can_reload()
+
+			if can_reload then
+				secondary_base:on_reload()
+				managers.statistics:reloaded()
+				managers.hud:set_ammo_amount(secondary_base:selection_index(), secondary_base:ammo_info())
+			end
+
+			primary_kills = 0
+		end
+
+		self:set_property("primary_reload_secondary_kills", primary_kills)
+	end
+	--^ copycat stuff
+	
 	if self:has_category_upgrade("player", "muscle_beachyboys") then
 		if not self._beach_health_points then
 			self._beach_health_points = 0.1

@@ -1,8 +1,0 @@
-Current changes:
-Note this heist was edited without consideration for lower difficulty adjustments.
-Double turret.
-Removed extra crowbar.
-Locked final policecar task.
-
-Todo:
-Loc fix -  difficulty asset insertion.

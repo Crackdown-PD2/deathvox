@@ -127,7 +127,6 @@
 	<effect path="effects/particles/explosions/smoke_grenade_smoke" force="true"/>
 	<effect path="effects/particles/weapons/trail_dv_sniper" load="true"/>
 	<effect path="effects/particles/weapons/money_muzzle_fps" load="true"/>
-	<effect path="effects/payday2/particles/weapons/weapon_trail" load="true" force="true"/>
 	<effect path="effects/pd2_mod_gageammo/particles/character/flashlight_ss" load="true"/>
 	<effect path="effects/pd2_mod_gageammo/particles/character/sociopath_damage" load="true"/>
 	<effect path="effects/pd2_mod_gageammo/particles/character/yakuza_selfdamage" load="true"/>
@@ -749,42 +748,5 @@
 	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_atlas_nm"  force="false"/>
 	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_mask_df"  force="false"/>	
 	<texture path="units/pd2_mod_gageammo/characters/shared_textures/grenadier_hood_df"  force="false"/>
-
-	<!-- TOTAL CRACKDOWN Armor Plates -->
-	<unit load="true" path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
-	<unit load="true" path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag_dummy"/>
-	<object path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
-	<model path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
-	<material_config path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
-	<sequence_manager path="units/pd2_mod_armorbag/equipment/gen_equipment_armorpak_bag/gen_equipment_armorpak_bag"/>
-	
-	
-	<!-- TOTAL CRACKDOWN GUI assets -->
-	<texture path="guis/textures/pd2/blackmarket/icons/tcd/class_grenade"  force="false"/>
-	<texture path="guis/textures/pd2/blackmarket/icons/tcd/class_heavy"  force="false"/>
-	<texture path="guis/textures/pd2/blackmarket/icons/tcd/class_melee"  force="false"/>
-	<texture path="guis/textures/pd2/blackmarket/icons/tcd/class_precision"  force="false"/>
-	<texture path="guis/textures/pd2/blackmarket/icons/tcd/class_rapidfire"  force="false"/>
-	<texture path="guis/textures/pd2/blackmarket/icons/tcd/class_saw"  force="false"/>
-	<texture path="guis/textures/pd2/blackmarket/icons/tcd/class_shotgun"  force="false"/>
-	<texture path="guis/textures/pd2/blackmarket/icons/tcd/class_specialist"  force="false"/>
-	<texture path="guis/textures/pd2/blackmarket/icons/tcd/class_throwing"  force="false"/>
-	<texture path="guis/textures/pd2/blackmarket/icons/tcd/subclass_areadenial"  force="false"/>
-	<texture path="guis/textures/pd2/blackmarket/icons/tcd/subclass_poison"  force="false"/>
-	<texture path="guis/textures/pd2/blackmarket/icons/tcd/subclass_quiet"  force="false"/>
-	
-	<texture path="guis/textures/pd2/blackmarket/icons/grenades/tripmine_throwable" force="false"/>
-	
-	<texture path="guis/textures/pd2/hud_health_sociopath" />
-	
-	
-	<!--Adds weapon class icons from TCD. Since this only overwrites a few characters in the box drawing character set, it is unlikely to conflict, and the additional overhead cost should be low. Requires BeardLib v4.3+. -->
-	<font path="fonts/tcd_weapon_class_icons" early_load = "true" load="true" unload="false" />
-	<texture path="fonts/tcd_weapon_class_icons" />
-	<merged_font path="fonts/font_small_mf" />
-	
-	<!--Hotline Miami "combo" font, for use in TCD's overhauled Sociopath perk deck -->
-	<font path="fonts/font_justice_shadow_outline" load="true" unload="false" />
-	<texture path="fonts/font_justice_shadow_outline" />
 
 </table>

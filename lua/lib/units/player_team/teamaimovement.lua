@@ -122,19 +122,6 @@ function TeamAIMovement:set_should_stay(should_stay)
 end
 
 function TeamAIMovement:chk_action_forbidden(action_type)
-	--stay put orders are not supposed to affect clients
-	if action_type == "walk" and self._should_stay and Network:is_server() then
-		local objective = self._unit:brain():objective()
-
-		if objective then
-			if objective.forced or objective.type == "revive" then
-				return false
-			end
-		end
-
-		return true
-	end
-
 	return TeamAIMovement.super.chk_action_forbidden(self, action_type)
 end
 

@@ -83,7 +83,7 @@ function CopSound:say(sound_name, sync, skip_prefix, important, callback)
 	local line_to_check = line_array[sound_name]
 	if self._unit:base():char_tweak()["custom_voicework"] then
 		if line_to_check then
-			local voicelines = _G.voiceline_framework.BufferedSounds[self._unit:base():char_tweak().custom_voicework]
+			local voicelines = deathvox._voiceline_framework.BufferedSounds[self._unit:base():char_tweak().custom_voicework]
 			if voicelines and voicelines[line_to_check] then
 				local line_to_use = voicelines[line_to_check][math.random(#voicelines[line_to_check])]
 				self._unit:base():play_voiceline(line_to_use, important)

@@ -1,13 +1,15 @@
-<table name="Crackdown Music By Rainbowmaker" min_lib_ver="4.3" global_key="deathvoxcore">
-   <Localization directory="loc" default="en.txt"/>
-	<HeistMusic id="rb_dead_end" directory="music/rb_dead_end"> 
-		<event name="setup" start_source="stealth_intro.ogg" source="stealth.ogg"/>
-		<event name="anticipation" start_source="anticipation_intro.ogg" source="anticipation.ogg"/>
-		<event name="assault" start_source="transition.ogg" source="assault.ogg"/>
-		<event name="control" start_source="control_intro.ogg" source="control.ogg"/>
-	</HeistMusic>
+<mod name="Crackdown" min_lib_ver="4.3" priority="7" global_key="deathvox" core_class="coredeathvox.lua">
+	<AssetUpdates id="Crackdown-PD2/deathvox" branch="master" provider="github" release="false" important="true" dont_delete="false" version="1.0.1">
+		<optional_versions>
+			<experimental id="Crackdown-PD2/deathvox" branch="experimental" provider="github" release="false" important="true" dont_delete="false" version="1.0.1"/>
+		</optional_versions>
+	</AssetUpdates>
+	<Dependencies>
+		<Dependency name="Crackdown Assets - Classics Faction" type="blt" id="Crackdown-PD2/Crackdown-Assets-Faction-Classics" provider="github" branch="main" release="false" folder_name="Crackdown Assets - Classics Faction"/>
+		<Dependency name="Crackdown Assets - Federales Faction" type="blt" id="Crackdown-PD2/Crackdown-Assets-Faction-Federales" provider="github" branch="main" release="false" folder_name="Crackdown Assets - Federales Faction"/>
+		<Dependency name="Crackdown Assets - Murkies Faction" type="blt" id="Crackdown-PD2/Crackdown-Assets-Faction-Murkies" provider="github" branch="main" release="false" folder_name="Crackdown Assets - Murkies Faction"/>
+	</Dependencies>
+	<Localization name="crackdown_main_localization" directory="loc" default="en.txt"/>
 	<AddFiles file="crackdownmainassets.xml"/>
-	<Package id="packages/deathvoxclassics" file="crackdownclassicassets.xml" use_clbk="self:DebugLoadAssets"/>
-	<Package id="packages/deathvoxmurkies" file="crackdownmurkies.xml" use_clbk="self:DebugLoadAssets"/>
-	<Package id="packages/deathvoxfederales" file="crackdownfederales.xml" use_clbk="self:DebugLoadAssets"/>
-</table>
+	<Hooks name="crackdown_hooks1" file="hooks.xml"/>
+</mod>

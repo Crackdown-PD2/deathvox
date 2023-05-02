@@ -65,6 +65,8 @@ function WeaponFactoryManager:get_weapon_subclasses_from_blueprint(weapon_id,blu
 end
 
 if deathvox:IsTotalCrackdownEnabled() then
+	--not very efficient; try not to call this too much
+	--it is suggested to call once on weapon assembled and cache whatever you need to into the weapon base instance
 	function WeaponFactoryManager:_part_data(part_id, factory_id, override)
 		local factory = tweak_data.weapon.factory
 
@@ -79,6 +81,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if part.tcd_stats then 
 			local weapon_override = part.tcd_stats[factory_id]
 			if weapon_override then 
+				if weapon_override.class_modifier then
+					part.class_modifier = weapon_override.class_modifier
+				end
+				if weapon_override.subclass_modifiers then
+					part.subclass_modifiers = deep_clone(weapon_override.subclass_modifiers)
+				end
 				if weapon_override.stats then
 					part.stats = deep_clone(weapon_override.stats)
 				end

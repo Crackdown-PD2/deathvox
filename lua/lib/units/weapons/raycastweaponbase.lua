@@ -1533,7 +1533,7 @@ if TCDEnabled then
 		if self:is_weapon_class("class_shotgun") and self:fire_mode() == "auto" then 
 			if tweak_data.weapon[self._name_id].CLIP_AMMO_MAX == 2 then 
 				if managers.player:has_category_upgrade("class_shotgun","heartbreaker_doublebarrel") then 
-	--				self._next_fire_allowed = 0
+					self._next_fire_allowed = 0
 					return
 				end
 			end
