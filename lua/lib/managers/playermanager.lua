@@ -229,10 +229,12 @@ if TCD_ENABLED then
 	
 	function PlayerManager:verify_grenade(peer_id)
 		--gutted anticheat detection function
+		return true
 	end
 	
 	function PlayerManager:verify_equipment(peer_id,equipment_id)
 		--gutted anticheat detection function
+		return true
 	end
 	
 	Hooks:PostHook(PlayerManager,"check_skills","deathvox_check_cd_skills",function(self)
@@ -1045,10 +1047,6 @@ if TCD_ENABLED then
 		return true
 	end
 	
-	function PlayerManager:verify_equipment(peer_id, equipment_id,...)
-		return true
-	end
-
 end
 
 
