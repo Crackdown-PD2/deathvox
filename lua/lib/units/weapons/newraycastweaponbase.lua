@@ -3,6 +3,42 @@ if deathvox:IsTotalCrackdownEnabled() then
 	local mvec3_distance = mvector3.distance
 	local math_map_range_clamped = math.map_range_clamped
 	
+	function NewRaycastWeaponBase:recoil_addend()
+		local user_unit = self._setup and self._setup.user_unit
+		local current_state = alive(user_unit) and user_unit:movement() and user_unit:movement()._current_state
+		
+		local primary_class = self:get_weapon_class()
+		local subclasses = self:get_weapon_subclasses()
+		
+		local recoil_index
+		if not self._cached_recoil_addend then
+			--cache the current recoil index,
+			--excluding situational/temporary bonuses
+			recoil_index = managers.blackmarket:recoil_addend(self._name_id, self:weapon_tweak_data().categories, recoil_index, self._silencer, self._blueprint, current_state, self:is_single_shot())
+			self._cached_recoil_addend = recoil_index
+		else
+			recoil_index = self._cached_recoil_addend
+		end
+		
+		if recoil_index then
+			--add temporary recoil bonuses
+			if managers.player:has_category_upgrade("class_heavy","death_grips_recoil_bonus") then
+				if primary_class == "class_heavy" then
+					recoil_index = recoil_index + managers.player:get_temporary_property("current_death_grips_stacks",0) * managers.player:upgrade_value("class_heavy","death_grips_recoil_bonus",0)
+				end
+			end
+			
+			for _,subclass in pairs(subclasses) do 
+				recoil_index = recoil_index + managers.player:upgrade_value(subclass,"subclass_stability_addend",0)
+			end
+			--clamp total recoil bonus within allowed range
+			recoil_index = math.clamp(recoil_index, 1, #tweak_data.weapon.stats.recoil)
+		end
+		
+		--return final current recoil bonus
+		return recoil_index
+	end
+
 	function NewRaycastWeaponBase:conditional_accuracy_addend(current_state)
 		local index = 0
 		local primary_class = self:get_weapon_class()
