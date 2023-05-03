@@ -1175,7 +1175,7 @@ function CopLogicAttack.aim_allow_fire(shoot, aim, data, my_data)
 			my_data.firing = true
 
 			if not data.unit:in_slot(16) and data.char_tweak.chatter and data.char_tweak.chatter.aggressive and managers.groupai:state():is_detection_persistent() then
-				if focus_enemy and focus_enemy.unit:base().sentry_gun then
+				if focus_enemy and focus_enemy.unit and focus_enemy.unit:base().sentry_gun then
 					anagers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "sentry")
 				else
 					managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "aggressive")
