@@ -248,6 +248,34 @@ Hooks:PostHook(GroupAITweakData, "_init_chatter_data", "CD_chatter", function(se
 			1.2
 		}
 	}
+	self.enemy_chatter.sentry = {
+		radius = 700,
+		max_nr = 1,
+		queue = "ch2",
+		group_min = 2,
+		duration = {
+			8,
+			16
+		},
+		interval = {
+			0.75,
+			1.2
+		}
+	}
+	self.enemy_chatter.saw = {
+		radius = 700,
+		max_nr = 1,
+		queue = "ch4",
+		group_min = 2,
+		duration = {
+			8,
+			16
+		},
+		interval = {
+			0.75,
+			1.2
+		}
+	}
 	self.enemy_chatter.follow_me = {
 		radius = 700,
 		max_nr = 1,
