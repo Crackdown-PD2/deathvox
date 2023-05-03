@@ -105,9 +105,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local has_category = self._unit and alive(self._unit) and not self._unit:base().thrower_unit and self._unit:base().is_category
 		
 		for _,subclass in pairs(self:get_weapon_subclasses()) do
-			multiplier = multiplier + managers.player:upgrade_value(subclass,"enter_steelsight_speed_multiplier",1)
+			multiplier = multiplier * managers.player:upgrade_value(subclass,"enter_steelsight_speed_multiplier",1)
 		end
-		multiplier = multiplier * managers.player:upgrade_value(self:get_weapon_class() or "","enter_steelsight_speed_multiplier",1)
+		multiplier = multiplier * managers.player:upgrade_value(self:get_weapon_class(),"enter_steelsight_speed_multiplier",1)
 		
 		
 		return self:_convert_add_to_mul(multiplier)
