@@ -1744,7 +1744,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "subclass_quiet"
 			}
 		}
-		self.values.subclass_quiet.subclass_stability_addend = { 5 }
+		self.values.subclass_quiet.subclass_stability_addend = { 2.5 }
 		
 		self.values.weapon.homing_bolts = {true}
 		self.definitions.weapon_homing_bolts = {
