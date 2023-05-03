@@ -227,7 +227,14 @@ if TCD_ENABLED then
 		end
 	end
 	
-
+	function PlayerManager:verify_grenade(peer_id)
+		--gutted anticheat detection function
+	end
+	
+	function PlayerManager:verify_equipment(peer_id,equipment_id)
+		--gutted anticheat detection function
+	end
+	
 	Hooks:PostHook(PlayerManager,"check_skills","deathvox_check_cd_skills",function(self)
 		
 		if self:has_category_upgrade("class_throwing","projectile_charged_damage_mul") then
