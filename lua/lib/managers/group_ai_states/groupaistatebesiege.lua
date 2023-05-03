@@ -1928,6 +1928,23 @@ function GroupAIStateBesiege:_get_group_area(group)
 	return best_area
 end
 
+function GroupAIStateBesiege:_register_escort(unit)
+	self._escorts = self._escorts or {}
+	
+	local u_key = unit:key()
+	local all_civs = managers.enemy:all_civilians()
+	local u_data = all_civs[u_key]
+	
+	if u_data then
+		self._escorts[u_key] = u_data
+	end
+end
+
+function GroupAIStateBesiege:_unregister_escort(key)
+	self._escorts = self._escorts or {}
+	self._escorts[key] = nil
+end
+
 local temp_vec1 = Vector3()
 
 function GroupAIStateBesiege:_set_assault_objective_to_group(group, phase)

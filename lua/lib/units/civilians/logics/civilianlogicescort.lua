@@ -1,3 +1,5 @@
+if not Iter then
+
 function CivilianLogicEscort.enter(data, new_logic_name, enter_params)
 	CopLogicBase.enter(data, new_logic_name, enter_params)
 	data.unit:brain():cancel_all_pathing_searches()
@@ -56,7 +58,9 @@ function CivilianLogicEscort.too_scared_to_move(data)
 	local m_com = data.unit:movement():m_com()
 	local m_head_pos = data.unit:movement():m_head_pos()
 	
-	if not data.unit:raycast("ray", m_com, m_head_pos, "slot_mask", data.visibility_slotmask, "ray_type", "ai_vision", "report") then
+	if data.unit:raycast("ray", m_com, m_head_pos, "slot_mask", data.visibility_slotmask, "ray_type", "ai_vision", "report") then
+		my_data.commanded_to_move = "temp"
+		
 		return
 	end
 
@@ -110,4 +114,7 @@ function CivilianLogicEscort.exit(data, new_logic_name, enter_params)
 	if new_logic_name ~= "inactive" then
 		data.unit:brain():set_update_enabled_state(true)
 	end
+end
+
+
 end
