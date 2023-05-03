@@ -387,15 +387,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		self._ammo_pickup = tweak_data.weapon[self._name_id].AMMO_PICKUP
 		local weapon_id = self:get_name_id()
-		if weapon_id == "ray" then
-			self._ammo_pickup = managers.player:upgrade_value("weapon","ray_ammo_pickup_modifier",self._ammo_pickup)
-		elseif weapon_id == "rpg7" then 
-			self._ammo_pickup = managers.player:upgrade_value("weapon","rpg7_ammo_pickup_modifier",self._ammo_pickup)
+		
+		if managers.player:has_category_upgrade("player","specialist_ammo_pickup_modifier") then
+			if tweak_data.weapon.tcd_specialist_pickup_amounts[weapon_id] then
+				self._ammo_pickup = tweak_data.weapon.tcd_specialist_pickup_amounts[weapon_id]
+			end
 		end
-		if self:is_category("flamethrower") then 
-			self._ammo_pickup = managers.player:upgrade_value("weapon","flamethrower_ammo_pickup_modifier",self._ammo_pickup)
-		end
-
+		
 		if self._assembly_complete then
 			for _, gadget in ipairs(self:get_all_override_weapon_gadgets()) do
 				if gadget and gadget.replenish then

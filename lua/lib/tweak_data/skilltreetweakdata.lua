@@ -1927,10 +1927,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			},
 			{
 				upgrades = {
-					"weapon_rpg7_ammo_pickup_modifier",
-					"weapon_ray_ammo_pickup_modifier",
-					"weapon_flamethrower_ammo_pickup_modifier",
-					"weapon_grenade_launcher_ammo_pickup_increase"
+					"player_specialist_ammo_pickup_modifier"
 				},
 				cost = self.costs.hightierpro
 			},
