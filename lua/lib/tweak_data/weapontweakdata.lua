@@ -2327,6 +2327,18 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 
 --BE AWARE all info in template above, other than value, reflects OUTPUT ingame, not code stats. See guidance above for conversion, entry.
 		
+		self.tcd_specialist_pickup_amounts = {
+			kacchainsaw_flamethrower = {1,1},
+			flamethrower_mk2 = {1,1},
+			slap = {0.05,0.1},
+			china = {0.05,0.1},
+			ms3gl = {0.05,0.1},
+			arbiter = {0.05,0.1},
+			system = {0.05,0.1},
+			rpg7 = {0.005,0.005},
+			ray = {0.005,0.005}
+		}
+		
 		CSVStatReader:read_files("weapon",self)
 		
 	--saw but again

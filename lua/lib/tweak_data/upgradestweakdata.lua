@@ -1744,7 +1744,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "subclass_quiet"
 			}
 		}
-		self.values.subclass_quiet.subclass_stability_addend = { 5 }
+		self.values.subclass_quiet.subclass_stability_addend = { 2.5 }
 		
 		self.values.weapon.homing_bolts = {true}
 		self.definitions.weapon_homing_bolts = {
@@ -2426,44 +2426,14 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 			--Special Toys Aced
-		self.values.weapon.rpg7_ammo_pickup_modifier = { {0.001,0.001} }
-		self.definitions.weapon_rpg7_ammo_pickup_modifier = {
+		self.values.player.specialist_ammo_pickup_modifier = { true }
+		self.definitions.player_specialist_ammo_pickup_modifier = {
 			name_id = "menu_improv_expert_aced",
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "rpg7_ammo_pickup_modifier",
-				category = "weapon"
-			}
-		}
-		self.values.weapon.ray_ammo_pickup_modifier = { {0.001,0.001} }
-		self.definitions.weapon_ray_ammo_pickup_modifier = {
-			name_id = "menu_improv_expert_aced",
-			category = "feature",
-			upgrade = {
-				value = 1,
-				upgrade = "ray_ammo_pickup_modifier",
-				category = "weapon"
-			}
-		}
-		self.values.weapon.grenade_launcher_ammo_pickup_increase = { 0.5 } --50% increase (additive)
-		self.definitions.weapon_grenade_launcher_ammo_pickup_increase = {
-			name_id = "menu_improv_expert_aced",
-			category = "feature",
-			upgrade = {
-				value = 1,
-				upgrade = "grenade_launcher_ammo_pickup_increase",
-				category = "weapon"
-			}
-		}
-		self.values.weapon.flamethrower_ammo_pickup_modifier = { {1,1} }
-		self.definitions.weapon_flamethrower_ammo_pickup_modifier = {
-			name_id = "menu_improv_expert_aced",
-			category = "feature",
-			upgrade = {
-				value = 1,
-				upgrade = "flamethrower_ammo_pickup_modifier",
-				category = "weapon"
+				upgrade = "specialist_ammo_pickup_modifier",
+				category = "player"
 			}
 		}
 		

@@ -1900,13 +1900,13 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 		replace_skill(tree_indices.demolitions,3,{ --Cheap Trick
 			{
 				upgrades = {
-					"trip_mine_can_throw"
+					"player_throwable_regen"
 				},
 				cost = self.costs.hightier
 			},
 			{
 				upgrades = {
-					"player_throwable_regen"
+					"trip_mine_can_throw"
 				},
 				cost = self.costs.hightierpro
 			},
@@ -1927,10 +1927,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			},
 			{
 				upgrades = {
-					"weapon_rpg7_ammo_pickup_modifier",
-					"weapon_ray_ammo_pickup_modifier",
-					"weapon_flamethrower_ammo_pickup_modifier",
-					"weapon_grenade_launcher_ammo_pickup_increase"
+					"player_specialist_ammo_pickup_modifier"
 				},
 				cost = self.costs.hightierpro
 			},

@@ -3,6 +3,42 @@ if deathvox:IsTotalCrackdownEnabled() then
 	local mvec3_distance = mvector3.distance
 	local math_map_range_clamped = math.map_range_clamped
 	
+	function NewRaycastWeaponBase:recoil_addend()
+		local user_unit = self._setup and self._setup.user_unit
+		local current_state = alive(user_unit) and user_unit:movement() and user_unit:movement()._current_state
+		
+		local primary_class = self:get_weapon_class()
+		local subclasses = self:get_weapon_subclasses()
+		
+		local recoil_index
+		if not self._cached_recoil_addend then
+			--cache the current recoil index,
+			--excluding situational/temporary bonuses
+			recoil_index = managers.blackmarket:recoil_addend(self._name_id, self:weapon_tweak_data().categories, recoil_index, self._silencer, self._blueprint, current_state, self:is_single_shot())
+			self._cached_recoil_addend = recoil_index
+		else
+			recoil_index = self._cached_recoil_addend
+		end
+		
+		if recoil_index then
+			--add temporary recoil bonuses
+			if managers.player:has_category_upgrade("class_heavy","death_grips_recoil_bonus") then
+				if primary_class == "class_heavy" then
+					recoil_index = recoil_index + managers.player:get_temporary_property("current_death_grips_stacks",0) * managers.player:upgrade_value("class_heavy","death_grips_recoil_bonus",0)
+				end
+			end
+			
+			for _,subclass in pairs(subclasses) do 
+				recoil_index = recoil_index + managers.player:upgrade_value(subclass,"subclass_stability_addend",0)
+			end
+			--clamp total recoil bonus within allowed range
+			recoil_index = math.clamp(recoil_index, 1, #tweak_data.weapon.stats.recoil)
+		end
+		
+		--return final current recoil bonus
+		return recoil_index
+	end
+
 	function NewRaycastWeaponBase:conditional_accuracy_addend(current_state)
 		local index = 0
 		local primary_class = self:get_weapon_class()
@@ -69,9 +105,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local has_category = self._unit and alive(self._unit) and not self._unit:base().thrower_unit and self._unit:base().is_category
 		
 		for _,subclass in pairs(self:get_weapon_subclasses()) do
-			multiplier = multiplier + managers.player:upgrade_value(subclass,"enter_steelsight_speed_multiplier",1)
+			multiplier = multiplier * managers.player:upgrade_value(subclass,"enter_steelsight_speed_multiplier",1)
 		end
-		multiplier = multiplier * managers.player:upgrade_value(self:get_weapon_class() or "","enter_steelsight_speed_multiplier",1)
+		multiplier = multiplier * managers.player:upgrade_value(self:get_weapon_class(),"enter_steelsight_speed_multiplier",1)
 		
 		
 		return self:_convert_add_to_mul(multiplier)
@@ -351,15 +387,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		self._ammo_pickup = tweak_data.weapon[self._name_id].AMMO_PICKUP
 		local weapon_id = self:get_name_id()
-		if weapon_id == "ray" then
-			self._ammo_pickup = managers.player:upgrade_value("weapon","ray_ammo_pickup_modifier",self._ammo_pickup)
-		elseif weapon_id == "rpg7" then 
-			self._ammo_pickup = managers.player:upgrade_value("weapon","rpg7_ammo_pickup_modifier",self._ammo_pickup)
+		
+		if managers.player:has_category_upgrade("player","specialist_ammo_pickup_modifier") then
+			if tweak_data.weapon.tcd_specialist_pickup_amounts[weapon_id] then
+				self._ammo_pickup = tweak_data.weapon.tcd_specialist_pickup_amounts[weapon_id]
+			end
 		end
-		if self:is_category("flamethrower") then 
-			self._ammo_pickup = managers.player:upgrade_value("weapon","flamethrower_ammo_pickup_modifier",self._ammo_pickup)
-		end
-
+		
 		if self._assembly_complete then
 			for _, gadget in ipairs(self:get_all_override_weapon_gadgets()) do
 				if gadget and gadget.replenish then

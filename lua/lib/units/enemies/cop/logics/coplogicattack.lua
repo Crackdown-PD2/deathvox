@@ -1167,68 +1167,7 @@ end
 
 function CopLogicAttack.aim_allow_fire(shoot, aim, data, my_data)
 	local focus_enemy = data.attention_obj
-	
-	if data.brain._minigunner_firing_buff then
-		local minigunner_firing_buff = data.brain._minigunner_firing_buff
-		
-		local dt = data.t - minigunner_firing_buff.last_chk_t
-		
-		if dt > 0.35 then
-			if shoot then
-				local increase = 0.5 * dt
-				minigunner_firing_buff.amount = math.clamp(minigunner_firing_buff.amount + increase, 0, 2)
-			else
-				local decrease = -dt
-				minigunner_firing_buff.amount = math.clamp(minigunner_firing_buff.amount + decrease, 0, 2)
-			end
 
-			data.unit:base():change_buff_by_id("base_damage", minigunner_firing_buff.id, minigunner_firing_buff.amount)
-			minigunner_firing_buff.last_chk_t = data.t
-		end
-	elseif data.brain._needs_falloff then
-		local falloff_sim = data.brain._needs_falloff
-		local old_amount = falloff_sim.amount
-		
-		if focus_enemy and AIAttentionObject.REACT_COMBAT <= focus_enemy.reaction then
-			if focus_enemy.dis > 2000 then
-				if data.unit:base()._shotgunner then
-					falloff_sim.amount = 0.84
-				else
-					falloff_sim.amount = 0.495
-				end
-				
-				if falloff_sim.amount ~= old_amount then
-					data.unit:base():change_buff_by_id("base_damage", falloff_sim.id, -falloff_sim.amount)
-				end
-			elseif focus_enemy.dis > 1000 then
-				if data.unit:base()._shotgunner then
-					falloff_sim.amount = 0.52
-				else
-					falloff_sim.amount = 0.33
-				end
-				
-				if falloff_sim.amount ~= old_amount then
-					data.unit:base():change_buff_by_id("base_damage", falloff_sim.id, -falloff_sim.amount)
-				end
-			elseif data.unit:base()._shotgunner then
-				falloff_sim.amount = 0.4
-				
-				if falloff_sim.amount ~= old_amount then
-					data.unit:base():change_buff_by_id("base_damage", falloff_sim.id, -falloff_sim.amount)
-				end
-			elseif falloff_sim.amount > 0 then
-				falloff_sim.amount = 0
-				
-				if falloff_sim.amount ~= old_amount then
-					data.unit:base():change_buff_by_id("base_damage", falloff_sim.id, 0)
-				end
-			end
-		elseif falloff_sim.amount > 0 then
-			falloff_sim.amount = 0
-			data.unit:base():change_buff_by_id("base_damage", falloff_sim.id, 0)
-		end
-	end
-	
 	if shoot then 	
 		if not my_data.firing then		
 			data.unit:movement():set_allow_fire(true)
@@ -1236,7 +1175,11 @@ function CopLogicAttack.aim_allow_fire(shoot, aim, data, my_data)
 			my_data.firing = true
 
 			if not data.unit:in_slot(16) and data.char_tweak.chatter and data.char_tweak.chatter.aggressive and managers.groupai:state():is_detection_persistent() then
-				managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "aggressive")
+				if focus_enemy and focus_enemy.unit and focus_enemy.unit:base().sentry_gun then
+					anagers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "sentry")
+				else
+					managers.groupai:state():chk_say_enemy_chatter(data.unit, data.m_pos, "aggressive")
+				end
 			end
 		end
 	elseif my_data.firing then

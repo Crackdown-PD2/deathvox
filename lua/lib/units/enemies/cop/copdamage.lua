@@ -805,13 +805,6 @@ function CopDamage:damage_bullet(attack_data)
 	
 	local attacker_is_main_player = attack_data.attacker_unit == managers.player:player_unit()
 	--moved up here so that blocked shots don't interfere
-	if attack_data.weapon_unit and attack_data.weapon_unit:base().is_category and attack_data.weapon_unit:base():is_category("saw") then
-		managers.groupai:state():chk_say_enemy_chatter(self._unit, self._unit:movement():m_pos(), "saw")
-	end
-
-	if attack_data.attacker_unit:base().sentry_gun then
-		managers.groupai:state():chk_say_enemy_chatter(self._unit, self._unit:movement():m_pos(), "sentry")
-	end
 	
 	mvec3_set(mvec_1, self._unit:position())
 	mvec3_sub(mvec_1, attack_data.attacker_unit:position())
