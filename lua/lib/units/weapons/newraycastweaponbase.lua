@@ -29,7 +29,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				--clamp total recoil bonus within allowed range
 				local RECOIL_CAP = #tweak_data.weapon.stats.recoil
 				recoil_index = math.clamp(recoil_index, 1, RECOIL_CAP)
-				if recoil_index ~= RECOIL_CAP
+				if recoil_index ~= RECOIL_CAP then
 					recoil_addend = recoil_addend + tweak_data.weapon.stats.recoil[recoil_index]
 				end
 			end
