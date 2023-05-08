@@ -212,7 +212,7 @@ wpn_fps_pis_hs2000_m_extended,Extended Mag,wpn_fps_pis_x_hs2000,,,16,,,0,,,,,,-5
 ,[Akimbo Chimano Custom],x_g22c,,,,,,,,,,,,,,,,0,,,,,,,,,,,,,
 wpn_fps_pis_g18c_m_mag_33rnd,Extended Mag.,wpn_fps_pis_x_g22c,,,12,,,0,,,,,,-5,,,,0,,,,,,,,,,,,,
 ,[Akimbo Deagle],x_deagle,,,,,,,,,,,,,,,,0,,,,,,,,,,,,,
-wpn_fps_pis_deagle_m_extended,Extended Magazine,wpn_fps_pis_x_deagle,,,,,,0,,,,,,-1,,,,0,,,,,,,,,,,,,
+wpn_fps_pis_deagle_m_extended,Extended Magazine,wpn_fps_x_deagle,,,,,,0,,,,,,-1,,,,0,,,,,,,,,,,,,
 ,[Akimbo White Streak],x_pl14,,,,,,,,,,,,,,,,0,,,,,,,,,,,,,
 wpn_fps_pis_pl14_m_extended,Extended Magazine,wpn_fps_pis_x_p114,,,4,,,0,,,,,,-1,,,,0,,,,,,,,,,,,,
 ,[Vulcan Minigun],m134,,,,,,,,,,,,,,,,0,,,,,,,,,,,,,
