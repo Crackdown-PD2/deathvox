@@ -71,6 +71,7 @@ wpn_fps_m4_upg_m_quick,Speedpull Mag,wpn_fps_ass_corgi,,,,,-10,-0.5,,,,,,-4,,,21
 ,[AK.762 Rifle],akm,,,,,,,,,,,,,,,,0,,,,,,,,,,,,,
 wpn_fps_upg_ak_m_quad,AK Quadstacked Mag,wpn_fps_ass_akm,,,30,,,0,,,,,,-10,,,,0,,,,,,,,,,,,,
 wpn_fps_upg_ak_m_quick,Speedpull Mag,wpn_fps_ass_akm,,,,,-10,-0.5,,,,,,-4,,,21,2,,,,,,,,,,,,,
+wpn_fps_upg_ass_ak_b_zastava,DMR Kit,wpn_fps_ass_akm,Precision,,,-75,,0,,50,,,-20,-5,,,,,,,,,,-1,-2,,,,,,
 ,[Gewehr 3 Rifle],g3,,,,,,,,,,,,,,,,0,,,,,,,,,,,,,
 wpn_fps_ass_g3_b_short,Assault Kit,wpn_fps_ass_g3,,,,85,,0,,-30,,-16,16,5,,,,0,,,,,,2,4,,,,,,
 wpn_fps_ass_g3_b_sniper,DMR Kit,wpn_fps_ass_g3,Precision,,-10,-65,,0,,50,,,,,,,,0,,,,,,-1,-2,,,,,,
