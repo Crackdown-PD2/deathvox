@@ -252,7 +252,7 @@ wpn_fps_pis_g18c_m_mag_33rnd,Extended Mag.,wpn_fps_pis_g26,,,12,,,0,,,,,,-3,,,,0
 ,[Crosskill Guard],shrew,,,,,,,,,,,,,,,,0,,,,,,,,,,,,,
 wpn_fps_pis_shrew_m_extended,Extended Mag,wpn_fps_pis_shrew,,,4,,,0,,,,,,-1,,,,0,,,,,,,,,,,,,
 ,[Bernetti 9],b92fs,,,,,,,,,,,,,,,,0,,,,,,,,,,,,,
-wpn_fps_pis_beretta_m_extended,Extended Mag.,wpn_fps_pis_g92fs,,,12,,,0,,,,,,-3,,,,0,,,,,,,,,,,,,
+wpn_fps_pis_beretta_m_extended,Extended Mag.,wpn_fps_pis_beretta,,,12,,,0,,,,,,-3,,,,0,,,,,,,,,,,,,
 ,[Crosskill],colt_1911,,,,,,,,,,,,,,,,0,,,,,,,,,,,,,
 wpn_fps_pis_1911_m_extended,12rnd Mag.,wpn_fps_pis_1911,,,2,,,0,,,,,,-1,,,,0,,,,,,,,,,,,,
 wpn_fps_pis_1911_m_big,Magazine with Ameritude!,wpn_fps_pis_1911,,,12,,,0,,,,,,-3,,,,0,,,,,,,,,,,,,
