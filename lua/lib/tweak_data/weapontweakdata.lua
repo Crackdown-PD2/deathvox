@@ -2326,7 +2326,7 @@ Hooks:PostHook(WeaponTweakData, "_init_data_player_weapons", "vox_wep", function
 	--Other mods related to the gun (that are not shared/common mods, eg suppressors) should be cosmetic only, retaining only their value.)
 
 --BE AWARE all info in template above, other than value, reflects OUTPUT ingame, not code stats. See guidance above for conversion, entry.
-		
+		self.BUCKSHOT_AMMO_DAMAGE_MUL = 0.5
 		self.tcd_specialist_pickup_amounts = {
 			kacchainsaw_flamethrower = {1,1},
 			flamethrower_mk2 = {1,1},

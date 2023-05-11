@@ -432,14 +432,13 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 				end
 			else
 				local final_damage
-				-- previously, base damage was split between pellets with
-				-- final_damage = damage / self._rays
 				
 				if table.contains(units_to_ignore, col_ray.unit:key()) then
 					final_damage = 0 --basically nullify the hit
 				else
-					final_damage = self:get_damage_falloff(damage, col_ray, user_unit)
-
+					--apply falloff and damage-per-pellet penalty for iron hand buckshot
+					final_damage = self:get_damage_falloff(damage * tweak_data.weapon.BUCKSHOT_AMMO_DAMAGE_MUL, col_ray, user_unit)
+					
 					if col_ray.unit:character_damage() and col_ray.unit:character_damage().dead and col_ray.unit:character_damage():dead() then --additional check to avoid pushing dead enemies excessively
 						table.insert(units_to_ignore, col_ray.unit:key())
 					end
