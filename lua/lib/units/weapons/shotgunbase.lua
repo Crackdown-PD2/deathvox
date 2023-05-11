@@ -431,18 +431,20 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 					end
 				end
 			else
-				local final_damage = damage / self._rays
-
+				local final_damage
+				-- previously, base damage was split between pellets with
+				-- final_damage = damage / self._rays
+				
 				if table.contains(units_to_ignore, col_ray.unit:key()) then
 					final_damage = 0 --basically nullify the hit
 				else
-					final_damage = self:get_damage_falloff(final_damage, col_ray, user_unit)
+					final_damage = self:get_damage_falloff(damage, col_ray, user_unit)
 
 					if col_ray.unit:character_damage() and col_ray.unit:character_damage().dead and col_ray.unit:character_damage():dead() then --additional check to avoid pushing dead enemies excessively
 						table.insert(units_to_ignore, col_ray.unit:key())
 					end
 				end
-
+				
 				if self._rays ~= 1 and col_ray.unit:in_slot(managers.slot:get_mask("enemy_shield_check")) then
 					if not hit_shields[col_ray.unit:key()] then --not already hit
 						hit_shields[col_ray.unit:key()] = col_ray
@@ -553,7 +555,7 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 	if self._single_damage_instance then
 		for _, col_ray in pairs(hit_enemies) do
 			local final_damage = self:get_damage_falloff(damage, col_ray, user_unit) --damage obviously isn't equally splitted according to the number of pellets
-
+			
 			if final_damage > 0 then
 				local my_result = nil
 
