@@ -1,10 +1,16 @@
 function ElementSpawnEnemyGroup:_finalize_values()
 	local values = self._values
 
-	if values.team == "default" then
-		values.team = nil
+	if self._values.team == "default" then
+		self._values.team = nil
+	elseif self._values.team ~= nil then
+		local teams = tweak_data.levels:get_team_setup()
+		
+		if not teams[self._values.team] then
+			self._values.team = tweak_data.levels:get_default_team_ID("combatant")
+		end
 	end
-	
+
 	local has_regular_enemies = nil
 	
 	local preferreds = {}
@@ -20,7 +26,7 @@ function ElementSpawnEnemyGroup:_finalize_values()
 		
 		return
 	end
-	
+
 	local has_regular_enemies = true
 	
 	for name, name2 in pairs(self._values.preferred_spawn_groups) do
