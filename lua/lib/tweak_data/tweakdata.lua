@@ -14,7 +14,9 @@ tweak_data.projectiles.dv_grenadier_grenade = {
 }
 
 if deathvox:IsTotalCrackdownEnabled() then 
-
+	
+	tweak_data.TCD_WEAPON_BUCKSHOT_AMMO_DAMAGE_MUL = 0.5
+	
 	tweak_data.weapon_disable_crit_for_damage = {
 		frag = nil --frag grenades are allowed to crit
 	}
