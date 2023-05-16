@@ -468,10 +468,32 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local total_ammo_add = 0
 		for _,part_id in pairs(self._blueprint) do 
 			local part_data = managers.weapon_factory:get_part_data_by_part_id_from_weapon(part_id, factory_id, self._blueprint)
-			if part_data.custom_stats then 
-				if part_data.custom_stats.total_ammo_add then
-					total_ammo_add = part_data.custom_stats.total_ammo_add + total_ammo_add
+			local custom_stats = part_data.custom_stats
+			if custom_stats then 
+				if custom_stats.total_ammo_add then
+					total_ammo_add = custom_stats.total_ammo_add + total_ammo_add
 				end
+				
+				if custom_stats.can_shoot_through_shield then
+					self._can_shoot_through_shield = custom_stats.can_shoot_through_shield
+				end
+
+				if custom_stats.can_shoot_through_enemy then
+					self._can_shoot_through_enemy = custom_stats.can_shoot_through_enemy
+				end
+
+				if custom_stats.can_shoot_through_wall then
+					self._can_shoot_through_wall = custom_stats.can_shoot_through_wall
+				end
+				
+				if custom_stats.armor_piercing_add then
+					self._armor_piercing_chance = math.clamp(self._armor_piercing_chance + custom_stats.armor_piercing_add,0,1)
+				end
+				
+				if custom_stats.armor_piercing_mul then
+					self._armor_piercing_chance = math.clamp(self._armor_piercing_chance * custom_stats.armor_piercing_mul,0,1)
+				end
+				
 			end
 		end
 		self._total_ammo_add = total_ammo_add
