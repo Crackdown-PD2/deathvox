@@ -110,71 +110,59 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		
 		
 		-- 000 Buckshot Shells
-		self.parts.wpn_fps_upg_a_custom.custom_stats = {
-			single_damage_instance = true,
-			rays_mul = 0.5 --halves number of pellets (custom tcd stat; shotguns only)
-		}
+		self.parts.wpn_fps_upg_a_custom.custom_stats.single_damage_instance = true
+		self.parts.wpn_fps_upg_a_custom.custom_stats.rays_mul = 0.5 --halves number of pellets (custom tcd stat; shotguns only)
+		
 		-- 000 Buckshot Shells (Community)
-		self.parts.wpn_fps_upg_a_custom_free.custom_stats = {
-			single_damage_instance = true,
-			rays_mul = 0.5
-		}
+		self.parts.wpn_fps_upg_a_custom_free.custom_stats.single_damage_instance = true
+		self.parts.wpn_fps_upg_a_custom_free.custom_stats.rays_mul = 0.5
 		
 --		self.parts.wpn_fps_upg_a_custom_free.name_id = "bm_wp_upg_a_custom_free"
 --		self.parts.wpn_fps_upg_a_custom_free.desc_id = "bm_wp_upg_a_custom_free_desc"
 		
 		-- Flechette Rounds
-		self.parts.wpn_fps_upg_a_piercing.custom_stats = {
-			damage_far = 20000,
-			damage_near = 20000,
-			no_falloff = true, --custom tcd perk
-			rays_mul = 0.5
-		}
+		self.parts.wpn_fps_upg_a_piercing.custom_stats.damage_far = 20000
+		self.parts.wpn_fps_upg_a_piercing.custom_stats.damage_near = 20000
+		self.parts.wpn_fps_upg_a_piercing.custom_stats.no_falloff = true --custom tcd perk
+		self.parts.wpn_fps_upg_a_piercing.custom_stats.rays_mul = 0.5
 		
 		-- HE Slugs
-		self.parts.wpn_fps_upg_a_explosive.custom_stats = {
-			ignore_statistic = true,
-			damage_far = 20000,
-			damage_near = 20000,
-			ammo_pickup_max_mul = 0.5,
-			ammo_pickup_min_mul = 0.5,
-			bullet_class = "InstantExplosiveBulletBase",
-			no_falloff = true,
-			rays = 1
-		}
+		self.parts.wpn_fps_upg_a_explosive.custom_stats.ignore_statistic = true
+		self.parts.wpn_fps_upg_a_explosive.custom_stats.damage_far = 20000
+		self.parts.wpn_fps_upg_a_explosive.custom_stats.damage_near = 20000
+		self.parts.wpn_fps_upg_a_explosive.custom_stats.ammo_pickup_max_mul = 0.5
+		self.parts.wpn_fps_upg_a_explosive.custom_stats.ammo_pickup_min_mul = 0.5
+		self.parts.wpn_fps_upg_a_explosive.custom_stats.bullet_class = "InstantExplosiveBulletBase"
+		self.parts.wpn_fps_upg_a_explosive.custom_stats.no_falloff = true
+		self.parts.wpn_fps_upg_a_explosive.custom_stats.rays = 1
 		
 		-- AP Slugs
-		self.parts.wpn_fps_upg_a_slug.custom_stats = {
-			base_stats_modifiers = {
-				damage = 2
-			},
-			damage_far = 20000,
-			damage_near = 20000,
-			no_falloff = true,
-			rays = 1
+		self.parts.wpn_fps_upg_a_slug.custom_stats.base_stats_modifiers = {
+			damage = 2
 		}
+		self.parts.wpn_fps_upg_a_slug.custom_stats.damage_far = 20000
+		self.parts.wpn_fps_upg_a_slug.custom_stats.damage_near = 20000
+		self.parts.wpn_fps_upg_a_slug.custom_stats.no_falloff = true
+		self.parts.wpn_fps_upg_a_slug.custom_stats.rays = 1
 		
 		-- Dragon's Breath Rounds
-		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats = {
-			ignore_statistic = true,
-			muzzleflash = "effects/payday2/particles/weapons/shotgun/sho_muzzleflash_dragons_breath",
-			can_shoot_through_shield = true,
-			can_shoot_through_enemy = true,
-			armor_piercing_add = 1,			
-			damage_far = 400,
-			damage_near = 400,
-			bullet_class = "FlameBulletBase",
-			no_falloff = true,
-			rays = 1,
-			fire_dot_data = {
-				dot_trigger_chance = "100",
-				dot_damage = "0",
-				dot_length = "3.1",
-				dot_trigger_max_distance = "400",
-				dot_tick_period = "0.5"
-			}
+		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats.ignore_statistic = true
+		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats.muzzleflash = "effects/payday2/particles/weapons/shotgun/sho_muzzleflash_dragons_breath"
+		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats.can_shoot_through_shield = true
+		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats.can_shoot_through_enemy = true
+		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats.armor_piercing_add = 1	
+		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats.damage_far = 400
+		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats.damage_near = 400
+		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats.bullet_class = "FlameBulletBase"
+		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats.no_falloff = true
+		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats.rays = 1
+		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats.fire_dot_data = {
+			dot_trigger_chance = "100",
+			dot_damage = "0",
+			dot_length = "3.1",
+			dot_trigger_max_distance = "400",
+			dot_tick_period = "0.5"
 		}
-		
 		
 		--Tombstone Slug goes here
 		-- self.parts.wpn_fps_upg_a_rip.custom_stats = {}
