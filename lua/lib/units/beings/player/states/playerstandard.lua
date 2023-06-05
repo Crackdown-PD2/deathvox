@@ -12,7 +12,7 @@ local tmp_ground_to_vec = Vector3()
 local up_offset_vec = math.UP * 30
 local down_offset_vec = math.UP * -40
 
-local tcd_enabled = deathvox:IsTotalCrackdownEnabled()
+local TCD_ENABLED = deathvox:IsTotalCrackdownEnabled()
 
 Hooks:PostHook(PlayerStandard, "_calculate_standard_variables", "CD_calculate_standard_variables", function(self, t, dt)
 	self._setting_hold_to_fire = managers.user:get_setting("holdtofire")
@@ -1352,7 +1352,7 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			
 --			Hooks:Call("OnPlayerMeleeHit",character_unit,col_ray,action_data,defense_data,t,lethal_hit)
 
-			if not tcd_enabled then 
+			if not TCD_ENABLED then 
 				if melee_td.tase_data and character_unit:character_damage().damage_tase then
 					local _action_data = {
 						variant = melee_td.tase_data.tase_strength,
@@ -1534,7 +1534,7 @@ function PlayerStandard:_check_action_melee(t, input)
 	return true
 end
 
-if tcd_enabled then 
+if TCD_ENABLED then 
 
 	local lunge_vec1 = Vector3()
 	local lunge_vec2 = Vector3()
@@ -1558,7 +1558,7 @@ if tcd_enabled then
 			to = from + self._unit:movement():m_head_rot():y() * range
 		end
 		local slot_mask = self._slotmask_bullet_impact_targets
-		if tcd_enabled then
+		if TCD_ENABLED then
 			if mtd.pierce_shields then
 				slot_mask = slot_mask - managers.slot:get_mask("enemy_shield_check")
 			end
@@ -1811,6 +1811,12 @@ if tcd_enabled then
 	end)
 	
 	function PlayerStandard:_do_action_throw_projectile(t, input, drop_projectile)
+		
+		local equipmentbase = self._unit:equipment()
+		if equipmentbase then
+			equipmentbase:on_deploy_interupted()
+		end
+		
 		local current_state_name = self._camera_unit:anim_state_machine():segment_state(self:get_animation("base"))
 		self._state_data.throwing_projectile = nil
 		local projectile_entry = managers.blackmarket:equipped_projectile()
@@ -2410,248 +2416,6 @@ if tcd_enabled then
 		end
 	end
 	
-	local orig_throw_grenade = PlayerStandard._check_action_throw_grenade
-	function PlayerStandard:_check_action_throw_grenade(t, input, ...)
-		local action_wanted = input.btn_throw_grenade_press
-
-		local projectile_entry = managers.blackmarket:equipped_projectile()
-		local projectile_tweak = tweak_data.blackmarket.projectiles[projectile_entry]
-
-		if not managers.player:can_throw_grenade() then
-			return
-		end
-
-		local action_forbidden = not PlayerBase.USE_GRENADES or self:chk_action_forbidden("interact") or self._unit:base():stats_screen_visible() or self:_is_throwing_grenade() or self:_interacting() or self:is_deploying() or self:_changing_weapon() or self:_is_meleeing() or self:_is_using_bipod()
-
-		if action_forbidden then
-			return
-		end
-
-		if projectile_tweak.override_equipment_id then 
-			local equipment_data = tweak_data.equipments[projectile_tweak.override_equipment_id]
-			if equipment_data then 
-				if projectile_tweak.instant_use then 
-					if input.btn_projectile_state then --held
-						if not self._held_throwable_equipment then 
-							self._held_throwable_equipment = true
-							self:_play_unequip_animation()
-						end
---						managers.hud:hide_progress_timer_bar(complete)
---						managers.hud:set_progress_timer_bar_valid(valid, not valid and "hud_deploy_valid_help")
-						local valid,on_enemy = self._unit:equipment():valid_look_at_placement(equipment_data,managers.player:has_category_upgrade("trip_mine","can_place_on_enemies")) and true or false
-
-						local equipment_name = managers.localization:text(equipment_data.text_id or "cursed_error")
---						managers.hud:show_progress_timer({
---							text = managers.localization:text(valid and "hud_deploying_tripmine_preview" or "hud_deploy_valid_help",{EQUIPMENT = equipment_name})
---						})
-						if equipment_data.sound_start then
-							self._unit:sound_source():post_event(equipment_data.sound_start)
-						end
-					elseif input.btn_projectile_release and self._held_throwable_equipment then
-						self._held_throwable_equipment = nil
-						self:_play_equip_animation()
-						
-						local valid,on_enemy = self._unit:equipment():valid_look_at_placement(equipment_data,managers.player:has_category_upgrade("trip_mine","can_place_on_enemies")) and true or false
-						
-						local equipmentbase = self._unit:equipment()
-						if valid and equipment_data.use_function_name and equipmentbase[equipment_data.use_function_name] then 
-							valid = equipmentbase[equipment_data.use_function_name](equipmentbase)
-						end
-						
-						if valid then 
-							managers.player:add_grenade_amount(-1)
-							if equipment_data.sound_done then
-								self._unit:sound_source():post_event(equipment_data.sound_done)
-							end
-						else
-							if equipment_data.sound_interupt then 
-								self._unit:sound_source():post_event(equipment_data.sound_interupt)
-							end
-						end
-						equipmentbase:on_deploy_interupted()
-						
---						local wtd = self._equipped_unit:base():weapon_tweak_data()
---						self._equip_weapon_expire_t = managers.player:player_timer():time() + (wtd.timers.equip or 0.7)
---						self:_play_equip_animation()
-						
---						managers.hud:remove_progress_timer()
-					end
-				else
-					if not action_wanted then
-						self._held_throwable_equipment = nil
-						return
-					end
-					self:_start_action_use_throwable_equipment(t,equipment_data)
-				end
-			end
-		else
-			if not action_wanted then
-				return
-			end
-			self:_start_action_throw_grenade(t, input)
-		end
-
-		return action_wanted
-	end
-
-	function PlayerStandard:_interupt_action_throw_grenade(t, input)
-		if not self:_is_throwing_grenade() then
-			return
-		end
- 		local projectile_entry = managers.blackmarket:equipped_projectile()
-		local projectile_tweak = tweak_data.blackmarket.projectiles[projectile_entry]
-		if projectile_tweak.override_equipment_id then 
-			self:_interupt_action_use_throwable_equipment(t)
-
-		else
-			self._ext_camera:play_redirect(self:get_animation("equip"))
-			self._camera_unit:base():unspawn_grenade()
-			self._camera_unit:base():show_weapon()
-			self._state_data.throw_grenade_expire_t = nil
-		end
-
-		self:_stance_entered()
-	end
-
-	function PlayerStandard:_start_action_use_throwable_equipment(t,equipment_data)
-	
-		self:_interupt_action_reload(t)
-		self:_interupt_action_steelsight(t)
-		self:_interupt_action_running(t)
-		self:_interupt_action_charging_weapon(t)
-	
-		local equipment_name = managers.localization:text(equipment_data.text_id or "cursed_error")
-		local deploy_timer = equipment_data.deploy_time
-
-		self._use_throwable_equipment_expire_t = t + deploy_timer
-
-		self:_play_unequip_animation()
-
-		local text = managers.player:selected_equipment_deploying_text() or managers.localization:text("hud_deploying_equipment", {
-			EQUIPMENT = equipment_name
-		})
-
-		managers.hud:show_progress_timer({
-			text = text
-		})
-		managers.hud:show_progress_timer_bar(0, deploy_timer)
-		
-		if equipment_data.sound_start then
-			self._unit:sound_source():post_event(equipment_data.sound_start)
-		end
-
-		managers.network:session():send_to_peers_synched("sync_teammate_progress", 2, true, equipment_id, deploy_timer, false)
-	end
-
-	function PlayerStandard:_update_throwable_equipment_timers(t)
- 		local projectile_entry = managers.blackmarket:equipped_projectile()
-		local projectile_tweak = tweak_data.blackmarket.projectiles[projectile_entry]
-		local equipment_id = projectile_tweak.override_equipment_id
-		local equipment_data = equipment_id and tweak_data.equipments[equipment_id]
-		if equipment_data then 
-
-			local valid = self._unit:equipment():valid_look_at_placement(equipment_data) and true or false
-			
-			local deploy_time_total = equipment_data.deploy_time
-			local deploy_time_current = deploy_time_total - math.max(0,self._use_throwable_equipment_expire_t - t)
-			
-			local text = managers.localization:text("hud_deploying_equipment", {
-				EQUIPMENT = managers.localization:text(equipment_data.text_id or "cursed_error")
-			})
-
-			managers.hud:show_progress_timer({
-				text = text
-			})
-			
-			managers.hud:set_progress_timer_bar_width(deploy_time_current,deploy_time_total)
-			managers.hud:set_progress_timer_bar_valid(valid, not valid and "hud_deploy_valid_help")
-			
-			
-			if self._use_throwable_equipment_expire_t <= t then 
-				self:_end_action_use_throwable_equipment(valid,equipment_data)
-			end
-		end
-	end
-		
-	function PlayerStandard:_interupt_action_use_throwable_equipment(t, input, complete, equipment_data)
-
-		if self._use_throwable_equipment_expire_t then
-			self._use_throwable_equipment_expire_t = nil
-			local tweak_data = self._equipped_unit:base():weapon_tweak_data()
-			self._equip_weapon_expire_t = managers.player:player_timer():time() + (tweak_data.timers.equip or 0.7)
-			self:_play_equip_animation()
-			managers.hud:hide_progress_timer_bar(complete)
-			managers.hud:remove_progress_timer()
-
-
-			if not complete then
-				if not equipment_data then 
-					local projectile_entry = managers.blackmarket:equipped_projectile()
-					local projectile_tweak = tweak_data.blackmarket.projectiles[projectile_entry]
-					local equipment_id = projectile_tweak.override_equipment_id
-					equipment_data = equipment_id and tweak_data.equipments[equipment_id]
-				end
-				
-				if equipment_data.sound_interupt then 
-					self._unit:sound_source():post_event(post_event)
-				end
-				
-			end
-
-			self._unit:equipment():on_deploy_interupted()
-			managers.network:session():send_to_peers_synched("sync_teammate_progress", 2, false, "", 0, complete and true or false)
-		end
-	end
-
-	function PlayerStandard:_end_action_use_throwable_equipment(valid,equipment_data)
-		local pm = managers.player
-		local equipmentbase = self._unit:equipment()
-		
-		if not pm:can_throw_grenade() then 
-			valid = false
-		end
-		
-		if valid and equipment_data.use_function_name and equipmentbase[equipment_data.use_function_name] then 
-			valid = equipmentbase[equipment_data.use_function_name](equipmentbase)
-		end
-		
-		if valid then 
-			if equipment_data.sound_done then
-				self._unit:sound_source():post_event(equipment_data.sound_done)
-			end
-			pm:add_grenade_amount(-1)
-		end
-
-		self:_interupt_action_use_throwable_equipment(nil, nil, valid,equipment_data)
-
-	end
-	
-	function PlayerStandard:_update_throw_grenade_timers(t,input,...)
-		if self._use_throwable_equipment_expire_t then 
-			return self:_update_throwable_equipment_timers(t,...)
-		end
-		
-		if self._state_data.throw_grenade_expire_t and self._state_data.throw_grenade_expire_t <= t then
-			self._state_data.throw_grenade_expire_t = nil
-
-			self:_stance_entered()
-
-			if self._equipped_unit and input.btn_steelsight_state then
-				self._steelsight_wanted = true
-			end
-		end
-	end
-
-	local orig_throwing_grenade_check = PlayerStandard._is_throwing_grenade
-	function PlayerStandard:_is_throwing_grenade(...)
-		return orig_throwing_grenade_check(self,...) or self._use_throwable_equipment_expire_t and true or false --or self._held_throwable_equipment
-	end
-	
-	local orig_deploying_check = PlayerStandard.is_deploying
-	function PlayerStandard:is_deploying(...)
-		return orig_deploying_check(self,...) or self._use_throwable_equipment_expire_t
-	end
-
 	function PlayerStandard:_check_action_interact(t, input)
 		local keyboard = self._controller.TYPE == "pc" or managers.controller:get_default_wrapper_type() == "pc"
 		local new_action, timer, interact_object = nil
@@ -2671,6 +2435,7 @@ if tcd_enabled then
 				if timer then
 					new_action = true
 					
+					--removing the limit with the upgrade is the only change
 					if not managers.player:has_category_upgrade("player", "burglar_camera_freeturn") then
 						self._ext_camera:camera_unit():base():set_limits(80, 50)
 					end
@@ -2852,6 +2617,112 @@ if tcd_enabled then
 
 			self:_do_action_intimidate(t, interact_type, sound_name, skip_alert)
 		end
+	end
+	
+	Hooks:PostHook(PlayerStandard,"_interupt_action_throw_projectile","playerstandard_on_interrupt_throw_projectile",function(self)
+		local equipmentbase = self._unit:equipment()
+		if equipmentbase then
+			equipmentbase:on_deploy_interupted()
+		end
+	end)
+	
+	local orig_check_throw_projectile = PlayerStandard._check_action_throw_projectile
+	function PlayerStandard:_check_action_throw_projectile(t, input, ...)
+		--Console:SetTracker(string.format("test %0.2f",t),4)
+		local projectile_entry = managers.blackmarket:equipped_projectile()
+		local projectile_tweak = tweak_data.blackmarket.projectiles[projectile_entry]
+		--require custom raycast check
+		if not projectile_tweak.override_equipment_id then
+			return orig_check_throw_projectile(self,t,input,...)
+		end
+		local action_wanted = input.btn_projectile_press or input.btn_projectile_release or self._state_data.projectile_idle_wanted
+
+		local equipment_data = tweak_data.equipments[projectile_tweak.override_equipment_id]
+		
+		local equipmentbase = self._unit:equipment()
+				
+		if projectile_tweak.is_a_grenade then
+			return self:_check_action_throw_grenade(t, input)
+		elseif projectile_tweak.ability then
+			return self:_check_action_use_ability(t, input)
+		end
+		
+		local ray,stuck_enemy
+		
+		if managers.player:can_throw_grenade() and (action_wanted or self._state_data.projectile_throw_wanted or self._state_data.throwing_projectile) then
+			--Console:SetTracker(string.format("action wanted %0.2f",t),1)
+			ray,stuck_enemy = equipmentbase:valid_look_at_placement(equipment_data, managers.player:has_category_upgrade("trip_mine", "can_place_on_enemies"))
+			--Console:SetTracker(tostring(ray) .. string.format(" %0.2f",t),2)
+		end
+		if self._state_data.projectile_throw_wanted then
+			if not ray then
+				--Console:SetTracker(string.format("no ray %0.2f",t),3)
+				equipmentbase:on_deploy_interupted()
+			end
+			
+			if not self._state_data.projectile_throw_allowed_t then
+				self._state_data.projectile_throw_wanted = nil
+				
+				--place from throw (instant press button)
+				if ray then
+					local success = equipmentbase:use_trip_mine(ray,stuck_enemy)
+					if success then
+						self:_interupt_action_throw_projectile(t)
+						managers.player:add_grenade_amount(-1)
+						return true
+					end
+				end
+				
+				self:_do_action_throw_projectile(t, input)
+			end
+
+			return
+		end
+
+		if not action_wanted then
+			return
+		end
+
+		if not managers.player:can_throw_grenade() then
+			self._state_data.projectile_throw_wanted = nil
+			self._state_data.projectile_idle_wanted = nil
+
+			return
+		end
+
+		if input.btn_projectile_release then
+			if self._state_data.throwing_projectile then
+				if self._state_data.projectile_throw_allowed_t then
+					self._state_data.projectile_throw_wanted = true
+
+					return
+				end
+				
+				--place from idle (hold button)
+				if ray then
+					local success = equipmentbase:use_trip_mine(ray,stuck_enemy)
+					if success then
+						self:_interupt_action_throw_projectile(t)
+						managers.player:add_grenade_amount(-1)
+						return true
+					end
+				end
+				
+				self:_do_action_throw_projectile(t, input)
+			end
+
+			return
+		end
+
+		local action_forbidden = not PlayerBase.USE_GRENADES or not self:_projectile_repeat_allowed() or self:chk_action_forbidden("interact") or self:_interacting() or self:is_deploying() or self:_changing_weapon() or self:_is_meleeing() or self:_is_using_bipod()
+
+		if action_forbidden then
+			return
+		end
+
+		self:_start_action_throw_projectile(t, input)
+
+		return true
 	end
 
 	--wrote the HUD code and stuff real quick and dirty just so that we could start getting feedback from testers

@@ -17,13 +17,22 @@ Hooks:PostHook(BlackMarketTweakData, "_init_projectiles", "cdgren", function(sel
 			dlc = false,
 			throwable = true,
 			max_amount = 6,
-			is_a_grenade = true,
-			instant_use = true,
+			repeat_expire_t = 1.5,
+			throw_allowed_expire_t = 0.1,
+			expire_t = 1.1,
+			animation = "throw_tripmine_throwable",
+			anim_global_param = "projectile_tripmine_throwable",
+			--local_unit = nil,
+			unit_dummy = "units/equipment/tripmine_throwable/tripmine_throwable_dummy",
+			is_a_grenade = false,
+			client_authoritative = true,
+			no_cheat_count = true,
+--			instant_use = true,
 			override_equipment_id = "tripmine_throwable", --reference key for corresponding data in equipmentstweakdata
 			primary_class = "class_grenade",
 			subclasses = {}
 		}
-
+		
 		self.projectiles.wpn_prj_four.max_amount = 10
 		self.projectiles.wpn_prj_four.can_pierce_armor = false
 		self.projectiles.wpn_prj_four.no_cheat_count = true
