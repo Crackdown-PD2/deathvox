@@ -925,8 +925,15 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 	end
 
 	local hit_unit = col_ray.unit
-	local is_shield = hit_unit:in_slot(managers.slot:get_mask("enemy_shield_check")) and alive(hit_unit:parent())
-
+	local is_shield
+	local enemy_unit
+	if hit_unit:in_slot(managers.slot:get_mask("enemy_shield_check")) then
+		local _enemy_unit = hit_unit:parent()
+		if alive(_enemy_unit) then
+			is_shield = true
+			enemy_unit = _enemy_unit
+		end
+	end
 	local weap_unit = alive(weapon_unit) and weapon_unit or nil
 	local weapon_base = weap_unit and weap_unit:base()
 
@@ -965,9 +972,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 		end
 
 		--more proper checks for knocking back a shield
-		if is_shield and weapon_base and weapon_base._shield_knock then
-			local enemy_unit = hit_unit:parent()
-
+		if is_shield and weapon_base and weapon_base._shield_knock and enemy_unit then
 			if enemy_unit:character_damage() and enemy_unit:character_damage().dead and not enemy_unit:character_damage():dead() then
 				if enemy_unit:base():char_tweak() and not enemy_unit:base().is_phalanx and enemy_unit:base():char_tweak().damage.shield_knocked and not enemy_unit:character_damage():is_immune_to_shield_knockback() then
 					local MIN_KNOCK_BACK = 200
