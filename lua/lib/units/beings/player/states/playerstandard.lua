@@ -2632,14 +2632,25 @@ if TCD_ENABLED then
 		local projectile_entry = managers.blackmarket:equipped_projectile()
 		local projectile_tweak = tweak_data.blackmarket.projectiles[projectile_entry]
 		--require custom raycast check
-		if not projectile_tweak.override_equipment_id then
+		local equipmentbase = self._unit:equipment()
+		
+		if projectile_tweak.override_equipment_id then
+			--if not (action_wanted or self._state_data.projectile_throw_wanted or self._state_data.throwing_projectile) then
+			--	return
+			--end
+			if not managers.player:has_category_upgrade("trip_mine","can_throw") then
+				--return equipmentbase:use_trip_mine()
+			end
+			
+			--temp disabled throwable tripmines
+			return --equipmentbase:use_trip_mine()
+		else
 			return orig_check_throw_projectile(self,t,input,...)
 		end
 		local action_wanted = input.btn_projectile_press or input.btn_projectile_release or self._state_data.projectile_idle_wanted
 
 		local equipment_data = tweak_data.equipments[projectile_tweak.override_equipment_id]
 		
-		local equipmentbase = self._unit:equipment()
 				
 		if projectile_tweak.is_a_grenade then
 			return self:_check_action_throw_grenade(t, input)

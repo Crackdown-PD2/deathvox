@@ -27,7 +27,7 @@ Hooks:PostHook(BlackMarketTweakData, "_init_projectiles", "cdgren", function(sel
 			is_a_grenade = false,
 			client_authoritative = true,
 			no_cheat_count = true,
---			instant_use = true,
+			--instant_use = true,
 			override_equipment_id = "tripmine_throwable", --reference key for corresponding data in equipmentstweakdata
 			primary_class = "class_grenade",
 			subclasses = {}

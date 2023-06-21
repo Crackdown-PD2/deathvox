@@ -527,38 +527,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return false
 	end
 
-	function PlayerEquipment:throw_projectile()
---		Log("Threw projectile")
-		do return end
-		
-		
-		local projectile_entry = managers.blackmarket:equipped_projectile()
-		local projectile_data = tweak_data.blackmarket.projectiles[projectile_entry]
-		local from = self._unit:movement():m_head_pos()
-		local pos = from + self._unit:movement():m_head_rot():y() * 30 + Vector3(0, 0, 0)
-		local dir = self._unit:movement():m_head_rot():y()
-		local say_line = projectile_data.throw_shout or "g43"
-
-		if say_line and say_line ~= true then
-			self._unit:sound():play(say_line, nil, true)
-		end
-
-		local projectile_index = tweak_data.blackmarket:get_index_from_projectile_id(projectile_entry)
-
-		if not projectile_data.client_authoritative then
-			if Network:is_client() then
-				managers.network:session():send_to_host("request_throw_projectile", projectile_index, pos, dir)
-			else
-				ProjectileBase.throw_projectile(projectile_entry, pos, dir, managers.network:session():local_peer():id())
-				managers.player:verify_grenade(managers.network:session():local_peer():id())
-			end
-		else
-			ProjectileBase.throw_projectile(projectile_entry, pos, dir, managers.network:session():local_peer():id())
-			managers.player:verify_grenade(managers.network:session():local_peer():id())
-		end
-
-		managers.player:on_throw_grenade()
-	end
 else
 	function PlayerEquipment:valid_shape_placement(equipment_id, equipment_data)
 		local unit = self._unit
