@@ -32,6 +32,12 @@ Hooks:PostHook(BlackMarketTweakData, "_init_projectiles", "cdgren", function(sel
 			primary_class = "class_grenade",
 			subclasses = {}
 		}
+		self.projectiles.smoke_screen_grenade.is_from_perk_deck = true
+		self.projectiles.pocket_ecm_jammer.is_from_perk_deck = true
+		self.projectiles.copr_ability.is_from_perk_deck = true
+		self.projectiles.damage_control.is_from_perk_deck = true
+		self.projectiles.chico_injector.is_from_perk_deck = true
+		self.projectiles.tag_team.is_from_perk_deck = true
 		
 		self.projectiles.wpn_prj_four.max_amount = 10
 		self.projectiles.wpn_prj_four.can_pierce_armor = false

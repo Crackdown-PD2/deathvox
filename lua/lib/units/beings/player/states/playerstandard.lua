@@ -2655,7 +2655,8 @@ if TCD_ENABLED then
 		if projectile_tweak.is_a_grenade then
 			return self:_check_action_throw_grenade(t, input)
 		elseif projectile_tweak.ability then
-			return self:_check_action_use_ability(t, input)
+			return
+			--return self:_check_action_use_ability(t, input)
 		end
 		
 		local ray,stuck_enemy
@@ -2753,14 +2754,15 @@ if TCD_ENABLED then
 	function PlayerStandard:_update_tagteam_hud_targets(t,input)
 		
 		local released
+		local btn_ability_state = self._controller:get_input_bool("change_equipment")
 		if self._cache_held_grenade then --todo make consistent with tripmine code
-			if not input.btn_projectile_state then 
+			if not btn_ability_state then 
 				self._cache_held_grenade = false
 				released = true
 			end
 		else
-			self._cache_held_grenade = input.btn_projectile_state
-			if not input.btn_projectile_state then
+			self._cache_held_grenade = btn_ability_state
+			if not btn_ability_state then
 				return false
 			end
 		end
@@ -2858,22 +2860,23 @@ if TCD_ENABLED then
 	end
 
 	function PlayerStandard:_check_action_use_ability(t, input)
-		local action_wanted = input.btn_throw_grenade_press
-		local held = input.btn_projectile_state
+		local action_wanted
+		if managers.player:get_ability_amount() == 0 then
+			return
+		end
+		--local held = self._controller:get_input_bool("change_equipment")
 
-		local equipped_ability,amount = managers.blackmarket:equipped_grenade()
+		local equipped_ability,amount = managers.blackmarket:equipped_ability()
 		local ptd = equipped_ability and tweak_data.blackmarket.projectiles[equipped_ability] 
-		if ptd then 
-			if ptd.hold_function_name then 
-				action_wanted = self[ptd.hold_function_name](self,t, input) 
-			end
+		if ptd and ptd.hold_function_name then 
+				--currently only used for tagteam
+			action_wanted = self[ptd.hold_function_name](self,t,input)
+		else
+			action_wanted = input.btn_change_equipment
 		end
 		
-		if not action_wanted then
-			return
-		end
-		if not managers.player:attempt_ability(equipped_ability) then
-			return
+		if action_wanted and not managers.player:attempt_ability(equipped_ability) then
+			return false
 		end
 
 		return action_wanted
@@ -2905,4 +2908,7 @@ if TCD_ENABLED then
 		end
 	end
 	
+	function PlayerStandard:_check_action_change_equipment(t, input)
+		return self:_check_action_use_ability(t, input)
+	end
 end

@@ -288,7 +288,7 @@
 		"menu_not_safe" : "Not Safe",
 		"menu_not_safe_desc" : "BASIC: ##$basic##\nThe $ICN_SAW OVE9000 Saw instantly destroys Dozer armor plates and can cut through shields.\n\nACE: ##$pro##\nThe $ICN_SAW OVE9000 Saw deals ##2x## Damage to Special Enemies.",
 		"menu_rolling_cutter" : "Rolling Cutter",
-		"menu_rolling_cutter_desc" : "BASIC: ##$basic##\nHitting an enemy with the $ICN_SAW OVE9000 Saw or Bloody Mess increases the damage bonus of Into The Pit by ##+1%##, up to ##+1000%##.\n\nACE: ##$pro##\nThe $ICN_SAW OVE9000 Saw is guarannteed to inflict Panic on hit.",
+		"menu_rolling_cutter_desc" : "BASIC: ##$basic##\nHitting an enemy with the $ICN_SAW OVE9000 Saw or Bloody Mess increases the damage bonus of Into The Pit by ##+1%##, up to ##+1000%##.\n\nACE: ##$pro##\nThe $ICN_SAW OVE9000 Saw is guaranteed to inflict Panic on hit.",
 		
 		"menu_have_blast" : "Have A Blast",
 		"menu_have_blast_desc" : "BASIC: ##$basic##\nTrip Mines can be stuck directly to an enemy, causing them to instantly panic and take ##3x## damage from the explosion.\n\nACE: ##$pro##\n$ICN_GRN Grenade throwables gain ##+33%## Ammunition.",
