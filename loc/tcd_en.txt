@@ -320,7 +320,7 @@
 		"menu_deck1_8" : "State of Grace",
 		"menu_deck1_8_desc" : "Your team gains ##+10%## Armor Recovery Rate.",
 		"menu_deck1_9" : "Angels with Dirty Faces",
-		"menu_deck1_9_desc" : "You can revive Downed players within your line of sight by Shouting at them when they are within ##10## meters of you. This effect has a ##20## second cooldown.",
+		"menu_deck1_9_desc" : "You can revive downed players within your line of sight by Shouting at them when they are within ##10## meters of you. This effect has a ##20## second cooldown.",
 		
 		"menu_deck2_1" : "Dynamic Tension",
 		"menu_deck2_1_desc" : "You gain ##+25%## Maximum Health and you become ##25%## more likely to be targeted over your teammates.",

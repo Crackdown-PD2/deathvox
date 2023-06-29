@@ -2504,9 +2504,9 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		self.values.team.crewchief = {}
 		
 		
-			--Crew Chief 1: +10% damage resistance
+			--Crew Chief 1: +20% damage resistance
 		self.values.team.crewchief.passive_damage_resistance = {
-			0.1
+			0.2
 		}
 		self.definitions.team_passive_damage_resistance = {
 			name_id = "menu_deck1_1",
@@ -2518,9 +2518,9 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
-			--Crew Chief 2: +10% stamina recovery rate
+			--Crew Chief 2: +20% stamina recovery rate
 		self.values.team.crewchief.passive_stamina_regen_mul = {
-			0.1
+			0.2
 		}
 		self.definitions.team_passive_stamina_regen_mul = {
 			name_id = "menu_deck1_2",
@@ -2531,10 +2531,17 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "crewchief"
 			}
 		}
-
-			--Crew Chief 4: +10% maximum stamina
+		
+			--Crew Chief 3: +20% maximum health
+			--(vanilla upgrade, buffed from 10% -> 20%)
+		self.values.team.health.passive_multiplier = {
+			1.2
+		}
+		
+			--Crew Chief 4: +20% maximum stamina
+			--(vanilla upgrade, changed from 50% -> 20%)
 		self.values.team.stamina.passive_multiplier = {
-			1.1,
+			1.2,
 			1.3 --seems to be unused
 		}
 		
@@ -2554,9 +2561,9 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 
 		
 		
-			--Crew Chief 6: +10% interaction speed (does not apply to pagers)
+			--Crew Chief 6: +20% interaction speed (does not apply to pagers)
 		self.values.team.crewchief.passive_interaction_speed_multiplier = {
-			0.9
+			0.8
 		}
 		self.definitions.team_passive_interaction_speed_multiplier = {
 			name_id = "menu_deck1_6",
@@ -2568,11 +2575,16 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 
-			--Crew Chief 7: +10% armor
+			--Crew Chief 7: +20% armor
 		self.values.team.armor.multiplier = {
-			1.1
+			1.2
 		}
 		
+			--Crew Chief 8: +20% armor recovery rate
+			--(vanilla upgrade, buffed from 10% -> 20%)
+		self.values.team.armor.passive_regen_time_multiplier = {
+			0.8
+		}
 
 		--General free skills (default upgrades)
 			--FAK auto revive radius on deploying
