@@ -339,7 +339,7 @@
 		"menu_deck2_8" : "Flex Eternal",
 		"menu_deck2_8_desc" : "Your Health Regeneration increases to ##2%## of your Maximum Health per second.",
 		"menu_deck2_9" : "Hero Of The Beach",
-		"menu_deck2_9_desc" : "Each kill you make during a heist increases your Maximum Health by ##+1##, up to ##+200##. All stacks are lost upon being downed.",
+		"menu_deck2_9_desc" : "Being hit increases your Maximum Health by ##+2##, up to ##+200##. All stacks are lost upon being downed.",
 		
 		"menu_deck3_1" : "Reactive Armor",
 		"menu_deck3_1_desc" : "You are rendered ##Invulnerable## to damage for ##2## seconds after your Armor breaks. This effect has a ##10## second cooldown.",

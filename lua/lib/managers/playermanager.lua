@@ -1324,9 +1324,7 @@ function PlayerManager:health_skill_addend()
 	
 	addend = addend + self:upgrade_value("team", "crew_add_health", 0)
 	
-	if self._beach_health_points then
-		addend = addend + self._beach_health_points
-	end
+	addend = addend + self:get_property("muscle_beachyboys_bonus",0)
 	
 	if table.contains(self._global.kit.equipment_slots, "thick_skin") then
 		addend = addend + self:upgrade_value("player", "thick_skin", 0)
@@ -1620,10 +1618,12 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 	--^ copycat stuff
 	
 	if self:has_category_upgrade("player", "muscle_beachyboys") then
-		if not self._beach_health_points then
-			self._beach_health_points = 0.1
-		elseif self._beach_health_points < 20 then
-			self._beach_health_points = self._beach_health_points + 0.1
+		local upgrade_data = self:upgrade_value("player","muscle_beachyboys")
+		local stacks = self:get_property("muscle_beachyboys_bonus",0)
+		local max_stacks = upgrade_data[2]
+		if stacks < max_stacks then
+			stacks = math.min(stacks + upgrade_data[1],max_stacks)
+			self:set_property("muscle_beachyboys_bonus",stacks)
 		end
 	end
 

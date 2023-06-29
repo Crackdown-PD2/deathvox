@@ -1343,7 +1343,7 @@ end)
 
 function PlayerDamage:blush_beach_hp()
 	--log(tostring(self:_max_health()))
-	managers.player._beach_health_points = 0
+	managers.player:set_property("muscle_beachyboys_bonus",0)
 end
 
 --tcd only
