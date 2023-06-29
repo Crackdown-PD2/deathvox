@@ -664,49 +664,8 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 		})
 	end
 
-	for key, data in pairs(tweak_data.achievement.shotgun_single_shot_kills) do --Donald's Horizontal Leveller achievement
-		if data.headshot and data.count <= kill_data.headshots - kill_data.civilian_kills or data.count <= kill_data.kills - kill_data.civilian_kills then
-			local should_award = true
 
-			if data.blueprint then
-				local missing_parts = false
-
-				for _, part_or_parts in ipairs(data.blueprint) do
-					if type(part_or_parts) == "string" then
-						if not table.contains(self._blueprint or {}, part_or_parts) then
-							missing_parts = true
-
-							break
-						end
-					else
-						local found_part = false
-
-						for _, part in ipairs(part_or_parts) do
-							if table.contains(self._blueprint or {}, part) then
-								found_part = true
-
-								break
-							end
-						end
-
-						if not found_part then
-							missing_parts = true
-
-							break
-						end
-					end
-				end
-
-				if missing_parts then
-					should_award = false
-				end
-			end
-
-			if should_award then
-				managers.achievment:_award_achievement(data, key)
-			end
-		end
-	end
+	self:_check_one_shot_shotgun_achievements(kill_data)
 
 	return result
 end
