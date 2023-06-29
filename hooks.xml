@@ -221,6 +221,7 @@
 	<hook post="true" file="lua/lib/network/base/hostnetworksession.lua" source_file="lib/network/base/hostnetworksession"/>
 	<hook post="true" file="lua/lib/network/handlers/unitnetworkhandler.lua" source_file="lib/network/handlers/unitnetworkhandler"/>
 	<hook post="true" file="lua/lib/network/matchmaking/networkmatchmakingsteam.lua" source_file="lib/network/matchmaking/networkmatchmakingsteam"/>
+	<hook post="true" file="lua/lib/network/matchmaking/networkmatchmakingepic.lua" source_file="lib/network/matchmaking/networkmatchmakingepic"/>
 	
 	<hook post="true" file="lua/lib/player_actions/skills/playeractiontagteam.lua" source_file="lib/player_actions/skills/playeractiontagteam"/>
 	
