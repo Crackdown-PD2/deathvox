@@ -2867,7 +2867,10 @@ if TCD_ENABLED then
 		--local held = self._controller:get_input_bool("change_equipment")
 
 		local equipped_ability,amount = managers.blackmarket:equipped_ability()
-		local ptd = equipped_ability and tweak_data.blackmarket.projectiles[equipped_ability] 
+		if not equipped_ability then
+			return
+		end
+		local ptd = tweak_data.blackmarket.projectiles[equipped_ability] 
 		if ptd and ptd.hold_function_name then 
 				--currently only used for tagteam
 			action_wanted = self[ptd.hold_function_name](self,t,input)
