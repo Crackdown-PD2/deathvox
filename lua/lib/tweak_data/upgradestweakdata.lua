@@ -2659,8 +2659,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			0.02
 		}
 		self.values.player.muscle_beachyboys = {
-			0.2,
-			20
+			{ 0.2,20 } --2 hp per stack, 200 hp bonus cap
 		}
 		
 		self.definitions.muscle_1_health = {
