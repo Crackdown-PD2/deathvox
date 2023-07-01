@@ -591,7 +591,7 @@ function UnitNetworkHandler:sync_medic_heal(unit, sender)
 	end
 end
 
-function UnitNetworkHandler:sync_heist_time(time, sender)
+function UnitNetworkHandler:sync_heist_time(time, id, sender)
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 		return
 	end
@@ -604,7 +604,7 @@ function UnitNetworkHandler:sync_heist_time(time, sender)
 
 	time = time + peer:qos().ping / 1000
 
-	managers.game_play_central:sync_heist_time(time)
+	managers.game_play_central:sync_heist_time(time, id)
 end
 
 function UnitNetworkHandler:place_sentry_gun(pos, rot, equipment_selection_index, user_unit, unit_idstring_index, ammo_level, fire_mode_index, sender)
