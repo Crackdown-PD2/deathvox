@@ -194,6 +194,27 @@ if TCD_ENABLED then
 		return true
 	end
 	
+	function PlayerManager:stamina_multiplier()
+		local multiplier = 1
+		multiplier = multiplier + self:upgrade_value("player", "sociopath_stamina_mul", 1) - 1
+		multiplier = multiplier + self:upgrade_value("player", "stamina_multiplier", 1) - 1
+		multiplier = multiplier + self:team_upgrade_value("stamina", "multiplier", 1) - 1
+		multiplier = multiplier + self:team_upgrade_value("stamina", "passive_multiplier", 1) - 1
+		multiplier = multiplier + self:get_hostage_bonus_multiplier("stamina") - 1
+		if self:has_category_upgrade("player", "armorer_stamina_penalty_reduction") then
+			--local armor_data = tweak_data.blackmarket.armors
+			--local equipped_armor = armor_data[managers.blackmarket:equipped_armor(true, true)]
+			local current_armor_stamina_mul = self:body_armor_value("stamina")
+			local suit_stamina_mul = self:body_armor_value("stamina",1)
+			if suit_stamina_mul > current_armor_stamina_mul then
+				local d_stamina_mul = suit_stamina_mul - current_armor_stamina_mul
+				multiplier = multiplier + d_stamina_mul * self:upgrade_value("player", "armorer_stamina_penalty_reduction",0)
+			end
+		end
+		multiplier = managers.modifiers:modify_value("PlayerManager:GetStaminaMultiplier", multiplier)
+
+		return multiplier
+	end
 
 	function PlayerManager:check_equipment_placement_valid(player, equipment)
 		local equipment_data = managers.player:equipment_data_by_name(equipment)
@@ -999,7 +1020,7 @@ if TCD_ENABLED then
 		if multiplier < 1.05 then
 			local diff = 1.05 - multiplier
 			
-			diff = diff * self:upgrade_value("player", "armorer_armor_pen_mul", 1)
+			diff = diff * self:upgrade_value("player", "armorer_armor_pen_mul", 1) --no longer used
 			
 			multiplier = 1.05 - diff
 			
@@ -1531,18 +1552,6 @@ function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, overri
 	end
 
 	return chance
-end
-
-function PlayerManager:stamina_multiplier()
-	local multiplier = 1
-	multiplier = multiplier + self:upgrade_value("player", "sociopath_stamina_mul", 1) - 1
-	multiplier = multiplier + self:upgrade_value("player", "stamina_multiplier", 1) - 1
-	multiplier = multiplier + self:team_upgrade_value("stamina", "multiplier", 1) - 1
-	multiplier = multiplier + self:team_upgrade_value("stamina", "passive_multiplier", 1) - 1
-	multiplier = multiplier + self:get_hostage_bonus_multiplier("stamina") - 1
-	multiplier = managers.modifiers:modify_value("PlayerManager:GetStaminaMultiplier", multiplier)
-
-	return multiplier
 end
 
 function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, weapon_unit)

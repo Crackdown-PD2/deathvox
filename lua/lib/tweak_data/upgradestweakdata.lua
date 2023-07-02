@@ -2755,24 +2755,28 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 		--Armorer Perkdeck
-		self.values.temporary.armor_break_invulnerable = { --Armorer 1
-			{
-				2,
-				10
-			}
-		}
+		self.values.player.armorer_full_armor_temp_invuln = {1}
 		self.values.player.armorer_armor_mul = {
-			1.25,
-			1.5,
-			1.75,
-			2
+			1.15,
+			1.3,
+			1.45,
+			1.6
 		}
+		self.values.player.armorer_stamina_penalty_reduction = {0.5}
 		self.values.player.armorer_shake_mul = {0.5}
 		self.values.player.armorer_armor_pen_mul = {0.5} --Armor Speed Penalty reducer
-		self.values.player.armorer_armor_regen_mul = {0.75}
+		self.values.player.armorer_armor_regen_mul = {0.85}
 		self.values.player.armorer_ironclad = {0.9}
 		
-		--Armorer 1 is not defined here
+		self.definitions.armorer_1 = {
+			name_id = "menu_deck3_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_full_armor_temp_invuln",
+				category = "player"
+			}
+		}
 		self.definitions.armorer_2 = {
 			name_id = "menu_deck3_2",
 			category = "feature",
@@ -2805,7 +2809,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "armorer_armor_pen_mul",
+				upgrade = "armorer_stamina_penalty_reduction",
 				category = "player"
 			}
 		}

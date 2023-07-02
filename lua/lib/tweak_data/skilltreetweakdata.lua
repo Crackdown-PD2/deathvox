@@ -2263,7 +2263,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck3_1_desc",
 				cost = perkdeck_tier_costs[1],
 				upgrades = {
-					"temporary_armor_break_invulnerable_1"
+					"armorer_1"
 				},
 				icon_xy = {
 					0,

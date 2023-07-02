@@ -613,6 +613,13 @@ end
 local _calc_armor_damage_original = PlayerDamage._calc_armor_damage
 function PlayerDamage:_calc_armor_damage(attack_data, ...)
 	if self:get_real_armor() > 0 then
+		if self:armor_ratio() == 1 then
+			if managers.player:has_category_upgrade("player","armorer_full_armor_temp_invuln") then
+				local duration = managers.player:upgrade_value("player","armorer_full_armor_temp_invuln",0)
+				managers.player:activate_temporary_property("armorer_perfect_defense_invuln",duration)
+			end
+		end
+		
 		if self._old_last_received_dmg then
 			attack_data.damage = attack_data.damage - self._old_last_received_dmg
 		end
@@ -1815,7 +1822,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 	local orig_chk_invuln = PlayerDamage._chk_can_take_dmg
 	function PlayerDamage:_chk_can_take_dmg(...)
-		return orig_chk_invuln(self,...) and not managers.player:has_active_temporary_property("preventative_care_invuln_active")
+		return orig_chk_invuln(self,...) and not managers.player:has_active_temporary_property("preventative_care_invuln_active") and not managers.player:has_active_temporary_property("armorer_perfect_defense_invuln")
 	end
 
 	function PlayerDamage:damage_fall(data)
