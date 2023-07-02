@@ -233,8 +233,11 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return ray, stuck_enemy
 	end
 
-	function PlayerEquipment:use_trip_mine()
-		local ray, stuck_enemy = self:valid_look_at_placement(nil, managers.player:has_category_upgrade("trip_mine", "can_place_on_enemies"))
+	--also changed signature: allow passing the arguments from the raycast check 
+	function PlayerEquipment:use_trip_mine(ray,stuck_enemy)
+		if ray == nil and stuck_enemy == nil then
+			ray, stuck_enemy = self:valid_look_at_placement(nil, managers.player:has_category_upgrade("trip_mine", "can_place_on_enemies"))
+		end
 
 		if ray then
 			managers.statistics:use_trip_mine()
@@ -523,6 +526,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		return false
 	end
+
 else
 	function PlayerEquipment:valid_shape_placement(equipment_id, equipment_data)
 		local unit = self._unit

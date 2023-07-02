@@ -17,13 +17,28 @@ Hooks:PostHook(BlackMarketTweakData, "_init_projectiles", "cdgren", function(sel
 			dlc = false,
 			throwable = true,
 			max_amount = 6,
-			is_a_grenade = true,
-			instant_use = true,
+			repeat_expire_t = 1.5,
+			throw_allowed_expire_t = 0.1,
+			expire_t = 1.1,
+			animation = "throw_tripmine_throwable",
+			anim_global_param = "projectile_tripmine_throwable",
+			--local_unit = nil,
+			unit_dummy = "units/equipment/tripmine_throwable/tripmine_throwable_dummy",
+			is_a_grenade = false,
+			client_authoritative = true,
+			no_cheat_count = true,
+			--instant_use = true,
 			override_equipment_id = "tripmine_throwable", --reference key for corresponding data in equipmentstweakdata
 			primary_class = "class_grenade",
 			subclasses = {}
 		}
-
+		self.projectiles.smoke_screen_grenade.is_from_perk_deck = true
+		self.projectiles.pocket_ecm_jammer.is_from_perk_deck = true
+		self.projectiles.copr_ability.is_from_perk_deck = true
+		self.projectiles.damage_control.is_from_perk_deck = true
+		self.projectiles.chico_injector.is_from_perk_deck = true
+		self.projectiles.tag_team.is_from_perk_deck = true
+		
 		self.projectiles.wpn_prj_four.max_amount = 10
 		self.projectiles.wpn_prj_four.can_pierce_armor = false
 		self.projectiles.wpn_prj_four.no_cheat_count = true

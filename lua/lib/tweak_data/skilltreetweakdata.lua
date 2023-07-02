@@ -3741,6 +3741,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					19
 				}
 			},
+			ability_id = "tag_team",
 			desc_id = "menu_st_spec_20_desc",
 			name_id = "menu_st_spec_20"
 		})
@@ -4082,6 +4083,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					16
 				}
 			},
+			ability_id = "chico_injector",
 			name_id = "menu_st_spec_17",
 			desc_id = "menu_st_spec_17_desc",
 			category = "offensive"
@@ -4196,6 +4198,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					17
 				}
 			},
+			ability_id = "smoke_screen_grenade",
 			desc_id = "menu_st_spec_18_desc",
 			name_id = "menu_st_spec_18"
 		})
@@ -4309,6 +4312,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					18
 				}
 			},
+			ability_id = "damage_control",
 			desc_id = "menu_st_spec_19_desc",
 			name_id = "menu_st_spec_19"
 		})
@@ -4422,6 +4426,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					20
 				}
 			},
+			ability_id = "pocket_ecm_jammer",
 			desc_id = "menu_st_spec_21_desc",
 			name_id = "menu_st_spec_21"
 		})
@@ -4535,6 +4540,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 					0
 				}
 			},
+			ability_id = "copr_ability",
 			desc_id = "menu_st_spec_22_desc",
 			name_id = "menu_st_spec_22"
 		})

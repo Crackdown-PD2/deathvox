@@ -186,7 +186,6 @@
 	<!--sadly have to include this here due to some fucky bullshit with cancelling update callback ids not wanting to work right for me, i cant figure it out, either, so until hoxi's code is around, this will HAVE to do...there are thankfully no side-effects -->
 	<hook post="true" file="lua/lib/managers/navigationmanager.lua" source_file="lib/managers/navigationmanager"/> 
 	
-	<hook post="true" file="lua/lib/managers/achievmentmanager.lua" source_file="lib/managers/achievmentmanager"/>
 	<hook post="true" file="lua/lib/managers/gameplaycentralmanager.lua" source_file="lib/managers/gameplaycentralmanager"/>
 	<hook post="true" file="lua/lib/managers/enemymanager.lua" source_file="lib/managers/enemymanager"/>
 	<hook post="true" file="lua/lib/managers/menumanager.lua" source_file="lib/managers/menumanager"/>
@@ -222,6 +221,7 @@
 	<hook post="true" file="lua/lib/network/base/hostnetworksession.lua" source_file="lib/network/base/hostnetworksession"/>
 	<hook post="true" file="lua/lib/network/handlers/unitnetworkhandler.lua" source_file="lib/network/handlers/unitnetworkhandler"/>
 	<hook post="true" file="lua/lib/network/matchmaking/networkmatchmakingsteam.lua" source_file="lib/network/matchmaking/networkmatchmakingsteam"/>
+	<hook post="true" file="lua/lib/network/matchmaking/networkmatchmakingepic.lua" source_file="lib/network/matchmaking/networkmatchmakingepic"/>
 	
 	<hook post="true" file="lua/lib/player_actions/skills/playeractiontagteam.lua" source_file="lib/player_actions/skills/playeractiontagteam"/>
 	

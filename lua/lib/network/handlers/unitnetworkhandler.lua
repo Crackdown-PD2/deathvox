@@ -222,7 +222,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return orig_sync_attach_projectile(self, unit, instant_dynamic_pickup, parent_unit, parent_body, synced_parent_object, synced_pos, dir, projectile_type_index, peer_id, sender)
 	end
 
-	function UnitNetworkHandler:sync_contour_state(unit, u_id, type, state, multiplier, sender)
+	function UnitNetworkHandler:sync_contour_add(unit, u_id, type_index, multiplier, sender)
 		if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 			return
 		end
@@ -246,23 +246,24 @@ if deathvox:IsTotalCrackdownEnabled() then
 		end
 
 		if not contour_unit then
+			--Application:error("[UnitNetworkHandler:sync_contour_add] Unit is missing")
 			return
 		end
-
-		if state then
+		
+		if contour_unit:contour() then
 			if Network:is_server() then
 				local peer_unit = peer:unit()
 
 				if alive(peer_unit) and peer_unit:id() ~= -1 and peer_unit:base() and peer_unit:base():upgrade_value("player", "convert_enemies_target_marked") then
-					contour_unit:contour():add(ContourExt.indexed_types[type], false, multiplier, nil, nil, peer:id())
+					contour_unit:contour():add(ContourExt.indexed_types[type_index], false, multiplier, nil, nil, peer:id())
 				else
-					contour_unit:contour():add(ContourExt.indexed_types[type], false, multiplier)
+					contour_unit:contour():add(ContourExt.indexed_types[type_index], false, multiplier)
 				end
 			else
-				contour_unit:contour():add(ContourExt.indexed_types[type], false, multiplier)
+				contour_unit:contour():add(ContourExt.indexed_types[type_index], false, multiplier)
 			end
 		else
-			contour_unit:contour():remove(ContourExt.indexed_types[type], nil)
+			--Application:error("[UnitNetworkHandler:sync_contour_add] No 'contour' extension found on unit.", self._unit)
 		end
 	end
 end
@@ -590,7 +591,7 @@ function UnitNetworkHandler:sync_medic_heal(unit, sender)
 	end
 end
 
-function UnitNetworkHandler:sync_heist_time(time, sender)
+function UnitNetworkHandler:sync_heist_time(time, id, sender)
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 		return
 	end
@@ -603,7 +604,7 @@ function UnitNetworkHandler:sync_heist_time(time, sender)
 
 	time = time + peer:qos().ping / 1000
 
-	managers.game_play_central:sync_heist_time(time)
+	managers.game_play_central:sync_heist_time(time, id)
 end
 
 function UnitNetworkHandler:place_sentry_gun(pos, rot, equipment_selection_index, user_unit, unit_idstring_index, ammo_level, fire_mode_index, sender)

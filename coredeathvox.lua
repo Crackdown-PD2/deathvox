@@ -33,8 +33,8 @@ deathvox.NetworkIDs = {
 }
 
 --matchmaking keys to lock lobbies to others using crackdown or crackdown overhaul
-deathvox.mm_key_default = "crackdown-release-1-92222"
-deathvox.mm_key_overhaul = "crackdown-total-experimental-1-02032023"
+deathvox.mm_key_default = "crackdown-release-1-290623"
+deathvox.mm_key_overhaul = "crackdown-total-experimental-1-290623"
 
 --main menu id; all other menu ids should be in their menu's .txt files
 deathvox.blt_menu_id = "deathvox_menu_main"

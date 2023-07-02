@@ -23,7 +23,7 @@ if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		}
 		
 		self.specials.cable_tie.quantity = 10
-		self.specials.cable_tie.max_quantity = 10
+		self.specials.cable_tie.max_quantity = 20
 		
 		self.first_aid_kit.target_deploy_text = "hud_deploying_revive_fak"
 		self.first_aid_kit.target_type = "teammates"
@@ -68,7 +68,7 @@ if deathvox and deathvox:IsTotalCrackdownEnabled() then
 		
 		self.tripmine_throwable = {
 			deploy_time = 2,
-			dummy_unit = "units/payday2/equipment/gen_equipment_tripmine/gen_equipment_tripmine_dummy",
+			dummy_unit = "units/equipment/tripmine_throwable/tripmine_throwable_dummy",
 			use_function_name = "use_trip_mine",
 			text_id = "debug_trip_mine_throwable",
 			visual_object = "g_toolbag",

@@ -22,6 +22,20 @@ Hooks:PostHook(PlayerManager,"_internal_load","deathvox_on_internal_load",functi
 			grenade = grenade,
 			amount = self:get_max_grenades() --for some reason, in vanilla, spawn amount is math.min()'d with the DEFAULT amount 
 		})
+		
+		local ability_id,ability_amount = managers.blackmarket:equipped_ability()
+		if ability_id then
+			
+			if self:has_category_upgrade(ability_id,"amount_increase") then
+				ability_amount = ability_amount * self:upgrade_value(ability_id,"amount_increase")
+			end
+			
+			self:_set_ability({
+				ability = ability_id,
+				amount = ability_amount
+			})
+		end
+		
 	end
 end)
 
@@ -71,12 +85,115 @@ end
 Hooks:PostHook(PlayerManager,"init","tcd_playermanager_init",function(self)
 	self._damage_overshield = {}
 	self._can_lunge = true
+	Global.player_manager.synced_abilities = {} --not actually synced atm
 end)
 
 if TCD_ENABLED then
 	function PlayerManager:use_messiah_charge()
 		--nothing
 	end
+	
+	--replenish ability instead of grenades
+	function PlayerManager:_on_grenade_cooldown_end()
+		local tweak = tweak_data.blackmarket.projectiles[managers.blackmarket:equipped_grenade()]
+
+		if tweak and tweak.sounds and tweak.sounds.cooldown then
+			self:player_unit():sound():play(tweak.sounds.cooldown)
+		end
+
+		self:add_ability_amount(1)
+	end
+	
+	function PlayerManager:speed_up_grenade_cooldown(time)
+		local timer = self._timers.replenish_grenades
+
+		if not timer then
+			return
+		end
+
+		timer.t = timer.t - time
+		local peer_id = managers.network:session():local_peer():id()
+		local ability = self._global.synced_abilities[peer_id].ability
+		local tweak = ability and tweak_data.blackmarket.projectiles[ability]
+		if tweak then
+			local time_left = self:get_timer_remaining("replenish_grenades") or 0
+
+			managers.hud:set_player_grenade_cooldown({
+				end_time = managers.game_play_central:get_heist_timer() + time_left,
+				duration = tweak.base_cooldown
+			})
+		end
+	end
+	
+	function PlayerManager:_set_ability(params)
+		self._global.synced_abilities[managers.network:session():local_peer():id()] = {
+			ability = params.ability,
+			amount = params.amount
+		}
+		
+		--[[
+		local grenade = params.grenade
+		local tweak_data = tweak_data.blackmarket.projectiles[grenade]
+		local amount = params.amount
+		local icon = tweak_data.icon
+
+		self:update_ability_amount_to_peers(grenade, amount)
+		managers.hud:set_teammate_abilities(HUDManager.PLAYER_PANEL, {
+			amount = amount,
+			icon = icon
+		})
+		--]]
+	end
+	
+	--added in tcd;
+	--returns the number of charges for the current perkdeck ability
+	function PlayerManager:get_ability_amount(peer_id)
+		local data = self._global.synced_abilities[peer_id or managers.network:session():local_peer():id()]
+		if data then
+			return data.amount
+		end
+		return nil
+	end
+	
+	function PlayerManager:add_ability_amount(num)
+		local data = self._global.synced_abilities[managers.network:session():local_peer():id()]
+		if data then
+			data.amount = data.amount + num
+		end
+	end
+	
+	function PlayerManager:attempt_ability(ability)
+		if not self:player_unit() then
+			return false
+		end
+		
+		local local_peer_id = managers.network:session():local_peer():id()
+		local has_no_charges = self:get_ability_amount(local_peer_id) == 0
+		local blocked_by_downed = game_state_machine:verify_game_state(GameStateFilters.downed)
+		blocked_by_downed = blocked_by_downed and not self:has_category_upgrade("player", "activate_ability_downed")
+
+		if has_no_charges or blocked_by_downed then
+			return false
+		end
+
+		local attempt_func = self["_attempt_" .. ability]
+
+		if attempt_func and not attempt_func(self) then
+			return false
+		end
+
+		local tweak = tweak_data.blackmarket.projectiles[ability]
+
+		if tweak and tweak.sounds and tweak.sounds.activate then
+			self:player_unit():sound():play(tweak.sounds.activate)
+		end
+
+		self:add_ability_amount(-1)
+		self._message_system:notify("ability_activated", nil, ability)
+
+		return true
+	end
+	
 
 	function PlayerManager:check_equipment_placement_valid(player, equipment)
 		local equipment_data = managers.player:equipment_data_by_name(equipment)
@@ -238,6 +355,51 @@ if TCD_ENABLED then
 	end
 	
 	Hooks:PostHook(PlayerManager,"check_skills","deathvox_check_cd_skills",function(self)
+		--[[
+		if self:has_category_upgrade("subclass_poison","weapon_subclass_damage_mul") then
+			self._message_system:register(Message.OnEnemyKilled, "subclass_poison_aoe_on_kill", function(weapon_unit, variant, killed_unit)
+				local player = self:local_player()
+				local session = managers.network:session()
+				
+				if not alive(player) then 
+					return
+				end
+				
+				local weapon_base = weapon_unit and weapon_unit:base()
+				
+				if weapon_base and weapon_base._setup and weapon_base._setup.user_unit and weapon_base:is_weapon_subclass("subclass_poison") then 
+					if weapon_base._setup.user_unit ~= player then 
+						return
+					end
+				else
+					return
+				end
+				
+				local weapon_id = weapon_base:get_name_id()
+				
+				local dot_range = managers.player:upgrade_value("subclass_poison", "poison_dot_aoe", 0)
+				
+				local dot_damage_received_time
+				local dot_length
+				local dot_damage
+				local sync_variant = variant == "poison" and 1 or variant == "dot" and 2 or nil
+				local weapon = weapon_id ~= nil and player or nil
+				
+				if dot_range > 0 then
+					local nearby_enemies = killed_unit:find_units_quick("sphere", killed_unit:position(), dot_range, managers.slot:get_mask("enemies"))
+					for i = 1, #nearby_enemies do
+						local enemy = nearby_enemies[i]
+
+						managers.dot:_add_doted_enemy(enemy, dot_damage_received_time, weapon_unit, dot_length, dot_damage, false, variant, weapon_id, player)
+						session:send_to_peers_synched("sync_add_doted_enemy", enemy, sync_variant, weapon, dot_length, dot_damage, player, false)
+					end
+				end
+			end)
+		else
+			self._message_system:unregister(Message.OnEnemyKilled,"subclass_poison_aoe_on_kill")
+		end
+		--]]
+		
 		
 		if self:has_category_upgrade("class_throwing","projectile_charged_damage_mul") then
 			self:set_property("charged_throwable_damage_bonus",0)
@@ -1162,9 +1324,7 @@ function PlayerManager:health_skill_addend()
 	
 	addend = addend + self:upgrade_value("team", "crew_add_health", 0)
 	
-	if self._beach_health_points then
-		addend = addend + self._beach_health_points
-	end
+	addend = addend + self:get_property("muscle_beachyboys_bonus",0)
 	
 	if table.contains(self._global.kit.equipment_slots, "thick_skin") then
 		addend = addend + self:upgrade_value("player", "thick_skin", 0)
@@ -1458,10 +1618,12 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 	--^ copycat stuff
 	
 	if self:has_category_upgrade("player", "muscle_beachyboys") then
-		if not self._beach_health_points then
-			self._beach_health_points = 0.1
-		elseif self._beach_health_points < 20 then
-			self._beach_health_points = self._beach_health_points + 0.1
+		local upgrade_data = self:upgrade_value("player","muscle_beachyboys")
+		local stacks = self:get_property("muscle_beachyboys_bonus",0)
+		local max_stacks = upgrade_data[2]
+		if stacks < max_stacks then
+			stacks = math.min(stacks + upgrade_data[1],max_stacks)
+			self:set_property("muscle_beachyboys_bonus",stacks)
 		end
 	end
 

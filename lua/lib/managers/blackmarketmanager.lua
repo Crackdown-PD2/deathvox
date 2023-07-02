@@ -1,5 +1,62 @@
 if deathvox:IsTotalCrackdownEnabled() then
 	
+	Hooks:PostHook(BlackMarketManager,"get_sorted_grenades","tcd_blackmarketmanager_get_sorted_grenades",function(self,hide_locked)
+		local sort_data = Hooks:GetReturn()
+		for i=#sort_data,1,-1 do 
+			local data = sort_data[i]
+			
+			local id = data[1]
+			local ptd = tweak_data.blackmarket.projectiles[id]
+			if ptd and ptd.is_from_perk_deck then
+				--hide perk deck throwables
+				table.remove(sort_data,i)
+			end
+		end
+	end)
+	
+	function BlackMarketManager:has_equipped_ability()
+		return self:equipped_ability() and true
+	end
+	
+	--this function added in tcd;
+	--if ability exists, returns two arguments: (string) ability_id, (int) current_amount
+	--else, returns nil
+	function BlackMarketManager:equipped_ability()
+		local current_specialization = managers.skilltree:digest_value(managers.skilltree._global.specializations.current_specialization, false, 1)
+		
+		local perkdeck_data = current_specialization and tweak_data.skilltree.specializations[current_specialization]
+		if perkdeck_data then
+			local ability_id = perkdeck_data.ability_id
+			if ability_id then
+				return ability_id,Global.blackmarket_manager.grenades[ability_id].amount or 0
+					--or tweak_data.blackmarket.projectiles[ability_id].max_amount
+			end
+		end
+	end
+	
+	function BlackMarketManager:on_aquired_grenade(upgrade, id, loading)
+		if not self._global.grenades[id] then
+			--Application:error("[BlackMarketManager:on_aquired_grenade] Grenade do not exist in blackmarket", "grenade_id", id)
+
+			return
+		end
+
+		self._global.grenades[id].unlocked = true
+		self._global.grenades[id].owned = true
+		self._global.grenades[id].amount = managers.player:get_max_grenades(id)
+
+		if not loading then
+			self._global.new_drops.normal = self._global.new_drops.normal or {}
+			self._global.new_drops.normal.grenades = self._global.new_drops.normal.grenades or {}
+			self._global.new_drops.normal.grenades[id] = true
+
+			if self._global.grenades[id].ability then
+				--self:equip_grenade(id)
+				--no! bad!
+			end
+		end
+	end
+	
 	function BlackMarketManager:recoil_addend(name, categories, recoil_index, silencer, blueprint, current_state, is_single_shot)
 		local addend = 0
 		local wfm = managers.weapon_factory

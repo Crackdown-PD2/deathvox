@@ -506,6 +506,17 @@ function PlayerDamage:clbk_kill_taunt_common(attack_data)
 	self._kill_taunt_clbk_id = nil
 end
 
+function PlayerDamage:clbk_kill_taunt_tase(attack_data)
+--[[
+	local attacker = attack_data.attacker_unit
+
+	if attacker and alive(attacker) and attacker:character_damage() and attacker:character_damage().dead and not attacker:character_damage():dead() then
+		attacker:sound():say("tsr_post_tasing_taunt")
+	end
+--]]
+	self._kill_taunt_clbk_id = nil
+end
+
 --local _chk_dmg_too_soon_orig = PlayerDamage._chk_dmg_too_soon
 function PlayerDamage:_chk_dmg_too_soon(damage, ...)
 	local next_allowed_dmg_t = type(self._next_allowed_dmg_t) == "number" and self._next_allowed_dmg_t or Application:digest_value(self._next_allowed_dmg_t, false)
@@ -1332,7 +1343,7 @@ end)
 
 function PlayerDamage:blush_beach_hp()
 	--log(tostring(self:_max_health()))
-	managers.player._beach_health_points = 0
+	managers.player:set_property("muscle_beachyboys_bonus",0)
 end
 
 --tcd only

@@ -1000,12 +1000,13 @@ function CopDamage:damage_bullet(attack_data)
 		end
 	end
 
-	if self._marked_dmg_mul then
-		damage = damage * self._marked_dmg_mul
+	damage = damage * (self._marked_dmg_mul or 1)
 
-		if self._marked_dmg_dist_mul then
-			local dst = mvec3_dis(attack_data.origin, self._unit:position())
-			local spott_dst = tweak_data.upgrades.values.player.marked_inc_dmg_distance[self._marked_dmg_dist_mul]
+	if self._marked_dmg_dist_mul then
+		local spott_dst = tweak_data.upgrades.values.player.marked_inc_dmg_distance[self._marked_dmg_dist_mul]
+
+		if spott_dst then
+			local dst = mvector3.distance(attack_data.origin, self._unit:position())
 
 			if spott_dst[1] < dst then
 				damage = damage * spott_dst[2]

@@ -69,16 +69,6 @@ function SentryGunDamage:sync_health(health_percent)
 	self._unit:event_listener():call("on_damage_received", self:health_ratio())
 end
 
-function SentryGunDamage:on_marked_state(state, bonus_distance_damage)
-	if state then
-		self._marked_dmg_mul = self._marked_dmg_mul or tweak_data.upgrades.values.player.marked_enemy_damage_mul
-		self._marked_dmg_dist_mul = bonus_distance_damage
-	else
-		self._marked_dmg_mul = nil
-		self._marked_dmg_dist_mul = nil
-	end
-end
-
 function SentryGunDamage:damage_bullet(attack_data)
 	if self._dead or self._invulnerable or PlayerDamage.is_friendly_fire(self, attack_data.attacker_unit) then
 		return "friendly_fire"
@@ -103,12 +93,11 @@ function SentryGunDamage:damage_bullet(attack_data)
 
 	local damage = attack_data.damage
 
-	if self._marked_dmg_mul then
-		damage = damage * self._marked_dmg_mul
+	if self._marked_dmg_dist_mul then
+		local spott_dst = tweak_data.upgrades.values.player.marked_inc_dmg_distance[self._marked_dmg_dist_mul]
 
-		if self._marked_dmg_dist_mul then
-			local dst = mvector3.distance(attack_data.origin, self._unit:movement():m_head_pos())
-			local spott_dst = tweak_data.upgrades.values.player.marked_inc_dmg_distance[self._marked_dmg_dist_mul]
+		if spott_dst then
+			local dst = mvector3.distance(attack_data.origin, self._unit:position())
 
 			if spott_dst[1] < dst then
 				damage = damage * spott_dst[2]

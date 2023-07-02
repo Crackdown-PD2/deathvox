@@ -288,7 +288,7 @@
 		"menu_not_safe" : "Not Safe",
 		"menu_not_safe_desc" : "BASIC: ##$basic##\nThe $ICN_SAW OVE9000 Saw instantly destroys Dozer armor plates and can cut through shields.\n\nACE: ##$pro##\nThe $ICN_SAW OVE9000 Saw deals ##2x## Damage to Special Enemies.",
 		"menu_rolling_cutter" : "Rolling Cutter",
-		"menu_rolling_cutter_desc" : "BASIC: ##$basic##\nHitting an enemy with the $ICN_SAW OVE9000 Saw or Bloody Mess increases the damage bonus of Into The Pit by ##+1%##, up to ##+1000%##.\n\nACE: ##$pro##\nThe $ICN_SAW OVE9000 Saw is guarannteed to inflict Panic on hit.",
+		"menu_rolling_cutter_desc" : "BASIC: ##$basic##\nHitting an enemy with the $ICN_SAW OVE9000 Saw or Bloody Mess increases the damage bonus of Into The Pit by ##+1%##, up to ##+1000%##.\n\nACE: ##$pro##\nThe $ICN_SAW OVE9000 Saw is guaranteed to inflict Panic on hit.",
 		
 		"menu_have_blast" : "Have A Blast",
 		"menu_have_blast_desc" : "BASIC: ##$basic##\nTrip Mines can be stuck directly to an enemy, causing them to instantly panic and take ##3x## damage from the explosion.\n\nACE: ##$pro##\n$ICN_GRN Grenade throwables gain ##+33%## Ammunition.",
@@ -320,7 +320,7 @@
 		"menu_deck1_8" : "State of Grace",
 		"menu_deck1_8_desc" : "Your team gains ##+10%## Armor Recovery Rate.",
 		"menu_deck1_9" : "Angels with Dirty Faces",
-		"menu_deck1_9_desc" : "You can revive Downed players within your line of sight by Shouting at them when they are within ##10## meters of you. This effect has a ##20## second cooldown.",
+		"menu_deck1_9_desc" : "You can revive downed players within your line of sight by Shouting at them when they are within ##10## meters of you. This effect has a ##20## second cooldown.",
 		
 		"menu_deck2_1" : "Dynamic Tension",
 		"menu_deck2_1_desc" : "You gain ##+25%## Maximum Health and you become ##25%## more likely to be targeted over your teammates.",
@@ -339,7 +339,7 @@
 		"menu_deck2_8" : "Flex Eternal",
 		"menu_deck2_8_desc" : "Your Health Regeneration increases to ##2%## of your Maximum Health per second.",
 		"menu_deck2_9" : "Hero Of The Beach",
-		"menu_deck2_9_desc" : "Each kill you make during a heist increases your Maximum Health by ##+1##, up to ##+200##. All stacks are lost upon being downed.",
+		"menu_deck2_9_desc" : "Being hit increases your Maximum Health by ##+2##, up to ##+200##. All stacks are lost upon being downed.",
 		
 		"menu_deck3_1" : "Reactive Armor",
 		"menu_deck3_1_desc" : "You are rendered ##Invulnerable## to damage for ##2## seconds after your Armor breaks. This effect has a ##10## second cooldown.",
