@@ -1335,7 +1335,7 @@ end
 function PlayerManager:health_skill_addend()
 	local addend = 0
 	
-	if managers.player:has_category_upgrade("player", "sociopath_mode") then
+	if self:has_category_upgrade("player", "sociopath_mode") then
 		addend = -22.6
 		
 		addend = addend + managers.player:upgrade_value("player", "sociopath_health_addend", 0) * 0.1
@@ -1357,7 +1357,7 @@ end
 function PlayerManager:health_skill_multiplier()
 	local multiplier = 1
 	
-	if managers.player:has_category_upgrade("player", "sociopath_mode") then
+	if self:has_category_upgrade("player", "sociopath_mode") then
 		return multiplier
 	end
 	
@@ -1404,7 +1404,7 @@ local crook_armor_types = {
 }
 
 function PlayerManager:body_armor_skill_multiplier(override_armor)
-	if managers.player:has_category_upgrade("player", "sociopath_mode") then
+	if self:has_category_upgrade("player", "sociopath_mode") then
 		return 0
 	end
 
@@ -1424,7 +1424,7 @@ function PlayerManager:body_armor_skill_multiplier(override_armor)
 end
 
 function PlayerManager:body_armor_skill_addend(override_armor)
-	if managers.player:has_category_upgrade("player", "sociopath_mode") then
+	if self:has_category_upgrade("player", "sociopath_mode") then
 		return 0
 	end
 
@@ -1762,15 +1762,18 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 	if self:has_category_upgrade("player", "sociopath_mode") then
 		local range = self:has_category_upgrade("player", "sociopath_combo_master") and 2250000 or 1000000
 		local throwing_add = self:has_category_upgrade("player", "sociopath_throwing_combo")
-		local combo_stacks_start = self._combo_stacks
+		
+		local combo_stacks_threshold = tweak_data.upgrades.values.player.sociopath_combo_stack_restore_hp_threshold
+		
+		local combo_stacks = self._combo_stacks or 0
+		local combo_stacks_start = combo_stacks
+		local next_combo_diff = combo_stacks_threshold - (combo_stacks % combo_stacks_threshold)
+		local next_combo_reward = combo_stacks + next_combo_diff 
+		
 		if weapon_unit then
 			if throwing_add then
 				if weapon_unit:base()._primary_class == "class_throwing" then
-					if self._combo_stacks then
-						self._combo_stacks = self._combo_stacks + 2
-					else
-						self._combo_stacks = 2
-					end
+					combo_stacks = combo_stacks + 2
 				end
 			end
 		end
@@ -1781,15 +1784,11 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 			local melee_add = self:has_category_upgrade("player", "sociopath_melee_combo")
 			local saw_add = self:has_category_upgrade("player", "sociopath_saw_combo")
 			
-			if self._combo_stacks then
-				self._combo_stacks = self._combo_stacks + 1
-			else
-				self._combo_stacks = 1
-			end
+			combo_stacks = combo_stacks + 1
 			
 			if self:has_category_upgrade("player", "sociopath_melee_combo") then
 				if variant == "melee" then
-					self._combo_stacks = self._combo_stacks + 1
+					combo_stacks = combo_stacks + 1
 				end
 			end		
 			
@@ -1797,38 +1796,19 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 				local equipped_unit = alive(weapon_unit) and weapon_unit:base() or self:get_current_state()._equipped_unit:base()
 				
 				if equipped_unit:is_category("saw") and variant == "bullet" then
-					self._combo_stacks = self._combo_stacks + 1
+					combo_stacks = combo_stacks + 1
 				end
 			end
-			
-			--log("combo: " .. tostring(self._combo_stacks))
-			
-			if not self._needed_combo_stacks_for_hp then
-				self._needed_combo_stacks_for_hp = 5
+		end
+		
+		if self._combo_stacks ~= combo_stacks then
+			if combo_stacks >= next_combo_reward then
+				local diff = combo_stacks - next_combo_reward
+				local num_rewards = 1 + math.floor(diff / combo_stacks_threshold)
+				damage_ext:restore_health(num_rewards, true)
 			end
-			
-			if not self._next_combo_hp_stack_reduction then
-				self._next_combo_hp_stack_reduction = 10
-			elseif self._combo_stacks > self._next_combo_hp_stack_reduction then
-				self._needed_combo_stacks_for_hp = math.max(1, self._needed_combo_stacks_for_hp - 1)
-				self._next_combo_hp_stack_reduction = self._next_combo_hp_stack_reduction + 10
-				--log("next_hp_stack_reduction: " .. tostring(self._next_combo_hp_stack_reduction))
-			end
-			
-			if not self._next_combo_hp then
-				self._next_combo_hp = self._needed_combo_stacks_for_hp
-			end
-			
-			if self._combo_stacks >= self._next_combo_hp then
-				damage_ext:restore_health(1, true)
-				
-				self._next_combo_hp = self._next_combo_hp + self._needed_combo_stacks_for_hp
-				--log("next_combo_hp: " .. tostring(self._next_combo_hp))
-			end
-			
-			if combo_stacks_start then 
-				Hooks:Call("TCD_OnSociopathComboStacksChanged",combo_stacks_start,self._combo_stacks)
-			end
+			self._combo_stacks = combo_stacks
+			Hooks:Call("TCD_OnSociopathComboStacksChanged",combo_stacks_start,combo_stacks)
 		end
 	end
 	
@@ -2174,9 +2154,6 @@ function PlayerManager:update(t, dt)
 		if self._combo_timer and self._combo_timer < t then
 			Hooks:Call("TCD_OnSociopathComboStacksChanged",self._combo_stacks,0)
 			self._combo_stacks = 0
-			self._needed_combo_stacks_for_hp = 5
-			self._next_combo_hp = self._needed_combo_stacks_for_hp
-			self._next_combo_hp_stack_reduction = 10
 		end
 		
 		if self._melee_stance_dr_t and self._melee_stance_dr_t < t then

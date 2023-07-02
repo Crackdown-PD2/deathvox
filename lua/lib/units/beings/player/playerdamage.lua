@@ -46,7 +46,7 @@ end
 
 function PlayerDamage:_raw_max_health()
 	if managers.player:has_category_upgrade("player", "sociopath_mode") then
-		local hp = 4
+		local hp = tweak_data.upgrades.values.player.sociopath_max_hp
 		
 		hp = hp + managers.player:upgrade_value("player", "sociopath_health_addend", 0)
 		
@@ -375,59 +375,58 @@ function PlayerDamage:damage_bullet(attack_data)
 		self:do_thorns(attack_data.damage)
 	end
 	
-	if not managers.player:has_category_upgrade("player", "sociopath_mode") then
-		local dodge_roll = math.random()
-		local dodge_value = tweak_data.player.damage.DODGE_INIT or 0
-		local armor_dodge_chance = pm:body_armor_value("dodge")
-		local skill_dodge_chance = pm:skill_dodge_chance(self._unit:movement():running(), self._unit:movement():crouching(), self._unit:movement():zipline_unit())
-		dodge_value = dodge_value + armor_dodge_chance + skill_dodge_chance
-
-		if self._temporary_dodge_t and TimerManager:game():time() < self._temporary_dodge_t then
-			dodge_value = dodge_value + self._temporary_dodge
-		end
-
-		local smoke_dodge = 0
-
-		for _, smoke_screen in ipairs(pm._smoke_screen_effects or {}) do
-			if smoke_screen:is_in_smoke(self._unit) then
-				smoke_dodge = tweak_data.projectiles.smoke_screen_grenade.dodge_chance
-
-				break
-			end
-		end
-
-		dodge_value = 1 - (1 - dodge_value) * (1 - smoke_dodge)
-
-		if dodge_roll < dodge_value then
-			self:play_whizby(attack_data.col_ray.position)
-			pm:send_message(Message.OnPlayerDodge)
-
-			return
-		end
-	
-		local dmg_mul = pm:damage_reduction_skill_multiplier("bullet")
-		attack_data.damage = attack_data.damage * dmg_mul
-		attack_data.damage = pm:modify_value("damage_taken", attack_data.damage, attack_data)
-		attack_data.damage = managers.mutators:modify_value("PlayerDamage:TakeDamageBullet", attack_data.damage)
-		attack_data.damage = managers.modifiers:modify_value("PlayerDamage:TakeDamageBullet", attack_data.damage)
-		
-		if _G.IS_VR then
-			local distance = mvector3.distance(self._unit:position(), attack_data.attacker_unit:position())
-
-			if tweak_data.vr.long_range_damage_reduction_distance[1] < distance then
-				local step = math.clamp(distance / tweak_data.vr.long_range_damage_reduction_distance[2], 0, 1)
-				local mul = 1 - math.step(tweak_data.vr.long_range_damage_reduction[1], tweak_data.vr.long_range_damage_reduction[2], step)
-				attack_data.damage = attack_data.damage * mul
-			end
-		end
-		
-		local damage_absorption = pm:damage_absorption()
-
-		if damage_absorption > 0 then
-			attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
-		end
-	else
+	if managers.player:has_category_upgrade("player", "sociopath_mode") then
 		attack_data.damage = 1
+	end
+	local dodge_roll = math.random()
+	local dodge_value = tweak_data.player.damage.DODGE_INIT or 0
+	local armor_dodge_chance = pm:body_armor_value("dodge")
+	local skill_dodge_chance = pm:skill_dodge_chance(self._unit:movement():running(), self._unit:movement():crouching(), self._unit:movement():zipline_unit())
+	dodge_value = dodge_value + armor_dodge_chance + skill_dodge_chance
+
+	if self._temporary_dodge_t and TimerManager:game():time() < self._temporary_dodge_t then
+		dodge_value = dodge_value + self._temporary_dodge
+	end
+
+	local smoke_dodge = 0
+
+	for _, smoke_screen in ipairs(pm._smoke_screen_effects or {}) do
+		if smoke_screen:is_in_smoke(self._unit) then
+			smoke_dodge = tweak_data.projectiles.smoke_screen_grenade.dodge_chance
+
+			break
+		end
+	end
+
+	dodge_value = 1 - (1 - dodge_value) * (1 - smoke_dodge)
+
+	if dodge_roll < dodge_value then
+		self:play_whizby(attack_data.col_ray.position)
+		pm:send_message(Message.OnPlayerDodge)
+
+		return
+	end
+
+	local dmg_mul = pm:damage_reduction_skill_multiplier("bullet")
+	attack_data.damage = attack_data.damage * dmg_mul
+	attack_data.damage = pm:modify_value("damage_taken", attack_data.damage, attack_data)
+	attack_data.damage = managers.mutators:modify_value("PlayerDamage:TakeDamageBullet", attack_data.damage)
+	attack_data.damage = managers.modifiers:modify_value("PlayerDamage:TakeDamageBullet", attack_data.damage)
+	
+	if _G.IS_VR then
+		local distance = mvector3.distance(self._unit:position(), attack_data.attacker_unit:position())
+
+		if tweak_data.vr.long_range_damage_reduction_distance[1] < distance then
+			local step = math.clamp(distance / tweak_data.vr.long_range_damage_reduction_distance[2], 0, 1)
+			local mul = 1 - math.step(tweak_data.vr.long_range_damage_reduction[1], tweak_data.vr.long_range_damage_reduction[2], step)
+			attack_data.damage = attack_data.damage * mul
+		end
+	end
+	
+	local damage_absorption = pm:damage_absorption()
+
+	if damage_absorption > 0 then
+		attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
 	end
 	
 	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
@@ -1592,7 +1591,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local to_restore = nil
 		
 		if managers.player:has_category_upgrade("player", "sociopath_mode") then
-			to_restore = 2
+			to_restore = tweak_data.upgrades.values.player.sociopath_max_hp
 		else
 			to_restore = self:_max_health() * self._healing_reduction
 		end

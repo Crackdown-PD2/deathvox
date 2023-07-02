@@ -3366,6 +3366,10 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 		--Sociopath
+		
+		self.values.player.sociopath_combo_stack_restore_hp_threshold = 5
+		self.values.player.sociopath_max_hp = 4 --base max hp; increased to 5 from card #4
+			
 		self.values.player.sociopath_mode = {true}
 		self.values.player.sociopath_stamina_mul = {2}
 		self.values.player.sociopath_melee_combo = {true}
