@@ -35,7 +35,15 @@ Hooks:PostHook(PlayerManager,"_internal_load","deathvox_on_internal_load",functi
 				amount = ability_amount
 			})
 		end
-		
+		if self:has_category_upgrade("player","cocaine_stacking") then
+			local max_stacks = self:upgrade_value("player","mania_max_stacks",0)
+			managers.hud:set_info_meter(nil, {
+				icon = "guis/dlcs/coco/textures/pd2/hud_absorb_stack_icon_01",
+				max = 1,
+				current = 0,
+				total = max_stacks / tweak_data.upgrades.values.player.mania_max_stacks[#tweak_data.upgrades.values.player.mania_max_stacks]
+			})
+		end
 	end
 end)
 
@@ -242,6 +250,13 @@ if TCD_ENABLED then
 		local player_unit = self:local_player()
 		local multiplier = 1
 		
+		local num_maniac_stacks = self:_get_cocaine_stacks_flat()
+		local maniac_stacks_rate = tweak_data.upgrades.maniac_stacks_rate
+		if num_maniac_stacks > maniac_stacks_rate then
+			local num_maniac_dr_stacks = math.floor(num_maniac_stacks / maniac_stacks_rate)
+			multiplier = math.max(0,multiplier * (1 - (num_maniac_dr_stacks * tweak_data.upgrades.maniac_damage_resistance_rate)))
+		end
+		
 		if self._melee_stance_dr_t then
 			multiplier = multiplier * 0.8
 		end
@@ -352,17 +367,108 @@ if TCD_ENABLED then
 		return multiplier
 	end
 	
+	function PlayerManager:_get_cocaine_stacks_flat(peer_id)
+		peer_id = peer_id or (managers.network:session() and managers.network:session():local_peer():id()) or 1
+		local data = self:get_synced_cocaine_stacks(peer_id)
+		return data and data.amount or 0
+	end
+	
+	function PlayerManager:_add_cocaine_stacks(peer_id,n)
+		peer_id = peer_id or (managers.network:session() and managers.network:session():local_peer():id()) or 1
+		local data = self:get_synced_cocaine_stacks(peer_id)
+		if data then
+			local amount = data and data.amount or 0
+			amount = math.clamp(amount + n,0,self:upgrade_value("player","mania_max_stacks",100))
+			data.amount = amount
+			return amount
+		end
+		return 0
+	end
+	
+	function PlayerManager:_deduct_local_cocaine_stacks()
+		local stacks_consumed = self:upgrade_value("player","mania_consumed_on_hit",100)
+		local new_amount = self:_add_cocaine_stacks(nil,-stacks_consumed)
+		local local_peer_id = managers.network:session() and managers.network:session():local_peer():id()
+		local character_data = managers.criminals:character_data_by_peer_id(local_peer_id)
+		if character_data then
+			local max_stacks = self:upgrade_value("player","mania_max_stacks",100)
+			local absolute_max_stacks = tweak_data.upgrades.values.player.mania_max_stacks[#tweak_data.upgrades.values.player.mania_max_stacks]
+			managers.hud:set_info_meter(character_data.panel_id, {
+				icon = "guis/dlcs/coco/textures/pd2/hud_absorb_stack_icon_01",
+				max = 1,
+				current = new_amount / absolute_max_stacks,
+				total = max_stacks / absolute_max_stacks
+			})
+		end
+	end
+	
+	function PlayerManager:_update_damage_dealt(t, dt)
+		local local_peer_id = managers.network:session() and managers.network:session():local_peer():id()
+
+		if not local_peer_id or not self:has_category_upgrade("player", "cocaine_stacking") then
+			return
+		end
+		local max_stacks = self:upgrade_value("player","mania_max_stacks",100)
+		--change max stacks to the upgrade value
+		
+		self._damage_dealt_to_cops_t = self._damage_dealt_to_cops_t or t + (tweak_data.upgrades.cocaine_stacks_tick_t or 1)
+		self._damage_dealt_to_cops_decay_t = self._damage_dealt_to_cops_decay_t or t + (tweak_data.upgrades.cocaine_stacks_decay_t or 5)
+		local cocaine_stack = self:get_synced_cocaine_stacks(local_peer_id)
+		local amount = cocaine_stack and cocaine_stack.amount or 0
+		local new_amount = amount
+		
+		--convert damage dealt to stacks
+		if self._damage_dealt_to_cops_t <= t then
+			self._damage_dealt_to_cops_t = t + (tweak_data.upgrades.cocaine_stacks_tick_t or 1)
+			local damage_dealt = self._damage_dealt_to_cops or 0
+			local new_stacks = damage_dealt * (tweak_data.gui.stats_present_multiplier or 10) * self:upgrade_value("player", "cocaine_stacking", 0)
+			new_amount = new_amount + damage_dealt
+			self._damage_dealt_to_cops = 0
+--			new_amount = new_amount + math.min(new_stacks, tweak_data.upgrades.max_cocaine_stacks_per_tick or 20)
+		end
+		
+		--decay is based on previous stack amount, not new total stack amount (unchanged)
+		if self._damage_dealt_to_cops_decay_t <= t then
+			self._damage_dealt_to_cops_decay_t = t + (tweak_data.upgrades.cocaine_stacks_decay_t or 5)
+			local decay = amount * (tweak_data.upgrades.cocaine_stacks_decay_percentage_per_tick or 0)
+			decay = decay + (tweak_data.upgrades.cocaine_stacks_decay_amount_per_tick or 20) * self:upgrade_value("player", "cocaine_stacks_decay_multiplier", 1)
+			new_amount = new_amount - decay
+		end
+		
+		
+		new_amount = math.clamp(math.floor(new_amount), 0, max_stacks)
+
+		if new_amount ~= amount then
+			--don't bother syncing cocaine stacks
+			--instead, visually update hud right here
+			local character_data = managers.criminals:character_data_by_peer_id(local_peer_id)
+			if character_data then
+				local absolute_max_stacks = tweak_data.upgrades.values.player.mania_max_stacks[#tweak_data.upgrades.values.player.mania_max_stacks]
+				managers.hud:set_info_meter(character_data.panel_id, {
+					icon = "guis/dlcs/coco/textures/pd2/hud_absorb_stack_icon_01",
+					max = 1,
+					current = new_amount / absolute_max_stacks,
+					total = max_stacks / absolute_max_stacks
+				})
+			end
+			self._global.synced_cocaine_stacks[local_peer_id] = {
+				amount = new_amount,
+				in_use = true,
+				upgrade_level = 1,
+				power_level = 0
+			}
+--			self:update_synced_cocaine_stacks_to_peers(new_amount, self:upgrade_value("player", "sync_cocaine_upgrade_level", 1), self:upgrade_level("player", "cocaine_stack_absorption_multiplier", 0))
+		end
+	end
+	--note: the following functions still reflect the old max stacks var, but are no longer relevant:
+	--get_local_cocaine_damage_absorption_max(), _get_best_max_cocaine_damage_absorption_ratio(), get_peer_cocaine_damage_absorption_max_ratio()
+	
 	--same as vanilla but disabled HUD element in order to prevent conflicting with damage overshield mechanic
 	--if/when the actual absorption mechanic is overhauled, this function (and its accompanying HUD element) may also need to be revisited
 	function PlayerManager:set_damage_absorption(key, value)
 		self._damage_absorption[key] = value and Application:digest_value(value, true) or nil
 
 --		managers.hud:set_absorb_active(HUDManager.PLAYER_PANEL, self:damage_absorption())
-	end
-	function PlayerManager:update_cocaine_hud()
-		if managers.hud then
---			managers.hud:set_absorb_active(HUDManager.PLAYER_PANEL, self:damage_absorption())
-		end
 	end
 	
 	function PlayerManager:verify_grenade(peer_id)

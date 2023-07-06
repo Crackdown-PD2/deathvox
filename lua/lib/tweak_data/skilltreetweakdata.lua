@@ -3753,7 +3753,9 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck14_1_desc",
 				cost = perkdeck_tier_costs[1],
 				upgrades = {
-					
+					"player_cocaine_stacking_1",
+					"player_mania_consumed_on_hit_1",
+					"player_mania_max_stacks_1"
 				},
 				icon_xy = {
 					0,
@@ -3765,7 +3767,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck14_2_desc",
 				cost = perkdeck_tier_costs[2],
 				upgrades = {
-					
+					"player_mania_consumed_on_hit_2"
 				},
 				icon_xy = {
 					1,
@@ -3777,7 +3779,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck14_3_desc",
 				cost = perkdeck_tier_costs[3],
 				upgrades = {
-					
+					--"player_mania_max_stacks_2"
 				},
 				icon_xy = {
 					2,
@@ -3789,7 +3791,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck14_4_desc",
 				cost = perkdeck_tier_costs[4],
 				upgrades = {
-					
+					"player_mania_consumed_on_hit_3"
 				},
 				icon_xy = {
 					3,
@@ -3801,7 +3803,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck14_5_desc",
 				cost = perkdeck_tier_costs[5],
 				upgrades = {
-					
+					--"player_mania_max_stacks_3"
 				},
 				icon_xy = {
 					4,
@@ -3813,7 +3815,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck14_6_desc",
 				cost = perkdeck_tier_costs[6],
 				upgrades = {
-					
+					"player_mania_consumed_on_hit_4"
 				},
 				icon_xy = {
 					5,
@@ -3825,7 +3827,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck14_7_desc",
 				cost = perkdeck_tier_costs[7],
 				upgrades = {
-					
+					--"player_mania_max_stacks_4"
 				},
 				icon_xy = {
 					6,
@@ -3837,7 +3839,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck14_8_desc",
 				cost = perkdeck_tier_costs[8],
 				upgrades = {
-					
+					"player_mania_consumed_on_hit_5"
 				},
 				icon_xy = {
 					7,
@@ -3849,7 +3851,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck14_9_desc",
 				cost = perkdeck_tier_costs[9],
 				upgrades = {
-					
+					--"player_mania_max_stacks_5"
 				},
 				icon_xy = {
 					8,

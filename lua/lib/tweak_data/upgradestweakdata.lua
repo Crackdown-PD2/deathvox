@@ -85,6 +85,124 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		--stamina is unchanged
 		
+		
+		self.definitions.player_mania_consumed_on_hit_1 = {
+			name_id = "menu_deck14_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "mania_consumed_on_hit",
+				category = "player"
+			}
+		}
+		self.definitions.player_mania_consumed_on_hit_2 = {
+			name_id = "menu_deck14_2",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "mania_consumed_on_hit",
+				category = "player"
+			}
+		}
+		self.definitions.player_mania_consumed_on_hit_3 = {
+			name_id = "menu_deck14_3",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "mania_consumed_on_hit",
+				category = "player"
+			}
+		}
+		self.definitions.player_mania_consumed_on_hit_4 = {
+			name_id = "menu_deck14_4",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "mania_consumed_on_hit",
+				category = "player"
+			}
+		}
+		self.definitions.player_mania_consumed_on_hit_5 = {
+			name_id = "menu_deck14_5",
+			category = "feature",
+			upgrade = {
+				value = 5,
+				upgrade = "mania_consumed_on_hit",
+				category = "player"
+			}
+		}
+		
+		self.definitions.player_mania_max_stacks_1 = {
+			name_id = "menu_deck14_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "mania_max_stacks",
+				category = "player"
+			}
+		}
+		self.definitions.player_mania_max_stacks_2 = {
+			name_id = "menu_deck14_2",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "mania_max_stacks",
+				category = "player"
+			}
+		}
+		self.definitions.player_mania_max_stacks_3 = {
+			name_id = "menu_deck14_3",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "mania_max_stacks",
+				category = "player"
+			}
+		}
+		self.definitions.player_mania_max_stacks_4 = {
+			name_id = "menu_deck14_4",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "mania_max_stacks",
+				category = "player"
+			}
+		}
+		self.definitions.player_mania_max_stacks_5 = {
+			name_id = "menu_deck14_5",
+			category = "feature",
+			upgrade = {
+				value = 5,
+				upgrade = "mania_max_stacks",
+				category = "player"
+			}
+		}
+		
+		self.values.player.mania_consumed_on_hit = {
+			100,
+			95,
+			90,
+			85,
+			80
+		}
+		self.values.player.mania_max_stacks = { --formerly a single value, max_total_cocaine_stacks 
+			100,
+			150,
+			200,
+			250,
+			300
+		}
+		
+		
+		self.mania_damage_resistance_threshold = 100 --stacks required to activate damage resistance
+		self.mania_damage_resistance_ratio = 0.1 / 10 --10% resist per 10 stacks
+		self.maniac_stacks_rate = 10 --num stacks per n damage resist
+		self.maniac_damage_resistance_rate = 0.1 --amount of damage resist per n stacks
+		self.cocaine_stacks_tick_t = 0.1 --interval at which to "convert" stacks
+		self.cocaine_stacks_decay_t = 1 --decay interval in seconds
+		self.cocaine_stacks_decay_percentage_per_tick = 0.1 --10% stacks lost per decay interval
+		self.cocaine_stacks_decay_amount_per_tick = 0 --no flat decay; percentage only
+		
 		--Taskmaster
 		
 		self.values.cable_tie.quantity_1 = {

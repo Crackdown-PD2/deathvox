@@ -424,11 +424,13 @@ function PlayerDamage:damage_bullet(attack_data)
 	end
 	
 	local damage_absorption = pm:damage_absorption()
-
+	
 	if damage_absorption > 0 then
 		attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
 	end
 	
+	pm:_deduct_local_cocaine_stacks()
+
 	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
 	local shake_armor_multiplier = pm:body_armor_value("damage_shake") * pm:upgrade_value("player", "damage_shake_multiplier", 1)
@@ -462,7 +464,7 @@ function PlayerDamage:damage_bullet(attack_data)
 			self._unit:sound():play("player_hit_permadamage")
 		end
 	end
-
+	
 	self:_check_chico_heal(attack_data)
 
 	local armor_reduction_multiplier = 0
@@ -743,6 +745,8 @@ function PlayerDamage:damage_melee(attack_data)
 		attack_data.damage = 1
 	end
 	
+	pm:_deduct_local_cocaine_stacks()
+	
 	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
 	if attack_data.tase_player then
@@ -790,7 +794,7 @@ function PlayerDamage:damage_melee(attack_data)
 
 		return
 	end
-
+	
 	self:_check_chico_heal(attack_data)
 
 	local go_through_armor = false --manual toggle
@@ -1054,6 +1058,8 @@ function PlayerDamage:damage_fire(attack_data)
 		attack_data.damage = 1
 	end
 	
+	pm:_deduct_local_cocaine_stacks()
+	
 	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
 	if self._bleed_out then
@@ -1073,7 +1079,7 @@ function PlayerDamage:damage_fire(attack_data)
 			self._unit:sound():play("player_hit_permadamage")
 		end
 	end
-
+	
 	self:_check_chico_heal(attack_data)
 
 	local armor_reduction_multiplier = 0
@@ -1147,6 +1153,8 @@ function PlayerDamage:damage_explosion(attack_data)
 		attack_data.damage = 1
 	end
 	
+	pm:_deduct_local_cocaine_stacks()
+	
 	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
 	if attack_data.attacker_unit and alive(attack_data.attacker_unit) then
@@ -1185,7 +1193,7 @@ function PlayerDamage:damage_explosion(attack_data)
 			self._unit:movement():push(push_vec * push_force)
 		end
 	end
-
+	
 	self:_check_chico_heal(attack_data)
 
 	local health_subtracted = self:_calc_armor_damage(attack_data)
