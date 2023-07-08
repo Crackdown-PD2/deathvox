@@ -243,3 +243,21 @@ function HuskTeamAIDamage:sync_damage_tase()
 	self._tase_effect = World:effect_manager():spawn(self._tase_effect_table)
 	self:_call_listeners(damage_info)
 end
+
+
+if deathvox:IsTotalCrackdownEnabled() then
+	
+	Hooks:PostHook(HuskTeamAIDamage,"init","tcd_huskteamaidamage_check_bleed_out",function(self)
+		self:add_listener("tcd_biker_check_bleedout",{"bleedout"},
+			function()
+				Hooks:Call("TCD_OnCriminalDowned","husk_ai",self,"bleed_out",self:down_time())
+			end
+		)
+	end)
+	
+	--[[
+	Hooks:PostHook(HuskTeamAIDamage,"_on_bleedout","tcd_huskteamai_on_bleedout",function(self)
+		Hooks:Call("TCD_OnCriminalDowned","husk_ai",self,"bleed_out",nil)
+	end)
+	--]]
+end

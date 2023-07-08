@@ -4076,6 +4076,126 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		--Biker
+		self.definitions.team_biker_restore_armor_on_special_kill = {
+			name_id = "menu_deck16_1",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "biker_restore_armor_on_special_kill",
+				category = "player"
+			}
+		}
+		self.values.team.player.biker_restore_armor_on_special_kill = {
+			0.05 --5% of max armor restored on special kill
+		}
+		
+		self.definitions.team_biker_temp_stagger_on_special_kill_1 = {
+			name_id = "menu_deck16_2",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "biker_temp_stagger_on_special_kill",
+				category = "player"
+			}
+		}
+		self.values.team.player.biker_temp_stagger_on_special_kill = {
+			4, -- effect duration of 4 seconds
+			8 -- 8 seconds
+		}
+		
+		self.definitions.team_biker_max_armor_increase_1 = {
+			name_id = "menu_deck16_3",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "biker_max_armor_increase",
+				category = "player"
+			}
+		}
+		self.values.team.player.biker_max_armor_increase = {
+			1.3, -- +30% max armor increase
+			1.6 -- +60%
+		}
+		
+		self.definitions.team_biker_can_stagger_heavy_enemies = {
+			name_id = "menu_deck16_4",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "biker_can_stagger_heavy_enemies",
+				category = "player"
+			}
+		}
+		self.values.team.player.biker_can_stagger_heavy_enemies = {
+			true
+		}
+		
+		self.definitions.team_biker_restore_armor_on_special_multikills = {
+			name_id = "menu_deck16_5",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "biker_restore_armor_on_special_multikills",
+				category = "player"
+			}
+		}
+		self.values.team.player.biker_restore_armor_on_special_multikills = {
+			{ 
+				multikill_timer = 5, -- multikills must be within 5 seconds of each other
+				armor_restored = 0.01, -- 1% armor restored per multikill stack
+				max_stacks = 10
+			}
+		}
+		
+		self.definitions.team_biker_can_stagger_special_enemies = {
+			name_id = "menu_deck16_6",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "biker_can_stagger_special_enemies",
+				category = "player"
+			}
+		}
+		self.values.team.player.biker_can_stagger_special_enemies = {
+			true
+		}
+		
+		self.definitions.team_biker_max_armor_increase_2 = {
+			name_id = "menu_deck16_8",
+			category = "team",
+			upgrade = {
+				value = 2,
+				upgrade = "biker_max_armor_increase",
+				category = "player"
+			}
+		}
+		
+		self.definitions.team_biker_temp_stagger_on_special_kill_2 = {
+			name_id = "menu_deck16_8",
+			category = "team",
+			upgrade = {
+				value = 2,
+				upgrade = "biker_temp_stagger_on_special_kill",
+				category = "player"
+			}
+		}
+		
+		self.definitions.team_biker_restore_armor_on_teammate_downed = {
+			name_id = "menu_deck16_9",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "biker_restore_armor_on_teammate_downed",
+				category = "player"
+			}
+		}
+		self.values.team.player.biker_restore_armor_on_teammate_downed = {
+			true -- regain all armor when teammate is downed
+		}
+		
+		
+		
 		--Tag Team
 		self.values.player.tag_team_base_deathvox = {
 			{

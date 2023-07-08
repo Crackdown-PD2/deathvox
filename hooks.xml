@@ -104,6 +104,7 @@
 	<hook post="true" file="lua/lib/units/player_team/huskteamaimovement.lua" source_file="lib/units/player_team/huskteamaimovement"/>
 	<hook post="true" file="lua/lib/units/player_team/teamaibase.lua" source_file="lib/units/player_team/teamaibase"/>
 	<hook post="true" file="lua/lib/units/player_team/teamaibrain.lua" source_file="lib/units/player_team/teamaibrain"/>
+	<hook post="true" file="lua/lib/units/player_team/teamaidamage.lua" source_file="lib/units/player_team/teamaidamage"/>
 	<hook post="true" file="lua/lib/units/player_team/teamaiinventory.lua" source_file="lib/units/player_team/teamaiinventory"/>
 	<hook post="true" file="lua/lib/units/player_team/teamaimovement.lua" source_file="lib/units/player_team/teamaimovement"/>
 	<hook post="true" file="lua/lib/units/player_team/actions/lower_body/criminalactionwalk.lua" source_file="lib/units/player_team/actions/lower_body/criminalactionwalk"/>

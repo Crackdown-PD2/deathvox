@@ -97,6 +97,8 @@ Hooks:PostHook(PlayerManager,"init","tcd_playermanager_init",function(self)
 end)
 
 if TCD_ENABLED then
+	Hooks:Register("TCD_OnCriminalDowned")
+	
 	function PlayerManager:use_messiah_charge()
 		--nothing
 	end
@@ -1110,8 +1112,18 @@ if TCD_ENABLED then
 			--]]
 			
 			
-			
 		end
+		
+		Hooks:Add("TCD_OnCriminalDowned","TCD_Biker_OnTeammateDowned",function(teammate_type,teammate_ext,state_name,down_time)
+			local player = self:local_player()
+			if alive(player) then
+				if self:has_team_category_upgrade("player","biker_restore_armor_on_teammate_downed") then
+					local dmg_ext = player:character_damage()
+					dmg_ext:restore_armor(dmg_ext:_max_armor())
+				end
+			end
+		end)
+		
 		if Network:is_server() then 
 			self:set_property("gambler_team_ammo_pickups_grabbed",0)
 		end
@@ -1336,6 +1348,55 @@ if TCD_ENABLED then
 		return true
 	end
 	
+	function PlayerManager:chk_wild_kill_counter(killed_unit, variant)
+		local player = self:local_player()
+		if alive(player) then
+			local dmg_ext = player:character_damage()
+			if alive(killed_unit) then
+				local killed_base = killed_unit:base()
+				if killed_base and killed_base:has_tag("special") then
+					local armor_restored_total = 0
+					
+					if self:has_team_category_upgrade("player","biker_restore_armor_on_special_kill") then
+						local armor_restored = self:team_upgrade_value("player","biker_restore_armor_on_special_kill")
+						
+						armor_restored_total = armor_restored_total + armor_restored
+					end
+					
+					if self:has_team_category_upgrade("player","biker_temp_stagger_on_special_kill") then
+						-- stagger event id
+						-- an enemy cannot be staggered twice in one buff proc
+						local stagger_id = self._num_biker_staggers or 0
+						stagger_id = stagger_id + 1
+						self._num_biker_staggers = stagger_id
+						
+						--activate guaranteed stagger temp buff
+						local stagger_duration = self:team_upgrade_value("player","biker_temp_stagger_on_special_kill")
+						self:activate_temporary_property("biker_guaranteed_stagger",stagger_duration,stagger_id)
+					end
+					
+					if self:has_team_category_upgrade("player","biker_restore_armor_on_special_multikills") then
+						local upgrade_data = self:team_upgrade_value("player","biker_restore_armor_on_special_multikills")
+						local multikill_timer = upgrade_data.multikill_timer
+						local max_stacks = upgrade_data.max_stacks
+						local armor_restored = upgrade_data.armor_restored
+						
+						-- increment stacks
+						local stacks = self:get_temporary_property("biker_special_multikill_counter",0)
+						stacks = math.min(max_stacks,stacks + 1)
+						self:activate_temporary_property("biker_special_multikill_counter",multikill_timer,stacks)
+						
+						armor_restored_total = armor_restored_total + (armor_restored * stacks)
+					end
+					
+					if armor_restored_total > 0 then
+						dmg_ext:restore_armor(armor_restored_total * dmg_ext:_max_armor())
+					end
+				end
+			end
+		end
+	end
+	
 end
 
 
@@ -1520,6 +1581,7 @@ function PlayerManager:body_armor_skill_multiplier(override_armor)
 	multiplier = multiplier + self:upgrade_value("player", "passive_armor_multiplier", 1) - 1
 	multiplier = multiplier + self:upgrade_value("player", "armor_multiplier", 1) - 1
 	multiplier = multiplier + self:team_upgrade_value("armor", "multiplier", 1) - 1
+	multiplier = multiplier + self:team_upgrade_value("player", "biker_max_armor_increase", 1) - 1
 	multiplier = multiplier + self:get_hostage_bonus_multiplier("armor") - 1
 	multiplier = multiplier + self:upgrade_value("player", "perk_armor_loss_multiplier", 1) - 1
 	multiplier = multiplier + self:upgrade_value("player", tostring(override_armor or managers.blackmarket:equipped_armor(true, true)) .. "_armor_multiplier", 1) - 1

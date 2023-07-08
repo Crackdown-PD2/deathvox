@@ -15,7 +15,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 
 
 	--replaces skills by position in the skilltree
-	--without having to look up the name (even you could just do it by list of names)
+	--without having to look up the name (even though you could just do it by list of names)
 	--usage:
 		--tree_index: the index of the tree [num 1-15]
 			--with 1-3 being the mastermind subtrees in vanilla,
@@ -3744,15 +3744,13 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			category = "offensive"
 		})
 		
-		--remaining perk decks will be added later; template data here		
-		
 		replace_perkdeck(perkdeck_indices.biker,{
 			{
 				name_id = "menu_deck16_1",
 				desc_id = "menu_deck16_1_desc",
 				cost = perkdeck_tier_costs[1],
 				upgrades = {
-					
+					"team_biker_restore_armor_on_special_kill"
 				},
 				icon_xy = {
 					0,
@@ -3764,7 +3762,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck16_2_desc",
 				cost = perkdeck_tier_costs[2],
 				upgrades = {
-					
+					"team_biker_temp_stagger_on_special_kill_1"
 				},
 				icon_xy = {
 					1,
@@ -3776,7 +3774,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck16_3_desc",
 				cost = perkdeck_tier_costs[3],
 				upgrades = {
-					
+					"team_biker_max_armor_increase_1"
 				},
 				icon_xy = {
 					2,
@@ -3788,7 +3786,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck16_4_desc",
 				cost = perkdeck_tier_costs[4],
 				upgrades = {
-					
+					"team_biker_can_stagger_heavy_enemies"
 				},
 				icon_xy = {
 					3,
@@ -3800,7 +3798,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck16_5_desc",
 				cost = perkdeck_tier_costs[5],
 				upgrades = {
-					
+					"team_biker_restore_armor_on_special_multikills"
 				},
 				icon_xy = {
 					4,
@@ -3812,7 +3810,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck16_6_desc",
 				cost = perkdeck_tier_costs[6],
 				upgrades = {
-					
+					"team_biker_can_stagger_special_enemies"
 				},
 				icon_xy = {
 					5,
@@ -3824,7 +3822,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck16_7_desc",
 				cost = perkdeck_tier_costs[7],
 				upgrades = {
-					
+					"team_biker_max_armor_increase_2"
 				},
 				icon_xy = {
 					6,
@@ -3836,7 +3834,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck16_8_desc",
 				cost = perkdeck_tier_costs[8],
 				upgrades = {
-					
+					"team_biker_temp_stagger_on_special_kill_2"
 				},
 				icon_xy = {
 					7,
@@ -3848,7 +3846,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck16_9_desc",
 				cost = perkdeck_tier_costs[9],
 				upgrades = {
-					
+					"team_biker_restore_armor_on_teammate_downed"
 				},
 				icon_xy = {
 					8,
@@ -3860,6 +3858,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			category = "defensive"
 		})
 	
+		--remaining perk decks will be added later; template data here		
+		
 		replace_perkdeck(perkdeck_indices.kingpin,{
 			{
 				name_id = "menu_deck17_1",
