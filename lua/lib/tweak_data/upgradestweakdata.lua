@@ -4001,18 +4001,16 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		
 		--Anarchist
 		self.values.player.anarch_conversion = { --i...don't understand why the math turns out this way but you need to do it like this or the health doesnt apply properly
-			0.5,
+			0.3,
 			0.6,
-			0.7,
-			0.8,
 			0.9
 		}
-		self.values.player.anarch_ondmg_armor_regen = {0.5}
-		self.values.player.anarch_onkill_armor_regen = {1}
-		self.values.player.anarch_onheadshotdmg_armor_regen = {1.5}
-		self.values.player.anarch_onheadshotkill_armor_regen = {2}
+		self.values.player.anarch_ondmg_armor_regen = {1}
+		self.values.player.anarch_onkill_armor_regen = {1.5}
+		self.values.player.anarch_onheadshotdmg_armor_regen = {2}
+		self.values.player.anarch_onheadshotkill_armor_regen = {2.5}
 		
-		self.definitions.anarch_1 = {
+		self.definitions.player_anarch_health_to_armor_1 = {
 			name_id = "menu_deck13_1",
 			category = "feature",
 			upgrade = {
@@ -4021,7 +4019,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-		self.definitions.anarch_2 = {
+		self.definitions.player_anarch_restore_armor_on_hit = {
 			name_id = "menu_deck13_2",
 			category = "feature",
 			upgrade = {
@@ -4030,7 +4028,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-		self.definitions.anarch_3 = {
+		self.definitions.player_anarch_health_to_armor_2 = {
 			name_id = "menu_deck13_3",
 			category = "feature",
 			upgrade = {
@@ -4039,7 +4037,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-		self.definitions.anarch_4 = {
+		self.definitions.player_anarch_restore_armor_on_kill = {
 			name_id = "menu_deck13_4",
 			category = "feature",
 			upgrade = {
@@ -4048,7 +4046,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-		self.definitions.anarch_5 = {
+		self.definitions.player_anarch_health_to_armor_3 = {
 			name_id = "menu_deck13_5",
 			category = "feature",
 			upgrade = {
@@ -4057,7 +4055,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-		self.definitions.anarch_6 = {
+		self.definitions.player_anarch_restore_armor_on_headshot_hit = {
 			name_id = "menu_deck13_6",
 			category = "feature",
 			upgrade = {
@@ -4066,30 +4064,12 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-		self.definitions.anarch_7 = {
-			name_id = "menu_deck13_7",
-			category = "feature",
-			upgrade = {
-				value = 4,
-				upgrade = "anarch_conversion",
-				category = "player"
-			}
-		}
-		self.definitions.anarch_8 = {
+		self.definitions.player_anarch_restore_armor_on_headshot_kill = {
 			name_id = "menu_deck13_8",
 			category = "feature",
 			upgrade = {
 				value = 1,
 				upgrade = "anarch_onheadshotkill_armor_regen",
-				category = "player"
-			}
-		}
-		self.definitions.anarch_9 = {
-			name_id = "menu_deck13_9",
-			category = "feature",
-			upgrade = {
-				value = 5,
-				upgrade = "anarch_conversion",
 				category = "player"
 			}
 		}

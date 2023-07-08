@@ -3637,8 +3637,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck15_1_desc",
 				cost = perkdeck_tier_costs[1],
 				upgrades = {
-					"player_armor_grinding_1",
-					"anarch_1"
+					"player_armor_grinding_1"
 				},
 				icon_xy = {
 					0,
@@ -3650,7 +3649,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck15_2_desc",
 				cost = perkdeck_tier_costs[2],
 				upgrades = {
-					"anarch_2"
+					"player_anarch_restore_armor_on_hit"
 				},
 				icon_xy = {
 					1,
@@ -3662,7 +3661,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck15_3_desc",
 				cost = perkdeck_tier_costs[3],
 				upgrades = {
-					"anarch_3"
+					"player_anarch_health_to_armor_1"
 				},
 				icon_xy = {
 					2,
@@ -3674,7 +3673,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck15_4_desc",
 				cost = perkdeck_tier_costs[4],
 				upgrades = {
-					"anarch_4"
+					"player_anarch_restore_armor_on_kill"
 				},
 				icon_xy = {
 					3,
@@ -3686,7 +3685,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck15_5_desc",
 				cost = perkdeck_tier_costs[5],
 				upgrades = {
-					"anarch_5"
+					"player_anarch_health_to_armor_2"
 				},
 				icon_xy = {
 					4,
@@ -3698,7 +3697,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck15_6_desc",
 				cost = perkdeck_tier_costs[6],
 				upgrades = {
-					"anarch_6"
+					"player_anarch_restore_armor_on_headshot_hit"
 				},
 				icon_xy = {
 					5,
@@ -3710,7 +3709,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck15_7_desc",
 				cost = perkdeck_tier_costs[7],
 				upgrades = {
-					"anarch_7"
+					"player_anarch_health_to_armor_3"
 				},
 				icon_xy = {
 					6,
@@ -3722,7 +3721,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck15_8_desc",
 				cost = perkdeck_tier_costs[8],
 				upgrades = {
-					"anarch_8"
+					"player_anarch_restore_armor_on_headshot_kill"
 				},
 				icon_xy = {
 					7,
@@ -3734,7 +3733,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck15_9_desc",
 				cost = perkdeck_tier_costs[9],
 				upgrades = {
-					"anarch_9"
+					"temporary_armor_break_invulnerable_1"
 				},
 				icon_xy = {
 					8,
