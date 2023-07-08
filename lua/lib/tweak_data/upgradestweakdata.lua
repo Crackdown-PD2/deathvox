@@ -3582,6 +3582,117 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		--Gambler
+		self.values.team.player.ammo_pickup_counter_thresholds = {
+			20,
+			15,
+			10,
+			5
+		}
+		self.values.team.player.ammo_pickup_range_mul = {
+			1,
+			1.25, --25%
+			1.50, --+50%
+			1.75, --+75%
+			2 --+100%
+		}
+		self.values.team.player.ammo_pickup_health_restore = {
+			0.01,
+			0.015
+		}
+		
+		self.definitions.gambler_range_1 = {
+			name_id = "menu_deck10_2",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "ammo_pickup_range_mul",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_range_2 = {
+			name_id = "menu_deck10_4",
+			category = "team",
+			upgrade = {
+				value = 2,
+				upgrade = "ammo_pickup_range_mul",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_range_3 = {
+			name_id = "menu_deck10_6",
+			category = "team",
+			upgrade = {
+				value = 3,
+				upgrade = "ammo_pickup_range_mul",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_range_4 = {
+			name_id = "menu_deck10_8",
+			category = "team",
+			upgrade = {
+				value = 4,
+				upgrade = "ammo_pickup_range_mul",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_threshold_1 = {
+			name_id = "menu_deck10_1_threshold",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "ammo_pickup_counter_thresholds",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_threshold_2 = {
+			name_id = "menu_deck10_3",
+			category = "team",
+			upgrade = {
+				value = 2,
+				upgrade = "ammo_pickup_counter_thresholds",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_threshold_3 = {
+			name_id = "menu_deck10_5",
+			category = "team",
+			upgrade = {
+				value = 3,
+				upgrade = "ammo_pickup_counter_thresholds",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_threshold_4 = {
+			name_id = "menu_deck10_7",
+			category = "team",
+			upgrade = {
+				value = 4,
+				upgrade = "ammo_pickup_counter_thresholds",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_healing_1 = {
+			name_id = "menu_deck10_1",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "ammo_pickup_health_restore",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_healing_2 = {
+			name_id = "menu_deck10_9",
+			category = "team",
+			upgrade = {
+				value = 2,
+				upgrade = "ammo_pickup_health_restore",
+				category = "player"
+			}
+		}
+		
+	
 		--Grinder
 		self.values.player.grinder_dmgtohp = {
 			0.005,
@@ -3785,6 +3896,9 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		--this perkdeck was kind of a nightmare but i managed to pull it together 
 		--im really sorry for offy, who will probably look at this code later and feel nothing but disgust
 		
+		--it is okay fug, you did great. thank you for your work
+		-- -offy
+		
 		self.values.player.expres_hot_election = {
 			{0.5, 20}, --stacks generated per kill, max stacks
 			{1, 30}
@@ -3887,118 +4001,6 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
-		--Gambler
-		self.values.team.player.ammo_pickup_counter_thresholds = {
-			20,
-			15,
-			10,
-			5
-		}
-		self.values.team.player.ammo_pickup_range_mul = {
-			1,
-			1.25, --25%
-			1.50, --+50%
-			1.75, --+75%
-			2 --+100%
-		}
-		self.values.team.player.ammo_pickup_health_restore = {
-			0.01,
-			0.015
-		}
-		
-		self.definitions.gambler_range_1 = {
-			name_id = "menu_deck10_2",
-			category = "team",
-			upgrade = {
-				value = 1,
-				upgrade = "ammo_pickup_range_mul",
-				category = "player"
-			}
-		}
-		self.definitions.gambler_range_2 = {
-			name_id = "menu_deck10_4",
-			category = "team",
-			upgrade = {
-				value = 2,
-				upgrade = "ammo_pickup_range_mul",
-				category = "player"
-			}
-		}
-		self.definitions.gambler_range_3 = {
-			name_id = "menu_deck10_6",
-			category = "team",
-			upgrade = {
-				value = 3,
-				upgrade = "ammo_pickup_range_mul",
-				category = "player"
-			}
-		}
-		self.definitions.gambler_range_4 = {
-			name_id = "menu_deck10_8",
-			category = "team",
-			upgrade = {
-				value = 4,
-				upgrade = "ammo_pickup_range_mul",
-				category = "player"
-			}
-		}
-		self.definitions.gambler_threshold_1 = {
-			name_id = "menu_deck10_1_threshold",
-			category = "team",
-			upgrade = {
-				value = 1,
-				upgrade = "ammo_pickup_counter_thresholds",
-				category = "player"
-			}
-		}
-		self.definitions.gambler_threshold_2 = {
-			name_id = "menu_deck10_3",
-			category = "team",
-			upgrade = {
-				value = 2,
-				upgrade = "ammo_pickup_counter_thresholds",
-				category = "player"
-			}
-		}
-		self.definitions.gambler_threshold_3 = {
-			name_id = "menu_deck10_5",
-			category = "team",
-			upgrade = {
-				value = 3,
-				upgrade = "ammo_pickup_counter_thresholds",
-				category = "player"
-			}
-		}
-		self.definitions.gambler_threshold_4 = {
-			name_id = "menu_deck10_7",
-			category = "team",
-			upgrade = {
-				value = 4,
-				upgrade = "ammo_pickup_counter_thresholds",
-				category = "player"
-			}
-		}
-		self.definitions.gambler_healing_1 = {
-			name_id = "menu_deck10_1",
-			category = "team",
-			upgrade = {
-				value = 1,
-				upgrade = "ammo_pickup_health_restore",
-				category = "player"
-			}
-		}
-		self.definitions.gambler_healing_2 = {
-			name_id = "menu_deck10_9",
-			category = "team",
-			upgrade = {
-				value = 2,
-				upgrade = "ammo_pickup_health_restore",
-				category = "player"
-			}
-		}
-		
-		
-		
 		--Anarchist
 		self.values.player.anarch_conversion = { --i...don't understand why the math turns out this way but you need to do it like this or the health doesnt apply properly
 			0.3,
@@ -4011,7 +4013,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		self.values.player.anarch_onheadshotkill_armor_regen = {2.5}
 		
 		self.definitions.player_anarch_health_to_armor_1 = {
-			name_id = "menu_deck13_1",
+			name_id = "menu_deck15_1",
 			category = "feature",
 			upgrade = {
 				value = 1,
@@ -4020,7 +4022,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		self.definitions.player_anarch_restore_armor_on_hit = {
-			name_id = "menu_deck13_2",
+			name_id = "menu_deck15_2",
 			category = "feature",
 			upgrade = {
 				value = 1,
@@ -4029,7 +4031,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		self.definitions.player_anarch_health_to_armor_2 = {
-			name_id = "menu_deck13_3",
+			name_id = "menu_deck15_3",
 			category = "feature",
 			upgrade = {
 				value = 2,
@@ -4038,7 +4040,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		self.definitions.player_anarch_restore_armor_on_kill = {
-			name_id = "menu_deck13_4",
+			name_id = "menu_deck15_4",
 			category = "feature",
 			upgrade = {
 				value = 1,
@@ -4047,7 +4049,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		self.definitions.player_anarch_health_to_armor_3 = {
-			name_id = "menu_deck13_5",
+			name_id = "menu_deck15_5",
 			category = "feature",
 			upgrade = {
 				value = 3,
@@ -4056,7 +4058,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		self.definitions.player_anarch_restore_armor_on_headshot_hit = {
-			name_id = "menu_deck13_6",
+			name_id = "menu_deck15_6",
 			category = "feature",
 			upgrade = {
 				value = 1,
@@ -4065,7 +4067,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		self.definitions.player_anarch_restore_armor_on_headshot_kill = {
-			name_id = "menu_deck13_8",
+			name_id = "menu_deck15_8",
 			category = "feature",
 			upgrade = {
 				value = 1,

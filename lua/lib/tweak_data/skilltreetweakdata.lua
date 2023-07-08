@@ -3514,8 +3514,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			desc_id = "menu_st_spec_13_desc",
 			category = "defensive"
 		})
-		
-		--remaining perk decks will be added later; template data here		
+
 		replace_perkdeck(perkdeck_indices.maniac,{
 			{
 				name_id = "menu_deck14_1",
@@ -3745,121 +3744,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			category = "offensive"
 		})
 		
-		replace_perkdeck(perkdeck_indices.tagteam,{
-			{
-				name_id = "menu_deck20_1",
-				desc_id = "menu_deck20_1_desc",
-				cost = perkdeck_tier_costs[1],
-				upgrades = {
-					"tag_team",
-					"player_tag_team_base_deathvox",
-					"player_tag_team_health_regen_1"
-				},
-				icon_xy = {
-					0,
-					19
-				}
-			},
-			{
-				name_id = "menu_deck20_2",
-				desc_id = "menu_deck20_2_desc",
-				cost = perkdeck_tier_costs[2],
-				upgrades = {
-					"player_tag_team_long_distance_revive"
-				},
-				icon_xy = {
-					1,
-					19
-				}
-			},
-			{
-				name_id = "menu_deck20_3",
-				desc_id = "menu_deck20_3_desc",
-				cost = perkdeck_tier_costs[3],
-				upgrades = {
-					"player_tag_team_movement_speed_bonus"
-				},
-				icon_xy = {
-					2,
-					19
-				}
-			},
-			{
-				name_id = "menu_deck20_4",
-				desc_id = "menu_deck20_4_desc",
-				cost = perkdeck_tier_costs[4],
-				upgrades = {
-					"player_tag_team_effect_empathy"
-				},
-				icon_xy = {
-					3,
-					19
-				}
-			},
-			{
-				name_id = "menu_deck20_5",
-				desc_id = "menu_deck20_5_desc",
-				cost = perkdeck_tier_costs[5],
-				upgrades = {
-					"player_tag_team_damage_resistance"
-				},
-				icon_xy = {
-					4,
-					19
-				}
-			},
-			{
-				name_id = "menu_deck20_6",
-				desc_id = "menu_deck20_6_desc",
-				cost = perkdeck_tier_costs[6],
-				upgrades = {
-					"player_tag_team_health_regen_2"
-				},
-				icon_xy = {
-					5,
-					19
-				}
-			},
-			{
-				name_id = "menu_deck20_7",
-				desc_id = "menu_deck20_7_desc",
-				cost = perkdeck_tier_costs[7],
-				upgrades = {
-					"player_tag_team_cooldown_drain_1"
-				},
-				icon_xy = {
-					6,
-					19
-				}
-			},
-			{
-				name_id = "menu_deck20_8",
-				desc_id = "menu_deck20_8_desc",
-				cost = perkdeck_tier_costs[8],
-				upgrades = {
-					"player_tag_team_duration_increase_1"
-				},
-				icon_xy = {
-					7,
-					19
-				}
-			},
-			{
-				name_id = "menu_deck20_9",
-				desc_id = "menu_deck20_9_desc",
-				cost = perkdeck_tier_costs[9],
-				upgrades = {
-					"player_tag_team_long_distance_revive_full_effects"
-				},
-				icon_xy = {
-					8,
-					19
-				}
-			},
-			ability_id = "tag_team",
-			desc_id = "menu_st_spec_20_desc",
-			name_id = "menu_st_spec_20"
-		})
+		--remaining perk decks will be added later; template data here		
 		
 		replace_perkdeck(perkdeck_indices.biker,{
 			{
@@ -3974,7 +3859,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			desc_id = "menu_st_spec_16_desc",
 			category = "defensive"
 		})
-		
+	
 		replace_perkdeck(perkdeck_indices.kingpin,{
 			{
 				name_id = "menu_deck17_1",
@@ -4316,6 +4201,122 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			ability_id = "damage_control",
 			desc_id = "menu_st_spec_19_desc",
 			name_id = "menu_st_spec_19"
+		})
+			
+		replace_perkdeck(perkdeck_indices.tagteam,{
+			{
+				name_id = "menu_deck20_1",
+				desc_id = "menu_deck20_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					"tag_team",
+					"player_tag_team_base_deathvox",
+					"player_tag_team_health_regen_1"
+				},
+				icon_xy = {
+					0,
+					19
+				}
+			},
+			{
+				name_id = "menu_deck20_2",
+				desc_id = "menu_deck20_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					"player_tag_team_long_distance_revive"
+				},
+				icon_xy = {
+					1,
+					19
+				}
+			},
+			{
+				name_id = "menu_deck20_3",
+				desc_id = "menu_deck20_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					"player_tag_team_movement_speed_bonus"
+				},
+				icon_xy = {
+					2,
+					19
+				}
+			},
+			{
+				name_id = "menu_deck20_4",
+				desc_id = "menu_deck20_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					"player_tag_team_effect_empathy"
+				},
+				icon_xy = {
+					3,
+					19
+				}
+			},
+			{
+				name_id = "menu_deck20_5",
+				desc_id = "menu_deck20_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					"player_tag_team_damage_resistance"
+				},
+				icon_xy = {
+					4,
+					19
+				}
+			},
+			{
+				name_id = "menu_deck20_6",
+				desc_id = "menu_deck20_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					"player_tag_team_health_regen_2"
+				},
+				icon_xy = {
+					5,
+					19
+				}
+			},
+			{
+				name_id = "menu_deck20_7",
+				desc_id = "menu_deck20_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					"player_tag_team_cooldown_drain_1"
+				},
+				icon_xy = {
+					6,
+					19
+				}
+			},
+			{
+				name_id = "menu_deck20_8",
+				desc_id = "menu_deck20_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					"player_tag_team_duration_increase_1"
+				},
+				icon_xy = {
+					7,
+					19
+				}
+			},
+			{
+				name_id = "menu_deck20_9",
+				desc_id = "menu_deck20_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					"player_tag_team_long_distance_revive_full_effects"
+				},
+				icon_xy = {
+					8,
+					19
+				}
+			},
+			ability_id = "tag_team",
+			desc_id = "menu_st_spec_20_desc",
+			name_id = "menu_st_spec_20"
 		})
 	
 		replace_perkdeck(perkdeck_indices.hacker,{
