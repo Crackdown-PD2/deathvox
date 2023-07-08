@@ -3058,7 +3058,121 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			desc_id = "menu_st_spec_9_desc",
 			category = "offensive"
 		})
-			
+		
+		replace_perkdeck(perkdeck_indices.gambler,{
+			{
+				name_id = "menu_deck10_1",
+				desc_id = "menu_deck10_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					"gambler_threshold_1",
+					"gambler_healing_1"
+				},
+				icon_xy = {
+					0,
+					9
+				}
+			},
+			{
+				name_id = "menu_deck10_2",
+				desc_id = "menu_deck10_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					"gambler_range_1"
+				},
+				icon_xy = {
+					1,
+					9
+				}
+			},
+			{
+				name_id = "menu_deck10_3",
+				desc_id = "menu_deck10_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					"gambler_threshold_2"
+				},
+				icon_xy = {
+					2,
+					9
+				}
+			},
+			{
+				name_id = "menu_deck10_4",
+				desc_id = "menu_deck10_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					"gambler_range_2"
+				},
+				icon_xy = {
+					3,
+					9
+				}
+			},
+			{
+				name_id = "menu_deck10_5",
+				desc_id = "menu_deck10_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					"gambler_threshold_3"
+				},
+				icon_xy = {
+					4,
+					9
+				}
+			},
+			{
+				name_id = "menu_deck10_6",
+				desc_id = "menu_deck10_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					"gambler_range_3"
+				},
+				icon_xy = {
+					5,
+					9
+				}
+			},
+			{
+				name_id = "menu_deck10_7",
+				desc_id = "menu_deck10_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					"gambler_threshold_4"
+				},
+				icon_xy = {
+					6,
+					9
+				}
+			},
+			{
+				name_id = "menu_deck10_8",
+				desc_id = "menu_deck10_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					"gambler_range_4"
+				},
+				icon_xy = {
+					7,
+					9
+				}
+			},
+			{
+				name_id = "menu_deck10_9",
+				desc_id = "menu_deck10_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					"gambler_healing_2"
+				},
+				icon_xy = {
+					8,
+					9
+				}
+			},
+			desc_id = "menu_st_spec_10_desc",
+			name_id = "menu_st_spec_10"
+		})
+		
 		replace_perkdeck(perkdeck_indices.grinder,{
 			{
 				name_id = "menu_deck11_1",
@@ -3401,6 +3515,122 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			category = "defensive"
 		})
 		
+		--remaining perk decks will be added later; template data here		
+		replace_perkdeck(perkdeck_indices.maniac,{
+			{
+				name_id = "menu_deck14_1",
+				desc_id = "menu_deck14_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					"player_cocaine_stacking_1",
+					"player_mania_consumed_on_hit_1",
+					"player_mania_max_stacks_1"
+				},
+				icon_xy = {
+					0,
+					13
+				}
+			},
+			{
+				name_id = "menu_deck14_2",
+				desc_id = "menu_deck14_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					"player_mania_consumed_on_hit_2"
+				},
+				icon_xy = {
+					1,
+					13
+				}
+			},
+			{
+				name_id = "menu_deck14_3",
+				desc_id = "menu_deck14_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					"player_mania_max_stacks_2"
+				},
+				icon_xy = {
+					2,
+					13
+				}
+			},
+			{
+				name_id = "menu_deck14_4",
+				desc_id = "menu_deck14_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					"player_mania_consumed_on_hit_3"
+				},
+				icon_xy = {
+					3,
+					13
+				}
+			},
+			{
+				name_id = "menu_deck14_5",
+				desc_id = "menu_deck14_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					"player_mania_max_stacks_3"
+				},
+				icon_xy = {
+					4,
+					13
+				}
+			},
+			{
+				name_id = "menu_deck14_6",
+				desc_id = "menu_deck14_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					"player_mania_consumed_on_hit_4"
+				},
+				icon_xy = {
+					5,
+					13
+				}
+			},
+			{
+				name_id = "menu_deck14_7",
+				desc_id = "menu_deck14_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					"player_mania_max_stacks_4"
+				},
+				icon_xy = {
+					6,
+					13
+				}
+			},
+			{
+				name_id = "menu_deck14_8",
+				desc_id = "menu_deck14_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					"player_mania_consumed_on_hit_5"
+				},
+				icon_xy = {
+					7,
+					13
+				}
+			},
+			{
+				name_id = "menu_deck14_9",
+				desc_id = "menu_deck14_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					"player_mania_max_stacks_5"
+				},
+				icon_xy = {
+					8,
+					13
+				}
+			},
+			desc_id = "menu_st_spec_14_desc",
+			name_id = "menu_st_spec_14"
+		})
+		
 		replace_perkdeck(perkdeck_indices.anarchist,{
 			{
 				name_id = "menu_deck15_1",
@@ -3515,121 +3745,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			desc_id = "menu_st_spec_15_desc",
 			category = "offensive"
 		})
-
-		replace_perkdeck(perkdeck_indices.gambler,{
-			{
-				name_id = "menu_deck10_1",
-				desc_id = "menu_deck10_1_desc",
-				cost = perkdeck_tier_costs[1],
-				upgrades = {
-					"gambler_threshold_1",
-					"gambler_healing_1"
-				},
-				icon_xy = {
-					0,
-					9
-				}
-			},
-			{
-				name_id = "menu_deck10_2",
-				desc_id = "menu_deck10_2_desc",
-				cost = perkdeck_tier_costs[2],
-				upgrades = {
-					"gambler_range_1"
-				},
-				icon_xy = {
-					1,
-					9
-				}
-			},
-			{
-				name_id = "menu_deck10_3",
-				desc_id = "menu_deck10_3_desc",
-				cost = perkdeck_tier_costs[3],
-				upgrades = {
-					"gambler_threshold_2"
-				},
-				icon_xy = {
-					2,
-					9
-				}
-			},
-			{
-				name_id = "menu_deck10_4",
-				desc_id = "menu_deck10_4_desc",
-				cost = perkdeck_tier_costs[4],
-				upgrades = {
-					"gambler_range_2"
-				},
-				icon_xy = {
-					3,
-					9
-				}
-			},
-			{
-				name_id = "menu_deck10_5",
-				desc_id = "menu_deck10_5_desc",
-				cost = perkdeck_tier_costs[5],
-				upgrades = {
-					"gambler_threshold_3"
-				},
-				icon_xy = {
-					4,
-					9
-				}
-			},
-			{
-				name_id = "menu_deck10_6",
-				desc_id = "menu_deck10_6_desc",
-				cost = perkdeck_tier_costs[6],
-				upgrades = {
-					"gambler_range_3"
-				},
-				icon_xy = {
-					5,
-					9
-				}
-			},
-			{
-				name_id = "menu_deck10_7",
-				desc_id = "menu_deck10_7_desc",
-				cost = perkdeck_tier_costs[7],
-				upgrades = {
-					"gambler_threshold_4"
-				},
-				icon_xy = {
-					6,
-					9
-				}
-			},
-			{
-				name_id = "menu_deck10_8",
-				desc_id = "menu_deck10_8_desc",
-				cost = perkdeck_tier_costs[8],
-				upgrades = {
-					"gambler_range_4"
-				},
-				icon_xy = {
-					7,
-					9
-				}
-			},
-			{
-				name_id = "menu_deck10_9",
-				desc_id = "menu_deck10_9_desc",
-				cost = perkdeck_tier_costs[9],
-				upgrades = {
-					"gambler_healing_2"
-				},
-				icon_xy = {
-					8,
-					9
-				}
-			},
-			desc_id = "menu_st_spec_10_desc",
-			name_id = "menu_st_spec_10"
-		})
-					
+		
 		replace_perkdeck(perkdeck_indices.tagteam,{
 			{
 				name_id = "menu_deck20_1",
@@ -3744,122 +3860,6 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			ability_id = "tag_team",
 			desc_id = "menu_st_spec_20_desc",
 			name_id = "menu_st_spec_20"
-		})
-		
-		--remaining perk decks will be added later; template data here		
-		replace_perkdeck(perkdeck_indices.maniac,{
-			{
-				name_id = "menu_deck14_1",
-				desc_id = "menu_deck14_1_desc",
-				cost = perkdeck_tier_costs[1],
-				upgrades = {
-					"player_cocaine_stacking_1",
-					"player_mania_consumed_on_hit_1",
-					"player_mania_max_stacks_1"
-				},
-				icon_xy = {
-					0,
-					13
-				}
-			},
-			{
-				name_id = "menu_deck14_2",
-				desc_id = "menu_deck14_2_desc",
-				cost = perkdeck_tier_costs[2],
-				upgrades = {
-					"player_mania_consumed_on_hit_2"
-				},
-				icon_xy = {
-					1,
-					13
-				}
-			},
-			{
-				name_id = "menu_deck14_3",
-				desc_id = "menu_deck14_3_desc",
-				cost = perkdeck_tier_costs[3],
-				upgrades = {
-					--"player_mania_max_stacks_2"
-				},
-				icon_xy = {
-					2,
-					13
-				}
-			},
-			{
-				name_id = "menu_deck14_4",
-				desc_id = "menu_deck14_4_desc",
-				cost = perkdeck_tier_costs[4],
-				upgrades = {
-					"player_mania_consumed_on_hit_3"
-				},
-				icon_xy = {
-					3,
-					13
-				}
-			},
-			{
-				name_id = "menu_deck14_5",
-				desc_id = "menu_deck14_5_desc",
-				cost = perkdeck_tier_costs[5],
-				upgrades = {
-					--"player_mania_max_stacks_3"
-				},
-				icon_xy = {
-					4,
-					13
-				}
-			},
-			{
-				name_id = "menu_deck14_6",
-				desc_id = "menu_deck14_6_desc",
-				cost = perkdeck_tier_costs[6],
-				upgrades = {
-					"player_mania_consumed_on_hit_4"
-				},
-				icon_xy = {
-					5,
-					13
-				}
-			},
-			{
-				name_id = "menu_deck14_7",
-				desc_id = "menu_deck14_7_desc",
-				cost = perkdeck_tier_costs[7],
-				upgrades = {
-					--"player_mania_max_stacks_4"
-				},
-				icon_xy = {
-					6,
-					13
-				}
-			},
-			{
-				name_id = "menu_deck14_8",
-				desc_id = "menu_deck14_8_desc",
-				cost = perkdeck_tier_costs[8],
-				upgrades = {
-					"player_mania_consumed_on_hit_5"
-				},
-				icon_xy = {
-					7,
-					13
-				}
-			},
-			{
-				name_id = "menu_deck14_9",
-				desc_id = "menu_deck14_9_desc",
-				cost = perkdeck_tier_costs[9],
-				upgrades = {
-					--"player_mania_max_stacks_5"
-				},
-				icon_xy = {
-					8,
-					13
-				}
-			},
-			desc_id = "menu_st_spec_14_desc",
-			name_id = "menu_st_spec_14"
 		})
 		
 		replace_perkdeck(perkdeck_indices.biker,{
