@@ -4194,6 +4194,126 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			true -- regain all armor when teammate is downed
 		}
 		
+		self.values.player.kingpin_injector_duration_increase = {
+			2
+		}
+		self.definitions.player_kingpin_injector_duration_increase = {
+			name_id = "menu_deck17_5",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "kingpin_injector_duration_increase",
+				category = "player"
+			}
+		}
+		
+		self.values.player.kingpin_max_health_mul = {
+			0.2,
+			0.4,
+			0.6,
+			0.8
+		}
+		self.definitions.player_kingpin_max_health_mul_1 = {
+			name_id = "menu_deck17_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "kingpin_max_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.player_kingpin_max_health_mul_2 = {
+			name_id = "menu_deck17_4",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "kingpin_max_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.player_kingpin_max_health_mul_3 = {
+			name_id = "menu_deck17_6",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "kingpin_max_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.player_kingpin_max_health_mul_4 = {
+			name_id = "menu_deck17_8",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "kingpin_max_health_mul",
+				category = "player"
+			}
+		}
+		
+		self.values.player.kingpin_inactive_dodge_chance = {
+			0.05,
+			0.1,
+			0.15,
+			0.2
+		}
+		self.definitions.player_kingpin_inactive_dodge_chance_1 = {
+			name_id = "menu_deck17_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "kingpin_inactive_dodge_chance",
+				category = "player"
+			}
+		}
+		self.definitions.player_kingpin_inactive_dodge_chance_2 = {
+			name_id = "menu_deck17_4",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "kingpin_inactive_dodge_chance",
+				category = "player"
+			}
+		}
+		self.definitions.player_kingpin_inactive_dodge_chance_3 = {
+			name_id = "menu_deck17_6",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "kingpin_inactive_dodge_chance",
+				category = "player"
+			}
+		}
+		self.definitions.player_kingpin_inactive_dodge_chance_4 = {
+			name_id = "menu_deck17_8",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "kingpin_inactive_dodge_chance",
+				category = "player"
+			}
+		}
+		
+		self.values.player.kingpin_cooldown_drain_on_kill = {
+			1 -- reduce cooldown by 1 second per kill
+		}
+		self.definitions.player_kingpin_cooldown_drain_on_kill = {
+			name_id = "menu_deck17_3",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "kingpin_cooldown_drain_on_kill",
+				category = "player"
+			}
+		}
+		
+		--vanilla upgrade
+		self.values.player.chico_injector_health_to_speed = {
+			{
+				10, -- nerfed from 5 to 10
+				1
+			}
+		}
+		
 		
 		
 		--Tag Team

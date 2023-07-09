@@ -3858,15 +3858,14 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			category = "defensive"
 		})
 	
-		--remaining perk decks will be added later; template data here		
-		
 		replace_perkdeck(perkdeck_indices.kingpin,{
 			{
 				name_id = "menu_deck17_1",
 				desc_id = "menu_deck17_1_desc",
 				cost = perkdeck_tier_costs[1],
 				upgrades = {
-					
+					"temporary_chico_injector_1", --basegame upgrade
+					"player_chico_preferred_target" --basegame upgrade
 				},
 				icon_xy = {
 					0,
@@ -3878,7 +3877,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck17_2_desc",
 				cost = perkdeck_tier_costs[2],
 				upgrades = {
-					
+					"player_kingpin_max_health_mul_1",
+					"player_kingpin_inactive_dodge_chance_1"
 				},
 				icon_xy = {
 					1,
@@ -3890,7 +3890,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck17_3_desc",
 				cost = perkdeck_tier_costs[3],
 				upgrades = {
-					
+					"player_kingpin_cooldown_drain_on_kill"
 				},
 				icon_xy = {
 					2,
@@ -3902,7 +3902,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck17_4_desc",
 				cost = perkdeck_tier_costs[4],
 				upgrades = {
-					
+					"player_kingpin_max_health_mul_2",
+					"player_kingpin_inactive_dodge_chance_2"
 				},
 				icon_xy = {
 					3,
@@ -3914,7 +3915,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck17_5_desc",
 				cost = perkdeck_tier_costs[5],
 				upgrades = {
-					
+					"player_kingpin_injector_duration_increase"
 				},
 				icon_xy = {
 					4,
@@ -3926,7 +3927,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck17_6_desc",
 				cost = perkdeck_tier_costs[6],
 				upgrades = {
-					
+					"player_kingpin_max_health_mul_3",
+					"player_kingpin_inactive_dodge_chance_3"
 				},
 				icon_xy = {
 					5,
@@ -3938,7 +3940,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck17_7_desc",
 				cost = perkdeck_tier_costs[7],
 				upgrades = {
-					
+					"player_chico_injector_low_health_multiplier"
 				},
 				icon_xy = {
 					6,
@@ -3950,7 +3952,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck17_8_desc",
 				cost = perkdeck_tier_costs[8],
 				upgrades = {
-					
+					"player_kingpin_max_health_mul_4",
+					"player_kingpin_inactive_dodge_chance_4"
 				},
 				icon_xy = {
 					7,
@@ -3962,7 +3965,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck17_9_desc",
 				cost = perkdeck_tier_costs[9],
 				upgrades = {
-					
+					"player_chico_injector_health_to_speed" --basegame upgrade
 				},
 				icon_xy = {
 					8,
@@ -3974,7 +3977,9 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			desc_id = "menu_st_spec_17_desc",
 			category = "offensive"
 		})
-		
+
+		--remaining perk decks will be added later; template data here		
+				
 		replace_perkdeck(perkdeck_indices.sicario,{
 			{
 				name_id = "menu_deck18_1",

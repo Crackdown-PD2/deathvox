@@ -23,16 +23,17 @@ Hooks:PostHook(PlayerManager,"_internal_load","deathvox_on_internal_load",functi
 			amount = self:get_max_grenades() --for some reason, in vanilla, spawn amount is math.min()'d with the DEFAULT amount 
 		})
 		
-		local ability_id,ability_amount = managers.blackmarket:equipped_ability()
+		local ability_id,max_amount = managers.blackmarket:equipped_ability()
 		if ability_id then
 			
 			if self:has_category_upgrade(ability_id,"amount_increase") then
-				ability_amount = ability_amount * self:upgrade_value(ability_id,"amount_increase")
+				max_amount = max_amount * self:upgrade_value(ability_id,"amount_increase")
 			end
 			
 			self:_set_ability({
 				ability = ability_id,
-				amount = ability_amount
+				amount = max_amount,
+				max_amount = max_amount
 			})
 		end
 		if self:has_category_upgrade("player","cocaine_stacking") then
@@ -138,21 +139,16 @@ if TCD_ENABLED then
 	function PlayerManager:_set_ability(params)
 		self._global.synced_abilities[managers.network:session():local_peer():id()] = {
 			ability = params.ability,
-			amount = params.amount
+			amount = params.amount,
+			max_amount = params.max_amount
 		}
 		
-		--[[
-		local grenade = params.grenade
-		local tweak_data = tweak_data.blackmarket.projectiles[grenade]
-		local amount = params.amount
-		local icon = tweak_data.icon
-
-		self:update_ability_amount_to_peers(grenade, amount)
-		managers.hud:set_teammate_abilities(HUDManager.PLAYER_PANEL, {
-			amount = amount,
-			icon = icon
-		})
-		--]]
+		local tweak = params.ability and tweak_data.blackmarket.projectiles[params.ability]
+		local icon = tweak and tweak.icon
+		if icon then
+			managers.hud:set_ability_icon(HUDManager.PLAYER_PANEL,icon)
+		end
+		--self:update_ability_amount_to_peers(grenade, amount)
 	end
 	
 	--added in tcd;
@@ -166,9 +162,16 @@ if TCD_ENABLED then
 	end
 	
 	function PlayerManager:add_ability_amount(num)
-		local data = self._global.synced_abilities[managers.network:session():local_peer():id()]
+		local peer_id = managers.network:session():local_peer():id()
+		local data = self._global.synced_abilities[peer_id]
 		if data then
 			data.amount = data.amount + num
+			local ability = data.ability
+			local tweak = ability and tweak_data.blackmarket.projectiles[ability]
+			local max_amount = data.max_amount or tweak and tweak.max_amount
+			if max_amount and tweak.base_cooldown and data.amount < max_amount then
+				self:replenish_grenades(tweak.base_cooldown)
+			end
 		end
 	end
 	
@@ -200,6 +203,30 @@ if TCD_ENABLED then
 
 		self:add_ability_amount(-1)
 		self._message_system:notify("ability_activated", nil, ability)
+
+		return true
+	end
+	
+	function PlayerManager:_attempt_chico_injector()
+		if self:has_activate_temporary_upgrade("temporary", "chico_injector") then
+			return false
+		end
+
+		local duration = self:upgrade_value("temporary", "chico_injector")[2] + self:upgrade_value("player","kingpin_injector_duration_increase",0)
+		local now = managers.game_play_central:get_heist_timer()
+
+		managers.network:session():send_to_peers("sync_ability_hud", now + duration, duration)
+		self:activate_temporary_upgrade("temporary", "chico_injector")
+		
+		if self:has_category_upgrade("player","kingpin_cooldown_drain_on_kill") then
+			local cooldown_amount = self:upgrade_value("player","kingpin_cooldown_drain_on_kill",1)
+			
+			local function speed_up_on_kill()
+				managers.player:speed_up_grenade_cooldown(cooldown_amount)
+			end
+			self:register_message(Message.OnEnemyKilled, "speed_up_chico_injector", speed_up_on_kill)
+		end
+
 
 		return true
 	end
@@ -1534,6 +1561,7 @@ function PlayerManager:health_skill_multiplier()
 	multiplier = multiplier + self:upgrade_value("player", "expres_health_mul", 1) - 1
 	multiplier = multiplier + self:upgrade_value("player", "passive_health_multiplier", 1) - 1
 	multiplier = multiplier + self:team_upgrade_value("health", "passive_multiplier", 1) - 1
+	multiplier = multiplier + self:upgrade_value("player", "kingpin_max_health_mul", 1) - 1
 	multiplier = multiplier + self:get_hostage_bonus_multiplier("health") - 1
 	multiplier = multiplier - self:upgrade_value("player", "health_decrease", 0)
 	multiplier = multiplier + self:upgrade_value("player", "infiltrator_max_health_mul",0)
@@ -1678,7 +1706,12 @@ function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, overri
 	chance = chance + self:upgrade_value("player", "tier_dodge_chance", 0)
 	chance = chance + self:upgrade_value("player", "rogue_dodge_add", 0)
 	chance = chance + self:upgrade_value("player", "expres_dodge_add", 0)
-
+	if not self:has_activate_temporary_upgrade("temporary", "chico_injector") then
+		if self:has_category_upgrade("player","kingpin_inactive_dodge_chance") then
+			chance = chance + self:upgrade_value("player","kingpin_inactive_dodge_chance")
+		end
+	end
+	
 	if running then
 		chance = chance + self:upgrade_value("player", "run_dodge_chance", 0)
 	end

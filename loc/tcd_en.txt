@@ -612,7 +612,7 @@
 		"menu_deck17_1" : "Every Dog Has His Day",
 		"menu_deck17_1_desc" : "Activate the Kingpin Injector with the ##$BTN_CHANGE_EQUIPMENT## key to ignore ##75%## of all damage taken for ##6## seconds and force all nearby enemies to target you.\n\nThe Kingpin Injector has a ##30## second cooldown.",
 		"menu_deck17_2" : "Now You're Talking",
-		"menu_deck17_2_desc" : "You gain ##+20%## Maximum Health. While the Kingpin Injector isn't active, you gain ##5%## Dodge Chance.",
+		"menu_deck17_2_desc" : "You gain ##+20%## Maximum Health.\nWhile the Kingpin Injector isn't active, you gain ##5%## Dodge Chance.",
 		"menu_deck17_3" : "Bury The Cockroaches",
 		"menu_deck17_3_desc" : "Killing an enemy reduces the cooldown of the Kingpin Injector by ##1## second.",
 		"menu_deck17_4" : "That, I Like",
