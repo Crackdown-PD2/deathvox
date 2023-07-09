@@ -32,6 +32,7 @@ Hooks:PostHook(BlackMarketTweakData, "_init_projectiles", "cdgren", function(sel
 			primary_class = "class_grenade",
 			subclasses = {}
 		}
+		--self.projectiles.smoke_screen_grenade.hold_function_name = "_update_sicario_throw_smoke"
 		self.projectiles.smoke_screen_grenade.is_from_perk_deck = true
 		self.projectiles.pocket_ecm_jammer.is_from_perk_deck = true
 		self.projectiles.copr_ability.is_from_perk_deck = true

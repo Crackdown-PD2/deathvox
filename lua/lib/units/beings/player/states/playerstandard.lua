@@ -2858,7 +2858,78 @@ if TCD_ENABLED then
 		
 		return released
 	end
+	
+	--[[
+	
+	function PlayerManager:_attempt_smoke_screen_grenade()
+		-- smoke grenade throwing code is in playerstandard
+		return true
+	end
+	
+	function PlayerStandard:_update_sicario_throw_smoke(t, input)
+		local released
+		local btn_ability_state = self._controller:get_input_bool("change_equipment")
+		if self._cache_held_grenade then --todo make consistent with tripmine code
+			if not btn_ability_state then 
+				self._cache_held_grenade = false
+				released = true
+			end
+		else
+			self._cache_held_grenade = btn_ability_state
+			if not btn_ability_state then
+				return false
+			end
+		end
+		
+		local action_forbidden = not PlayerBase.USE_GRENADES or self:chk_action_forbidden("interact") or self._unit:base():stats_screen_visible() or self:_is_throwing_grenade() or self:_interacting() or self:is_deploying() or self:_changing_weapon() or self:_is_meleeing() or self:_is_using_bipod()
+		
+		if action_forbidden then
+			return
+		end
+		
+		--start throw smoke
+		
+		self:_interupt_action_reload(t)
+		self:_interupt_action_steelsight(t)
+		self:_interupt_action_running(t)
+		self:_interupt_action_charging_weapon(t)
+		
+		local projectile_tweak = tweak_data.blackmarket.projectiles.smoke_screen_grenade
+			
+		if self._projectile_global_value then
+			self._camera_unit:anim_state_machine():set_global(self._projectile_global_value, 0)
 
+			self._projectile_global_value = nil
+		end
+
+		if projectile_tweak.anim_global_param then
+			self._projectile_global_value = projectile_tweak.anim_global_param
+
+			self._camera_unit:anim_state_machine():set_global(self._projectile_global_value, 1)
+		end
+		
+		local throw_delay
+		if not self.projectile_throw_delays[self._projectile_global_value] then
+			--Application:error("No projectile throw delay for ", self._projectile_global_value, "! This needs to be added to PlayerStandard!")
+
+			self._debug_throw_anim_req_update = true
+
+			throw_delay = 0
+		else
+			throw_delay = self.projectile_throw_delays[self._projectile_global_value]
+		end
+
+		managers.network:session():send_to_peers_synched("play_distance_interact_redirect_delay", self._unit, "throw_grenade", throw_delay)
+		
+		self._ext_camera:play_redirect(Idstring(projectile_tweak.animation or "throw_grenade"))
+		
+		self._state_data.throw_grenade_expire_t = t + (projectile_tweak.expire_t or 1.1)
+
+		self:_stance_entered()
+		
+	end
+	--]]
+	
 	function PlayerStandard:_check_action_use_ability(t, input)
 		local action_wanted
 		if managers.player:get_ability_amount() == 0 then
@@ -2872,7 +2943,6 @@ if TCD_ENABLED then
 		end
 		local ptd = tweak_data.blackmarket.projectiles[equipped_ability] 
 		if ptd and ptd.hold_function_name then 
-				--currently only used for tagteam
 			action_wanted = self[ptd.hold_function_name](self,t,input)
 		else
 			action_wanted = input.btn_change_equipment
@@ -2884,7 +2954,7 @@ if TCD_ENABLED then
 
 		return action_wanted
 	end
-
+	
 	function PlayerStandard:_find_pickups(t)
 		local pm = managers.player
 		
