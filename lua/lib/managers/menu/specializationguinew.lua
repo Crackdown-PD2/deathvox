@@ -139,6 +139,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 					local locked = current_tier < index
 					local macroes = {
 						BTN_ABILITY = managers.localization:btn_macro("throw_grenade"),
+						BTN_CHANGE_EQUIPMENT = managers.localization:btn_macro("change_equipment"),
 						CLONED_CARD = managers.localization:text("menu_deck_multichoice_no_choice")
 					}
 
@@ -151,6 +152,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 					local choice_macroes = {
 						BTN_ABILITY = managers.localization:btn_macro("throw_grenade"),
+						BTN_CHANGE_EQUIPMENT = managers.localization:btn_macro("change_equipment"),
 						CLONED_CARD = choice_data and choice_data.name_id and managers.localization:text(choice_data.name_id) or managers.localization:text("menu_deck_multichoice_no_choice")
 					}
 
@@ -203,7 +205,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 			end
 
 			local macroes = {
-				BTN_ABILITY = managers.localization:btn_macro("throw_grenade")
+				BTN_ABILITY = managers.localization:btn_macro("throw_grenade"),
+				BTN_CHANGE_EQUIPMENT = managers.localization:btn_macro("change_equipment")
 			}
 
 			for i, d in pairs(specialization_description) do
@@ -214,7 +217,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 			deathvox:insert_tcd_macros(macroes)
 			
 			local choice_macroes = {
-				BTN_ABILITY = managers.localization:btn_macro("throw_grenade")
+				BTN_ABILITY = managers.localization:btn_macro("throw_grenade"),
+				BTN_CHANGE_EQUIPMENT = managers.localization:btn_macro("change_equipment")
 			}
 			
 			for i, d in pairs(multi_choice_specialization_descs) do
