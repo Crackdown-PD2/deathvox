@@ -106,7 +106,8 @@ if TCD_ENABLED then
 	
 	--replenish ability instead of grenades
 	function PlayerManager:_on_grenade_cooldown_end()
-		local tweak = tweak_data.blackmarket.projectiles[managers.blackmarket:equipped_grenade()]
+		local ability,_ = managers.blackmarket:equipped_ability()
+		local tweak = tweak_data.blackmarket.projectiles[ability]
 
 		if tweak and tweak.sounds and tweak.sounds.cooldown then
 			self:player_unit():sound():play(tweak.sounds.cooldown)
