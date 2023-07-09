@@ -4315,6 +4315,123 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 		
+		--vanilla upgrade
+		self.values.player.damage_control_passive = {
+			{
+				75,
+				10
+			}
+		}
+		
+		self.values.player.stoic_stagger_time_increase = {
+			2.5,
+			5,
+			7.5,
+			10
+		}
+		self.definitions.player_stoic_stagger_time_increase_1 = {
+			name_id = "menu_deck18_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stoic_stagger_time_increase",
+				category = "player"
+			}
+		}
+		self.definitions.player_stoic_stagger_time_increase_2 = {
+			name_id = "menu_deck18_2",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "stoic_stagger_time_increase",
+				category = "player"
+			}
+		}
+		self.definitions.player_stoic_stagger_time_increase_3 = {
+			name_id = "menu_deck18_2",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "stoic_stagger_time_increase",
+				category = "player"
+			}
+		}
+		self.definitions.player_stoic_stagger_time_increase_4 = {
+			name_id = "menu_deck18_2",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "stoic_stagger_time_increase",
+				category = "player"
+			}
+		}
+		
+		self.values.player.stoic_meds_clears_staggered_damage = { true }
+		self.definitions.player_stoic_meds_clears_staggered_damage = {
+			name_id = "menu_deck18_3",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stoic_meds_clears_staggered_damage",
+				category = "player"
+			}
+		}
+		self.values.player.stoic_meds_refreshes_ability = { true }
+		self.definitions.player_stoic_meds_refreshes_ability = {
+			name_id = "menu_deck18_3",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stoic_meds_refreshes_ability",
+				category = "player"
+			}
+		}
+		
+		self.values.player.stoic_damage_resist_on_stagger = {
+			{
+				0.2, -- 20% damage resist 
+				5 -- 5 second duration
+			}
+		}
+		
+		self.definitions.player_stoic_damage_resist_on_stagger = {
+			name_id = "menu_deck18_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stoic_damage_resist_on_stagger",
+				category = "player"
+			}
+		}
+		self.values.player.stoic_cooldown_drain_on_damaged = {
+			{
+				1, -- cooldown reduced by 1 second per hit taken
+				1 --max of once per second
+			}
+		}
+		
+		self.definitions.player_stoic_cooldown_drain_on_damaged = {
+			name_id = "menu_deck18_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stoic_cooldown_drain_on_damaged",
+				category = "player"
+			}
+		}
+		
+		--vanilla upgrade, added second value
+		self.values.player.armor_to_health_conversion[2] = 150  -- +50% (150% total)
+		self.definitions.player_stoic_armor_to_health_conversion_bonus = {
+			name_id = "menu_deck18_9",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "armor_to_health_conversion",
+				category = "player"
+			}
+		}
+		
 		
 		--Tag Team
 		self.values.player.tag_team_base_deathvox = {

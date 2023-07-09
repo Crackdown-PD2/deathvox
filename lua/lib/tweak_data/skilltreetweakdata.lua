@@ -3978,6 +3978,125 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			category = "offensive"
 		})
 
+		replace_perkdeck(perkdeck_indices.stoic,{
+			{
+				name_id = "menu_deck19_1",
+				desc_id = "menu_deck19_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					--"damage_control",
+					"player_damage_control_passive",
+					"player_armor_to_health_conversion"
+				},
+				icon_xy = {
+					0,
+					18
+				}
+			},
+			{
+				name_id = "menu_deck19_2",
+				desc_id = "menu_deck19_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					"player_stoic_stagger_time_increase_1"
+				},
+				icon_xy = {
+					1,
+					18
+				}
+			},
+			{
+				name_id = "menu_deck19_3",
+				desc_id = "menu_deck19_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					"player_stoic_meds_clears_staggered_damage",
+					"player_stoic_meds_refreshes_ability"
+				},
+				icon_xy = {
+					2,
+					18
+				}
+			},
+			{
+				name_id = "menu_deck19_4",
+				desc_id = "menu_deck19_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					"player_stoic_stagger_time_increase_2"
+				},
+				icon_xy = {
+					3,
+					18
+				}
+			},
+			{
+				name_id = "menu_deck19_5",
+				desc_id = "menu_deck19_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					"player_damage_control_cooldown_drain_1",
+					"player_stoic_damage_resist_on_stagger"
+				},
+				icon_xy = {
+					4,
+					18
+				}
+			},
+			{
+				name_id = "menu_deck19_6",
+				desc_id = "menu_deck19_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					"player_stoic_stagger_time_increase_3"
+				},
+				icon_xy = {
+					5,
+					18
+				}
+			},
+			{
+				name_id = "menu_deck19_7",
+				desc_id = "menu_deck19_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					"player_stoic_cooldown_drain_on_damaged"
+				},
+				icon_xy = {
+					6,
+					18
+				}
+			},
+			{
+				name_id = "menu_deck19_8",
+				desc_id = "menu_deck19_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					"player_stoic_stagger_time_increase_4"
+				},
+				icon_xy = {
+					7,
+					18
+				}
+			},
+			{
+				name_id = "menu_deck19_9",
+				desc_id = "menu_deck19_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					"player_stoic_armor_to_health_conversion_bonus",
+					"player_damage_control_healing"
+				},
+				icon_xy = {
+					8,
+					18
+				}
+			},
+			ability_id = "damage_control",
+			desc_id = "menu_st_spec_19_desc",
+			name_id = "menu_st_spec_19"
+		})
+	
 		--remaining perk decks will be added later; template data here		
 				
 		replace_perkdeck(perkdeck_indices.sicario,{
@@ -3986,7 +4105,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck18_1_desc",
 				cost = perkdeck_tier_costs[1],
 				upgrades = {
-					
+					"player_damage_control_passive"
 				},
 				icon_xy = {
 					0,
@@ -4034,7 +4153,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck18_5_desc",
 				cost = perkdeck_tier_costs[5],
 				upgrades = {
-					
+					"player_damage_control_cooldown_drain_1"
 				},
 				icon_xy = {
 					4,
@@ -4093,121 +4212,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			desc_id = "menu_st_spec_18_desc",
 			name_id = "menu_st_spec_18"
 		})
-
-		replace_perkdeck(perkdeck_indices.stoic,{
-			{
-				name_id = "menu_deck19_1",
-				desc_id = "menu_deck19_1_desc",
-				cost = perkdeck_tier_costs[1],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					0,
-					18
-				}
-			},
-			{
-				name_id = "menu_deck19_2",
-				desc_id = "menu_deck19_2_desc",
-				cost = perkdeck_tier_costs[2],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					1,
-					18
-				}
-			},
-			{
-				name_id = "menu_deck19_3",
-				desc_id = "menu_deck19_3_desc",
-				cost = perkdeck_tier_costs[3],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					2,
-					18
-				}
-			},
-			{
-				name_id = "menu_deck19_4",
-				desc_id = "menu_deck19_4_desc",
-				cost = perkdeck_tier_costs[4],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					3,
-					18
-				}
-			},
-			{
-				name_id = "menu_deck19_5",
-				desc_id = "menu_deck19_5_desc",
-				cost = perkdeck_tier_costs[5],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					4,
-					18
-				}
-			},
-			{
-				name_id = "menu_deck19_6",
-				desc_id = "menu_deck19_6_desc",
-				cost = perkdeck_tier_costs[6],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					5,
-					18
-				}
-			},
-			{
-				name_id = "menu_deck19_7",
-				desc_id = "menu_deck19_7_desc",
-				cost = perkdeck_tier_costs[7],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					6,
-					18
-				}
-			},
-			{
-				name_id = "menu_deck19_8",
-				desc_id = "menu_deck19_8_desc",
-				cost = perkdeck_tier_costs[8],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					7,
-					18
-				}
-			},
-			{
-				name_id = "menu_deck19_9",
-				desc_id = "menu_deck19_9_desc",
-				cost = perkdeck_tier_costs[9],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					8,
-					18
-				}
-			},
-			ability_id = "damage_control",
-			desc_id = "menu_st_spec_19_desc",
-			name_id = "menu_st_spec_19"
-		})
-			
+		
 		replace_perkdeck(perkdeck_indices.tagteam,{
 			{
 				name_id = "menu_deck20_1",

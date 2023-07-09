@@ -225,6 +225,7 @@
 	<hook post="true" file="lua/lib/network/matchmaking/networkmatchmakingepic.lua" source_file="lib/network/matchmaking/networkmatchmakingepic"/>
 	
 	<hook post="true" file="lua/lib/player_actions/skills/playeractiontagteam.lua" source_file="lib/player_actions/skills/playeractiontagteam"/>
+	<hook post="true" file="lua/lib/player_actions/skills/playeractiondamagecontrol.lua" source_file="lib/player_actions/skills/playeractiondamagecontrol"/>
 	
 	<hook post="true" file="lua/lib/managers/coreenvironmentcontrollermanager.lua" source_file="core/lib/managers/coreenvironmentcontrollermanager"/>
 </hooks>

@@ -423,12 +423,15 @@ if TCD_ENABLED then
 		if character_data then
 			local max_stacks = self:upgrade_value("player","mania_max_stacks",100)
 			local absolute_max_stacks = tweak_data.upgrades.values.player.mania_max_stacks[#tweak_data.upgrades.values.player.mania_max_stacks]
-			managers.hud:set_info_meter(character_data.panel_id, {
-				icon = "guis/dlcs/coco/textures/pd2/hud_absorb_stack_icon_01",
-				max = 1,
-				current = new_amount / absolute_max_stacks,
-				total = max_stacks / absolute_max_stacks
-			})
+
+			if self:has_category_upgrade("player","cocaine_stacking") then
+				managers.hud:set_info_meter(character_data.panel_id, {
+					icon = "guis/dlcs/coco/textures/pd2/hud_absorb_stack_icon_01",
+					max = 1,
+					current = new_amount / absolute_max_stacks,
+					total = max_stacks / absolute_max_stacks
+				})
+			end
 		end
 	end
 	
@@ -473,13 +476,15 @@ if TCD_ENABLED then
 			--instead, visually update hud right here
 			local character_data = managers.criminals:character_data_by_peer_id(local_peer_id)
 			if character_data then
-				local absolute_max_stacks = tweak_data.upgrades.values.player.mania_max_stacks[#tweak_data.upgrades.values.player.mania_max_stacks]
-				managers.hud:set_info_meter(character_data.panel_id, {
-					icon = "guis/dlcs/coco/textures/pd2/hud_absorb_stack_icon_01",
-					max = 1,
-					current = new_amount / absolute_max_stacks,
-					total = max_stacks / absolute_max_stacks
-				})
+				if self:has_category_upgrade("player","cocaine_stacking") then
+					local absolute_max_stacks = tweak_data.upgrades.values.player.mania_max_stacks[#tweak_data.upgrades.values.player.mania_max_stacks]
+					managers.hud:set_info_meter(character_data.panel_id, {
+						icon = "guis/dlcs/coco/textures/pd2/hud_absorb_stack_icon_01",
+						max = 1,
+						current = new_amount / absolute_max_stacks,
+						total = max_stacks / absolute_max_stacks
+					})
+				end
 			end
 			self._global.synced_cocaine_stacks[local_peer_id] = {
 				amount = new_amount,
