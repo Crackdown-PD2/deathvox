@@ -21,6 +21,9 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 	self.values.subclass_areadenial = self.values.subclass_areadenial or {}
 	self.values.friendship_collar = self.values.friendship_collar or {}
 	
+	-- enables amount increase upgrades for abilities on a casewise basis
+	self.values.pocket_ecm_jammer = self.values.pocket_ecm_jammer or {}
+	
 	if deathvox:IsTotalCrackdownEnabled() then
 	
 		self.definitions.tripmine_throwable = {
@@ -4568,6 +4571,145 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
+		
+		
+		--tweaked vanilla values
+		self.values.player.pocket_ecm_jammer_base = {
+			{
+				affects_cameras = false, --managed by separate upgrade
+				affects_pagers = false, --managed by separate upgrade
+				cooldown_drain = 1,
+				feedback_interval = 1,
+				duration = 3,
+				feedback_range = 3000
+			}
+		}	
+		
+		self.values.player.pocket_ecm_jammer_loud_feedback = {
+			3,
+			4,
+			5
+		}
+		self.definitions.player_pocket_ecm_jammer_loud_feedback_1 = {
+			name_id = "menu_deck21_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "pocket_ecm_jammer_loud_feedback",
+				category = "player"
+			}
+		}
+		self.definitions.player_pocket_ecm_jammer_loud_feedback_2 = {
+			name_id = "menu_deck21_3",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "pocket_ecm_jammer_loud_feedback",
+				category = "player"
+			}
+		}
+		self.definitions.player_pocket_ecm_jammer_loud_feedback_3 = {
+			name_id = "menu_deck21_7",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "pocket_ecm_jammer_loud_feedback",
+				category = "player"
+			}
+		}
+		
+		self.values.player.pocket_ecm_jammer_stealth_feedback = {
+			4,
+			6,
+			8
+		}
+		self.definitions.player_pocket_ecm_jammer_stealth_feedback_1 = {
+			name_id = "menu_deck21_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "pocket_ecm_jammer_stealth_feedback",
+				category = "player"
+			}
+		}
+		self.definitions.player_pocket_ecm_jammer_stealth_feedback_2 = {
+			name_id = "menu_deck21_4",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "pocket_ecm_jammer_stealth_feedback",
+				category = "player"
+			}
+		}
+		self.definitions.player_pocket_ecm_jammer_stealth_feedback_3 = {
+			name_id = "menu_deck21_8",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "pocket_ecm_jammer_stealth_feedback",
+				category = "player"
+			}
+		}
+		
+		self.values.player.pocket_ecm_jammer_blocks_electronics = { true }
+		self.definitions.player_pocket_ecm_jammer_blocks_electronics = {
+			name_id = "menu_deck21_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "pocket_ecm_jammer_blocks_electronics",
+				category = "player"
+			}
+		}
+		self.values.player.pocket_ecm_jammer_loud_marking = { true }
+		self.definitions.player_pocket_ecm_jammer_loud_marking = {
+			name_id = "menu_deck21_5",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "pocket_ecm_jammer_loud_marking",
+				category = "player"
+			}
+		}
+		
+		self.values.player.pocket_ecm_jammer_marked_kill_cooldown_drain = {
+			1 -- reduce cooldown by 1 second upon enemy kill
+		}
+		self.definitions.player_pocket_ecm_jammer_marked_kill_cooldown_drain = {
+			name_id = "menu_deck21_5",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "pocket_ecm_jammer_marked_kill_cooldown_drain",
+				category = "player"
+			}
+		}
+		
+		self.values.player.pocket_ecm_jammer_stealth_passive_cooldown_refund = {
+			0.5 -- refund 50% cooldown on use in stealth
+		}
+		self.definitions.player_pocket_ecm_jammer_stealth_passive_cooldown_refund = {
+			name_id = "menu_deck21_6",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "pocket_ecm_jammer_stealth_passive_cooldown_refund",
+				category = "player"
+			}
+		}
+		self.values.pocket_ecm_jammer.amount_increase = {
+			1 -- +1 charge (total 2)
+		}
+		self.definitions.pocket_ecm_jammer_amount_increase_1 = {
+			name_id = "menu_deck21_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "amount_increase",
+				category = "pocket_ecm_jammer"
+			}
+		}
+		
 	end
 end)	
 

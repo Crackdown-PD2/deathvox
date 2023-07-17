@@ -232,6 +232,71 @@ if TCD_ENABLED then
 		return true
 	end
 	
+	function PlayerManager:_attempt_pocket_ecm_jammer()
+		local player_inventory = self:player_unit():inventory()
+		local t = TimerManager:game():time()
+
+		if player_inventory:is_jammer_active() then
+			return false
+		end
+		
+		local base_upgrade = self:upgrade_value("player", "pocket_ecm_jammer_base")
+		local effect_duration
+		
+		local started = false
+		
+		if managers.groupai and managers.groupai:state():whisper_mode() and self:has_category_upgrade("player","pocket_ecm_jammer_stealth_feedback") then
+			effect_duration = self:upgrade_value("player","pocket_ecm_jammer_stealth_feedback",0)
+			
+			local has_block_electronics = self:has_category_upgrade("player","pocket_ecm_jammer_blocks_electronics")
+			started = player_inventory:start_jammer_effect(t + effect_duration,has_block_electronics,has_block_electronics,has_block_electronics)
+			if started and self:has_category_upgrade("player","pocket_ecm_jammer_stealth_passive_cooldown_refund") then
+				local base_cooldown = tweak_data.blackmarket.projectiles.pocket_ecm_jammer.base_cooldown
+				local cooldown_refund_amount = base_cooldown * self:upgrade_value("player","pocket_ecm_jammer_stealth_passive_cooldown_refund",0)
+				if cooldown_refund_amount ~= 0 then
+					
+					--delay cooldown refund by one frame
+					--so that the cooldown is applied correctly
+					--after the cooldown starts proper
+					DelayedCalls:Add("tcd_deck21_refund_cooldown",0,function()
+						managers.player:speed_up_grenade_cooldown(cooldown_refund_amount)
+					end)
+				end
+			end
+		else
+			effect_duration = self:upgrade_value("player","pocket_ecm_jammer_loud_feedback",0)
+			local mark_enemies = self:has_category_upgrade("player","pocket_ecm_jammer_loud_marking")
+			started = player_inventory:start_feedback_effect(t + effect_duration,base_upgrade.feedback_interval,base_upgrade.feedback_range,mark_enemies)
+		end
+		
+		if not started then
+			return false
+		end
+		
+		if self:has_category_upgrade("player","pocket_ecm_jammer_marked_kill_cooldown_drain") then
+			local cooldown_drain_amount = self:upgrade_value("player","pocket_ecm_jammer_marked_kill_cooldown_drain",0)
+			
+			local function speed_up_on_kill(weapon_unit, variant, killed_unit)
+				if not alive(killed_unit) then 
+					return
+				end
+				
+				local contour_ext = killed_unit:contour()
+				
+				if contour_ext and contour_ext:has_id("pocket_ecm_marked") then
+					managers.player:speed_up_grenade_cooldown(cooldown_drain_amount)
+				end
+				
+			end
+			
+			self:register_message(Message.OnEnemyKilled, "speed_up_pocket_ecm_jammer", speed_up_on_kill)
+		end
+		
+		managers.hud:activate_teammate_ability_radial(HUDManager.PLAYER_PANEL, effect_duration)
+		
+		return true
+	end
+	
 	function PlayerManager:stamina_multiplier()
 		local multiplier = 1
 		multiplier = multiplier + self:upgrade_value("player", "sociopath_stamina_mul", 1) - 1

@@ -3,12 +3,6 @@
 Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 	if deathvox:IsTotalCrackdownEnabled() then
 	
-	
-
-
-
-
-
 	-------------------------------------------------------------------------------------
 	--********************************** SKILL TREES **********************************--
 	-------------------------------------------------------------------------------------
@@ -4096,122 +4090,6 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			desc_id = "menu_st_spec_19_desc",
 			name_id = "menu_st_spec_19"
 		})
-	
-		--remaining perk decks will be added later; template data here		
-				
-		replace_perkdeck(perkdeck_indices.sicario,{
-			{
-				name_id = "menu_deck18_1",
-				desc_id = "menu_deck18_1_desc",
-				cost = perkdeck_tier_costs[1],
-				upgrades = {
-					"player_damage_control_passive"
-				},
-				icon_xy = {
-					0,
-					17
-				}
-			},
-			{
-				name_id = "menu_deck18_2",
-				desc_id = "menu_deck18_2_desc",
-				cost = perkdeck_tier_costs[2],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					1,
-					17
-				}
-			},
-			{
-				name_id = "menu_deck18_3",
-				desc_id = "menu_deck18_3_desc",
-				cost = perkdeck_tier_costs[3],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					2,
-					17
-				}
-			},
-			{
-				name_id = "menu_deck18_4",
-				desc_id = "menu_deck18_4_desc",
-				cost = perkdeck_tier_costs[4],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					3,
-					17
-				}
-			},
-			{
-				name_id = "menu_deck18_5",
-				desc_id = "menu_deck18_5_desc",
-				cost = perkdeck_tier_costs[5],
-				upgrades = {
-					"player_damage_control_cooldown_drain_1"
-				},
-				icon_xy = {
-					4,
-					17
-				}
-			},
-			{
-				name_id = "menu_deck18_6",
-				desc_id = "menu_deck18_6_desc",
-				cost = perkdeck_tier_costs[6],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					5,
-					17
-				}
-			},
-			{
-				name_id = "menu_deck18_7",
-				desc_id = "menu_deck18_7_desc",
-				cost = perkdeck_tier_costs[7],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					6,
-					17
-				}
-			},
-			{
-				name_id = "menu_deck18_8",
-				desc_id = "menu_deck18_8_desc",
-				cost = perkdeck_tier_costs[8],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					7,
-					17
-				}
-			},
-			{
-				name_id = "menu_deck18_9",
-				desc_id = "menu_deck18_9_desc",
-				cost = perkdeck_tier_costs[9],
-				upgrades = {
-					
-				},
-				icon_xy = {
-					8,
-					17
-				}
-			},
-			ability_id = "smoke_screen_grenade",
-			desc_id = "menu_st_spec_18_desc",
-			name_id = "menu_st_spec_18"
-		})
 		
 		replace_perkdeck(perkdeck_indices.tagteam,{
 			{
@@ -4328,14 +4206,16 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			desc_id = "menu_st_spec_20_desc",
 			name_id = "menu_st_spec_20"
 		})
-	
+		
 		replace_perkdeck(perkdeck_indices.hacker,{
 			{
 				name_id = "menu_deck21_1",
 				desc_id = "menu_deck21_1_desc",
 				cost = perkdeck_tier_costs[1],
 				upgrades = {
-					
+					"pocket_ecm_jammer",
+					"player_pocket_ecm_jammer_base",
+					"player_pocket_ecm_jammer_loud_feedback_1"
 				},
 				icon_xy = {
 					0,
@@ -4347,7 +4227,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck21_2_desc",
 				cost = perkdeck_tier_costs[2],
 				upgrades = {
-					
+					"player_pocket_ecm_jammer_blocks_electronics",
+					"player_pocket_ecm_jammer_stealth_feedback_1"
 				},
 				icon_xy = {
 					1,
@@ -4359,7 +4240,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck21_3_desc",
 				cost = perkdeck_tier_costs[3],
 				upgrades = {
-					
+					"player_pocket_ecm_jammer_loud_feedback_2"
 				},
 				icon_xy = {
 					2,
@@ -4371,7 +4252,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck21_4_desc",
 				cost = perkdeck_tier_costs[4],
 				upgrades = {
-					
+					"player_pocket_ecm_jammer_stealth_feedback_2"
 				},
 				icon_xy = {
 					3,
@@ -4383,7 +4264,8 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck21_5_desc",
 				cost = perkdeck_tier_costs[5],
 				upgrades = {
-					
+					"player_pocket_ecm_jammer_loud_marking",
+					"player_pocket_ecm_jammer_marked_kill_cooldown_drain"
 				},
 				icon_xy = {
 					4,
@@ -4395,7 +4277,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck21_6_desc",
 				cost = perkdeck_tier_costs[6],
 				upgrades = {
-					
+					"player_pocket_ecm_jammer_stealth_passive_cooldown_refund"
 				},
 				icon_xy = {
 					5,
@@ -4407,7 +4289,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck21_7_desc",
 				cost = perkdeck_tier_costs[7],
 				upgrades = {
-					
+					"player_pocket_ecm_jammer_loud_feedback_3"
 				},
 				icon_xy = {
 					6,
@@ -4419,7 +4301,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck21_8_desc",
 				cost = perkdeck_tier_costs[8],
 				upgrades = {
-					
+					"player_pocket_ecm_jammer_stealth_feedback_3"
 				},
 				icon_xy = {
 					7,
@@ -4431,7 +4313,7 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 				desc_id = "menu_deck21_9_desc",
 				cost = perkdeck_tier_costs[9],
 				upgrades = {
-					
+					"pocket_ecm_jammer_amount_increase_1"
 				},
 				icon_xy = {
 					8,
@@ -4441,6 +4323,122 @@ Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
 			ability_id = "pocket_ecm_jammer",
 			desc_id = "menu_st_spec_21_desc",
 			name_id = "menu_st_spec_21"
+		})
+		
+		--remaining perk decks will be added later; template data here		
+				
+		replace_perkdeck(perkdeck_indices.sicario,{
+			{
+				name_id = "menu_deck18_1",
+				desc_id = "menu_deck18_1_desc",
+				cost = perkdeck_tier_costs[1],
+				upgrades = {
+					"player_damage_control_passive"
+				},
+				icon_xy = {
+					0,
+					17
+				}
+			},
+			{
+				name_id = "menu_deck18_2",
+				desc_id = "menu_deck18_2_desc",
+				cost = perkdeck_tier_costs[2],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					1,
+					17
+				}
+			},
+			{
+				name_id = "menu_deck18_3",
+				desc_id = "menu_deck18_3_desc",
+				cost = perkdeck_tier_costs[3],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					2,
+					17
+				}
+			},
+			{
+				name_id = "menu_deck18_4",
+				desc_id = "menu_deck18_4_desc",
+				cost = perkdeck_tier_costs[4],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					3,
+					17
+				}
+			},
+			{
+				name_id = "menu_deck18_5",
+				desc_id = "menu_deck18_5_desc",
+				cost = perkdeck_tier_costs[5],
+				upgrades = {
+					"player_damage_control_cooldown_drain_1"
+				},
+				icon_xy = {
+					4,
+					17
+				}
+			},
+			{
+				name_id = "menu_deck18_6",
+				desc_id = "menu_deck18_6_desc",
+				cost = perkdeck_tier_costs[6],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					5,
+					17
+				}
+			},
+			{
+				name_id = "menu_deck18_7",
+				desc_id = "menu_deck18_7_desc",
+				cost = perkdeck_tier_costs[7],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					6,
+					17
+				}
+			},
+			{
+				name_id = "menu_deck18_8",
+				desc_id = "menu_deck18_8_desc",
+				cost = perkdeck_tier_costs[8],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					7,
+					17
+				}
+			},
+			{
+				name_id = "menu_deck18_9",
+				desc_id = "menu_deck18_9_desc",
+				cost = perkdeck_tier_costs[9],
+				upgrades = {
+					
+				},
+				icon_xy = {
+					8,
+					17
+				}
+			},
+			ability_id = "smoke_screen_grenade",
+			desc_id = "menu_st_spec_18_desc",
+			name_id = "menu_st_spec_18"
 		})
 		
 		replace_perkdeck(perkdeck_indices.leech,{

@@ -47,6 +47,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 --			damage_bonus = true,
 			trigger_marked_event = true,
 			color = tweak_data.contour.character.civilian_mark_special_color
+		},
+		pocket_ecm_marked = {
+			fadeout = 2,
+			fadeout_silent = 3,
+			priority = 2,
+			material_swap_required = true,
+			color = Color(1,0,1)
 		}
 	}
 	
