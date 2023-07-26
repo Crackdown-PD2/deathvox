@@ -1,6 +1,7 @@
+local TCD_ENABLED = deathvox:IsTotalCrackdownEnabled()
+
 local mvec3_norm = mvector3.normalize
 
---i hate my life
 PlayerDamage._expres_election_stacks = 0
 PlayerDamage._expres_regenerate_speed = 1
 
@@ -429,8 +430,10 @@ function PlayerDamage:damage_bullet(attack_data)
 		attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
 	end
 	
-	pm:_deduct_local_cocaine_stacks()
-
+	if TCD_ENABLED then
+		pm:_deduct_local_cocaine_stacks()
+	end
+	
 	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
 	local shake_armor_multiplier = pm:body_armor_value("damage_shake") * pm:upgrade_value("player", "damage_shake_multiplier", 1)
@@ -745,7 +748,9 @@ function PlayerDamage:damage_melee(attack_data)
 		attack_data.damage = 1
 	end
 	
-	pm:_deduct_local_cocaine_stacks()
+	if TCD_ENABLED then
+		pm:_deduct_local_cocaine_stacks()
+	end
 	
 	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
@@ -1058,7 +1063,9 @@ function PlayerDamage:damage_fire(attack_data)
 		attack_data.damage = 1
 	end
 	
-	pm:_deduct_local_cocaine_stacks()
+	if TCD_ENABLED then
+		pm:_deduct_local_cocaine_stacks()
+	end
 	
 	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
@@ -1153,7 +1160,9 @@ function PlayerDamage:damage_explosion(attack_data)
 		attack_data.damage = 1
 	end
 	
-	pm:_deduct_local_cocaine_stacks()
+	if TCD_ENABLED then
+		pm:_deduct_local_cocaine_stacks()
+	end
 	
 	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
@@ -1379,7 +1388,7 @@ function PlayerDamage:remove_armor_plates_bonus()
 	managers.player:set_property("armor_plates_active",false)
 end
 
-if deathvox:IsTotalCrackdownEnabled() then 
+if TCD_ENABLED then 
 
 	function PlayerDamage:_upd_health_regen(t, dt)
 		local player_manager = managers.player
