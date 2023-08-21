@@ -1245,7 +1245,10 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			end
 
 			dmg_multiplier = dmg_multiplier * managers.player:upgrade_value("player", "melee_" .. tostring(melee_td.stats.weapon_type) .. "_damage_multiplier", 1)
-
+			
+			if character_unit:base():char_tweak().priority_shout then
+				dmg_multiplier = dmg_multiplier * (melee_td.stats.special_damage_multiplier or 1)
+			end
 			
 			if managers.player:has_category_upgrade("melee", "stacking_hit_damage_multiplier") then
 				self._state_data.stacking_dmg_mul = self._state_data.stacking_dmg_mul or {}
@@ -1335,14 +1338,14 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 				local lethal_hit = target_alive and defense_data.type == "dead"
 				if shuffle_cut_stacks ~= 0 then 
 					if lethal_hit and managers.player:has_category_upgrade("class_melee","throwing_loop_refund") then 
-						--on melee kill with shuffle and cut aced, don't consume a shuffle cut throwing wepaon bonus stack
+						-- on melee kill with shuffle and cut aced, don't consume a shuffle cut throwing weapon bonus stack
 					else
-						--else, consume one stack
+						-- else, consume one stack
 						managers.player:set_property("shuffle_cut_melee_bonus_damage",math.max(shuffle_cut_stacks - 1,0))
 					end
 				end
 				
-				--on melee hit, grant throwing bonus
+				-- on melee hit, grant throwing bonus
 				if managers.player:has_category_upgrade("class_melee","melee_boosts_throwing_loop") then 
 					local max_stacks = managers.player:upgrade_value("class_melee","melee_boosts_throwing_loop")[1]
 					local stacks = managers.player:get_property("shuffle_cut_throwing_bonus_damage",0)
@@ -1352,34 +1355,11 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			
 --			Hooks:Call("OnPlayerMeleeHit",character_unit,col_ray,action_data,defense_data,t,lethal_hit)
 
-			if not TCD_ENABLED then 
-				if melee_td.tase_data and character_unit:character_damage().damage_tase then
-					local _action_data = {
-						variant = melee_td.tase_data.tase_strength,
-						damage = 0,
-						attacker_unit = self._unit,
-						col_ray = col_ray
-					}
-
-					character_unit:character_damage():damage_tase(_action_data)
-				end
-
-				if melee_td.fire_dot_data and character_unit:character_damage().damage_fire then
-					local _action_data = {
-						variant = "fire",
-						damage = 0,
-						attacker_unit = self._unit,
-						col_ray = col_ray,
-						fire_dot_data = melee_td.fire_dot_data
-					}
-
-					character_unit:character_damage():damage_fire(_action_data)
-				end
-			else
+			if TCD_ENABLED then 
 				action_data.armor_piercing = melee_td.pierce_body_armor
 			end
 
-			self:_check_melee_dot_damage(col_ray, defense_data, melee_entry)
+			self:_check_melee_special_damage(col_ray, character_unit, defense_data, melee_entry)
 			self:_perform_sync_melee_damage(hit_unit, col_ray, action_data.damage)
 			
 			
