@@ -1316,7 +1316,7 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			action_data.name_id = melee_entry
 			action_data.charge_lerp_value = charge_lerp_value
 			
-			if character_unit:base():char_tweak().priority_shout then
+			if character_unit:base().char_tweak and character_unit:base():char_tweak().priority_shout then
 				dmg_multiplier = dmg_multiplier * (melee_td.stats.special_damage_multiplier or 1)
 			end
 			
