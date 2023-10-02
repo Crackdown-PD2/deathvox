@@ -307,24 +307,25 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 				local weapon_id = slot_data.name
 				local weapon_tweak = weapon_id and tweak_data.weapon[weapon_id]
-
-				if weapon_tweak.has_description then
-					updated_texts[4].text = updated_texts[4].text .. "\n" .. managers.localization:to_upper_text(tweak_data.weapon[slot_data.name].desc_id)
-					updated_texts[4].below_stats = true
-				end
-
-				if slot_data.not_moddable then
-					local movement_penalty = weapon_tweak and tweak_data.upgrades.weapon_movement_penalty[weapon_tweak.categories[1]] or 1
-
-					if movement_penalty < 1 then
-						local penalty_as_string = string.format("%d%%", math.round((1 - movement_penalty) * 100))
-						updated_texts[5].text = updated_texts[5].text .. managers.localization:to_upper_text("bm_menu_weapon_movement_penalty_info", {
-							penalty = penalty_as_string
-						})
+				if weapon_tweak then
+					if weapon_tweak.has_description then
+						updated_texts[4].text = updated_texts[4].text .. "\n" .. managers.localization:to_upper_text(tweak_data.weapon[slot_data.name].desc_id)
+						updated_texts[4].below_stats = true
 					end
-				end
+						
+					if slot_data.not_moddable then
+						local movement_penalty = weapon_tweak and tweak_data.upgrades.weapon_movement_penalty[weapon_tweak.categories[1]] or 1
 
-				updated_texts[5].below_stats = true
+						if movement_penalty < 1 then
+							local penalty_as_string = string.format("%d%%", math.round((1 - movement_penalty) * 100))
+							updated_texts[5].text = updated_texts[5].text .. managers.localization:to_upper_text("bm_menu_weapon_movement_penalty_info", {
+								penalty = penalty_as_string
+							})
+						end
+					end
+					
+					updated_texts[5].below_stats = true
+				end
 			elseif slot_data.locked_slot then
 				ignore_lock = true
 				updated_texts[1].text = managers.localization:to_upper_text("bm_menu_locked_weapon_slot")
@@ -558,32 +559,34 @@ if deathvox:IsTotalCrackdownEnabled() then
 		elseif identifier == self.identifiers.player_style then
 			local player_style = slot_data.name
 			local player_style_tweak = tweak_data.blackmarket.player_styles[player_style]
-			updated_texts[1].text = slot_data.name_localized
+			if player_style_tweak then
+				updated_texts[1].text = slot_data.name_localized
 
-			if not slot_data.unlocked then
-				updated_texts[2].text = "##" .. managers.localization:to_upper_text("bm_menu_item_locked") .. "##"
-				updated_texts[2].resource_color = tweak_data.screen_colors.important_1
-				updated_texts[3].text = slot_data.dlc_locked and managers.localization:to_upper_text(slot_data.dlc_locked) or managers.localization:to_upper_text("bm_menu_dlc_locked")
-			end
-
-			local desc_id = player_style_tweak.desc_id
-			local desc_colors = {}
-			updated_texts[4].text = desc_id and managers.localization:text(desc_id) or ""
-
-			if slot_data.global_value and slot_data.global_value ~= "normal" then
-				local gvalue_tweak = tweak_data.lootdrop.global_values[slot_data.global_value]
-
-				if gvalue_tweak.desc_id then
-					updated_texts[4].text = updated_texts[4].text .. "\n##" .. managers.localization:to_upper_text(gvalue_tweak.desc_id) .. "##"
-
-					table.insert(desc_colors, gvalue_tweak.color)
+				if not slot_data.unlocked then
+					updated_texts[2].text = "##" .. managers.localization:to_upper_text("bm_menu_item_locked") .. "##"
+					updated_texts[2].resource_color = tweak_data.screen_colors.important_1
+					updated_texts[3].text = slot_data.dlc_locked and managers.localization:to_upper_text(slot_data.dlc_locked) or managers.localization:to_upper_text("bm_menu_dlc_locked")
 				end
-			end
 
-			if #desc_colors == 1 then
-				updated_texts[4].resource_color = desc_colors[1]
-			else
-				updated_texts[4].resource_color = desc_colors
+				local desc_id = player_style_tweak.desc_id
+				local desc_colors = {}
+				updated_texts[4].text = desc_id and managers.localization:text(desc_id) or ""
+
+				if slot_data.global_value and slot_data.global_value ~= "normal" then
+					local gvalue_tweak = tweak_data.lootdrop.global_values[slot_data.global_value]
+
+					if gvalue_tweak.desc_id then
+						updated_texts[4].text = updated_texts[4].text .. "\n##" .. managers.localization:to_upper_text(gvalue_tweak.desc_id) .. "##"
+
+						table.insert(desc_colors, gvalue_tweak.color)
+					end
+				end
+
+				if #desc_colors == 1 then
+					updated_texts[4].resource_color = desc_colors[1]
+				else
+					updated_texts[4].resource_color = desc_colors
+				end
 			end
 		elseif identifier == self.identifiers.suit_variation then
 			local player_style = self._data.prev_node_data.name
@@ -620,32 +623,34 @@ if deathvox:IsTotalCrackdownEnabled() then
 		elseif identifier == self.identifiers.glove then
 			local glove_id = slot_data.name
 			local glove_tweak = tweak_data.blackmarket.gloves[glove_id]
-			updated_texts[1].text = slot_data.name_localized
+			if glove_tweak then
+				updated_texts[1].text = slot_data.name_localized
 
-			if not slot_data.unlocked then
-				updated_texts[2].text = "##" .. managers.localization:to_upper_text("bm_menu_item_locked") .. "##"
-				updated_texts[2].resource_color = tweak_data.screen_colors.important_1
-				updated_texts[3].text = slot_data.dlc_locked and managers.localization:to_upper_text(slot_data.dlc_locked) or managers.localization:to_upper_text("bm_menu_dlc_locked")
-			end
-
-			local desc_id = glove_tweak.desc_id
-			local desc_colors = {}
-			updated_texts[4].text = desc_id and managers.localization:text(desc_id) or ""
-
-			if slot_data.global_value and slot_data.global_value ~= "normal" then
-				local gvalue_tweak = tweak_data.lootdrop.global_values[slot_data.global_value]
-
-				if gvalue_tweak.desc_id then
-					updated_texts[4].text = updated_texts[4].text .. "\n##" .. managers.localization:to_upper_text(gvalue_tweak.desc_id) .. "##"
-
-					table.insert(desc_colors, gvalue_tweak.color)
+				if not slot_data.unlocked then
+					updated_texts[2].text = "##" .. managers.localization:to_upper_text("bm_menu_item_locked") .. "##"
+					updated_texts[2].resource_color = tweak_data.screen_colors.important_1
+					updated_texts[3].text = slot_data.dlc_locked and managers.localization:to_upper_text(slot_data.dlc_locked) or managers.localization:to_upper_text("bm_menu_dlc_locked")
 				end
-			end
 
-			if #desc_colors == 1 then
-				updated_texts[4].resource_color = desc_colors[1]
-			else
-				updated_texts[4].resource_color = desc_colors
+				local desc_id = glove_tweak.desc_id
+				local desc_colors = {}
+				updated_texts[4].text = desc_id and managers.localization:text(desc_id) or ""
+
+				if slot_data.global_value and slot_data.global_value ~= "normal" then
+					local gvalue_tweak = tweak_data.lootdrop.global_values[slot_data.global_value]
+
+					if gvalue_tweak.desc_id then
+						updated_texts[4].text = updated_texts[4].text .. "\n##" .. managers.localization:to_upper_text(gvalue_tweak.desc_id) .. "##"
+
+						table.insert(desc_colors, gvalue_tweak.color)
+					end
+				end
+
+				if #desc_colors == 1 then
+					updated_texts[4].resource_color = desc_colors[1]
+				else
+					updated_texts[4].resource_color = desc_colors
+				end
 			end
 		elseif identifier == self.identifiers.mask then
 			local price = slot_data.price
@@ -1397,6 +1402,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 					}
 					local lock_text_id = slot_data.lock_text_id or "bm_menu_wcc_not_owned"
 					updated_texts[5].text = (slot_data.default_blueprint and "" or "\n") .. managers.localization:text(lock_text_id, macros)
+				elseif type(slot_data.unlocked) == "number" then
+					updated_texts[2].text = updated_texts[2].text .. managers.localization:to_upper_text("bm_menu_item_amount", {
+						amount = tostring(math.abs(slot_data.unlocked))
+					})
 				end
 
 				if cosmetic_rarity then
@@ -1680,7 +1689,3 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 
 end
-
-
-
-
