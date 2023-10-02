@@ -422,10 +422,11 @@ function CopActionHurt:init(action_desc, common_data)
 
 		if action_type == "death" then
 			if action_desc.variant == "fire" then
+				local fire_variant = alive(action_desc.weapon_unit) and (tweak_data.weapon[action_desc.weapon_unit:base():get_name_id()] or tweak_data.weapon.amcar).fire_variant or "fire"
+				
 				keep_checking = nil
 
 				local variant = 0
-
 				if common_data.ext_anim.ragdoll or common_data.ext_movement:died_on_rope() then
 					self:force_ragdoll()
 				else
@@ -439,7 +440,12 @@ function CopActionHurt:init(action_desc, common_data)
 
 					variant = 1
 
-					local variant_count = #self.fire_death_anim_variants_length
+					local variant_count
+					if fire_variant == "money" then 
+						variant_count = 10
+					else
+						variant_count = #self.fire_death_anim_variants_length
+					end
 
 					if variant_count > 1 then
 						variant = self:_pseudorandom(variant_count)
@@ -463,7 +469,11 @@ function CopActionHurt:init(action_desc, common_data)
 						keep_checking = nil
 
 						redir_res = common_data.ext_movement:play_redirect("death_run")
-
+						
+						if fire_variant == "money" and alive(self._unit) and self._unit:inventory() then 
+							self._unit:inventory():set_visibility_state("false")
+						end
+						
 						if not redir_res then
 							return
 						end
@@ -812,8 +822,10 @@ function CopActionHurt:init(action_desc, common_data)
 
 	if not common_data.ext_base.nick_name then
 		if action_desc.variant == "fire" then
+			local fire_variant = alive(action_desc.weapon_unit) and (tweak_data.weapon[action_desc.weapon_unit:base():get_name_id()] or tweak_data.weapon.amcar).fire_variant or "fire"
+			
 			if action_type == "fire_hurt" then
-				common_data.unit:sound():say("burnhurt")
+				common_data.unit:sound():say(fire_variant == "money" and "moneythrower_hurt" or "burnhurt", nil, fire_variant == "money"))
 			elseif action_type == "death" then
 				if common_data.ext_base:has_tag("tank") then
 					if common_data.char_tweak.die_sound_event then
@@ -822,7 +834,7 @@ function CopActionHurt:init(action_desc, common_data)
 						common_data.unit:sound():say("x02a_any_3p")
 					end
 				else
-					common_data.unit:sound():say("burndeath")
+					common_data.unit:sound():say(fire_variant == "money" and "moneythrower_death" or "burndeath", nil, fire_variant == "money")
 
 					if common_data.ext_base:has_tag("spooc") and common_data.char_tweak.die_sound_event then
 						common_data.unit:sound():play(common_data.char_tweak.die_sound_event)

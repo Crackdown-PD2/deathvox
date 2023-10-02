@@ -988,6 +988,10 @@ function CopDamage:damage_bullet(attack_data)
 
 		if self._char_tweak.priority_shout then
 			damage = damage * managers.player:upgrade_value("weapon", "special_damage_taken_multiplier", 1)
+			
+			if attack_data.weapon_unit:base().weapon_tweak_data then
+				damage = damage * (attack_data.weapon_unit:base():weapon_tweak_data().special_damage_multiplier or 1)
+			end
 		end
 
 		if head then
@@ -2562,6 +2566,7 @@ function CopDamage:sync_damage_melee(attacker_unit, damage_percent, damage_effec
 
 	attack_data.result = result
 	attack_data.is_synced = true
+	attack_data.name_id = attacker_unit and attacker_unit:inventory() and attacker_unit:inventory():get_melee_weapon_id()
 
 	if i_result == 3 then
 		self._unit:unit_data().has_alarm_pager = false

@@ -1316,6 +1316,10 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			action_data.name_id = melee_entry
 			action_data.charge_lerp_value = charge_lerp_value
 			
+			if character_unit:base():char_tweak().priority_shout then
+				dmg_multiplier = dmg_multiplier * (melee_td.stats.special_damage_multiplier or 1)
+			end
+			
 			if managers.player:has_category_upgrade("melee", "stacking_hit_damage_multiplier") then
 				self._state_data.stacking_dmg_mul = self._state_data.stacking_dmg_mul or {}
 				self._state_data.stacking_dmg_mul.melee = self._state_data.stacking_dmg_mul.melee or {
@@ -1368,7 +1372,7 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			self:_perform_sync_melee_damage(hit_unit, col_ray, damage)
 		end
 	end
-
+	
 	if managers.player:has_category_upgrade("melee", "stacking_hit_damage_multiplier") then
 		self._state_data.stacking_dmg_mul = self._state_data.stacking_dmg_mul or {}
 		self._state_data.stacking_dmg_mul.melee = self._state_data.stacking_dmg_mul.melee or {

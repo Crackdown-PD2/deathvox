@@ -138,9 +138,10 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 	local shield_piercing = self._can_shoot_through_shield
 	local body_piercing = self._can_shoot_through_enemy
 
-	local ap_slug = self._bullet_class == InstantBulletBase and self._rays == 1
-	local he_round = self._bullet_class == InstantExplosiveBulletBase
-	local dragons_breath = self._bullet_class == FlameBulletBase
+	local bullet_class = self:bullet_class()
+	local ap_slug = bullet_class == InstantBulletBase and self._rays == 1
+	local he_round = bullet_class == InstantExplosiveBulletBase
+	local dragons_breath = bullet_class == FlameBulletBase
 
 	local result = nil
 	local col_rays = nil
@@ -376,7 +377,9 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 	local hit_through_wall = false
 	local hit_through_shield = false
 	local hit_anyone = false
-
+	
+	local extra_collisions = self.extra_collisions and self:extra_collisions()
+	
 	--usual shotgun stat stuff
 	local kill_data = {
 		kills = 0,
@@ -418,16 +421,16 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 							hit_shields[col_ray.unit:key()] = col_ray
 
 							--only hit the shield once to avoid almost guaranteed knockbacks
-							self._bullet_class:on_collision(col_ray, self._unit, user_unit, damage)
+							bullet_class:on_collision(col_ray, self._unit, user_unit, damage)
 						else
-							self._bullet_class:on_collision_effects(col_ray, self._unit, user_unit, damage)
+							bullet_class:on_collision_effects(col_ray, self._unit, user_unit, damage)
 						end
 					else
 						local final_damage = damage / self._rays
 						final_damage = self:get_damage_falloff(final_damage, col_ray, user_unit)
 
 						--still going to split damage here among the pellets and apply fall-off to avoid situations where a 155-damage shotgun deals 155 damage per pellet to things like solid objects or similar
-						self._bullet_class:on_collision(col_ray, self._unit, user_unit, final_damage)
+						bullet_class:on_collision(col_ray, self._unit, user_unit, final_damage)
 					end
 				end
 			else
@@ -450,17 +453,25 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 						table.insert(units_to_ignore, col_ray.unit:key())
 
 						--only hit the shield once to avoid almost guaranteed knockbacks
-						self._bullet_class:on_collision(col_ray, self._unit, user_unit, damage)
+						bullet_class:on_collision(col_ray, self._unit, user_unit, damage)
 					else
-						self._bullet_class:on_collision_effects(col_ray, self._unit, user_unit, damage)
+						bullet_class:on_collision_effects(col_ray, self._unit, user_unit, damage)
 					end
 				end
 
 				if final_damage > 0 then
 					local my_result = nil
 
-					my_result = self._bullet_class:on_collision(col_ray, self._unit, user_unit, final_damage)
-
+					my_result = bullet_class:on_collision(col_ray, self._unit, user_unit, final_damage)
+					
+					if extra_collisions then
+						for idx, extra_col_data in ipairs(extra_collisions) do
+							if alive(hit.unit) then
+								extra_col_data.bullet_class:on_collision(hit, self._unit, user_unit, dmg * (extra_col_data.dmg_mul or 1))
+							end
+						end
+					end
+					
 					--only try to modify the result if the mutator is active and the unit is valid
 					if managers.game_play_central:get_shotgun_push_range() ~= 500 and col_ray.unit:character_damage() and not (col_ray.unit:base() and col_ray.unit:base().sentry_gun) then
 						my_result = managers.mutators:modify_value("ShotgunBase:_fire_raycast", my_result)
@@ -558,8 +569,16 @@ function ShotgunBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoo
 			if final_damage > 0 then
 				local my_result = nil
 
-				my_result = self._bullet_class:on_collision(col_ray, self._unit, user_unit, final_damage)
-
+				my_result = bullet_class:on_collision(col_ray, self._unit, user_unit, final_damage)
+				
+				if extra_collisions then
+					for idx, extra_col_data in ipairs(extra_collisions) do
+						if alive(hit.unit) then
+							extra_col_data.bullet_class:on_collision(hit, self._unit, user_unit, dmg * (extra_col_data.dmg_mul or 1))
+						end
+					end
+				end
+				
 				if managers.game_play_central:get_shotgun_push_range() ~= 500 and not (col_ray.unit:base() and col_ray.unit:base().sentry_gun) then --only try to modify the result if the mutator is active and the unit is valid
 					my_result = managers.mutators:modify_value("ShotgunBase:_fire_raycast", my_result)
 				end

@@ -413,6 +413,10 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 		end
 	end
 	
+	if self._autoaim and self._active_modify_mutator then
+		self._active_modify_mutator:check_modify_weapon(self)
+	end
+	
 	if not self:_soundfix_should_play_normal() then 
 		self._bullets_fired = 0
 		self:play_tweak_data_sound(self:weapon_tweak_data().sounds.fire_single,"fire_single")
@@ -429,6 +433,7 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 		
 		self._bullets_fired = self._bullets_fired + 1
 	end
+
 	
 	local user_unit = self._setup.user_unit
 	local is_player = user_unit == pm:player_unit()
@@ -436,7 +441,16 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 	local ammo_usage = self:ammo_usage()	
 	local base = self:ammo_base()
 	local mag = base:get_ammo_remaining_in_clip()
-	
+		
+	local mutator = nil
+
+	if managers.mutators:is_mutator_active(MutatorPiggyRevenge) then
+		mutator = managers.mutators:get_mutator(MutatorPiggyRevenge)
+	end
+
+	if mutator and mutator.get_free_ammo_chance and mutator:get_free_ammo_chance() then
+		ammo_usage = 0
+	end
 
 	
 
@@ -620,7 +634,7 @@ function RaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul
 
 	for _, hit in ipairs(ray_hits) do
 		damage = self:get_damage_falloff(damage, hit, user_unit)
-		hit_result = self._bullet_class:on_collision(hit, self._unit, user_unit, damage, nil, nil, nil, self._money_shot_ready)
+		hit_result = self:bullet_class():on_collision(hit, self._unit, user_unit, damage, nil, nil, nil, self._money_shot_ready)
 
 		if hit_result and hit_result.type == "death" then
 			local unit_type = hit.unit:base() and hit.unit:base()._tweak_table
