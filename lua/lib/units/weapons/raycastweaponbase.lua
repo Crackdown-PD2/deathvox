@@ -592,8 +592,6 @@ function RaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul
 	mvector3.set(mvec_to, mvec_spread_direction)
 	mvector3.multiply(mvec_to, ray_distance)
 	mvector3.add(mvec_to, from_pos)
-
-	local damage = self:_get_current_damage(dmg_mul)
 	
 	local ray_hits, hit_enemy = self:_collect_hits(from_pos, mvec_to)
 	local hit_anyone = false
@@ -630,94 +628,42 @@ function RaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul
 	local cop_kill_count = 0
 	local hit_through_wall = false
 	local hit_through_shield = false
+	local is_civ_f = CopDamage.is_civilian
+	local damage = self:_get_current_damage(dmg_mul)
 	local hit_result = nil
 
 	for _, hit in ipairs(ray_hits) do
 		damage = self:get_damage_falloff(damage, hit, user_unit)
-		hit_result = self:bullet_class():on_collision(hit, self._unit, user_unit, damage, nil, nil, nil, self._money_shot_ready)
+		if damage > 0 then 
+			hit_result = self:bullet_class():on_collision(hit, self._unit, user_unit, damage, nil, nil, nil, self._money_shot_ready)
 
-		if hit_result and hit_result.type == "death" then
-			local unit_type = hit.unit:base() and hit.unit:base()._tweak_table
-			local is_civilian = unit_type and CopDamage.is_civilian(unit_type)
-
-			if not is_civilian then
-				cop_kill_count = cop_kill_count + 1
-			end
-
-			if self:is_category(tweak_data.achievement.easy_as_breathing.weapon_type) and not is_civilian then
-				self._kills_without_releasing_trigger = (self._kills_without_releasing_trigger or 0) + 1
-
-				if tweak_data.achievement.easy_as_breathing.count <= self._kills_without_releasing_trigger then
-					managers.achievment:award(tweak_data.achievement.easy_as_breathing.award)
+			if hit_result then 
+				if hit.unit:in_slot(managers.slot:get_mask("world_geometry")) then
+					hit_through_wall = true
+				elseif hit.unit:in_slot(managers.slot:get_mask("enemy_shield_check")) then
+					hit_through_shield = hit_through_shield or alive(hit.unit:parent())
 				end
-			end
-		end
+				
+				hit.damage_result = hit_result
+				hit_anyone = true
+				hit_count = hit_count + 1
+				
+				if hit_result.type == "death" then
+					local unit_base = hit.unit:base()
+					local unit_type = unit_base and unit_base._tweak_table
+					local is_civilian = unit_type and is_civ_f(unit_type)
 
-		if hit_result then
-			hit.damage_result = hit_result
-			hit_anyone = true
-			hit_count = hit_count + 1
-		end
-
-		if hit.unit:in_slot(managers.slot:get_mask("world_geometry")) then
-			hit_through_wall = true
-		elseif hit.unit:in_slot(managers.slot:get_mask("enemy_shield_check")) then
-			hit_through_shield = hit_through_shield or alive(hit.unit:parent())
-		end
-
-		if hit_result and hit_result.type == "death" and cop_kill_count > 0 then
-			local unit_type = hit.unit:base() and hit.unit:base()._tweak_table
-			local multi_kill, enemy_pass, obstacle_pass, weapon_pass, weapons_pass, weapon_type_pass = nil
-
-			for achievement, achievement_data in pairs(tweak_data.achievement.sniper_kill_achievements) do
-				multi_kill = not achievement_data.multi_kill or cop_kill_count == achievement_data.multi_kill
-				enemy_pass = not achievement_data.enemy or unit_type == achievement_data.enemy
-				obstacle_pass = not achievement_data.obstacle or achievement_data.obstacle == "wall" and hit_through_wall or achievement_data.obstacle == "shield" and hit_through_shield
-				weapon_pass = not achievement_data.weapon or self._name_id == achievement_data.weapon
-				weapons_pass = not achievement_data.weapons or table.contains(achievement_data.weapons, self._name_id)
-				weapon_type_pass = not achievement_data.weapon_type or self:is_category(achievement_data.weapon_type)
-
-				if multi_kill and enemy_pass and obstacle_pass and weapon_pass and weapons_pass and weapon_type_pass then
-					if achievement_data.stat then
-						managers.achievment:award_progress(achievement_data.stat)
-					elseif achievement_data.award then
-						managers.achievment:award(achievement_data.award)
-					elseif achievement_data.challenge_stat then
-						managers.challenge:award_progress(achievement_data.challenge_stat)
-					elseif achievement_data.trophy_stat then
-						managers.custom_safehouse:award(achievement_data.trophy_stat)
-					elseif achievement_data.challenge_award then
-						managers.challenge:award(achievement_data.challenge_award)
+					if not is_civilian then
+						cop_kill_count = cop_kill_count + 1
 					end
 				end
+				self:_check_kill_achievements(cop_kill_count, unit_base, unit_type, is_civilian, hit_through_wall, hit_through_shield)
 			end
 		end
 	end
 
-	if not tweak_data.achievement.tango_4.difficulty or table.contains(tweak_data.achievement.tango_4.difficulty, Global.game_settings.difficulty) then
-		if self._gadgets and table.contains(self._gadgets, "wpn_fps_upg_o_45rds") and cop_kill_count > 0 and managers.player:player_unit():movement():current_state():in_steelsight() then
-			if self._tango_4_data then
-				if self._gadget_on == self._tango_4_data.last_gadget_state then
-					self._tango_4_data = nil
-				else
-					self._tango_4_data.last_gadget_state = self._gadget_on
-					self._tango_4_data.count = self._tango_4_data.count + 1
-				end
-
-				if self._tango_4_data and tweak_data.achievement.tango_4.count <= self._tango_4_data.count then
-					managers.achievment:_award_achievement(tweak_data.achievement.tango_4, "tango_4")
-				end
-			else
-				self._tango_4_data = {
-					count = 1,
-					last_gadget_state = self._gadget_on
-				}
-			end
-		elseif self._tango_4_data then
-			self._tango_4_data = nil
-		end
-	end
-
+	self:_check_tango_achievements(cop_kill_count)
+	
 	result.hit_enemy = hit_anyone
 
 	if self._autoaim then
