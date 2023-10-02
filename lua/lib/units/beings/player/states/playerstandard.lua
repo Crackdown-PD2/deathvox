@@ -2403,9 +2403,19 @@ if TCD_ENABLED then
 	
 	function PlayerStandard:_check_action_interact(t, input)
 		local keyboard = self._controller.TYPE == "pc" or managers.controller:get_default_wrapper_type() == "pc"
+		local pressed, released, holding = nil
+
+		if self._interact_expire_t then
+			pressed, released, holding = self:_check_tap_to_interact_inputs(t, input.btn_interact_press, input.btn_interact_release, input.btn_interact_state)
+		else
+			holding = input.btn_interact_state
+			released = input.btn_interact_release
+			pressed = input.btn_interact_press
+		end
+
 		local new_action, timer, interact_object = nil
 
-		if input.btn_interact_press then
+		if pressed then
 			if _G.IS_VR then
 				self._interact_hand = input.btn_interact_left_press and PlayerHand.LEFT or PlayerHand.RIGHT
 			end
@@ -2419,13 +2429,13 @@ if TCD_ENABLED then
 
 				if timer then
 					new_action = true
-					
+
 					--removing the limit with the upgrade is the only change
 					if not managers.player:has_category_upgrade("player", "burglar_camera_freeturn") then
 						self._ext_camera:camera_unit():base():set_limits(80, 50)
 					end
-					
 					self:_start_action_interact(t, input, timer, interact_object)
+					self:_chk_tap_to_interact_enable(t, timer, interact_object)
 				end
 
 				if not new_action then
@@ -2442,9 +2452,7 @@ if TCD_ENABLED then
 			force_secondary_intimidate = true
 		end
 
-		if input.btn_interact_release then
-			local released = true
-
+		if released then
 			if _G.IS_VR then
 				local release_hand = input.btn_interact_left_release and PlayerHand.LEFT or PlayerHand.RIGHT
 				released = release_hand == self._interact_hand

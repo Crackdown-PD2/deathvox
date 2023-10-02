@@ -1159,6 +1159,14 @@ function CopActionShoot:_chk_start_melee(t)
 	return true
 end
 
+function CopActionShoot:sync_start_melee()
+	if self._shield_unit or self._ext_anim.melee then
+		return
+	end
+
+	self:_chk_start_melee(TimerManager:game():time())
+end
+
 function CopActionShoot:anim_clbk_melee_strike()
 	local melee_weap_data = self._melee_weapon_data
 
