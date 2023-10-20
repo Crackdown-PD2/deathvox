@@ -431,9 +431,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local optimal_start = self._optimal_distance
 		local optimal_end = self._optimal_distance + self._optimal_range
 		local far_dist = optimal_end + self._far_falloff
-		local near_mul = self._near_mul
+		local near_mul = self._near_multiplier
 		local optimal_mul = 1
-		local far_mul = self._far_mul
+		local far_mul = self._far_multiplier
 		local primary_category = self:weapon_tweak_data().categories and self:weapon_tweak_data().categories[1]
 		local current_state = user_unit and user_unit:movement() and user_unit:movement()._current_state
 

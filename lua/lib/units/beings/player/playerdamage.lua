@@ -1,6 +1,7 @@
+local TCD_ENABLED = deathvox:IsTotalCrackdownEnabled()
+
 local mvec3_norm = mvector3.normalize
 
---i hate my life
 PlayerDamage._expres_election_stacks = 0
 PlayerDamage._expres_regenerate_speed = 1
 
@@ -46,7 +47,7 @@ end
 
 function PlayerDamage:_raw_max_health()
 	if managers.player:has_category_upgrade("player", "sociopath_mode") then
-		local hp = 4
+		local hp = tweak_data.upgrades.values.player.sociopath_max_hp
 		
 		hp = hp + managers.player:upgrade_value("player", "sociopath_health_addend", 0)
 		
@@ -375,59 +376,62 @@ function PlayerDamage:damage_bullet(attack_data)
 		self:do_thorns(attack_data.damage)
 	end
 	
-	if not managers.player:has_category_upgrade("player", "sociopath_mode") then
-		local dodge_roll = math.random()
-		local dodge_value = tweak_data.player.damage.DODGE_INIT or 0
-		local armor_dodge_chance = pm:body_armor_value("dodge")
-		local skill_dodge_chance = pm:skill_dodge_chance(self._unit:movement():running(), self._unit:movement():crouching(), self._unit:movement():zipline_unit())
-		dodge_value = dodge_value + armor_dodge_chance + skill_dodge_chance
-
-		if self._temporary_dodge_t and TimerManager:game():time() < self._temporary_dodge_t then
-			dodge_value = dodge_value + self._temporary_dodge
-		end
-
-		local smoke_dodge = 0
-
-		for _, smoke_screen in ipairs(pm._smoke_screen_effects or {}) do
-			if smoke_screen:is_in_smoke(self._unit) then
-				smoke_dodge = tweak_data.projectiles.smoke_screen_grenade.dodge_chance
-
-				break
-			end
-		end
-
-		dodge_value = 1 - (1 - dodge_value) * (1 - smoke_dodge)
-
-		if dodge_roll < dodge_value then
-			self:play_whizby(attack_data.col_ray.position)
-			pm:send_message(Message.OnPlayerDodge)
-
-			return
-		end
-	
-		local dmg_mul = pm:damage_reduction_skill_multiplier("bullet")
-		attack_data.damage = attack_data.damage * dmg_mul
-		attack_data.damage = pm:modify_value("damage_taken", attack_data.damage, attack_data)
-		attack_data.damage = managers.mutators:modify_value("PlayerDamage:TakeDamageBullet", attack_data.damage)
-		attack_data.damage = managers.modifiers:modify_value("PlayerDamage:TakeDamageBullet", attack_data.damage)
-		
-		if _G.IS_VR then
-			local distance = mvector3.distance(self._unit:position(), attack_data.attacker_unit:position())
-
-			if tweak_data.vr.long_range_damage_reduction_distance[1] < distance then
-				local step = math.clamp(distance / tweak_data.vr.long_range_damage_reduction_distance[2], 0, 1)
-				local mul = 1 - math.step(tweak_data.vr.long_range_damage_reduction[1], tweak_data.vr.long_range_damage_reduction[2], step)
-				attack_data.damage = attack_data.damage * mul
-			end
-		end
-		
-		local damage_absorption = pm:damage_absorption()
-
-		if damage_absorption > 0 then
-			attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
-		end
-	else
+	if managers.player:has_category_upgrade("player", "sociopath_mode") then
 		attack_data.damage = 1
+	end
+	local dodge_roll = math.random()
+	local dodge_value = tweak_data.player.damage.DODGE_INIT or 0
+	local armor_dodge_chance = pm:body_armor_value("dodge")
+	local skill_dodge_chance = pm:skill_dodge_chance(self._unit:movement():running(), self._unit:movement():crouching(), self._unit:movement():zipline_unit())
+	dodge_value = dodge_value + armor_dodge_chance + skill_dodge_chance
+
+	if self._temporary_dodge_t and TimerManager:game():time() < self._temporary_dodge_t then
+		dodge_value = dodge_value + self._temporary_dodge
+	end
+
+	local smoke_dodge = 0
+
+	for _, smoke_screen in ipairs(pm._smoke_screen_effects or {}) do
+		if smoke_screen:is_in_smoke(self._unit) then
+			smoke_dodge = tweak_data.projectiles.smoke_screen_grenade.dodge_chance
+
+			break
+		end
+	end
+
+	dodge_value = 1 - (1 - dodge_value) * (1 - smoke_dodge)
+
+	if dodge_roll < dodge_value then
+		self:play_whizby(attack_data.col_ray.position)
+		pm:send_message(Message.OnPlayerDodge)
+
+		return
+	end
+
+	local dmg_mul = pm:damage_reduction_skill_multiplier("bullet")
+	attack_data.damage = attack_data.damage * dmg_mul
+	attack_data.damage = pm:modify_value("damage_taken", attack_data.damage, attack_data)
+	attack_data.damage = managers.mutators:modify_value("PlayerDamage:TakeDamageBullet", attack_data.damage)
+	attack_data.damage = managers.modifiers:modify_value("PlayerDamage:TakeDamageBullet", attack_data.damage)
+	
+	if _G.IS_VR then
+		local distance = mvector3.distance(self._unit:position(), attack_data.attacker_unit:position())
+
+		if tweak_data.vr.long_range_damage_reduction_distance[1] < distance then
+			local step = math.clamp(distance / tweak_data.vr.long_range_damage_reduction_distance[2], 0, 1)
+			local mul = 1 - math.step(tweak_data.vr.long_range_damage_reduction[1], tweak_data.vr.long_range_damage_reduction[2], step)
+			attack_data.damage = attack_data.damage * mul
+		end
+	end
+	
+	local damage_absorption = pm:damage_absorption()
+	
+	if damage_absorption > 0 then
+		attack_data.damage = math.max(0, attack_data.damage - damage_absorption)
+	end
+	
+	if TCD_ENABLED then
+		pm:_deduct_local_cocaine_stacks()
 	end
 	
 	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
@@ -463,7 +467,7 @@ function PlayerDamage:damage_bullet(attack_data)
 			self._unit:sound():play("player_hit_permadamage")
 		end
 	end
-
+	
 	self:_check_chico_heal(attack_data)
 
 	local armor_reduction_multiplier = 0
@@ -613,6 +617,13 @@ end
 local _calc_armor_damage_original = PlayerDamage._calc_armor_damage
 function PlayerDamage:_calc_armor_damage(attack_data, ...)
 	if self:get_real_armor() > 0 then
+		if self:armor_ratio() == 1 then
+			if managers.player:has_category_upgrade("player","armorer_full_armor_temp_invuln") then
+				local duration = managers.player:upgrade_value("player","armorer_full_armor_temp_invuln",0)
+				managers.player:activate_temporary_property("armorer_perfect_defense_invuln",duration)
+			end
+		end
+		
 		if self._old_last_received_dmg then
 			attack_data.damage = attack_data.damage - self._old_last_received_dmg
 		end
@@ -737,6 +748,10 @@ function PlayerDamage:damage_melee(attack_data)
 		attack_data.damage = 1
 	end
 	
+	if TCD_ENABLED then
+		pm:_deduct_local_cocaine_stacks()
+	end
+	
 	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
 	if attack_data.tase_player then
@@ -784,7 +799,7 @@ function PlayerDamage:damage_melee(attack_data)
 
 		return
 	end
-
+	
 	self:_check_chico_heal(attack_data)
 
 	local go_through_armor = false --manual toggle
@@ -1048,6 +1063,10 @@ function PlayerDamage:damage_fire(attack_data)
 		attack_data.damage = 1
 	end
 	
+	if TCD_ENABLED then
+		pm:_deduct_local_cocaine_stacks()
+	end
+	
 	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
 	if self._bleed_out then
@@ -1067,7 +1086,7 @@ function PlayerDamage:damage_fire(attack_data)
 			self._unit:sound():play("player_hit_permadamage")
 		end
 	end
-
+	
 	self:_check_chico_heal(attack_data)
 
 	local armor_reduction_multiplier = 0
@@ -1141,6 +1160,10 @@ function PlayerDamage:damage_explosion(attack_data)
 		attack_data.damage = 1
 	end
 	
+	if TCD_ENABLED then
+		pm:_deduct_local_cocaine_stacks()
+	end
+	
 	attack_data.damage = pm:consume_damage_overshield(attack_data.damage)
 
 	if attack_data.attacker_unit and alive(attack_data.attacker_unit) then
@@ -1179,7 +1202,7 @@ function PlayerDamage:damage_explosion(attack_data)
 			self._unit:movement():push(push_vec * push_force)
 		end
 	end
-
+	
 	self:_check_chico_heal(attack_data)
 
 	local health_subtracted = self:_calc_armor_damage(attack_data)
@@ -1365,7 +1388,7 @@ function PlayerDamage:remove_armor_plates_bonus()
 	managers.player:set_property("armor_plates_active",false)
 end
 
-if deathvox:IsTotalCrackdownEnabled() then 
+if TCD_ENABLED then 
 
 	function PlayerDamage:_upd_health_regen(t, dt)
 		local player_manager = managers.player
@@ -1585,7 +1608,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		local to_restore = nil
 		
 		if managers.player:has_category_upgrade("player", "sociopath_mode") then
-			to_restore = 2
+			to_restore = tweak_data.upgrades.values.player.sociopath_max_hp
 		else
 			to_restore = self:_max_health() * self._healing_reduction
 		end
@@ -1815,7 +1838,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 	local orig_chk_invuln = PlayerDamage._chk_can_take_dmg
 	function PlayerDamage:_chk_can_take_dmg(...)
-		return orig_chk_invuln(self,...) and not managers.player:has_active_temporary_property("preventative_care_invuln_active")
+		return orig_chk_invuln(self,...) and not managers.player:has_active_temporary_property("preventative_care_invuln_active") and not managers.player:has_active_temporary_property("armorer_perfect_defense_invuln")
 	end
 
 	function PlayerDamage:damage_fall(data)

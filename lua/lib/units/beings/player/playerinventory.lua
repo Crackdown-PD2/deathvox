@@ -1,4 +1,5 @@
 local tostring_g = tostring
+local TCD_ENABLED = deathvox:IsTotalCrackdownEnabled()
 
 function PlayerInventory:load(data)
 	if data.equipped_weapon_index then
@@ -47,16 +48,50 @@ function PlayerInventory:sync_net_event(event_id, peer)
 end
 
 function PlayerInventory:get_jammer_time() --checking for a player upgrade that can actually be missing (local player isn't using the perk deck or lacks the first card) is not how you do this, defaulting to 0 also isn't smart
-	return tweak_data.upgrades.values.player.pocket_ecm_jammer_base and tweak_data.upgrades.values.player.pocket_ecm_jammer_base.duration or 6
+	if TCD_ENABLED then
+		return tweak_data.upgrades.values.player.pocket_ecm_jammer_base and tweak_data.upgrades.values.player.pocket_ecm_jammer_base.duration or 6
+	else
+		return managers.player:upgrade_value("player","pocket_ecm_jammer_stealth_feedback",tweak_data.upgrades.values.player.pocket_ecm_jammer_base and tweak_data.upgrades.values.player.pocket_ecm_jammer_base.duration or 6)
+	end
 end
 
 function PlayerInventory:_send_net_event_to_host(event_id) --if only OVK made a send_to_host_synched function to avoid having to do this all the time
 	managers.network:session():send_to_peer_synched(managers.network:session():peer(1), "sync_unit_event_id_16", self._unit, "inventory", event_id)
 end
 
-function PlayerInventory:_start_jammer_effect(end_time) --if end_time isn't nil here, it's under the assumption of having added current time to it (i.e. TimerManager:game():time() )
-	end_time = end_time or self:get_jammer_time() + TimerManager:game():time()
+if TCD_ENABLED then
+	--only change is passing args to _start_jammer_effect()
+	function PlayerInventory:start_jammer_effect(...)
+		local started = self:_start_jammer_effect(...)
 
+		if started then
+			self:_send_net_event(self._NET_EVENTS.jammer_start)
+		end
+
+		return started
+	end
+end
+
+function PlayerInventory:_start_jammer_effect(end_time,can_block_pagers,can_block_cameras,can_block_calls) --if end_time isn't nil here, it's under the assumption of having added current time to it (i.e. TimerManager:game():time() )
+	end_time = end_time or self:get_jammer_time() + TimerManager:game():time()
+	
+	if TCD_ENABLED then
+		if can_block_pagers == nil then
+			can_block_pagers = true
+		end
+		if can_block_cameras == nil then
+			can_block_cameras = true
+		end
+		if can_block_calls == nil then
+			can_block_calls = true
+		end
+	else
+		can_block_pagers = true
+		can_block_cameras = true
+		can_block_calls = true
+	end
+	
+	
 	local key_str = tostring_g(self._unit:key())
 
 	self._jammer_data = {
@@ -68,9 +103,9 @@ function PlayerInventory:_start_jammer_effect(end_time) --if end_time isn't nil 
 
 	if Network:is_server() then --while the register_ecm_jammer function checks for this, you usually check for it locally anyway to avoid confusion
 		managers.groupai:state():register_ecm_jammer(self._unit, {
-			pager = true,
-			call = true,
-			camera = true
+			pager = can_block_pagers,
+			call = can_block_calls,
+			camera = can_block_cameras
 		})
 	end
 
@@ -85,6 +120,8 @@ function PlayerInventory:_start_jammer_effect(end_time) --if end_time isn't nil 
 
 		managers.player:register_message(Message.OnEnemyKilled, self._jammer_data.dodge_listener_key, callback(self, self, "_jamming_kill_dodge"))
 	end
+	
+	return true
 end
 
 function PlayerInventory:stop_jammer_effect()
@@ -100,9 +137,7 @@ function PlayerInventory:_stop_jammer_effect()
 	if not self._jammer_data or self._jammer_data.effect ~= "jamming" then
 		return
 	end
-
-	self._jammer_data.effect = nil
-
+	
 	if self._jammer_data.sound then
 		self._jammer_data.sound:stop()
 		self._unit:sound_source():post_event("ecm_jammer_jam_signal_stop") --make sure the sound event even happened, like with normal ECMs
@@ -117,14 +152,17 @@ function PlayerInventory:_stop_jammer_effect()
 	if self._jammer_data.dodge_listener_key then
 		managers.player:unregister_message(Message.OnEnemyKilled, self._jammer_data.dodge_listener_key, true)
 	end
+	
+	self._jammer_data = nil
 end
 
 function PlayerInventory:start_feedback_effect(...)
 	self:_start_feedback_effect(...)
 	self:_send_net_event(self._NET_EVENTS.feedback_start) --just like with the jamming effect, the local player starts the effect locally and syncs it. There's no reason to do it the way it was done
+	return true
 end
 
-function PlayerInventory:_start_feedback_effect(end_time, interval, range)
+function PlayerInventory:_start_feedback_effect(end_time, interval, range, mark_enemies)
 	local t = TimerManager:game():time()
 	local key_str = tostring_g(self._unit:key())
 
@@ -135,7 +173,8 @@ function PlayerInventory:_start_feedback_effect(end_time, interval, range)
 		interval = interval or 1, --"granting a chance to stun enemies on the map every second for a 6 second duration." ; EVERY 1 SECOND, not 1.5
 		range = range or 2500,
 		sound = self._unit:sound_source():post_event("ecm_jammer_puke_signal"),
-		feedback_callback_key = "feedback" .. key_str
+		feedback_callback_key = "feedback" .. key_str,
+		mark_enemies = mark_enemies
 	}
 
 	local is_local_player = managers.player:player_unit() == self._unit
@@ -181,8 +220,6 @@ function PlayerInventory:_stop_feedback_effect()
 		return
 	end
 
-	self._jammer_data.effect = nil
-
 	if self._jammer_data.sound then
 		self._jammer_data.sound:stop()
 		self._unit:sound_source():post_event("ecm_jammer_puke_signal_stop") --make sure the sound event even happened, like with normal ECMs
@@ -197,6 +234,8 @@ function PlayerInventory:_stop_feedback_effect()
 	end
 
 	managers.enemy:remove_delayed_clbk(self._jammer_data.feedback_callback_key, true)
+	
+	self._jammer_data = nil
 end
 
 --this is how you do proper healing checks + make sure players with active berserker effects block healing from teammates
@@ -255,7 +294,7 @@ function PlayerInventory:_do_feedback()
 	end
 
 	--use m_head_pos for a more accurate position (won't be super accurate for client husks unless you have my huskplayermovement improvements)
-	ECMJammerBase._detect_and_give_dmg(self._unit:movement():m_head_pos(), nil, self._unit, 2500)
+	ECMJammerBase._detect_and_give_dmg(self._unit:movement():m_head_pos(), nil, self._unit, 2500, data.mark_enemies)
 
 	local t = TimerManager:game():time()
 

@@ -1245,7 +1245,10 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			end
 
 			dmg_multiplier = dmg_multiplier * managers.player:upgrade_value("player", "melee_" .. tostring(melee_td.stats.weapon_type) .. "_damage_multiplier", 1)
-
+			
+			if character_unit:base():char_tweak().priority_shout then
+				dmg_multiplier = dmg_multiplier * (melee_td.stats.special_damage_multiplier or 1)
+			end
 			
 			if managers.player:has_category_upgrade("melee", "stacking_hit_damage_multiplier") then
 				self._state_data.stacking_dmg_mul = self._state_data.stacking_dmg_mul or {}
@@ -1313,6 +1316,11 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			action_data.name_id = melee_entry
 			action_data.charge_lerp_value = charge_lerp_value
 			
+			local char_base =  character_unit:base()
+			if char_base and char_base.char_tweak and char_base:char_tweak().priority_shout then
+				dmg_multiplier = dmg_multiplier * (melee_td.stats.special_damage_multiplier or 1)
+			end
+			
 			if managers.player:has_category_upgrade("melee", "stacking_hit_damage_multiplier") then
 				self._state_data.stacking_dmg_mul = self._state_data.stacking_dmg_mul or {}
 				self._state_data.stacking_dmg_mul.melee = self._state_data.stacking_dmg_mul.melee or {
@@ -1335,14 +1343,14 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 				local lethal_hit = target_alive and defense_data.type == "dead"
 				if shuffle_cut_stacks ~= 0 then 
 					if lethal_hit and managers.player:has_category_upgrade("class_melee","throwing_loop_refund") then 
-						--on melee kill with shuffle and cut aced, don't consume a shuffle cut throwing wepaon bonus stack
+						-- on melee kill with shuffle and cut aced, don't consume a shuffle cut throwing weapon bonus stack
 					else
-						--else, consume one stack
+						-- else, consume one stack
 						managers.player:set_property("shuffle_cut_melee_bonus_damage",math.max(shuffle_cut_stacks - 1,0))
 					end
 				end
 				
-				--on melee hit, grant throwing bonus
+				-- on melee hit, grant throwing bonus
 				if managers.player:has_category_upgrade("class_melee","melee_boosts_throwing_loop") then 
 					local max_stacks = managers.player:upgrade_value("class_melee","melee_boosts_throwing_loop")[1]
 					local stacks = managers.player:get_property("shuffle_cut_throwing_bonus_damage",0)
@@ -1352,34 +1360,11 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			
 --			Hooks:Call("OnPlayerMeleeHit",character_unit,col_ray,action_data,defense_data,t,lethal_hit)
 
-			if not TCD_ENABLED then 
-				if melee_td.tase_data and character_unit:character_damage().damage_tase then
-					local _action_data = {
-						variant = melee_td.tase_data.tase_strength,
-						damage = 0,
-						attacker_unit = self._unit,
-						col_ray = col_ray
-					}
-
-					character_unit:character_damage():damage_tase(_action_data)
-				end
-
-				if melee_td.fire_dot_data and character_unit:character_damage().damage_fire then
-					local _action_data = {
-						variant = "fire",
-						damage = 0,
-						attacker_unit = self._unit,
-						col_ray = col_ray,
-						fire_dot_data = melee_td.fire_dot_data
-					}
-
-					character_unit:character_damage():damage_fire(_action_data)
-				end
-			else
+			if TCD_ENABLED then 
 				action_data.armor_piercing = melee_td.pierce_body_armor
 			end
 
-			self:_check_melee_dot_damage(col_ray, defense_data, melee_entry)
+			self:_check_melee_special_damage(col_ray, character_unit, defense_data, melee_entry)
 			self:_perform_sync_melee_damage(hit_unit, col_ray, action_data.damage)
 			
 			
@@ -1388,7 +1373,7 @@ function PlayerStandard:_do_melee_damage(t, bayonet_melee, melee_hit_ray, melee_
 			self:_perform_sync_melee_damage(hit_unit, col_ray, damage)
 		end
 	end
-
+	
 	if managers.player:has_category_upgrade("melee", "stacking_hit_damage_multiplier") then
 		self._state_data.stacking_dmg_mul = self._state_data.stacking_dmg_mul or {}
 		self._state_data.stacking_dmg_mul.melee = self._state_data.stacking_dmg_mul.melee or {
@@ -2047,7 +2032,7 @@ if TCD_ENABLED then
 	end	
 	
 	function PlayerStandard:_start_action_jump(t, action_start_data)
-		if not self:_is_meleeing() and (self._running and not self.RUN_AND_RELOAD and not self._equipped_unit:base():run_and_shoot_allowed()) then
+		if not self:_is_meleeing() and (self._running and self:_is_reloading() and not self.RUN_AND_RELOAD and not self._equipped_unit:base():run_and_shoot_allowed()) then
 			self:_interupt_action_reload(t)
 			self._ext_camera:play_redirect(self:get_animation("stop_running"), self._equipped_unit:base():exit_run_speed_multiplier())
 		end
@@ -2418,9 +2403,19 @@ if TCD_ENABLED then
 	
 	function PlayerStandard:_check_action_interact(t, input)
 		local keyboard = self._controller.TYPE == "pc" or managers.controller:get_default_wrapper_type() == "pc"
+		local pressed, released, holding = nil
+
+		if self._interact_expire_t then
+			pressed, released, holding = self:_check_tap_to_interact_inputs(t, input.btn_interact_press, input.btn_interact_release, input.btn_interact_state)
+		else
+			holding = input.btn_interact_state
+			released = input.btn_interact_release
+			pressed = input.btn_interact_press
+		end
+
 		local new_action, timer, interact_object = nil
 
-		if input.btn_interact_press then
+		if pressed then
 			if _G.IS_VR then
 				self._interact_hand = input.btn_interact_left_press and PlayerHand.LEFT or PlayerHand.RIGHT
 			end
@@ -2434,13 +2429,13 @@ if TCD_ENABLED then
 
 				if timer then
 					new_action = true
-					
+
 					--removing the limit with the upgrade is the only change
 					if not managers.player:has_category_upgrade("player", "burglar_camera_freeturn") then
 						self._ext_camera:camera_unit():base():set_limits(80, 50)
 					end
-					
 					self:_start_action_interact(t, input, timer, interact_object)
+					self:_chk_tap_to_interact_enable(t, timer, interact_object)
 				end
 
 				if not new_action then
@@ -2457,9 +2452,7 @@ if TCD_ENABLED then
 			force_secondary_intimidate = true
 		end
 
-		if input.btn_interact_release then
-			local released = true
-
+		if released then
 			if _G.IS_VR then
 				local release_hand = input.btn_interact_left_release and PlayerHand.LEFT or PlayerHand.RIGHT
 				released = release_hand == self._interact_hand
@@ -2858,7 +2851,78 @@ if TCD_ENABLED then
 		
 		return released
 	end
+	
+	--[[
+	
+	function PlayerManager:_attempt_smoke_screen_grenade()
+		-- smoke grenade throwing code is in playerstandard
+		return true
+	end
+	
+	function PlayerStandard:_update_sicario_throw_smoke(t, input)
+		local released
+		local btn_ability_state = self._controller:get_input_bool("change_equipment")
+		if self._cache_held_grenade then --todo make consistent with tripmine code
+			if not btn_ability_state then 
+				self._cache_held_grenade = false
+				released = true
+			end
+		else
+			self._cache_held_grenade = btn_ability_state
+			if not btn_ability_state then
+				return false
+			end
+		end
+		
+		local action_forbidden = not PlayerBase.USE_GRENADES or self:chk_action_forbidden("interact") or self._unit:base():stats_screen_visible() or self:_is_throwing_grenade() or self:_interacting() or self:is_deploying() or self:_changing_weapon() or self:_is_meleeing() or self:_is_using_bipod()
+		
+		if action_forbidden then
+			return
+		end
+		
+		--start throw smoke
+		
+		self:_interupt_action_reload(t)
+		self:_interupt_action_steelsight(t)
+		self:_interupt_action_running(t)
+		self:_interupt_action_charging_weapon(t)
+		
+		local projectile_tweak = tweak_data.blackmarket.projectiles.smoke_screen_grenade
+			
+		if self._projectile_global_value then
+			self._camera_unit:anim_state_machine():set_global(self._projectile_global_value, 0)
 
+			self._projectile_global_value = nil
+		end
+
+		if projectile_tweak.anim_global_param then
+			self._projectile_global_value = projectile_tweak.anim_global_param
+
+			self._camera_unit:anim_state_machine():set_global(self._projectile_global_value, 1)
+		end
+		
+		local throw_delay
+		if not self.projectile_throw_delays[self._projectile_global_value] then
+			--Application:error("No projectile throw delay for ", self._projectile_global_value, "! This needs to be added to PlayerStandard!")
+
+			self._debug_throw_anim_req_update = true
+
+			throw_delay = 0
+		else
+			throw_delay = self.projectile_throw_delays[self._projectile_global_value]
+		end
+
+		managers.network:session():send_to_peers_synched("play_distance_interact_redirect_delay", self._unit, "throw_grenade", throw_delay)
+		
+		self._ext_camera:play_redirect(Idstring(projectile_tweak.animation or "throw_grenade"))
+		
+		self._state_data.throw_grenade_expire_t = t + (projectile_tweak.expire_t or 1.1)
+
+		self:_stance_entered()
+		
+	end
+	--]]
+	
 	function PlayerStandard:_check_action_use_ability(t, input)
 		local action_wanted
 		if managers.player:get_ability_amount() == 0 then
@@ -2872,7 +2936,6 @@ if TCD_ENABLED then
 		end
 		local ptd = tweak_data.blackmarket.projectiles[equipped_ability] 
 		if ptd and ptd.hold_function_name then 
-				--currently only used for tagteam
 			action_wanted = self[ptd.hold_function_name](self,t,input)
 		else
 			action_wanted = input.btn_change_equipment
@@ -2884,7 +2947,7 @@ if TCD_ENABLED then
 
 		return action_wanted
 	end
-
+	
 	function PlayerStandard:_find_pickups(t)
 		local pm = managers.player
 		

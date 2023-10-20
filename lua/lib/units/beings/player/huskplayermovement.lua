@@ -490,3 +490,21 @@ function HuskPlayerMovement:update(unit, t, dt)
 		head_brush:sphere(self._m_detect_pos, 15)
 	end
 end]]
+
+if deathvox:IsTotalCrackdownEnabled() then
+	Hooks:PostHook(HuskPlayerMovement,"sync_movement_state","tcd_on_teammate_sync_state",function(self,state,down_time)
+		local is_downed 
+		if state == "bleed_out" then
+			is_downed = true
+		elseif state == "fatal" then
+			is_downed = true
+		elseif state == "incapacitated" then
+			is_downed = true
+		end
+		
+		if is_downed then
+			Hooks:Call("tcd_on_teammate_player_downed","husk_player",self,state,down_time)
+		end
+		
+	end)
+end

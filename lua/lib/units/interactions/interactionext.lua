@@ -125,6 +125,13 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return SentryGunInteractionExt.super.super.can_select(self, ...) and not SentryControlMenu:IsMenuActive()
 	end
 
+	Hooks:Register("TCD_Stoic_OnDoctorBagBaseInteraction")
+	Hooks:PostHook(DoctorBagBaseInteractionExt,"interact","tcd_on_use_docbag",function(self,player)
+		Hooks:Call("TCD_Stoic_OnDoctorBagBaseInteraction",self,player)
+		if managers.player:has_category_upgrade("player","stoic_meds_refreshes_ability") then
+			managers.player:speed_up_grenade_cooldown(999)
+		end
+	end)
 	
 	ArmorPlatesBaseInteractionExt = ArmorPlatesBaseInteractionExt or class(UseInteractionExt)
 	function ArmorPlatesBaseInteractionExt:_interact_blocked(player)

@@ -545,6 +545,15 @@ function CopActionShoot:update(t)
 				local falloff, i_range = self:_get_shoot_falloff(target_dis, self._falloff)
 				local dmg_buff = self._ext_base:get_total_buff("base_damage") + 1
 				local dmg_mul = dmg_buff * falloff.dmg_mul
+				
+				if managers.mutators:is_mutator_active(MutatorCG22) then
+					local cg22_mutator = managers.mutators:get_mutator(MutatorCG22)
+
+					if cg22_mutator:can_enemy_be_affected_by_buff("green", self._unit) then
+						dmg_mul = dmg_mul * cg22_mutator:get_enemy_green_multiplier()
+					end
+				end
+				
 				local att_unit = attention.unit
 				local shoot_hist = self._shoot_history
 				local shooting_husk = self._shooting_husk_unit
@@ -1148,6 +1157,14 @@ function CopActionShoot:_chk_start_melee(t)
 	end
 
 	return true
+end
+
+function CopActionShoot:sync_start_melee()
+	if self._shield_unit or self._ext_anim.melee then
+		return
+	end
+
+	self:_chk_start_melee(TimerManager:game():time())
 end
 
 function CopActionShoot:anim_clbk_melee_strike()

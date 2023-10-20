@@ -1,5 +1,7 @@
 ECMJammerBase._NET_EVENTS.feedback_stop_and_recharge = 8
 
+local TCD_ENABLED = deathvox:IsTotalCrackdownEnabled()
+				
 local mvec3_cpy = mvector3.copy
 
 local math_random = math.random
@@ -536,7 +538,7 @@ function ECMJammerBase:contour_interaction()
 	end
 end
 
-function ECMJammerBase._detect_and_give_dmg(from_pos, device_unit, user_unit, range)
+function ECMJammerBase._detect_and_give_dmg(from_pos, device_unit, user_unit, range, mark_enemies)
 	local enemies_in_range = world_g:find_units_quick("sphere", from_pos, range, managers.slot:get_mask("enemies"))
 	local attacker = alive_g(user_unit) and user_unit or nil
 	local weapon = alive_g(device_unit) and device_unit or nil
@@ -585,8 +587,13 @@ function ECMJammerBase._detect_and_give_dmg(from_pos, device_unit, user_unit, ra
 							ray = attack_dir:normalized()
 						}
 					}
-
 					dmg_ext:damage_explosion(attack_data)
+				end
+				if mark_enemies and TCD_ENABLED then 
+					local contour_ext = enemy:contour()
+					if contour_ext then 
+						contour_ext:add("pocket_ecm_marked",true,nil,nil,nil)
+					end
 				end
 			end
 		end

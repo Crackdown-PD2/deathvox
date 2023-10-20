@@ -92,6 +92,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 	Hooks:PostHook(HUDTeammate,"set_health","deathvox_hudteammate_sethealth",function(self,data)
 		if alive(self._sociopath_health) then 
 			local current_index = math.floor(5 - data.current)
+			--sociopath base max hp 4 (tweak_data.upgrades.values.player.sociopath_max_hp), +1 from card #4
 			local tw = HUDTeammate.sociopath_health_texture_w
 			local th = HUDTeammate.sociopath_health_texture_h
 			self._sociopath_health:set_texture_rect(1 + ((1 + tw) * current_index),1,tw,th)

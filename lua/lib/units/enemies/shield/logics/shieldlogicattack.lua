@@ -49,7 +49,14 @@ function ShieldLogicAttack.enter(data, new_logic_name, enter_params)
 		end
 	end
 	
-	my_data.weapon_range = data.char_tweak.weapon[data.unit:inventory():equipped_unit():base():weapon_tweak_data().usage].range
+	local equipped_unit = data.unit:inventory():equipped_unit()
+	if not alive(equipped_unit) then
+		return
+	end
+	local wtd = equipped_unit:base():weapon_tweak_data()
+	local usage = wtd.usage
+	local usage_data = data.char_tweak.weapon[usage]
+	my_data.weapon_range = usage_data.range
 	my_data.update_queue_id = "ShieldLogicAttack.queued_update" .. key_str
 
 	ShieldLogicAttack.queue_update(data, my_data)

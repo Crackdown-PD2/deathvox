@@ -21,6 +21,9 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 	self.values.subclass_areadenial = self.values.subclass_areadenial or {}
 	self.values.friendship_collar = self.values.friendship_collar or {}
 	
+	-- enables amount increase upgrades for abilities on a casewise basis
+	self.values.pocket_ecm_jammer = self.values.pocket_ecm_jammer or {}
+	
 	if deathvox:IsTotalCrackdownEnabled() then
 	
 		self.definitions.tripmine_throwable = {
@@ -84,6 +87,124 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			0.44
 		}
 		--stamina is unchanged
+		
+		
+		self.definitions.player_mania_consumed_on_hit_1 = {
+			name_id = "menu_deck14_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "mania_consumed_on_hit",
+				category = "player"
+			}
+		}
+		self.definitions.player_mania_consumed_on_hit_2 = {
+			name_id = "menu_deck14_2",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "mania_consumed_on_hit",
+				category = "player"
+			}
+		}
+		self.definitions.player_mania_consumed_on_hit_3 = {
+			name_id = "menu_deck14_3",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "mania_consumed_on_hit",
+				category = "player"
+			}
+		}
+		self.definitions.player_mania_consumed_on_hit_4 = {
+			name_id = "menu_deck14_4",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "mania_consumed_on_hit",
+				category = "player"
+			}
+		}
+		self.definitions.player_mania_consumed_on_hit_5 = {
+			name_id = "menu_deck14_5",
+			category = "feature",
+			upgrade = {
+				value = 5,
+				upgrade = "mania_consumed_on_hit",
+				category = "player"
+			}
+		}
+		
+		self.definitions.player_mania_max_stacks_1 = {
+			name_id = "menu_deck14_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "mania_max_stacks",
+				category = "player"
+			}
+		}
+		self.definitions.player_mania_max_stacks_2 = {
+			name_id = "menu_deck14_2",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "mania_max_stacks",
+				category = "player"
+			}
+		}
+		self.definitions.player_mania_max_stacks_3 = {
+			name_id = "menu_deck14_3",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "mania_max_stacks",
+				category = "player"
+			}
+		}
+		self.definitions.player_mania_max_stacks_4 = {
+			name_id = "menu_deck14_4",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "mania_max_stacks",
+				category = "player"
+			}
+		}
+		self.definitions.player_mania_max_stacks_5 = {
+			name_id = "menu_deck14_5",
+			category = "feature",
+			upgrade = {
+				value = 5,
+				upgrade = "mania_max_stacks",
+				category = "player"
+			}
+		}
+		
+		self.values.player.mania_consumed_on_hit = {
+			100,
+			95,
+			90,
+			85,
+			80
+		}
+		self.values.player.mania_max_stacks = { --formerly a single value, max_total_cocaine_stacks 
+			100,
+			150,
+			200,
+			250,
+			300
+		}
+		
+		
+		self.mania_damage_resistance_threshold = 100 --stacks required to activate damage resistance
+		self.mania_damage_resistance_ratio = 0.1 / 10 --10% resist per 10 stacks
+		self.maniac_stacks_rate = 10 --num stacks per n damage resist
+		self.maniac_damage_resistance_rate = 0.1 --amount of damage resist per n stacks
+		self.cocaine_stacks_tick_t = 0.1 --interval at which to "convert" stacks
+		self.cocaine_stacks_decay_t = 1 --decay interval in seconds
+		self.cocaine_stacks_decay_percentage_per_tick = 0.1 --10% stacks lost per decay interval
+		self.cocaine_stacks_decay_amount_per_tick = 0 --no flat decay; percentage only
 		
 		--Taskmaster
 		
@@ -2755,24 +2876,28 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 		--Armorer Perkdeck
-		self.values.temporary.armor_break_invulnerable = { --Armorer 1
-			{
-				2,
-				10
-			}
-		}
+		self.values.player.armorer_full_armor_temp_invuln = {1}
 		self.values.player.armorer_armor_mul = {
-			1.25,
-			1.5,
-			1.75,
-			2
+			1.15,
+			1.3,
+			1.45,
+			1.6
 		}
+		self.values.player.armorer_stamina_penalty_reduction = {0.5}
 		self.values.player.armorer_shake_mul = {0.5}
 		self.values.player.armorer_armor_pen_mul = {0.5} --Armor Speed Penalty reducer
-		self.values.player.armorer_armor_regen_mul = {0.75}
+		self.values.player.armorer_armor_regen_mul = {0.85}
 		self.values.player.armorer_ironclad = {0.9}
 		
-		--Armorer 1 is not defined here
+		self.definitions.armorer_1 = {
+			name_id = "menu_deck3_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "armorer_full_armor_temp_invuln",
+				category = "player"
+			}
+		}
 		self.definitions.armorer_2 = {
 			name_id = "menu_deck3_2",
 			category = "feature",
@@ -2805,7 +2930,7 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			category = "feature",
 			upgrade = {
 				value = 1,
-				upgrade = "armorer_armor_pen_mul",
+				upgrade = "armorer_stamina_penalty_reduction",
 				category = "player"
 			}
 		}
@@ -3362,6 +3487,10 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		}
 		
 		--Sociopath
+		
+		self.values.player.sociopath_combo_stack_restore_hp_threshold = 5
+		self.values.player.sociopath_max_hp = 4 --base max hp; increased to 5 from card #4
+			
 		self.values.player.sociopath_mode = {true}
 		self.values.player.sociopath_stamina_mul = {2}
 		self.values.player.sociopath_melee_combo = {true}
@@ -3456,6 +3585,117 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
+		--Gambler
+		self.values.team.player.ammo_pickup_counter_thresholds = {
+			20,
+			15,
+			10,
+			5
+		}
+		self.values.team.player.ammo_pickup_range_mul = {
+			1,
+			1.25, --25%
+			1.50, --+50%
+			1.75, --+75%
+			2 --+100%
+		}
+		self.values.team.player.ammo_pickup_health_restore = {
+			0.01,
+			0.015
+		}
+		
+		self.definitions.gambler_range_1 = {
+			name_id = "menu_deck10_2",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "ammo_pickup_range_mul",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_range_2 = {
+			name_id = "menu_deck10_4",
+			category = "team",
+			upgrade = {
+				value = 2,
+				upgrade = "ammo_pickup_range_mul",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_range_3 = {
+			name_id = "menu_deck10_6",
+			category = "team",
+			upgrade = {
+				value = 3,
+				upgrade = "ammo_pickup_range_mul",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_range_4 = {
+			name_id = "menu_deck10_8",
+			category = "team",
+			upgrade = {
+				value = 4,
+				upgrade = "ammo_pickup_range_mul",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_threshold_1 = {
+			name_id = "menu_deck10_1_threshold",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "ammo_pickup_counter_thresholds",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_threshold_2 = {
+			name_id = "menu_deck10_3",
+			category = "team",
+			upgrade = {
+				value = 2,
+				upgrade = "ammo_pickup_counter_thresholds",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_threshold_3 = {
+			name_id = "menu_deck10_5",
+			category = "team",
+			upgrade = {
+				value = 3,
+				upgrade = "ammo_pickup_counter_thresholds",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_threshold_4 = {
+			name_id = "menu_deck10_7",
+			category = "team",
+			upgrade = {
+				value = 4,
+				upgrade = "ammo_pickup_counter_thresholds",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_healing_1 = {
+			name_id = "menu_deck10_1",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "ammo_pickup_health_restore",
+				category = "player"
+			}
+		}
+		self.definitions.gambler_healing_2 = {
+			name_id = "menu_deck10_9",
+			category = "team",
+			upgrade = {
+				value = 2,
+				upgrade = "ammo_pickup_health_restore",
+				category = "player"
+			}
+		}
+		
+	
 		--Grinder
 		self.values.player.grinder_dmgtohp = {
 			0.005,
@@ -3659,6 +3899,9 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 		--this perkdeck was kind of a nightmare but i managed to pull it together 
 		--im really sorry for offy, who will probably look at this code later and feel nothing but disgust
 		
+		--it is okay fug, you did great. thank you for your work
+		-- -offy
+		
 		self.values.player.expres_hot_election = {
 			{0.5, 20}, --stacks generated per kill, max stacks
 			{1, 30}
@@ -3761,133 +4004,19 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 			}
 		}
 		
-		--Gambler
-		self.values.team.player.ammo_pickup_counter_thresholds = {
-			20,
-			15,
-			10,
-			5
-		}
-		self.values.team.player.ammo_pickup_range_mul = {
-			1,
-			1.25, --25%
-			1.50, --+50%
-			1.75, --+75%
-			2 --+100%
-		}
-		self.values.team.player.ammo_pickup_health_restore = {
-			0.01,
-			0.015
-		}
-		
-		self.definitions.gambler_range_1 = {
-			name_id = "menu_deck10_2",
-			category = "team",
-			upgrade = {
-				value = 1,
-				upgrade = "ammo_pickup_range_mul",
-				category = "player"
-			}
-		}
-		self.definitions.gambler_range_2 = {
-			name_id = "menu_deck10_4",
-			category = "team",
-			upgrade = {
-				value = 2,
-				upgrade = "ammo_pickup_range_mul",
-				category = "player"
-			}
-		}
-		self.definitions.gambler_range_3 = {
-			name_id = "menu_deck10_6",
-			category = "team",
-			upgrade = {
-				value = 3,
-				upgrade = "ammo_pickup_range_mul",
-				category = "player"
-			}
-		}
-		self.definitions.gambler_range_4 = {
-			name_id = "menu_deck10_8",
-			category = "team",
-			upgrade = {
-				value = 4,
-				upgrade = "ammo_pickup_range_mul",
-				category = "player"
-			}
-		}
-		self.definitions.gambler_threshold_1 = {
-			name_id = "menu_deck10_1_threshold",
-			category = "team",
-			upgrade = {
-				value = 1,
-				upgrade = "ammo_pickup_counter_thresholds",
-				category = "player"
-			}
-		}
-		self.definitions.gambler_threshold_2 = {
-			name_id = "menu_deck10_3",
-			category = "team",
-			upgrade = {
-				value = 2,
-				upgrade = "ammo_pickup_counter_thresholds",
-				category = "player"
-			}
-		}
-		self.definitions.gambler_threshold_3 = {
-			name_id = "menu_deck10_5",
-			category = "team",
-			upgrade = {
-				value = 3,
-				upgrade = "ammo_pickup_counter_thresholds",
-				category = "player"
-			}
-		}
-		self.definitions.gambler_threshold_4 = {
-			name_id = "menu_deck10_7",
-			category = "team",
-			upgrade = {
-				value = 4,
-				upgrade = "ammo_pickup_counter_thresholds",
-				category = "player"
-			}
-		}
-		self.definitions.gambler_healing_1 = {
-			name_id = "menu_deck10_1",
-			category = "team",
-			upgrade = {
-				value = 1,
-				upgrade = "ammo_pickup_health_restore",
-				category = "player"
-			}
-		}
-		self.definitions.gambler_healing_2 = {
-			name_id = "menu_deck10_9",
-			category = "team",
-			upgrade = {
-				value = 2,
-				upgrade = "ammo_pickup_health_restore",
-				category = "player"
-			}
-		}
-		
-		
-		
 		--Anarchist
 		self.values.player.anarch_conversion = { --i...don't understand why the math turns out this way but you need to do it like this or the health doesnt apply properly
-			0.5,
+			0.3,
 			0.6,
-			0.7,
-			0.8,
 			0.9
 		}
-		self.values.player.anarch_ondmg_armor_regen = {0.5}
-		self.values.player.anarch_onkill_armor_regen = {1}
-		self.values.player.anarch_onheadshotdmg_armor_regen = {1.5}
-		self.values.player.anarch_onheadshotkill_armor_regen = {2}
+		self.values.player.anarch_ondmg_armor_regen = {1}
+		self.values.player.anarch_onkill_armor_regen = {1.5}
+		self.values.player.anarch_onheadshotdmg_armor_regen = {2}
+		self.values.player.anarch_onheadshotkill_armor_regen = {2.5}
 		
-		self.definitions.anarch_1 = {
-			name_id = "menu_deck13_1",
+		self.definitions.player_anarch_health_to_armor_1 = {
+			name_id = "menu_deck15_1",
 			category = "feature",
 			upgrade = {
 				value = 1,
@@ -3895,8 +4024,8 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-		self.definitions.anarch_2 = {
-			name_id = "menu_deck13_2",
+		self.definitions.player_anarch_restore_armor_on_hit = {
+			name_id = "menu_deck15_2",
 			category = "feature",
 			upgrade = {
 				value = 1,
@@ -3904,8 +4033,8 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-		self.definitions.anarch_3 = {
-			name_id = "menu_deck13_3",
+		self.definitions.player_anarch_health_to_armor_2 = {
+			name_id = "menu_deck15_3",
 			category = "feature",
 			upgrade = {
 				value = 2,
@@ -3913,8 +4042,8 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-		self.definitions.anarch_4 = {
-			name_id = "menu_deck13_4",
+		self.definitions.player_anarch_restore_armor_on_kill = {
+			name_id = "menu_deck15_4",
 			category = "feature",
 			upgrade = {
 				value = 1,
@@ -3922,8 +4051,8 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-		self.definitions.anarch_5 = {
-			name_id = "menu_deck13_5",
+		self.definitions.player_anarch_health_to_armor_3 = {
+			name_id = "menu_deck15_5",
 			category = "feature",
 			upgrade = {
 				value = 3,
@@ -3931,8 +4060,8 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-		self.definitions.anarch_6 = {
-			name_id = "menu_deck13_6",
+		self.definitions.player_anarch_restore_armor_on_headshot_hit = {
+			name_id = "menu_deck15_6",
 			category = "feature",
 			upgrade = {
 				value = 1,
@@ -3940,17 +4069,8 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-		self.definitions.anarch_7 = {
-			name_id = "menu_deck13_7",
-			category = "feature",
-			upgrade = {
-				value = 4,
-				upgrade = "anarch_conversion",
-				category = "player"
-			}
-		}
-		self.definitions.anarch_8 = {
-			name_id = "menu_deck13_8",
+		self.definitions.player_anarch_restore_armor_on_headshot_kill = {
+			name_id = "menu_deck15_8",
 			category = "feature",
 			upgrade = {
 				value = 1,
@@ -3958,15 +4078,363 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
-		self.definitions.anarch_9 = {
-			name_id = "menu_deck13_9",
-			category = "feature",
+		
+		--Biker
+		self.definitions.team_biker_restore_armor_on_special_kill = {
+			name_id = "menu_deck16_1",
+			category = "team",
 			upgrade = {
-				value = 5,
-				upgrade = "anarch_conversion",
+				value = 1,
+				upgrade = "biker_restore_armor_on_special_kill",
 				category = "player"
 			}
 		}
+		self.values.team.player.biker_restore_armor_on_special_kill = {
+			0.05 --5% of max armor restored on special kill
+		}
+		
+		self.definitions.team_biker_temp_stagger_on_special_kill_1 = {
+			name_id = "menu_deck16_2",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "biker_temp_stagger_on_special_kill",
+				category = "player"
+			}
+		}
+		self.values.team.player.biker_temp_stagger_on_special_kill = {
+			4, -- effect duration of 4 seconds
+			8 -- 8 seconds
+		}
+		
+		self.definitions.team_biker_max_armor_increase_1 = {
+			name_id = "menu_deck16_3",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "biker_max_armor_increase",
+				category = "player"
+			}
+		}
+		self.values.team.player.biker_max_armor_increase = {
+			1.3, -- +30% max armor increase
+			1.6 -- +60%
+		}
+		
+		self.definitions.team_biker_can_stagger_heavy_enemies = {
+			name_id = "menu_deck16_4",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "biker_can_stagger_heavy_enemies",
+				category = "player"
+			}
+		}
+		self.values.team.player.biker_can_stagger_heavy_enemies = {
+			true
+		}
+		
+		self.definitions.team_biker_restore_armor_on_special_multikills = {
+			name_id = "menu_deck16_5",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "biker_restore_armor_on_special_multikills",
+				category = "player"
+			}
+		}
+		self.values.team.player.biker_restore_armor_on_special_multikills = {
+			{ 
+				multikill_timer = 5, -- multikills must be within 5 seconds of each other
+				armor_restored = 0.01, -- 1% armor restored per multikill stack
+				max_stacks = 10
+			}
+		}
+		
+		self.definitions.team_biker_can_stagger_special_enemies = {
+			name_id = "menu_deck16_6",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "biker_can_stagger_special_enemies",
+				category = "player"
+			}
+		}
+		self.values.team.player.biker_can_stagger_special_enemies = {
+			true
+		}
+		
+		self.definitions.team_biker_max_armor_increase_2 = {
+			name_id = "menu_deck16_8",
+			category = "team",
+			upgrade = {
+				value = 2,
+				upgrade = "biker_max_armor_increase",
+				category = "player"
+			}
+		}
+		
+		self.definitions.team_biker_temp_stagger_on_special_kill_2 = {
+			name_id = "menu_deck16_8",
+			category = "team",
+			upgrade = {
+				value = 2,
+				upgrade = "biker_temp_stagger_on_special_kill",
+				category = "player"
+			}
+		}
+		
+		self.definitions.team_biker_restore_armor_on_teammate_downed = {
+			name_id = "menu_deck16_9",
+			category = "team",
+			upgrade = {
+				value = 1,
+				upgrade = "biker_restore_armor_on_teammate_downed",
+				category = "player"
+			}
+		}
+		self.values.team.player.biker_restore_armor_on_teammate_downed = {
+			true -- regain all armor when teammate is downed
+		}
+		
+		self.values.player.kingpin_injector_duration_increase = {
+			2
+		}
+		self.definitions.player_kingpin_injector_duration_increase = {
+			name_id = "menu_deck17_5",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "kingpin_injector_duration_increase",
+				category = "player"
+			}
+		}
+		
+		self.values.player.kingpin_max_health_mul = {
+			0.2,
+			0.4,
+			0.6,
+			0.8
+		}
+		self.definitions.player_kingpin_max_health_mul_1 = {
+			name_id = "menu_deck17_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "kingpin_max_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.player_kingpin_max_health_mul_2 = {
+			name_id = "menu_deck17_4",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "kingpin_max_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.player_kingpin_max_health_mul_3 = {
+			name_id = "menu_deck17_6",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "kingpin_max_health_mul",
+				category = "player"
+			}
+		}
+		self.definitions.player_kingpin_max_health_mul_4 = {
+			name_id = "menu_deck17_8",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "kingpin_max_health_mul",
+				category = "player"
+			}
+		}
+		
+		self.values.player.kingpin_inactive_dodge_chance = {
+			0.05,
+			0.1,
+			0.15,
+			0.2
+		}
+		self.definitions.player_kingpin_inactive_dodge_chance_1 = {
+			name_id = "menu_deck17_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "kingpin_inactive_dodge_chance",
+				category = "player"
+			}
+		}
+		self.definitions.player_kingpin_inactive_dodge_chance_2 = {
+			name_id = "menu_deck17_4",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "kingpin_inactive_dodge_chance",
+				category = "player"
+			}
+		}
+		self.definitions.player_kingpin_inactive_dodge_chance_3 = {
+			name_id = "menu_deck17_6",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "kingpin_inactive_dodge_chance",
+				category = "player"
+			}
+		}
+		self.definitions.player_kingpin_inactive_dodge_chance_4 = {
+			name_id = "menu_deck17_8",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "kingpin_inactive_dodge_chance",
+				category = "player"
+			}
+		}
+		
+		self.values.player.kingpin_cooldown_drain_on_kill = {
+			1 -- reduce cooldown by 1 second per kill
+		}
+		self.definitions.player_kingpin_cooldown_drain_on_kill = {
+			name_id = "menu_deck17_3",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "kingpin_cooldown_drain_on_kill",
+				category = "player"
+			}
+		}
+		
+		--vanilla upgrade
+		self.values.player.chico_injector_health_to_speed = {
+			{
+				10, -- nerfed from 5 to 10
+				1
+			}
+		}
+		
+		
+		--vanilla upgrade
+		self.values.player.damage_control_passive = {
+			{
+				75,
+				10
+			}
+		}
+		
+		self.values.player.stoic_stagger_time_increase = {
+			2.5,
+			5,
+			7.5,
+			10
+		}
+		self.definitions.player_stoic_stagger_time_increase_1 = {
+			name_id = "menu_deck18_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stoic_stagger_time_increase",
+				category = "player"
+			}
+		}
+		self.definitions.player_stoic_stagger_time_increase_2 = {
+			name_id = "menu_deck18_2",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "stoic_stagger_time_increase",
+				category = "player"
+			}
+		}
+		self.definitions.player_stoic_stagger_time_increase_3 = {
+			name_id = "menu_deck18_2",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "stoic_stagger_time_increase",
+				category = "player"
+			}
+		}
+		self.definitions.player_stoic_stagger_time_increase_4 = {
+			name_id = "menu_deck18_2",
+			category = "feature",
+			upgrade = {
+				value = 4,
+				upgrade = "stoic_stagger_time_increase",
+				category = "player"
+			}
+		}
+		
+		self.values.player.stoic_meds_clears_staggered_damage = { true }
+		self.definitions.player_stoic_meds_clears_staggered_damage = {
+			name_id = "menu_deck18_3",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stoic_meds_clears_staggered_damage",
+				category = "player"
+			}
+		}
+		self.values.player.stoic_meds_refreshes_ability = { true }
+		self.definitions.player_stoic_meds_refreshes_ability = {
+			name_id = "menu_deck18_3",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stoic_meds_refreshes_ability",
+				category = "player"
+			}
+		}
+		
+		self.values.player.stoic_damage_resist_on_stagger = {
+			{
+				0.2, -- 20% damage resist 
+				5 -- 5 second duration
+			}
+		}
+		
+		self.definitions.player_stoic_damage_resist_on_stagger = {
+			name_id = "menu_deck18_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stoic_damage_resist_on_stagger",
+				category = "player"
+			}
+		}
+		self.values.player.stoic_cooldown_drain_on_damaged = {
+			{
+				1, -- cooldown reduced by 1 second per hit taken
+				1 --max of once per second
+			}
+		}
+		
+		self.definitions.player_stoic_cooldown_drain_on_damaged = {
+			name_id = "menu_deck18_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "stoic_cooldown_drain_on_damaged",
+				category = "player"
+			}
+		}
+		
+		--vanilla upgrade, added second value
+		self.values.player.armor_to_health_conversion[2] = 150  -- +50% (150% total)
+		self.definitions.player_stoic_armor_to_health_conversion_bonus = {
+			name_id = "menu_deck18_9",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "armor_to_health_conversion",
+				category = "player"
+			}
+		}
+		
 		
 		--Tag Team
 		self.values.player.tag_team_base_deathvox = {
@@ -4103,6 +4571,145 @@ Hooks:PostHook(UpgradesTweakData, "init", "vox_overhaul1", function(self, tweak_
 				category = "player"
 			}
 		}
+		
+		
+		--tweaked vanilla values
+		self.values.player.pocket_ecm_jammer_base = {
+			{
+				affects_cameras = false, --managed by separate upgrade
+				affects_pagers = false, --managed by separate upgrade
+				cooldown_drain = 1,
+				feedback_interval = 1,
+				duration = 3,
+				feedback_range = 3000
+			}
+		}	
+		
+		self.values.player.pocket_ecm_jammer_loud_feedback = {
+			3,
+			4,
+			5
+		}
+		self.definitions.player_pocket_ecm_jammer_loud_feedback_1 = {
+			name_id = "menu_deck21_1",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "pocket_ecm_jammer_loud_feedback",
+				category = "player"
+			}
+		}
+		self.definitions.player_pocket_ecm_jammer_loud_feedback_2 = {
+			name_id = "menu_deck21_3",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "pocket_ecm_jammer_loud_feedback",
+				category = "player"
+			}
+		}
+		self.definitions.player_pocket_ecm_jammer_loud_feedback_3 = {
+			name_id = "menu_deck21_7",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "pocket_ecm_jammer_loud_feedback",
+				category = "player"
+			}
+		}
+		
+		self.values.player.pocket_ecm_jammer_stealth_feedback = {
+			4,
+			6,
+			8
+		}
+		self.definitions.player_pocket_ecm_jammer_stealth_feedback_1 = {
+			name_id = "menu_deck21_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "pocket_ecm_jammer_stealth_feedback",
+				category = "player"
+			}
+		}
+		self.definitions.player_pocket_ecm_jammer_stealth_feedback_2 = {
+			name_id = "menu_deck21_4",
+			category = "feature",
+			upgrade = {
+				value = 2,
+				upgrade = "pocket_ecm_jammer_stealth_feedback",
+				category = "player"
+			}
+		}
+		self.definitions.player_pocket_ecm_jammer_stealth_feedback_3 = {
+			name_id = "menu_deck21_8",
+			category = "feature",
+			upgrade = {
+				value = 3,
+				upgrade = "pocket_ecm_jammer_stealth_feedback",
+				category = "player"
+			}
+		}
+		
+		self.values.player.pocket_ecm_jammer_blocks_electronics = { true }
+		self.definitions.player_pocket_ecm_jammer_blocks_electronics = {
+			name_id = "menu_deck21_2",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "pocket_ecm_jammer_blocks_electronics",
+				category = "player"
+			}
+		}
+		self.values.player.pocket_ecm_jammer_loud_marking = { true }
+		self.definitions.player_pocket_ecm_jammer_loud_marking = {
+			name_id = "menu_deck21_5",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "pocket_ecm_jammer_loud_marking",
+				category = "player"
+			}
+		}
+		
+		self.values.player.pocket_ecm_jammer_marked_kill_cooldown_drain = {
+			1 -- reduce cooldown by 1 second upon enemy kill
+		}
+		self.definitions.player_pocket_ecm_jammer_marked_kill_cooldown_drain = {
+			name_id = "menu_deck21_5",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "pocket_ecm_jammer_marked_kill_cooldown_drain",
+				category = "player"
+			}
+		}
+		
+		self.values.player.pocket_ecm_jammer_stealth_passive_cooldown_refund = {
+			0.5 -- refund 50% cooldown on use in stealth
+		}
+		self.definitions.player_pocket_ecm_jammer_stealth_passive_cooldown_refund = {
+			name_id = "menu_deck21_6",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "pocket_ecm_jammer_stealth_passive_cooldown_refund",
+				category = "player"
+			}
+		}
+		self.values.pocket_ecm_jammer.amount_increase = {
+			1 -- +1 charge (total 2)
+		}
+		self.definitions.pocket_ecm_jammer_amount_increase_1 = {
+			name_id = "menu_deck21_9",
+			category = "feature",
+			upgrade = {
+				value = 1,
+				upgrade = "amount_increase",
+				category = "pocket_ecm_jammer"
+			}
+		}
+		
 	end
 end)	
 

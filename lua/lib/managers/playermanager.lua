@@ -23,19 +23,28 @@ Hooks:PostHook(PlayerManager,"_internal_load","deathvox_on_internal_load",functi
 			amount = self:get_max_grenades() --for some reason, in vanilla, spawn amount is math.min()'d with the DEFAULT amount 
 		})
 		
-		local ability_id,ability_amount = managers.blackmarket:equipped_ability()
+		local ability_id,max_amount = managers.blackmarket:equipped_ability()
 		if ability_id then
 			
 			if self:has_category_upgrade(ability_id,"amount_increase") then
-				ability_amount = ability_amount * self:upgrade_value(ability_id,"amount_increase")
+				max_amount = max_amount * self:upgrade_value(ability_id,"amount_increase")
 			end
 			
 			self:_set_ability({
 				ability = ability_id,
-				amount = ability_amount
+				amount = max_amount,
+				max_amount = max_amount
 			})
 		end
-		
+		if self:has_category_upgrade("player","cocaine_stacking") then
+			local max_stacks = self:upgrade_value("player","mania_max_stacks",0)
+			managers.hud:set_info_meter(nil, {
+				icon = "guis/dlcs/coco/textures/pd2/hud_absorb_stack_icon_01",
+				max = 1,
+				current = 0,
+				total = max_stacks / tweak_data.upgrades.values.player.mania_max_stacks[#tweak_data.upgrades.values.player.mania_max_stacks]
+			})
+		end
 	end
 end)
 
@@ -89,13 +98,16 @@ Hooks:PostHook(PlayerManager,"init","tcd_playermanager_init",function(self)
 end)
 
 if TCD_ENABLED then
+	Hooks:Register("TCD_OnCriminalDowned")
+	
 	function PlayerManager:use_messiah_charge()
 		--nothing
 	end
 	
 	--replenish ability instead of grenades
 	function PlayerManager:_on_grenade_cooldown_end()
-		local tweak = tweak_data.blackmarket.projectiles[managers.blackmarket:equipped_grenade()]
+		local ability,_ = managers.blackmarket:equipped_ability()
+		local tweak = tweak_data.blackmarket.projectiles[ability]
 
 		if tweak and tweak.sounds and tweak.sounds.cooldown then
 			self:player_unit():sound():play(tweak.sounds.cooldown)
@@ -128,21 +140,16 @@ if TCD_ENABLED then
 	function PlayerManager:_set_ability(params)
 		self._global.synced_abilities[managers.network:session():local_peer():id()] = {
 			ability = params.ability,
-			amount = params.amount
+			amount = params.amount,
+			max_amount = params.max_amount
 		}
 		
-		--[[
-		local grenade = params.grenade
-		local tweak_data = tweak_data.blackmarket.projectiles[grenade]
-		local amount = params.amount
-		local icon = tweak_data.icon
-
-		self:update_ability_amount_to_peers(grenade, amount)
-		managers.hud:set_teammate_abilities(HUDManager.PLAYER_PANEL, {
-			amount = amount,
-			icon = icon
-		})
-		--]]
+		local tweak = params.ability and tweak_data.blackmarket.projectiles[params.ability]
+		local icon = tweak and tweak.icon
+		if icon then
+			managers.hud:set_ability_icon(HUDManager.PLAYER_PANEL,icon)
+		end
+		--self:update_ability_amount_to_peers(grenade, amount)
 	end
 	
 	--added in tcd;
@@ -156,9 +163,16 @@ if TCD_ENABLED then
 	end
 	
 	function PlayerManager:add_ability_amount(num)
-		local data = self._global.synced_abilities[managers.network:session():local_peer():id()]
+		local peer_id = managers.network:session():local_peer():id()
+		local data = self._global.synced_abilities[peer_id]
 		if data then
 			data.amount = data.amount + num
+			local ability = data.ability
+			local tweak = ability and tweak_data.blackmarket.projectiles[ability]
+			local max_amount = data.max_amount or tweak and tweak.max_amount
+			if max_amount and tweak.base_cooldown and data.amount < max_amount then
+				self:replenish_grenades(tweak.base_cooldown)
+			end
 		end
 	end
 	
@@ -194,6 +208,116 @@ if TCD_ENABLED then
 		return true
 	end
 	
+	function PlayerManager:_attempt_chico_injector()
+		if self:has_activate_temporary_upgrade("temporary", "chico_injector") then
+			return false
+		end
+
+		local duration = self:upgrade_value("temporary", "chico_injector")[2] + self:upgrade_value("player","kingpin_injector_duration_increase",0)
+		local now = managers.game_play_central:get_heist_timer()
+
+		managers.network:session():send_to_peers("sync_ability_hud", now + duration, duration)
+		self:activate_temporary_upgrade("temporary", "chico_injector")
+		
+		if self:has_category_upgrade("player","kingpin_cooldown_drain_on_kill") then
+			local cooldown_amount = self:upgrade_value("player","kingpin_cooldown_drain_on_kill",1)
+			
+			local function speed_up_on_kill()
+				managers.player:speed_up_grenade_cooldown(cooldown_amount)
+			end
+			self:register_message(Message.OnEnemyKilled, "speed_up_chico_injector", speed_up_on_kill)
+		end
+
+
+		return true
+	end
+	
+	function PlayerManager:_attempt_pocket_ecm_jammer()
+		local player_inventory = self:player_unit():inventory()
+		local t = TimerManager:game():time()
+
+		if player_inventory:is_jammer_active() then
+			return false
+		end
+		
+		local base_upgrade = self:upgrade_value("player", "pocket_ecm_jammer_base")
+		local effect_duration
+		
+		local started = false
+		
+		if managers.groupai and managers.groupai:state():whisper_mode() and self:has_category_upgrade("player","pocket_ecm_jammer_stealth_feedback") then
+			effect_duration = self:upgrade_value("player","pocket_ecm_jammer_stealth_feedback",0)
+			
+			local has_block_electronics = self:has_category_upgrade("player","pocket_ecm_jammer_blocks_electronics")
+			started = player_inventory:start_jammer_effect(t + effect_duration,has_block_electronics,has_block_electronics,has_block_electronics)
+			if started and self:has_category_upgrade("player","pocket_ecm_jammer_stealth_passive_cooldown_refund") then
+				local base_cooldown = tweak_data.blackmarket.projectiles.pocket_ecm_jammer.base_cooldown
+				local cooldown_refund_amount = base_cooldown * self:upgrade_value("player","pocket_ecm_jammer_stealth_passive_cooldown_refund",0)
+				if cooldown_refund_amount ~= 0 then
+					
+					--delay cooldown refund by one frame
+					--so that the cooldown is applied correctly
+					--after the cooldown starts proper
+					DelayedCalls:Add("tcd_deck21_refund_cooldown",0,function()
+						managers.player:speed_up_grenade_cooldown(cooldown_refund_amount)
+					end)
+				end
+			end
+		else
+			effect_duration = self:upgrade_value("player","pocket_ecm_jammer_loud_feedback",0)
+			local mark_enemies = self:has_category_upgrade("player","pocket_ecm_jammer_loud_marking")
+			started = player_inventory:start_feedback_effect(t + effect_duration,base_upgrade.feedback_interval,base_upgrade.feedback_range,mark_enemies)
+		end
+		
+		if not started then
+			return false
+		end
+		
+		if self:has_category_upgrade("player","pocket_ecm_jammer_marked_kill_cooldown_drain") then
+			local cooldown_drain_amount = self:upgrade_value("player","pocket_ecm_jammer_marked_kill_cooldown_drain",0)
+			
+			local function speed_up_on_kill(weapon_unit, variant, killed_unit)
+				if not alive(killed_unit) then 
+					return
+				end
+				
+				local contour_ext = killed_unit:contour()
+				
+				if contour_ext and contour_ext:has_id("pocket_ecm_marked") then
+					managers.player:speed_up_grenade_cooldown(cooldown_drain_amount)
+				end
+				
+			end
+			
+			self:register_message(Message.OnEnemyKilled, "speed_up_pocket_ecm_jammer", speed_up_on_kill)
+		end
+		
+		managers.hud:activate_teammate_ability_radial(HUDManager.PLAYER_PANEL, effect_duration)
+		
+		return true
+	end
+	
+	function PlayerManager:stamina_multiplier()
+		local multiplier = 1
+		multiplier = multiplier + self:upgrade_value("player", "sociopath_stamina_mul", 1) - 1
+		multiplier = multiplier + self:upgrade_value("player", "stamina_multiplier", 1) - 1
+		multiplier = multiplier + self:team_upgrade_value("stamina", "multiplier", 1) - 1
+		multiplier = multiplier + self:team_upgrade_value("stamina", "passive_multiplier", 1) - 1
+		multiplier = multiplier + self:get_hostage_bonus_multiplier("stamina") - 1
+		if self:has_category_upgrade("player", "armorer_stamina_penalty_reduction") then
+			--local armor_data = tweak_data.blackmarket.armors
+			--local equipped_armor = armor_data[managers.blackmarket:equipped_armor(true, true)]
+			local current_armor_stamina_mul = self:body_armor_value("stamina")
+			local suit_stamina_mul = self:body_armor_value("stamina",1)
+			if suit_stamina_mul > current_armor_stamina_mul then
+				local d_stamina_mul = suit_stamina_mul - current_armor_stamina_mul
+				multiplier = multiplier + d_stamina_mul * self:upgrade_value("player", "armorer_stamina_penalty_reduction",0)
+			end
+		end
+		multiplier = managers.modifiers:modify_value("PlayerManager:GetStaminaMultiplier", multiplier)
+
+		return multiplier
+	end
 
 	function PlayerManager:check_equipment_placement_valid(player, equipment)
 		local equipment_data = managers.player:equipment_data_by_name(equipment)
@@ -220,6 +344,13 @@ if TCD_ENABLED then
 		local is_melee = damage_type == "melee"
 		local player_unit = self:local_player()
 		local multiplier = 1
+		
+		local num_maniac_stacks = self:_get_cocaine_stacks_flat()
+		local maniac_stacks_rate = tweak_data.upgrades.maniac_stacks_rate
+		if num_maniac_stacks > maniac_stacks_rate then
+			local num_maniac_dr_stacks = math.floor(num_maniac_stacks / maniac_stacks_rate)
+			multiplier = math.max(0,multiplier * (1 - (num_maniac_dr_stacks * tweak_data.upgrades.maniac_damage_resistance_rate)))
+		end
 		
 		if self._melee_stance_dr_t then
 			multiplier = multiplier * 0.8
@@ -331,17 +462,113 @@ if TCD_ENABLED then
 		return multiplier
 	end
 	
+	function PlayerManager:_get_cocaine_stacks_flat(peer_id)
+		peer_id = peer_id or (managers.network:session() and managers.network:session():local_peer():id()) or 1
+		local data = self:get_synced_cocaine_stacks(peer_id)
+		return data and data.amount or 0
+	end
+	
+	function PlayerManager:_add_cocaine_stacks(peer_id,n)
+		peer_id = peer_id or (managers.network:session() and managers.network:session():local_peer():id()) or 1
+		local data = self:get_synced_cocaine_stacks(peer_id)
+		if data then
+			local amount = data and data.amount or 0
+			amount = math.clamp(amount + n,0,self:upgrade_value("player","mania_max_stacks",100))
+			data.amount = amount
+			return amount
+		end
+		return 0
+	end
+	
+	function PlayerManager:_deduct_local_cocaine_stacks()
+		local stacks_consumed = self:upgrade_value("player","mania_consumed_on_hit",100)
+		local new_amount = self:_add_cocaine_stacks(nil,-stacks_consumed)
+		local local_peer_id = managers.network:session() and managers.network:session():local_peer():id()
+		local character_data = managers.criminals:character_data_by_peer_id(local_peer_id)
+		if character_data then
+			local max_stacks = self:upgrade_value("player","mania_max_stacks",100)
+			local absolute_max_stacks = tweak_data.upgrades.values.player.mania_max_stacks[#tweak_data.upgrades.values.player.mania_max_stacks]
+
+			if self:has_category_upgrade("player","cocaine_stacking") then
+				managers.hud:set_info_meter(character_data.panel_id, {
+					icon = "guis/dlcs/coco/textures/pd2/hud_absorb_stack_icon_01",
+					max = 1,
+					current = new_amount / absolute_max_stacks,
+					total = max_stacks / absolute_max_stacks
+				})
+			end
+		end
+	end
+	
+	function PlayerManager:_update_damage_dealt(t, dt)
+		local local_peer_id = managers.network:session() and managers.network:session():local_peer():id()
+
+		if not local_peer_id or not self:has_category_upgrade("player", "cocaine_stacking") then
+			return
+		end
+		local max_stacks = self:upgrade_value("player","mania_max_stacks",100)
+		--change max stacks to the upgrade value
+		
+		self._damage_dealt_to_cops_t = self._damage_dealt_to_cops_t or t + (tweak_data.upgrades.cocaine_stacks_tick_t or 1)
+		self._damage_dealt_to_cops_decay_t = self._damage_dealt_to_cops_decay_t or t + (tweak_data.upgrades.cocaine_stacks_decay_t or 5)
+		local cocaine_stack = self:get_synced_cocaine_stacks(local_peer_id)
+		local amount = cocaine_stack and cocaine_stack.amount or 0
+		local new_amount = amount
+		
+		--convert damage dealt to stacks
+		if self._damage_dealt_to_cops_t <= t then
+			self._damage_dealt_to_cops_t = t + (tweak_data.upgrades.cocaine_stacks_tick_t or 1)
+			local damage_dealt = self._damage_dealt_to_cops or 0
+			local new_stacks = damage_dealt * (tweak_data.gui.stats_present_multiplier or 10) * self:upgrade_value("player", "cocaine_stacking", 0)
+			new_amount = new_amount + damage_dealt
+			self._damage_dealt_to_cops = 0
+--			new_amount = new_amount + math.min(new_stacks, tweak_data.upgrades.max_cocaine_stacks_per_tick or 20)
+		end
+		
+		--decay is based on previous stack amount, not new total stack amount (unchanged)
+		if self._damage_dealt_to_cops_decay_t <= t then
+			self._damage_dealt_to_cops_decay_t = t + (tweak_data.upgrades.cocaine_stacks_decay_t or 5)
+			local decay = amount * (tweak_data.upgrades.cocaine_stacks_decay_percentage_per_tick or 0)
+			decay = decay + (tweak_data.upgrades.cocaine_stacks_decay_amount_per_tick or 20) * self:upgrade_value("player", "cocaine_stacks_decay_multiplier", 1)
+			new_amount = new_amount - decay
+		end
+		
+		
+		new_amount = math.clamp(math.floor(new_amount), 0, max_stacks)
+
+		if new_amount ~= amount then
+			--don't bother syncing cocaine stacks
+			--instead, visually update hud right here
+			local character_data = managers.criminals:character_data_by_peer_id(local_peer_id)
+			if character_data then
+				if self:has_category_upgrade("player","cocaine_stacking") then
+					local absolute_max_stacks = tweak_data.upgrades.values.player.mania_max_stacks[#tweak_data.upgrades.values.player.mania_max_stacks]
+					managers.hud:set_info_meter(character_data.panel_id, {
+						icon = "guis/dlcs/coco/textures/pd2/hud_absorb_stack_icon_01",
+						max = 1,
+						current = new_amount / absolute_max_stacks,
+						total = max_stacks / absolute_max_stacks
+					})
+				end
+			end
+			self._global.synced_cocaine_stacks[local_peer_id] = {
+				amount = new_amount,
+				in_use = true,
+				upgrade_level = 1,
+				power_level = 0
+			}
+--			self:update_synced_cocaine_stacks_to_peers(new_amount, self:upgrade_value("player", "sync_cocaine_upgrade_level", 1), self:upgrade_level("player", "cocaine_stack_absorption_multiplier", 0))
+		end
+	end
+	--note: the following functions still reflect the old max stacks var, but are no longer relevant:
+	--get_local_cocaine_damage_absorption_max(), _get_best_max_cocaine_damage_absorption_ratio(), get_peer_cocaine_damage_absorption_max_ratio()
+	
 	--same as vanilla but disabled HUD element in order to prevent conflicting with damage overshield mechanic
 	--if/when the actual absorption mechanic is overhauled, this function (and its accompanying HUD element) may also need to be revisited
 	function PlayerManager:set_damage_absorption(key, value)
 		self._damage_absorption[key] = value and Application:digest_value(value, true) or nil
 
 --		managers.hud:set_absorb_active(HUDManager.PLAYER_PANEL, self:damage_absorption())
-	end
-	function PlayerManager:update_cocaine_hud()
-		if managers.hud then
---			managers.hud:set_absorb_active(HUDManager.PLAYER_PANEL, self:damage_absorption())
-		end
 	end
 	
 	function PlayerManager:verify_grenade(peer_id)
@@ -983,8 +1210,18 @@ if TCD_ENABLED then
 			--]]
 			
 			
-			
 		end
+		
+		Hooks:Add("TCD_OnCriminalDowned","TCD_Biker_OnTeammateDowned",function(teammate_type,teammate_ext,state_name,down_time)
+			local player = self:local_player()
+			if alive(player) then
+				if self:has_team_category_upgrade("player","biker_restore_armor_on_teammate_downed") then
+					local dmg_ext = player:character_damage()
+					dmg_ext:restore_armor(dmg_ext:_max_armor())
+				end
+			end
+		end)
+		
 		if Network:is_server() then 
 			self:set_property("gambler_team_ammo_pickups_grabbed",0)
 		end
@@ -999,7 +1236,7 @@ if TCD_ENABLED then
 		if multiplier < 1.05 then
 			local diff = 1.05 - multiplier
 			
-			diff = diff * self:upgrade_value("player", "armorer_armor_pen_mul", 1)
+			diff = diff * self:upgrade_value("player", "armorer_armor_pen_mul", 1) --no longer used
 			
 			multiplier = 1.05 - diff
 			
@@ -1209,6 +1446,55 @@ if TCD_ENABLED then
 		return true
 	end
 	
+	function PlayerManager:chk_wild_kill_counter(killed_unit, variant)
+		local player = self:local_player()
+		if alive(player) then
+			local dmg_ext = player:character_damage()
+			if alive(killed_unit) then
+				local killed_base = killed_unit:base()
+				if killed_base and killed_base:has_tag("special") then
+					local armor_restored_total = 0
+					
+					if self:has_team_category_upgrade("player","biker_restore_armor_on_special_kill") then
+						local armor_restored = self:team_upgrade_value("player","biker_restore_armor_on_special_kill")
+						
+						armor_restored_total = armor_restored_total + armor_restored
+					end
+					
+					if self:has_team_category_upgrade("player","biker_temp_stagger_on_special_kill") then
+						-- stagger event id
+						-- an enemy cannot be staggered twice in one buff proc
+						local stagger_id = self._num_biker_staggers or 0
+						stagger_id = stagger_id + 1
+						self._num_biker_staggers = stagger_id
+						
+						--activate guaranteed stagger temp buff
+						local stagger_duration = self:team_upgrade_value("player","biker_temp_stagger_on_special_kill")
+						self:activate_temporary_property("biker_guaranteed_stagger",stagger_duration,stagger_id)
+					end
+					
+					if self:has_team_category_upgrade("player","biker_restore_armor_on_special_multikills") then
+						local upgrade_data = self:team_upgrade_value("player","biker_restore_armor_on_special_multikills")
+						local multikill_timer = upgrade_data.multikill_timer
+						local max_stacks = upgrade_data.max_stacks
+						local armor_restored = upgrade_data.armor_restored
+						
+						-- increment stacks
+						local stacks = self:get_temporary_property("biker_special_multikill_counter",0)
+						stacks = math.min(max_stacks,stacks + 1)
+						self:activate_temporary_property("biker_special_multikill_counter",multikill_timer,stacks)
+						
+						armor_restored_total = armor_restored_total + (armor_restored * stacks)
+					end
+					
+					if armor_restored_total > 0 then
+						dmg_ext:restore_armor(armor_restored_total * dmg_ext:_max_armor())
+					end
+				end
+			end
+		end
+	end
+	
 end
 
 
@@ -1314,7 +1600,7 @@ end
 function PlayerManager:health_skill_addend()
 	local addend = 0
 	
-	if managers.player:has_category_upgrade("player", "sociopath_mode") then
+	if self:has_category_upgrade("player", "sociopath_mode") then
 		addend = -22.6
 		
 		addend = addend + managers.player:upgrade_value("player", "sociopath_health_addend", 0) * 0.1
@@ -1336,7 +1622,7 @@ end
 function PlayerManager:health_skill_multiplier()
 	local multiplier = 1
 	
-	if managers.player:has_category_upgrade("player", "sociopath_mode") then
+	if self:has_category_upgrade("player", "sociopath_mode") then
 		return multiplier
 	end
 	
@@ -1346,6 +1632,7 @@ function PlayerManager:health_skill_multiplier()
 	multiplier = multiplier + self:upgrade_value("player", "expres_health_mul", 1) - 1
 	multiplier = multiplier + self:upgrade_value("player", "passive_health_multiplier", 1) - 1
 	multiplier = multiplier + self:team_upgrade_value("health", "passive_multiplier", 1) - 1
+	multiplier = multiplier + self:upgrade_value("player", "kingpin_max_health_mul", 1) - 1
 	multiplier = multiplier + self:get_hostage_bonus_multiplier("health") - 1
 	multiplier = multiplier - self:upgrade_value("player", "health_decrease", 0)
 	multiplier = multiplier + self:upgrade_value("player", "infiltrator_max_health_mul",0)
@@ -1383,7 +1670,7 @@ local crook_armor_types = {
 }
 
 function PlayerManager:body_armor_skill_multiplier(override_armor)
-	if managers.player:has_category_upgrade("player", "sociopath_mode") then
+	if self:has_category_upgrade("player", "sociopath_mode") then
 		return 0
 	end
 
@@ -1393,6 +1680,7 @@ function PlayerManager:body_armor_skill_multiplier(override_armor)
 	multiplier = multiplier + self:upgrade_value("player", "passive_armor_multiplier", 1) - 1
 	multiplier = multiplier + self:upgrade_value("player", "armor_multiplier", 1) - 1
 	multiplier = multiplier + self:team_upgrade_value("armor", "multiplier", 1) - 1
+	multiplier = multiplier + self:team_upgrade_value("player", "biker_max_armor_increase", 1) - 1
 	multiplier = multiplier + self:get_hostage_bonus_multiplier("armor") - 1
 	multiplier = multiplier + self:upgrade_value("player", "perk_armor_loss_multiplier", 1) - 1
 	multiplier = multiplier + self:upgrade_value("player", tostring(override_armor or managers.blackmarket:equipped_armor(true, true)) .. "_armor_multiplier", 1) - 1
@@ -1403,7 +1691,7 @@ function PlayerManager:body_armor_skill_multiplier(override_armor)
 end
 
 function PlayerManager:body_armor_skill_addend(override_armor)
-	if managers.player:has_category_upgrade("player", "sociopath_mode") then
+	if self:has_category_upgrade("player", "sociopath_mode") then
 		return 0
 	end
 
@@ -1489,7 +1777,12 @@ function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, overri
 	chance = chance + self:upgrade_value("player", "tier_dodge_chance", 0)
 	chance = chance + self:upgrade_value("player", "rogue_dodge_add", 0)
 	chance = chance + self:upgrade_value("player", "expres_dodge_add", 0)
-
+	if not self:has_activate_temporary_upgrade("temporary", "chico_injector") then
+		if self:has_category_upgrade("player","kingpin_inactive_dodge_chance") then
+			chance = chance + self:upgrade_value("player","kingpin_inactive_dodge_chance")
+		end
+	end
+	
 	if running then
 		chance = chance + self:upgrade_value("player", "run_dodge_chance", 0)
 	end
@@ -1531,18 +1824,6 @@ function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, overri
 	end
 
 	return chance
-end
-
-function PlayerManager:stamina_multiplier()
-	local multiplier = 1
-	multiplier = multiplier + self:upgrade_value("player", "sociopath_stamina_mul", 1) - 1
-	multiplier = multiplier + self:upgrade_value("player", "stamina_multiplier", 1) - 1
-	multiplier = multiplier + self:team_upgrade_value("stamina", "multiplier", 1) - 1
-	multiplier = multiplier + self:team_upgrade_value("stamina", "passive_multiplier", 1) - 1
-	multiplier = multiplier + self:get_hostage_bonus_multiplier("stamina") - 1
-	multiplier = managers.modifiers:modify_value("PlayerManager:GetStaminaMultiplier", multiplier)
-
-	return multiplier
 end
 
 function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, weapon_unit)
@@ -1753,15 +2034,18 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 	if self:has_category_upgrade("player", "sociopath_mode") then
 		local range = self:has_category_upgrade("player", "sociopath_combo_master") and 2250000 or 1000000
 		local throwing_add = self:has_category_upgrade("player", "sociopath_throwing_combo")
-		local combo_stacks_start = self._combo_stacks
+		
+		local combo_stacks_threshold = tweak_data.upgrades.values.player.sociopath_combo_stack_restore_hp_threshold
+		
+		local combo_stacks = self._combo_stacks or 0
+		local combo_stacks_start = combo_stacks
+		local next_combo_diff = combo_stacks_threshold - (combo_stacks % combo_stacks_threshold)
+		local next_combo_reward = combo_stacks + next_combo_diff 
+		
 		if weapon_unit then
 			if throwing_add then
 				if weapon_unit:base()._primary_class == "class_throwing" then
-					if self._combo_stacks then
-						self._combo_stacks = self._combo_stacks + 2
-					else
-						self._combo_stacks = 2
-					end
+					combo_stacks = combo_stacks + 2
 				end
 			end
 		end
@@ -1772,15 +2056,11 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 			local melee_add = self:has_category_upgrade("player", "sociopath_melee_combo")
 			local saw_add = self:has_category_upgrade("player", "sociopath_saw_combo")
 			
-			if self._combo_stacks then
-				self._combo_stacks = self._combo_stacks + 1
-			else
-				self._combo_stacks = 1
-			end
+			combo_stacks = combo_stacks + 1
 			
 			if self:has_category_upgrade("player", "sociopath_melee_combo") then
 				if variant == "melee" then
-					self._combo_stacks = self._combo_stacks + 1
+					combo_stacks = combo_stacks + 1
 				end
 			end		
 			
@@ -1788,38 +2068,19 @@ function PlayerManager:on_killshot(killed_unit, variant, headshot, weapon_id, we
 				local equipped_unit = alive(weapon_unit) and weapon_unit:base() or self:get_current_state()._equipped_unit:base()
 				
 				if equipped_unit:is_category("saw") and variant == "bullet" then
-					self._combo_stacks = self._combo_stacks + 1
+					combo_stacks = combo_stacks + 1
 				end
 			end
-			
-			--log("combo: " .. tostring(self._combo_stacks))
-			
-			if not self._needed_combo_stacks_for_hp then
-				self._needed_combo_stacks_for_hp = 5
+		end
+		
+		if self._combo_stacks ~= combo_stacks then
+			if combo_stacks >= next_combo_reward then
+				local diff = combo_stacks - next_combo_reward
+				local num_rewards = 1 + math.floor(diff / combo_stacks_threshold)
+				damage_ext:restore_health(num_rewards, true)
 			end
-			
-			if not self._next_combo_hp_stack_reduction then
-				self._next_combo_hp_stack_reduction = 10
-			elseif self._combo_stacks > self._next_combo_hp_stack_reduction then
-				self._needed_combo_stacks_for_hp = math.max(1, self._needed_combo_stacks_for_hp - 1)
-				self._next_combo_hp_stack_reduction = self._next_combo_hp_stack_reduction + 10
-				--log("next_hp_stack_reduction: " .. tostring(self._next_combo_hp_stack_reduction))
-			end
-			
-			if not self._next_combo_hp then
-				self._next_combo_hp = self._needed_combo_stacks_for_hp
-			end
-			
-			if self._combo_stacks >= self._next_combo_hp then
-				damage_ext:restore_health(1, true)
-				
-				self._next_combo_hp = self._next_combo_hp + self._needed_combo_stacks_for_hp
-				--log("next_combo_hp: " .. tostring(self._next_combo_hp))
-			end
-			
-			if combo_stacks_start then 
-				Hooks:Call("TCD_OnSociopathComboStacksChanged",combo_stacks_start,self._combo_stacks)
-			end
+			self._combo_stacks = combo_stacks
+			Hooks:Call("TCD_OnSociopathComboStacksChanged",combo_stacks_start,combo_stacks)
 		end
 	end
 	
@@ -2165,9 +2426,6 @@ function PlayerManager:update(t, dt)
 		if self._combo_timer and self._combo_timer < t then
 			Hooks:Call("TCD_OnSociopathComboStacksChanged",self._combo_stacks,0)
 			self._combo_stacks = 0
-			self._needed_combo_stacks_for_hp = 5
-			self._next_combo_hp = self._needed_combo_stacks_for_hp
-			self._next_combo_hp_stack_reduction = 10
 		end
 		
 		if self._melee_stance_dr_t and self._melee_stance_dr_t < t then

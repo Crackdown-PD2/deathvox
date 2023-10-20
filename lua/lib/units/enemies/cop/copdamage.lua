@@ -837,6 +837,12 @@ function CopDamage:damage_bullet(attack_data)
 					elseif attack_data.stagger and not self._has_been_staggered then
 						result_type = "stagger"
 						self._has_been_staggered = true
+					elseif managers.player:has_active_temporary_property("biker_guaranteed_stagger") then
+						local stagger_id = managers.player:get_temporary_property("biker_guaranteed_stagger")
+						if stagger_id ~= self._biker_proc_stagger then
+							self._biker_proc_stagger = stagger_id
+							result_type = "stagger"
+						end
 					end
 				end
 
@@ -930,7 +936,7 @@ function CopDamage:damage_bullet(attack_data)
 	local headshot_multiplier = 1
 	local headshot_mul_addend = 0
 
-	if attacker_is_main_player then
+	if attacker_is_main_player then	
 		local backstab_bullets_mul = 1
 		local weap_base = alive(attack_data.weapon_unit) and attack_data.weapon_unit:base()
 		local weapon_class = weap_base and weap_base.get_weapon_class and weap_base:get_weapon_class() or "NO_WEAPON_CLASS"
@@ -982,6 +988,10 @@ function CopDamage:damage_bullet(attack_data)
 
 		if self._char_tweak.priority_shout then
 			damage = damage * managers.player:upgrade_value("weapon", "special_damage_taken_multiplier", 1)
+			
+			if attack_data.weapon_unit:base().weapon_tweak_data then
+				damage = damage * (attack_data.weapon_unit:base():weapon_tweak_data().special_damage_multiplier or 1)
+			end
 		end
 
 		if head then
@@ -1097,6 +1107,28 @@ function CopDamage:damage_bullet(attack_data)
 			elseif attack_data.stagger and not self._has_been_staggered then
 				result_type = "stagger"
 				self._has_been_staggered = true
+			elseif managers.player:has_active_temporary_property("biker_guaranteed_stagger") then
+				local do_stagger = false
+				if self._unit:base():has_tag("tank") then
+					--stagger not allowed
+				elseif self._unit:base():has_tag("special") then
+					if managers.player:has_team_category_upgrade("player","biker_can_stagger_special_enemies") then
+						do_stagger = true
+					end
+				elseif self._unit:base():has_tag("heavy") then
+					if managers.player:has_team_category_upgrade("player","biker_can_stagger_heavy_enemies") then
+						do_stagger = true
+					end
+				else --assume light enemy
+					do_stagger = true
+				end
+				if do_stagger then
+					local stagger_id = managers.player:get_temporary_property("biker_guaranteed_stagger")
+					if stagger_id ~= self._biker_proc_stagger then
+						self._biker_proc_stagger = stagger_id
+						result_type = "stagger"
+					end
+				end
 			end
 		end
 
@@ -2052,6 +2084,15 @@ function CopDamage:damage_melee(attack_data)
 	local damage = attack_data.damage
 	local damage_effect = attack_data.damage_effect
 	
+	--[[
+			elseif managers.player:has_active_temporary_property("biker_guaranteed_stagger") then
+				local stagger_id = managers.player:get_temporary_property("biker_guaranteed_stagger")
+				if stagger_id ~= self._biker_proc_stagger then
+					self._biker_proc_stagger = stagger_id
+					result_type = "stagger"
+				end
+				--]]
+	
 	local damage_multiplier = 1
 	local headshot_multiplier = 1
 
@@ -2205,14 +2246,38 @@ function CopDamage:damage_melee(attack_data)
 			end
 		elseif attack_data.variant == "counter_spooc" and not is_tank and not self._unit:base():has_tag("boss") then
 			result_type = "expl_hurt"
+		elseif not self._char_tweak.immune_to_knock_down then
+			if attacker_is_main_player and managers.player:has_active_temporary_property("biker_guaranteed_stagger") then
+				local do_stagger = false
+				if self._unit:base():has_tag("tank") then
+					--stagger not allowed
+				elseif self._unit:base():has_tag("special") then
+					if managers.player:has_team_category_upgrade("player","biker_can_stagger_special_enemies") then
+						do_stagger = true
+					end
+				elseif self._unit:base():has_tag("heavy") then
+					if managers.player:has_team_category_upgrade("player","biker_can_stagger_heavy_enemies") then
+						do_stagger = true
+					end
+				else --assume light enemy
+					do_stagger = true
+				end
+				if do_stagger then
+					local stagger_id = managers.player:get_temporary_property("biker_guaranteed_stagger")
+					if stagger_id ~= self._biker_proc_stagger then
+						self._biker_proc_stagger = stagger_id
+						result_type = "stagger"
+					end
+				end
+			end
 		end
 
 		if not result_type then
 			if attack_data.knockback_tier then 
 				result_type = attack_data.knockback_tier and self.melee_knockback_tiers[math.min(#self.melee_knockback_tiers,attack_data.knockback_tier)]
 				if result_type == "expl_hurt" and is_tank then 
-					--expl_hurt is listed as a tier above hurt_heavy, but is not as severe an animation for bulldozers as hurt_heavy,
-					--so don't punish the player for being TOO GOOD at punching things
+					-- expl_hurt is listed as a tier above hurt_heavy, but is not as severe an animation for bulldozers as hurt_heavy,
+					-- so don't punish the player for being TOO GOOD at punching things
 					result_type = self.melee_knockback_tiers[4]
 				end
 			end
@@ -2501,6 +2566,7 @@ function CopDamage:sync_damage_melee(attacker_unit, damage_percent, damage_effec
 
 	attack_data.result = result
 	attack_data.is_synced = true
+	attack_data.name_id = attacker_unit and attacker_unit:inventory() and attacker_unit:inventory():get_melee_weapon_id()
 
 	if i_result == 3 then
 		self._unit:unit_data().has_alarm_pager = false
@@ -3530,8 +3596,33 @@ function CopDamage:damage_dot(attack_data)
 	else
 		attack_data.damage = damage
 
-		local result_type = attack_data.hurt_animation and self:get_damage_type(damage_percent, attack_data.variant) or "dmg_rcv"
+		local result_type = attack_data.hurt_animation and self:get_damage_type(damage_percent, attack_data.variant)
 
+		if attack_data.attacker_unit == managers.player:local_player() and managers.player:has_active_temporary_property("biker_guaranteed_stagger") then
+			local do_stagger = false
+			if self._unit:base():has_tag("tank") then
+				--stagger not allowed
+			elseif self._unit:base():has_tag("special") then
+				if managers.player:has_team_category_upgrade("player","biker_can_stagger_special_enemies") then
+					do_stagger = true
+				end
+			elseif self._unit:base():has_tag("heavy") then
+				if managers.player:has_team_category_upgrade("player","biker_can_stagger_heavy_enemies") then
+					do_stagger = true
+				end
+			else --assume light enemy
+				do_stagger = true
+			end
+			if do_stagger then
+				local stagger_id = managers.player:get_temporary_property("biker_guaranteed_stagger")
+				if stagger_id ~= self._biker_proc_stagger then
+					self._biker_proc_stagger = stagger_id
+					result_type = "stagger"
+				end
+			end
+		end
+		result_type = result_type or "dmg_rcv"
+		
 		result = {
 			type = result_type,
 			variant = attack_data.variant
