@@ -886,7 +886,7 @@ function CopActionHurt:init(action_desc, common_data)
 				end
 			end
 
-			managers.fire:remove_dead_dozer_from_overgrill(unit_id)
+			--managers.fire:remove_dead_dozer_from_overgrill(unit_id)
 		end
 
 		if self._is_server then

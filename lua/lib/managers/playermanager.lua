@@ -582,7 +582,7 @@ if TCD_ENABLED then
 	end
 	
 	Hooks:PostHook(PlayerManager,"check_skills","deathvox_check_cd_skills",function(self)
-		--[[
+		--[[ note: dotmanager function signatures have changed since this was written; do not re-enable without analysis/rewrite
 		if self:has_category_upgrade("subclass_poison","weapon_subclass_damage_mul") then
 			self._message_system:register(Message.OnEnemyKilled, "subclass_poison_aoe_on_kill", function(weapon_unit, variant, killed_unit)
 				local player = self:local_player()

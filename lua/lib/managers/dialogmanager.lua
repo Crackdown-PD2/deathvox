@@ -16,6 +16,7 @@ function DialogManager:queue_dialog(id, params)
 	
 	if not deny_skm then
 		if not params.skip_idle_check and managers.platform:presence() == "Idle" then
+			self:_call_done_callback(params and params.done_cbk, "idle")
 			return
 		end
 
@@ -36,6 +37,8 @@ function DialogManager:queue_dialog(id, params)
 			else
 				debug_pause(error_message)
 			end
+			
+			self:_call_done_callback(params and params.done_cbk, "unexistent")
 
 			return false
 		end

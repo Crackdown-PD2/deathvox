@@ -1,9 +1,11 @@
+--[[
 function MutatorFriendlyFire:setup(mutator_manager)
 	MutatorFriendlyFire.super.setup(mutator_manager)
 
 	--this results in anything that uses this slotmask to hit targets, to hit player husks, which is NOT good, so I'm commenting it out
 	--managers.slot._masks.bullet_impact_targets = managers.slot._masks.bullet_impact_targets_ff
 end
+--]]
 
 function MutatorFriendlyFire:modify_value(id, value)
 	if id == "PlayerDamage:FriendlyFire" then

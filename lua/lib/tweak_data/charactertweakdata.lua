@@ -2988,7 +2988,7 @@ function CharacterTweakData:_init_deathvox()
 	self.deathvox_heavyshot.speech_prefix_count = nil
 	self.deathvox_heavyshot.detection = presets.detection.deathvox
 	self.deathvox_heavyshot.ignore_medic_revive_animation = true  -- no revive animation. may require curving on lower diffs.
-	self.deathvox_heavyshot.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- may require curving on lower diffs.
+	self.deathvox_heavyshot.damage.hurt_severity = presets.hurt_severities.only_poison_and_light_hurt -- may require curving on lower diffs.
 	self.deathvox_heavyshot.suppression = presets.suppression.hard_agg -- hard_agg on all diffs.
 	self.deathvox_heavyshot.surrender = presets.surrender.special -- should be normal on N/H, hard on VH-DW.
 	self.deathvox_heavyshot.move_speed = presets.move_speed.fast -- fast on all diffs.
@@ -3018,7 +3018,7 @@ function CharacterTweakData:_init_deathvox()
 	--self.deathvox_shield.tags = {"shield"} -- commented out as it was actually breaking the tags
 	self.deathvox_shield.detection = presets.detection.deathvox
 	self.deathvox_shield.ignore_medic_revive_animation = true  --no revive animation. In base.
-	self.deathvox_shield.damage.hurt_severity = presets.hurt_severities.only_explosion_hurts
+	self.deathvox_shield.damage.hurt_severity = deep_clone(presets.hurt_severities.only_explosion_and_light_hurt)
 	self.deathvox_shield.damage.hurt_severity.tase = false
 	self.deathvox_shield.suppression = nil
 	self.deathvox_shield.surrender = nil
@@ -3074,7 +3074,7 @@ function CharacterTweakData:_init_deathvox()
 	table.insert(self.deathvox_taser.tags, "takedown")
 	self.deathvox_taser.detection = presets.detection.deathvox
 	self.deathvox_taser.ignore_medic_revive_animation = true  --no revive animation. may require curving on lower diffs.
-	self.deathvox_taser.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire -- may require curving on lower diffs.
+	self.deathvox_taser.damage.hurt_severity = deep_clone(presets.hurt_severities.only_light_hurt) -- may require curving on lower diffs.
 	self.deathvox_taser.damage.hurt_severity.tase = false
 	self.deathvox_taser.suppression = nil 
 	self.deathvox_taser.surrender = nil 
@@ -3307,7 +3307,7 @@ function CharacterTweakData:_init_deathvox()
 	self.deathvox_grenadier.weapon_safety_range = 1000
 	self.deathvox_grenadier.detection = presets.detection.deathvox
 	self.deathvox_grenadier.ignore_medic_revive_animation = true  -- no revive animation. do not touch.
-	self.deathvox_grenadier.damage.hurt_severity = presets.hurt_severities.only_light_hurt_and_fire -- immune to poison.
+	self.deathvox_grenadier.damage.hurt_severity = presets.hurt_severities.only_explosion_and_light_hurt -- immune to poison.
 	self.deathvox_grenadier.HEALTH_INIT = 101
 	self.deathvox_grenadier.HEALTH_SUICIDE_LIMIT = 0.25
 	self.deathvox_grenadier.flammable = true

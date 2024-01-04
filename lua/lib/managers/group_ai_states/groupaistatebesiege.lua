@@ -911,7 +911,7 @@ function GroupAIStateBesiege:_chk_group_use_smoke_grenade(group, task_data, deto
 		end
 		
 		if detonate_pos and shooter_u_data then
-			self:detonate_smoke_grenade(detonate_pos, shooter_pos, duration, false)
+			self:detonate_smoke_grenade(detonate_pos, shooter_pos, duration, false, false)
 			self:apply_grenade_cooldown(nil)
 
 			if shooter_u_data.char_tweak.chatter.smoke and not shooter_u_data.unit:sound():speaking(self._t) then
@@ -997,7 +997,7 @@ function GroupAIStateBesiege:_chk_group_use_flash_grenade(group, task_data, deto
 		end
 
 		if detonate_pos and shooter_u_data then
-			self:detonate_smoke_grenade(detonate_pos, shooter_pos, duration, true)
+			self:detonate_smoke_grenade(detonate_pos, shooter_pos, duration, true, false)
 			self:apply_grenade_cooldown(true)
 
 			if shooter_u_data.char_tweak.chatter.flash_grenade and not shooter_u_data.unit:sound():speaking(self._t) then
@@ -2827,58 +2827,6 @@ end
 function GroupAIStateBesiege:set_damage_reduction_buff_hud()
 end
 
-function GroupAIStateBesiege:assign_enemy_to_group_ai(unit, team_id)
-	local u_tracker = unit:movement():nav_tracker()
-	local seg = u_tracker:nav_segment()
-	local area = self:get_area_from_nav_seg_id(seg)
-	local current_unit_type = tweak_data.levels:get_ai_group_type()
-	local u_name = unit:name()
-	local u_category = nil
-
-	for cat_name, category in pairs_g(tweak_data.group_ai.unit_categories) do
-		local units = category.unit_types[current_unit_type]
-		if units then
-			for _, test_u_name in ipairs(units) do
-				if u_name == test_u_name then
-					u_category = cat_name
-
-					break
-				end
-			end
-		end
-	end
-
-	local group_desc = {
-		size = 1,
-		type = u_category or "custom"
-	}
-	local group = self:_create_group(group_desc)
-	group.team = self._teams[team_id]
-	local grp_objective = nil
-	local objective = unit:brain():objective()
-	local grp_obj_type = self._task_data.assault.active and "assault_area" or "recon_area"
-
-	if objective then
-		grp_objective = {
-			type = grp_obj_type,
-			area = objective.area or objective.nav_seg and self:get_area_from_nav_seg_id(objective.nav_seg) or area
-		}
-		objective.grp_objective = grp_objective
-	else
-		grp_objective = {
-			type = grp_obj_type,
-			area = area
-		}
-	end
-
-	grp_objective.moving_out = false
-	group.objective = grp_objective
-	group.has_spawned = true
-
-	self:_add_group_member(group, unit:key())
-	self:set_enemy_assigned(area, unit:key())
-end
-
 function GroupAIStateBesiege:_assign_skirmish_groups_to_retire(group)
 	--this is horrible, but it works.
 	for group_id, group in pairs_g(self._groups) do --this acquires the groups currently existing in the level.
@@ -3546,9 +3494,9 @@ function GroupAIStateBesiege:_find_spawn_group_near_area(target_area, allowed_gr
 		return
 	end
 
-	--[[for _, group in ipairs(candidate_groups) do
-		table_insert(self._debug_weights, clone(group))
-	end]]
+	--for _, group in ipairs(candidate_groups) do
+	--	table_insert(self._debug_weights, clone(group))
+	--end
 
 	return self:_choose_best_group(candidate_groups, total_weight, delays)
 end

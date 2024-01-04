@@ -30,8 +30,8 @@ local alive_g = alive
 local tmp_vec1 = Vector3()
 local tmp_vec2 = Vector3()
 local old_group_misc_data = GroupAIStateBase._init_misc_data
-function GroupAIStateBase:_init_misc_data()
-	old_group_misc_data(self)
+function GroupAIStateBase:_init_misc_data(...)
+	old_group_misc_data(self,...)
 	self._nr_important_cops = 8
 	self._special_unit_types = {
 		tank = true,
@@ -123,7 +123,7 @@ function GroupAIStateBase:_determine_objective_for_criminal_AI(unit)
 	if not objective then
 		local mov_ext = unit:movement()
 
-		if mov_ext._should_stay then
+		if mov_ext:should_stay() then
 			mov_ext:set_should_stay(false)
 		end
 
@@ -508,7 +508,8 @@ function GroupAIStateBase:chk_area_leads_to_enemy(start_nav_seg_id, test_nav_seg
 	until #to_search_nav_segs == 0
 end
 
---[[-- on_enemy_registered() / on_enemy_unregistered()
+--[[-- on_enemy_registered() / on_enemy_unregistered() 
+-- CAUTION: Outdated! -offy
 function GroupAIStateBase:on_enemy_unregistered(unit)
 	if self:is_unit_in_phalanx_minion_data(unit:key()) then
 		self:unregister_phalanx_minion(unit:key())
@@ -903,20 +904,9 @@ function GroupAIStateBase:_merge_coarse_path_by_area(coarse_path)
 	--fug pls (i did it hoxi) 
 end
 
-function GroupAIStateBase:queue_smoke_grenade(id, detonate_pos, shooter_pos, duration, ignore_control, flashbang)
-	self._smoke_grenades = self._smoke_grenades or {}
-	local data = {
-		id = id,
-		detonate_pos = detonate_pos,
-		shooter_pos = shooter_pos,
-		duration = duration,
-		ignore_control = ignore_control,
-		flashbang = flashbang
-	}
-	self._smoke_grenades[id] = data
-end
-
-function GroupAIStateBase:detonate_world_smoke_grenade(id)
+function GroupAIStateBase:detonate_world_smoke_grenade(id, sync)
+	-- main difference appears to be a world raycast into ground to prevent floating grenades? -offy
+	
 	self._smoke_grenades = self._smoke_grenades or {}
 
 	if not self._smoke_grenades[id] then
@@ -931,8 +921,11 @@ function GroupAIStateBase:detonate_world_smoke_grenade(id)
 		if Network:is_client() then
 			return
 		end
-
+		local flashbang_unit = "units/payday2/weapons/wpn_frag_flashbang/wpn_frag_flashbang"
 		local det_pos = data.detonate_pos
+		local rotation = Rotation(math.random() * 360, 0, 0)
+		local flash_grenade = World:spawn_unit(Idstring(flashbang_unit), det_pos, rotation)
+		
 		local ray_to = mvector3.copy(det_pos) + math.UP * 5
 
 		mvector3.set_z(ray_to, ray_to.z - 50)
@@ -945,14 +938,19 @@ function GroupAIStateBase:detonate_world_smoke_grenade(id)
 			data.detonate_pos = det_pos
 		end
 
-		local rotation = Rotation(math.random() * 360, 0, 0)
-		local flash_grenade = World:spawn_unit(Idstring("units/payday2/weapons/wpn_frag_flashbang/wpn_frag_flashbang"), det_pos, rotation)
 		local shoot_from_pos = data.shooter_pos or det_pos
-		flash_grenade:base():activate(shoot_from_pos, data.duration)
-
+		if data.instant then
+			flash_grenade:base():activate_immediately(shoot_from_pos, data.duration)
+		else
+			flash_grenade:base():activate(shoot_from_pos, data.duration)
+		end
+		
 		self._smoke_grenades[id] = nil
 	else
 		data.duration = data.duration == 0 and 15 or data.duration
+		local rotation = Rotation(math.random() * 360, 0, 0)
+		local smoke_grenade = World:spawn_unit(Idstring("units/weapons/smoke_grenade_quick/smoke_grenade_quick"), det_pos, rotation)
+		
 		local det_pos = data.detonate_pos
 		local ray_to = mvector3.copy(det_pos) + math.UP * 5
 
@@ -966,37 +964,24 @@ function GroupAIStateBase:detonate_world_smoke_grenade(id)
 			data.detonate_pos = det_pos
 		end
 
-		local rotation = Rotation(math.random() * 360, 0, 0)
-		local smoke_grenade = World:spawn_unit(Idstring("units/weapons/smoke_grenade_quick/smoke_grenade_quick"), det_pos, rotation)
 		local shoot_from_pos = data.shooter_pos or det_pos
-		smoke_grenade:base():activate(shoot_from_pos, data.duration)
+		if data.instant then
+			smoke_grenade:base():activate_immediately(shoot_from_pos, data.duration)
+		else
+			smoke_grenade:base():activate(shoot_from_pos, data.duration)
+		end
 
 		managers.groupai:state():teammate_comment(nil, "g40x_any", det_pos, true, 2000, false)
 
 		data.grenade = smoke_grenade
-		self._smoke_end_t = Application:time() + data.duration
-	end
-end
-
-function GroupAIStateBase:sync_smoke_grenade(detonate_pos, shooter_pos, duration, flashbang)
-	self._smoke_grenades = self._smoke_grenades or {}
-	local id = #self._smoke_grenades
-
-	self:queue_smoke_grenade(id, detonate_pos, shooter_pos, duration, true, flashbang)
-	self:detonate_world_smoke_grenade(id)
-end
-
-function GroupAIStateBase:sync_smoke_grenade_kill()
-	if self._smoke_grenades then
-		for id, data in pairs(self._smoke_grenades) do
-			if alive(data.grenade) and data.grenade:base() and data.grenade:base().preemptive_kill then
-				data.grenade:base():preemptive_kill()
-			end
+		self:_update_smoke_end_t(TimerManager:game():time() + data.duration)
+		
+		if sync and Network:is_server() then
+			managers.network:session():send_to_peers_synched("sync_smoke_grenade", data.detonate_pos, data.shooter_pos or Vector3(), data.duration, data.flashbang and true or false, data.instant and true or false)
 		end
-
-		self._smoke_grenades = {}
-		self._smoke_end_t = nil
 	end
+	
+	
 end
 
 function GroupAIStateBase:smoke_and_flash_grenades()
@@ -1450,8 +1435,10 @@ function GroupAIStateBase:on_hostage_follow(owner, follower, state)
 			else
 				managers.network:session():send_to_peers_synched("sync_unit_event_id_16", follower, "base", 3)
 			end
-
-			if managers.player:has_team_category_upgrade("player", "civilian_hostage_carry_bags") then
+			
+			-- main change is this tcd upgrade code;
+			-- other changes were integrated into base-game in 240.3
+			if managers.player:has_team_category_upgrade("player", "civilian_hostage_carry_bags") and mov_ext then
 				CarryData._valid_civs[follower_key] = follower
 
 				local was_carrying_data = mov_ext:was_carrying_bag()
@@ -1492,7 +1479,26 @@ function GroupAIStateBase:on_hostage_follow(owner, follower, state)
 		end
 
 		if Network:is_server() then
-			mov_ext:throw_bag()
+			if follower:id() ~= 1 then
+				local peer = owner and managers.network:session():peer_by_unit(owner)
+
+				if peer then
+					local peer_id = peer:id()
+
+					if peer_id ~= managers.network:session():local_peer():id() then
+						peer:send_queued_sync("sync_unit_event_id_16", follower, "base", 3)
+						managers.network:session():send_to_peers_synched_except(peer_id, "sync_unit_event_id_16", follower, "base", 4)
+					else
+						managers.network:session():send_to_peers_synched("sync_unit_event_id_16", follower, "base", 4)
+					end
+				else
+					managers.network:session():send_to_peers_synched("sync_unit_event_id_16", follower, "base", 4)
+				end
+			end
+			
+			if mov_ext then
+				mov_ext:throw_bag()
+			end
 
 			if CarryData._valid_civs[follower_key] then
 				CarryData._valid_civs[follower_key] = nil
@@ -1507,5 +1513,8 @@ function GroupAIStateBase:on_hostage_follow(owner, follower, state)
 				managers.network:session():send_to_peers_synched("sync_unit_event_id_16", follower, "base", 2)
 			end
 		end
+	end
+	if mov_ext and mov_ext.set_hostage_speed_modifier then
+		mov_ext:set_hostage_speed_modifier(state)
 	end
 end

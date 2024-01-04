@@ -19,6 +19,26 @@ local draw_obstructed_splinters = nil
 local draw_splinter_hits = nil
 local debug_draw_duration = 3
 
+function FireManager:remove_dead_dozer_from_overgrill(unit_id)
+	local dozers_on_fire = self._enemies_on_fire
+	dozers_on_fire[unit_id] = nil
+
+	if unit_id == -1 then
+		for dozer_id, dozer_info in pairs_g(dozers_on_fire) do
+			local dozer_unit = dozer_info.unit
+
+			if not alive_g(dozer_unit) or dozer_unit:id() == -1 then
+				dozers_on_fire[dozer_id] = nil
+			end
+		end
+	end
+
+	self._enemies_on_fire = dozers_on_fire
+end
+
+do return end
+
+
 function FireManager:update(t, dt)
 	local doted_enemies = self._doted_enemies
 
@@ -199,23 +219,6 @@ function FireManager:check_achievemnts(unit, t)
 
 		self._dozers_on_fire = dozers_on_fire
 	end
-end
-
-function FireManager:remove_dead_dozer_from_overgrill(unit_id)
-	local dozers_on_fire = self._dozers_on_fire
-	dozers_on_fire[unit_id] = nil
-
-	if unit_id == -1 then
-		for dozer_id, dozer_info in pairs_g(dozers_on_fire) do
-			local dozer_unit = dozer_info.unit
-
-			if not alive_g(dozer_unit) or dozer_unit:id() == -1 then
-				dozers_on_fire[dozer_id] = nil
-			end
-		end
-	end
-
-	self._dozers_on_fire = dozers_on_fire
 end
 
 function FireManager:is_set_on_fire(unit)

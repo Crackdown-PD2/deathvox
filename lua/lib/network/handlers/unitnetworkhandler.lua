@@ -563,34 +563,6 @@ function UnitNetworkHandler:action_hurt_start(unit, hurt_type_idx, body_part, de
 	end
 end
 
-function UnitNetworkHandler:sync_medic_heal(unit, sender)
-	if not self._verify_gamestate(self._gamestate_filter.any_ingame) or not self._verify_sender(sender) then
-		return
-	end
-
-	MedicActionHeal:check_achievements()
-
-	if not self._verify_character(unit) then
-		return
-	end
-
-	unit:character_damage()._heal_cooldown_t = Application:time()
-
-	local anim_data = unit:anim_data()
-
-	if anim_data and anim_data.act then
-		unit:sound():say("heal")
-	else
-		local action_data = {
-			body_part = 1,
-			type = "heal",
-			client_interrupt = Network:is_client()
-		}
-
-		unit:movement():action_request(action_data)
-	end
-end
-
 function UnitNetworkHandler:sync_heist_time(time, id, sender)
 	if not self._verify_gamestate(self._gamestate_filter.any_ingame) then
 		return

@@ -271,8 +271,7 @@ function ExplosionManager:detect_and_give_dmg(params)
 				variant = "explosion",
 				position = hit_pos,
 				range = range,
-				damage = player_dmg,
-				ignite_character = params.ignite_character
+				damage = player_dmg
 			})
 		end
 	end
@@ -511,8 +510,7 @@ function ExplosionManager:detect_and_give_dmg(params)
 						col_ray = self._col_ray or {
 							position = mvec3_copy(hit_body:position()),
 							ray = dir
-						},
-						ignite_character = params.ignite_character
+						}
 					}
 
 					char_dmg_ext:damage_explosion(action_data)

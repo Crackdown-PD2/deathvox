@@ -36,9 +36,6 @@
 	<hook post="true" file="lua/lib/tweak_data/upgradestweakdata.lua" source_file="lib/tweak_data/upgradestweakdata"/>
 	<hook post="true" file="lua/lib/tweak_data/skilltreetweakdata.lua" source_file="lib/tweak_data/skilltreetweakdata"/>
 
-	<hook post="true" file="lua/lib/modifiers/modifiernohurtanims.lua" source_file="lib/modifiers/modifiernohurtanims"/>
-	<hook post="true" file="lua/lib/modifiers/modifiershieldphalanx.lua" source_file="lib/modifiers/modifiershieldphalanx"/>
-
 	<hook post="true" file="lua/lib/mutators/mutatorfriendlyfire.lua" source_file="lib/mutators/mutatorfriendlyfire"/>
 
 	<!--  <group file="lua/lib/units/enemies/" source_file="lib/units/enemies/"> -->
