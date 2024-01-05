@@ -1,6 +1,6 @@
 local origin_charmap = CharacterTweakData.character_map
 
-Hooks:PostHook(CharacterTweakData, "init", "CD_init", function(self, tweak_data)
+Hooks:PostHook(CharacterTweakData, "init", "CD_charactertweakdata_init", function(self, tweak_data)
 	self:_init_deathvox()
 end)
 

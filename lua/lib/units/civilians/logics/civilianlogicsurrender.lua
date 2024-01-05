@@ -180,7 +180,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				data.unit:base():set_slot(data.unit, 22)
 
 				managers.network:session():send_to_peers_synched("sync_unit_surrendered", data.unit, true)
-				managers.network:session():send_to_peers_synched("sync_unit_event_id_16", data.unit, "brain", HuskCopBrain._NET_EVENTS.surrender_tied)
+				managers.network:session():send_to_peers_synched("sync_unit_event_id_16", data.unit, "brain", HuskCopBrain._NET_EVENTS.surrender_cop_tied)
 
 				if data.unit:movement() then
 					data.unit:movement():remove_giveaway()

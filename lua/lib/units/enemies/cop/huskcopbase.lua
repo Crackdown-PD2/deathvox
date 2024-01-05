@@ -1,8 +1,8 @@
 local post_init_original = HuskCopBase.post_init
-function HuskCopBase:post_init()
+function HuskCopBase:post_init(...)
 	self._allow_invisible = true
 
-	post_init_original(self)
+	post_init_original(self, ...)
 
 	--[[local spawn_state = nil
 

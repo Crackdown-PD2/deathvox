@@ -539,7 +539,7 @@ function CopLogicIntimidated._do_tied(data, aggressor_unit)
 
 	data.brain:set_update_enabled_state(false)
 	data.unit:inventory():destroy_all_items()
-	managers.network:session():send_to_peers_synched("sync_unit_event_id_16", data.unit, "brain", HuskCopBrain._NET_EVENTS.surrender_tied) ----
+	managers.network:session():send_to_peers_synched("sync_unit_event_id_16", data.unit, "brain", HuskCopBrain._NET_EVENTS.surrender_cop_tied)
 
 	data.brain:rem_pos_rsrv("stand")
 

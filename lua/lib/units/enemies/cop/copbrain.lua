@@ -1,6 +1,6 @@
 local mvec3_cpy = mvector3.copy
 
-Hooks:PostHook(CopBrain, "init", "CD_init", function(self, unit)
+Hooks:PostHook(CopBrain, "init", "CD_copbrain_init", function(self, unit)
 	CopBrain._logic_variants.tank.attack = BossLogicAttack
 	CopBrain._logic_variants.tank_medic.attack = BossLogicAttack
 	CopBrain._logic_variants.tank_mini.attack = BossLogicAttack
@@ -227,8 +227,6 @@ end
 
 if deathvox:IsTotalCrackdownEnabled() then
 	function CopBrain:convert_to_criminal(mastermind_criminal)
-		managers.network:session():send_to_peers_synched("sync_unit_converted", self._unit)
-
 		if self._alert_listen_key then
 			managers.groupai:state():remove_alert_listener(self._alert_listen_key)
 		else
@@ -505,7 +503,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 	end
 else
 	function CopBrain:convert_to_criminal(mastermind_criminal)
-		managers.network:session():send_to_peers_synched("sync_unit_converted", self._unit)
 
 		if self._alert_listen_key then
 			managers.groupai:state():remove_alert_listener(self._alert_listen_key)
@@ -699,58 +696,6 @@ local next_g = next
 local pairs_g = pairs
 local type_g = type
 
-local on_nav_link_unregistered_original = CopBrain.on_nav_link_unregistered
-function CopBrain:on_nav_link_unregistered(element_id)
-	on_nav_link_unregistered_original(self, element_id)
-
-	if next_g(self._logic_data.active_searches) then
-		for search_id, search_type in pairs_g(self._logic_data.active_searches) do
-			if search_type ~= 2 then
-				self._nav_links_to_check = self._nav_links_to_check or {}
-				self._nav_links_to_check[search_id] = element_id
-			end
-		end
-	end
-end
-
-function CopBrain:clbk_pathing_results(search_id, path)
-	local dead_nav_links = self._nav_links_to_check
-
-	if dead_nav_links then
-		if path then
-			local element_id = dead_nav_links[search_id]
-
-			if element_id then
-				for i = 1, #path do
-					local nav_point = path[i]
-
-					if not nav_point.x and nav_point:script_data().element._id == element_id then
-						path = nil
-
-						break
-					end
-				end
-			end
-
-			dead_nav_links[search_id] = nil
-
-			if not next_g(dead_nav_links) then
-				dead_nav_links = nil
-			end
-		elseif dead_nav_links[search_id] then
-			dead_nav_links[search_id] = nil
-
-			if not next_g(dead_nav_links) then
-				dead_nav_links = nil
-			end
-		end
-
-		self._nav_links_to_check = dead_nav_links
-	end
-
-	self:_add_pathing_result(search_id, path)
-end
-
 function CopBrain:_add_pathing_result(search_id, path)
 	self._logic_data.active_searches[search_id] = nil
 	self._logic_data.pathing_results = self._logic_data.pathing_results or {}
@@ -759,69 +704,6 @@ function CopBrain:_add_pathing_result(search_id, path)
 	if path and self._current_logic._pathing_complete_clbk then
 		self._current_logic._pathing_complete_clbk(self._logic_data)
 	end
-end
-
-function CopBrain:abort_detailed_pathing(search_id)
-	if not self._logic_data.active_searches[search_id] then
-		return
-	end
-
-	self._logic_data.active_searches[search_id] = nil
-
-	managers.navigation:cancel_pathing_search(search_id)
-
-	local dead_nav_links = self._nav_links_to_check
-
-	if dead_nav_links and dead_nav_links[search_id] then
-		dead_nav_links[search_id] = nil
-
-		if not next_g(dead_nav_links) then
-			dead_nav_links = nil
-		end
-
-		self._nav_links_to_check = dead_nav_links
-	end
-end
-
-function CopBrain:cancel_all_pathing_searches()
-	local dead_nav_links = self._nav_links_to_check
-	local contains_dead_nav_link = {}
-
-	for search_id, search_type in pairs_g(self._logic_data.active_searches) do
-		if search_type == 2 then
-			managers.navigation:cancel_coarse_search(search_id)
-		else
-			managers.navigation:cancel_pathing_search(search_id)
-
-			if dead_nav_links and dead_nav_links[search_id] then
-				contains_dead_nav_link[search_id] = true
-				dead_nav_links[search_id] = nil
-			end
-		end
-	end
-
-	if dead_nav_links and not next_g(dead_nav_links) then
-		self._nav_links_to_check = nil
-	end
-
-	local path_results = self._logic_data.pathing_results
-
-	if path_results and next_g(path_results) then
-		for search_id, path in pairs_g(path_results) do
-			if path ~= "failed" and not contains_dead_nav_link[search_id] and type_g(path[1]) ~= "table" then
-				for i = 1, #path do
-					local nav_point = path[i]
-
-					if not nav_point.x and nav_point:script_data().element:nav_link_delay() then
-						nav_point:set_delay_time(0)
-					end
-				end
-			end
-		end
-	end
-
-	self._logic_data.active_searches = {}
-	self._logic_data.pathing_results = nil
 end
 
 function CopBrain:_reset_logic_data()
@@ -861,12 +743,11 @@ function CopBrain:on_suppressed(state)
 	if state and self._current_logic.on_suppressed_state then
 		self._current_logic.on_suppressed_state(self._logic_data)
 
-		if self._logic_data.char_tweak.chatter.suppress then
-			if math.random() <= 0.5 then
-				self._unit:sound():say("hlp", true) 
-			else --hopefully some variety here now
-				self._unit:sound():say("lk3a", true) 
-			end
+		-- hopefully some variety here now
+		if state == "panic" and math.random() <= 0.5 then
+			self._unit:sound():say("lk3a", true) 
+		elseif self._logic_data.char_tweak.chatter.suppress then
+			self._unit:sound():say("hlp", true)
 		end
 	end
 end
