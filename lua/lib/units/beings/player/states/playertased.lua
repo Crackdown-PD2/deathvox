@@ -2,9 +2,42 @@ function PlayerTased:_on_tased_event(taser_unit, tased_unit)
 	if self._unit == tased_unit then
 		self._taser_unit = taser_unit
 		
-		if managers.player:has_category_upgrade("player", "infiltrator_taser_breakout") then
-			managers.enemy:add_delayed_clbk("TCD:TASERFUCKERYEAAAAAAAH", callback(self, self, "give_shock_to_taser_no_damage"), TimerManager:game():time() + 1.5)
+		if self._taser_malfunction_data then
+			local function clbk()
+				self:_on_malfunction_to_taser_event()
+			end
+
+			managers.player:register_message(Message.SendTaserMalfunction, "taser_malfunction", clbk)
+			managers.player:add_coroutine("taser_malfunction", PlayerAction.TaserMalfunction, managers.player, self._taser_malfunction_data.interval, self._taser_malfunction_data.chance_to_trigger)
 		end
+
+		if managers.player:has_category_upgrade("player", "infiltrator_taser_breakout") then
+			managers.enemy:add_delayed_clbk("TCD_Taser_Countershock", callback(self, self, "give_shock_to_taser_no_damage"), TimerManager:game():time() + 1.5)
+		end
+		
+		--[[
+		-- counter-tase is automatic in cd
+		if self._escape_tase_t then
+			local interact_string = managers.localization:text("hud_int_escape_taser", {
+				BTN_INTERACT = managers.localization:btn_macro("interact", false)
+			})
+
+			managers.hud:show_interact({
+				icon = "mugshot_electrified",
+				text = interact_string
+			})
+
+			local target_time = self._escape_tase_t
+
+			managers.player:add_coroutine("escape_tase", PlayerAction.EscapeTase, managers.player, managers.hud, TimerManager:game():time() + target_time)
+
+			local function clbk()
+				self:give_shock_to_taser_no_damage()
+			end
+
+			managers.player:register_message(Message.EscapeTase, "escape_tase", clbk)
+		end
+		--]]
 	end
 end
 

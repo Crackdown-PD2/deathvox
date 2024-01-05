@@ -28,7 +28,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 	ContourExt._types.mark_enemy_damage_bonus_distance.fadeout = 60
 	ContourExt._types.mark_enemy_damage_bonus_distance.fadeout_silent = 60
 	
-	--damage bonuses, and contour/marking itself (for these two) are handled clientside, since there's no easy way to tweak the damage bonus from marking
+	-- damage bonuses, and contour/marking itself (for these two) are handled clientside, since there's no easy way to tweak the damage bonus from marking
 	local new_types = {
 		civilian_mark_standard = {
 			fadeout = 2,
@@ -62,12 +62,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 		table.insert(ContourExt.indexed_types, name)
 	end
 
+	-- note: do not sort unless you can guarantee the order will be the same for all other peers!
+	-- (ie. if you have changed the matchmaking key)
 	table.sort(ContourExt.indexed_types)
-	
-	
 end
 
---mark_peer_id is from tcd
+-- mark_peer_id is from tcd
 function ContourExt:add(type, sync, multiplier, override_color, is_element, mark_peer_id)
 	self._contour_list = self._contour_list or {}
 	local data = self._types[type]
@@ -133,6 +133,12 @@ function ContourExt:add(type, sync, multiplier, override_color, is_element, mark
 		end
 	end
 
+	if not self._removed_occlusion then
+		self._removed_occlusion = true
+
+		managers.occlusion:remove_occlusion(self._unit)
+	end
+	
 	local setup = {
 		ref_c = 1,
 		type = type,

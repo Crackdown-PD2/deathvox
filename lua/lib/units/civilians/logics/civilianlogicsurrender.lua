@@ -49,9 +49,12 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		data.unit:brain():set_update_enabled_state(true) --only change was this
 		data.unit:movement():set_allow_fire(false)
-		managers.groupai:state():add_to_surrendered(data.unit, callback(CivilianLogicSurrender, CivilianLogicSurrender, "queued_update", data))
+		if not data.is_tied then
+			managers.groupai:state():add_to_surrendered(data.unit, callback(CivilianLogicSurrender, CivilianLogicSurrender, "queued_update", data))
 
-		my_data.surrender_clbk_registered = true
+			my_data.surrender_clbk_registered = true
+		end
+
 
 		data.unit:movement():set_stance(data.is_tied and "cbt" or "hos")
 		data.unit:movement():set_cool(false)
@@ -202,7 +205,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 					managers.statistics:tied({
 						name = data.unit:base()._tweak_table
 					})
-				else
+				elseif aggressor_unit:base() and aggressor_unit:base().is_husk_player then
 					aggressor_unit:network():send_to_unit({
 						"statistics_tied",
 						data.unit:base()._tweak_table
@@ -358,7 +361,13 @@ function CivilianLogicSurrender._update_enemy_detection(data, my_data)
 	end
 	
 	for e_key, u_data in pairs(enemies) do
-		if not u_data.is_deployable then
+		if u_data.is_deployable then
+			local dis = mvector3.distance(my_pos, u_data.m_det_pos)
+
+			if dis < 1000 then
+				my_data.inside_intimidate_aura = true
+			end
+		elseif chk_vis_func(my_tracker, u_data.tracker) then
 			local enemy_unit = u_data.unit
 			local enemy_pos = u_data.m_det_pos
 			
@@ -402,7 +411,7 @@ function CivilianLogicSurrender._update_enemy_detection(data, my_data)
 					local look_vec
 				
 					if enemy_unit:base().is_local_player then
-						look_vec = enemy_unit:movement():m_head_rot():y()
+						look_vec = enemy_unit:movement():detect_look_dir()
 					else
 						if enemy_unit:inventory() and enemy_unit:inventory():equipped_unit() then
 							if enemy_unit:movement()._stance.values[3] >= 0.6 then
@@ -415,7 +424,7 @@ function CivilianLogicSurrender._update_enemy_detection(data, my_data)
 						end
 
 						if not look_vec then
-							look_vec = enemy_unit:movement():m_head_rot():z()
+							look_vec = enemy_unit:movement():detect_look_dir()
 						end
 					end
 					

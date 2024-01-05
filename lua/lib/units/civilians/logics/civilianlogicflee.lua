@@ -32,8 +32,13 @@ function CivilianLogicFlee.on_rescue_SO_completed(ignore_this, data, good_pig)
 				was_rescued = true,
 				type = "free"
 			})
-		elseif not CivilianLogicFlee._get_coarse_flee_path(data) then
-			return
+		else
+			data.unit:base():set_slot(data.unit, 21)
+			managers.network:session():send_to_peers_synched("sync_unit_event_id_16", data.unit, "brain", HuskCopBrain._NET_EVENTS.surrender_civilian_untied)
+
+			if not CivilianLogicFlee._get_coarse_flee_path(data) then
+				return
+			end
 		end
 	end
 
@@ -143,7 +148,7 @@ function CivilianLogicFlee.enter(data, new_logic_name, enter_params)
 
 	data.unit:brain():set_attention_settings(attention_settings)
 
-	if data.char_tweak.calls_in and not managers.groupai:state():is_police_called() then
+	if data.char_tweak.calls_in and not managers.groupai:state():is_police_called() and managers.groupai:state():can_police_be_called() then
 		my_data.call_police_clbk_id = "civ_call_police" .. key_str
 		local call_t = math.max(data.call_police_delay_t or 0, TimerManager:game():time() + math.lerp(1, 10, math.random()))
 
@@ -264,7 +269,7 @@ function CivilianLogicFlee._find_hide_cover(data)
 
 			mvector3.random_orthogonal(avoid_pos)
 			mvector3.multiply(avoid_pos, 100)
-			mvector3.add(data.m_pos, 100)
+			mvector3.add(avoid_pos, data.m_pos)
 		end
 	end
 

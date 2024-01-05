@@ -25,12 +25,6 @@ local table_remove = table.remove
 local left_hand_str = Idstring("LeftHandMiddle2")
 local right_hand_str = Idstring("RightHandMiddle2")
 
-local post_init_original = HuskPlayerMovement.post_init
-function HuskPlayerMovement:post_init()
-	post_init_original(self)
-	self._attention_handler:setup_attention_positions(self._m_detect_pos, self._m_newest_pos)
-end
-
 function HuskPlayerMovement:m_pos()
 	return self._m_newest_pos
 end
@@ -40,11 +34,11 @@ function HuskPlayerMovement:m_head_pos()
 end
 
 local init_original = HuskPlayerMovement.init
-function HuskPlayerMovement:init(unit)
+function HuskPlayerMovement:init(unit, ...)
 
 	self._stand_detection_offset_z = mvec3_z(tweak_data.player.stances.default.standard.head.translation)
 
-	init_original(self, unit)
+	init_original(self, unit, ...)
 end
 
 function HuskPlayerMovement:_calculate_m_pose()
@@ -66,29 +60,6 @@ function HuskPlayerMovement:sync_action_walk_nav_point(pos, speed, action, param
 	if not pos then
 		if path_len <= 0 or self._movement_path[path_len].pos then
 			pos = mvec3_cpy(self:m_pos())
-		end
-	end
-
-	if Network:is_server() then
-		if not self._pos_reservation then
-			self._pos_reservation = {
-				radius = 100,
-				position = mvec3_cpy(pos),
-				filter = self._pos_rsrv_id
-			}
-			self._pos_reservation_slow = {
-				radius = 100,
-				position = mvec3_cpy(pos),
-				filter = self._pos_rsrv_id
-			}
-
-			managers.navigation:add_pos_reservation(self._pos_reservation)
-			managers.navigation:add_pos_reservation(self._pos_reservation_slow)
-		else
-			self._pos_reservation.position = mvec3_cpy(pos)
-
-			managers.navigation:move_pos_rsrv(self._pos_reservation)
-			self:_upd_slow_pos_reservation()
 		end
 	end
 
@@ -233,19 +204,14 @@ function HuskPlayerMovement:_upd_move_driving(t, dt)
 end
 
 local _upd_move_zipline_original = HuskPlayerMovement._upd_move_zipline
-function HuskPlayerMovement:_upd_move_zipline(t, dt)
-	_upd_move_zipline_original(self, t, dt)
+function HuskPlayerMovement:_upd_move_zipline(t, dt, ...)
+	_upd_move_zipline_original(self, t, dt, ...)
 
 	if self._load_data then
 		return
 	end
 
 	self:_update_real_pos(self._unit:position())
-end
-
-function HuskPlayerMovement:set_position(pos)
-	mvec3_set(self._m_pos, pos)
-	self._unit:set_position(pos)
 end
 
 function HuskPlayerMovement:sync_action_change_pose(pose_code, pos)

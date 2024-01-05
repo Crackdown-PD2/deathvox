@@ -156,13 +156,7 @@ Hooks:PostHook( WeaponFactoryTweakData, "init", "totalcd_weaps", function(self)
 		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats.bullet_class = "FlameBulletBase"
 		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats.no_falloff = true
 		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats.rays = 1
-		self.parts.wpn_fps_upg_a_dragons_breath.custom_stats.fire_dot_data = {
-			dot_trigger_chance = "100",
-			dot_damage = "0",
-			dot_length = "3.1",
-			dot_trigger_max_distance = "400",
-			dot_tick_period = "0.5"
-		}
+		--self.parts.wpn_fps_upg_a_dragons_breath.custom_stats.dot_data_name = "ammo_dragons_breath"
 		
 		--Tombstone Slug goes here
 		-- self.parts.wpn_fps_upg_a_rip.custom_stats = {}

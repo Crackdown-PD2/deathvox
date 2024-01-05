@@ -120,14 +120,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 	tweak_data.projectiles.fir_com.burn_duration = 10
 	--central flame only (no subflame pools) not implemented
 	--all of this needs to be checked
-
-
-	tweak_data.dot_types.poison = {
-		damage_class = "PoisonBulletBase",
-		dot_damage = 15, --150 damage
-		dot_length = 3,
-		hurt_animation_chance = 0
-	}
 	
 	tweak_data.contour.character.civilian_mark_special_color = Vector3(206/255,48/255,0/255)
 	tweak_data.contour.character.civilian_mark_standard_color = Vector3(134/255,31/255,0/255)
