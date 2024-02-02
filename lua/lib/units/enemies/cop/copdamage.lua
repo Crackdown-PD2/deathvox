@@ -305,14 +305,7 @@ function CopDamage:check_medic_heal()
 	if anim_data and anim_data.act then
 		return false
 	end
-
-	local disabled_units = tweak_data.character.medic.disabled_units
-	local tweak_table_name = self._unit:base()._tweak_table
-
-	if table_contains(disabled_units, tweak_table_name) then
-		return false
-	end
-
+	
 	local mov_ext = self._unit:movement()
 	local team = mov_ext.team and mov_ext:team()
 

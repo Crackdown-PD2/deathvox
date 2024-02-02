@@ -3039,10 +3039,6 @@ function CharacterTweakData:_init_deathvox()
 	self.deathvox_shield.no_retreat = false
 	table.insert(self._enemy_list, "deathvox_shield")
 	
-	self.medic.disabled_units = { -- list of tweak table names of enemies that can't be healed by medics
-		"medic",
-		"deathvox_medic"
-	}
 	self.deathvox_medic = deep_clone(self.medic)
 	--self.deathvox_medic.tags = {"medic"} -- commented out as it was actually breaking the tags
 	self.deathvox_medic.detection = presets.detection.deathvox
