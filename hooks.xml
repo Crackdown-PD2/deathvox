@@ -25,6 +25,7 @@
 	<hook post="true" file="lua/lib/tweak_data/skirmishtweakdata.lua" source_file="lib/tweak_data/skirmishtweakdata"/>
 	<hook post="true" file="lua/lib/tweak_data/firetweakdata.lua" source_file="lib/tweak_data/firetweakdata"/>
 	<hook post="true" file="lua/lib/tweak_data/levelstweakdata.lua" source_file="lib/tweak_data/levelstweakdata"/>
+	<hook post="true" file="lua/lib/tweak_data/dottweakdata.lua" source_file="lib/tweak_data/dottweakdata"/>
 
 	<hook post="true" file="lua/lib/tweak_data/weapontweakdata.lua" source_file="lib/tweak_data/weapontweakdata"/>
 	<hook post="true" file="lua/lib/tweak_data/blackmarket/projectilestweakdata.lua" source_file="lib/tweak_data/blackmarket/projectilestweakdata"/>
@@ -95,16 +96,13 @@
 	<hook post="true" file="lua/lib/units/civilians/logics/civilianlogicflee.lua" source_file="lib/units/civilians/logics/civilianlogicflee"/>
 
 	 <!-- Hoxi's Crew Bots Fixes  -->
-	<hook post="true" file="lua/lib/units/player_team/huskteamaibase.lua" source_file="lib/units/player_team/huskteamaibase"/>
 	<hook post="true" file="lua/lib/units/player_team/huskteamaidamage.lua" source_file="lib/units/player_team/huskteamaidamage"/>
 	<hook post="true" file="lua/lib/units/player_team/huskteamaiinventory.lua" source_file="lib/units/player_team/huskteamaiinventory"/>
 	<hook post="true" file="lua/lib/units/player_team/huskteamaimovement.lua" source_file="lib/units/player_team/huskteamaimovement"/>
-	<hook post="true" file="lua/lib/units/player_team/teamaibase.lua" source_file="lib/units/player_team/teamaibase"/>
 	<hook post="true" file="lua/lib/units/player_team/teamaibrain.lua" source_file="lib/units/player_team/teamaibrain"/>
 	<hook post="true" file="lua/lib/units/player_team/teamaidamage.lua" source_file="lib/units/player_team/teamaidamage"/>
 	<hook post="true" file="lua/lib/units/player_team/teamaiinventory.lua" source_file="lib/units/player_team/teamaiinventory"/>
 	<hook post="true" file="lua/lib/units/player_team/teamaimovement.lua" source_file="lib/units/player_team/teamaimovement"/>
-	<hook post="true" file="lua/lib/units/player_team/actions/lower_body/criminalactionwalk.lua" source_file="lib/units/player_team/actions/lower_body/criminalactionwalk"/>
 	<hook post="true" file="lua/lib/units/player_team/logics/teamailogicassault.lua" source_file="lib/units/player_team/logics/teamailogicassault"/>
 	<hook post="true" file="lua/lib/units/player_team/logics/teamailogicbase.lua" source_file="lib/units/player_team/logics/teamailogicbase"/>
 	<hook post="true" file="lua/lib/units/player_team/logics/teamailogicdisabled.lua" source_file="lib/units/player_team/logics/teamailogicdisabled"/>
@@ -168,7 +166,6 @@
 	<hook post="true" file="lua/lib/units/equipment/doctor_bag/doctorbagbase.lua" source_file="lib/units/equipment/doctor_bag/doctorbagbase"/>
 	<hook post="true" file="lua/lib/units/equipment/first_aid_kit/firstaidkitbase.lua" source_file="lib/units/equipment/first_aid_kit/firstaidkitbase"/>
 	<hook post="true" file="lua/lib/units/equipment/ecm_jammer/ecmjammerbase.lua" source_file="lib/units/equipment/ecm_jammer/ecmjammerbase"/>
-	<hook post="true" file="lua/lib/units/weapons/newflamethrowerbase.lua" source_file="lib/units/weapons/newflamethrowerbase"/>
 	<hook post="true" file="lua/lib/units/weapons/raycastweaponbase.lua" source_file="lib/units/weapons/raycastweaponbase"/>
 	<hook post="true" file="lua/lib/units/weapons/newraycastweaponbase.lua" source_file="lib/units/weapons/newraycastweaponbase"/>
 	<hook post="true" file="lua/lib/units/weapons/newnpcraycastweaponbase.lua" source_file="lib/units/weapons/newnpcraycastweaponbase"/>
