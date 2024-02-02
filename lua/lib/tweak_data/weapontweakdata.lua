@@ -460,7 +460,7 @@ function WeaponTweakData:init(tweak_data)
 	self.deathvox_greendozer.shell_ejection = "effects/payday2/particles/weapons/shells/shell_slug_semi"
 	self.deathvox_greendozer.CLIP_AMMO_MAX = 6
 	self.deathvox_greendozer.NR_CLIPS_MAX = 4
-	self.deathvox_greendozer.hold = "shot"
+	self.deathvox_greendozer.hold = "shotgun"
 	self.deathvox_greendozer.alert_size = 4500
 	self.deathvox_greendozer.suppression = 1.8
 	self.deathvox_greendozer.is_shotgun = true

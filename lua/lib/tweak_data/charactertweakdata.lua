@@ -3074,7 +3074,7 @@ function CharacterTweakData:_init_deathvox()
 	table.insert(self.deathvox_taser.tags, "takedown")
 	self.deathvox_taser.detection = presets.detection.deathvox
 	self.deathvox_taser.ignore_medic_revive_animation = true  --no revive animation. may require curving on lower diffs.
-	self.deathvox_taser.damage.hurt_severity = deep_clone(presets.hurt_severities.only_light_hurt) -- may require curving on lower diffs.
+	self.deathvox_taser.damage.hurt_severity = deep_clone(presets.hurt_severities.only_light_hurt_no_stuns) -- may require curving on lower diffs.
 	self.deathvox_taser.damage.hurt_severity.tase = false
 	self.deathvox_taser.suppression = nil 
 	self.deathvox_taser.surrender = nil 

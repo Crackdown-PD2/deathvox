@@ -122,6 +122,8 @@ function CopActionAct:_play_anim()
 
 		return
 	end
+	
+	self._timer = TimerManager:game()
 
 	if self._action_desc.start_rot and not self._unit:parent() then
 		self._ext_movement:set_rotation(self._action_desc.start_rot)
