@@ -59,7 +59,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		if self._disable_upgrades then
 			return
 		end
-		butt = self --!
+		
 		local background_icons = {}
 		local timer_gui_ext = self._unit:timer_gui()
 		local background_icon_template = {
@@ -357,6 +357,9 @@ if deathvox:IsTotalCrackdownEnabled() then
 					dmg_ext:_call_listeners(attack_data)
 				end,t + 0.5
 				)
+				
+				-- counter-sabo skill proc'd,
+				-- so don't play bain's "drill messed up" voiceline
 				return
 			elseif self._static_defense_cooldown_end > t then 
 				--still on cooldown

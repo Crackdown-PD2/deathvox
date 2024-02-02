@@ -69,7 +69,7 @@ function CopLogicSniper.enter(data, new_logic_name, enter_params)
 
 		my_data.weapon_laser_on = true
 
-		managers.enemy:_destroy_unit_gfx_lod_data(data.key)
+		data.unit:base():prevent_main_bones_disabling(true)
 		managers.network:session():send_to_peers_synched("sync_unit_event_id_16", data.unit, "brain", HuskCopBrain._NET_EVENTS.weapon_laser_on)
 	end
 end

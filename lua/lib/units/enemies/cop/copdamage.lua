@@ -306,7 +306,7 @@ function CopDamage:check_medic_heal()
 		return false
 	end
 
-	local disabled_units = tweak_data.medic.disabled_units
+	local disabled_units = tweak_data.character.medic.disabled_units
 	local tweak_table_name = self._unit:base()._tweak_table
 
 	if table_contains(disabled_units, tweak_table_name) then
@@ -2696,7 +2696,7 @@ function CopDamage:damage_fire(attack_data)
 	local headshot_multiplier = 1
 	local headshot_mul_addend = 0
 
-	if attacker_is_main_player and damage > 0 and weap_unit and alive(weap_unit) and attack_data.variant ~= "stun" and then
+	if attacker_is_main_player and damage > 0 and weap_unit and alive(weap_unit) and attack_data.variant ~= "stun" then
 		local weap_base = weap_unit:base()
 		local is_grenade_or_ground_fire = nil
 
@@ -2904,7 +2904,7 @@ function CopDamage:damage_fire(attack_data)
 	
 	self:_on_damage_received(attack_data)
 
-	if and not is_civilian and attacker_unit and alive(attacker_unit) then
+	if not is_civilian and attacker_unit and alive(attacker_unit) then
 		managers.player:send_message(Message.OnEnemyShot, nil, self._unit, attack_data)
 	end
 	

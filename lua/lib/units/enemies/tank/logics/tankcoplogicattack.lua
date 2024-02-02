@@ -641,7 +641,7 @@ end
 
 function TankCopLogicAttack._chk_request_action_walk_to_chase_pos(data, my_data, speed)
 	if not data.unit:movement():chk_action_forbidden("walk") then
-		CopLogicAttack._correct_path_start_pos(data, my_data.chase_path)
+		TankCopLogicAttack._correct_path_start_pos(data, my_data.chase_path)
 
 		local new_action_data = {
 			type = "walk",

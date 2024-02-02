@@ -252,7 +252,7 @@ function TeamAILogicAssault.mark_enemy(data, criminal, to_mark, play_sound, play
 		end
 	end
 
-	if not data.unit:movement():chk_action_forbidden("action") then
+	if play_action and not data.unit:anim_data().reload and not criminal:movement():chk_action_forbidden("action") then
 		local redir_name = "cmd_point"
 
 		if data.unit:movement():play_redirect(redir_name) then

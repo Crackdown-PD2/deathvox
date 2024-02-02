@@ -50,7 +50,7 @@ function TeamAILogicIdle._check_should_relocate(data, my_data, objective)
 	end
 
 	local follow_unit = objective.follow_unit
-	local follow_pos = follow_unit:movement():m_pos()
+	local follow_pos = follow_unit:movement():m_newest_pos()
 	local max_allowed_dis = 700
 	local z_diff = math.abs(data.m_pos.z - follow_pos.z)
 	
@@ -429,7 +429,7 @@ end
 
 function TeamAILogicIdle._find_intimidateable_civilians(criminal, use_default_shout_shape, max_angle, max_dis)
 	local head_pos = criminal:movement():m_head_pos()
-	local look_vec = criminal:movement():m_rot():y()
+	local look_vec = criminal:movement():m_fwd()
 	local close_dis = 400
 	local intimidateable_civilians = {}
 	local best_civ = nil

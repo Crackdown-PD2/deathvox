@@ -552,14 +552,12 @@ function WeaponTweakData:init(tweak_data)
 			self.sentry_gun.FIRE_RANGE = 2000
 			self.sentry_gun.SPREAD = 10
 			self.sentry_gun.DETECTION_RANGE = 2000
-			
 			self.sentry_gun.WEAPON_HEAT_INIT = 0
 			self.sentry_gun.WEAPON_HEAT_GAIN_RATE = 1 --heat gained per kill
 			self.sentry_gun.WEAPON_HEAT_MAX = 75 
 			self.sentry_gun.WEAPON_HEAT_DAMAGE_PENALTY = -0.01 -- -1% damage penalty per heat point
 			
 			self.sentry_gun.WEAPON_HEAT_OVERHEAT_THRESHOLD = 50 --threshold at which the heat value causes the sentry gun to overheat and shut down (not used) 
-			
 			
 			--AP
 			self.sentry_ap = table.deep_map_copy(self.sentry_gun)
@@ -1482,8 +1480,8 @@ function WeaponTweakData:_set_easy_wish()
 	
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
 	self.m14_sniper_npc.DAMAGE = 20	-- sniper damage, set according to table.
-	self.m14_sniper_npc.sniper_trail = true
-	self.deathvox_sniper.sniper_trail = true
+	self.m14_sniper_npc.trail = "effects/particles/weapons/trail_dv_sniper"
+	self.deathvox_sniper.trail = "effects/particles/weapons/trail_dv_sniper"
 	self.m14_sniper_npc.use_laser = false
     self.m14_sniper_npc.disable_sniper_laser = true
 	
@@ -1698,8 +1696,8 @@ function WeaponTweakData:_set_overkill_290()
 	
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
 	self.m14_sniper_npc.DAMAGE = 20	-- sniper damage, set according to table.
-	self.m14_sniper_npc.sniper_trail = true
-	self.deathvox_sniper.sniper_trail = true
+	self.m14_sniper_npc.trail = "effects/particles/weapons/trail_dv_sniper"
+	self.deathvox_sniper.trail = "effects/particles/weapons/trail_dv_sniper"
 	self.m14_sniper_npc.use_laser = false
     self.m14_sniper_npc.disable_sniper_laser = true
 	
@@ -1915,8 +1913,8 @@ function WeaponTweakData:_set_sm_wish()
 --	self.m14_npc.DAMAGE = 3		-- possibly unused.
 	self.m14_sniper_npc.DAMAGE = 24	-- sniper damage, set according to table
 	--Sniper Trail for Snipers
-	self.m14_sniper_npc.sniper_trail = true
-	self.deathvox_sniper.sniper_trail = true
+	self.m14_sniper_npc.trail = "effects/particles/weapons/trail_dv_sniper"
+	self.deathvox_sniper.trail = "effects/particles/weapons/trail_dv_sniper"
 	self.m14_sniper_npc.use_laser = false
     self.m14_sniper_npc.disable_sniper_laser = true
 	

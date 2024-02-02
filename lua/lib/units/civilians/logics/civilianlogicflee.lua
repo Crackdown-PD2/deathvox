@@ -1,3 +1,4 @@
+-- offy's note: this function may now be redundant?
 function CivilianLogicFlee.on_rescue_SO_completed(ignore_this, data, good_pig)
 	if data.internal_data.rescuer and good_pig:key() == data.internal_data.rescuer:key() then
 		data.internal_data.rescue_active = nil
@@ -18,7 +19,7 @@ function CivilianLogicFlee.on_rescue_SO_completed(ignore_this, data, good_pig)
 
 			if data.is_tied then
 				managers.network:session():send_to_peers_synched("sync_unit_surrendered", data.unit, false)
-
+				
 				data.is_tied = nil
 			end
 
@@ -236,100 +237,6 @@ function CivilianLogicFlee._run_away_from_alert(data, alert_data)
 	my_data.avoid_pos = avoid_pos
 
 	CivilianLogicFlee._find_hide_cover(data)
-end
-
-function CivilianLogicFlee._find_hide_cover(data)
-	local my_data = data.internal_data
-	my_data.cover_search_task_key = nil
-
-	if data.unit:anim_data().dont_flee then
-		return
-	end
-
-	local avoid_pos = nil
-
-	if my_data.avoid_pos then
-		avoid_pos = my_data.avoid_pos
-	elseif data.attention_obj and AIAttentionObject.REACT_SCARED <= data.attention_obj.reaction then
-		avoid_pos = data.attention_obj.m_pos
-	else
-		local closest_crim, closest_crim_dis = nil
-
-		for u_key, att_data in pairs(data.detected_attention_objects) do
-			if not closest_crim_dis or att_data.dis < closest_crim_dis then
-				closest_crim = att_data
-				closest_crim_dis = att_data.dis
-			end
-		end
-
-		if closest_crim then
-			avoid_pos = closest_crim.m_pos
-		else
-			avoid_pos = Vector3(0, 0, 1)
-
-			mvector3.random_orthogonal(avoid_pos)
-			mvector3.multiply(avoid_pos, 100)
-			mvector3.add(avoid_pos, data.m_pos)
-		end
-	end
-
-	if my_data.best_cover then
-		local best_cover_vec = avoid_pos - my_data.best_cover[1][1]
-
-		if mvector3.dot(best_cover_vec, my_data.best_cover[1][2]) > 0.7 then
-			return
-		end
-	end
-
-	local cover = managers.navigation:find_cover_away_from_pos(data.m_pos, avoid_pos, my_data.panic_area.nav_segs)
-
-	if cover then
-		if not data.unit:anim_data().panic then
-			local action_data = {
-				clamp_to_graph = true,
-				variant = "panic",
-				body_part = 1,
-				type = "act"
-			}
-
-			data.unit:brain():action_request(action_data)
-		end
-
-		CivilianLogicFlee._cancel_pathing(data, my_data)
-		CopLogicAttack._set_best_cover(data, my_data, {
-			cover
-		})
-		data.unit:brain():set_update_enabled_state(true)
-		CopLogicBase._reset_attention(data)
-	elseif data.unit:anim_data().react or data.unit:anim_data().halt then
-		local action_data = {
-			clamp_to_graph = true,
-			variant = "panic",
-			body_part = 1,
-			type = "act"
-		}
-
-		data.unit:brain():action_request(action_data)
-		data.unit:sound():say("a02x_any", true)
-
-		if data.unit:unit_data().mission_element then
-			data.unit:unit_data().mission_element:event("panic", data.unit)
-		end
-
-		CopLogicBase._reset_attention(data)
-
-		if not managers.groupai:state():enemy_weapons_hot() then
-			local alert = {
-				"vo_distress",
-				data.unit:movement():m_head_pos(),
-				200,
-				data.SO_access,
-				data.unit
-			}
-
-			managers.groupai:state():propagate_alert(alert)
-		end
-	end
 end
 
 function CivilianLogicFlee.update(data)

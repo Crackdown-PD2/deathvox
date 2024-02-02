@@ -15,66 +15,6 @@ local clone_g = clone
 local alive_g = alive
 local call_on_next_update_g = call_on_next_update
 
-function TeamAIMovement:on_SPOOCed(enemy_unit)
-	local state = "incapacitated"
-	state = managers.modifiers:modify_value("PlayerMovement:OnSpooked", state)
-
-	if state == "arrested" then
-		self:on_cuffed()
-	else
-		self._unit:character_damage():on_incapacitated()
-	end
-
-	return true
-end
-
-function TeamAIMovement:pre_destroy()
-	TeamAIMovement.super.pre_destroy(self)
-
-	if self._heat_listener_clbk then
-		managers.groupai:state():remove_listener(self._heat_listener_clbk)
-
-		self._heat_listener_clbk = nil
-	end
-
-	if self._switch_to_not_cool_clbk_id then
-		managers.enemy:remove_delayed_clbk(self._switch_to_not_cool_clbk_id)
-
-		self._switch_to_not_cool_clbk_id = nil
-	end
-end
-
-function TeamAIMovement:carrying_bag(...)
-	return TeamAIMovement.super.carrying_bag(self, ...)
-end
-
-function TeamAIMovement:set_carrying_bag(...)
-	TeamAIMovement.super.set_carrying_bag(self, ...)
-end
-
-function TeamAIMovement:carry_id(...)
-	return TeamAIMovement.super.carry_id(self, ...)
-end
-
-function TeamAIMovement:carry_data(...)
-	return TeamAIMovement.super.carry_data(self)
-end
-
-function TeamAIMovement:carry_tweak(...)
-	return TeamAIMovement.super.carry_tweak(self)
-end
-
-function TeamAIMovement:throw_bag(...)
-	TeamAIMovement.super.throw_bag(self, ...)
-end
-
-function TeamAIMovement:was_carrying_bag(...)
-	return TeamAIMovement.super.was_carrying_bag(self, ...)
-end
-
-function TeamAIMovement:sync_throw_bag(...)
-	TeamAIMovement.super.sync_throw_bag(self, ...)
-end
 
 function TeamAIMovement:save(save_data)
 	TeamAIMovement.super.save(self, save_data)

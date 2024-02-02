@@ -1,29 +1,30 @@
 
 
 Hooks:PostHook(SkillTreeTweakData, "init", "vox_overhaul_init", function(self)
+	
 	if deathvox:IsTotalCrackdownEnabled() then
 	
 	-------------------------------------------------------------------------------------
 	--********************************** SKILL TREES **********************************--
 	-------------------------------------------------------------------------------------
+	-- 								(for Total Crackdown)
 
-
-	--replaces skills by position in the skilltree
-	--without having to look up the name (even though you could just do it by list of names)
-	--usage:
-		--tree_index: the index of the tree [num 1-15]
+	--- replaces skills by position in the skilltree
+	--- without having to look up the name (even though you could just do it by list of names)
+	--- usage: replace_skill(Int tree_index,Int position_index,Table data)
+		-- tree_index: the index of the tree [num 1-15]
 			--with 1-3 being the mastermind subtrees in vanilla,
 			--4-6 being enforcer,
 			--7-9 technician,
 			--10-12 ghost,
 			--13-15 fugitive
-		--skill_position: the position of the skill in the tree. [num 1-6]
+		-- skill_position: the position of the skill in the tree. [num 1-6]
 			--visually, position numbers are situated as follows:
 			--    6
 			--  4   5
 			--  2   3
 			--    1
-		--data: the skill data with upgrades etc that you're replacing existing values with [table]
+		-- data: the skill data with upgrades etc that you're replacing existing values with [table]
 		
 		local function replace_skill(tree_index,position_index,data)
 			data = data or {}

@@ -5,30 +5,30 @@ function MedicDamage:heal_unit(unit_to_heal, no_cooldown)
 		self._heal_cooldown_t = t
 	end
 
+	unit_to_heal:character_damage():do_medic_heal()
+
 	local my_unit = self._unit
 
-	if not my_unit:character_damage():dead() then
-		local action_data = {
-			body_part = 1,
-			type = "heal",
-			client_interrupt = Network:is_client()
-		}
+	local action_data = {
+		body_part = 1,
+		type = "heal",
+		client_interrupt = Network:is_client()
+	}
 
-		local base_ext = my_unit:base()
-		local custom_vo = base_ext and base_ext:char_tweak().custom_voicework
+	local base_ext = my_unit:base()
+	local custom_vo = base_ext and base_ext:char_tweak().custom_voicework
 
-		if custom_vo then
-			local voicelines = deathvox._voiceline_framework.BufferedSounds[custom_vo]
+	if custom_vo then
+		local voicelines = deathvox._voiceline_framework.BufferedSounds[custom_vo]
 
-			if voicelines and voicelines["heal"] then
-				local line_to_use = voicelines.heal[math_random(#voicelines.heal)]
+		if voicelines and voicelines["heal"] then
+			local line_to_use = voicelines.heal[math_random(#voicelines.heal)]
 
-				base_ext:play_voiceline(line_to_use)
-			end
+			base_ext:play_voiceline(line_to_use)
 		end
-
-		my_unit:movement():action_request(action_data)
 	end
+
+	my_unit:movement():action_request(action_data)
 
 	local sync_unit = my_unit:id() ~= 1 and my_unit or nil
 

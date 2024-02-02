@@ -1,4 +1,4 @@
-local TCDEnabled = deathvox:IsTotalCrackdownEnabled()
+local TCD_ENABLED = deathvox:IsTotalCrackdownEnabled()
 local mvec3_set = mvector3.set
 local mvec3_add = mvector3.add
 local mvec3_dot = mvector3.dot
@@ -13,6 +13,8 @@ local mvec3_cpy = mvector3.copy
 
 local math_clamp = math.clamp
 local math_lerp = math.lerp
+local math_acos = math.acos
+local math_pow = math.pow
 local math_floor = math.floor
 local math_random = math.random
 
@@ -190,66 +192,12 @@ function RaycastWeaponBase:check_autoaim(from_pos, direction, max_dist, use_aim_
 	return closest_ray
 end
 
-function RaycastWeaponBase:setup(setup_data, damage_multiplier)
-	
+Hooks:PostHook(RaycastWeaponBase,"setup","cd_raycastweaponbase_setup",function(self, setup_data, damage_multiplier)
 	local name_id = self._name_id
 	local blueprint = self._blueprint
 	self:set_weapon_class(managers.weapon_factory:get_primary_weapon_class_from_blueprint(name_id,blueprint))
 	self._subclasses = managers.weapon_factory:get_weapon_subclasses_from_blueprint(name_id,blueprint)
-
-	self._autoaim = setup_data.autoaim
-	local stats = tweak_data.weapon[name_id].stats
-	self._alert_events = setup_data.alert_AI and {} or nil
-	self._alert_fires = {}
-	local weapon_stats = tweak_data.weapon.stats
-
-	if stats then
-		self._zoom = self._zoom or weapon_stats.zoom[stats.zoom]
-		self._alert_size = self._alert_size or weapon_stats.alert_size[stats.alert_size]
-		self._suppression = self._suppression or weapon_stats.suppression[stats.suppression]
-		self._spread = self._spread or weapon_stats.spread[stats.spread]
-		self._recoil = self._recoil or weapon_stats.recoil[stats.recoil]
-		self._spread_moving = self._spread_moving or weapon_stats.spread_moving[stats.spread_moving]
-		self._concealment = self._concealment or weapon_stats.concealment[stats.concealment]
-		self._value = self._value or weapon_stats.value[stats.value]
-		self._reload = self._reload or weapon_stats.reload[stats.reload]
-
-		for i, _ in pairs(weapon_stats) do
-			local stat = self["_" .. tostring(i)]
-
-			if not stat then
-				self["_" .. tostring(i)] = weapon_stats[i][5]
-
-				debug_pause("[RaycastWeaponBase] Weapon \"" .. tostring(name_id) .. "\" is missing stat \"" .. tostring(i) .. "\"!")
-			end
-		end
-	else
-		debug_pause("[RaycastWeaponBase] Weapon \"" .. tostring(name_id) .. "\" is missing stats block!")
-
-		self._zoom = 60
-		self._alert_size = 5000
-		self._suppression = 1
-		self._spread = 1
-		self._recoil = 1
-		self._spread_moving = 1
-		self._reload = 1
-	end
-
-	self._bullet_slotmask = setup_data.hit_slotmask or self._bullet_slotmask
-	self._bullet_slotmask = managers.mutators:modify_value("RaycastWeaponBase:setup:weapon_slot_mask", self._bullet_slotmask)
-	self._panic_suppression_chance = setup_data.panic_suppression_skill and self:weapon_tweak_data().panic_suppression_chance
-
-	if self._panic_suppression_chance == 0 then
-		self._panic_suppression_chance = false
-	end
-
-	self._setup = setup_data
-	self._fire_mode = self._fire_mode or tweak_data.weapon[name_id].FIRE_MODE or "single"
-
-	if self._setup.timer then
-		self:set_timer(self._setup.timer)
-	end
-end
+end)
 
 function RaycastWeaponBase:_weapon_tweak_data_id()
 	local override_gadget = self:gadget_overrides_weapon_functions()
@@ -531,7 +479,7 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 			self._money_shot_pierce = false
 			
 			self._trail_effect_table = {
-				effect = self.TRAIL_EFFECT,
+				effect = Idstring(self._trail_effect or self.TRAIL_EFFECT),
 				position = Vector3(),
 				normal = Vector3()
 			}
@@ -558,7 +506,7 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 	if self._alert_events and ray_res.rays then
 		self:_check_alert(ray_res.rays, from_pos, direction, user_unit)
 	end
-
+--[[
 	if ray_res.enemies_in_cone then
 		for enemy_data, dis_error in pairs(ray_res.enemies_in_cone) do
 			if not enemy_data.unit:movement():cool() then
@@ -566,143 +514,10 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 			end
 		end
 	end
-
+--]]
 	pm:send_message(Message.OnWeaponFired, nil, self._unit, ray_res)
 
 	return ray_res
-end
-
-function RaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoot_player, spread_mul, autohit_mul, suppr_mul)
-	if self:gadget_overrides_weapon_functions() then
-		return self:gadget_function_override("_fire_raycast", self, user_unit, from_pos, direction, dmg_mul, shoot_player, spread_mul, autohit_mul, suppr_mul)
-	end
-
-	local result = {}
-	local spread_x, spread_y = self:_get_spread(user_unit)
-	local ray_distance = self:weapon_range()
-	local right = direction:cross(Vector3(0, 0, 1)):normalized()
-	local up = direction:cross(right):normalized()
-	local theta = math.random() * 360
-	local ax = math.sin(theta) * math.random() * spread_x * (spread_mul or 1)
-	local ay = math.cos(theta) * math.random() * spread_y * (spread_mul or 1)
-
-	mvector3.set(mvec_spread_direction, direction)
-	mvector3.add(mvec_spread_direction, right * math.rad(ax))
-	mvector3.add(mvec_spread_direction, up * math.rad(ay))
-	mvector3.set(mvec_to, mvec_spread_direction)
-	mvector3.multiply(mvec_to, ray_distance)
-	mvector3.add(mvec_to, from_pos)
-	
-	local ray_hits, hit_enemy = self:_collect_hits(from_pos, mvec_to)
-	local hit_anyone = false
-
-	if self._autoaim then
-		local weight = 0.1
-		local auto_hit_candidate = not hit_enemy and self:check_autoaim(from_pos, direction)
-
-		if auto_hit_candidate then
-			local autohit_chance = 1 - math.clamp((self._autohit_current - self._autohit_data.MIN_RATIO) / (self._autohit_data.MAX_RATIO - self._autohit_data.MIN_RATIO), 0, 1)
-
-			if autohit_mul then
-				autohit_chance = autohit_chance * autohit_mul
-			end
-
-			if math.random() < autohit_chance then
-				self._autohit_current = (self._autohit_current + weight) / (1 + weight)
-
-				mvector3.set(mvec_to, from_pos)
-				mvector3.add_scaled(mvec_to, auto_hit_candidate.ray, ray_distance)
-
-				ray_hits, hit_enemy = self:_collect_hits(from_pos, mvec_to)
-			end
-		end
-
-		if hit_enemy then
-			self._autohit_current = (self._autohit_current + weight) / (1 + weight)
-		elseif auto_hit_candidate then
-			self._autohit_current = self._autohit_current / (1 + weight)
-		end
-	end
-
-	local hit_count = 0
-	local cop_kill_count = 0
-	local hit_through_wall = false
-	local hit_through_shield = false
-	local is_civ_f = CopDamage.is_civilian
-	local damage = self:_get_current_damage(dmg_mul)
-	local hit_result = nil
-
-	for _, hit in ipairs(ray_hits) do
-		damage = self:get_damage_falloff(damage, hit, user_unit)
-		if damage > 0 then 
-			hit_result = self:bullet_class():on_collision(hit, self._unit, user_unit, damage, nil, nil, nil, self._money_shot_ready)
-
-			if hit_result then 
-				if hit.unit:in_slot(managers.slot:get_mask("world_geometry")) then
-					hit_through_wall = true
-				elseif hit.unit:in_slot(managers.slot:get_mask("enemy_shield_check")) then
-					hit_through_shield = hit_through_shield or alive(hit.unit:parent())
-				end
-				
-				hit.damage_result = hit_result
-				hit_anyone = true
-				hit_count = hit_count + 1
-				
-				if hit_result.type == "death" then
-					local unit_base = hit.unit:base()
-					local unit_type = unit_base and unit_base._tweak_table
-					local is_civilian = unit_type and is_civ_f(unit_type)
-
-					if not is_civilian then
-						cop_kill_count = cop_kill_count + 1
-					end
-				end
-				self:_check_kill_achievements(cop_kill_count, unit_base, unit_type, is_civilian, hit_through_wall, hit_through_shield)
-			end
-		end
-	end
-
-	self:_check_tango_achievements(cop_kill_count)
-	
-	result.hit_enemy = hit_anyone
-
-	if self._autoaim then
-		self._shot_fired_stats_table.hit = hit_anyone
-		self._shot_fired_stats_table.hit_count = hit_count
-
-		if (not self._ammo_data or not self._ammo_data.ignore_statistic) and not self._rays then
-			managers.statistics:shot_fired(self._shot_fired_stats_table)
-		end
-	end
-
-	local furthest_hit = ray_hits[#ray_hits]
-
-	if alive(self._obj_fire) then
-		if furthest_hit and furthest_hit.distance > 600 or not furthest_hit then
-			local trail_direction = furthest_hit and furthest_hit.ray or mvec_spread_direction
-
-			self._obj_fire:m_position(self._trail_effect_table.position)
-			mvector3.set(self._trail_effect_table.normal, trail_direction)
-
-			local trail = world_g:effect_manager():spawn(self._trail_effect_table)
-
-			if furthest_hit then
-				world_g:effect_manager():set_remaining_lifetime(trail, math.clamp((furthest_hit.distance - 600) / 10000, 0, furthest_hit.distance))
-			else
-				world_g:effect_manager():set_remaining_lifetime(trail, math.clamp((ray_distance - 600) / 10000, 0, ray_distance))
-			end
-		end
-	end
-
-	if self._alert_events then
-		result.rays = ray_hits
-	end
-
-	if self._suppression then
-		self:_suppress_units(mvector3.copy(from_pos), mvector3.copy(direction), ray_distance, managers.slot:get_mask("enemies"), user_unit, suppr_mul)
-	end
-
-	return result
 end
 
 local reflect_result = Vector3()
@@ -898,7 +713,7 @@ function InstantBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage,
 	local weapon_base = weap_unit and weap_unit:base()
 
 	if not blank then
-		if TCDEnabled and weap_unit and not critical_hit then
+		if TCD_ENABLED and weap_unit and not critical_hit then
 			critical_hit = self:calculate_crit(weap_unit, user_unit)
 		end
 
@@ -1117,102 +932,6 @@ function InstantBulletBase:give_impact_damage(col_ray, weapon_unit, user_unit, d
 		critical_hit = critical_hit
 	}
 	local defense_data = col_ray.unit:character_damage():damage_bullet(action_data)
-
-	return defense_data
-end
-
-function FlameBulletBase:on_collision(col_ray, weapon_unit, user_unit, damage, blank)
-	local hit_unit = col_ray.unit
-	local play_impact_flesh = false
-	local critical_hit = nil
-	
-	if TCDEnabled then
-		critical_hit = self:calculate_crit(weapon_unit, user_unit)
-	end
-
-	if hit_unit:damage() and col_ray.body:extension() and col_ray.body:extension().damage then
-		local sync_damage = not blank and hit_unit:id() ~= -1
-		local network_damage = math.ceil(damage * 163.84)
-		damage = network_damage / 163.84
-
-		if sync_damage then
-			local normal_vec_yaw, normal_vec_pitch = self._get_vector_sync_yaw_pitch(col_ray.normal, 128, 64)
-			local dir_vec_yaw, dir_vec_pitch = self._get_vector_sync_yaw_pitch(col_ray.ray, 128, 64)
-
-			managers.network:session():send_to_peers_synched("sync_body_damage_bullet", col_ray.unit:id() ~= -1 and col_ray.body or nil, user_unit:id() ~= -1 and user_unit or nil, normal_vec_yaw, normal_vec_pitch, col_ray.position, dir_vec_yaw, dir_vec_pitch, math.min(16384, network_damage))
-		end
-
-		local local_damage = not blank or hit_unit:id() == -1
-
-		if local_damage then
-			col_ray.body:extension().damage:damage_bullet(user_unit, col_ray.normal, col_ray.position, col_ray.ray, 1)
-			col_ray.body:extension().damage:damage_damage(user_unit, col_ray.normal, col_ray.position, col_ray.ray, damage)
-
-			if alive(weapon_unit) and weapon_unit:base().categories and weapon_unit:base():categories() then
-				for _, category in ipairs(weapon_unit:base():categories()) do
-					col_ray.body:extension().damage:damage_bullet_type(category, user_unit, col_ray.normal, col_ray.position, col_ray.ray, 1)
-				end
-			end
-		end
-	end
-
-	local result = nil
-
-	if hit_unit:character_damage() and hit_unit:character_damage().damage_fire then
-		local is_alive = not hit_unit:character_damage():dead()
-		result = self:give_fire_damage(col_ray, weapon_unit, user_unit, damage, nil, critical_hit)
-
-		if result ~= "friendly_fire" then
-			local is_dead = hit_unit:character_damage():dead()
-
-			if weapon_unit:base()._ammo_data and weapon_unit:base()._ammo_data.push_units then
-				local push_multiplier = self:_get_character_push_multiplier(weapon_unit, is_alive and is_dead)
-
-				managers.game_play_central:physics_push(col_ray, push_multiplier)
-			end
-		else
-			play_impact_flesh = false
-		end
-	elseif weapon_unit:base()._ammo_data and weapon_unit:base()._ammo_data.push_units then
-		managers.game_play_central:physics_push(col_ray)
-	end
-
-	if play_impact_flesh then
-		managers.game_play_central:play_impact_flesh({
-			no_sound = true,
-			col_ray = col_ray
-		})
-	end
-
-	self:play_impact_sound_and_effects(weapon_unit, col_ray)
-
-	return result
-end
-
-function FlameBulletBase:give_fire_damage(col_ray, weapon_unit, user_unit, damage, armor_piercing, critical_hit)
-	local fire_dot_data = nil
-
-	if weapon_unit.base and weapon_unit:base()._ammo_data and weapon_unit:base()._ammo_data.bullet_class == "FlameBulletBase" then
-		fire_dot_data = weapon_unit:base()._ammo_data.fire_dot_data
-	elseif weapon_unit.base and weapon_unit:base()._name_id then
-		local weapon_name_id = weapon_unit:base()._name_id
-
-		if tweak_data.weapon[weapon_name_id] and tweak_data.weapon[weapon_name_id].fire_dot_data then
-			fire_dot_data = tweak_data.weapon[weapon_name_id].fire_dot_data
-		end
-	end
-
-	local action_data = {
-		variant = "fire",
-		damage = damage,
-		weapon_unit = weapon_unit,
-		attacker_unit = user_unit,
-		col_ray = col_ray,
-		critical_hit = critical_hit,
-		armor_piercing = armor_piercing,
-		fire_dot_data = fire_dot_data
-	}
-	local defense_data = col_ray.unit:character_damage():damage_fire(action_data)
 
 	return defense_data
 end
@@ -1485,15 +1204,8 @@ function RaycastWeaponBase:is_heavy_weapon() --deprecated, do not use
 	return false
 end
 
-if TCDEnabled then
-
-	DOTBulletBase.DOT_DATA = {
-		hurt_animation_chance = 0,
-		dot_damage = 15,
-		dot_length = 3,
-		dot_tick_period = 0.5
-	}
-
+if TCD_ENABLED then
+	
 	function RaycastWeaponBase:update_next_shooting_time()
 		if self:is_weapon_class("class_shotgun") and self:fire_mode() == "auto" then 
 			if tweak_data.weapon[self._name_id].CLIP_AMMO_MAX == 2 then 
@@ -1542,7 +1254,6 @@ if TCDEnabled then
 		
 		self:update_damage()
 	end
-
 
 	function RaycastWeaponBase:on_reload(amount)
 		local ammo_base = self._reload_ammo_base or self:ammo_base()

@@ -17,14 +17,78 @@ local t_ins = table.insert
 
 local world_g = World
 
-local is_total_cd = deathvox:IsTotalCrackdownEnabled()
+local TCD_ENABLED = deathvox:IsTotalCrackdownEnabled()
 
-local instapeel_bodies = {}
-if is_total_cd then
+local INSTAPEEL_BODIES = {}
+if TCD_ENABLED then
 	--list of Idstrings for bodies that take maxed damage from saws (currently just dozer faceplate "body_helmet_plate" but could also be "body_helmet_glass")
 	for _,body_name in pairs(tweak_data.upgrades.values.saw.dozer_instant_armor_peel_bodies) do 
-		instapeel_bodies[Idstring(body_name)] = true
+		INSTAPEEL_BODIES[Idstring(body_name)] = true
 	end
+	
+	
+local sawhit_collision_orig = SawHit.on_collision
+function SawHit:on_collision(col_ray, weapon_unit, user_unit, damage, ...)
+	if TCD_ENABLED then
+		
+		local hit_unit = col_ray.unit
+		local base_ext = hit_unit:base()
+		local is_crit, is_breachable_object = nil
+		local unit_dmg_ext = hit_unit:character_damage()
+		
+		if unit_base_ext and self._bonus_dozer_damage and unit_base_ext.has_tag and unit_base_ext:has_tag("tank") then
+			damage = damage * self._bonus_dozer_damage
+		end
+		if managers.groupai:state():is_enemy_special(hit_unit) then
+			damage = damage * managers.player:upgrade_value("saw","damage_multiplier_to_specials",1)
+		end
+		if unit_dmg_ext then 
+			
+			if managers.player:has_category_upgrade("saw","crit_first_strike") then
+
+				if unit_dmg_ext and not unit_dmg_ext._INTO_THE_PIT_PROC then
+					unit_dmg_ext._INTO_THE_PIT_PROC = true
+					is_crit = true
+				end
+			end
+			
+			if managers.player:has_category_upgrade("saw","panic_on_hit") and unit_dmg_ext.build_suppression then
+				unit_dmg_ext:build_suppression("panic")
+			end
+
+			if unit_dmg_ext.build_suppression then
+				unit_dmg_ext:build_suppression("panic")
+			end
+		end
+		
+		-- tcd skip dozer flat damage bonus;
+		-- saws in tcd do plenty already
+		
+		local result = InstantBulletBase.on_collision(self, col_ray, weapon_unit, user_unit, damage, nil, nil, nil, is_crit)
+		local col_body = col_ray.body
+		local body_dmg_ext = hit_unit:damage() and col_body:extension() and col_body:extension().damage 
+		if body_dmg_ext then
+			is_breachable_object = true
+			
+			if managers.player:has_category_upgrade("saw","destroys_dozer_armor") and INSTAPEEL_BODIES[col_body:name()] then
+				damage = 200 --max out damage to the plate body
+			end
+			
+			damage = math_clamp(damage * managers.player:upgrade_value("saw", "lock_damage_multiplier", 1) * 4, 0, 200)
+
+			body_dmg_ext:damage_lock(user_unit, col_ray.normal, col_ray.position, col_ray.direction, damage)
+			
+			if hit_unit:id() ~= -1 then
+				managers.network:session():send_to_peers_synched("sync_body_damage_lock", col_body, damage)
+			end
+		end
+		
+		return result,is_breachable_object
+	else
+		return sawhit_collision_orig(self, col_ray, weapon_unit, user_unit, damage, ...)
+	end
+end
+
 end
 
 
@@ -39,7 +103,7 @@ function SawWeaponBase:init(unit)
 	self._shield_knock = false --knocking shields with a saw ends up being worse
 	self._use_armor_piercing = true --this not being a thing normally is just silly
 
-	if is_total_cd then
+	if TCD_ENABLED then
 		self._saw_enemies_free = managers.player:has_category_upgrade("saw", "enemy_cutter") --no ammo consumed on enemy hit
 		self._extra_saw_range_mul = managers.player:upgrade_value("saw","range_mul",1) --basically what it says on the tin
 		self._saw_through_shields = managers.player:has_category_upgrade("saw", "ignore_shields") --also what it says on the tin + don't spend ammo when hitting shields
@@ -115,7 +179,7 @@ function SawWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spread_m
 		self:_start_sawing_effect()
 
 		if drain_ammo and not managers.player:has_active_temporary_property("bullet_storm") then --check if the hit will drain ammo (not a helmet, corpse or similar entities that are can get in the way and waste ammo)
-			if is_total_cd then
+			if TCD_ENABLED then
 				if not hit_an_enemy or not self._saw_enemies_free then
 					local ammo_usage = self._reduced_ammo_usage or self._HIT_DEFAULT_AMMO_USAGE
 					ammo_usage = ammo_usage + math_ceil(math_random() * 10)
@@ -170,7 +234,7 @@ function SawWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spread_m
 end
 
 function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoot_player, spread_mul, autohit_mul, suppr_mul)
-	if is_total_cd then
+	if TCD_ENABLED then
 		--use usual firing position for other weapons (center of the camera for players)
 		local range = self:weapon_range()
 
@@ -210,7 +274,7 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 				if not self._saw_through_shields then --stop hitting stuff past shields + drain ammo if the player lacks the shield piercing skill
 					drain_ammo = true
 					should_stop = true
-				elseif not is_total_cd then --drain ammo even with the skill only outside of TCD
+				elseif not TCD_ENABLED then --drain ammo even with the skill only outside of TCD
 					drain_ammo = true
 				end
 			elseif hit_in_slot_func(unit, self._enemy_slotmask) then
@@ -224,7 +288,7 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 				drain_ammo = true
 			end
 			
-			if is_total_cd and hit_an_enemy then
+			if TCD_ENABLED and hit_an_enemy then
 				--damage mul should only apply to enemies, not saw-able objects like deposit boxes
 				local enemy_damage_multiplier = self._enemy_damage_multiplier
 				if self._has_consecutive_damage_bonus then
@@ -239,7 +303,7 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 			if self._saw_enemies_free and not is_breachable_object then 
 				drain_ammo = false
 			end
-			if is_total_cd and hit_result and hit_an_enemy and hit_result.attack_data then
+			if TCD_ENABLED and hit_result and hit_an_enemy and hit_result.attack_data then
 				
 				--give rolling cutter basic damage bonus stacks here
 				if self._has_consecutive_damage_bonus then 
@@ -398,61 +462,6 @@ function SawWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, sh
 	end
 
 	return result, valid_hit, drain_ammo, hit_an_enemy
-end
-
-function SawHit:on_collision(col_ray, weapon_unit, user_unit, damage)
-	local hit_unit = col_ray.unit
-	local unit_base_ext = hit_unit:base()
-	local is_crit, unit_dmg_ext, is_breachable_object = nil
-
-	if is_total_cd then
-		unit_dmg_ext = hit_unit:character_damage()
-		
-		if unit_base_ext and self._bonus_dozer_damage and unit_base_ext.has_tag and unit_base_ext:has_tag("tank") then
-			damage = damage * self._bonus_dozer_damage
-		end
-		if managers.groupai:state():is_enemy_special(hit_unit) then
-			damage = damage * managers.player:upgrade_value("saw","damage_multiplier_to_specials",1)
-		end
-		if unit_dmg_ext then 
-			
-			if managers.player:has_category_upgrade("saw","crit_first_strike") then
-
-				if unit_dmg_ext and not unit_dmg_ext._INTO_THE_PIT_PROC then
-					unit_dmg_ext._INTO_THE_PIT_PROC = true
-					is_crit = true
-				end
-			end
-			
-			if managers.player:has_category_upgrade("saw","panic_on_hit") and unit_dmg_ext.build_suppression then
-				unit_dmg_ext:build_suppression("panic")
-			end
-
-			if unit_dmg_ext.build_suppression then
-				unit_dmg_ext:build_suppression("panic")
-			end
-		end
-		
-	elseif unit_base_ext and unit_base_ext.has_tag and unit_base_ext:has_tag("tank") then --vanilla (but fixed), add 500 damage to the hit against all Dozers
-		damage = damage + 50
-	end
-	local result = InstantBulletBase.on_collision(self, col_ray, weapon_unit, user_unit, damage, nil, nil, nil, is_crit)
-
-	if hit_unit:damage() and col_ray.body:extension() and col_ray.body:extension().damage then
-		is_breachable_object = true
-		damage = math_clamp(damage * managers.player:upgrade_value("saw", "lock_damage_multiplier", 1) * 4, 0, 200)
-
-		if managers.player:has_category_upgrade("saw","destroys_dozer_armor") and instapeel_bodies[col_ray.body:name()] then
-			damage = 200 --max out damage to the plate body
-		end
-		col_ray.body:extension().damage:damage_lock(user_unit, col_ray.normal, col_ray.position, col_ray.direction, damage)
-		
-		if hit_unit:id() ~= -1 then
-			managers.network:session():send_to_peers_synched("sync_body_damage_lock", col_ray.body, damage)
-		end
-	end
-
-	return result,is_breachable_object
 end
 
 function SawHit:play_impact_sound_and_effects(weapon_unit, col_ray)

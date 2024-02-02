@@ -926,7 +926,7 @@ function CopLogicTravel._determine_destination_occupation(data, objective)
 			threat_pos = data.attention_obj.nav_tracker:field_position()
 		end
 
-		local cover = managers.navigation:find_cover_in_nav_seg_3(dest_area.nav_segs, follow_dis, follow_pos, threat_pos)
+		local cover = threat_pos and managers.navigation:find_cover_in_nav_seg_3(dest_area.nav_segs, follow_dis, follow_pos, threat_pos)
 		
 		if cover and (not follow_pos or mvector3.distance_sq(cover[1], follow_pos) <= (data.internal_data.called and 202500 or 490000)) then
 			local cover_entry = {
@@ -957,7 +957,7 @@ function CopLogicTravel._determine_destination_occupation(data, objective)
 		local revive_u_rot = is_local_player and Rotation(0, 0, 0) or revive_u_mv:m_rot()
 		local revive_u_fwd = revive_u_rot:y()
 		local revive_u_right = revive_u_rot:x()
-		local revive_u_pos = revive_u_tracker:lost() and revive_u_tracker:field_position() or revive_u_mv:m_pos()
+		local revive_u_pos = revive_u_tracker:lost() and revive_u_tracker:field_position() or revive_u_mv:m_newest_pos()
 		local ray_params = {
 			trace = true,
 			tracker_from = revive_u_tracker
@@ -1672,7 +1672,7 @@ function CopLogicTravel._get_pos_on_wall(from_pos, max_dist, step_offset, is_rec
 			local is_free = nav_manager:is_pos_free(rsrv_desc)
 
 			if is_free then
-				fail_position = to_pos
+				fail_position = rsrv_desc.position
 			end
 		end
 

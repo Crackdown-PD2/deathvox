@@ -51,57 +51,6 @@ local is_local_vr = _G.IS_VR
 
 local IS_TOTAL_CRACKDOWN_ENABLED = deathvox:IsTotalCrackdownEnabled()
 
-function SentryGunBrain:_upd_flash_grenade(t)
-	if not self._tweak_data.FLASH_GRENADE then
-		return
-	end
-
-	if self._ext_movement:repairing() then
-		return
-	end
-
-	if managers.groupai:state():is_cs_grenade_active() then
-		return
-	end
-
-	if self._next_flash_grenade_chk_t and t < self._next_flash_grenade_chk_t then
-		return
-	end
-
-	local grenade_tweak = self._tweak_data.FLASH_GRENADE
-	local check_t = self._next_flash_grenade_chk_t or t
-	self._next_flash_grenade_chk_t = check_t + math_lerp(grenade_tweak.check_interval[1], grenade_tweak.check_interval[2], math_random())
-
-	if grenade_tweak.chance < math_random() then
-		return
-	end
-
-	local my_pos = self._ext_movement:m_head_pos()
-	local ray_to = mvec3_cpy(my_pos)
-
-	mvec3_set_z(ray_to, ray_to.z - 500)
-
-	local ground_ray = self._unit:raycast("ray", my_pos, ray_to, "slot_mask", managers.slot:get_mask("statics"))
-
-	if ground_ray then
-		self._grenade_m_pos = mvec3_cpy(ground_ray.hit_position)
-
-		mvec3_set_z(self._grenade_m_pos, self._grenade_m_pos.z + 3)
-		
-		local max_range_sq = grenade_tweak.range * grenade_tweak.range
-
-		for u_key, attention_info in pairs(self._detected_attention_objects) do
-			if attention_info.identified and attention_info.criminal_record and attention_info.is_person and mvec3_dist_sq(self._grenade_m_pos, attention_info.m_pos) < max_range_sq then
-				managers.groupai:state():detonate_cs_grenade(self._grenade_m_pos, my_pos, grenade_tweak.effect_duration)
-
-				self._next_flash_grenade_chk_t = check_t + math_lerp(grenade_tweak.quiet_time[1], grenade_tweak.quiet_time[2], math_random())
-
-				break
-			end
-		end
-	end
-end
-
 function SentryGunBrain:_upd_fire(t,dt)
 	local is_owner = self._unit:base():is_owner()
 	local sentryweapon = self._unit:weapon()

@@ -1,3 +1,8 @@
+do return end
+
+-- disabled the whole file because it's a lot to go through! gotta do that later
+-- -offy
+
 local mvec3_set = mvector3.set
 local mvec3_set_z = mvector3.set_z
 local mvec3_cpy = mvector3.copy
@@ -37,15 +42,14 @@ local alive_g = alive
 local world_g = World
 local call_on_next_update_g = call_on_next_update
 
-CarryData.EVENT_IDS.dye_pack_exploded = 4
 CarryData._carrying_units = {}
 CarryData._body_bags = {}
 CarryData._valid_civs = {}
 
 function CarryData:init(unit)
 	self._unit = unit
-	self._dye_initiated = false
-	self._has_dye_pack = false
+	self._dye_initiated = nil
+	self._has_dye_pack = nil
 	self._dye_value_multiplier = 100
 	self._linked_to = nil
 

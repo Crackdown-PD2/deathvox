@@ -9,7 +9,9 @@ function ZipLine:attach_bag(bag)
 
 	local link_body = bag:body("hinge_body_1") or bag:body(0)
 	link_body:set_keyframed()
-
+	
+	self._unit:link(bag)
+	
 	local nr_bodies = bag:num_bodies()
 	local disabled_collisions = {} --, dynamic_bodies = {}, {}
 
@@ -43,6 +45,7 @@ function ZipLine:release_bag()
 	local link_body = bag:body("hinge_body_1") or bag:body(0)
 
 	link_body:set_dynamic()
+	self._attached_bag:unlink()
 
 	local disabled_collisions = self._bag_disabled_collisions
 

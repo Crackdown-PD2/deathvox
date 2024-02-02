@@ -1,97 +1,3 @@
-function NewNPCRaycastWeaponBase:init(unit)
-	NewRaycastWeaponBase.super.super.init(self, unit, false)
-
-	self._player_manager = managers.player
-	self._unit = unit
-	self._name_id = self.name_id or "m4_crew"
-	self.name_id = nil
-	self._bullet_slotmask = managers.slot:get_mask("bullet_impact_targets")
-	self._blank_slotmask = managers.slot:get_mask("bullet_blank_impact_targets")
-
-	self:_create_use_setups()
-
-	self._setup = {}
-	self._digest_values = false
-
-	self:set_ammo_max(tweak_data.weapon[self._name_id].AMMO_MAX)
-	self:set_ammo_total(self:get_ammo_max())
-	self:set_ammo_max_per_clip(tweak_data.weapon[self._name_id].CLIP_AMMO_MAX)
-	self:set_ammo_remaining_in_clip(self:get_ammo_max_per_clip())
-
-	self._damage = tweak_data.weapon[self._name_id].DAMAGE
-	self._shoot_through_data = {
-		from = Vector3()
-	}
-	self._next_fire_allowed = -1000
-	self._obj_fire = self._unit:get_object(Idstring("fire"))
-	self._sound_fire = SoundDevice:create_source("fire")
-
-	self._sound_fire:link(self._unit:orientation_object())
-
-	self._muzzle_effect = Idstring(self:weapon_tweak_data().muzzleflash or "effects/particles/test/muzzleflash_maingun")
-	self._muzzle_effect_table = {
-		force_synch = false,
-		effect = self._muzzle_effect,
-		parent = self._obj_fire
-	}
-	self._use_shell_ejection_effect = SystemInfo:platform() == Idstring("WIN32")
-	self._active_animation_effects = self._active_animation_effects or {}
-
-	if self:weapon_tweak_data().armor_piercing then
-		self._use_armor_piercing = true
-	end
-
-	if self._use_shell_ejection_effect then
-		self._obj_shell_ejection = self._unit:get_object(Idstring("a_shell"))
-		self._shell_ejection_effect = Idstring(self:weapon_tweak_data().shell_ejection or "effects/payday2/particles/weapons/shells/shell_556")
-		self._shell_ejection_effect_table = {
-			effect = self._shell_ejection_effect,
-			parent = self._obj_shell_ejection
-		}
-	end
-
-	self._trail_effect_table = {
-		effect = self.TRAIL_EFFECT,
-		position = Vector3(),
-		normal = Vector3()
-	}
-	self._flashlight_light_lod_enabled = true
-
-	if self._multivoice then
-		if not NewNPCRaycastWeaponBase._next_i_voice[self._name_id] then
-			NewNPCRaycastWeaponBase._next_i_voice[self._name_id] = 1
-		end
-
-		self._voice = NewNPCRaycastWeaponBase._VOICES[NewNPCRaycastWeaponBase._next_i_voice[self._name_id]]
-
-		if NewNPCRaycastWeaponBase._next_i_voice[self._name_id] == #NewNPCRaycastWeaponBase._VOICES then
-			NewNPCRaycastWeaponBase._next_i_voice[self._name_id] = 1
-		else
-			NewNPCRaycastWeaponBase._next_i_voice[self._name_id] = NewNPCRaycastWeaponBase._next_i_voice[self._name_id] + 1
-		end
-	else
-		self._voice = "a"
-	end
-
-	if self._unit:get_object(Idstring("ls_flashlight")) then
-		self._flashlight_data = {
-			light = self._unit:get_object(Idstring("ls_flashlight")),
-			effect = self._unit:effect_spawner(Idstring("flashlight"))
-		}
-
-		self._flashlight_data.light:set_far_range(400)
-		self._flashlight_data.light:set_spot_angle_end(25)
-		self._flashlight_data.light:set_multiplier(2)
-	end
-
-	self._textures = {}
-	self._cosmetics_data = nil
-	self._materials = nil
-
-	managers.mission:add_global_event_listener(tostring(self._unit:key()), {
-		"on_peer_removed"
-	}, callback(self, self, "_on_peer_removed"))
-end
 
 function NewNPCRaycastWeaponBase:setup(setup_data)
 	self._autoaim = setup_data.autoaim
@@ -114,12 +20,12 @@ local mvec_to = Vector3()
 local mvec_spread = Vector3()
 
 function NewNPCRaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, dmg_mul, shoot_player, shoot_through_data)
-	--check for the armor piercing skills (can't be done through init), this also allows body armor piercing without having to add a specicic check when hitting body_plate
+	--check for the armor piercing skills (can't be done through init), this also allows body armor piercing without having to add a specific check when hitting body_plate
 	if not self._checked_for_ap then
 		self._checked_for_ap = true
 
 		if not self._use_armor_piercing then
-			if self._is_team_ai and managers.player:has_category_upgrade("team", "crew_ai_ap_ammo") then
+			if self._is_team_ai and self._has_ap_rounds then
 				self._use_armor_piercing = true
 			end
 		end
@@ -210,7 +116,7 @@ function NewNPCRaycastWeaponBase:_fire_raycast(user_unit, from_pos, direction, d
 				end
 			end
 
-			local hit_char = InstantBulletBase:on_collision(hit, self._unit, user_unit, damage)
+			local hit_char = InstantBulletBase:on_collision(hit, self._unit, user_unit, damage, self._fires_blanks)
 
 			if hit_char then
 				char_hit = true
@@ -295,59 +201,52 @@ end
 -- Lifted directly from HD weapon customization by Shiny Hoppip
 local fire_original = NewNPCRaycastWeaponBase.fire
 function NewNPCRaycastWeaponBase:fire(...)
-  local result = fire_original(self, ...)
-   self:tweak_data_anim_play("fire")
-  return result
+	local result = fire_original(self, ...)
+	self:tweak_data_anim_play("fire")
+	return result
 end
 
 local fire_blank_original = NewNPCRaycastWeaponBase.fire_blank
 function NewNPCRaycastWeaponBase:fire_blank(...)
-  local result = fire_blank_original(self, ...)
-   self:tweak_data_anim_play("fire")
-  return result
+	local result = fire_blank_original(self, ...)
+	self:tweak_data_anim_play("fire")
+	return result
 end
 
 local auto_fire_blank_original = NewNPCRaycastWeaponBase.auto_fire_blank
 function NewNPCRaycastWeaponBase:auto_fire_blank(...)
-  local result = auto_fire_blank_original(self, ...)
-   self:tweak_data_anim_play("fire")
-  return result
+	local result = auto_fire_blank_original(self, ...)
+	self:tweak_data_anim_play("fire")
+	return result
 end
 
-local tweak_data_anim_play_original = NewNPCRaycastWeaponBase.tweak_data_anim_play
-function NewNPCRaycastWeaponBase:tweak_data_anim_play(anim, ...)
-  local unit_anim = self:_get_tweak_data_weapon_animation(anim)
-  -- disable animations that don't have a unit to prevent crashing
-  if not self._checked_anims[unit_anim] then
-	for part_id, data in pairs(self._parts) do
-	  if data.animations and data.animations[unit_anim] and not data.unit then
-		data.animations[unit_anim] = nil
-	  end
+Hooks:PreHook(NewNPCRaycastWeaponBase,"tweak_data_anim_play","cd_newnpcraycastweaponbase_tweak_data_anim_play",function(self,anim,...)
+	local unit_anim = self:_get_tweak_data_weapon_animation(anim)
+	-- disable animations that don't have a unit to prevent crashing
+	if not self._checked_anims[unit_anim] then
+		for part_id, data in pairs(self._parts) do
+			if data.animations and data.animations[unit_anim] and not data.unit then
+				data.animations[unit_anim] = nil
+			end
+		end
+		self._checked_anims[unit_anim] = true
 	end
-	self._checked_anims[unit_anim] = true
-  end
-  return tweak_data_anim_play_original(self, anim, ...)
-end
+end)
 
-local setup_original = NewNPCRaycastWeaponBase.setup
-function NewNPCRaycastWeaponBase:setup(...)
-  setup_original(self, ...)
-
-  self._checked_anims = {}
-end
+Hooks:PostHook(NewNPCRaycastWeaponBase,"setup","cd_newnpcraycastweaponbase_setup",function(self,...)
+	self._checked_anims = {}
+end)
 
 
 function NewNPCRaycastWeaponBase:add_damage_multiplier(damage_multiplier)
 	self._damage = self._damage * damage_multiplier
 end
 
-local destroy_original = NewNPCRaycastWeaponBase.destroy
-function NewNPCRaycastWeaponBase:destroy(...)
-  if alive(self._collider_unit) then
-    World:delete_unit(self._collider_unit)
-  end
-  return destroy_original(self, ...)
-end
+Hooks:PreHook(NewNPCRaycastWeaponBase,"destroy","cd_newnpcraycastweaponbase_destroy",function(self,...)
+	if alive(self._collider_unit) then
+		World:delete_unit(self._collider_unit)
+	end
+end)
 
 --DeathVoxSniperWeaponBase = DeathVoxSniperWeaponBase or blt_class(NewNPCRaycastWeaponBase)
 --DeathVoxSniperWeaponBase.TRAIL_EFFECT = Idstring("effects/particles/weapons/trail_dv_sniper")

@@ -593,7 +593,7 @@ function ActionSpooc:_chk_target_invalid()
 end
 
 function ActionSpooc:_start_sprint()
-	self:_check_sounds_and_lights_state(true)
+	self:_check_sounds_and_lights_state(true) -- only change is here
 
 	CopActionWalk._chk_start_anim(self, self._nav_path[self._nav_index + 1])
 
@@ -601,7 +601,6 @@ function ActionSpooc:_start_sprint()
 		self:_set_updator("_upd_start_anim_first_frame")
 	else
 		self:_set_updator("_upd_sprint")
-		self._ext_base:chk_freeze_anims()
 	end
 end
 
@@ -701,7 +700,6 @@ function ActionSpooc:_upd_strike_first_frame(t)
 	self._last_vel_z = 0
 
 	self:_set_updator("_upd_striking")
-	self._ext_base:chk_freeze_anims()
 end
 
 function ActionSpooc:_upd_chase_path()
@@ -909,7 +907,7 @@ function ActionSpooc:_upd_sprint(t)
 	local variant = self._haste
 	local stance = self._stance
 	local stance_name = stance.name
-	local pose = stance.values[4] > 0 and "wounded" or ext_anim.pose or "stand"
+	local pose = stance.values[4] > 0 and "wounded" or ext_anim.pose or self._fallback_pose
 	local anim_velocities = self._walk_anim_velocities
 	local wanted_walk = anim_velocities[pose]
 	wanted_walk = wanted_walk and wanted_walk[stance_name]
@@ -957,7 +955,7 @@ function ActionSpooc:_upd_start_anim_first_frame(t)
 		return
 	end
 
-	local pose = self._ext_anim.pose or "stand"
+	local pose = self._ext_anim.pose or self._fallback_pose
 	local speed = self:_get_current_max_walk_speed("fwd")
 	local speed_mul = speed / self._walk_anim_velocities[pose][self._stance.name].run.fwd
 	local start_run_turn = self._start_run_turn
@@ -966,7 +964,6 @@ function ActionSpooc:_upd_start_anim_first_frame(t)
 	self:_start_move_anim(start_run_dir, "run", speed_mul, start_run_turn)
 
 	self:_set_updator("_upd_start_anim")
-	self._ext_base:chk_freeze_anims()
 end
 
 function ActionSpooc:_upd_start_anim(t)

@@ -304,19 +304,17 @@ function SentryGunDamage:damage_fire(attack_data)
 	if not attacker or not alive(attacker) or attacker:id() == -1 then
 		attacker = self._unit
 	end
-
-	local send_hit_shield = false
+	
 	local send_destroy_shield = false
 
 	if dmg_shield then
-		send_hit_shield = true
-
+	
 		if self._shield_health > 0 then
 			send_destroy_shield = true
 		end
 	end
-
-	self._unit:network():send("damage_fire", attacker, damage_percent, send_hit_shield, self._dead and true or false, Vector3(), nil, nil, send_destroy_shield)
+	
+	self._unit:network():send("damage_fire", attacker, damage_percent, self._dead and true or false, attack_data.col_ray.ray, 0, send_destroy_shield)
 
 	if not self._dead then
 		self._unit:brain():on_damage_received(attack_data.attacker_unit)
@@ -495,7 +493,11 @@ function SentryGunDamage:die(attacker_unit, variant, options)
 	self._unit:brain():set_active(false)
 	self._unit:movement():set_active(false)
 	self._unit:movement():on_death()
-	managers.groupai:state():on_criminal_neutralized(self._unit)
+	
+	if managers.groupai:state():criminal_record(self._unit:key()) then
+		managers.groupai:state():on_criminal_neutralized(self._unit)
+	end
+	
 	self._unit:base():on_death()
 
 	if self._breakdown_snd_event then

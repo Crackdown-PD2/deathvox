@@ -125,8 +125,6 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		local setup_data = {
 			expend_ammo = true,
-			autoaim = true,
-			alert_AI = true,
 			creates_alerts = true,
 			user_unit = self._owner,
 			ignore_units = {

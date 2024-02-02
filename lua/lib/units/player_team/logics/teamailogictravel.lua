@@ -9,6 +9,9 @@ function TeamAILogicTravel.enter(data, new_logic_name, enter_params)
 	}
 
 	if old_internal_data then
+		my_data.turning = old_internal_data.turning
+		my_data.firing = old_internal_data.firing
+		my_data.shooting = old_internal_data.shooting
 		my_data.attention_unit = old_internal_data.attention_unit
 
 		if old_internal_data.nearest_cover then
@@ -59,6 +62,8 @@ function TeamAILogicTravel.enter(data, new_logic_name, enter_params)
 
 	if w_td then
 		local cw_td = data.char_tweak.weapon[w_td.usage]
+		-- note from offy:
+		-- weapon_range is a table in cd, but a number in vanilla?
 		my_data.weapon_range = cw_td and cw_td.range or {
 			optimal = 2000,
 			far = 5000,

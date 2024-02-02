@@ -251,8 +251,8 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 				self._unit:brain():on_alarm_pager_interaction("complete", player)
 
-				if alive(managers.interaction:active_unit()) then
-					managers.interaction:active_unit():interaction():selected()
+				if managers.interaction:active_unit() == self._unit then
+					self:set_text_dirty(true)
 				end
 			else
 				managers.groupai:state():sync_alarm_pager_bluff()
