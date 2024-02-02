@@ -59,10 +59,9 @@ local action_variants = {
 		healed = CopActionHealed
 	}
 }
-local security_variant = action_variants.security
+Hooks:PreHook(CopMovement,"init","cd_copmovement_init",(self,unit,...)
+	local security_variant = action_variants.security
 
-local old_init = CopMovement.init
-function CopMovement:init(unit, ...)
 	CopMovement._action_variants.deathvox_shield = clone(security_variant)
 	CopMovement._action_variants.deathvox_shield.hurt = ShieldActionHurt
 	CopMovement._action_variants.deathvox_shield.walk = ShieldCopActionWalk
@@ -101,9 +100,7 @@ function CopMovement:init(unit, ...)
 	CopMovement._action_variants.deathvox_fbi_hrt = security_variant
 	CopMovement._action_variants.deathvox_fbi_veteran = security_variant
 	CopMovement._action_variants.deathvox_fbi_rookie = security_variant
-
-	old_init(self, unit, ...)
-end
+end)
 
 Hooks:PostHook(CopMovement,"post_init","cd_copmovement_postinit",function(self)
 	self._unit:unit_data().ignore_ecm_for_pager = self._tweak_data.ignore_ecm_for_pager
