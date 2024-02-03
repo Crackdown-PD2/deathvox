@@ -41,27 +41,26 @@ local ids_func = Idstring
 local left_hand_str = ids_func("LeftHandMiddle2")
 local ids_movement = ids_func("movement")
 
-local action_variants = {
-	security = {
-		idle = CopActionIdle,
-		act = CopActionAct,
-		walk = CopActionWalk,
-		turn = CopActionTurn,
-		hurt = CopActionHurt,
-		stand = CopActionStand,
-		crouch = CopActionCrouch,
-		shoot = CopActionShoot,
-		reload = CopActionReload,
-		spooc = ActionSpooc,
-		tase = CopActionTase,
-		dodge = CopActionDodge,
-		warp = CopActionWarp,
-		healed = CopActionHealed
+do 
+	local action_variants = {
+		security = {
+			idle = CopActionIdle,
+			act = CopActionAct,
+			walk = CopActionWalk,
+			turn = CopActionTurn,
+			hurt = CopActionHurt,
+			stand = CopActionStand,
+			crouch = CopActionCrouch,
+			shoot = CopActionShoot,
+			reload = CopActionReload,
+			spooc = ActionSpooc,
+			tase = CopActionTase,
+			dodge = CopActionDodge,
+			warp = CopActionWarp,
+			healed = CopActionHealed
+		}
 	}
-}
-Hooks:PreHook(CopMovement,"init","cd_copmovement_init",(self,unit,...)
 	local security_variant = action_variants.security
-
 	CopMovement._action_variants.deathvox_shield = clone(security_variant)
 	CopMovement._action_variants.deathvox_shield.hurt = ShieldActionHurt
 	CopMovement._action_variants.deathvox_shield.walk = ShieldCopActionWalk
@@ -100,7 +99,17 @@ Hooks:PreHook(CopMovement,"init","cd_copmovement_init",(self,unit,...)
 	CopMovement._action_variants.deathvox_fbi_hrt = security_variant
 	CopMovement._action_variants.deathvox_fbi_veteran = security_variant
 	CopMovement._action_variants.deathvox_fbi_rookie = security_variant
+end
+
+--[[
+Hooks:PostHook(CopMovement,"init","cd_copmovement_init",function(self,unit,...)
+	local base_ext = unit:base()
+	if not (self._action_variants and self._action_variants[self._action_variant or base_ext._tweak_table]) then
+		Print("UNKNOWN ACTION VARIANT av:",self._action_variant,"tt:",base_ext._tweak_table)
+		self._action_variant = "security"
+	end
 end)
+--]]
 
 Hooks:PostHook(CopMovement,"post_init","cd_copmovement_postinit",function(self)
 	self._unit:unit_data().ignore_ecm_for_pager = self._tweak_data.ignore_ecm_for_pager
