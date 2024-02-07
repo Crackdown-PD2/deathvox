@@ -680,6 +680,7 @@ function PlayerStandard:_get_unit_intimidation_action(intimidate_enemies, intimi
 	end
 
 	local range_mul = managers.player:upgrade_value("player", "intimidate_range_mul", 1) * managers.player:upgrade_value("player", "passive_intimidate_range_mul", 1)
+	local spotting_mul = managers.player:upgrade_value("player", "marked_distance_mul", 1)
 	local intimidate_range_escort = tweak_data.player.long_dis_interaction.intimidate_range_escorts
 	local intimidate_range_civ = tweak_data.player.long_dis_interaction.intimidate_range_civilians * range_mul
 	local intimidate_range_ene = tweak_data.player.long_dis_interaction.intimidate_range_enemies * range_mul
