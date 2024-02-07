@@ -25,9 +25,6 @@ local tmp_rot1 = Rotation()
 
 local world_g = World
 
-RaycastWeaponBase.TRAIL_EFFECT = Idstring("effects/particles/weapons/weapon_trail")
-
-
 Hooks:PostHook(RaycastWeaponBase,"init","deathvox_init_weapon_classes",function(self,unit)
 	self:set_weapon_class(tweak_data.weapon[self._name_id].primary_class)
 	local name_id = self._name_id
@@ -479,7 +476,7 @@ function RaycastWeaponBase:fire(from_pos, direction, dmg_mul, shoot_player, spre
 			self._money_shot_pierce = false
 			
 			self._trail_effect_table = {
-				effect = Idstring(self._trail_effect or self.TRAIL_EFFECT),
+				effect = self._trail_effect or self.TRAIL_EFFECT,
 				position = Vector3(),
 				normal = Vector3()
 			}
