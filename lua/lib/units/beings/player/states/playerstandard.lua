@@ -2261,37 +2261,39 @@ if TCD_ENABLED then
 			local can_place_tripmines_on_enemies = managers.player:has_category_upgrade("trip_mine", "can_place_on_enemies")
 			if input.btn_projectile_release then
 				-- attempt tripmine throw/place;
-				--Print("Release- check!")
-				
 				local eq_ext = self._unit:equipment()
 				local ray,stuck_enemy = eq_ext:valid_look_at_placement(nil, can_place_tripmines_on_enemies)
+				
+				-- clear placement preview
+				eq_ext:on_deploy_interupted()
 				
 				-- if object too close (wall or enemy)
 				-- then place tripmine
 				if ray or stuck_enemy then
 					local placed_tripmine = eq_ext:use_trip_mine(ray,stuck_enemy)
 					if placed_tripmine then
+					
 						-- stop throwing grenade
 						self:_interupt_action_throw_projectile(t,input)
-						--self._ext_camera:play_redirect(self:get_animation("projectile_exit_state"))
-						
-						--Print("Stuck enemy",stuck_enemy)
 						return
 					end
 				end
+				
 				-- else,
 				-- continue normal tripmine throw check
 				
-			elseif input.btn_projectile_state then
-				-- aim-at-wall preview check
 				
+			elseif input.btn_projectile_state then -- placement preview check
 				-- if aiming at wall,
 				-- trigger hide viewmodel anim and preview placement;
 				-- else, trigger show viewmodel anim and stop preview placement
-				--Console:SetTracker("state!",1)
+				
 				local eq_ext = self._unit:equipment()
 				local ray,stuck_enemy = eq_ext:valid_look_at_placement({dummy_unit=projectile_tweak.unit_dummy}, can_place_tripmines_on_enemies)
-				--[[
+				--[[ 
+				-- dunno what the state name is for when you're in the projectile idle hold state, because it's not "projectile_idle_state" or any of the others;
+				-- need to be able to check that in order for perfect intended behavior
+				
 				local current_state_name = self._camera_unit:anim_state_machine():segment_state(self:get_animation("base"))
 				if ray or stuck_enemy then
 					-- if viewmodel then hide viewmodel
@@ -2304,13 +2306,12 @@ if TCD_ENABLED then
 					if current_state_name == self:get_animation("projectile_exit_state") then
 						self._ext_camera:play_redirect(self:get_animation("projectile_enter"))
 					end
-					
 				end
 				--]]
 				
 			end
 		end
-		
+		-- 99% vanilla from here on out
 		if projectile_tweak.is_a_grenade then
 			return self:_check_action_throw_grenade(t, input)
 		elseif projectile_tweak.ability then
@@ -2333,7 +2334,7 @@ if TCD_ENABLED then
 			return
 		end
 		
-		if not can_throw_grenade then
+		if not can_throw_grenade then -- changed to local for efficiency
 			self._state_data.projectile_throw_wanted = nil
 			self._state_data.projectile_idle_wanted = nil
 
@@ -2364,134 +2365,6 @@ if TCD_ENABLED then
 
 		return true
 	end
-	
-	--[[
-	Hooks:PostHook(PlayerStandard,"_interupt_action_throw_projectile","playerstandard_on_interrupt_throw_projectile",function(self)
-		local equipmentbase = self._unit:equipment()
-		if equipmentbase then
-			equipmentbase:on_deploy_interupted()
-		end
-	end)
-	--]]
-	
-	--[[
-	local orig_check_throw_projectile = PlayerStandard._check_action_throw_projectile
-	function PlayerStandard:_check_action_throw_projectile(t, input, ...)
-		--Console:SetTracker(string.format("test %0.2f",t),4)
-		local projectile_entry = managers.blackmarket:equipped_projectile()
-		local projectile_tweak = tweak_data.blackmarket.projectiles[projectile_entry]
-		--require custom raycast check
-		local equipmentbase = self._unit:equipment()
-		
-		
-		if projectile_tweak.override_equipment_id then
-			if input.btn_projectile_release or self._state_data.projectile_throw_wanted or self._state_data.throwing_projectile then
-				
-				if self._state_data.projectile_throw_wanted then
-					-- is already throwing nade
-				end
-				
-				if not managers.player:has_category_upgrade("trip_mine","can_throw") then
-					return equipmentbase:use_trip_mine()
-				end
-				
-				--temp disabled throwable tripmines
-			else
-				return -- equipmentbase:use_trip_mine()
-			end
-		else
-			return orig_check_throw_projectile(self,t,input,...)
-		end
-
-		local equipment_data = tweak_data.equipments[projectile_tweak.override_equipment_id]
-		
-		local action_wanted = input.btn_projectile_press or input.btn_projectile_release or self._state_data.projectile_idle_wanted
-				
-		if projectile_tweak.is_a_grenade then
-			return self:_check_action_throw_grenade(t, input)
-		elseif projectile_tweak.ability then
-			return
-			--return self:_check_action_use_ability(t, input)
-		end
-		
-		local ray,stuck_enemy
-		
-		if managers.player:can_throw_grenade() and (action_wanted or self._state_data.projectile_throw_wanted or self._state_data.throwing_projectile) then
-			--Console:SetTracker(string.format("action wanted %0.2f",t),1)
-			ray,stuck_enemy = equipmentbase:valid_look_at_placement(equipment_data, managers.player:has_category_upgrade("trip_mine", "can_place_on_enemies"))
-			--Console:SetTracker(tostring(ray) .. string.format(" %0.2f",t),2)
-		end
-		if self._state_data.projectile_throw_wanted then
-			if not ray then
-				--Console:SetTracker(string.format("no ray %0.2f",t),3)
-				equipmentbase:on_deploy_interupted()
-			end
-			
-			if not self._state_data.projectile_throw_allowed_t then
-				self._state_data.projectile_throw_wanted = nil
-				
-				--place from throw (instant press button)
-				if ray then
-					local success = equipmentbase:use_trip_mine(ray,stuck_enemy)
-					if success then
-						self:_interupt_action_throw_projectile(t)
-						managers.player:add_grenade_amount(-1)
-						return true
-					end
-				end
-				
-				self:_do_action_throw_projectile(t, input)
-			end
-
-			return
-		end
-
-		if not action_wanted then
-			return
-		end
-
-		if not managers.player:can_throw_grenade() then
-			self._state_data.projectile_throw_wanted = nil
-			self._state_data.projectile_idle_wanted = nil
-
-			return
-		end
-
-		if input.btn_projectile_release then
-			if self._state_data.throwing_projectile then
-				if self._state_data.projectile_throw_allowed_t then
-					self._state_data.projectile_throw_wanted = true
-
-					return
-				end
-				
-				--place from idle (hold button)
-				if ray then
-					local success = equipmentbase:use_trip_mine(ray,stuck_enemy)
-					if success then
-						self:_interupt_action_throw_projectile(t)
-						managers.player:add_grenade_amount(-1)
-						return true
-					end
-				end
-				
-				self:_do_action_throw_projectile(t, input)
-			end
-
-			return
-		end
-
-		local action_forbidden = not PlayerBase.USE_GRENADES or not self:_projectile_repeat_allowed() or self:chk_action_forbidden("interact") or self:_interacting() or self:is_deploying() or self:_changing_weapon() or self:_is_meleeing() or self:_is_using_bipod()
-
-		if action_forbidden then
-			return
-		end
-
-		self:_start_action_throw_projectile(t, input)
-
-		return true
-	end
-	--]]
 
 	--wrote the HUD code and stuff real quick and dirty just so that we could start getting feedback from testers
 	--IOU some prettier code
