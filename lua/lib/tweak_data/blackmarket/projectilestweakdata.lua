@@ -24,6 +24,7 @@ Hooks:PostHook(BlackMarketTweakData, "_init_projectiles", "cdgren", function(sel
 			anim_global_param = "projectile_tripmine_throwable",
 			--local_unit = nil,
 			unit_dummy = "units/equipment/tripmine_throwable/tripmine_throwable_dummy",
+			-- unit = "units/equipment/tripmine_throwable/tripmine_throwable", -- do not open til kithmas
 			is_a_grenade = false,
 			client_authoritative = true,
 			no_cheat_count = true,
