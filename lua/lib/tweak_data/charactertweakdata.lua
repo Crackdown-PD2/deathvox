@@ -925,48 +925,48 @@ function CharacterTweakData:_init_dv_presets()
 	
 	--Begin new hurt presets.
 	presets.hurt_severities.only_light_hurt_no_stuns = {
-        	tase = false,
-        	bullet = {
-           	health_reference = 1,
-           	zones = {
-       		{
-         		light = 1
-               		}
-		}
-       	},
+		tase = false,
+		bullet = {
+			health_reference = 1,
+			zones = {
+				{
+					light = 1
+				}
+			}
+		},
 		explosion = {
-            	health_reference = 1,
-            	zones = {
-                {
-                	light = 1
-                	}
-        	}
-        },
-        	melee = {
-        		health_reference = 1,
-       		zones = {
-                {
-                	light = 1
-                	}
-            	}
-        },
-        	fire = {
-        	health_reference = 1,
-            	zones = {
-                {
-                	light = 1
-                	}
+			health_reference = 1,
+			zones = {
+				{
+					light = 1
+				}
+			}
+		},
+		melee = {
+			health_reference = 1,
+			zones = {
+				{
+					light = 1
+				}
+			}
+		},
+		fire = {
+			health_reference = 1,
+			zones = {
+				{
+					light = 1
+				}
+			}
+		},
+		poison = {
+			health_reference = 1,
+			zones = {
+				{
+					light = 1
+				}
+			}
 		}
-        },
-        	poison = {
-        	health_reference = 1,
-            	zones = {
-                {
-                	light = 1
-                	}
-            	}
-        }
-    }
+	}
 	
 -- Begin revised surrender presets.
 	presets.surrender = {
