@@ -966,7 +966,8 @@ function EnemyManager:set_corpse_disposal_enabled(state)
 	elseif not was_enabled and is_now_enabled then
 		self:_chk_detach_stored_units()
 
-		managers.groupai:state():chk_unregister_irrelevant_attention_objects()
+		--managers.groupai:state():chk_unregister_irrelevant_attention_objects()
+		-- temp disabled due to crashes
 
 		self:chk_queue_disposal(self._timer:time())
 	end
