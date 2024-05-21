@@ -148,10 +148,26 @@ function deathvox:Load()
 		self:Save()
 	end
 	
+	--[[
+	if self:IsTotalCrackdownEnabled() then 
+		NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY = deathvox.mm_key_overhaul
+	else
+		NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY = deathvox.mm_key_default
+	end
+	--]]
+	
 --	self:check_for_updates()
 
 --	log("Loaded menu settings")
 	return self.Settings
+end
+
+function deathvox:GetSetting(key)
+	return self.Settings[key]
+end
+
+function deathvox:GetSessionSetting(key)
+	return self.Session_Settings[key]
 end
 
 function deathvox:ChangeSetting(key,value) --called when changing settings
@@ -184,20 +200,44 @@ end
 function deathvox:SyncOptionsToClients() --all clients
 	local network_string = LuaNetworking:TableToString(self.Session_Settings)
 	
-	LuaNetworking:SendToPeers(deathvox.NetworkIDs.Overhauls,network_string)
+	LuaNetworking:SendToPeers(self.NetworkIDs.Overhauls,network_string)
 end
 
 function deathvox:SyncOptionsToClient(peer_id) --single target client; for late joins
 	local network_string = LuaNetworking:TableToString(self.Session_Settings)
 	
-	LuaNetworking:SendToPeer(peer_id,deathvox.NetworkIDs.Overhauls,network_string)
+	LuaNetworking:SendToPeer(peer_id,self.NetworkIDs.Overhauls,network_string)
+end
+
+-- menu util
+function deathvox.GetMenuItem(menu_id,item_id)
+	local menu = MenuHelper:GetMenu(menu_id)
+	if menu then
+		-- necessary to get the index, 
+		-- as item() does not return the index.
+		-- technically could do (#items - (priority+1)) but the last item in the list also has nil priority so.
+		-- better to just use the less efficient, more effective way.
+		
+		local items = menu._items
+		if items then 
+			for i,item in ipairs(items) do 
+				if item:parameter("name") == item_id then
+					return item,i
+				end
+			end
+		end
+		
+		--return menu:item(item_id)
+	end
 end
 
 --load contents now, as well as on menu load
 deathvox:Load()
 
-
 -- Voice Framework Setup
+
+Hooks:Register("crackdown_on_setup_voiceline_framework")
+
 local C = blt_class()
 VoicelineFramework = C
 VoicelineFramework.BufferedSounds = {}
@@ -230,7 +270,6 @@ function C:register_voiceline(unit_name, line_type, path)
 		end
 	end
 end
---Hooks:Register("crackdown_on_setup_voiceline_framework")
 
 if not deathvox._voiceline_framework then
 	blt.xaudio.setup()
@@ -238,83 +277,3 @@ if not deathvox._voiceline_framework then
 	deathvox._voiceline_framework = voiceline_framework
 	Hooks:Call("crackdown_on_setup_voiceline_framework",voiceline_framework)
 end  
-
-
-
----------------------------
--- Options Menu Creation --
----------------------------
-
---creates empty menu entries for the main menu and the overhauls submenu, to be populated with options later
-local menu_id = deathvox.blt_menu_id
-Hooks:Add("MenuManagerSetupCustomMenus", "MenuManagerSetupCustomMenus_deathvox", function(menu_manager, nodes)
-	MenuHelper:NewMenu( menu_id )
-	MenuHelper:NewMenu("deathvox_menu_overhauls")
-end)
-
---populates the menu with data from the json file; this data should have a menu id matching one you created in the above MenuManagerSetupCustomMenus hook
-Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_deathvox", function(menu_manager, nodes)
-	MenuHelper:LoadFromJsonFile(deathvox.ModPath .. "menu/menu_overhauls.txt", deathvox, deathvox.Settings)
-
-	local overhaul_is_installed = not not _G.deathvox_overhaul
-	MenuHelper:AddToggle({
-		id = "deathvox_toggle_totalcd",
-		title = "deathvox_toggle_totalcd_title",
-		desc = "deathvox_toggle_totalcd_desc",
-		callback = "callback_deathvox_toggle_totalcd",
-		value = deathvox:IsTotalCrackdownEnabled(),
-		disabled = not overhaul_is_installed,
-		menu_id = "deathvox_menu_overhauls",
-		priority = 1
-	})	
-	
-end)
-
---i just used this to create the main crackdown menu; you probably don't need to change/add to this if you just want more submenus
-Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenus_deathvox", function(menu_manager, nodes)
-	nodes[menu_id] = MenuHelper:BuildMenu( menu_id )
-	
-	--place the crackdown menu in the main menu instead of the mod options menu
-	MenuHelper:AddMenuItem( nodes.options, menu_id, "deathvox_menu_main_title", "deathvox_menu_main_desc","blt_options","before")
-	
-end)
-
--- Currently, the menu is only set up to save on changing the only option extant so far (ie put Save() in every new menu option entry)
--- Optionally, I can make a manual save button and prompt the user to save when there are unsaved options,
-	-- or save automatically only when exiting the menu		
-Hooks:Add("MenuManagerInitialize", "MenuManagerInitialize_deathvox", function(menu_manager)
-
-	MenuCallbackHandler.callback_deathvox_toggle_hoppip = function(self,item) --on keypress
-		local enabled = item:value() == "on"
-		deathvox:ChangeSetting("useHoppipOverhaul",enabled)
-		deathvox:Save()
-	end
-	MenuCallbackHandler.callback_deathvox_toggle_totalcd = function(self,item) --on keypress
-		local enabled = item:value() == "on"
-		deathvox:ChangeSetting("useTotalCDOverhaul",enabled)
-		
-		--quick and dirty fix
-		--alternatively, close game immediately after to force a restart + apply game settings change?
-		if enabled then 
-			NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY = deathvox.mm_key_overhaul
-		else
-			NetworkMatchMakingSTEAM._BUILD_SEARCH_INTEREST_KEY = deathvox.mm_key_default
-		end
-		
-		deathvox:Save()
-	end
-
-	MenuCallbackHandler.callback_deathvox_close_overhauls = function(self)
---			deathvox:Save()
-	end
-	deathvox:Load()
-end)
-
-Hooks:Add("NetworkReceivedData", "NetworkReceivedData_deathvox", function(sender, message, data)
-	if sender == 1 then --only accept sync data from host
-		if message == deathvox.NetworkIDs.Overhauls then
-			deathvox:SyncOptionsFromHost(data)
-		--other sync data interpretation can go here
-		end
-	end
-end)

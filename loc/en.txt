@@ -8,7 +8,10 @@
 	"deathvox_toggle_hoppip_title" : "Hoppip's I-Frame Rework",
 	"deathvox_toggle_hoppip_desc" : "Adjusts invincibility frames on the player to work in a less frustrating way.",
 	"deathvox_toggle_totalcd_title" : "TOTAL CRACKDOWN Overhaul",
-	"deathvox_toggle_totalcd_desc" : "The Total Crackdown Overhaul is WIP and features entirely reworked primary weapon stats and new skills.",
+	"deathvox_toggle_totalcd_desc" : "The Total Crackdown Overhaul is a WIP and features entirely reworked primary weapon stats and new skills.",
+	"deathvox_dialog_tcd_restart_required_title" : "Restart required",
+	"deathvox_dialog_tcd_restart_required_desc" : "In order to finish enabling Total Crackdown, the game must be restarted. \nClick \"Yes\" to close the game. \nIf you select \"No\", the settings changes will be reverted instead."
+	
 
 	"ene_deathvox_guard" : "Secret Service", 
 	"ene_deathvox_heavyar" : "Heavy Zulu",
