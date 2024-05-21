@@ -40,8 +40,10 @@ if deathvox:IsTotalCrackdownEnabled() then
 			--spawn x number of child grenades, but flag each child grenade as unable to create more child grenades
 		end
 		--]]
-		managers.network:session():send_to_peers_synched("sync_unit_event_id_16", self._unit, "base", GrenadeBase.EVENT_IDS.detonate)
-		self._unit:set_slot(0)
+		if self._unit:id() ~= -1 then
+			managers.network:session():send_to_peers_synched("sync_unit_event_id_16", self._unit, "base", GrenadeBase.EVENT_IDS.detonate)
+		end
+		self:_handle_hiding_and_destroying(true, nil)
 	end
 
 	
