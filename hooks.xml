@@ -177,7 +177,6 @@
 	<hook post="true" file="lua/lib/managers/blackmarketmanager.lua" source_file="lib/managers/blackmarketmanager"/>
 	<hook post="true" file="lua/lib/managers/weaponfactorymanager.lua" source_file="lib/managers/weaponfactorymanager"/>
 	
-	<hook post="true" file="lua/lib/managers/groupaistatebase.lua" source_file="lib/managers/group_ai_states/groupaistatebase"/>
 	<!--sadly have to include this here due to some fucky bullshit with cancelling update callback ids not wanting to work right for me, i cant figure it out, either, so until hoxi's code is around, this will HAVE to do...there are thankfully no side-effects -->
 	<hook post="true" file="lua/lib/managers/navigationmanager.lua" source_file="lib/managers/navigationmanager"/> 
 	
