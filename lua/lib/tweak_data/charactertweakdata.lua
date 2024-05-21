@@ -243,7 +243,6 @@ end)
 
 function CharacterTweakData:_init_dv_presets()
 	local presets = self.presets
-	local presets = self.presets 
 	
 	presets.hurt_severities.no_hurts = { --due to overkill's recent updates, i have to do this now, apparently >:c
 		tase = true,
@@ -963,6 +962,67 @@ function CharacterTweakData:_init_dv_presets()
 			zones = {
 				{
 					light = 1
+				}
+			}
+		}
+	}
+	
+	-- the following was removed in 240.3, but retained in crackdown:
+	-- only used for deathvox_heavyshot (medics?)
+	presets.hurt_severities.only_poison_and_light_hurt = {
+		tase = false,
+		bullet = {
+			health_reference = "current",
+			zones = {
+				{
+					none = 0.4,
+					light = 0.6,
+					health_limit = 0.3
+				},
+				{
+					light = 1
+				}
+			}
+		},
+		explosion = {
+			health_reference = "current",
+			zones = {
+				{
+					none = 0.4,
+					light = 0.6,
+					health_limit = 0.3
+				},
+				{
+					light = 1
+				}
+			}
+		},
+		melee = {
+			health_reference = "current",
+			zones = {
+				{
+					none = 0.4,
+					light = 0.6,
+					health_limit = 0.3
+				},
+				{
+					light = 1
+				}
+			}
+		},
+		fire = {
+			health_reference = 1,
+			zones = {
+				{
+					none = 1
+				}
+			}
+		},
+		poison = {
+			health_reference = 1,
+			zones = {
+				{
+					poison = 1
 				}
 			}
 		}
@@ -2959,7 +3019,7 @@ function CharacterTweakData:_init_deathvox()
 	self.deathvox_heavyar.speech_prefix_count = nil
 	self.deathvox_heavyar.detection = presets.detection.deathvox
 	self.deathvox_heavyar.ignore_medic_revive_animation = true  --no revive animation. may require curving on lower diffs.
-	self.deathvox_heavyar.damage.hurt_severity = presets.hurt_severities.light_hurt_fire_poison -- may require curving on lower diffs.
+	self.deathvox_heavyar.damage.hurt_severity = presets.hurt_severities.base -- same as vanilla
 	self.deathvox_heavyar.suppression = presets.suppression.hard_agg -- hard_agg on all diffs.
 	self.deathvox_heavyar.surrender = presets.surrender.special -- should be normal on N/H, hard on VH-DW.
 	self.deathvox_heavyar.move_speed = presets.move_speed.fast -- fast on all diffs.
@@ -3043,7 +3103,7 @@ function CharacterTweakData:_init_deathvox()
 	--self.deathvox_medic.tags = {"medic"} -- commented out as it was actually breaking the tags
 	self.deathvox_medic.detection = presets.detection.deathvox
 	self.deathvox_medic.ignore_medic_revive_animation = true  --no revive animation. may require curving on lower diffs.
-	self.deathvox_medic.damage.hurt_severity = presets.hurt_severities.only_fire_and_poison_hurts -- added to make code consistent.
+	self.deathvox_medic.damage.hurt_severity = presets.hurt_severities.only_light_hurt -- same as vanilla, added to make code consistent.
 	self.deathvox_medic.suppression = nil
 	self.deathvox_medic.surrender = nil
 	self.deathvox_medic.move_speed = presets.move_speed.very_fast -- same for all diffs.
@@ -4082,8 +4142,6 @@ function CharacterTweakData:_set_easy_wish() -- MAYHEM specific tweaks begin.
 	--i am sorry little one - fuglore
     self.deathvox_sniper.weapon.is_rifle.use_laser = false
     self.sniper.weapon.is_rifle.use_laser = false
-    self.deathvox_sniper.disable_sniper_laser = true
-    self.sniper.weapon.disable_sniper_laser = true
 --	tank - MAYHEM
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.	
@@ -4218,8 +4276,6 @@ function CharacterTweakData:_set_overkill_290() -- DEATH WISH specific tweaks be
 	--i am sorry little one - fuglore
     self.deathvox_sniper.weapon.is_rifle.use_laser = false
     self.sniper.weapon.is_rifle.use_laser = false
-    self.deathvox_sniper.disable_sniper_laser = true
-    self.sniper.weapon.disable_sniper_laser = true
 --	tank - DEATH WISH
 	self.deathvox_tank.damage.explosion_damage_mul = 0.7 -- set 0.7 below CD.
 --	No specific unit curving for dozers, which all sync off of tank effects.	
@@ -4320,8 +4376,6 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	--i am sorry little one - fuglore
     self.deathvox_sniper.weapon.is_rifle.use_laser = false
     self.sniper.weapon.is_rifle.use_laser = false
-    self.deathvox_sniper.disable_sniper_laser = true
-    self.sniper.weapon.disable_sniper_laser = true
 	
 	self:_multiply_all_speeds(1, 1)
 	self.spa_vip.HEALTH_INIT = 525
