@@ -124,14 +124,14 @@
 	<hook post="true" file="lua/lib/units/beings/player/playersound.lua" source_file="lib/units/beings/player/playersound"/>
 
 	<hook post="true" file="lua/lib/units/weapons/bowweaponbase.lua" source_file="lib/units/weapons/bowweaponbase"/>
-	<hook post="true" file="lua/lib/units/weapons/concussiongrenade.lua" source_file="lib/units/weapons/grenades/concussiongrenade"/>
-	<hook post="true" file="lua/lib/units/weapons/incendiaryburstgrenade.lua" source_file="lib/units/weapons/grenades/incendiaryburstgrenade"/>
-	<hook post="true" file="lua/lib/units/weapons/fraggrenade.lua" source_file="lib/units/weapons/grenades/fraggrenade"/>
-	<hook post="true" file="lua/lib/units/weapons/quickcsgrenade.lua" source_file="lib/units/weapons/grenades/quickcsgrenade"/>
-	<hook post="true" file="lua/lib/units/weapons/quickflashgrenade.lua" source_file="lib/units/weapons/grenades/quickflashgrenade"/>
-	<hook post="true" file="lua/lib/units/weapons/quicksmokegrenade.lua" source_file="lib/units/weapons/grenades/quicksmokegrenade"/>
-	<hook post="true" file="lua/lib/units/weapons/teargasgrenade.lua" source_file="lib/units/weapons/grenades/teargasgrenade"/>
-	<hook post="true" file="lua/lib/units/weapons/dvgrenade.lua" source_file="lib/units/weapons/grenades/fraggrenade"/>
+	<hook post="true" file="lua/lib/units/weapons/grenades/concussiongrenade.lua" source_file="lib/units/weapons/grenades/concussiongrenade"/>
+	<hook post="true" file="lua/lib/units/weapons/grenades/fraggrenade.lua" source_file="lib/units/weapons/grenades/fraggrenade"/>
+	<hook post="true" file="lua/lib/units/weapons/grenades/incendiaryburstgrenade.lua" source_file="lib/units/weapons/grenades/incendiaryburstgrenade"/>
+	<hook post="true" file="lua/lib/units/weapons/grenades/quickcsgrenade.lua" source_file="lib/units/weapons/grenades/quickcsgrenade"/>
+	<hook post="true" file="lua/lib/units/weapons/grenades/quickflashgrenade.lua" source_file="lib/units/weapons/grenades/quickflashgrenade"/>
+	<hook post="true" file="lua/lib/units/weapons/grenades/quicksmokegrenade.lua" source_file="lib/units/weapons/grenades/quicksmokegrenade"/>
+	<hook post="true" file="lua/lib/units/weapons/grenades/teargasgrenade.lua" source_file="lib/units/weapons/grenades/teargasgrenade"/>
+	<hook post="true" file="lua/lib/units/weapons/grenades/dvgrenade.lua" source_file="lib/units/weapons/grenades/fraggrenade"/>
 	<hook post="true" file="lua/lib/units/weapons/projectiles/projectilebase.lua" source_file="lib/units/weapons/projectiles/projectilebase"/>
 	<hook post="true" file="lua/lib/units/weapons/projectiles/tripminethrowablebase.lua" source_file="lib/units/weapons/projectiles/projectilebase"/>
 	<hook post="true" file="lua/lib/units/weapons/projectiles/arrowbase.lua" source_file="lib/units/weapons/projectiles/arrowbase"/>
