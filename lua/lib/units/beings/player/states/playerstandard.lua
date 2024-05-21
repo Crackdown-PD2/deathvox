@@ -2272,7 +2272,11 @@ if TCD_ENABLED then
 				if ray or stuck_enemy then
 					local placed_tripmine = eq_ext:use_trip_mine(ray,stuck_enemy)
 					if placed_tripmine then
-					
+						
+						-- deduct one grenade, 
+						-- increment progress and achievement counters (eg. fire in the hole)
+						managers.player:on_throw_grenade()
+						
 						-- stop throwing grenade
 						self:_interupt_action_throw_projectile(t,input)
 						return

@@ -133,6 +133,7 @@
 	<hook post="true" file="lua/lib/units/weapons/teargasgrenade.lua" source_file="lib/units/weapons/grenades/teargasgrenade"/>
 	<hook post="true" file="lua/lib/units/weapons/dvgrenade.lua" source_file="lib/units/weapons/grenades/fraggrenade"/>
 	<hook post="true" file="lua/lib/units/weapons/projectiles/projectilebase.lua" source_file="lib/units/weapons/projectiles/projectilebase"/>
+	<hook post="true" file="lua/lib/units/weapons/projectiles/tripminethrowablebase.lua" source_file="lib/units/weapons/projectiles/projectilebase"/>
 	<hook post="true" file="lua/lib/units/weapons/projectiles/arrowbase.lua" source_file="lib/units/weapons/projectiles/arrowbase"/>
 	<hook post="true" file="lua/lib/units/weapons/sentrygunweapon.lua" source_file="lib/units/weapons/sentrygunweapon"/>
 	<hook post="true" file="lua/lib/units/weapons/sawweaponbase.lua" source_file="lib/units/weapons/sawweaponbase"/>
