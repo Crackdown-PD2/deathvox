@@ -13,6 +13,11 @@ tweak_data.projectiles.dv_grenadier_grenade = {
 	push_at_body_index = 0
 }
 
+tweak_data.projectiles.cs_grenade_quick.radius = 400
+tweak_data.projectiles.cs_grenade_quick.radius_blurzone_multiplier = 1.3
+tweak_data.projectiles.cs_grenade_quick.damage_tick_period = 1
+tweak_data.projectiles.cs_grenade_quick.damage_per_tick = 3
+
 if deathvox:IsTotalCrackdownEnabled() then 
 	
 	tweak_data.TCD_WEAPON_BUCKSHOT_AMMO_DAMAGE_MUL = 0.5
