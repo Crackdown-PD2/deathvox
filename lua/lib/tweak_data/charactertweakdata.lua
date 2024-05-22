@@ -4380,7 +4380,7 @@ function CharacterTweakData:_set_sm_wish() -- CRACKDOWN specific tweaks begin.
 	self:_multiply_all_speeds(1, 1)
 	self.spa_vip.HEALTH_INIT = 525
 	self.flashbang_multiplier = 2
-	self.concussion_multiplier = 2
+	self.concussion_multiplier = 1 -- THIS CANNOT BE HIGHER THAN 1 OR YOU WILL BE CONCUSSED FOREVER.
 	
 -- Begin goofball legacy health changes.
 	
