@@ -30,10 +30,63 @@ function MedicDamage:heal_unit(unit_to_heal, no_cooldown)
 
 	my_unit:movement():action_request(action_data)
 
-	local sync_unit = my_unit:id() ~= 1 and my_unit or nil
-
-	managers.network:session():send_to_peers_synched("sync_medic_heal", sync_unit)
+	if my_unit:id() ~= 1 then
+		managers.network:session():send_to_peers_synched("sync_medic_heal", my_unit)
+	end
 	MedicActionHeal:check_achievements()
+
+	return true
+end
+
+function MedicDamage:verify_heal_requesting_unit(requesting_unit)
+
+	local base_ext = requesting_unit:base()
+	local char_tweak = base_ext and base_ext.char_tweak and base_ext:char_tweak()
+
+	if not char_tweak or char_tweak.can_be_healed == false then
+		return false
+	end
+
+	local mov_ext = requesting_unit:movement()
+	local team = mov_ext and mov_ext.team and mov_ext:team()
+
+	if not team then
+		return false
+	end
+
+	local my_team = self._unit:movement():team()
+
+	if team ~= my_team and not team.friends[my_team.id] then
+		return false
+	end
+
+
+	local anim_data = requesting_unit:anim_data()
+
+	if anim_data and anim_data.act then
+		return false
+	end
+
+	--further ensure that the unit isn't acting or plans to act
+	local act_action, was_queued = requesting_unit:movement():_get_latest_act_action()
+
+	if act_action then
+		if not was_queued or not act_action.host_expired then
+			return false
+		end
+	end
+	
+	-- converts also cannot be healed at all
+	local brain_ext = requesting_unit:brain()
+	if brain_ext then
+		if brain_ext.converted then
+			if brain_ext:converted() then
+				return false
+			end
+		elseif brain_ext._logic_data and brain_ext._logic_data.is_converted then
+			return false
+		end
+	end
 
 	return true
 end

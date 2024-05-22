@@ -299,105 +299,46 @@ function CopDamage:roll_critical_hit(attack_data,damage)
 	return critical_hit, damage
 end
 
+-- validity checks moved to medic character damage ext
 function CopDamage:check_medic_heal()
-	local anim_data = self._unit:anim_data()
-
-	if anim_data and anim_data.act then
+	if self._unit:anim_data().act then
 		return false
-	end
-	
-	local mov_ext = self._unit:movement()
-	local team = mov_ext.team and mov_ext:team()
-
-	if team and team.id ~= "law1" then
-		if not team.friends or not team.friends.law1 then
-			return false
-		end
-	end
-
-	local brain_ext = self._unit:brain()
-
-	if brain_ext then
-		if brain_ext.converted then
-			if brain_ext:converted() then
-				return false
-			end
-		elseif brain_ext._logic_data and brain_ext._logic_data.is_converted then
-			return false
-		end
-	end
-
-	--further ensure that the unit isn't acting or plans to act
-	local act_action, was_queued = self._unit:movement():_get_latest_act_action()
-
-	if act_action then
-		if not was_queued or not act_action.host_expired then
-			return false
-		end
 	end
 
 	local medic = managers.enemy:get_nearby_medic(self._unit)
+	local medic_dmg_ext = medic and medic:character_damage()
+	if medic_dmg_ext and medic_dmg_ext:heal_unit(self._unit) then
+		local difficulty_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)
 
-	if medic then
-		local medic_dmg_ext = medic:character_damage()
+		--if playing on Crackdown difficulty, find enemies around the Medic and proceed with the usual healing process on them as well
+		if difficulty_index == 8 then
+			local enemies = medic:find_units_quick("sphere", medic:position(), tweak_data.medic.radius, managers.slot:get_mask("enemies"))
+			local my_key = self._unit:key()
 
-		if medic_dmg_ext:heal_unit(self._unit) then
-			local difficulty_index = tweak_data:difficulty_to_index(Global.game_settings.difficulty)
+			for i = 1, #enemies do
+				local enemy = enemies[i]
+				local anim_data = enemy:anim_data()
+				local skip_enemy = anim_data and anim_data.act or my_key == enemy:key()
+				if not skip_enemy then
+					if medic_dmg_ext:heal_unit(enemy, true) then
+						local attack_data = {
+							damage = 0,
+							type = "healed",
+							variant = "healed",
+							result = {
+								variant = "healed",
+								type = "healed"
+							}
+						}
 
-			--if playing on Crackdown difficulty, find enemies around the Medic and proceed with the usual healing process on them as well
-			if difficulty_index == 8 then
-				local enemies = medic:find_units_quick("sphere", medic:position(), tweak_data.medic.radius, managers.slot:get_mask("enemies"))
-				local my_key = self._unit:key()
-
-				for i = 1, #enemies do
-					local enemy = enemies[i]
-					local anim_data = enemy:anim_data()
-					local skip_enemy = anim_data and anim_data.act or my_key == enemy:key()
-
-					if not skip_enemy then
-						local tweak_table_name = enemy:base()._tweak_table
-
-						skip_enemy = table_contains(disabled_units, tweak_table_name) and true
-
-						if not skip_enemy then
-							local mov_ext = enemy:movement()
-							local team = mov_ext.team and mov_ext:team()
-
-							if team and team.id ~= "law1" then
-								if not team.friends or not team.friends.law1 then
-									skip_enemy = true
-								end
-							end
-
-							if not skip_enemy then
-								local brain_ext = enemy:brain()
-
-								if brain_ext and brain_ext._logic_data and brain_ext._logic_data.is_converted then
-									skip_enemy = true
-								end
-
-								if not skip_enemy and medic_dmg_ext:heal_unit(enemy, true) then
-									local attack_data = {
-										damage = 0,
-										type = "healed",
-										variant = "healed",
-										result = {
-											variant = "healed",
-											type = "healed"
-										}
-									}
-
-									enemy:network():send("damage_simple", enemy, 0, 4, 1) --sync the healed instance to other peers
-									enemy:character_damage():_call_listeners(attack_data)
-								end
-							end
-						end
+						enemy:network():send("damage_simple", enemy, 0, 4, 1) --sync the healed instance to other peers
+						enemy:character_damage():_call_listeners(attack_data)
 					end
 				end
 			end
-
-			return true
 		end
+
+		return true
 	end
 end
 
