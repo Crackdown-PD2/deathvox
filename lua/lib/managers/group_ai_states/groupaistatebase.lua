@@ -924,7 +924,6 @@ function GroupAIStateBase:detonate_world_smoke_grenade(id, sync)
 		local flashbang_unit = "units/payday2/weapons/wpn_frag_flashbang/wpn_frag_flashbang"
 		local det_pos = data.detonate_pos
 		local rotation = Rotation(math.random() * 360, 0, 0)
-		local flash_grenade = World:spawn_unit(Idstring(flashbang_unit), det_pos, rotation)
 		
 		local ray_to = mvector3.copy(det_pos) + math.UP * 5
 
@@ -938,6 +937,7 @@ function GroupAIStateBase:detonate_world_smoke_grenade(id, sync)
 			data.detonate_pos = det_pos
 		end
 
+		local flash_grenade = World:spawn_unit(Idstring(flashbang_unit), det_pos, rotation)
 		local shoot_from_pos = data.shooter_pos or det_pos
 		if data.instant then
 			flash_grenade:base():activate_immediately(shoot_from_pos, data.duration)
@@ -948,10 +948,9 @@ function GroupAIStateBase:detonate_world_smoke_grenade(id, sync)
 		self._smoke_grenades[id] = nil
 	else
 		data.duration = data.duration == 0 and 15 or data.duration
-		local rotation = Rotation(math.random() * 360, 0, 0)
-		local smoke_grenade = World:spawn_unit(Idstring("units/weapons/smoke_grenade_quick/smoke_grenade_quick"), det_pos, rotation)
-		
 		local det_pos = data.detonate_pos
+		local rotation = Rotation(math.random() * 360, 0, 0)
+		
 		local ray_to = mvector3.copy(det_pos) + math.UP * 5
 
 		mvector3.set_z(ray_to, ray_to.z - 50)
@@ -963,6 +962,7 @@ function GroupAIStateBase:detonate_world_smoke_grenade(id, sync)
 			mvector3.set_z(det_pos, det_pos.z + 3)
 			data.detonate_pos = det_pos
 		end
+		local smoke_grenade = World:spawn_unit(Idstring("units/weapons/smoke_grenade_quick/smoke_grenade_quick"), det_pos, rotation)
 
 		local shoot_from_pos = data.shooter_pos or det_pos
 		if data.instant then
