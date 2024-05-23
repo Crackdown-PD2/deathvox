@@ -1,3 +1,5 @@
+do return end
+
 local mvec3_dis_sq = mvector3.distance_sq
 local mvec3_copy = mvector3.copy
 
@@ -35,9 +37,6 @@ function FireManager:remove_dead_dozer_from_overgrill(unit_id)
 
 	self._enemies_on_fire = dozers_on_fire
 end
-
-do return end
-
 
 function FireManager:update(t, dt)
 	local doted_enemies = self._doted_enemies
@@ -111,7 +110,7 @@ function FireManager:update(t, dt)
 	end
 end
 
-function FireManager:check_achievemnts(unit, t)
+function FireManager:check_achievements(unit, t)
 	local doted_enemies = self._doted_enemies
 
 	if not doted_enemies or not alive_g(unit) then
@@ -285,7 +284,7 @@ function FireManager:_add_doted_enemy(enemy_unit, fire_damage_received_time, wea
 
 	self._doted_enemies = doted_enemies
 
-	self:check_achievemnts(enemy_unit, t)
+	self:check_achievements(enemy_unit, t)
 end
 
 if deathvox:IsTotalCrackdownEnabled() then

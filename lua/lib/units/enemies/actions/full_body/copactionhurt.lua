@@ -458,8 +458,7 @@ function CopActionHurt:init(action_desc, common_data)
 					end
 				end
 
-				self:_start_enemy_fire_effect_on_death(variant)
-				managers.fire:check_achievemnts(common_data.unit, t)
+				self:_start_enemy_fire_effect_on_death(variant,fire_variant)
 			elseif action_desc.variant == "poison" or action_desc.variant == "dot" then
 				keep_checking = nil
 				self:force_ragdoll()
@@ -1206,61 +1205,6 @@ function CopActionHurt.variant_to_idx(var)
 	else
 		return idx
 	end
-end
-
-local tmp_used_flame_objects = nil
-
-function CopActionHurt:_start_enemy_fire_effect_on_death(death_variant)
-	local fire_data = tweak_data.fire
-	local fire_bones = fire_data.fire_bones
-	local effects_cost = fire_data.effects_cost
-	local num_fire_bones = #fire_bones
-	local effect_tbl = fire_data.fire_death_anims[death_variant] or fire_data.fire_death_anims[0]
-	local fire_effects = fire_data.effects[effect_tbl.effect]
-	local num_effects = math_random(3, num_fire_bones)
-
-	if not tmp_used_flame_objects then
-		tmp_used_flame_objects = {}
-
-		for i = 1, num_fire_bones do
-			tmp_used_flame_objects[#tmp_used_flame_objects + 1] = false
-		end
-	end
-
-	local idx = 1
-	local effects_table = {}
-	local my_unit = self._unit
-	local get_object_f = my_unit.get_object
-
-	for i = 1, num_effects do
-		while tmp_used_flame_objects[idx] do
-			idx = math_random(1, num_fire_bones)
-		end
-
-		local bone = get_object_f(my_unit, idstr_func(fire_bones[idx]))
-
-		if bone then
-			local effect_name = fire_effects[effects_cost[i]]
-			local effect_id = world_g:effect_manager():spawn({
-				effect = idstr_func(effect_name),
-				parent = bone
-			})
-
-			effects_table[#effects_table + 1] = effect_id
-		end
-
-		tmp_used_flame_objects[idx] = true
-	end
-
-	self._fire_death_effects_table = effects_table
-
-	for i = 1, #tmp_used_flame_objects do
-		tmp_used_flame_objects[i] = false
-	end
-
-	self._fire_death_sound_source_table = {enemy_unit = my_unit}
-
-	managers.fire:start_burn_body_sound(self._fire_death_sound_source_table, effect_tbl.duration)
 end
 
 function CopActionHurt:_dragons_breath_sparks()

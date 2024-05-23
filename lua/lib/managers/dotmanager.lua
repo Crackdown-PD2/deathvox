@@ -1,7 +1,42 @@
 local alive_g = alive
 
 if deathvox:IsTotalCrackdownEnabled() then
+	--[[ --todo reimplement toxic shock spread poison dot to nearby enemies
+	function DOTManager:_add_variant_data(dot_info, data, t)
+		t = t or data.time_override or TimerManager:game():time()
+		local var_info = {}
+		dot_info.variants[data.dot_data.variant] = var_info
+		var_info.variant = data.dot_data.variant
+		Print("Added variant:",var_info.variant)
+		
+		if var_info.variant == "fire" then
+			var_info.hurt_animation = false
+		end
+		var_info.damage_class = data.dot_data.damage_class
+		var_info.last_weapon_id = data.weapon_id
+		var_info.last_weapon_unit = data.weapon_unit
+		var_info.last_attacker_unit = data.attacker_unit
+		var_info.hurt_animation = data.hurt_animation
+		var_info.apply_hurt_once = data.dot_data.apply_hurt_once
+		var_info.dot_applied_time = t
+		var_info.dot_damage = data.dot_data.dot_damage
+		var_info.dot_length = data.modified_length or data.dot_data.dot_length
+		var_info.dot_tick_period = data.dot_data.dot_tick_period
+		var_info.dot_grace_period = data.dot_data.dot_grace_period
+		var_info.dot_ticks_remaining = math.max(1, math.floor(var_info.dot_length / var_info.dot_tick_period))
+		var_info.dot_counter = var_info.dot_tick_period - math.max(var_info.dot_tick_period, var_info.dot_grace_period)
 
+		if data.on_added_clbk then
+			data.on_added_clbk(dot_info, var_info, data)
+		end
+
+		var_info.on_removed_clbk = data.on_removed_clbk
+		var_info.check_achivements_clbk = data.check_achivements_clbk
+
+		self:_chk_local_updating(var_info)
+	end
+	--]]
+--[[
 	function DOTManager:add_doted_enemy(data)
 		
 		local dot_info, var_info, should_sync = self:_add_doted_enemy(data)
@@ -85,5 +120,5 @@ if deathvox:IsTotalCrackdownEnabled() then
 
 		return dot_info, var_info
 	end
-	
+	--]]
 end

@@ -109,30 +109,16 @@ if deathvox:IsTotalCrackdownEnabled() then
 	tweak_data.projectiles.molotov.player_damage = 5
 	tweak_data.projectiles.molotov.range = 250
 	--tweak_data.projectiles.molotov.launch_speed = 1500
-	tweak_data.projectiles.molotov.fire_dot_data = {
-		dot_trigger_chance = 35,
-		dot_damage = 25,
-		dot_length = 15,
-		dot_trigger_max_distance = 3000,
-		dot_tick_period = 0.5
-	}
 	tweak_data.projectiles.molotov.burn_duration = 10
 	--all of this needs to be checked
 
 	--incendiary grenade
-	tweak_data.projectiles.fir_com._cant_be_shot_to_detonate = true
-	tweak_data.projectiles.fir_com.slot_mask_id = "bullet_impact_targets"
 	tweak_data.projectiles.fir_com.damage = 0
 	tweak_data.projectiles.fir_com.player_damage = 5
+	tweak_data.projectiles.fir_com._cant_be_shot_to_detonate = true
+	tweak_data.projectiles.fir_com.slot_mask_id = "bullet_impact_targets"
 	tweak_data.projectiles.fir_com.range = 112.5
 	--tweak_data.projectiles.fir_com.launch_speed = 1500
-	tweak_data.projectiles.fir_com.fire_dot_data = {
-		dot_trigger_chance = 35,
-		dot_damage = 25,
-		dot_length = 30,
-		dot_trigger_max_distance = 3000,
-		dot_tick_period = 0.5
-	}
 	tweak_data.projectiles.fir_com.burn_duration = 10
 	--central flame only (no subflame pools) not implemented
 	--all of this needs to be checked
