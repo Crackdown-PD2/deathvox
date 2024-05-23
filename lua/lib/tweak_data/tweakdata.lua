@@ -43,18 +43,17 @@ if deathvox:IsTotalCrackdownEnabled() then
 	--javelin
 	tweak_data.projectiles.wpn_prj_jav.damage = 400
 	--armor piercing not implemented
-
-	-- custom tripmine throwable
-	tweak_data.projectiles.wpn_prj_tripmine_throwable = {
+	
+	tweak_data.projectiles.tripmine_throwable = {
 		name_id = "bm_grenade_tripmine",
 		damage = 0,
-		launch_speed = 400,
+		launch_speed = 200,
 		adjust_z = 0,
 		mass_look_up_modifier = 1,
 		push_at_body_index = 0,
 		sounds = {}
 	}
-
+	
 	--frag grenade
 	
 	tweak_data.projectiles.frag._cant_be_shot_to_detonate = true
