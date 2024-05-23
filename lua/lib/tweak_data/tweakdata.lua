@@ -47,7 +47,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 	tweak_data.projectiles.tripmine_throwable = {
 		name_id = "bm_grenade_tripmine",
 		damage = 0,
-		launch_speed = 200,
+		launch_speed = 125,
 		adjust_z = 0,
 		mass_look_up_modifier = 1,
 		push_at_body_index = 0,

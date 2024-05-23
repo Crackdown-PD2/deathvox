@@ -51,6 +51,7 @@ function TripmineThrowableBase:init(unit,...)
 	
 	TripmineThrowableBase.super.init(self,unit,...)
 	--self._draw_debug_trail = true
+	self._orient_to_vel = false
 	
 	--asdf = self
 end
@@ -60,10 +61,16 @@ function TripmineThrowableBase:_setup_server_data()
 end
 
 function TripmineThrowableBase:throw(params,...)
-	
 	TripmineThrowableBase.super.throw(self,params,...)
 	--Print(params.projectile_entry)
-	
+
+	if params.projectile_entry and tweak_data.projectiles[params.projectile_entry] then
+		local push_at_body_index = tweak_data.projectiles[params.projectile_entry].push_at_body_index
+		local body = self._unit:body(push_at_body_index)
+		if body then
+			self._rotatey_body = body
+		end
+	end
 end
 
 function TripmineThrowableBase:_on_collision(col_ray)
@@ -85,6 +92,7 @@ function TripmineThrowableBase:_on_collision(col_ray)
 	local global_pos, local_pos, local_rot_vec = tmp_vec1
 	mvec3_set(global_pos, position)
 	
+
 	PlayerEquipment:_check_unit_attach_segment(stuck_enemy, global_pos)
 	
 
@@ -96,7 +104,6 @@ function TripmineThrowableBase:_on_collision(col_ray)
 		-- stuck as client
 		
 
-		--! THIS IS NOT GOOD CODE YOU SHOULD FIX THIS PART
 
 		if parent_obj then
 			local_pos, local_rot_vec = tmp_vec2, tmp_vec3
@@ -229,6 +236,15 @@ function TripmineThrowableBase:update(unit, t, dt)
 		end
 
 		self._velocity = Vector3(self._velocity.x, self._velocity.y, self._velocity.z - 980 * dt)
+	end
+	
+	if self._rotatey_body then
+		local _body = self._rotatey_body
+		local rotation = _body:rotation()
+		local yaw = rotation:yaw()
+		local pitch = rotation:pitch() - (dt * 360)
+		local roll = rotation:roll()
+		_body:set_rotation(Rotation(yaw,pitch,roll + (dt * 30)))
 	end
 
 	if self._sweep_data and not self._collided then
