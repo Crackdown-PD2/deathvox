@@ -122,7 +122,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 		return false
 	end
 
-	function PlayerEquipment:_check_unit_attach_segment(hit_unit, m_global_pos)
+	function PlayerEquipment._check_unit_attach_segment(hit_unit, m_global_pos)
 		local damage_ext = hit_unit:character_damage()
 
 		if not damage_ext or not damage_ext.get_impact_segment then
@@ -206,7 +206,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				mvec3_set(dummy_pos, ray.position)
 
 				if stuck_enemy then
-					self:_check_unit_attach_segment(stuck_enemy, dummy_pos)
+					self._check_unit_attach_segment(stuck_enemy, dummy_pos)
 				end
 
 				local dummy_rot = tmp_rot1
@@ -252,7 +252,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 					local global_pos, local_pos, local_rot_vec = tmp_vec1
 					mvec3_set(global_pos, ray.position)
 
-					self:_check_unit_attach_segment(stuck_enemy, global_pos)
+					self._check_unit_attach_segment(stuck_enemy, global_pos)
 
 					if parent_obj then
 						local_pos, local_rot_vec = tmp_vec2, tmp_vec3
@@ -292,7 +292,7 @@ if deathvox:IsTotalCrackdownEnabled() then
 				local global_pos, local_pos, local_rot_vec = tmp_vec1
 				mvec3_set(global_pos, ray.position)
 
-				self:_check_unit_attach_segment(stuck_enemy, global_pos)
+				self._check_unit_attach_segment(stuck_enemy, global_pos)
 
 				local global_rot = tmp_rot1
 				mrot_set_look_at(global_rot, normal, math_up)

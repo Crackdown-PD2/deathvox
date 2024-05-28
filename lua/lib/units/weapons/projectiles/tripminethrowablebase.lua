@@ -92,10 +92,8 @@ function TripmineThrowableBase:_on_collision(col_ray)
 	local global_pos, local_pos, local_rot_vec = tmp_vec1
 	mvec3_set(global_pos, position)
 	
-
-	PlayerEquipment:_check_unit_attach_segment(stuck_enemy, global_pos)
+	PlayerEquipment._check_unit_attach_segment(stuck_enemy, global_pos)
 	
-
 	local session = managers.network:session()
 
 	local player_unit = managers.player:local_player()
@@ -103,7 +101,6 @@ function TripmineThrowableBase:_on_collision(col_ray)
 	if Network:is_client() then
 		-- stuck as client
 		
-
 
 		if parent_obj then
 			local_pos, local_rot_vec = tmp_vec2, tmp_vec3
